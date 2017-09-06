@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e9aec4b_64a8b94e",
+        "filename": "content/browser/android/text_suggestion_host_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-06T00:21:41Z",
+      "side": 1,
+      "message": "We shouldn\u0027t use handwritten jni.  Add a static create in SuggestionInfo with @CalledByNative to allow you to do this.",
+      "range": {
+        "startLine": 164,
+        "startChar": 42,
+        "endLine": 164,
+        "endChar": 49
+      },
+      "revId": "c690e8dc96c193b5589f6d141e04cc4fc7f9f2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991644ab_a66883d1",
+        "filename": "content/browser/android/text_suggestion_host_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-06T00:21:41Z",
+      "side": 1,
+      "message": "The problem is that you don\u0027t have the class here anymore, so this gets trickier.  You could again expose some jni magic to get it (adding some jni folk here for thoughts).\n\nThe other option is that you could lazily init the suggestion_infos_for_java (although I would recommend jsuggestion_infos here for a name).  Then you might be able to call env-\u003eGetObjectClass(env, suggestion_info_for_java); below.",
+      "range": {
+        "startLine": 169,
+        "startChar": 51,
+        "endLine": 169,
+        "endChar": 60
+      },
+      "revId": "c690e8dc96c193b5589f6d141e04cc4fc7f9f2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e424feec_576c66df",
+        "filename": "content/browser/android/text_suggestion_host_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-06T00:21:41Z",
+      "side": 1,
+      "message": "Same naming suggestion here jsuggestion_info",
+      "range": {
+        "startLine": 176,
+        "startChar": 32,
+        "endLine": 176,
+        "endChar": 56
+      },
+      "revId": "c690e8dc96c193b5589f6d141e04cc4fc7f9f2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ddb514d_7edc0111",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-06T00:21:41Z",
+      "side": 1,
+      "message": "General thoughts on reflection, we can\u0027t rely on it so we should return a sane value here.  Is black an ok return value?  Should we just return Color.BLACK to make it easier to read.\n\nAlso, how often do we expect this to be called during a session?  reflection isn\u0027t cheap, so we could consider caching either the Method or the return value, but if it won\u0027t be called often then that is overkill.\n\nAnd the broader thing is that we should file a bug against Android to expose this as we shouldn\u0027t ever rely on Android for longer term needs.",
+      "range": {
+        "startLine": 885,
+        "startChar": 12,
+        "endLine": 885,
+        "endChar": 18
+      },
+      "revId": "c690e8dc96c193b5589f6d141e04cc4fc7f9f2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4997ec10_9a456dfa",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SuggestionsPopupWindow.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-06T00:21:41Z",
+      "side": 1,
+      "message": "move below the constructor\n\nalso for non-private methods, consider whether javadoc is needed to make the apis clearer (applies anytime you have non-private fields, methods, etc..)",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 13
+      },
+      "revId": "c690e8dc96c193b5589f6d141e04cc4fc7f9f2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
