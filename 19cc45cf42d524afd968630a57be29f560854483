@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38986430_44e03bca",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-06T23:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac4d928e_1d9bd464",
+      "revId": "19cc45cf42d524afd968630a57be29f560854483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41d61b18_9b23f609",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-06T22:48:54Z",
       "side": 1,
       "message": "nit: did you run \u0027git cl format\u0027? L59 might fit into the previous line.",
+      "revId": "19cc45cf42d524afd968630a57be29f560854483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b53d06_ee534493",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-06T23:06:12Z",
+      "side": 1,
+      "message": "Yup, doesn\u0027t fit.",
+      "parentUuid": "41d61b18_9b23f609",
       "revId": "19cc45cf42d524afd968630a57be29f560854483",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "25923b26_efd2e8cc",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-06T23:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de962d86_fc4e48b9",
+      "revId": "19cc45cf42d524afd968630a57be29f560854483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afc783f0_c9a34730",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "19cc45cf42d524afd968630a57be29f560854483",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16495438_53a4a8ed",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-06T23:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afc783f0_c9a34730",
+      "revId": "19cc45cf42d524afd968630a57be29f560854483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
