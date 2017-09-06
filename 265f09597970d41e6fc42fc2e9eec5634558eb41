@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "67eb12db_dda38e2e",
+        "filename": "chrome/browser/signin/easy_unlock_app_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-06T16:37:09Z",
+      "side": 1,
+      "message": "actually, these might work better as\nASSERT_TRUE(args);\nASSERT_EQ(2u, args-\u003eGetSize());\nASSERT_TRUE(args-\u003eGetString(0, \u0026auth_type));",
+      "range": {
+        "startLine": 197,
+        "startChar": 6,
+        "endLine": 197,
+        "endChar": 17
+      },
+      "revId": "265f09597970d41e6fc42fc2e9eec5634558eb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dd18fce_4fcb52ae",
         "filename": "extensions/browser/test_event_router.cc",
         "patchSetId": 7
