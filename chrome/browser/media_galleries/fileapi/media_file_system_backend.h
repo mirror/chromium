@@ -111,11 +111,9 @@ class MediaFileSystemBackend : public storage::FileSystemBackend {
 
 #if defined(OS_WIN) || defined(OS_MACOSX)
   std::unique_ptr<storage::AsyncFileUtil> picasa_file_util_;
-  std::unique_ptr<storage::AsyncFileUtil> itunes_file_util_;
 
   // Used for usage UMA tracking.
   bool picasa_file_util_used_;
-  bool itunes_file_util_used_;
 #endif
 
   DISALLOW_COPY_AND_ASSIGN(MediaFileSystemBackend);

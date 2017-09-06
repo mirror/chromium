@@ -25,7 +25,6 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/media_galleries/fileapi/iapps_finder.h"
 #include "chrome/browser/media_galleries/fileapi/picasa_finder.h"
 #include "chrome/browser/media_galleries/imported_media_gallery_registry.h"
 #include "chrome/browser/media_galleries/media_file_system_registry.h"
@@ -91,7 +90,6 @@ const char kMediaGalleriesDefaultGalleryTypeMusicDefaultValue[] = "music";
 const char kMediaGalleriesDefaultGalleryTypePicturesDefaultValue[] = "pictures";
 const char kMediaGalleriesDefaultGalleryTypeVideosDefaultValue[] = "videos";
 
-const char kITunesGalleryName[] = "iTunes";
 const char kPicasaGalleryName[] = "Picasa";
 
 const int kCurrentPrefsVersion = 3;
@@ -493,7 +491,7 @@ void MediaGalleriesPreferences::EnsureInitialized(base::Closure callback) {
   // It cannot be incremented inline with each callback, as some may return
   // synchronously, decrement the counter to 0, and prematurely trigger
   // FinishInitialization.
-  pre_initialization_callbacks_waiting_ = 3;
+  pre_initialization_callbacks_waiting_ = 2;
 
   // Check whether we should be initializing -- are there any extensions that
   // are using media galleries?
@@ -511,10 +509,6 @@ void MediaGalleriesPreferences::EnsureInitialized(base::Closure callback) {
                  APIHasBeenUsed(profile_)));
 
   // Look for optional default galleries every time.
-  iapps::FindITunesLibrary(
-      base::Bind(&MediaGalleriesPreferences::OnFinderDeviceID,
-                 weak_factory_.GetWeakPtr()));
-
   picasa::FindPicasaDatabase(
       base::Bind(&MediaGalleriesPreferences::OnFinderDeviceID,
                  weak_factory_.GetWeakPtr()));
@@ -667,9 +661,7 @@ void MediaGalleriesPreferences::OnStorageMonitorInit(
 void MediaGalleriesPreferences::OnFinderDeviceID(const std::string& device_id) {
   if (!device_id.empty()) {
     std::string gallery_name;
-    if (StorageInfo::IsITunesDevice(device_id))
-      gallery_name = kITunesGalleryName;
-    else if (StorageInfo::IsPicasaDevice(device_id))
+    if (StorageInfo::IsPicasaDevice(device_id))
       gallery_name = kPicasaGalleryName;
 
     if (!gallery_name.empty()) {
@@ -758,16 +750,6 @@ bool MediaGalleriesPreferences::LookUpGalleryByPath(
     const base::FilePath& path,
     MediaGalleryPrefInfo* gallery_info) const {
   DCHECK(IsInitialized());
-
-  // First check if the path matches an imported gallery.
-  for (MediaGalleriesPrefInfoMap::const_iterator it =
-           known_galleries_.begin(); it != known_galleries_.end(); ++it) {
-    const std::string& device_id = it->second.device_id;
-    if (iapps::PathIndicatesITunesLibrary(device_id, path)) {
-      *gallery_info = it->second;
-      return true;
-    }
-  }
 
   StorageInfo info;
   base::FilePath relative_path;
