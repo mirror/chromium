@@ -2,6 +2,374 @@
   "comments": [
     {
       "key": {
+        "uuid": "ab51e8c5_b02a8940",
+        "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "Add comment explaining what |non_preview_url| is?",
+      "range": {
+        "startLine": 59,
+        "startChar": 56,
+        "endLine": 59,
+        "endChar": 70
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05e9f5e_c196b04a",
+        "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "Pass this as a GURL?\nAlso, pass by reference.",
+      "range": {
+        "startLine": 62,
+        "startChar": 31,
+        "endLine": 62,
+        "endChar": 42
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc0e692e_01c9ff18",
+        "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "No need for these DCHECKs. The program will crash anyways on the next line (in both DEBUG and release builds).",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 26
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d8fc49_e082dd6a",
+        "filename": "chrome/browser/previews/previews_infobar_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "Add crbug.com/745942 in TODO",
+      "range": {
+        "startLine": 87,
+        "startChar": 27,
+        "endLine": 87,
+        "endChar": 35
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fdda061_78a9e717",
+        "filename": "chrome/browser/previews/previews_infobar_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "Store as GURL?",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 19
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4beb57_e5c49dd9",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "Is the request guaranteed to be non-null?\nMay be it is (I just wanted to check).",
+      "range": {
+        "startLine": 204,
+        "startChar": 6,
+        "endLine": 204,
+        "endChar": 13
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e20257f_7eee441a",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "When is the key set?",
+      "range": {
+        "startLine": 204,
+        "startChar": 45,
+        "endLine": 204,
+        "endChar": 65
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee87f9ef_c7857375",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "If the webpage is cached (i.e., response code is 304), should we still redirect automaticallu back?",
+      "range": {
+        "startLine": 208,
+        "startChar": 25,
+        "endLine": 208,
+        "endChar": 49
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e23d829f_07d0b8f6",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "This include should come on Line 8 (before the other set)",
+      "range": {
+        "startLine": 12,
+        "startChar": 1,
+        "endLine": 12,
+        "endChar": 8
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ae91cf_a875f8eb",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "rm this since it is same as line 16 below.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 5
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f450e0_dcbbc215",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "class comments.",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 22
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7db12c_6b32034e",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_ui_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "Not this CL but this variable is named |on_previews_shown_callback| on the header file. Probably best to use the same name.",
+      "range": {
+        "startLine": 20,
+        "startChar": 35,
+        "endLine": 20,
+        "endChar": 65
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15799513_3c5b49a7",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_ui_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "\"OnLoFiReponseReceivedOnUI\"\nstale comment?",
+      "range": {
+        "startLine": 56,
+        "startChar": 36,
+        "endLine": 56,
+        "endChar": 61
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e427953_a5a465ef",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "How do we know that the AMP preview was enabled when |request| was originally fetched?\nIIUC, body of method MaybeContinueOrDisableAMPPreview() assumes that |request| was originally fetched with preview set to AMP.",
+      "range": {
+        "startLine": 506,
+        "startChar": 10,
+        "endLine": 506,
+        "endChar": 42
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55ca41d_399586b7",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "Is request guaranteed to be non-null?",
+      "range": {
+        "startLine": 507,
+        "startChar": 12,
+        "endLine": 507,
+        "endChar": 19
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ec62597_c295be5d",
+        "filename": "components/data_reduction_proxy/core/common/lofi_decider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T01:26:41Z",
+      "side": 1,
+      "message": "add method comment.\nI am particularly confused about when this method can be called? For all requests? For requests that were originally fetched with preview set to AMP? At every redirect?",
+      "range": {
+        "startLine": 77,
+        "startChar": 15,
+        "endLine": 77,
+        "endChar": 47
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c48af767_0492d365",
         "filename": "components/data_reduction_proxy/core/common/lofi_ui_service.h",
         "patchSetId": 1
