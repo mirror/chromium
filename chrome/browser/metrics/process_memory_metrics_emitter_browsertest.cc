@@ -261,6 +261,7 @@ class ProcessMemoryMetricsEmitterTest : public ExtensionBrowserTest {
     CheckMemoryMetricWithName(source_id, UkmEntry::kPartitionAllocName, true,
                               metric_count);
     CheckMemoryMetricWithName(source_id, UkmEntry::kV8Name, true, metric_count);
+    CheckMemoryMetricWithName(source_id, UkmEntry::kUptime, true, metric_count);
     CheckMemoryMetricWithName(source_id, UkmEntry::kNumberOfExtensionsName,
                               true, metric_count);
   }
