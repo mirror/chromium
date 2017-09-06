@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d4f271c1_0168490a",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T05:20:15Z",
+      "side": 1,
+      "message": "Thanks, no we don\u0027t.",
+      "parentUuid": "922c3fa9_d79e0e33",
+      "revId": "006229e453da860da4cae9271a89cd59235752ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f03f0ae8_85f878f9",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "006229e453da860da4cae9271a89cd59235752ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9351806_7529cb8d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T05:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f03f0ae8_85f878f9",
+      "revId": "006229e453da860da4cae9271a89cd59235752ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e4cdf944_df6f639d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T05:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efe7b5d8_2e9cb38a",
+      "revId": "006229e453da860da4cae9271a89cd59235752ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddc37446_bfba7c53",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d6ce0e7d_f2ee668b",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T05:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddc37446_bfba7c53",
+      "revId": "006229e453da860da4cae9271a89cd59235752ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c05b95aa_013172d0",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "006229e453da860da4cae9271a89cd59235752ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6898e5f9_304c21c5",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T05:20:15Z",
+      "side": 1,
+      "message": "The structure of folders is: \nFolder1 --\u003e Folder 2 --\u003e Folder3\n\nHence adding 1.1 at Folder 1 level.\nThat is why I have not introduced a new line, as Folder 1 and Folder 1.1 are both added at the same level - mobile bookmarks, and 2 and 3 and the next levels.",
+      "parentUuid": "c05b95aa_013172d0",
+      "revId": "006229e453da860da4cae9271a89cd59235752ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
