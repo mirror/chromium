@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd51701c_a68a64f9",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-06T01:27:39Z",
+      "side": 1,
+      "message": "This was originally meant for use outside of the coordinator hierarchy (i.e. OverlayScheduler adds itself as an observer so that it can be notified when the next overlay can be started).  However, since we already have OverlayCoordinator, this could be accomplished by adding API to the BrowserCoordinator+Internal category and communicating with the service via overrides in OverlayCoordinator.",
+      "parentUuid": "004d99b6_8967ec70",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "aee63819055796d6157ed0b5ba6266c8899b1b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab968a0b_9910516b",
         "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "aee63819055796d6157ed0b5ba6266c8899b1b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1f1223_abcf92f6",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-06T01:27:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab968a0b_9910516b",
+      "range": {
+        "startLine": 113,
+        "startChar": 13,
+        "endLine": 113,
+        "endChar": 14
+      },
+      "revId": "aee63819055796d6157ed0b5ba6266c8899b1b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0cb5340b_91c669fc",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-06T01:27:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40bf8a93_21554215",
+      "range": {
+        "startLine": 115,
+        "startChar": 48,
+        "endLine": 115,
+        "endChar": 53
+      },
+      "revId": "aee63819055796d6157ed0b5ba6266c8899b1b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dc7b3bf_7aa30147",
         "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator_observer.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "01556001_604e8a9e",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-06T01:27:39Z",
+      "side": 1,
+      "message": "Ack.  This is all handled internally now, and refers to UIViewControllers rather than \"consumers\".",
+      "parentUuid": "2dc7b3bf_7aa30147",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 42
+      },
+      "revId": "aee63819055796d6157ed0b5ba6266c8899b1b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61abca69_08eeb9df",
         "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator_observer.h",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-18T13:41:56Z",
       "side": 1,
       "message": "Under ARC, we really shouldn\u0027t care about when things are destroyed, right? Owning code should decide when child objects are no longer relevant, and disconnect them from other objects at that point.",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "aee63819055796d6157ed0b5ba6266c8899b1b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "694cb5a7_8caa58c8",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-06T01:27:39Z",
+      "side": 1,
+      "message": "This protocol is gone now.",
+      "parentUuid": "61abca69_08eeb9df",
       "range": {
         "startLine": 32,
         "startChar": 8,

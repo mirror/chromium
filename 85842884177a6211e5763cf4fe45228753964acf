@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90719b4c_e278b8dd",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-06T01:27:39Z",
+      "side": 1,
+      "message": "I\u0027m not sure how strict we want to be with this DCHECK.  Does it make sense to allow calling |-stop| on on a coordinator whose presentation hasn\u0027t finished?  Right now this isn\u0027t supported; but it could be useful in the future.",
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df99fb0_858cbc04",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-06T01:27:39Z",
+      "side": 1,
+      "message": "This was added to appease the DCHECK in the BrowserCoordinator presentationState setter.  If we want to keep that DHCECK around, then it\u0027s likely that other BrowserCoordinator unittests will also need this.  Should I move this to ios/chrome/browser/ui/browser_list/test?",
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
