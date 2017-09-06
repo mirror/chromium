@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4b25331_56b82da8",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T15:54:46Z",
+      "side": 1,
+      "message": "maybe ShouldEnableMDPAllocatorHooks(mode) ?",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 32
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54dc0248_f5bee814",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T15:54:46Z",
+      "side": 1,
+      "message": "maybe just:\n\n#include \"base/strings/string_util.h\"\n\nstd::string filter_string \u003d JoinString({\"*\", TRACE_DISABLED_BY_DEFAULT(\"net\"),...}, \",\"})",
+      "range": {
+        "startLine": 120,
+        "startChar": 1,
+        "endLine": 125,
+        "endChar": 46
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af0c1c5_a6f807d1",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T15:54:46Z",
+      "side": 1,
+      "message": "const auto\u0026, will avoid an unnecessary refcount + derefcount cycle here",
+      "range": {
+        "startLine": 307,
+        "startChar": 22,
+        "endLine": 307,
+        "endChar": 23
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf8514b6_a3a4c0ad",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T15:54:46Z",
+      "side": 1,
+      "message": "consistently I\u0027d rename this to enable_mdp_allocator_hooks",
+      "range": {
+        "startLine": 419,
+        "startChar": 4,
+        "endLine": 419,
+        "endChar": 27
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "021a335f_e26979ed",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T15:54:46Z",
+      "side": 1,
+      "message": "don\u0027t you need also to InitializeHeapProfilerStateIfNeededLocked()\nwhat if this is called before the now that you moved outside of the ctor (which makes sense)",
+      "range": {
+        "startLine": 424,
+        "startChar": 2,
+        "endLine": 424,
+        "endChar": 3
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e0ace7_9eee69a7",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T15:54:46Z",
+      "side": 1,
+      "message": "just realized that theoretically this could be called on a thread !\u003d task_runner.\nmaybe we should extract lines 303-313 in a function that we also call here.",
+      "range": {
+        "startLine": 425,
+        "startChar": 4,
+        "endLine": 425,
+        "endChar": 31
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0b1ea6_194f462c",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T15:54:46Z",
+      "side": 1,
+      "message": "add a lock_.AssertAcquired();",
+      "range": {
+        "startLine": 831,
+        "startChar": 0,
+        "endLine": 831,
+        "endChar": 2
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d56fa85_93d5d874",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T15:54:46Z",
+      "side": 1,
+      "message": "seems unnecessary, just do RunLoop().RunUntilIdle() when needed.\nAlso you don\u0027t need base::",
+      "range": {
+        "startLine": 200,
+        "startChar": 2,
+        "endLine": 204,
+        "endChar": 0
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5418578_287aafdf",
+        "filename": "base/trace_event/memory_dump_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T15:54:46Z",
+      "side": 1,
+      "message": "uhm not sure this is true. If it was true how would MDM guarantee they are not called together?",
+      "range": {
+        "startLine": 51,
+        "startChar": 57,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
