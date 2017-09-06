@@ -843,11 +843,15 @@ if (enable_java_templates) {
           "--jar-path",
           rebase_path(invoker.jar_path, root_build_dir),
           "--classpath=@FileArg($_rebased_build_config:javac:interface_classpath)",
-          "--resource-sources=@FileArg($_rebased_build_config:deps_info:owned_resources_dirs)",
-          "--resource-sources=@FileArg($_rebased_build_config:deps_info:owned_resources_zips)",
           "--srcjars=@FileArg($_rebased_build_config:gradle:bundled_srcjars)",
           "--can-fail-build",
         ]
+        if (!defined(invoker.force_lint) || !invoker.force_lint) {
+          args += [
+            "--resource-sources=@FileArg($_rebased_build_config:deps_info:owned_resources_dirs)",
+            "--resource-sources=@FileArg($_rebased_build_config:deps_info:owned_resources_zips)",
+          ]
+        }
       }
     }
   }
@@ -1175,6 +1179,9 @@ if (enable_java_templates) {
         defined(invoker.enable_build_hooks) && invoker.enable_build_hooks &&
         (is_java_debug || dcheck_always_on)
 
+    _enable_custom_resources = defined(invoker.enable_build_hooks_android) &&
+                               invoker.enable_build_hooks_android
+
     _desugar = defined(invoker.supports_android) && invoker.supports_android
 
     _jar_excluded_patterns = []
@@ -1188,15 +1195,26 @@ if (enable_java_templates) {
     _deps = []
     _previous_output_jar = _input_jar_path
 
-    if (_enable_assert) {
-      _assert_target = "${target_name}__assert"
-      _assert_input_jar = _previous_output_jar
-      _assert_output_jar = "$target_out_dir/$target_name-asserted.jar"
+    assert(!defined(invoker.alternative_android_sdk_ijar) ||
+           invoker.alternative_android_sdk_ijar != "")
+    assert(!defined(invoker.alternative_android_sdk_ijar_dep) ||
+           invoker.alternative_android_sdk_ijar_dep != "")
+    assert(!defined(invoker.alternative_android_sdk_jar) ||
+           invoker.alternative_android_sdk_jar != "")
 
-      action(_assert_target) {
-        script = "$root_build_dir/bin/helper/java_assertion_enabler"
+    if (_enable_assert || _enable_custom_resources) {
+      _java_bytecode_rewriter_target = "${target_name}__bytecode_rewrite"
+      _java_bytecode_rewriter_input_jar = _previous_output_jar
+      _java_bytecode_rewriter_output_jar =
+          "$target_out_dir/$target_name-bytecode-rewritten.jar"
+
+      action(_java_bytecode_rewriter_target) {
+        script = "//build/android/gyp/java_binary_script_wrapper.py"
+        depfile = "$target_gen_dir/$target_name.d"
+        _bytecode_rewriter_script =
+            "$root_build_dir/bin/helper/java_bytecode_rewriter"
         deps = [
-          "//build/android/java_assertion_enabler($default_toolchain)",
+          "//build/android/bytecode:java_bytecode_rewriter($default_toolchain)",
         ]
         deps += _deps
         if (defined(invoker.deps)) {
@@ -1205,29 +1223,51 @@ if (enable_java_templates) {
         if (defined(invoker.public_deps)) {
           public_deps = invoker.public_deps
         }
+        _android_sdk_jar = android_sdk_jar
+        if (defined(invoker.alternative_android_sdk_jar)) {
+          _android_sdk_jar = invoker.alternative_android_sdk_jar
+        }
         inputs = [
-          _assert_input_jar,
+          _android_sdk_jar,
+          _java_bytecode_rewriter_input_jar,
+          _build_config,
         ]
         outputs = [
-          _assert_output_jar,
+          _java_bytecode_rewriter_output_jar,
         ]
         args = [
-          rebase_path(_assert_input_jar, root_build_dir),
-          rebase_path(_assert_output_jar, root_build_dir),
+          "--depfile",
+          rebase_path(depfile, root_build_dir),
+          "--script",
+          rebase_path(_bytecode_rewriter_script, root_build_dir),
+          "--input",
+          rebase_path(_java_bytecode_rewriter_input_jar, root_build_dir),
+          "--output",
+          rebase_path(_java_bytecode_rewriter_output_jar, root_build_dir),
+        ]
+        if (_enable_assert) {
+          args += [ "--enable-assert" ]
+        } else {
+          args += [ "--no-assert" ]
+        }
+        if (_enable_custom_resources) {
+          args += [ "--enable-custom-resources" ]
+        } else {
+          args += [ "--no-custom-resources" ]
+        }
+        args += [
+          "--extra-input",
+          rebase_path(_android_sdk_jar, root_build_dir),
+          "--extra-input",
+          "@FileArg($_rebased_build_config:deps_info:java:full_classpath)",
         ]
       }
 
       _deps = []
-      _deps = [ ":$_assert_target" ]
-      _previous_output_jar = _assert_output_jar
+      _deps = [ ":$_java_bytecode_rewriter_target" ]
+      _previous_output_jar = _java_bytecode_rewriter_output_jar
     }
 
-    assert(!defined(invoker.alternative_android_sdk_ijar) ||
-           invoker.alternative_android_sdk_ijar != "")
-    assert(!defined(invoker.alternative_android_sdk_ijar_dep) ||
-           invoker.alternative_android_sdk_ijar_dep != "")
-    assert(!defined(invoker.alternative_android_sdk_jar) ||
-           invoker.alternative_android_sdk_jar != "")
     if (_desugar) {
       _desugar_target = "${target_name}__desugar"
       _desugar_input_jar = _previous_output_jar
@@ -1992,6 +2032,8 @@ if (enable_java_templates) {
     forward_variables_from(invoker, [ "testonly" ])
     _supports_android =
         defined(invoker.supports_android) && invoker.supports_android
+    _requires_android =
+        defined(invoker.requires_android) && invoker.requires_android
 
     assert(defined(invoker.jar_path))
     if (defined(invoker.output_name)) {
@@ -2037,6 +2079,16 @@ if (enable_java_templates) {
       _deps += [ "//build/android/buildhooks:build_hooks_java" ]
     }
 
+    # Some testonly targets use their own resources and the code being
+    # tested will use custom resources so there's no need to enable this
+    # for testonly targets.
+    _enable_build_hooks_android =
+        _enable_build_hooks && _requires_android &&
+        (!defined(invoker.testonly) || !invoker.testonly)
+    if (_enable_build_hooks_android) {
+      _deps += [ "//build/android/buildhooks:build_hooks_android_java" ]
+    }
+
     write_build_config(_build_config_target_name) {
       type = "java_prebuilt"
       is_prebuilt_binary = defined(invoker.main_class)
@@ -2046,8 +2098,7 @@ if (enable_java_templates) {
                                "proguard_configs",
                              ])
       supports_android = _supports_android
-      requires_android =
-          defined(invoker.requires_android) && invoker.requires_android
+      requires_android = _requires_android
 
       if (defined(invoker.deps)) {
         possible_config_deps = _deps
@@ -2082,6 +2133,7 @@ if (enable_java_templates) {
 
       supports_android = _supports_android
       enable_build_hooks = _enable_build_hooks
+      enable_build_hooks_android = _enable_build_hooks_android
       build_config = _build_config
       input_jar_path = invoker.jar_path
       output_jar_path = _jar_path
@@ -2646,6 +2698,7 @@ if (enable_java_templates) {
       requires_android = _requires_android
       emma_instrument = _emma_instrument
       enable_build_hooks = _enable_build_hooks
+      enable_build_hooks_android = _enable_build_hooks_android
       deps = _accumulated_deps
     }
     _accumulated_deps += [ ":$_compile_java_target" ]
@@ -2673,51 +2726,54 @@ if (enable_java_templates) {
     }
 
     _has_lint_target = false
-    if (_supports_android) {
-      if (_chromium_code) {
-        _has_lint_target = true
-        android_lint("${_template_name}__lint") {
-          android_manifest = _android_manifest
-          build_config = _build_config
+    _requires_lint =
+        _chromium_code && (_supports_android ||
+                           (defined(invoker.force_lint) && invoker.force_lint))
+    if (_requires_lint) {
+      _has_lint_target = true
+      android_lint("${_template_name}__lint") {
+        forward_variables_from(invoker, [ "force_lint" ])
+        android_manifest = _android_manifest
+        build_config = _build_config
 
-          # Run lint on javac output.
-          jar_path = "$target_gen_dir/$_compile_java_target.javac.jar"
+        # Run lint on javac output.
+        jar_path = "$target_gen_dir/$_compile_java_target.javac.jar"
 
-          java_files = _java_files
-          if (_java_files != []) {
-            java_sources_file = _java_sources_file
-          }
-          deps = _accumulated_deps
-          if (_emma_instrument) {
-            # Disable the NewApi lint warning when building with coverage
-            # enabled. Coverage seems to mess with how the linter detects
-            # the usages of a new API within a conditional. See
-            # crbug.com/677320 for more.
-            disable = [ "NewApi" ]
-          }
+        java_files = _java_files
+        if (_java_files != []) {
+          java_sources_file = _java_sources_file
         }
-
-        if (_run_findbugs) {
-          findbugs("${_template_name}__findbugs") {
-            build_config = _build_config
-            jar_path = _jar_path
-            deps = _accumulated_deps
-          }
-        }
-
-        # Use an intermediate group() rather as the data_deps target in order to
-        # avoid lint artifacts showing up as runtime_deps (while still having lint
-        # run in parallel to other targets).
-        group("${_template_name}__analysis") {
-          public_deps = [
-            ":${_template_name}__lint",
-          ]
-          if (_run_findbugs) {
-            public_deps += [ ":${_template_name}__findbugs" ]
-          }
+        deps = _accumulated_deps
+        if (_emma_instrument) {
+          # Disable the NewApi lint warning when building with coverage
+          # enabled. Coverage seems to mess with how the linter detects
+          # the usages of a new API within a conditional. See
+          # crbug.com/677320 for more.
+          disable = [ "NewApi" ]
         }
       }
 
+      if (_run_findbugs) {
+        findbugs("${_template_name}__findbugs") {
+          build_config = _build_config
+          jar_path = _jar_path
+          deps = _accumulated_deps
+        }
+      }
+
+      # Use an intermediate group() rather as the data_deps target in order to
+      # avoid lint artifacts showing up as runtime_deps (while still having lint
+      # run in parallel to other targets).
+      group("${_template_name}__analysis") {
+        public_deps = [
+          ":${_template_name}__lint",
+        ]
+        if (_run_findbugs) {
+          public_deps += [ ":${_template_name}__findbugs" ]
+        }
+      }
+    }
+    if (_supports_android) {
       _final_deps += [ ":${_template_name}__dex" ]
       dex("${_template_name}__dex") {
         sources = [
