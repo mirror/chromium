@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daf1d3f3_76ec6a24",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-09-06T23:24:20Z",
+      "side": 1,
+      "message": "would we ever have an error without error message?",
+      "range": {
+        "startLine": 167,
+        "startChar": 20,
+        "endLine": 167,
+        "endChar": 42
+      },
+      "revId": "383af1dbac57a97e256ab6479021bda98fe08aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
