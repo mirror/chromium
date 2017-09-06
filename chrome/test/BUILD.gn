@@ -1469,6 +1469,8 @@ test("browser_tests") {
       "../browser/subresource_filter/subresource_filter_worker_browsertest.cc",
       "../browser/subresource_filter/test_ruleset_publisher.cc",
       "../browser/subresource_filter/test_ruleset_publisher.h",
+      "../browser/subresource_filter/test_safe_browsing_database_helper.cc",
+      "../browser/subresource_filter/test_safe_browsing_database_helper.h",
       "../browser/sync_file_system/mock_local_change_processor.cc",
       "../browser/sync_file_system/mock_local_change_processor.h",
       "../browser/sync_file_system/mock_remote_file_sync_service.cc",
