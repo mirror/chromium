@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "665f4056_47e274f6",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/video-unmute-repaint-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-06T21:12:23Z",
+      "side": 1,
+      "message": "These added lines are in SPv2 baselines, and they actually become the same as the SPv1 baselines with this CL. We rebaselined and still need to rebaseline these tests for SPv2 because of other unrelated differences.",
+      "parentUuid": "69dee614_724df92e",
+      "revId": "1d5c95d719540efe060bf4770ae92418ef3a9e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44a411ae_98858869",
         "filename": "third_party/WebKit/Source/core/paint/ViewPainter.cpp",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-06T20:30:22Z",
       "side": 1,
       "message": "For the root LayoutView, this needs to always be true. Will it be for some\nreason? Also DCHECK that.",
+      "revId": "1d5c95d719540efe060bf4770ae92418ef3a9e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34fdfd2c_cd81f78d",
+        "filename": "third_party/WebKit/Source/core/paint/ViewPainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-06T21:12:23Z",
+      "side": 1,
+      "message": "Just noticed that background_rect is an IntRect, so the above check is useless. Reverted.",
+      "parentUuid": "44a411ae_98858869",
       "revId": "1d5c95d719540efe060bf4770ae92418ef3a9e83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
