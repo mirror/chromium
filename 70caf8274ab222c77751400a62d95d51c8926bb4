@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de4b4535_cfb7123a",
+        "filename": "chrome/browser/vr/ui_element_renderer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-06T17:36:41Z",
+      "side": 1,
+      "message": "Why do these classes have to be friends of their parent class?  Wouldn\u0027t it be cleaner to make the required stuff in the parent class protected, then expose it in a new method in this class?  This is already done to expose parts of RenderText in our tests.",
+      "revId": "70caf8274ab222c77751400a62d95d51c8926bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d428998c_c2440c35",
+        "filename": "chrome/browser/vr/ui_element_renderer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-06T17:36:41Z",
+      "side": 1,
+      "message": "This test covers some elements, but any new element with opacity would have to be added here (and people will probably forget).  What did you think of the recursive approach suggestion?  It might end up actually being less code.",
+      "revId": "70caf8274ab222c77751400a62d95d51c8926bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
