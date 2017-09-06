@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9251f9e5_8c955e06",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-06T23:53:43Z",
+      "side": 1,
+      "message": "How does this get updated with DSF changes?\n\nThe ResizeLock code accepts a frame that matches in DIP regardless of DSF, which means DFH didn\u0027t really need to be aware of DSF changes, and WasResized is only called when the DIP size changes. The argument being that when moving a window from one screen to another one we can do that smoothly, at the cost of temporary DSF mismatch (i.e. blurriness or aliasing).\nI don\u0027t feel strongly whether it should be the behavior with surface synchronization, but if we only latch onto exact (pixel size, DSF) matches, we need to make sure WasResized (or something else with the same effect) gets called when either one changes - and in particular, after layer-\u003edevice_scale_factor() was updated (or by explicitly providing a DelegatedFrameHostDesiredDSF on the client).\n\nSide note, if we do want to change the behavior, maybe it would be beneficial to update the ResizeLock to work with explicit Pixel Size+DSF, as to decouple the user-visible behavior.",
+      "revId": "a5b8610d79dc045033966018b8515f4af6bd2a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57fad9a_5c2ddd02",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-06T23:53:43Z",
+      "side": 1,
+      "message": "Trying to work through the logic... in which case do we get here and primary_surface_info is null? In particular is it possible that this would be called with an older surface after ClearDelegatedFrame() was called? In that case we wouldn\u0027t want to set the primary surface (or, for that matter, the fallback), because that would be a security issue.",
+      "revId": "a5b8610d79dc045033966018b8515f4af6bd2a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
