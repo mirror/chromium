@@ -19,8 +19,8 @@
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/events/keycodes/dom/dom_code.h"
 #include "ui/events/keycodes/dom/keycode_converter.h"
+#include "ui/events/system_input_injector.h"
 #include "ui/ozone/public/ozone_platform.h"
-#include "ui/ozone/public/system_input_injector.h"
 
 namespace remoting {
 
@@ -144,8 +144,13 @@ void InputInjectorChromeos::Core::InjectMouseEvent(const MouseEvent& event) {
 
 void InputInjectorChromeos::Core::Start(
     std::unique_ptr<protocol::ClipboardStub> client_clipboard) {
-  ui::OzonePlatform* ozone_platform = ui::OzonePlatform::GetInstance();
-  delegate_ = ozone_platform->CreateSystemInputInjector();
+  // If there's a set global SystemInputInjector, prefer that to the one
+  // provided by OzonePlatform.
+  delegate_ = ui::CreateSystemInputInjector();
+  if (!delegate_) {
+    ui::OzonePlatform* ozone_platform = ui::OzonePlatform::GetInstance();
+    delegate_ = ozone_platform->CreateSystemInputInjector();
+  }
   DCHECK(delegate_);
 
   // Implemented by remoting::ClipboardAura.

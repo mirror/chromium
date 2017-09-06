@@ -2548,6 +2548,13 @@ void WindowTree::WmSetCursorTouchVisible(bool enabled) {
   window_manager_state_->SetCursorTouchVisible(enabled);
 }
 
+void WindowTree::WmInjectEvent(std::unique_ptr<ui::Event> event,
+                               int64_t display_id) {
+  DCHECK(window_manager_state_);
+  window_manager_state_->event_dispatcher()->ProcessEvent(
+      *event, display_id, EventDispatcher::AcceleratorMatchPhase::ANY);
+}
+
 void WindowTree::OnWmCreatedTopLevelWindow(uint32_t change_id,
                                            Id transport_window_id) {
   ServerWindow* window =
