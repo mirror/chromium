@@ -12,7 +12,7 @@
 #include "base/metrics/histogram.h"
 #include "base/strings/string_split.h"
 #include "base/threading/thread_checker.h"
-#include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/cache.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
@@ -76,7 +76,7 @@ bool LevelDB::Init(const leveldb_proto::Options& options) {
     leveldb_options.write_buffer_size = options.write_buffer_size;
   switch (options.shared_cache) {
     case leveldb_env::SharedReadCache::Web:
-      leveldb_options.block_cache = leveldb_env::SharedWebBlockCache();
+      leveldb_options.block_cache = leveldb::chrome::GetSharedWebBlockCache();
       break;
     case leveldb_env::SharedReadCache::Default:
       // fallthrough

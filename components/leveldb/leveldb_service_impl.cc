@@ -12,7 +12,7 @@
 #include "components/leveldb/leveldb_database_impl.h"
 #include "components/leveldb/public/cpp/util.h"
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
-#include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/env.h"
@@ -65,7 +65,7 @@ void LevelDBServiceImpl::OpenWithOptions(
 
   switch (open_options->shared_block_read_cache) {
     case leveldb::mojom::SharedReadCache::Web:
-      options.block_cache = leveldb_env::SharedWebBlockCache();
+      options.block_cache = leveldb::chrome::GetSharedWebBlockCache();
       break;
     case leveldb::mojom::SharedReadCache::Default:
       // fallthrough
