@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bad3d206_2b650fd1",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-06T06:38:58Z",
+      "side": 1,
+      "message": "Now we changed the items in menu here, so the timing of \u0027transitionend\u0027 should be reliable.\nCould you look into why the transitionend event is not dispatched at the expected timing?",
+      "revId": "b5aa887a23ed89ddbff1c18d6670e9b5ad20ff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
