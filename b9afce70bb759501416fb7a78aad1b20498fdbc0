@@ -34,6 +34,24 @@
       "revId": "b9afce70bb759501416fb7a78aad1b20498fdbc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da11dcca_4e9929b8",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-09-06T18:36:03Z",
+      "side": 1,
+      "message": "Oh right. Done. Thanks!",
+      "parentUuid": "cf8f63ee_9d582a22",
+      "revId": "b9afce70bb759501416fb7a78aad1b20498fdbc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
