@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0739b85_6dac4844",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T16:59:20Z",
+      "side": 1,
+      "message": "I don\u0027t think you want any of the conditions here except !reset_to_default.\n\nYou were trying to negate the logic of the old Selection::empty() method, but you failed to reverse the \u0026\u0026s to ||s.  And all matches have a provider, so there isn\u0027t a case where we care about these remaining conditions -- empty() would have always returned false in the case where |reset_to_default| wasn\u0027t set.",
+      "revId": "b9faccd23d663fcc9994611befc7340e94529bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
