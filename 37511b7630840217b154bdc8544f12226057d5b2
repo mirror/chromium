@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78059195_56b39b8e",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-09-06T01:43:20Z",
+      "side": 1,
+      "message": "This CL only copies the existing logic into a helper function.  I will send a follow-up CL that changes to the validation.",
+      "parentUuid": "5ca991c3_732346a5",
+      "revId": "37511b7630840217b154bdc8544f12226057d5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4160546e_c06569eb",
         "filename": "components/arc/net/arc_net_host_impl.cc",
         "patchSetId": 1
