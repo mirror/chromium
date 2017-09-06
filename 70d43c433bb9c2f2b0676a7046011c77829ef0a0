@@ -34,6 +34,24 @@
       "revId": "70d43c433bb9c2f2b0676a7046011c77829ef0a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c0ad141_0d9f042b",
+        "filename": "cc/layers/viewport.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-09-06T01:59:31Z",
+      "side": 1,
+      "message": "OK.  This still looks wrong, though.  Considered like an API, browser_controls_manager()-\u003eScrollBy() should just always take either scaled or unscaled delta, and it\u0027s leaking implementation details to scale the delta here depending on browser control mode.  Could you track down and explain why there\u0027s a difference between top and bottom here, and make the change at a more appropriate place?",
+      "parentUuid": "2c24e82c_436ca24a",
+      "revId": "70d43c433bb9c2f2b0676a7046011c77829ef0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
