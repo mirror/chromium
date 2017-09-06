@@ -2,23 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef DeprecationReport_h
-#define DeprecationReport_h
+#ifndef InterventionReport_h
+#define InterventionReport_h
 
 #include "bindings/core/v8/SourceLocation.h"
 #include "core/frame/ReportBody.h"
 
 namespace blink {
 
-class CORE_EXPORT DeprecationReport : public ReportBody {
+class CORE_EXPORT InterventionReport : public ReportBody {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  DeprecationReport(const String& message,
-                    std::unique_ptr<SourceLocation> location)
+  InterventionReport(const String& message,
+                     std::unique_ptr<SourceLocation> location)
       : message_(message), location_(std::move(location)) {}
 
-  ~DeprecationReport() override {}
+  ~InterventionReport() override {}
 
   String message() const { return message_; }
   String sourceFile() const { return location_->Url(); }
@@ -35,4 +35,4 @@ class CORE_EXPORT DeprecationReport : public ReportBody {
 
 }  // namespace blink
 
-#endif  // DeprecationReport_h
+#endif  // InterventionReport_h
