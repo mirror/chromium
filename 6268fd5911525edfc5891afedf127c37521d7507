@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4812a162_e87e945e",
+        "filename": "tools/grit/grit/format/data_pack.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T14:25:51Z",
+      "side": 1,
+      "message": "nit: we don\u0027t handle 0 input files for the .pak portion here, so no need to guard against 0 input files for .info handling",
+      "revId": "6268fd5911525edfc5891afedf127c37521d7507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a808594b_2da8b640",
+        "filename": "tools/grit/grit_rule.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T14:25:51Z",
+      "side": 1,
+      "message": "Comment / variable name wrong? This is not just en-only?",
+      "revId": "6268fd5911525edfc5891afedf127c37521d7507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
