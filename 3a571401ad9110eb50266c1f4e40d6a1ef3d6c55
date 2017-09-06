@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "778d9c02_f189fc9b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-06T16:08:51Z",
+      "side": 1,
+      "message": "overscan",
+      "revId": "3a571401ad9110eb50266c1f4e40d6a1ef3d6c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50208e50_bb6293cb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-06T16:08:51Z",
+      "side": 1,
+      "message": "BUG\u003d?",
+      "revId": "3a571401ad9110eb50266c1f4e40d6a1ef3d6c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f0f80c_0adfcd2f",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-06T16:08:51Z",
+      "side": 1,
+      "message": "Is there a crbug to move this to ash/ ? Then we should be able to move this file to display_info_provider_ash.cc.",
+      "revId": "3a571401ad9110eb50266c1f4e40d6a1ef3d6c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
