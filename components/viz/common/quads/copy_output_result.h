@@ -17,13 +17,11 @@
 
 class SkBitmap;
 
-namespace cc {
+namespace viz {
+
 namespace mojom {
 class CopyOutputResultDataView;
 }
-}  // namespace cc
-
-namespace viz {
 
 class TextureMailbox;
 
@@ -56,7 +54,7 @@ class VIZ_COMMON_EXPORT CopyOutputResult {
                    std::unique_ptr<SingleReleaseCallback>* release_callback);
 
  private:
-  friend struct mojo::StructTraits<cc::mojom::CopyOutputResultDataView,
+  friend struct mojo::StructTraits<mojom::CopyOutputResultDataView,
                                    std::unique_ptr<CopyOutputResult>>;
 
   CopyOutputResult();
