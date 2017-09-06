@@ -128,6 +128,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   bool MainThreadSeemsUnresponsive(
       base::TimeDelta main_thread_responsiveness_threshold) override;
   void SetRendererProcessType(RendererProcessType type) override;
+  scoped_refptr<TaskQueue> NewDefaultTaskQueue() override;
 
   // RenderWidgetSignals::Observer implementation:
   void SetAllRenderWidgetsHidden(bool hidden) override;

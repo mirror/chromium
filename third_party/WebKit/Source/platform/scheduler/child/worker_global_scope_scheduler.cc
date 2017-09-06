@@ -10,8 +10,7 @@ namespace blink {
 namespace scheduler {
 
 WorkerGlobalScopeScheduler::WorkerGlobalScopeScheduler(
-    WorkerScheduler* worker_scheduler) {
-  scoped_refptr<TaskQueue> task_queue = worker_scheduler->CreateTaskRunner();
+    scoped_refptr<TaskQueue> task_queue) {
   unthrottled_task_runner_ = WebTaskRunnerImpl::Create(std::move(task_queue));
 }
 

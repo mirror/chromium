@@ -18,6 +18,8 @@ class MessageLoop;
 namespace blink {
 namespace scheduler {
 
+class TaskQueue;
+
 class BLINK_PLATFORM_EXPORT ChildScheduler {
  public:
   virtual ~ChildScheduler() {}
@@ -29,6 +31,9 @@ class BLINK_PLATFORM_EXPORT ChildScheduler {
   // relative to other task types and may be starved for an arbitrarily long
   // time if no idle time is available.
   virtual scoped_refptr<SingleThreadIdleTaskRunner> IdleTaskRunner() = 0;
+
+  // Creates and returns a new default task queue.
+  virtual scoped_refptr<TaskQueue> NewDefaultTaskQueue() = 0;
 
   // Returns true if there is high priority work pending on the main thread
   // and the caller should yield to let the scheduler service that work. Note

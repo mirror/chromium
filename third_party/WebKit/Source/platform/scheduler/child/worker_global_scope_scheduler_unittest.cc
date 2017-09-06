@@ -44,8 +44,8 @@ class WorkerGlobalScopeSchedulerTest : public ::testing::Test {
 
   void SetUp() override {
     scheduler_->Init();
-    global_scope_scheduler_ =
-        base::MakeUnique<WorkerGlobalScopeScheduler>(scheduler_.get());
+    global_scope_scheduler_ = base::MakeUnique<WorkerGlobalScopeScheduler>(
+        scheduler_->NewDefaultTaskQueue());
   }
 
   void RunUntilIdle() { mock_task_runner_->RunUntilIdle(); }
