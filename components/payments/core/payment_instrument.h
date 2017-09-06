@@ -19,7 +19,7 @@ namespace payments {
 class PaymentInstrument {
  public:
   // The type of this instrument instance.
-  enum class Type { AUTOFILL, NATIVE_MOBILE_APP };
+  enum class Type { AUTOFILL, NATIVE_MOBILE_APP, SERVICE_WORKER_WEB_APP };
 
   class Delegate {
    public:
@@ -65,7 +65,7 @@ class PaymentInstrument {
       const std::set<autofill::CreditCard::CardType>& supported_types,
       bool supported_types_specified) const = 0;
 
-  const std::string& method_name() const { return method_name_; }
+  const std::vector<std::string>& method_names() const { return method_names_; }
   int icon_resource_id() const { return icon_resource_id_; }
   Type type() { return type_; }
 
@@ -75,7 +75,7 @@ class PaymentInstrument {
                     Type type);
 
  private:
-  const std::string method_name_;
+  const std::vector<std::string> method_names_;
   int icon_resource_id_;
   Type type_;
 

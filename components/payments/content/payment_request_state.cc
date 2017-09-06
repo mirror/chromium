@@ -85,7 +85,7 @@ bool PaymentRequestState::CanMakePayment() const {
       // AddAutofillPaymentInstrument() filters out available instruments based
       // on supported card networks (visa, amex) and types (credit, debit).
       DCHECK(spec_->supported_card_networks_set().find(
-                 instrument->method_name()) !=
+                 instrument->method_names()[0]) !=
              spec_->supported_card_networks_set().end());
       return true;
     }

@@ -92,7 +92,9 @@ class PaymentMethodListItem : public PaymentRequestItemList::Item {
                 ->credit_card());
         return;
       case PaymentInstrument::Type::NATIVE_MOBILE_APP:
-        // We cannot edit a native mobile app instrument.
+      case PaymentInstrument::Type::SERVICE_WORKER_WEB_APP:
+        // We cannot edit a native mobile app instrument and service worker
+        // based web app.
         return;
     }
     NOTREACHED();
