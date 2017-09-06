@@ -54,8 +54,6 @@ class TextTrackCue : public EventTargetWithInlineData {
   TextTrack* track() const;
   void SetTrack(TextTrack*);
 
-  Node* Owner() const;
-
   const AtomicString& id() const { return id_; }
   void setId(const AtomicString&);
 

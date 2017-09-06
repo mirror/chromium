@@ -4,13 +4,26 @@
 
 #include "core/html/track/TextTrackList.h"
 
+#include "core/html/track/TextTrack.h"
+#include "core/testing/NullExecutionContext.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
+class MockTextTrackListOwner : public GarbageCollected<MockTextTrackListOwner>,
+                               public TextTrackListOwner {
+  USING_GARBAGE_COLLECTED_MIXIN(MockTextTrackListOwner);
+
+ public:
+  MockTextTrackListOwner() : TextTrackListOwner(new NullExecutionContext) {}
+
+  void TextTrackModeChanged(TextTrack*) override {}
+  CueTimeline* GetCueTimeline() override { return nullptr; }
+};
+
 TEST(TextTrackListTest, InvalidateTrackIndexes) {
   // Create and fill the list
-  TextTrackList* list = TextTrackList::Create(nullptr);
+  TextTrackList* list = TextTrackList::Create(new MockTextTrackListOwner());
   const size_t kNumTextTracks = 4;
   TextTrack* text_tracks[kNumTextTracks];
   for (size_t i = 0; i < kNumTextTracks; ++i) {
