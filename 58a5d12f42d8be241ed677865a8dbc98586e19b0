@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0539994f_1c0f97b4",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1558,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-09-06T22:25:31Z",
+      "side": 1,
+      "message": "We solved this offline. Discovered that passing a MouseWheelEvent over Mojo requires converting to a WheelData object, which doesn\u0027t really give us much (as compared to a MouseWheelEvent object.) Adding this to the list of things that need to be fixed when migrating ui/app_list into ash. (go/launcher-tech-debt).\n\nWe decided on settling for sending the offset over mojo, but sending the MouseWheelEvent up to the mojo interface call.",
+      "parentUuid": "ae947861_a6d6f28b",
+      "revId": "58a5d12f42d8be241ed677865a8dbc98586e19b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59e89558_81a82e64",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "58a5d12f42d8be241ed677865a8dbc98586e19b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681c99ef_04eeacf1",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2060,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-09-06T22:25:31Z",
+      "side": 1,
+      "message": "Done on AppListPresenterDelegateUnittest.cc",
+      "parentUuid": "59e89558_81a82e64",
+      "revId": "58a5d12f42d8be241ed677865a8dbc98586e19b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
