@@ -16,6 +16,24 @@
       "revId": "6cfae7de48a4dea05bcbb8be0e98378eb1e1ebe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6212764c_d4fa4447",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-headers-origin.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-06T06:46:56Z",
+      "side": 1,
+      "message": "Thanks for the advice! I\u0027ve made the change. Let me know if there\u0027s anything else I can fix!",
+      "parentUuid": "5fa1c0d7_c440d1c7",
+      "revId": "6cfae7de48a4dea05bcbb8be0e98378eb1e1ebe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
