@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49c6de17_1ed22d57",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-06T13:19:01Z",
+      "side": 1,
+      "message": "You refer to priority here, but only define what it means in the second paragraph. Maybe s/priority/chronological creation time/?",
+      "revId": "a0c8c4ba63b11fac1718e6ef4b3136e78f332ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "325b1a68_07caf5ff",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-06T13:19:01Z",
+      "side": 1,
+      "message": "There\u0027s a very stark contrast between the precision of this statement and the use of \"briefly\" that humours me :-).",
+      "revId": "a0c8c4ba63b11fac1718e6ef4b3136e78f332ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943b3345_4eb53271",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-06T13:19:01Z",
+      "side": 1,
+      "message": "So what do we do in this case? We should probably blow away the database as this hints to I/O corruption?",
+      "revId": "a0c8c4ba63b11fac1718e6ef4b3136e78f332ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be498f6a_2056484b",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-06T13:19:01Z",
+      "side": 1,
+      "message": "nit: std::move(serialized_registration_proto), saves a copy",
+      "revId": "a0c8c4ba63b11fac1718e6ef4b3136e78f332ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ea760d_7a1fd49d",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-06T13:19:01Z",
+      "side": 1,
+      "message": "nit: you can drop the assignment operator",
+      "revId": "a0c8c4ba63b11fac1718e6ef4b3136e78f332ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
