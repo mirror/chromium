@@ -44,6 +44,8 @@ _log = logging.getLogger(__name__)
 
 
 def main(argv, stdout, stderr):
+    argv.append('--exit-after-n-crashes-or-timeouts=5000')
+    argv.append('--exit-after-n-failures=5000')
     options, args = parse_args(argv)
 
     if options.platform and 'test' in options.platform and not 'browser_test' in options.platform:
