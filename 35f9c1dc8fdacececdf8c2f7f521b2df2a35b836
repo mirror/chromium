@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "6f667f22_7a91d73c",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_fab_indicator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-06T00:03:40Z",
+      "side": 1,
+      "message": "I\u0027m still new to Chrome UI stuff.. Do you have any example?",
+      "parentUuid": "6b11640d_02c36395",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 3
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3921c66e_49865a3f",
         "filename": "chrome/browser/ui/views/fab_icon_view.cc",
         "patchSetId": 9
@@ -199,6 +223,30 @@
       "writtenOn": "2017-09-05T23:03:15Z",
       "side": 1,
       "message": "This class seems super specific to your needs. Is it really going to be used outside of the exit indicator?",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 17
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b45d7d8_f4e8fe06",
+        "filename": "chrome/browser/ui/views/fab_icon_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-06T00:03:40Z",
+      "side": 1,
+      "message": "Probably not... Let me make it a private nested class of the Indicator?",
+      "parentUuid": "01d1d5d1_d51bcfee",
       "range": {
         "startLine": 30,
         "startChar": 6,
