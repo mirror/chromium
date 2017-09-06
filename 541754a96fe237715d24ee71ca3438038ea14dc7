@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c75604bc_2451af3f",
+        "filename": "components/metrics/call_stack_profile_metrics_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-09-06T21:54:05Z",
+      "side": 1,
+      "message": "I don\u0027t see this change in patch set 8... But do we even need these ifdefs for this test?",
+      "parentUuid": "6c3abfbe_34e8ecf3",
+      "range": {
+        "startLine": 840,
+        "startChar": 0,
+        "endLine": 840,
+        "endChar": 76
+      },
+      "revId": "541754a96fe237715d24ee71ca3438038ea14dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae3db2e2_c65adff2",
         "filename": "components/metrics/call_stack_profile_metrics_provider_unittest.cc",
         "patchSetId": 7
