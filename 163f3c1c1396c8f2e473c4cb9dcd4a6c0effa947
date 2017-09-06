@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a3caafc_b40a85d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ImpressionTracker.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-06T16:15:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07c95fc1_9b7eee7c",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 79,
+        "endChar": 28
+      },
+      "revId": "163f3c1c1396c8f2e473c4cb9dcd4a6c0effa947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "501c0440_5a839033",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e014bc2e_83cc4c95",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-06T16:15:19Z",
+      "side": 1,
+      "message": "If we make it final, we can\u0027t use a lambda expression in the constructor as the mImpressionTracker is not initialized yet when we are creating the lambda expression. It fails with \"Variable might not have been initialized yet\". I prefer to override the onImpression() in the class anyway and make the fiels final as you suggested.",
+      "parentUuid": "501c0440_5a839033",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 29
+      },
+      "revId": "163f3c1c1396c8f2e473c4cb9dcd4a6c0effa947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4c1ed_2ec2b7fd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
         "patchSetId": 9
@@ -62,6 +110,24 @@
       "revId": "163f3c1c1396c8f2e473c4cb9dcd4a6c0effa947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0426bda3_7db3cd4a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-06T16:15:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4c1ed_2ec2b7fd",
+      "revId": "163f3c1c1396c8f2e473c4cb9dcd4a6c0effa947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "2b09ccbc_6213b548",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-06T16:15:19Z",
+      "side": 1,
+      "message": "made private",
+      "parentUuid": "b3bc11eb_dff3dff3",
+      "range": {
+        "startLine": 61,
+        "startChar": 16,
+        "endLine": 61,
+        "endChar": 32
+      },
+      "revId": "163f3c1c1396c8f2e473c4cb9dcd4a6c0effa947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7fdeff5_f1a4593e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
         "patchSetId": 9
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "29d95b0d_24c79818",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-06T16:15:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7fdeff5_f1a4593e",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 33
+      },
+      "revId": "163f3c1c1396c8f2e473c4cb9dcd4a6c0effa947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "948c9fff_4966f33f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
         "patchSetId": 9
@@ -122,6 +236,24 @@
       "writtenOn": "2017-09-05T09:47:52Z",
       "side": 1,
       "message": "Sorry I missed this before. What we need is for each impression to have a chance to record one scroll event. Currently we register this listener every time onBindViewHolder is called, which can happen more often than carousel#refresh, so there is a risk to get a Shown -\u003e Scrolled -\u003e ... -\u003e Scrolled metric sequence.",
+      "revId": "163f3c1c1396c8f2e473c4cb9dcd4a6c0effa947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7950a00_07bba255",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-06T16:15:19Z",
+      "side": 1,
+      "message": "We register the listener only when onCreateViewHolder is called. The problem you are describing will occur only if the view holder gets destroyed and then we have to create it again. Is this likely to happen? I played with it, and it doesn\u0027t record scrolling more than once for one impression.",
+      "parentUuid": "948c9fff_4966f33f",
       "revId": "163f3c1c1396c8f2e473c4cb9dcd4a6c0effa947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
