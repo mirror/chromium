@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "922c3fa9_d79e0e33",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-06T05:01:41Z",
+      "side": 1,
+      "message": "do we still need to check \u003e1 here?",
+      "revId": "006229e453da860da4cae9271a89cd59235752ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f03f0ae8_85f878f9",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-06T05:01:41Z",
+      "side": 1,
+      "message": "will it be better if added:\n// More clicked, show action sheet with context menu.",
+      "revId": "006229e453da860da4cae9271a89cd59235752ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe7b5d8_2e9cb38a",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-06T05:01:41Z",
+      "side": 1,
+      "message": "// Edit clicked, open the editor.",
+      "revId": "006229e453da860da4cae9271a89cd59235752ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc37446_bfba7c53",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-06T05:01:41Z",
+      "side": 1,
+      "message": "same, see if we\u0027d add:\n// More clicked, show action sheet with context menu.",
+      "revId": "006229e453da860da4cae9271a89cd59235752ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c05b95aa_013172d0",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-06T05:01:41Z",
+      "side": 1,
+      "message": "should we add a new line before this?\nBy the way, I am sure why we need \"Folder 1.1\", could we use \"Folder 2\" or \"Folder 3\" for that test?",
+      "revId": "006229e453da860da4cae9271a89cd59235752ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
