@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6e5d7e95_a32a3c14",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-06T19:13:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b4ea12f3_1ba7586a",
+      "range": {
+        "startLine": 621,
+        "startChar": 28,
+        "endLine": 621,
+        "endChar": 37
+      },
+      "revId": "c85bd573a2745d9d8a82e12f2db7f3220b5558df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05279cdb_75d9ce33",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 1
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "Editor automatically cleans stuff like that up on save. It\u0027s a redundant cast.",
       "parentUuid": "05279cdb_75d9ce33",
+      "range": {
+        "startLine": 773,
+        "startChar": 14,
+        "endLine": 773,
+        "endChar": 15
+      },
+      "revId": "c85bd573a2745d9d8a82e12f2db7f3220b5558df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42994c27_3ee6fb93",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-06T19:13:37Z",
+      "side": 1,
+      "message": "ack. Asked because thought you fixed it here: https://chromium-review.googlesource.com/c/chromium/src/+/652786",
+      "parentUuid": "72d73ad2_38886515",
       "range": {
         "startLine": 773,
         "startChar": 14,
