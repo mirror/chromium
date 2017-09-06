@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b932686_4f618c56",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-recursive-failed-preflight.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-06T08:59:39Z",
+      "side": 1,
+      "message": "onload",
+      "revId": "e61f8235cfd093cb2311749f5a56a79d8f6dee10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01641425_7266511f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-recursive-failed-preflight.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-06T08:59:39Z",
+      "side": 1,
+      "message": "return;",
+      "revId": "e61f8235cfd093cb2311749f5a56a79d8f6dee10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
