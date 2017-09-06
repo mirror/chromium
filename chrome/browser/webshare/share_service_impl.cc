@@ -147,7 +147,13 @@ ShareServiceImpl::GetTargetsWithSufficientEngagement() {
   std::vector<WebShareTarget> sufficiently_engaged_targets;
   for (const auto& it : *share_targets_dict) {
     GURL manifest_url(it.first);
-    DCHECK(manifest_url.is_valid());
+    // This should not happen, but if the prefs file is corrupted, it might, so
+    // don't (D)CHECK, just continue gracefully.
+    if (!manifest_url.is_valid()) {
+      LOG(WARNING) << "Share target URL \""
+                   << manifest_url.possibly_invalid_spec() << "\" not valid.";
+      continue;
+    }
 
     if (GetEngagementLevel(manifest_url) < kMinimumEngagementLevel)
       continue;
