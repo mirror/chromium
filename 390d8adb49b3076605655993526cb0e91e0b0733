@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffb988ef_ebf5c8d2",
+        "filename": "content/browser/service_worker/embedded_worker_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-06T01:46:28Z",
+      "side": 1,
+      "message": "Neat. This is useful also for my patch :)",
+      "revId": "390d8adb49b3076605655993526cb0e91e0b0733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693ebb9a_0fbd4827",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-06T01:46:28Z",
+      "side": 1,
+      "message": "How about having CHECK(S13nServiceWorkerIsEnabled()) at the beginning of functions that are tagged with \"S13nServiceWorker\" as much as possible? That helps to avoid the functions are accidentally called on non-S13n call paths. WDYT?",
+      "revId": "390d8adb49b3076605655993526cb0e91e0b0733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f62c72_e0e4a36a",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-06T01:46:28Z",
+      "side": 1,
+      "message": "Can we have the crbug number so that we can easily find all places that need to be updated later?",
+      "range": {
+        "startLine": 716,
+        "startChar": 43,
+        "endLine": 717,
+        "endChar": 50
+      },
+      "revId": "390d8adb49b3076605655993526cb0e91e0b0733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379f255d_83511d9c",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-06T01:46:28Z",
+      "side": 1,
+      "message": "\"auto\" beacuse of MakeUnique\u003c\u003e?",
+      "range": {
+        "startLine": 749,
+        "startChar": 2,
+        "endLine": 749,
+        "endChar": 38
+      },
+      "revId": "390d8adb49b3076605655993526cb0e91e0b0733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfed0f93_0e9941b4",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-06T01:46:28Z",
+      "side": 1,
+      "message": "default?",
+      "revId": "390d8adb49b3076605655993526cb0e91e0b0733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c115eebc_fb75a80c",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-06T01:46:28Z",
+      "side": 1,
+      "message": "final?",
+      "revId": "390d8adb49b3076605655993526cb0e91e0b0733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
