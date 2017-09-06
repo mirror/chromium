@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94d54814_ac66d10e",
+        "filename": "media/media_options.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-09-06T23:04:58Z",
+      "side": 1,
+      "message": "Does Android things support secure codec?",
+      "revId": "35aae5d1ba060f5acf24a16a6d7122ccd259475a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
