@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80722402_cedc8188",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1375,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T00:40:24Z",
+      "side": 1,
+      "message": "why was this changed?",
+      "range": {
+        "startLine": 1375,
+        "startChar": 17,
+        "endLine": 1375,
+        "endChar": 30
+      },
+      "revId": "1d151f02c26428e03c54ab89076ad1ec2d6cf0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72e931c_22ff3dea",
+        "filename": "components/previews/core/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T00:40:24Z",
+      "side": 1,
+      "message": "s/hG/h/\n?",
+      "range": {
+        "startLine": 8,
+        "startChar": 28,
+        "endLine": 8,
+        "endChar": 30
+      },
+      "revId": "1d151f02c26428e03c54ab89076ad1ec2d6cf0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a11063e0_c33f68f4",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T00:40:24Z",
+      "side": 1,
+      "message": "nit:Define this function along with the declaration (on Line 33). There is no need to keep declaration and definition separate since this is all in .cc file.",
+      "range": {
+        "startLine": 67,
+        "startChar": 19,
+        "endLine": 67,
+        "endChar": 36
+      },
+      "revId": "1d151f02c26428e03c54ab89076ad1ec2d6cf0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e06c13_f8a17a77",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T00:40:24Z",
+      "side": 1,
+      "message": "why not simply use\nurl::kHttpScheme\ninstead of redeclaring this multiple times?\n\nSame for https?",
+      "range": {
+        "startLine": 113,
+        "startChar": 61,
+        "endLine": 113,
+        "endChar": 65
+      },
+      "revId": "1d151f02c26428e03c54ab89076ad1ec2d6cf0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c434a65c_6dbca886",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T00:40:24Z",
+      "side": 1,
+      "message": "why not use StringPrintF?",
+      "range": {
+        "startLine": 174,
+        "startChar": 9,
+        "endLine": 174,
+        "endChar": 15
+      },
+      "revId": "1d151f02c26428e03c54ab89076ad1ec2d6cf0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c001948_9c4ff9d7",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T00:40:24Z",
+      "side": 1,
+      "message": "Add a comment on what this is doing.",
+      "range": {
+        "startLine": 177,
+        "startChar": 7,
+        "endLine": 177,
+        "endChar": 56
+      },
+      "revId": "1d151f02c26428e03c54ab89076ad1ec2d6cf0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d63e6f_efbee2ca",
+        "filename": "components/previews/core/previews_amp_converter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T00:40:24Z",
+      "side": 1,
+      "message": "s/amp/AMP/",
+      "range": {
+        "startLine": 28,
+        "startChar": 51,
+        "endLine": 28,
+        "endChar": 54
+      },
+      "revId": "1d151f02c26428e03c54ab89076ad1ec2d6cf0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20fef08_15feb880",
+        "filename": "components/previews/core/previews_amp_converter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T00:40:24Z",
+      "side": 1,
+      "message": "Add one more test case where \ns/test.com/test2.com/\nand verify that there is no match.",
+      "range": {
+        "startLine": 57,
+        "startChar": 15,
+        "endLine": 57,
+        "endChar": 19
+      },
+      "revId": "1d151f02c26428e03c54ab89076ad1ec2d6cf0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a602f98b_8f49ef78",
+        "filename": "components/previews/core/previews_amp_converter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T00:40:24Z",
+      "side": 1,
+      "message": "Add another test to make sure that path pattern match is case sensitive.\n\nAdd another test to make sure that the host match is case sensitive.",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 12
+      },
+      "revId": "1d151f02c26428e03c54ab89076ad1ec2d6cf0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9fb7f9_20bc514e",
+        "filename": "components/previews/core/previews_amp_converter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T00:40:24Z",
+      "side": 1,
+      "message": "Can we add one test where the json is malformed, and ensure that nothing crashes?",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 42
+      },
+      "revId": "1d151f02c26428e03c54ab89076ad1ec2d6cf0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50aed136_adbeafb7",
+        "filename": "components/previews/core/previews_amp_converter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T00:40:24Z",
+      "side": 1,
+      "message": "May be add an entry where path is empty (or /), and see if prefix still works?",
+      "range": {
+        "startLine": 102,
+        "startChar": 14,
+        "endLine": 102,
+        "endChar": 30
+      },
+      "revId": "1d151f02c26428e03c54ab89076ad1ec2d6cf0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cba2bc4_1058d183",
+        "filename": "components/previews/core/previews_amp_converter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T00:40:24Z",
+      "side": 1,
+      "message": "Add test for html_suffix?",
+      "range": {
+        "startLine": 109,
+        "startChar": 15,
+        "endLine": 109,
+        "endChar": 30
+      },
+      "revId": "1d151f02c26428e03c54ab89076ad1ec2d6cf0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02d028f_d43b87d0",
+        "filename": "components/previews/core/previews_amp_converter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T00:40:24Z",
+      "side": 1,
+      "message": "s/TestURLPatterns/TestPathPatterns/",
+      "range": {
+        "startLine": 123,
+        "startChar": 33,
+        "endLine": 123,
+        "endChar": 48
+      },
+      "revId": "1d151f02c26428e03c54ab89076ad1ec2d6cf0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef29fd6_0c8a4171",
+        "filename": "components/previews/core/previews_amp_converter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T00:40:24Z",
+      "side": 1,
+      "message": "what is invalid about this?\nIs it the schemeamp? If yes, can we set schememp to \"invalid\" instead of \"both\"?",
+      "range": {
+        "startLine": 170,
+        "startChar": 22,
+        "endLine": 170,
+        "endChar": 41
+      },
+      "revId": "1d151f02c26428e03c54ab89076ad1ec2d6cf0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
