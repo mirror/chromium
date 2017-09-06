@@ -34,6 +34,24 @@
       "revId": "27e93ce546bf52a4909a1a87bc69477bb0947293",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e0bd845_03c11480",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/garbage-collection-ran-during-error.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-06T22:44:38Z",
+      "side": 1,
+      "message": "Oh right! Then yeah, the service will get gc\u0027ed.",
+      "parentUuid": "4436d501_f02db6fb",
+      "revId": "27e93ce546bf52a4909a1a87bc69477bb0947293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
