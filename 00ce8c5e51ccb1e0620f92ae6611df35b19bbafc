@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3017743_684c00e4",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-09-06T17:50:17Z",
+      "side": 0,
+      "message": "I don\u0027t think we can get rid of this check. I believe that AreRequiredTilesReadyToDraw only checks tiles which are not yet scheduled, so we need the pending callback check to ensure that we wait for any already-scheduled tiles.\n\nWe should probably rename \"AreRequiredTilesReadyForDraw\" to make this clearer.",
+      "range": {
+        "startLine": 1304,
+        "startChar": 9,
+        "endLine": 1304,
+        "endChar": 53
+      },
+      "revId": "00ce8c5e51ccb1e0620f92ae6611df35b19bbafc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
