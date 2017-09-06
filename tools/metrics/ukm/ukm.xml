@@ -1338,4 +1338,19 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event name="TabManager.Background.TimeToActiveOrClosed">
+  <owner>chrisha@chromium.org</owner>
+  <owner>lpy@chromium.org</owner>
+  <summary>
+    Collects the duration in MS from when the tab is backgrounded to when it is
+    brought to foreground or closed.
+  </summary>
+  <metric name="TimeFromBackgrounded">
+    <summary>
+      Duration in MS from when the tab is backgrounded to when it is brought to
+      foreground or closed.
+    </summary>
+  </metric>
+</event>
+
 </ukm-configuration>
