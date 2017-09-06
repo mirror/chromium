@@ -16,6 +16,23 @@
       "revId": "dde0f9ed2bd7e5402d6dd53f63465b28cdfb93c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6ed228_515b9b3a",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastCrashUploader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-06T21:03:15Z",
+      "side": 1,
+      "message": "Hmmm, what happens if the scheduled service does this at the same time ... seems like we could upload the same thing twice, or one of them could fail.  It\u0027s a bit hard to reason about - seems conceivable that other bad things could happen.\n\nCan you schedule this to run on the same thread to avoid this scenario?",
+      "revId": "dde0f9ed2bd7e5402d6dd53f63465b28cdfb93c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
