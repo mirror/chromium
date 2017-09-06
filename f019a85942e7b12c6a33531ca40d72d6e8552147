@@ -1,0 +1,904 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7f5a706_d42fb342",
+        "filename": "ios/net/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "ns_http_system_cookie_store.h ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 13,
+        "endLine": 45,
+        "endChar": 39
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cdeccdf_b4283f66",
+        "filename": "ios/net/cookies/cookie_store_ios.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "Should this be std::unique_ptr\u003cSystemCookieStore\u003e? Otherwise this API imply that callers suppose to keep |cookie_storage| alive.",
+      "range": {
+        "startLine": 61,
+        "startChar": 26,
+        "endLine": 61,
+        "endChar": 43
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f105e8_bc51899a",
+        "filename": "ios/net/cookies/cookie_store_ios.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "nit: s/storage/store ?",
+      "range": {
+        "startLine": 61,
+        "startChar": 45,
+        "endLine": 61,
+        "endChar": 59
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311d3227_bf54726e",
+        "filename": "ios/net/cookies/cookie_store_ios.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003cSystemCookieStore\u003e?",
+      "range": {
+        "startLine": 135,
+        "startChar": 17,
+        "endLine": 135,
+        "endChar": 34
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28978f0c_310f59fb",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "nit: s/include/import",
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0b10ed_c3a686ac",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "nit: base::MakeUnique?",
+      "range": {
+        "startLine": 235,
+        "startChar": 25,
+        "endLine": 235,
+        "endChar": 48
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a33a16_5b49fb9e",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "nit: s/gurl/url",
+      "range": {
+        "startLine": 732,
+        "startChar": 16,
+        "endLine": 732,
+        "endChar": 20
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d193486_6f132dd5",
+        "filename": "ios/net/cookies/cookie_store_ios_persistent.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "nit: s/include/import",
+      "range": {
+        "startLine": 9,
+        "startChar": 9,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee02ecb_12f0fe45",
+        "filename": "ios/net/cookies/cookie_store_ios_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 18,
+        "startChar": 14,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a43a5e0_5daa34c6",
+        "filename": "ios/net/cookies/cookie_store_ios_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "nit: base::MakeUnique ?",
+      "range": {
+        "startLine": 93,
+        "startChar": 31,
+        "endLine": 93,
+        "endChar": 54
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbb4db4_f8140c37",
+        "filename": "ios/net/cookies/cookie_store_ios_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003cnet::SystemCookieStore\u003e ?",
+      "range": {
+        "startLine": 148,
+        "startChar": 7,
+        "endLine": 148,
+        "endChar": 24
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d79efc_6c6293ac",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "#import Foundation",
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fef1565_c7a17d5d",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "Would it be better to pass |manager| in constructor or create internally?",
+      "range": {
+        "startLine": 23,
+        "startChar": 28,
+        "endLine": 23,
+        "endChar": 53
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce8ec1b_6830cc7e",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "No need to use scoped_nsobject under ARC",
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6423ed8_e5ad4760",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "s/include/import",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 8
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a661ce2_5ee8154b",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "nit:\n\nif (!manager)\n  return cookies;\n\nreturn [cookies sortedArrayUsingFunction:CompareCookies context:manager];",
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a1b543c_398dafa7",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "No need for scoped_nsobject under ARC",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5329a19_be011136",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "nit: Do you want to use dot syntax?",
+      "range": {
+        "startLine": 65,
+        "startChar": 15,
+        "endLine": 65,
+        "endChar": 16
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9251cf_2284fc0b",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "nit: No need to put test fixture into anonymous namespace. We don\u0027t expect any symbol collisions.",
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690580cf_bdbd55fc",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "How about creating parametrized test (INSTANTIATE_TEST_CASE_P), so we can run the same tests for all cookie storages?",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f373343_fc832e4d",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "No need for using scoped_nsobject under ARC",
+      "range": {
+        "startLine": 51,
+        "startChar": 24,
+        "endLine": 51,
+        "endChar": 43
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3349c5_98e2d3ca",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "* const",
+      "range": {
+        "startLine": 53,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 23
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d98dd8c4_c34ce6c0",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "cookie_name",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f42e8e2_22ef3e5c",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "Could you please add tests for all APIs.",
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c584176c_5954e527",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "Do you want to use dot syntax?",
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "054d4f32_60609afd",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "WKHTTPCookieStore",
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc99880_92fc977a",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "is to interact\n\nstore, and let",
+      "range": {
+        "startLine": 20,
+        "startChar": 14,
+        "endLine": 20,
+        "endChar": 22
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d83331_663d5435",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "Do we need this constructor?",
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f4bac4e_0da85781",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "Do we need this method to be virtual?",
+      "range": {
+        "startLine": 28,
+        "startChar": 21,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e876f8_bbb848e5",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "Please start comment with explaining what this method does",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 9
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10ba706_cfbbd652",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "s/Return/Returns",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f85a11_b905123b",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "Please start comment with explaining what this method does",
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b9b346_85064db3",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "Please add comments to all methods",
+      "range": {
+        "startLine": 39,
+        "startChar": 19,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263d4448_2b8ebe34",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "WKHTTPCookieStore does not support policy. How do you plan implementing it?",
+      "range": {
+        "startLine": 47,
+        "startChar": 35,
+        "endLine": 47,
+        "endChar": 56
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b675c9_144fb252",
+        "filename": "ios/net/cookies/system_cookie_store.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "nit: s/include/import",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 8
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624a7c98_a3531360",
+        "filename": "ios/net/cookies/system_cookie_store.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "nit: s/{}/ \u003d default;",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 37
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "413ca77e_c1934e50",
+        "filename": "ios/net/cookies/system_cookie_store.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "/*param_name*\u003d/nullptr",
+      "range": {
+        "startLine": 21,
+        "startChar": 31,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07066fd7_db7f139c",
+        "filename": "ios/net/cookies/system_cookie_store.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 25,
+        "startChar": 9,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80cc885c_e70cde15",
+        "filename": "ios/net/cookies/system_cookie_store.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "static_cast",
+      "range": {
+        "startLine": 30,
+        "startChar": 28,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b30156_4ce5d5de",
+        "filename": "ios/net/cookies/system_cookie_store.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "Do you want to use dot syntax?",
+      "range": {
+        "startLine": 33,
+        "startChar": 31,
+        "endLine": 33,
+        "endChar": 39
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450d0135_a0112728",
+        "filename": "ios/net/cookies/system_cookie_store.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "nit: No need for DCHECK, the next line will crash anyway",
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb891f64_208937d6",
+        "filename": "ios/net/cookies/system_cookie_store.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-06T01:46:24Z",
+      "side": 1,
+      "message": "nit: How about this for consistency?: \nif (created_a \u003e created_b)\n  return NSOrderedDescending;\n\nreturn NSOrderedSame;",
+      "range": {
+        "startLine": 54,
+        "startChar": 22,
+        "endLine": 54,
+        "endChar": 31
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
