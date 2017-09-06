@@ -24,6 +24,7 @@
 #include "ash/wm/overview/window_selector_item.h"
 #include "ash/wm/panels/panel_layout_manager.h"
 #include "ash/wm/splitview/split_view_controller.h"
+#include "ash/wm/splitview/split_view_overview_overlay.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
@@ -2141,6 +2142,47 @@ TEST_F(WindowSelectorTest, EmptyWindowsListExitOverview) {
   EXPECT_EQ(split_view_controller()->state(),
             SplitViewController::LEFT_SNAPPED);
   EXPECT_FALSE(window_selector_controller()->IsSelecting());
+}
+
+// Verify that the split view overview overlay is shown when expected.
+TEST_F(WindowSelectorTest, SplitViewOverviewOverlayVisibility) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAshEnableTabletSplitView);
+  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
+
+  const gfx::Rect bounds(0, 0, 400, 400);
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
+  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
+
+  ToggleOverview();
+  ASSERT_TRUE(window_selector_controller()->IsSelecting());
+
+  // Verify that when are no snapped windows, the overlay is visible when a drag
+  // is initiated and disappears when the drag is started.
+  const int grid_index = 0;
+  WindowSelectorItem* selector_item =
+      GetWindowItemForWindow(grid_index, window1.get());
+  gfx::Point start_location(selector_item->target_bounds().CenterPoint());
+  window_selector()->InitiateDrag(selector_item, start_location);
+  EXPECT_TRUE(window_selector()->split_view_overview_overlay()->visible());
+  const gfx::Point end_location1(0, 0);
+  window_selector()->Drag(selector_item, end_location1);
+  EXPECT_FALSE(window_selector()->split_view_overview_overlay()->visible());
+
+  // Snap window to the left.
+  window_selector()->CompleteDrag(selector_item);
+  ASSERT_TRUE(split_view_controller()->IsSplitViewModeActive());
+  ASSERT_EQ(SplitViewController::LEFT_SNAPPED,
+            split_view_controller()->state());
+
+  // Verify that when there is a snapped window, the overlay is not visible.
+  selector_item = GetWindowItemForWindow(grid_index, window2.get());
+  start_location = selector_item->target_bounds().CenterPoint();
+  window_selector()->InitiateDrag(selector_item, start_location);
+  EXPECT_FALSE(window_selector()->split_view_overview_overlay()->visible());
+  window_selector()->CompleteDrag(selector_item);
+
+  ToggleOverview();
 }
 
 }  // namespace ash
