@@ -5,12 +5,11 @@
 #include "chrome/browser/android/vr_shell/vr_controller.h"
 
 #include <algorithm>
-#include <cmath>
 #include <utility>
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
+#include "base/numerics/math_util.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/gvr-android-sdk/src/libraries/headers/vr/gvr/capi/include/gvr.h"
@@ -39,7 +38,7 @@ constexpr float kSlopHorizontal = 0.15f;
 constexpr float kDelta = 1.0e-7f;
 
 constexpr float kCutoffHz = 10.0f;
-constexpr float kRC = static_cast<float>(1.0 / (2.0 * M_PI * kCutoffHz));
+constexpr float kRC = 1.0f / (2.0f * base::kPiFloat * kCutoffHz);
 constexpr float kNanoSecondsPerSecond = 1.0e9f;
 
 constexpr int kMaxNumOfExtrapolations = 2;
@@ -51,8 +50,8 @@ constexpr float kFadeDistanceFromFace = 0.34f;
 constexpr float kDeltaAlpha = 3.0f;
 
 void ClampTouchpadPosition(gfx::Vector2dF* position) {
-  position->set_x(cc::MathUtil::ClampToRange(position->x(), 0.0f, 1.0f));
-  position->set_y(cc::MathUtil::ClampToRange(position->y(), 0.0f, 1.0f));
+  position->set_x(base::ClampToRange(position->x(), 0.0f, 1.0f));
+  position->set_y(base::ClampToRange(position->y(), 0.0f, 1.0f));
 }
 
 float DeltaTimeSeconds(int64_t last_timestamp_nanos) {

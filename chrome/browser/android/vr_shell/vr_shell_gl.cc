@@ -12,6 +12,7 @@
 #include "base/callback_helpers.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/numerics/math_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/android/vr_shell/gl_browser_interface.h"
@@ -102,10 +103,10 @@ gfx::Transform PerspectiveMatrixFromView(const gvr::Rectf& fov,
                                          float z_near,
                                          float z_far) {
   gfx::Transform result;
-  const float x_left = -std::tan(fov.left * M_PI / 180.0f) * z_near;
-  const float x_right = std::tan(fov.right * M_PI / 180.0f) * z_near;
-  const float y_bottom = -std::tan(fov.bottom * M_PI / 180.0f) * z_near;
-  const float y_top = std::tan(fov.top * M_PI / 180.0f) * z_near;
+  const float x_left = -std::tan(base::DegToRad(fov.left)) * z_near;
+  const float x_right = std::tan(base::DegToRad(fov.right)) * z_near;
+  const float y_bottom = -std::tan(base::DegToRad(fov.bottom)) * z_near;
+  const float y_top = std::tan(base::DegToRad(fov.top)) * z_near;
 
   DCHECK(x_left < x_right && y_bottom < y_top && z_near < z_far &&
          z_near > 0.0f && z_far > 0.0f);

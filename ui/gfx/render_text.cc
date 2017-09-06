@@ -13,12 +13,12 @@
 #include "base/i18n/break_iterator.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/numerics/math_util.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
-#include "cc/base/math_util.h"
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_shader.h"
 #include "third_party/icu/source/common/unicode/rbbi.h"
@@ -67,16 +67,13 @@ const SkScalar kLineThicknessFactor = (SK_Scalar1 / 18);
 // re-calculation of baseline.
 const int kInvalidBaseline = INT_MAX;
 
-int round(float value) {
-  return static_cast<int>(floor(value + 0.5f));
-}
-
 // Given |font| and |display_width|, returns the width of the fade gradient.
 int CalculateFadeGradientWidth(const FontList& font_list, int display_width) {
   // Fade in/out about 3 characters of the beginning/end of the string.
   // Use a 1/3 of the display width if the display width is very short.
   const int narrow_width = font_list.GetExpectedTextWidth(3);
-  const int gradient_width = std::min(narrow_width, round(display_width / 3.f));
+  const int gradient_width =
+      std::min(narrow_width, gfx::ToRoundedInt(display_width / 3.f));
   DCHECK_GE(gradient_width, 0);
   return gradient_width;
 }
@@ -122,8 +119,10 @@ sk_sp<cc::PaintShader> CreateFadeShader(const FontList& font_list,
   const float width_fraction =
       text_rect.width() / static_cast<float>(font_list.GetExpectedTextWidth(4));
   const SkAlpha kAlphaAtZeroWidth = 51;
-  const SkAlpha alpha = (width_fraction < 1) ?
-      static_cast<SkAlpha>(round((1 - width_fraction) * kAlphaAtZeroWidth)) : 0;
+  const SkAlpha alpha =
+      (width_fraction < 1)
+          ? gfx::ToRoundedInt((1 - width_fraction) * kAlphaAtZeroWidth)
+          : 0;
   const SkColor fade_color = SkColorSetA(color, alpha);
 
   std::vector<SkScalar> positions;
@@ -1458,7 +1457,7 @@ base::string16 RenderText::Elide(const base::string16& text,
     guess = lo + static_cast<size_t>(ToRoundedInt((available_width - lo_width) *
                                                   (hi - lo) /
                                                   (hi_width - lo_width)));
-    guess = cc::MathUtil::ClampToRange(guess, lo, hi);
+    guess = base::ClampToRange(guess, lo, hi);
     DCHECK_NE(last_guess, guess);
 
     // Restore colors. They will be truncated to size by SetText.
