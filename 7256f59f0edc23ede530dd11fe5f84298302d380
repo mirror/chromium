@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05ed3e29_650b085b",
+        "filename": "chrome/browser/extensions/api/font_settings/font_settings_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-06T20:19:03Z",
+      "side": 1,
+      "message": "aren\u0027t you missing a 1 from the period on line 74?",
+      "revId": "7256f59f0edc23ede530dd11fe5f84298302d380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9012d70_9a1f95cb",
+        "filename": "chrome/browser/font_pref_change_notifier.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-06T20:19:03Z",
+      "side": 1,
+      "message": "remove has_registered_. In your current code, you never set has_registered_ to true.",
+      "revId": "7256f59f0edc23ede530dd11fe5f84298302d380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
