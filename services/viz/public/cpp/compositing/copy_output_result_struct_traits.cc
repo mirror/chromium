@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/ipc/copy_output_result_struct_traits.h"
+#include "services/viz/public/cpp/compositing/copy_output_result_struct_traits.h"
 
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
@@ -14,7 +14,7 @@ namespace {
 // serializable). Once the client calls Release, the release_callback_ will be
 // called. An object of this class will remain alive until the MessagePipe
 // attached to it goes away (i.e. StrongBinding is used).
-class TextureMailboxReleaserImpl : public cc::mojom::TextureMailboxReleaser {
+class TextureMailboxReleaserImpl : public viz::mojom::TextureMailboxReleaser {
  public:
   TextureMailboxReleaserImpl(
       std::unique_ptr<viz::SingleReleaseCallback> release_callback)
@@ -41,7 +41,7 @@ class TextureMailboxReleaserImpl : public cc::mojom::TextureMailboxReleaser {
   std::unique_ptr<viz::SingleReleaseCallback> release_callback_;
 };
 
-void Release(cc::mojom::TextureMailboxReleaserPtr ptr,
+void Release(viz::mojom::TextureMailboxReleaserPtr ptr,
              const gpu::SyncToken& sync_token,
              bool is_lost) {
   ptr->Release(sync_token, is_lost);
@@ -52,7 +52,7 @@ void Release(cc::mojom::TextureMailboxReleaserPtr ptr,
 namespace mojo {
 
 // static
-const SkBitmap& StructTraits<cc::mojom::CopyOutputResultDataView,
+const SkBitmap& StructTraits<viz::mojom::CopyOutputResultDataView,
                              std::unique_ptr<viz::CopyOutputResult>>::
     bitmap(const std::unique_ptr<viz::CopyOutputResult>& result) {
   static SkBitmap* null_bitmap = new SkBitmap();
@@ -62,13 +62,13 @@ const SkBitmap& StructTraits<cc::mojom::CopyOutputResultDataView,
 }
 
 // static
-cc::mojom::TextureMailboxReleaserPtr
-StructTraits<cc::mojom::CopyOutputResultDataView,
+viz::mojom::TextureMailboxReleaserPtr
+StructTraits<viz::mojom::CopyOutputResultDataView,
              std::unique_ptr<viz::CopyOutputResult>>::
     releaser(const std::unique_ptr<viz::CopyOutputResult>& result) {
   if (!result->release_callback_)
     return {};
-  cc::mojom::TextureMailboxReleaserPtr releaser;
+  viz::mojom::TextureMailboxReleaserPtr releaser;
   auto impl = std::make_unique<TextureMailboxReleaserImpl>(
       std::move(result->release_callback_));
   MakeStrongBinding(std::move(impl), MakeRequest(&releaser));
@@ -76,9 +76,9 @@ StructTraits<cc::mojom::CopyOutputResultDataView,
 }
 
 // static
-bool StructTraits<cc::mojom::CopyOutputResultDataView,
+bool StructTraits<viz::mojom::CopyOutputResultDataView,
                   std::unique_ptr<viz::CopyOutputResult>>::
-    Read(cc::mojom::CopyOutputResultDataView data,
+    Read(viz::mojom::CopyOutputResultDataView data,
          std::unique_ptr<viz::CopyOutputResult>* out_p) {
   // We first read into local variables and then call the appropriate
   // constructor of viz::CopyOutputResult.
@@ -96,7 +96,7 @@ bool StructTraits<cc::mojom::CopyOutputResultDataView,
   if (!data.ReadTextureMailbox(&texture_mailbox))
     return false;
 
-  auto releaser = data.TakeReleaser<cc::mojom::TextureMailboxReleaserPtr>();
+  auto releaser = data.TakeReleaser<viz::mojom::TextureMailboxReleaserPtr>();
   if (releaser) {
     // CopyOutputResult does not have a TextureMailboxReleaserPtr member.
     // We use base::Bind to turn TextureMailboxReleaser::Release into a
