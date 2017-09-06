@@ -239,7 +239,7 @@ class ComputedStyle : public ComputedStyleBase,
                    IsAtShadowBoundary = kNotAtShadowBoundary);
   void CopyNonInheritedFromCached(const ComputedStyle&);
 
-  PseudoId StyleType() const { return StyleTypeInternal(); }
+  PseudoId StyleType() const { return static_cast<PseudoId>(StyleTypeInternal()); }
   void SetStyleType(PseudoId style_type) { SetStyleTypeInternal(style_type); }
 
   ComputedStyle* GetCachedPseudoStyle(PseudoId) const;
@@ -302,24 +302,24 @@ class ComputedStyle : public ComputedStyleBase,
   // backdrop-filter
   static const FilterOperations& InitialBackdropFilter();
   const FilterOperations& BackdropFilter() const {
-    DCHECK(BackdropFilterInternal().Get());
-    return BackdropFilterInternal()->operations_;
+    DCHECK(ComputedStyleBase::BackdropFilter().Get());
+    return ComputedStyleBase::BackdropFilter()->operations_;
   }
   FilterOperations& MutableBackdropFilter() {
-    DCHECK(BackdropFilterInternal().Get());
+    DCHECK(MutableBackdropFilterInternal().Get());
     return MutableBackdropFilterInternal()->operations_;
   }
   bool HasBackdropFilter() const {
-    DCHECK(BackdropFilterInternal().Get());
-    return !BackdropFilterInternal()->operations_.Operations().IsEmpty();
+    DCHECK(ComputedStyleBase::BackdropFilter().Get());
+    return !ComputedStyleBase::BackdropFilter()->operations_.Operations().IsEmpty();
   }
   void SetBackdropFilter(const FilterOperations& ops) {
-    DCHECK(BackdropFilterInternal().Get());
-    if (BackdropFilterInternal()->operations_ != ops)
+    DCHECK(ComputedStyleBase::BackdropFilter().Get());
+    if (ComputedStyleBase::BackdropFilter()->operations_ != ops)
       MutableBackdropFilterInternal()->operations_ = ops;
   }
   bool BackdropFilterDataEquivalent(const ComputedStyle& o) const {
-    return DataEquivalent(BackdropFilterInternal(), o.BackdropFilterInternal());
+    return DataEquivalent(ComputedStyleBase::BackdropFilter(), ((ComputedStyleBase*)&o)->BackdropFilter());
   }
 
   // filter (aka -webkit-filter)
@@ -825,13 +825,13 @@ class ComputedStyle : public ComputedStyleBase,
   static EVerticalAlign InitialVerticalAlign() {
     return EVerticalAlign::kBaseline;
   }
-  EVerticalAlign VerticalAlign() const { return VerticalAlignInternal(); }
+  EVerticalAlign VerticalAlign() const { return static_cast<EVerticalAlign>(VerticalAlignInternal()); }
   const Length& GetVerticalAlignLength() const {
     return VerticalAlignLengthInternal();
   }
-  void SetVerticalAlign(EVerticalAlign v) { SetVerticalAlignInternal(v); }
+  void SetVerticalAlign(EVerticalAlign v) { SetVerticalAlignInternal(static_cast<unsigned>(v)); }
   void SetVerticalAlignLength(const Length& length) {
-    SetVerticalAlignInternal(EVerticalAlign::kLength);
+    SetVerticalAlignInternal(static_cast<unsigned>(EVerticalAlign::kLength));
     SetVerticalAlignLengthInternal(length);
   }
 
@@ -901,9 +901,7 @@ class ComputedStyle : public ComputedStyleBase,
   void SetColor(const Color&);
 
   // line-height
-  static Length InitialLineHeight() { return Length(-100.0, kPercent); }
   Length LineHeight() const;
-  CORE_EXPORT void SetLineHeight(const Length& specified_line_height);
 
   // List style properties.
   // list-style-image
@@ -1207,7 +1205,7 @@ class ComputedStyle : public ComputedStyleBase,
   }
   bool ColumnRuleIsTransparent() const {
     return !ColumnRuleColorIsCurrentColor() &&
-           !ColumnRuleColorInternal().Alpha();
+           !ComputedStyleBase::ColumnRuleColor().Alpha();
   }
   bool ColumnRuleEquivalent(const ComputedStyle& other_style) const;
 
@@ -2400,7 +2398,7 @@ class ComputedStyle : public ComputedStyleBase,
   StyleColor ColumnRuleColor() const {
     return ColumnRuleColorIsCurrentColor()
                ? StyleColor::CurrentColor()
-               : StyleColor(ColumnRuleColorInternal());
+               : StyleColor(ComputedStyleBase::ColumnRuleColor());
   }
   StyleColor OutlineColor() const {
     return OutlineColorIsCurrentColor() ? StyleColor::CurrentColor()
