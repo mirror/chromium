@@ -29,7 +29,7 @@ class ASH_EXPORT OverviewWindowDragController {
   void InitiateDrag(WindowSelectorItem* item,
                     const gfx::Point& location_in_screen);
   void Drag(const gfx::Point& location_in_screen);
-  void CompleteDrag();
+  void CompleteDrag(const gfx::Point& location_in_screen);
 
   // Resets |window_selector_| to nullptr. It's needed since we defer the
   // deletion of OverviewWindowDragController in WindowSelector destructor and
@@ -45,9 +45,6 @@ class ASH_EXPORT OverviewWindowDragController {
 
   SplitViewController::SnapPosition GetSnapPosition(
       const gfx::Point& location_in_screen) const;
-
-  // Returns the expected window grid bounds based on |snap_position|.
-  gfx::Rect GetGridBounds(SplitViewController::SnapPosition snap_position);
 
   void SnapWindow(SplitViewController::SnapPosition snap_position);
 

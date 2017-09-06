@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "ui/aura/window_observer.h"
+#include "ui/display/display_observer.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/wm/public/activation_change_observer.h"
 
@@ -30,10 +31,18 @@ class WindowSelectorTest;
 class ASH_EXPORT SplitViewController : public aura::WindowObserver,
                                        public ash::wm::WindowStateObserver,
                                        public ::wm::ActivationChangeObserver,
-                                       public ShellObserver {
+                                       public ShellObserver,
+                                       public display::DisplayObserver {
  public:
-  enum State { NO_SNAP, LEFT_SNAPPED, RIGHT_SNAPPED, BOTH_SNAPPED };
-  enum SnapPosition { NONE, LEFT, RIGHT };
+  enum State {
+    NO_SNAP,
+    LEFT_SNAPPED,
+    RIGHT_SNAPPED,
+    TOP_SNAPPED,
+    BOTTOM_SNAPPED,
+    BOTH_SNAPPED
+  };
+  enum SnapPosition { NONE, LEFT, RIGHT, TOP, BOTTOM };
 
   class Observer {
    public:
@@ -53,7 +62,7 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   // Returns true if split view mode is active.
   bool IsSplitViewModeActive() const;
 
-  // Snaps window to left/right.
+  // Snaps window to left/right/top/bottom.
   void SnapWindow(aura::Window* window, SnapPosition snap_position);
 
   // Returns the default snapped window. It's the window that remains open until
@@ -61,6 +70,11 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   // |default_snap_position_| equals LEFT, then the default snapped window is
   // |left_window_|. All the other window will open on the right side.
   aura::Window* GetDefaultSnappedWindow();
+
+  // Gets the opposite snap position for a giving |snap_position|.
+  SnapPosition GetOppositeSnapPosition(SnapPosition snap_position);
+  // Gets available snap position for a giving |snap_state|.
+  SnapPosition GetAvailableSnapPositionFromSnapState(State snap_state);
 
   // Gets the window bounds according to the snap state |snap_state| and the
   // separator position |separator_position_|.
@@ -94,12 +108,17 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   void OnOverviewModeStarting() override;
   void OnOverviewModeEnded() override;
 
+  // display::DisplayObserver:
+  void OnDisplayMetricsChanged(const display::Display& display,
+                               uint32_t metrics) override;
+
   aura::Window* left_window() { return left_window_; }
   aura::Window* right_window() { return right_window_; }
   int divider_position() const { return divider_position_; }
   State state() const { return state_; }
   SnapPosition default_snap_position() const { return default_snap_position_; }
   SplitViewDivider* split_view_divider() { return split_view_divider_.get(); }
+  bool is_resizing() const { return is_resizing_; }
 
  private:
   friend class SplitViewControllerTest;
@@ -115,14 +134,9 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   // Notifies observers that the split view state has been changed.
   void NotifySplitViewStateChanged(State previous_state, State state);
 
-  // Gets the window bounds according to the separator position.
-  gfx::Rect GetLeftWindowBoundsInParent(aura::Window* window);
-  gfx::Rect GetRightWindowBoundsInParent(aura::Window* window);
-  gfx::Rect GetLeftWindowBoundsInScreen(aura::Window* window);
-  gfx::Rect GetRightWindowBoundsInScreen(aura::Window* window);
-
-  // Gets the default value of |divider_position_|.
-  int GetDefaultDividerPosition(aura::Window* window) const;
+  // Gets the default value of |divider_position_| for a giving |snap_position|.
+  int GetDefaultDividerPosition(const gfx::Rect& work_area_bounds_in_screen,
+                                SnapPosition snap_position) const;
 
   // Updates the black scrim layer's bounds and opacity while dragging the
   // divider. The opacity increases as the split divider gets closer to the edge
@@ -137,8 +151,13 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   void RestackWindows(const int previous_divider_position,
                       const int current_divider_position);
 
-  // The current left/right snapped window.
+  // Update the bounds for the snapped windows and divider according to the
+  // current snap direction.
+  void UpdateSnappedWindowsAndDividerBounds();
+
+  // The current left/top snapped window.
   aura::Window* left_window_ = nullptr;
+  // The current right/bottom snapped window.
   aura::Window* right_window_ = nullptr;
 
   // Split view divider widget. It's a black bar stretching from one edge of the
@@ -152,8 +171,11 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   // closer to the edge of the screen.
   std::unique_ptr<ui::Layer> black_scrim_layer_;
 
-  // The x position of the divider between |left_window_| and |right_window_| in
-  // screen coordinates.
+  // The x position (if horizontal) or y position (if vertical) of the divider
+  // in screen coordinates.
+  // TODO(xdai): Modify it to be the distance between the the divider and the
+  // left window. Otherwise it will be hard to calculate the correct value when
+  // display configuration is changed.
   int divider_position_ = -1;
 
   // The location of the previous mouse/gesture event in screen coordinates.
@@ -167,6 +189,9 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   // i.e., all the other windows will open snapped on the right side - and vice
   // versa.
   SnapPosition default_snap_position_ = NONE;
+
+  // If the divider is currently being dragging.
+  bool is_resizing_ = false;
 
   base::ObserverList<Observer> observers_;
 
