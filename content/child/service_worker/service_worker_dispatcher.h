@@ -165,6 +165,15 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   // instance if thread-local instance doesn't exist.
   static ServiceWorkerDispatcher* GetThreadSpecificInstance();
 
+  // Assumes that the given object information retains an interprocess handle
+  // reference passed from the browser process, and adopts it.
+  std::unique_ptr<ServiceWorkerRegistrationHandleReference> Adopt(
+      const ServiceWorkerRegistrationObjectInfo& info);
+  std::unique_ptr<ServiceWorkerHandleReference> Adopt(
+      const ServiceWorkerObjectInfo& info);
+
+  ThreadSafeSender* thread_safe_sender() { return thread_safe_sender_.get(); }
+
   base::SingleThreadTaskRunner* main_thread_task_runner() {
     return main_thread_task_runner_.get();
   }
@@ -280,13 +289,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
       WebServiceWorkerRegistrationImpl* registration);
   void RemoveServiceWorkerRegistration(
       int registration_handle_id);
-
-  // Assumes that the given object information retains an interprocess handle
-  // reference passed from the browser process, and adopts it.
-  std::unique_ptr<ServiceWorkerRegistrationHandleReference> Adopt(
-      const ServiceWorkerRegistrationObjectInfo& info);
-  std::unique_ptr<ServiceWorkerHandleReference> Adopt(
-      const ServiceWorkerObjectInfo& info);
 
   UpdateCallbackMap pending_update_callbacks_;
   UnregistrationCallbackMap pending_unregistration_callbacks_;
