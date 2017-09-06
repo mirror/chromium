@@ -16,6 +16,24 @@
       "revId": "cb74437a98bb1d723c29509f8c8b6a317ddbe017",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504f2491_dbb9077d",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-06T16:19:32Z",
+      "side": 1,
+      "message": "It is, actually, so that test annotations can override method annotations. But that\u0027s okay, I just split it into two methods.",
+      "parentUuid": "3234daf6_c0a3d444",
+      "revId": "cb74437a98bb1d723c29509f8c8b6a317ddbe017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
