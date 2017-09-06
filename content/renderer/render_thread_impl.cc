@@ -1555,11 +1555,6 @@ int32_t RenderThreadImpl::GetClientId() {
 }
 
 scoped_refptr<base::SingleThreadTaskRunner>
-RenderThreadImpl::GetTimerTaskRunner() {
-  return renderer_scheduler_->TimerTaskRunner();
-}
-
-scoped_refptr<base::SingleThreadTaskRunner>
 RenderThreadImpl::GetLoadingTaskRunner() {
   return renderer_scheduler_->LoadingTaskRunner();
 }
