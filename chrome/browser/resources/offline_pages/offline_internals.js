@@ -160,6 +160,16 @@ cr.define('offlineInternals', function() {
   }
 
   /**
+   * Error callback for prefetch actions.
+   * @param {string} error The error that resulted from the prefetch call.
+   */
+  function prefetchResultError(error) {
+    var errorText = error && error.message ? error.message : error;
+
+    $('prefetch-actions-info').textContent = 'Error: ' + errorText;
+  }
+
+  /**
    * Downloads all the stored page and request queue information into a file.
    * TODO(chili): Create a CSV writer that can abstract out the line joining.
    */
@@ -302,11 +312,13 @@ cr.define('offlineInternals', function() {
     };
     $('generate-page-bundle').onclick = function() {
       browserProxy.generatePageBundle($('generate-urls').value)
-          .then(setPrefetchResult);
+          .then(setPrefetchResult)
+          .catch(prefetchResultError);
     };
     $('get-operation').onclick = function() {
       browserProxy.getOperation($('operation-name').value)
-          .then(setPrefetchResult);
+          .then(setPrefetchResult)
+          .catch(prefetchResultError);
     };
     $('download-archive').onclick = function() {
       browserProxy.downloadArchive($('download-name').value);
