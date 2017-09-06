@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7c63ffa_3e033b6a",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-06T22:01:06Z",
+      "side": 1,
+      "message": "How does this work if the media is paused for a few seconds, and then resumed? Wouldn\u0027t the displayed current time jump a few seconds as well? Or would it behave correctly because it gets a status update as a response to play / pause?",
+      "revId": "cd704e7cdfe509473e75165a293e19d37d7d09f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee36b0d_eed764fb",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-06T22:01:06Z",
+      "side": 1,
+      "message": "Should we make sure this.displayedCurrentTime_ doesn\u0027t exceed this.routeStatus.duration here?",
+      "revId": "cd704e7cdfe509473e75165a293e19d37d7d09f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
