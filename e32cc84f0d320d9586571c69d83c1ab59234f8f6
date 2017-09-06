@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "188c8adf_6df0a55a",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-06T01:13:24Z",
+      "side": 1,
+      "message": "ToIsolate(context) will work.",
+      "revId": "e32cc84f0d320d9586571c69d83c1ab59234f8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3721c5_8e91ca01",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-06T01:13:24Z",
+      "side": 1,
+      "message": "Instead of passing ExecutionContext, v8::Isolate and is_isolated_world, can we pass in ScriptState? Also we can make XMLHttpRequest hold script_state_.",
+      "revId": "e32cc84f0d320d9586571c69d83c1ab59234f8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
