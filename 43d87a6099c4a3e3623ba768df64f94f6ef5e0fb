@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a99c05f1_70edecb9",
+        "filename": "content/public/renderer/resource_fetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-06T12:22:42Z",
+      "side": 1,
+      "message": "Agreed. I also added DCHECK to ensure this in implementation side.",
+      "parentUuid": "d3d5006f_489f2167",
+      "range": {
+        "startLine": 71,
+        "startChar": 37,
+        "endLine": 71,
+        "endChar": 38
+      },
+      "revId": "43d87a6099c4a3e3623ba768df64f94f6ef5e0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0018ea1_f3dea22c",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 2
