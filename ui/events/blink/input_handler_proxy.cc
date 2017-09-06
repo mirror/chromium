@@ -1044,10 +1044,8 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
   *is_touching_scrolling_layer = false;
   EventDisposition result = DROP_EVENT;
   for (size_t i = 0; i < touch_event.touches_length; ++i) {
-    if (touch_event.touch_start_or_first_touch_move)
-      DCHECK(white_listed_touch_action);
-    else
-      DCHECK(!white_listed_touch_action);
+    // HitTestTouchEvent is called on TouchStarts and FirstTouchMoves only.
+    DCHECK(white_listed_touch_action);
 
     if (touch_event.GetType() == WebInputEvent::kTouchStart &&
         touch_event.touches[i].state != WebTouchPoint::kStatePressed) {
@@ -1069,9 +1067,16 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
           event_listener_type ==
           cc::InputHandler::TouchStartOrMoveEventListenerType::
               HANDLER_ON_SCROLLING_LAYER;
-      result = DID_NOT_HANDLE;
+      result = DID_HANDLE_NON_BLOCKING;
       break;
     }
+  }
+
+  // If the whitelisted touch action we find is none, there is no reason to
+  // ack the event from the compositor.
+  if (result == DID_HANDLE_NON_BLOCKING &&
+      *white_listed_touch_action == cc::kTouchActionNone) {
+    result = DID_NOT_HANDLE;
   }
 
   // If |result| is DROP_EVENT it wasn't processed above.
