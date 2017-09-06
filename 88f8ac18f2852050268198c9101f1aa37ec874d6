@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f24db1e4_5ef65101",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-06T04:44:07Z",
+      "side": 1,
+      "message": "Yeah, just tried it and it only shows the details while you have the mouse button down D:",
+      "parentUuid": "922bc763_160504d7",
+      "revId": "88f8ac18f2852050268198c9101f1aa37ec874d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "723d8bde_b005266d",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 3
