@@ -22,6 +22,30 @@
       "revId": "8abee6123bfee08cc08d7524187898607da0a8ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e1fbe3_abae18c0",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-06T18:02:38Z",
+      "side": 1,
+      "message": "I renamed to CHROME_ROLE and added a // Chrome only, comment. Commented as well for ROLE_DESCRIPTION, which is only exposed by the Chrome for Android.",
+      "parentUuid": "472db141_648a1716",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 13
+      },
+      "revId": "8abee6123bfee08cc08d7524187898607da0a8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
