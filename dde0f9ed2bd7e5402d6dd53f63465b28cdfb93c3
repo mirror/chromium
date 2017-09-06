@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ab3c1a4_a79e7221",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastCrashHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2017-09-06T20:54:08Z",
+      "side": 1,
+      "message": "Added function to only upload once and not create a mExecutorService to upload every 20 minutes",
+      "revId": "dde0f9ed2bd7e5402d6dd53f63465b28cdfb93c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
