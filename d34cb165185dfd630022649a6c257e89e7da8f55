@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8de62477_fd68ded4",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T21:16:51Z",
+      "side": 1,
+      "message": "I tried changing all the tests in this file to use the local state and user pref services provided by AshTestBase and TestSessionControllerClient, but that results in BluetoothPowerController::OnLocalStatePrefServiceInitialized() being called during AshTestBase setup, which writes values into the prefs, which causes the \"default pref value\" checks in some of the tests to fail. So I elected to leave this class mostly as-is and add a new regression test.",
+      "revId": "d34cb165185dfd630022649a6c257e89e7da8f55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b75a5819_8ffc9a90",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T21:16:51Z",
+      "side": 1,
+      "message": "This isn\u0027t strictly necessary, but it makes it clearer the tests are handling their own local state.",
+      "revId": "d34cb165185dfd630022649a6c257e89e7da8f55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
