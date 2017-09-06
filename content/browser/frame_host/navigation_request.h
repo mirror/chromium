@@ -164,9 +164,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // This should be called when the navigation is ready to commit, because the
   // NavigationHandle outlives the NavigationRequest. The NavigationHandle's
   // lifetime is the entire navigation, while the NavigationRequest is
-  // destroyed when a navigation is ready for commit.
-  void TransferNavigationHandleOwnership(
-      RenderFrameHostImpl* render_frame_host);
+  // destroyed when a navigation's response completes.
+  void TransferNavigationHandleOwnership();
 
   void set_on_start_checks_complete_closure_for_testing(
       const base::Closure& closure) {
@@ -209,6 +208,7 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
                          bool is_stream,
                          mojom::URLLoaderFactoryPtrInfo
                              subresource_url_loader_factory_info) override;
+  void OnResponseComplete() override;
   void OnRequestFailed(bool has_stale_copy_in_cache,
                        int net_error,
                        const base::Optional<net::SSLInfo>& ssl_info,
@@ -325,6 +325,10 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // Used in the network service world to pass the subressource loader factory
   // to the renderer. Currently only used by AppCache.
   mojom::URLLoaderFactoryPtrInfo subresource_loader_factory_info_;
+
+  // The RenderFrameHost responsible for loading this navigation in the Renderer
+  // process. Null until NavigationRequest::CommitNavigation is called.
+  RenderFrameHostImpl* render_frame_host_;
 
   base::WeakPtrFactory<NavigationRequest> weak_factory_;
 

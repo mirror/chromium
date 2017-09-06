@@ -476,13 +476,13 @@ void NavigationRequest::BeginNavigation() {
   state_ = RESPONSE_STARTED;
 
   // Select an appropriate RenderFrameHost.
-  RenderFrameHostImpl* render_frame_host =
+  render_frame_host_ =
       frame_tree_node_->render_manager()->GetFrameHostForNavigation(*this);
-  NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(render_frame_host,
+  NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(render_frame_host_,
                                                            common_params_.url);
 
   // Inform the NavigationHandle that the navigation will commit.
-  navigation_handle_->ReadyToCommitNavigation(render_frame_host);
+  navigation_handle_->ReadyToCommitNavigation(render_frame_host_);
 
   CommitNavigation();
 }
@@ -535,9 +535,9 @@ void NavigationRequest::CreateNavigationHandle() {
   }
 }
 
-void NavigationRequest::TransferNavigationHandleOwnership(
-    RenderFrameHostImpl* render_frame_host) {
-  render_frame_host->SetNavigationHandle(std::move(navigation_handle_));
+void NavigationRequest::TransferNavigationHandleOwnership() {
+  DCHECK(render_frame_host_);
+  render_frame_host_->SetNavigationHandle(std::move(navigation_handle_));
 }
 
 void NavigationRequest::OnRequestRedirected(
@@ -696,17 +696,16 @@ void NavigationRequest::OnResponseStarted(
   common_params_.previews_state = response->head.previews_state;
 
   // Select an appropriate renderer to commit the navigation.
-  RenderFrameHostImpl* render_frame_host = nullptr;
   if (response_should_be_rendered_) {
-    render_frame_host =
+    render_frame_host_ =
         frame_tree_node_->render_manager()->GetFrameHostForNavigation(*this);
     NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(
-        render_frame_host, common_params_.url);
+        render_frame_host_, common_params_.url);
   }
-  DCHECK(render_frame_host || !response_should_be_rendered_);
+  DCHECK(render_frame_host_ || !response_should_be_rendered_);
 
-  if (!browser_initiated_ && render_frame_host &&
-      render_frame_host != frame_tree_node_->current_frame_host()) {
+  if (!browser_initiated_ && render_frame_host_ &&
+      render_frame_host_ != frame_tree_node_->current_frame_host()) {
     // Reset the source location information if the navigation will not commit
     // in the current renderer process. This information originated in another
     // process (the current one), it should not be transferred to the new one.
@@ -734,12 +733,19 @@ void NavigationRequest::OnResponseStarted(
 
   // Check if the navigation should be allowed to proceed.
   navigation_handle_->WillProcessResponse(
-      render_frame_host, response->head.headers.get(),
+      render_frame_host_, response->head.headers.get(),
       response->head.connection_info, ssl_status, request_id,
       common_params_.should_replace_current_entry, is_download, is_stream,
       base::Closure(),
       base::Bind(&NavigationRequest::OnWillProcessResponseChecksComplete,
                  base::Unretained(this)));
+}
+
+void NavigationRequest::OnResponseComplete() {
+  DCHECK(render_frame_host_);
+  render_frame_host_->ReleaseNavigationRequest(this);
+  // DO NOT ADD CODE after this. The previous call destroyed the
+  // NavigationRequest.
 }
 
 // TODO(crbug.com/751941): Pass certificate_error_info to navigation throttles.
@@ -789,27 +795,26 @@ void NavigationRequest::OnRequestFailed(
   //   URLs should be allowed to transfer away from the current process, which
   //   didn't request the navigation and may have a higher privilege level than
   //   the blocked destination.
-  RenderFrameHostImpl* render_frame_host = nullptr;
   if (net_error == net::ERR_BLOCKED_BY_CLIENT && !browser_initiated()) {
-    render_frame_host = frame_tree_node_->current_frame_host();
+    render_frame_host_ = frame_tree_node_->current_frame_host();
   } else {
-    render_frame_host =
+    render_frame_host_ =
         frame_tree_node_->render_manager()->GetFrameHostForNavigation(*this);
   }
 
   // Don't ask the renderer to commit an URL if the browser will kill it when
   // it does.
-  DCHECK(render_frame_host->CanCommitURL(common_params_.url));
+  DCHECK(render_frame_host_->CanCommitURL(common_params_.url));
 
-  NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(render_frame_host,
+  NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(render_frame_host_,
                                                            common_params_.url);
 
-  TransferNavigationHandleOwnership(render_frame_host);
-  render_frame_host->navigation_handle()->ReadyToCommitNavigation(
-      render_frame_host);
-  render_frame_host->FailedNavigation(common_params_, begin_params_,
-                                      request_params_, has_stale_copy_in_cache,
-                                      net_error);
+  TransferNavigationHandleOwnership();
+  render_frame_host_->navigation_handle()->ReadyToCommitNavigation(
+      render_frame_host_);
+  render_frame_host_->FailedNavigation(common_params_, begin_params_,
+                                       request_params_, has_stale_copy_in_cache,
+                                       net_error);
 }
 
 void NavigationRequest::OnRequestStarted(base::TimeTicks timestamp) {
@@ -1001,25 +1006,24 @@ void NavigationRequest::CommitNavigation() {
   DCHECK(response_ || !IsURLHandledByNetworkStack(common_params_.url) ||
          navigation_handle_->IsSameDocument());
   DCHECK(!common_params_.url.SchemeIs(url::kJavaScriptScheme));
-
-  // Retrieve the RenderFrameHost that needs to commit the navigation.
-  RenderFrameHostImpl* render_frame_host =
-      navigation_handle_->GetRenderFrameHost();
-  DCHECK(render_frame_host ==
+  DCHECK(render_frame_host_ ==
              frame_tree_node_->render_manager()->current_frame_host() ||
-         render_frame_host ==
+         render_frame_host_ ==
              frame_tree_node_->render_manager()->speculative_frame_host());
 
-  TransferNavigationHandleOwnership(render_frame_host);
+  // The render_frame_host will store the last NavigationHandle until it gets
+  // replaced or it is committed renderer-side.
+  TransferNavigationHandleOwnership();
+  // The frame_tree_node will store NavigationRequest until the response
+  // complete.
+  frame_tree_node_->TransferNavigationRequest(render_frame_host_);
 
   DCHECK_EQ(request_params_.has_user_gesture, begin_params_.has_user_gesture);
 
-  render_frame_host->CommitNavigation(
+  render_frame_host_->CommitNavigation(
       response_.get(), std::move(body_), std::move(handle_), common_params_,
       request_params_, is_view_source_,
       std::move(subresource_loader_factory_info_));
-
-  frame_tree_node_->ResetNavigationRequest(true, true);
 }
 
 NavigationRequest::ContentSecurityPolicyCheckResult
