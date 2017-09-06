@@ -208,9 +208,9 @@ void RecordPrinterList(size_t* call_count,
 // Increases |*call_count| and records values returned by StartGetCapability.
 void RecordCapability(size_t* call_count,
                       std::unique_ptr<base::DictionaryValue>* capability_out,
-                      const base::DictionaryValue& capability) {
+                      std::unique_ptr<base::DictionaryValue> capability) {
   ++(*call_count);
-  capability_out->reset(capability.DeepCopy());
+  capability_out->reset(capability.release());
 }
 
 // Used as a callback to StartPrint in tests.
