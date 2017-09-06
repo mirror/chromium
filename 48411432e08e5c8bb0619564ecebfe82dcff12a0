@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fc79d4f_09515f89",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_scheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-06T14:36:24Z",
+      "side": 1,
+      "message": "I think this method should be const.\n\n  bool paused() const { return paused_; }",
+      "revId": "48411432e08e5c8bb0619564ecebfe82dcff12a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f626492_fbf34a82",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_scheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-06T14:36:24Z",
+      "side": 1,
+      "message": "nit: with C++11, it is possible to specify an initialiser at declaration that is used if the constructor does not explicitly initialise the member variable; this is IMO safer as it is robust against changes made to the constructor (or when the class has multiple constructors).\n\n  bool paused_ \u003d false;\n\nhttp://en.cppreference.com/w/cpp/language/data_members#Member_initialization",
+      "revId": "48411432e08e5c8bb0619564ecebfe82dcff12a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62308b3_683c392e",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_scheduler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-06T14:36:24Z",
+      "side": 1,
+      "message": "Since TryToStartNextOverlay() does check paused_, it is worth checking it here? Why not just do:\n\n  void OverlayScheduler::SetPaused(bool paused) {\n    if (paused_ \u003d\u003d paused)\n      return;\n    paused_ \u003d paused;\n    TryToStartNextOverlay();\n  }",
+      "revId": "48411432e08e5c8bb0619564ecebfe82dcff12a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
