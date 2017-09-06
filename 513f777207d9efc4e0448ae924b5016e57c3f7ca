@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24d85467_edb82338",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-06T03:46:34Z",
+      "side": 1,
+      "message": "If you\u0027re going to keep ArcSettingsServiceImpl::SyncRuntimeSettings() as-is, you can implement this interface in ArcSettingsService instead:\n\n class ArcSettingsService\n    : public KeyedService,\n      public InstanceHolder\u003cmojom::AppInstance\u003e::Observer,\n      public InstanceHolder\u003cmojom::IntentHelperInstance\u003e::Observer {\n...\n  // InstanceHolder\u003cmojom::AppInstance\u003e::Observer and                                                                                        \n  // InstanceHolder\u003cmojom::IntentHelperInstance\u003e::Observer                                                                                   \n  void OnInstanceReady() override;\n  void OnInstanceClosed() override;\n\n private:\n  static const size_t kMaxInstanceCount \u003d 2;\n  size_t instance_count_ \u003d 0;\n...\n };\n\n ArcSettingsService::ArcSettingsService(content::BrowserContext* context,\n                                        ArcBridgeService* bridge_service)\n     : context_(context), arc_bridge_service_(bridge_service) {\n   arc_bridge_service_-\u003eapp()-\u003eAddObserver(this);\n   arc_bridge_service_-\u003eintent_helper()-\u003eAddObserver(this);\n }\n\n ArcSettingsService::~ArcSettingsService() {\n   arc_bridge_service_-\u003eintent_helper()-\u003eRemoveObserver(this);\n   arc_bridge_service_-\u003eapp()-\u003eRemoveObserver(this);\n }\n\n void ArcSettingsService::OnInstanceReady() {\n   if (++instance_count_ \u003d\u003d kMaxInstanceCount) {\n     impl_ \u003d\n         base::MakeUnique\u003cArcSettingsServiceImpl\u003e(context_, arc_bridge_service_);\n   }\n }\n\n void ArcSettingsService::OnInstanceClosed() {\n   --instance_count_;\n   impl_.reset();\n }\n\nIsn\u0027t this simpler than conditionally observing a similar interface in a difference class?",
+      "revId": "513f777207d9efc4e0448ae924b5016e57c3f7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2e9557_8b261529",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-06T03:46:34Z",
+      "side": 1,
+      "message": "I\u0027d like to see some code comments for the SyncLocale() call. Can you document the reason why SyncLocale() can be called only after app instance is ready?",
+      "revId": "513f777207d9efc4e0448ae924b5016e57c3f7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

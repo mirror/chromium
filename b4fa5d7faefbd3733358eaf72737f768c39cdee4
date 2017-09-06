@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6f8d924_571458e8",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-06T03:46:34Z",
+      "side": 0,
+      "message": "How about keeping this function as-is, but calling it only when both instances are ready? That seems much simpler than having two functions.",
+      "revId": "b4fa5d7faefbd3733358eaf72737f768c39cdee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
