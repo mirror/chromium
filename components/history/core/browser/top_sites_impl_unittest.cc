@@ -346,6 +346,18 @@ static void AppendForcedMostVisitedURL(std::vector<MostVisitedURL>* list,
   list->push_back(mv);
 }
 
+// Helper function for appending a URL to a vector of "most visited" URLs,
+// using the default values for everything but the URL and the title.
+static void AppendMostVisitedURLwithTitle(std::vector<MostVisitedURL>* list,
+                                          const GURL& url,
+                                          const base::string16& title) {
+  MostVisitedURL mv;
+  mv.url = url;
+  mv.title = title;
+  mv.redirects.push_back(url);
+  list->push_back(mv);
+}
+
 // Same as AppendMostVisitedURL except that it adds a redirect from the first
 // URL to the second.
 static void AppendMostVisitedURLWithRedirect(std::vector<MostVisitedURL>* list,
@@ -387,6 +399,36 @@ TEST_F(TopSitesImplTest, GetCanonicalURL) {
   // The URL in question is the destination of a redirect.
   result = GetCanonicalURL(dest);
   EXPECT_EQ(dest, result);
+}
+
+// Tests MostVisitedTitleChanged.
+TEST_F(TopSitesImplTest, MostVisitedTitleChanged) {
+  GURL url_1("http://url1/");
+  GURL url_2("http://url2/");
+  base::string16 title_1(base::ASCIIToUTF16("title1"));
+  base::string16 title_2(base::ASCIIToUTF16("title2"));
+
+  std::vector<MostVisitedURL> old_list;
+  AppendMostVisitedURLwithTitle(&old_list, url_1, title_1);
+
+  std::vector<MostVisitedURL> new_list;
+  AppendMostVisitedURLwithTitle(&new_list, url_1, title_1);
+  AppendMostVisitedURLwithTitle(&new_list, url_2, title_2);
+
+  // old_list and new_list now have different sizes.
+  EXPECT_TRUE(
+      history::TopSitesImpl::MostVisitedTitleChanged(old_list, new_list));
+
+  // old_list and new_list are exactly the same now.
+  AppendMostVisitedURLwithTitle(&old_list, url_2, title_2);
+  EXPECT_FALSE(
+      history::TopSitesImpl::MostVisitedTitleChanged(old_list, new_list));
+
+  // Change |url_2|'s title to |title_1| in old_list.
+  old_list.pop_back();
+  AppendMostVisitedURLwithTitle(&old_list, url_2, title_1);
+  EXPECT_TRUE(
+      history::TopSitesImpl::MostVisitedTitleChanged(old_list, new_list));
 }
 
 // Tests DiffMostVisited.
