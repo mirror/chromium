@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fde50be3_8891ece6",
+        "filename": "base/android/java/src/org/chromium/base/BuildInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-06T21:11:44Z",
+      "side": 1,
+      "message": "i don\u0027t love adding all these members back and caching an instance of buildinfo. How about just adding constants for each of them?",
+      "revId": "456d243d920d4d2d075d23b66de39a7e8bda8532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d603b3e0_c57327ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-06T21:11:44Z",
+      "side": 1,
+      "message": "i assume this is copy-pasted but we always crash after reporting for the early reporter",
+      "range": {
+        "startLine": 21,
+        "startChar": 26,
+        "endLine": 21,
+        "endChar": 43
+      },
+      "revId": "456d243d920d4d2d075d23b66de39a7e8bda8532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9493dc6a_35068976",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-06T21:11:44Z",
+      "side": 1,
+      "message": "omit boolean",
+      "range": {
+        "startLine": 42,
+        "startChar": 23,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "456d243d920d4d2d075d23b66de39a7e8bda8532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1cc352_015b1d51",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-06T21:11:44Z",
+      "side": 1,
+      "message": "this causes the error to not bubble up, right? I think you want to rethrow the android exceptoin so user can report the error too (at least they have indication that it crashed vs just disappearing)",
+      "range": {
+        "startLine": 53,
+        "startChar": 18,
+        "endLine": 53,
+        "endChar": 19
+      },
+      "revId": "456d243d920d4d2d075d23b66de39a7e8bda8532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6843d04_b9639f31",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-06T21:11:44Z",
+      "side": 1,
+      "message": "needs tests",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "456d243d920d4d2d075d23b66de39a7e8bda8532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f1d77c_b7be588a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-06T21:11:44Z",
+      "side": 1,
+      "message": "please make these final and update naming: LOCAL_ID",
+      "revId": "456d243d920d4d2d075d23b66de39a7e8bda8532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "834ca1b7_96a41180",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-06T21:11:44Z",
+      "side": 1,
+      "message": "it\u0027s not a renderer?",
+      "range": {
+        "startLine": 33,
+        "startChar": 56,
+        "endLine": 33,
+        "endChar": 64
+      },
+      "revId": "456d243d920d4d2d075d23b66de39a7e8bda8532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c50f2f_1e4441e3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-06T21:11:44Z",
+      "side": 1,
+      "message": "oh is this naming why we didn\u0027t extract the logcat? Shouldn\u0027t it just be .dmp and the uploader addes the .try suffix? Maybe I remember wrong",
+      "range": {
+        "startLine": 34,
+        "startChar": 48,
+        "endLine": 34,
+        "endChar": 51
+      },
+      "revId": "456d243d920d4d2d075d23b66de39a7e8bda8532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ee3d14_2deda455",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-06T21:11:44Z",
+      "side": 1,
+      "message": "I notice that process type isn\u0027t included - it needs to be.\nWe should probably also include an additional field like \"early_java\" so we can tell if this is pre-native as a bunch of information is absent (gpu-info, command-line flags, variations).",
+      "range": {
+        "startLine": 51,
+        "startChar": 32,
+        "endLine": 51,
+        "endChar": 46
+      },
+      "revId": "456d243d920d4d2d075d23b66de39a7e8bda8532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59769e34_43795554",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-06T21:11:44Z",
+      "side": 1,
+      "message": "why do this so early and not do it on-demand?",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 75
+      },
+      "revId": "456d243d920d4d2d075d23b66de39a7e8bda8532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d57b416_05c6d58f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-06T21:11:44Z",
+      "side": 1,
+      "message": "nit: Please be consistent with \"miniDump*\" and \"minidump*\". I think the latter is better",
+      "range": {
+        "startLine": 55,
+        "startChar": 19,
+        "endLine": 55,
+        "endChar": 35
+      },
+      "revId": "456d243d920d4d2d075d23b66de39a7e8bda8532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72daa83_daf58ce4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-06T21:11:44Z",
+      "side": 1,
+      "message": "any idea why logcat isn\u0027t included in your report? I thought it goes through the same pipeline? Can you investigate?",
+      "range": {
+        "startLine": 149,
+        "startChar": 30,
+        "endLine": 149,
+        "endChar": 48
+      },
+      "revId": "456d243d920d4d2d075d23b66de39a7e8bda8532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c24a8b_43036962",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-06T21:11:44Z",
+      "side": 1,
+      "message": "I suspect this probably isn\u0027t enough and need to add it to all activities. You can find the various base activity classes and install it there too. Perhaps we can implement this first though and then as a separate CL, integrate it everywhere",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 32
+      },
+      "revId": "456d243d920d4d2d075d23b66de39a7e8bda8532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

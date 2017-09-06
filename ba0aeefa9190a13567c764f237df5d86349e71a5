@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fa45af5_2119b88e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/MinidumpUploadService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-06T21:11:44Z",
+      "side": 0,
+      "message": "why is this removed?",
+      "range": {
+        "startLine": 299,
+        "startChar": 16,
+        "endLine": 299,
+        "endChar": 47
+      },
+      "revId": "ba0aeefa9190a13567c764f237df5d86349e71a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
