@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7465869b_7be8c39e",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-06T07:23:02Z",
+      "side": 1,
+      "message": "Note: this method moved from elsewhere in the file. This call here is the only new thing. The diffing is a bit misleading....",
+      "range": {
+        "startLine": 337,
+        "startChar": 2,
+        "endLine": 337,
+        "endChar": 32
+      },
+      "revId": "65f885107e423c3ed16081f702d4b14af8e8d34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
