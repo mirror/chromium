@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "153b1f3f_f5e4c6b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-09-06T19:38:22Z",
+      "side": 1,
+      "message": "1703 is the correct number.  However, I changed the comment to be explicit:\n\nWindows 10 version 1703.",
+      "parentUuid": "8b234dc9_116364f2",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "3fb36300c02bca86a0587421bdcff094258d47f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6379286_28820f14",
         "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
         "patchSetId": 3
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "bfc4653d_16a6fd99",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-09-06T19:38:22Z",
+      "side": 1,
+      "message": "That\u0027s right.  As Will pointed out (off this CL I now realize), when this error is returned, the password has been verified to be correct.  However LogonUser() failed due to some restriction on the account, like an empty password.  For purposes of checking the password though, as is needed here, this is good enough.  I captured this idea in the comment.\n\nThis seems reasonable, yes/no?",
+      "parentUuid": "f6379286_28820f14",
+      "range": {
+        "startLine": 464,
+        "startChar": 11,
+        "endLine": 464,
+        "endChar": 28
+      },
+      "revId": "3fb36300c02bca86a0587421bdcff094258d47f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afb4d906_4b9a5759",
         "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
         "patchSetId": 3
@@ -92,6 +140,30 @@
       "revId": "3fb36300c02bca86a0587421bdcff094258d47f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7b5f45_e745e31f",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-09-06T19:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afb4d906_4b9a5759",
+      "range": {
+        "startLine": 465,
+        "startChar": 21,
+        "endLine": 465,
+        "endChar": 29
+      },
+      "revId": "3fb36300c02bca86a0587421bdcff094258d47f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
