@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29ca196e_a3866fc7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-06T13:21:30Z",
+      "side": 1,
+      "message": "Can we move this condition inside updateSearchEnginePreferenceSummary (renaming it as necessary), please? updateSearchEnginePreferenceSummary already sets enabled state, so this renaming makes sense anyway.",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 0
+      },
+      "revId": "45127a2d295e8a4d922594e9c8a2436558d88e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a269bd_2b9641fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-06T13:21:30Z",
+      "side": 1,
+      "message": "You can change return type of addPreferenceIfAbsent to Preference to avoid searching for it twice.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 68
+      },
+      "revId": "45127a2d295e8a4d922594e9c8a2436558d88e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
