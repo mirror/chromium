@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f68235f_d0c7da1c",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-06T07:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33223571_5e299302",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 38
+      },
+      "revId": "2d904790837ec076b7da59cd2558fabb7cfa649e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84ac8c5d_40f9e491",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-25T14:26:27Z",
       "side": 1,
       "message": "Just checking: The intention here is that if clang_tool_path_ is empty, we only add a separator to PATH, thus not changing its functionality?\n\nWould it maybe be clearer to never touch PATH if clang_tool_path_ is empty?",
+      "range": {
+        "startLine": 184,
+        "startChar": 6,
+        "endLine": 184,
+        "endChar": 75
+      },
+      "revId": "2d904790837ec076b7da59cd2558fabb7cfa649e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0022d8a8_59d80f3f",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-06T07:00:08Z",
+      "side": 1,
+      "message": "Clang tool path is never empty. If it is not passed as a command line switch, it is initialized to be equal to where the auditor executable is.\nAdded DCHECKS to constructor to emphasis on this.",
+      "parentUuid": "84ac8c5d_40f9e491",
       "range": {
         "startLine": 184,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "034c1b3e_4caaa332",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-06T07:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "977f906a_2f4fa9e7",
+      "range": {
+        "startLine": 43,
+        "startChar": 1,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "2d904790837ec076b7da59cd2558fabb7cfa649e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d1fb2ff_a87dd164",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7d24fe69_b300acfb",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-06T07:00:08Z",
+      "side": 1,
+      "message": "No, it\u0027s the path that executable resides in. Currently it is supposed to be tools/traffic_annotation/bib/[platform].",
+      "parentUuid": "3d1fb2ff_a87dd164",
+      "range": {
+        "startLine": 36,
+        "startChar": 66,
+        "endLine": 37,
+        "endChar": 37
+      },
+      "revId": "2d904790837ec076b7da59cd2558fabb7cfa649e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72e013b9_3e25bffd",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-25T14:26:27Z",
       "side": 1,
       "message": "Please document this addition in the CL description.",
+      "range": {
+        "startLine": 270,
+        "startChar": 2,
+        "endLine": 270,
+        "endChar": 55
+      },
+      "revId": "2d904790837ec076b7da59cd2558fabb7cfa649e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919756f7_df06b2d7",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-06T07:00:08Z",
+      "side": 1,
+      "message": "Moved it to another CL (that this is base on it). Done there.",
+      "parentUuid": "72e013b9_3e25bffd",
       "range": {
         "startLine": 270,
         "startChar": 2,
