@@ -33,6 +33,8 @@ enum WindowStateType {
 
   WINDOW_STATE_TYPE_LEFT_SNAPPED,
   WINDOW_STATE_TYPE_RIGHT_SNAPPED,
+  WINDOW_STATE_TYPE_TOP_SNAPPED,
+  WINDOW_STATE_TYPE_BOTTOM_SNAPPED,
 
   // A window is in this state when it is automatically placed and
   // sized by the window manager. (it's newly opened, or pushed to the side

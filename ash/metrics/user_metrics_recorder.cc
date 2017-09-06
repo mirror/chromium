@@ -51,6 +51,8 @@ ActiveWindowStateType GetActiveWindowState() {
         break;
       case wm::WINDOW_STATE_TYPE_LEFT_SNAPPED:
       case wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED:
+      case wm::WINDOW_STATE_TYPE_TOP_SNAPPED:
+      case wm::WINDOW_STATE_TYPE_BOTTOM_SNAPPED:
         active_window_state_type = ACTIVE_WINDOW_STATE_TYPE_SNAPPED;
         break;
       case wm::WINDOW_STATE_TYPE_PINNED:
