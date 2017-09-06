@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54a696c9_9c3b27cc",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-06T22:30:35Z",
+      "side": 1,
+      "message": "|path| is inherently accessed at ReplaceComponents in line#176 (though it is only passed to SetPathStr in line#174)",
+      "range": {
+        "startLine": 164,
+        "startChar": 14,
+        "endLine": 164,
+        "endChar": 18
+      },
+      "revId": "d2c75dc764671d458ca8671cb2debdfd8336910b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
