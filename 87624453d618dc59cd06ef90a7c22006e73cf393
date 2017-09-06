@@ -69,6 +69,24 @@
       "revId": "87624453d618dc59cd06ef90a7c22006e73cf393",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4c83f0e_5f7f26e2",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-06T22:58:26Z",
+      "side": 1,
+      "message": "I don\u0027t quite follow.\n\nGetSelectionAnchor and GetSelectionFocus() both return the node id\nof the selection start and end, right?\n\nThen GetSelectionOffsets returns 0-based character offsets\nof the selection relative to a particular node.",
+      "parentUuid": "8973b7a1_5e7dfdbe",
+      "revId": "87624453d618dc59cd06ef90a7c22006e73cf393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
