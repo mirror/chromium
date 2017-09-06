@@ -16,6 +16,24 @@
       "revId": "e16ce506b34e26dcd2b8757eb954176f49abad7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0f3eaa_5dbafd54",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-06T01:44:39Z",
+      "side": 1,
+      "message": "\u003e I still don\u0027t understand. The cross...\n\nAbove Resore() and Maximize() are called when we have an old buffer in the window layer, and new buffer will be pushed to that layer in line #788 below. So, SetBoundsDirectCrossFace will recreate the window layer, which means the current layer with old buffer will be detached, and cross faded with the newly created layer which will be very soon filled out with the new buffer in #788.\n\n\n\u003e You need to call wm::CrossFadeAnimation with old (current layer), with updated window), don\u0027t you?\n\nNot sure if I understand. Yes, we need to call it with old layer (for the old window state). What do you mean by \"updated window\"?",
+      "parentUuid": "34325e6c_ceb3bb2b",
+      "revId": "e16ce506b34e26dcd2b8757eb954176f49abad7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
