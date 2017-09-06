@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ee03b13_50732c66",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_memory.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-06T21:09:58Z",
+      "side": 1,
+      "message": "I believe this was renamed to XrWebVrStatic. See https://cs.chromium.org/chromium/src/tools/perf/contrib/vr_benchmarks/vr_benchmarks/webvr.py",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 28
+      },
+      "revId": "f6d5d4044fa3cd61dbd915b1af7601db9bd6fb83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
