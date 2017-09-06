@@ -50705,6 +50705,65 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="OfflinePages.Prefetching.CountAwaitingGcm">
+  <owner>petewil@chromium.org</owner>
+  <summary>Number of prefetch requests in the 'AwaitingGcm' state.</summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.CountDownloaded">
+  <owner>petewil@chromium.org</owner>
+  <summary>Number of prefetch requests in the 'Downloaded' state.</summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.CountDownloading">
+  <owner>petewil@chromium.org</owner>
+  <summary>Number of prefetch requests in the 'Downloading' state.</summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.CountFinished">
+  <owner>petewil@chromium.org</owner>
+  <summary>Number of prefetch requests in the 'Finished' state.</summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.CountImporting">
+  <owner>petewil@chromium.org</owner>
+  <summary>Number of prefetch requests in the 'Importing' state.</summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.CountNewRequest">
+  <owner>petewil@chromium.org</owner>
+  <summary>Number of prefetch requests in the 'NewRequest' state.</summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.CountReceivedBundle">
+  <owner>petewil@chromium.org</owner>
+  <summary>Number of prefetch requests in the 'ReceivedBundle' state.</summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.CountReceivedGcm">
+  <owner>petewil@chromium.org</owner>
+  <summary>Number of prefetch requests in the 'ReceivedGcm' state.</summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.CountSentGeneratePageBundle">
+  <owner>petewil@chromium.org</owner>
+  <summary>
+    Number of prefetch requests in the 'SentGeneratePageBundle' state.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.CountSentGetOperation">
+  <owner>petewil@chromium.org</owner>
+  <summary>
+    Number of prefetch requests in the 'SentGetOperation' state.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.CountZombie">
+  <owner>petewil@chromium.org</owner>
+  <summary>Number of prefetch requests in the 'Zombie' state.</summary>
+</histogram>
+
 <histogram name="OfflinePages.Prefetching.DownloadedArchiveSizeVsExpected"
     enum="OfflinePrefetchArchiveActualSizeVsExpected">
   <owner>carlosk@chromium.org</owner>

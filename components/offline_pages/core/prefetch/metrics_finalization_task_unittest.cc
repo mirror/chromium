@@ -259,4 +259,74 @@ TEST_F(MetricsFinalizationTaskTest, FileSizeMetricsAreReportedCorrectly) {
       "OfflinePages.Prefetching.DownloadedArchiveSizeVsExpected", 22, 1);
 }
 
+// Verifies that expired and non-expired items from all expirable states are
+// properly handled.
+TEST_F(MetricsFinalizationTaskTest,
+       CountsItemsInEachStateMetricReportedCorectly) {
+  // Insert fresh and stale items for all expirable states from all buckets.
+  std::vector<PrefetchItemState> states_for_items = {
+      PrefetchItemState::NEW_REQUEST,
+      PrefetchItemState::SENT_GENERATE_PAGE_BUNDLE,
+      PrefetchItemState::AWAITING_GCM,
+      PrefetchItemState::RECEIVED_GCM,
+      PrefetchItemState::SENT_GET_OPERATION,
+      PrefetchItemState::RECEIVED_BUNDLE,
+      PrefetchItemState::DOWNLOADING,
+      PrefetchItemState::DOWNLOADED,
+      PrefetchItemState::FINISHED,
+      PrefetchItemState::FINISHED,
+      PrefetchItemState::IMPORTING,
+      PrefetchItemState::ZOMBIE,
+      PrefetchItemState::ZOMBIE,
+  };
+
+  for (auto& state : states_for_items) {
+    PrefetchItem item = item_generator()->CreateItem(state);
+    EXPECT_TRUE(store_util()->InsertPrefetchItem(item))
+        << "Failed inserting item with state " << static_cast<int>(state);
+  }
+
+  std::set<PrefetchItem> all_inserted_items;
+  EXPECT_EQ(13U, store_util()->GetAllItems(&all_inserted_items));
+
+  // Execute the task.
+  base::HistogramTester histogram_tester;
+  ExpectTaskCompletes(metrics_finalization_task_.get());
+  metrics_finalization_task_->Run();
+  RunUntilIdle();
+
+  // Check that histogram was recorded correctly for each state.
+  histogram_tester.ExpectBucketCount("OfflinePages.Prefetching.CountNewRequest",
+                                     1, 1);
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.CountSentGeneratePageBundle", 1, 1);
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.CountAwaitingGcm", 1, 1);
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.CountReceivedGcm", 1, 1);
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.CountSentGetOperation", 1, 1);
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.CountReceivedBundle", 1, 1);
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.CountDownloading", 1, 1);
+  histogram_tester.ExpectBucketCount("OfflinePages.Prefetching.CountDownloaded",
+                                     1, 1);
+  histogram_tester.ExpectBucketCount("OfflinePages.Prefetching.CountFinished",
+                                     2, 1);
+  histogram_tester.ExpectBucketCount("OfflinePages.Prefetching.CountImporting",
+                                     1, 1);
+  histogram_tester.ExpectBucketCount("OfflinePages.Prefetching.CountZombie", 2,
+                                     1);
+
+  // Double check that a few numbers that should not have been recorded were
+  // not.
+  histogram_tester.ExpectBucketCount("OfflinePages.Prefetching.CountFinished",
+                                     0, 0);
+  histogram_tester.ExpectBucketCount("OfflinePages.Prefetching.CountFinished",
+                                     1, 0);
+  histogram_tester.ExpectBucketCount("OfflinePages.Prefetching.CountFinished",
+                                     3, 0);
+}
+
 }  // namespace offline_pages
