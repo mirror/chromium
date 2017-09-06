@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d47257da_5bde013b",
+        "filename": "build/win/reorder-imports.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-09-06T03:16:46Z",
+      "side": 1,
+      "message": "Yeah, there\u0027s a sanity check here https://codesearch.chromium.org/chromium/src/chrome_elf/elf_imports_unittest.cc?l\u003d160\n\nbut less brittleness would be nice too :)",
+      "parentUuid": "013bbf5f_f48cf402",
+      "range": {
+        "startLine": 24,
+        "startChar": 60,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "cf357e4d70c3f537994bbbce771b678bc6ef2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3edee97d_fab00cf0",
         "filename": "build/win/reorder-imports.py",
         "patchSetId": 8
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "Looks more natural to me too. But given that this is the behavior of the current script and doing it like this is a bit less code, I\u0027d leave this as-is for now.",
       "parentUuid": "3edee97d_fab00cf0",
+      "revId": "cf357e4d70c3f537994bbbce771b678bc6ef2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4fc3ae9_41e2beee",
+        "filename": "build/win/reorder-imports.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-09-06T03:16:46Z",
+      "side": 1,
+      "message": "SGTM, I\u0027m not aware of anything else that is import-order dependent or would be rendered unhappy by the reordering implemented here.",
+      "parentUuid": "639f1445_5993a9db",
       "revId": "cf357e4d70c3f537994bbbce771b678bc6ef2d3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
