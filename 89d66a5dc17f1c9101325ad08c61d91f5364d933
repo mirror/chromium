@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dd8604c_d621f913",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-06T16:04:35Z",
+      "side": 1,
+      "message": "This reads a bit odd and you might also want to mention that this is for alt-text or accessibility.",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "89d66a5dc17f1c9101325ad08c61d91f5364d933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe3fd1a_5df37d60",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListMarker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-06T16:04:35Z",
+      "side": 1,
+      "message": "Does this need to be reversed for RTL?\n\nI.e. \u0027 \u0027 + prefix + text_?",
+      "revId": "89d66a5dc17f1c9101325ad08c61d91f5364d933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
