@@ -188,8 +188,8 @@ Console.ConsoleView = class extends UI.VBox {
     this._messagesElement.addEventListener('mouseleave', this._updateStickToBottomOnMouseUp.bind(this), false);
     this._messagesElement.addEventListener('wheel', this._updateStickToBottomOnWheel.bind(this), false);
 
-    this._sidebar.addEventListener(Console.ConsoleSidebar.Events.ContextSelected, event => {
-      this._filter.setContext(/** @type {string|symbol} */ (event.data));
+    this._sidebar.addEventListener(Console.ConsoleSidebar.Events.GroupSelected, event => {
+      this._filter.onSidebarFilterChanged(/** @type {?TextUtils.FilterParser.ParsedFilter} */ (event.data));
     });
 
     ConsoleModel.consoleModel.addEventListener(
@@ -1004,7 +1004,8 @@ Console.ConsoleViewFilter = class {
    */
   constructor(filterChangedCallback) {
     this._filterChanged = filterChangedCallback;
-    this._context = Console.ConsoleSidebar.AllContextsFilter;
+    /** @type {?TextUtils.FilterParser.ParsedFilter} */
+    this._sidebarFilter = null;
 
     this._messageURLFiltersSetting = Common.settings.createSetting('messageURLFilters', {});
     this._messageLevelFiltersSetting = Console.ConsoleViewFilter.levelFilterSetting();
@@ -1022,7 +1023,7 @@ Console.ConsoleViewFilter = class {
     this._textFilterUI = new UI.ToolbarInput(Common.UIString('Filter'), 0.2, 1, true);
     this._textFilterUI.element.title = Common.UIString('e.g. /event\\d/ -cdn url:a.com');
     this._textFilterUI.addEventListener(UI.ToolbarInput.Event.TextChanged, this._textFilterChanged, this);
-    this._filterParser = new TextUtils.FilterParser(Object.values(Console.ConsoleViewFilter._filterType));
+    this._filterParser = new TextUtils.FilterParser(Object.values(Console.ConsoleViewFilter.FilterType));
     /** @type {!Array<!TextUtils.FilterParser.ParsedFilter>} */
     this._filters = [];
 
@@ -1068,11 +1069,11 @@ Console.ConsoleViewFilter = class {
   }
 
   /**
-   * @param {string|symbol} context
+   * @param {?TextUtils.FilterParser.ParsedFilter} filter
    */
-  setContext(context) {
-    if (this._context !== context) {
-      this._context = context;
+  onSidebarFilterChanged(filter) {
+    if (filter !== this._sidebarFilter) {
+      this._sidebarFilter = filter;
       this._filterChanged();
     }
   }
@@ -1196,10 +1197,8 @@ Console.ConsoleViewFilter = class {
         message.source !== ConsoleModel.ConsoleMessage.MessageSource.ConsoleAPI)
       return false;
 
-    if (this._context !== Console.ConsoleSidebar.AllContextsFilter && message.context !== this._context)
-      return false;
-
-    for (var filter of this._filters) {
+    var filters = this._sidebarFilter ? this._filters.concat([this._sidebarFilter]) : this._filters;
+    for (var filter of filters) {
       if (!filter.key) {
         if (filter.regex && viewMessage.matchesFilterRegex(filter.regex) === filter.negative)
           return false;
@@ -1207,15 +1206,15 @@ Console.ConsoleViewFilter = class {
           return false;
       } else {
         switch (filter.key) {
-          case Console.ConsoleViewFilter._filterType.Context:
+          case Console.ConsoleViewFilter.FilterType.Context:
             if (!passesFilter(filter, message.context, false /* exactMatch */))
               return false;
             break;
-          case Console.ConsoleViewFilter._filterType.Source:
+          case Console.ConsoleViewFilter.FilterType.Source:
             if (!passesFilter(filter, message.source, true /* exactMatch */))
               return false;
             break;
-          case Console.ConsoleViewFilter._filterType.Url:
+          case Console.ConsoleViewFilter.FilterType.Url:
             if (!passesFilter(filter, message.url, false /* exactMatch */))
               return false;
             break;
@@ -1245,7 +1244,7 @@ Console.ConsoleViewFilter = class {
   }
 
   reset() {
-    this._context = Console.ConsoleSidebar.AllContextsFilter;
+    this._sidebarFilter = null;
     this._messageURLFiltersSetting.set({});
     this._messageLevelFiltersSetting.set(Console.ConsoleViewFilter.defaultLevelsFilterValue());
     this._filterByExecutionContextSetting.set(false);
@@ -1257,7 +1256,7 @@ Console.ConsoleViewFilter = class {
 };
 
 /** @enum {string} */
-Console.ConsoleViewFilter._filterType = {
+Console.ConsoleViewFilter.FilterType = {
   Context: 'context',
   Source: 'source',
   Url: 'url'

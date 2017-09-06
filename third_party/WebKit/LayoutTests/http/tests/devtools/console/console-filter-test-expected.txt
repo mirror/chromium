@@ -175,6 +175,11 @@ Running: checkContextFilter
   >console-filter-test.js:31 innerGroup
 console-filter-test.js:43 Hello 1
 
+Running: checkViolationFilter
+>console-filter-test.js:24 outerGroup
+  >console-filter-test.js:31 innerGroup
+[Violation] Violation message text
+
 Running: checkAllContextsFilter
 console-filter-test.js:14 0topGroup
 log-source.js:3 1topGroup

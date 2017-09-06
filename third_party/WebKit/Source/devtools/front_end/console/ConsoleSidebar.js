@@ -18,23 +18,21 @@ Console.ConsoleSidebar = class extends UI.VBox {
     this._list.element.classList.add('list');
     this.contentElement.appendChild(this._list.element);
 
-    this._allGroup = this._createAllGroup();
+    this._allGroup = /** @type {!Console.ConsoleSidebar.GroupItem} */ ({
+      type: Console.ConsoleSidebar.AllGroupType,
+      name: 'All',
+      value: 'All',
+      info: 0,
+      warning: 0,
+      error: 0,
+      filter: null
+    });
     this._items.replaceAll([this._allGroup]);
     this._list.selectItem(this._items.at(0));
-
-    /** @type {!Map<string, !Console.ConsoleSidebar.GroupItem>} */
-    this._contextToItem = new Map();
+    this._valueToItemMaps = this._createValueToItemMaps();
     /** @type {!Set<!Console.ConsoleSidebar.GroupItem>} */
     this._pendingItemsToAdd = new Set();
     this._pendingClear = false;
-  }
-
-  /**
-   * @return {!Console.ConsoleSidebar.GroupItem}
-   */
-  _createAllGroup() {
-    this._allGroup = {context: Console.ConsoleSidebar.AllContextsFilter, name: 'All', info: 0, warning: 0, error: 0};
-    return this._allGroup;
   }
 
   /**
@@ -58,47 +56,65 @@ Console.ConsoleSidebar = class extends UI.VBox {
   onMessageAdded(message) {
     if (!Runtime.experiments.isEnabled('logManagement'))
       return;
-    incrementCounters(this._allGroup, message.level);
-    var context = message.context;
-    if (!context)
-      return;
+    this._addItem(message.level, Console.ConsoleSidebar.AllGroupType, this._allGroup.name);
+    if (message.context)
+      this._addItem(message.level, Console.ConsoleViewFilter.FilterType.Context, message.context);
+    if (message.source === ConsoleModel.ConsoleMessage.MessageSource.Violation)
+      this._addItem(message.level, Console.ConsoleViewFilter.FilterType.Source, message.source);
+  }
 
-    var item = this._contextToItem.get(context);
+  /**
+   * @param {?ConsoleModel.ConsoleMessage.MessageLevel} level
+   * @param {!Console.ConsoleSidebar.GroupType} key
+   * @param {string} value
+   */
+  _addItem(level, key, value) {
+    var item = key === Console.ConsoleSidebar.AllGroupType ? this._allGroup : this._valueToItemMaps[key].get(value);
     if (!item) {
-      item = {name: context, context: context, info: 0, warning: 0, error: 0};
-      this._contextToItem.set(context, item);
+      item = /** @type {!Console.ConsoleSidebar.GroupItem} */ (
+          {name: value, info: 0, warning: 0, error: 0, filter: {key: key, text: value, negative: false}});
+      this._valueToItemMaps[key].set(value, item);
       this._pendingItemsToAdd.add(item);
-    }
-    incrementCounters(item, message.level);
-
-    /**
-     * @param {!Console.ConsoleSidebar.GroupItem} item
-     * @param {?ConsoleModel.ConsoleMessage.MessageLevel} level
-     */
-    function incrementCounters(item, level) {
-      if (level === ConsoleModel.ConsoleMessage.MessageLevel.Info)
-        item.info++;
-      else if (level === ConsoleModel.ConsoleMessage.MessageLevel.Warning)
-        item.warning++;
-      else if (level === ConsoleModel.ConsoleMessage.MessageLevel.Error)
-        item.error++;
+    } else {
       item[Console.ConsoleSidebar._itemIsDirtySymbol] = true;
     }
+    if (level === ConsoleModel.ConsoleMessage.MessageLevel.Info ||
+        level === ConsoleModel.ConsoleMessage.MessageLevel.Verbose)
+      item.info++;
+    else if (level === ConsoleModel.ConsoleMessage.MessageLevel.Warning)
+      item.warning++;
+    else if (level === ConsoleModel.ConsoleMessage.MessageLevel.Error)
+      item.error++;
   }
 
   clear() {
     if (!Runtime.experiments.isEnabled('logManagement'))
       return;
-    this._contextToItem.clear();
+    this._valueToItemMaps = this._createValueToItemMaps();
     this._pendingItemsToAdd.clear();
     this._pendingClear = true;
+  }
+
+  /**
+   * @return {!Object<!Console.ConsoleSidebar.GroupType, !Map<string, !Console.ConsoleSidebar.GroupItem>>}
+   */
+  _createValueToItemMaps() {
+    /** @type {!Object<!Console.ConsoleSidebar.GroupType, !Map<string, !Console.ConsoleSidebar.GroupItem>>} */
+    var valueToItemMaps = {};
+    valueToItemMaps[Console.ConsoleSidebar.AllGroupType] = new Map([[this._allGroup.name, this._allGroup]]);
+    for (var type of Object.values(Console.ConsoleViewFilter.FilterType))
+      valueToItemMaps[type] = /** @type {!Map<string, !Console.ConsoleSidebar.GroupItem>} */ (new Map());
+    return valueToItemMaps;
   }
 
   refresh() {
     if (!Runtime.experiments.isEnabled('logManagement'))
       return;
     if (this._pendingClear) {
-      this._items.replaceAll([this._createAllGroup()]);
+      this._allGroup.info = 0;
+      this._allGroup.warning = 0;
+      this._allGroup.error = 0;
+      this._items.replaceAll([this._allGroup]);
       this._list.selectItem(this._items.at(0));
       this._pendingClear = false;
     }
@@ -168,20 +184,24 @@ Console.ConsoleSidebar = class extends UI.VBox {
       return;
 
     toElement.classList.add('selected');
-    this.dispatchEventToListeners(Console.ConsoleSidebar.Events.ContextSelected, to.context);
+    this.dispatchEventToListeners(Console.ConsoleSidebar.Events.GroupSelected, to.filter);
   }
 };
 
-Console.ConsoleSidebar.AllContextsFilter = Symbol('All');
+Console.ConsoleSidebar.AllGroupType = Symbol('All');
+
+/** @typedef {!Console.ConsoleViewFilter.FilterType|symbol} */
+Console.ConsoleSidebar.GroupType;
 
 /** @enum {symbol} */
 Console.ConsoleSidebar.Events = {
-  ContextSelected: Symbol('ContextSelected')
+  GroupSelected: Symbol('GroupSelected')
 };
 
 /** @typedef {{
-        context: (string|symbol),
         name: string,
+        value: string,
+        filter: ?TextUtils.FilterParser.ParsedFilter,
         info: number,
         warning: number,
         error: number
