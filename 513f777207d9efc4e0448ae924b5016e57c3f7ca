@@ -51,6 +51,24 @@
       "revId": "513f777207d9efc4e0448ae924b5016e57c3f7ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3009dbd9_df377936",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-06T15:43:04Z",
+      "side": 1,
+      "message": "Thanks! I\u0027ve added TODO with bug.",
+      "parentUuid": "df1406b8_7f49cb8d",
+      "revId": "513f777207d9efc4e0448ae924b5016e57c3f7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
