@@ -354,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "655faaf0_dbfb30a9",
+        "filename": "chrome/common/plugin.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-06T02:32:25Z",
+      "side": 1,
+      "message": "Well, the current name does seem a bit silly since the renderer side is not in fact rendering plugins and all of the message descriptions refer to a plugin placeholder.",
+      "parentUuid": "a7e8c275_d2345c50",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 24
+      },
+      "revId": "e642cf9b3d530adbf98c1a25691f2c9fa2abc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "528e9d9d_1fc2328c",
         "filename": "chrome/common/render_messages.h",
         "patchSetId": 11
