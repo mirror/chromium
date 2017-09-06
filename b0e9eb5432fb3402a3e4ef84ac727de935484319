@@ -39,6 +39,24 @@
       "revId": "b0e9eb5432fb3402a3e4ef84ac727de935484319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d7da22_e3736bfb",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-06T01:40:53Z",
+      "side": 1,
+      "message": "It\u0027s not necessary. WebGL doesn\u0027t expose the enabled extensions. We only need to enable \u0027EXT_color_buffer_half_float\u0027 at WebGL level when it\u0027s requested through getExtension(\u0027EXT_color_buffer_half_float\u0027); for getExtension(\u0027OES_texture_half_float\u0027), we only need to make sure the \u0027EXT_color_buffer_half_float\u0027 is enabled in the underlying level.\n\nSame with the OES_texture_float / WEBGL_color_buffer_float case.",
+      "parentUuid": "9dfec7c0_7056d524",
+      "revId": "b0e9eb5432fb3402a3e4ef84ac727de935484319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
