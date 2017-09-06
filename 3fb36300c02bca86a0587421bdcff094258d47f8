@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "da609697_c1bcf39e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-06T19:42:08Z",
+      "side": 1,
+      "message": "Windows has strange version numbers. It has a build number which is typically five digits long like e.g. 10586 and that\u0027s included in the OS version info, then it has a \"release\" number which is format YYMM for the approximate month of release. E.g. this case 1703 is March 2017 and refers to build number 15063 or \"Creators Update\"... Also just to confuse things it has codenames for each release so for \"Creators Update\" this is rs2 \"Redstone 2\".\n\nhttps://technet.microsoft.com/en-us/windows/release-info.aspx\n\ntl;dr; 1703 is fine, but could put \"Creators Update\" or \"build 15063\" to be more specific and match the numbers used in base/win/windows_version.cc",
+      "parentUuid": "8b234dc9_116364f2",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "3fb36300c02bca86a0587421bdcff094258d47f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6379286_28820f14",
         "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
         "patchSetId": 3
