@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34ef9464_77d5deaf",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-06T03:17:00Z",
+      "side": 1,
+      "message": "Have you tried just SetShouldDoFullPaintInvalidation() here? We also don\u0027t need to invalidate if we paint the background onto the scrolling contents layer, which may be worth a TODO here.",
+      "revId": "3aa6e8e956c57b000b9930f76699fd1a72eb56a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
