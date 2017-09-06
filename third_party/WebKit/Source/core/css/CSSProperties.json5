@@ -520,6 +520,17 @@
       priority: "High",
     },
     {
+      name: "font-variant-east-asian",
+      api_class: true,
+      api_methods: ["ParseSingleValue"],
+      converter: "ConvertFontVariantEastAsian",
+      font: true,
+      inherited: true,
+      name_for_methods: "VariantEastAsian",
+      priority: "High",
+      type_name: "VariantEastAsian",
+    },
+    {
       name: "font-variant-numeric",
       api_class: true,
       api_methods: ["ParseSingleValue"],
@@ -3940,7 +3951,7 @@
     },
     {
       name: "font-variant",
-      longhands: ["font-variant-ligatures", "font-variant-caps", "font-variant-numeric"],
+      longhands: ["font-variant-ligatures", "font-variant-caps", "font-variant-numeric", "font-variant-east-asian"],
       api_class: true,
       api_methods: ["ParseShorthand"],
       is_descriptor: true,
