@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af5f22fc_ba3fbff6",
+        "filename": "chrome/browser/chromeos/arc/lock_screen/arc_lock_screen_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-06T17:55:06Z",
+      "side": 1,
+      "message": "Can this service be in components/arc? This is disallowed, but you can use https://cs.chromium.org/chromium/src/components/arc/arc_session_runner.h?type\u003dcs\u0026q\u003dThread+file:src/components/arc\u0026sq\u003dpackage:chromium\u0026l\u003d136 instead.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 50
+      },
+      "revId": "7dcbb539e956497fa49406c2b5c42a9008253d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b65e02e_374efb47",
+        "filename": "components/arc/common/lock_screen.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-06T17:55:06Z",
+      "side": 1,
+      "message": "nit: @0 is reserved for Init(). Please use @1.",
+      "range": {
+        "startLine": 13,
+        "startChar": 18,
+        "endLine": 13,
+        "endChar": 19
+      },
+      "revId": "7dcbb539e956497fa49406c2b5c42a9008253d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
