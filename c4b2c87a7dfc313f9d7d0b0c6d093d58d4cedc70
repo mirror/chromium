@@ -19,6 +19,86 @@
     },
     {
       "key": {
+        "uuid": "27c43b2f_86719eee",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T22:58:52Z",
+      "side": 1,
+      "message": "This should never be the case for renderer-initiated frame creation, right? Can we DCHECK(renderer_initiated_creation)?",
+      "revId": "c4b2c87a7dfc313f9d7d0b0c6d093d58d4cedc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3198eb7c_9471e048",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T22:58:52Z",
+      "side": 1,
+      "message": "Now that this method is on a Mojo interface, it seems more appropriate to call Binding::ReportBadMessage. I missed to call this one out in your previous CL, so feel free to include it there or just proceed as is and we can convert them wholesale for the whole method in a follow up CL.",
+      "revId": "c4b2c87a7dfc313f9d7d0b0c6d093d58d4cedc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a04f45_4fe973c5",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T22:58:52Z",
+      "side": 1,
+      "message": "nit: renderer process.",
+      "range": {
+        "startLine": 664,
+        "startChar": 35,
+        "endLine": 664,
+        "endChar": 43
+      },
+      "revId": "c4b2c87a7dfc313f9d7d0b0c6d093d58d4cedc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0513e399_af48c32d",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T22:58:52Z",
+      "side": 1,
+      "message": "nit: either \"renderer process\" or \"RenderFrame\", just \"renderer\" on its own is ambiguous.",
+      "range": {
+        "startLine": 688,
+        "startChar": 34,
+        "endLine": 688,
+        "endChar": 42
+      },
+      "revId": "c4b2c87a7dfc313f9d7d0b0c6d093d58d4cedc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34c5c012_d85d6d4b",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 9
@@ -30,6 +110,57 @@
       "writtenOn": "2017-09-06T16:58:28Z",
       "side": 1,
       "message": "nit: Please document why this is virtual (i.e. for testing)",
+      "revId": "c4b2c87a7dfc313f9d7d0b0c6d093d58d4cedc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0e5461_0979c5d3",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1351,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T22:58:52Z",
+      "side": 1,
+      "message": "This is used only in the cases of browser-initiated frame creation, correct? If so, maybe worthwhile detail to put in the comment.",
+      "revId": "c4b2c87a7dfc313f9d7d0b0c6d093d58d4cedc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af16bcd_e867232d",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1738,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T22:58:52Z",
+      "side": 1,
+      "message": "Would this create an unbound request?",
+      "revId": "c4b2c87a7dfc313f9d7d0b0c6d093d58d4cedc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99494e28_97787fc7",
+        "filename": "content/browser/frame_host/render_frame_message_filter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T22:58:52Z",
+      "side": 1,
+      "message": "A comment will be very helpful describing the intent of this code. It is only 3-4 lines of code, but it has lots of semantic meaning that for anyone that hasn\u0027t dealt with lots of Mojo code, it isn\u0027t obvious what it does.",
       "revId": "c4b2c87a7dfc313f9d7d0b0c6d093d58d4cedc70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +195,29 @@
       "writtenOn": "2017-09-06T16:58:28Z",
       "side": 1,
       "message": "nit: Worth documenting that this is an InterfaceProviderRequest since MessagePipeHandle loses that information",
+      "revId": "c4b2c87a7dfc313f9d7d0b0c6d093d58d4cedc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c62ac3c5_87e94ccd",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3796,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T22:58:52Z",
+      "side": 1,
+      "message": "nit: I find this word confusing. \"message\" maybe? Or even \"paramters\"?",
+      "range": {
+        "startLine": 3796,
+        "startChar": 59,
+        "endLine": 3796,
+        "endChar": 71
+      },
       "revId": "c4b2c87a7dfc313f9d7d0b0c6d093d58d4cedc70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
