@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "055b0828_d4fe2989",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-06T20:13:47Z",
+      "side": 1,
+      "message": "ack, Leaving as is, but moving block below to chromium_code",
+      "parentUuid": "863f7fb5_7df41dca",
+      "range": {
+        "startLine": 1134,
+        "startChar": 9,
+        "endLine": 1134,
+        "endChar": 14
+      },
+      "revId": "256b91a719f11d8c6533cf03ff01af0122685afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b50a994_ac1b9cbe",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8a6dadf1_22ba34f0",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-06T20:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b50a994_ac1b9cbe",
+      "range": {
+        "startLine": 1338,
+        "startChar": 30,
+        "endLine": 1338,
+        "endChar": 31
+      },
+      "revId": "256b91a719f11d8c6533cf03ff01af0122685afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b6eadfd_69de47e1",
         "filename": "ios/chrome/app/spotlight/spotlight_util.mm",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "256b91a719f11d8c6533cf03ff01af0122685afb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7982afb1_3debdccf",
+        "filename": "ios/chrome/app/spotlight/spotlight_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-06T20:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b6eadfd_69de47e1",
+      "range": {
+        "startLine": 197,
+        "startChar": 4,
+        "endLine": 197,
+        "endChar": 17
+      },
+      "revId": "256b91a719f11d8c6533cf03ff01af0122685afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "72094d78_61e54708",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-06T20:13:47Z",
+      "side": 1,
+      "message": "This code was incorrect on iOS9.  Per mahmadi, leaving code as is.",
+      "parentUuid": "68d1c8bb_5b5abd32",
+      "revId": "256b91a719f11d8c6533cf03ff01af0122685afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1baf2894_08949c6a",
         "filename": "ios/chrome/browser/physical_web/physical_web_initial_state_recorder.mm",
         "patchSetId": 4
@@ -120,6 +210,24 @@
       "revId": "256b91a719f11d8c6533cf03ff01af0122685afb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a18f85_02db845f",
+        "filename": "ios/chrome/browser/physical_web/physical_web_initial_state_recorder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-06T20:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1baf2894_08949c6a",
+      "revId": "256b91a719f11d8c6533cf03ff01af0122685afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

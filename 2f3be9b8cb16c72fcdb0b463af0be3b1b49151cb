@@ -34,6 +34,24 @@
       "revId": "2f3be9b8cb16c72fcdb0b463af0be3b1b49151cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7fad79_1c4697ac",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-06T20:13:47Z",
+      "side": 0,
+      "message": "nevermind, seems i can leave it, the \u0027and here\u0027 was in reference to https://chromium-review.googlesource.com/c/chromium/src/+/646447/3/ios/chrome/app/spotlight/spotlight_util.mm",
+      "parentUuid": "7562d55d_35cf2798",
+      "revId": "2f3be9b8cb16c72fcdb0b463af0be3b1b49151cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
