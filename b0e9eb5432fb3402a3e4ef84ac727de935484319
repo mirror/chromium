@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "453ecda7_cce72a25",
+        "filename": "third_party/WebKit/Source/modules/webgl/OESTextureHalfFloat.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-06T00:47:04Z",
+      "side": 1,
+      "message": "geofflang: If I do context-\u003eExtensionsUtil()-\u003eEnsureExtensionEnabled(\"context-\u003eExtensionsUtil()-\u003eEnsureExtensionEnabled(\") here, in passthrough mode, this calls glRequestExtesnionANGLE() on the service side, and then readPixels will generate INVALID_ENUM with RGBA/FLOAT.\n\nIt\u0027s OK not to call that, so I don\u0027t, but I\u0027d like to understand why the ANGLE behavior.",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "b0e9eb5432fb3402a3e4ef84ac727de935484319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
