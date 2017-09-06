@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5e2d3a80_cd0ad836",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-09-06T21:54:35Z",
+      "side": 1,
+      "message": "I don\u0027t know of any reason you couldn\u0027t use this as long as you know it will restart with MAIN intent.",
+      "parentUuid": "6e5d7e95_a32a3c14",
+      "range": {
+        "startLine": 621,
+        "startChar": 28,
+        "endLine": 621,
+        "endChar": 37
+      },
+      "revId": "c85bd573a2745d9d8a82e12f2db7f3220b5558df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05279cdb_75d9ce33",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 1
