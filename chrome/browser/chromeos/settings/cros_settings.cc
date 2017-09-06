@@ -237,10 +237,6 @@ bool CrosSettings::FindEmailInList(const std::string& path,
   if (wildcard_match)
     *wildcard_match = false;
 
-  const base::ListValue* list;
-  if (!GetList(path, &list))
-    return false;
-
   bool found_wildcard_match = false;
   for (base::ListValue::const_iterator entry(list->begin());
        entry != list->end();
