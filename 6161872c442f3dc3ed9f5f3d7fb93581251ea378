@@ -16,6 +16,24 @@
       "revId": "6161872c442f3dc3ed9f5f3d7fb93581251ea378",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c66e4f_29ebe5f8",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-06T16:51:26Z",
+      "side": 1,
+      "message": "So, unfortunately the paper- elements are not super well supported. We should consider carefully whether we want to add paper-toast since we will need fix any issues like this ourselves.\n\nI see that md-bookmarks has their own toast manager, have you spoken to the authors about their decision to do that instead of use paper-toast? It seems like we should handle toast UI consistently in MD WebUI. Maybe we can move toast bookmarks-toast-manager to ui/webui/resources/cr_components/cr_toast_manager/ and use it in both places?",
+      "parentUuid": "01ecdb9b_fad05c4d",
+      "revId": "6161872c442f3dc3ed9f5f3d7fb93581251ea378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
