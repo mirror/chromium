@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baf0d237_75a02e88",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2228,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-06T20:43:44Z",
+      "side": 1,
+      "message": "If you want a class to be private to a .cc file, there\u0027s no need for NET_EXPORT, and it can live in the anonymous namespace at the top of the file.",
+      "revId": "436dea494c6cfb746456071d8a24cfd8f40618f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba99221d_1071b73c",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2237,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-06T20:43:44Z",
+      "side": 1,
+      "message": "This looks like it only needs to be its own class because it owns request_. Am I reading that correctly? Since you\u0027ll need to find somewhere to store these anyway, I\u0027d recommend skipping the new class, making Refresh() a function in HostResolverImpl, and making a place in HostResolverImpl to store the HostResolver::Requests directly instead.",
+      "revId": "436dea494c6cfb746456071d8a24cfd8f40618f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
