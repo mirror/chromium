@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "a52f1338_d4c7e32e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-06T18:20:52Z",
+      "side": 1,
+      "message": "I think gray (as is used for FLAG_EASY_CORRECT SuggestionSpans) would be a good default. Black would likely be confused with composition underlines.\n\nThis will be called once per SuggestionSpan added by the IME. The rate of SuggestionSpans being added is limited by the rate of the user\u0027s text input (probably at most one per word when typing, and a handful per sentence when using the voice IME). If we cache the color, we\u0027d have to cache different colors depending on e.g. if FLAG_MISSPELLED is set or not.\n\nI\u0027ve filed b/65385671 to un-hide this method in a future version of Android.",
+      "parentUuid": "0ddb514d_7edc0111",
+      "range": {
+        "startLine": 885,
+        "startChar": 12,
+        "endLine": 885,
+        "endChar": 18
+      },
+      "revId": "c690e8dc96c193b5589f6d141e04cc4fc7f9f2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4997ec10_9a456dfa",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/SuggestionsPopupWindow.java",
         "patchSetId": 14
