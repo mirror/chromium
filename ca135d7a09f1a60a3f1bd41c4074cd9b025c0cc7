@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5d4caec_9c8c2a79",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 4663,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-06T10:25:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t look syntactically correct -- shouldn\u0027t this be outside of the `sources +\u003d` block, i.e. on the next line?",
+      "range": {
+        "startLine": 4663,
+        "startChar": 6,
+        "endLine": 4663,
+        "endChar": 49
+      },
+      "revId": "ca135d7a09f1a60a3f1bd41c4074cd9b025c0cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
