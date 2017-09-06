@@ -314,6 +314,24 @@
       "revId": "0ab2490ae7a1d711d8b840a49f5d0c228d05ee0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1414612_d937160a",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIApplyAtRule.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-06T23:44:24Z",
+      "side": 1,
+      "message": "If it\u0027s not in any BUILD file and still working i\u0027d say that means it\u0027s not being used at all... might want to investigate that, what happens if you delete this file entirely?",
+      "parentUuid": "75be9878_fb5d3718",
+      "revId": "0ab2490ae7a1d711d8b840a49f5d0c228d05ee0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

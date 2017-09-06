@@ -34,6 +34,24 @@
       "revId": "4d1955e742f84f9688fd13f59a1ecdaf20d235b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "417cab1f_20942a21",
+        "filename": "third_party/WebKit/Source/core/css/CSSPropertyMetadata.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-06T23:44:24Z",
+      "side": 0,
+      "message": "for future cls i think this sort of thing should be separate. i wouldn\u0027t worry about removing it now, just make note of it in the cl description",
+      "parentUuid": "51c618c6_6d2b05c2",
+      "revId": "4d1955e742f84f9688fd13f59a1ecdaf20d235b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
