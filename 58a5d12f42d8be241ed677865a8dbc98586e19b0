@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae947861_a6d6f28b",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1558,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-06T00:34:31Z",
+      "side": 1,
+      "message": "I\u0027d recommend to pass the event for following reasons.\n*) The name suggests it\u0027s processing the mouse wheel event\n*) It can pass full context, that can be useful when troubleshooting\n*) It\u0027s consistent with OnGestureEvent",
+      "revId": "58a5d12f42d8be241ed677865a8dbc98586e19b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e89558_81a82e64",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2060,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-06T00:34:31Z",
+      "side": 1,
+      "message": "don\u0027t you also want to test if it revealed the launcher?",
+      "revId": "58a5d12f42d8be241ed677865a8dbc98586e19b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
