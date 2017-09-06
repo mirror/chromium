@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c9183ea_30a4f049",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-06T09:21:22Z",
+      "side": 1,
+      "message": "Child nodes of Shadow Root can be appeared in flat tree.\n\nBeforeAnchor(SR) and AfterAnchor(SR) are contrerversial.\nBut, I think below interpretation is meaningful.\n\nExamples:\n\u003cshadow-host\u003e SH\n#shadow-root \u003d SR\n0\u003ca\u003e1\u003c/a\u003e2\n\nBeforeAnchor(SR) \u003d\u003d BeforeChildren(SH); really?\nBeforeChildren(SR) \u003d\u003d SR@0, BeforeAnchor(\"0\")\nSR@n: They are position in shadow root\nAfterAnchor(SR) \u003d\u003d AfterChildren(SH): really?\nAfterChildren(SR) \u003d\u003d SR@3, AfterAnchor(\"2\")",
+      "revId": "9b85ffa8ca46169a74902f85e9ff0a35aa6ba8f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
