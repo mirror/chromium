@@ -52,6 +52,24 @@
       "revId": "fd25c8a1ea192bfe85f179384b3a704f31c991e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73cead0e_8b1e028f",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-09-06T17:20:57Z",
+      "side": 1,
+      "message": "looks like the signal is currently only getting sent to the top level document as you point out.\nthis should really be sent to all documents or atleast all documents involved in the layout preceding the commit. Then TextElementTiming::DidCommitCompositorFrame should generate the timestamp, if needed, and report to the corresponding document\u0027s Performance object.\n\nAn alternative approach to plumbing the commit signal to relevant Document\u0027s TextElementTiming is by adding observers on the renderer scheduler (DidCommit signal) - which will invoke method on observers when the commit happens.\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h?l\u003d89\nThis might be cleaner than punching through WebView anyway.",
+      "parentUuid": "aa118ff6_b0019e55",
+      "revId": "fd25c8a1ea192bfe85f179384b3a704f31c991e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
