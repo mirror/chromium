@@ -2435,6 +2435,8 @@ split_static_library("ui") {
       "cocoa/notifications/message_center_tray_bridge.mm",
       "cocoa/nsmenuitem_additions.h",
       "cocoa/nsmenuitem_additions.mm",
+      "cocoa/password_reuse_warning_dialog_controller.h",
+      "cocoa/password_reuse_warning_dialog_controller.mm",
       "cocoa/profiles/profile_menu_controller.h",
       "cocoa/profiles/profile_menu_controller.mm",
       "cocoa/renderer_context_menu/render_view_context_menu_mac.h",
