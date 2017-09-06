@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01ecdb9b_fad05c4d",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-06T16:07:13Z",
+      "side": 1,
+      "message": "While using paper-toast significantly simplifies this, I am currently failing to right adjust the UNDO button properly as mandated by the MD spec: https://material.io/guidelines/components/snackbars-toasts.html#snackbars-toasts-specs\n\n(Details: https://storage.googleapis.com/material-design/publish/material_v_11/assets/0B57Y8yNEHsZPaTBmR1lJeTdVT0k/components_toasts_tabletdesktop3.png)\n\nMy CSS fu is failing me here, so any help is appreciated :)",
+      "revId": "6161872c442f3dc3ed9f5f3d7fb93581251ea378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
