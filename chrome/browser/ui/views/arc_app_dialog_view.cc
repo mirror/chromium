@@ -129,7 +129,8 @@ ArcAppDialogView::ArcAppDialogView(Profile* profile,
 
   SetLayoutManager(new views::BoxLayout(
       views::BoxLayout::kHorizontal,
-      provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS),
+      provider->GetInsetsForContentType(views::LeadingContentType::TEXT,
+                                        views::TrailingContentType::TEXT),
       provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_HORIZONTAL)));
 
   icon_view_ = new views::ImageView();

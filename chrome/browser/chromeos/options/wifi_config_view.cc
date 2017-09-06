@@ -906,8 +906,8 @@ void WifiConfigView::Cancel() {
 
 void WifiConfigView::Init(bool show_8021x) {
   views::LayoutProvider* provider = views::LayoutProvider::Get();
-  SetBorder(views::CreateEmptyBorder(
-      provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS)));
+  SetBorder(views::CreateEmptyBorder(provider->GetInsetsForContentType(
+      views::LeadingContentType::TEXT, views::TrailingContentType::TEXT)));
 
   const NetworkState* network = GetNetworkState();
   if (network) {

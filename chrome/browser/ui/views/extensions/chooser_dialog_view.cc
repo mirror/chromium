@@ -44,9 +44,10 @@ ChooserDialogView::ChooserDialogView(
   DCHECK(chooser_controller);
   device_chooser_content_view_ =
       new DeviceChooserContentView(this, std::move(chooser_controller));
-  device_chooser_content_view_->SetBorder(
-      views::CreateEmptyBorder(ChromeLayoutProvider::Get()->GetInsetsMetric(
-          views::INSETS_DIALOG_CONTENTS)));
+  device_chooser_content_view_->SetBorder(views::CreateEmptyBorder(
+      ChromeLayoutProvider::Get()->GetInsetsForContentType(
+          views::LeadingContentType::CONTROL,
+          views::TrailingContentType::CONTROL)));
   chrome::RecordDialogCreation(chrome::DialogIdentifier::CHOOSER);
 }
 
@@ -78,7 +79,7 @@ views::View* ChooserDialogView::CreateFootnoteView() {
   if (footnote_link) {
     footnote_link->SetBorder(
         views::CreateEmptyBorder(ChromeLayoutProvider::Get()->GetInsetsMetric(
-            views::INSETS_DIALOG_CONTENTS)));
+            views::INSETS_DIALOG_SUBSECTION)));
   }
   return footnote_link;
 }
