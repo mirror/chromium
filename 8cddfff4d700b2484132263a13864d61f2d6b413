@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c335db7f_887a67c1",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-06T23:51:39Z",
+      "side": 1,
+      "message": "Done. \n\nMy original theory is that we would rarely see these exceed 10 (with the exception of zombies), and using a lower upper bound would allow us to have more granular buckets.",
+      "parentUuid": "bd81d1ab_65fbda56",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1abe8a10_e62c16ef",
         "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18736c2_eaacc32a",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-06T23:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1abe8a10_e62c16ef",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "afaf5e73_8315777c",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-06T23:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5a30440_5ef90a02",
+      "range": {
+        "startLine": 100,
+        "startChar": 30,
+        "endLine": 100,
+        "endChar": 70
+      },
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a654669a_e442e3da",
         "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-06T17:51:02Z",
       "side": 1,
       "message": "question: Why did you choose a multiple histograms approach instead of a single enumeration one?",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6306499_d047f526",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-06T23:51:39Z",
+      "side": 1,
+      "message": "I wanted to see the distribution of each individual count.  Can we do that with a single enumeration one?  I though we\u0027d only get relative totals with a single enumeration one.",
+      "parentUuid": "a654669a_e442e3da",
       "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "5d5d080f_49c73caa",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-06T23:51:39Z",
+      "side": 1,
+      "message": "Oops, old comment, I was planning to remove that before sending it out for review.  In this case, I wanted to make sure I was using the right column, when I wrote this, I wasn\u0027t sure whether the state would be in column 0 or 1.  \n\nChanged to a C++ cast, and TODO removed.",
+      "parentUuid": "6387633e_81e9816f",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "511686f6_865995a0",
         "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
         "patchSetId": 1
@@ -107,6 +203,24 @@
       "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44068059_ca7cac4a",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-06T23:51:39Z",
+      "side": 1,
+      "message": "Otherwise we only see zombies, we never see anything in the finished state.  It might be useful to see how many tasks were in the finished state when we collect metrics.  Comment  updated.",
+      "parentUuid": "511686f6_865995a0",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "103e8b4e_92f6be4e",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-06T23:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cf5a242_5eaaef9f",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75f43754_76b92c8e",
         "filename": "components/offline_pages/core/prefetch/metrics_finalization_task_unittest.cc",
         "patchSetId": 1
@@ -138,6 +270,24 @@
       "writtenOn": "2017-09-06T17:51:02Z",
       "side": 1,
       "message": "Why different number of items specifically for FINISHED and ZOMBIE?",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503d99ca_d3dfb74c",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-06T23:51:39Z",
+      "side": 1,
+      "message": "I\u0027m being cautious in the test by not having everything with exactly one entry, otherwise code that always returned 1 item would be correct.  It could have been anything, finished and zombie seemed like two good ones to pick.  I can update the comment if that helps.",
+      "parentUuid": "75f43754_76b92c8e",
       "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "bc0c9b1f_22ac5983",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-06T23:51:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f61fd4a4_06a22900",
+      "range": {
+        "startLine": 285,
+        "startChar": 30,
+        "endLine": 285,
+        "endChar": 48
+      },
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70c65743_57cf67f4",
         "filename": "components/offline_pages/core/prefetch/metrics_finalization_task_unittest.cc",
         "patchSetId": 1
@@ -190,6 +364,30 @@
     },
     {
       "key": {
+        "uuid": "76252c5f_bb57f55b",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-06T23:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70c65743_57cf67f4",
+      "range": {
+        "startLine": 299,
+        "startChar": 19,
+        "endLine": 299,
+        "endChar": 36
+      },
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75055635_d10d50a2",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
         "patchSetId": 1
@@ -201,6 +399,24 @@
       "writtenOn": "2017-09-06T17:51:02Z",
       "side": 1,
       "message": "Uneeded change.",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395cbf12_0aac53c6",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-06T23:51:39Z",
+      "side": 1,
+      "message": "True, but we are supposed to have blank lines between functions.  If you like, I can put this in a different changelist.",
+      "parentUuid": "75055635_d10d50a2",
       "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -227,6 +443,30 @@
       "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e0442c_9e2dff9c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 50710,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-06T23:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdad555f_bf311f9e",
+      "range": {
+        "startLine": 50710,
+        "startChar": 11,
+        "endLine": 50710,
+        "endChar": 66
+      },
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
