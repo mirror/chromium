@@ -16,6 +16,24 @@
       "revId": "8e5327ab1e1d938546fab67914333e9d75bf2111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49dc657c_18b5e649",
+        "filename": "chrome/browser/media_galleries/media_galleries_preferences.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-06T22:02:16Z",
+      "side": 1,
+      "message": "Oh yeah, I had fixed it in the picasa CL.\nI just changed it here as well and will remove the counter as part of the picasa CL after this one lands.",
+      "parentUuid": "4c4385cc_06c82b97",
+      "revId": "8e5327ab1e1d938546fab67914333e9d75bf2111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
