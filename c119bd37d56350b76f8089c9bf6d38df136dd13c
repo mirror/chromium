@@ -105,6 +105,24 @@
       "revId": "c119bd37d56350b76f8089c9bf6d38df136dd13c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c45386a_868175cc",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-06T21:01:24Z",
+      "side": 1,
+      "message": "The clipping happens in RenderSurfaceImpl. The content bounds are computed as the bounding box [1] of contributing layers in target space [2]. The target space for window layers is the window\u0027s local coordinate space, for example:\n\nFrame: (0, 0) 618×1098\nShadow: (-94, -46) 808×1288\n\nHowever, the host_window layer is positioned at ShellSurface::GetSurfaceOrigin, and sized to match the client-side viewport/display:\n\n(-970, -252) 2560×1700\n\nThis doesn\u0027t make much sense, but the math coincidentally works out in most cases, e.g. if the window is positioned at non-negative coordinates like (970, 252) in the example above. For windows at negative coordinates, the content bounds end up having the same origin as the shadow layer, clipping content outside quadrant IV.\n\nI think the first step of a proper solution is changing the surface hierarchy in ARC, i.e. use local coordinates for layer positioning and input events in HWC. I have a working prototype, but it\u0027s a significant breaking change, so could we use this workaround for now?\n\n[1] https://chromium.googlesource.com/chromium/src/+/4490a7d56f6e4cf0df0ab3bc70d2e1aeb8cb79bf/cc/layers/render_surface_impl.cc#284\n[2] https://chromium.googlesource.com/chromium/src/+/bd22c1ecd5ca1bcc7fe7c8d14156cb6502983f6f/cc/trees/draw_property_utils.cc#987",
+      "parentUuid": "e67a3422_944737fe",
+      "revId": "c119bd37d56350b76f8089c9bf6d38df136dd13c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
