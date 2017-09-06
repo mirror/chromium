@@ -31,6 +31,8 @@ class PLATFORM_EXPORT CompositorAnimationHost {
   void AdjustImplOnlyScrollOffsetAnimation(CompositorElementId,
                                            const gfx::Vector2dF& adjustment);
   void TakeOverImplOnlyScrollOffsetAnimation(CompositorElementId);
+  void SetMainThreadAnimationsCount(size_t num);
+  void SetMainThreadCompositableAnimationsCount(size_t num);
 
  private:
   cc::AnimationHost* animation_host_;

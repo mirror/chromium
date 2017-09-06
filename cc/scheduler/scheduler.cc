@@ -581,7 +581,10 @@ void Scheduler::DrawIfPossible() {
   state_machine_.DidDraw(result);
   compositor_timing_history_->DidDraw(
       drawing_with_new_active_tree, main_thread_missed_last_deadline,
-      begin_impl_frame_tracker_.DangerousMethodCurrentOrLast().frame_time);
+      begin_impl_frame_tracker_.DangerousMethodCurrentOrLast().frame_time,
+      client_->CompositedAnimationsCount(),
+      client_->MainThreadAnimationsCount(),
+      client_->MainThreadCompositableAnimationsCount());
 }
 
 void Scheduler::DrawForced() {
@@ -596,7 +599,10 @@ void Scheduler::DrawForced() {
   state_machine_.DidDraw(result);
   compositor_timing_history_->DidDraw(
       drawing_with_new_active_tree, main_thread_missed_last_deadline,
-      begin_impl_frame_tracker_.DangerousMethodCurrentOrLast().frame_time);
+      begin_impl_frame_tracker_.DangerousMethodCurrentOrLast().frame_time,
+      client_->CompositedAnimationsCount(),
+      client_->MainThreadAnimationsCount(),
+      client_->MainThreadCompositableAnimationsCount());
 }
 
 void Scheduler::SetDeferCommits(bool defer_commits) {
