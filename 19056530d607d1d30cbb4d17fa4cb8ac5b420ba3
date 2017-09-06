@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d28e4bbd_bfdf138c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/accessibility/AXBreadcrumbsPane.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-06T01:36:38Z",
+      "side": 1,
+      "message": "How\u0027s that? :) More seriously, does it need a comment?",
+      "parentUuid": "a5bf58d2_09f91367",
+      "revId": "19056530d607d1d30cbb4d17fa4cb8ac5b420ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff5b6702_673d1186",
         "filename": "third_party/WebKit/Source/devtools/front_end/accessibility/AXBreadcrumbsPane.js",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-05T23:58:41Z",
       "side": 1,
       "message": "This fixes the contextmenu right? Can you add that to the description?",
+      "revId": "19056530d607d1d30cbb4d17fa4cb8ac5b420ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aec63da_c2220ca1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/accessibility/AXBreadcrumbsPane.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-06T01:36:38Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "ff5b6702_673d1186",
       "revId": "19056530d607d1d30cbb4d17fa4cb8ac5b420ba3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f43af09d_6c9bd91d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/accessibility/AXBreadcrumbsPane.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-06T01:36:38Z",
+      "side": 1,
+      "message": "The reason is, the \"breadcrumb\" element contains *both* the \"node\" (the row containing the \u003e and the role name) and the \"children\". Only the \"node\" should be the focus target and tree item; the children should be contained in a group (which doesn\u0027t get focus).\n\nI realised in looking again at this that I should also set aria-expanded on the same element (now done) and that removing the tabindex causes a blur which leads to a lot of focus notifications, so I fixed that too.",
+      "parentUuid": "2638ae4c_0fc83e7e",
+      "revId": "19056530d607d1d30cbb4d17fa4cb8ac5b420ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cebda5bd_0863a7a7",
         "filename": "third_party/WebKit/Source/devtools/front_end/accessibility/AXBreadcrumbsPane.js",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-05T23:58:41Z",
       "side": 1,
       "message": "Nit: _ means private to the file, not to the class. So you can just use _nodeElement above instead of making this public.",
+      "revId": "19056530d607d1d30cbb4d17fa4cb8ac5b420ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fdd0852_e3155ff4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/accessibility/AXBreadcrumbsPane.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-06T01:36:38Z",
+      "side": 1,
+      "message": "Is it ok if I leave it as is? It\u0027s all \"I\u0027m a sign, not a cop\" anyway, and it makes me feel better knowing what\u0027s \"really\" private.",
+      "parentUuid": "cebda5bd_0863a7a7",
       "revId": "19056530d607d1d30cbb4d17fa4cb8ac5b420ba3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
