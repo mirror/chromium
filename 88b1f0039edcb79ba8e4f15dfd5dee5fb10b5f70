@@ -95,6 +95,24 @@
     },
     {
       "key": {
+        "uuid": "907c32a5_5c9b35a7",
+        "filename": "chromecast/app/android/crash_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-06T20:50:56Z",
+      "side": 1,
+      "message": "Ok, but this also starts a new task to scan the directory every 20 minutes ... which seems completely unnecessary?",
+      "parentUuid": "e1deac48_00526650",
+      "revId": "88b1f0039edcb79ba8e4f15dfd5dee5fb10b5f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "facc359b_55456cab",
         "filename": "chromecast/app/android/crash_handler.h",
         "patchSetId": 1
