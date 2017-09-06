@@ -111,7 +111,7 @@ Polymer({
       this.showChromeCleanup = false;
     });
 
-    this.addEventListener('change-password-clicked', e => {
+    this.addEventListener('change-password-dismissed', e => {
       this.showChangePassword = false;
     });
 

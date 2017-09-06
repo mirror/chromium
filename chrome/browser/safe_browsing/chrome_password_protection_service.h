@@ -5,12 +5,16 @@
 #ifndef CHROME_BROWSER_SAFE_BROWSING_CHROME_PASSWORD_PROTECTION_SERVICE_H_
 #define CHROME_BROWSER_SAFE_BROWSING_CHROME_PASSWORD_PROTECTION_SERVICE_H_
 
+#include <map>
+
+#include "base/observer_list.h"
 #include "build/build_config.h"
 #include "components/safe_browsing/password_protection/password_protection_service.h"
 #include "components/sync/protocol/user_event_specifics.pb.h"
 #include "ui/base/ui_features.h"
 
 class PrefService;
+class PrefChangeRegistrar;
 class Profile;
 
 namespace content {
@@ -22,20 +26,39 @@ namespace safe_browsing {
 class SafeBrowsingService;
 class SafeBrowsingNavigationObserverManager;
 class SafeBrowsingUIManager;
+class ChromePasswordProtectionService;
 
 using OnWarningDone =
     base::OnceCallback<void(PasswordProtectionService::WarningAction)>;
 
 #if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
 // Shows the platform-specific password reuse modal dialog.
-void ShowPasswordReuseModalWarningDialog(content::WebContents* web_contents,
-                                         OnWarningDone done_callback);
+void ShowPasswordReuseModalWarningDialog(
+    content::WebContents* web_contents,
+    ChromePasswordProtectionService* service,
+    OnWarningDone done_callback);
 #endif  // !OS_MACOSX || MAC_VIEWS_BROWSER
 
 // ChromePasswordProtectionService extends PasswordProtectionService by adding
 // access to SafeBrowsingNaivigationObserverManager and Profile.
 class ChromePasswordProtectionService : public PasswordProtectionService {
  public:
+  class Observer {
+   public:
+    // Called when user clicks on the "Change Password" button on
+    // chrome://settings page.
+    virtual void OnStartingPasswordChange() {}
+
+    // Called when user completes the sync password reset.
+    virtual void OnPasswordChanged() {}
+
+    // Called when user marks the site as legitimate.
+    virtual void OnMarkingSiteAsLegitimate(const GURL& url) {}
+
+   protected:
+    virtual ~Observer() = default;
+  };
+
   ChromePasswordProtectionService(SafeBrowsingService* sb_service,
                                   Profile* profile);
 
@@ -43,10 +66,17 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
 
   static bool ShouldShowChangePasswordSettingUI(Profile* profile);
 
-  void ShowModalWarning(
-      content::WebContents* web_contents,
-      const LoginReputationClientRequest* request_proto,
-      const LoginReputationClientResponse* response_proto) override;
+  void ShowModalWarning(content::WebContents* web_contents,
+                        const std::string& verdict_token) override;
+
+  // |AddObserver()| immediately notifies |observer| of the controller's state
+  // by calling the corresponding |On*()| function.
+  virtual void AddObserver(Observer* observer);
+  virtual void RemoveObserver(Observer* observer);
+
+  std::map<GURL, int64_t> unhandled_password_reuses() {
+    return unhandled_password_reuses_;
+  }
 
  protected:
   // PasswordProtectionService overrides.
@@ -86,6 +116,11 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   void UpdateSecurityState(SBThreatType threat_type,
                            content::WebContents* web_contents) override;
 
+ public:
+  // Called when user's sync password changed.
+  void OnSyncPasswordChanged();
+
+ protected:
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
                            VerifyUserPopulationForPasswordOnFocusPing);
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
@@ -136,6 +171,12 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   Profile* profile_;
   scoped_refptr<SafeBrowsingNavigationObserverManager>
       navigation_observer_manager_;
+  base::ObserverList<Observer> observer_list_;
+  std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_;
+  // The map of password reuse URLs (with empty path) to navigation ID. These
+  // are password reuses that user hasn't chosen to change password, or
+  // mark site as legitimate yet.
+  std::map<GURL, int64_t> unhandled_password_reuses_;
   DISALLOW_COPY_AND_ASSIGN(ChromePasswordProtectionService);
 };
 
