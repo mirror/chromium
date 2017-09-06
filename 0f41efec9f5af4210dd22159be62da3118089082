@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abfdd1fa_8f0664ee",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-06T20:53:30Z",
+      "side": 1,
+      "message": "Are the FindPath() calls expected to never return nullptr?",
+      "revId": "0f41efec9f5af4210dd22159be62da3118089082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
