@@ -15,6 +15,8 @@ import shutil
 import signal
 import subprocess
 import sys
+import time
+import uuid
 
 
 DIR_SOURCE_ROOT = os.path.abspath(
@@ -28,17 +30,23 @@ GUEST_NET = '192.168.3.0/24'
 GUEST_IP_ADDRESS = '192.168.3.9'
 HOST_IP_ADDRESS = '192.168.3.2'
 
+# This port on localhost is forwarded to 22 on the target.
+HOST_SSH_PORT = '23422'
+
 
 def _RunAndCheck(dry_run, args):
+  print 'Run:', args
+
   if dry_run:
     print 'Run:', ' '.join(args)
     return 0
-  else:
-    try:
-      subprocess.check_call(args)
-      return 0
-    except subprocess.CalledProcessError as e:
-      return e.returncode
+
+  try:
+    with open(os.devnull, 'r') as nul:
+      subprocess.check_call(args, stdin=nul)
+    return 0
+  except subprocess.CalledProcessError as e:
+    return e.returncode
 
 
 def _IsRunningOnBot():
@@ -150,6 +158,41 @@ def _WriteManifest(manifest_file, file_mapping):
     manifest_file.write('%s=%s\n' % (target, source))
 
 
+def _InitializeSSH(base_path, dry_run):
+  """Creates a keypair to enable SSHing into the target. Returns a list of files
+  to be added to the bootfs, and the ssh config file to be used on the host."""
+  id_key_path = '%s.id_key' % base_path
+  host_key_path = '%s.host_key' % base_path
+  _RunAndCheck(
+      dry_run,
+      ['ssh-keygen', '-q', '-t', 'ed25519', '-N', '', '-f', id_key_path])
+  _RunAndCheck(
+      dry_run,
+      ['ssh-keygen', '-q', '-t', 'ed25519', '-N', '', '-f', host_key_path])
+
+  config_file_path = '%s.ssh_config' % base_path
+  with open(config_file_path, 'w') as f:
+    f.write("""Host *
+CheckHostIP no
+StrictHostKeyChecking no
+ForwardAgent no
+ForwardX11 no
+GSSAPIDelegateCredentials no
+UserKnownHostsFile /dev/null
+User fuchsia
+IdentityFile {id_key_path}
+IPQoS reliability
+ControlPersist yes
+ControlMaster auto
+ControlPath /tmp/fuchsia-{user}-%r@%h:%p
+""".format(id_key_path=id_key_path, user=os.environ.get('USER')))
+
+  return ((('data/ssh/authorized_keys', '%s.pub' % id_key_path),
+           ('data/ssh/ssh_host_ed25519_key', host_key_path),
+           ('data/ssh/ssh_host_ed25519_key.pub', '%s.pub' % host_key_path)),
+          config_file_path)
+
+
 def ReadRuntimeDeps(deps_path, output_directory):
   result = []
   for f in open(deps_path):
@@ -159,11 +202,31 @@ def ReadRuntimeDeps(deps_path, output_directory):
     result.append((target_path, abs_path))
   return result
 
-def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
-                dry_run, power_off):
+
+class BootfsData(object):
+  """Results from BuildBootfs().
+
+  bootfs: Local path to .bootfs image file.
+  symbols_mapping: A dict mapping executables to their unstripped originals.
+  termination_string: A string to be grep'd for that indicates the target
+                      process on the VM has terminated.
+  ssh_config_file: A host-side file that can be used to SSH into the target.
+  """
+  def __init__(self, bootfs_name, symbols_mapping, termination_string,
+               ssh_config_file):
+    self.bootfs = bootfs_name
+    self.symbols_mapping = symbols_mapping
+    self.termination_string = termination_string
+    self.ssh_config_file = ssh_config_file
+
+
+def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run):
   # |runtime_deps| already contains (target, source) pairs for the runtime deps,
   # so we can initialize |file_mapping| from it directly.
   file_mapping = dict(runtime_deps)
+
+  extra_files, local_config_file = _InitializeSSH(bin_name, dry_run)
+  file_mapping.update(dict(extra_files))
 
   # Generate a script that runs the binaries and shuts down QEMU (if used).
   autorun_file = open(bin_name + '.bootfs_autorun', 'w')
@@ -182,15 +245,10 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
   for arg in child_args:
     autorun_file.write(' "%s"' % arg);
   autorun_file.write('\n')
-  autorun_file.write('echo Process terminated.\n')
-
-  if power_off:
-    # If shutdown of QEMU happens too soon after the program finishes, log
-    # statements from the end of the run will be lost, so sleep for a bit before
-    # shutting down. When running on device don't power off so the output and
-    # system can be inspected.
-    autorun_file.write('msleep 3000\n')
-    autorun_file.write('dm poweroff\n')
+  # Generate a unique string that the output processor can look for to know
+  # that the target process is finished.
+  termination_string = 'Process terminated %s.' % uuid.uuid4().hex
+  autorun_file.write('echo ' + termination_string + '\n')
 
   autorun_file.flush()
   os.chmod(autorun_file.name, 0750)
@@ -224,8 +282,8 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
        '--target=system', manifest_file.name]) != 0:
     return None
 
-  # Return both the name of the bootfs file, and the filename mapping.
-  return (bootfs_name, symbols_mapping)
+  return BootfsData(bootfs_name, symbols_mapping, termination_string,
+                    local_config_file)
 
 
 def _SymbolizeEntries(entries):
@@ -329,15 +387,15 @@ def _SymbolizeBacktrace(backtrace, file_mapping):
   return map(lambda entry: symbolized[entry['frame_id']], backtrace)
 
 
-def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
-  bootfs, bootfs_manifest = bootfs_and_manifest
+def RunFuchsia(bootfs_data, use_device, dry_run, test_launcher_summary_output):
   kernel_path = os.path.join(SDK_ROOT, 'kernel', 'magenta.bin')
 
   if use_device:
     # TODO(fuchsia): This doesn't capture stdout as there's no way to do so
     # currently. See https://crbug.com/749242.
     bootserver_path = os.path.join(SDK_ROOT, 'tools', 'bootserver')
-    bootserver_command = [bootserver_path, '-1', kernel_path, bootfs]
+    bootserver_command = [bootserver_path, '-1', kernel_path,
+                          bootfs_data.bootfs]
     return _RunAndCheck(dry_run, bootserver_command)
 
   qemu_path = os.path.join(SDK_ROOT, 'qemu', 'bin', 'qemu-system-x86_64')
@@ -346,7 +404,7 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
       '-nographic',
       '-machine', 'q35',
       '-kernel', kernel_path,
-      '-initrd', bootfs,
+      '-initrd', bootfs_data.bootfs,
       '-smp', '4',
       '-enable-kvm',
       '-cpu', 'host,migratable=no',
@@ -356,6 +414,11 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
       '-netdev', 'user,id=net0,net=%s,dhcpstart=%s,host=%s' %
           (GUEST_NET, GUEST_IP_ADDRESS, HOST_IP_ADDRESS),
       '-device', 'e1000,netdev=net0',
+
+      # Second device used for scping results json and for triggering shutdown.
+      '-netdev', 'user,id=net1,hostfwd=tcp::%s-:22,hostfwd=udp::%s-:22' %
+          (HOST_SSH_PORT, HOST_SSH_PORT),
+      '-device', 'e1000,netdev=net1',
 
       # Use stdio for the guest OS only; don't attach the QEMU interactive
       # monitor.
@@ -405,6 +468,29 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
     if 'SUCCESS: all tests passed.' in line:
       success = True
 
+    if bootfs_data.termination_string in line:
+      # If this string is seen, the target process is done: copy the results
+      # file back if desired and start shutdown.
+
+      # TODO(scottmg): This is a hack. ssh or maybe user networking seems very
+      # flaky in qemu. Wait to make sure sshd is responding.
+      for i in range(50):
+        if subprocess.call(
+            ['ssh', '-v', '-F', bootfs_data.ssh_config_file, '-p',
+             HOST_SSH_PORT, 'fuchsia@localhost', 'echo sshd up']) == 0:
+          break
+        time.sleep(1)
+
+      if test_launcher_summary_output:
+        _RunAndCheck(dry_run,
+            ['scp', '-v', '-F', bootfs_data.ssh_config_file, '-P',
+             HOST_SSH_PORT, 'fuchsia@localhost:/tmp/summary_output.json',
+            test_launcher_summary_output])
+
+      _RunAndCheck(dry_run,
+          ['ssh', '-v', '-F', bootfs_data.ssh_config_file, '-p', HOST_SSH_PORT,
+           'fuchsia@localhost', 'dm shutdown'])
+
     # If the line is not from QEMU then don't try to process it.
     matched = qemu_prefix.match(line)
     if not matched:
@@ -424,7 +510,7 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
     if backtrace_line == 'end':
       if backtrace_entries:
         for processed in _SymbolizeBacktrace(backtrace_entries,
-                                             bootfs_manifest):
+                                             bootfs_data.symbols_mapping):
           print processed
       backtrace_entries = []
       continue
