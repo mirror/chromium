@@ -51,6 +51,24 @@
       "revId": "47d536a25e66f90ee1c6a78aea9227e789300a54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1032027f_2d31e134",
+        "filename": "extensions/shell/installer/linux/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-06T21:59:22Z",
+      "side": 1,
+      "message": "Do you want to convert the app_shell installer as well then?",
+      "parentUuid": "b625331c_e5267baf",
+      "revId": "47d536a25e66f90ee1c6a78aea9227e789300a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
