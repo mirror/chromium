@@ -170,7 +170,7 @@ void ChromeRuntimeAPIDelegate::RemoveUpdateObserver(
   }
 }
 
-void ChromeRuntimeAPIDelegate::ReloadExtension(
+void ChromeRuntimeAPIDelegate::ReloadExtensionAsync(
     const std::string& extension_id) {
   std::pair<base::TimeTicks, int>& reload_info =
       last_reload_time_[extension_id];
@@ -191,28 +191,23 @@ void ChromeRuntimeAPIDelegate::ReloadExtension(
 
   ExtensionService* service =
       ExtensionSystem::Get(browser_context_)->extension_service();
+  scoped_refptr<base::SingleThreadTaskRunner> single_thread_task_runner =
+      base::ThreadTaskRunnerHandle::Get();
   if (reload_info.second >= kFastReloadCount) {
     // Unloading an extension clears all warnings, so first terminate the
-    // extension, and then add the warning. Since this is called from an
-    // extension function unloading the extension has to be done
-    // asynchronously. Fortunately PostTask guarentees FIFO order so just
-    // post both tasks.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    // extension, and then add the warning.
+    single_thread_task_runner->PostTask(
         FROM_HERE, base::BindOnce(&ExtensionService::TerminateExtension,
                                   service->AsWeakPtr(), extension_id));
     extensions::WarningSet warnings;
     warnings.insert(
-        extensions::Warning::CreateReloadTooFrequentWarning(
-            extension_id));
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        extensions::Warning::CreateReloadTooFrequentWarning(extension_id));
+    single_thread_task_runner->PostTask(
         FROM_HERE,
         base::BindOnce(&extensions::WarningService::NotifyWarningsOnUI,
                        browser_context_, warnings));
   } else {
-    // We can't call ReloadExtension directly, since when this method finishes
-    // it tries to decrease the reference count for the extension, which fails
-    // if the extension has already been reloaded; so instead we post a task.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    single_thread_task_runner->PostTask(
         FROM_HERE, base::BindOnce(&ExtensionService::ReloadExtension,
                                   service->AsWeakPtr(), extension_id));
   }

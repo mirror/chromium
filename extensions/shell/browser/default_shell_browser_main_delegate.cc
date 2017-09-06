@@ -90,6 +90,7 @@ DefaultShellBrowserMainDelegate::~DefaultShellBrowserMainDelegate() {
 
 void DefaultShellBrowserMainDelegate::Start(
     content::BrowserContext* browser_context) {
+  LOG(ERROR) << "Start";
   ShellExtensionSystem* extension_system =
       static_cast<ShellExtensionSystem*>(ExtensionSystem::Get(browser_context));
   extension_system->Init();
