@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f66df56f_eaca2261",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-06T23:17:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e59bb13e_3cd65a43",
+      "revId": "f27fafa5707ae1c203f0e4ace48b6862c2669870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74857ee0_c0cf4442",
         "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "f27fafa5707ae1c203f0e4ace48b6862c2669870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b268cc5c_e404ca33",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-06T23:17:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74857ee0_c0cf4442",
+      "revId": "f27fafa5707ae1c203f0e4ace48b6862c2669870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3a422b71_c6c4328d",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-06T23:17:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9fe14ae_cebcd355",
+      "revId": "f27fafa5707ae1c203f0e4ace48b6862c2669870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b1241d1_7fcb7525",
         "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
         "patchSetId": 12
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-06T15:59:36Z",
       "side": 1,
       "message": "Is it reasonable to wrap some or all of the above in an x509_util function? It\u0027s a lot of implementation detail that is pretty obscure (at least to the likes of myself).",
+      "revId": "f27fafa5707ae1c203f0e4ace48b6862c2669870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f8a6801_405f39b1",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_nss.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-06T23:17:51Z",
+      "side": 1,
+      "message": "Hm, I took a shot at that (patchset 14) but it feels like kind of a weird interface. If it was just a ParseSPKI that returns an EVP instead of an RSA would feel a bit cleaner, but then the helper is hardly doing much.",
+      "parentUuid": "1b1241d1_7fcb7525",
       "revId": "f27fafa5707ae1c203f0e4ace48b6862c2669870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "f27fafa5707ae1c203f0e4ace48b6862c2669870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131a2311_ef6918f1",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-06T23:17:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d38e801_da8cf735",
+      "revId": "f27fafa5707ae1c203f0e4ace48b6862c2669870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
