@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c199bb54_88c3add9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-06T20:15:33Z",
+      "side": 1,
+      "message": "I actually had one but I forgot to link it. Fixed.",
+      "parentUuid": "3abb64bd_ff634a12",
+      "revId": "1b5bce0b840a5a780ee8ea25c137f3b3b8a459ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "141a210b_ce95ff3b",
         "filename": "chrome/browser/extensions/api/font_settings/font_settings_api.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "1b5bce0b840a5a780ee8ea25c137f3b3b8a459ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1877e1e0_f0d6c92b",
+        "filename": "chrome/browser/extensions/api/font_settings/font_settings_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-06T20:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "141a210b_ce95ff3b",
+      "revId": "1b5bce0b840a5a780ee8ea25c137f3b3b8a459ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9cae3445_994538c4",
+        "filename": "chrome/browser/font_pref_change_notifier.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-06T20:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31b91055_4431540e",
+      "revId": "1b5bce0b840a5a780ee8ea25c137f3b3b8a459ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef62bc3b_a991b40b",
         "filename": "chrome/browser/font_pref_change_notifier.cc",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1a27558e_19402b1f",
+        "filename": "chrome/browser/font_pref_change_notifier.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-06T20:15:33Z",
+      "side": 1,
+      "message": "Yeah, I initially wasn\u0027t sure whether the prefs would be alive when this was called, and I was unregistering when the last one disappears. But the unregistration makes removal not reentrant-safe so I removed it, and then the pref service ended up being passed into the constructor.\n\nI removed this and registered in the constructor.",
+      "parentUuid": "ef62bc3b_a991b40b",
+      "revId": "1b5bce0b840a5a780ee8ea25c137f3b3b8a459ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c541d356_42f3d013",
         "filename": "chrome/browser/font_pref_change_notifier.h",
         "patchSetId": 8
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-06T01:19:10Z",
       "side": 1,
       "message": "Indicate that this is not re-entrant safe and that callers *must not* remove themselves as observers as part of the callback? Alternatively, would some locks be in order? Taht would cause deadlocks rather than undefined behavior, which seems better.",
+      "revId": "1b5bce0b840a5a780ee8ea25c137f3b3b8a459ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b054a5b_49defe3b",
+        "filename": "chrome/browser/font_pref_change_notifier.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-06T20:15:33Z",
+      "side": 1,
+      "message": "Tracking these with ObserverList\u003cRegistrar\u003e below should actually make this reentrant safe.",
+      "parentUuid": "c541d356_42f3d013",
       "revId": "1b5bce0b840a5a780ee8ea25c137f3b3b8a459ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
