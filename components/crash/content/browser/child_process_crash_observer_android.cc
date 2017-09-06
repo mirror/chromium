@@ -14,8 +14,15 @@ namespace breakpad {
 
 ChildProcessCrashObserver::ChildProcessCrashObserver(
     const base::FilePath crash_dump_dir,
-    int descriptor_id)
-    : crash_dump_dir_(crash_dump_dir), descriptor_id_(descriptor_id) {}
+    int descriptor_id,
+    const base::Closure& increase_crash_cb)
+    : crash_dump_dir_(crash_dump_dir),
+      descriptor_id_(descriptor_id),
+      increase_crash_cb_(base::Bind(
+          [](base::Closure cb, bool run_cb) {
+            if (run_cb)
+              cb.Run();
+          }, increase_crash_cb)) {}
 
 ChildProcessCrashObserver::~ChildProcessCrashObserver() {}
 
@@ -41,12 +48,14 @@ void ChildProcessCrashObserver::OnChildExit(
   // This might be called twice for a given child process, with a
   // NOTIFICATION_RENDERER_PROCESS_TERMINATED and then with
   // NOTIFICATION_RENDERER_PROCESS_CLOSED.
-  base::PostTaskWithTraits(
-      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {},
       base::Bind(&CrashDumpManager::ProcessMinidumpFileFromChild,
                  base::Unretained(CrashDumpManager::GetInstance()),
                  crash_dump_dir_, child_process_id, process_type,
-                 termination_status, app_state));
+                 termination_status, app_state),
+      increase_crash_cb_);
 }
 
 }  // namespace breakpad
