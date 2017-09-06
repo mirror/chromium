@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b650ac1_3309d485",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-06T13:33:01Z",
+      "side": 1,
+      "message": "I think this can also just be \"Eq(logo)\" without a custom matcher, since base::Optional has an overload of operator\u003d\u003d for const T\u0026 (which handles nullopt).",
+      "range": {
+        "startLine": 450,
+        "startChar": 39,
+        "endLine": 450,
+        "endChar": 0
+      },
+      "revId": "0ed982f24e492bc66179c6b5d6e4014b03255980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

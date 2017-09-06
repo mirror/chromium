@@ -272,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "3637603d_13f8aa24",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-06T13:33:01Z",
+      "side": 1,
+      "message": "Yeah, I suppose that makes sense. It is a bit weird that we\u0027ll decode the image twice, but oh well... I guess alternatively, we\u0027d have to provide a way for clients to say \"hey, that data was bad\", which is probably way more complexity than it\u0027s worth.",
+      "parentUuid": "63a47388_293ff491",
+      "revId": "a18f2cd6d7cd9ca6ca820fc29eab1cfa891a8525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "776bc39c_d8f76222",
         "filename": "components/search_provider_logos/logo_tracker.cc",
         "patchSetId": 5
