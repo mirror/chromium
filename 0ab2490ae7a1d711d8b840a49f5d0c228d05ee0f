@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8fc215a_8c41b172",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8CSSStyleDeclarationCustom.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-06T04:03:39Z",
+      "side": 1,
+      "message": "should be able to delete this now",
+      "revId": "0ab2490ae7a1d711d8b840a49f5d0c228d05ee0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "393a6bc4_1fc778ff",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-06T04:03:39Z",
+      "side": 1,
+      "message": "this should be fine given that aliases don\u0027t have separate apis",
+      "revId": "0ab2490ae7a1d711d8b840a49f5d0c228d05ee0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7092e4dd_6e629ddf",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-06T04:03:39Z",
+      "side": 1,
+      "message": "i don\u0027t think this dcheck is necessary anymore. i would trust that resolving a valid id leads to a valid id",
+      "revId": "0ab2490ae7a1d711d8b840a49f5d0c228d05ee0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e571c1e0_9f8449db",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.h.tmpl",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-06T04:03:39Z",
+      "side": 1,
+      "message": "please set the other patch as upstream of this patch so the changes aren\u0027t duplicated here. this will cause rebasing problems later and might lead to revert if they land around the same time.\n\nactually in this case the changes are entirely independent so no need to include this change in this patch at all",
+      "revId": "0ab2490ae7a1d711d8b840a49f5d0c228d05ee0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f646c41c_3b944fb1",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 10
+      },
+      "lineNbr": 2198,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-06T04:03:39Z",
+      "side": 1,
+      "message": "bikeshed: i\u0027d prefer CSSPropertyAPIScrollBoundaryBehavior here. note that this would not interfere with the shorthand api as it is named CSSShorthandPropertyAPIScrollBoundaryBehavior. up to you though",
+      "revId": "0ab2490ae7a1d711d8b840a49f5d0c228d05ee0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7cb94a_920e6d24",
+        "filename": "third_party/WebKit/Source/core/css/DOMWindowCSS.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-06T04:03:39Z",
+      "side": 1,
+      "message": "should be able to remove this",
+      "revId": "0ab2490ae7a1d711d8b840a49f5d0c228d05ee0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f205f45c_1b46cb66",
+        "filename": "third_party/WebKit/Source/core/css/StylePropertySerializer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-06T04:03:39Z",
+      "side": 1,
+      "message": "should be able to remove this",
+      "revId": "0ab2490ae7a1d711d8b840a49f5d0c228d05ee0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b8acae_1f18d2a9",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-06T04:03:39Z",
+      "side": 1,
+      "message": "this is only used internal to this file so should be included in the unnamed namespace at the start of this file",
+      "revId": "0ab2490ae7a1d711d8b840a49f5d0c228d05ee0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d1bf12_3e99cddd",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIApplyAtRule.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-06T04:03:39Z",
+      "side": 1,
+      "message": "i think this needs to be added to a build file",
+      "revId": "0ab2490ae7a1d711d8b840a49f5d0c228d05ee0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
