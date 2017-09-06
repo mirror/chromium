@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c10f177f_29c6530f",
+        "filename": "chrome/browser/android/vr_shell/vr_input_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-09-06T19:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e21074e_db0ec6cc",
+      "range": {
+        "startLine": 36,
+        "startChar": 49,
+        "endLine": 36,
+        "endChar": 54
+      },
+      "revId": "0f144088ad1f60bf18503a4670ec1f821d0da6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8267b9ec_242f353b",
         "filename": "chrome/browser/android/vr_shell/vr_input_manager.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "938151dc_2de96af0",
+        "filename": "chrome/browser/android/vr_shell/vr_input_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-09-06T19:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8267b9ec_242f353b",
+      "revId": "0f144088ad1f60bf18503a4670ec1f821d0da6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a6e1e67_21f6cb10",
         "filename": "chrome/browser/android/vr_shell/vr_input_manager.h",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "0f144088ad1f60bf18503a4670ec1f821d0da6a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09129f3_c383b53d",
+        "filename": "chrome/browser/android/vr_shell/vr_input_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-09-06T19:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a6e1e67_21f6cb10",
+      "revId": "0f144088ad1f60bf18503a4670ec1f821d0da6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
