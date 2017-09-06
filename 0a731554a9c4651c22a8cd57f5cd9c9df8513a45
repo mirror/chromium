@@ -33,6 +33,24 @@
       "revId": "0a731554a9c4651c22a8cd57f5cd9c9df8513a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c6d734_fc06f517",
+        "filename": "ui/message_center/public/cpp/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-06T19:39:34Z",
+      "side": 1,
+      "message": "In both of these regards, I\u0027m copying ash/public/cpp:ash_public_cpp\n\nThe docs for source_set are here[1] but I don\u0027t see any for component.\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/tools/gn/docs/reference.md#source_set",
+      "parentUuid": "7b2304ac_0f5f99d6",
+      "revId": "0a731554a9c4651c22a8cd57f5cd9c9df8513a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
