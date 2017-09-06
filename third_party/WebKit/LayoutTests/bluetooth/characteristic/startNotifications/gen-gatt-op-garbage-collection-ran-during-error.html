@@ -7,29 +7,31 @@
 <script src="../../../resources/mojo-helpers.js"></script>
 <script>
 'use strict';
-promise_test(() => {
-  let val = new Uint8Array([1]);
-  let promise;
-  return setBluetoothFakeAdapter('FailingGATTOperationsAdapter')
-    .then(() => requestDeviceWithKeyDown({
-      filters: [{services: [errorUUID(0xA0)]}]}))
-    .then(device => device.gatt.connect())
-    .then(gattServer => gattServer.getPrimaryService(errorUUID(0xA0)))
-    .then(service => service.getCharacteristic(errorUUID(0xA1)))
-    .then(error_characteristic => {
-      promise = assert_promise_rejects_with_message(
-        error_characteristic.startNotifications(),
+let test_desc = 'Garbage Collection ran during a startNotifications call that '
+   'fails. Should not crash.'
+let characteristic, fake_characteristic, func_promise;
+promise_test(() => getMeasurementIntervalCharacteristic()
+  .then(_ => ({characteristic, fake_characteristic} = _))
+  // 1. Set up error responses.
+  .then(() => fake_characteristic.setNextReadResponse(1))
+  .then(() => fake_characteristic.setNextWriteResponse(1))
+  .then(() => fake_characteristic.setNextSubscribeToNotificationsResponse(1))
+  .then(() => {
+    // 2. Begin making a call that will fail.
+    func_promise = assert_promise_rejects_with_message(
+        characteristic.startNotifications(),
         new DOMException(
-          'GATT Server is disconnected. Cannot perform GATT operations. ' +
-          '(Re)connect first with `device.gatt.connect`.',
-          'NetworkError'));
-      // Disconnect called to clear attributeInstanceMap and allow the
-      // object to get garbage collected.
-      error_characteristic.service.device.gatt.disconnect();
-    })
-    .then(runGarbageCollection)
-    .then(() => promise);
-}, 'Garbage Collection ran during a startNotifications call that fails. ' +
-   'Should not crash.');
+            'GATT Server is disconnected. Cannot perform GATT operations. ' +
+            '(Re)connect first with `device.gatt.connect`.',
+            'NetworkError'));
+    // 3. Disconnect called to clear attributeInstanceMap and allow the object
+    // to get garbage collected.
+    characteristic.service.device.gatt.disconnect();
+    characteristic = undefined;
+    fake_characteristic = undefined;
+  })
+  // 4. Run garbage collection.
+  .then(runGarbageCollection)
+  .then(() => func_promise), test_desc);
 
 </script>
