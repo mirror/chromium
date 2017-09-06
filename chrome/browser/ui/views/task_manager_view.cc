@@ -337,9 +337,10 @@ void TaskManagerView::Init() {
   AddChildView(tab_table_parent_);
 
   SetLayoutManager(new views::FillLayout());
-  SetBorder(
-      views::CreateEmptyBorder(ChromeLayoutProvider::Get()->GetInsetsMetric(
-          views::INSETS_DIALOG_CONTENTS)));
+  SetBorder(views::CreateEmptyBorder(
+      ChromeLayoutProvider::Get()->GetInsetsForContentType(
+          views::LeadingContentType::NO_TITLE,
+          views::TrailingContentType::CONTROL)));
 
   table_model_->RetrieveSavedColumnsSettingsAndUpdateTable();
 

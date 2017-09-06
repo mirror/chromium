@@ -49,8 +49,8 @@ LoginView::LoginView(const base::string16& authority,
   // to textfield_layout.h to decide.
   constexpr int kMessageWidth = 320;
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
-  SetBorder(views::CreateEmptyBorder(
-      provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS)));
+  SetBorder(views::CreateEmptyBorder(provider->GetInsetsForContentType(
+      views::LeadingContentType::TEXT, views::TrailingContentType::CONTROL)));
 
   // Initialize the Grid Layout Manager used for this dialog box.
   GridLayout* layout = GridLayout::CreateAndInstall(this);

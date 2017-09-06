@@ -46,17 +46,11 @@ gfx::Insets LayoutProvider::GetInsetsMetric(int metric) const {
   DCHECK_LT(metric, VIEWS_INSETS_MAX);
   switch (metric) {
     case InsetsMetric::INSETS_DIALOG:
+    case InsetsMetric::INSETS_DIALOG_SUBSECTION:
       return gfx::Insets(13, 13);
     case InsetsMetric::INSETS_DIALOG_BUTTON_ROW: {
       const gfx::Insets dialog_insets = GetInsetsMetric(INSETS_DIALOG);
       return gfx::Insets(0, dialog_insets.left(), dialog_insets.bottom(),
-                         dialog_insets.right());
-    }
-    case InsetsMetric::INSETS_DIALOG_CONTENTS: {
-      const gfx::Insets dialog_insets = GetInsetsMetric(INSETS_DIALOG);
-      return gfx::Insets(GetDistanceMetric(DISTANCE_DIALOG_TITLE_TO_CONTENT),
-                         dialog_insets.left(),
-                         GetDistanceMetric(DISTANCE_DIALOG_CONTENT_TO_BUTTONS),
                          dialog_insets.right());
     }
     case InsetsMetric::INSETS_DIALOG_TITLE: {
@@ -84,9 +78,10 @@ int LayoutProvider::GetDistanceMetric(int metric) const {
       return 7;
     case DistanceMetric::DISTANCE_CONTROL_TOTAL_VERTICAL_TEXT_PADDING:
       return 6;
-    case DistanceMetric::DISTANCE_DIALOG_CONTENT_TO_BUTTONS:
-      return 13;
-    case DistanceMetric::DISTANCE_DIALOG_TITLE_TO_CONTENT:
+    case DistanceMetric::DISTANCE_DIALOG_CONTROL_CONTENT_TO_BUTTONS:
+    case DistanceMetric::DISTANCE_DIALOG_TEXT_CONTENT_TO_BUTTONS:
+    case DistanceMetric::DISTANCE_DIALOG_TITLE_TO_CONTROL_CONTENT:
+    case DistanceMetric::DISTANCE_DIALOG_TITLE_TO_TEXT_CONTENT:
       return 13;
     case DistanceMetric::DISTANCE_RELATED_BUTTON_HORIZONTAL:
       return 6;
@@ -119,6 +114,41 @@ int LayoutProvider::GetSnappedDialogWidth(int min_width) const {
   // than this value. In principle it's possible to factor in the title width
   // here, but it is not really worth the complexity.
   return std::max(min_width, 320);
+}
+
+gfx::Insets LayoutProvider::GetInsetsForContentType(
+    LeadingContentType leading,
+    TrailingContentType trailing) const {
+  const gfx::Insets dialog_insets = GetInsetsMetric(INSETS_DIALOG);
+  int top_margin = 0;
+  switch (leading) {
+    case LeadingContentType::TEXT:
+      top_margin = GetDistanceMetric(DISTANCE_DIALOG_TITLE_TO_TEXT_CONTENT);
+      break;
+    case LeadingContentType::CONTROL:
+      top_margin = GetDistanceMetric(DISTANCE_DIALOG_TITLE_TO_CONTROL_CONTENT);
+      break;
+    case LeadingContentType::NO_TITLE:
+      top_margin = dialog_insets.top();
+      break;
+    default:
+      NOTREACHED();
+  }
+  int bottom_margin = 0;
+  switch (trailing) {
+    case TrailingContentType::TEXT:
+      bottom_margin =
+          GetDistanceMetric(DISTANCE_DIALOG_TEXT_CONTENT_TO_BUTTONS);
+      break;
+    case TrailingContentType::CONTROL:
+      bottom_margin =
+          GetDistanceMetric(DISTANCE_DIALOG_CONTROL_CONTENT_TO_BUTTONS);
+      break;
+    default:
+      NOTREACHED();
+  }
+  return gfx::Insets(top_margin, dialog_insets.left(), bottom_margin,
+                     dialog_insets.right());
 }
 
 }  // namespace views
