@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac4d928e_1d9bd464",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-06T22:48:54Z",
+      "side": 1,
+      "message": "nit: not your fault, but maybe:\n\n false /* deferred_launch_allowed */);",
+      "revId": "19cc45cf42d524afd968630a57be29f560854483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d61b18_9b23f609",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-06T22:48:54Z",
+      "side": 1,
+      "message": "nit: did you run \u0027git cl format\u0027? L59 might fit into the previous line.",
+      "revId": "19cc45cf42d524afd968630a57be29f560854483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de962d86_fc4e48b9",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-06T22:48:54Z",
+      "side": 1,
+      "message": "nit: IWYU: #include \"ui/gfx/geometry/size.h\" seems missing.",
+      "revId": "19cc45cf42d524afd968630a57be29f560854483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc783f0_c9a34730",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-06T22:48:54Z",
+      "side": 1,
+      "message": "not your fault, but #include ui/gfx/geometry/rect.h is also missing, it seems.",
+      "revId": "19cc45cf42d524afd968630a57be29f560854483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
