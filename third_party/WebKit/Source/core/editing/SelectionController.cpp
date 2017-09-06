@@ -943,6 +943,7 @@ bool SelectionController::HandleMousePressEvent(
   // so it's allowed to start a drag or selection if it wasn't in a scrollbar.
   mouse_down_may_start_select_ =
       (CanMouseDownStartSelect(event.InnerNode()) || IsLinkSelection(event)) &&
+      event.Event().button == WebPointerProperties::Button::kLeft &&
       !event.GetScrollbar();
   mouse_down_was_single_click_in_selection_ = false;
   if (!Selection().IsAvailable()) {

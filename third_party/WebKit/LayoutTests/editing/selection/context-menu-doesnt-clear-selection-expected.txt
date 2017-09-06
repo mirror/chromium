@@ -1,0 +1,5 @@
+This test checks that triggering the context menu doesn't clear the selection on Windows.
+
+Lorem ipsum
+dolor sit amet
+SUCCESS

@@ -1,0 +1,56 @@
+<body onload="load()">
+<p>This test checks that triggering the context menu doesn't clear the selection on Windows.
+<div id="text">Lorem ipsum</div>
+<div id="text2">dolor sit amet</div>
+<div id="resultwin">RUNNING</div>
+</body>
+<script>
+function test(platform, result)
+{
+    // clear selection
+    window.getSelection().removeAllRanges();
+
+    internals.settings.setEditingBehavior(platform);
+    internals.settings.setShowContextMenuOnMouseUp(true);
+
+    var text = document.getElementById("text");
+
+    var x = text.offsetParent.offsetLeft + text.offsetLeft + text.offsetWidth / 2;
+    var y = text.offsetParent.offsetTop + text.offsetTop + text.offsetHeight / 2;
+    var x2 = text2.offsetParent.offsetLeft + text2.offsetLeft + text2.offsetWidth / 2;
+    var y2 = text2.offsetParent.offsetTop + text2.offsetTop + text2.offsetHeight / 2;
+
+    // Double-click to select.
+    eventSender.mouseMoveTo(x, y);
+    eventSender.mouseDown(0);
+    eventSender.leapForward(1);
+    eventSender.mouseUp(0);
+    eventSender.leapForward(100);
+    eventSender.mouseDown(0);
+    eventSender.leapForward(1);
+    eventSender.mouseUp(0);
+
+    // Right-click on some different text.
+    eventSender.mouseMoveTo(x2, y2);
+    eventSender.mouseDown(2);
+    eventSender.mouseUp(2);
+    eventSender.keyDown("Escape", null);
+
+    var resultElement = document.getElementById(result);
+    var selectionType = window.getSelection().type;
+        if (selectionType == "Range")
+            resultElement.innerHTML = "SUCCESS";
+        else
+            resultElement.innerHTML = "FAILURE: There should be a selection.";
+}
+
+function load()
+{
+    if (!window.eventSender || !window.testRunner || !window.internals)
+        return;
+
+    testRunner.dumpAsText();
+
+    test('win', 'resultwin');
+}
+</script>
