@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70218e71_a22b65c3",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParser.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-09-06T11:39:26Z",
+      "side": 1,
+      "message": "This was previously done in ParseRule()?",
+      "revId": "f3e6232550a9704616d72853c48c04ba8f56fea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
