@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8761ec52_f740c26e",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-09-06T09:17:57Z",
+      "side": 1,
+      "message": "Nah, I think only moving Y is fine.",
+      "parentUuid": "9ab996d5_a3837129",
+      "revId": "91672090bdf9c11ff303f5347c6c2c4bb5783077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b8063f7_7a4251d3",
         "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
         "patchSetId": 2
@@ -116,6 +134,30 @@
       "revId": "91672090bdf9c11ff303f5347c6c2c4bb5783077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8868c86e_d8fc471c",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-09-06T09:17:57Z",
+      "side": 1,
+      "message": "💩",
+      "parentUuid": "d6c71963_c7bc47bc",
+      "range": {
+        "startLine": 1006,
+        "startChar": 0,
+        "endLine": 1007,
+        "endChar": 31
+      },
+      "revId": "91672090bdf9c11ff303f5347c6c2c4bb5783077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
