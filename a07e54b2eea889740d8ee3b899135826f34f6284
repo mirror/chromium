@@ -68,6 +68,24 @@
       "revId": "a07e54b2eea889740d8ee3b899135826f34f6284",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a74d48_3e8e6194",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-06T21:00:22Z",
+      "side": 1,
+      "message": "The logic behind this was to just use primary root window for the time being until the widget is reparented to the proper root window when it is shown.\n\nHow do you set widget bounds to fullscreen?\n\nq: would it be better instead to just create the widget and it\u0027s view each time it is to be shown and destroy it when it is time to be hidden?",
+      "parentUuid": "739b1f8d_eba83285",
+      "revId": "a07e54b2eea889740d8ee3b899135826f34f6284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
