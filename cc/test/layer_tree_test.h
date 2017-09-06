@@ -160,6 +160,8 @@ class LayerTreeTest : public testing::Test, public TestHooks {
     return image_worker_->task_runner().get();
   }
 
+  bool use_skia_renderer_;
+
  private:
   virtual void DispatchAddAnimationToPlayer(
       AnimationPlayer* player_to_receive_animation,

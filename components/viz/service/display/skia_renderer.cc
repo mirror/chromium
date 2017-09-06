@@ -619,8 +619,35 @@ void SkiaRenderer::DrawUnsupportedQuad(const cc::DrawQuad* quad) {
 
 void SkiaRenderer::CopyCurrentRenderPassToBitmap(
     std::unique_ptr<CopyOutputRequest> request) {
-  // TODO(weiliangc): Make copy request work. (crbug.com/644851)
-  NOTIMPLEMENTED();
+  TRACE_EVENT0("viz", "SkiaRenderer::CopyCurrentRenderPassToBitmap");
+  DCHECK(!request->IsEmpty());
+
+  gfx::Rect copy_rect = current_frame()->current_render_pass->output_rect;
+  if (request->has_area())
+    copy_rect.Intersect(request->area());
+
+  if (copy_rect.IsEmpty())
+    return;
+
+  gfx::Rect window_copy_rect = MoveFromDrawToWindowSpace(copy_rect);
+  LOG(ERROR) << window_copy_rect.ToString();
+  if (!request->force_bitmap_result()) {
+    // Send copy request by texture mailbox.
+    return;
+  }
+
+  DCHECK(request->force_bitmap_result());
+  // Send copy request by copying into a bitmap.
+  std::unique_ptr<SkBitmap> bitmap(new SkBitmap);
+  bitmap->allocPixels(SkImageInfo::MakeN32Premul(window_copy_rect.width(),
+                                                 window_copy_rect.height()));
+  sk_sp<SkImage> copy_image = root_surface_->makeImageSnapshot()->makeSubset(
+      RectToSkIRect(window_copy_rect));
+  if (!copy_image->makeNonTextureImage()->asLegacyBitmap(
+          bitmap.get(), SkImage::kRO_LegacyBitmapMode))
+    bitmap->reset();
+
+  request->SendBitmapResult(std::move(bitmap));
 }
 
 void SkiaRenderer::SetEnableDCLayers(bool enable) {
