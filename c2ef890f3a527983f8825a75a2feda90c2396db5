@@ -16,6 +16,24 @@
       "revId": "c2ef890f3a527983f8825a75a2feda90c2396db5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb1659cb_88b4cb6c",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-09-06T21:32:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2514dacb_64444155",
+      "revId": "c2ef890f3a527983f8825a75a2feda90c2396db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
