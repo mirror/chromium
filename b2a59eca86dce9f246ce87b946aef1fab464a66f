@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "016fdb5e_86728c02",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-06T03:20:37Z",
+      "side": 1,
+      "message": "In markdown, A paragraph is one or more consecutive lines of text separated by one or more blank lines, and you shall avoid exceeding 80 chars in one line. ex: the following shall be reformatted to:\n\nLineChart is a library to create a RWD HTML canvas line chart. User can zoom or\nscroll the chart to observe the data.\n\nEvery line in the line chart is maintain by a |DataSeries|. There is a menu at\nthe left of the line chart to control the visibility of data series. Under the\nchart there is a dummy scrollbar to show the current position of the chart.",
+      "revId": "b2a59eca86dce9f246ce87b946aef1fab464a66f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
