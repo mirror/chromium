@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f2d63a0f_c3e56881",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-06T19:53:23Z",
+      "side": 1,
+      "message": "calling setVSyncPaused with the same value is a noop IIUC? I found it is easier to wrap my head around that way. But this is my personal opinion. I won\u0027t force you to do it :)",
+      "parentUuid": "01c5e0e9_44e1b70a",
+      "range": {
+        "startLine": 554,
+        "startChar": 25,
+        "endLine": 554,
+        "endChar": 43
+      },
+      "revId": "17d3392494d68d6c8a8992d08882c6f71c7b0c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01d67305_7a254a65",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
         "patchSetId": 2
@@ -140,6 +164,30 @@
       "revId": "17d3392494d68d6c8a8992d08882c6f71c7b0c20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c15f0a0_f94a09ec",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-06T19:53:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "695e9534_f659b0fe",
+      "range": {
+        "startLine": 188,
+        "startChar": 8,
+        "endLine": 188,
+        "endChar": 26
+      },
+      "revId": "17d3392494d68d6c8a8992d08882c6f71c7b0c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
