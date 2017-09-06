@@ -22,6 +22,30 @@
       "revId": "e8d9e2c0eb8f6f564f161aebbeb02e1dc8b51d98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac558980_79bebe7a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/phone/stack/Stack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2279,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-06T14:44:59Z",
+      "side": 1,
+      "message": "I was going to let it slide because it probably should have been this to begin with, but we should probably keep the behavior the same. Done.",
+      "parentUuid": "e58d7549_e4dfad0c",
+      "range": {
+        "startLine": 2279,
+        "startChar": 12,
+        "endLine": 2279,
+        "endChar": 64
+      },
+      "revId": "e8d9e2c0eb8f6f564f161aebbeb02e1dc8b51d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
