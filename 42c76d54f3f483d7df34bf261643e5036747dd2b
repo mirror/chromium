@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "56397b88_05acbabb",
+        "filename": "base/trace_event/memory_allocator_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T20:45:16Z",
+      "side": 1,
+      "message": "also this has to be a strcmp. char* are not guaranteed to be pointer identical, especially in compnent builds",
+      "range": {
+        "startLine": 28,
+        "startChar": 48,
+        "endLine": 28,
+        "endChar": 71
+      },
+      "revId": "42c76d54f3f483d7df34bf261643e5036747dd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf4c344_d68881d4",
+        "filename": "base/trace_event/memory_allocator_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T20:45:16Z",
+      "side": 1,
+      "message": "I\u0027d early out here for the nominal case and remove indentation later, i.e.\n\nuint64_t MemoryAllocatorDump::GetSizeInternal() const {\n  if (size_.has_value())\n    return size.value();\n  for (const auto\u0026 entry : entries_) {\n    if (entry.entry_type \u003d\u003d Entry::kUint64 \u0026\u0026 entry.units \u003d\u003d kUnitsBytes \u0026\u0026\n        strcmp(entry.name, kNameSize) \u003d\u003d 0) {\n      size_ \u003d entry.value_uint64;\n      return size_;\n    }\n  }\n  NOTREACHED();\n  return 0;\n};",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 2
+      },
+      "revId": "42c76d54f3f483d7df34bf261643e5036747dd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c1247ea_087225ec",
+        "filename": "base/trace_event/memory_allocator_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T20:45:16Z",
+      "side": 1,
+      "message": "not needed, IIRC base::Optional is non pod and has a defualt nullopt initializer",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 20
+      },
+      "revId": "42c76d54f3f483d7df34bf261643e5036747dd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6926d922_4c1eed77",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T20:45:16Z",
+      "side": 1,
+      "message": "just realized this is missing a noexcept",
+      "range": {
+        "startLine": 54,
+        "startChar": 24,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "42c76d54f3f483d7df34bf261643e5036747dd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59433c0d_087b8499",
         "filename": "base/trace_event/memory_allocator_dump.h",
         "patchSetId": 2
@@ -18,6 +110,52 @@
         "startChar": 11,
         "endLine": 111,
         "endChar": 26
+      },
+      "revId": "42c76d54f3f483d7df34bf261643e5036747dd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e0ee87_911c6d03",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T20:45:16Z",
+      "side": 1,
+      "message": "nit: move the comment t the right and remove the extra blank line",
+      "range": {
+        "startLine": 142,
+        "startChar": 34,
+        "endLine": 142,
+        "endChar": 35
+      },
+      "revId": "42c76d54f3f483d7df34bf261643e5036747dd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4275ca06_179143e9",
+        "filename": "base/trace_event/memory_allocator_dump_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T20:45:16Z",
+      "side": 1,
+      "message": "a test for a dcheck is overkill I\u0027d remove this.\nThe one above makes sense because is PII sensitive, this is not.",
+      "range": {
+        "startLine": 221,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 1
       },
       "revId": "42c76d54f3f483d7df34bf261643e5036747dd2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
