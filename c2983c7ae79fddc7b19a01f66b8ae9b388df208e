@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45ade9c2_a50404c6",
+        "filename": "content/browser/loader/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-06T12:21:21Z",
+      "side": 1,
+      "message": "I\u0027m not sure how well this DEPS is maintained, but probably you need to add new entries for added files?",
+      "range": {
+        "startLine": 62,
+        "startChar": 29,
+        "endLine": 62,
+        "endChar": 45
+      },
+      "revId": "c2983c7ae79fddc7b19a01f66b8ae9b388df208e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8f19c9_7daf15ea",
+        "filename": "content/browser/loader/mojo_pipe_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-06T12:21:21Z",
+      "side": 1,
+      "message": "We can set |first_read_| to false unconditionally, right?",
+      "revId": "c2983c7ae79fddc7b19a01f66b8ae9b388df208e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
