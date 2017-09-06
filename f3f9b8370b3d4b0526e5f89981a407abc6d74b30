@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b852f5d5_b8b0d123",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-06T21:45:28Z",
+      "side": 0,
+      "message": "Looking at the bug, how do we manage to get \"://\" as a url? Should we fix it on the caller side instead to never pass bogus urls?",
+      "revId": "f3f9b8370b3d4b0526e5f89981a407abc6d74b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
