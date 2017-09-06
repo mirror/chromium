@@ -22,6 +22,30 @@
       "revId": "d93293fdb84e2a64bbd1269c8753361e6522c1ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cdcfcbd_d09ea00b",
+        "filename": "cc/raster/raster_source_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-06T17:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb136e3c_5a9031cd",
+      "range": {
+        "startLine": 550,
+        "startChar": 8,
+        "endLine": 550,
+        "endChar": 14
+      },
+      "revId": "d93293fdb84e2a64bbd1269c8753361e6522c1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
