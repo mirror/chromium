@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63c13784_9e2064f2",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-06T17:06:44Z",
+      "side": 1,
+      "message": "equals -\u003e equal\nthis mean -\u003e this means",
+      "range": {
+        "startLine": 160,
+        "startChar": 40,
+        "endLine": 160,
+        "endChar": 46
+      },
+      "revId": "7147d4cce42f2fcf4a1700b09dedfd2307926cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04581b0_8e1f2a1d",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-06T17:06:44Z",
+      "side": 1,
+      "message": "in background -\u003e in the background",
+      "range": {
+        "startLine": 161,
+        "startChar": 26,
+        "endLine": 161,
+        "endChar": 36
+      },
+      "revId": "7147d4cce42f2fcf4a1700b09dedfd2307926cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
