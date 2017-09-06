@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d0150f5e_8a785c93",
+        "filename": "chrome/browser/chromeos/arc/lock_screen/arc_lock_screen_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-06T18:20:39Z",
+      "side": 1,
+      "message": "This service needs dependency on components/sessionmanager/core, which is not currently available to components/arc. \n\nJust curious why DCHECK_CURRENTLY_ON() is disallowed? I \"borrowed\" it from neighboring services ... :)",
+      "parentUuid": "af5f22fc_ba3fbff6",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 50
+      },
+      "revId": "7dcbb539e956497fa49406c2b5c42a9008253d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b65e02e_374efb47",
         "filename": "components/arc/common/lock_screen.mojom",
         "patchSetId": 1
