@@ -33,6 +33,7 @@ struct CONTENT_EXPORT ExplodedHttpBody {
 };
 
 struct CONTENT_EXPORT ExplodedFrameState {
+  base::NullableString16 http_content_type;
   base::NullableString16 url_string;
   base::NullableString16 referrer;
   base::NullableString16 target;
@@ -78,9 +79,10 @@ CONTENT_EXPORT int DecodePageStateForTesting(const std::string& encoded,
                                              ExplodedPageState* exploded);
 CONTENT_EXPORT void EncodePageState(const ExplodedPageState& exploded,
                                     std::string* encoded);
-CONTENT_EXPORT void EncodePageStateForTesting(const ExplodedPageState& exploded,
-                                              int version,
-                                              std::string* encoded);
+CONTENT_EXPORT void LegacyEncodePageStateForTesting(
+    const ExplodedPageState& exploded,
+    int version,
+    std::string* encoded);
 
 #if defined(OS_ANDROID)
 CONTENT_EXPORT bool DecodePageStateWithDeviceScaleFactorForTesting(

@@ -11,12 +11,16 @@
 
 #include "base/pickle.h"
 #include "base/strings/nullable_string16.h"
+#include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "content/common/frame_state.pb.h"
+#include "content/common/page_state.mojom.h"
 #include "content/common/unique_name_helper.h"
 #include "content/public/common/resource_request_body.h"
+#include "mojo/common/common_custom_types_struct_traits.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 
@@ -199,6 +203,7 @@ struct SerializeObject {
 // 23: Remove frame sequence number, there are easier ways.
 // 24: Add did save scroll or scale state.
 // 25: Limit the length of unique names: https://crbug.com/626202
+// 26: Switch to mojo-based serialization.
 //
 // NOTE: If the version is -1, then the pickle contains only a URL string.
 // See ReadPageState.
@@ -207,11 +212,14 @@ const int kMinVersion = 11;
 // NOTE: When changing the version, please add a backwards compatibility test.
 // See PageStateSerializationTest.DumpExpectedPageStateForBackwardsCompat for
 // instructions on how to generate the new test case.
-const int kCurrentVersion = 25;
+const int kCurrentVersion = 26;
 
-// A bunch of convenience functions to read/write to SerializeObjects.  The
+// A bunch of convenience functions to write to/read from SerializeObjects.  The
 // de-serializers assume the input data will be in the correct format and fall
-// back to returning safe defaults when not.
+// back to returning safe defaults when not. These are mostly used by
+// legacy(pre-mojo) serialization methods. If you're making changes to the
+// PageState serialization format You almost certainly want to add/remove fields
+// in page_state.mojom rather than using these methods.
 
 void WriteData(const void* data, int length, SerializeObject* obj) {
   obj->pickle.WriteData(static_cast<const char*>(data), length);
@@ -398,45 +406,12 @@ void ReadStringVector(SerializeObject* obj,
     (*result)[i] = ReadString(obj);
 }
 
-void WriteResourceRequestBody(const ResourceRequestBody& request_body,
-                              SerializeObject* obj) {
-  WriteAndValidateVectorSize(*request_body.elements(), obj);
-  for (const auto& element : *request_body.elements()) {
-    switch (element.type()) {
-      case ResourceRequestBody::Element::TYPE_BYTES:
-        WriteInteger(blink::WebHTTPBody::Element::kTypeData, obj);
-        WriteData(element.bytes(), static_cast<int>(element.length()), obj);
-        break;
-      case ResourceRequestBody::Element::TYPE_FILE:
-        WriteInteger(blink::WebHTTPBody::Element::kTypeFile, obj);
-        WriteString(
-            base::NullableString16(element.path().AsUTF16Unsafe(), false), obj);
-        WriteInteger64(static_cast<int64_t>(element.offset()), obj);
-        WriteInteger64(static_cast<int64_t>(element.length()), obj);
-        WriteReal(element.expected_modification_time().ToDoubleT(), obj);
-        break;
-      case ResourceRequestBody::Element::TYPE_FILE_FILESYSTEM:
-        WriteInteger(blink::WebHTTPBody::Element::kTypeFileSystemURL, obj);
-        WriteGURL(element.filesystem_url(), obj);
-        WriteInteger64(static_cast<int64_t>(element.offset()), obj);
-        WriteInteger64(static_cast<int64_t>(element.length()), obj);
-        WriteReal(element.expected_modification_time().ToDoubleT(), obj);
-        break;
-      case ResourceRequestBody::Element::TYPE_BLOB:
-        WriteInteger(blink::WebHTTPBody::Element::kTypeBlob, obj);
-        WriteStdString(element.blob_uuid(), obj);
-        break;
-      case ResourceRequestBody::Element::TYPE_BYTES_DESCRIPTION:
-      case ResourceRequestBody::Element::TYPE_DISK_CACHE_ENTRY:
-      default:
-        NOTREACHED();
-        continue;
-    }
-  }
-  WriteInteger64(request_body.identifier(), obj);
+base::NullableString16 NS16(base::string16 s) {
+  return s.empty() ? base::NullableString16()
+                   : base::NullableString16(s, false);
 }
 
-void ReadResourceRequestBody(
+void LegacyReadResourceRequestBody(
     SerializeObject* obj,
     const scoped_refptr<ResourceRequestBody>& request_body) {
   int num_elements = ReadInteger(obj);
@@ -476,86 +451,68 @@ void ReadResourceRequestBody(
   request_body->set_identifier(ReadInteger64(obj));
 }
 
-// Writes an ExplodedHttpBody object into a SerializeObject for serialization.
-void WriteHttpBody(const ExplodedHttpBody& http_body, SerializeObject* obj) {
-  bool is_null = http_body.request_body == nullptr;
-  WriteBoolean(!is_null, obj);
-  if (is_null)
-    return;
-
-  WriteResourceRequestBody(*http_body.request_body, obj);
-  WriteBoolean(http_body.contains_passwords, obj);
+void LegacyWriteResourceRequestBody(const ResourceRequestBody& request_body,
+                                    SerializeObject* obj) {
+  WriteAndValidateVectorSize(*request_body.elements(), obj);
+  for (const auto& element : *request_body.elements()) {
+    switch (element.type()) {
+      case ResourceRequestBody::Element::TYPE_BYTES:
+        WriteInteger(blink::WebHTTPBody::Element::kTypeData, obj);
+        WriteData(element.bytes(), static_cast<int>(element.length()), obj);
+        break;
+      case ResourceRequestBody::Element::TYPE_FILE:
+        WriteInteger(blink::WebHTTPBody::Element::kTypeFile, obj);
+        WriteString(
+            base::NullableString16(element.path().AsUTF16Unsafe(), false), obj);
+        WriteInteger64(static_cast<int64_t>(element.offset()), obj);
+        WriteInteger64(static_cast<int64_t>(element.length()), obj);
+        WriteReal(element.expected_modification_time().ToDoubleT(), obj);
+        break;
+      case ResourceRequestBody::Element::TYPE_FILE_FILESYSTEM:
+        WriteInteger(blink::WebHTTPBody::Element::kTypeFileSystemURL, obj);
+        WriteGURL(element.filesystem_url(), obj);
+        WriteInteger64(static_cast<int64_t>(element.offset()), obj);
+        WriteInteger64(static_cast<int64_t>(element.length()), obj);
+        WriteReal(element.expected_modification_time().ToDoubleT(), obj);
+        break;
+      case ResourceRequestBody::Element::TYPE_BLOB:
+        WriteInteger(blink::WebHTTPBody::Element::kTypeBlob, obj);
+        WriteStdString(element.blob_uuid(), obj);
+        break;
+      case ResourceRequestBody::Element::TYPE_BYTES_DESCRIPTION:
+      case ResourceRequestBody::Element::TYPE_DISK_CACHE_ENTRY:
+      default:
+        NOTREACHED();
+        continue;
+    }
+  }
+  WriteInteger64(request_body.identifier(), obj);
 }
 
-void ReadHttpBody(SerializeObject* obj, ExplodedHttpBody* http_body) {
+void LegacyReadHttpBody(SerializeObject* obj, ExplodedHttpBody* http_body) {
   // An initial boolean indicates if we have an HTTP body.
   if (!ReadBoolean(obj))
     return;
 
   http_body->request_body = new ResourceRequestBody();
-  ReadResourceRequestBody(obj, http_body->request_body);
+  LegacyReadResourceRequestBody(obj, http_body->request_body);
 
   if (obj->version >= 12)
     http_body->contains_passwords = ReadBoolean(obj);
 }
 
-// Writes the ExplodedFrameState data into the SerializeObject object for
-// serialization.
-void WriteFrameState(
-    const ExplodedFrameState& state, SerializeObject* obj, bool is_top) {
-  // WARNING: This data may be persisted for later use. As such, care must be
-  // taken when changing the serialized format. If a new field needs to be
-  // written, only adding at the end will make it easier to deal with loading
-  // older versions. Similarly, this should NOT save fields with sensitive
-  // data, such as password fields.
+void LegacyWriteHttpBody(const ExplodedHttpBody& http_body,
+                         SerializeObject* obj) {
+  bool is_null = http_body.request_body == nullptr;
+  WriteBoolean(!is_null, obj);
+  if (is_null)
+    return;
 
-  WriteString(state.url_string, obj);
-  WriteString(state.target, obj);
-  WriteBoolean(state.did_save_scroll_or_scale_state, obj);
-
-  if (state.did_save_scroll_or_scale_state) {
-    WriteInteger(state.scroll_offset.x(), obj);
-    WriteInteger(state.scroll_offset.y(), obj);
-  }
-
-  WriteString(state.referrer, obj);
-
-  WriteStringVector(state.document_state, obj);
-
-  if (state.did_save_scroll_or_scale_state)
-    WriteReal(state.page_scale_factor, obj);
-
-  WriteInteger64(state.item_sequence_number, obj);
-  WriteInteger64(state.document_sequence_number, obj);
-  WriteInteger(static_cast<int>(state.referrer_policy), obj);
-
-  if (state.did_save_scroll_or_scale_state) {
-    WriteReal(state.visual_viewport_scroll_offset.x(), obj);
-    WriteReal(state.visual_viewport_scroll_offset.y(), obj);
-  }
-
-  WriteInteger(state.scroll_restoration_type, obj);
-
-  bool has_state_object = !state.state_object.is_null();
-  WriteBoolean(has_state_object, obj);
-  if (has_state_object)
-    WriteString(state.state_object, obj);
-
-  WriteHttpBody(state.http_body, obj);
-
-  // NOTE: It is a quirk of the format that we still have to write the
-  // http_content_type field when the HTTP body is null.  That's why this code
-  // is here instead of inside WriteHttpBody.
-  WriteString(state.http_body.http_content_type, obj);
-
-  // Subitems
-  const std::vector<ExplodedFrameState>& children = state.children;
-  WriteAndValidateVectorSize(children, obj);
-  for (size_t i = 0; i < children.size(); ++i)
-    WriteFrameState(children[i], obj, false);
+  LegacyWriteResourceRequestBody(*http_body.request_body, obj);
+  WriteBoolean(http_body.contains_passwords, obj);
 }
 
-void ReadFrameState(
+void LegacyReadFrameState(
     SerializeObject* obj,
     bool is_top,
     std::vector<UniqueNameHelper::Replacement>* unique_name_replacements,
@@ -636,7 +593,7 @@ void ReadFrameState(
   if (has_state_object)
     state->state_object = ReadString(obj);
 
-  ReadHttpBody(obj, &state->http_body);
+  LegacyReadHttpBody(obj, &state->http_body);
 
   // NOTE: It is a quirk of the format that we still have to read the
   // http_content_type field when the HTTP body is null.  That's why this code
@@ -675,13 +632,302 @@ void ReadFrameState(
       ReadAndValidateVectorSize(obj, sizeof(ExplodedFrameState));
   state->children.resize(num_children);
   for (size_t i = 0; i < num_children; ++i)
-    ReadFrameState(obj, false, unique_name_replacements, &state->children[i]);
+    LegacyReadFrameState(obj, false, unique_name_replacements,
+                         &state->children[i]);
+}
+
+// Writes the ExplodedFrameState data into the SerializeObject object for
+// serialization. This uses the custom, legacy format, and its implementation 
+// should remain frozen in order to preserve this format. 
+void LegacyWriteFrameState(const ExplodedFrameState& state,
+                           SerializeObject* obj,
+                           bool is_top) {
+  // WARNING: This data may be persisted for later use. As such, care must be
+  // taken when changing the serialized format. If a new field needs to be
+  // written, only adding at the end will make it easier to deal with loading
+  // older versions. Similarly, this should NOT save fields with sensitive
+  // data, such as password fields.
+
+  WriteString(state.url_string, obj);
+  WriteString(state.target, obj);
+  WriteBoolean(state.did_save_scroll_or_scale_state, obj);
+
+  if (state.did_save_scroll_or_scale_state) {
+    WriteInteger(state.scroll_offset.x(), obj);
+    WriteInteger(state.scroll_offset.y(), obj);
+  }
+
+  WriteString(state.referrer, obj);
+
+  WriteStringVector(state.document_state, obj);
+
+  if (state.did_save_scroll_or_scale_state)
+    WriteReal(state.page_scale_factor, obj);
+
+  WriteInteger64(state.item_sequence_number, obj);
+  WriteInteger64(state.document_sequence_number, obj);
+  WriteInteger(static_cast<int>(state.referrer_policy), obj);
+
+  if (state.did_save_scroll_or_scale_state) {
+    WriteReal(state.visual_viewport_scroll_offset.x(), obj);
+    WriteReal(state.visual_viewport_scroll_offset.y(), obj);
+  }
+
+  WriteInteger(state.scroll_restoration_type, obj);
+
+  bool has_state_object = !state.state_object.is_null();
+  WriteBoolean(has_state_object, obj);
+  if (has_state_object)
+    WriteString(state.state_object, obj);
+
+  LegacyWriteHttpBody(state.http_body, obj);
+
+  // NOTE: It is a quirk of the format that we still have to write the
+  // http_content_type field when the HTTP body is null.  That's why this code
+  // is here instead of inside WriteHttpBody.
+  WriteString(state.http_body.http_content_type, obj);
+
+  // Subitems
+  const std::vector<ExplodedFrameState>& children = state.children;
+  WriteAndValidateVectorSize(children, obj);
+  for (size_t i = 0; i < children.size(); ++i)
+    LegacyWriteFrameState(children[i], obj, false);
+}
+
+void LegacyWritePageState(const ExplodedPageState& state,
+                          SerializeObject* obj) {
+  WriteInteger(obj->version, obj);
+  WriteStringVector(state.referenced_files, obj);
+  LegacyWriteFrameState(state.top, obj, true);
+}
+
+void WriteResourceRequestBody(const ResourceRequestBody& request_body,
+                              mojom::RequestBody* mojo_body) {
+  for (const auto& element : *request_body.elements()) {
+    mojom::ElementPtr data_element = mojom::Element::New();
+    switch (element.type()) {
+      case ResourceRequestBody::Element::TYPE_BYTES: {
+        data_element->set_bytes(std::vector<unsigned char>(
+            reinterpret_cast<const char*>(element.bytes()),
+            element.bytes() + element.length()));
+        break;
+      }
+      case ResourceRequestBody::Element::TYPE_FILE: {
+        mojom::FilePtr file = mojom::File::New(
+            element.path().AsUTF16Unsafe(), element.offset(), element.length(),
+            element.expected_modification_time().ToDoubleT());
+        data_element->set_file(std::move(file));
+        break;
+      }
+      case ResourceRequestBody::Element::TYPE_FILE_FILESYSTEM: {
+        mojom::FileSystemPtr file_system = mojom::FileSystem::New(
+            element.path().AsUTF16Unsafe(), element.offset(), element.length(),
+            element.expected_modification_time().ToDoubleT());
+        data_element->set_file_system(std::move(file_system));
+        break;
+      }
+      case ResourceRequestBody::Element::TYPE_BLOB:
+        data_element->set_blob(element.blob_uuid());
+        break;
+      case ResourceRequestBody::Element::TYPE_BYTES_DESCRIPTION:
+      case ResourceRequestBody::Element::TYPE_DISK_CACHE_ENTRY:
+      default:
+        NOTREACHED();
+        continue;
+    }
+    mojo_body->elements.push_back(std::move(data_element));
+  }
+  mojo_body->identifier = request_body.identifier();
+}
+
+void ReadResourceRequestBody(
+    mojom::RequestBody* mojo_body,
+    const scoped_refptr<ResourceRequestBody>& request_body) {
+  for (const auto& element : mojo_body->elements) {
+    mojom::Element::Tag tag = element->which();
+    switch (tag) {
+      case mojom::Element::Tag::BYTES:
+        AppendDataToRequestBody(
+            request_body,
+            reinterpret_cast<const char*>(element->get_bytes().data()),
+            element->get_bytes().size());
+        break;
+      case mojom::Element::Tag::FILE: {
+        mojom::File* file = element->get_file().get();
+        AppendFileRangeToRequestBody(request_body, NS16(file->path),
+                                     file->offset, file->length,
+                                     file->modification_time);
+        break;
+      }
+      case mojom::Element::Tag::FILE_SYSTEM: {
+        mojom::FileSystem* file_system = element->get_file_system().get();
+        AppendURLRangeToRequestBody(request_body,
+                                    GURL(file_system->filesystem_url),
+                                    file_system->offset, file_system->length,
+                                    file_system->modification_time);
+        break;
+      }
+      case mojom::Element::Tag::BLOB:
+        AppendBlobToRequestBody(request_body, element->get_blob());
+        break;
+      default:
+        NOTREACHED();
+    }
+  }
+  request_body->set_identifier(mojo_body->identifier);
+}
+
+void WriteHttpBody(const ExplodedHttpBody& http_body,
+                   mojom::HttpBody* mojo_body) {
+  if (http_body.request_body != nullptr) {
+    mojo_body->request_body = mojom::RequestBody::New();
+    mojo_body->contains_passwords = http_body.contains_passwords;
+    WriteResourceRequestBody(*http_body.request_body,
+                             mojo_body->request_body.get());
+  }
+}
+
+void ReadHttpBody(mojom::HttpBody* mojo_body, ExplodedHttpBody* http_body) {
+  http_body->contains_passwords = mojo_body->contains_passwords;
+  if (mojo_body->request_body) {
+    http_body->request_body = new ResourceRequestBody();
+    ReadResourceRequestBody(mojo_body->request_body.get(),
+                            http_body->request_body);
+  }
+}
+
+void WriteFrameState(const ExplodedFrameState& state,
+                     mojom::FrameState* frame) {
+  frame->url_string = state.url_string.string();
+  frame->target = state.target.string();
+  frame->did_save_scroll_or_scale_state = state.did_save_scroll_or_scale_state;
+
+  frame->scroll_offset = mojom::Point::New();
+  frame->visual_viewport_scroll_offset = mojom::PointF::New();
+  if (state.did_save_scroll_or_scale_state) {
+    frame->scroll_offset->x = state.scroll_offset.x();
+    frame->scroll_offset->y = state.scroll_offset.y();
+
+    frame->visual_viewport_scroll_offset->x =
+        state.visual_viewport_scroll_offset.x();
+    frame->visual_viewport_scroll_offset->y =
+        state.visual_viewport_scroll_offset.y();
+  }
+
+  frame->scroll_restoration_type =
+      static_cast<mojom::ScrollRestorationType>(state.scroll_restoration_type);
+
+  frame->referrer = state.referrer.string();
+
+  for (const auto& s : state.document_state) {
+    frame->document_state.push_back(s.string());
+  }
+
+  if (state.did_save_scroll_or_scale_state)
+    frame->page_scale_factor = state.page_scale_factor;
+
+  frame->item_sequence_number = state.item_sequence_number;
+  frame->document_sequence_number = state.document_sequence_number;
+  frame->referrer_policy =
+      static_cast<mojom::WebReferrerPolicy>(state.referrer_policy);
+
+  bool has_state_object = !state.state_object.is_null();
+  if (has_state_object)
+    frame->state_object = state.state_object.string();
+
+  frame->http_body = mojom::HttpBody::New();
+  WriteHttpBody(state.http_body, frame->http_body.get());
+  frame->http_body->http_content_type =
+      state.http_body.http_content_type.string();
+
+  // Subitems
+  const std::vector<ExplodedFrameState>& children = state.children;
+  for (const auto& child : children) {
+    mojom::FrameStatePtr child_frame = mojom::FrameState::New();
+    WriteFrameState(child, child_frame.get());
+    frame->children.push_back(std::move(child_frame));
+  }
+}
+
+void ReadFrameState(mojom::FrameState* frame, ExplodedFrameState* state) {
+  state->url_string = NS16(frame->url_string);
+  state->referrer = NS16(frame->referrer);
+  state->target = NS16(frame->target);
+  state->state_object = NS16(frame->state_object);
+
+  for (auto s : frame->document_state) {
+    state->document_state.push_back(base::NullableString16(s));
+  }
+
+  state->scroll_restoration_type =
+      static_cast<blink::WebHistoryScrollRestorationType>(
+          frame->scroll_restoration_type);
+  state->did_save_scroll_or_scale_state = frame->did_save_scroll_or_scale_state;
+  state->scroll_offset =
+      gfx::Point(frame->scroll_offset->x, frame->scroll_offset->y);
+  state->visual_viewport_scroll_offset =
+      gfx::PointF(frame->visual_viewport_scroll_offset->x,
+                  frame->visual_viewport_scroll_offset->y);
+
+  state->item_sequence_number = frame->item_sequence_number;
+  state->document_sequence_number = frame->document_sequence_number;
+
+  state->page_scale_factor = frame->page_scale_factor;
+
+  state->referrer_policy =
+      static_cast<blink::WebReferrerPolicy>(frame->referrer_policy);
+  if (frame->http_body) {
+    ReadHttpBody(frame->http_body.get(), &state->http_body);
+    state->http_body.http_content_type =
+        NS16(frame->http_body->http_content_type);
+  } else {
+    state->http_body.request_body = nullptr;
+  }
+
+  state->children.resize(frame->children.size());
+  int i = 0;
+  for (const auto& child : frame->children)
+    ReadFrameState(child.get(), &state->children[i++]);
+}
+
+void ReadMojoPageState(SerializeObject* obj, ExplodedPageState* state) {
+  const void* tmp = nullptr;
+  int length = 0;
+  ReadData(obj, &tmp, &length);
+  if (obj->parse_error || length <= 0)
+    return;
+
+  mojom::PageStatePtr page;
+  obj->parse_error = !(mojom::PageState::Deserialize(tmp, length, &page));
+  if (obj->parse_error)
+    return;
+
+  for (const auto& referenced_file : page->referenced_files) {
+    state->referenced_files.push_back(NS16(referenced_file));
+  }
+
+  ReadFrameState(page->top.get(), &state->top);
+
+  state->referenced_files.erase(
+      std::unique(state->referenced_files.begin(),
+                  state->referenced_files.end()),
+      state->referenced_files.end());
 }
 
 void WritePageState(const ExplodedPageState& state, SerializeObject* obj) {
   WriteInteger(obj->version, obj);
-  WriteStringVector(state.referenced_files, obj);
-  WriteFrameState(state.top, obj, true);
+
+  mojom::PageStatePtr page = mojom::PageState::New();
+  for (const auto& referenced_file : state.referenced_files) {
+    page->referenced_files.push_back(referenced_file.string());
+  }
+
+  page->top = mojom::FrameState::New();
+  WriteFrameState(state.top, page->top.get());
+
+  std::vector<uint8_t> page_bytes = mojom::PageState::Serialize(&page);
+  obj->pickle.WriteData(reinterpret_cast<char*>(page_bytes.data()),
+                        page_bytes.size());
 }
 
 void ReadPageState(SerializeObject* obj, ExplodedPageState* state) {
@@ -701,11 +947,16 @@ void ReadPageState(SerializeObject* obj, ExplodedPageState* state) {
     return;
   }
 
+  if (obj->version >= 26) {
+    ReadMojoPageState(obj, state);
+    return;
+  }
+
   if (obj->version >= 14)
     ReadStringVector(obj, &state->referenced_files);
 
   std::vector<UniqueNameHelper::Replacement> unique_name_replacements;
-  ReadFrameState(obj, true, &unique_name_replacements, &state->top);
+  LegacyReadFrameState(obj, true, &unique_name_replacements, &state->top);
 
   if (obj->version < 14)
     RecursivelyAppendReferencedFiles(state->top, &state->referenced_files);
@@ -789,23 +1040,20 @@ int DecodePageStateForTesting(const std::string& encoded,
   return DecodePageStateInternal(encoded, exploded);
 }
 
-static void EncodePageStateInternal(const ExplodedPageState& exploded,
-                                    int version,
-                                    std::string* encoded) {
+void EncodePageState(const ExplodedPageState& exploded, std::string* encoded) {
   SerializeObject obj;
-  obj.version = version;
+  obj.version = kCurrentVersion;
   WritePageState(exploded, &obj);
   *encoded = obj.GetAsString();
 }
 
-void EncodePageState(const ExplodedPageState& exploded, std::string* encoded) {
-  EncodePageStateInternal(exploded, kCurrentVersion, encoded);
-}
-
-void EncodePageStateForTesting(const ExplodedPageState& exploded,
-                               int version,
-                               std::string* encoded) {
-  EncodePageStateInternal(exploded, version, encoded);
+void LegacyEncodePageStateForTesting(const ExplodedPageState& exploded,
+                                     int version,
+                                     std::string* encoded) {
+  SerializeObject obj;
+  obj.version = version;
+  LegacyWritePageState(exploded, &obj);
+  *encoded = obj.GetAsString();
 }
 
 #if defined(OS_ANDROID)
@@ -823,7 +1071,7 @@ scoped_refptr<ResourceRequestBody> DecodeResourceRequestBody(const char* data,
                                                              size_t size) {
   scoped_refptr<ResourceRequestBody> result = new ResourceRequestBody();
   SerializeObject obj(data, static_cast<int>(size));
-  ReadResourceRequestBody(&obj, result);
+  LegacyReadResourceRequestBody(&obj, result);
   // Please see the EncodeResourceRequestBody() function below for information
   // about why the contains_sensitive_info() field is being explicitly
   // deserialized.
@@ -834,8 +1082,8 @@ scoped_refptr<ResourceRequestBody> DecodeResourceRequestBody(const char* data,
 std::string EncodeResourceRequestBody(
     const ResourceRequestBody& resource_request_body) {
   SerializeObject obj;
-  obj.version = kCurrentVersion;
-  WriteResourceRequestBody(resource_request_body, &obj);
+  obj.version = 25;
+  LegacyWriteResourceRequestBody(resource_request_body, &obj);
   // EncodeResourceRequestBody() is different from WriteResourceRequestBody()
   // because it covers additional data (e.g.|contains_sensitive_info|) which
   // is marshaled between native code and java. WriteResourceRequestBody()
