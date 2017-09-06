@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f42ca33_a6e1820b",
+        "filename": "third_party/blink/tools/plan_blink_move.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-06T04:31:40Z",
+      "side": 1,
+      "message": "I personally prefer unabbreviated variable names like \"filename\" (or \"path\") instead of shorter names like \"fn\"; \"fn\" isn\u0027t so clear because sometimes it also stands for \"function\".\n\nYou could also optionally add a docstring here - this returns the dest path for a given file in third_party/WebKit, right?",
+      "revId": "61930e0151a2b5b7662b4d684c251b7dc2edff54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be7ed7b8_27985c5b",
+        "filename": "third_party/blink/tools/plan_blink_move.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-06T04:31:40Z",
+      "side": 1,
+      "message": "I think ideally docstrings should have a short (one line) summary, with more explanation below if necessary; so optionally this could be changed to something like:\n\n    \"\"\"Returns (source, dest) path pairs.\n\n    The source paths are relative to third_party/WebKit,\n    and the dest paths are relative to third_party/blink.\n    The paths use os.sep as the path part separator.\n    \"\"\"",
+      "revId": "61930e0151a2b5b7662b4d684c251b7dc2edff54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
