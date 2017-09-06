@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "83613a66_72ee7b28",
+        "filename": "chrome/browser/chrome_browser_main_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-06T20:56:26Z",
+      "side": 1,
+      "message": "The other alternative I thought of is to leave IncreaseRendererCrashCount() as is. Instead of binding to it directly here, bind to some function in chrome/ that then calls IncreaseRendererCrashCount(g_browser_process-\u003elocal_state());",
+      "parentUuid": "79a4d366_ab2534d5",
+      "revId": "b9c97fad3d6058f43777e1b8a7dfb1f75b5c21b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8eec6ae_d3a470a6",
         "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
         "patchSetId": 2
@@ -65,6 +83,24 @@
       "writtenOn": "2017-09-06T00:57:52Z",
       "side": 1,
       "message": "Can we put this back to the way it was? I realized the ChildProcessCrashObserver ctor is being called in PreCreateThreads(), which is not the best time to try to access code that may end up creating threads.",
+      "revId": "b9c97fad3d6058f43777e1b8a7dfb1f75b5c21b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe14f6b_3f0b3473",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-06T20:56:26Z",
+      "side": 1,
+      "message": "To be clear, \"the way it was\" meaning not creating a task runner here, and instead calling base::PostTaskWithTraitsAndReplyWithResult() in OnChildExit().",
+      "parentUuid": "f8eec6ae_d3a470a6",
       "revId": "b9c97fad3d6058f43777e1b8a7dfb1f75b5c21b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
