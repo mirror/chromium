@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d99e30b6_d0c8fb01",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-09-06T00:26:48Z",
+      "side": 1,
+      "message": "typo, should be SUCCESSFUL.\nActually, why not standard SUCCESS/FAILURE? This goes better with FooStatus name of the enum.",
+      "revId": "2757285c1311b609d3b3e16702ede265b2128831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3993a3c_b74f54b2",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-09-06T00:26:48Z",
+      "side": 1,
+      "message": "I would add the happy case to the reporting as well, changing enum a little:\nSUCCESS_UPDATED, SUCCESS_NOT_FOUND, FAILURE_NOT_FOUND or something like this. \nIt will give the \u0027base\u0027 to the histogram, to put possible failures in perspective. In other words, histogram will include all 100% cases.",
+      "revId": "2757285c1311b609d3b3e16702ede265b2128831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
