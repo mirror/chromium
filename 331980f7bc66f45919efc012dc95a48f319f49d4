@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "78d43dbd_6e65e93e",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-06T02:58:22Z",
+      "side": 1,
+      "message": "To be clear, the old algorithm also fails in cases where a shorter string is rendered wider. See comment in [1]. Essentially any bisect algorithm will implicitly make the (false) assumption that string width is monotonic.\n\nI think it\u0027s fine to make this (false) assumption, as long as the failure mode is merely having a string that is shorter than it could be, rather than some other bad outcome.\n\n[1] https://cs.chromium.org/chromium/src/components/url_formatter/elide_url.cc?l\u003d151",
+      "parentUuid": "1f00592f_a29a4f1d",
+      "revId": "331980f7bc66f45919efc012dc95a48f319f49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "770b5763_5f38a82b",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 5
