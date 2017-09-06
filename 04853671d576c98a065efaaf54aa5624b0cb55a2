@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53c6da90_3489f1dd",
+        "filename": "chrome/browser/ntp_snippets/ntp_snippets_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-06T18:03:40Z",
+      "side": 1,
+      "message": "\u003e Why have two histograms that only log a specific value each. Why not combine them into one histogram?\n\u003e\n\u003e i.e. have a single OptOut histogram and one would be \"IMPLICIT_OPT_OUT\" and the other one would be \"IMPLICIT_AUTO_OPT_OUT\".\n\nBecause the original one has the wrong name. I had meant to create \"OptOuts[{IMPLICIT,EXPLICIT}]\" but accidentally created \"AutoOptOuts[IMPLICIT]\" instead. In this CL, the proper name is used for new data, and the bad name is used for old data.\n\nI could rename the histogram instead of creating a new one, but:\n1. Then I would break continuity for IMPLICIT\n2. The IMPLICIT data is no longer used as soon as we have the new data.\n\nSo my plan is to start using the new name now, and deprecate the old name once the new one lands.\n\n\u003e In general, we recommend having enough information in a single histogram to make sense of the signal. For example, if you ever log one value, then what does a value like 3838 tell you? Nothing - because you needing something else to make sense of it (is it a lot? is it few?). So a best practice would be to have a histogram have a bucket that can act as a normalizing factor - for example the number of content suggestions shown.\n\nThe appropriate normalizing factor in this case is the number of users in the experiment. Is there a good way to put that into the histogram, or is it better to rely on other mechanisms?\n\n\n(there was also another bug here, in that I swapped the values to the two histograms, but didn\u0027t notice in chrome://histograms because both values are 0)",
+      "parentUuid": "aa0ca77d_2d6f8518",
+      "range": {
+        "startLine": 36,
+        "startChar": 57,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "04853671d576c98a065efaaf54aa5624b0cb55a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdbef740_56d98c91",
         "filename": "chrome/browser/ntp_snippets/ntp_snippets_metrics.cc",
         "patchSetId": 3
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "04dad172_93d9c5ef",
+        "filename": "chrome/browser/ntp_snippets/ntp_snippets_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-06T18:03:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5254bf4_d3b1ac13",
+      "revId": "04853671d576c98a065efaaf54aa5624b0cb55a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "472a47dc_555ca43c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -80,6 +122,30 @@
       "revId": "04853671d576c98a065efaaf54aa5624b0cb55a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb12e44_83057038",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 47389,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-06T18:03:40Z",
+      "side": 1,
+      "message": "\u003e Please specify enum\u003d else this will be treated as a numeric histogram by our dashboards, which is not what you want.\n\nDone. I added an enum \"Count\", with a single bucket \"Count\".",
+      "parentUuid": "472a47dc_555ca43c",
+      "range": {
+        "startLine": 47389,
+        "startChar": 47,
+        "endLine": 47389,
+        "endChar": 60
+      },
+      "revId": "04853671d576c98a065efaaf54aa5624b0cb55a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
