@@ -41,17 +41,19 @@ void HitTestQuery::SwitchActiveAggregatedHitTestRegionList(
 }
 
 Target HitTestQuery::FindTargetForLocation(
+    EventSource event_source,
     const gfx::Point& location_in_root) const {
   Target target;
   if (!active_hit_test_list_size_)
     return target;
 
-  FindTargetInRegionForLocation(location_in_root, active_hit_test_list_,
-                                &target);
+  FindTargetInRegionForLocation(event_source, location_in_root,
+                                active_hit_test_list_, &target);
   return target;
 }
 
 bool HitTestQuery::FindTargetInRegionForLocation(
+    EventSource event_source,
     const gfx::Point& location_in_parent,
     AggregatedHitTestRegion* region,
     Target* target) const {
@@ -71,8 +73,8 @@ bool HitTestQuery::FindTargetInRegionForLocation(
   gfx::Point location_in_target(location_transformed);
   location_in_target.Offset(-region->rect.x(), -region->rect.y());
   while (child_region < child_region_end) {
-    if (FindTargetInRegionForLocation(location_in_target, child_region,
-                                      target)) {
+    if (FindTargetInRegionForLocation(event_source, location_in_target,
+                                      child_region, target)) {
       return true;
     }
 
@@ -83,7 +85,11 @@ bool HitTestQuery::FindTargetInRegionForLocation(
     child_region = child_region + child_region->child_count + 1;
   }
 
-  if (region->flags & mojom::kHitTestMine) {
+  bool match_touch_or_mouse_region =
+      event_source == EventSource::MOUSE
+          ? (region->flags & mojom::kHitTestMouse)
+          : (region->flags & mojom::kHitTestTouch);
+  if ((region->flags & mojom::kHitTestMine) && match_touch_or_mouse_region) {
     target->frame_sink_id = region->frame_sink_id;
     target->location_in_target = location_in_target;
     target->flags = region->flags;
