@@ -15,8 +15,11 @@
 #include "cc/output/overlay_candidate.h"
 #include "cc/quads/render_pass.h"
 
-namespace cc {
+namespace viz {
 class DisplayResourceProvider;
+}
+
+namespace cc {
 class OutputSurface;
 
 class CC_EXPORT OverlayProcessor {
@@ -28,7 +31,7 @@ class CC_EXPORT OverlayProcessor {
     // current set of render passes. Returns true if the strategy was successful
     // and adds any additional passes necessary to represent overlays to
     // |render_passes|.
-    virtual bool Attempt(DisplayResourceProvider* resource_provider,
+    virtual bool Attempt(viz::DisplayResourceProvider* resource_provider,
                          RenderPass* render_pass,
                          OverlayCandidateList* candidates,
                          std::vector<gfx::Rect>* content_bounds) = 0;
@@ -47,7 +50,7 @@ class CC_EXPORT OverlayProcessor {
   // Attempt to replace quads from the specified root render pass with overlays
   // or CALayers. This must be called every frame.
   void ProcessForOverlays(
-      DisplayResourceProvider* resource_provider,
+      viz::DisplayResourceProvider* resource_provider,
       RenderPassList* render_passes,
       const FilterOperationsMap& render_pass_filters,
       const FilterOperationsMap& render_pass_background_filters,
@@ -65,7 +68,7 @@ class CC_EXPORT OverlayProcessor {
 
  private:
   bool ProcessForCALayers(
-      DisplayResourceProvider* resource_provider,
+      viz::DisplayResourceProvider* resource_provider,
       RenderPass* render_pass,
       const FilterOperationsMap& render_pass_filters,
       const FilterOperationsMap& render_pass_background_filters,
@@ -73,7 +76,7 @@ class CC_EXPORT OverlayProcessor {
       CALayerOverlayList* ca_layer_overlays,
       gfx::Rect* damage_rect);
   bool ProcessForDCLayers(
-      DisplayResourceProvider* resource_provider,
+      viz::DisplayResourceProvider* resource_provider,
       RenderPassList* render_passes,
       const FilterOperationsMap& render_pass_filters,
       const FilterOperationsMap& render_pass_background_filters,

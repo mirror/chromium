@@ -8,8 +8,6 @@
 #include <vector>
 
 #include "base/memory/ptr_util.h"
-#include "cc/resources/layer_tree_resource_provider.h"
-#include "cc/resources/resource_provider.h"
 #include "cc/test/fake_output_surface.h"
 #include "cc/test/fake_output_surface_client.h"
 #include "cc/test/fake_picture_layer_tiling_client.h"
@@ -17,6 +15,8 @@
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/trees/layer_tree_settings.h"
+#include "components/viz/common/display/layer_tree_resource_provider.h"
+#include "components/viz/common/display/resource_provider.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/size_conversions.h"
 
@@ -249,8 +249,8 @@ class PictureLayerTilingSetTestWithResources : public testing::Test {
         TestContextProvider::Create();
     ASSERT_TRUE(context_provider->BindToCurrentThread());
     auto shared_bitmap_manager = std::make_unique<TestSharedBitmapManager>();
-    std::unique_ptr<ResourceProvider> resource_provider =
-        FakeResourceProvider::Create<LayerTreeResourceProvider>(
+    std::unique_ptr<viz::ResourceProvider> resource_provider =
+        FakeResourceProvider::Create<viz::LayerTreeResourceProvider>(
             context_provider.get(), shared_bitmap_manager.get());
 
     FakePictureLayerTilingClient client(resource_provider.get());

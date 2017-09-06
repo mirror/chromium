@@ -13,8 +13,8 @@
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/resources/layer_tree_resource_provider.h"
 #include "cc/resources/resource.h"
+#include "components/viz/common/display/layer_tree_resource_provider.h"
 #include "components/viz/common/resources/platform_color.h"
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -24,7 +24,7 @@ namespace {
 
 class RasterBufferImpl : public RasterBuffer {
  public:
-  RasterBufferImpl(LayerTreeResourceProvider* resource_provider,
+  RasterBufferImpl(viz::LayerTreeResourceProvider* resource_provider,
                    const Resource* resource)
       : lock_(resource_provider, resource->id()), resource_(resource) {}
 
@@ -57,7 +57,7 @@ class RasterBufferImpl : public RasterBuffer {
   }
 
  private:
-  LayerTreeResourceProvider::ScopedWriteLockGpuMemoryBuffer lock_;
+  viz::LayerTreeResourceProvider::ScopedWriteLockGpuMemoryBuffer lock_;
   const Resource* resource_;
 
   DISALLOW_COPY_AND_ASSIGN(RasterBufferImpl);
@@ -67,7 +67,7 @@ class RasterBufferImpl : public RasterBuffer {
 
 // static
 std::unique_ptr<RasterBufferProvider> ZeroCopyRasterBufferProvider::Create(
-    LayerTreeResourceProvider* resource_provider,
+    viz::LayerTreeResourceProvider* resource_provider,
     viz::ResourceFormat preferred_tile_format) {
   return base::WrapUnique<RasterBufferProvider>(
       new ZeroCopyRasterBufferProvider(resource_provider,
@@ -75,7 +75,7 @@ std::unique_ptr<RasterBufferProvider> ZeroCopyRasterBufferProvider::Create(
 }
 
 ZeroCopyRasterBufferProvider::ZeroCopyRasterBufferProvider(
-    LayerTreeResourceProvider* resource_provider,
+    viz::LayerTreeResourceProvider* resource_provider,
     viz::ResourceFormat preferred_tile_format)
     : resource_provider_(resource_provider),
       preferred_tile_format_(preferred_tile_format) {}
@@ -130,7 +130,7 @@ bool ZeroCopyRasterBufferProvider::IsResourceReadyToDraw(
 }
 
 uint64_t ZeroCopyRasterBufferProvider::SetReadyToDrawCallback(
-    const ResourceProvider::ResourceIdArray& resource_ids,
+    const viz::ResourceProvider::ResourceIdArray& resource_ids,
     const base::Closure& callback,
     uint64_t pending_callback_id) const {
   // Zero-copy resources are immediately ready to draw.

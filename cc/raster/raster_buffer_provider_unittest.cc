@@ -26,7 +26,6 @@
 #include "cc/raster/synchronous_task_graph_runner.h"
 #include "cc/raster/zero_copy_raster_buffer_provider.h"
 #include "cc/resources/resource_pool.h"
-#include "cc/resources/resource_provider.h"
 #include "cc/resources/scoped_resource.h"
 #include "cc/test/fake_raster_source.h"
 #include "cc/test/fake_resource_provider.h"
@@ -34,6 +33,7 @@
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/test/test_web_graphics_context_3d.h"
 #include "cc/tiles/tile_task_manager.h"
+#include "components/viz/common/display/resource_provider.h"
 #include "components/viz/common/resources/platform_color.h"
 #include "components/viz/test/test_gpu_memory_buffer_manager.h"
 #include "gpu/GLES2/gl2extchromium.h"
@@ -238,7 +238,7 @@ class RasterBufferProviderTest
 
   void AppendTask(unsigned id, const gfx::Size& size) {
     auto resource = std::make_unique<ScopedResource>(resource_provider_.get());
-    resource->Allocate(size, ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+    resource->Allocate(size, viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE,
                        viz::RGBA_8888, gfx::ColorSpace());
 
     // The raster buffer has no tile ids associated with it for partial update,
@@ -257,7 +257,7 @@ class RasterBufferProviderTest
     const gfx::Size size(1, 1);
 
     auto resource = std::make_unique<ScopedResource>(resource_provider_.get());
-    resource->Allocate(size, ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+    resource->Allocate(size, viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE,
                        viz::RGBA_8888, gfx::ColorSpace());
 
     std::unique_ptr<RasterBuffer> raster_buffer =
@@ -298,14 +298,14 @@ class RasterBufferProviderTest
     TestWebGraphicsContext3D* context3d = context_provider_->TestContext3d();
     context3d->set_support_sync_query(true);
     resource_provider_ =
-        FakeResourceProvider::Create<LayerTreeResourceProvider>(
+        FakeResourceProvider::Create<viz::LayerTreeResourceProvider>(
             context_provider_.get(), &shared_bitmap_manager_,
             &gpu_memory_buffer_manager_);
   }
 
   void CreateSoftwareResourceProvider() {
     resource_provider_ =
-        FakeResourceProvider::Create<LayerTreeResourceProvider>(
+        FakeResourceProvider::Create<viz::LayerTreeResourceProvider>(
             nullptr, &shared_bitmap_manager_, &gpu_memory_buffer_manager_);
   }
 
@@ -317,7 +317,7 @@ class RasterBufferProviderTest
  protected:
   scoped_refptr<TestContextProvider> context_provider_;
   scoped_refptr<TestContextProvider> worker_context_provider_;
-  std::unique_ptr<LayerTreeResourceProvider> resource_provider_;
+  std::unique_ptr<viz::LayerTreeResourceProvider> resource_provider_;
   std::unique_ptr<TileTaskManager> tile_task_manager_;
   std::unique_ptr<RasterBufferProvider> raster_buffer_provider_;
   viz::TestGpuMemoryBufferManager gpu_memory_buffer_manager_;
@@ -404,7 +404,7 @@ TEST_P(RasterBufferProviderTest, ReadyToDrawCallback) {
   ScheduleTasks();
   RunMessageLoopUntilAllTasksHaveCompleted();
 
-  ResourceProvider::ResourceIdArray array;
+  viz::ResourceProvider::ResourceIdArray array;
   for (const auto& resource : resources_) {
     array.push_back(resource->id());
   }
@@ -429,7 +429,7 @@ TEST_P(RasterBufferProviderTest, ReadyToDrawCallbackNoDuplicate) {
   ScheduleTasks();
   RunMessageLoopUntilAllTasksHaveCompleted();
 
-  ResourceProvider::ResourceIdArray array;
+  viz::ResourceProvider::ResourceIdArray array;
   for (const auto& resource : resources_) {
     array.push_back(resource->id());
   }

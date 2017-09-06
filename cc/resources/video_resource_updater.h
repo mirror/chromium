@@ -17,7 +17,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "cc/cc_export.h"
-#include "cc/resources/release_callback_impl.h"
+#include "components/viz/common/quads/release_callback_impl.h"
 #include "components/viz/common/quads/texture_mailbox.h"
 #include "components/viz/common/resources/resource_format.h"
 #include "ui/gfx/buffer_types.h"
@@ -30,10 +30,10 @@ class VideoFrame;
 
 namespace viz {
 class ContextProvider;
+class ResourceProvider;
 }
 
 namespace cc {
-class ResourceProvider;
 
 class CC_EXPORT VideoFrameExternalResources {
  public:
@@ -54,14 +54,14 @@ class CC_EXPORT VideoFrameExternalResources {
 
   ResourceType type;
   std::vector<viz::TextureMailbox> mailboxes;
-  std::vector<ReleaseCallbackImpl> release_callbacks;
+  std::vector<viz::ReleaseCallbackImpl> release_callbacks;
   bool read_lock_fences_enabled;
   // Format of the storage of the resource, if known.
   gfx::BufferFormat buffer_format;
 
   // TODO(danakj): Remove these too.
   std::vector<unsigned> software_resources;
-  ReleaseCallbackImpl software_release_callback;
+  viz::ReleaseCallbackImpl software_release_callback;
 
   // Used by hardware textures which do not return values in the 0-1 range.
   // After a lookup, subtract offset and multiply by multiplier.
@@ -79,7 +79,7 @@ class CC_EXPORT VideoFrameExternalResources {
 class CC_EXPORT VideoResourceUpdater {
  public:
   VideoResourceUpdater(viz::ContextProvider* context_provider,
-                       ResourceProvider* resource_provider,
+                       viz::ResourceProvider* resource_provider,
                        bool use_stream_video_draw_quad);
   ~VideoResourceUpdater();
 
@@ -180,7 +180,7 @@ class CC_EXPORT VideoResourceUpdater {
                             BlockingTaskRunner* main_thread_task_runner);
 
   viz::ContextProvider* context_provider_;
-  ResourceProvider* resource_provider_;
+  viz::ResourceProvider* resource_provider_;
   const bool use_stream_video_draw_quad_;
   std::unique_ptr<media::SkCanvasVideoRenderer> video_renderer_;
   std::vector<uint8_t> upload_pixels_;

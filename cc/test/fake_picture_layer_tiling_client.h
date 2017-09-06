@@ -17,7 +17,8 @@ namespace cc {
 class FakePictureLayerTilingClient : public PictureLayerTilingClient {
  public:
   FakePictureLayerTilingClient();
-  explicit FakePictureLayerTilingClient(ResourceProvider* resource_provider);
+  explicit FakePictureLayerTilingClient(
+      viz::ResourceProvider* resource_provider);
   ~FakePictureLayerTilingClient() override;
 
   // PictureLayerTilingClient implementation.

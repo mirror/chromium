@@ -22,11 +22,11 @@ FakePictureLayerTilingClient::FakePictureLayerTilingClient()
       has_valid_tile_priorities_(true) {}
 
 FakePictureLayerTilingClient::FakePictureLayerTilingClient(
-    ResourceProvider* resource_provider)
+    viz::ResourceProvider* resource_provider)
     : resource_pool_(
           ResourcePool::Create(resource_provider,
                                base::ThreadTaskRunnerHandle::Get().get(),
-                               ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                               viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE,
                                ResourcePool::kDefaultExpirationDelay,
                                false)),
       tile_manager_(

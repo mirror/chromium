@@ -5,7 +5,7 @@
 #include <stddef.h>
 
 #include "base/logging.h"
-#include "cc/resources/resource_util.h"
+#include "cc/base/resource_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace cc {

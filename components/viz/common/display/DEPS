@@ -1,0 +1,16 @@
+include_rules = [
+    "+cc/base",
+    "+cc/output/overlay_candidate.h",
+    "+cc/resources",
+    "+gpu/command_buffer/client",
+    "+gpu/GLES2/gl2extchromium.h",
+    "+skia/ext/texture_handle.h",
+    "+third_party/khronos/GLES2",
+    "+third_party/skia/include",
+    "+ui/gl/trace_util.h",
+]
+specific_include_rules = {
+  "resource_provider_unittest\.cc": [
+    "+cc/test",
+  ],
+}

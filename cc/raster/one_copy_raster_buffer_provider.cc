@@ -16,7 +16,7 @@
 #include "base/trace_event/trace_event.h"
 #include "cc/base/histograms.h"
 #include "cc/base/math_util.h"
-#include "cc/resources/resource_util.h"
+#include "cc/base/resource_util.h"
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/resources/platform_color.h"
 #include "components/viz/common/resources/resource_format.h"
@@ -37,7 +37,7 @@ const int kMaxBytesPerCopyOperation = 1024 * 1024 * 4;
 
 OneCopyRasterBufferProvider::RasterBufferImpl::RasterBufferImpl(
     OneCopyRasterBufferProvider* client,
-    LayerTreeResourceProvider* resource_provider,
+    viz::LayerTreeResourceProvider* resource_provider,
     const Resource* resource,
     uint64_t previous_content_id)
     : client_(client),
@@ -70,7 +70,7 @@ OneCopyRasterBufferProvider::OneCopyRasterBufferProvider(
     base::SequencedTaskRunner* task_runner,
     viz::ContextProvider* compositor_context_provider,
     viz::ContextProvider* worker_context_provider,
-    LayerTreeResourceProvider* resource_provider,
+    viz::LayerTreeResourceProvider* resource_provider,
     int max_copy_texture_chromium_size,
     bool use_partial_raster,
     int max_staging_buffer_usage_in_bytes,
@@ -122,7 +122,8 @@ void OneCopyRasterBufferProvider::OrderingBarrier() {
 
   gpu::gles2::GLES2Interface* gl = compositor_context_provider_->ContextGL();
   if (async_worker_context_enabled_) {
-    gpu::SyncToken sync_token = ResourceProvider::GenerateSyncTokenHelper(gl);
+    gpu::SyncToken sync_token =
+        viz::ResourceProvider::GenerateSyncTokenHelper(gl);
     for (RasterBufferImpl* buffer : pending_raster_buffers_)
       buffer->set_sync_token(sync_token);
   } else {
@@ -175,7 +176,7 @@ bool OneCopyRasterBufferProvider::IsResourceReadyToDraw(
 }
 
 uint64_t OneCopyRasterBufferProvider::SetReadyToDrawCallback(
-    const ResourceProvider::ResourceIdArray& resource_ids,
+    const viz::ResourceProvider::ResourceIdArray& resource_ids,
     const base::Closure& callback,
     uint64_t pending_callback_id) const {
   if (!async_worker_context_enabled_)
@@ -206,7 +207,7 @@ void OneCopyRasterBufferProvider::Shutdown() {
 
 void OneCopyRasterBufferProvider::PlaybackAndCopyOnWorkerThread(
     const Resource* resource,
-    ResourceProvider::ScopedWriteLockGL* resource_lock,
+    viz::ResourceProvider::ScopedWriteLockGL* resource_lock,
     const gpu::SyncToken& sync_token,
     const RasterSource* raster_source,
     const gfx::Rect& raster_full_rect,
@@ -305,7 +306,7 @@ void OneCopyRasterBufferProvider::PlaybackToStagingBuffer(
 
 void OneCopyRasterBufferProvider::CopyOnWorkerThread(
     StagingBuffer* staging_buffer,
-    ResourceProvider::ScopedWriteLockGL* resource_lock,
+    viz::ResourceProvider::ScopedWriteLockGL* resource_lock,
     const RasterSource* raster_source,
     const gfx::Rect& rect_to_copy) {
   viz::ContextProvider::ScopedContextLock scoped_context(
@@ -405,7 +406,8 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
   gl->DeleteTextures(1, &texture_id);
 
   // Generate sync token for cross context synchronization.
-  resource_lock->set_sync_token(ResourceProvider::GenerateSyncTokenHelper(gl));
+  resource_lock->set_sync_token(
+      viz::ResourceProvider::GenerateSyncTokenHelper(gl));
 
   // Mark resource as synchronized when worker and compositor are in same stream
   // to prevent extra wait sync token calls.

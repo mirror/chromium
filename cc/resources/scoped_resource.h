@@ -21,11 +21,11 @@ namespace cc {
 
 class CC_EXPORT ScopedResource : public Resource {
  public:
-  explicit ScopedResource(ResourceProvider* provider);
+  explicit ScopedResource(viz::ResourceProvider* provider);
   virtual ~ScopedResource();
 
   void Allocate(const gfx::Size& size,
-                ResourceProvider::TextureHint hint,
+                viz::ResourceProvider::TextureHint hint,
                 viz::ResourceFormat format,
                 const gfx::ColorSpace& color_space);
   void AllocateWithGpuMemoryBuffer(const gfx::Size& size,
@@ -35,7 +35,7 @@ class CC_EXPORT ScopedResource : public Resource {
   void Free();
 
  private:
-  ResourceProvider* resource_provider_;
+  viz::ResourceProvider* resource_provider_;
 
 #if DCHECK_IS_ON()
   base::PlatformThreadId allocate_thread_id_;

@@ -27,13 +27,13 @@
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/stream_video_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
-#include "cc/resources/display_resource_provider.h"
 #include "cc/test/fake_output_surface_client.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/geometry_test_utils.h"
 #include "cc/test/test_context_provider.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/test/test_web_graphics_context_3d.h"
+#include "components/viz/common/display/display_resource_provider.h"
 #include "components/viz/common/quads/texture_mailbox.h"
 #include "components/viz/service/display/gl_renderer.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -264,14 +264,14 @@ std::unique_ptr<RenderPass> CreateRenderPassWithTransform(
   return pass;
 }
 
-viz::ResourceId CreateResource(ResourceProvider* resource_provider,
+viz::ResourceId CreateResource(viz::ResourceProvider* resource_provider,
                                const gfx::Size& size,
                                bool is_overlay_candidate) {
   viz::TextureMailbox mailbox =
       viz::TextureMailbox(gpu::Mailbox::Generate(), gpu::SyncToken(),
                           GL_TEXTURE_2D, size, is_overlay_candidate, false);
-  std::unique_ptr<SingleReleaseCallbackImpl> release_callback =
-      SingleReleaseCallbackImpl::Create(base::Bind(&MailboxReleased));
+  std::unique_ptr<viz::SingleReleaseCallbackImpl> release_callback =
+      viz::SingleReleaseCallbackImpl::Create(base::Bind(&MailboxReleased));
 
   return resource_provider->CreateResourceFromTextureMailbox(
       mailbox, std::move(release_callback));
@@ -288,7 +288,7 @@ SolidColorDrawQuad* CreateSolidColorQuadAt(
   return quad;
 }
 
-TextureDrawQuad* CreateCandidateQuadAt(ResourceProvider* resource_provider,
+TextureDrawQuad* CreateCandidateQuadAt(viz::ResourceProvider* resource_provider,
                                        const SharedQuadState* shared_quad_state,
                                        RenderPass* render_pass,
                                        const gfx::Rect& rect) {
@@ -314,7 +314,7 @@ TextureDrawQuad* CreateCandidateQuadAt(ResourceProvider* resource_provider,
 }
 
 TextureDrawQuad* CreateTransparentCandidateQuadAt(
-    ResourceProvider* resource_provider,
+    viz::ResourceProvider* resource_provider,
     const SharedQuadState* shared_quad_state,
     RenderPass* render_pass,
     const gfx::Rect& rect) {
@@ -340,7 +340,7 @@ TextureDrawQuad* CreateTransparentCandidateQuadAt(
 }
 
 StreamVideoDrawQuad* CreateCandidateVideoQuadAt(
-    ResourceProvider* resource_provider,
+    viz::ResourceProvider* resource_provider,
     const SharedQuadState* shared_quad_state,
     RenderPass* render_pass,
     const gfx::Rect& rect,
@@ -360,7 +360,7 @@ StreamVideoDrawQuad* CreateCandidateVideoQuadAt(
 }
 
 TextureDrawQuad* CreateFullscreenCandidateQuad(
-    ResourceProvider* resource_provider,
+    viz::ResourceProvider* resource_provider,
     const SharedQuadState* shared_quad_state,
     RenderPass* render_pass) {
   return CreateCandidateQuadAt(resource_provider, shared_quad_state,
@@ -368,7 +368,7 @@ TextureDrawQuad* CreateFullscreenCandidateQuad(
 }
 
 StreamVideoDrawQuad* CreateFullscreenCandidateVideoQuad(
-    ResourceProvider* resource_provider,
+    viz::ResourceProvider* resource_provider,
     const SharedQuadState* shared_quad_state,
     RenderPass* render_pass,
     const gfx::Transform& transform) {
@@ -378,7 +378,7 @@ StreamVideoDrawQuad* CreateFullscreenCandidateVideoQuad(
 }
 
 YUVVideoDrawQuad* CreateFullscreenCandidateYUVVideoQuad(
-    ResourceProvider* resource_provider,
+    viz::ResourceProvider* resource_provider,
     const SharedQuadState* shared_quad_state,
     RenderPass* render_pass) {
   bool needs_blending = false;
@@ -400,7 +400,7 @@ YUVVideoDrawQuad* CreateFullscreenCandidateYUVVideoQuad(
   return overlay_quad;
 }
 
-void CreateOpaqueQuadAt(ResourceProvider* resource_provider,
+void CreateOpaqueQuadAt(viz::ResourceProvider* resource_provider,
                         const SharedQuadState* shared_quad_state,
                         RenderPass* render_pass,
                         const gfx::Rect& rect) {
@@ -409,7 +409,7 @@ void CreateOpaqueQuadAt(ResourceProvider* resource_provider,
   color_quad->SetNew(shared_quad_state, rect, rect, SK_ColorBLACK, false);
 }
 
-void CreateOpaqueQuadAt(ResourceProvider* resource_provider,
+void CreateOpaqueQuadAt(viz::ResourceProvider* resource_provider,
                         const SharedQuadState* shared_quad_state,
                         RenderPass* render_pass,
                         const gfx::Rect& rect,
@@ -420,7 +420,7 @@ void CreateOpaqueQuadAt(ResourceProvider* resource_provider,
   color_quad->SetNew(shared_quad_state, rect, rect, color, false);
 }
 
-void CreateFullscreenOpaqueQuad(ResourceProvider* resource_provider,
+void CreateFullscreenOpaqueQuad(viz::ResourceProvider* resource_provider,
                                 const SharedQuadState* shared_quad_state,
                                 RenderPass* render_pass) {
   CreateOpaqueQuadAt(resource_provider, shared_quad_state, render_pass,
@@ -471,8 +471,9 @@ class OverlayTest : public testing::Test {
         new OverlayCandidateValidatorType);
 
     shared_bitmap_manager_.reset(new TestSharedBitmapManager());
-    resource_provider_ = FakeResourceProvider::Create<DisplayResourceProvider>(
-        provider_.get(), shared_bitmap_manager_.get());
+    resource_provider_ =
+        FakeResourceProvider::Create<viz::DisplayResourceProvider>(
+            provider_.get(), shared_bitmap_manager_.get());
 
     overlay_processor_.reset(new OverlayProcessor(output_surface_.get()));
     overlay_processor_->Initialize();
@@ -482,7 +483,7 @@ class OverlayTest : public testing::Test {
   std::unique_ptr<OutputSurfaceType> output_surface_;
   FakeOutputSurfaceClient client_;
   std::unique_ptr<viz::SharedBitmapManager> shared_bitmap_manager_;
-  std::unique_ptr<DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<viz::DisplayResourceProvider> resource_provider_;
   std::unique_ptr<OverlayProcessor> overlay_processor_;
   gfx::Rect damage_rect_;
   std::vector<gfx::Rect> content_bounds_;
@@ -513,8 +514,8 @@ TEST(OverlayTest, OverlaysProcessorHasStrategy) {
 
   std::unique_ptr<viz::SharedBitmapManager> shared_bitmap_manager(
       new TestSharedBitmapManager());
-  std::unique_ptr<DisplayResourceProvider> resource_provider =
-      FakeResourceProvider::Create<DisplayResourceProvider>(
+  std::unique_ptr<viz::DisplayResourceProvider> resource_provider =
+      FakeResourceProvider::Create<viz::DisplayResourceProvider>(
           provider.get(), shared_bitmap_manager.get());
 
   std::unique_ptr<DefaultOverlayProcessor> overlay_processor(
@@ -2271,7 +2272,7 @@ class OverlayInfoRendererGL : public viz::GLRenderer {
  public:
   OverlayInfoRendererGL(const viz::RendererSettings* settings,
                         OutputSurface* output_surface,
-                        DisplayResourceProvider* resource_provider)
+                        viz::DisplayResourceProvider* resource_provider)
       : viz::GLRenderer(settings, output_surface, resource_provider, NULL),
         expect_overlays_(false) {}
 
@@ -2323,8 +2324,9 @@ class GLRendererWithOverlaysTest : public testing::Test {
     provider_->BindToCurrentThread();
     output_surface_.reset(new OutputSurfaceType(provider_));
     output_surface_->BindToClient(&output_surface_client_);
-    resource_provider_ = FakeResourceProvider::Create<DisplayResourceProvider>(
-        provider_.get(), nullptr);
+    resource_provider_ =
+        FakeResourceProvider::Create<viz::DisplayResourceProvider>(
+            provider_.get(), nullptr);
 
     provider_->support()->SetScheduleOverlayPlaneCallback(base::Bind(
         &MockOverlayScheduler::Schedule, base::Unretained(&scheduler_)));
@@ -2354,8 +2356,8 @@ class GLRendererWithOverlaysTest : public testing::Test {
     renderer_->SwapBuffersComplete();
   }
   void ReturnResourceInUseQuery(viz::ResourceId id) {
-    DisplayResourceProvider::ScopedReadLockGL lock(resource_provider_.get(),
-                                                   id);
+    viz::DisplayResourceProvider::ScopedReadLockGL lock(
+        resource_provider_.get(), id);
     gpu::TextureInUseResponse response;
     response.texture = lock.texture_id();
     response.in_use = false;
@@ -2367,7 +2369,7 @@ class GLRendererWithOverlaysTest : public testing::Test {
   viz::RendererSettings settings_;
   FakeOutputSurfaceClient output_surface_client_;
   std::unique_ptr<OutputSurfaceType> output_surface_;
-  std::unique_ptr<DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<viz::DisplayResourceProvider> resource_provider_;
   std::unique_ptr<OverlayInfoRendererGL> renderer_;
   scoped_refptr<TestContextProvider> provider_;
   MockOverlayScheduler scheduler_;

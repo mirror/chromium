@@ -9,7 +9,7 @@
 
 #include "cc/base/filter_operations.h"
 #include "cc/quads/render_pass.h"
-#include "cc/resources/resource_provider.h"
+#include "components/viz/common/display/resource_provider.h"
 #include "third_party/skia/include/core/SkColor.h"
 
 namespace gfx {
@@ -57,7 +57,7 @@ void AddRenderPassQuad(RenderPass* to_pass,
                        SkBlendMode blend_mode);
 
 void AddOneOfEveryQuadType(RenderPass* to_pass,
-                           ResourceProvider* resource_provider,
+                           viz::ResourceProvider* resource_provider,
                            RenderPassId child_pass_id,
                            gpu::SyncToken* sync_token_for_mailbox_texture);
 
