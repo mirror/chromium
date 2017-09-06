@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecc6695d_5ed5e6c8",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-06T22:04:33Z",
+      "side": 1,
+      "message": "Just thinking out loud here... since this really only impacts the TaskScheduler, should the TaskScheduler specific implementation really take care of knowing when to ignore the blocking observer request instead of setting/unsetting the TLS?\n\nDo we expect others to need the ability to unset the blocking observer?",
+      "range": {
+        "startLine": 414,
+        "startChar": 2,
+        "endLine": 414,
+        "endChar": 42
+      },
+      "revId": "08020b3a9b0a825bfa7f7e9e9142ab12f4a245e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
