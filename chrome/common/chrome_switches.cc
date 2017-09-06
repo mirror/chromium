@@ -363,6 +363,9 @@ const char kEnablePermissionActionReporting[] =
 // Enables the picture in picture feature for videos.
 const char kEnablePictureInPicture[] = "enable-picture-in-picture";
 
+// Enables page for policy management at chrome://policy-tool.
+const char kEnablePolicyTool[] = "enable-policy-tool";
+
 // Enables a number of potentially annoying security features (strict mixed
 // content mode, powerful feature restrictions, etc.)
 const char kEnablePotentiallyAnnoyingSecurityFeatures[] =
@@ -1056,6 +1059,11 @@ bool ExtensionsDisabled() {
 bool MdFeedbackEnabled() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       ::switches::kEnableMaterialDesignFeedback);
+}
+
+bool PolicyToolEnabled() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      ::switches::kEnablePolicyTool);
 }
 
 #if defined(OS_CHROMEOS)
