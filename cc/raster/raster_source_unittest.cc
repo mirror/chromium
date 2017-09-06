@@ -548,7 +548,7 @@ TEST(RasterSourceTest, GetPictureMemoryUsageIncludesClientReportedMemory) {
 
 // In debug there is a bunch of clearing to debug colors that makes mocking
 // very noisy and hard to test against.
-#ifndef NDEBUG
+#ifdef NDEBUG
 TEST(RasterSourceTest, RasterTransformWithoutRecordingScale) {
   gfx::Size size(100, 100);
   float recording_scale = 2.f;
