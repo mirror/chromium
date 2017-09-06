@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfae7c72_e245067b",
+        "filename": "net/cert/x509_util_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-06T16:58:35Z",
+      "side": 1,
+      "message": "nit: In this comment (and the other definitions of InvalidIntermediateBehavior) I suggest clarifying that by \"silently ignored\" it means the certificate is not added to the output container. And that by \"invalid intermediate certificate\" what is meant is a basic subset of parsing fails.",
+      "revId": "63cc375f1046d235e690dd56f1c2a69e72ad69a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
