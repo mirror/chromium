@@ -25,4 +25,14 @@ void WaitForOverlayPresentation(OverlayCoordinator* overlay) {
   }));
 }
 
+void WaitForOverlayDismissal(OverlayCoordinator* overlay) {
+  ASSERT_TRUE(overlay);
+  UIViewController* view_controller = overlay.viewController;
+  EXPECT_TRUE(view_controller);
+  EXPECT_TRUE(WaitUntilConditionOrTimeout(kWaitForUIElementTimeout, ^bool {
+    return !view_controller.presentingViewController &&
+           !view_controller.beingDismissed;
+  }));
+}
+
 }  // namespace testing
