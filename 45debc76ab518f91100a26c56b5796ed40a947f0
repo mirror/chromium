@@ -22,6 +22,30 @@
       "revId": "45debc76ab518f91100a26c56b5796ed40a947f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a228c93a_e0bf2ddf",
+        "filename": "third_party/WebKit/LayoutTests/battery-status/api-defined.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-06T19:43:43Z",
+      "side": 1,
+      "message": "This is the style that I\u0027ve copied from other tests using the new Mojo JS API. I agree it\u0027s a little weird and I believe that the tests still function properly after removing the \"file://\" prefix. I will put together a separate patch cleaning this up in all tests.",
+      "parentUuid": "1e801c18_d2c30490",
+      "range": {
+        "startLine": 5,
+        "startChar": 84,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "45debc76ab518f91100a26c56b5796ed40a947f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
