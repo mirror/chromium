@@ -443,6 +443,11 @@ void LockStateController::StartPostLockAnimation() {
       post_lock_immediate_animation_
           ? SessionStateAnimator::ANIMATION_SPEED_IMMEDIATE
           : SessionStateAnimator::ANIMATION_SPEED_MOVE_WINDOWS);
+  animation_sequence->StartAnimation(
+      SessionStateAnimator::SHELF, SessionStateAnimator::ANIMATION_FADE_IN,
+      post_lock_immediate_animation_
+          ? SessionStateAnimator::ANIMATION_SPEED_IMMEDIATE
+          : SessionStateAnimator::ANIMATION_SPEED_MOVE_WINDOWS);
   animation_sequence->EndSequence();
 }
 
