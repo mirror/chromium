@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "352a68a0_72152e3a",
+        "filename": "chrome/browser/ui/interventions/framebust_block_message_delegate.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-06T12:17:37Z",
+      "side": 1,
+      "message": "Renamed from GetMessage(): compilation fails on windows because we have a \n\"#define GetMessage GetMessageW\" somewhere in the toolchain: https://build.chromium.org/p/tryserver.chromium.win/builders/win_clang/builds/304893",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 31
+      },
+      "revId": "ee8c61b3983ee632ab9189b63d0d7259301236fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

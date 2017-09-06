@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aec40362_37086e20",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-06T12:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af13fe2f_78962246",
+      "revId": "b306e4e7bec615d24caf8a3f260705e12d77aff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1593223_58409b80",
         "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
         "patchSetId": 24
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-06T03:16:52Z",
       "side": 1,
       "message": "IIRC this will mean that while one framebust infobar is on the screen, another can\u0027t replace it, and will simply get dropped on the floor.  Is that what you want?",
+      "revId": "b306e4e7bec615d24caf8a3f260705e12d77aff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d8954c_cedb42c8",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-06T12:17:37Z",
+      "side": 1,
+      "message": "Currently, yes. I asked about what should happen if there are multiple redirects, but it would be very rare and most likely be a case of ads or some other behavior unexpected from the main page. I can maybe just record metrics for how often this happens?",
+      "parentUuid": "f1593223_58409b80",
       "revId": "b306e4e7bec615d24caf8a3f260705e12d77aff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0dff3572_108620bf",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-06T12:17:37Z",
+      "side": 1,
+      "message": "yes, pure virtual in InfoBarAndroid",
+      "parentUuid": "7f0d6e20_60ef5e4d",
+      "revId": "b306e4e7bec615d24caf8a3f260705e12d77aff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b3bc3e7_1776e7c4",
         "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
         "patchSetId": 24
@@ -67,6 +121,24 @@
       "revId": "b306e4e7bec615d24caf8a3f260705e12d77aff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c57cc1_9bb9078a",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-06T12:17:37Z",
+      "side": 1,
+      "message": "Good to know it\u0027s allowed! QoL features we\u0027re missing in Java... Thanks!",
+      "parentUuid": "5b3bc3e7_1776e7c4",
+      "revId": "b306e4e7bec615d24caf8a3f260705e12d77aff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f81d7b34_562db29b",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-06T12:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e7b7e77_e6fb1553",
+      "revId": "b306e4e7bec615d24caf8a3f260705e12d77aff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "243669d0_ffef7b01",
         "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.h",
         "patchSetId": 24
@@ -101,6 +191,24 @@
       "revId": "b306e4e7bec615d24caf8a3f260705e12d77aff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c21fb4_cee3ab37",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-06T12:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "243669d0_ffef7b01",
+      "revId": "b306e4e7bec615d24caf8a3f260705e12d77aff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "cbe2b353_9dd9be76",
+        "filename": "chrome/browser/ui/interventions/framebust_block_message_delegate.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-06T12:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b7a2c93_8b84deb4",
+      "revId": "b306e4e7bec615d24caf8a3f260705e12d77aff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "970bb0e6_ce4b207c",
         "filename": "chrome/browser/ui/interventions/framebust_block_message_delegate.h",
         "patchSetId": 24
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "b72fff43_7e07e3cf",
+        "filename": "chrome/browser/ui/interventions/framebust_block_message_delegate.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-06T12:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "970bb0e6_ce4b207c",
+      "revId": "b306e4e7bec615d24caf8a3f260705e12d77aff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f009f6ba_3b860854",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 24
@@ -152,6 +296,24 @@
       "revId": "b306e4e7bec615d24caf8a3f260705e12d77aff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3544bc2_ab409777",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 4564,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-06T12:17:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f009f6ba_3b860854",
+      "revId": "b306e4e7bec615d24caf8a3f260705e12d77aff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
