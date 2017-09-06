@@ -1277,7 +1277,7 @@ void OmniboxEditModel::GetInfoForCurrentText(AutocompleteMatch* match,
               *selected_match.associated_keyword : selected_match;
     }
     if (alternate_nav_url &&
-        (!popup_model() || popup_model()->manually_selected_match().empty()))
+        (!popup_model() || !popup_model()->has_selected_match()))
       *alternate_nav_url = result().alternate_nav_url();
   } else {
     client_->GetAutocompleteClassifier()->Classify(
