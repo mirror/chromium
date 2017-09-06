@@ -870,6 +870,7 @@ void LayerTreeTest::RequestNewLayerTreeFrameSink() {
   constexpr double refresh_rate = 200.0;
   renderer_settings.resource_settings.buffer_to_texture_target_map =
       viz::DefaultBufferToTextureTargetMapForTesting();
+  renderer_settings.use_skia_renderer = use_skia_renderer_;
   auto layer_tree_frame_sink = CreateLayerTreeFrameSink(
       renderer_settings, refresh_rate, std::move(shared_context_provider),
       std::move(worker_context_provider));
