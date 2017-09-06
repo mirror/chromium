@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "388ad45f_6d464961",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-06T07:14:17Z",
+      "side": 1,
+      "message": "nit: Please remove a trailing whitespace",
+      "revId": "47181bf0cb6c70a486b92930ccf47db56a8ba176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113671c0_c30adcf6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-06T07:14:17Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/637298",
+      "revId": "47181bf0cb6c70a486b92930ccf47db56a8ba176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
