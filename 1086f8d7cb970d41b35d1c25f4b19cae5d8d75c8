@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaa443a9_72971b28",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T19:27:50Z",
+      "side": 1,
+      "message": "// cryptauth::CryptAuthAccessTokenFetcher:",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 1
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1124ec_f944d859",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T19:27:50Z",
+      "side": 1,
+      "message": "OnAccessTokenFetched",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 44
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d996fc_b4c8a0a7",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T19:27:50Z",
+      "side": 1,
+      "message": "Please don\u0027t create an additional derived class. Just use cryptauth::CryptAuthClientFactory and just fetch the account ID before creating it.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 77
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f784cf85_c10dfebe",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T19:27:50Z",
+      "side": 1,
+      "message": "nit: Let\u0027s move this above the observer notification.",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 229,
+        "endChar": 72
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e781aa4d_eb182ff8",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T19:27:50Z",
+      "side": 1,
+      "message": "ConnectToPrefService",
+      "range": {
+        "startLine": 281,
+        "startChar": 21,
+        "endLine": 281,
+        "endChar": 31
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65bb74fe_23078554",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T19:27:50Z",
+      "side": 1,
+      "message": "Use user_prefs::PrefRegistrySyncable(). Example: https://cs.chromium.org/chromium/src/ash/session/session_controller.cc",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 53
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1cb19f0_07675dea",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T19:27:50Z",
+      "side": 1,
+      "message": "Don\u0027t call StartManagers() from within CreateManagers(). Just call StartManagers() after you call CreateManagers() in OnConnectedToPrefService().",
+      "range": {
+        "startLine": 306,
+        "startChar": 2,
+        "endLine": 306,
+        "endChar": 15
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7500fff3_7b427b32",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T19:27:50Z",
+      "side": 1,
+      "message": "Rename to FinishPostEnrollmentInitialization().\n\nThen, move the contents of InitialSync() into here. The functions are only called right after one another.",
+      "range": {
+        "startLine": 324,
+        "startChar": 21,
+        "endLine": 324,
+        "endChar": 47
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4dc86da_ee313780",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T19:27:50Z",
+      "side": 1,
+      "message": "OnConnectedToPrefService",
+      "range": {
+        "startLine": 357,
+        "startChar": 21,
+        "endLine": 357,
+        "endChar": 35
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f255d4bf_ac6a2450",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-06T19:27:50Z",
+      "side": 1,
+      "message": "pref_service_ \u003d std::move(pref_service);",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 359,
+        "endChar": 42
+      },
+      "revId": "1086f8d7cb970d41b35d1c25f4b19cae5d8d75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
