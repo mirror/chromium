@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e801c18_d2c30490",
+        "filename": "third_party/WebKit/LayoutTests/battery-status/api-defined.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-06T16:57:49Z",
+      "side": 1,
+      "message": "hmm, is this intentional? absolute file name with a \"file:\" prefix?\n(also in other tests in this patch)",
+      "range": {
+        "startLine": 5,
+        "startChar": 84,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "45debc76ab518f91100a26c56b5796ed40a947f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
