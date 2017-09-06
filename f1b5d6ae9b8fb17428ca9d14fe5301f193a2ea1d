@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc559858_1bdd2dab",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-06T01:37:15Z",
+      "side": 1,
+      "message": "Good catch; this was a real bug. This was tested by PaintControllerPaintTestForSlimmingPaintV2.BlockScrollingNonLayeredContents but was masked by over-invalidation.\n\nI\u0027ve updated this code to always call \"Layer()-\u003eSetNeedsRepaint();\" but have written it in a way that makes the interest rect requirement obvious.",
+      "parentUuid": "f2281ea5_0a8449dd",
+      "revId": "f1b5d6ae9b8fb17428ca9d14fe5301f193a2ea1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9a97aa0_42f83c6a",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableAreaTest.cpp",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "f1b5d6ae9b8fb17428ca9d14fe5301f193a2ea1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f5fc60_ab04d41d",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableAreaTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-06T01:37:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9a97aa0_42f83c6a",
+      "revId": "f1b5d6ae9b8fb17428ca9d14fe5301f193a2ea1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
