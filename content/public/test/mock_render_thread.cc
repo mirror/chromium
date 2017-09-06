@@ -226,11 +226,6 @@ int32_t MockRenderThread::GetClientId() {
 }
 
 scoped_refptr<base::SingleThreadTaskRunner>
-MockRenderThread::GetTimerTaskRunner() {
-  return base::ThreadTaskRunnerHandle::Get();
-}
-
-scoped_refptr<base::SingleThreadTaskRunner>
 MockRenderThread::GetLoadingTaskRunner() {
   return base::ThreadTaskRunnerHandle::Get();
 }

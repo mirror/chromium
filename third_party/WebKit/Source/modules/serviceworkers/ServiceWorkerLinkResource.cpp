@@ -27,32 +27,26 @@ namespace {
 class RegistrationCallback
     : public WebServiceWorkerProvider::WebServiceWorkerRegistrationCallbacks {
  public:
-  explicit RegistrationCallback(LinkLoaderClient* client) : client_(client) {}
+  explicit RegistrationCallback(HTMLLinkElement* owner) : owner_(owner) {}
   ~RegistrationCallback() override {}
 
   void OnSuccess(
       std::unique_ptr<WebServiceWorkerRegistration::Handle> handle) override {
-    Platform::Current()
-        ->CurrentThread()
-        ->Scheduler()
-        ->TimerTaskRunner()
+    TaskRunnerHelper::Get(TaskType::kTimer, &owner_->GetDocument())
         ->PostTask(BLINK_FROM_HERE,
-                   WTF::Bind(&LinkLoaderClient::LinkLoaded, client_));
+                   WTF::Bind(&LinkLoaderClient::LinkLoaded, owner_));
   }
 
   void OnError(const WebServiceWorkerError& error) override {
-    Platform::Current()
-        ->CurrentThread()
-        ->Scheduler()
-        ->TimerTaskRunner()
+    TaskRunnerHelper::Get(TaskType::kTimer, &owner_->GetDocument())
         ->PostTask(BLINK_FROM_HERE,
-                   WTF::Bind(&LinkLoaderClient::LinkLoadingErrored, client_));
+                   WTF::Bind(&LinkLoaderClient::LinkLoadingErrored, owner_));
   }
 
  private:
   WTF_MAKE_NONCOPYABLE(RegistrationCallback);
 
-  Persistent<LinkLoaderClient> client_;
+  Persistent<HTMLLinkElement> owner_;
 };
 }
 
