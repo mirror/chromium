@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9dc14995_fbd76d4c",
+        "filename": "tools/perf/benchmarks/rasterize_and_record_micro.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-09-06T21:00:08Z",
+      "side": 1,
+      "message": "Actually my intent was to land this as a separate patch, so that the addition of the page set and shifting the benchmark to use it are separate changes. So I am breaking this out into https://chromium-review.googlesource.com/c/chromium/src/+/653999",
+      "parentUuid": "e105bc3d_54750e27",
+      "range": {
+        "startLine": 58,
+        "startChar": 38,
+        "endLine": 58,
+        "endChar": 45
+      },
+      "revId": "302f3b0a0e1dd53f7b66ebc7a15d80f025c4bdb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "673dc9b2_576db9aa",
         "filename": "tools/perf/page_sets/static_top_25_pages.py",
         "patchSetId": 2
