@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16fb67c7_808fccc4",
+        "filename": "media/filters/source_buffer_range.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-06T03:35:05Z",
+      "side": 1,
+      "message": "This portion of this CL should fix bug 758802.",
+      "range": {
+        "startLine": 91,
+        "startChar": 3,
+        "endLine": 91,
+        "endChar": 50
+      },
+      "revId": "5c23f7dd4ed742fbb3e2aaf2b9bffd50107fecb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc6ee5c3_7e66376b",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-06T03:35:05Z",
+      "side": 1,
+      "message": "This is the key part of the fix for bug 759336 (and it should finally let us close bug 589295 for realz...)",
+      "range": {
+        "startLine": 419,
+        "startChar": 3,
+        "endLine": 419,
+        "endChar": 43
+      },
+      "revId": "5c23f7dd4ed742fbb3e2aaf2b9bffd50107fecb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03009110_e9ab9306",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4075,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-06T03:35:05Z",
+      "side": 1,
+      "message": "This new test hit the CHECK in bug 759336 before the rest of this CL was included.\nWith the removal of +1us from SBS::PotentialNextAppendTimestamp() in this CL, this test then hit  the DCHECK in bug 758802, so I included a fix for that issue as well.",
+      "range": {
+        "startLine": 4075,
+        "startChar": 7,
+        "endLine": 4075,
+        "endChar": 29
+      },
+      "revId": "5c23f7dd4ed742fbb3e2aaf2b9bffd50107fecb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7d32bd_cc50c629",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4097,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-06T03:35:05Z",
+      "side": 1,
+      "message": "This new test hit the CHECK in bug 759336 before the rest of this CL was included.",
+      "range": {
+        "startLine": 4097,
+        "startChar": 0,
+        "endLine": 4097,
+        "endChar": 6
+      },
+      "revId": "5c23f7dd4ed742fbb3e2aaf2b9bffd50107fecb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f0a814d_51b85426",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4119,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-06T03:35:05Z",
+      "side": 1,
+      "message": "This new test passes both with and without the SBS and SBR changes in this CL.",
+      "range": {
+        "startLine": 4119,
+        "startChar": 0,
+        "endLine": 4119,
+        "endChar": 6
+      },
+      "revId": "5c23f7dd4ed742fbb3e2aaf2b9bffd50107fecb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
