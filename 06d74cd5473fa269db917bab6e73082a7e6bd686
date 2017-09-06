@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e8359623_5188d0df",
+        "filename": "media/filters/source_buffer_range.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-06T19:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d9d5282_380079c0",
+      "range": {
+        "startLine": 99,
+        "startChar": 6,
+        "endLine": 99,
+        "endChar": 62
+      },
+      "revId": "06d74cd5473fa269db917bab6e73082a7e6bd686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77c97f26_406d4af0",
         "filename": "media/filters/source_buffer_range.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-06T18:30:23Z",
       "side": 1,
       "message": "Do you want to say all this. Its all true, but I think its likely to make my eyes glaze over if I\u0027m reading it later on.",
+      "range": {
+        "startLine": 99,
+        "startChar": 63,
+        "endLine": 102,
+        "endChar": 77
+      },
+      "revId": "06d74cd5473fa269db917bab6e73082a7e6bd686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32321e31_19c7d4d6",
+        "filename": "media/filters/source_buffer_range.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-06T19:31:12Z",
+      "side": 1,
+      "message": "I\u0027ll only keep the 1st sentence (moved to .h).",
+      "parentUuid": "77c97f26_406d4af0",
       "range": {
         "startLine": 99,
         "startChar": 63,
