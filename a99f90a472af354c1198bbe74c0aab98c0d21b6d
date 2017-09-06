@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cd1ca29d_c9185bd1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-06T07:50:44Z",
+      "side": 1,
+      "message": "The proper link would be:\n\nBUG\u003db:63900378",
+      "parentUuid": "5791950d_cee16720",
+      "revId": "a99f90a472af354c1198bbe74c0aab98c0d21b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2367bc5_d8e6cc77",
         "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
         "patchSetId": 2
