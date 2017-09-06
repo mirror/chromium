@@ -46,6 +46,30 @@
       "revId": "266fa88023b5729d05be57a14634285d877e0302",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438283ca_42848e00",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-06T20:19:24Z",
+      "side": 1,
+      "message": "We are planning to launch Chrome Home but\n1) Chrome Home is a complete fork in Chrome for Android\u0027s UI, and as such testing with the feature enabled requires special set up:  https://cs.chromium.org/chromium/src/chrome/test/android/javatests/src/org/chromium/chrome/test/BottomSheetTestRule.java?type\u003dcs\u0026q\u003dbottomsheettest\u0026sq\u003dpackage:chromium\u0026l\u003d119\n2) The legacy UI needs ongoing testing until Chrome Home is rolled out to 100%. \n\nIf we put ChromeHome as the first config, I expect many tests will start failing due to the special set up referenced in #1. We\u0027ve started conversations with the test team about how to get better coverage over the UI forks, but until then it is highly preferable to keep the current UI as the default for tests.",
+      "parentUuid": "848b329f_f0a2d16d",
+      "range": {
+        "startLine": 529,
+        "startChar": 29,
+        "endLine": 529,
+        "endChar": 36
+      },
+      "revId": "266fa88023b5729d05be57a14634285d877e0302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
