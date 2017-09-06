@@ -27,9 +27,12 @@ void EventHandler::OnEvent(Event* event) {
     OnMouseEvent(event->AsMouseEvent());
   else if (event->IsScrollEvent())
     OnScrollEvent(event->AsScrollEvent());
-  else if (event->IsTouchEvent())
+  else if (event->IsTouchEvent()) {
     OnTouchEvent(event->AsTouchEvent());
-  else if (event->IsGestureEvent())
+    if (event->handled()) {
+      LOG(ERROR) << "EventHandler::OnEvent touch handled";
+    }
+  } else if (event->IsGestureEvent())
     OnGestureEvent(event->AsGestureEvent());
   else if (event->IsCancelModeEvent())
     OnCancelMode(event->AsCancelModeEvent());

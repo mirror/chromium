@@ -1236,6 +1236,7 @@ void RenderWidgetHostImpl::ForwardTouchEventWithLatencyInfo(
     const blink::WebTouchEvent& touch_event,
     const ui::LatencyInfo& latency) {
   TRACE_EVENT0("input", "RenderWidgetHostImpl::ForwardTouchEvent");
+  LOG(ERROR) << "RenderWidgetHostImpl::ForwardTouchEventWithLatencyInfo start";
 
   // Always forward TouchEvents for touch stream consistency. They will be
   // ignored if appropriate in FilterInputEvent().
@@ -1244,6 +1245,8 @@ void RenderWidgetHostImpl::ForwardTouchEventWithLatencyInfo(
   if (touch_emulator_ &&
       touch_emulator_->HandleTouchEvent(touch_with_latency.event)) {
     if (view_) {
+      LOG(ERROR)
+          << "RenderWidgetHostImpl::ForwardTouchEventWithLatencyInfo touch";
       view_->ProcessAckedTouchEvent(
           touch_with_latency, INPUT_EVENT_ACK_STATE_CONSUMED);
     }
@@ -2368,6 +2371,7 @@ void RenderWidgetHostImpl::OnGestureEventAck(
 void RenderWidgetHostImpl::OnTouchEventAck(
     const TouchEventWithLatencyInfo& event,
     InputEventAckState ack_result) {
+  LOG(ERROR) << "RenderWidgetHostImpl::OnTouchEventAck";
   latency_tracker_.OnInputEventAck(event.event, &event.latency, ack_result);
   for (auto& input_event_observer : input_event_observers_)
     input_event_observer.OnInputEventAck(event.event);

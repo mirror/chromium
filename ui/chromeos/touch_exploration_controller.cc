@@ -84,6 +84,7 @@ void TouchExplorationController::SetLiftActivationBounds(
 ui::EventRewriteStatus TouchExplorationController::RewriteEvent(
     const ui::Event& event,
     std::unique_ptr<ui::Event>* rewritten_event) {
+  LOG(ERROR) << "TouchExplorationController::RewriteEvent";
   if (!event.IsTouchEvent()) {
     if (event.IsKeyEvent()) {
       const ui::KeyEvent& key_event = static_cast<const ui::KeyEvent&>(event);

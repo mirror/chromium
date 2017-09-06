@@ -191,6 +191,7 @@ bool CrossProcessFrameConnector::TransformPointToCoordSpaceForView(
 void CrossProcessFrameConnector::ForwardProcessAckedTouchEvent(
     const TouchEventWithLatencyInfo& touch,
     InputEventAckState ack_result) {
+  LOG(ERROR) << "CrossProcessFrameConnector::ForwardProcessAckedTouchEvent";
   auto* main_view = GetRootRenderWidgetHostView();
   if (main_view)
     main_view->ProcessAckedTouchEvent(touch, ack_result);

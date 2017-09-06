@@ -119,6 +119,7 @@ void AshWindowTreeHostPlatform::SetBoundsInPixels(const gfx::Rect& bounds) {
 
 void AshWindowTreeHostPlatform::DispatchEvent(ui::Event* event) {
   TRACE_EVENT0("input", "AshWindowTreeHostPlatform::DispatchEvent");
+  LOG(ERROR) << "AshWindowTreeHostPlatform::DispatchEvent";
   if (event->IsLocatedEvent())
     TranslateLocatedEvent(static_cast<ui::LocatedEvent*>(event));
   SendEventToSink(event);

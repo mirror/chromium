@@ -49,6 +49,8 @@
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/geometry/vector2d_conversions.h"
 
+#include "base/json/json_writer.h"
+
 namespace cc {
 
 void LayerTreeLifecycle::AdvanceTo(LifecycleState next_state) {
@@ -1863,8 +1865,11 @@ static void FindClosestMatchingLayer(const gfx::PointF& screen_space_point,
                                      FindClosestMatchingLayerState* state) {
   // We want to iterate from front to back when hit testing.
   for (auto* layer : base::Reversed(*root_layer->layer_tree_impl())) {
-    if (!func(layer))
+    LOG(ERROR) << "FindClosestMatchingLayer layer: " << layer;
+    if (!func(layer)) {
+      // LOG(ERROR) << "FindClosestMatchingLayer func false";
       continue;
+    }
 
     float distance_to_intersection = 0.f;
     bool hit = false;
@@ -1874,8 +1879,10 @@ static void FindClosestMatchingLayer(const gfx::PointF& screen_space_point,
     else
       hit = PointHitsLayer(layer, screen_space_point, nullptr);
 
-    if (!hit)
+    if (!hit) {
+      LOG(ERROR) << "FindClosestMatchingLayer no hit";
       continue;
+    }
 
     bool in_front_of_previous_candidate =
         state->closest_match &&
@@ -1885,6 +1892,7 @@ static void FindClosestMatchingLayer(const gfx::PointF& screen_space_point,
             state->closest_distance + std::numeric_limits<float>::epsilon();
 
     if (!state->closest_match || in_front_of_previous_candidate) {
+      LOG(ERROR) << "FindClosestMatchingLayer has match";
       state->closest_distance = distance_to_intersection;
       state->closest_match = layer;
     }
@@ -1929,19 +1937,36 @@ LayerImpl* LayerTreeImpl::FindLayerThatIsHitByPoint(
 
 static bool LayerHasTouchEventHandlersAt(const gfx::PointF& screen_space_point,
                                          LayerImpl* layer_impl) {
-  if (layer_impl->touch_action_region().region().IsEmpty())
+  gfx::Rect rect = layer_impl->visible_layer_rect();
+  if (rect.width() != 0 && rect.height() != 0) {
+    LOG(ERROR) << "LayerHasTouchEventHandlersAt, rect: " << rect.x() << ", "
+               << rect.y() << ", " << rect.width() << ", " << rect.height();
+    layer_impl->LayerTreeAsJson();
+    std::string str;
+    std::unique_ptr<base::Value> json(layer_impl->LayerTreeAsJson());
+    base::JSONWriter::WriteWithOptions(
+        *json, base::JSONWriter::OPTIONS_PRETTY_PRINT, &str);
+    LOG(ERROR) << "LayerHasTouchEventHandlersAt: " << str;
+  }
+  if (layer_impl->touch_action_region().region().IsEmpty()) {
+    LOG(ERROR) << "LayerHasTouchEventHandlersAt empty";
     return false;
+  }
 
   if (!PointHitsRegion(screen_space_point, layer_impl->ScreenSpaceTransform(),
-                       layer_impl->touch_action_region().region()))
+                       layer_impl->touch_action_region().region())) {
+    LOG(ERROR) << "LayerHasTouchEventHandlersAt no hit";
     return false;
+  }
 
   // At this point, we think the point does hit the touch event handler region
   // on the layer, but we need to walk up the parents to ensure that the layer
   // was not clipped in such a way that the hit point actually should not hit
   // the layer.
-  if (PointIsClippedBySurfaceOrClipRect(screen_space_point, layer_impl))
+  if (PointIsClippedBySurfaceOrClipRect(screen_space_point, layer_impl)) {
+    LOG(ERROR) << "LayerHasTouchEventHandlersAt clipped";
     return false;
+  }
 
   return true;
 }
@@ -1955,13 +1980,27 @@ struct FindTouchEventLayerFunctor {
 
 LayerImpl* LayerTreeImpl::FindLayerThatIsHitByPointInTouchHandlerRegion(
     const gfx::PointF& screen_space_point) {
-  if (layer_list_.empty())
+  if (layer_list_.empty()) {
+    LOG(ERROR) << "LayerTreeImpl::"
+                  "FindLayerThatIsHitByPointInTouchHandlerRegion empty list";
     return NULL;
-  if (!UpdateDrawProperties())
+  }
+  if (!UpdateDrawProperties()) {
+    LOG(ERROR) << "LayerTreeImpl::"
+                  "FindLayerThatIsHitByPointInTouchHandlerRegion not update";
     return NULL;
+  }
   FindTouchEventLayerFunctor func = {screen_space_point};
   FindClosestMatchingLayerState state;
+  LOG(ERROR) << "LayerTreeImpl::FindLayerThatIsHitByPointInTouchHandlerRegion "
+                "before find";
   FindClosestMatchingLayer(screen_space_point, layer_list_[0], func, &state);
+  LOG(ERROR) << "LayerTreeImpl::FindLayerThatIsHitByPointInTouchHandlerRegion "
+                "after find";
+  if (state.closest_match == NULL) {
+    LOG(ERROR) << "LayerTreeImpl::"
+                  "FindLayerThatIsHitByPointInTouchHandlerRegion no match";
+  }
   return state.closest_match;
 }
 

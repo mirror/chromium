@@ -46,6 +46,7 @@ Event* EventDispatcherDelegate::current_event() {
 
 EventDispatchDetails EventDispatcherDelegate::DispatchEvent(EventTarget* target,
                                                             Event* event) {
+  LOG(ERROR) << "EventDispatcherDelegate::DispatchEvent";
   CHECK(target);
   Event::DispatcherApi dispatch_helper(event);
   dispatch_helper.set_phase(EP_PREDISPATCH);
@@ -80,6 +81,7 @@ EventDispatchDetails EventDispatcherDelegate::PostDispatchEvent(
 EventDispatchDetails EventDispatcherDelegate::DispatchEventToTarget(
     EventTarget* target,
     Event* event) {
+  LOG(ERROR) << "EventDispatcherDelegate::DispatchEventToTarget";
   EventDispatcher* old_dispatcher = dispatcher_;
   EventDispatcher dispatcher(this);
   dispatcher_ = &dispatcher;
@@ -93,6 +95,7 @@ EventDispatchDetails EventDispatcherDelegate::DispatchEventToTarget(
   details.dispatcher_destroyed = dispatcher.delegate_destroyed();
   details.target_destroyed =
       (!details.dispatcher_destroyed && !CanDispatchToTarget(target));
+  LOG(ERROR) << "EventDispatcherDelegate::DispatchEventToTarget end";
   return details;
 }
 
@@ -114,19 +117,25 @@ void EventDispatcher::OnHandlerDestroyed(EventHandler* handler) {
 }
 
 void EventDispatcher::ProcessEvent(EventTarget* target, Event* event) {
-  if (!target || !target->CanAcceptEvent(*event))
+  if (!target || !target->CanAcceptEvent(*event)) {
+    LOG(ERROR) << "EventDispatcher::ProcessEvent no dispatch 1";
     return;
+  }
 
   ScopedDispatchHelper dispatch_helper(event);
   dispatch_helper.set_target(target);
 
   handler_list_.clear();
   target->GetPreTargetHandlers(&handler_list_);
+  LOG(ERROR) << "EventDispatcher::ProcessEvent pre handler count: "
+             << handler_list_.size();
 
   dispatch_helper.set_phase(EP_PRETARGET);
   DispatchEventToEventHandlers(&handler_list_, event);
-  if (event->handled())
+  if (event->handled()) {
+    LOG(ERROR) << "EventDispatcher::ProcessEvent handled 1";
     return;
+  }
 
   // If the event hasn't been consumed, trigger the default handler. Note that
   // even if the event has already been handled (i.e. return result has
@@ -137,17 +146,22 @@ void EventDispatcher::ProcessEvent(EventTarget* target, Event* event) {
       target->target_handler()) {
     dispatch_helper.set_phase(EP_TARGET);
     DispatchEvent(target->target_handler(), event);
-    if (event->handled())
+    if (event->handled()) {
+      LOG(ERROR) << "EventDispatcher::ProcessEvent handled 2";
       return;
+    }
   }
 
-  if (!delegate_ || !delegate_->CanDispatchToTarget(target))
+  if (!delegate_ || !delegate_->CanDispatchToTarget(target)) {
+    LOG(ERROR) << "EventDispatcher::ProcessEvent no dispatch 2";
     return;
+  }
 
   handler_list_.clear();
   target->GetPostTargetHandlers(&handler_list_);
   dispatch_helper.set_phase(EP_POSTTARGET);
   DispatchEventToEventHandlers(&handler_list_, event);
+  LOG(ERROR) << "EventDispatcher::ProcessEvent handled 3";
 }
 
 void EventDispatcher::OnDispatcherDelegateDestroyed() {
@@ -159,6 +173,7 @@ void EventDispatcher::OnDispatcherDelegateDestroyed() {
 
 void EventDispatcher::DispatchEventToEventHandlers(EventHandlerList* list,
                                                    Event* event) {
+  LOG(ERROR) << "EventDispatcher::DispatchEventToEventHandlers";
   for (EventHandlerList::const_iterator it = list->begin(),
            end = list->end(); it != end; ++it) {
     (*it)->dispatchers_.push(this);
@@ -180,6 +195,7 @@ void EventDispatcher::DispatchEventToEventHandlers(EventHandlerList* list,
 }
 
 void EventDispatcher::DispatchEvent(EventHandler* handler, Event* event) {
+  // LOG(ERROR) << "EventDispatcher::DispatchEvent";
   // If the target has been invalidated or deleted, don't dispatch the event.
   if (!delegate_->CanDispatchToTarget(event->target())) {
     if (event->cancelable())

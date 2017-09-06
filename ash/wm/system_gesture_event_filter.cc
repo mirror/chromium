@@ -35,6 +35,8 @@ void SystemGestureEventFilter::OnScrollEvent(ui::ScrollEvent* event) {
 }
 
 void SystemGestureEventFilter::OnTouchEvent(ui::TouchEvent* event) {
+  return;
+  LOG(ERROR) << "SystemGestureEventFilter::OnTouchEvent";
   aura::Window* target = static_cast<aura::Window*>(event->target());
   TouchUMA::GetInstance()->RecordTouchEvent(target, *event);
 }

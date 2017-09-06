@@ -168,6 +168,7 @@ bool RenderWidgetHostViewGuest::HasFocus() const {
 #if defined(USE_AURA)
 void RenderWidgetHostViewGuest::ProcessAckedTouchEvent(
     const TouchEventWithLatencyInfo& touch, InputEventAckState ack_result) {
+  LOG(ERROR) << "RenderWidgetHostViewGuest::ProcessAckedTouchEvent";
   // TODO(tdresser): Since all ProcessAckedTouchEvent() uses is the event id,
   // don't pass the full event object here. https://crbug.com/550581.
   GetOwnerRenderWidgetHostView()->ProcessAckedTouchEvent(touch, ack_result);
