@@ -290,7 +290,7 @@ void LevelDBDatabaseImpl::IteratorPrev(const base::UnguessableToken& iterator,
 bool LevelDBDatabaseImpl::OnMemoryDump(
     const base::trace_event::MemoryDumpArgs& args,
     base::trace_event::ProcessMemoryDump* pmd) {
-  std::string name = base::StringPrintf("leveldb/mojo/0x%" PRIXPTR,
+  std::string name = base::StringPrintf("leveldatabase/mojo/0x%" PRIXPTR,
                                         reinterpret_cast<uintptr_t>(db_.get()));
   auto* mad = pmd->CreateAllocatorDump(name);
 
