@@ -16,6 +16,24 @@
       "revId": "04f2c755f3b698c2309b26cfc490479f7184171c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca46f82e_124c9a3e",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-06T17:56:24Z",
+      "side": 1,
+      "message": "tl;dr: Yes for now, and yes in the future. There will be behavior changes in future CLs, but only tab capture needs this and I have a plan that will work for all DirectRenderer impls.\n\nFor now: This is just an API change, but retaining the current behavior. Meaning, the result will be either a texture or a SkBitmap, depending on what the DirectRenderer impl supports (texture is the preference). If --disable-gpu is present, the client will get a bitmap result (from SoftwareRenderer).\n\nIn the future: All clients except tab capture (and Ash screen rotator) actually want the texture result. All other clients asking for the texture also do their own readback to produce a SkBitmap. They have 100\u0027s of LOC to instantiate and manage a GLHelper just to get the same result that a bitmap copy output request would provide. I\u0027m going to fix that in soon-upcoming CLs.\n\nAfter fixing that, I will be changing the behavior so that clients either get a texture or nothing (no SkBitmap fallback). With --disable-gpu, things should still work out fine, however: Tab capture is moving into VIZ, and will not be requesting textures anymore. I will be introducing a new I420 ResultFormat which will provide the result in system memory. So, any DirectRenderer impl will return the I420 result regardless of whether --disable-gpu is being used.",
+      "parentUuid": "58e7f21b_c88ec1ea",
+      "revId": "04f2c755f3b698c2309b26cfc490479f7184171c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
