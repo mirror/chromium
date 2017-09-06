@@ -455,6 +455,9 @@ int BitmapImage::RepetitionCount(bool image_known_to_be_complete) {
 }
 
 bool BitmapImage::ShouldAnimate() {
+  if (RuntimeEnabledFeatures::CompositorDrivenImageAnimationsEnabled())
+    return false;
+
   bool animated = RepetitionCount(false) != kAnimationNone &&
                   !animation_finished_ && GetImageObserver();
   if (animated && animation_policy_ == kImageAnimationPolicyNoAnimation)
