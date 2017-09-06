@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53e57538_a8fb5889",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-06T14:38:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f41b095_0d89388d",
+      "range": {
+        "startLine": 481,
+        "startChar": 6,
+        "endLine": 481,
+        "endChar": 15
+      },
+      "revId": "b7790128f2703dbc174df9d11e4d0fb19250fbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f409df69_fedc03d1",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "b7790128f2703dbc174df9d11e4d0fb19250fbcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ac19ca_f4dc6257",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-06T14:38:45Z",
+      "side": 1,
+      "message": "Done\nI don\u0027t think it\u0027s inconsistent in any way and indeed looks better.",
+      "parentUuid": "f409df69_fedc03d1",
+      "revId": "b7790128f2703dbc174df9d11e4d0fb19250fbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
