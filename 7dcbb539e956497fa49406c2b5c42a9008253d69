@@ -69,6 +69,30 @@
       "revId": "7dcbb539e956497fa49406c2b5c42a9008253d69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf9675f_ed1a7934",
+        "filename": "components/arc/common/lock_screen.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-06T18:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b65e02e_374efb47",
+      "range": {
+        "startLine": 13,
+        "startChar": 18,
+        "endLine": 13,
+        "endChar": 19
+      },
+      "revId": "7dcbb539e956497fa49406c2b5c42a9008253d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
