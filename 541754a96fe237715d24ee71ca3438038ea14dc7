@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5c91f42_1b462861",
+        "filename": "components/metrics/call_stack_profile_metrics_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-09-06T20:38:37Z",
+      "side": 1,
+      "message": "size_t? It looks like all the keys used are size_t values.",
+      "range": {
+        "startLine": 252,
+        "startChar": 24,
+        "endLine": 252,
+        "endChar": 27
+      },
+      "revId": "541754a96fe237715d24ee71ca3438038ea14dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8766a7_4f46d6ce",
+        "filename": "components/metrics/call_stack_profile_metrics_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-09-06T20:38:37Z",
+      "side": 1,
+      "message": "Comment needs updating.",
+      "range": {
+        "startLine": 840,
+        "startChar": 0,
+        "endLine": 840,
+        "endChar": 76
+      },
+      "revId": "541754a96fe237715d24ee71ca3438038ea14dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3db2e2_c65adff2",
+        "filename": "components/metrics/call_stack_profile_metrics_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-09-06T20:38:37Z",
+      "side": 1,
+      "message": "Can you add a test for the non-merge case, and the merge case where both periodic and non-periodic profiles are already recorded?",
+      "range": {
+        "startLine": 848,
+        "startChar": 0,
+        "endLine": 848,
+        "endChar": 75
+      },
+      "revId": "541754a96fe237715d24ee71ca3438038ea14dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
