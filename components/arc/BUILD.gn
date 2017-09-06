@@ -101,8 +101,6 @@ static_library("arc_base") {
     "arc_features.h",
     "arc_service_manager.cc",
     "arc_service_manager.h",
-    "arc_session.cc",
-    "arc_session.h",
     "arc_session_runner.cc",
     "arc_session_runner.h",
     "arc_stop_reason.cc",
