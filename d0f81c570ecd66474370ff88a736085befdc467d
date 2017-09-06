@@ -16,6 +16,29 @@
       "revId": "d0f81c570ecd66474370ff88a736085befdc467d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee575e1_ad2c1a59",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-09-06T19:09:57Z",
+      "side": 1,
+      "message": "Should this be called |DestroyOnNetworkThread| or |CleanupOnNetworkThread| now?",
+      "range": {
+        "startLine": 279,
+        "startChar": 24,
+        "endLine": 279,
+        "endChar": 56
+      },
+      "revId": "d0f81c570ecd66474370ff88a736085befdc467d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
