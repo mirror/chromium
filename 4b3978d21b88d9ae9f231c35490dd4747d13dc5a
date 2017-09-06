@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9838f46d_6aaf4faa",
+        "filename": "services/ui/ws/server_window_drawn_tracker_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T15:21:19Z",
+      "side": 1,
+      "message": "Would it make sense to have a MakeWindowId() that does this? e.g.\n\n  ClientWindowId MakeWindowId() {\n    constexpr int client_id \u003d 1;\n    static int window_id \u003d 0;\n    return WindowId(client_id, ++window_id);\n  }\n\nThat way, you don\u0027t need to keep count of how many windows you have created in the tests. (or maybe as a member function of ServerWindowDrawnTrackerTest, so that the counter gets reset for each test)",
+      "revId": "4b3978d21b88d9ae9f231c35490dd4747d13dc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3feb5a_454d8637",
+        "filename": "services/ui/ws/window_manager_access_policy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T15:21:19Z",
+      "side": 1,
+      "message": "We should update DefaultAccessPolicy to make sure id.client_id() is zero, right?",
+      "revId": "4b3978d21b88d9ae9f231c35490dd4747d13dc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d225cf_6c181655",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T15:21:19Z",
+      "side": 1,
+      "message": "Some comments: (1) I think it\u0027s better to update DefaultAccessPolicy::IsValidIdForNewWindow() (2) the client is never told about its own client-id. So it should not be able to set the client id correctly. So instead of checking against |client_id_|, it should really check that the client-id is set to zero. (3) if we do check for zero, then I don\u0027t think you need to check GetWindowByClientId() anymore. You can just do a DCHECK() instead.",
+      "revId": "4b3978d21b88d9ae9f231c35490dd4747d13dc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
