@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bd8d0d1_cf965373",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1536,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-06T20:35:39Z",
+      "side": 1,
+      "message": "Would this affect checker imaging as well? Should this particular diff be landed separately/sooner as a bug fix to InvalidateRegionForImages?",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
