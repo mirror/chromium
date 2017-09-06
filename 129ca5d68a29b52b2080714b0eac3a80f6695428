@@ -46,6 +46,30 @@
       "revId": "129ca5d68a29b52b2080714b0eac3a80f6695428",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b1b6c12_a258a5ab",
+        "filename": "net/url_request/url_request_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-06T20:02:09Z",
+      "side": 1,
+      "message": "Thanks Matt for raising this point.\n\nRegarding timeline question: we\u0027ve made a lot of progress in getting 98% of layout tests passing and 90%+ of content_browsertests. We are aiming for launching this in the first half of next year, so we would like to avoid new features being added that don\u0027t work with the network service.",
+      "parentUuid": "8e21f278_01588122",
+      "range": {
+        "startLine": 293,
+        "startChar": 7,
+        "endLine": 293,
+        "endChar": 29
+      },
+      "revId": "129ca5d68a29b52b2080714b0eac3a80f6695428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
