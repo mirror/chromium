@@ -53,6 +53,7 @@ _cronet_deps = [
   ":cronet_version_header",
   ":generate_accept_languages",
   "//base:base",
+  "//components/cronet/interfaces",
   "//components/grpc_support",
   "//components/metrics:metrics",
   "//components/metrics/proto:proto",
@@ -60,6 +61,7 @@ _cronet_deps = [
   "//ios/net:net",
   "//ios/web:user_agent",
   "//ios/web/public/global_state",
+  "//mojo/edk/system",
   "//net",
   "//url",
 ]

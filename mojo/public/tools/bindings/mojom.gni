@@ -17,6 +17,7 @@ declare_args() {
 mojom_generator_root = "//mojo/public/tools/bindings"
 mojom_generator_script = "$mojom_generator_root/mojom_bindings_generator.py"
 mojom_generator_sources = [
+  "$mojom_generator_root/generators/cronet_c_generator.py",
   "$mojom_generator_root/generators/mojom_cpp_generator.py",
   "$mojom_generator_root/generators/mojom_js_generator.py",
   "$mojom_generator_root/generators/mojom_java_generator.py",
