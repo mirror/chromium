@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc3cc6e4_6677bf62",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-06T21:43:13Z",
+      "side": 1,
+      "message": "Moved the comment to cl description. I put the reason in the reply message before.",
+      "parentUuid": "3ae62618_53703fcc",
+      "revId": "b9c97fad3d6058f43777e1b8a7dfb1f75b5c21b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f16d77b_71a1ac0e",
         "filename": "chrome/browser/chrome_browser_main_android.cc",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "c5de85e1_5c251f4d",
+        "filename": "chrome/browser/chrome_browser_main_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-06T21:43:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83613a66_72ee7b28",
+      "revId": "b9c97fad3d6058f43777e1b8a7dfb1f75b5c21b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8eec6ae_d3a470a6",
         "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
         "patchSetId": 2
@@ -104,6 +140,24 @@
       "revId": "b9c97fad3d6058f43777e1b8a7dfb1f75b5c21b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69596534_dab0fafc",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-06T21:43:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfe14f6b_3f0b3473",
+      "revId": "b9c97fad3d6058f43777e1b8a7dfb1f75b5c21b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
