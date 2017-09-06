@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "553a46e2_ab642833",
+        "filename": "chrome/browser/ui/browser_content_setting_bubble_model_delegate.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "Nit: {} unnecessary",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ae8c22_ae0fd7ad",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "Nit: This is only called in one function, could just call the longer func there and store the result in a const bool",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e75c652_cff3074d",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "I am still a bit concerned about l10n for this string.  I\u0027m wondering if we should instead have a string in the .grd file defined as \"\\u2022  $1\" or something, that we retrieve here with an l10n_util function.",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6653369_d1805782",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "Nit: prominent",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80c0d14_3020b5d5",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "Nit: Should |padding_above| be documented, and documented as doing nothing in Harmony?",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d071712e_f597db59",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "Nit: Or auto*",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb49709_180072f9",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "Nit: has not yet -\u003e may not yet have?\n\n(Because presumably it\u0027s also called in other cases)",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a7f723d_e574a90d",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "Could we safely just eliminate this padding in non-Harmony too?  It seems like if the list is readable without it in Harmony it should look OK in non-Harmony.  That would simplify the calculations below too.\n\nIf not I would pull the padding amount here out into a constant and use it below too since the two have to stay in sync.  In fact you could set that constant to 0 in Harmony mode and then eliminate the other IsHarmonyMode() checks.",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57fea23_28ca5ba8",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "Nit: Or auto*",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23d0234_0e91d94c",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "Nit: Maybe declare a constant for the 4 (which would obviate the need for this comment if well-named)",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa1c349_80e0b962",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "I thought the mock showed a bubble title?  How come this is non-Harmony only?",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff70912_2a001dc7",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure of the ramifications of FILL vs. LEADING here.  The scroll view gets stretched across the full width?  Wondering if there\u0027s a way to just use a single value for both Harmony and non-Harmony.",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b8d1c4_38c2720e",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "Nit: Or const auto\u0026",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff0372b_9c4131eb",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "It seems like it would simplify the code some if we just always created and used this container even when it didn\u0027t have two items in it.",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e212bb2_6cb87124",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "Is the reason you stopped using Cancel as \"manage\" that we didn\u0027t want the order to get swapped around on Mac?",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6813e98e_656a81ed",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "Nit: Shorter:\n\n  return done_text.empty() ? l10n_util::GetStringUTF16(IDS_DONE) : done_text;",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9c194c1_144dfbe7",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "Nit: Be consistent about the order of calling a handler vs. calling Close(); the code in the arm just above uses the opposite order.\n\n(Probably Close() first, as you\u0027ve done, is better?  Not sure)",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72461c87_dfa277c9",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_bubble_dialog_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:38:41Z",
+      "side": 1,
+      "message": "Nit: Or auto*",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
