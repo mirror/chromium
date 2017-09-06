@@ -433,7 +433,10 @@ public class LocaleManager {
     public List<TemplateUrl> getSearchEnginesForPromoDialog(@SearchEnginePromoType int promoType) {
         TemplateUrlService instance = TemplateUrlService.getInstance();
         assert instance.isLoaded();
-        return instance.getSearchEngines();
+        instance.setFilteringEnabled(false);
+        List<TemplateUrl> templateUrls = instance.getSearchEngines();
+        instance.setFilteringEnabled(true);
+        return templateUrls;
     }
 
     /** Set a LocaleManager to be used for testing. */
