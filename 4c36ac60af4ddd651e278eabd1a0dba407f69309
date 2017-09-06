@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b046337_e3f5c139",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 38967,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-06T01:16:42Z",
+      "side": 1,
+      "message": "Please document when this is recorded.  Also, you mention in the CL description that this metric is meant to be temporary; please mention that here as well, preferably with some idea of what milestone it\u0027s expected to be removed in.",
+      "range": {
+        "startLine": 38967,
+        "startChar": 65,
+        "endLine": 38967,
+        "endChar": 0
+      },
+      "revId": "4c36ac60af4ddd651e278eabd1a0dba407f69309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
