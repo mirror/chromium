@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "472db141_648a1716",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-06T10:46:49Z",
+      "side": 1,
+      "message": "optional: Sorry for commenting this late. IIUC, ROLE_STRING is used to pass a role which is not in Android but in Chrome. How about to name this as CHROME_ROLE? Or AX_ROLE? ROLE_STRING seems to be generic but we are handling the value as AXRole.",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 13
+      },
+      "revId": "8abee6123bfee08cc08d7524187898607da0a8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
