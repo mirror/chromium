@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c1d9713_f2b3fdbf",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4080,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-06T19:18:36Z",
+      "side": 1,
+      "message": "note: this updated test fails before the SBR/SBS changes: it hits: \"FATAL:source_buffer_range.cc(55)] Check failed: buffers_.empty() || CanAppendBuffersToEnd(new_buffers, new_buffers_group_start_timestamp)\"\n\n(which is bug 759336)",
+      "range": {
+        "startLine": 4080,
+        "startChar": 7,
+        "endLine": 4080,
+        "endChar": 60
+      },
+      "revId": "5fc6631dbb002be92d1554189654db463b1dd35f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389eff4f_29d4f34e",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4102,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-06T19:18:36Z",
+      "side": 1,
+      "message": "note: this updated test fails before the SBR/SBS changes: it hits: \"FATAL:source_buffer_range.cc(91)] Check failed: timestamp_delta \u003e base::TimeDelta()\"\n\n(which is bug 758802)\n\n(The earlier PS\u0027s _3 test didn\u0027t demo 758802, this one does now because I changed the 2nd and 3rd appends to use estimated durations.)",
+      "range": {
+        "startLine": 4102,
+        "startChar": 7,
+        "endLine": 4102,
+        "endChar": 61
+      },
+      "revId": "5fc6631dbb002be92d1554189654db463b1dd35f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
