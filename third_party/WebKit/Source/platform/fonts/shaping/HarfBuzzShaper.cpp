@@ -492,6 +492,58 @@ void SetFontFeatures(const Font* font, FeaturesVector* features) {
       break;
   }
 
+  // font-variant-east-asian:
+  const FontVariantEastAsian east_asian = description.GetVariantEastAsian();
+  if (UNLIKELY(!east_asian.IsAllNormal())) {
+    static hb_feature_t jp78 = CreateFeature(HB_TAG('j', 'p', '7', '8'), 1);
+    static hb_feature_t jp83 = CreateFeature(HB_TAG('j', 'p', '8', '3'), 1);
+    static hb_feature_t jp90 = CreateFeature(HB_TAG('j', 'p', '9', '0'), 1);
+    static hb_feature_t jp04 = CreateFeature(HB_TAG('j', 'p', '0', '4'), 1);
+    static hb_feature_t smpl = CreateFeature(HB_TAG('s', 'm', 'p', 'l'), 1);
+    static hb_feature_t trad = CreateFeature(HB_TAG('t', 'r', 'a', 'd'), 1);
+    switch (east_asian.Form()) {
+      case FontVariantEastAsian::kNormalForm:
+        break;
+      case FontVariantEastAsian::kJis78:
+        features->push_back(jp78);
+        break;
+      case FontVariantEastAsian::kJis83:
+        features->push_back(jp83);
+        break;
+      case FontVariantEastAsian::kJis90:
+        features->push_back(jp90);
+        break;
+      case FontVariantEastAsian::kJis04:
+        features->push_back(jp04);
+        break;
+      case FontVariantEastAsian::kSimplified:
+        features->push_back(smpl);
+        break;
+      case FontVariantEastAsian::kTraditional:
+        features->push_back(trad);
+        break;
+      default:
+        NOTREACHED();
+    }
+    static hb_feature_t fwid = CreateFeature(HB_TAG('f', 'w', 'i', 'd'), 1);
+    static hb_feature_t pwid = CreateFeature(HB_TAG('p', 'w', 'i', 'd'), 1);
+    switch (east_asian.Width()) {
+      case FontVariantEastAsian::kNormalWidth:
+        break;
+      case FontVariantEastAsian::kFullWidth:
+        features->push_back(fwid);
+        break;
+      case FontVariantEastAsian::kProportionalWidth:
+        features->push_back(pwid);
+        break;
+      default:
+        NOTREACHED();
+    }
+    static hb_feature_t ruby = CreateFeature(HB_TAG('r', 'u', 'b', 'y'), 1);
+    if (east_asian.Ruby())
+      features->push_back(ruby);
+  }
+
   // font-variant-numeric:
   static hb_feature_t lnum = CreateFeature(HB_TAG('l', 'n', 'u', 'm'), 1);
   if (description.VariantNumeric().NumericFigureValue() ==
