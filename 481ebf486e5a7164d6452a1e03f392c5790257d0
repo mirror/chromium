@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d13273c8_5c160cc5",
+        "filename": "device/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-06T22:27:01Z",
+      "side": 1,
+      "message": "Was required for unit testing on linux.",
+      "revId": "481ebf486e5a7164d6452a1e03f392c5790257d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
