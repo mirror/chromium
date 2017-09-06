@@ -332,7 +332,6 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainEntry(
       StringPrintf("TaskScheduler%sWorker", outer_->name_.c_str()));
 
   outer_->BindToCurrentThread();
-  SetBlockingObserverForCurrentThread(this);
 }
 
 scoped_refptr<Sequence>
@@ -406,10 +405,13 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
     DCHECK(!outer_->idle_workers_stack_.Contains(worker));
   }
 #endif
+
+  SetBlockingObserverForCurrentThread(this);
   return sequence;
 }
 
 void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::DidRunTask() {
+  ClearBlockingObserverForCurrentThread();
   ++num_tasks_since_last_wait_;
   ++num_tasks_since_last_detach_;
 }
