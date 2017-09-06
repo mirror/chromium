@@ -4,8 +4,6 @@
 
 #include "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.h"
 
-#include "base/logging.h"
-#include "base/values.h"
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h"
 

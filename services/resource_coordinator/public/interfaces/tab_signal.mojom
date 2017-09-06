@@ -5,7 +5,6 @@
 module resource_coordinator.mojom;
 
 import "coordination_unit.mojom";
-import "mojo/common/values.mojom";
 import "signals.mojom";
 
 // Event signal scoped to a tab.
