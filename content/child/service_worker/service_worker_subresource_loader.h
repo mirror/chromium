@@ -10,6 +10,7 @@
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_status_code.h"
+#include "content/common/shared_interface_ptr.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
@@ -17,7 +18,6 @@
 
 namespace content {
 
-class ServiceWorkerEventDispatcherHolder;
 class ChildURLLoaderFactoryGetter;
 
 // S13nServiceWorker:
@@ -40,7 +40,8 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
       const ResourceRequest& resource_request,
       mojom::URLLoaderClientPtr client,
       const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
-      scoped_refptr<ServiceWorkerEventDispatcherHolder> event_dispatcher,
+      scoped_refptr<SharedInterfacePtr<mojom::ServiceWorkerEventDispatcher>>
+          event_dispatcher,
       scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter,
       const GURL& controller_origin);
 
@@ -108,7 +109,8 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
   // For handling FetchEvent response.
   mojo::Binding<ServiceWorkerFetchResponseCallback> response_callback_binding_;
 
-  scoped_refptr<ServiceWorkerEventDispatcherHolder> event_dispatcher_;
+  scoped_refptr<SharedInterfacePtr<mojom::ServiceWorkerEventDispatcher>>
+      event_dispatcher_;
 
   // These are given by the constructor (as the params for
   // URLLoaderFactory::CreateLoaderAndStart).
@@ -155,7 +157,8 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoaderFactory
   // network fallback. |controller_origin| is used to create a new Blob public
   // URL (this will become unnecessary once we switch over to MojoBlobs).
   ServiceWorkerSubresourceLoaderFactory(
-      scoped_refptr<ServiceWorkerEventDispatcherHolder> event_dispatcher,
+      scoped_refptr<SharedInterfacePtr<mojom::ServiceWorkerEventDispatcher>>
+          event_dispatcher,
       scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter,
       const GURL& controller_origin);
 
@@ -173,7 +176,8 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoaderFactory
   void Clone(mojom::URLLoaderFactoryRequest request) override;
 
  private:
-  scoped_refptr<ServiceWorkerEventDispatcherHolder> event_dispatcher_;
+  scoped_refptr<SharedInterfacePtr<mojom::ServiceWorkerEventDispatcher>>
+      event_dispatcher_;
 
   // Contains a set of default loader factories for the associated loading
   // context. Used to load a blob, and for network fallback.
