@@ -16,6 +16,24 @@
       "revId": "02d6e4a1b6e69d912fef15fcb248a8225fbf62d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de4998a_08f850df",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-06T08:42:22Z",
+      "side": 1,
+      "message": "In my opinion the test has to ensure that the app is in the correct state at the beginning. But I have added it at the end.",
+      "parentUuid": "c751504e_856f585a",
+      "revId": "02d6e4a1b6e69d912fef15fcb248a8225fbf62d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
