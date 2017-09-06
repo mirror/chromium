@@ -25,6 +25,11 @@ struct StructTraits<cc::mojom::CopyOutputResultDataView,
   static const SkBitmap& bitmap(
       const std::unique_ptr<viz::CopyOutputResult>& result);
 
+  static const gfx::ColorSpace& bitmap_color_space(
+      const std::unique_ptr<viz::CopyOutputResult>& result) {
+    return result->bitmap_color_space_;
+  }
+
   static const viz::TextureMailbox& texture_mailbox(
       const std::unique_ptr<viz::CopyOutputResult>& result) {
     return result->texture_mailbox_;

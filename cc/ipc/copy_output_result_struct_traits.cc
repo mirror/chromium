@@ -84,6 +84,7 @@ bool StructTraits<cc::mojom::CopyOutputResultDataView,
   // constructor of viz::CopyOutputResult.
   gfx::Size size;
   auto bitmap = std::make_unique<SkBitmap>();
+  gfx::ColorSpace bitmap_color_space;
   viz::TextureMailbox texture_mailbox;
   std::unique_ptr<viz::SingleReleaseCallback> release_callback;
 
@@ -91,6 +92,9 @@ bool StructTraits<cc::mojom::CopyOutputResultDataView,
     return false;
 
   if (!data.ReadBitmap(bitmap.get()))
+    return false;
+
+  if (!data.ReadBitmapColorSpace(&bitmap_color_space))
     return false;
 
   if (!data.ReadTextureMailbox(&texture_mailbox))
@@ -116,7 +120,8 @@ bool StructTraits<cc::mojom::CopyOutputResultDataView,
     // We can't have both a bitmap and a texture.
     if (texture_mailbox.IsTexture())
       return false;
-    *out_p = viz::CopyOutputResult::CreateBitmapResult(std::move(bitmap));
+    *out_p = viz::CopyOutputResult::CreateBitmapResult(std::move(bitmap),
+                                                       bitmap_color_space);
     return true;
   }
 
