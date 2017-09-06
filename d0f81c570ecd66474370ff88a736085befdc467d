@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a037cdc_ae3ff20a",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-06T20:24:32Z",
+      "side": 1,
+      "message": "Done.\n\nThe CronetEnvirnoment ownership is following. A single (and only one) instance of this class is owned by a global leaky unique pointer in Cronet.mm. It is set only once when Cronet is started. There can be only one instance of Cronet and CronetEnvirnoment. From the Apps point of view, it is a singleton that can only be initialized once and never destroyed.\n\nbase::LazyInstance\u003cstd::unique_ptr\u003ccronet::CronetEnvironment\u003e\u003e::Leaky\n    gChromeNet \u003d LAZY_INSTANCE_INITIALIZER;\n\nHowever, for testing we are reseting CronetEnvirnoment, so we can sequentially run multiple Cronet engines with different parameters. There is an internal Cronet::shutdownForTesting() method that the tests use.",
+      "parentUuid": "04c570fa_36eded0a",
+      "revId": "d0f81c570ecd66474370ff88a736085befdc467d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ee575e1_ad2c1a59",
         "filename": "components/cronet/ios/cronet_environment.mm",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-06T19:09:57Z",
       "side": 1,
       "message": "Should this be called |DestroyOnNetworkThread| or |CleanupOnNetworkThread| now?",
+      "range": {
+        "startLine": 279,
+        "startChar": 24,
+        "endLine": 279,
+        "endChar": 56
+      },
+      "revId": "d0f81c570ecd66474370ff88a736085befdc467d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96267c58_33cfccc9",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-06T20:24:32Z",
+      "side": 1,
+      "message": "Done. Renamed it to |CleanupOnNetworkThread| because it doesn\u0027t really destroy CronetEnvironment.",
+      "parentUuid": "6ee575e1_ad2c1a59",
       "range": {
         "startLine": 279,
         "startChar": 24,
