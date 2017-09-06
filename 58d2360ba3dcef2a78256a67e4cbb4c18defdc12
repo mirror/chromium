@@ -22,6 +22,30 @@
       "revId": "58d2360ba3dcef2a78256a67e4cbb4c18defdc12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcfab58e_803edf8f",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-09-06T17:24:33Z",
+      "side": 1,
+      "message": "Done.  If we get here, the account is restricted in some way, but we know the password is valid.  Makes sense.",
+      "parentUuid": "a1a44021_452a5d74",
+      "range": {
+        "startLine": 463,
+        "startChar": 43,
+        "endLine": 463,
+        "endChar": 71
+      },
+      "revId": "58d2360ba3dcef2a78256a67e4cbb4c18defdc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
