@@ -77,6 +77,7 @@ bool MemlogStreamParser::OnStreamData(std::unique_ptr<char[]> data, size_t sz) {
     if (status == READ_NO_DATA)
       return true;  // Wait for more data.
     if (status == READ_ERROR) {
+      LOG(ERROR) << "FUUUUUUUUUUUUU";
       SetErrorState();
       return false;
     }

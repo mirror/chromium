@@ -56,6 +56,7 @@ MemlogConnectionManager::~MemlogConnectionManager() = default;
 
 void MemlogConnectionManager::OnNewConnection(base::ScopedPlatformFile file,
                                               base::ProcessId pid) {
+  LOG(ERROR) << "Registrered " << pid;
   base::AutoLock lock(connections_lock_);
   DCHECK(connections_.find(pid) == connections_.end());
 
@@ -82,6 +83,7 @@ void MemlogConnectionManager::OnNewConnection(base::ScopedPlatformFile file,
 }
 
 void MemlogConnectionManager::OnConnectionComplete(base::ProcessId pid) {
+  LOG(ERROR) << "Finished " << pid;
   base::AutoLock lock(connections_lock_);
   auto found = connections_.find(pid);
   CHECK(found != connections_.end());
