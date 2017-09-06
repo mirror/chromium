@@ -84,6 +84,23 @@ class CronetURLRequestContextGetter : public net::URLRequestContextGetter {
   DISALLOW_COPY_AND_ASSIGN(CronetURLRequestContextGetter);
 };
 
+// Extends the base thread class to add the Cronet specific cleanup logic.
+class CronetNetworkThread : public base::Thread {
+ public:
+  CronetNetworkThread(const std::string& name,
+                      cronet::CronetEnvironment* cronet_environment)
+      : base::Thread(name), cronet_environment_(cronet_environment) {}
+
+ protected:
+  ~CronetNetworkThread() override { Stop(); }
+  void CleanUp() override {
+    cronet_environment_->PrepareForDestroyOnNetworkThread();
+  }
+
+ private:
+  cronet::CronetEnvironment* const cronet_environment_;
+};
+
 void SignalEvent(base::WaitableEvent* event) {
   event->Signal();
 }
@@ -245,7 +262,8 @@ void CronetEnvironment::Start() {
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
       ios_global_state::GetSharedNetworkIOThreadTaskRunner();
   if (!task_runner) {
-    network_io_thread_.reset(new base::Thread("Chrome Network IO Thread"));
+    network_io_thread_.reset(
+        new CronetNetworkThread("Chrome Network IO Thread", this));
     network_io_thread_->StartWithOptions(
         base::Thread::Options(base::MessageLoop::TYPE_IO, 0));
   }
@@ -283,10 +301,6 @@ void CronetEnvironment::PrepareForDestroyOnNetworkThread() {
 }
 
 CronetEnvironment::~CronetEnvironment() {
-  PostToNetworkThread(
-      FROM_HERE,
-      base::Bind(&CronetEnvironment::PrepareForDestroyOnNetworkThread,
-                 base::Unretained(this)));
   if (network_io_thread_) {
     // Deleting a thread blocks the current thread and waits until all pending
     // tasks are completed.
