@@ -355,6 +355,10 @@ const char kEnableBlinkFeatures[]           = "enable-blink-features";
 // PlzNavigate: Use the experimental browser-side navigation path.
 const char kEnableBrowserSideNavigation[]   = "enable-browser-side-navigation";
 
+// Enable animating of images in the compositor instead of blink.
+const char kEnableCompositorDrivenImageAnimations[] =
+    "enable-compositor-driven-image-animations";
+
 // Enables display list based 2d canvas implementation. Options:
 //  1. Enable: allow browser to use display list for 2d canvas (browser makes
 //     decision).

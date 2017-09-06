@@ -891,8 +891,10 @@ void TileManager::PartitionImagesForCheckering(
   WhichTree tree = tile->tiling()->tree();
 
   for (const auto* original_draw_image : images_in_tile) {
+    size_t frame_index = client_->GetFrameIndexForImage(
+        original_draw_image->paint_image(), tree);
     DrawImage draw_image(*original_draw_image, tile->raster_transform().scale(),
-                         raster_color_space);
+                         frame_index, raster_color_space);
     if (checker_image_tracker_.ShouldCheckerImage(
             draw_image, tree, tile->required_for_activation()))
       checkered_images->push_back(draw_image.paint_image());
@@ -913,8 +915,10 @@ void TileManager::AddCheckeredImagesToDecodeQueue(
   WhichTree tree = tile->tiling()->tree();
 
   for (const auto* original_draw_image : images_in_tile) {
+    size_t frame_index = client_->GetFrameIndexForImage(
+        original_draw_image->paint_image(), tree);
     DrawImage draw_image(*original_draw_image, tile->raster_transform().scale(),
-                         raster_color_space);
+                         frame_index, raster_color_space);
     if (checker_image_tracker_.ShouldCheckerImage(
             draw_image, tree, tile->required_for_activation())) {
       image_decode_queue->push_back(CheckerImageTracker::ImageDecodeRequest(
@@ -1136,11 +1140,14 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
       scheduled_draw_images_[tile->id()];
   sync_decoded_images.clear();
   PaintImageIdFlatSet images_to_skip;
+  base::flat_map<PaintImage::Id, size_t> image_id_to_current_frame_index;
   if (!skip_images) {
     std::vector<PaintImage> checkered_images;
     PartitionImagesForCheckering(prioritized_tile, color_space,
                                  &sync_decoded_images, &checkered_images);
     for (const auto& image : checkered_images) {
+      DCHECK(!image.ShouldAnimate());
+
       images_to_skip.insert(image.stable_id());
 
       // This can be the case for tiles on the active tree that will be replaced
@@ -1151,6 +1158,13 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
         checker_image_decode_queue->push_back(
             CheckerImageTracker::ImageDecodeRequest(
                 image, CheckerImageTracker::DecodeType::kRaster));
+      }
+    }
+
+    for (const auto& draw_image : sync_decoded_images) {
+      if (draw_image.paint_image().ShouldAnimate()) {
+        image_id_to_current_frame_index[draw_image.paint_image().stable_id()] =
+            draw_image.frame_index();
       }
     }
   }
@@ -1175,7 +1189,8 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
   const bool has_predecoded_images = !sync_decoded_images.empty();
   if (skip_images || has_checker_images || has_predecoded_images) {
     image_provider.emplace(skip_images, std::move(images_to_skip),
-                           image_controller_.cache(), color_space);
+                           image_controller_.cache(), color_space,
+                           std::move(image_id_to_current_frame_index));
   }
 
   return make_scoped_refptr(new RasterTaskImpl(
