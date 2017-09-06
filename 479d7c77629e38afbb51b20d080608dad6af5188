@@ -141,6 +141,30 @@
       "revId": "479d7c77629e38afbb51b20d080608dad6af5188",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25fa1e88_ed682c4f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-09-06T10:06:31Z",
+      "side": 1,
+      "message": "... guess I could just stick in a \u0027synchronized\u0027 on displaySitePermissions for now and do the onSaveInstanceState stuff in a followup CL?",
+      "parentUuid": "e6d6a19d_da6c630e",
+      "range": {
+        "startLine": 423,
+        "startChar": 51,
+        "endLine": 423,
+        "endChar": 56
+      },
+      "revId": "479d7c77629e38afbb51b20d080608dad6af5188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
