@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ac6c8af_fa5af827",
+        "filename": "cc/ipc/copy_output_result_struct_traits.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-06T00:18:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure how this can be null: the other getters unconditionally deref |result|",
+      "range": {
+        "startLine": 80,
+        "startChar": 11,
+        "endLine": 80,
+        "endChar": 18
+      },
+      "revId": "792a1d9b03f95220df4fc77cfbf5e750f0cc8943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bad2872_317d6886",
+        "filename": "components/viz/common/quads/copy_output_request.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-06T00:18:22Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "792a1d9b03f95220df4fc77cfbf5e750f0cc8943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
