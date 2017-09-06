@@ -9,6 +9,7 @@ public_deps = [
   "//cc",
   "//components/viz/common",
   "//skia/public/interfaces:struct_traits",
+  "//ui/gfx/ipc",
 ]
 sources = [
   "copy_output_result_struct_traits.cc",

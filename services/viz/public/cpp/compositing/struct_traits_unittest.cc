@@ -268,7 +268,7 @@ TEST_F(StructTraitsTest, CopyOutputRequest_BitmapRequest) {
   EXPECT_TRUE(output->has_area());
   EXPECT_EQ(area, output->area());
   EXPECT_EQ(source, output->source());
-  output->SendBitmapResult(std::move(bitmap));
+  output->SendBitmapResult(std::move(bitmap), gfx::ColorSpace::CreateSRGB());
   // If CopyOutputRequestCallback is called, this ends. Otherwise, the test
   // will time out and fail.
   run_loop.Run();
