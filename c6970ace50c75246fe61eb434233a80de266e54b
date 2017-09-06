@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de805dbc_e94422d7",
+        "filename": "components/drive/chromeos/file_system/touch_operation.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-06T06:32:51Z",
+      "side": 1,
+      "message": "A number of requests:\n\n1. Could you confirm that this behavior is consistent with that of the Drive API?\nThe API reference says modifiedByMeDate is not writable.\nWhat is unclear is whether modifiedByMeDate is set to the value of modifiedByMe, or the date when the server accepts API request.\nhttps://developers.google.com/drive/v2/reference/files#resource-representations\n\n2. modification_date is modified by other operations too.\nPlease also update these operations.\nhttps://cs.chromium.org/search/?q\u003dfile:/drive/+_modification_date%5Cb\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\n3. Please update the tests.",
+      "revId": "c6970ace50c75246fe61eb434233a80de266e54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e67b37a_10175d42",
+        "filename": "components/drive/drive.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-06T06:32:51Z",
+      "side": 1,
+      "message": "Please mention that this is meant to be used for conflict resolution, not as a normal file metadata which can be modified.",
+      "revId": "c6970ace50c75246fe61eb434233a80de266e54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5778ac_fcf58e7a",
+        "filename": "components/drive/drive.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-06T06:32:51Z",
+      "side": 1,
+      "message": "This looks like a copy of the comment for modification_date.\nPlease write something appropriate.",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 27
+      },
+      "revId": "c6970ace50c75246fe61eb434233a80de266e54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "009e71cf_5063edf0",
+        "filename": "google_apis/drive/drive_api_parser.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-06T06:32:51Z",
+      "side": 1,
+      "message": "Could you make this comment look more like the one for last_viewed_by_me_date()?",
+      "revId": "c6970ace50c75246fe61eb434233a80de266e54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
