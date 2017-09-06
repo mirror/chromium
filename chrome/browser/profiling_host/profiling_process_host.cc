@@ -274,7 +274,8 @@ ProfilingProcessHost* ProfilingProcessHost::GetInstance() {
 }
 
 void ProfilingProcessHost::RequestProcessDump(base::ProcessId pid,
-                                              const base::FilePath& dest) {
+                                              const base::FilePath& dest,
+                                              base::OnceClosure done) {
   if (!connector_) {
     DLOG(ERROR)
         << "Requesting process dump when profiling process hasn't started.";
@@ -285,7 +286,8 @@ void ProfilingProcessHost::RequestProcessDump(base::ProcessId pid,
   base::PostTaskWithTraits(
       FROM_HERE, {base::TaskPriority::USER_VISIBLE, base::MayBlock()},
       base::BindOnce(&ProfilingProcessHost::GetOutputFileOnBlockingThread,
-                     base::Unretained(this), pid, dest, kNoUpload));
+                     base::Unretained(this), pid, dest, kNoUpload,
+                     std::move(done)));
 }
 
 void ProfilingProcessHost::RequestProcessReport(base::ProcessId pid) {
@@ -305,7 +307,8 @@ void ProfilingProcessHost::RequestProcessReport(base::ProcessId pid) {
   base::PostTaskWithTraits(
       FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
       base::BindOnce(&ProfilingProcessHost::GetOutputFileOnBlockingThread,
-                     base::Unretained(this), pid, output_path, kUpload));
+                     base::Unretained(this), pid, output_path, kUpload,
+                     base::OnceClosure()));
 }
 
 void ProfilingProcessHost::MakeConnector(
@@ -341,40 +344,49 @@ void ProfilingProcessHost::LaunchAsService() {
   connector_->BindInterface(content::mojom::kBrowserServiceName,
                             mojo::MakeRequest(&memlog_client));
   base::ProcessId pid = base::Process::Current().Pid();
+  LOG(ERROR) << "This is the pid: " << pid;
   SendPipeToProfilingService(std::move(memlog_client), pid);
 }
 
 void ProfilingProcessHost::GetOutputFileOnBlockingThread(
     base::ProcessId pid,
     const base::FilePath& dest,
-    bool upload) {
+    bool upload,
+    base::OnceClosure done) {
   base::File file(dest,
                   base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&ProfilingProcessHost::HandleDumpProcessOnIOThread,
                      base::Unretained(this), pid, std::move(dest),
-                     std::move(file), upload));
+                     std::move(file), upload, std::move(done)));
 }
 
 void ProfilingProcessHost::HandleDumpProcessOnIOThread(base::ProcessId pid,
                                                        base::FilePath file_path,
                                                        base::File file,
-                                                       bool upload) {
+                                                       bool upload,
+                                                       base::OnceClosure done) {
   mojo::ScopedHandle handle = mojo::WrapPlatformFile(file.TakePlatformFile());
   memlog_->DumpProcess(
       pid, std::move(handle), GetMetadataJSONForTrace(),
       base::BindOnce(&ProfilingProcessHost::OnProcessDumpComplete,
-                     base::Unretained(this), std::move(file_path), upload));
+                     base::Unretained(this), std::move(file_path), upload,
+                     std::move(done)));
 }
 
 void ProfilingProcessHost::OnProcessDumpComplete(base::FilePath file_path,
                                                  bool upload,
+                                                 base::OnceClosure done,
                                                  bool success) {
+  base::ScopedClosureRunner done_runner(std::move(done));
   if (!success) {
     DLOG(ERROR) << "Cannot dump process.";
     // On any errors, the requested trace output file is deleted.
-    base::DeleteFile(file_path, false);
+    base::PostTaskWithTraits(
+        FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
+        base::BindOnce(base::IgnoreResult(&base::DeleteFile), file_path,
+                       false));
     return;
   }
 
@@ -382,7 +394,10 @@ void ProfilingProcessHost::OnProcessDumpComplete(base::FilePath file_path,
     UploadTraceToCrashServer(file_path);
 
     // Uploaded file is a temporary file and must be deleted.
-    base::DeleteFile(file_path, false);
+    base::PostTaskWithTraits(
+        FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
+        base::BindOnce(base::IgnoreResult(&base::DeleteFile), file_path,
+                       false));
   }
 }
 
