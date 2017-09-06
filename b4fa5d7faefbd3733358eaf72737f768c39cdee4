@@ -16,6 +16,24 @@
       "revId": "b4fa5d7faefbd3733358eaf72737f768c39cdee4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b001c5_2fc02cf7",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-06T04:44:34Z",
+      "side": 0,
+      "message": "I considered this approach, my concern was not to change this dramatically. That is why I choose \"safer\" solution, keeping in-mind M61 merge. Also from performance point of view it is better to set locale at early stage of the boot to reduce number of restarting services. \nI don\u0027t have strong preference here so if you think this is better, I will update the code and create this service once  both conditions are met. I will probably re-use functionality from bluetooth refactoring where we did the similar thing, wait for app and intent helper instances.",
+      "parentUuid": "c6f8d924_571458e8",
+      "revId": "b4fa5d7faefbd3733358eaf72737f768c39cdee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
