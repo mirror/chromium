@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "565d602e_ed42406b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-06T20:44:45Z",
+      "side": 1,
+      "message": "This patch also enables zero copy for the UI right? I def think that\u0027s worth mentioning in this CL description, if not worth doing as its own patch first.",
+      "revId": "357ba2820af89267d92541b4a3eb440913de3498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
