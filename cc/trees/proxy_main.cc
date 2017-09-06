@@ -172,6 +172,7 @@ void ProxyMain::BeginMainFrame(
 
   current_pipeline_stage_ = ANIMATE_PIPELINE_STAGE;
 
+  // Synchronize scrolls from impl thread to main thread.
   layer_tree_host_->ApplyScrollAndScale(
       begin_main_frame_state->scroll_info.get());
 
@@ -182,7 +183,23 @@ void ProxyMain::BeginMainFrame(
 
   layer_tree_host_->WillBeginMainFrame();
 
+  // Dispatches BeginMainFrame-aligned input events.
+  //
+  // Advances frame-synchronized animations and callbacks. These include
+  // gesture animations, auto scroll animations, declarative
+  // CSS animations (including both main-thread and compositor thread
+  // animations), and script-implemented requestAnimationFrame animations.
+  //
+  // CSS animations which run on the main thread invalidate rendering phases
+  // as appropriate. CSS animations which run on the compositor invalidate
+  // styles, and then update transforms or opacity on the Layer tree.
+  // Compositor animations need to be updated here, because there is no
+  // other mechanism by which the compositor syncs state for these animations to
+  // the main thread.
   layer_tree_host_->BeginMainFrame(begin_main_frame_state->begin_frame_args);
+
+  // Updates cc animations on the main-thread. This appears to be entirely
+  // duplicated by work done in LayerTreeHost::BeginMainFrame. crbug.com/762717.
   layer_tree_host_->AnimateLayers(
       begin_main_frame_state->begin_frame_args.frame_time);
 
@@ -191,6 +208,8 @@ void ProxyMain::BeginMainFrame(
   if (begin_main_frame_state->evicted_ui_resources)
     layer_tree_host_->GetUIResourceManager()->RecreateUIResources();
 
+  // Updates the Blink DocumentLifecycle: performs style, layout, paint
+  // Blink compositing, and paint/raster invalidation.
   layer_tree_host_->RequestMainFrameUpdate();
 
   // At this point the main frame may have deferred commits to avoid committing
@@ -219,6 +238,10 @@ void ProxyMain::BeginMainFrame(
   current_pipeline_stage_ = UPDATE_LAYERS_PIPELINE_STAGE;
   bool should_update_layers =
       final_pipeline_stage_ >= UPDATE_LAYERS_PIPELINE_STAGE;
+  // 1. Update property trees in cc
+  // 2. Copy Blink display item list to corresponding cc display item list.
+  // 3. For non-PictureLayer Layer subclasses, updates some internal
+  // state, and also for PainteScrollbarLayers, paints them.
   bool updated = should_update_layers && layer_tree_host_->UpdateLayers();
 
   // If updating the layers resulted in a content update, we need a commit.
