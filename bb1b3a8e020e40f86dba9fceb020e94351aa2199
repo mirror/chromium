@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e82c96f0_368de6d5",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-06T22:33:50Z",
+      "side": 1,
+      "message": "Instead of observing, how about we call SessionController::GetLastActiveUserPrefService in DoAuthenticateUser where it is needed ?",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdc2f5a4_f51a7d56",
         "filename": "ash/login/lock_screen_controller.cc",
         "patchSetId": 1
@@ -36,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "162707d7_b35d194b",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-06T22:33:50Z",
+      "side": 1,
+      "message": "Out of curiosity, why do we need to do this test to set |hashed_password|? And if the condition stands, do we still need to call back to the other side?",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c59cf1c5_168a1df9",
         "filename": "ash/login/lock_screen_controller.cc",
         "patchSetId": 1
@@ -47,6 +81,40 @@
       "writtenOn": "2017-09-06T22:10:04Z",
       "side": 1,
       "message": "Does this function have test coverage in lock_screen_controller_unittest.cc? I\u0027m surprised that file doesn\u0027t need to be updated.",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500edabd_280e529d",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-06T22:33:50Z",
+      "side": 1,
+      "message": "Is this the right place to call OnFocusPod? It seems LayoutAuth is called from multiple places and not all of them are related to pod focusing.",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc0926c7_0097431f",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-06T22:33:50Z",
+      "side": 1,
+      "message": "nit: Suggest to use !!(auth_methods_ \u0026 AUTH_PIN) instead.",
       "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
