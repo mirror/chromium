@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2df460b4_30e3cf2f",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1557,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T21:42:28Z",
+      "side": 1,
+      "message": "This bug doesn\u0027t seem to be relevant to this comment, does it? We will always have to modify the parameter, because an exploited renderer can supply anything it wants into the url parameter. Unless we modify how FilterURL works (which is not what that bug is about), I don\u0027t see how this comment is actionable.",
+      "range": {
+        "startLine": 1557,
+        "startChar": 10,
+        "endLine": 1557,
+        "endChar": 34
+      },
+      "revId": "308c222262f9e351c718b62de0409d682af9281c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f381f0d6_4916ea04",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 5113,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T21:42:28Z",
+      "side": 1,
+      "message": "The FrameHostMsg_DidCommitProvisionalLoad message doesn\u0027t exist anymore with this CL, maybe worthwhile rewording this comment a bit?",
+      "revId": "308c222262f9e351c718b62de0409d682af9281c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ee423e_918655ca",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T21:42:28Z",
+      "side": 1,
+      "message": "TestRenderFrame?",
+      "range": {
+        "startLine": 707,
+        "startChar": 20,
+        "endLine": 707,
+        "endChar": 37
+      },
+      "revId": "308c222262f9e351c718b62de0409d682af9281c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b74259_68f0cc46",
+        "filename": "content/test/did_commit_provisional_load_interceptor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T21:42:28Z",
+      "side": 1,
+      "message": "This might fail if the process gets terminated. In my experimentation of doing the same in the destructor, I was getting nullptr back from the swap call above. No action is needed on your CL, but I wonder if a comment might be worthwhile, possibly TODO to investigate?",
+      "revId": "308c222262f9e351c718b62de0409d682af9281c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae7b2bf_672baa1e",
+        "filename": "content/test/did_commit_provisional_load_interceptor.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T21:42:28Z",
+      "side": 1,
+      "message": "nit: Either expand it to the full name or use a different word. This isn\u0027t a common abbreviation.",
+      "range": {
+        "startLine": 22,
+        "startChar": 39,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "308c222262f9e351c718b62de0409d682af9281c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
