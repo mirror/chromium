@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d261327_503f4a2b",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-06T18:03:25Z",
+      "side": 1,
+      "message": "You might not need this. there is already guards against this condition in NotifySplitViewStateChanged() function.",
+      "revId": "3da6ff0c6b7be8816cdb1285944210544156f721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f84674_36e4c631",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-06T18:03:25Z",
+      "side": 1,
+      "message": "It\u0027s supposed to work without line 166-169. If not, there might be bugs in SnapWindow() function. Could you help to check? If it doesn\u0027t work, you can leave it as-is and I\u0027ll work on a fix later.",
+      "revId": "3da6ff0c6b7be8816cdb1285944210544156f721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a86a185_1d4129df",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-06T18:03:25Z",
+      "side": 1,
+      "message": "It sounds like a bug.",
+      "revId": "3da6ff0c6b7be8816cdb1285944210544156f721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
