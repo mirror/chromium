@@ -39,7 +39,9 @@ class NGInlineNodeOffsetMappingTest : public RenderingTest {
   }
 
   bool IsOffsetMappingStored() const {
-    return layout_block_flow_->GetNGInlineNodeData()->offset_mapping_.get();
+    return GetNGData(layout_block_flow_)
+        ->GetNGInlineNodeData()
+        ->offset_mapping_.get();
   }
 
   const LayoutText* GetLayoutTextUnder(const char* parent_id) {
