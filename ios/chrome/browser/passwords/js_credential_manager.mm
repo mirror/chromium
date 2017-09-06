@@ -14,8 +14,6 @@
 #error "This file requires ARC support."
 #endif
 
-namespace credential_manager {
-
 namespace {
 
 // Takes CredentialInfo and returns string representing invocation of
@@ -110,5 +108,3 @@ void RejectPromiseWithNotSupportedError(web::WebState* web_state,
   ResolveOrRejectPromise(web_state, promise_id, /*resolve=*/false,
                          not_supported_err_str);
 }
-
-}  // namespace credential_manager

@@ -19,8 +19,6 @@ using password_manager::CredentialInfo;
 using password_manager::CredentialType;
 using password_manager::CredentialMediationRequirement;
 
-namespace credential_manager {
-
 namespace {
 
 constexpr char kCommandPrefix[] = "credentials";
@@ -158,5 +156,3 @@ void CredentialManager::SendPreventSilentAccessResponse(int promise_id) {
 void CredentialManager::SendStoreResponse(int promise_id) {
   ResolvePromiseWithUndefined(web_state_, promise_id);
 }
-
-}  // namespace credential_manager
