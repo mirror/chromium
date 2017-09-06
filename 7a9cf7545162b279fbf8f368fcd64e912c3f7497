@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10c4697a_38fe0e7b",
+        "filename": "chrome/browser/media_galleries/media_galleries_preferences.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-06T22:37:03Z",
+      "side": 1,
+      "message": "Just as a reminder to remove this mechanism in whichever the second patch to land is.",
+      "revId": "7a9cf7545162b279fbf8f368fcd64e912c3f7497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
