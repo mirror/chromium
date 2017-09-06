@@ -70,6 +70,24 @@
       "revId": "e16ce506b34e26dcd2b8757eb954176f49abad7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdd3181_bb6b9a28",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-06T08:35:16Z",
+      "side": 1,
+      "message": "I took a closer look, and we don\u0027t overwrite the bounds in OnWindowBoundsChanged for NYC as I wrote earlier, but we do overwrite then in a surface commit. This means that if a window state change is invoked from Chrome (eg. Alt+) the window will have incorrect geometry until the surface is committed. It can be easily confirmed by pressing F4 quickly after alt+.\n\nI believe we should address this in aura by adding native supports for such geometry constraints. We already have aura::WindowDelegate::get(Minimum|Maximum)Size. Either by adding aura::WindowDelegate::GetMaximizedBounds or maybe even aura::WindowDelegate::GetAspectRatio. The second one could be used together with the existing GetMaximumBounds to define the maximized bounds.\n\nI don\u0027t see much alternative. Maybe use custom code for animating ARC windows. Or overwrite widget bounds in OnWindowBoundsChanged, but this may turn into spaghetti.",
+      "parentUuid": "48f08e65_321f499b",
+      "revId": "e16ce506b34e26dcd2b8757eb954176f49abad7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
