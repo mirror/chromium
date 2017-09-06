@@ -126,7 +126,9 @@ size_t AppendBacktraceStrings(const Backtrace& backtrace,
                               BacktraceTable* backtrace_table,
                               StringTable* string_table) {
   int parent = -1;
-  for (const Address& addr : backtrace.addrs()) {
+  // Addresses must be outputted in reverse order.
+  const auto& addresses = backtrace.addrs();
+  for (auto addr = addresses.rbegin(); addr != addresses.rend(); ++addr) {
     static constexpr char kPcPrefix[] = "pc:";
     // std::numeric_limits<>::digits gives the number of bits in the value.
     // Dividing by 4 gives the number of hex digits needed to store the value.
@@ -134,9 +136,9 @@ size_t AppendBacktraceStrings(const Backtrace& backtrace,
     // null terminator.
     static constexpr int kBufSize =
         sizeof(kPcPrefix) +
-        (std::numeric_limits<decltype(addr.value)>::digits / 4);
+        (std::numeric_limits<decltype(addr->value)>::digits / 4);
     char buf[kBufSize];
-    snprintf(buf, kBufSize, "%s%" PRIx64, kPcPrefix, addr.value);
+    snprintf(buf, kBufSize, "%s%" PRIx64, kPcPrefix, addr->value);
     size_t sid = AddOrGetString(buf, string_table);
     parent = AddOrGetBacktraceNode(BacktraceNode(sid, parent), backtrace_table);
   }
