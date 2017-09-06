@@ -4,6 +4,7 @@
 
 #include "ash/login/ui/lock_contents_view.h"
 
+#include "ash/login/lock_screen_controller.h"
 #include "ash/login/ui/lock_screen.h"
 #include "ash/login/ui/login_auth_user_view.h"
 #include "ash/login/ui/login_display_style.h"
@@ -396,6 +397,9 @@ LockContentsView::UserState* LockContentsView::FindStateForUser(
 void LockContentsView::LayoutAuth(LoginAuthUserView* to_update,
                                   LoginAuthUserView* opt_to_hide,
                                   bool animate) {
+  Shell::Get()->lock_screen_controller()->OnFocusPod(
+      to_update->current_user()->account_id);
+
   // Capture animation metadata before we changing state.
   if (animate) {
     to_update->CaptureStateForAnimationPreLayout();

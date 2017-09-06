@@ -5,14 +5,51 @@
 #include "ash/login/lock_screen_controller.h"
 
 #include "ash/login/ui/lock_screen.h"
+#include "ash/public/cpp/ash_pref_names.h"
+#include "ash/session/session_controller.h"
+#include "ash/shell.h"
+#include "base/strings/string_number_conversions.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
 #include "chromeos/login/auth/user_context.h"
+#include "components/prefs/pref_registry_simple.h"
+#include "components/prefs/pref_service.h"
 
 namespace ash {
 
-LockScreenController::LockScreenController() = default;
+namespace {
 
-LockScreenController::~LockScreenController() = default;
+std::string CalculateHash(const std::string& password,
+                          const std::string& salt,
+                          chromeos::Key::KeyType key_type) {
+  chromeos::Key key(password);
+  key.Transform(key_type, salt);
+  return key.GetSecret();
+}
+
+}  // namespace
+
+LockScreenController::LockScreenController() {
+  Shell::Get()->session_controller()->AddObserver(this);
+}
+
+LockScreenController::~LockScreenController() {
+  Shell::Get()->session_controller()->RemoveObserver(this);
+}
+
+// static
+void LockScreenController::RegisterProfilePrefs(PrefRegistrySimple* registry,
+                                                bool for_test) {
+  if (for_test) {
+    // There is no remote pref service, so pretend that ash owns the pref.
+    registry->RegisterStringPref(prefs::kQuickUnlockPinSalt, "");
+    registry->RegisterStringPref(prefs::kQuickUnlockPinSecret, "");
+    return;
+  }
+
+  // Pref is owned by chrome and flagged as PUBLIC.
+  registry->RegisterForeignPref(prefs::kQuickUnlockPinSalt);
+  registry->RegisterForeignPref(prefs::kQuickUnlockPinSecret);
+}
 
 void LockScreenController::BindRequest(mojom::LockScreenRequest request) {
   bindings_.AddBinding(this, std::move(request));
@@ -62,7 +99,13 @@ void LockScreenController::LoadUsers(std::vector<mojom::LoginUserInfoPtr> users,
 
 void LockScreenController::SetPinEnabledForUser(const AccountId& account_id,
                                                 bool is_enabled) {
-  ash::LockScreen::Get()->SetPinEnabledForUser(account_id, is_enabled);
+  if (ash::LockScreen::IsInitialized())
+    ash::LockScreen::Get()->SetPinEnabledForUser(account_id, is_enabled);
+}
+
+void LockScreenController::OnActiveUserPrefServiceChanged(
+    PrefService* pref_service) {
+  active_user_pref_service_ = pref_service;
 }
 
 void LockScreenController::AuthenticateUser(
@@ -140,13 +183,27 @@ void LockScreenController::DoAuthenticateUser(
     bool authenticated_by_pin,
     mojom::LockScreenClient::AuthenticateUserCallback callback,
     const std::string& system_salt) {
-  // Hash password before sending through mojo.
-  // TODO(xiaoyinh): Pin is hashed differently by using a different salt and
-  // a different hash algorithm. Update this part in PinStorage.
-  chromeos::Key key(password);
-  key.Transform(chromeos::Key::KEY_TYPE_SALTED_SHA256_TOP_HALF, system_salt);
-  lock_screen_client_->AuthenticateUser(
-      account_id, key.GetSecret(), authenticated_by_pin, std::move(callback));
+  int dummy_value;
+  bool is_pin =
+      authenticated_by_pin && base::StringToInt(password, &dummy_value);
+  std::string hashed_password = CalculateHash(
+      password, system_salt, chromeos::Key::KEY_TYPE_SALTED_SHA256_TOP_HALF);
+
+  if (is_pin && active_user_pref_service_) {
+    std::string hashed_pin = CalculateHash(
+        password,
+        active_user_pref_service_->GetString(prefs::kQuickUnlockPinSalt),
+        chromeos::Key::KEY_TYPE_SALTED_PBKDF2_AES256_1234);
+    if (hashed_pin ==
+        active_user_pref_service_->GetString(prefs::kQuickUnlockPinSecret)) {
+      hashed_password = hashed_pin;
+    } else {
+      is_pin = false;
+    }
+  }
+
+  lock_screen_client_->AuthenticateUser(account_id, hashed_password, is_pin,
+                                        std::move(callback));
 }
 
 void LockScreenController::OnGetSystemSalt(const std::string& system_salt) {

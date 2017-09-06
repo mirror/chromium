@@ -347,6 +347,7 @@ void Shell::RegisterProfilePrefs(PrefRegistrySimple* registry, bool for_test) {
   ShelfController::RegisterProfilePrefs(registry);
   TrayCapsLock::RegisterProfilePrefs(registry, for_test);
   BluetoothPowerController::RegisterProfilePrefs(registry);
+  LockScreenController::RegisterProfilePrefs(registry, for_test);
 }
 
 views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(
@@ -640,7 +641,6 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
           base::MakeUnique<KeyboardBrightnessController>()),
       locale_notification_controller_(
           base::MakeUnique<LocaleNotificationController>()),
-      lock_screen_controller_(base::MakeUnique<LockScreenController>()),
       media_controller_(base::MakeUnique<MediaController>()),
       new_window_controller_(base::MakeUnique<NewWindowController>()),
       session_controller_(base::MakeUnique<SessionController>(
@@ -860,6 +860,7 @@ Shell::~Shell() {
   shell_port_.reset();
   session_controller_->RemoveObserver(this);
   wallpaper_delegate_.reset();
+  lock_screen_controller_.reset();
   // BluetoothPowerController depends on the PrefService and must be destructed
   // before it.
   bluetooth_power_controller_ = nullptr;
@@ -883,6 +884,7 @@ void Shell::Init(const ShellInitParams& init_params) {
     night_light_controller_ = base::MakeUnique<NightLightController>();
 
   bluetooth_power_controller_ = base::MakeUnique<BluetoothPowerController>();
+  lock_screen_controller_ = base::MakeUnique<LockScreenController>();
 
   wallpaper_delegate_ = shell_delegate_->CreateWallpaperDelegate();
 

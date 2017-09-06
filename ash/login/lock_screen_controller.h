@@ -7,8 +7,12 @@
 
 #include "ash/ash_export.h"
 #include "ash/public/interfaces/lock_screen.mojom.h"
+#include "ash/session/session_observer.h"
 #include "base/macros.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+
+class PrefRegistrySimple;
+class PrefService;
 
 namespace ash {
 
@@ -17,12 +21,15 @@ namespace ash {
 // LockScreenClient, which we will dispatch to if one has been provided to us.
 // This could send requests to LockScreenClient and also handle requests from
 // LockScreenClient through mojo.
-class ASH_EXPORT LockScreenController : public mojom::LockScreen {
+class ASH_EXPORT LockScreenController : public mojom::LockScreen,
+                                        public SessionObserver {
  public:
   using OnShownCallback = base::OnceCallback<void(bool did_show)>;
 
   LockScreenController();
   ~LockScreenController() override;
+
+  static void RegisterProfilePrefs(PrefRegistrySimple* registry, bool for_test);
 
   // Binds the mojom::LockScreen interface to this object.
   void BindRequest(mojom::LockScreenRequest request);
@@ -45,6 +52,9 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
                  bool show_guest) override;
   void SetPinEnabledForUser(const AccountId& account_id,
                             bool is_enabled) override;
+
+  // SessionObserver:
+  void OnActiveUserPrefServiceChanged(PrefService* pref_service) override;
 
   // Wrappers around the mojom::LockScreenClient interface.
   // Hash the password and send AuthenticateUser request to LockScreenClient.
@@ -80,6 +90,10 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
 
   // Client interface in chrome browser. May be null in tests.
   mojom::LockScreenClientPtr lock_screen_client_;
+
+  // The pref service of the currently active user. Can be null in
+  // ash_unittests.
+  PrefService* active_user_pref_service_ = nullptr;
 
   // Bindings for the LockScreen interface.
   mojo::BindingSet<mojom::LockScreen> bindings_;
