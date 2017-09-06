@@ -121,6 +121,24 @@
     },
     {
       "key": {
+        "uuid": "9bf0309d_17869566",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T02:03:40Z",
+      "side": 1,
+      "message": "Nevermind, we can keep this for now.",
+      "parentUuid": "5d23aec0_b19c32d3",
+      "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2d413d3_44489d2c",
         "filename": "content/public/browser/service_worker_context.h",
         "patchSetId": 12
@@ -166,6 +184,24 @@
       "writtenOn": "2017-09-06T01:52:36Z",
       "side": 1,
       "message": "Can you just change this function contract to require being called on the IO thread? I see only one other user, so it should be easy. IMO the \"called from any thread\" pattern should generally be avoided by default.",
+      "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a13f779_9cb2bf80",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T02:03:40Z",
+      "side": 1,
+      "message": "I overlooked that there are several callsites in tests. Let\u0027s keep the \"call on any thread\" thing for now, it could be a follow-up refactoring later.",
+      "parentUuid": "5c92e33b_2e3dfb56",
       "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
