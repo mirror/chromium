@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d845ba42_6371bbf1",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-06T21:50:37Z",
+      "side": 1,
+      "message": "These need to be $i18nPolymer so that they work in other languages (like French which frequently has \u0027 in text). Changing this now will avoid getting pri-1 regression bugs in French.",
+      "revId": "bba73c9c13a3b98fe9b32fc52e4ad0f24f469adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7a75df_d51a0db3",
+        "filename": "chrome/browser/resources/settings/settings_vars_css.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-06T21:50:37Z",
+      "side": 1,
+      "message": "What effect does this have?",
+      "revId": "bba73c9c13a3b98fe9b32fc52e4ad0f24f469adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
