@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "b40b6380_56a48d1c",
+        "filename": "chrome/browser/win/jumplist.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-06T06:47:12Z",
+      "side": 1,
+      "message": "\u003e \u003e \u003e I think it\u0027s okay not to reset top_sites_has_pending_notification_ here.\n\u003e \u003e \u003e 1) If the next notification is from TopSites, then this flag is set to true regardless of its previous value. So not resetting the top_sites flag doesn\u0027t make a difference here.\n\u003e \u003e \u003e 2) If the next notification is from TabRestore, then both top_sites and tab_restore flags are now true. This means both categories will be updated. This is equivalent to \"delay-n-coalesce\". So not resetting the top_sites flag doesn\u0027t make a difference here neither.\n\u003e \u003e \n\u003e \u003e The delay-n-coalesce behavior makes sense. I can\u0027t think of a reason why it\u0027s bad. On the other hand, I don\u0027t think it\u0027s obvious from reading the code. It\u0027s also not symmetrical, is it? If the first notification after updates_to_skip_ hits zero is from TopSites, ProcessNotifications will not pull data from the tab restore service, will it?\n\u003e \n\u003e Yes, if the first notification after updates_to_skip_ hits zero is from TopSites, ProcessNotifications will NOT pull data from the tab restore service in the current impl. Please allow me to give more details. \n\u003e 1) We can pull data from topsites service via explicitly calling top_sites-\u003eSyncWithHistory. This call generates a notification from topsites. Jumplist handles this notification via the normal routine, i.e., via TopSiteChanged() override function.\n\u003e 2) However, I don\u0027t think we can pull data from tab restore service in this way.\n\nWould we need to? Can we not get the TabRestoreService for a profile and iterate over its entries on-demand (as is done in JumpList::ProcessTabRestoreServiceNotification)? Is there a reason why this would not provide the current set of most recently closed tabs/windows?",
+      "parentUuid": "4f681068_cbc3880f",
+      "revId": "6fe21e2bfd90b90c6a91d2d9660d9ab1d937a5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96b10c39_885e5c5f",
         "filename": "chrome/browser/win/jumplist.cc",
         "patchSetId": 8
