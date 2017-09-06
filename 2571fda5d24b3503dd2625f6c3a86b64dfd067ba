@@ -16,6 +16,24 @@
       "revId": "2571fda5d24b3503dd2625f6c3a86b64dfd067ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7d753b_b14611e0",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-06T01:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33a3cf01_f8e69fdb",
+      "revId": "2571fda5d24b3503dd2625f6c3a86b64dfd067ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
