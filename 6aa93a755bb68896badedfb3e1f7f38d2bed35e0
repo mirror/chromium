@@ -46,6 +46,30 @@
       "revId": "6aa93a755bb68896badedfb3e1f7f38d2bed35e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f068c4_533f33dc",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 1001921
+      },
+      "writtenOn": "2017-09-06T18:59:00Z",
+      "side": 1,
+      "message": "Since Linux Ozone (Intel) is green, perhaps all these just need to be removed.\nI think Frank had them to remove targets that failed to compile on \"Linux ChromiumOS Ozone (Intel)\", but if they compile successfully now, they are not needed anymore.",
+      "parentUuid": "8dec2b56_3fa14d3e",
+      "range": {
+        "startLine": 1431,
+        "startChar": 11,
+        "endLine": 1431,
+        "endChar": 41
+      },
+      "revId": "6aa93a755bb68896badedfb3e1f7f38d2bed35e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
