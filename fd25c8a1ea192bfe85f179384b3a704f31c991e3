@@ -16,6 +16,24 @@
       "revId": "fd25c8a1ea192bfe85f179384b3a704f31c991e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7836009c_169dace3",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-06T00:07:44Z",
+      "side": 1,
+      "message": "I might be missing something, but what do this have to do with IsMainFrame()?",
+      "parentUuid": "bc00658d_3c7f9e3c",
+      "revId": "fd25c8a1ea192bfe85f179384b3a704f31c991e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
