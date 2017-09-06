@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "172064a4_98583bfb",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-06T23:08:59Z",
+      "side": 1,
+      "message": "magic.",
+      "parentUuid": "76634b90_017344d0",
+      "range": {
+        "startLine": 536,
+        "startChar": 2,
+        "endLine": 540,
+        "endChar": 0
+      },
+      "revId": "36669a47c74a06cd2a83e2e2d2d14f160d99fc39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "835ee16b_5be645ae",
         "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "36669a47c74a06cd2a83e2e2d2d14f160d99fc39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4abd70_b0dfae7e",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-06T23:08:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "835ee16b_5be645ae",
+      "range": {
+        "startLine": 178,
+        "startChar": 71,
+        "endLine": 179,
+        "endChar": 29
+      },
+      "revId": "36669a47c74a06cd2a83e2e2d2d14f160d99fc39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
