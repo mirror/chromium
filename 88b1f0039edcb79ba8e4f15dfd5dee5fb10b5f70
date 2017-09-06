@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fbfade52_18e0dfe2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-09-06T19:27:19Z",
+      "side": 1,
+      "message": "Can you have a more descriptive message? This change is just part of what\u0027s needed to support Home feedback on Android.",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 51
+      },
+      "revId": "88b1f0039edcb79ba8e4f15dfd5dee5fb10b5f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6bc0181_4f489973",
         "filename": "chromecast/app/android/crash_handler.cc",
         "patchSetId": 1
@@ -47,6 +70,29 @@
       "writtenOn": "2017-09-06T18:38:10Z",
       "side": 1,
       "message": "nit: const std::string\u0026",
+      "revId": "88b1f0039edcb79ba8e4f15dfd5dee5fb10b5f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd963c8c_079df8ba",
+        "filename": "chromecast/app/android/crash_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-09-06T19:27:19Z",
+      "side": 1,
+      "message": "Should this be a base::FilePath?",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 37
+      },
       "revId": "88b1f0039edcb79ba8e4f15dfd5dee5fb10b5f70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
