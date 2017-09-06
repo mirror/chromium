@@ -34,6 +34,24 @@
       "revId": "e16ce506b34e26dcd2b8757eb954176f49abad7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc1cd00_e5032b02",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-06T06:16:42Z",
+      "side": 1,
+      "message": "Won\u0027t it apply wrong animation for pillar-boxed/letter-boxed app because it doesn\u0027t know the real target size there?",
+      "parentUuid": "1c0f3eaa_5dbafd54",
+      "revId": "e16ce506b34e26dcd2b8757eb954176f49abad7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
