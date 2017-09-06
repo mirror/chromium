@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbf23fda_0eb3802a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2397,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-09-06T20:26:02Z",
+      "side": 1,
+      "message": "Can you add brackets here? (Since you are touching this line)",
+      "range": {
+        "startLine": 2397,
+        "startChar": 32,
+        "endLine": 2397,
+        "endChar": 0
+      },
+      "revId": "4bb2651728acc2dc90f0d46982d88d90cb958bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f94cd2_75ef434a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2426,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-09-06T20:26:02Z",
+      "side": 1,
+      "message": "Does it make sense to assign new_container_whitelisted_touch_action here?",
+      "range": {
+        "startLine": 2426,
+        "startChar": 4,
+        "endLine": 2426,
+        "endChar": 22
+      },
+      "revId": "4bb2651728acc2dc90f0d46982d88d90cb958bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
