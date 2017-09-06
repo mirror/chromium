@@ -34,6 +34,40 @@
       "revId": "a07e54b2eea889740d8ee3b899135826f34f6284",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c904f53_6c362dad",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2186,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-06T20:24:37Z",
+      "side": 1,
+      "message": "can you also test reparent scenario?",
+      "revId": "a07e54b2eea889740d8ee3b899135826f34f6284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739b1f8d_eba83285",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-06T20:24:37Z",
+      "side": 1,
+      "message": "You need to use the parent\u0027s root window, not primary.\n\nIt may be better to just set fullscreen.",
+      "revId": "a07e54b2eea889740d8ee3b899135826f34f6284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
