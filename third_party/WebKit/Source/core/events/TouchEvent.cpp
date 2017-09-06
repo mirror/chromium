@@ -28,6 +28,7 @@
 
 #include "core/events/EventDispatcher.h"
 #include "core/frame/FrameConsole.h"
+#include "core/frame/Intervention.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
@@ -256,6 +257,7 @@ bool TouchEvent::IsTouchEvent() const {
 }
 
 void TouchEvent::preventDefault() {
+  LOG(ERROR) << "TouchEvent";
   UIEventWithKeyState::preventDefault();
 
   // A common developer error is to wait too long before attempting to stop
@@ -300,6 +302,8 @@ void TouchEvent::preventDefault() {
       }
       break;
     case PassiveMode::kPassiveForcedDocumentLevel:
+
+      LOG(ERROR) << "TouchEvent " << current_touch_action_;
       // Only enable the warning when the current touch action is auto because
       // an author may use touch action but call preventDefault for interop with
       // browsers that don't support touch-action.
@@ -315,11 +319,12 @@ void TouchEvent::preventDefault() {
       break;
   }
 
+  LOG(ERROR) << "TouchEvent 2";
   if (!warning_message.IsEmpty() && view() && view()->IsLocalDOMWindow() &&
       view()->GetFrame()) {
-    ToLocalDOMWindow(view())->GetFrame()->Console().AddMessage(
-        ConsoleMessage::Create(message_source, kWarningMessageLevel,
-                               warning_message));
+    LOG(ERROR) << "TouchEvent 3";
+    Intervention::GenerateReport(ToLocalDOMWindow(view())->GetFrame(),
+                                 warning_message);
   }
 
   if ((type() == EventTypeNames::touchstart ||
