@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e71ab129_ba237764",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-06T22:38:49Z",
+      "side": 1,
+      "message": "nit: these are optional",
+      "range": {
+        "startLine": 62,
+        "startChar": 32,
+        "endLine": 62,
+        "endChar": 34
+      },
+      "revId": "20659c7fd37286d12754b17d67320f0bac1aa5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16824d0_0acc983a",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-06T22:38:49Z",
+      "side": 1,
+      "message": "this one too",
+      "range": {
+        "startLine": 136,
+        "startChar": 63,
+        "endLine": 136,
+        "endChar": 65
+      },
+      "revId": "20659c7fd37286d12754b17d67320f0bac1aa5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
