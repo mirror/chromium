@@ -37,10 +37,13 @@
 
 - (void)runFeature:(NSString*)feature withContext:(id<StepContext>)context {
   _rootCoordinator = [[RootCoordinator alloc] init];
-  [_rootCoordinator
-      setBrowser:BrowserList::FromBrowserState(context.browserState)
-                     ->CreateNewBrowser()];
 
+  // Create the main browser, set the root coordinator's dispatcher.
+  _rootCoordinator.browser =
+      BrowserList::FromBrowserState(context.browserState)->CreateNewBrowser();
+  _rootCoordinator.dispatcher = _rootCoordinator.browser->dispatcher();
+
+  // Restore the previous session's tabs, if any.
   BrowserListSessionService* service =
       BrowserListSessionServiceFactory::GetForBrowserState(
           context.browserState);
@@ -55,6 +58,8 @@
     webStateList.ActivateWebStateAt(0);
   }
 
+  // Start the root coordinator and assign it as the URL opener for the app.
+  // This creates and starts the Chrome UI.
   [_rootCoordinator start];
   context.URLOpener = _rootCoordinator;
   context.window.rootViewController = _rootCoordinator.viewController;

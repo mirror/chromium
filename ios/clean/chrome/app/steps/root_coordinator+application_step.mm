@@ -51,6 +51,7 @@ const char kRootCoordinatorContainerKey[] = "root_coordinator";
 - (void)runInState:(ApplicationState*)state {
   self.browser =
       BrowserList::FromBrowserState(state.browserState)->CreateNewBrowser();
+  self.dispatcher = [[CommandDispatcher alloc] init];
 
   BrowserListSessionService* service =
       BrowserListSessionServiceFactory::GetForBrowserState(state.browserState);
