@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44b2a1f0_3087ad6c",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-06T16:42:22Z",
+      "side": 1,
+      "message": "Go ahead and do that, just loop over all of the children.\nI\u0027d rather get it correct first, and then if we find a\nfaster or simpler way to do it later that\u0027s great.",
+      "revId": "395b3e6f6213363fce69f5e3408ddd296c88c8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
