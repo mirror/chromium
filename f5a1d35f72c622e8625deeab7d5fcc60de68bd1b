@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0df04377_909fef9a",
+        "filename": "ios/chrome/browser/ui/omnibox/image_fetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-06T17:20:55Z",
+      "side": 1,
+      "message": "You\u0027re right! Using your suggestion: \"ImageRetriever\"",
+      "parentUuid": "810e7929_6472f0e0",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 22
+      },
+      "revId": "f5a1d35f72c622e8625deeab7d5fcc60de68bd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a27b9f1_ff9b0d2a",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "f5a1d35f72c622e8625deeab7d5fcc60de68bd1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1847536c_5810dd1c",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-06T17:20:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0a27b9f1_ff9b0d2a",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "f5a1d35f72c622e8625deeab7d5fcc60de68bd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d1d87094_7b5f4d3b",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-06T17:20:55Z",
+      "side": 1,
+      "message": "Agreed, this will at some point move to coordinator + VC - filed crbug.com/762597.",
+      "parentUuid": "a61087c6_62079600",
+      "range": {
+        "startLine": 50,
+        "startChar": 53,
+        "endLine": 50,
+        "endChar": 76
+      },
+      "revId": "f5a1d35f72c622e8625deeab7d5fcc60de68bd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa31763d_2efbbf20",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.mm",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-10T13:26:14Z",
       "side": 1,
       "message": "So in the shiny perfect future, the animation param goes away because this code path triggers the popup coordinator starting, and the animation happens there.",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 28
+      },
+      "revId": "f5a1d35f72c622e8625deeab7d5fcc60de68bd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f906c8_84ee5ab4",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-06T17:20:55Z",
+      "side": 1,
+      "message": "This requires that the coordinator exist, so I\u0027ll file a bug to track this for now.",
+      "parentUuid": "fa31763d_2efbbf20",
       "range": {
         "startLine": 89,
         "startChar": 7,
