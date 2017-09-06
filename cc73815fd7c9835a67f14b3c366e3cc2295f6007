@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08ddc2a7_ddb583a4",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-06T04:11:56Z",
+      "side": 1,
+      "message": "same-origin",
+      "range": {
+        "startLine": 50,
+        "startChar": 24,
+        "endLine": 50,
+        "endChar": 25
+      },
+      "revId": "cc73815fd7c9835a67f14b3c366e3cc2295f6007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3792f5_9d412a52",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-06T04:11:56Z",
+      "side": 1,
+      "message": "Nit: IFrame reads better to me. (A case-sensitive code search shows no consensus but IFrame outnumbers Iframe 2:1).",
+      "range": {
+        "startLine": 42,
+        "startChar": 30,
+        "endLine": 42,
+        "endChar": 31
+      },
+      "revId": "cc73815fd7c9835a67f14b3c366e3cc2295f6007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cec82e_9952184c",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-06T04:11:56Z",
+      "side": 1,
+      "message": "Could this logic (shared between the two tests) go into a SetUp to avoid duplication?",
+      "range": {
+        "startLine": 338,
+        "startChar": 15,
+        "endLine": 338,
+        "endChar": 28
+      },
+      "revId": "cc73815fd7c9835a67f14b3c366e3cc2295f6007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d4ecda_3442c1d4",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-06T04:11:56Z",
+      "side": 1,
+      "message": "Why doesn\u0027t this use TestTabActionDoesNotOpenAppWindow like below?\n\nIs the below a separate test case to the above? Or are these somehow related to one another?",
+      "range": {
+        "startLine": 425,
+        "startChar": 2,
+        "endLine": 425,
+        "endChar": 11
+      },
+      "revId": "cc73815fd7c9835a67f14b3c366e3cc2295f6007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
