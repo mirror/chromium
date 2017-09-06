@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c327bb6_c2a22769",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-06T09:02:50Z",
+      "side": 1,
+      "message": "Thanks. removed.",
+      "parentUuid": "5dd0905c_ab0b1f21",
+      "range": {
+        "startLine": 1068,
+        "startChar": 6,
+        "endLine": 1068,
+        "endChar": 66
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1659f76_3a4cca85",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391b0f98_7eda3f01",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-06T09:02:50Z",
+      "side": 1,
+      "message": "_currentRootNode could become NULL when it is deleted remotely.\nSo we need to deal with that later.",
+      "parentUuid": "a1659f76_3a4cca85",
+      "range": {
+        "startLine": 223,
+        "startChar": 2,
+        "endLine": 224,
+        "endChar": 34
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "24345f2a_ad9b7930",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-06T09:02:50Z",
+      "side": 1,
+      "message": "That\u0027s true.  And it won\u0027t happen in normal usage.\nI will remove this TODO then. thanks for the advice!",
+      "parentUuid": "ecf67383_f2cba2e2",
+      "range": {
+        "startLine": 530,
+        "startChar": 2,
+        "endLine": 532,
+        "endChar": 14
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a1964d5_d53a649c",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737435ca_33464898",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-06T09:02:50Z",
+      "side": 1,
+      "message": "Yah. same as line 224. this is to prevent the crash when the current root node is removed remotely.",
+      "parentUuid": "8a1964d5_d53a649c",
+      "range": {
+        "startLine": 567,
+        "startChar": 2,
+        "endLine": 569,
+        "endChar": 3
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5f5d23c1_2a52a9d1",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-06T09:02:50Z",
+      "side": 1,
+      "message": "Thanks.  I changed this to if (newName.length \u003e 0) {..}\nto skip setTitle (revert to New Folder) when empty string.",
+      "parentUuid": "f91458ff_5e627c68",
+      "range": {
+        "startLine": 780,
+        "startChar": 2,
+        "endLine": 780,
+        "endChar": 29
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc701a48_4980b1e9",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143d9b70_ae10df5b",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-06T09:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc701a48_4980b1e9",
+      "range": {
+        "startLine": 783,
+        "startChar": 2,
+        "endLine": 783,
+        "endChar": 26
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "8589d393_14990183",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-06T09:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3def8b0d_f465751f",
+      "range": {
+        "startLine": 780,
+        "startChar": 2,
+        "endLine": 782,
+        "endChar": 39
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecec222a_8404e477",
         "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
         "patchSetId": 1
@@ -183,6 +351,30 @@
       "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ceb7d7_5be4b7e4",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-06T09:02:50Z",
+      "side": 1,
+      "message": "Done. thanks!",
+      "parentUuid": "ecec222a_8404e477",
+      "range": {
+        "startLine": 77,
+        "startChar": 1,
+        "endLine": 81,
+        "endChar": 61
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "91511bc8_d833623d",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-06T09:02:50Z",
+      "side": 1,
+      "message": "Agree.  disabling refresh may introduce more unpredictable problems.  I will remove this TODO.",
+      "parentUuid": "fd1b9bca_c881e54a",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 25
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "244597b0_22142a97",
         "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
         "patchSetId": 1
@@ -229,6 +445,30 @@
       "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7546ec2f_8ea7c4b5",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-06T09:02:50Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. Done.",
+      "parentUuid": "244597b0_22142a97",
+      "range": {
+        "startLine": 92,
+        "startChar": 33,
+        "endLine": 92,
+        "endChar": 0
+      },
+      "revId": "026e57b41329baaba66a043af152aad7c3fdaf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
