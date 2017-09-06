@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5df79951_6a6294ee",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-sandboxed-iframe.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-06T04:27:54Z",
+      "side": 1,
+      "message": "Okay, I\u0027ll change it!",
+      "parentUuid": "df2a40bb_179b85d1",
+      "revId": "2614855ae799dfe07de67f5750231b714a966e43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c17fcfc5_f6021a91",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-sandboxed-iframe.html",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "2614855ae799dfe07de67f5750231b714a966e43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f05c28_aeafdb7d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-sandboxed-iframe.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-06T04:27:54Z",
+      "side": 1,
+      "message": "That\u0027s a good idea! I think I\u0027ll change it on all related CL\u0027s. Let me know if it looks all right after!",
+      "parentUuid": "c17fcfc5_f6021a91",
+      "revId": "2614855ae799dfe07de67f5750231b714a966e43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
