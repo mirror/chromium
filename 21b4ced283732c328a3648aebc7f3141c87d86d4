@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3158cb23_9cc95760",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-09-06T07:42:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd4f80f1_030da11e",
+      "revId": "21b4ced283732c328a3648aebc7f3141c87d86d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6be4b237_91ac5156",
         "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-05T15:37:13Z",
       "side": 1,
       "message": "nit: this.enableEventProcessing(false) ? here and in this file",
+      "range": {
+        "startLine": 432,
+        "startChar": 4,
+        "endLine": 432,
+        "endChar": 24
+      },
+      "revId": "21b4ced283732c328a3648aebc7f3141c87d86d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032109d7_498551bb",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-09-06T07:42:55Z",
+      "side": 1,
+      "message": "I\u0027d rather not do that:\n- My understanding is that JS constructors should initialize member variables. Calling a function that does it implicitly feels out of place.\n- For symmetry, I\u0027d also need \n    if (!this.isEventProcessingEnabled())\n  instead of\n    if (!this.process_events_)\n  and it seems to add unnecessary complexity.",
+      "parentUuid": "6be4b237_91ac5156",
       "range": {
         "startLine": 432,
         "startChar": 4,
@@ -62,6 +104,30 @@
       "revId": "21b4ced283732c328a3648aebc7f3141c87d86d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7966ecb_325843cc",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-09-06T07:42:55Z",
+      "side": 1,
+      "message": "Done. Not needed anymore. This was needed to verify the assumption that onErrorOccurred was triggered without URLs being set, but that can\u0027t happen anymore since event processing and setting URLs is now tied together.",
+      "parentUuid": "507d1c12_7fde6977",
+      "range": {
+        "startLine": 447,
+        "startChar": 4,
+        "endLine": 447,
+        "endChar": 66
+      },
+      "revId": "21b4ced283732c328a3648aebc7f3141c87d86d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
