@@ -12,6 +12,7 @@
 #include "base/path_service.h"
 #include "base/strings/string_piece.h"
 #include "build/build_config.h"
+#include "ui/base/resource/resource_bundle.h"
 
 #if defined(OS_ANDROID)
 #include "base/android/apk_assets.h"
@@ -46,6 +47,9 @@ TestContentClient::TestContentClient()
         FILE_PATH_LITERAL("content_shell.pak"));
     data_pack_.LoadFromPath(content_shell_pack_path);
   }
+
+  if (!ui::ResourceBundle::HasSharedInstance())
+    ui::ResourceBundle::InitSharedInstanceWithPakPath(content_shell_pack_path);
 }
 
 TestContentClient::~TestContentClient() {
