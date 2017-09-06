@@ -264,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "2b7fcb62_3b5dd540",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T21:05:35Z",
+      "side": 1,
+      "message": "I think it\u0027s probably fine to change it, but if you\u0027re worried about it I\u0027m happy to look at a screenshot and give another opinion :)",
+      "parentUuid": "0866e3d8_bdca2e59",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f57fea23_28ca5ba8",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 14
@@ -369,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "54316a8d_509a217b",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T21:05:35Z",
+      "side": 1,
+      "message": "Ah right, I forgot about GetWindowTitle().\n\nAnnoying that it\u0027s only called when we\u0027re showing a close button, but not worth mucking with that now.",
+      "parentUuid": "68521038_62547fb3",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aff70912_2a001dc7",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 14
@@ -468,6 +504,24 @@
       "side": 1,
       "message": "There are cases where this container view would then be empty. In that case, this function should return nullptr. I suppose the container could always be created then later destroyed if it has no child views... or always return the container that would then be empty. I\u0027m concerned that an empty view might behave oddly and merely push the complexity around.",
       "parentUuid": "5ff0372b_9c4131eb",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "965eef00_c3937b9b",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T21:05:35Z",
+      "side": 1,
+      "message": "I think an empty view would probably work fine (which was my thought when originally suggesting this).  But as you note, another route would be something like:\n\n  auto container \u003d base::MakeUnique\u003cviews::View\u003e();\n  ... maybe add children\n  if (container-\u003echild_count() \u003d\u003d 0)\n    container.reset();\n  return container.get();\n\nThis still seems simpler than all the conditionals below.\n\nI suppose Yet Another Way would be a helper function that returns a vector\u003cView*\u003e of everything to go in the extra view.  Then here we either return nullptr, return vector.front(), or create a container and add all children to it, depending on whether the vector has 0, 1, or 2 elements.",
+      "parentUuid": "2ae6b93f_20b4b199",
       "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
