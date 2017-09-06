@@ -69,6 +69,24 @@
       "revId": "47d536a25e66f90ee1c6a78aea9227e789300a54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6539421_13efa6d6",
+        "filename": "extensions/shell/installer/linux/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-06T22:00:38Z",
+      "side": 1,
+      "message": "I have an open CL that pulls in some of the changes to allow parallel builds and also deletes their expected_deps file:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/653839",
+      "parentUuid": "1032027f_2d31e134",
+      "revId": "47d536a25e66f90ee1c6a78aea9227e789300a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
