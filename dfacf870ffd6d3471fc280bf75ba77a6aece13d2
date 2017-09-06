@@ -175,6 +175,24 @@
       "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c252ce38_65318102",
+        "filename": "content/public/android/java/res/menu/select_action_menu.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-06T19:31:21Z",
+      "side": 1,
+      "message": "Thanks for addressing this, I didn\u0027t aware of the existence of tools:targetApi.\n\nWhen running on below-O devices, the resource id is actually pointing to a wrong resource, but we removed this menu item on below-O, so we won\u0027t see it.\n\nFor more info, I had a discussion here b/37164197.",
+      "parentUuid": "20d91097_2bd78b05",
+      "revId": "dfacf870ffd6d3471fc280bf75ba77a6aece13d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
