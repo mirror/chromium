@@ -142,6 +142,30 @@
       "revId": "6a8189147b146d72e91e10cca7f7f432dc42ed2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe6d787_2c9fb059",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2386,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-09-06T10:24:48Z",
+      "side": 1,
+      "message": "How can I verify if there\u0027s an extra resize happening or not? I added logging in a few places and moving this onShow() doesn\u0027t appear to affect the calls (in number or sizing values) to any of ContentViewCore::WasResized, RenderWidgetHostImpl::WasResized or WebViewImpl::ResizeVisualViewport when entering reader mode.\n\nHaving the onShow() come after setContentViewCore() makes this consistent with everywhere else that initialises tabs, everywhere else we attach TabHelpers before dispatching WebContentsObserver::WasShown() and as such observing WasShown()/WasHidden() mostly lets us respond to the visibility of a tab, except for this case where we don\u0027t get the initial WasShown().",
+      "parentUuid": "7841131e_db975e4f",
+      "range": {
+        "startLine": 2386,
+        "startChar": 8,
+        "endLine": 2386,
+        "endChar": 26
+      },
+      "revId": "6a8189147b146d72e91e10cca7f7f432dc42ed2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
