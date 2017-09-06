@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c70cf699_9ed8ec1c",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T21:20:32Z",
+      "side": 1,
+      "message": "Do you need to add .action() on each line? Wouldn\u0027t the constructor that takes ThrottleAction be used to do a type conversion and the result compared properly? If you look at nick@\u0027s CL, there are no explicit calls to .action().",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac84a1f8_7d66621f",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T21:20:32Z",
+      "side": 1,
+      "message": "Empty line before the comment here and the other test cases.",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b8dd48_ef62e28c",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T21:20:32Z",
+      "side": 1,
+      "message": "nick@\u0027s test also has:\n\nEXPECT_NE(NavigationThrottle::ThrottleCheckResult(NavigationThrottle::BLOCK_REQUEST), callback_result());\n\nThis ensures that the operator overloads work correctly.",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2668df_3351a1e7",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T21:20:32Z",
+      "side": 1,
+      "message": "Put the error code checks before the HTML, as that is the order you have them in the struct, so it is easier to follow - action, error code, html.",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac16aa80_3c469d9a",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T21:20:32Z",
+      "side": 1,
+      "message": "What about test without HTML for the response?",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "797a2d11_3eb54031",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T21:20:32Z",
+      "side": 1,
+      "message": "nick@\u0027s CL had a bunch of DCHECKs added to these codepaths. Is there a reason you didn\u0027t copy them over?",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0130f712_99ee07a0",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T21:20:32Z",
+      "side": 1,
+      "message": "Any reason why the rest of the comment wasn\u0027t copied over?",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377529a9_60c2680f",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T21:20:32Z",
+      "side": 1,
+      "message": "Why not keep the constexpr?",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987fbb5a_6ae68fc1",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T21:20:32Z",
+      "side": 1,
+      "message": "nick@\u0027s CL also has a test only operator\u003d\u003d that allows ThrottleCheckResult to be used in EXPECT_* type macros.",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9114b41c_c6613193",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-06T21:20:32Z",
+      "side": 1,
+      "message": "The result now carries the error code, so no need for this switch statement anymore.",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
