@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ab9ad2d_f77b5895",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 2328,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-06T16:13:08Z",
+      "side": 1,
+      "message": "nit:this",
+      "range": {
+        "startLine": 2328,
+        "startChar": 18,
+        "endLine": 2328,
+        "endChar": 22
+      },
+      "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6136b6c1_15f0c926",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 2341,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-06T16:13:08Z",
+      "side": 1,
+      "message": "can you keep the old comment for this test",
+      "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2763628_4a10d6a5",
+        "filename": "extensions/common/api/virtual_keyboard.idl",
+        "patchSetId": 37
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-06T16:13:08Z",
+      "side": 1,
+      "message": "63?",
+      "range": {
+        "startLine": 15,
+        "startChar": 24,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44fd96e7_48035532",
+        "filename": "extensions/test/data/api_test/virtual_keyboard/test.js",
+        "patchSetId": 37
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-06T16:13:08Z",
+      "side": 1,
+      "message": "can you have this return the list of enabled features, and verify the list matches the expectations?",
+      "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e70324_8e627511",
+        "filename": "extensions/test/data/api_test/virtual_keyboard/test.js",
+        "patchSetId": 37
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-06T16:13:08Z",
+      "side": 1,
+      "message": "maybe add a test with only subset of avaialble values defined",
+      "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
