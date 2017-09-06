@@ -32,7 +32,9 @@ class ScopedBlockingCallTest : public testing::Test {
     internal::SetBlockingObserverForCurrentThread(&observer_);
   }
 
-  ~ScopedBlockingCallTest() { internal::ClearBlockingObserverForTesting(); }
+  ~ScopedBlockingCallTest() {
+    internal::ClearBlockingObserverForCurrentThread();
+  }
 
   testing::StrictMock<MockBlockingObserver> observer_;
 
