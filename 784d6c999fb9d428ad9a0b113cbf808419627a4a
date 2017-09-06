@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "39f62488_32c7c649",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-06T23:50:43Z",
+      "side": 1,
+      "message": "Yes, for sure! For now, the double notification due to differences in tags from notificationManager.notify and startForeground hasn\u0027t been resolved on the Android notification side so will keep the code this way instead.",
+      "parentUuid": "037942e8_004481f2",
+      "range": {
+        "startLine": 237,
+        "startChar": 8,
+        "endLine": 237,
+        "endChar": 74
+      },
+      "revId": "784d6c999fb9d428ad9a0b113cbf808419627a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9e43fa0_d44303f1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/SystemDownloadNotifier.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "784d6c999fb9d428ad9a0b113cbf808419627a4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71c56cc_647028f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/SystemDownloadNotifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-06T23:50:43Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e9e43fa0_d44303f1",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 77
+      },
+      "revId": "784d6c999fb9d428ad9a0b113cbf808419627a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
