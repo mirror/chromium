@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca289f73_d6db613c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-06T18:00:35Z",
+      "side": 1,
+      "message": "ChromeActivity#existFullscreenIfShowing() checks for persistent fullscreen mode and a contentVideoView. I suspect both checks are needed (although I\u0027m not positive).\n\nPerhaps we should re-order the checks in ChromeActivity rather than returning false here? Or we could expose ChromeTabbedActivity#isFullscreenVideoPlaying() and check that here as well.",
+      "range": {
+        "startLine": 533,
+        "startChar": 8,
+        "endLine": 533,
+        "endChar": 93
+      },
+      "revId": "827b3037ec9629ba26ba8b305f18a7cfcda22065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
