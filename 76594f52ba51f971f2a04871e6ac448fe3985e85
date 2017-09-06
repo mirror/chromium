@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "bacac688_3ea60eb5",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-06T19:42:37Z",
+      "side": 1,
+      "message": "Yeah, I believe so. I took this name from the proposal, unfortunately it doesn\u0027t give further information: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4279.html",
+      "parentUuid": "8893a7df_548e7c28",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 48
+      },
+      "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dcc63b2_b9010f21",
         "filename": "base/containers/flat_map.h",
         "patchSetId": 2
@@ -161,6 +185,24 @@
     },
     {
       "key": {
+        "uuid": "5c655995_bf29dacc",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-06T19:42:37Z",
+      "side": 1,
+      "message": "This wouldn\u0027t work currently as there is no appropriate version of |insert|. The main problem with the current |insert(value_type\u0026\u0026)| is that it unconditionally moves from the argument, even if insertion does not happen due to an already existing key. The main point of try_emplace is it to solve this problem. insert_or_assign could actually be implemented in terms of try_emplace, where you only assign if the returned pair contains false as it\u0027s second member.\n\nWhen looking up what version of insert is implemented, I realized we are missing the C++11 version\n\n  template\u003cclass P\u003e\n  std::pair\u003citerator,bool\u003e insert( P\u0026\u0026 value );\n\nin flat_tree. Using this (and probably generalizing GetKeyFromValuePairFirst) I suppose we *could* implement it in such a way that insert does not move from the value if the key is already present. This idea was explored in the preceding proposals:\n- http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3873.html\n- http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4006.html",
+      "parentUuid": "3b1df512_d614ad12",
+      "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d0464dd_b2bf0b99",
         "filename": "base/containers/flat_map.h",
         "patchSetId": 2
@@ -172,6 +214,24 @@
       "writtenOn": "2017-09-06T17:55:03Z",
       "side": 1,
       "message": "Just pointing out that this overload is always preferred to the first one and you always do move.",
+      "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3508481_22eb8674",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-06T19:42:37Z",
+      "side": 1,
+      "message": "Ha, that is interesting. I figured using Key\u0026\u0026 or key_type\u0026\u0026 wouldn\u0027t matter in theory, given that one is a typedef of the other. But if I understand you correctly, Key\u0026\u0026 is a forwarding reference, while key_type\u0026\u0026 would just be an rvalue reference, is this correct?",
+      "parentUuid": "4d0464dd_b2bf0b99",
       "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -261,6 +321,30 @@
       "side": 1,
       "message": "1) forwarding.\n2) plz be consistent val vs obj. I\u0027d suggest obj since val corelates better with value_type wich is a pair.\n\n2)\nI think that using hint for assign is important, that\u0027s the main point of this method.\nHow about?\n\nif ((hint \u003d\u003d tree::begin() || tree::key_comp()(std::prev(hint)-\u003efirst, key))) {\n  if (hint \u003d\u003d tree::end() || tree::key_comp(key, hint-\u003efirst))\n    return tree::unsafe_emplace(hint, std::forward\u003cKey\u003e(key), std::forward\u003cM\u003e(val));\n  if (!tree::key_comp(hint-\u003efirst, key)) {\n    hint-\u003esecond \u003d std::forward\u003cM\u003e(val);\n    return hint;\n  }\n}\n\nreturn insert_or_assign(std::forward\u003cKey\u003e(key), std::forward\u003cM\u003e(val));",
       "parentUuid": "fbb34802_9534f000",
+      "range": {
+        "startLine": 367,
+        "startChar": 0,
+        "endLine": 368,
+        "endChar": 79
+      },
+      "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65542aa8_fdf7638e",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-06T19:42:37Z",
+      "side": 1,
+      "message": "1) s/Key/key_type/, correct?\n2) This is really neat, I like it a lot!",
+      "parentUuid": "afee7186_deacf228",
       "range": {
         "startLine": 367,
         "startChar": 0,
