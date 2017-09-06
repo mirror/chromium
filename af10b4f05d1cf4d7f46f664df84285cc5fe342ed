@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38f81327_38f740ea",
+        "filename": "chrome/browser/extensions/unpacked_installer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-06T22:48:53Z",
+      "side": 1,
+      "message": "I like this one better. We should separate this out to a CL since this is \"sort of\" orthogonal change and would make your current CL look better.",
+      "range": {
+        "startLine": 314,
+        "startChar": 0,
+        "endLine": 314,
+        "endChar": 46
+      },
+      "revId": "af10b4f05d1cf4d7f46f664df84285cc5fe342ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae29bf42_7a495d70",
+        "filename": "extensions/common/file_util.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-06T22:48:53Z",
+      "side": 1,
+      "message": "nit: here and in other places: either \"_metadata directory\" (easy to read) or kMetadataFolder (actual reference to variable).",
+      "range": {
+        "startLine": 159,
+        "startChar": 7,
+        "endLine": 159,
+        "endChar": 23
+      },
+      "revId": "af10b4f05d1cf4d7f46f664df84285cc5fe342ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e0547d_56a6bd36",
+        "filename": "extensions/common/file_util.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-06T22:48:53Z",
+      "side": 1,
+      "message": "GetReservedMetadataFilePaths",
+      "range": {
+        "startLine": 160,
+        "startChar": 28,
+        "endLine": 160,
+        "endChar": 55
+      },
+      "revId": "af10b4f05d1cf4d7f46f664df84285cc5fe342ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

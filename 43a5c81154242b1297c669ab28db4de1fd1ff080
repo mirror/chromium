@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3940c614_55e4a583",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-06T22:48:53Z",
+      "side": 0,
+      "message": "Are you removing this test because we can\u0027t certainly say which of _badfolder/_metadata warning we\u0027ll get?\nIn that case we should change this test to look for error with either _badfolder OR _metadata.",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 69
+      },
+      "revId": "43a5c81154242b1297c669ab28db4de1fd1ff080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
