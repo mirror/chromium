@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "570ad770_b8ea9637",
+        "filename": "content/browser/indexed_db/leveldb/leveldb_iterator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-06T20:15:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c6273fce_8533c026",
+      "range": {
+        "startLine": 45,
+        "startChar": 17,
+        "endLine": 45,
+        "endChar": 23
+      },
+      "revId": "0a09effb18f8c340f88ec103cfec9039cf95f6ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "023c0d95_4aab7d8b",
         "filename": "content/browser/indexed_db/leveldb/leveldb_iterator_impl.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ffa67476_de1ecba6",
+        "filename": "content/browser/indexed_db/leveldb/leveldb_iterator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-06T20:15:54Z",
+      "side": 1,
+      "message": "key/value are both leveldb::Slice instances which don\u0027t own the data. I think the key/value data is owned by the internal iterator which doesn\u0027t use std::string instances.",
+      "parentUuid": "023c0d95_4aab7d8b",
+      "range": {
+        "startLine": 62,
+        "startChar": 34,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "0a09effb18f8c340f88ec103cfec9039cf95f6ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79085e25_10d5db58",
         "filename": "content/browser/indexed_db/leveldb/leveldb_iterator_impl.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-01T16:48:24Z",
       "side": 1,
       "message": "We need an allocation edge to malloc here.",
+      "range": {
+        "startLine": 186,
+        "startChar": 22,
+        "endLine": 186,
+        "endChar": 23
+      },
+      "revId": "0a09effb18f8c340f88ec103cfec9039cf95f6ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a13d192_bf15fa16",
+        "filename": "content/browser/indexed_db/leveldb/leveldb_iterator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-06T20:15:54Z",
+      "side": 1,
+      "message": "Not sure I understand. Are you talking about using AddOwnershipEdge?",
+      "parentUuid": "79085e25_10d5db58",
       "range": {
         "startLine": 186,
         "startChar": 22,
