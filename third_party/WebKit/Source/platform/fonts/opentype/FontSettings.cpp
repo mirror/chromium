@@ -4,6 +4,7 @@
 
 #include "platform/fonts/opentype/FontSettings.h"
 
+#include "platform/fonts/Djb2Hashing.h"
 #include "platform/wtf/HashFunctions.h"
 #include "platform/wtf/StringHasher.h"
 #include "platform/wtf/text/AtomicStringHash.h"
@@ -15,14 +16,6 @@ uint32_t AtomicStringToFourByteTag(AtomicString tag) {
   DCHECK_EQ(tag.length(), 4u);
   return (((tag[0]) << 24) | ((tag[1]) << 16) | ((tag[2]) << 8) | (tag[3]));
 }
-
-static inline void AddToHash(unsigned& hash, unsigned key) {
-  hash = ((hash << 5) + hash) + key;  // Djb2
-};
-
-static inline void AddFloatToHash(unsigned& hash, float value) {
-  AddToHash(hash, WTF::FloatHash<float>::GetHash(value));
-};
 
 unsigned FontVariationSettings::GetHash() const {
   unsigned computed_hash = size() ? 5381 : 0;

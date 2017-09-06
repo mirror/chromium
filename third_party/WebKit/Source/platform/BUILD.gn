@@ -684,6 +684,7 @@ component("platform") {
     "fonts/AlternateFontFamily.h",
     "fonts/CharacterRange.h",
     "fonts/CustomFontData.h",
+    "fonts/Djb2Hashing.h",
     "fonts/FallbackListCompositeKey.h",
     "fonts/Font.cpp",
     "fonts/Font.h",

@@ -31,6 +31,7 @@
 
 #include "platform/Language.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/fonts/Djb2Hashing.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/StringHasher.h"
 #include "platform/wtf/text/AtomicStringHash.h"
@@ -267,14 +268,6 @@ void FontDescription::UpdateTypesettingFeatures() {
 
   if (VariantCaps() != kCapsNormal)
     fields_.typesetting_features_ |= blink::kCaps;
-}
-
-static inline void AddToHash(unsigned& hash, unsigned key) {
-  hash = ((hash << 5) + hash) + key;  // Djb2
-}
-
-static inline void AddFloatToHash(unsigned& hash, float value) {
-  AddToHash(hash, StringHasher::HashMemory(&value, sizeof(value)));
 }
 
 unsigned FontDescription::StyleHashWithoutFamilyList() const {
