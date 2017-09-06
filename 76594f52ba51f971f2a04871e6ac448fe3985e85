@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0ce994a1_45c5701c",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-06T08:46:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "67089adf_ed7a244f",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 48
+      },
+      "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dcc63b2_b9010f21",
         "filename": "base/containers/flat_map.h",
         "patchSetId": 2
@@ -60,6 +84,30 @@
       "writtenOn": "2017-09-05T20:58:27Z",
       "side": 1,
       "message": "In the other code I was using \"Key\" which was why this wasn\u0027t required. I\u0027m not actually sure which is better, but we should be consistent.\n\nIf we do define this, we should make key_type \u003d typename tree::key_type since if they diverge very bad things will happen!",
+      "range": {
+        "startLine": 172,
+        "startChar": 8,
+        "endLine": 172,
+        "endChar": 16
+      },
+      "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f88031_1d32e129",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-06T08:46:06Z",
+      "side": 1,
+      "message": "Agreed, using key_type \u003d typename tree::key_type sounds good. Currently we are in an inconsistent state with regard to template params and typedefs (e.g. operator[] in this file), which I would like to fix. I feel using the typedefs is more idiomatic, as this is what the C++ standard and library implementations such as libc++ do.",
+      "parentUuid": "0dcc63b2_b9010f21",
       "range": {
         "startLine": 172,
         "startChar": 8,
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "fbb34802_9534f000",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-06T08:46:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "640ec463_4780bd34",
+      "range": {
+        "startLine": 367,
+        "startChar": 0,
+        "endLine": 368,
+        "endChar": 79
+      },
+      "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44a88aa6_220fd5db",
         "filename": "base/containers/flat_map.h",
         "patchSetId": 2
@@ -139,6 +211,30 @@
       "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b02cc5_d40591c8",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-06T08:46:06Z",
+      "side": 1,
+      "message": "It is indeed, luckily this makes call sites much simpler (also this behavior is mandated by the standard). All except one usage of std::piecewise_construct in the codebase could be removed if callers were able to use std::map::try_emplace instead of std::map::emplace.",
+      "parentUuid": "44a88aa6_220fd5db",
+      "range": {
+        "startLine": 419,
+        "startChar": 19,
+        "endLine": 419,
+        "endChar": 38
+      },
+      "revId": "76594f52ba51f971f2a04871e6ac448fe3985e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
