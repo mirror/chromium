@@ -34,16 +34,21 @@ Persistence.FileSystemMapping = class extends Common.Object {
    */
   constructor(fileSystemManager) {
     super();
+    this._fileSystemManager = fileSystemManager;
     this._fileSystemMappingSetting = Common.settings.createLocalSetting('fileSystemMapping', {});
     /** @type {!Object<string, !Persistence.FileSystemMapping.Entry>} */
     this._mappingForURLPrefix = {};
     /** @type {!Array<string>} */
     this._urlPrefixes = [];
 
+    this._enabledFileSystemPathsForInterceptionSetting =
+        Common.settings.createSetting('Persistence.enabledFileSystemPathsForInterception', {});
+    this._enabledFileSystemPathsForInterceptionSetting.addChangeListener(this._enabledInterceptionsChanged, this);
     /** @type {!Object.<string, !Array.<!Persistence.FileSystemMapping.Entry>>} */
     this._fileSystemMappings = {};
     this._loadFromSettings();
 
+    /** @type {!Array<!Common.EventTarget.EventDescriptor>} */
     this._eventListeners = [
       fileSystemManager.addEventListener(
           Persistence.IsolatedFileSystemManager.Events.FileSystemAdded, this._fileSystemAdded, this),
@@ -90,11 +95,33 @@ Persistence.FileSystemMapping = class extends Common.Object {
         var savedEntry = savedFileSystemMappings[i];
         var entry =
             new Persistence.FileSystemMapping.Entry(fileSystemPath, savedEntry.urlPrefix, savedEntry.pathPrefix);
+        var interceptingFileSystemPaths = this._enabledFileSystemPathsForInterceptionSetting.get();
+        if (interceptingFileSystemPaths[fileSystemPath])
+          this._addInterceptorForEntry(entry);
         fileSystemMappings.push(entry);
       }
     }
 
     this._rebuildIndexes();
+  }
+
+  _enabledInterceptionsChanged() {
+    var enabledFileSystems = this._enabledFileSystemPathsForInterceptionSetting.get();
+    for (var fileSystemPath in this._fileSystemMappings) {
+      var enabled = enabledFileSystems[fileSystemPath];
+      var mappings = this._fileSystemMappings[fileSystemPath];
+      for (var entry of mappings) {
+        if (!enabled) {
+          this._disposeInterceptorFromEntry(entry);
+          continue;
+        }
+        var interceptor = entry[Persistence.FileSystemMapping._interceptorForEntrySymbol];
+        if (!interceptor)
+          this._addInterceptorForEntry(entry);
+        else
+          interceptor.setPatterns(new Set([entry.urlPrefix]));
+      }
+    }
   }
 
   _saveToSettings() {
@@ -135,6 +162,7 @@ Persistence.FileSystemMapping = class extends Common.Object {
   _removeFileSystemPath(fileSystemPath) {
     if (!this._fileSystemMappings[fileSystemPath])
       return;
+    this._fileSystemMappings[fileSystemPath].forEach(this._disposeInterceptorFromEntry.bind(this));
     delete this._fileSystemMappings[fileSystemPath];
     this._rebuildIndexes();
     this._saveToSettings();
@@ -163,6 +191,9 @@ Persistence.FileSystemMapping = class extends Common.Object {
    */
   _innerAddFileMapping(fileSystemPath, urlPrefix, pathPrefix) {
     var entry = new Persistence.FileSystemMapping.Entry(fileSystemPath, urlPrefix, pathPrefix);
+    var interceptingFileSystemPaths = this._enabledFileSystemPathsForInterceptionSetting.get();
+    if (interceptingFileSystemPaths[fileSystemPath])
+      this._addInterceptorForEntry(entry);
     this._fileSystemMappings[fileSystemPath].push(entry);
     this._rebuildIndexes();
     this.dispatchEventToListeners(Persistence.FileSystemMapping.Events.FileMappingAdded, entry);
@@ -177,6 +208,7 @@ Persistence.FileSystemMapping = class extends Common.Object {
     var entry = this._configurableMappingEntryForPathPrefix(fileSystemPath, pathPrefix);
     if (!entry)
       return;
+    this._disposeInterceptorFromEntry(entry);
     this._fileSystemMappings[fileSystemPath].remove(entry);
     this._rebuildIndexes();
     this._saveToSettings();
@@ -282,6 +314,7 @@ Persistence.FileSystemMapping = class extends Common.Object {
     var entry = this._mappingEntryForURL(url);
     if (!entry)
       return;
+    this._disposeInterceptorFromEntry(entry);
     this._fileSystemMappings[entry.fileSystemPath].remove(entry);
     this._saveToSettings();
   }
@@ -312,11 +345,36 @@ Persistence.FileSystemMapping = class extends Common.Object {
   }
 
   resetForTesting() {
+    for (var mapping of Object.values(this._fileSystemMappings))
+      mapping.forEach(this._disposeInterceptorFromEntry.bind(this));
     this._fileSystemMappings = {};
   }
 
+  /**
+   * @param {!Persistence.FileSystemMapping.Entry} entry
+   */
+  _addInterceptorForEntry(entry) {
+    if (!Runtime.experiments.isEnabled('persistence2'))
+      return;
+    entry[Persistence.FileSystemMapping._interceptorForEntrySymbol] =
+        new Persistence.FileSystemMapping._Interceptor(entry, this._fileSystemManager);
+  }
+
+  /**
+   * @param {!Persistence.FileSystemMapping.Entry} entry
+   */
+  _disposeInterceptorFromEntry(entry) {
+    var interceptor = entry[Persistence.FileSystemMapping._interceptorForEntrySymbol];
+    if (interceptor)
+      interceptor.setEnabled(false);
+    delete entry[Persistence.FileSystemMapping._interceptorForEntrySymbol];
+  }
+
   dispose() {
+    for (var mapping of Object.values(this._fileSystemMappings))
+      mapping.forEach(this._disposeInterceptorFromEntry.bind(this));
     Common.EventTarget.removeEventListeners(this._eventListeners);
+    this._enabledFileSystemPathsForInterceptionSetting.removeChangeListener(this._enabledInterceptionsChanged, this);
   }
 };
 
@@ -342,7 +400,53 @@ Persistence.FileSystemMapping.Entry = class {
   }
 };
 
+Persistence.FileSystemMapping._interceptorForEntrySymbol = Symbol('InterceptorForFileEntry');
+
 /**
  * @type {!Persistence.FileSystemMapping}
  */
 Persistence.fileSystemMapping;
+
+Persistence.FileSystemMapping._Interceptor = class extends SDK.RequestInterceptor {
+  /**
+   * @param {!Persistence.FileSystemMapping.Entry} entry
+   * @param {!Persistence.IsolatedFileSystemManager} fileSystemManager
+   */
+  constructor(entry, fileSystemManager) {
+    var urlPrefix = entry.urlPrefix;
+    if (urlPrefix.endsWith('/'))
+      urlPrefix = urlPrefix.substr(0, urlPrefix.length - 1);
+    super(true, new Set([urlPrefix + entry.pathPrefix + '*']));
+    this._entry = entry;
+    this._urlPrefix = urlPrefix;
+    this._fileSystemManager = fileSystemManager;
+  }
+
+  /**
+   * @override
+   * @param {!SDK.InterceptedRequest} interceptedRequest
+   * @return {!Promise}
+   */
+  async handle(interceptedRequest) {
+    var isolatedFilesystem = this._fileSystemManager.fileSystem(this._entry.fileSystemPath);
+    if (!isolatedFilesystem)
+      return;
+
+    var url = interceptedRequest.request.url;
+    var charCount = SDK.RequestInterceptor.patternMatchedLength(this._urlPrefix + '*', url);
+    if (charCount === -1)
+      return;
+
+    var relativePath = url.substr(charCount);
+    if (relativePath.endsWith('/'))
+      relativePath = relativePath + 'index.html';
+
+    var content = await isolatedFilesystem.requestFileContentPromise(relativePath);
+    if (content !== null) {
+      var queryParamsIndex = url.indexOf('?');
+      if (queryParamsIndex !== -1)
+        url = url.substr(0, queryParamsIndex);
+      interceptedRequest.continueRequestWithContent(content, Common.ResourceType.mimeFromURL(url) || 'text/x-unknown');
+    }
+  }
+};
