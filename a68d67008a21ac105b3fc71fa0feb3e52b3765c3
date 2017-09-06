@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0289e89c_c202fbe2",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-06T13:33:11Z",
+      "side": 1,
+      "message": "Makes sense to mention in a comment here what this interface is modeled after.",
+      "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e73c4fd_fb316ffb",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-06T13:33:11Z",
+      "side": 1,
+      "message": "match the keymaster names?",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8498c8c5_1a54909b",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-06T13:33:11Z",
+      "side": 1,
+      "message": "I think it\u0027d make more sense to have separate union fields for ALL_USERS and NO_AUTH_REQUIRED so we maintain a 1:1 keymaster tag vs. union field mapping.",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 13
+      },
+      "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b723ed_1d5c2fb6",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-06T13:33:11Z",
+      "side": 1,
+      "message": "I think these to structs actually don\u0027t correspond to keymaster types - would it make sense to separate the interface here into the keymaster part and the stuff we for Chrome OS? In a hypothetical world where Chrome OS takes over the entire keymaster implementation for ARC++ that\u0027d be helpful since we\u0027d probably only need the keymaster stuff and can drop everything else at that point.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 2
+      },
+      "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3300cb8c_76ff884c",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-06T13:33:11Z",
+      "side": 1,
+      "message": "Might make sense to introduce a name for this type so we can name it KeyParamSet to match the keymaster name?",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 14
+      },
+      "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43803413_657f2243",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-06T13:33:11Z",
+      "side": 1,
+      "message": "Hm, this deviates from the keymaster version again, presumably because keymaster knows the algorithm, digest and padding parameters from the encoded key? Can we do something similar in an effort to not deviate from the keymaster interface too much?",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 18
+      },
+      "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1e9cd6_28dee7a6",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-06T13:33:11Z",
+      "side": 1,
+      "message": "This is called \"handle\" in the keymaster message definitions. Use the same name here and below?",
+      "range": {
+        "startLine": 116,
+        "startChar": 9,
+        "endLine": 116,
+        "endChar": 19
+      },
+      "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f0c2a0_d6f9fc47",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-06T13:33:11Z",
+      "side": 1,
+      "message": "nit: remove trailing space",
+      "range": {
+        "startLine": 169,
+        "startChar": 71,
+        "endLine": 169,
+        "endChar": 72
+      },
+      "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e2582e_c28400bb",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-06T13:33:11Z",
+      "side": 1,
+      "message": "It looks like this operation is the only one that doesn\u0027t correspond to the keymaster interface. Add a comment to explain?",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 172,
+        "endChar": 18
+      },
+      "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d804faf_3e2782ff",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-06T13:33:11Z",
+      "side": 1,
+      "message": "Is there a good reason to use request and response structs as opposed to just listing parameters here?",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d362d8_9b5b0c00",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-06T13:33:11Z",
+      "side": 1,
+      "message": "This RPC (and the ones below) are suffixed \"Operation\" in the keymaster header, i.e. \"BeginOperation\", \"UpdateOperation\", \"FinishOperation\", \"AbortOperation\". Match the names?",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 7
+      },
+      "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
