@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ede1e2b_abc37a4c",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-06T07:48:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08ddc2a7_ddb583a4",
+      "range": {
+        "startLine": 50,
+        "startChar": 24,
+        "endLine": 50,
+        "endChar": 25
+      },
+      "revId": "cc73815fd7c9835a67f14b3c366e3cc2295f6007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c3792f5_9d412a52",
         "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "cc73815fd7c9835a67f14b3c366e3cc2295f6007",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2663fc66_1e7f2b78",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-06T07:48:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c3792f5_9d412a52",
+      "range": {
+        "startLine": 42,
+        "startChar": 30,
+        "endLine": 42,
+        "endChar": 31
+      },
+      "revId": "cc73815fd7c9835a67f14b3c366e3cc2295f6007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0e99e8d7_481acc73",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-06T07:48:44Z",
+      "side": 1,
+      "message": "I introduced TestIFrameActionDoesNotOpenAppWindow and InsertIFrame.",
+      "parentUuid": "61cec82e_9952184c",
+      "range": {
+        "startLine": 338,
+        "startChar": 15,
+        "endLine": 338,
+        "endChar": 28
+      },
+      "revId": "cc73815fd7c9835a67f14b3c366e3cc2295f6007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5d4ecda_3442c1d4",
         "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "cc73815fd7c9835a67f14b3c366e3cc2295f6007",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46be8d6e_9f0f5043",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-06T07:48:44Z",
+      "side": 1,
+      "message": "\u003e Why doesn\u0027t this use TestTabActionDoesNotOpenAppWindow like below?\n\u003e \n\nWe don\u0027t actually want to test this in this test; it\u0027s just the setup. What we want to test happens below. I ended up changing TestTabAction... to return false if there are any failures and called it in an ASSERT to signal that it\u0027s just setting up the real part of the test. \n\n\u003e Is the below a separate test case to the above? Or are these somehow related to one another?\n\nAre you referring to the AppUrlSelf test above or just the above statement? The AppUrlSelf test makes sure the app window is opened when navigating to the app\u0027s website. The above statement is just setup for this test. This is more like the test below.",
+      "parentUuid": "c5d4ecda_3442c1d4",
+      "range": {
+        "startLine": 425,
+        "startChar": 2,
+        "endLine": 425,
+        "endChar": 11
+      },
+      "revId": "cc73815fd7c9835a67f14b3c366e3cc2295f6007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
