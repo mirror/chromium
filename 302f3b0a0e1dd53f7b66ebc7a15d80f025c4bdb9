@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e105bc3d_54750e27",
+        "filename": "tools/perf/benchmarks/rasterize_and_record_micro.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-09-06T20:54:39Z",
+      "side": 1,
+      "message": "I considered renaming this to .static_top_25 but I think that has ramifications for other config files and it seems ok if we just switch to the static page set for now as a first step anyway.",
+      "range": {
+        "startLine": 58,
+        "startChar": 38,
+        "endLine": 58,
+        "endChar": 45
+      },
+      "revId": "302f3b0a0e1dd53f7b66ebc7a15d80f025c4bdb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673dc9b2_576db9aa",
+        "filename": "tools/perf/page_sets/static_top_25_pages.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-09-06T20:54:39Z",
+      "side": 1,
+      "message": "This is basically operational locally, however, many images show as broken even though they work when viewing the static html file locally in a browser, but not when serving through whatever proxy server telemetry is starting up to serve the static data files.\n\nInvestigating further seems like something we could do in a separate change.\n\nAs an example, try opening:\n\nfile:///.../tools/perf/page_sets/static_top_25/googleplus.html\n\nlocally, and then try running (with this patch):\n\n% ./tools/perf/run_benchmark --browser\u003dsystem rasterize_and_record_micro.top_25\n\nand watch the googleplus story when it comes up. Similar is the case for Amazon and many others.",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 21
+      },
+      "revId": "302f3b0a0e1dd53f7b66ebc7a15d80f025c4bdb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
