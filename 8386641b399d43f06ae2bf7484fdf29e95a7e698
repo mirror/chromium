@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7fadce00_378fb50e",
+        "filename": "chrome/browser/ui/browser_content_setting_bubble_model_delegate.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "553a46e2_ab642833",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86ae8c22_ae0fd7ad",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b24b3b_7c753b30",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86ae8c22_ae0fd7ad",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "df5acccc_63311a4c",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e75c652_cff3074d",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6653369_d1805782",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.h",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d2298f_2f31a58c",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6653369_d1805782",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "fc3220ab_96aa0298",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d071712e_f597db59",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bb49709_180072f9",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 14
@@ -118,6 +208,24 @@
       "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2793bc75_86e34f4c",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "It would have been more clear if it read \"When this function is called from the constructor, ...\"",
+      "parentUuid": "9bb49709_180072f9",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "0866e3d8_bdca2e59",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure how far we wanted to go in making non-Harmony mode changes. If this isn\u0027t deemed too jarring without the other Harmony changes, it would make sense.",
+      "parentUuid": "5a7f723d_e574a90d",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f57fea23_28ca5ba8",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 14
@@ -152,6 +278,24 @@
       "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf8899fb_c6bc1898",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f57fea23_28ca5ba8",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "97b16853_c2dd0f3d",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a23d0234_0e91d94c",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aa1c349_80e0b962",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 14
@@ -186,6 +348,24 @@
       "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68521038_62547fb3",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "It does. It also shows a close [X] button. In order to get both, the title needs to be returned from GetWindowTitle(), which is only called when ShouldShowCloseButton() returns true.",
+      "parentUuid": "4aa1c349_80e0b962",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "d0052723_c6f56d43",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "I erred on the side of keeping non-Harmony mode unchanged. On balance, FILL makes more sense for both modes.\n\nDone.",
+      "parentUuid": "aff70912_2a001dc7",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37b8d1c4_38c2720e",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 14
@@ -220,6 +418,24 @@
       "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9093825_5475b3b9",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "37b8d1c4_38c2720e",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "2ae6b93f_20b4b199",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "There are cases where this container view would then be empty. In that case, this function should return nullptr. I suppose the container could always be created then later destroyed if it has no child views... or always return the container that would then be empty. I\u0027m concerned that an empty view might behave oddly and merely push the complexity around.",
+      "parentUuid": "5ff0372b_9c4131eb",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e212bb2_6cb87124",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 14
@@ -254,6 +488,24 @@
       "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f697ef_1b100d99",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "Correct. The \"Manage\" button is always on the left side of the dialog using the \"extra view\" feature of the DialogDelegate class.",
+      "parentUuid": "1e212bb2_6cb87124",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +526,24 @@
     },
     {
       "key": {
+        "uuid": "c8a2e1e5_153ed9ab",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6813e98e_656a81ed",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9c194c1_144dfbe7",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 14
@@ -291,6 +561,24 @@
     },
     {
       "key": {
+        "uuid": "36aef4eb_aa9649c5",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9c194c1_144dfbe7",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72461c87_dfa277c9",
         "filename": "chrome/browser/ui/views/location_bar/content_setting_bubble_dialog_browsertest.cc",
         "patchSetId": 14
@@ -305,6 +593,24 @@
       "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48baa7aa_69fd80f6",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_bubble_dialog_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-06T20:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72461c87_dfa277c9",
+      "revId": "8386641b399d43f06ae2bf7484fdf29e95a7e698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
