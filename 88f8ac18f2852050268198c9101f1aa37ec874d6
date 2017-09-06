@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "922bc763_160504d7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-06T01:50:58Z",
+      "side": 1,
+      "message": "Won\u0027t that mean we\u0027ll get two toggles in quick succession for non-synthetic clicks?",
+      "parentUuid": "63342448_bf934ad8",
+      "revId": "88f8ac18f2852050268198c9101f1aa37ec874d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "723d8bde_b005266d",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-06T00:36:59Z",
       "side": 1,
       "message": "This looks unused.",
+      "revId": "88f8ac18f2852050268198c9101f1aa37ec874d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d78ab2f_b6b3b215",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-06T01:50:58Z",
+      "side": 1,
+      "message": "It\u0027s used by setControls, below.",
+      "parentUuid": "723d8bde_b005266d",
       "revId": "88f8ac18f2852050268198c9101f1aa37ec874d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8b72bff1_852745d7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-06T01:50:58Z",
+      "side": 1,
+      "message": "The hidden text is so that it shows up for copy/paste. WDYT?",
+      "parentUuid": "24fb13b0_a9c02428",
+      "revId": "88f8ac18f2852050268198c9101f1aa37ec874d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66fb887a_6c8d87c8",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/spectrum.css",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-06T00:36:59Z",
       "side": 1,
       "message": "I\u0027d rather explicitly set outline\n\noutline: -webkit-focus-ring-color auto 3px;\n\nI\u0027ve also been putting :focus after data-keyboard-focus just to be safe.",
+      "revId": "88f8ac18f2852050268198c9101f1aa37ec874d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa0975e_4ca00f9d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/spectrum.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-06T01:50:58Z",
+      "side": 1,
+      "message": "Happy to add :focus, but why do you prefer explicitly setting outline? It seems like this avoids needing to keep the outline style in sync with the UA style.",
+      "parentUuid": "66fb887a_6c8d87c8",
       "revId": "88f8ac18f2852050268198c9101f1aa37ec874d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
