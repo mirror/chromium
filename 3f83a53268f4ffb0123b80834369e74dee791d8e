@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dba63e6b_d2cc14e7",
+        "filename": "chrome/browser/chrome_browser_main_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-06T21:48:05Z",
+      "side": 1,
+      "message": "nit: Refer to variables as |variable_name|",
+      "revId": "3f83a53268f4ffb0123b80834369e74dee791d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02198a91_59bb2a18",
+        "filename": "chrome/browser/chrome_browser_main_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-06T21:48:05Z",
+      "side": 1,
+      "message": "before accessing |g_browser_process| below when creating ChildProcessCrashObserver.",
+      "revId": "3f83a53268f4ffb0123b80834369e74dee791d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf352a00_13c662d7",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-06T21:48:05Z",
+      "side": 1,
+      "message": "Did you want some traits here?",
+      "range": {
+        "startLine": 53,
+        "startChar": 17,
+        "endLine": 53,
+        "endChar": 19
+      },
+      "revId": "3f83a53268f4ffb0123b80834369e74dee791d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
