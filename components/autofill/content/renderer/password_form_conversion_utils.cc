@@ -19,6 +19,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/autofill/content/renderer/form_autofill_util.h"
+#include "components/autofill/content/renderer/html_username_detection_classifier.h"
 #include "components/autofill/core/common/autofill_regex_constants.h"
 #include "components/autofill/core/common/autofill_regexes.h"
 #include "components/autofill/core/common/autofill_util.h"
@@ -521,6 +522,10 @@ bool GetPasswordForm(
     }
   }
 
+  // Call HTML username detection classifier
+  HTMLGetUsernameField(form.control_elements, password_form, username_element);
+
+  // Base heuristic
   WebInputElement password;
   WebInputElement new_password;
   WebInputElement confirmation_password;
@@ -636,6 +641,7 @@ bool GetPasswordForm(
       (number_of_non_empty_text_non_password_fields == 1 &&
        password_form->password_element.empty() &&
        !password_form->new_password_element.empty());
+
   return true;
 }
 
