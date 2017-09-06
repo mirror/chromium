@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9658a06b_91b581a7",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-06T12:44:18Z",
+      "side": 1,
+      "message": "What you\u0027re doing here is totally reasonable given the current UiElement API, but it makes me sad. In a previous CL, I\u0027d considered adding a SetVisibilityImmediately function, and this makes me think we should do that now. The code would then become:\n\n// Immediately hide the element.\nSetVisibleImmediately(false);\n\n// Fade it back in.\nSetVisible(true);\n\nI know it\u0027s a bit of a tangent, but could you please add the SetVisibleImmediately function while you\u0027re here?",
+      "revId": "0b55cf43265bdab85401ee30c93c0d99a8201403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93573804_1b6942bf",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-06T12:44:18Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "0b55cf43265bdab85401ee30c93c0d99a8201403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
