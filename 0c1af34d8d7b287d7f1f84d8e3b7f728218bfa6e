@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b0bd7c5_97f189ce",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-06T04:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b48013ca_17f535e9",
+      "revId": "0c1af34d8d7b287d7f1f84d8e3b7f728218bfa6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0df01613_f7326859",
         "filename": "media/gpu/vaapi_wrapper.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bcb828e9_b90ee140",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-06T04:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0df01613_f7326859",
+      "revId": "0c1af34d8d7b287d7f1f84d8e3b7f728218bfa6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af777ff8_eb58e79b",
         "filename": "media/gpu/vaapi_wrapper.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-06T04:08:44Z",
       "side": 1,
       "message": "Could we move this to LazyProfileInfos()? This way it should be printed only once (even though it likely is right now as well, since if this fails once, profiles are empty).",
+      "revId": "0c1af34d8d7b287d7f1f84d8e3b7f728218bfa6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc783a3b_9d3ec6af",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-06T04:56:09Z",
+      "side": 1,
+      "message": "IIUC VaInitialize() can also be called from another path (VaapiWrapper::Create()) so we would not cover all cases if moving this to LazyProfileInfos(). From a context point of view it also makes more sense to me to do it here (we set the environment variable right before calling the function that will be influenced by it). Finally we probably want the log to be noisy in case of failure, to provide an incentive to fix the core issue. Bug 752187 is about being less verbose only when there is no problem.",
+      "parentUuid": "af777ff8_eb58e79b",
       "revId": "0c1af34d8d7b287d7f1f84d8e3b7f728218bfa6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
