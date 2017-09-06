@@ -22,6 +22,30 @@
       "revId": "583c40ea8a5bfe2f582e81a97cfc916d4b81d156",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3cfa9a3_467f7298",
+        "filename": "content/common/sandbox_linux/sandbox_linux.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1163397
+      },
+      "writtenOn": "2017-09-06T04:35:56Z",
+      "side": 1,
+      "message": "Below calls from InitializeSandbox will send NULL argument\nhttps://cs.chromium.org/chromium/src/content/ppapi_plugin/ppapi_plugin_main.cc?rcl\u003d3d1dafe6de22865f9525143501e4aa44a9a56354\u0026l\u003d124\n\nhttps://cs.chromium.org/chromium/src/content/renderer/renderer_main_platform_delegate_linux.cc?rcl\u003d3d1dafe6de22865f9525143501e4aa44a9a56354\u0026l\u003d36\n\nModifying to const pointer.",
+      "parentUuid": "8494070d_a8f498ed",
+      "range": {
+        "startLine": 97,
+        "startChar": 32,
+        "endLine": 97,
+        "endChar": 61
+      },
+      "revId": "583c40ea8a5bfe2f582e81a97cfc916d4b81d156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
