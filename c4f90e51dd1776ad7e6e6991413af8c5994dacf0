@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feffb7d9_93504b11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-06T08:39:01Z",
+      "side": 1,
+      "message": "Replace Platform::Current() with TestingPlatformSupport (to call GetURLLoaderMockFactory)?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "c4f90e51dd1776ad7e6e6991413af8c5994dacf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f927e7_3c282960",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcherTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-06T08:39:01Z",
+      "side": 1,
+      "message": "I guess you gave up to replace this call in this CL.\nIt\u0027s fine, but could you restore the broken indent here before submitting this?",
+      "range": {
+        "startLine": 403,
+        "startChar": 4,
+        "endLine": 403,
+        "endChar": 23
+      },
+      "revId": "c4f90e51dd1776ad7e6e6991413af8c5994dacf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
