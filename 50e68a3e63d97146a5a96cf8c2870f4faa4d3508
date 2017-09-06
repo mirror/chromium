@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b16544d_7e543196",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimationsTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1362,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-06T01:00:56Z",
+      "side": 1,
+      "message": "Use the helper file to automatically set this to true during test\nand back to default after.\n\nRuntimeEnabledFeaturesTestHelpers.h",
+      "revId": "50e68a3e63d97146a5a96cf8c2870f4faa4d3508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0eed8ef_6bd4abd1",
+        "filename": "third_party/WebKit/Source/core/animation/DocumentAnimations.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-06T01:00:56Z",
+      "side": 1,
+      "message": "Does this get called at the end of an animation, to correctly set back\nto zero?",
+      "revId": "50e68a3e63d97146a5a96cf8c2870f4faa4d3508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042ffa24_fbca2179",
+        "filename": "third_party/WebKit/Source/core/animation/DocumentTimeline.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-06T01:00:56Z",
+      "side": 1,
+      "message": "Do you need to filter out \"finished\" animations?",
+      "revId": "50e68a3e63d97146a5a96cf8c2870f4faa4d3508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
