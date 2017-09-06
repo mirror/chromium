@@ -141,6 +141,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     // arrives or till the selection is adjusted based on the classification result.
     private boolean mPendingShowActionMode;
 
+    private boolean mIsSmartSelectionReset;
+
     // Whether a scroll is in progress.
     private boolean mScrollInProgress;
 
@@ -225,7 +227,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     @CalledByNative
     private void showSelectionMenu(int left, int top, int right, int bottom, boolean isEditable,
             boolean isPasswordType, String selectionText, boolean canSelectAll,
-            boolean canRichlyEdit, boolean shouldSuggest) {
+            boolean canRichlyEdit, boolean shouldSuggest, boolean isSmartSelectionReset) {
         mSelectionRect.set(left, top, right, bottom);
         mEditable = isEditable;
         mLastSelectedText = selectionText;
@@ -234,6 +236,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         mCanSelectAllForPastePopup = canSelectAll;
         mCanEditRichly = canRichlyEdit;
         mUnselectAllOnDismiss = true;
+        mIsSmartSelectionReset = isSmartSelectionReset;
         if (hasSelection()) {
             if (mSelectionClient != null
                     && mSelectionClient.requestSelectionPopupUpdates(shouldSuggest)) {
@@ -258,6 +261,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      */
     public void showActionModeOrClearOnFailure() {
         mPendingShowActionMode = false;
+        mIsSmartSelectionReset = false;
 
         if (!isActionModeSupported() || !hasSelection()) return;
 
@@ -1149,6 +1153,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 assert !mHidden;
                 assert mClassificationResult == null;
                 mPendingShowActionMode = false;
+                mIsSmartSelectionReset = false;
                 return;
             }
 
@@ -1183,6 +1188,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 // Remain pending until SELECTION_HANDLES_MOVED arrives.
                 if (mPendingShowActionMode) return;
             }
+
+            if (mPendingShowActionMode && mIsSmartSelectionReset) return;
 
             // Rely on this method to clear |mHidden| and unhide the action mode.
             showActionModeOrClearOnFailure();

@@ -2013,9 +2013,12 @@ void RenderFrameImpl::OnAdjustSelectionByCharacterOffset(int start_adjust,
   // A negative adjust amount moves the selection towards the beginning of
   // the document, a positive amount moves the selection towards the end of
   // the document.
-  frame_->SelectRange(WebRange(range.StartOffset() + start_adjust,
-                               range.length() + end_adjust - start_adjust),
-                      WebLocalFrame::kPreserveHandleVisibility);
+  frame_->SelectRange(
+      WebRange(range.StartOffset() + start_adjust,
+               range.length() + end_adjust - start_adjust),
+      WebLocalFrame::kPreserveHandleVisibility,
+      // TODO: get it from parameter to not interfere with contextual search.
+      blink::WebLocalFrame::kSelectClosestWord);
 }
 
 void RenderFrameImpl::OnCollapseSelection() {

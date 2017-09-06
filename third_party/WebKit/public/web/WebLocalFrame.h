@@ -496,8 +496,16 @@ class WebLocalFrame : public WebFrame {
     // Keep the current handle visibility.
     kPreserveHandleVisibility,
   };
+
+  enum SelectionTapBehavior {
+    // Clears the selection, for editable text set caret position at click.
+    kClearSelection,
+    // Shrinks the selection to the closest word.
+    kSelectClosestWord,
+  };
   virtual void SelectRange(const WebRange&,
-                           HandleVisibilityBehavior = kHideSelectionHandle) = 0;
+                           HandleVisibilityBehavior = kHideSelectionHandle,
+                           SelectionTapBehavior = kClearSelection) = 0;
 
   virtual WebString RangeAsText(const WebRange&) = 0;
 
