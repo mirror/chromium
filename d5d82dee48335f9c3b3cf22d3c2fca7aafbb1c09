@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11dc4762_f281610c",
+        "filename": "chrome/browser/resources/policy_base.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T18:14:31Z",
+      "side": 1,
+      "message": "Please delete the code instead of comments.",
+      "revId": "d5d82dee48335f9c3b3cf22d3c2fca7aafbb1c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7290390a_93f20737",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T18:14:31Z",
+      "side": 1,
+      "message": "For all overridden functions, please use @override annotation.\n\nhttps://google.github.io/styleguide/jsguide.html#jsdoc-method-and-function-comments",
+      "revId": "d5d82dee48335f9c3b3cf22d3c2fca7aafbb1c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298408b6_bafa0a5c",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T18:14:31Z",
+      "side": 1,
+      "message": "For all private functions, please use @private annotation.\n\nAlso, after using @overrides annotation, you don\u0027t need @param anymore.",
+      "revId": "d5d82dee48335f9c3b3cf22d3c2fca7aafbb1c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

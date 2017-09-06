@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "18edacf0_804ee7f6",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T18:14:31Z",
+      "side": 1,
+      "message": "Here is the code style of Javascript default parameters:\nhttps://google.github.io/styleguide/jsguide.html#features-functions-parameters\nPlease follow the instructions there: not using \u0027opt_\u0027 prefix, using \u0027value_updated \u003d false\u0027, \n\nBut you have refactor the code so it\u0027s just FYI.",
+      "parentUuid": "8c4e4a6c_5846db26",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8608f48_80c23e0d",
         "filename": "chrome/browser/resources/policy_tool.js",
         "patchSetId": 14
@@ -174,6 +192,24 @@
       "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be57b174_d703f844",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T18:14:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2af1b524_bc649c1d",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -349,6 +385,24 @@
       "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd982f1_7e590d2e",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T18:14:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2f979dd4_4ae4692e",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -556,6 +610,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "742d34b5_3cd841a1",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a150350_819329c8",
+        "filename": "components/policy_strings.grdp",
+        "patchSetId": 14
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T18:14:31Z",
+      "side": 1,
+      "message": "Please change the description as well.",
+      "parentUuid": "a5329e9d_31b188ac",
       "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
