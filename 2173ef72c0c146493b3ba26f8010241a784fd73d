@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7531c6_2dc4f256",
+        "filename": "ash/fast_ink/fast_ink_pointer_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T01:03:29Z",
+      "side": 1,
+      "message": "nit: extra () not needed",
+      "revId": "2173ef72c0c146493b3ba26f8010241a784fd73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eefcde6_62a0abdd",
+        "filename": "ash/fast_ink/fast_ink_pointer_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T01:03:29Z",
+      "side": 1,
+      "message": "nit: CanStartNewGesture()? ShouldStartNewGesture()? it just reads a little weird, like a MaybeDoFoo() function that might actually do something.",
+      "revId": "2173ef72c0c146493b3ba26f8010241a784fd73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "195d18b7_42de0290",
+        "filename": "ash/fast_ink/fast_ink_points.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T01:03:29Z",
+      "side": 1,
+      "message": "nit: I would provide an example of why there can be a gap (in this case from off-screen, I presume), either here or below",
+      "revId": "2173ef72c0c146493b3ba26f8010241a784fd73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db7d412d_a703775b",
+        "filename": "ash/fast_ink/fast_ink_points_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T01:03:29Z",
+      "side": 1,
+      "message": "nit: this reads really strangely to me. I would just have a bunch of copy/pasted EXPECT_TRUE() / EXPECT_FALSE(), or a data table",
+      "revId": "2173ef72c0c146493b3ba26f8010241a784fd73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d60d10_6a3c26c5",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T01:03:29Z",
+      "side": 1,
+      "message": "nit: document units\n\nnit: move these constants above the functions",
+      "revId": "2173ef72c0c146493b3ba26f8010241a784fd73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f362e17d_5c930495",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T01:03:29Z",
+      "side": 1,
+      "message": "nit: maybe add comment here that the stylus has gone off the screen?",
+      "revId": "2173ef72c0c146493b3ba26f8010241a784fd73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f23026d_28ebb5fb",
+        "filename": "ash/highlighter/highlighter_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T01:03:29Z",
+      "side": 1,
+      "message": "Nice comment.",
+      "revId": "2173ef72c0c146493b3ba26f8010241a784fd73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62798d35_dc9215d6",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T01:03:29Z",
+      "side": 1,
+      "message": "nit: keep the {} because the else clause is 2 \n\nalternately, init current_point with a trigraph",
+      "revId": "2173ef72c0c146493b3ba26f8010241a784fd73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
