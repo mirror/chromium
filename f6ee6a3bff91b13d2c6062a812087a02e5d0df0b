@@ -34,6 +34,24 @@
       "revId": "f6ee6a3bff91b13d2c6062a812087a02e5d0df0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58803fe1_0a7e013f",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_drag_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-06T01:46:59Z",
+      "side": 1,
+      "message": "I just meant that I believe this expression:\n\n    ((!outOfTabHorizDeadZone_ \u0026\u0026 fabs(vertOffset) \u003e kVertTearDistance) || (outOfTabHorizDeadZone_ \u0026\u0026 fabs(vertOffset) \u003e kLargeVertTearDistance))\n\nCould also be written as:\n\n    ((!outOfTabHorizDeadZone_ \u0026\u0026 fabs(vertOffset) \u003e kVertTearDistance) || fabs(vertOffset) \u003e kLargeVertTearDistance)",
+      "parentUuid": "fd393369_a593a9d9",
+      "revId": "f6ee6a3bff91b13d2c6062a812087a02e5d0df0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
