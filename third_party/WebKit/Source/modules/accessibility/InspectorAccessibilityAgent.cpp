@@ -227,9 +227,12 @@ void FillWidgetProperties(AXObject& ax_object,
   }
 
   if (ax_object.IsRange()) {
-    properties.addItem(
-        CreateProperty(AXWidgetAttributesEnum::Valuemin,
-                       CreateValue(ax_object.MinValueForRange())));
+    float min_value;
+    if (ax_object.MinValueForRange(&min_value)) {
+      properties.addItem(CreateProperty(AXWidgetAttributesEnum::Valuemin,
+                                        CreateValue(min_value)));
+    }
+
     properties.addItem(
         CreateProperty(AXWidgetAttributesEnum::Valuemax,
                        CreateValue(ax_object.MaxValueForRange())));

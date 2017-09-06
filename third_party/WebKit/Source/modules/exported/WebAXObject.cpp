@@ -979,11 +979,11 @@ float WebAXObject::MaxValueForRange() const {
   return private_->MaxValueForRange();
 }
 
-float WebAXObject::MinValueForRange() const {
+bool WebAXObject::MinValueForRange(float* out_value) const {
   if (IsDetached())
     return 0.0;
 
-  return private_->MinValueForRange();
+  return private_->MinValueForRange(out_value);
 }
 
 WebNode WebAXObject::GetNode() const {

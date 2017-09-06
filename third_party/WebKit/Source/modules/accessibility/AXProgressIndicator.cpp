@@ -70,12 +70,14 @@ float AXProgressIndicator::MaxValueForRange() const {
   return clampTo<float>(GetProgressElement()->max());
 }
 
-float AXProgressIndicator::MinValueForRange() const {
+bool AXProgressIndicator::MinValueForRange(float* out_value) const {
   float value_min;
-  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueMin, value_min))
-    return value_min;
+  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueMin, value_min)) {
+    *out_value = value_min;
+    return true;
+  }
 
-  return 0.0f;
+  return false;
 }
 
 HTMLProgressElement* AXProgressIndicator::GetProgressElement() const {

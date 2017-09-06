@@ -250,7 +250,7 @@ class WebAXObject {
   BLINK_EXPORT WebString ValueDescription() const;
   BLINK_EXPORT float ValueForRange() const;
   BLINK_EXPORT float MaxValueForRange() const;
-  BLINK_EXPORT float MinValueForRange() const;
+  BLINK_EXPORT bool MinValueForRange(float* out_value) const;
 
   BLINK_EXPORT WebNode GetNode() const;
   BLINK_EXPORT WebDocument GetDocument() const;

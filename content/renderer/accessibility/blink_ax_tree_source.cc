@@ -707,8 +707,10 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
       dst->AddFloatAttribute(ui::AX_ATTR_VALUE_FOR_RANGE, src.ValueForRange());
       dst->AddFloatAttribute(ui::AX_ATTR_MAX_VALUE_FOR_RANGE,
                              src.MaxValueForRange());
-      dst->AddFloatAttribute(ui::AX_ATTR_MIN_VALUE_FOR_RANGE,
-                             src.MinValueForRange());
+      float min_value;
+      if (src.MinValueForRange(&min_value)) {
+        dst->AddFloatAttribute(ui::AX_ATTR_MIN_VALUE_FOR_RANGE, min_value);
+      }
     }
 
     if (dst->role == ui::AX_ROLE_DIALOG ||

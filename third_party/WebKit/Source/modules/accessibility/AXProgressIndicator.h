@@ -42,7 +42,7 @@ class AXProgressIndicator final : public AXLayoutObject {
 
   float ValueForRange() const override;
   float MaxValueForRange() const override;
-  float MinValueForRange() const override;
+  bool MinValueForRange(float* out_value) const override;
 
   AXProgressIndicator(LayoutProgress*, AXObjectCacheImpl&);
 

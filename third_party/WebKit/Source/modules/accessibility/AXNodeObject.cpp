@@ -1890,18 +1890,24 @@ float AXNodeObject::MaxValueForRange() const {
   return 0.0;
 }
 
-float AXNodeObject::MinValueForRange() const {
+bool AXNodeObject::MinValueForRange(float* out_value) const {
   float value_min;
-  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueMin, value_min))
-    return value_min;
+  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueMin, value_min)) {
+    *out_value = value_min;
+    return true;
+  }
 
-  if (IsNativeSlider())
-    return toHTMLInputElement(*GetNode()).Minimum();
+  if (IsNativeSlider()) {
+    *out_value = toHTMLInputElement(*GetNode()).Minimum();
+    return true;
+  }
 
-  if (isHTMLMeterElement(GetNode()))
-    return toHTMLMeterElement(*GetNode()).min();
+  if (isHTMLMeterElement(GetNode())) {
+    *out_value = toHTMLMeterElement(*GetNode()).min();
+    return true;
+  }
 
-  return 0.0;
+  return false;
 }
 
 float AXNodeObject::StepValueForRange() const {
