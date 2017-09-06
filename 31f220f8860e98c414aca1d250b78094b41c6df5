@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af3ef86d_cad3032b",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-06T21:29:40Z",
+      "side": 0,
+      "message": "Why is this no longer needed?",
+      "range": {
+        "startLine": 171,
+        "startChar": 20,
+        "endLine": 171,
+        "endChar": 31
+      },
+      "revId": "31f220f8860e98c414aca1d250b78094b41c6df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

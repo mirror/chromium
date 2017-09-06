@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0130ae65_90058028",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1290,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-06T21:29:40Z",
+      "side": 1,
+      "message": "\"Add to default_warnings instead of to chromium_code once fixed in third_party\"",
+      "range": {
+        "startLine": 1290,
+        "startChar": 34,
+        "endLine": 1290,
+        "endChar": 49
+      },
+      "revId": "58616270b0d0a3ce29bf834b36cb0e160c52c416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b75b9e79_f57df7b7",
+        "filename": "ios/chrome/app/spotlight/spotlight_util.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-06T21:29:40Z",
+      "side": 1,
+      "message": "This should go on the declaration in the .h file, not here. Else the compiler can\u0027t warn you when you call this function without an @available check.\n\n(In the other places, you\u0027re adding this to delegate methods we don\u0027t call ourselves, so putting it with the implementation is fine there. But here it\u0027s our own code, so it should go in the .h.)",
+      "range": {
+        "startLine": 197,
+        "startChar": 12,
+        "endLine": 197,
+        "endChar": 25
+      },
+      "revId": "58616270b0d0a3ce29bf834b36cb0e160c52c416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
