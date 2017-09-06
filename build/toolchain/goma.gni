@@ -16,4 +16,10 @@ declare_args() {
     # Absolute directory containing the gomacc binary.
     goma_dir = getenv("HOME") + "/goma"
   }
+
+  action_pool_depth = 1024
+}
+
+if (use_goma) {
+   action_pool_depth = exec_script("get_cpu_count.py", [], "value")
 }
