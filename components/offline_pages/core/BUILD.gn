@@ -49,6 +49,8 @@ static_library("core") {
     "task.h",
     "task_queue.cc",
     "task_queue.h",
+    "tasks/add_page_task.cc",
+    "tasks/add_page_task.h",
   ]
 
   deps = [
@@ -113,6 +115,7 @@ source_set("unit_tests") {
     "snapshot_controller_unittest.cc",
     "task_queue_unittest.cc",
     "task_unittest.cc",
+    "tasks/add_page_task_unittest.cc",
   ]
 
   deps = [
