@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c9f6e8_7ef12505",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelsInitializer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-09-06T15:24:22Z",
+      "side": 1,
+      "message": "erm, bit late now, but shouldn\u0027t this be passing \u0027false\u0027?",
+      "revId": "0e36cc1f662f51a62f497393e8f1ad3421913990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
