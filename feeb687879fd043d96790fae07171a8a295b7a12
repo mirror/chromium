@@ -22,6 +22,30 @@
       "revId": "feeb687879fd043d96790fae07171a8a295b7a12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795466f1_f889ec4f",
+        "filename": "extensions/shell/installer/linux/debian/build.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-06T19:33:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "704a3b7b_c5bb67e4",
+      "range": {
+        "startLine": 227,
+        "startChar": 22,
+        "endLine": 227,
+        "endChar": 32
+      },
+      "revId": "feeb687879fd043d96790fae07171a8a295b7a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
