@@ -14,10 +14,16 @@ namespace {
 LazyInstance<ThreadLocalPointer<internal::BlockingObserver>>::Leaky
     tls_blocking_observer = LAZY_INSTANCE_INITIALIZER;
 
+// Last ScopedBlockingCall instantiated on this thread that caused
+// BlockingScopeEntered() to be called.
+LazyInstance<ThreadLocalPointer<ScopedBlockingCall>>::Leaky
+    tls_last_scoped_blocking_call_to_notify_observer =
+        LAZY_INSTANCE_INITIALIZER;
+
 #if DCHECK_IS_ON()
-// Ensures the absence of nested ScopedBlockingCall instances.
-LazyInstance<ThreadLocalBoolean>::Leaky tls_in_blocked_scope =
-    LAZY_INSTANCE_INITIALIZER;
+// Last ScopedBlockingCall instantiated on this thread.
+LazyInstance<ThreadLocalPointer<ScopedBlockingCall>>::Leaky
+    tls_last_scoped_blocking_call = LAZY_INSTANCE_INITIALIZER;
 #endif
 
 }  // namespace
@@ -36,26 +42,41 @@ void ClearBlockingObserverForTesting() {
 }  // namespace internal
 
 ScopedBlockingCall::ScopedBlockingCall(BlockingType blocking_type)
-    : blocking_type_(blocking_type) {
+    : blocking_type_(blocking_type),
+      blocking_observer_(tls_blocking_observer.Get().Get()),
+      previous_scoped_blocking_call_to_notify_observer_(
+          tls_last_scoped_blocking_call_to_notify_observer.Get().Get())
 #if DCHECK_IS_ON()
-  DCHECK(!tls_in_blocked_scope.Get().Get());
-  tls_in_blocked_scope.Get().Set(true);
+      ,
+      previous_scoped_blocking_call_(tls_last_scoped_blocking_call.Get().Get())
 #endif
-
-  blocking_observer_ = tls_blocking_observer.Get().Get();
-  if (blocking_observer_)
+{
+#if DCHECK_IS_ON()
+  tls_last_scoped_blocking_call.Get().Set(this);
+#endif
+  if (blocking_observer_ &&
+      ((blocking_type_ == BlockingType::MAY_BLOCK &&
+        !previous_scoped_blocking_call_to_notify_observer_) ||
+       (blocking_type_ == BlockingType::WILL_BLOCK &&
+        (!previous_scoped_blocking_call_to_notify_observer_ ||
+         previous_scoped_blocking_call_to_notify_observer_->blocking_type_ ==
+             BlockingType::MAY_BLOCK)))) {
     blocking_observer_->BlockingScopeEntered(blocking_type_);
+    tls_last_scoped_blocking_call_to_notify_observer.Get().Set(this);
+  }
 }
 
 ScopedBlockingCall::~ScopedBlockingCall() {
 #if DCHECK_IS_ON()
-  DCHECK(tls_in_blocked_scope.Get().Get());
-  tls_in_blocked_scope.Get().Set(false);
-#endif
-
   DCHECK_EQ(blocking_observer_, tls_blocking_observer.Get().Get());
-  if (blocking_observer_)
-    blocking_observer_->BlockingScopeExited(blocking_type_);
+  DCHECK_EQ(this, tls_last_scoped_blocking_call.Get().Get());
+  tls_last_scoped_blocking_call.Get().Set(previous_scoped_blocking_call_);
+#endif
+  if (blocking_observer_ &&
+      !previous_scoped_blocking_call_to_notify_observer_) {
+    blocking_observer_->BlockingScopeExited();
+    tls_last_scoped_blocking_call_to_notify_observer.Get().Set(nullptr);
+  }
 }
 
 }  // namespace base
