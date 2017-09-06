@@ -11,7 +11,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
 #include "platform/PlatformExport.h"
-#include "platform/scheduler/base/task_queue.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "public/platform/WebThread.h"
 
@@ -41,6 +40,7 @@ class PLATFORM_EXPORT WebSchedulerImpl : public WebScheduler {
   WebTaskRunner* LoadingTaskRunner() override;
   WebTaskRunner* TimerTaskRunner() override;
   WebTaskRunner* CompositorTaskRunner() override;
+  scoped_refptr<scheduler::TaskQueue> NewDefaultTaskQueue() override;
   std::unique_ptr<WebViewScheduler> CreateWebViewScheduler(
       InterventionReporter*,
       WebViewScheduler::WebViewSchedulerDelegate*) override;

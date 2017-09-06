@@ -12,15 +12,13 @@
 namespace blink {
 namespace scheduler {
 
-class WorkerScheduler;
-
 // A scheduler provides per-global-scope task queues. This is constructed when a
 // global scope is created and destructed when it's closed.
 //
 // Unless stated otherwise, all methods must be called on the worker thread.
 class PLATFORM_EXPORT WorkerGlobalScopeScheduler {
  public:
-  explicit WorkerGlobalScopeScheduler(WorkerScheduler* worker_scheduler);
+  explicit WorkerGlobalScopeScheduler(scoped_refptr<TaskQueue>);
   ~WorkerGlobalScopeScheduler();
 
   // Unregisters the task queues and cancels tasks in them.

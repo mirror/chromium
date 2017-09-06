@@ -18,6 +18,8 @@ class MessageLoop;
 namespace blink {
 namespace scheduler {
 
+class TaskQueue;
+
 class BLINK_PLATFORM_EXPORT ChildScheduler {
  public:
   virtual ~ChildScheduler() {}
@@ -59,6 +61,10 @@ class BLINK_PLATFORM_EXPORT ChildScheduler {
   // queues. After this call any work posted to the task runners will be
   // silently dropped.
   virtual void Shutdown() = 0;
+
+#ifdef INSIDE_BLINK
+  virtual scoped_refptr<TaskQueue> NewDefaultTaskQueue() = 0;
+#endif
 
  protected:
   ChildScheduler() {}

@@ -7,6 +7,7 @@
 #include "core/dom/IdleRequestCallback.h"
 #include "core/dom/IdleRequestOptions.h"
 #include "core/testing/NullExecutionContext.h"
+#include "platform/scheduler/base/task_queue.h"
 #include "platform/testing/TestingPlatformSupport.h"
 #include "platform/wtf/CurrentTime.h"
 #include "public/platform/Platform.h"
@@ -26,6 +27,9 @@ class MockScriptedIdleTaskControllerScheduler final : public WebScheduler {
   WebTaskRunner* LoadingTaskRunner() override { return nullptr; }
   WebTaskRunner* TimerTaskRunner() override { return nullptr; }
   WebTaskRunner* CompositorTaskRunner() override { return nullptr; }
+  scoped_refptr<scheduler::TaskQueue> NewDefaultTaskQueue() override {
+    return nullptr;
+  }
   void Shutdown() override {}
   bool ShouldYieldForHighPriorityWork() override { return should_yield_; }
   bool CanExceedIdleDeadlineIfRequired() override { return false; }

@@ -4,6 +4,7 @@
 
 #include "core/dom/IdleDeadline.h"
 
+#include "platform/scheduler/base/task_queue.h"
 #include "platform/testing/TestingPlatformSupport.h"
 #include "platform/wtf/CurrentTime.h"
 #include "public/platform/Platform.h"
@@ -20,6 +21,9 @@ class MockIdleDeadlineScheduler final : public WebScheduler {
   // WebScheduler implementation:
   WebTaskRunner* LoadingTaskRunner() override { return nullptr; }
   WebTaskRunner* TimerTaskRunner() override { return nullptr; }
+  scoped_refptr<scheduler::TaskQueue> NewDefaultTaskQueue() override {
+    return nullptr;
+  }
   void Shutdown() override {}
   bool ShouldYieldForHighPriorityWork() override { return true; }
   bool CanExceedIdleDeadlineIfRequired() override { return false; }
