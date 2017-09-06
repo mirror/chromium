@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae6bf38b_0b670873",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-06T18:06:26Z",
+      "side": 1,
+      "message": "nit: Add a comment as to why this observer is needed -- i.e. who observes.\n\nQ: Will any of these get called if the original tab is closed first?",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 16
+      },
+      "revId": "339515fd9e01dbfe50f61238f6651015f0c6b9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f27a86_2ed14cc8",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-06T18:06:26Z",
+      "side": 1,
+      "message": "Does the observer get called later on as well? Also, what\u0027s the lifetime expectations of observer vs this CPPS? Maybe add comments with those details.",
+      "range": {
+        "startLine": 69,
+        "startChar": 21,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "339515fd9e01dbfe50f61238f6651015f0c6b9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672ebc5d_999622e9",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-06T18:06:26Z",
+      "side": 1,
+      "message": "(Would it be useful to have metrics on how often these happen? Maybe an UMA metric for how/why this dialog gets closed?  You decide -- maybe it doesn\u0027t matter to us -- let\u0027s only add it if we think it\u0027d be useful.)",
+      "range": {
+        "startLine": 136,
+        "startChar": 21,
+        "endLine": 136,
+        "endChar": 22
+      },
+      "revId": "339515fd9e01dbfe50f61238f6651015f0c6b9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
