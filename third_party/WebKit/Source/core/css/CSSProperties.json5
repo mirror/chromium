@@ -668,7 +668,7 @@
     },
     {
       name: "align-self",
-      api_class: "CSSPropertyAPIAlignOrJustifySelf",
+      api_class: true,
       api_methods: ["ParseSingleValue"],
       converter: "ConvertSelfOrDefaultAlignmentData",
       field_template: "external",
@@ -679,7 +679,7 @@
     },
     {
       name: "backdrop-filter",
-      api_class: "CSSPropertyAPIFilter",
+      api_class: true,
       api_methods: ["ParseSingleValue"],
       converter: "ConvertFilterOperations",
       interpolable: true,
@@ -1302,7 +1302,7 @@
     },
     {
       name: "filter",
-      api_class: "CSSPropertyAPIFilter",
+      api_class: true,
       api_methods: ["ParseSingleValue"],
       converter: "ConvertFilterOperations",
       interpolable: true,
@@ -1532,7 +1532,7 @@
     },
     {
       name: "hyphens",
-      api_class: "CSSPropertyAPIInherited",
+      api_class: true,
       inherited: true,
       runtime_flag: "CSSHyphens",
       field_template: "keyword",
@@ -1595,7 +1595,7 @@
     },
     {
       name: "justify-self",
-      api_class: "CSSPropertyAPIAlignOrJustifySelf",
+      api_class: true,
       api_methods: ["ParseSingleValue"],
       converter: "ConvertSelfOrDefaultAlignmentData",
       runtime_flag: "CSSGridLayout",
@@ -1997,6 +1997,7 @@
     },
     {
       name: "overflow-anchor",
+      api_class: true,
       runtime_flag: "ScrollAnchoring",
       inherited: false,
       default_value: "auto",
@@ -2183,6 +2184,7 @@
     },
     {
       name: "scroll-behavior",
+      api_class: true,
       runtime_flag: "CSSOMSmoothScroll",
       type_name: "ScrollBehavior",
       field_template: "storage_only",
@@ -2193,6 +2195,7 @@
     },
     {
       name: "scroll-boundary-behavior-x",
+      api_class: "CSSPropertyAPIScrollBoundaryBehaviorXOrY",
       default_value: "auto",
       field_template: "keyword",
       keywords: ["auto", "contain", "none"],
@@ -2201,6 +2204,7 @@
     },
     {
       name: "scroll-boundary-behavior-y",
+      api_class: "CSSPropertyAPIScrollBoundaryBehaviorXOrY",
       default_value: "auto",
       field_template: "keyword",
       keywords: ["auto", "contain", "none"],
@@ -2235,6 +2239,7 @@
     },
     {
       name: "scroll-snap-stop",
+      api_class: true,
       default_value: "normal",
       field_template: "keyword",
       keywords: ["normal", "always"],
@@ -2664,6 +2669,7 @@
     },
     {
       name: "text-decoration-style",
+      api_class: true,
       runtime_flag: "CSS3TextDecorations",
       field_template: "keyword",
       keywords: ["solid", "double", "dotted", "dashed", "wavy"],
@@ -2683,7 +2689,7 @@
     },
     {
       name: "text-justify",
-      api_class: "CSSPropertyAPIInherited",
+      api_class: true,
       inherited: true,
       runtime_flag: "CSS3Text",
       getter: "GetTextJustify",
@@ -2792,6 +2798,7 @@
     },
     {
       name: "transform-box",
+      api_class: true,
       field_template: "keyword",
       keywords: ["border-box", "fill-box", "view-box"],
       default_value: "border-box",
@@ -3783,7 +3790,7 @@
 
     {
       name: "font-display",
-      api_class: "CSSPropertyAPIDescriptorOnly",
+      api_class: true,
       is_descriptor: true,
       is_property: false,
       runtime_flag: "CSSFontDisplay",
