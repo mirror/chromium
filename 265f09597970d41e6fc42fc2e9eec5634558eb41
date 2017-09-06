@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dd18fce_4fcb52ae",
+        "filename": "extensions/browser/test_event_router.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-06T00:37:04Z",
+      "side": 1,
+      "message": "!expected_extension_id_.empty()",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 33
+      },
+      "revId": "265f09597970d41e6fc42fc2e9eec5634558eb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd8893a_6c924b11",
+        "filename": "extensions/browser/test_event_router.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-06T00:37:04Z",
+      "side": 1,
+      "message": "nit: It would be helpful to add a description",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 6
+      },
+      "revId": "265f09597970d41e6fc42fc2e9eec5634558eb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37705ac1_bae5f11e",
+        "filename": "extensions/browser/test_event_router.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-06T00:37:04Z",
+      "side": 1,
+      "message": "nit: ExtensionId",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 13
+      },
+      "revId": "265f09597970d41e6fc42fc2e9eec5634558eb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
