@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "562b1cf9_478513c8",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_popup_view_mac.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-06T20:58:21Z",
+      "side": 1,
+      "message": "There are two varieties of this function.  ToNSImage() forces a conversion to NSImage and returns the result.  AsNSImage() will return nil if the image doesn\u0027t already exist as an NSImage, without converting.  Please double-check that AsNSImage() is appropriate for this use case.",
+      "range": {
+        "startLine": 353,
+        "startChar": 56,
+        "endLine": 353,
+        "endChar": 65
+      },
+      "revId": "e5b3698da8243e6d37e848788036501a8553238e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
