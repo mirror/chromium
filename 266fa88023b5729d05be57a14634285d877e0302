@@ -22,6 +22,30 @@
       "revId": "266fa88023b5729d05be57a14634285d877e0302",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848b329f_f0a2d16d",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-06T19:17:23Z",
+      "side": 1,
+      "message": "Normally, we try to have the bots be testing the more experimental branches.  Is there a reason that you wouldn\u0027t want bot to test with this?  Are you not planning to launch this?",
+      "parentUuid": "ad56ec8f_36730b1c",
+      "range": {
+        "startLine": 529,
+        "startChar": 29,
+        "endLine": 529,
+        "endChar": 36
+      },
+      "revId": "266fa88023b5729d05be57a14634285d877e0302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
