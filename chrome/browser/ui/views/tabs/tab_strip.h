@@ -61,6 +61,9 @@ class TabStrip : public views::View,
   explicit TabStrip(TabStripController* controller);
   ~TabStrip() override;
 
+  // Returns the max width the tab endcap can be.
+  static float GetTabEndcapMaxWidth();
+
   // Add and remove observers to changes within this TabStrip.
   void AddObserver(TabStripObserver* observer);
   void RemoveObserver(TabStripObserver* observer);
@@ -232,9 +235,11 @@ class TabStrip : public views::View,
   Tab* GetTabAt(Tab* tab, const gfx::Point& tab_in_tab_coordinates) override;
   void OnMouseEventInTab(views::View* source,
                          const ui::MouseEvent& event) override;
+  float GetTabEndcapWidth() const override;
   bool ShouldPaintTab(
       const Tab* tab,
-      const base::Callback<gfx::Path(const gfx::Size&)>& border_callback,
+      const base::Callback<gfx::Path(const gfx::Size&, float endcap_width)>&
+          border_callback,
       gfx::Path* clip) override;
   bool CanPaintThrobberToLayer() const override;
   SkColor GetToolbarTopSeparatorColor() const override;
@@ -585,6 +590,9 @@ class TabStrip : public views::View,
   // be 1 px larger.
   int current_inactive_width_;
   int current_active_width_;
+
+  // The current width of the tab endcap.
+  float current_endcap_width_;
 
   // If this value is nonnegative, it is used as the width to lay out tabs
   // (instead of tab_area_width()). Most of the time this will be -1, but while

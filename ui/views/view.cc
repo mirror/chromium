@@ -909,7 +909,6 @@ void View::Paint(const ui::PaintContext& parent_context) {
     gfx::Canvas* canvas = recorder.canvas();
     gfx::ScopedRTLFlipCanvas scoped_canvas(canvas, width(),
                                            flip_canvas_on_paint_for_rtl_ui_);
-
     // Delegate painting the contents of the View to the virtual OnPaint method.
     OnPaint(canvas);
   }
