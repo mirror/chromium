@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50f3a1c3_3f61a2f2",
+        "filename": "chrome/browser/download/notification/download_item_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-06T22:25:09Z",
+      "side": 0,
+      "message": "I\u0027m not familiar with this code. Why is this conditional no longer relevant? I assume it\u0027s never true anymore, is that the case?",
+      "range": {
+        "startLine": 453,
+        "startChar": 8,
+        "endLine": 456,
+        "endChar": 65
+      },
+      "revId": "c886e1823984b87ee4c9bcab0dcc269de277cdc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
