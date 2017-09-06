@@ -503,11 +503,13 @@ void SourceBufferStream::RemoveInternal(DecodeTimestamp start,
     // Split off any remaining GOPs starting at or after |end| and add it to
     // |ranges_|.
     std::unique_ptr<SourceBufferRange> new_range = range->SplitRange(end);
+    // bool next_append_location_moved = false; // BIG TODO uncomment and use...
     if (new_range) {
       itr = ranges_.insert(++itr, std::move(new_range));
 
       // Update |range_for_next_append_| if it was previously |range| and should
-      // be the new range (that |itr| is at) now.
+      // be the new range (that |itr| is at) now. Caveat, BIG TODO continue here
+      // with populating/using |next_append_location_moved|.
       if (range_for_next_append_ != ranges_.end() &&
           range_for_next_append_->get() == range) {
         DecodeTimestamp potential_next_append_timestamp =
