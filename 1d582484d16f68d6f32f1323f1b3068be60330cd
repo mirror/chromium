@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f939cd96_f2537c9b",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-06T21:19:17Z",
+      "side": 0,
+      "message": "These checks are in theory not needed anymore, because after this CL a renderer is not physically able to send an incorrect origin.  OTOH, we still depend on the caller (RenderFrameHostImpl::OpenLocalStorage) to provide the right origin, so maybe we want to retain these checks in some form (as a CHECK maybe?).  FWIW retaining these checks is a bit difficult, because mojo::InterfaceRequest doesn’t today allow checking the process id of the other end of the pipe.",
+      "range": {
+        "startLine": 689,
+        "startChar": 0,
+        "endLine": 694,
+        "endChar": 3
+      },
+      "revId": "1d582484d16f68d6f32f1323f1b3068be60330cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

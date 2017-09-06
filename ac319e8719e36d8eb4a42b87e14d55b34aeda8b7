@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f21bcb90_7f7b9811",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2859,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-06T21:19:17Z",
+      "side": 1,
+      "message": "I am not sure if I should leave this comment in here, but we\u0027ve spent a good chunk of time in US-KIR trying to reason through these races (i.e. trying to answer if renderer-side can ever get an interface bound to an unintended origin).",
+      "range": {
+        "startLine": 2852,
+        "startChar": 0,
+        "endLine": 2859,
+        "endChar": 24
+      },
+      "revId": "ac319e8719e36d8eb4a42b87e14d55b34aeda8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1ed85c8_02b4db99",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-06T21:19:17Z",
+      "side": 1,
+      "message": "Ooops - RenderFrame is used in the CL to get mojom::FrameHostAssociatedPtr:\n\nYou added one or more #includes that violate checkdeps rules.\n  content/renderer/dom_storage/local_storage_cached_area.cc\n      Illegal include: \"content/renderer/render_frame_impl.h\"\n    Because of \"-content/renderer\" from content/renderer/dom_storage\u0027s specific_include_rules.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 47
+      },
+      "revId": "ac319e8719e36d8eb4a42b87e14d55b34aeda8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55eebd28_3ea14177",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-06T21:19:17Z",
+      "side": 1,
+      "message": "This seems like a big issue applicable to all CapabilitiesBroker scenarios where renderer-side caching takes place (i.e. where interfaces requested via a FrameHost are cached per-origin and reused for other frames from the same origin).\n\nNo clear solution yet.  Some ideas (brainstorming mode - some of the ideas might be silly):\n\n- Idea #1: Make OpenLocalStorage [Sync]\n  - In some cases OpenLocalStorage will anyhow be followed by a (already [Sync]) LevelDBWrapper::GetAll call\n  - OTOH, all other methods of LevelDBWrapper are async (i.e. Put(key, value) \u003d\u003e success)\n\n- Idea #2: No caching of renderer-\u003ebrowser interfaces\n   - Can still cache data\n   - Can probably (?) still cache browser-\u003erenderer interfaces (like LevelDBObserver)\n\n- Idea #3: Give up and keep passing an origin\n   - Maybe localStorage is special?",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 16
+      },
+      "revId": "ac319e8719e36d8eb4a42b87e14d55b34aeda8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b19fff89_59ef458d",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1487,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-06T21:19:17Z",
+      "side": 1,
+      "message": "Not yet sure how difficult this will turn out to be...  Any comments or suggestions are welcomed :-)",
+      "range": {
+        "startLine": 1487,
+        "startChar": 6,
+        "endLine": 1487,
+        "endChar": 65
+      },
+      "revId": "ac319e8719e36d8eb4a42b87e14d55b34aeda8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4d634e_d65b395e",
+        "filename": "third_party/WebKit/Source/modules/storage/DOMWindowStorage.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-06T21:19:17Z",
+      "side": 1,
+      "message": "Hmpf... maybe this should pass Document\u0026, rather than Frame\u0026.  Maybe this doesn\u0027t matter that much?",
+      "range": {
+        "startLine": 91,
+        "startChar": 10,
+        "endLine": 91,
+        "endChar": 16
+      },
+      "revId": "ac319e8719e36d8eb4a42b87e14d55b34aeda8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd491107_20b9bd9e",
+        "filename": "third_party/WebKit/Source/modules/storage/StorageNamespace.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-06T21:19:17Z",
+      "side": 1,
+      "message": "Ooops... \n\nYou added one or more #includes of files that are temporarily\nallowed but being removed. Can you avoid introducing the\n#includes? See relevant DEPS file(s) for details and contacts.\n  third_party/WebKit/Source/modules/storage/StorageNamespace.cpp\n      Illegal include: \"core/frame/WebLocalFrameImpl.h\"\n    Because of \"!core/frame/WebLocalFrameImpl.h\" from third_party/WebKit/Source/modules\u0027s include_rules.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 41
+      },
+      "revId": "ac319e8719e36d8eb4a42b87e14d55b34aeda8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
