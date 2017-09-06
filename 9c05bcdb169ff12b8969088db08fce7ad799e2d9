@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b490a883_831c48e9",
+        "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-06T04:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab51e8c5_b02a8940",
+      "range": {
+        "startLine": 59,
+        "startChar": 56,
+        "endLine": 59,
+        "endChar": 70
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b05e9f5e_c196b04a",
         "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_io_data.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd14661d_906ba788",
+        "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-06T04:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b05e9f5e_c196b04a",
+      "range": {
+        "startLine": 62,
+        "startChar": 31,
+        "endLine": 62,
+        "endChar": 42
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "196b3348_1dfed6aa",
+        "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-06T04:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc0e692e_01c9ff18",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 26
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86d8fc49_e082dd6a",
         "filename": "chrome/browser/previews/previews_infobar_delegate.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6d551b3b_1e8d25ce",
+        "filename": "chrome/browser/previews/previews_infobar_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-06T04:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86d8fc49_e082dd6a",
+      "range": {
+        "startLine": 87,
+        "startChar": 27,
+        "endLine": 87,
+        "endChar": 35
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fdda061_78a9e717",
         "filename": "chrome/browser/previews/previews_infobar_delegate.h",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cecd6ecd_e1977ab4",
+        "filename": "chrome/browser/previews/previews_infobar_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-06T04:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fdda061_78a9e717",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 19
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,54 @@
     },
     {
       "key": {
+        "uuid": "5a95154b_fa9f9a4f",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-06T04:49:20Z",
+      "side": 1,
+      "message": "Yes. It is called from DRP NetworkDelegate OnResponseStarted.\nSo should be non-null.",
+      "parentUuid": "cf4beb57_e5c49dd9",
+      "range": {
+        "startLine": 204,
+        "startChar": 6,
+        "endLine": 204,
+        "endChar": 13
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43d9612c_780f5e24",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-06T04:49:20Z",
+      "side": 1,
+      "message": "Setting the key will be done in line#195 above, once the core AMP conversion scheme logic CL lands.",
+      "parentUuid": "6e20257f_7eee441a",
+      "range": {
+        "startLine": 204,
+        "startChar": 45,
+        "endLine": 204,
+        "endChar": 65
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee87f9ef_c7857375",
         "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
         "patchSetId": 1
@@ -183,6 +351,30 @@
       "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6c4fe5_ef504bd5",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-06T04:49:20Z",
+      "side": 1,
+      "message": "Added check for 305 also.",
+      "parentUuid": "ee87f9ef_c7857375",
+      "range": {
+        "startLine": 208,
+        "startChar": 25,
+        "endLine": 208,
+        "endChar": 49
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "ef57e33c_ddc56c4f",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-06T04:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e23d829f_07d0b8f6",
+      "range": {
+        "startLine": 12,
+        "startChar": 1,
+        "endLine": 12,
+        "endChar": 8
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80ae91cf_a875f8eb",
         "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.h",
         "patchSetId": 1
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "5c93a947_b9995839",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-06T04:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80ae91cf_a875f8eb",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 5
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20f450e0_dcbbc215",
         "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.h",
         "patchSetId": 1
@@ -252,6 +492,30 @@
       "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0552b927_04843672",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-06T04:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20f450e0_dcbbc215",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 22
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +588,30 @@
     },
     {
       "key": {
+        "uuid": "42311098_069c0315",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-06T04:49:20Z",
+      "side": 1,
+      "message": "Existence of PreviewsUserData in request user data indicates AMP is applied.\nCurrently only AMP preview uses this userdata. If multiple previews use PreviewsUserData, then a type field could be added.",
+      "parentUuid": "1e427953_a5a465ef",
+      "range": {
+        "startLine": 506,
+        "startChar": 10,
+        "endLine": 506,
+        "endChar": 42
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b55ca41d_399586b7",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
         "patchSetId": 1
@@ -347,6 +635,30 @@
     },
     {
       "key": {
+        "uuid": "cc853bc9_5c4a51a0",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-06T04:49:20Z",
+      "side": 1,
+      "message": "Should be. But doing additional check.",
+      "parentUuid": "b55ca41d_399586b7",
+      "range": {
+        "startLine": 507,
+        "startChar": 12,
+        "endLine": 507,
+        "endChar": 19
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ec62597_c295be5d",
         "filename": "components/data_reduction_proxy/core/common/lofi_decider.h",
         "patchSetId": 1
@@ -367,6 +679,30 @@
       "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a058539_4f354993",
+        "filename": "components/data_reduction_proxy/core/common/lofi_decider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-09-06T04:49:20Z",
+      "side": 1,
+      "message": "This is called even if AMP previews is not applied to the mainframe request. In that case it exits, since PreviewsUserData will not be available for the request.",
+      "parentUuid": "0ec62597_c295be5d",
+      "range": {
+        "startLine": 77,
+        "startChar": 15,
+        "endLine": 77,
+        "endChar": 47
+      },
+      "revId": "9c05bcdb169ff12b8969088db08fce7ad799e2d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
