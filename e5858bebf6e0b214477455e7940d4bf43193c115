@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5f7ae60_ca262a66",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:59:29Z",
+      "side": 1,
+      "message": "Nit: Should this be a DCHECK instead of a conditional, or is there some reason callers might actually try to do this? (2 places)",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ecc08c_23fe7146",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:59:29Z",
+      "side": 1,
+      "message": "Nit: {}",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc693d5_69457661",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:59:29Z",
+      "side": 1,
+      "message": "Nit: Can this return false at some time other than when |index| is kNoMatch?\n\nIt seems like the answer ought to be no, in which case equality-checking for that (and reversing the conditional) might be clearer than HasMatchAt() (which implies the index can be out-of-range).",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb771fbf_069cead4",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:59:29Z",
+      "side": 1,
+      "message": "Nit: Since we use the index both here and below, maybe compute it above the switch?",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15da229a_e380a6a4",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:59:29Z",
+      "side": 1,
+      "message": "Nit: It\u0027s confusing that we have some virtual non-overrides, then virtual overrides, then a virtual non-override, then non-virtual non-overrides.\n\nSuggestion: All overrides either first or last, all virtual non-overrides next to them, all non-virtuals last or first",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda114ac_4cc303d8",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:59:29Z",
+      "side": 1,
+      "message": "Nit: No else after return (see https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#code-formatting )",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1772ce_fa0929cc",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:59:29Z",
+      "side": 1,
+      "message": "Why 7 here and below?",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d78722_721eb555",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T02:59:29Z",
+      "side": 1,
+      "message": "Nit: Is resetting all these scoped pointers manually necessary?",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
