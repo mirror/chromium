@@ -39,6 +39,24 @@
       "revId": "31c5bd4225aeaec9c663bba32fc8215920a7561a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6758a2_a8194664",
+        "filename": "third_party/WebKit/Source/core/dom/Modulator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-06T06:52:30Z",
+      "side": 1,
+      "message": "As offline chat w/ kouhei@, we decided to keep this as is because retrieving ScriptState from Document would be cumbersome (ToScriptStateForMainWorld(LocalFrame)).",
+      "parentUuid": "eebf994a_8c498abf",
+      "revId": "31c5bd4225aeaec9c663bba32fc8215920a7561a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
