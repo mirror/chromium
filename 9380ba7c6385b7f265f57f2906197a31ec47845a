@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a6382f70_f5f19d2e",
+        "filename": "base/win/com_base_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-06T14:25:18Z",
+      "side": 1,
+      "message": "I\u0027ve removed this function entirely and exported each Preload function instead. This gets rid of callers specifying APIs by string. I don\u0027t think it is sufficient for callers to request just the library ahead of time, because (for example) the notifications code needs to know up front if any of the functions requested are not available, so it can fall back on non-native notifications.",
+      "parentUuid": "11b7b47f_7f2b0e54",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 45
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6573a6a3_78669270",
         "filename": "base/win/com_base_util.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1625ce05_e20f640b",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-06T14:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6573a6a3_78669270",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a713267e_9579c515",
         "filename": "base/win/com_base_util.h",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9ca71f_cc672d9f",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-06T14:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a713267e_9579c515",
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "87e6e76b_c1dec357",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-06T14:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca44eed6_d13d7881",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbde48b7_5a58d6a5",
         "filename": "base/win/com_base_util.h",
         "patchSetId": 4
@@ -159,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "5048f617_99fe8a57",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-06T14:25:18Z",
+      "side": 1,
+      "message": "I\u0027d like to request a clarification on where you guys are headed with this...\n\nAre we talking about simply moving these functions into ScopedHString? (Note: HStringRef is gone now). That would mean doing a LoadLibrary there also, right? And the associated Preload functions.\n\nOr are we talking about helper functions in ScopedHString that internally calls these functions?",
+      "parentUuid": "0186e9fa_49366261",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82ef4107_d7e355fb",
         "filename": "base/win/com_base_util.h",
         "patchSetId": 4
@@ -179,6 +293,30 @@
       "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a413d6d2_e6294770",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-06T14:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82ef4107_d7e355fb",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 49
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -205,6 +343,30 @@
     },
     {
       "key": {
+        "uuid": "2153b7ab_82708528",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-06T14:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c4964b3_e8fa681b",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 30
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11e3fd0b_2260cead",
         "filename": "base/win/hstring_ref.h",
         "patchSetId": 4
@@ -219,6 +381,24 @@
       "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3c790c_c229fafd",
+        "filename": "base/win/hstring_ref.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-06T14:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11e3fd0b_2260cead",
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -242,6 +422,30 @@
       "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c7f6700_65b136fe",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-06T14:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87fb80a4_a9a9fc2d",
+      "range": {
+        "startLine": 46,
+        "startChar": 13,
+        "endLine": 46,
+        "endChar": 27
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
