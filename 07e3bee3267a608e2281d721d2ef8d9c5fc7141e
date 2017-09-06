@@ -16,6 +16,24 @@
       "revId": "07e3bee3267a608e2281d721d2ef8d9c5fc7141e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47bc31f8_a6db730a",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-06T00:49:24Z",
+      "side": 1,
+      "message": "I\u0027ve updated the code to do this, but I ran into an issue b/c aria-label is set w/o calling polymer so it\u0027s reflected to the dom. This is unwanted behavior b/c it means that a screen reader will read the same text twice. I worked around it by creating a function that just returns the string, but this seems hacky and wrong. Do you have any ideas of how we could do that better?",
+      "parentUuid": "b3aea248_3ac24a87",
+      "revId": "07e3bee3267a608e2281d721d2ef8d9c5fc7141e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
