@@ -21,6 +21,7 @@ class OmniboxPopupViewSuggestionsDelegate;
 @protocol OmniboxPopupPositioner;
 struct AutocompleteMatch;
 @class OmniboxPopupPresenter;
+@class OmniboxPopupMediator;
 
 namespace ios {
 class ChromeBrowserState;
@@ -28,7 +29,7 @@ class ChromeBrowserState;
 
 // iOS implementation of AutocompletePopupView.
 class OmniboxPopupViewIOS : public OmniboxPopupView,
-                            public OmniboxPopupMaterialViewControllerDelegate {
+                            public OmniboxPopupMediatorDelegate {
  public:
   OmniboxPopupViewIOS(ios::ChromeBrowserState* browser_state,
                       OmniboxEditModel* edit_model,
@@ -59,6 +60,7 @@ class OmniboxPopupViewIOS : public OmniboxPopupView,
  private:
   std::unique_ptr<OmniboxPopupModel> model_;
   OmniboxPopupViewSuggestionsDelegate* delegate_;  // weak
+  base::scoped_nsobject<OmniboxPopupMediator> mediator_;
   base::scoped_nsobject<OmniboxPopupPresenter> presenter_;
   base::scoped_nsobject<OmniboxPopupMaterialViewController> popup_controller_;
   bool is_open_;
