@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "f79ce197_0a39ebaa",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-06T00:35:25Z",
+      "side": 1,
+      "message": "IIUC, the new class will be used only as an internal class, so we don\u0027t need IDL for it.\n\nIf it was not that case, we do need to introduce IDL for this new subclass. However, the new class will have only two extra fields (|event_data_| and |menu_source_type_|) and few related functions. We are not exposing them to IDL currently, so from the binding side, it will be identical to MouseEvent mostly. From this perspective, having a new subclass won\u0027t buy us that much IMO. On the other hand, if IDL was necessary, will the new class introduce a spec change in https://w3c.github.io/ later? How does that process?",
+      "parentUuid": "fa48e5fe_21f68332",
+      "revId": "cced2b3858379451482f469030367e51fce274f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d99f81e7_c4d0bde8",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 3
@@ -95,6 +113,30 @@
       "writtenOn": "2017-08-18T17:11:31Z",
       "side": 1,
       "message": "I\u0027d just create the context menu event here and dispatch it. I don\u0027t think it needs to call into the MouseEventManager; then you don\u0027t need to change the MouseEventManager to take a field about context menus.",
+      "range": {
+        "startLine": 1780,
+        "startChar": 9,
+        "endLine": 1780,
+        "endChar": 29
+      },
+      "revId": "cced2b3858379451482f469030367e51fce274f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638f403f_1144364d",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1780,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-06T00:35:25Z",
+      "side": 1,
+      "message": "IIUC, \"context menu event\" is the new subclass of MouseEvent suggested in the other comment. However, DispatchMouseEvent() is taking WebMouseEvent as one of params, and creates MouseEvent object inside. If we created a new context menu event, in order to pass it to DispatchMouseEvent(), we still need to modify DispatchMouseEvent() or create an override of it I think?",
+      "parentUuid": "d99f81e7_c4d0bde8",
       "range": {
         "startLine": 1780,
         "startChar": 9,
