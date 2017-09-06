@@ -16,6 +16,24 @@
       "revId": "dfbe636a24c6a3ac04fb7711edd40f456bf3bd9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd3fffa_c2230d6c",
+        "filename": "media/mojo/clients/mojo_video_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-06T04:31:27Z",
+      "side": 1,
+      "message": "Ok sgtm. Using capabilities on the renderer side is just a performance optimization, but in this case it\u0027s a tiny win if any.",
+      "parentUuid": "9cdc8584_44edf923",
+      "revId": "dfbe636a24c6a3ac04fb7711edd40f456bf3bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
