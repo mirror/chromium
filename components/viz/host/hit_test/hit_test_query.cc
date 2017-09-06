@@ -38,6 +38,17 @@ void HitTestQuery::SwitchActiveAggregatedHitTestRegionList(
   active_hit_test_list_ = static_cast<AggregatedHitTestRegion*>(
       handle_buffers_[active_handle_index].get());
   active_hit_test_list_size_ = handle_buffer_sizes_[active_handle_index];
+
+  // debug to be removed
+  LOG(ERROR) << "oooo HTQ: ActiveAggregatedHitTestRegionList";
+  AggregatedHitTestRegion* region = active_hit_test_list_;
+  int i = 0;
+  while (region->child_count != -1) {
+    LOG(ERROR) << "oooo HTQ: REGION: " << i << " " << region->frame_sink_id
+               << " " << region->rect.ToString();
+    region++;
+    i++;
+  }
 }
 
 Target HitTestQuery::FindTargetForLocation(
@@ -55,6 +66,8 @@ bool HitTestQuery::FindTargetInRegionForLocation(
     const gfx::Point& location_in_parent,
     AggregatedHitTestRegion* region,
     Target* target) const {
+  LOG(ERROR) << "oooo HTQ: FindTarget: " << location_in_parent.ToString();
+
   gfx::Point location_transformed(location_in_parent);
   region->transform.TransformPoint(&location_transformed);
   if (!region->rect.Contains(location_transformed))
@@ -73,6 +86,10 @@ bool HitTestQuery::FindTargetInRegionForLocation(
   while (child_region < child_region_end) {
     if (FindTargetInRegionForLocation(location_in_target, child_region,
                                       target)) {
+      // debug to be removed
+      LOG(ERROR) << "oooo HTQ: Found in: " << region->frame_sink_id << " "
+                 << region->rect.ToString();
+
       return true;
     }
 
@@ -87,6 +104,7 @@ bool HitTestQuery::FindTargetInRegionForLocation(
     target->frame_sink_id = region->frame_sink_id;
     target->location_in_target = location_in_target;
     target->flags = region->flags;
+    LOG(ERROR) << "oooo HTQ: Found: " << region->frame_sink_id;
     return true;
   }
   return false;

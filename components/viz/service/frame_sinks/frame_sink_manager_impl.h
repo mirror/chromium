@@ -16,6 +16,7 @@
 #include "base/threading/thread_checker.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/service/frame_sinks/primary_begin_frame_source.h"
+#include "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "components/viz/service/surfaces/surface_observer.h"
 #include "components/viz/service/viz_service_export.h"
@@ -110,6 +111,8 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
 
   SurfaceManager* surface_manager() { return &surface_manager_; }
 
+  HitTestManager* hit_test_manager() { return &hit_test_manager_; }
+
   // SurfaceObserver implementation.
   void OnFirstSurfaceActivation(const SurfaceInfo& surface_info) override;
   void OnSurfaceActivated(const SurfaceId& surface_id) override;
@@ -188,6 +191,8 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
   // |surface_manager_| should be placed under |primary_source_| so that all
   // surfaces are destroyed before |primary_source_|.
   SurfaceManager surface_manager_;
+
+  HitTestManager hit_test_manager_;
 
   std::unordered_map<FrameSinkId,
                      std::unique_ptr<mojom::CompositorFrameSink>,
