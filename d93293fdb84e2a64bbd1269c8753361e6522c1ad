@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb136e3c_5a9031cd",
+        "filename": "cc/raster/raster_source_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-06T17:50:28Z",
+      "side": 1,
+      "message": "noisy",
+      "range": {
+        "startLine": 550,
+        "startChar": 8,
+        "endLine": 550,
+        "endChar": 14
+      },
+      "revId": "d93293fdb84e2a64bbd1269c8753361e6522c1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
