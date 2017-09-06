@@ -194,6 +194,14 @@ void MimeHandlerViewContainer::PluginDidReceiveData(const char* data,
 void MimeHandlerViewContainer::DidResizeElement(const gfx::Size& new_size) {
   element_size_ = new_size;
 
+  // Don't try to resize a guest that hasn't been created yet. It is enough to
+  // initialise |element_size_| here and then we'll send that to the browser
+  // during guest creation. If we resize in between sending the creation
+  // message and receiving the creation ACK, we'll send the pending resize
+  // message upon receiving the ACK.
+  if (!guest_created_)
+    return;
+
   render_frame()->Send(new ExtensionsGuestViewHostMsg_ResizeGuest(
       render_frame()->GetRoutingID(), element_instance_id(), new_size));
 }
@@ -271,8 +279,17 @@ void MimeHandlerViewContainer::OnCreateMimeHandlerViewGuestACK(
   DCHECK_NE(this->element_instance_id(), guest_view::kInstanceIDNone);
   DCHECK_EQ(this->element_instance_id(), element_instance_id);
 
+  guest_created_ = true;
+
   if (!render_frame())
     return;
+
+  if (element_size_at_creation_ != element_size_) {
+    // The element resized while we were waiting for the creation ACK. We
+    // deferred the sending of the resize message until now.
+    render_frame()->Send(new ExtensionsGuestViewHostMsg_ResizeGuest(
+        render_frame()->GetRoutingID(), element_instance_id, element_size_));
+  }
 
   render_frame()->AttachGuest(element_instance_id);
 }
@@ -319,10 +336,12 @@ void MimeHandlerViewContainer::CreateMimeHandlerViewGuest() {
   if (!render_frame())
     return;
 
+  element_size_at_creation_ = element_size_;
+
   render_frame()->Send(
       new ExtensionsGuestViewHostMsg_CreateMimeHandlerViewGuest(
           render_frame()->GetRoutingID(), view_id_, element_instance_id(),
-          element_size_));
+          element_size_at_creation_));
 }
 
 }  // namespace extensions

@@ -116,8 +116,17 @@ class MimeHandlerViewContainer : public guest_view::GuestViewContainer,
   // has been called.
   bool guest_loaded_;
 
+  // True once we receive an ACK from the browser that the guest has been
+  // created.
+  bool guest_created_ = false;
+
   // The size of the element.
   gfx::Size element_size_;
+
+  // The size of the element when we first create the guest.
+  // We use this to determine if the element is resized in between when we
+  // send the creation message and when we get the creation ACK.
+  gfx::Size element_size_at_creation_;
 
   base::WeakPtrFactory<MimeHandlerViewContainer> weak_factory_;
 
