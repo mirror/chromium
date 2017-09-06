@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8602abb_92fa9ac4",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-06T07:17:36Z",
+      "side": 1,
+      "message": "This test is failing.  HTML parser recognizes it as \"\u003cbr\u003e1\u003cbr\u003e\".",
+      "revId": "c15fd3041c2be141a56e54e4dee51d0b8c0bbbfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
