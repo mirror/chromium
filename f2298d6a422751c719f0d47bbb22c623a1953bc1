@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75f29ccb_e144e967",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-06T11:44:32Z",
+      "side": 1,
+      "message": "Do you actually need the static_cast here?  What does the compiler say if you leave it off?",
+      "revId": "f2298d6a422751c719f0d47bbb22c623a1953bc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31bf953_eac01d16",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-06T11:44:32Z",
+      "side": 1,
+      "message": "self.callableDispatcher?",
+      "revId": "f2298d6a422751c719f0d47bbb22c623a1953bc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
