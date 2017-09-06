@@ -122,6 +122,11 @@ class CronetEnvironment {
   // Used by Cronet tests.
   base::SingleThreadTaskRunner* GetFileThreadRunnerForTesting() const;
 
+  // Prepares the Cronet environment to be destroyed. The method must be
+  // executed on the network thread. No other tasks should be posted to the
+  // network thread after calling this method.
+  void PrepareForDestroyOnNetworkThread();
+
  private:
   // Performs initialization tasks that must happen on the network thread.
   void InitializeOnNetworkThread();
@@ -149,8 +154,6 @@ class CronetEnvironment {
                                            base::WaitableEvent* event);
 
   std::string getDefaultQuicUserAgentId() const;
-
-  void PrepareForDestroyOnNetworkThread();
 
   bool http2_enabled_;
   bool quic_enabled_;
