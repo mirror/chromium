@@ -273,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "23f36bbb_329e65ec",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-06T17:14:54Z",
+      "side": 1,
+      "message": "I\u0027d like to group these APIs into logical groups.\n\nWe have things that deal with WinRT here (and can name this file winrt_util.h). RoGetActivationFactory and RoActivateInstance are WinRT supporting APIs.\n\nHSTRINGs are a separate API and WinRT just happens to consume them, so having Windows*String and friends makes sense for this. Other APIs that aren\u0027t as closely related to WinRT (but are projected by the WinRT system) also consume HSTRINGs. A ScopedHString is the way to go for this.\n\nI can see a world where we have\n\n// Heavyweight HSTRING\nclass ScopedHString {\n public:\n  // WindowsCreateString + WindowsDeleteString, and any additional useful variants\n  static ScopedHString Create(const wchar_t* string);\n\n  // Loads all required HSTRING functions. These tend to be consistent since Win8.\n  static bool PreloadRequiredFunctions();\n\n  // Returns an HSTRING for use by Windows APIs.\n  HSTRING\u0026 GetHString() const;\n};\n\n// A way to quickly wrap preexisting strings for the purpose of passing them into APIs.\nclass ScopedHStringReference {\n public:\n  // WindowsCreateStringReference\n  ScopedHStringReference(const wchar_t* string);\n\n  // Returns an HSTRING for use by Windows APIs.\n  HSTRING\u0026 GetHString() const;  \n\n  // Loads all required HSTRING functions. These tend to be consistent since Win8.\n  static bool PreloadRequiredFunctions();\n}\n\nI see you\u0027ve used ScopedGeneric as a way to handle this, which seems fine.",
+      "parentUuid": "5048f617_99fe8a57",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82ef4107_d7e355fb",
         "filename": "base/win/com_base_util.h",
         "patchSetId": 4
