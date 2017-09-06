@@ -10,6 +10,8 @@
 #include "base/memory/ref_counted.h"
 #include "components/data_reduction_proxy/core/common/lofi_ui_service.h"
 
+class GURL;
+
 namespace base {
 class SingleThreadTaskRunner;
 }
@@ -24,8 +26,10 @@ class URLRequest;
 
 namespace data_reduction_proxy {
 
-using OnLoFiResponseReceivedCallback =
-    base::Callback<void(content::WebContents* web_contents)>;
+using OnPreviewsShownCallback =
+    base::Callback<void(content::WebContents* web_contents,
+                        previews::PreviewsType type,
+                        const GURL& non_preview_url)>;
 
 // Passes notifications to the UI thread that a Lo-Fi response has been
 // received. These notifications may be used to show Lo-Fi UI. This object lives
@@ -34,23 +38,27 @@ class ContentLoFiUIService : public LoFiUIService {
  public:
   ContentLoFiUIService(
       const scoped_refptr<base::SingleThreadTaskRunner>& ui_task_runner,
-      const OnLoFiResponseReceivedCallback& on_lofi_response_received_callback);
+      const OnPreviewsShownCallback& on_previews_shown_callback);
   ~ContentLoFiUIService() override;
 
   // LoFiUIService implementation:
-  void OnLoFiReponseReceived(const net::URLRequest& request) override;
+  void OnPreviewsShown(const net::URLRequest& request,
+                       previews::PreviewsType type,
+                       const GURL& non_preview_url) override;
 
  private:
   // Using the |render_process_id| and |render_frame_id|, gets the associated
   // WebContents if it exists and runs the
-  // |notify_lofi_response_received_callback_|.
-  void OnLoFiResponseReceivedOnUIThread(int render_process_id,
-                                        int render_frame_id);
+  // |notify_previews_shown_callback_|.
+  void OnPreviewsShownOnUIThread(int render_process_id,
+                                 int render_frame_id,
+                                 previews::PreviewsType type,
+                                 const GURL& non_preview_url);
 
   // A task runner to post calls to OnLoFiReponseReceivedOnUI on the UI
   // thread.
   const scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner_;
-  const OnLoFiResponseReceivedCallback on_lofi_response_received_callback_;
+  const OnPreviewsShownCallback on_previews_shown_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(ContentLoFiUIService);
 };

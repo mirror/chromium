@@ -104,6 +104,8 @@ class DataReductionProxyNetworkDelegate : public net::LayeredNetworkDelegate {
   void OnBeforeRedirectInternal(net::URLRequest* request,
                                 const GURL& new_location) override;
 
+  void OnResponseStartedInternal(net::URLRequest* request) override;
+
   // Indicates that the URL request has been completed or failed.
   // |started| indicates whether the request has been started. If false,
   // some information like the socket address is not available.

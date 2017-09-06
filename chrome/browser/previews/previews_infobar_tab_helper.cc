@@ -87,7 +87,7 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
             DataReductionProxyChromeSettingsFactory::GetForBrowserContext(
                 web_contents()->GetBrowserContext());
     PreviewsInfoBarDelegate::Create(
-        web_contents(), previews::PreviewsType::OFFLINE,
+        web_contents(), previews::PreviewsType::OFFLINE, GURL(),
         base::Time() /* previews_freshness */, false /* is_reload */,
         data_reduction_proxy_settings &&
             data_reduction_proxy_settings->IsDataReductionProxyEnabled(),
@@ -106,8 +106,8 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
     base::Time previews_freshness;
     headers->GetDateValue(&previews_freshness);
     PreviewsInfoBarDelegate::Create(
-        web_contents(), previews::PreviewsType::LITE_PAGE, previews_freshness,
-        true /* is_data_saver_user */, is_reload,
+        web_contents(), previews::PreviewsType::LITE_PAGE, GURL(),
+        previews_freshness, true /* is_data_saver_user */, is_reload,
         base::Bind(&AddPreviewNavigationCallback,
                    web_contents()->GetBrowserContext(),
                    navigation_handle->GetRedirectChain()[0],

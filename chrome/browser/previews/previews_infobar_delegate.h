@@ -13,6 +13,8 @@
 
 class PreviewsInfoBarTabHelper;
 
+class GURL;
+
 namespace content {
 class WebContents;
 }
@@ -56,6 +58,7 @@ class PreviewsInfoBarDelegate : public ConfirmInfoBarDelegate {
   static void Create(
       content::WebContents* web_contents,
       previews::PreviewsType previews_type,
+      const GURL& non_preview_url,
       base::Time previews_freshness,
       bool is_data_saver_user,
       bool is_reload,
@@ -75,6 +78,7 @@ class PreviewsInfoBarDelegate : public ConfirmInfoBarDelegate {
   PreviewsInfoBarDelegate(
       PreviewsInfoBarTabHelper* infobar_tab_helper,
       previews::PreviewsType previews_type,
+      const GURL& non_preview_url,
       base::Time previews_freshness,
       bool is_data_saver_user,
       bool is_reload,
@@ -93,6 +97,11 @@ class PreviewsInfoBarDelegate : public ConfirmInfoBarDelegate {
   // value of zero means that the creation time is unknown.
   const base::Time previews_freshness_;
   const bool is_reload_;
+
+  // URL for the non previews version of the page. This is used to reload
+  // without previews, if set.
+  const GURL non_preview_url_;
+
   mutable PreviewsInfoBarAction infobar_dismissed_action_;
 
   const base::string16 message_text_;
