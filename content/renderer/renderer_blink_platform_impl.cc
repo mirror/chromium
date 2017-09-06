@@ -509,22 +509,6 @@ void RendererBlinkPlatformImpl::SuddenTerminationChanged(bool enabled) {
     thread->Send(new RenderProcessHostMsg_SuddenTerminationChanged(enabled));
 }
 
-std::unique_ptr<WebStorageNamespace>
-RendererBlinkPlatformImpl::CreateLocalStorageNamespace() {
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableMojoLocalStorage)) {
-    if (!local_storage_cached_areas_) {
-      local_storage_cached_areas_.reset(new LocalStorageCachedAreas(
-          RenderThreadImpl::current()->GetStoragePartitionService()));
-    }
-    return base::MakeUnique<LocalStorageNamespace>(
-        local_storage_cached_areas_.get());
-  }
-
-  return base::MakeUnique<WebStorageNamespaceImpl>();
-}
-
-
 //------------------------------------------------------------------------------
 
 WebIDBFactory* RendererBlinkPlatformImpl::IdbFactory() {

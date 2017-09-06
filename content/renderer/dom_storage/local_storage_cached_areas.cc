@@ -4,23 +4,23 @@
 
 #include "content/renderer/dom_storage/local_storage_cached_areas.h"
 
+#include "content/public/renderer/render_frame.h"
 #include "content/renderer/dom_storage/local_storage_cached_area.h"
+#include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
+#include "third_party/WebKit/public/web/WebDocument.h"
+#include "third_party/WebKit/public/web/WebLocalFrame.h"
 
 namespace content {
 
-LocalStorageCachedAreas::LocalStorageCachedAreas(
-    mojom::StoragePartitionService* storage_partition_service)
-    : storage_partition_service_(storage_partition_service) {}
+LocalStorageCachedAreas::LocalStorageCachedAreas() {}
 
-LocalStorageCachedAreas::~LocalStorageCachedAreas() {
-}
+LocalStorageCachedAreas::~LocalStorageCachedAreas() {}
 
 scoped_refptr<LocalStorageCachedArea> LocalStorageCachedAreas::GetCachedArea(
-    const url::Origin& origin) {
-  if (cached_areas_.find(origin) == cached_areas_.end()) {
-    cached_areas_[origin] = new LocalStorageCachedArea(
-        origin, storage_partition_service_, this);
-  }
+    blink::WebLocalFrame* web_frame) {
+  url::Origin origin = web_frame->GetDocument().GetSecurityOrigin();
+  if (cached_areas_.find(origin) == cached_areas_.end())
+    cached_areas_[origin] = new LocalStorageCachedArea(web_frame, this);
 
   return make_scoped_refptr(cached_areas_[origin]);
 }

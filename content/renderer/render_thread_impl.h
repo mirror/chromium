@@ -39,7 +39,6 @@
 #include "content/common/render_message_filter.mojom.h"
 #include "content/common/renderer.mojom.h"
 #include "content/common/renderer_host.mojom.h"
-#include "content/common/storage_partition_service.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/renderer/render_thread.h"
 #include "content/renderer/gpu/compositor_dependencies.h"
@@ -492,7 +491,6 @@ class CONTENT_EXPORT RenderThreadImpl
       mojom::FrameRequest frame,
       mojom::FrameHostInterfaceBrokerPtr host);
 
-  mojom::StoragePartitionService* GetStoragePartitionService();
   mojom::RendererHost* GetRendererHost();
 
   // ChildMemoryCoordinatorDelegate implementation.
@@ -784,7 +782,6 @@ class CONTENT_EXPORT RenderThreadImpl
       std::map<int, scoped_refptr<PendingFrameCreate>>;
   PendingFrameCreateMap pending_frame_creates_;
 
-  mojom::StoragePartitionServicePtr storage_partition_service_;
   mojom::RendererHostPtr renderer_host_;
 
   AssociatedInterfaceRegistryImpl associated_interfaces_;
