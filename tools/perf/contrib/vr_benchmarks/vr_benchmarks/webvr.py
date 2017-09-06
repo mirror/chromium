@@ -3,26 +3,17 @@
 # found in the LICENSE file.
 
 from benchmarks import memory
-from core import perf_benchmark
 from telemetry import benchmark
 from telemetry.timeline import chrome_trace_category_filter
 from telemetry.timeline import chrome_trace_config
 from telemetry.web_perf import timeline_based_measurement
 from contrib.vr_benchmarks.vr_page_sets import webvr_sample_pages
+from contrib.vr_benchmarks.vr_benchmarks.base_vr_benchmark import _BaseVRBenchmark
 
 
 @benchmark.Owner(emails=['bsheedy@chromium.org', 'leilei@chromium.org'])
-class XrWebVrStatic(perf_benchmark.PerfBenchmark):
+class XrWebVrStatic(_BaseVRBenchmark):
   """Measures WebVR performance with sample pages."""
-
-  @classmethod
-  def AddBenchmarkCommandLineArgs(cls, parser):
-    parser.add_option('--shared-prefs-file',
-                      help='The path relative to the Chromium source root '
-                           'to a file containing a JSON list of shared '
-                           'preference files to edit and how to do so. '
-                           'See examples in //chrome/android/'
-                           'shared_preference_files/test/')
 
   def CreateCoreTimelineBasedMeasurementOptions(self):
     memory_categories = ['blink.console', 'disabled-by-default-memory-infra']
@@ -43,7 +34,9 @@ class XrWebVrStatic(perf_benchmark.PerfBenchmark):
 
   def SetExtraBrowserOptions(self, options):
     memory.SetExtraBrowserOptionsForMemoryMeasurement(options)
-    options.AppendExtraBrowserArgs(['--enable-webvr',])
+    options.AppendExtraBrowserArgs([
+        '--enable-webvr',
+    ])
 
   @classmethod
   def Name(cls):
