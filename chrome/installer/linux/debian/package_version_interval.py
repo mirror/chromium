@@ -127,11 +127,11 @@ def format_package_intervals(m):
       lines.append(package + ' (= ' + str(interval.start._version) + ')\n')
     else:
       if not interval.start._is_open:
-        op = '>=' if interval.start._is_inclusive else '>'
+        op = '>=' if interval.start._is_inclusive else '>>'
         lines.append(package + ' (' + op + ' ' +
                      str(interval.start._version) +')\n')
       if not interval.end._is_open:
-        op = '<=' if interval.end._is_inclusive else '<'
+        op = '<=' if interval.end._is_inclusive else '<<'
         lines.append(package + ' (' + op + ' ' +
                      str(interval.end._version) + ')\n')
   return ''.join(sorted(lines))
