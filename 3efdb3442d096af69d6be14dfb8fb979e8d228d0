@@ -355,6 +355,24 @@
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b823e777_d10db18b",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-06T23:09:02Z",
+      "side": 1,
+      "message": "On ARC++, the state change is initiated by Android, not chrome.\nThe maximize() from chrome is just a request, not really event in ARC++ case,\nbecause it may or may not maximize.  It may result in a confirmation dialog.\nWe don\u0027t really know the size the application will use.\n\nThe current implementation has to be updated to just send a request \n(which should fix the bug like this crbug.com/36724503).\n\n\nI understand that\u0027s standard wayland model, but this isn\u0027t regular wayland client, and I believe we agreed to implement this way first?\n\nWe have everything we need here. Why we need configure? I understand this case can be implemented using configure, but it sounds more complicated than necessary.",
+      "parentUuid": "c8082a55_8d4d7430",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

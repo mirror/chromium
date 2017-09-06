@@ -124,6 +124,24 @@
       "revId": "e16ce506b34e26dcd2b8757eb954176f49abad7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf29bbb_4b285822",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-06T23:09:02Z",
+      "side": 1,
+      "message": "yeah, something like that would work, although it may be more work than simply cross fading between two here. Let\u0027s chat offline today.",
+      "parentUuid": "05ac5ce4_f35f8b7c",
+      "revId": "e16ce506b34e26dcd2b8757eb954176f49abad7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
