@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2d1fbee_7d71671d",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-06T16:25:28Z",
+      "side": 1,
+      "message": "This is no longer needed if we use ImeController.",
+      "parentUuid": "aba9fd94_4ecc3ad4",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f08a1ba1_3a3cbb3a",
         "filename": "ash/login/ui/login_auth_user_view.cc",
         "patchSetId": 1
@@ -130,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "32e8e719_dab0bbe7",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-06T16:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b780909_88a8d71b",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86ed0933_e6a3ecb3",
         "filename": "ash/login/ui/login_auth_user_view.cc",
         "patchSetId": 1
@@ -141,6 +177,24 @@
       "writtenOn": "2017-09-05T17:00:58Z",
       "side": 1,
       "message": "Is this how the existing webui code handles joining the two strings?",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74831aa5_681c4ea6",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-06T16:25:28Z",
+      "side": 1,
+      "message": "Yes, this is same as the existing webui code: https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/ui/webui_login_display.cc?rcl\u003d728e23ba2703a84822d963ddaeb3ca0794480b9b\u0026l\u003d138",
+      "parentUuid": "86ed0933_e6a3ecb3",
       "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -182,6 +236,24 @@
     },
     {
       "key": {
+        "uuid": "61b2266d_e6689361",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-06T16:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c2a4dd5_9108e3c0",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dba821dc_24243a14",
         "filename": "ash/login/ui/login_auth_user_view.cc",
         "patchSetId": 1
@@ -205,6 +277,30 @@
     },
     {
       "key": {
+        "uuid": "08e1c075_7015dd26",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-06T16:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dba821dc_24243a14",
+      "range": {
+        "startLine": 356,
+        "startChar": 28,
+        "endLine": 356,
+        "endChar": 40
+      },
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eac46f57_deaa7dbf",
         "filename": "ash/login/ui/login_base_bubble_view.cc",
         "patchSetId": 1
@@ -219,6 +315,24 @@
       "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e1184d_f0bbbbc8",
+        "filename": "ash/login/ui/login_base_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-06T16:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eac46f57_deaa7dbf",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -245,6 +359,30 @@
     },
     {
       "key": {
+        "uuid": "152d5eaa_1f9ee138",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-06T16:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba6e9874_254c0378",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 5
+      },
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c05ebdd_70ee4651",
         "filename": "ash/login/ui/login_bubble.cc",
         "patchSetId": 1
@@ -256,6 +394,24 @@
       "writtenOn": "2017-09-05T17:32:01Z",
       "side": 1,
       "message": "There could be a \"Remove this user\" action in the user menu. How would we support that?",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204f1235_8f674756",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-06T16:25:28Z",
+      "side": 1,
+      "message": "Added show_remove_user parameter for this user case.",
+      "parentUuid": "9c05ebdd_70ee4651",
       "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -279,6 +435,24 @@
     },
     {
       "key": {
+        "uuid": "0010af23_b7452116",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-06T16:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fa33be2_a2bf3ef9",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b23b8d0_1572d866",
         "filename": "ash/login/ui/login_bubble.cc",
         "patchSetId": 1
@@ -290,6 +464,24 @@
       "writtenOn": "2017-09-05T17:00:58Z",
       "side": 1,
       "message": "Does views::View::HitTestPoint work? If so, you could probably simplify a lot of this code.",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d4b24e_7efd000c",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-06T16:25:28Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. I tried it and it works when I clicked on the text, but not on the margin area.",
+      "parentUuid": "3b23b8d0_1572d866",
       "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -313,6 +505,24 @@
     },
     {
       "key": {
+        "uuid": "c7e0427f_d4069b28",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-06T16:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eb79e7a_1e6106b6",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ce274a7_8eed76d2",
         "filename": "ash/login/ui/login_bubble.h",
         "patchSetId": 1
@@ -327,6 +537,24 @@
       "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb908d9_4014e17f",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-06T16:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ce274a7_8eed76d2",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +575,24 @@
     },
     {
       "key": {
+        "uuid": "ac569f76_b0be1a1f",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-06T16:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3aea426_7f91f837",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a0afd2d_cadc3c9e",
         "filename": "ash/login/ui/login_user_view.cc",
         "patchSetId": 1
@@ -361,6 +607,24 @@
       "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055e3e57_efcb1019",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-06T16:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a0afd2d_cadc3c9e",
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -384,6 +648,30 @@
       "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ac3267_5c06e1a9",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-06T16:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8f9131d_37419c2a",
+      "range": {
+        "startLine": 372,
+        "startChar": 29,
+        "endLine": 372,
+        "endChar": 41
+      },
+      "revId": "281a94f429d51a504e091f60fba085bf3bb99c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
