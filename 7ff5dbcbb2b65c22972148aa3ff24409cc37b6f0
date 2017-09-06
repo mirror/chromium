@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f6cde72_dfbbca25",
+        "filename": "chrome/browser/plugins/plugin_observer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-06T01:40:51Z",
+      "side": 1,
+      "message": "comment here and below need updating (or removing)",
+      "revId": "7ff5dbcbb2b65c22972148aa3ff24409cc37b6f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
