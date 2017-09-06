@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c4385cc_06c82b97",
+        "filename": "chrome/browser/media_galleries/media_galleries_preferences.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-06T21:41:34Z",
+      "side": 1,
+      "message": "I think this now should be \u003d 2, and then you can probably remove this whole infrastructure once you remove the Picasa one, as then you can just call FinishInitialialization from OnStorageMonitorInit.",
+      "revId": "8e5327ab1e1d938546fab67914333e9d75bf2111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
