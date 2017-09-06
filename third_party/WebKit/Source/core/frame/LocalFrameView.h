@@ -913,6 +913,10 @@ class CORE_EXPORT LocalFrameView final
     void DestroyScrollbar(ScrollbarOrientation) override;
   };
 
+  void PaintInternal(GraphicsContext&,
+                     const GlobalPaintFlags,
+                     const CullRect&) const;
+
   LocalFrameView* ParentFrameView() const;
 
   void UpdateScrollOffset(const ScrollOffset&, ScrollType) override;
