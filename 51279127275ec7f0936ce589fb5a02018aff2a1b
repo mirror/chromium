@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "af5e4297_c8642fca",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-06T02:21:09Z",
+      "side": 1,
+      "message": "I think \"Fence\" is more popular word for memory barriers though it\u0027s not common in chromium code.\nWaitForOneWorker sounds good to me.",
+      "parentUuid": "75da4126_c9bfe443",
+      "revId": "51279127275ec7f0936ce589fb5a02018aff2a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "554acac9_4b81fe02",
         "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
         "patchSetId": 12
