@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad7901ac_baee479c",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-06T18:44:10Z",
+      "side": 1,
+      "message": "Move it down to where it\u0027s needed.",
+      "range": {
+        "startLine": 92,
+        "startChar": 6,
+        "endLine": 92,
+        "endChar": 52
+      },
+      "revId": "58e5f35128e4b03f5436cfe0c2faa8985a0c3d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf79826_21773c10",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-06T18:44:10Z",
+      "side": 1,
+      "message": "How is it relevant here?",
+      "range": {
+        "startLine": 100,
+        "startChar": 37,
+        "endLine": 100,
+        "endChar": 56
+      },
+      "revId": "58e5f35128e4b03f5436cfe0c2faa8985a0c3d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5a9d0e_d4589fe9",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2416,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-06T18:44:10Z",
+      "side": 1,
+      "message": "I think it\u0027s pretty essential that you assign different passwords below. There should be a comment on it.",
+      "range": {
+        "startLine": 2416,
+        "startChar": 14,
+        "endLine": 2416,
+        "endChar": 29
+      },
+      "revId": "58e5f35128e4b03f5436cfe0c2faa8985a0c3d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d2257d0_ad1ca8d0",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2426,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-06T18:44:10Z",
+      "side": 1,
+      "message": "And where is it checked below??",
+      "range": {
+        "startLine": 2426,
+        "startChar": 26,
+        "endLine": 2426,
+        "endChar": 61
+      },
+      "revId": "58e5f35128e4b03f5436cfe0c2faa8985a0c3d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "228dc410_b4013d05",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-06T18:44:10Z",
+      "side": 1,
+      "message": "I\u0027m confused by the test. It kinda suggests that other_possible_passwords should be written to the database which is false.\nInstead you just need to check pending_credential.other_possible_passwords. There is no need to call Save.",
+      "range": {
+        "startLine": 1622,
+        "startChar": 27,
+        "endLine": 1622,
+        "endChar": 51
+      },
+      "revId": "58e5f35128e4b03f5436cfe0c2faa8985a0c3d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
