@@ -43,6 +43,14 @@ const char kRealmKey[] = "realm";
 const char kAuthCredentialsKey[] = "authCredentials";
 const char kUsernameKey[] = "username";
 const char kPasswordKey[] = "password";
+const char kTLSInfoKey[] = "tlsInfo";
+const char kTLSSentChainKey[] = "sentChain";
+const char kTLSBuiltChainKey[] = "builtChain";
+const char kTLSBuiltChainValidKey[] = "chainValid";
+const char kTLSProtocolKey[] = "protocol";
+const char kTLSVersionKey[] = "tlsVersion";
+const char kTLSKeyExchangeKey[] = "keyExchangeGroup";
+const char kTLSCipherSuiteKey[] = "cipherSuite";
 
 const char kOnBeforeRedirectEvent[] = "webRequest.onBeforeRedirect";
 const char kOnBeforeSendHeadersEvent[] = "webRequest.onBeforeSendHeaders";
