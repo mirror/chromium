@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f24f16b6_6cde543c",
+        "filename": "chrome/installer/linux/debian/merge-package-versions.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-06T23:02:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21f7ce86_5096d00e",
+      "revId": "6f60a73eda560f46adc0a8d26841493b9d9bbafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec6d5556_0410e470",
         "filename": "chrome/installer/linux/debian/merge-package-versions.py",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d70e72b7_e6d8b447",
+        "filename": "chrome/installer/linux/debian/merge-package-versions.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-06T23:02:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec6d5556_0410e470",
+      "revId": "6f60a73eda560f46adc0a8d26841493b9d9bbafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2ec227e_37b82fab",
         "filename": "chrome/installer/linux/debian/package_version_interval.py",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "6f60a73eda560f46adc0a8d26841493b9d9bbafb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74eb523_f0cdfded",
+        "filename": "chrome/installer/linux/debian/package_version_interval.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-06T23:02:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2ec227e_37b82fab",
+      "revId": "6f60a73eda560f46adc0a8d26841493b9d9bbafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
