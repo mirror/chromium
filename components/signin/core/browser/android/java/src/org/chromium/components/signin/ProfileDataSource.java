@@ -17,12 +17,25 @@ public interface ProfileDataSource {
      * Immutable holder for profile data.
      */
     class ProfileData {
+        // TODO(bsazonov): remove @Nullable after removing ctor without this parameter.
+        private final @Nullable String mAccountName;
+
         private final @Nullable Bitmap mAvatar;
         private final @Nullable String mFullName;
         private final @Nullable String mGivenName;
 
+        @Deprecated
         public ProfileData(
                 @Nullable Bitmap avatar, @Nullable String fullName, @Nullable String givenName) {
+            this.mAccountName = null;
+            this.mAvatar = avatar;
+            this.mFullName = fullName;
+            this.mGivenName = givenName;
+        }
+
+        public ProfileData(String accountName, @Nullable Bitmap avatar, @Nullable String fullName,
+                @Nullable String givenName) {
+            this.mAccountName = accountName;
             this.mAvatar = avatar;
             this.mFullName = fullName;
             this.mGivenName = givenName;
