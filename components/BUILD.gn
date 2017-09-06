@@ -98,6 +98,7 @@ test("components_unittests") {
     "//components/login:unit_tests",
     "//components/machine_intelligence:unit_tests",
     "//components/metrics:unit_tests",
+    "//components/multidevice:unit_tests",
     "//components/navigation_metrics:unit_tests",
     "//components/net_log:unit_tests",
     "//components/network_session_configurator/browser:unit_tests",
@@ -279,7 +280,6 @@ test("components_unittests") {
       # See comment in components/guest_view/browser/BUILD.gn for why
       # guest_view is currently non-mobile.
       "//components/guest_view/browser:unit_tests",
-      "//components/multidevice:unit_tests",
       "//components/proximity_auth:unit_tests",
       "//components/storage_monitor:unit_tests",
       "//components/web_modal:unit_tests",
