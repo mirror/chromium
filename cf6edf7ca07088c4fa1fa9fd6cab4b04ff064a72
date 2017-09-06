@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fa86e95_3eea3e1e",
+        "filename": "ash/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T21:54:56Z",
+      "side": 1,
+      "message": "I checked with rockot@, we prefer the target to be called \"cpp\" so this becomes //ui/message_center/public/cpp. ash_public_cpp is doing it wrong. :-(",
+      "revId": "cf6edf7ca07088c4fa1fa9fd6cab4b04ff064a72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c0e0a6_8698e850",
+        "filename": "ui/message_center/public/cpp/message_center_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T21:54:56Z",
+      "side": 1,
+      "message": "Do you have a sense for how much of this stuff is internal only? If it\u0027s a lot of it, does it make sense to do the split now?",
+      "revId": "cf6edf7ca07088c4fa1fa9fd6cab4b04ff064a72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0013e67b_b235c8c4",
+        "filename": "ui/message_center/public/cpp/message_center_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-06T21:54:56Z",
+      "side": 1,
+      "message": "nit: Is this needed?",
+      "revId": "cf6edf7ca07088c4fa1fa9fd6cab4b04ff064a72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
