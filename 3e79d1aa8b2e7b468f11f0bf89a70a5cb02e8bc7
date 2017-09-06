@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "471e0e3e_468c7afb",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-06T17:59:48Z",
+      "side": 1,
+      "message": "I think reveman@ prefer 2 APIs here so that we can use them separately.\n\nThis may not the final solution to add this cache and deferred painting. reveman@ has another cl to use trilinear filter for better scaled display. I would like in this cl only focus on the UI deferred painting API and remove all the distractions such as how to use the API and cache in overview mode?",
+      "parentUuid": "3a6e93b2_a1b57e6a",
+      "range": {
+        "startLine": 210,
+        "startChar": 16,
+        "endLine": 210,
+        "endChar": 34
+      },
+      "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bec118a2_0b65f12f",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-05T15:23:40Z",
       "side": 1,
       "message": "nit: use range-based loop to enumerate |children_| (but maybe this can be cleaned up separately here and elsewhere in layer.cc, along with NULL-\u003enullptr).",
+      "range": {
+        "startLine": 911,
+        "startChar": 2,
+        "endLine": 911,
+        "endChar": 47
+      },
+      "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d41112_fa16a546",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-06T17:59:48Z",
+      "side": 1,
+      "message": "Will do in the next cl. Thanks.\nCreated a bug assigned to me: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d762615",
+      "parentUuid": "bec118a2_0b65f12f",
       "range": {
         "startLine": 911,
         "startChar": 2,
