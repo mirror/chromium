@@ -1101,7 +1101,7 @@ TEST_F(RenderWidgetHostTest, Background) {
   // TODO(derat): Call this on all platforms: http://crbug.com/102450.
   view->InitAsChild(NULL);
 #elif defined(OS_ANDROID)
-  view.reset(new RenderWidgetHostViewAndroid(host_.get(), NULL));
+  view.reset(new RenderWidgetHostViewAndroid(host_.get()));
 #endif
   host_->SetView(view.get());
 

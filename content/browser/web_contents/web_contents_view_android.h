@@ -37,6 +37,7 @@ class WebContentsViewAndroid : public WebContentsView,
   // by its Java ContentViewCore counterpart, whose lifetime is managed
   // by the UI frontend.
   void SetContentViewCore(ContentViewCore* content_view_core);
+  void LinkRenderWidgetHostView(RenderWidgetHostViewAndroid* rwhv);
 
   void set_synchronous_compositor_client(SynchronousCompositorClient* client) {
     synchronous_compositor_client_ = client;
