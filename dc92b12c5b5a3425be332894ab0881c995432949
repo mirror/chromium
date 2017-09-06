@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14bd48d4_023acb9f",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-06T17:13:18Z",
+      "side": 1,
+      "message": "Drive-by:\nSince we only care whether or not all results were SERVICE_WORKER_OK, can we can avoid using this vector and use an int (to count how many failed) or bool (to indicate whether any failed)?\nI was thinking sth like:\n\na)\nnum_worker_stop_errors_ +\u003d (status !\u003d SERVICE_WORKER_OK);\nand in the end\nresult \u003d num_worker_errors_ \u003d\u003d 0;\n\nor\nb)\nbool any_worker_failed_ \u003d false;\nany_worker_failed_ |\u003d (status !\u003d SERVICE_WORKER_OK);\nand in the end\nresult \u003d !any_worker_failed_;",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "dc92b12c5b5a3425be332894ab0881c995432949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
