@@ -16,6 +16,24 @@
       "revId": "0e36cc1f662f51a62f497393e8f1ad3421913990",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff85251_564536b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelsInitializer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-06T15:42:21Z",
+      "side": 1,
+      "message": "\u003e erm, bit late now, but shouldn\u0027t this be passing \u0027false\u0027?\n\nSure looks like it.\n\nAny idea how the test [1] passes!?\n\n[1] https://cs.chromium.org/chromium/src/chrome/android/javatests/src/org/chromium/chrome/browser/notifications/channels/ChannelsInitializerTest.java?l\u003d252",
+      "parentUuid": "d7c9f6e8_7ef12505",
+      "revId": "0e36cc1f662f51a62f497393e8f1ad3421913990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
