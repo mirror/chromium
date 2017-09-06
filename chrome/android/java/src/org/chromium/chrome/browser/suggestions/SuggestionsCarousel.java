@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.cards.ImpressionTracker;
 import org.chromium.chrome.browser.ntp.cards.ItemViewType;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder;
@@ -43,8 +44,9 @@ public class SuggestionsCarousel extends OptionalLeaf implements ImpressionTrack
     @Nullable
     private String mCurrentContextUrl;
 
-    public SuggestionsCarousel(UiConfig uiConfig, SuggestionsUiDelegate uiDelegate) {
-        mAdapter = new SuggestionsCarouselAdapter(uiConfig, uiDelegate);
+    public SuggestionsCarousel(UiConfig uiConfig, SuggestionsUiDelegate uiDelegate,
+            ContextMenuManager contextMenuManager) {
+        mAdapter = new SuggestionsCarouselAdapter(uiConfig, uiDelegate, contextMenuManager);
         mUiDelegate = uiDelegate;
 
         // The impression tracker will record metrics only once per bottom sheet opened.
