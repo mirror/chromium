@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9344ef5_2e8197c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-06T01:23:30Z",
+      "side": 1,
+      "message": "nit: Please remove a trailing whitespace.",
+      "revId": "1d5a0a084695ddcf576c8b8d8d69acd51615b073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
