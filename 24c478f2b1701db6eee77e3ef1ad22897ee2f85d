@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d1b60d4_dceba5f4",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-09-06T02:52:18Z",
+      "side": 1,
+      "message": "nit: accidental comment",
+      "revId": "24c478f2b1701db6eee77e3ef1ad22897ee2f85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43fe434b_cfc23328",
+        "filename": "content/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1991,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-09-06T02:52:18Z",
+      "side": 0,
+      "message": "These files are not removed from the repo in this patch.  Need to do \"git rm\"",
+      "revId": "d2bc9edfd8862f72ec34f4e18a7858e5bc1f326a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29774ee1_31bec2ca",
+        "filename": "content/public/android/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-09-06T02:52:18Z",
+      "side": 0,
+      "message": "This file is not removed from the repo in this patch.  Need to do \"git rm\"",
+      "revId": "d2bc9edfd8862f72ec34f4e18a7858e5bc1f326a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
