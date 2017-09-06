@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "b69a5b56_3d9730bf",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_fab_indicator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-06T16:12:11Z",
+      "side": 1,
+      "message": "here\u0027s one: https://cs.chromium.org/chromium/src/chrome/browser/ui/views/location_bar/icon_label_bubble_view.cc?rcl\u003de1a632525403fde467852059a414872b8f068fb6\u0026l\u003d84",
+      "parentUuid": "6f667f22_7a91d73c",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 3
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3921c66e_49865a3f",
         "filename": "chrome/browser/ui/views/fab_icon_view.cc",
         "patchSetId": 9
@@ -212,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "cd92b84a_b0553ce7",
+        "filename": "chrome/browser/ui/views/fab_icon_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-06T16:12:11Z",
+      "side": 1,
+      "message": "Yes, please. Naming is hard, so I would be OK with \"fab\" if there were absolutely no better alternative, but in that case the comment would need to explain what it stands for.\n\nAlso, this view is not a views::Button and doesn\u0027t handle input, so even \"FloatingActionButton\" is a deceptive name.",
+      "parentUuid": "eabce93a_c81a6f9d",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01d1d5d1_d51bcfee",
         "filename": "chrome/browser/ui/views/fab_icon_view.h",
         "patchSetId": 9
@@ -306,6 +354,24 @@
       "side": 1,
       "message": "There is already close.icon in vector_icons. I tried to reuse that but it is 16x16 and I was not allowed to scale it to 24x24...\n\nI don\u0027t think there is any difference other than scaling. Just remove the old close icon and rename close.1x to close?",
       "parentUuid": "c939957f_12e8d2c1",
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0d2fb5_1c3306c6",
+        "filename": "components/vector_icons/ic_close.icon",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-06T16:12:11Z",
+      "side": 1,
+      "message": "no, we can\u0027t remove the old close icon. This is an unfortunate limitation of the vector icons but one we don\u0027t run into very often[1]. I would say the least bad approach is to rename the current close.icon and close.1x.icon to close_16* and add this one as close.icon.\n\n[1]crbug.com/647286",
+      "parentUuid": "d1953f6a_67f94393",
       "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
