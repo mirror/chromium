@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7c1bf87_dbb76519",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-06T16:36:12Z",
+      "side": 1,
+      "message": "It looks like this would be a useful Test Rule to create more generally.",
+      "range": {
+        "startLine": 97,
+        "startChar": 28,
+        "endLine": 97,
+        "endChar": 51
+      },
+      "revId": "81d4cb2729fb6a12c80cc7d690e84bfc8e0b327c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a2f578_a070b1aa",
+        "filename": "chrome/test/data/android/render_tests/ArticleSnippetsTest.modern-download_snippet_placeholder.Nexus_5-19.png",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-06T16:36:12Z",
+      "side": 1,
+      "message": "Do we have downloads cards in modern?\n\nI\u0027ve got to say the \"publisher\" field looks a bit ugly - like it\u0027s always going to be truncated. I wonder if we should get rid of it, or change the layout slightly.",
+      "revId": "81d4cb2729fb6a12c80cc7d690e84bfc8e0b327c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
