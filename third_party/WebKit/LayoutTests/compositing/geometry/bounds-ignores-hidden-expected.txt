@@ -9,20 +9,9 @@
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV class='composited'",
+      "position": [10, 10],
       "bounds": [50, 50],
-      "contentsOpaque": true,
-      "transform": 1
-    }
-  ],
-  "transforms": [
-    {
-      "id": 1,
-      "transform": [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [10, 10, 0, 1]
-      ]
+      "contentsOpaque": true
     }
   ]
 }

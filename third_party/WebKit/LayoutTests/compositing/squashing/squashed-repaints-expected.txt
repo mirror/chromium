@@ -15,27 +15,15 @@ CASE 1, original layer tree:
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV class='composited'",
+      "position": [60, 60],
       "bounds": [100, 100],
       "contentsOpaque": true,
-      "backgroundColor": "#808080",
-      "transform": 1
+      "backgroundColor": "#808080"
     },
     {
       "name": "Squashing Layer (first squashed layer: LayoutBlockFlow (positioned) DIV id='A' class='overlap1')",
       "position": [140, 140],
       "bounds": [260, 260]
-    }
-  ],
-  "transforms": [
-    {
-      "id": 1,
-      "transform": [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [60, 60, 0, 1]
-      ],
-      "flattenInheritedTransform": false
     }
   ]
 }
@@ -54,10 +42,10 @@ CASE 2, overlap1 changes color:
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV class='composited'",
+      "position": [60, 60],
       "bounds": [100, 100],
       "contentsOpaque": true,
-      "backgroundColor": "#808080",
-      "transform": 1
+      "backgroundColor": "#808080"
     },
     {
       "name": "Squashing Layer (first squashed layer: LayoutBlockFlow (positioned) DIV id='A' class='overlap1')",
@@ -70,18 +58,6 @@ CASE 2, overlap1 changes color:
           "reason": "style change"
         }
       ]
-    }
-  ],
-  "transforms": [
-    {
-      "id": 1,
-      "transform": [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [60, 60, 0, 1]
-      ],
-      "flattenInheritedTransform": false
     }
   ],
   "objectPaintInvalidations": [
@@ -106,10 +82,10 @@ CASE 3, overlap1 and overlap2 change color:
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV class='composited'",
+      "position": [60, 60],
       "bounds": [100, 100],
       "contentsOpaque": true,
-      "backgroundColor": "#808080",
-      "transform": 1
+      "backgroundColor": "#808080"
     },
     {
       "name": "Squashing Layer (first squashed layer: LayoutBlockFlow (positioned) DIV id='A' class='overlap1')",
@@ -127,18 +103,6 @@ CASE 3, overlap1 and overlap2 change color:
           "reason": "style change"
         }
       ]
-    }
-  ],
-  "transforms": [
-    {
-      "id": 1,
-      "transform": [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [60, 60, 0, 1]
-      ],
-      "flattenInheritedTransform": false
     }
   ],
   "objectPaintInvalidations": [
@@ -167,10 +131,10 @@ CASE 4, overlap2 and overlap3 change color:
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV class='composited'",
+      "position": [60, 60],
       "bounds": [100, 100],
       "contentsOpaque": true,
-      "backgroundColor": "#808080",
-      "transform": 1
+      "backgroundColor": "#808080"
     },
     {
       "name": "Squashing Layer (first squashed layer: LayoutBlockFlow (positioned) DIV id='A' class='overlap1')",
@@ -188,18 +152,6 @@ CASE 4, overlap2 and overlap3 change color:
           "reason": "style change"
         }
       ]
-    }
-  ],
-  "transforms": [
-    {
-      "id": 1,
-      "transform": [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [60, 60, 0, 1]
-      ],
-      "flattenInheritedTransform": false
     }
   ],
   "objectPaintInvalidations": [
@@ -228,10 +180,10 @@ CASE 5, overlap3 and overlap1 change color:
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV class='composited'",
+      "position": [60, 60],
       "bounds": [100, 100],
       "contentsOpaque": true,
-      "backgroundColor": "#808080",
-      "transform": 1
+      "backgroundColor": "#808080"
     },
     {
       "name": "Squashing Layer (first squashed layer: LayoutBlockFlow (positioned) DIV id='A' class='overlap1')",
@@ -249,18 +201,6 @@ CASE 5, overlap3 and overlap1 change color:
           "reason": "style change"
         }
       ]
-    }
-  ],
-  "transforms": [
-    {
-      "id": 1,
-      "transform": [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [60, 60, 0, 1]
-      ],
-      "flattenInheritedTransform": false
     }
   ],
   "objectPaintInvalidations": [

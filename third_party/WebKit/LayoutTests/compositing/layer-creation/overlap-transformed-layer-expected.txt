@@ -14,9 +14,10 @@
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV id='composited'",
+      "position": [385, 0],
       "contentsOpaque": true,
       "drawsContent": false,
-      "transform": 3
+      "transform": 2
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV id='green'",
@@ -43,16 +44,6 @@
         [0, 1, 0, 0],
         [0, 0, 1, 0],
         [-10, 0, 0, 1]
-      ]
-    },
-    {
-      "id": 3,
-      "parent": 2,
-      "transform": [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [385, 0, 0, 1]
       ]
     }
   ]

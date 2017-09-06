@@ -1132,15 +1132,6 @@ Bug(none) paint/invalidation/paint-invalidation-with-opacity.html [ Failure ]
 Bug(none) paint/invalidation/svg/deep-nested-embedded-svg-size-changes-no-layout-triggers-1.html [ Failure ]
 Bug(none) paint/invalidation/svg/deep-nested-embedded-svg-size-changes-no-layout-triggers-2.html [ Failure ]
 
-# contentsOpaque
-Bug(none) paint/invalidation/compositing/containing-block-added.html [ Failure ]
-Bug(none) paint/invalidation/compositing/containing-block-added-individual.html [ Failure ]
-Bug(none) paint/invalidation/compositing/containing-block-removed.html [ Failure ]
-Bug(none) paint/invalidation/compositing/containing-block-removed-individual.html [ Failure ]
-Bug(none) paint/invalidation/compositing/should-not-repaint-composited-z-index.html [ Failure ]
-Bug(none) paint/invalidation/destroy-composited-scrollbar.html [ Failure ]
-Bug(none) paint/invalidation/filter-repaint-on-accelerated-layer.html [ Failure ]
-
 # Wrong invalidation/painting/rasterization for multicol. Different layer tree.
 crbug.com/648274 fast/text/letter-spacing-leading-and-trailing.html [ Failure ]
 crbug.com/648274 paint/invalidation/column-rules-fixed-height.html [ Failure ]

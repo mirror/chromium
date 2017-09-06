@@ -9,19 +9,8 @@
     },
     {
       "name": "LayoutImage (positioned) IMG class='composited'",
-      "bounds": [140, 140],
-      "transform": 1
-    }
-  ],
-  "transforms": [
-    {
-      "id": 1,
-      "transform": [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [210, 23, 0, 1]
-      ]
+      "position": [210, 23],
+      "bounds": [140, 140]
     }
   ]
 }

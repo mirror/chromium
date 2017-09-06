@@ -8,9 +8,9 @@
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV id='fixedTransformed'",
+      "position": [8, 88],
       "contentsOpaque": true,
-      "drawsContent": false,
-      "transform": 1
+      "drawsContent": false
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV id='fixedOverlapping'",
@@ -24,17 +24,6 @@
       "bounds": [100, 100],
       "contentsOpaque": true,
       "backgroundColor": "#008000"
-    }
-  ],
-  "transforms": [
-    {
-      "id": 1,
-      "transform": [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [8, 88, 0, 1]
-      ]
     }
   ]
 }

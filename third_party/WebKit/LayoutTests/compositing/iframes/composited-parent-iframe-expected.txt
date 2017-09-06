@@ -9,77 +9,50 @@
     },
     {
       "name": "LayoutIFrame IFRAME",
-      "bounds": [368, 218],
-      "transform": 1
+      "position": [-11, -11],
+      "bounds": [368, 218]
     },
     {
       "name": "Frame Overflow Controls Host Layer",
-      "position": [34, 34],
+      "position": [23, 23],
       "bounds": [300, 150],
-      "drawsContent": false,
-      "transform": 1
+      "drawsContent": false
     },
     {
       "name": "Frame Clipping Layer",
-      "position": [34, 34],
+      "position": [23, 23],
       "bounds": [285, 150],
-      "drawsContent": false,
-      "transform": 1
+      "drawsContent": false
     },
     {
       "name": "Frame Scrolling Layer",
-      "position": [34, 34],
-      "drawsContent": false,
-      "transform": 1
+      "position": [23, 23],
+      "drawsContent": false
     },
     {
       "name": "Content Root Layer",
-      "position": [34, 34],
+      "position": [23, 23],
       "bounds": [285, 230],
-      "drawsContent": false,
-      "transform": 1
+      "drawsContent": false
     },
     {
       "name": "LayoutView #document",
-      "position": [34, 34],
+      "position": [23, 23],
       "bounds": [285, 230],
-      "backgroundColor": "#C0C0C0",
-      "transform": 1
+      "backgroundColor": "#C0C0C0"
     },
     {
       "name": "LayoutBlockFlow DIV id='iframe-content' class='box'",
+      "position": [41, 33],
       "bounds": [210, 210],
       "contentsOpaque": true,
-      "backgroundColor": "#0000FF",
-      "transform": 2
+      "backgroundColor": "#0000FF"
     },
     {
       "name": "Frame Vertical Scrollbar Layer",
-      "position": [319, 34],
+      "position": [308, 23],
       "bounds": [15, 150],
-      "drawsContent": false,
-      "transform": 1
-    }
-  ],
-  "transforms": [
-    {
-      "id": 1,
-      "transform": [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [-11, -11, 0, 1]
-      ]
-    },
-    {
-      "id": 2,
-      "parent": 1,
-      "transform": [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [52, 44, 0, 1]
-      ]
+      "drawsContent": false
     }
   ]
 }

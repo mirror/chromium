@@ -8,31 +8,19 @@
     },
     {
       "name": "LayoutBlockFlow DIV class='resizable composited box'",
-      "bounds": [100, 100],
-      "transform": 1
+      "position": [18, 10],
+      "bounds": [100, 100]
     },
     {
       "name": "Overflow Controls Host Layer",
+      "position": [18, 10],
       "bounds": [100, 100],
-      "drawsContent": false,
-      "transform": 1
+      "drawsContent": false
     },
     {
       "name": "Scroll Corner Layer",
-      "position": [85, 85],
-      "bounds": [15, 15],
-      "transform": 1
-    }
-  ],
-  "transforms": [
-    {
-      "id": 1,
-      "transform": [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [18, 10, 0, 1]
-      ]
+      "position": [103, 95],
+      "bounds": [15, 15]
     }
   ]
 }

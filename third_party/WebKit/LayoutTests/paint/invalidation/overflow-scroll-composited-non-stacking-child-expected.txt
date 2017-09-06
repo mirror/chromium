@@ -30,10 +30,10 @@
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV class='icon'",
+      "position": [200, 10],
       "bounds": [40, 40],
       "contentsOpaque": true,
-      "backgroundColor": "#FFDDBB",
-      "transform": 1
+      "backgroundColor": "#FFDDBB"
     },
     {
       "name": "Ancestor Clipping Layer",
@@ -51,17 +51,6 @@
       "name": "Squashing Layer (first squashed layer: LayoutBlockFlow (relative positioned) DIV class='commit')",
       "position": [43, 35],
       "bounds": [180, 250]
-    }
-  ],
-  "transforms": [
-    {
-      "id": 1,
-      "transform": [
-        [1, 0, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [200, 10, 0, 1]
-      ]
     }
   ],
   "objectPaintInvalidations": [
