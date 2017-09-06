@@ -110,22 +110,51 @@ void NewTabButton::PaintButtonContents(gfx::Canvas* canvas) {
 
   const bool pressed = state() == views::CustomButton::STATE_PRESSED;
   const float scale = canvas->image_scale();
+  gfx::SizeF curve_size =
+      Tab::GetCurveSizeForEndcapWidth(tab_strip_->GetTabEndcapWidth());
 
   // Fill.
   SkPath fill;
   const float fill_bottom = (visible_height - 2) * scale;
-  const float diag_height = fill_bottom - 3.5 * scale;
-  const float diag_width = diag_height * Tab::GetInverseDiagonalSlope();
-  fill.moveTo(diag_width + 4 * scale, fill_bottom);
-  fill.rCubicTo(-0.75 * scale, 0, -1.625 * scale, -0.5 * scale, -2 * scale,
-                -1.5 * scale);
+  const float diag_height = fill_bottom - 2.f * curve_size.height() * scale - 1;
+  const float inverse_slope = Tab::GetInverseDiagonalSlopeForEndcapWidth(
+      tab_strip_->GetTabEndcapWidth());
+  const float diag_width = diag_height * inverse_slope;
+  const float max_diag_width =
+      diag_height * Tab::GetInverseDiagonalSlopeForEndcapWidth(
+                        TabStrip::GetTabEndcapMaxWidth());
+  fill.moveTo(max_diag_width + 2 * curve_size.width() * scale, fill_bottom);
+  fill.rCubicTo(
+      -(curve_size.width() / 2.f) * scale, 0,
+      -(curve_size.width() - inverse_slope * (curve_size.height() / 2.f)) *
+          scale,
+      -(curve_size.height() / 2.f) * scale, -curve_size.width() * scale,
+      -curve_size.height() * scale);
+
   fill.rLineTo(-diag_width, -diag_height);
-  fill.rCubicTo(0, -0.5 * scale, 0.25 * scale, -scale, scale, -scale);
-  fill.lineTo((width() - 4) * scale - diag_width, scale);
-  fill.rCubicTo(0.75 * scale, 0, 1.625 * scale, 0.5 * scale, 2 * scale,
-                1.5 * scale);
+  fill.rCubicTo(-inverse_slope * (curve_size.height() / 1.5f) * scale,
+                -(curve_size.height() / 1.5f) * scale, curve_size.width() / 3.f,
+                -curve_size.height() * scale, curve_size.width() * scale,
+                -curve_size.height() * scale);
+
+  fill.lineTo((width() - 2.f * curve_size.width()) * scale - diag_width,
+              1.f /* Leave 1px offset for stroke*/);
+
+  fill.rCubicTo(
+      (curve_size.width() / 2.f) * scale, 0,
+      (curve_size.width() - (curve_size.height() / 2.f) * inverse_slope) *
+          scale,
+      (curve_size.height() / 2.f) * scale, curve_size.width() * scale,
+      curve_size.height() * scale);
+
   fill.rLineTo(diag_width, diag_height);
-  fill.rCubicTo(0, 0.5 * scale, -0.25 * scale, scale, -scale, scale);
+
+  fill.rCubicTo(inverse_slope * (curve_size.height() / 1.5f) * scale,
+                (curve_size.height() / 1.5f) * scale,
+                -(curve_size.width() / 3.f) * scale,
+                curve_size.height() * scale, -curve_size.width() * scale,
+                curve_size.height() * scale);
+
   fill.close();
   PaintFill(pressed, scale, fill, canvas);
 
@@ -196,15 +225,56 @@ void NewTabButton::GetBorderPath(float button_y,
                                  float scale,
                                  bool extend_to_top,
                                  SkPath* path) const {
-  const float inverse_slope = Tab::GetInverseDiagonalSlope();
+  const float inverse_slope = Tab::GetInverseDiagonalSlopeForEndcapWidth(
+      tab_strip_->GetTabEndcapWidth());
+  const float slope = 1.f / inverse_slope;
+
   const float fill_bottom =
       (GetLayoutSize(NEW_TAB_BUTTON).height() - 2) * scale;
-  const float stroke_bottom = button_y + fill_bottom + 1;
-  const float diag_height = fill_bottom - 3.5 * scale;
+  const float stroke_bottom =
+      button_y + fill_bottom + 1 /* offset the stroke by 1px */;
+
+  // Constants required to keep the stroke path have 1px offset from fill path.
+  const float c_squared = slope * slope + 1.f;
+  const float c = std::sqrt(c_squared);
+  const float x_offset = 1.f;
+  const float obtuse_y_offset = 1.f - (1.f / c);
+
+  // The curve size of the fill path.
+  const gfx::SizeF default_curve_size =
+      Tab::GetCurveSizeForEndcapWidth(tab_strip_->GetTabEndcapWidth());
+
+  // Diagonal height for stroke path should be the same as that of fill path.
+  // The offset of 1px is adjusted into the curve instead.
+  const float diag_height =
+      fill_bottom - 2.f * default_curve_size.height() * scale - 1;
   const float diag_width = diag_height * inverse_slope;
-  path->moveTo(diag_width + 4 * scale - 1, stroke_bottom);
-  path->rCubicTo(-0.75 * scale, 0, -1.625 * scale, -0.5 * scale, -2 * scale,
-                 -1.5 * scale);
+
+  // The curve size of the stroke path that is offset from the fill path by 1px.
+  // |obtuse_curve_size| is the curve size for bottom left and top right corners
+  // of the new tab button.
+  const gfx::SizeF obtuse_curve_size(
+      default_curve_size.width() * scale + x_offset,
+      default_curve_size.height() * scale + obtuse_y_offset);
+
+  // |acute_curve_size| is the curve size for bottom right and top left corners
+  // of the new tab button.
+  const gfx::SizeF acute_curve_size(
+      default_curve_size.width() * scale + x_offset,
+      stroke_bottom - diag_height - obtuse_curve_size.height());
+
+  const float max_diag_width =
+      diag_height * Tab::GetInverseDiagonalSlopeForEndcapWidth(
+                        TabStrip::GetTabEndcapMaxWidth());
+  path->moveTo(max_diag_width + scale * default_curve_size.width() * 2.f,
+               stroke_bottom);
+
+  path->rCubicTo(-obtuse_curve_size.width() / 2.f, 0,
+                 -(obtuse_curve_size.width() -
+                   inverse_slope * (obtuse_curve_size.height() / 2.f)),
+                 -(obtuse_curve_size.height() / 2.f),
+                 -obtuse_curve_size.width(), -obtuse_curve_size.height());
+
   path->rLineTo(-diag_width, -diag_height);
   if (extend_to_top) {
     // Create the vertical extension by extending the side diagonals at the
@@ -212,21 +282,35 @@ void NewTabButton::GetBorderPath(float button_y,
     // the border, respectively (in other words, "un-round-off" those corners
     // and turn them into sharp points).  Then extend upward from the corner
     // points to the top of the bounds.
-    const float dy = scale + 2;
+    const float dy = acute_curve_size.height();
     const float dx = inverse_slope * dy;
     path->rLineTo(-dx, -dy);
-    path->rLineTo(0, -button_y - scale + 1);
-    path->lineTo((width() - 2) * scale + 1 + dx, 0);
+    path->rLineTo(0, -button_y);
+    path->lineTo((width() - default_curve_size.width()) * scale + x_offset + dx,
+                 0);
     path->rLineTo(0, stroke_bottom);
   } else {
-    path->rCubicTo(-0.5 * scale, -1.125 * scale, 0.5 * scale, -scale - 2, scale,
-                   -scale - 2);
-    path->lineTo((width() - 4) * scale - diag_width + 1, button_y + scale - 1);
-    path->rCubicTo(0.75 * scale, 0, 1.625 * scale, 0.5 * scale, 2 * scale,
-                   1.5 * scale);
+    path->rCubicTo(-inverse_slope * acute_curve_size.height() / 1.5f,
+                   -acute_curve_size.height() / 1.5f,
+                   acute_curve_size.width() / 3.f, -acute_curve_size.height(),
+                   acute_curve_size.width(), -acute_curve_size.height());
+
+    path->lineTo(
+        (width() - 2.f * default_curve_size.width()) * scale - diag_width,
+        button_y);
+
+    path->rCubicTo(obtuse_curve_size.width() / 2.f, 0,
+                   obtuse_curve_size.width() -
+                       (obtuse_curve_size.height() / 2.f) * inverse_slope,
+                   obtuse_curve_size.height() / 2.f, obtuse_curve_size.width(),
+                   obtuse_curve_size.height());
+
     path->rLineTo(diag_width, diag_height);
-    path->rCubicTo(0.5 * scale, 1.125 * scale, -0.5 * scale, scale + 2, -scale,
-                   scale + 2);
+
+    path->rCubicTo(inverse_slope * acute_curve_size.height() / 1.5f,
+                   acute_curve_size.height() / 1.5f,
+                   -acute_curve_size.width() / 3.f, acute_curve_size.height(),
+                   -acute_curve_size.width(), acute_curve_size.height());
   }
   path->close();
 }

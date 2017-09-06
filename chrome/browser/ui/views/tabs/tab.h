@@ -55,8 +55,10 @@ class Tab : public gfx::AnimationDelegate,
   // The Tab's class name.
   static const char kViewClassName[];
 
-  // The combined width of the curves at the top and bottom of the endcap.
+  // The minimum endcap width so that the slope does not get vertical.
   static constexpr float kMinimumEndcapWidth = 4;
+
+  static const gfx::SizeF kCurveSize;
 
   Tab(TabController* controller, gfx::AnimationContainer* container);
   ~Tab() override;
@@ -151,16 +153,22 @@ class Tab : public gfx::AnimationDelegate,
   static int GetPinnedWidth();
 
   // Returns the inverse of the slope of the diagonal portion of the tab outer
-  // border.  (This is a positive value, so it's specifically for the slope of
-  // the leading edge.)
+  // border, given the width of the endcap.  (This is a positive value, so it's
+  // specifically for the slope of the leading edge.)
   //
   // This returns the inverse (dx/dy instead of dy/dx) because we use exact
   // values for the vertical distances between points and then compute the
   // horizontal deltas from those.
-  static float GetInverseDiagonalSlope();
+  static float GetInverseDiagonalSlopeForEndcapWidth(float endcap_width);
+
+  // Returns the overlap between adjacent tabs given the current endcap width.
+  static int GetOverlapForEndcapWidth(float endcap_width);
 
   // Returns the overlap between adjacent tabs.
   static int GetOverlap();
+
+  // Returns the curve size of the endcap based on |endcap_width|.
+  static gfx::SizeF GetCurveSizeForEndcapWidth(float endcap_width);
 
  private:
   friend class AlertIndicatorButtonTest;
@@ -212,6 +220,9 @@ class Tab : public gfx::AnimationDelegate,
 
   // ui::EventHandler:
   void OnGestureEvent(ui::GestureEvent* event) override;
+
+  // Adjusts the current border based on the supplied endcap width.
+  void SetBorderForEndcapWidth(float endcap_width);
 
   // Invoked from Layout to adjust the position of the favicon or alert
   // indicator for pinned tabs.
