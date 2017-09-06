@@ -42,6 +42,91 @@
     },
     {
       "key": {
+        "uuid": "08a4ef07_490d2b96",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T07:59:00Z",
+      "side": 1,
+      "message": "do we need features_temp? can it just be\n\nused_features \u003d std::set\u003cuint32_t\u003e(begin(), end())?",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54e7328_1c0ec64f",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T07:59:00Z",
+      "side": 1,
+      "message": "do you know when we not have a |provider_client_|? seems like a bug to get a SetController() IPC before there is a ServiceWorkerContainer#controller to set.",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e1b99b5_a2fe8118",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T07:59:00Z",
+      "side": 1,
+      "message": "Hmm the lifetime model seems error-prone here. Maybe if instead of keeping |provider_client_|, the ServiceWorkerContainer/WebServiceWorkerProviderClientImpl registers a callback/listener on ProviderContext to listen for SetController messages, and it removes itself as a callback/listener when it dies?",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d9dfbe_a0494333",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T07:59:00Z",
+      "side": 1,
+      "message": "provider_client_ should be moved to |controllee_state_|. It\u0027s only used for providers that are controllees.\n\nAlso, I know the class name can\u0027t be changed now, but I feel naming it something like |controllee_| is more descriptive, since in production code this is a blink::ServiceWorkerContainer. The contrast of ProviderClient and ProviderContext is confusing.",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10ef58d2_811790fa",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T07:59:00Z",
+      "side": 1,
+      "message": "This code looks suspiciously the same as what we have in ServiceWorkerProviderContext::SetController now. Can we factor this stuff out in a nicer way somehow?",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d755e4b_6341114b",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 3
