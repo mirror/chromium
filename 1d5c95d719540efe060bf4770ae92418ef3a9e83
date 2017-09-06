@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69dee614_724df92e",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/video-unmute-repaint-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-06T20:30:22Z",
+      "side": 1,
+      "message": "Why is SPv1 unable to figure out this one, and the other tests?",
+      "revId": "1d5c95d719540efe060bf4770ae92418ef3a9e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a411ae_98858869",
+        "filename": "third_party/WebKit/Source/core/paint/ViewPainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-06T20:30:22Z",
+      "side": 1,
+      "message": "For the root LayoutView, this needs to always be true. Will it be for some\nreason? Also DCHECK that.",
+      "revId": "1d5c95d719540efe060bf4770ae92418ef3a9e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
