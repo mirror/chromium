@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d84e3c24_82102c93",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-06T18:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4b25331_56b82da8",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 32
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54dc0248_f5bee814",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16091be8_9f023214",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-06T18:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54dc0248_f5bee814",
+      "range": {
+        "startLine": 120,
+        "startChar": 1,
+        "endLine": 125,
+        "endChar": 46
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "66ce371d_00bb570a",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-06T18:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1af0c1c5_a6f807d1",
+      "range": {
+        "startLine": 307,
+        "startChar": 22,
+        "endLine": 307,
+        "endChar": 23
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf8514b6_a3a4c0ad",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d03ec9dc_9ed9530d",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-06T18:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf8514b6_a3a4c0ad",
+      "range": {
+        "startLine": 419,
+        "startChar": 4,
+        "endLine": 419,
+        "endChar": 27
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "021a335f_e26979ed",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-06T15:54:46Z",
       "side": 1,
       "message": "don\u0027t you need also to InitializeHeapProfilerStateIfNeededLocked()\nwhat if this is called before the now that you moved outside of the ctor (which makes sense)",
+      "range": {
+        "startLine": 424,
+        "startChar": 2,
+        "endLine": 424,
+        "endChar": 3
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e74000_ca4b3e97",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-06T18:13:53Z",
+      "side": 1,
+      "message": "So, we will never end up in a state where tracing is enabled and heap profiler is enabled and the state is not initialized.\nIt needs to be initialized when tracing is enabled only and not just heap profiling is enabled. So, enabling heap profiling on dump provider is fine without the serialization state. When tracing is enabled before or after this point, the state will get initialized.\n\nCan you explain a bit more if I am missing something?",
+      "parentUuid": "021a335f_e26979ed",
       "range": {
         "startLine": 424,
         "startChar": 2,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "a115074d_2d428a92",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-06T18:13:53Z",
+      "side": 1,
+      "message": "Ouch, I was thinking I am doing this before adding mdpinfo into the |dump_providers_| list. So, OnMemoryDump cannot be called.\nRealized to do that I would have to acquire lock before this point to check if it\u0027s enabled and it will also cause races with EnableHeapProfiling(). So, just better to post task here.\nFixed it.",
+      "parentUuid": "24e0ace7_9eee69a7",
+      "range": {
+        "startLine": 425,
+        "startChar": 4,
+        "endLine": 425,
+        "endChar": 31
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e0b1ea6_194f462c",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 5
@@ -160,6 +304,30 @@
       "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de4fbf29_ab59cc96",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-06T18:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e0b1ea6_194f462c",
+      "range": {
+        "startLine": 831,
+        "startChar": 0,
+        "endLine": 831,
+        "endChar": 2
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "5d4fbef5_bb69ec05",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-06T18:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d56fa85_93d5d874",
+      "range": {
+        "startLine": 200,
+        "startChar": 2,
+        "endLine": 204,
+        "endChar": 0
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5418578_287aafdf",
         "filename": "base/trace_event/memory_dump_provider.h",
         "patchSetId": 5
@@ -206,6 +398,30 @@
       "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43739097_23f257a8",
+        "filename": "base/trace_event/memory_dump_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-06T18:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5418578_287aafdf",
+      "range": {
+        "startLine": 51,
+        "startChar": 57,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
