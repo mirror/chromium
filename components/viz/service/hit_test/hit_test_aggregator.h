@@ -7,6 +7,7 @@
 
 #include "components/viz/common/hit_test/aggregated_hit_test_region.h"
 #include "components/viz/common/surfaces/surface_id.h"
+#include "components/viz/service/hit_test/hit_test_manager.h"
 #include "components/viz/service/surfaces/surface_observer.h"
 #include "components/viz/service/viz_service_export.h"
 #include "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom.h"
@@ -20,18 +21,12 @@ class HitTestAggregatorDelegate;
 //
 // This is intended to be created in the viz or GPU process. For mus+ash this
 // will be true after the mus process split.
-class VIZ_SERVICE_EXPORT HitTestAggregator : public SurfaceObserver {
+class VIZ_SERVICE_EXPORT HitTestAggregator {
  public:
   // |delegate| owns and outlives HitTestAggregator.
-  explicit HitTestAggregator(HitTestAggregatorDelegate* delegate);
+  explicit HitTestAggregator(HitTestManager* hit_test_manager,
+                             HitTestAggregatorDelegate* delegate);
   ~HitTestAggregator();
-
-  // Called when HitTestRegionList is submitted along with every call
-  // to SubmitCompositorFrame.  This is collected in pending_ until
-  // surfaces are aggregated and put on the display.
-  void SubmitHitTestRegionList(
-      const SurfaceId& surface_id,
-      mojom::HitTestRegionListPtr hit_test_region_list);
 
   // Performs the work of Aggregate by creating a PostTask so that
   // the work is not directly on the call.
@@ -48,29 +43,7 @@ class VIZ_SERVICE_EXPORT HitTestAggregator : public SurfaceObserver {
   void Swap();
 
  protected:
-  // SurfaceObserver:
-  void OnFirstSurfaceActivation(const SurfaceInfo& surface_info) override {}
-  void OnSurfaceActivated(const SurfaceId& surface_id) override {}
-  void OnSurfaceDestroyed(const SurfaceId& surface_id) override {}
-  bool OnSurfaceDamaged(const SurfaceId& surface_id,
-                        const BeginFrameAck& ack) override;
-  void OnSurfaceDiscarded(const SurfaceId& surface_id) override;
-  void OnSurfaceDamageExpected(const SurfaceId& surface_id,
-                               const BeginFrameArgs& args) override {}
-
-  // Called when a surface has been aggregated and added to the
-  // display frame.  HitTestRegionList objects are held but ignored until
-  // this happens.  HitTestRegionList for the surface is copied from |pending_|
-  // to |active_| in this method.
-  void OnSurfaceWillDraw(const SurfaceId& surface_id) override;
-
-  // The collection of received HitTestRegionList objects that have not yet
-  // been added to the DisplayFrame (OnSurfaceWillDraw has not been called).
-  std::map<SurfaceId, mojom::HitTestRegionListPtr> pending_;
-
-  // The collection of HitTestRegionList objects that have been added to the
-  // DisplayFrame (OnSurfaceWillDraw has been called).
-  std::map<SurfaceId, mojom::HitTestRegionListPtr> active_;
+  HitTestManager* hit_test_manager_;
 
   // Keeps track of the number of regions in the active list
   // so that we know when we exceed the available length.
