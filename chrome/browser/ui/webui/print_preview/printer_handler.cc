@@ -6,16 +6,34 @@
 
 #include "build/buildflag.h"
 #include "chrome/browser/ui/webui/print_preview/extension_printer_handler.h"
+#include "chrome/browser/ui/webui/print_preview/pdf_printer_handler.h"
 #include "chrome/common/features.h"
 
 #if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
 #include "chrome/browser/ui/webui/print_preview/privet_printer_handler.h"
 #endif
 
+namespace content {
+class WebContents;
+}
+
+namespace printing {
+class StickySettings;
+}
+
 // static
 std::unique_ptr<PrinterHandler> PrinterHandler::CreateForExtensionPrinters(
     Profile* profile) {
   return base::MakeUnique<ExtensionPrinterHandler>(profile);
+}
+
+// static
+std::unique_ptr<PrinterHandler> PrinterHandler::CreateForPdfPrinter(
+    Profile* profile,
+    content::WebContents* preview_web_contents,
+    printing::StickySettings* sticky_settings) {
+  return base::MakeUnique<PdfPrinterHandler>(profile, preview_web_contents,
+                                             sticky_settings);
 }
 
 #if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
