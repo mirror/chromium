@@ -22,6 +22,23 @@
       "revId": "35e39b20bb158d0682a8f5225c524baea5e76f93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4496e1f_1f37488e",
+        "filename": "BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-06T00:48:18Z",
+      "side": 1,
+      "message": "Bots generally don\u0027t build \u0027all\u0027, so this change alone doesn\u0027t mean that the binary will be built everywhere. If that\u0027s what you want, that\u0027s ok.",
+      "revId": "35e39b20bb158d0682a8f5225c524baea5e76f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
