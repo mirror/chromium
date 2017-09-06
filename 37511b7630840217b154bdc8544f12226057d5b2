@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "606d8d86_7df33efa",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-06T16:36:00Z",
+      "side": 1,
+      "message": "Personally I would prefer fixing that at the same time since reverting just one CL or the other is likely to cause problems, but that\u0027s fine too.",
+      "parentUuid": "78059195_56b39b8e",
+      "revId": "37511b7630840217b154bdc8544f12226057d5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4160546e_c06569eb",
         "filename": "components/arc/net/arc_net_host_impl.cc",
         "patchSetId": 1
