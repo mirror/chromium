@@ -196,6 +196,11 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
   void MaybeStartLoader(StartLoaderCallback start_loader_callback) {
     if (start_loader_callback) {
+      if (url_loader_) {
+        DCHECK(!redirect_info_.new_url.is_empty());
+        url_loader_->DisconnectClient();
+      }
+      default_loader_used_ = false;
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
           std::move(start_loader_callback),
           GetContentClient()->browser()->CreateURLLoaderThrottles(
@@ -221,6 +226,13 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       return;
     }
 
+    if (url_loader_) {
+      // We're in the process of restarting to follow a redirect.
+      DCHECK(!redirect_info_.new_url.is_empty());
+      url_loader_->FollowRedirect();
+      return;
+    }
+
     mojom::URLLoaderFactory* factory = nullptr;
     DCHECK_EQ(handlers_.size(), handler_index_);
     if (resource_request_->url.SchemeIs(url::kBlobScheme)) {
@@ -241,10 +253,27 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   void FollowRedirect() {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     DCHECK(url_loader_);
-
     DCHECK(!response_url_loader_);
+    DCHECK(!redirect_info_.new_url.is_empty());
 
-    url_loader_->FollowRedirect();
+    if (!default_loader_used_) {
+      url_loader_->FollowRedirect();
+      return;
+    }
+
+    // Update resource_request_ and call Restart to give our handlers_ a chance
+    // at handling the new location.
+    resource_request_->method = redirect_info_.new_method;
+    resource_request_->url = redirect_info_.new_url;
+    resource_request_->site_for_cookies = redirect_info_.new_site_for_cookies;
+    resource_request_->referrer = GURL(redirect_info_.new_referrer);
+    // resource_request_->referrer_policy = redirect_info_.new_referrer_policy;
+
+    // The body is no longer applicable.
+    resource_request_->request_body = nullptr;
+    blob_handles_.clear();
+
+    Restart();
   }
 
   // Ownership of the URLLoaderFactoryPtrInfo instance is transferred to the
@@ -285,6 +314,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
                          const ResourceResponseHead& head) override {
     scoped_refptr<ResourceResponse> response(new ResourceResponse());
     response->head = head;
+    redirect_info_ = redirect_info;
 
     // Make a copy of the ResourceResponse before it is passed to another
     // thread.
@@ -362,12 +392,14 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     // Disconnect from the network loader to stop receiving further data
     // or notifications for the URL.
     url_loader_->DisconnectClient();
+    url_loader_.reset();
   }
 
   std::vector<std::unique_ptr<URLLoaderRequestHandler>> handlers_;
   size_t handler_index_ = 0;
 
   std::unique_ptr<ResourceRequest> resource_request_;
+  net::RedirectInfo redirect_info_;
   ResourceContext* resource_context_;
   base::Callback<WebContents*()> web_contents_getter_;
 
@@ -520,8 +552,6 @@ void NavigationURLLoaderNetworkService::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
     scoped_refptr<ResourceResponse> response) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  // TODO(kinuko): Perform the necessary check and call
-  // URLLoaderRequestController::Restart with the new URL??
   delegate_->OnRequestRedirected(redirect_info, std::move(response));
 }
 
