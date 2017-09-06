@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bcd27243_6d403bb3",
+        "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-09-06T08:36:59Z",
+      "side": 1,
+      "message": "Right, done. There was no need to fix any code.",
+      "parentUuid": "f6647719_446c98b0",
+      "range": {
+        "startLine": 122,
+        "startChar": 45,
+        "endLine": 122,
+        "endChar": 60
+      },
+      "revId": "ec054e85d8f753c67c8cbaf491286aa368f3892d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5dba11d_b525c4fc",
         "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
         "patchSetId": 3
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "f1f9db12_ea6196d6",
+        "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-09-06T08:36:59Z",
+      "side": 1,
+      "message": "Doh, thanks. Fixed (2 places).",
+      "parentUuid": "4d5248ce_151fa154",
+      "range": {
+        "startLine": 377,
+        "startChar": 6,
+        "endLine": 377,
+        "endChar": 8
+      },
+      "revId": "ec054e85d8f753c67c8cbaf491286aa368f3892d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de2cabbd_c26d47e2",
         "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
         "patchSetId": 3
@@ -82,6 +130,30 @@
       "writtenOn": "2017-08-31T11:40:42Z",
       "side": 1,
       "message": "Though that may be a UB, I think we sometimes assign char to unsigned char. Can we care size(InT) \u003d\u003d size(T) case as overlapping case?",
+      "range": {
+        "startLine": 389,
+        "startChar": 35,
+        "endLine": 389,
+        "endChar": 76
+      },
+      "revId": "ec054e85d8f753c67c8cbaf491286aa368f3892d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5683d4f_4af34d96",
+        "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-09-06T08:36:59Z",
+      "side": 1,
+      "message": "Yeah, you\u0027re right. After considering about this, I\u0027ve just removed this optimization and consolidated these functions into one function template. (Fixed in 2 places)",
+      "parentUuid": "de2cabbd_c26d47e2",
       "range": {
         "startLine": 389,
         "startChar": 35,
@@ -114,6 +186,30 @@
       "revId": "ec054e85d8f753c67c8cbaf491286aa368f3892d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16465c8f_24e21d8e",
+        "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-09-06T08:36:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f989d63_074e1c68",
+      "range": {
+        "startLine": 426,
+        "startChar": 6,
+        "endLine": 426,
+        "endChar": 10
+      },
+      "revId": "ec054e85d8f753c67c8cbaf491286aa368f3892d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
