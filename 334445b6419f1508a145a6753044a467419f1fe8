@@ -16,6 +16,24 @@
       "revId": "334445b6419f1508a145a6753044a467419f1fe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bfd84b9_50f94588",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-06T20:15:55Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "8d27aaa6_b2c262c2",
+      "revId": "334445b6419f1508a145a6753044a467419f1fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
