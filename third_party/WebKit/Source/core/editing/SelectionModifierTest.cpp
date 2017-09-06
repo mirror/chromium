@@ -26,23 +26,14 @@ TEST_F(SelectionModifierTest, leftPositionOf) {
   Element* four = shadow_root->getElementById("four");
   Element* five = shadow_root->getElementById("five");
 
-  EXPECT_EQ(
-      Position(two->firstChild(), 1),
-      LeftPositionOf(CreateVisiblePosition(Position(one, 0))).DeepEquivalent());
   EXPECT_EQ(PositionInFlatTree(two->firstChild(), 1),
             LeftPositionOf(CreateVisiblePosition(PositionInFlatTree(one, 0)))
                 .DeepEquivalent());
 
-  EXPECT_EQ(
-      Position(one->firstChild(), 0),
-      LeftPositionOf(CreateVisiblePosition(Position(two, 0))).DeepEquivalent());
   EXPECT_EQ(PositionInFlatTree(four->firstChild(), 3),
             LeftPositionOf(CreateVisiblePosition(PositionInFlatTree(two, 0)))
                 .DeepEquivalent());
 
-  EXPECT_EQ(Position(two->firstChild(), 2),
-            LeftPositionOf(CreateVisiblePosition(Position(three, 0)))
-                .DeepEquivalent());
   EXPECT_EQ(PositionInFlatTree(five->firstChild(), 5),
             LeftPositionOf(CreateVisiblePosition(PositionInFlatTree(three, 0)))
                 .DeepEquivalent());
@@ -64,29 +55,18 @@ TEST_F(SelectionModifierTest, rightPositionOf) {
   Node* four = shadow_root->getElementById("four")->firstChild();
   Node* five = shadow_root->getElementById("five")->firstChild();
 
-  EXPECT_EQ(Position(), RightPositionOf(CreateVisiblePosition(Position(one, 1)))
-                            .DeepEquivalent());
   EXPECT_EQ(PositionInFlatTree(five, 0),
             RightPositionOf(CreateVisiblePosition(PositionInFlatTree(one, 1)))
                 .DeepEquivalent());
 
-  EXPECT_EQ(Position(one, 1),
-            RightPositionOf(CreateVisiblePosition(Position(two, 2)))
-                .DeepEquivalent());
   EXPECT_EQ(PositionInFlatTree(one, 1),
             RightPositionOf(CreateVisiblePosition(PositionInFlatTree(two, 2)))
                 .DeepEquivalent());
 
-  EXPECT_EQ(Position(five, 0),
-            RightPositionOf(CreateVisiblePosition(Position(four, 4)))
-                .DeepEquivalent());
   EXPECT_EQ(PositionInFlatTree(two, 0),
             RightPositionOf(CreateVisiblePosition(PositionInFlatTree(four, 4)))
                 .DeepEquivalent());
 
-  EXPECT_EQ(Position(),
-            RightPositionOf(CreateVisiblePosition(Position(five, 5)))
-                .DeepEquivalent());
   EXPECT_EQ(PositionInFlatTree(three, 0),
             RightPositionOf(CreateVisiblePosition(PositionInFlatTree(five, 5)))
                 .DeepEquivalent());
