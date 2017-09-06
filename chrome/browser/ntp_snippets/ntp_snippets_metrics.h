@@ -35,7 +35,7 @@ enum ContentSuggestionsNotificationAction {
 // GENERATED_JAVA_PREFIX_TO_STRIP: CONTENT_SUGGESTIONS_
 enum ContentSuggestionsNotificationOptOut {
   CONTENT_SUGGESTIONS_IMPLICIT = 0,  // User ignored notifications.
-  CONTENT_SUGGESTIONS_EXPLICIT,      // User explicitly opted-out.
+  // CONTENT_SUGGESTIONS_EXPLICIT was never used.
 
   MAX_CONTENT_SUGGESTIONS_NOTIFICATION_OPT_OUT
 };
@@ -44,7 +44,7 @@ void RecordContentSuggestionsNotificationImpression(
     ContentSuggestionsNotificationImpression what);
 void RecordContentSuggestionsNotificationAction(
     ContentSuggestionsNotificationAction what);
-void RecordContentSuggestionsNotificationOptOut(
-    ContentSuggestionsNotificationOptOut what);
+void RecordContentSuggestionsNotificationOptOut();
+void RecordContentSuggestionsNotificationAutoOptOut();
 
 #endif  // CHROME_BROWSER_NTP_SNIPPETS_NTP_SNIPPETS_METRICS_H_

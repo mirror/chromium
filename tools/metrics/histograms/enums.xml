@@ -6019,7 +6019,6 @@ uploading your change for review.  These are checked by presubmit scripts.
 
 <enum name="ContentSuggestionsNotificationsOptOut">
   <int value="0" label="Implicit"/>
-  <int value="1" label="Explicit"/>
 </enum>
 
 <enum name="ContentSuggestionsStatusCode">
@@ -6559,6 +6558,10 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="Missing All Hashes"/>
   <int value="2" label="Missing File Hash"/>
   <int value="3" label="Hash Mismatch"/>
+</enum>
+
+<enum name="Count">
+  <int value="0" label="Count"/>
 </enum>
 
 <enum name="CrashExitCodes">

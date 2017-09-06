@@ -13,6 +13,8 @@ const char kContentSuggestionsNotificationImpressions[] =
 const char kContentSuggestionsNotificationActions[] =
     "NewTabPage.ContentSuggestions.Notifications.Actions";
 const char kContentSuggestionsNotificationOptOuts[] =
+    "NewTabPage.ContentSuggestions.Notifications.OptOuts";
+const char kContentSuggestionsNotificationAutoOptOuts[] =
     "NewTabPage.ContentSuggestions.Notifications.AutoOptOuts";
 
 }  // namespace
@@ -29,8 +31,12 @@ void RecordContentSuggestionsNotificationAction(
                             MAX_CONTENT_SUGGESTIONS_NOTIFICATION_ACTION);
 }
 
-void RecordContentSuggestionsNotificationOptOut(
-    ContentSuggestionsNotificationOptOut what) {
-  UMA_HISTOGRAM_ENUMERATION(kContentSuggestionsNotificationOptOuts, what,
+void RecordContentSuggestionsNotificationOptOut() {
+  UMA_HISTOGRAM_BOOLEAN(kContentSuggestionsNotificationOptOuts, false);
+}
+
+void RecordContentSuggestionsNotificationAutoOptOut() {
+  UMA_HISTOGRAM_ENUMERATION(kContentSuggestionsNotificationAutoOptOuts,
+                            CONTENT_SUGGESTIONS_IMPLICIT,
                             MAX_CONTENT_SUGGESTIONS_NOTIFICATION_OPT_OUT);
 }

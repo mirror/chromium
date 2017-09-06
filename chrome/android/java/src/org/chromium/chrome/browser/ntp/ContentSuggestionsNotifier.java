@@ -32,7 +32,6 @@ import org.chromium.chrome.browser.notifications.NotificationUmaTracker;
 import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
 import org.chromium.chrome.browser.notifications.channels.ChannelsInitializer;
 import org.chromium.chrome.browser.ntp.snippets.ContentSuggestionsNotificationAction;
-import org.chromium.chrome.browser.ntp.snippets.ContentSuggestionsNotificationOptOut;
 import org.chromium.chrome.browser.preferences.NotificationsPreferences;
 import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.content.browser.BrowserStartupController;
@@ -79,14 +78,6 @@ public class ContentSuggestionsNotifier {
             "ntp.content_suggestions.notification.active";
 
     private ContentSuggestionsNotifier() {} // Prevent instantiation
-
-    /**
-     * Records the reason why Content Suggestions notifications have been opted out.
-     * @see ContentSuggestionsNotificationOptOut;
-     */
-    public static void recordNotificationOptOut(@ContentSuggestionsNotificationOptOut int reason) {
-        nativeRecordNotificationOptOut(reason);
-    }
 
     /**
      * Records an action performed on a Content Suggestions notification.
@@ -543,8 +534,6 @@ public class ContentSuggestionsNotifier {
     private static native void nativeReceiveFlushedMetrics(int tapCount, int dismissalCount,
             int hideDeadlineCount, int hideExpiryCount, int hideFrontmostCount,
             int hideDisabledCount, int hideShutdownCount, int consecutiveIgnored);
-    private static native void nativeRecordNotificationOptOut(
-            @ContentSuggestionsNotificationOptOut int reason);
     private static native void nativeRecordNotificationAction(
             @ContentSuggestionsNotificationAction int action);
 }
