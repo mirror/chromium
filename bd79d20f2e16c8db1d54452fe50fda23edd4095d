@@ -16,6 +16,24 @@
       "revId": "bd79d20f2e16c8db1d54452fe50fda23edd4095d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b4b546_36dfb1f7",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-06T02:13:32Z",
+      "side": 1,
+      "message": "This *is* the CL I moved it to; the original one is https://chromium-review.googlesource.com/c/chromium/src/+/642115.\n\nI described this CL as fixing a crash, but the test case I came up with actually isn\u0027t fixed by this (it\u0027s fixed by the IsValidFor() check in the other CL); is there a good test case for this change?",
+      "parentUuid": "18ae5831_2cc25b4a",
+      "revId": "bd79d20f2e16c8db1d54452fe50fda23edd4095d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
