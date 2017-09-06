@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8113252c_a39be3ea",
+        "filename": "content/public/renderer/resource_fetcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-06T18:33:53Z",
+      "side": 1,
+      "message": "nit: double \u0027be\u0027",
+      "revId": "0ed63262190ad8d1377eb62dd30db981b4cdd427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
