@@ -22,6 +22,9 @@ class VIZ_COMMON_EXPORT ResourceSettings {
   size_t texture_id_allocation_chunk_size = 64;
   bool use_gpu_memory_buffer_resources = false;
   BufferToTextureTargetMap buffer_to_texture_target_map;
+  bool high_bit_for_testing = false;
+  // TODO(riju): Remove after r16 is used without the flag. crbug.com/759456
+  bool use_r16_texture = false;
 };
 
 }  // namespace viz
