@@ -46,6 +46,30 @@
       "revId": "0a1c0c442ac264f04951856156745717ba629188",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c5cce7_58561d3f",
+        "filename": "third_party/crashpad/crashpad/snapshot/snapshot.gyp",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-09-06T17:06:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3a54718_fb07c140",
+      "range": {
+        "startLine": 147,
+        "startChar": 13,
+        "endLine": 147,
+        "endChar": 25
+      },
+      "revId": "0a1c0c442ac264f04951856156745717ba629188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
