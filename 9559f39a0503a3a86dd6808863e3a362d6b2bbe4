@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a87ac40_e227beda",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-06T23:49:38Z",
+      "side": 1,
+      "message": "The line wrapping here is a bit odd.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 29
+      },
+      "revId": "9559f39a0503a3a86dd6808863e3a362d6b2bbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ec5bf0_91475671",
+        "filename": "chrome/browser/guest_view/web_view/chrome_web_view_permission_helper_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-06T23:49:38Z",
+      "side": 1,
+      "message": "Can this be a regular BindingSet?",
+      "revId": "9559f39a0503a3a86dd6808863e3a362d6b2bbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84db5a86_89486ceb",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-06T23:49:38Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 15
+      },
+      "revId": "9559f39a0503a3a86dd6808863e3a362d6b2bbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40537f74_2930a00a",
+        "filename": "chrome/browser/plugins/plugin_observer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-06T23:49:38Z",
+      "side": 1,
+      "message": "Does a regular BindingSet work here?",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 36
+      },
+      "revId": "9559f39a0503a3a86dd6808863e3a362d6b2bbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
