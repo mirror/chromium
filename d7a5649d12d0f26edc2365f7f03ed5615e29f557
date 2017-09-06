@@ -127,6 +127,23 @@
     },
     {
       "key": {
+        "uuid": "070ba18b_7aaab5de",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-06T10:40:44Z",
+      "side": 1,
+      "message": "Seems no need to create an additional struct. Can we just remove this struct and put its members directly as parameters of SetController()?",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d755e4b_6341114b",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 3
