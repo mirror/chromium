@@ -16,6 +16,24 @@
       "revId": "f9f7668f9e3ee6a8f2f69375fa243a95f27664e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd2979a_fa0aba1d",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-09-06T04:00:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8917b6ba_532b5a2a",
+      "revId": "f9f7668f9e3ee6a8f2f69375fa243a95f27664e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
