@@ -2671,12 +2671,6 @@ LRESULT HWNDMessageHandler::HandleMouseEventInternal(UINT message,
   if (!ref.get())
     return 0;
 
-  if (direct_manipulation_helper_ && track_mouse &&
-      (message == WM_MOUSEWHEEL || message == WM_MOUSEHWHEEL)) {
-    direct_manipulation_helper_->HandleMouseWheel(hwnd(), message, w_param,
-        l_param);
-  }
-
   if (!handled && message == WM_NCLBUTTONDOWN && w_param != HTSYSMENU &&
       w_param != HTCAPTION &&
       delegate_->GetFrameMode() == FrameMode::CUSTOM_DRAWN) {
@@ -3026,8 +3020,21 @@ void HWNDMessageHandler::OnBackgroundFullscreen() {
   fullscreen_handler()->MarkFullscreen(false);
 }
 
-void HWNDMessageHandler::DestroyAXSystemCaret() {
-  ax_system_caret_ = nullptr;
-}
+LRESULT HWNDMessageHandler::OnTimer(UINT message,
+                                    WPARAM w_param,
+                                    LPARAM l_param) {
+  if (direct_manipulation_helper_) {
+    direct_manipulation_helper_->OnTimer(w_param);
+  }
 
-}  // namespace views
+  LRESULT HWNDMessageHandler::OnPointerHitTest(UINT message, WPARAM w_param,
+                                               LPARAM l_param) {
+    if (direct_manipulation_helper_) {
+      direct_manipulation_helper_->OnPointerHitTest(w_param);
+    }
+
+    void HWNDMessageHandler::DestroyAXSystemCaret() {
+      ax_system_caret_ = nullptr;
+    }
+
+  }  // namespace views

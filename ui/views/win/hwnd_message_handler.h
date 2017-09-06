@@ -415,6 +415,9 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
     // word of WPARAM could be set when the window is minimized or restored.
     CR_MESSAGE_HANDLER_EX(WM_NCACTIVATE, OnNCActivate)
 
+    CR_MESSAGE_HANDLER_EX(WM_TIMER, OnTimer)
+    CR_MESSAGE_HANDLER_EX(DM_POINTERHITTEST, OnPointerHitTest)
+
     // This list is in _ALPHABETICAL_ order! OR I WILL HURT YOU.
     CR_MSG_WM_ACTIVATEAPP(OnActivateApp)
     CR_MSG_WM_APPCOMMAND(OnAppCommand)
@@ -604,6 +607,9 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   // clients that are still holding onto its |IAccessible| to get a failure code
   // if they request its location.
   void DestroyAXSystemCaret();
+
+  LRESULT OnTimer(UINT message, WPARAM w_param, LPARAM l_param);
+  LRESULT OnPointerHitTest(UINT message, WPARAM w_param, LPARAM l_param);
 
   HWNDMessageHandlerDelegate* delegate_;
 

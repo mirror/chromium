@@ -17,6 +17,19 @@
 namespace gfx {
 namespace win {
 
+class CViewportEventHandler : public IDirectManipulationViewportEventHandler {
+  HRESULT OnViewportStatusChanged(IDirectManipulationViewport* viewport,
+                                  DIRECTMANIPULATION_STATUS current,
+                                  DIRECTMANIPULATION_STATUS previous);
+
+  HRESULT CViewportEventHandler::OnViewportUpdated(
+      IDirectManipulationViewport* viewport);
+
+  HRESULT CViewportEventHandler::OnContentUpdated(
+      IDirectManipulationViewport* viewport,
+      IDirectManipulationContent* content);
+};
+
 // Windows 10 provides a new API called Direct Manipulation which generates
 // smooth scroll events via WM_MOUSEWHEEL messages with predictable deltas
 // on high precision touch pads. This basically requires the application window
@@ -43,7 +56,7 @@ class GFX_EXPORT DirectManipulationHelper {
  public:
   // Creates an instance of this class if Direct Manipulation is enabled on
   // the platform. If not returns NULL.
-  static std::unique_ptr<DirectManipulationHelper> CreateInstance();
+  static DirectManipulationHelper* GetInstance();
 
   // This function instantiates Direct Manipulation and creates a viewport for
   // the passed in |window|.
@@ -61,22 +74,26 @@ class GFX_EXPORT DirectManipulationHelper {
   // Deactivates Direct Manipulation processing on the passed in |window|.
   void Deactivate(HWND window);
 
-  // Passes the WM_MOUSEWHEEL messages to Direct Manipulation. This is for
-  // logistics purposes.
-  void HandleMouseWheel(HWND window, UINT message, WPARAM w_param,
-      LPARAM l_param);
+  void ResetViewport();
+
+  void OnPointerHitTest(WPARAM w_param);
+
+  void OnTimer(WPARAM w_param);
 
   ~DirectManipulationHelper();
 
  private:
   DirectManipulationHelper();
 
+  static std::unique_ptr<DirectManipulationHelper> instance_;
+
   base::win::ScopedComPtr<IDirectManipulationManager2> manager_;
-  base::win::ScopedComPtr<IDirectManipulationCompositor> compositor_;
   base::win::ScopedComPtr<IDirectManipulationUpdateManager> update_manager_;
   base::win::ScopedComPtr<IDirectManipulationFrameInfoProvider> frame_info_;
   base::win::ScopedComPtr<IDirectManipulationViewport2> view_port_outer_;
-
+  base::win::ScopedComPtr<CViewportEventHandler> event_handler_;
+  UINT_PTR render_timer_;
+  DWORD view_port_handler_cookie_;
   DISALLOW_COPY_AND_ASSIGN(DirectManipulationHelper);
 };
 
