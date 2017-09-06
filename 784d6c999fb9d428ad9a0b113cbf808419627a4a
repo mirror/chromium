@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "037942e8_004481f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-06T23:06:06Z",
+      "side": 1,
+      "message": "We\u0027ll have to support old versions of Android, so we\u0027ll have to work around this even if it\u0027s patched in the next release.",
+      "range": {
+        "startLine": 237,
+        "startChar": 8,
+        "endLine": 237,
+        "endChar": 74
+      },
+      "revId": "784d6c999fb9d428ad9a0b113cbf808419627a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e43fa0_d44303f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/SystemDownloadNotifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-06T23:06:06Z",
+      "side": 1,
+      "message": "Should we just have a parallel implementation of DownloadNotifier?",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 77
+      },
+      "revId": "784d6c999fb9d428ad9a0b113cbf808419627a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
