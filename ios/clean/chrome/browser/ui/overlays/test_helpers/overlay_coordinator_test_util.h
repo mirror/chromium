@@ -12,6 +12,9 @@ namespace testing {
 // Waits for |overlay|'s UI to finish being presented.
 void WaitForOverlayPresentation(OverlayCoordinator* overlay);
 
+// Waits for |overlay|'s UI to finish being dismissed.
+void WaitForOverlayDismissal(OverlayCoordinator* overlay);
+
 }  // namespace testing
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_OVERLAYS_TEST_HELPERS_OVERLAY_COORDINATOR_TEST_UTIL_H_
