@@ -316,6 +316,24 @@
       "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb4ec5b_9d092976",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/fields/base.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-06T03:59:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1155d013_eb0e6769",
+      "revId": "adf245b7e2d635d670b7b8f5dbfb0db4a8225204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
