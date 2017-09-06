@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fadc757a_354ec439",
+        "filename": "tools/grit/grit/format/data_pack.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T00:46:27Z",
+      "side": 1,
+      "message": "Using str(id) here so that .join() will work is a bit sub-optimal (since they really are numbers). Instead, how about storing without str() here, and when writing to file, do:\n\ninfofile.writelines(\u0027{},{},{}\\n\u0027.format(*entry) for entry in info)",
+      "revId": "f053ab16e77533a0e120e3794e333753c7f5976f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2733cc57_7786135a",
+        "filename": "tools/grit/grit_rule.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T00:46:27Z",
+      "side": 1,
+      "message": "Filtering is only indirectly supported. For this you\u0027d do:\n\n# This filters out *.pak upon assigning to sources\nset_sources_assignment_filter([\"*.pak\"])\nsources \u003d grit_outputs\n# Use subtraction to get the list of only .pak\npak_info_outputs \u003d grit_outputs - sources",
+      "revId": "f053ab16e77533a0e120e3794e333753c7f5976f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
