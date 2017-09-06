@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74410f7d_a3702c89",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-06T13:57:57Z",
+      "side": 1,
+      "message": "sequenced_task_runner_handle.h",
+      "range": {
+        "startLine": 14,
+        "startChar": 25,
+        "endLine": 14,
+        "endChar": 52
+      },
+      "revId": "274e2b814057ba4edc9cd04c01965708b56a2841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
