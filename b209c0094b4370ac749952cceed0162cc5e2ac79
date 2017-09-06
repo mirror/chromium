@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b725bc0e_1dd324a7",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-06T17:22:03Z",
+      "side": 1,
+      "message": "nit: #include \u003cmemory\u003e",
+      "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4f8b86_5710b109",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-06T17:22:03Z",
+      "side": 1,
+      "message": "nit: LoginBubble* const",
+      "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668ceb62_ca614c38",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-06T17:22:03Z",
+      "side": 1,
+      "message": "nit: insert an empty line before",
+      "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28cb2708_4033dcde",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-06T17:22:03Z",
+      "side": 1,
+      "message": "Can this return a std::unique_ptr\u003cLoginBubble\u003e so that it is clear the ownership is transferred to caller ?",
+      "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee45199f_5c12e059",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-06T17:22:03Z",
+      "side": 1,
+      "message": "ditto, return a std::unique_ptr\u003c\u003e",
+      "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cada125_c9c2bed3",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-06T17:22:03Z",
+      "side": 1,
+      "message": "nit: end with \":\"",
+      "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "027b8530_056a3e91",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-06T17:22:03Z",
+      "side": 1,
+      "message": "seems not used?",
+      "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3fafffa_3a773da9",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-06T17:22:03Z",
+      "side": 1,
+      "message": "nit: How about just pass in a LocatedEvent*? In the call sites, we can do event-\u003eAsLocatedEvent() to cast to proper type.",
+      "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2fa0e3_c0f86542",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-06T17:22:03Z",
+      "side": 1,
+      "message": "nit: button_view_ -\u003e anchor_view_ since it is not necessarily a button.",
+      "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71e32f8_7ac97bd2",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-06T17:22:03Z",
+      "side": 1,
+      "message": "This does not feel like to be part of LoginBubble.\n\nCan we e.g. have two Show methods, say ShowErrorBubble and ShowUserMenu? We could probably get rid of the two CreateXXX methods and LoginBubbleType and rely on the Show methods to create proper contents view of the bubble.",
+      "revId": "b209c0094b4370ac749952cceed0162cc5e2ac79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
