@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "b4ea12f3_1ba7586a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-06T19:06:55Z",
+      "side": 1,
+      "message": "The boolean parameter is to trigger the restart (true causes a restart).\n\nWe could probably show a relaunch infobar as well, but that\u0027s probably just annoying as it requires extra clicks and we already know the user wants to use the site and just updated VR services to do so.",
+      "parentUuid": "3b4b89f1_37097d5a",
+      "range": {
+        "startLine": 621,
+        "startChar": 28,
+        "endLine": 621,
+        "endChar": 37
+      },
+      "revId": "c85bd573a2745d9d8a82e12f2db7f3220b5558df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05279cdb_75d9ce33",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 1
@@ -68,6 +92,30 @@
       "revId": "c85bd573a2745d9d8a82e12f2db7f3220b5558df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d73ad2_38886515",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-06T19:06:55Z",
+      "side": 1,
+      "message": "Editor automatically cleans stuff like that up on save. It\u0027s a redundant cast.",
+      "parentUuid": "05279cdb_75d9ce33",
+      "range": {
+        "startLine": 773,
+        "startChar": 14,
+        "endLine": 773,
+        "endChar": 15
+      },
+      "revId": "c85bd573a2745d9d8a82e12f2db7f3220b5558df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
