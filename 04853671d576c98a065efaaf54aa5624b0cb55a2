@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "aa0ca77d_2d6f8518",
+        "filename": "chrome/browser/ntp_snippets/ntp_snippets_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-06T17:12:56Z",
+      "side": 1,
+      "message": "Why have two histograms that only log a specific value each. Why not combine them into one histogram?\n\ni.e. have a single OptOut histogram and one would be \"IMPLICIT_OPT_OUT\" and the other one would be \"IMPLICIT_AUTO_OPT_OUT\".\n\nIn general, we recommend having enough information in a single histogram to make sense of the signal. For example, if you ever log one value, then what does a value like 3838 tell you? Nothing - because you needing something else to make sense of it (is it a lot? is it few?). So a best practice would be to have a histogram have a bucket that can act as a normalizing factor - for example the number of content suggestions shown.",
+      "range": {
+        "startLine": 36,
+        "startChar": 57,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "04853671d576c98a065efaaf54aa5624b0cb55a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdbef740_56d98c91",
         "filename": "chrome/browser/ntp_snippets/ntp_snippets_metrics.cc",
         "patchSetId": 3
@@ -13,6 +36,47 @@
       "writtenOn": "2017-09-06T10:18:33Z",
       "side": 1,
       "message": "Correct if all we care about is a simple count, not a histogram?",
+      "revId": "04853671d576c98a065efaaf54aa5624b0cb55a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5254bf4_d3b1ac13",
+        "filename": "chrome/browser/ntp_snippets/ntp_snippets_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-06T17:12:56Z",
+      "side": 1,
+      "message": "Yes, this is equivalent to UMA_HISTOGRAM_BOOLEAN(name, FALSE);\n\nPlease use that if you\u0027re not actually defining the enums.",
+      "parentUuid": "cdbef740_56d98c91",
+      "revId": "04853671d576c98a065efaaf54aa5624b0cb55a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472a47dc_555ca43c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 47389,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-06T17:12:56Z",
+      "side": 1,
+      "message": "Please specify enum\u003d else this will be treated as a numeric histogram by our dashboards, which is not what you want.",
+      "range": {
+        "startLine": 47389,
+        "startChar": 47,
+        "endLine": 47389,
+        "endChar": 60
+      },
       "revId": "04853671d576c98a065efaaf54aa5624b0cb55a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
