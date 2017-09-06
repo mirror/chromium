@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "5435f086_c79649cc",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-06T23:01:10Z",
+      "side": 1,
+      "message": "Done.\n\nI think Mustafa is responsible for the first such guards from the captive portal code. :-P",
+      "parentUuid": "56d3a7b6_dedcf3c5",
+      "range": {
+        "startLine": 723,
+        "startChar": 0,
+        "endLine": 723,
+        "endChar": 19
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6f5af86_0da3d0ae",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 5
@@ -117,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "524c869d_7de15786",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-06T23:01:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b6aae2f_d1861de0",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 23
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af899b16_6f56cf77",
         "filename": "chrome/browser/ssl/ssl_error_handler.h",
         "patchSetId": 5
@@ -128,6 +176,30 @@
       "writtenOn": "2017-09-06T17:40:44Z",
       "side": 1,
       "message": "nit: it would be nice if we had one canonical place where the flag was checked, instead of having to check it in multiple places. Suggestion: change HandleSSLError to take a callback instead of a |throttle| (as suggested for other reasons in another comment). Specify that the interface is as follows: if the callback is provided, then it will be called with the interstitial HTML when it\u0027s ready. If the callback isn\u0027t provided, then the interstitial page will be shown when it\u0027s ready. That way, SSLErrorHandlerDelegateImpl::ShowInterstitial() can just check whether the callback is null, and SSLErrorNavigationThrottle can be the one place where we check whether the flag is enabled.",
+      "range": {
+        "startLine": 124,
+        "startChar": 14,
+        "endLine": 124,
+        "endChar": 46
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7928fc0_51efb711",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-06T23:01:10Z",
+      "side": 1,
+      "message": "I was a bit wary of adding another callback, but I like that. Will do.",
+      "parentUuid": "af899b16_6f56cf77",
       "range": {
         "startLine": 124,
         "startChar": 14,
@@ -232,6 +304,30 @@
     },
     {
       "key": {
+        "uuid": "66deab41_f47bc6cb",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-06T23:01:10Z",
+      "side": 1,
+      "message": "Sorry for not singling this out; I meant to look into it and then discuss it.\n\nIt looks like copying/sharing code from SSLManager::OnCertError() *might* work, but I don\u0027t know if all the information is available here.",
+      "parentUuid": "02ab7a7d_2e8c2cdc",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 65
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b961a5eb_0ec855e3",
         "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
         "patchSetId": 5
@@ -275,6 +371,30 @@
       "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd67a65_38921fe7",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-06T23:01:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "689a7fd5_d1891991",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "55f65d7a7e4daf1a2b0f39387e3cc33e50c5a1ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
