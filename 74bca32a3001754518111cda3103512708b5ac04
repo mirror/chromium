@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a5cb8bcc_3fd48af1",
+        "filename": "chrome/browser/ui/views/harmony/harmony_layout_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T23:57:31Z",
+      "side": 1,
+      "message": "Internal leading + (cap height - x-height) is about 8.\n\nAdding to controls or subtracting from text both produce equal results between text and controls, they just produce different results.  Presumably, Alan wants the larger value.\n\nUsing the control version for checkboxes seems likely wrong.  I\u0027d explicitly ask Alan about that.  I bet he\u0027d prefer the visuals of treating those like text.\n\nI agree that dynamic calculation is gross.  In the end, I think I\u0027m spending too much time concerned about this.  Hopefully by the time we\u0027d try to change the layout unit (which is the only case where \"* 1.5\" vs. \"+ 8\" would matter), we\u0027ll have nuked this.\n\nDo whatever seems wise.",
+      "parentUuid": "a078e015_4d3c7f81",
+      "revId": "74bca32a3001754518111cda3103512708b5ac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee18bc46_18749c84",
         "filename": "ui/views/layout/layout_provider.cc",
         "patchSetId": 4
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Okay, I agree with separating out \"no title.\" The only two places that use it, ExtensionInstallDialogView and TaskManagerView, are both kinda special cases already so I don\u0027t feel too bad about giving them a special case of manually constructing their content insets. Especially because ExtensionInstallDialogView is supposed to change to be more regular before Harmony is over.\n\nIn terms of the two enums, I like that the callsites are self-documenting, because you have to say \"the Leading Type is X and the Trailing Type is Y.\" But it would certainly be a lot terser to collapse them, and not have to type all that.",
       "parentUuid": "65393dc2_1c390279",
+      "revId": "74bca32a3001754518111cda3103512708b5ac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64139d3f_de292748",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T23:57:31Z",
+      "side": 1,
+      "message": "I\u0027d probably go even further and make them enums instead of enum classes, because I value terseness above a lot of other things :D.  Surprisingly, the Google style guide has no recommendations about when to use one versus the other.\n\nI didn\u0027t expect you to rip out the \"no title\" functionality entirely -- I\u0027d have made it a bool with a default argument -- but I don\u0027t care much either way.  If you think it better to just handle it manually, I don\u0027t object.",
+      "parentUuid": "9a89687c_5ed0223b",
       "revId": "74bca32a3001754518111cda3103512708b5ac04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
