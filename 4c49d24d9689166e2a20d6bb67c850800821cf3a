@@ -16,6 +16,24 @@
       "revId": "4c49d24d9689166e2a20d6bb67c850800821cf3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54514fdc_1cfe1422",
+        "filename": "chrome/browser/ui/views/tabs/tab.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-06T17:23:19Z",
+      "side": 1,
+      "message": "(I restored it to the old way of doing things.) FaviconCrashAnimation is only forward declared in this file so to make it a value member we\u0027d have to add a complete declaration here. I favor not doing so because IMO a small class like that is easier to digest when it\u0027s all in one place, and I like to keep the header as minimal as possible (which is sort of a lost cause in this case, I suppose).",
+      "parentUuid": "e153ef87_8bdb02ed",
+      "revId": "4c49d24d9689166e2a20d6bb67c850800821cf3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
