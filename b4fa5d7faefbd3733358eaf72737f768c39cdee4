@@ -52,6 +52,24 @@
       "revId": "b4fa5d7faefbd3733358eaf72737f768c39cdee4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db124015_58db4476",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-06T04:59:18Z",
+      "side": 0,
+      "message": "You may take a look impl here: https://chromium-review.googlesource.com/c/chromium/src/+/614752",
+      "parentUuid": "81a3d518_a5f86000",
+      "revId": "b4fa5d7faefbd3733358eaf72737f768c39cdee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
