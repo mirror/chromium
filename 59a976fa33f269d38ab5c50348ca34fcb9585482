@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c39868e_afc577b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-06T04:22:36Z",
+      "side": 1,
+      "message": "nit: %s/Null/null/g",
+      "revId": "59a976fa33f269d38ab5c50348ca34fcb9585482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3939b09_4f40b6bf",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-06T04:22:36Z",
+      "side": 1,
+      "message": "Could you explain what \"recursive Shadow roots\" and why do we need to\nadapt it?",
+      "revId": "59a976fa33f269d38ab5c50348ca34fcb9585482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0944ffbd_066beb7c",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-06T04:22:36Z",
+      "side": 1,
+      "message": "nit: s/slottle/connected/",
+      "revId": "59a976fa33f269d38ab5c50348ca34fcb9585482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea5df7ca_84de4b0a",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-06T04:22:36Z",
+      "side": 1,
+      "message": "Using shadow host for position anchored by shadow root is wrong.\n\n\u003cshadow-host\u003e SH\n#shadow-root \u003d SR\n0\u003ca\u003e1\u003c/a\u003e2\n\nBeforeAnchor(SR) \u003d\u003d BeforeChildren(SH); really?\nBeforeChildren(SR) \u003d\u003d SR@0, BeforeAnchor(\"0\")\nSR@n: They are position in shadow root\nAfterAnchor(SR) \u003d\u003d AfterChildren(SH): really?\nAfterChildren(SR) \u003d\u003d SR@3, AfterAnchor(\"2\")",
+      "revId": "59a976fa33f269d38ab5c50348ca34fcb9585482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
