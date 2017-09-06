@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "74ed0d8e_d2a75d0b",
+        "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-06T23:59:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec5c53ad_117ffabf",
+      "revId": "50f27690e4d770c27608ff5072d284c7fe80e52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ce9998f_2721f2a1",
         "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.cpp",
         "patchSetId": 2
@@ -53,6 +71,24 @@
       "writtenOn": "2017-09-06T05:52:37Z",
       "side": 1,
       "message": "Maybe a TODO here for getting properties on virtual nodes (if here is the right place for it)?",
+      "revId": "50f27690e4d770c27608ff5072d284c7fe80e52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6bb3163_1209736f",
+        "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-06T23:59:25Z",
+      "side": 1,
+      "message": "No TODO needed - GetProperty handles that cases since there\u0027s\nnever any need to fall back on an ARIA attribute.",
+      "parentUuid": "8ce9998f_2721f2a1",
       "revId": "50f27690e4d770c27608ff5072d284c7fe80e52d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "b1cb58dd_fb803fd0",
+        "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-06T23:59:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62376967_a8ae1fea",
+      "revId": "50f27690e4d770c27608ff5072d284c7fe80e52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ce3cf8a_8427bd43",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXVirtualObject.cpp",
         "patchSetId": 2
@@ -90,6 +144,24 @@
       "revId": "50f27690e4d770c27608ff5072d284c7fe80e52d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0126a9b3_f68a4b09",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXVirtualObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-06T23:59:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ce3cf8a_8427bd43",
+      "revId": "50f27690e4d770c27608ff5072d284c7fe80e52d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
