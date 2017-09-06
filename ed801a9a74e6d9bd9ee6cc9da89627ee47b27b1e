@@ -494,6 +494,30 @@
       "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9006407a_e6c708f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-06T15:11:25Z",
+      "side": 1,
+      "message": "Okay, sg.\n\nAs an aside, \"git cl format\" is only a warning currently so you can land things that don\u0027t comply (in fact, this is sometimes necessary since git cl format and presubmit checks sometimes clash)",
+      "parentUuid": "d9e41f12_6872ec1c",
+      "range": {
+        "startLine": 228,
+        "startChar": 31,
+        "endLine": 228,
+        "endChar": 32
+      },
+      "revId": "ed801a9a74e6d9bd9ee6cc9da89627ee47b27b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
