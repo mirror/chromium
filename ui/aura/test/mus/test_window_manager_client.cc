@@ -111,6 +111,9 @@ void TestWindowManagerClient::WmConfineCursorToBounds(
 
 void TestWindowManagerClient::WmSetCursorTouchVisible(bool enabled) {}
 
+void TestWindowManagerClient::WmInjectEvent(std::unique_ptr<ui::Event> event,
+                                            int64_t display_id) {}
+
 void TestWindowManagerClient::OnWmCreatedTopLevelWindow(
     uint32_t change_id,
     Id transport_window_id) {}
