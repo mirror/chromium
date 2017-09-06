@@ -1787,6 +1787,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     // See ../paint/README.md for more on fragments.
     FragmentData* FirstFragment();
     FragmentData& EnsureFirstFragment();
+    void ClearFirstFragment();
 
     friend class LayoutObject;
     MutableForPainting(const LayoutObject& layout_object)
