@@ -47,7 +47,8 @@ class CastWebView : content::WebContentsObserver, content::WebContentsDelegate {
               CastWebContentsManager* web_contents_manager,
               content::BrowserContext* browser_context,
               scoped_refptr<content::SiteInstance> site_instance,
-              bool transparent);
+              bool transparent,
+              bool is_headless);
   ~CastWebView() override;
 
   shell::CastContentWindow* window() const { return window_.get(); }
