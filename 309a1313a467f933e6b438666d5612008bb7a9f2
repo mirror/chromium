@@ -46,6 +46,30 @@
       "revId": "309a1313a467f933e6b438666d5612008bb7a9f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd81f98e_86b4857c",
+        "filename": "media/mojo/clients/mojo_video_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-06T01:53:11Z",
+      "side": 1,
+      "message": "SGTM if the decoder could work without a token or factories.",
+      "parentUuid": "ad4eca8c_72b30943",
+      "range": {
+        "startLine": 217,
+        "startChar": 6,
+        "endLine": 217,
+        "endChar": 19
+      },
+      "revId": "309a1313a467f933e6b438666d5612008bb7a9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
