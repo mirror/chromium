@@ -249,6 +249,9 @@ struct NavigateParams {
   // an about:blank or a data url navigation.
   scoped_refptr<content::SiteInstance> source_site_instance;
 
+  // True if this navigation is gated by the popup blocker.
+  bool is_popup;
+
  private:
   NavigateParams();
 };

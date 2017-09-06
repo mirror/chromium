@@ -366,6 +366,8 @@ content::WebContents* CreateTargetContents(const chrome::NavigateParams& params,
   if (params.disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB)
     create_params.initially_hidden = true;
 
+  create_params.is_popup = params.is_popup;
+
 #if defined(USE_AURA)
   if (params.browser->window() &&
       params.browser->window()->GetNativeWindow()) {

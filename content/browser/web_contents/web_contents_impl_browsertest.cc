@@ -1699,4 +1699,22 @@ IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest,
   ASSERT_EQ(title, base::ASCIIToUTF16("done"));
 }
 
+IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest, WindowOpen_SetsPopupBit) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  EXPECT_TRUE(
+      NavigateToURL(shell(), embedded_test_server()->GetURL("/title1.html")));
+
+  std::string script = R"(
+    var opened = !!window.open();
+    window.domAutomationController.send(opened);
+  )";
+  bool opened_window = false;
+  ASSERT_TRUE(ExecuteScriptAndExtractBool(shell(), script, &opened_window));
+  EXPECT_TRUE(opened_window);
+  EXPECT_EQ(2u, Shell::windows().size());
+  WebContentsImpl* new_contents =
+      static_cast<WebContentsImpl*>(Shell::windows()[1]->web_contents());
+  EXPECT_TRUE(new_contents->is_popup_);
+}
+
 }  // namespace content

@@ -1498,13 +1498,14 @@ WebContents* Browser::OpenURLFromTab(WebContents* source,
   if (params.user_gesture)
     nav_params.window_action = chrome::NavigateParams::SHOW_WINDOW;
   nav_params.user_gesture = params.user_gesture;
-  if ((params.disposition == WindowOpenDisposition::NEW_POPUP ||
-       params.disposition == WindowOpenDisposition::NEW_FOREGROUND_TAB ||
-       params.disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB ||
-       params.disposition == WindowOpenDisposition::NEW_WINDOW) &&
-      PopupBlockerTabHelper::MaybeBlockPopup(source, base::Optional<GURL>(),
-                                             nav_params, &params,
-                                             blink::mojom::WindowFeatures())) {
+  nav_params.is_popup =
+      params.disposition == WindowOpenDisposition::NEW_POPUP ||
+      params.disposition == WindowOpenDisposition::NEW_FOREGROUND_TAB ||
+      params.disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB ||
+      params.disposition == WindowOpenDisposition::NEW_WINDOW;
+  if (nav_params.is_popup && PopupBlockerTabHelper::MaybeBlockPopup(
+                                 source, base::Optional<GURL>(), nav_params,
+                                 &params, blink::mojom::WindowFeatures())) {
     return nullptr;
   }
 

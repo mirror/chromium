@@ -171,6 +171,10 @@ class WebContents : public PageNavigator,
     // Note that the pre-created renderer process may not be used if the first
     // navigation requires a dedicated or privileged process, such as a WebUI.
     bool initialize_renderer;
+
+    // True if this web contents is considered a popup (e.g. its existence is
+    // gated by the popup blocker).
+    bool is_popup;
   };
 
   // Creates a new WebContents.
