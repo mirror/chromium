@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d51ae284_52414720",
+        "filename": "content/public/android/java/res/menu/select_action_menu.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-06T18:55:11Z",
+      "side": 1,
+      "message": "While reviewing this:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/652964/4/content/public/android/java/res/menu/select_action_menu.xml#61\n\nI wondered how does this work?  The menu is fully inflated and then we disable menu items right?  Is the title not pulled until needed and thus doesn\u0027t complain about missing resource ids?  In general, I\u0027m surprised it doesn\u0027t pull all of these resources during inflation and bork on older android revs.",
+      "range": {
+        "startLine": 60,
+        "startChar": 28,
+        "endLine": 60,
+        "endChar": 42
+      },
+      "revId": "74bb05b84499d5731abd9fc558568ae0762f77c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
