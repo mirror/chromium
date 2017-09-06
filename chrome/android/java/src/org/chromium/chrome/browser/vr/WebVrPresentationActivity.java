@@ -2,11 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.chrome.browser.vr_shell;
+package org.chromium.chrome.browser.vr;
 
 import android.view.WindowManager;
 
 import org.chromium.chrome.browser.customtabs.SeparateTaskCustomTabActivity;
+import org.chromium.chrome.browser.vr_shell.VrIntentUtils;
+import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 
 /**
  * A subclass of SeparateTaskCustomTabActivity created when starting Chrome in VR mode.
@@ -14,7 +16,7 @@ import org.chromium.chrome.browser.customtabs.SeparateTaskCustomTabActivity;
  * The main purpose of this activity is to add flexibility to the way Chrome is started when the
  * user's phone is already in their VR headset (e.g, we want to hide the System UI).
  */
-public class SeparateTaskCustomTabVrActivity extends SeparateTaskCustomTabActivity {
+public class WebVrPresentationActivity extends SeparateTaskCustomTabActivity {
     @Override
     public void preInflationStartup() {
         if (VrIntentUtils.getHandlerInstance().isTrustedDaydreamIntent(getIntent())) {
