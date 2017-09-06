@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cc292d5d_abb8b6ce",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "419700c9_7fbcafce",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "910fb921_fcae0717",
         "filename": "chrome/browser/resources/policy_tool.js",
         "patchSetId": 14
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fc329ec9_9a5be312",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "910fb921_fcae0717",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc7f19c2_109e41f1",
         "filename": "chrome/browser/resources/policy_tool.js",
         "patchSetId": 14
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-06T03:37:40Z",
       "side": 1,
       "message": "Do you need to override checkOverflow in policy_base.js? Because that one\nwill be called when the window is resized.\n\nAnd will your checkOverflow ever be called with opt_value_updated\u003dfalse? Because I\nonly find one caller with opt_value_update\u003dtrue.",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c4e4a6c_5846db26",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "I am not quite sure what you mean by that.\n\nThe fact that the overridden version has a parameter (and the original version doesn\u0027t) doesn\u0027t mean that the original version will be called when there are no parameters. Unlike C++, in JS functions behave like objects, and if we assign a different object to a field, it will completely override the previous one.\n\nFurthermore, in JS, if the number of arguments doesn\u0027t match the signature, the remaining arguments just have \u0027undefined\u0027 value, which is why passing no arguments is equivalent to passing \u0027false\u0027, as \u0027undefined\u0027 evaluates to \u0027false\u0027 in boolean expressions. This also answers the second question: I don\u0027t directly call this with \u0027false\u0027, but policy_base calls it with no parameters, which is equivalent.",
+      "parentUuid": "dc7f19c2_109e41f1",
       "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "26843141_5c17bfd8",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8608f48_80c23e0d",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0abab21e_b667e9c0",
         "filename": "chrome/browser/resources/policy_tool.js",
         "patchSetId": 14
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-06T03:37:40Z",
       "side": 1,
       "message": "what does \u0027false\u0027 mean?",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af1b524_bc649c1d",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "As far as I understand, this means that the page shouldn\u0027t fully reload after the form is submitted.",
+      "parentUuid": "0abab21e_b667e9c0",
       "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "386b7173_14e07900",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d86e826f_e7d2f451",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2457bed_2768692e",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
         "patchSetId": 14
@@ -118,6 +226,24 @@
       "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84fdd0eb_3b313298",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2457bed_2768692e",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "59b53486_e0c2e5d4",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d27b50da_d8591dd3",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d86eb21_bee57947",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
         "patchSetId": 14
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "0447c095_d63810a5",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d86eb21_bee57947",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af24c239_534de05c",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
         "patchSetId": 14
@@ -166,6 +328,24 @@
       "writtenOn": "2017-09-06T03:37:40Z",
       "side": 1,
       "message": "You have used \"logged: false\" in two different places, could you move it to constexpr in anonymous namespace?",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f979dd4_4ae4692e",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s worth it since it\u0027s a temporary thing anyway.",
+      "parentUuid": "af24c239_534de05c",
       "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "1af2c7d4_c96afae4",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eafce5d1_822eb538",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2aee11f9_003bc5e1",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
         "patchSetId": 14
@@ -203,6 +401,24 @@
       "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989588bd_a7247d01",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aee11f9_003bc5e1",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "fa2d78f9_8fd5eef0",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "848545e2_0047bb1f",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0a133c7_4683cec1",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
         "patchSetId": 14
@@ -237,6 +471,24 @@
       "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d45def_5442d7e9",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0a133c7_4683cec1",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "bea9f1ff_7d14ae9f",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "984a30d9_c8a5166e",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "742d34b5_3cd841a1",
         "filename": "components/policy_strings.grdp",
         "patchSetId": 14
@@ -271,6 +541,24 @@
       "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5329e9d_31b188ac",
+        "filename": "components/policy_strings.grdp",
+        "patchSetId": 14
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-06T16:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "742d34b5_3cd841a1",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
