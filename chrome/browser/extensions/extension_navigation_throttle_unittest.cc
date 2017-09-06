@@ -70,16 +70,18 @@ class ExtensionNavigationThrottleUnitTest
   void CheckTestCase(
       content::RenderFrameHost* host,
       const GURL& extension_url,
-      NavigationThrottle::ThrottleCheckResult expected_will_start_result) {
+      NavigationThrottle::ThrottleAction expected_will_start_result) {
     // First subtest: direct navigation to |extension_url|.
     std::unique_ptr<content::NavigationHandle> handle =
         content::NavigationHandle::CreateNavigationHandleForTesting(
             extension_url, host);
     EXPECT_EQ(expected_will_start_result,
-              handle->CallWillStartRequestForTesting(
-                  /*is_post=*/false, content::Referrer(),
-                  /*has_user_gesture=*/false, ui::PAGE_TRANSITION_LINK,
-                  /*is_external_protocol=*/false))
+              handle
+                  ->CallWillStartRequestForTesting(
+                      /*is_post=*/false, content::Referrer(),
+                      /*has_user_gesture=*/false, ui::PAGE_TRANSITION_LINK,
+                      /*is_external_protocol=*/false)
+                  .action())
         << extension_url;
 
     // Reset the handle for a second subtest: server redirect to
@@ -91,21 +93,25 @@ class ExtensionNavigationThrottleUnitTest
     // TODO(nick): https://crbug.com/695421 Once PlzNavigate is enabled 100%, it
     // should be possible to support return values other than PROCEED and CANCEL
     // from ExtensionNavigationThrottle::WillRedirectRequest.
-    NavigationThrottle::ThrottleCheckResult expected_will_redirect_result =
+    NavigationThrottle::ThrottleAction expected_will_redirect_result =
         (expected_will_start_result == NavigationThrottle::PROCEED)
             ? NavigationThrottle::PROCEED
             : NavigationThrottle::CANCEL;
     EXPECT_EQ(NavigationThrottle::PROCEED,
-              handle->CallWillStartRequestForTesting(
-                  /*is_post=*/false, content::Referrer(),
-                  /*has_user_gesture=*/false, ui::PAGE_TRANSITION_LINK,
-                  /*is_external_protocol=*/false))
+              handle
+                  ->CallWillStartRequestForTesting(
+                      /*is_post=*/false, content::Referrer(),
+                      /*has_user_gesture=*/false, ui::PAGE_TRANSITION_LINK,
+                      /*is_external_protocol=*/false)
+                  .action())
         << http_url;
     EXPECT_EQ(expected_will_redirect_result,
-              handle->CallWillRedirectRequestForTesting(
-                  extension_url,
-                  /*new_method_is_post=*/false, http_url,
-                  /*new_is_external_protocol=*/false))
+              handle
+                  ->CallWillRedirectRequestForTesting(
+                      extension_url,
+                      /*new_method_is_post=*/false, http_url,
+                      /*new_is_external_protocol=*/false)
+                  .action())
         << extension_url;
   }
 

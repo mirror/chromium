@@ -33,8 +33,8 @@ IN_PROC_BROWSER_TEST_F(FormSubmissionBrowserTest,
   const struct {
     GURL main_page_url;
     GURL form_page_url;
-    NavigationThrottle::ThrottleCheckResult start_expectation;
-    NavigationThrottle::ThrottleCheckResult redirect_expectation;
+    NavigationThrottle::ThrottleAction start_expectation;
+    NavigationThrottle::ThrottleAction redirect_expectation;
   } kTestCases[] = {
       // Form submissions is allowed by default when there is no CSP.
       {
@@ -99,8 +99,9 @@ IN_PROC_BROWSER_TEST_F(FormSubmissionBrowserTest,
     std::unique_ptr<NavigationThrottle> throttle =
         FormSubmissionThrottle::MaybeCreateThrottleFor(handle.get());
     ASSERT_TRUE(throttle);
-    EXPECT_EQ(test.start_expectation, throttle->WillStartRequest());
-    EXPECT_EQ(test.redirect_expectation, throttle->WillRedirectRequest());
+    EXPECT_EQ(test.start_expectation, throttle->WillStartRequest().action());
+    EXPECT_EQ(test.redirect_expectation,
+              throttle->WillRedirectRequest().action());
   }
 }
 
@@ -139,8 +140,9 @@ IN_PROC_BROWSER_TEST_F(FormSubmissionBrowserTest,
   std::unique_ptr<NavigationThrottle> throttle =
       FormSubmissionThrottle::MaybeCreateThrottleFor(handle.get());
   ASSERT_TRUE(throttle);
-  EXPECT_EQ(NavigationThrottle::PROCEED, throttle->WillStartRequest());
-  EXPECT_EQ(NavigationThrottle::PROCEED, throttle->WillRedirectRequest());
+  EXPECT_EQ(NavigationThrottle::PROCEED, throttle->WillStartRequest().action());
+  EXPECT_EQ(NavigationThrottle::PROCEED,
+            throttle->WillRedirectRequest().action());
 }
 
 }  // namespace content
