@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2acf3d5c_ed174575",
+        "filename": "extensions/renderer/guest_view/mime_handler_view/mime_handler_view_container.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-06T13:21:45Z",
+      "side": 1,
+      "message": "Ack. Uh thanks I missed that. We were sending it even before the change.",
+      "parentUuid": "f8c3a2a6_ab859c09",
+      "revId": "13c1275f27dd7e3ff30cb9a1895760ce45b139ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f8d9624_2c35f753",
         "filename": "extensions/renderer/guest_view/mime_handler_view/mime_handler_view_container.cc",
         "patchSetId": 2
