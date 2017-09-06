@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fe17364_5cb8f6a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-06T22:36:13Z",
+      "side": 1,
+      "message": "s/ARC++/ARC/g\n\nMaybe you\u0027ll need to change that from the Gerrit UI, not sure if Gerrit supports updating this from the commandline (Rietveld didn\u0027t).",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 16
+      },
+      "revId": "3941dca2725a9c0b5e492bd58eef454b9f85400c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
