@@ -186,6 +186,8 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // Records user action to corresponding UMA histograms.
   void RecordWarningAction(WarningUIType ui_type, WarningAction action);
 
+  void OnWarningComplete(WarningAction action);
+
   // Called when user close warning UI or navigate away.
   void OnWarningDone(content::WebContents* web_contents,
                      WarningUIType ui_type,

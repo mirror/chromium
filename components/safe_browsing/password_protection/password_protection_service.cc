@@ -17,6 +17,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
+#include "chrome/browser/safe_browsing/chrome_password_protection_service.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/password_manager/core/browser/password_reuse_detector.h"
@@ -147,6 +148,10 @@ void PasswordProtectionService::RecordWarningAction(WarningUIType ui_type,
       NOTREACHED();
       break;
   }
+}
+
+void PasswordProtectionService::OnWarningComplete(WarningAction action) {
+  LOG(INFO) << "OnWarningComplete";
 }
 
 void PasswordProtectionService::OnWarningDone(
@@ -390,6 +395,11 @@ void PasswordProtectionService::MaybeStartPasswordFieldOnFocusRequest(
     const GURL& password_form_action,
     const GURL& password_form_frame_url) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  ShowPasswordReuseModalWarningDialog(
+      web_contents, base::Bind(&PasswordProtectionService::OnWarningComplete,
+                               base::Unretained(this)));
+
   if (CanSendPing(kPasswordFieldOnFocusPinging, main_frame_url, false)) {
     StartRequest(web_contents, main_frame_url, password_form_action,
                  password_form_frame_url,
