@@ -160,6 +160,24 @@
       "revId": "9859174336713de9436bc4a390ff7baef7eb07cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9488d759_5d3c94b7",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-06T21:38:33Z",
+      "side": 1,
+      "message": "Yes, given that this is a short-term solution I prefer to just have it hardcoded, as in the current version of this patch.",
+      "parentUuid": "86ca8658_98ab0b57",
+      "revId": "9859174336713de9436bc4a390ff7baef7eb07cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
