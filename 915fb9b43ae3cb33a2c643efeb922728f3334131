@@ -16,6 +16,24 @@
       "revId": "915fb9b43ae3cb33a2c643efeb922728f3334131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0243f02e_fac1b4cc",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-06T18:39:30Z",
+      "side": 1,
+      "message": "As soon as this changes:\nhttps://cs.chromium.org/chromium/src/ui/display/display.h?type\u003dcs\u0026q\u003dDisplay+accelerometer_support\u0026sq\u003dpackage:chromium\u0026l\u003d135\n\nSpecifically I am reluctant to make the change until / unless we change it and document it in display.h. Following the trail from the JS code to the C++ implementation is hard enough without making the next developer that comes along try to search for \"sensor\" :) \n\nWe made this property [nodoc] because it\u0027s only used by Settings; we can rename this any time we want since it is undocumented / not for external use.",
+      "parentUuid": "bef1abe3_528de8b4",
+      "revId": "915fb9b43ae3cb33a2c643efeb922728f3334131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
