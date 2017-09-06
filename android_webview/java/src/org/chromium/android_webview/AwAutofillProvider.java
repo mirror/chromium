@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.support.annotation.VisibleForTesting;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,7 @@ public class AwAutofillProvider extends AutofillProvider {
                 ViewStructure child = structure.newChild(index++);
                 int virtualId = toVirtualId(sessionId, fieldIndex++);
                 child.setAutofillId(structure.getAutofillId(), virtualId);
-                if (field.mAutocompleteAttr != null) {
+                if (field.mAutocompleteAttr != null && !field.mAutocompleteAttr.isEmpty()) {
                     child.setAutofillHints(field.mAutocompleteAttr.split(" +"));
                 }
                 child.setHint(field.mPlaceholder);
@@ -146,8 +147,18 @@ public class AwAutofillProvider extends AutofillProvider {
         public AutofillValue getFieldNewValue(int index) {
             FormFieldData field = mFormData.mFields.get(index);
             if (field == null) return null;
-            String value = field.getValue();
-            return AutofillValue.forText(value);
+            switch (field.getControlType()) {
+                case FormFieldData.TYPE_LIST:
+                    int i = findIndex(field.mOptionValues, field.getValue());
+                    if (i == -1) return null;
+                    return AutofillValue.forList(i);
+                case FormFieldData.TYPE_TOGGLE:
+                    return AutofillValue.forToggle(field.isChecked());
+                case FormFieldData.TYPE_TEXT:
+                    return AutofillValue.forText(field.getValue());
+                default:
+                    return null;
+            }
         }
 
         public int getVirtualId(short index) {
@@ -191,6 +202,12 @@ public class AwAutofillProvider extends AutofillProvider {
 
     public AwAutofillProvider(Context context, ViewGroup containerView) {
         mAutofillManager = new AwAutofillManager(context);
+        mContainerView = containerView;
+    }
+
+    @VisibleForTesting
+    public AwAutofillProvider(ViewGroup containerView, AwAutofillManager manager) {
+        mAutofillManager = manager;
         mContainerView = containerView;
     }
 
@@ -269,6 +286,7 @@ public class AwAutofillProvider extends AutofillProvider {
 
     private void notifyVirtualValueChanged(int index) {
         AutofillValue autofillValue = mRequest.getFieldNewValue(index);
+        if (autofillValue == null) return;
         mAutofillManager.notifyVirtualValueChanged(
                 mContainerView, mRequest.getVirtualId((short) index), autofillValue);
     }
