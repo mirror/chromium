@@ -9,6 +9,7 @@ import("//build/config/crypto.gni")
 import("//build/config/features.gni")
 import("//build/config/ui.gni")
 import("//net/features.gni")
+import("//services/service_manager/public/service_manifest.gni")
 import("//testing/libfuzzer/fuzzer_test.gni")
 import("//testing/test.gni")
 import("//third_party/icu/config.gni")
@@ -2761,6 +2762,8 @@ if (enable_net_mojo) {
       "dns/host_resolver_mojo.h",
       "proxy/mojo_proxy_resolver_factory_impl.cc",
       "proxy/mojo_proxy_resolver_factory_impl.h",
+      "proxy/mojo_proxy_resolver_factory_service.cc",
+      "proxy/mojo_proxy_resolver_factory_service.h",
       "proxy/mojo_proxy_resolver_impl.cc",
       "proxy/mojo_proxy_resolver_impl.h",
       "proxy/mojo_proxy_resolver_v8_tracing_bindings.h",
@@ -2769,6 +2772,7 @@ if (enable_net_mojo) {
     deps = [
       ":net_with_v8",
       "//base",
+      "//services/service_manager",
     ]
 
     public_deps = [
@@ -5243,6 +5247,7 @@ test("net_unittests") {
     "//net/base/registry_controlled_domains",
     "//net/data/ssl/certificate_transparency:ct_log_list",
     "//net/http:transport_security_state_unittest_data",
+    "//services/service_manager",
     "//testing/gmock",
     "//testing/gtest",
     "//third_party/protobuf:protobuf_lite",
@@ -6247,4 +6252,9 @@ fuzzer_test("net_spdy_session_fuzzer") {
   ]
   dict = "data/fuzzer_dictionaries/net_spdy_session_fuzzer.dict"
   seed_corpus = "data/fuzzer_data/net_spdy_session_fuzzer/"
+}
+
+service_manifest("proxy_resolver_factory_manifest") {
+  name = "net_proxy_resolver_factory"
+  source = "proxy/mojo_proxy_resolver_factory_manifest.json"
 }
