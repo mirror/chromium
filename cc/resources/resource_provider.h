@@ -344,6 +344,9 @@ class CC_EXPORT ResourceProvider
 
   // For tests only!
   void CreateForTesting(viz::ResourceId id);
+  void SetYUVHighbitResourceFormatForTesting(viz::ResourceFormat format) {
+    settings_.yuv_highbit_resource_format = format;
+  }
 
   // Indicates if we can currently lock this resource for write.
   bool CanLockForWrite(viz::ResourceId id);
