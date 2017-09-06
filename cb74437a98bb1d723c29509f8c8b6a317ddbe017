@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3234daf6_c0a3d444",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/AnnotationProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-06T15:00:38Z",
+      "side": 1,
+      "message": "nit: I would not have this guarantee any order at an interface level. If we want to support clients determining which annotations are on the class vs which or on the method, we should support those via separate methods. It doesn\u0027t look like that\u0027s necessary for Features, though.",
+      "revId": "cb74437a98bb1d723c29509f8c8b6a317ddbe017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
