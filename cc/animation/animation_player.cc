@@ -7,6 +7,7 @@
 #include <inttypes.h>
 #include <algorithm>
 
+#include "base/numerics/math_util.h"
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "cc/animation/animation_delegate.h"

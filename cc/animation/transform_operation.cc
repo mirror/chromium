@@ -2,16 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Needed on Windows to get |M_PI| from <cmath>
-#ifdef _WIN32
-#define _USE_MATH_DEFINES
-#endif
-
 #include <algorithm>
-#include <cmath>
 #include <limits>
 
 #include "base/logging.h"
+#include "base/numerics/math_util.h"
 #include "cc/animation/transform_operation.h"
 #include "cc/animation/transform_operations.h"
 #include "cc/base/math_util.h"
@@ -72,7 +67,7 @@ static bool ShareSameAxis(const TransformOperation* from,
                   to->rotate.axis.y * from->rotate.axis.y +
                   to->rotate.axis.z * from->rotate.axis.z;
   SkMScalar error =
-      std::abs(SK_MScalar1 - (dot * dot) / (length_2 * other_length_2));
+      SkMScalarAbs(SK_MScalar1 - (dot * dot) / (length_2 * other_length_2));
   bool result = error < kAngleEpsilon;
   if (result) {
     *axis_x = to->rotate.axis.x;
@@ -293,19 +288,11 @@ static void FindCandidatesInPlane(float px,
   *num_candidates = 4;
   candidates[0] = phi;
   for (int i = 1; i < *num_candidates; ++i)
-    candidates[i] = candidates[i - 1] + M_PI_2;
+    candidates[i] = candidates[i - 1] + base::kPiDouble / 2;
   if (nz < 0.f) {
     for (int i = 0; i < *num_candidates; ++i)
       candidates[i] *= -1.f;
   }
-}
-
-static float RadiansToDegrees(float radians) {
-  return (180.f * radians) / M_PI;
-}
-
-static float DegreesToRadians(float degrees) {
-  return (M_PI * degrees) / 180.f;
 }
 
 static void BoundingBoxForArc(const gfx::Point3F& point,
@@ -411,29 +398,29 @@ static void BoundingBoxForArc(const gfx::Point3F& point,
     // maximum/minimum x, y, z values.
     // x'(t) = r*cos(t)*v2.x - r*sin(t)*v1.x = 0
     // tan(t) = v2.x/v1.x
-    // t = atan2(v2.x, v1.x) + n*M_PI;
+    // t = atan2(v2.x, v1.x) + n*pi;
     candidates[0] = atan2(v2.x(), v1.x());
-    candidates[1] = candidates[0] + M_PI;
+    candidates[1] = candidates[0] + base::kPiDouble;
     candidates[2] = atan2(v2.y(), v1.y());
-    candidates[3] = candidates[2] + M_PI;
+    candidates[3] = candidates[2] + base::kPiDouble;
     candidates[4] = atan2(v2.z(), v1.z());
-    candidates[5] = candidates[4] + M_PI;
+    candidates[5] = candidates[4] + base::kPiDouble;
   }
 
-  double min_radians = DegreesToRadians(min_degrees);
-  double max_radians = DegreesToRadians(max_degrees);
+  double min_radians = base::DegToRad(min_degrees);
+  double max_radians = base::DegToRad(max_degrees);
 
   for (int i = 0; i < num_candidates; ++i) {
     double radians = candidates[i];
     while (radians < min_radians)
-      radians += 2.0 * M_PI;
+      radians += 2.0 * base::kPiDouble;
     while (radians > max_radians)
-      radians -= 2.0 * M_PI;
+      radians -= 2.0 * base::kPiDouble;
     if (radians < min_radians)
       continue;
 
     gfx::Transform rotation;
-    rotation.RotateAbout(axis, RadiansToDegrees(radians));
+    rotation.RotateAbout(axis, base::RadToDeg(radians));
     gfx::Point3F rotated = point;
     rotation.TransformPoint(&rotated);
 
