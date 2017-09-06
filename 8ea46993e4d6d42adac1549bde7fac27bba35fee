@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1fbf91ba_057f8803",
+        "filename": "build/android/buildhooks/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "549bea5f_39e3efb2",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 10
+      },
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80147912_55a2d384",
         "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooksAndroid.java",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "9fc5e90d_36c71c0a",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooksAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80147912_55a2d384",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a0b6e04_a1360fa4",
         "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooksAndroid.java",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-06T17:38:01Z",
       "side": 1,
       "message": "Make all of these abstract rather than dummy methods?",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd70713_ee5de316",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooksAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "And move the dummy implementations to the default BuiltHooksAndroidImpl?",
+      "parentUuid": "7a0b6e04_a1360fa4",
       "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "d91b6a01_3d8fcb74",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooksAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd87aad4_222f9069",
+      "range": {
+        "startLine": 51,
+        "startChar": 36,
+        "endLine": 51,
+        "endChar": 41
+      },
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54a95406_3bb5a018",
         "filename": "build/android/bytecode/java/org/chromium/bytecode/ByteCodeProcessor.java",
         "patchSetId": 4
@@ -96,6 +180,24 @@
       "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "760374d2_1ff20a53",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/ByteCodeProcessor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54a95406_3bb5a018",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "86f78a57_c575d377",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/ByteCodeProcessor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a21ab706_ce56ed81",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8609ad0_77a153ed",
         "filename": "build/android/bytecode/java/org/chromium/bytecode/ByteCodeProcessor.java",
         "patchSetId": 4
@@ -130,6 +250,24 @@
       "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd0bb1d3_25548e18",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/ByteCodeProcessor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "git cl format wants this for some reason. I changed it to a block comment for easier pasting anyways.",
+      "parentUuid": "e8609ad0_77a153ed",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "1e90254a_022c3945",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/ByteCodeProcessor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Since we\u0027re using a wrapper wrapper script it hardly seems worth it to include this check so I removed this block entirely. Let me know if I should add it back.",
+      "parentUuid": "43aaa7e5_bfadca93",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb302e98_c0c81ba0",
         "filename": "build/android/bytecode/java/org/chromium/bytecode/CustomResourcesClassAdapter.java",
         "patchSetId": 4
@@ -164,6 +320,24 @@
       "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb97cfe_22794a53",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/CustomResourcesClassAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb302e98_c0c81ba0",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "46841c7d_a08a8775",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/CustomResourcesClassAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Changed to EXCEPTED_CLASS_METHODS since this one includes the class name while PROHIBITED_METHODS only includes the method signature.",
+      "parentUuid": "89bd1995_c8f98bc1",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f356a6e5_6bbc447d",
         "filename": "build/android/bytecode/java/org/chromium/bytecode/CustomResourcesClassAdapter.java",
         "patchSetId": 4
@@ -198,6 +390,24 @@
       "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf33461_ce3878b4",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/CustomResourcesClassAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f356a6e5_6bbc447d",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -218,6 +428,24 @@
     },
     {
       "key": {
+        "uuid": "fc252f8a_167931e6",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/CustomResourcesClassAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62af4d5a_57114778",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5136ef57_d9ea0e01",
         "filename": "build/android/bytecode/java/org/chromium/bytecode/CustomResourcesClassAdapter.java",
         "patchSetId": 4
@@ -232,6 +460,24 @@
       "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a8fe5b_386260e2",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/CustomResourcesClassAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5136ef57_d9ea0e01",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -252,6 +498,24 @@
     },
     {
       "key": {
+        "uuid": "e116f0d3_14a0f675",
+        "filename": "build/android/gyp/java_binary_script_wrapper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Done. Also changed it to handle the --enable-custom-resources/--no-custom-resources instead of doing this in GN.",
+      "parentUuid": "2c82dfa8_6e4d4c5c",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6bfba31_adb0cdd2",
         "filename": "build/android/gyp/java_binary_script_wrapper.py",
         "patchSetId": 4
@@ -266,6 +530,24 @@
       "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9c607d_42cc84c6",
+        "filename": "build/android/gyp/java_binary_script_wrapper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Removed this, done.",
+      "parentUuid": "b6bfba31_adb0cdd2",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -286,6 +568,24 @@
     },
     {
       "key": {
+        "uuid": "b55156d4_2b3dc625",
+        "filename": "build/android/gyp/java_binary_script_wrapper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92d3140c_61ca63fb",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ef48cbf_62565b5d",
         "filename": "build/config/android/internal_rules.gni",
         "patchSetId": 4
@@ -303,6 +603,24 @@
     },
     {
       "key": {
+        "uuid": "00970472_5405bc98",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ef48cbf_62565b5d",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3555475_13136a4a",
         "filename": "build/secondary/third_party/android_tools/support/BUILD.gn",
         "patchSetId": 4
@@ -314,6 +632,24 @@
       "writtenOn": "2017-09-06T17:38:01Z",
       "side": 1,
       "message": "Add a comment as to why",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae35d83_443bb49e",
+        "filename": "build/secondary/third_party/android_tools/support/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-06T20:24:11Z",
+      "side": 1,
+      "message": "Removed lint.",
+      "parentUuid": "c3555475_13136a4a",
       "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
