@@ -171,6 +171,7 @@ bool DrmWindowHost::CanDispatchEvent(const PlatformEvent& ne) {
 }
 
 uint32_t DrmWindowHost::DispatchEvent(const PlatformEvent& native_event) {
+  LOG(ERROR) << "DrmWindowHost::DispatchEvent start";
   DCHECK(native_event);
 
   Event* event = static_cast<Event*>(native_event);

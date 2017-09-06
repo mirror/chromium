@@ -30,6 +30,7 @@ void EventSource::RemoveEventRewriter(EventRewriter* rewriter) {
 }
 
 EventDispatchDetails EventSource::SendEventToSink(Event* event) {
+  LOG(ERROR) << "EventSource::SendEventToSink start";
   std::unique_ptr<Event> rewritten_event;
   EventRewriteStatus status = EVENT_REWRITE_CONTINUE;
   EventRewriterList::const_iterator it = rewriter_list_.begin(),

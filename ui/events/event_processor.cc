@@ -13,6 +13,7 @@ EventDispatchDetails EventProcessor::OnEventFromSource(Event* event) {
   // If |event| is in the process of being dispatched or has already been
   // dispatched, then dispatch a copy of the event instead. We expect event
   // target to be already set if event phase is after EP_PREDISPATCH.
+  LOG(ERROR) << "EventProcessor::OnEventFromSource";
   bool dispatch_original_event = event->phase() == EP_PREDISPATCH;
   DCHECK(dispatch_original_event || event->target());
   Event* event_to_dispatch = event;
@@ -49,6 +50,7 @@ EventDispatchDetails EventProcessor::OnEventFromSource(Event* event) {
     }
 
     while (target) {
+      LOG(ERROR) << "EventProcessor::OnEventFromSource loop";
       details = DispatchEvent(target, event_to_dispatch);
 
       if (!dispatch_original_event) {
@@ -63,10 +65,12 @@ EventDispatchDetails EventProcessor::OnEventFromSource(Event* event) {
 
       if (details.target_destroyed || event->handled() ||
           target == initial_target) {
+        LOG(ERROR) << "EventProcessor::OnEventFromSource handled";
         break;
       }
 
       DCHECK(targeter);
+      LOG(ERROR) << "EventProcessor::OnEventFromSource find next target";
       target = targeter->FindNextBestTarget(target, event_to_dispatch);
     }
   }

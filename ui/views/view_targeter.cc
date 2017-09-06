@@ -51,17 +51,21 @@ ui::EventTarget* ViewTargeter::FindTargetForEvent(ui::EventTarget* root,
 ui::EventTarget* ViewTargeter::FindNextBestTarget(
     ui::EventTarget* previous_target,
     ui::Event* event) {
-  if (!previous_target)
+  if (!previous_target) {
+    LOG(ERROR) << "ViewTargeter::FindNextBestTarget no target";
     return NULL;
+  }
 
   if (event->IsGestureEvent()) {
     ui::GestureEvent* gesture = event->AsGestureEvent();
     ui::EventTarget* next_target =
         FindNextBestTargetForGestureEvent(previous_target, *gesture);
     previous_target->ConvertEventToTarget(next_target, gesture);
+    LOG(ERROR) << "ViewTargeter::FindNextBestTarget gesture";
     return next_target;
   }
 
+  LOG(ERROR) << "ViewTargeter::FindNextBestTarget get parent";
   return previous_target->GetParentTarget();
 }
 

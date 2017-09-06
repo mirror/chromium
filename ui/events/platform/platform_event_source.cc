@@ -79,6 +79,7 @@ void PlatformEventSource::RemovePlatformEventObserver(
 }
 
 uint32_t PlatformEventSource::DispatchEvent(PlatformEvent platform_event) {
+  LOG(ERROR) << "PlatformEventSource::DispatchEvent start";
   uint32_t action = POST_DISPATCH_PERFORM_DEFAULT;
 
   for (PlatformEventObserver& observer : observers_)
@@ -89,6 +90,7 @@ uint32_t PlatformEventSource::DispatchEvent(PlatformEvent platform_event) {
 
   if (action & POST_DISPATCH_PERFORM_DEFAULT) {
     for (PlatformEventDispatcher& dispatcher : dispatchers_) {
+      LOG(ERROR) << "PlatformEventSource::DispatchEvent default";
       if (dispatcher.CanDispatchEvent(platform_event))
         action = dispatcher.DispatchEvent(platform_event);
       if (action & POST_DISPATCH_STOP_PROPAGATION)

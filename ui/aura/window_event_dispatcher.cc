@@ -183,6 +183,7 @@ void WindowEventDispatcher::ProcessedTouchEvent(
     Window* window,
     ui::EventResult result,
     bool is_source_touch_event_set_non_blocking) {
+  LOG(ERROR) << "WindowEventDispatcher::ProcessedTouchEvent";
   ui::GestureRecognizer::Gestures gestures =
       ui::GestureRecognizer::Get()->AckTouchEvent(
           unique_event_id, result, is_source_touch_event_set_non_blocking,
@@ -306,6 +307,9 @@ ui::EventDispatchDetails WindowEventDispatcher::DispatchMouseEnterOrExit(
 ui::EventDispatchDetails WindowEventDispatcher::ProcessGestures(
     Window* target,
     ui::GestureRecognizer::Gestures gestures) {
+  LOG(ERROR) << "WindowEventDispatcher::ProcessGestures";
+  TRACE_EVENT1("input", "WindowEventDispatcher::ProcessGestures",
+               "gesture_count", gestures.size());
   DispatchDetails details;
   if (gestures.empty())
     return details;
@@ -568,6 +572,7 @@ ui::EventDispatchDetails WindowEventDispatcher::PreDispatchEvent(
 ui::EventDispatchDetails WindowEventDispatcher::PostDispatchEvent(
     ui::EventTarget* target,
     const ui::Event& event) {
+  LOG(ERROR) << "WindowEventDispatcher::PostDispatchEvent start";
   DispatchDetails details;
   if (!target || target != event_dispatch_target_)
     details.target_destroyed = true;
@@ -591,6 +596,7 @@ ui::EventDispatchDetails WindowEventDispatcher::PostDispatchEvent(
                 touchevent.unique_event_id(), event.result(),
                 false /* is_source_touch_event_set_non_blocking */, window);
 
+        LOG(ERROR) << "WindowEventDispatcher::PostDispatchEvent gesture";
         return ProcessGestures(window, std::move(gestures));
       }
     }
