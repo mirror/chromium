@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cae41b60_3d4eb8f7",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T18:01:17Z",
+      "side": 1,
+      "message": "Add parenthesis around the return statement.",
+      "range": {
+        "startLine": 158,
+        "startChar": 5,
+        "endLine": 159,
+        "endChar": 45
+      },
+      "revId": "080c2116cab93e4c1e8d61132bdec166559d2863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

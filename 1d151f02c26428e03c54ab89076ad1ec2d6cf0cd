@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "5ed91801_5a5c6843",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-06T18:01:17Z",
+      "side": 1,
+      "message": "Yeah, this is ugly too.\n\nLets use base::JoinString.\nSee \"Real-world example #3\" here: https://groups.google.com/a/chromium.org/forum/#!searchin/chromium-dev/stringpiece$20join%7Csort:relevance/chromium-dev/q30yArC03RU/aPv90s2rAAAJ\n\nSorry for the confusion.",
+      "parentUuid": "f683667e_bb5ba9d1",
+      "range": {
+        "startLine": 174,
+        "startChar": 9,
+        "endLine": 174,
+        "endChar": 15
+      },
+      "revId": "1d151f02c26428e03c54ab89076ad1ec2d6cf0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c001948_9c4ff9d7",
         "filename": "components/previews/core/previews_amp_converter.cc",
         "patchSetId": 7
