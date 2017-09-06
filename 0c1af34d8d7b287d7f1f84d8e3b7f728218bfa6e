@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b48013ca_17f535e9",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-06T04:08:44Z",
+      "side": 1,
+      "message": "Please define local variables as close as possible to their first use site.",
+      "revId": "0c1af34d8d7b287d7f1f84d8e3b7f728218bfa6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df01613_f7326859",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-06T04:08:44Z",
+      "side": 1,
+      "message": "s/Set a reasonable VA logging level/Set VA logging level to enable error messages/",
+      "revId": "0c1af34d8d7b287d7f1f84d8e3b7f728218bfa6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af777ff8_eb58e79b",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-06T04:08:44Z",
+      "side": 1,
+      "message": "Could we move this to LazyProfileInfos()? This way it should be printed only once (even though it likely is right now as well, since if this fails once, profiles are empty).",
+      "revId": "0c1af34d8d7b287d7f1f84d8e3b7f728218bfa6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
