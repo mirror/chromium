@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cd38364_252b4ffd",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-06T09:16:34Z",
+      "side": 1,
+      "message": "Thanks for cleaning this up.",
+      "range": {
+        "startLine": 1080,
+        "startChar": 27,
+        "endLine": 1082,
+        "endChar": 60
+      },
+      "revId": "bac0ba13497214048d64eebab9143db20eead42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
