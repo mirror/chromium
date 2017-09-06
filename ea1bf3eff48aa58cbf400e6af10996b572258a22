@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbb57256_2f87d571",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T16:48:00Z",
+      "side": 1,
+      "message": "Returns",
+      "revId": "ea1bf3eff48aa58cbf400e6af10996b572258a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954c33e2_8a94bea2",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T16:48:00Z",
+      "side": 1,
+      "message": "Make it a const method.",
+      "revId": "ea1bf3eff48aa58cbf400e6af10996b572258a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf13d4ed_4c874b59",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T16:48:00Z",
+      "side": 1,
+      "message": "What is |true| here?",
+      "revId": "ea1bf3eff48aa58cbf400e6af10996b572258a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a7dc41_0a5109d1",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T16:48:00Z",
+      "side": 1,
+      "message": "Add a TODO for the y_offset() \u003c 0 case too.",
+      "revId": "ea1bf3eff48aa58cbf400e6af10996b572258a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432eba81_6c0ec013",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-06T16:48:00Z",
+      "side": 1,
+      "message": "Can you add a SetPinnedNodeId() function that takes care of setting |pinned_id_|, and calling the frontend()/dom_agent_ functions as appropriate?",
+      "revId": "ea1bf3eff48aa58cbf400e6af10996b572258a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
