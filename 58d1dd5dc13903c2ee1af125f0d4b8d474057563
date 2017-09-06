@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af6924d2_759cf888",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-06T19:56:30Z",
+      "side": 0,
+      "message": "Don\u0027t call this Init in a constructor because you could get a virtual method call back (SetBeginFrameSource). Instead use a factory method to call Init.",
+      "revId": "58d1dd5dc13903c2ee1af125f0d4b8d474057563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
