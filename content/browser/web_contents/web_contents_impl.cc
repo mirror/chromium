@@ -4560,6 +4560,11 @@ void WebContentsImpl::OnInterfaceRequest(
   }
 }
 
+void WebContentsImpl::OnDidBlockFramebust(const GURL& url) {
+  if (delegate_)
+    delegate_->OnDidBlockFramebust(this, url);
+}
+
 const GURL& WebContentsImpl::GetMainFrameLastCommittedURL() const {
   return GetLastCommittedURL();
 }
