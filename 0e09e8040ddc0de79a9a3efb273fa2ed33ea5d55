@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bdac6cec_ad456894",
+        "filename": "chrome/browser/extensions/api/networking_private/networking_private_chromeos_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-06T19:03:29Z",
+      "side": 1,
+      "message": "Cute. Done.",
+      "parentUuid": "981a69ba_727cd66d",
+      "revId": "0e09e8040ddc0de79a9a3efb273fa2ed33ea5d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e49896a_60d4d5da",
         "filename": "chrome/test/data/extensions/api_test/networking_private/chromeos/test.js",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c39fd112_1e26ec76",
+        "filename": "chrome/test/data/extensions/api_test/networking_private/chromeos/test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-06T19:03:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e49896a_60d4d5da",
+      "revId": "0e09e8040ddc0de79a9a3efb273fa2ed33ea5d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d6d11ab_f35dbf87",
         "filename": "chrome/test/data/extensions/api_test/networking_private/chromeos/test.js",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "0e09e8040ddc0de79a9a3efb273fa2ed33ea5d55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d87851b_85850c09",
+        "filename": "chrome/test/data/extensions/api_test/networking_private/chromeos/test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-06T19:03:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d6d11ab_f35dbf87",
+      "revId": "0e09e8040ddc0de79a9a3efb273fa2ed33ea5d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "385a45af_cfb9c5b4",
+        "filename": "chromeos/dbus/fake_shill_device_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-06T19:03:29Z",
+      "side": 1,
+      "message": "Moved to a separate CL.",
+      "parentUuid": "14a13c4a_ddc2940a",
+      "range": {
+        "startLine": 416,
+        "startChar": 0,
+        "endLine": 420,
+        "endChar": 1
+      },
+      "revId": "0e09e8040ddc0de79a9a3efb273fa2ed33ea5d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1aabc12_741f4c73",
         "filename": "extensions/common/api/networking_private.idl",
         "patchSetId": 3
@@ -87,6 +165,24 @@
       "writtenOn": "2017-09-01T14:59:46Z",
       "side": 1,
       "message": "will we potentially add more parameters here?  Would it make sense to have a dictionary of parameters?",
+      "revId": "0e09e8040ddc0de79a9a3efb273fa2ed33ea5d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef8d8b2_96720d5d",
+        "filename": "extensions/common/api/networking_private.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-06T19:03:29Z",
+      "side": 1,
+      "message": "No, I can\u0027t imagine that we would. We are selecting which \"mobile network\" (i.e. a carrier+technology) to use for a particular cellular network. It\u0027s not really a property setter.",
+      "parentUuid": "d1aabc12_741f4c73",
       "revId": "0e09e8040ddc0de79a9a3efb273fa2ed33ea5d55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
