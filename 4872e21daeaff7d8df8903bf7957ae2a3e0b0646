@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b76bcb27_26b4c6a4",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/transform-inside-opacity.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-06T21:50:51Z",
+      "side": 1,
+      "message": "The new code does not take into account transform when determining fragment clips. Transform\nis instead applied as a post-fragmentation-paint effect. I adjusted this \n\nFirefox\u0027s also applies transform afterward, and the spec seems to agree:\nhttps://drafts.csswg.org/css-break-3/#transforms\n\nHowever, Chrome also clips the transform at the edge of the fragmentation area. This is\ndue to a too-small area for the CempositingRecorder for the opacity effect. This should\nbe fixed automatically by SPv2.",
+      "revId": "4872e21daeaff7d8df8903bf7957ae2a3e0b0646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c331f9a5_aeccf475",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/paint/invalidation/paged-with-overflowing-block-rl-expected.png",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-06T21:50:51Z",
+      "side": 1,
+      "message": "The result here previously appears to be wrong. Don\u0027t know why exactly my CL fixed it.",
+      "revId": "4872e21daeaff7d8df8903bf7957ae2a3e0b0646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
