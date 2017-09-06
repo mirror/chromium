@@ -16,6 +16,24 @@
       "revId": "7e81682c8f739e1aafd64f907019b37b82ab1d7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ffda14_5f29e86a",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/background_test.extjs",
+        "patchSetId": 2
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-06T01:58:09Z",
+      "side": 1,
+      "message": "Yes it is; I do usually test these manually. The tests replace cvox.ChromeVox.tts, so whatever dict doesn\u0027t really even come into play.",
+      "parentUuid": "03bbfd45_e4b54fb9",
+      "revId": "7e81682c8f739e1aafd64f907019b37b82ab1d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
