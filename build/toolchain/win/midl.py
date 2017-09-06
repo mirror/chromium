@@ -32,7 +32,7 @@ def main(arch, outdir, tlb, h, dlldata, iid, proxy, idl, *flags):
   # i.e. it changes every few compiles.  So a checked-in file does not work
   # for chromoting_lib.idl.  For now, call midl.exe for remoting instead of
   # using checked-in artifacts for it.
-  is_chromoting = os.path.basename(idl) == 'chromoting_lib.idl'
+  is_chromoting = False# os.path.basename(idl) == 'chromoting_lib.idl'
 
   # Copy checked-in outputs to final location.
   THIS_DIR = os.path.abspath(os.path.dirname(__file__))

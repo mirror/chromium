@@ -301,6 +301,10 @@ deps = {
   'src/third_party/openh264/src':
     Var('chromium_git') + '/external/github.com/cisco/openh264' + '@' + '0fd88df93c5dcaf858c57eb7892bd27763f0f0ac',
 
+  # Parses Windows PE/COFF executable format.
+  'src/third_party/pefile':
+    Var('chromium_git') + '/external/pefile.git' + '@' + '72c6ae42396cb913bcab63c15585dc3b5c3f92f1',
+
   'src/third_party/re2/src':
     Var('chromium_git') + '/external/github.com/google/re2.git' + '@' + 'ae9cb49a2e2ba95de4f0c6ec5a8afd039996d2c7',
 
@@ -335,10 +339,6 @@ deps_os = {
 
     'src/third_party/lighttpd':
       Var('chromium_git') + '/chromium/deps/lighttpd.git' + '@' + Var('lighttpd_revision'),
-
-    # Parses Windows PE/COFF executable format.
-    'src/third_party/pefile':
-      Var('chromium_git') + '/external/pefile.git' + '@' + '72c6ae42396cb913bcab63c15585dc3b5c3f92f1',
 
     # GNU binutils assembler for x86-32.
     'src/third_party/gnu_binutils':
