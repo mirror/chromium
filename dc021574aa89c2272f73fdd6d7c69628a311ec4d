@@ -87,6 +87,24 @@
       "revId": "dc021574aa89c2272f73fdd6d7c69628a311ec4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6954af92_eaa7d76a",
+        "filename": "docs/static_initializers.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T02:19:30Z",
+      "side": 1,
+      "message": "Sure: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d762359",
+      "parentUuid": "a8905075_b74c30a9",
+      "revId": "dc021574aa89c2272f73fdd6d7c69628a311ec4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

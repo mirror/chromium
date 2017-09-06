@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8a45989_0d4d9ff2",
+        "filename": "build/android/resource_sizes.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T02:19:30Z",
+      "side": 1,
+      "message": "Moved it to a separate script within //build/android/gyp",
+      "parentUuid": "2cca4ffc_8b7db6eb",
+      "revId": "988c26ff7d30a607e5f92b3c1de4fdacdfea8ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a066f3ae_751a5309",
         "filename": "chrome/android/BUILD.gn",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "0a1a8b9f_3ebfdd3c",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T02:19:30Z",
+      "side": 1,
+      "message": "I could do: rebase_path(root_build_dir, root_build_dir), but it\u0027s always \".\" :P",
+      "parentUuid": "a066f3ae_751a5309",
+      "range": {
+        "startLine": 1162,
+        "startChar": 35,
+        "endLine": 1162,
+        "endChar": 36
+      },
+      "revId": "988c26ff7d30a607e5f92b3c1de4fdacdfea8ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4177965a_a71176a8",
         "filename": "chrome/android/static_initializers.gni",
         "patchSetId": 6
@@ -53,6 +95,30 @@
       "writtenOn": "2017-09-05T21:25:37Z",
       "side": 1,
       "message": "what about x86?",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "988c26ff7d30a607e5f92b3c1de4fdacdfea8ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500e05d6_9b5294d7",
+        "filename": "chrome/android/static_initializers.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-06T02:19:30Z",
+      "side": 1,
+      "message": "There are no try bots for x86, so I didn\u0027t think it worthwhile to add. Everyone that fixes a SI would then have to locally build for x86 to ensure they are correctly updating the expectation, whereas here, the CQ will tell you what the number should be and fail until it\u0027s correct.\n\nAdded a comment saying these are the only try bots.",
+      "parentUuid": "4177965a_a71176a8",
       "range": {
         "startLine": 11,
         "startChar": 6,
