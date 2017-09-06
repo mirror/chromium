@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfe5546d_c2d48e29",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T07:09:00Z",
+      "side": 1,
+      "message": "can use BindOnce?",
+      "revId": "41fe8248fb1897207decd7edebbc4d9b7fb57879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2411a93_c7bc283b",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T07:09:00Z",
+      "side": 1,
+      "message": "does BindOnce work?",
+      "revId": "41fe8248fb1897207decd7edebbc4d9b7fb57879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666f3314_155343c0",
+        "filename": "content/browser/shared_worker/shared_worker_host.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T07:09:00Z",
+      "side": 1,
+      "message": "Maybe not to do with this CL, but it seems SharedWorkerHost is always accessed on the IO thread. Should we add a comment saying that to the class documentation?",
+      "revId": "41fe8248fb1897207decd7edebbc4d9b7fb57879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6395f4_8835f3bc",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T07:09:00Z",
+      "side": 1,
+      "message": "maybe turn this to auto/std::make_unique for consistency with the below",
+      "revId": "41fe8248fb1897207decd7edebbc4d9b7fb57879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7254ddd_149fcbaf",
+        "filename": "content/common/shared_worker/shared_worker_client.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T07:09:00Z",
+      "side": 1,
+      "message": "Can you add lightweight comments about what this interface is, and what the functions do?\n\nI guess, SharedWorkerClient is a renderer-side interface that represents a context (currently, this can only be a Document) that can access a SharedWorker. The browser process uses this interface to tell the renderer about the creation and activities of the shared worker.",
+      "revId": "41fe8248fb1897207decd7edebbc4d9b7fb57879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dade59c_f9ab4422",
+        "filename": "content/common/shared_worker/shared_worker_client.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T07:09:00Z",
+      "side": 1,
+      "message": "Called when the shared worker execution context starts?",
+      "revId": "41fe8248fb1897207decd7edebbc4d9b7fb57879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e98acb_6cc64b2c",
+        "filename": "content/common/shared_worker/shared_worker_client.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T07:09:00Z",
+      "side": 1,
+      "message": "Called when the shared worker uses a feature?",
+      "revId": "41fe8248fb1897207decd7edebbc4d9b7fb57879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06494e70_910732c3",
+        "filename": "content/common/shared_worker/shared_worker_connector.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T07:09:00Z",
+      "side": 1,
+      "message": "Maybe a comment like \"The browser process uses this interface to tell the renderer to connect a SharedWorker to a SharedWorkerClient.\" would be useful?",
+      "revId": "41fe8248fb1897207decd7edebbc4d9b7fb57879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab70d120_15d99588",
+        "filename": "third_party/WebKit/public/platform/address_space.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-06T07:09:00Z",
+      "side": 1,
+      "message": "Could we also lead with an overall comment like: Represents AddressSpace from the \"CORS and RFC1918\" spec  https://wicg.github.io/cors-rfc1918/#feature-detect",
+      "revId": "41fe8248fb1897207decd7edebbc4d9b7fb57879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
