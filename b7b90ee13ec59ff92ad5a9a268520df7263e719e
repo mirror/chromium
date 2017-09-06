@@ -118,6 +118,30 @@
       "revId": "b7b90ee13ec59ff92ad5a9a268520df7263e719e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "805c7df9_0880786e",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-06T18:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4792cba5_6edb4e50",
+      "range": {
+        "startLine": 1265,
+        "startChar": 12,
+        "endLine": 1265,
+        "endChar": 21
+      },
+      "revId": "b7b90ee13ec59ff92ad5a9a268520df7263e719e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
