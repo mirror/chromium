@@ -34,6 +34,24 @@
       "revId": "0e36cc1f662f51a62f497393e8f1ad3421913990",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f78412e_b4c131e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelsInitializer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-09-06T16:12:16Z",
+      "side": 1,
+      "message": "Just ran it locally and it doesn\u0027t!\n\n$ out/AndroidDebug/bin/run_chrome_public_test_apk_incremental --test-filter \"*ChannelsInitializerTest*\"\n\nC   55.574s Main  [FAIL] org.chromium.chrome.browser.notifications.channels.ChannelsInitializerTest#testEnsureInitialized_contentSu\nggestionsDisabled:\nC   55.575s Main  java.lang.AssertionError: \nC   55.575s Main  Expected: is \u003c0\u003e\nC   55.575s Main       but: was \u003c2\u003e\nC   55.575s Main        at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)\nC   55.575s Main        at org.junit.Assert.assertThat(Assert.java:956)\nC   55.575s Main        at org.junit.Assert.assertThat(Assert.java:923)\nC   55.575s Main        at org.chromium.chrome.browser.notifications.channels.ChannelsInitializerTest.testEnsureInitialized_content\nSuggestionsDisabled(ChannelsInitializerTest.java:252)\n\nUnfortunately seems we still don\u0027t have any trybots running Android O yet, so these tests don\u0027t run on the CQ. Sorry, I should have warned you.\n\nYou can fix it up but might still find it fails due to the preceding test creating a channel with the same ID as enabled, and Android persisting its properties. A workaround would be to use a different ID in each test.",
+      "parentUuid": "0ff85251_564536b3",
+      "revId": "0e36cc1f662f51a62f497393e8f1ad3421913990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
