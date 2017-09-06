@@ -71,10 +71,6 @@ class SystemHealthMobileCommonExpectations(expectations.StoryExpectations):
                       'crbug.com/714650')
     self.DisableStory('load:tools:gmail', [expectations.ALL_ANDROID],
                       'crbug.com/657433')
-    self.DisableStory('long_running:tools:gmail-background',
-                      [expectations.ALL_ANDROID], 'crbug.com/726301')
-    self.DisableStory('long_running:tools:gmail-foreground',
-                      [expectations.ALL_ANDROID], 'crbug.com/726301')
     self.DisableStory('browse:news:toi', [expectations.ALL_ANDROID],
                       'crbug.com/728081')
     self.DisableStory(
@@ -111,10 +107,6 @@ class SystemHealthMobileMemoryExpectations(expectations.StoryExpectations):
                       'crbug.com/714650')
     self.DisableStory('load:tools:gmail', [expectations.ALL_ANDROID],
                       'crbug.com/657433')
-    self.DisableStory('long_running:tools:gmail-background',
-                      [expectations.ALL_ANDROID], 'crbug.com/726301')
-    self.DisableStory('long_running:tools:gmail-foreground',
-                      [expectations.ALL_ANDROID], 'crbug.com/726301')
     self.DisableStory('browse:news:toi', [expectations.ALL_ANDROID],
                       'crbug.com/728081')
     self.DisableStory('browse:social:facebook_infinite_scroll',
