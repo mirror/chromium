@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e584567_49551c39",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-06T12:03:55Z",
+      "side": 1,
+      "message": "You also need to add the following boiler plates:\n\"def GetExpectations(self):\n  class StoryExpectations(story.expectations.StoryExpectations):\n      def SetExpectations(self):\n         ...\n\"\n(See other benchmark class in this file)",
+      "revId": "449ab66bfa311950cbc1bbb969a3dd0c75fc22e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
