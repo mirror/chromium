@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aee98256_2c97170c",
+        "filename": "ios/clean/chrome/browser/ui/root/root_coordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-06T15:16:30Z",
+      "side": 1,
+      "message": "This is redeclared just to make it strong instead?",
+      "revId": "2186616b07c03614241fc71ede4d413fae0b162f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
