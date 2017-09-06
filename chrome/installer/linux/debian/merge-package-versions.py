@@ -17,6 +17,9 @@ input_filenames = sys.argv[2:]
 package_intervals = {}
 for input_filename in input_filenames:
   for line in open(input_filename):
+    # Allow comments starting with '#'
+    if line.startswith('#'):
+      continue
     line = line.rstrip('\n')
     (package, interval) = package_version_interval.parse_dep(line)
     if package in package_intervals:
