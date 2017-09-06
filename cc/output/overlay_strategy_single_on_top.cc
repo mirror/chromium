@@ -6,7 +6,7 @@
 
 #include "cc/base/math_util.h"
 #include "cc/output/overlay_candidate_validator.h"
-#include "cc/quads/draw_quad.h"
+#include "components/viz/common/quads/draw_quad.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 

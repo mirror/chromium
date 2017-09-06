@@ -11,7 +11,6 @@
 #include "cc/base/devtools_instrumentation.h"
 #include "cc/benchmarks/benchmark_instrumentation.h"
 #include "cc/output/layer_tree_frame_sink.h"
-#include "cc/quads/draw_quad.h"
 #include "cc/resources/ui_resource_manager.h"
 #include "cc/scheduler/commit_earlyout_reason.h"
 #include "cc/scheduler/compositor_timing_history.h"
@@ -24,6 +23,7 @@
 #include "cc/trees/scoped_abort_remaining_swap_promises.h"
 #include "components/viz/common/frame_sinks/delay_based_time_source.h"
 #include "components/viz/common/gpu/context_provider.h"
+#include "components/viz/common/quads/draw_quad.h"
 
 namespace cc {
 

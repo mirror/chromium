@@ -8,8 +8,8 @@
 #include "cc/output/output_surface.h"
 #include "cc/output/overlay_strategy_single_on_top.h"
 #include "cc/output/overlay_strategy_underlay.h"
-#include "cc/quads/draw_quad.h"
 #include "cc/resources/display_resource_provider.h"
+#include "components/viz/common/quads/draw_quad.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/transform.h"
 
