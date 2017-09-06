@@ -20,9 +20,11 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/test/mock_render_process_host.h"
+#include "content/public/test/navigation_simulator.h"
 #include "content/public/test/web_contents_tester.h"
 
 using content::WebContents;
+using content::NavigationSimulator;
 using content::WebContentsObserver;
 
 namespace {
@@ -219,8 +221,7 @@ TEST_F(PrintPreviewDialogControllerUnitTest, CloseDialogOnNavigation) {
   content::NavigationController& nav_controller = web_contents->GetController();
 
   // Navigate to first page
-  nav_controller.LoadURL(tiger, content::Referrer(),
-                         ui::PageTransitionFromInt(ui::PAGE_TRANSITION_LINK),
+  nav_controller.LoadURL(tiger, content::Referrer(), ui::PAGE_TRANSITION_TYPED,
                          std::string());
   CommitPendingLoad(&nav_controller);
   EXPECT_EQ(tiger, web_contents->GetLastCommittedURL());
@@ -242,8 +243,7 @@ TEST_F(PrintPreviewDialogControllerUnitTest, CloseDialogOnNavigation) {
 
   // Navigate via link to a similar page.
   nav_controller.LoadURL(tiger_barb, content::Referrer(),
-                         ui::PageTransitionFromInt(ui::PAGE_TRANSITION_LINK),
-                         std::string());
+                         ui::PAGE_TRANSITION_TYPED, std::string());
   CommitPendingLoad(&nav_controller);
 
   // Check navigation was successful
@@ -285,13 +285,10 @@ TEST_F(PrintPreviewDialogControllerUnitTest, CloseDialogOnNavigation) {
   PrintPreviewDialogDestroyedObserver tiger_2_destroyed(
       tiger_preview_dialog_2);
 
-  // Try to simulate Gmail navigation: Navigate to an existing page (via
-  // Forward) but modify the navigation type while pending to look like an
-  // address bar + typed transition (like Gmail auto navigation)
-  nav_controller.GoForward();
-  nav_controller.GetPendingEntry()->SetTransitionType(ui::PageTransitionFromInt(
-      ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR));
-  CommitPendingLoad(&nav_controller);
+  // Simulate a Gmail auto navigation.
+  auto navigation = NavigationSimulator::CreateRendererInitiated(
+      tiger_barb, web_contents->GetMainFrame());
+  navigation->CommitSameDocument();
 
   // Navigation successful
   EXPECT_EQ(tiger_barb, web_contents->GetLastCommittedURL());

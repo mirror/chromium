@@ -341,18 +341,10 @@ void PrintPreviewDialogController::OnNavEntryCommitted(
     NOTREACHED();
     return;
   }
-  if (details) {
-    ui::PageTransition type = details->entry->GetTransitionType();
-    content::NavigationType nav_type = details->type;
-    if (nav_type == content::NAVIGATION_TYPE_EXISTING_PAGE &&
-        (ui::PageTransitionTypeIncludingQualifiersIs(
-             type,
-             ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
-                                       ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)) ||
-         ui::PageTransitionTypeIncludingQualifiersIs(type,
-                                                     ui::PAGE_TRANSITION_LINK)))
-      return;
-  }
+  // Same-document navigations don't change the page enough to require the
+  // dialog to close.
+  if (details && details->is_same_document)
+    return;
 
   RemoveInitiator(contents);
 }
