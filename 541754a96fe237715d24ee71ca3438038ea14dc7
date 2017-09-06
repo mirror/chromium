@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8663a6f3_91fe05d8",
+        "filename": "components/metrics/call_stack_profile_metrics_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-06T21:24:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5c91f42_1b462861",
+      "range": {
+        "startLine": 252,
+        "startChar": 24,
+        "endLine": 252,
+        "endChar": 27
+      },
+      "revId": "541754a96fe237715d24ee71ca3438038ea14dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b8766a7_4f46d6ce",
         "filename": "components/metrics/call_stack_profile_metrics_provider_unittest.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6c3abfbe_34e8ecf3",
+        "filename": "components/metrics/call_stack_profile_metrics_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-06T21:24:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b8766a7_4f46d6ce",
+      "range": {
+        "startLine": 840,
+        "startChar": 0,
+        "endLine": 840,
+        "endChar": 76
+      },
+      "revId": "541754a96fe237715d24ee71ca3438038ea14dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae3db2e2_c65adff2",
         "filename": "components/metrics/call_stack_profile_metrics_provider_unittest.cc",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-06T20:38:37Z",
       "side": 1,
       "message": "Can you add a test for the non-merge case, and the merge case where both periodic and non-periodic profiles are already recorded?",
+      "range": {
+        "startLine": 848,
+        "startChar": 0,
+        "endLine": 848,
+        "endChar": 75
+      },
+      "revId": "541754a96fe237715d24ee71ca3438038ea14dc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "132fb92a_d46452d6",
+        "filename": "components/metrics/call_stack_profile_metrics_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-06T21:24:31Z",
+      "side": 1,
+      "message": "Done. Expanded the new test to have a startup profile and another periodic profile for a different thread that shouldn\u0027t be merged.",
+      "parentUuid": "ae3db2e2_c65adff2",
       "range": {
         "startLine": 848,
         "startChar": 0,
