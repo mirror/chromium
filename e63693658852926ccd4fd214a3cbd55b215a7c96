@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b709e51e_d2943780",
+        "filename": "ios/chrome/browser/payments/ios_can_make_payment_query_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-06T09:50:16Z",
+      "side": 1,
+      "message": "drive-by:\n\nIf you wanted the factory to always use the original BrowserState, even if called with an incognito BrowserState, you can override GetBrowserStateToUse(web::BrowserState* context) and in the implementation call GetBrowserStateRedirectedInIncognito():\n\n  web::BrowserState* IOSCanMakePaymentQueryFactory::GetBrowserStateToUse(\n      web::BrowserState* context) const {\n    return GetBrowserStateRedirectedInIncognito(context);\n  }",
+      "revId": "e63693658852926ccd4fd214a3cbd55b215a7c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
