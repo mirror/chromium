@@ -70,6 +70,24 @@
       "revId": "4c49d24d9689166e2a20d6bb67c850800821cf3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1ba049_45a3bab6",
+        "filename": "chrome/browser/ui/views/tabs/tab.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T19:47:26Z",
+      "side": 1,
+      "message": "That all sounds reasonable to me.",
+      "parentUuid": "5fe3c8dd_dd9c2019",
+      "revId": "4c49d24d9689166e2a20d6bb67c850800821cf3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
