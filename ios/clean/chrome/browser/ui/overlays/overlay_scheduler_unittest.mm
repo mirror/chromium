@@ -12,6 +12,7 @@
 #import "ios/clean/chrome/browser/ui/overlays/browser_overlay_queue.h"
 #import "ios/clean/chrome/browser/ui/overlays/overlay_queue_manager.h"
 #import "ios/clean/chrome/browser/ui/overlays/overlay_scheduler_observer.h"
+#import "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test_util.h"
 #import "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_coordinator.h"
 #import "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_parent_coordinator.h"
 #import "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_queue.h"
@@ -90,6 +91,7 @@ TEST_F(OverlaySchedulerTest, AddBrowserOverlay) {
   TestOverlayCoordinator* overlay = [[TestOverlayCoordinator alloc] init];
   queue->AddBrowserOverlay(overlay, parent);
   EXPECT_EQ(parent.presentedOverlay, overlay);
+  testing::WaitForOverlayPresentation(overlay);
   EXPECT_TRUE(scheduler()->IsShowingOverlay());
   [overlay stop];
   EXPECT_EQ(parent.presentedOverlay, nil);
@@ -112,6 +114,7 @@ TEST_F(OverlaySchedulerTest, AddWebStateOverlay) {
   TestOverlayCoordinator* overlay = [[TestOverlayCoordinator alloc] init];
   queue->AddWebStateOverlay(overlay);
   EXPECT_EQ(parent.presentedOverlay, overlay);
+  testing::WaitForOverlayPresentation(overlay);
   EXPECT_TRUE(scheduler()->IsShowingOverlay());
   [overlay stop];
   EXPECT_EQ(parent.presentedOverlay, nil);
@@ -142,6 +145,7 @@ TEST_F(OverlaySchedulerTest, SwitchWebStateForOverlay) {
   // Verify that the overlay is presented and the active WebState index is
   // updated.
   EXPECT_EQ(parent.presentedOverlay, overlay);
+  testing::WaitForOverlayPresentation(overlay);
   EXPECT_TRUE(scheduler()->IsShowingOverlay());
   EXPECT_EQ(observer()->active_index(), 0);
   [overlay stop];
@@ -171,6 +175,7 @@ TEST_F(OverlaySchedulerTest, SwitchWebStateForQueuedOverlays) {
   TestOverlayCoordinator* overlay_0 = [[TestOverlayCoordinator alloc] init];
   queue_0->AddWebStateOverlay(overlay_0);
   EXPECT_EQ(parent_0.presentedOverlay, overlay_0);
+  testing::WaitForOverlayPresentation(overlay_0);
   EXPECT_TRUE(scheduler()->IsShowingOverlay());
   EXPECT_EQ(observer()->active_index(), 0);
   // Add an overlay to the queue corresponding with the second WebState.
@@ -186,6 +191,7 @@ TEST_F(OverlaySchedulerTest, SwitchWebStateForQueuedOverlays) {
   // presented and the active index updated.
   [overlay_0 stop];
   EXPECT_EQ(parent_1.presentedOverlay, overlay_1);
+  testing::WaitForOverlayPresentation(overlay_1);
   EXPECT_TRUE(scheduler()->IsShowingOverlay());
   EXPECT_EQ(observer()->active_index(), 1);
   EXPECT_EQ(parent_0.presentedOverlay, nil);

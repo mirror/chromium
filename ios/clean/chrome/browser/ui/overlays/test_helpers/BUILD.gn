@@ -7,6 +7,8 @@ source_set("test_helpers") {
   sources = [
     "overlay_coordinator_test.h",
     "overlay_coordinator_test.mm",
+    "overlay_coordinator_test_util.h",
+    "overlay_coordinator_test_util.mm",
     "test_overlay_coordinator.h",
     "test_overlay_coordinator.mm",
     "test_overlay_parent_coordinator.h",
@@ -30,6 +32,7 @@ source_set("test_helpers") {
     "//ios/clean/chrome/browser/ui/commands",
     "//ios/clean/chrome/browser/ui/overlays",
     "//ios/clean/chrome/browser/ui/overlays:overlays_internal",
+    "//ios/testing:ios_test_support",
     "//ios/web",
     "//testing/gtest",
   ]

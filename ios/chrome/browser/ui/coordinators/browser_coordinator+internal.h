@@ -73,6 +73,12 @@ typedef NS_ENUM(NSInteger, BrowserCoordinatorMode) {
 // coordinator.
 - (void)willBeRemovedFromParentCoordinator;
 
+// Called when this coordinator's UIViewController has finished being presented.
+- (void)viewControllerWasPresented;
+
+// Called when this coordinator's UIViewController has finished being dismissed.
+- (void)viewControllerWasDismissed;
+
 // Called when a child coordinator did start. This is a blank template method.
 // Subclasses can override this method when they need to know when their
 // children start.
