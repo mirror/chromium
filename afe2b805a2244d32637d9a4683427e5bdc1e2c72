@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fe5d46c_a4d0851e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-06T18:08:12Z",
+      "side": 0,
+      "message": "nit: This isn\u0027t actually a typo, \"iff\" is shorthand for \"if and only if\".",
+      "revId": "afe2b805a2244d32637d9a4683427e5bdc1e2c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
