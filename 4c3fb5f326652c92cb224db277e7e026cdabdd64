@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab80126c_40afea8c",
+        "filename": "ios/chrome/browser/ui/browser_list/browser.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-06T04:59:55Z",
+      "side": 1,
+      "message": "s/window/windows",
+      "range": {
+        "startLine": 25,
+        "startChar": 48,
+        "endLine": 25,
+        "endChar": 54
+      },
+      "revId": "4c3fb5f326652c92cb224db277e7e026cdabdd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5a9f2f_c2a97f36",
+        "filename": "ios/chrome/browser/ui/browser_list/browser.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-06T04:59:55Z",
+      "side": 1,
+      "message": "Should we add a TODO for supporting multiple Browsers?",
+      "range": {
+        "startLine": 26,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 71
+      },
+      "revId": "4c3fb5f326652c92cb224db277e7e026cdabdd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a2fb87a_c9b86fbc",
+        "filename": "ios/chrome/browser/ui/browser_list/browser_list_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-06T04:59:55Z",
+      "side": 1,
+      "message": "Is there a reason we\u0027re keeping a vector of unique ptrs rather than just a vector of Browsers?",
+      "revId": "4c3fb5f326652c92cb224db277e7e026cdabdd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
