@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "401b34e2_a5e8e290",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-06T17:48:40Z",
+      "side": 1,
+      "message": "I think we can move this before Avast since it\u0027s a test entry (see the entry for captive-portal.badssl.com).\n\nAnd maybe add a line like line 17 before this entry as well.",
+      "range": {
+        "startLine": 160,
+        "startChar": 62,
+        "endLine": 160,
+        "endChar": 0
+      },
+      "revId": "567578e2fce57ed0389fef5e14f6d46dbad5452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
