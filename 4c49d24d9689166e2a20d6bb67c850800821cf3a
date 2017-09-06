@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e153ef87_8bdb02ed",
+        "filename": "chrome/browser/ui/views/tabs/tab.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-06T17:17:16Z",
+      "side": 1,
+      "message": "Why does this need to be a unique_ptr instead of a member by value?  It seems like the functional change in this CL is to convert LinearAnimation to FaviconCrashAnimation, but most of the changed lines have to do with this introduction of a unique_ptr, which is set in the constructor and never deleted AFAICT.",
+      "revId": "4c49d24d9689166e2a20d6bb67c850800821cf3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
