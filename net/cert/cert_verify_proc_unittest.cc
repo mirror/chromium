@@ -491,8 +491,13 @@ TEST_P(CertVerifyProcInternalTest, InvalidTarget) {
 }
 
 // Tests the case where an intermediate certificate is accepted by
-// X509CertificateBytes, but has errors that should cause verification to fail.
-TEST_P(CertVerifyProcInternalTest, InvalidIntermediate) {
+// X509CertificateBytes, but has errors that should prevent using it during
+// verification.  The verification should succeed, since the intermediate
+// wasn't necessary.
+TEST_P(CertVerifyProcInternalTest, UnnecessaryInvalidIntermediate) {
+  ScopedTestRoot test_root(
+      ImportCertFromFile(GetTestCertsDirectory(), "root_ca_cert.pem").get());
+
   base::FilePath certs_dir =
       GetTestNetDataDirectory().AppendASCII("parse_certificate_unittest");
   bssl::UniquePtr<CRYPTO_BUFFER> bad_cert =
@@ -515,10 +520,42 @@ TEST_P(CertVerifyProcInternalTest, InvalidIntermediate) {
   int error = Verify(cert_with_bad_intermediate.get(), "127.0.0.1", flags, NULL,
                      CertificateList(), &verify_result);
 
-  EXPECT_TRUE(verify_result.cert_status & CERT_STATUS_INVALID);
-  EXPECT_THAT(error, IsError(ERR_CERT_INVALID));
+  EXPECT_THAT(error, IsOk());
+  EXPECT_EQ(0u, verify_result.cert_status);
 }
 #endif  // BUILDFLAG(USE_BYTE_CERTS)
+
+// A server provides an unnecessary GOST-using certificate as an intermediate.
+// The chain should validate successfully as the certificate isn't needed to
+// verify the chain, and an un-supported algorithm on a server-supplied
+// intermediate shouldn't prevent building the chain some other way.
+TEST_P(CertVerifyProcInternalTest, UnnecessaryGOSTIntermediate) {
+  ScopedTestRoot test_root(
+      ImportCertFromFile(GetTestCertsDirectory(), "root_ca_cert.pem").get());
+
+  scoped_refptr<X509Certificate> gost_cert(
+      ImportCertFromFile(GetTestCertsDirectory(), "vguc1_5.pem"));
+  ASSERT_TRUE(gost_cert);
+
+  scoped_refptr<X509Certificate> ok_cert(
+      ImportCertFromFile(GetTestCertsDirectory(), "ok_cert.pem"));
+  ASSERT_TRUE(ok_cert);
+
+  scoped_refptr<X509Certificate> cert_with_bad_intermediate(
+      X509Certificate::CreateFromHandle(ok_cert->os_cert_handle(),
+                                        {gost_cert->os_cert_handle()}));
+  ASSERT_TRUE(cert_with_bad_intermediate);
+  EXPECT_EQ(1U,
+            cert_with_bad_intermediate->GetIntermediateCertificates().size());
+
+  int flags = 0;
+  CertVerifyResult verify_result;
+  int error = Verify(cert_with_bad_intermediate.get(), "127.0.0.1", flags, NULL,
+                     CertificateList(), &verify_result);
+
+  EXPECT_THAT(error, IsOk());
+  EXPECT_EQ(0u, verify_result.cert_status);
+}
 
 // A regression test for http://crbug.com/31497.
 TEST_P(CertVerifyProcInternalTest, IntermediateCARequireExplicitPolicy) {

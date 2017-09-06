@@ -2483,6 +2483,7 @@ bundle_data("test_support_bundle_data") {
     "data/ssl/certificates/verisign_class3_g5_crosssigned.pem",
     "data/ssl/certificates/verisign_intermediate_ca_2011.pem",
     "data/ssl/certificates/verisign_intermediate_ca_2016.pem",
+    "data/ssl/certificates/vguc1_5.pem",
     "data/ssl/certificates/weak_digest_md2_ee.pem",
     "data/ssl/certificates/weak_digest_md2_intermediate.pem",
     "data/ssl/certificates/weak_digest_md2_root.pem",
