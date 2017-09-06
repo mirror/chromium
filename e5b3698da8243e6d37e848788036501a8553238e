@@ -22,6 +22,30 @@
       "revId": "e5b3698da8243e6d37e848788036501a8553238e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc03e56_6d67f4e6",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_popup_view_mac.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-06T21:36:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "562b1cf9_478513c8",
+      "range": {
+        "startLine": 353,
+        "startChar": 56,
+        "endLine": 353,
+        "endChar": 65
+      },
+      "revId": "e5b3698da8243e6d37e848788036501a8553238e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
