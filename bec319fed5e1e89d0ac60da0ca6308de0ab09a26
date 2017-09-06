@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f59fb20a_b1255d14",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-09-06T22:25:44Z",
+      "side": 1,
+      "message": "I think we should either keep the if (hit_test_region_list) check here or check if the list is empty in HitTestManager::ValidateHitTestRegionList (I\u0027m getting no ptr error there), wdyt?",
+      "range": {
+        "startLine": 207,
+        "startChar": 2,
+        "endLine": 207,
+        "endChar": 48
+      },
+      "revId": "bec319fed5e1e89d0ac60da0ca6308de0ab09a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
