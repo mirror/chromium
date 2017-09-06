@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "880f50c2_1480bd61",
+        "filename": "cc/raster/raster_source_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-06T22:18:08Z",
+      "side": 1,
+      "message": "Oh my god I made this only run in debug. LOL",
+      "revId": "135f8e843bd7ba16feb82eedfd86e893ff90cf75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
