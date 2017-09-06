@@ -456,6 +456,11 @@ TEST_F(PlatformSensorAndProviderTestWin, StartFails) {
 // Tests that PlatformSensor::StartListening succeeds and notification about
 // modified sensor reading is sent to the PlatformSensor::Client interface.
 TEST_F(PlatformSensorAndProviderTestWin, SensorStarted) {
+  // TODO(https://crbug.com/756986): Re-enable on Windows 10.
+  if (base::win::GetVersion() >= base::win::VERSION_WIN10) {
+    return;
+  }
+
   SetSupportedReportingFrequency(10);
   SetSupportedSensor(SENSOR_TYPE_AMBIENT_LIGHT);
 
@@ -490,6 +495,11 @@ TEST_F(PlatformSensorAndProviderTestWin, SensorStarted) {
 
 // Tests that OnSensorError is called when sensor is disconnected.
 TEST_F(PlatformSensorAndProviderTestWin, SensorRemoved) {
+  // TODO(https://crbug.com/756986): Re-enable on Windows 10.
+  if (base::win::GetVersion() >= base::win::VERSION_WIN10) {
+    return;
+  }
+
   SetSupportedSensor(SENSOR_TYPE_AMBIENT_LIGHT);
   auto sensor = CreateSensor(SensorType::AMBIENT_LIGHT);
   EXPECT_TRUE(sensor);
@@ -505,6 +515,11 @@ TEST_F(PlatformSensorAndProviderTestWin, SensorRemoved) {
 
 // Tests that OnSensorError is called when sensor is in an error state.
 TEST_F(PlatformSensorAndProviderTestWin, SensorStateChangedToError) {
+  // TODO(https://crbug.com/756986): Re-enable on Windows 10.
+  if (base::win::GetVersion() >= base::win::VERSION_WIN10) {
+    return;
+  }
+
   SetSupportedSensor(SENSOR_TYPE_AMBIENT_LIGHT);
   auto sensor = CreateSensor(SensorType::AMBIENT_LIGHT);
   EXPECT_TRUE(sensor);
@@ -520,6 +535,11 @@ TEST_F(PlatformSensorAndProviderTestWin, SensorStateChangedToError) {
 
 // Tests that OnSensorError is not called when sensor is in a ready state.
 TEST_F(PlatformSensorAndProviderTestWin, SensorStateChangedToReady) {
+  // TODO(https://crbug.com/756986): Re-enable on Windows 10.
+  if (base::win::GetVersion() >= base::win::VERSION_WIN10) {
+    return;
+  }
+
   SetSupportedSensor(SENSOR_TYPE_AMBIENT_LIGHT);
   auto sensor = CreateSensor(SensorType::AMBIENT_LIGHT);
   EXPECT_TRUE(sensor);
@@ -553,6 +573,11 @@ TEST_F(PlatformSensorAndProviderTestWin, GetMaximumSupportedFrequencyFallback) {
 
 // Tests that Accelerometer readings are correctly converted.
 TEST_F(PlatformSensorAndProviderTestWin, CheckAccelerometerReadingConversion) {
+  // TODO(https://crbug.com/756986): Re-enable on Windows 10.
+  if (base::win::GetVersion() >= base::win::VERSION_WIN10) {
+    return;
+  }
+
   mojo::ScopedSharedBufferHandle handle =
       PlatformSensorProviderWin::GetInstance()->CloneSharedBufferHandle();
   mojo::ScopedSharedBufferMapping mapping = handle->MapAtOffset(
@@ -592,6 +617,11 @@ TEST_F(PlatformSensorAndProviderTestWin, CheckAccelerometerReadingConversion) {
 
 // Tests that Gyroscope readings are correctly converted.
 TEST_F(PlatformSensorAndProviderTestWin, CheckGyroscopeReadingConversion) {
+  // TODO(https://crbug.com/756986): Re-enable on Windows 10.
+  if (base::win::GetVersion() >= base::win::VERSION_WIN10) {
+    return;
+  }
+
   mojo::ScopedSharedBufferHandle handle =
       PlatformSensorProviderWin::GetInstance()->CloneSharedBufferHandle();
   mojo::ScopedSharedBufferMapping mapping = handle->MapAtOffset(
@@ -632,6 +662,11 @@ TEST_F(PlatformSensorAndProviderTestWin, CheckGyroscopeReadingConversion) {
 
 // Tests that Magnetometer readings are correctly converted.
 TEST_F(PlatformSensorAndProviderTestWin, CheckMagnetometerReadingConversion) {
+  // TODO(https://crbug.com/756986): Re-enable on Windows 10.
+  if (base::win::GetVersion() >= base::win::VERSION_WIN10) {
+    return;
+  }
+
   mojo::ScopedSharedBufferHandle handle =
       PlatformSensorProviderWin::GetInstance()->CloneSharedBufferHandle();
   mojo::ScopedSharedBufferMapping mapping = handle->MapAtOffset(
@@ -674,6 +709,11 @@ TEST_F(PlatformSensorAndProviderTestWin, CheckMagnetometerReadingConversion) {
 // provided.
 TEST_F(PlatformSensorAndProviderTestWin,
        CheckDeviceOrientationEulerAnglesReadingConversion) {
+  // TODO(https://crbug.com/756986): Re-enable on Windows 10.
+  if (base::win::GetVersion() >= base::win::VERSION_WIN10) {
+    return;
+  }
+
   mojo::ScopedSharedBufferHandle handle =
       PlatformSensorProviderWin::GetInstance()->CloneSharedBufferHandle();
   mojo::ScopedSharedBufferMapping mapping =
@@ -717,6 +757,11 @@ TEST_F(PlatformSensorAndProviderTestWin,
 // provided.
 TEST_F(PlatformSensorAndProviderTestWin,
        CheckDeviceOrientationQuaternionReadingConversion) {
+  // TODO(https://crbug.com/756986): Re-enable on Windows 10.
+  if (base::win::GetVersion() >= base::win::VERSION_WIN10) {
+    return;
+  }
+
   mojo::ScopedSharedBufferHandle handle =
       PlatformSensorProviderWin::GetInstance()->CloneSharedBufferHandle();
   mojo::ScopedSharedBufferMapping mapping =
