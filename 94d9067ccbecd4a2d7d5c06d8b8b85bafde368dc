@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f88d5db2_f9073bff",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-06T16:14:46Z",
+      "side": 1,
+      "message": "nit: you may do this inline at L375. The same for other code.",
+      "range": {
+        "startLine": 374,
+        "startChar": 2,
+        "endLine": 374,
+        "endChar": 28
+      },
+      "revId": "94d9067ccbecd4a2d7d5c06d8b8b85bafde368dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9043f968_43063b09",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-06T16:14:46Z",
+      "side": 1,
+      "message": "nit:\nASSERT_EQ(AppListView::FULLSCREEN_SEARCH, view_-\u003eapp_list_state());\nThe same in other places.",
+      "range": {
+        "startLine": 382,
+        "startChar": 0,
+        "endLine": 382,
+        "endChar": 69
+      },
+      "revId": "94d9067ccbecd4a2d7d5c06d8b8b85bafde368dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f315e30_58e2ec01",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-06T16:14:46Z",
+      "side": 1,
+      "message": "you constantly repeating this construction. You may want to extract it to separate function:\nSomething like: void InitializeSearch(const std::string\u0026 text)",
+      "range": {
+        "startLine": 508,
+        "startChar": 0,
+        "endLine": 515,
+        "endChar": 61
+      },
+      "revId": "94d9067ccbecd4a2d7d5c06d8b8b85bafde368dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
