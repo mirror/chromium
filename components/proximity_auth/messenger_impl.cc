@@ -99,10 +99,8 @@ void MessengerImpl::RemoveObserver(MessengerObserver* observer) {
 }
 
 bool MessengerImpl::SupportsSignIn() const {
-  // TODO(tengs): Support sign-in for Bluetooth LE protocol.
   return (secure_context_->GetProtocolVersion() ==
-          cryptauth::SecureContext::PROTOCOL_VERSION_THREE_ONE) &&
-         !connection_->remote_device().bluetooth_address.empty();
+          cryptauth::SecureContext::PROTOCOL_VERSION_THREE_ONE);
 }
 
 void MessengerImpl::DispatchUnlockEvent() {
