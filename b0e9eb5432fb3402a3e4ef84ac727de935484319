@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8c250c9_dc2df563",
+        "filename": "third_party/WebKit/Source/modules/webgl/OESTextureHalfFloat.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-09-06T14:35:56Z",
+      "side": 1,
+      "message": "The relevant validation is here: https://cs.chromium.org/chromium/src/third_party/angle/src/libANGLE/validationES.cpp?q\u003dValidReadPixelsTypeEnum\u0026l\u003d179\n\nIt looks like we don\u0027t accept GL_FLOAT as a read pixels type unless OES_texture_float is available.  Looks like we need to update to accept it if EXT_color_buffer_half_float is available too but the spec is pretty poorly written about it... the only mention is in a line of the revision history:\n\n         5   04/27/11  aeddy     Update ReadPixels to accept RGBA, FLOAT.\n\nI\u0027d like to make sure we do the right thing with requesting these extensions and only request the ones we need so let\u0027s make sure the validation is correct.",
+      "parentUuid": "453ecda7_cce72a25",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "b0e9eb5432fb3402a3e4ef84ac727de935484319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dfec7c0_7056d524",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContext.cpp",
         "patchSetId": 5
