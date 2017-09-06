@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ae62618_53703fcc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-06T00:57:52Z",
+      "side": 1,
+      "message": "This is not a straight forward reland. You did more work. Let\u0027s work out how to fix the problem that caused your original CL to get reverted. Once we have a final solution, please explain here what additional changes you made, so it is safe to land this time.",
+      "revId": "b9c97fad3d6058f43777e1b8a7dfb1f75b5c21b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f16d77b_71a1ac0e",
+        "filename": "chrome/browser/chrome_browser_main_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-06T00:57:52Z",
+      "side": 1,
+      "message": "Really, I think the problem is this is accessing |g_browser_process| too early. Ideally, IncreaseRendererCrashCount() can call g_browser_process-\u003elocal_state() when it runs, but because it\u0027s in a components/ directory, it doesn\u0027t have access to |g_browser_process|. The alternative to the current solution is to set the PrefService* later. Or find some appropriate place in chrome/ to implement StabilityMetricsHelper::IncreaseRendererCrashCount(), instead of in components.\n\nThe current solution is ok. The only downside is it constraints when ChildProcessCrashObserver can be created. If you go with this route, can you add a brief comment to mention ChromeBrowserMainParts::PreCreateThreads() needs to run first, so |g_browser_process| gets created?",
+      "revId": "b9c97fad3d6058f43777e1b8a7dfb1f75b5c21b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8eec6ae_d3a470a6",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-06T00:57:52Z",
+      "side": 1,
+      "message": "Can we put this back to the way it was? I realized the ChildProcessCrashObserver ctor is being called in PreCreateThreads(), which is not the best time to try to access code that may end up creating threads.",
+      "revId": "b9c97fad3d6058f43777e1b8a7dfb1f75b5c21b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
