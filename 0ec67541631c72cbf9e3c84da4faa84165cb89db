@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c3a6be53_3e04301a",
+        "filename": "third_party/WebKit/Source/core/css/CSSStyleSheet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-06T08:40:48Z",
+      "side": 1,
+      "message": "We don\u0027t need this flag if we store active stylesheets for UserStyleSheets separately?",
+      "revId": "0ec67541631c72cbf9e3c84da4faa84165cb89db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82e1e082_fcf1e5a1",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
         "patchSetId": 5

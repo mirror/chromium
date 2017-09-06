@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fa160f4_c3a2db49",
+        "filename": "third_party/WebKit/Source/core/css/resolver/ScopedStyleResolver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-06T08:40:48Z",
+      "side": 0,
+      "message": "Keep this as ResetAuthorStyle().",
+      "revId": "c6873c3c3740d704fa8101595b46b628e5485e78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b400472_7b362ff3",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-06T08:40:48Z",
+      "side": 0,
+      "message": "Keep as ResetAuthorStyle()",
+      "revId": "c6873c3c3740d704fa8101595b46b628e5485e78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
