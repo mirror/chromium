@@ -11,6 +11,7 @@ namespace web {
 class WebState;
 }
 
+// TODO(crbug.com/435048): Drop this namespace here and everywhere else.
 namespace credential_manager {
 
 // Owned by PasswordController. It is responsible for registering and handling
