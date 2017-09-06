@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91ef7a6f_58a5f38d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-06T19:24:32Z",
+      "side": 1,
+      "message": "Do you need to check mPendingVSyncPause here?\nIf not, it is probably easier to read this way:\nmPendingVsyncPause \u003d enabled;\nif (!mPendingVsynPause) mContentVrWindowAndroid.setVSyncPaused(enabled);",
+      "range": {
+        "startLine": 554,
+        "startChar": 25,
+        "endLine": 554,
+        "endChar": 43
+      },
+      "revId": "17d3392494d68d6c8a8992d08882c6f71c7b0c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d67305_7a254a65",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-06T19:24:32Z",
+      "side": 1,
+      "message": "It is not quite clear what this TODO want to fix. Do you mean that we should fix onControlOffsetChanged so that it always called when it is fully hidden? But if we can pause as soon as hide start, the following code seems working properly. Even after onControlOffsetChanged is fixed. We dont have a TODO here.",
+      "range": {
+        "startLine": 568,
+        "startChar": 11,
+        "endLine": 568,
+        "endChar": 15
+      },
+      "revId": "17d3392494d68d6c8a8992d08882c6f71c7b0c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556d363b_24989906",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-06T19:24:32Z",
+      "side": 1,
+      "message": "What\u0027s the probability of this test being flaky? If it is flaky, perhaps we shouldn\u0027t upload it. As flaky test could create more trouble than benefit.\n+bsheedy",
+      "range": {
+        "startLine": 188,
+        "startChar": 8,
+        "endLine": 188,
+        "endChar": 26
+      },
+      "revId": "17d3392494d68d6c8a8992d08882c6f71c7b0c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
