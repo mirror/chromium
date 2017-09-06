@@ -27,6 +27,7 @@
 
 class CommonNameMismatchHandler;
 class Profile;
+class SSLErrorNavigationThrottle;
 
 namespace base {
 class Clock;
@@ -107,6 +108,8 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
 
   // Entry point for the class. The parameters are the same as SSLBlockingPage
   // constructor.
+  // |navigation_handle| must be passed for the Committed Interstitials code
+  // path.
   static void HandleSSLError(
       content::WebContents* web_contents,
       int cert_error,
@@ -115,7 +118,10 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
       int options_mask,
       std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
       const base::Callback<void(content::CertificateRequestResultType)>&
-          callback);
+          callback,
+      SSLErrorNavigationThrottle* throttle);
+
+  static bool AreCommittedInterstitialsEnabled();
 
   // Sets the binary proto for SSL error assistant. The binary proto
   // can be downloaded by the component updater, or set by tests.
