@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d231312_afef6802",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-06T21:50:16Z",
+      "side": 1,
+      "message": "Just q. Will new window automatically be snapped when another is snapped?",
+      "revId": "31e32833c691cd302d9a56a1c69bf4026cfdd288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
