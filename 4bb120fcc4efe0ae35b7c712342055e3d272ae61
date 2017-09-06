@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a920e2ff_ac187204",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-06T22:17:57Z",
+      "side": 1,
+      "message": "This section feels like it\u0027ll get state *very* quickly. What\u0027s the purpose of this as opposed to class-level comments in the actual files?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 9
+      },
+      "revId": "4bb120fcc4efe0ae35b7c712342055e3d272ae61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
