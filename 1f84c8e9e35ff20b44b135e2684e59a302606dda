@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e625ecbf_f68a4f9f",
+        "filename": "media/capture/video/win/video_capture_device_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-09-06T09:01:02Z",
+      "side": 1,
+      "message": "nit: seems like you don\u0027t really need the extra scope and could just do\n\nif (query_detailed_frame_rates \u0026\u0026 video_control.Get()) {",
+      "revId": "1f84c8e9e35ff20b44b135e2684e59a302606dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
