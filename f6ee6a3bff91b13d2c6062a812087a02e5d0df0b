@@ -16,6 +16,24 @@
       "revId": "f6ee6a3bff91b13d2c6062a812087a02e5d0df0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd393369_a593a9d9",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_drag_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-06T01:00:12Z",
+      "side": 1,
+      "message": "I might be missing something really obvious here, but I\u0027m not sure what you mean - I think the other possibilities are if\n\n 1. The tab is still inside its the horizontal dead zone, but also inside the vertical dead zone, which means we probably don\u0027t want to do anything (i.e. wait for the user to drag it more first).\n 2. The tab is outside the horizontal dead zone, but is inside the large vertical dead zone, so this should probably have turned on |draggingWithinTabStrip_| (though I haven\u0027t really looked at the logic for this).\n\nWhich wouldn\u0027t be covered if I didn\u0027t check |outOfTabHorizDeadZone_| twice. Did I understand correctly?",
+      "parentUuid": "96707056_aae3f58f",
+      "revId": "f6ee6a3bff91b13d2c6062a812087a02e5d0df0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
