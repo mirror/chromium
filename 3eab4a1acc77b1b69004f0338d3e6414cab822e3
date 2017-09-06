@@ -45,6 +45,30 @@
       "revId": "3eab4a1acc77b1b69004f0338d3e6414cab822e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5136e5ce_73d45d29",
+        "filename": "components/policy/proto/device_management_backend.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-06T13:18:39Z",
+      "side": 1,
+      "message": "put at the end.",
+      "parentUuid": "48644e03_5ba05f0c",
+      "range": {
+        "startLine": 683,
+        "startChar": 0,
+        "endLine": 683,
+        "endChar": 35
+      },
+      "revId": "3eab4a1acc77b1b69004f0338d3e6414cab822e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
