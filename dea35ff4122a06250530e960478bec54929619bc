@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "850508c5_e3c9c4d8",
+        "filename": "chrome/browser/resources/settings/site_settings/constants.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-06T22:04:37Z",
+      "side": 1,
+      "message": "Can we unconditionally define PROTECTED_CONTENT: \u0027protectedContent\u0027, and use another method to determine whether protected content is present (like on chromeos)?\nI\u0027d like to avoid defining a setting type as an empty string and then looking for the empty string elsewhere to determine if it\u0027s protected content. It makes for code that is harder to read/follow.",
+      "revId": "dea35ff4122a06250530e960478bec54929619bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
