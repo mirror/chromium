@@ -34,6 +34,10 @@ declare_args() {
   enable_iterator_debugging = true
 }
 
+pool("action_pool") {
+  depth = action_pool_depth
+}
+
 # ==============================================
 #   PLEASE DO NOT ADD MORE THINGS TO THIS LIST
 # ==============================================
