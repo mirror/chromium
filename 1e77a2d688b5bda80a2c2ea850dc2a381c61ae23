@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a21386bd_c72a3367",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-06T14:41:50Z",
+      "side": 1,
+      "message": "To answer question asked directly by email, I think those name are okay if they are in the global namespace. If you still want them to be less generic, then you can maybe rename them \"ResolveCredentialPromiseWithCredentialInfo\", \"ResolveCredentialPromiseWithUndefined\", ...",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "1e77a2d688b5bda80a2c2ea850dc2a381c61ae23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
