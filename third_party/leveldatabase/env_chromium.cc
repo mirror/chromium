@@ -44,10 +44,58 @@ using leveldb::Status;
 
 namespace leveldb_env {
 
+// Helper class to limit resource usage to avoid exhaustion. Currently used to
+// limit read-only file usage so that we do not end up running out of file
+// descriptors, or running into kernel performance problems for very large
+// databases.
+class Limiter {
+ public:
+  // Limit maximum number of resources to |n|.
+  explicit Limiter(intptr_t n) { SetAllowed(n); }
+
+  // If another resource is available, acquire it and return true.
+  // Else return false.
+  bool Acquire() {
+    if (GetAllowed() <= 0)
+      return false;
+    leveldb::MutexLock l(&mu_);
+    intptr_t x = GetAllowed();
+    if (x <= 0) {
+      return false;
+    } else {
+      SetAllowed(x - 1);
+      return true;
+    }
+  }
+
+  // Release a resource acquired by a previous call to Acquire() that returned
+  // true.
+  void Release() {
+    leveldb::MutexLock l(&mu_);
+    SetAllowed(GetAllowed() + 1);
+  }
+
+ private:
+  intptr_t GetAllowed() const {
+    return reinterpret_cast<intptr_t>(allowed_.Acquire_Load());
+  }
+
+  // REQUIRES: mu_ must be held
+  void SetAllowed(intptr_t v) {
+    allowed_.Release_Store(reinterpret_cast<void*>(v));
+  }
+
+  leveldb::port::Mutex mu_;
+  leveldb::port::AtomicPointer allowed_;
+
+  DISALLOW_COPY_AND_ASSIGN(Limiter);
+};
+
 namespace {
 
 const FilePath::CharType backup_table_extension[] = FILE_PATH_LITERAL(".bak");
 const FilePath::CharType table_extension[] = FILE_PATH_LITERAL(".ldb");
+int open_read_only_file_limit = -1;
 
 static const FilePath::CharType kLevelDBTestDirectoryPrefix[] =
     FILE_PATH_LITERAL("leveldb-test-");
@@ -225,11 +273,22 @@ class ChromiumSequentialFile : public leveldb::SequentialFile {
 
 class ChromiumRandomAccessFile : public leveldb::RandomAccessFile {
  public:
-  ChromiumRandomAccessFile(const std::string& fname,
+  ChromiumRandomAccessFile(base::FilePath file_path,
                            base::File file,
-                           const UMALogger* uma_logger)
-      : filename_(fname), file_(std::move(file)), uma_logger_(uma_logger) {}
-  virtual ~ChromiumRandomAccessFile() {}
+                           const UMALogger* uma_logger,
+                           Limiter* limiter)
+      : filepath_(std::move(file_path)),
+        file_(std::move(file)),
+        uma_logger_(uma_logger),
+        limiter_(limiter),
+        temporary_file_(!limiter->Acquire()) {
+    if (temporary_file_)
+      file_.Close();  // Open file on every access.
+  }
+  virtual ~ChromiumRandomAccessFile() {
+    if (!temporary_file_)
+      limiter_->Release();
+  }
 
   Status Read(uint64_t offset,
               size_t n,
@@ -237,11 +296,22 @@ class ChromiumRandomAccessFile : public leveldb::RandomAccessFile {
               char* scratch) const override {
     TRACE_EVENT2("leveldb", "ChromiumRandomAccessFile::Read", "offset", offset,
                  "size", n);
+    if (temporary_file_) {
+      DCHECK(!file_.IsValid());
+      int flags = base::File::FLAG_READ | base::File::FLAG_OPEN;
+      file_.Initialize(filepath_, flags);
+      if (!file_.IsValid()) {
+        return MakeIOError(filepath_.value(), "Could not perform read",
+                           kRandomAccessFileRead);
+      }
+    }
     int bytes_read = file_.Read(offset, scratch, n);
+    if (temporary_file_)
+      file_.Close();
     *result = Slice(scratch, (bytes_read < 0) ? 0 : bytes_read);
     if (bytes_read < 0) {
       uma_logger_->RecordErrorAt(kRandomAccessFileRead);
-      return MakeIOError(filename_, "Could not perform read",
+      return MakeIOError(filepath_.value(), "Could not perform read",
                          kRandomAccessFileRead);
     }
     if (bytes_read > 0)
@@ -250,9 +320,11 @@ class ChromiumRandomAccessFile : public leveldb::RandomAccessFile {
   }
 
  private:
-  std::string filename_;
+  const base::FilePath filepath_;
   mutable base::File file_;
   const UMALogger* uma_logger_;
+  Limiter* limiter_;
+  bool temporary_file_;  // If true, file_ is closed and we open on every read.
 
   DISALLOW_COPY_AND_ASSIGN(ChromiumRandomAccessFile);
 };
@@ -374,6 +446,17 @@ size_t DefaultBlockCacheSize() {
 leveldb::Cache* GetDefaultBlockCache() {
   static leveldb::Cache* cache = leveldb::NewLRUCache(DefaultBlockCacheSize());
   return cache;
+}
+
+// Return the maximum number of read-only files to keep open.
+int MaxOpenFiles() {
+  if (open_read_only_file_limit >= 0)
+    return open_read_only_file_limit;
+
+  // Allow use of 20% of available file descriptors for read-only files.
+  open_read_only_file_limit = base::GetMaxFds() / 5;
+
+  return open_read_only_file_limit;
 }
 
 }  // unnamed namespace
@@ -630,7 +713,8 @@ ChromiumEnv::ChromiumEnv(const std::string& name)
     : kMaxRetryTimeMillis(1000),
       name_(name),
       bgsignal_(&mu_),
-      started_bgthread_(false) {
+      started_bgthread_(false),
+      file_limit_(new Limiter(MaxOpenFiles())) {
   uma_ioerror_base_name_ = name_ + ".IOError.BFE";
 }
 
@@ -701,6 +785,11 @@ void ChromiumEnv::DeleteBackupFiles(const FilePath& dir) {
        fname = dir_reader.Next()) {
     histogram->AddBoolean(base::DeleteFile(fname, false));
   }
+}
+
+// Test must call this *before* opening any random-access files.
+void ChromiumEnv::SetReadOnlyFileLimitForTesting(int max_open_files) {
+  file_limit_.reset(new Limiter(max_open_files));
 }
 
 Status ChromiumEnv::GetChildren(const std::string& dir,
@@ -934,9 +1023,11 @@ void ChromiumEnv::RecordOpenFilesLimit(const std::string& type) {
 Status ChromiumEnv::NewRandomAccessFile(const std::string& fname,
                                         leveldb::RandomAccessFile** result) {
   int flags = base::File::FLAG_READ | base::File::FLAG_OPEN;
-  base::File file(FilePath::FromUTF8Unsafe(fname), flags);
+  base::FilePath file_path = FilePath::FromUTF8Unsafe(fname);
+  base::File file(file_path, flags);
   if (file.IsValid()) {
-    *result = new ChromiumRandomAccessFile(fname, std::move(file), this);
+    *result = new ChromiumRandomAccessFile(
+        std::move(file_path), std::move(file), this, file_limit_.get());
     RecordOpenFilesLimit("Success");
     return Status::OK();
   }

@@ -134,6 +134,8 @@ class RetrierProvider {
       MethodID method) const = 0;
 };
 
+class Limiter;
+
 class ChromiumEnv : public leveldb::Env,
                     public UMALogger,
                     public RetrierProvider {
@@ -172,6 +174,7 @@ class ChromiumEnv : public leveldb::Env,
                                             leveldb::WritableFile** result);
   virtual leveldb::Status NewLogger(const std::string& fname,
                                     leveldb::Logger** result);
+  void SetReadOnlyFileLimitForTesting(int max_open_files);
 
  protected:
   explicit ChromiumEnv(const std::string& name);
@@ -239,6 +242,7 @@ class ChromiumEnv : public leveldb::Env,
   typedef std::deque<BGItem> BGQueue;
   BGQueue queue_;
   LockTable locks_;
+  std::unique_ptr<Limiter> file_limit_;
 };
 
 // Tracks databases open via OpenDatabase() method and exposes them to
