@@ -22,6 +22,30 @@
       "revId": "0c46204a0d2a82f50078dc788e608ecad843f105",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b19963_68cfb2f2",
+        "filename": "components/proximity_auth/unlock_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-09-06T00:53:50Z",
+      "side": 1,
+      "message": "This would crash anyways if the values were null, but in random places that would make it hard to debug. But you\u0027re right, it is a bit risky, so I reverted it.",
+      "parentUuid": "5d9841e1_21cd8218",
+      "range": {
+        "startLine": 165,
+        "startChar": 26,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "0c46204a0d2a82f50078dc788e608ecad843f105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
