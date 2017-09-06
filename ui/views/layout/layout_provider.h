@@ -26,9 +26,9 @@ enum InsetsMetric {
   // The margins around the button row of a dialog. The top margin is implied
   // by the content insets and the other margins overlap with INSETS_DIALOG.
   INSETS_DIALOG_BUTTON_ROW,
-  // The margins around the contents of a dialog. The left and right margins
-  // overlap with INSETS_DIALOG.
-  INSETS_DIALOG_CONTENTS,
+  // The insets to use for a section of a dialog that needs padding around it.
+  // For example, the contents of a TabbedPane.
+  INSETS_DIALOG_SUBSECTION,
   // The margins around the icon/title of a dialog. The bottom margin is implied
   // by the content insets and the other margins overlap with INSETS_DIALOG.
   INSETS_DIALOG_TITLE,
@@ -60,14 +60,20 @@ enum DistanceMetric {
   DISTANCE_CLOSE_BUTTON_MARGIN,
   // The combined vertical padding applied to text in a control.
   DISTANCE_CONTROL_TOTAL_VERTICAL_TEXT_PADDING,
-  // The distance between the bottom of a dialog's content and the top of the
-  // dialog's button row.
-  DISTANCE_DIALOG_CONTENT_TO_BUTTONS,
+  // The distance between the bottom of a dialog's content, when the final
+  // content element is a control, and the top of the dialog's button row.
+  DISTANCE_DIALOG_CONTROL_CONTENT_TO_BUTTONS,
+  // The distance between the bottom of a dialog's content, when the final
+  // content element is text, and the top of the dialog's button row.
+  DISTANCE_DIALOG_TEXT_CONTENT_TO_BUTTONS,
   // The default minimum width of a dialog button.
   DISTANCE_DIALOG_BUTTON_MINIMUM_WIDTH,
   // The distance between the bottom of a dialog's title and the top of the
-  // dialog's content.
-  DISTANCE_DIALOG_TITLE_TO_CONTENT,
+  // dialog's content, when the first content element is a control.
+  DISTANCE_DIALOG_TITLE_TO_CONTROL_CONTENT,
+  // The distance between the bottom of a dialog's title and the top of the
+  // dialog's content, when the first content element is text.
+  DISTANCE_DIALOG_TITLE_TO_TEXT_CONTENT,
   // The spacing between a pair of related horizontal buttons, used for
   // dialog layout.
   DISTANCE_RELATED_BUTTON_HORIZONTAL,
@@ -87,6 +93,9 @@ enum DistanceMetric {
   // Embedders must start DistanceMetric enum values from here.
   VIEWS_DISTANCE_END
 };
+
+enum class LeadingContentType { TEXT, CONTROL, NO_TITLE };
+enum class TrailingContentType { TEXT, CONTROL };
 
 class VIEWS_EXPORT LayoutProvider {
  public:
@@ -116,6 +125,13 @@ class VIEWS_EXPORT LayoutProvider {
   // Returns the actual width to use for a dialog that requires at least
   // |min_width|.
   virtual int GetSnappedDialogWidth(int min_width) const;
+
+  // Returns the insets that should be used around a dialog's content for the
+  // given type of content. |leading| is the type (text or a control) of the
+  // first element in the content  and |trailing| is the type of the final
+  // element. If the dialog does not have a title, use NO_TITLE for |leading|.
+  gfx::Insets GetInsetsForContentType(LeadingContentType leading,
+                                      TrailingContentType trailing) const;
 
  private:
   DefaultTypographyProvider typography_provider_;

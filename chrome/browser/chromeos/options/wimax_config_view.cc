@@ -198,8 +198,8 @@ void WimaxConfigView::Cancel() {
 
 void WimaxConfigView::Init() {
   const views::LayoutProvider* provider = views::LayoutProvider::Get();
-  SetBorder(views::CreateEmptyBorder(
-      provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS)));
+  SetBorder(views::CreateEmptyBorder(provider->GetInsetsForContentType(
+      views::LeadingContentType::TEXT, views::TrailingContentType::TEXT)));
 
   const NetworkState* wimax = NetworkHandler::Get()->network_state_handler()->
       GetNetworkState(service_path_);

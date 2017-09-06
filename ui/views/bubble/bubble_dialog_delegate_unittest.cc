@@ -402,8 +402,8 @@ TEST_F(BubbleDialogDelegateTest, CustomTitle) {
             title_view->bounds().right());
 
   LayoutProvider* provider = LayoutProvider::Get();
-  const gfx::Insets content_margins =
-      provider->GetInsetsMetric(INSETS_DIALOG_CONTENTS);
+  const gfx::Insets content_margins = provider->GetInsetsForContentType(
+      views::LeadingContentType::TEXT, views::TrailingContentType::TEXT);
   const gfx::Insets title_margins =
       provider->GetInsetsMetric(INSETS_DIALOG_TITLE);
   EXPECT_EQ(content_margins, bubble_delegate->margins());
