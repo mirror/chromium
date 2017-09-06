@@ -22,6 +22,30 @@
       "revId": "0f6df2cb5fab5175e8b7c1e2ca5b77854f5ea9d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006c24fc_7af53374",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-09-06T16:54:55Z",
+      "side": 1,
+      "message": "I tried that, but it makes the text size huge. I guess it is because the text size is set as 20sp, not dp. res.getDimensionPixelSize() converts a dp to pixel.",
+      "parentUuid": "49241dee_cdb84df5",
+      "range": {
+        "startLine": 307,
+        "startChar": 16,
+        "endLine": 307,
+        "endChar": 90
+      },
+      "revId": "0f6df2cb5fab5175e8b7c1e2ca5b77854f5ea9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
