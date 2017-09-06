@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79381e36_c8bf1e82",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "nit: More descriptive name, please.",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 14
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae7abeb7_f2fbedc3",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "The style guide suggests that enum values can be NamedLikeThis if it\u0027s a shorthand to define constants. Normally, they should be NAMED_LIKE_THIS.",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2b8c06_93463e3c",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "I wonder if we should just say ASCII/ alpha/ something like that to be more precise.\n\nA permissive definition of \"Latin alphabet\" would include áéóúýíščťčžň.\nA strict definition would not include J, W, Y, as these letter did not exist in Roman times.",
+      "range": {
+        "startLine": 41,
+        "startChar": 36,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c15fcee_40780281",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "nit: Consistent formatting please. Either all arrays as grids, or all arrays as collumns. Or did \"git cl format\" cause this?",
+      "range": {
+        "startLine": 42,
+        "startChar": 46,
+        "endLine": 42,
+        "endChar": 48
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f310014a_28edede1",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "Add a constant reference (const base::string16\u0026) to avoid copying the string into the method.",
+      "range": {
+        "startLine": 520,
+        "startChar": 27,
+        "endLine": 520,
+        "endChar": 41
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1acbc5b0_f073afd1",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "style: use_underscores_for_local_variables",
+      "range": {
+        "startLine": 522,
+        "startChar": 14,
+        "endLine": 522,
+        "endChar": 20
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f17353_6a160d9d",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "style: Not needed, string is always initialized to empty.",
+      "range": {
+        "startLine": 522,
+        "startChar": 23,
+        "endLine": 522,
+        "endChar": 25
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50880b6a_9449567e",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "Could this whole method be written in terms of std::remove_if?",
+      "range": {
+        "startLine": 523,
+        "startChar": 2,
+        "endLine": 524,
+        "endChar": 30
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cdb4974_21288909",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "(non-overlapping)",
+      "range": {
+        "startLine": 529,
+        "startChar": 23,
+        "endLine": 529,
+        "endChar": 24
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbeec642_29d90242",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "style: Braces {}.\n\nThey are typically excluded in one-line if() statements, rarely so in one-line for() statements, but anyways, here for() itself takes two lines.",
+      "range": {
+        "startLine": 536,
+        "startChar": 4,
+        "endLine": 536,
+        "endChar": 12
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76357946_32c62032",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "style: const ref",
+      "range": {
+        "startLine": 542,
+        "startChar": 29,
+        "endLine": 542,
+        "endChar": 40
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5467927_ece152c9",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "arraysize ?",
+      "range": {
+        "startLine": 543,
+        "startChar": 18,
+        "endLine": 543,
+        "endChar": 55
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156e0edd_08490030",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "nit: Period at the end of the sentence. Here and everywhere.",
+      "range": {
+        "startLine": 678,
+        "startChar": 59,
+        "endLine": 678,
+        "endChar": 60
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1ca7ed_acd571a2",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "style: Braces here and elsewhere.",
+      "range": {
+        "startLine": 685,
+        "startChar": 2,
+        "endLine": 685,
+        "endChar": 22
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739dde19_cf7ece02",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 693,
+        "startChar": 10,
+        "endLine": 693,
+        "endChar": 15
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6104c0_c0b2dbc6",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 15,
+        "startChar": 34,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b214df4_085627fa",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-06T14:36:55Z",
+      "side": 1,
+      "message": "It\u0027s not clear from the signature or the documentation where is the output of this function.",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 25
+      },
+      "revId": "530fd23f0945a2a2c026be3f7032ffc9a3314e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
