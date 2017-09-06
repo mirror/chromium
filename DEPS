@@ -942,6 +942,20 @@ hooks = [
                 '-s', 'src/third_party/checkstyle/checkstyle-8.0-all.jar.sha1'
     ],
   },
+
+  {
+    'name': 'tools_traffic_annotation_linux',
+    'pattern': '.',
+    'action': [ 'python',
+                'src/third_party/depot_tools/download_from_google_storage.py',
+                '--no_resume',
+                '--platform=linux*',
+                '--no_auth',
+                '--num-threads=4',
+                '--bucket', 'chromium-tools-traffic_annotation',
+                '-d', 'src/tools/traffic_annotation/bin/linux64',
+    ],
+  },
 ]
 
 # Note: These are keyed off target os, not host os. So don't move things here
