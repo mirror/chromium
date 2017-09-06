@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7edc6db5_e3ee6d0b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-06T05:23:09Z",
+      "side": 1,
+      "message": "Great diagram!",
+      "range": {
+        "startLine": 21,
+        "startChar": 22,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "31c5bd4225aeaec9c663bba32fc8215920a7561a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eebf994a_8c498abf",
+        "filename": "third_party/WebKit/Source/core/dom/Modulator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-06T05:23:09Z",
+      "side": 1,
+      "message": "Let\u0027s do \"modulator \u003d DocumentModulatorImpl::Create(document);\" here",
+      "revId": "31c5bd4225aeaec9c663bba32fc8215920a7561a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
