@@ -141,8 +141,7 @@ const GpuFeatureInfo GetGpuFeatureInfo(size_t index, bool* eof) {
      "Native GpuMemoryBuffers have been disabled, either via about:flags"
      " or command line.",
      true},
-    {kWebGL2FeatureName,
-     manager->IsFeatureBlacklisted(gpu::GPU_FEATURE_TYPE_WEBGL2),
+    {kWebGL2FeatureName, !manager->IsWebGL2Enabled(),
      command_line.HasSwitch(switches::kDisableES3APIs),
      "WebGL2 has been disabled via blacklist or the command line.", false},
     {kCheckerImagingFeatureName, false, !IsCheckerImagingEnabled(),
