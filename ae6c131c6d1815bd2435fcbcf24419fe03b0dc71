@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0277047e_d02596af",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-06T01:48:04Z",
+      "side": 1,
+      "message": "I went further and reused the existing layer owner delegate, to notify window that it should reallocate the surface id. WDYT?",
+      "parentUuid": "85629016_6317b498",
+      "revId": "ae6c131c6d1815bd2435fcbcf24419fe03b0dc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d0607b6_979cc239",
         "filename": "ash/wm/window_state.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T17:11:39Z",
       "side": 1,
       "message": "Local variables shouldn\u0027t end with _\n\nUse a recursive function to do this instead.",
+      "revId": "ae6c131c6d1815bd2435fcbcf24419fe03b0dc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c2847e_2bacad4d",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-06T01:48:04Z",
+      "side": 1,
+      "message": "Moved the logic. Done.",
+      "parentUuid": "6d0607b6_979cc239",
       "revId": "ae6c131c6d1815bd2435fcbcf24419fe03b0dc71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +92,30 @@
       "revId": "ae6c131c6d1815bd2435fcbcf24419fe03b0dc71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac08ec8_b217bfda",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-06T01:48:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "90bafd77_007ee981",
+      "range": {
+        "startLine": 503,
+        "startChar": 2,
+        "endLine": 503,
+        "endChar": 25
+      },
+      "revId": "ae6c131c6d1815bd2435fcbcf24419fe03b0dc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
