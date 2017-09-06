@@ -210,9 +210,11 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
     context.GetPaintController().SetFirstPainted();
 
   if (combined_background_color.Alpha()) {
-    if (!combined_background_color.HasAlpha() &&
-        RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
+        !combined_background_color.HasAlpha() &&
+        EnclosingIntRect(background_rect) == background_rect)
       recorder.SetKnownToBeOpaque();
+
     context.FillRect(
         background_rect, combined_background_color,
         (should_draw_background_in_separate_buffer || should_clear_canvas)
