@@ -111,8 +111,8 @@ void CalculateSHA256OfKey(const std::string& key,
 }  // namespace
 
 using simple_util::GetEntryHashKey;
-using simple_util::GetFilenameFromEntryHashAndFileIndex;
-using simple_util::GetSparseFilenameFromEntryHash;
+using simple_util::GetFilenameFromEntryFileKeyAndFileIndex;
+using simple_util::GetSparseFilenameFromFromEntryFileKey;
 using simple_util::GetHeaderSize;
 using simple_util::GetDataSizeFromFileSize;
 using simple_util::GetFileSizeFromDataSize;
@@ -823,7 +823,7 @@ SimpleSynchronousEntry::SimpleSynchronousEntry(net::CacheType cache_type,
                                                const bool had_index)
     : cache_type_(cache_type),
       path_(path),
-      entry_hash_(entry_hash),
+      entry_file_key_(entry_hash),
       had_index_(had_index),
       key_(key),
       have_open_files_(false),
@@ -1157,7 +1157,8 @@ int SimpleSynchronousEntry::InitializeForOpen(
       out_entry_stat->data_size(2) == 0) {
     DVLOG(1) << "Removing empty stream 2 file.";
     CloseFile(stream2_file_index);
-    DeleteFileForEntryHash(path_, entry_hash_, stream2_file_index);
+    DeleteFileForEntryHash(path_, entry_file_key_.entry_hash,
+                           stream2_file_index);
     empty_file_omitted_[stream2_file_index] = true;
     removed_stream2 = true;
   }
@@ -1378,15 +1379,16 @@ int SimpleSynchronousEntry::GetEOFRecordData(base::StringPiece file_0_prefetch,
 }
 
 void SimpleSynchronousEntry::Doom() const {
-  DeleteFilesForEntryHash(path_, entry_hash_);
+  DCHECK_EQ(0u, entry_file_key_.doom_generation);
+  DeleteFilesForEntryHash(path_, entry_file_key_.entry_hash);
 }
 
 // static
 bool SimpleSynchronousEntry::DeleteFileForEntryHash(const FilePath& path,
                                                     const uint64_t entry_hash,
                                                     const int file_index) {
-  FilePath to_delete = path.AppendASCII(
-      GetFilenameFromEntryHashAndFileIndex(entry_hash, file_index));
+  FilePath to_delete = path.AppendASCII(GetFilenameFromEntryFileKeyAndFileIndex(
+      SimpleFileTracker::EntryFileKey(entry_hash), file_index));
   return simple_util::SimpleCacheDeleteFile(to_delete);
 }
 
@@ -1399,8 +1401,8 @@ bool SimpleSynchronousEntry::DeleteFilesForEntryHash(
     if (!DeleteFileForEntryHash(path, entry_hash, i) && !CanOmitEmptyFile(i))
       result = false;
   }
-  FilePath to_delete = path.AppendASCII(
-      GetSparseFilenameFromEntryHash(entry_hash));
+  FilePath to_delete = path.AppendASCII(GetSparseFilenameFromFromEntryFileKey(
+      SimpleFileTracker::EntryFileKey(entry_hash)));
   simple_util::SimpleCacheDeleteFile(to_delete);
   return result;
 }
@@ -1409,15 +1411,16 @@ bool SimpleSynchronousEntry::DeleteFilesForEntryHash(
 bool SimpleSynchronousEntry::TruncateFilesForEntryHash(
     const FilePath& path,
     const uint64_t entry_hash) {
+  SimpleFileTracker::EntryFileKey file_key(entry_hash);
   bool result = true;
   for (int i = 0; i < kSimpleEntryFileCount; ++i) {
     FilePath filename_to_truncate =
-        path.AppendASCII(GetFilenameFromEntryHashAndFileIndex(entry_hash, i));
+        path.AppendASCII(GetFilenameFromEntryFileKeyAndFileIndex(file_key, i));
     if (!TruncatePath(filename_to_truncate))
       result = false;
   }
   FilePath to_delete =
-      path.AppendASCII(GetSparseFilenameFromEntryHash(entry_hash));
+      path.AppendASCII(GetSparseFilenameFromFromEntryFileKey(file_key));
   TruncatePath(to_delete);
   return result;
 }
@@ -1440,15 +1443,15 @@ void SimpleSynchronousEntry::RecordSyncCreateResult(CreateEntryResult result,
 
 FilePath SimpleSynchronousEntry::GetFilenameFromFileIndex(int file_index) {
   return path_.AppendASCII(
-      GetFilenameFromEntryHashAndFileIndex(entry_hash_, file_index));
+      GetFilenameFromEntryFileKeyAndFileIndex(entry_file_key_, file_index));
 }
 
 bool SimpleSynchronousEntry::OpenSparseFileIfExists(
     int32_t* out_sparse_data_size) {
   DCHECK(!sparse_file_open());
 
-  FilePath filename = path_.AppendASCII(
-      GetSparseFilenameFromEntryHash(entry_hash_));
+  FilePath filename =
+      path_.AppendASCII(GetSparseFilenameFromFromEntryFileKey(entry_file_key_));
   int flags = File::FLAG_OPEN | File::FLAG_READ | File::FLAG_WRITE |
               File::FLAG_SHARE_DELETE;
   sparse_file_.Initialize(filename, flags);
@@ -1461,8 +1464,8 @@ bool SimpleSynchronousEntry::OpenSparseFileIfExists(
 bool SimpleSynchronousEntry::CreateSparseFile() {
   DCHECK(!sparse_file_open());
 
-  FilePath filename = path_.AppendASCII(
-      GetSparseFilenameFromEntryHash(entry_hash_));
+  FilePath filename =
+      path_.AppendASCII(GetSparseFilenameFromFromEntryFileKey(entry_file_key_));
   int flags = File::FLAG_CREATE | File::FLAG_READ | File::FLAG_WRITE |
               File::FLAG_SHARE_DELETE;
   sparse_file_.Initialize(filename, flags);
