@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "01c5e0e9_44e1b70a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-06T19:43:13Z",
+      "side": 1,
+      "message": "I could also write it that way, but I wrote it this way so that we\u0027re not unnecessarily calling setVSyncPaused(false) when we haven\u0027t yet paused VSync. I can change it if you insist, I don\u0027t really care either way.",
+      "parentUuid": "91ef7a6f_58a5f38d",
+      "range": {
+        "startLine": 554,
+        "startChar": 25,
+        "endLine": 554,
+        "endChar": 43
+      },
+      "revId": "17d3392494d68d6c8a8992d08882c6f71c7b0c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01d67305_7a254a65",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cdd9cae3_fcdde8f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-06T19:43:13Z",
+      "side": 1,
+      "message": "Removed the TODO part.",
+      "parentUuid": "01d67305_7a254a65",
+      "range": {
+        "startLine": 568,
+        "startChar": 11,
+        "endLine": 568,
+        "endChar": 15
+      },
+      "revId": "17d3392494d68d6c8a8992d08882c6f71c7b0c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "556d363b_24989906",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-06T19:24:32Z",
       "side": 1,
       "message": "What\u0027s the probability of this test being flaky? If it is flaky, perhaps we shouldn\u0027t upload it. As flaky test could create more trouble than benefit.\n+bsheedy",
+      "range": {
+        "startLine": 188,
+        "startChar": 8,
+        "endLine": 188,
+        "endChar": 26
+      },
+      "revId": "17d3392494d68d6c8a8992d08882c6f71c7b0c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695e9534_f659b0fe",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-06T19:43:13Z",
+      "side": 1,
+      "message": "It\u0027s not flaky when it isn\u0027t broken. The sleep is only to give the omnibox time to hide itself if it\u0027s going to hide itself after exiting VR (if we checked the omnibox was visible immediately, the test would always pass even if exiting VR hid the omnibox). I wrote the test this way because I don\u0027t want to test intermediary states. We don\u0027t care if the omnibox hidden ratio is wrong while in WebVR, we only care that when we exit VR that it settles on the omnibox being visible.",
+      "parentUuid": "556d363b_24989906",
       "range": {
         "startLine": 188,
         "startChar": 8,
