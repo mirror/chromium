@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d38d80c_8680ca53",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-06T22:33:58Z",
+      "side": 1,
+      "message": "The latter is right, |lastStatusUpdate_| would get updated when we resume, and we\u0027d start incrementing from there.",
+      "parentUuid": "e7c63ffa_3e033b6a",
+      "revId": "cd704e7cdfe509473e75165a293e19d37d7d09f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bee36b0d_eed764fb",
         "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "cd704e7cdfe509473e75165a293e19d37d7d09f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0aa3f2e_caa0a09d",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-06T22:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bee36b0d_eed764fb",
+      "revId": "cd704e7cdfe509473e75165a293e19d37d7d09f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
