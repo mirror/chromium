@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2e9ed77_a39dea35",
+        "filename": "chrome/browser/resources/policy_tool.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-06T22:21:32Z",
+      "side": 1,
+      "message": "New code should use $i18n. See https://cs.chromium.org/chromium/src/chrome/browser/resources/ntp4/guest_tab.html?type\u003dcs\u0026q\u003d%5C$i18n+file:%5Esrc/chrome/browser/resources/+package:%5Echromium$\u0026l\u003d2 for an example.",
+      "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8207b36_b64762f7",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-06T22:21:32Z",
+      "side": 1,
+      "message": "Instead of using self, you can use ES6 arrow functions, which don\u0027t bind their own \u0027this\u0027 keyword: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions",
+      "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5292d61e_06a63472",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-06T22:21:32Z",
+      "side": 1,
+      "message": "Maybe let\u0027s do a console.log, even at this stage..",
+      "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb094af_abc38942",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-06T22:21:32Z",
+      "side": 1,
+      "message": "If the above script gets any longer we may want to break it out into its own JS file.",
+      "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8176e6d3_584fbecb",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-06T22:21:32Z",
+      "side": 1,
+      "message": "Instead of using unretained pointers, use a callback_weak_ptr_factory_, following this example:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/webui/settings/profile_info_handler.h?q\u003dcallback_weak_ptr_fact\u0026sq\u003dpackage:chromium\u0026l\u003d100\n\nMake sure you call callback_weak_ptr_factory_.InvalidateWeakPtrs() in OnJavascriptDisallowed.",
+      "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c96a826_73b1e84c",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-06T22:21:32Z",
+      "side": 1,
+      "message": "Same here, use the callback_weak_ptr_factory_",
+      "range": {
+        "startLine": 160,
+        "startChar": 37,
+        "endLine": 160,
+        "endChar": 38
+      },
+      "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1286501_c08980cc",
+        "filename": "chrome/common/chrome_switches.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-06T22:21:32Z",
+      "side": 1,
+      "message": "AFAIK, we\u0027re supposed to prefer using base::Feature instead of adding new command line switches: https://cs.chromium.org/chromium/src/chrome/common/chrome_features.h?q\u003dchrome_features\u0026sq\u003dpackage:chromium\u0026l\u003d1",
+      "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
