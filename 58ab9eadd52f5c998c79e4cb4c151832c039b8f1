@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c5b8a4_6309c041",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/switch-multiple-list-items-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-06T00:03:08Z",
+      "side": 1,
+      "message": "Selection anchor should be\n\n\u003ca href\u003d\"z\"\u003e^\u003cbr\u003e\u003c/a\u003e",
+      "revId": "58ab9eadd52f5c998c79e4cb4c151832c039b8f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4905055_87ac40a0",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/switch-multiple-list-items-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-06T00:03:08Z",
+      "side": 1,
+      "message": "Selection focus should be\n\n|\u003c/li\u003e",
+      "revId": "58ab9eadd52f5c998c79e4cb4c151832c039b8f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62432fb8_d2ee3e71",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/switch-multiple-list-items-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-06T00:03:08Z",
+      "side": 1,
+      "message": "nit: fix typo",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "58ab9eadd52f5c998c79e4cb4c151832c039b8f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
