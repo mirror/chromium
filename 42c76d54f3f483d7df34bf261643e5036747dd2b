@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59433c0d_087b8499",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-06T20:21:55Z",
+      "side": 1,
+      "message": "GetSize()\nActually I realized later that this function is actually useful in multiple places in dump providers (callsites of this function). So, Internal is not be needed.\nSorry about making you fix these files.",
+      "range": {
+        "startLine": 111,
+        "startChar": 11,
+        "endLine": 111,
+        "endChar": 26
+      },
+      "revId": "42c76d54f3f483d7df34bf261643e5036747dd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
