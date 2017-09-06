@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "8b78653a_3a551855",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-09-06T23:05:39Z",
+      "side": 1,
+      "message": "Hmm, would a copy prevent accessing the same memory from different threads? I can repro this when clicking inside the launcher for example (although we should be processing new events if the previous one is not done yet?).\n\nIs is_asan\u003dtrue enough to have an asan build? If so then I have an asan build.\n\nWe won\u0027t come to this function in that case. If |active_hit_test_list_| is nullptr, in which case |active_hit_test_list_size_| should be 0 and we just do early return in line 47.",
+      "parentUuid": "c763a551_d0709288",
+      "revId": "4cc9d38feb1747c8d85c34449490ad9c9207f844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fe6c5ad_4db1ac42",
         "filename": "services/ui/ws/event_targeter.cc",
         "patchSetId": 1
