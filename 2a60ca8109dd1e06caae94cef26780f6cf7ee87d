@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f4c80df_a4b080da",
+        "filename": "tools/battor_agent/battor_agent.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-09-06T00:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c89f26f3_4f103e34",
+      "range": {
+        "startLine": 33,
+        "startChar": 21,
+        "endLine": 33,
+        "endChar": 31
+      },
+      "revId": "2a60ca8109dd1e06caae94cef26780f6cf7ee87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3c393c0_f96e9e83",
         "filename": "tools/battor_agent/battor_agent.h",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "2a60ca8109dd1e06caae94cef26780f6cf7ee87d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f71986e_09618820",
+        "filename": "tools/battor_agent/battor_agent.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-09-06T00:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3c393c0_f96e9e83",
+      "revId": "2a60ca8109dd1e06caae94cef26780f6cf7ee87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "16c0158c_635a7ad7",
+        "filename": "tools/battor_agent/battor_agent.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-09-06T00:13:17Z",
+      "side": 1,
+      "message": "Sounds good, although I need a trailing underscore because it is a class member.",
+      "parentUuid": "373100fd_ce03d169",
+      "revId": "2a60ca8109dd1e06caae94cef26780f6cf7ee87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60079066_1e999494",
         "filename": "tools/battor_agent/battor_agent_bin.cc",
         "patchSetId": 8
@@ -73,6 +133,24 @@
       "revId": "2a60ca8109dd1e06caae94cef26780f6cf7ee87d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0a4aff_0e1aaaba",
+        "filename": "tools/battor_agent/battor_agent_bin.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-09-06T00:13:17Z",
+      "side": 1,
+      "message": "Ack - we can always extend BattOrResults if needed but I think not doing so now is best.",
+      "parentUuid": "60079066_1e999494",
+      "revId": "2a60ca8109dd1e06caae94cef26780f6cf7ee87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "d59c345b_dbacf75f",
+        "filename": "tools/battor_agent/battor_agent_bin.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-09-06T00:13:17Z",
+      "side": 1,
+      "message": "I went with num_seconds - I think using a plural variant of second is crucial to avoiding the confusion you hit.",
+      "parentUuid": "ed2dffab_025bff5c",
+      "revId": "2a60ca8109dd1e06caae94cef26780f6cf7ee87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2aace0fc_9b2aebbc",
         "filename": "tools/battor_agent/battor_agent_bin.cc",
         "patchSetId": 8
@@ -107,6 +203,24 @@
       "revId": "2a60ca8109dd1e06caae94cef26780f6cf7ee87d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a4f75b_b86efd28",
+        "filename": "tools/battor_agent/battor_agent_bin.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-09-06T00:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aace0fc_9b2aebbc",
+      "revId": "2a60ca8109dd1e06caae94cef26780f6cf7ee87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "a4043f44_22719c39",
+        "filename": "tools/battor_agent/battor_agent_bin.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-09-06T00:13:17Z",
+      "side": 1,
+      "message": "Yes - that makes much more sense. I was unhappy with the state of the logic and that resolves it.",
+      "parentUuid": "8be6bd7b_c123030a",
+      "revId": "2a60ca8109dd1e06caae94cef26780f6cf7ee87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17286bb9_18c4c760",
         "filename": "tools/battor_agent/battor_sample_converter.cc",
         "patchSetId": 8
@@ -141,6 +273,24 @@
       "revId": "2a60ca8109dd1e06caae94cef26780f6cf7ee87d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4713af30_91ffb5eb",
+        "filename": "tools/battor_agent/battor_sample_converter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-09-06T00:13:17Z",
+      "side": 1,
+      "message": "Done. I also changed 1e-6 to 1e-6f because the result is a float.",
+      "parentUuid": "17286bb9_18c4c760",
+      "revId": "2a60ca8109dd1e06caae94cef26780f6cf7ee87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
