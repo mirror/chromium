@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6a84f38_29413af4",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-06T22:10:40Z",
+      "side": 1,
+      "message": "no {} and move the host_frame_sink_manager check first as it\u0027s the cheapest.",
+      "range": {
+        "startLine": 399,
+        "startChar": 2,
+        "endLine": 399,
+        "endChar": 80
+      },
+      "revId": "83371769c57adb3b34f885d691d9502f932aad87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
