@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "69f8ee47_66ce2766",
+        "filename": "chrome/browser/chrome_content_gpu_manifest_overlay.json",
+        "patchSetId": 36
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-09-06T23:08:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73d51491_e97b700d",
+      "range": {
+        "startLine": 8,
+        "startChar": 40,
+        "endLine": 8,
+        "endChar": 50
+      },
+      "revId": "5ec0e65da9ac007c2b879ce9f040243378968b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6bef3c9_8f500323",
         "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
         "patchSetId": 36
@@ -45,6 +69,30 @@
       "revId": "5ec0e65da9ac007c2b879ce9f040243378968b2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5471dfe_8f7ca4b9",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-09-06T23:08:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6bef3c9_8f500323",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 12
+      },
+      "revId": "5ec0e65da9ac007c2b879ce9f040243378968b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
