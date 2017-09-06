@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "b8ad35d4_2bccd33e",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-06T18:36:03Z",
+      "side": 1,
+      "message": "Ah you are right, if the mode is set than it must have been initialized",
+      "parentUuid": "59e74000_ca4b3e97",
+      "range": {
+        "startLine": 424,
+        "startChar": 2,
+        "endLine": 424,
+        "endChar": 3
+      },
+      "revId": "912ee2f39e9c56dd2dceb551fc7d805efa998491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24e0ace7_9eee69a7",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 5
