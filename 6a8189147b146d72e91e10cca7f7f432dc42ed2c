@@ -166,6 +166,30 @@
       "revId": "6a8189147b146d72e91e10cca7f7f432dc42ed2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ef954c_8d9edfac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2386,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-06T16:14:16Z",
+      "side": 1,
+      "message": "Sorry for pushing back on this, because I do realize this is an exception that doesn\u0027t make sense on first look. It would make more sense to set first and then call onShow. And I know this looks like an edge case and this logic is fragile mostly because we made it so. But I still want to avoid regressing.\n\nPrerender in Android is almost 100% used by only the hidden tab logic in CustomTabsConnection, that is designed for external prerender request coming from other apps. So even if this breaks that one test and reader mode, it makes practical sense to keep focus on  the external prerender use case not regressing.\n\nThe extra resize will not happen in cases where intent is coming from an already existing Chrome tab.(Reader mode, omnibox prerenders will work fine).\n\nIt will happen in cases where we have an external prerender, Chrome prerendering a WebContents with no ContentViewCore and then a tab being created on cold start and getting a swap call. In this scenario, both the ContentViewCore being swapped in and out will have no initial size since we haven\u0027t gotten the update from the Android View hierarchy. And with set and onShow being called on that order, they will become aware of that fact (their internal size is (w,h) but Android would tell them it is (0,0)) causing a resize. Your best bet for reproducing this probably is CustomTabActivityTest#testHiddenTabCorrectUrl which I believe goes through this flow. My worry is with your patch that test will cause an extra resize after the tab is created going back and forth between (w,h) and (0,0).",
+      "parentUuid": "9fe6d787_2c9fb059",
+      "range": {
+        "startLine": 2386,
+        "startChar": 8,
+        "endLine": 2386,
+        "endChar": 26
+      },
+      "revId": "6a8189147b146d72e91e10cca7f7f432dc42ed2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
