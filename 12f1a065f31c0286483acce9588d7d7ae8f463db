@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "419700c9_7fbcafce",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "This is the only different between this createPolicyTable \nand createPolicyTable in policy_base.js\n\nCan you set tableHeadings to the prototype directly so that you don\u0027t have to copy\nthe rest of code.",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910fb921_fcae0717",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "Maybe it\u0027s not possible but shall we check unknown before unset?\nAs a unset unknown policy should display unknown.",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7f19c2_109e41f1",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "Do you need to override checkOverflow in policy_base.js? Because that one\nwill be called when the window is resized.\n\nAnd will your checkOverflow ever be called with opt_value_updated\u003dfalse? Because I\nonly find one caller with opt_value_update\u003dtrue.",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8608f48_80c23e0d",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "You can move this to a separate function like GetWidthOfValueContainer\nso that you don\u0027t have to copy the rest of checkOverflow code from policy_base.js",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0abab21e_b667e9c0",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "what does \u0027false\u0027 mean?",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86e826f_e7d2f451",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "Since alert is not a very good UX. I think it\u0027s good to have TODO here about\nimproving UX later.",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2457bed_2768692e",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "Can you add a test case with unicode FileName to make sure it works properly on all platforms.",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27b50da_d8591dd3",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "There\u0027re couple session_dir_.Append...AddExtension in the code\nCan you move it to a util function?",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d86eb21_bee57947",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "You return \u0027logged\u0027: false instead of empty dict in the code below. Either change the comment or change the code.\n\nDo the same thing for the other \u0027logged\u0027: false too.",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af24c239_534de05c",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "You have used \"logged: false\" in two different places, could you move it to constexpr in anonymous namespace?",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eafce5d1_822eb538",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "FILE_PATH_LITERAL_ or create a util function as I mentioned above.",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aee11f9_003bc5e1",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "Do you want the user edit the json file manually? If not, maybe pretty_print is not necessary here.",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848545e2_0047bb1f",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "The documentation of AllowJavascript() says:\nThis should never be called from a C++ callback used as a reply for a\nposted task or asynchronous operation.\"\n\nHowever, you are calling this method from a reply function. (i.e. OnFileRead)\nBased on the documentation, it should\n\"be called once the handler\u0027s corresponding JavaScript component is initialized.\"",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a133c7_4683cec1",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "I think it will be awesome if there\u0027s a short doc here describes some details of this function.",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984a30d9_c8a5166e",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742d34b5_3cd841a1",
+        "filename": "components/policy_strings.grdp",
+        "patchSetId": 14
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-06T03:37:40Z",
+      "side": 1,
+      "message": "How about Saving instead of logging? WDYT?",
+      "revId": "12f1a065f31c0286483acce9588d7d7ae8f463db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
