@@ -52,6 +52,24 @@
       "revId": "f6ee6a3bff91b13d2c6062a812087a02e5d0df0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cba246b_28a3d5e9",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_drag_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-06T02:20:48Z",
+      "side": 1,
+      "message": "To make this if() clearer, you can pull some of this offset calculation into a variable.",
+      "parentUuid": "58803fe1_0a7e013f",
+      "revId": "f6ee6a3bff91b13d2c6062a812087a02e5d0df0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
