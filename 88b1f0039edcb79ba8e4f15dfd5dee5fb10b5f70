@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6bc0181_4f489973",
+        "filename": "chromecast/app/android/crash_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-06T18:38:10Z",
+      "side": 1,
+      "message": "Is the intent for this path to be different than crash_dump_path_?  (otherwise there will be tasks initiated for uploading multiple paths).  If so, could DCHECK that it\u0027s not the same?",
+      "revId": "88b1f0039edcb79ba8e4f15dfd5dee5fb10b5f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "facc359b_55456cab",
+        "filename": "chromecast/app/android/crash_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-06T18:38:10Z",
+      "side": 1,
+      "message": "nit: const std::string\u0026",
+      "revId": "88b1f0039edcb79ba8e4f15dfd5dee5fb10b5f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
