@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8dd80fa_b6bc6fd5",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-06T07:24:00Z",
+      "side": 1,
+      "message": "This was failing in some tests where the WebContents is destroyed, causing AppBannerManager::Stop to be called, but presumably without RequestAppBanner having been called (so status_reporter_ was still null -- it\u0027s default value).  Before this CL, this DCHECK looked like:\n\nDCHECK(!need_to_log_status_ || (IsRunning() \u0026\u0026 !IsWaitingForData()));\n\nand need_to_log_status_ was false simply because that is the default value, so the aforementioned tests happened to pass.\n\nI think that guarding against a status_reporter_ being null here is reasonable and equivalent to the old behaviour.",
+      "revId": "06c2a01a7c6601cf7c8381d4b2ee6b300c8adcd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
