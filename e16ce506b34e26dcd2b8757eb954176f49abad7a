@@ -88,6 +88,24 @@
       "revId": "e16ce506b34e26dcd2b8757eb954176f49abad7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c287eb3_87ce2fdc",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-06T09:02:53Z",
+      "side": 1,
+      "message": "Unfortunately, Chrome shouldn\u0027t (and can\u0027t) control the bounds of the ARC++ windows because we can\u0027t predict the bounds that application will use. I was going to add ARC++ specific state impl that will delegate the request to client without changing state nor bounds.\n\nMin/Max size won\u0027t solve 100% cases for above reason. It\u0027s dynamic and up to application. We only know after the fact.",
+      "parentUuid": "afdd3181_bb6b9a28",
+      "revId": "e16ce506b34e26dcd2b8757eb954176f49abad7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
