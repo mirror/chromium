@@ -215,7 +215,7 @@ SkColor Checkbox::GetInkDropBaseColor() const {
 
 gfx::ImageSkia Checkbox::GetImage(ButtonState for_state) const {
   if (UseMd()) {
-    return gfx::CreateVectorIcon(GetVectorIcon(), 16,
+    return gfx::CreateVectorIcon(GetVectorIcon(), 14,
                                  GetIconImageColor(checked_));
   }
 
