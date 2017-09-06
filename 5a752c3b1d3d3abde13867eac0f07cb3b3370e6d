@@ -52,6 +52,24 @@
       "revId": "5a752c3b1d3d3abde13867eac0f07cb3b3370e6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67eba6b7_37981940",
+        "filename": "cc/output/vulkan_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1241467
+      },
+      "writtenOn": "2017-09-06T04:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0f971bb_34f00dc8",
+      "revId": "5a752c3b1d3d3abde13867eac0f07cb3b3370e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
