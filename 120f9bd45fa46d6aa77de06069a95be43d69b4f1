@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "622a5cb1_5ccdeb1c",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-06T00:31:23Z",
+      "side": 1,
+      "message": "I defer the decision to you. It just caught my eyes because all other code in this patch basically does early exit.",
+      "parentUuid": "4e8d6d43_6c31deb0",
+      "revId": "120f9bd45fa46d6aa77de06069a95be43d69b4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d45d46ee_8e6faa1d",
         "filename": "content/child/service_worker/web_service_worker_provider_impl.h",
         "patchSetId": 3
