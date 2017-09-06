@@ -197,6 +197,11 @@ class MemoryDumpManagerTest : public testing::Test {
     TraceLog::DeleteForTesting();
   }
 
+  void RunLoopUntilIdle() {
+    base::RunLoop run_loop;
+    run_loop.RunUntilIdle();
+  }
+
  protected:
   // Blocks the current thread (spinning a nested message loop) until the
   // memory dump is complete. Returns:
@@ -839,7 +844,7 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingPseudoStack) {
   InitializeMemoryDumpManagerForInProcessTesting(false /* is_coordinator */);
   MockMemoryDumpProvider mdp1;
   MockMemoryDumpProvider mdp2;
-  RegisterDumpProvider(&mdp1, nullptr);
+  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get());
   {
     testing::InSequence sequence;
     EXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(1);
@@ -852,13 +857,29 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingPseudoStack) {
   }
 
   EXPECT_TRUE(mdm_->EnableHeapProfiling(kHeapProfilingModePseudo));
+  RunLoopUntilIdle();
   ASSERT_EQ(AllocationContextTracker::CaptureMode::PSEUDO_STACK,
             AllocationContextTracker::capture_mode());
   EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModePseudo);
-  RegisterDumpProvider(&mdp2, nullptr);
+  RegisterDumpProvider(&mdp2, ThreadTaskRunnerHandle::Get());
+
+  TraceConfig::MemoryDumpConfig config;
+  config.heap_profiler_options.breakdown_threshold_bytes = 100;
+  mdm_->SetupForTracing(config);
+  EXPECT_EQ(config.heap_profiler_options.breakdown_threshold_bytes,
+            mdm_->heap_profiler_serialization_state_for_testing()
+                ->heap_profiler_breakdown_threshold_bytes());
+  EXPECT_TRUE(
+      mdm_->heap_profiler_serialization_state_for_testing()->is_initialized());
+  EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModePseudo);
+  mdm_->TeardownForTracing();
+  EXPECT_FALSE(mdm_->heap_profiler_serialization_state_for_testing());
+
   // Disable will permanently disable heap profiling.
   EXPECT_TRUE(mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled));
+  RunLoopUntilIdle();
   EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeInvalid);
+  EXPECT_FALSE(mdm_->heap_profiler_serialization_state_for_testing());
   ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
             AllocationContextTracker::capture_mode());
   EXPECT_FALSE(mdm_->EnableHeapProfiling(kHeapProfilingModePseudo));
@@ -867,20 +888,34 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingPseudoStack) {
   EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeInvalid);
   EXPECT_FALSE(mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled));
   EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeInvalid);
+  EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeInvalid);
 }
 
 TEST_F(MemoryDumpManagerTest, EnableHeapProfilingNoStack) {
   InitializeMemoryDumpManagerForInProcessTesting(true /* is_coordinator */);
   MockMemoryDumpProvider mdp1;
-  RegisterDumpProvider(&mdp1, nullptr);
+  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get());
   testing::InSequence sequence;
   EXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(1);
   EXPECT_CALL(mdp1, OnHeapProfilingEnabled(false)).Times(1);
 
+  // Enable tracing before heap profiling.
+  TraceConfig::MemoryDumpConfig config;
+  config.heap_profiler_options.breakdown_threshold_bytes = 100;
+  mdm_->SetupForTracing(config);
+  EXPECT_EQ(config.heap_profiler_options.breakdown_threshold_bytes,
+            mdm_->heap_profiler_serialization_state_for_testing()
+                ->heap_profiler_breakdown_threshold_bytes());
+  EXPECT_FALSE(
+      mdm_->heap_profiler_serialization_state_for_testing()->is_initialized());
+
   EXPECT_TRUE(mdm_->EnableHeapProfiling(kHeapProfilingModeNoStack));
+  RunLoopUntilIdle();
   ASSERT_EQ(AllocationContextTracker::CaptureMode::NO_STACK,
             AllocationContextTracker::capture_mode());
   EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeNoStack);
+  EXPECT_TRUE(
+      mdm_->heap_profiler_serialization_state_for_testing()->is_initialized());
   // Do nothing when already enabled.
   EXPECT_FALSE(mdm_->EnableHeapProfiling(kHeapProfilingModeNoStack));
   EXPECT_FALSE(mdm_->EnableHeapProfiling(kHeapProfilingModePseudo));
@@ -889,6 +924,7 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingNoStack) {
   EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeNoStack);
   // Disable will permanently disable heap profiling.
   EXPECT_TRUE(mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled));
+  RunLoopUntilIdle();
   ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
             AllocationContextTracker::capture_mode());
   EXPECT_FALSE(mdm_->EnableHeapProfiling(kHeapProfilingModePseudo));
@@ -896,25 +932,30 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingNoStack) {
             AllocationContextTracker::capture_mode());
   EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeInvalid);
   EXPECT_FALSE(mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled));
+  RunLoopUntilIdle();
   EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeInvalid);
+  mdm_->TeardownForTracing();
+  EXPECT_FALSE(mdm_->heap_profiler_serialization_state_for_testing());
 }
 
 TEST_F(MemoryDumpManagerTest, EnableHeapProfilingTask) {
   InitializeMemoryDumpManagerForInProcessTesting(true /* is_coordinator */);
   MockMemoryDumpProvider mdp1;
   MockMemoryDumpProvider mdp2;
-  RegisterDumpProvider(&mdp1, nullptr);
+  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get());
   EXPECT_CALL(mdp1, OnHeapProfilingEnabled(_)).Times(0);
   EXPECT_CALL(mdp2, OnHeapProfilingEnabled(_)).Times(0);
 
   ASSERT_FALSE(base::debug::ThreadHeapUsageTracker::IsHeapTrackingEnabled());
   EXPECT_TRUE(mdm_->EnableHeapProfiling(kHeapProfilingModeTaskProfiler));
+  RunLoopUntilIdle();
   ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
             AllocationContextTracker::capture_mode());
-  RegisterDumpProvider(&mdp2, nullptr);
+  RegisterDumpProvider(&mdp2, ThreadTaskRunnerHandle::Get());
   EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeTaskProfiler);
   ASSERT_TRUE(debug::ThreadHeapUsageTracker::IsHeapTrackingEnabled());
   TestingThreadHeapUsageTracker::DisableHeapTrackingForTesting();
+  ASSERT_FALSE(base::debug::ThreadHeapUsageTracker::IsHeapTrackingEnabled());
 }
 
 TEST_F(MemoryDumpManagerTest, EnableHeapProfilingDisableDisabled) {
@@ -928,7 +969,7 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingDisableDisabled) {
 TEST_F(MemoryDumpManagerTest, EnableHeapProfilingIfNeeded) {
   InitializeMemoryDumpManagerForInProcessTesting(false /* is_coordinator */);
   MockMemoryDumpProvider mdp1;
-  RegisterDumpProvider(&mdp1, nullptr);
+  RegisterDumpProvider(&mdp1, ThreadTaskRunnerHandle::Get());
 
   // Should be noop.
   mdm_->EnableHeapProfilingIfNeeded();
@@ -946,9 +987,11 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingIfNeeded) {
   CommandLine* cmdline = CommandLine::ForCurrentProcess();
   cmdline->AppendSwitchASCII(switches::kEnableHeapProfiling, "");
   mdm_->EnableHeapProfilingIfNeeded();
+  RunLoopUntilIdle();
   ASSERT_EQ(AllocationContextTracker::CaptureMode::PSEUDO_STACK,
             AllocationContextTracker::capture_mode());
   EXPECT_TRUE(mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled));
+  RunLoopUntilIdle();
   ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
             AllocationContextTracker::capture_mode());
   EXPECT_FALSE(mdm_->EnableHeapProfiling(kHeapProfilingModeNoStack));
