@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ccb87a86_c896e349",
+        "filename": "chrome/browser/chrome_browser_main_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-06T21:57:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dba63e6b_d2cc14e7",
+      "revId": "3f83a53268f4ffb0123b80834369e74dee791d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02198a91_59bb2a18",
         "filename": "chrome/browser/chrome_browser_main_android.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "3f83a53268f4ffb0123b80834369e74dee791d8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a047d6d8_b30951d1",
+        "filename": "chrome/browser/chrome_browser_main_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-06T21:57:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02198a91_59bb2a18",
+      "revId": "3f83a53268f4ffb0123b80834369e74dee791d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "3f83a53268f4ffb0123b80834369e74dee791d8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2453eb8d_1e0fe139",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-06T21:57:36Z",
+      "side": 1,
+      "message": "Sorry forgot to add it back.",
+      "parentUuid": "bf352a00_13c662d7",
+      "range": {
+        "startLine": 53,
+        "startChar": 17,
+        "endLine": 53,
+        "endChar": 19
+      },
+      "revId": "3f83a53268f4ffb0123b80834369e74dee791d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
