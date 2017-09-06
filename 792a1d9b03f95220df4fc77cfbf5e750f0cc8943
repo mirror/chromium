@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "fc796e3e_170cd8c0",
+        "filename": "cc/ipc/copy_output_result_struct_traits.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-06T00:20:20Z",
+      "side": 1,
+      "message": "Oh, one other minor nit: I would personally out-of-line this by default (since this is all in the same compilation unit, I /think/ the compiler will be able to figure out whether it thinks it\u0027s better to inline or out-of-line based on optimization settings?).",
+      "revId": "792a1d9b03f95220df4fc77cfbf5e750f0cc8943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bad2872_317d6886",
         "filename": "components/viz/common/quads/copy_output_request.h",
         "patchSetId": 11
