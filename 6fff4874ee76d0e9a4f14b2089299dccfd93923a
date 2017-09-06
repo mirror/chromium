@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b60f9b8_69db49d7",
+        "filename": "net/spdy/chromium/spdy_session_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4643,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-06T14:38:55Z",
+      "side": 1,
+      "message": "nit: Maybe rephrase comment?\n\n- Your code says the session is stalled, but your comment says it is \"not stalled.\" We could mention that it\u0027s stalled again because stream2 consumed all send budget.\n- Could you be more specific which stream (1 or 2) you are referring to in this comment?",
+      "revId": "6fff4874ee76d0e9a4f14b2089299dccfd93923a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
