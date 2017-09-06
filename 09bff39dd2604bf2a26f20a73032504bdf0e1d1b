@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7d21f5b_e32d9a04",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-06T20:57:21Z",
+      "side": 1,
+      "message": "Oh nevermind, I see we are separately recording the commit interval. I\u0027m not sure how we\u0027d use this metric since in some cases we would only tick compositor frames on main.",
+      "parentUuid": "36a4bd6b_188bb675",
+      "revId": "09bff39dd2604bf2a26f20a73032504bdf0e1d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6f4b6b3_9392413d",
         "filename": "third_party/WebKit/Source/core/animation/DocumentAnimations.cpp",
         "patchSetId": 18
