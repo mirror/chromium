@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c0d07e3_0695c631",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-09-06T02:04:52Z",
+      "side": 1,
+      "message": "Nit: \"This allows getting and setting rlimits only on the current process.\"",
+      "range": {
+        "startLine": 102,
+        "startChar": 3,
+        "endLine": 102,
+        "endChar": 7
+      },
+      "revId": "0bc97761ca355f885db8884d69b60f40ccd6a530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
