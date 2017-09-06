@@ -22,6 +22,30 @@
       "revId": "ab777fb19f5c939ac66568ddf656916c56c8827a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "027abb16_b1723d9a",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/garbage-collection-ran-during-error.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-09-06T18:12:55Z",
+      "side": 0,
+      "message": "Ah, OK.  For some reason I thought it was the other way around (that the test was supposed to test this function call after a gc).",
+      "parentUuid": "1c932d74_6b02be4e",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "ab777fb19f5c939ac66568ddf656916c56c8827a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
