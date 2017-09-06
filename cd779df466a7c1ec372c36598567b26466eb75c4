@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "f503e059_b437f603",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-06T22:08:43Z",
+      "side": 1,
+      "message": "So on every commit and every activation we unregister and reregister every image?\n\nIt\u0027s probably not easy to know that a raster source has changed, but we only need to do this on commit and not activation, since that\u0027s the only time a set of images would change?",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47dfba8e_ed628a2f",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-06T22:08:43Z",
+      "side": 1,
+      "message": "I think something like \"only update image metadata during commit\" would be more clear.  I had to look through code to understand why this wouldn\u0027t get hit during synthetic pending tree invalidations.",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bd8d0d1_cf965373",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 5
@@ -34,6 +68,125 @@
       "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12de3aa0_7866133e",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-06T22:08:43Z",
+      "side": 1,
+      "message": "This new class definitely needs some tests.  :)",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "face4b7f_4ccec7d2",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-06T22:08:43Z",
+      "side": 1,
+      "message": "This is almost too magical for my tastes, to combine \"max repetitions\" with \"repetition type\".  I see the image_animation_count.h comments and I understand what\u0027s going on, but this took a little to digest.  Can you maybe leave some comments on repetition_count_?  The comment there says \"The number of animation loops requested for this image\" which without reading that other header file would make me think that 0 would mean \"no loops\" and not \"1 loop\".",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94411f2_25d345aa",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-06T22:08:43Z",
+      "side": 1,
+      "message": "repetition_count_ \u003d\u003d kAnimationLoopOnce?",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8d78c1_e4683a0b",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-06T22:08:43Z",
+      "side": 1,
+      "message": "Why do you update the requested max number of repetitions from 1 to 2 when you get to the end? Is this related to the code on line 226?",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3412febd_f0703bd3",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-06T22:08:43Z",
+      "side": 1,
+      "message": "*premature optimization hat* could early out here if you find any that need updating.",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f53d9cb_ee942b18",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-06T22:08:43Z",
+      "side": 1,
+      "message": "I found repetition \"count\" vs repetitions \"completed\" ambiguous.  They sound about the same to my ears.  Maybe something more like max/requested vs current/completed would make this more readable?",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa80b6f9_da3907e2",
+        "filename": "cc/trees/layer_tree_settings.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-06T22:08:43Z",
+      "side": 1,
+      "message": "cc has other clients than Blink? Maybe say \"whether images should be animated in the compositor\".  ui could use this too if it wanted.",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
