@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66d446ba_00f0594f",
+        "filename": "third_party/blink/tools/plan_blink_move.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-06T04:45:44Z",
+      "side": 1,
+      "message": "Done. I also added a docstring.",
+      "parentUuid": "6f42ca33_a6e1820b",
+      "revId": "61930e0151a2b5b7662b4d684c251b7dc2edff54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be7ed7b8_27985c5b",
         "filename": "third_party/blink/tools/plan_blink_move.py",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "61930e0151a2b5b7662b4d684c251b7dc2edff54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d96517d_6603eeeb",
+        "filename": "third_party/blink/tools/plan_blink_move.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-06T04:45:44Z",
+      "side": 1,
+      "message": "Thanks.  I copied your proposed docstring :)",
+      "parentUuid": "be7ed7b8_27985c5b",
+      "revId": "61930e0151a2b5b7662b4d684c251b7dc2edff54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
