@@ -6,6 +6,7 @@
 
 #include "ash/drag_drop/drag_drop_tracker.h"
 #include "ash/drag_drop/drag_image_view.h"
+#include "ash/public/cpp/config.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "base/command_line.h"
@@ -346,7 +347,7 @@ class DragDropControllerTest : public AshTestBase {
   }
 
   void TearDown() override {
-    aura::client::SetDragDropClient(Shell::GetPrimaryRootWindow(), NULL);
+    aura::client::SetDragDropClient(Shell::GetPrimaryRootWindow(), nullptr);
     drag_drop_controller_.reset();
     AshTestBase::TearDown();
   }
@@ -370,7 +371,7 @@ class DragDropControllerTest : public AshTestBase {
     return drag_drop_controller_->drag_image_.get()
                ? drag_drop_controller_->drag_image_->GetWidget()
                      ->GetNativeWindow()
-               : NULL;
+               : nullptr;
   }
 
   DragDropTracker* drag_drop_tracker() {
@@ -846,10 +847,10 @@ TEST_F(DragDropControllerTest, CaptureLostCancelsDragDrop) {
   aura::Window* capture_window = drag_drop_tracker()->capture_window();
   ASSERT_TRUE(capture_window);
   EXPECT_EQ("0x0", capture_window->bounds().size().ToString());
-  EXPECT_EQ(NULL, capture_window->GetEventHandlerForPoint(gfx::Point()));
+  EXPECT_EQ(nullptr, capture_window->GetEventHandlerForPoint(gfx::Point()));
 
   aura::client::GetCaptureClient(widget->GetNativeView()->GetRootWindow())
-      ->SetCapture(NULL);
+      ->SetCapture(nullptr);
 
   EXPECT_TRUE(drag_drop_controller_->drag_start_received_);
   EXPECT_EQ(num_drags - 1 - drag_view->VerticalDragThreshold(),
@@ -970,7 +971,7 @@ TEST_F(DragDropControllerTest, TouchDragDropLongTapGestureIsForwarded) {
 
   // Since we are not running inside a nested loop, the |drag_source_window_|
   // will get destroyed immediately. Hence we reassign it.
-  EXPECT_EQ(NULL, GetDragSourceWindow());
+  EXPECT_EQ(nullptr, GetDragSourceWindow());
   SetDragSourceWindow(widget->GetNativeView());
   EXPECT_FALSE(drag_view->long_tap_received_);
   DispatchGesture(ui::ET_GESTURE_LONG_TAP, point);
@@ -1070,7 +1071,7 @@ TEST_F(DragDropControllerTest, DragCancelAcrossDisplays) {
   }
   for (aura::Window::Windows::iterator iter = root_windows.begin();
        iter != root_windows.end(); ++iter) {
-    aura::client::SetDragDropClient(*iter, NULL);
+    aura::client::SetDragDropClient(*iter, nullptr);
   }
 }
 
@@ -1227,6 +1228,49 @@ TEST_F(DragDropControllerTest, EventTarget) {
   EXPECT_EQ(EventTargetTestDelegate::State::kPerformDropInvoked,
             delegate.state());
   RunAllPendingInMessageLoop();
+}
+
+TEST_F(DragDropControllerTest, StartDragAndDropLockCursor) {
+  // TODO: mash doesn't support CursorManager. http://crbug.com/631103.
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
+  DragTestView* drag_view = new DragTestView;
+  AddViewToWidgetAndResize(widget.get(), drag_view);
+  ui::OSExchangeData data;
+  data.SetString(base::UTF8ToUTF16("I am being dragged"));
+  ui::test::EventGenerator generator(Shell::GetPrimaryRootWindow(),
+                                     widget->GetNativeView());
+  generator.PressLeftButton();
+
+  int num_drags = 17;
+  SetCheckIfCaptureLost(widget.get(), true);
+  for (int i = 0; i < num_drags; ++i) {
+    // Because we are not doing a blocking drag and drop, the original
+    // OSDragExchangeData object is lost as soon as we return from the drag
+    // initiation in DragDropController::StartDragAndDrop(). Hence we set the
+    // drag_data_ to a fake drag data object that we created.
+    if (i > 0)
+      UpdateDragData(&data);
+    // 7 comes from views::View::GetVerticalDragThreshold()).
+    if (i >= 7)
+      SetCheckIfCaptureLost(widget.get(), false);
+
+    generator.MoveMouseBy(0, 1);
+
+    // Execute any scheduled draws to process deferred mouse events.
+    RunAllPendingInMessageLoop();
+  }
+
+  ::wm::CursorManager* cursor_manager = Shell::Get()->cursor_manager();
+  EXPECT_TRUE(cursor_manager->IsCursorLocked());
+  EXPECT_TRUE(cursor_manager->IsCursorVisible());
+  generator.PressKey(ui::VKEY_A, ui::EF_NONE);
+  generator.ReleaseKey(ui::VKEY_A, ui::EF_NONE);
+  EXPECT_TRUE(cursor_manager->IsCursorVisible());
+  generator.ReleaseLeftButton();
+  EXPECT_FALSE(cursor_manager->IsCursorLocked());
 }
 
 }  // namespace ash
