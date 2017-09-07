@@ -158,6 +158,7 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
                 : BottomSheet.SHEET_STATE_HALF;
         if (mBottomSheet.getSheetState() != sheetState) {
             mBottomSheet.setSheetState(sheetState, true);
+            // TODO (thildebr): Need to make sure we don't always record opened by new tab creation.
             mBottomSheet.getBottomSheetMetrics().recordSheetOpenReason(
                     BottomSheetMetrics.OPENED_BY_NEW_TAB_CREATION);
         }
