@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08be5a22_702b2db0",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-07T19:26:35Z",
+      "side": 1,
+      "message": "These two functions preserved as plumbing for https://cs.chromium.org/chromium/src/chrome/browser/printing/print_preview_pdf_generated_browsertest.cc",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

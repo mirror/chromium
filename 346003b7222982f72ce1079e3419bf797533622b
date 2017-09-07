@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a668090c_eeeefff0",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-07T19:26:35Z",
+      "side": 0,
+      "message": "Note: from what I can tell this function essentially does nothing, because we close the dialog in PostPrintToPDFTask() which was called almost immediately after resolving the promise. Have tested on Win, Linux, and thestig@ tested on Mac, and on none of them is the \"printingToPDFInProgress\" message ever visible.",
+      "range": {
+        "startLine": 758,
+        "startChar": 4,
+        "endLine": 758,
+        "endChar": 28
+      },
+      "revId": "346003b7222982f72ce1079e3419bf797533622b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
