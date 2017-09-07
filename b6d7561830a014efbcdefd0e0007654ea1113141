@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "eb6b4547_fb4f40eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-07T19:27:58Z",
+      "side": 1,
+      "message": "OK, so it sounds like, if I run into DEPS errors, add a specific dependency on ui/gfx/geometry/.  Will do.\n\nConsider me as +1 for the idea of something like //geometry.  I\u0027m OK with it not being in base, but ui/gfx/ definitely seems little-better than cc/.  :)",
+      "parentUuid": "5a1bf1c3_5c076c7f",
+      "revId": "b6d7561830a014efbcdefd0e0007654ea1113141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fca8aed6_5d5238b2",
         "filename": "/COMMIT_MSG",
         "patchSetId": 22
