@@ -16,6 +16,7 @@
 #include "base/memory/linked_ptr.h"
 #include "base/memory/ref_counted.h"
 #include "base/observer_list.h"
+#include "chrome/browser/chromeos/policy/device_off_hours_controller.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
 #include "chromeos/dbus/session_manager_client.h"
 #include "components/ownership/owner_settings_service.h"
@@ -45,7 +46,9 @@ class SessionManagerOperation;
 //
 // DeviceSettingsService generates notifications for key and policy update
 // events so interested parties can reload state as appropriate.
-class DeviceSettingsService : public SessionManagerClient::Observer {
+class DeviceSettingsService
+    : public SessionManagerClient::Observer,
+      public policy::DeviceOffHoursController::Observer {
  public:
   // Indicates ownership status of the device (listed in upgrade order).
   enum OwnershipStatus {
@@ -130,6 +133,12 @@ class DeviceSettingsService : public SessionManagerClient::Observer {
   // nullptr.
   Status status() const { return store_status_; }
 
+  // Returns the currently device off hours controller.
+  // Returns nullptr if controller haven't been initialized.
+  policy::DeviceOffHoursController* device_off_hours_controller() {
+    return device_off_hours_controller_.get();
+  }
+
   // Triggers an attempt to pull the public half of the owner key from disk and
   // load the device settings.
   void Load();
@@ -188,6 +197,9 @@ class DeviceSettingsService : public SessionManagerClient::Observer {
   // SessionManagerClient::Observer:
   void OwnerKeySet(bool success) override;
   void PropertyChangeComplete(bool success) override;
+
+  // DeviceOffHoursController::Observer:
+  void OnOffHoursModeMaybeChanged() override;
 
  private:
   friend class OwnerSettingsServiceChromeOS;
@@ -259,6 +271,9 @@ class DeviceSettingsService : public SessionManagerClient::Observer {
   bool will_establish_consumer_ownership_ = false;
 
   base::WeakPtrFactory<DeviceSettingsService> weak_factory_{this};
+
+  std::unique_ptr<policy::DeviceOffHoursController>
+      device_off_hours_controller_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(DeviceSettingsService);
 };
