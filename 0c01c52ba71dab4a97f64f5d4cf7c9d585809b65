@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fd69b6c_06467c09",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T20:29:51Z",
+      "side": 1,
+      "message": "\u0027intentionally\u0027. And please reference a bug.",
+      "range": {
+        "startLine": 252,
+        "startChar": 33,
+        "endLine": 252,
+        "endChar": 45
+      },
+      "revId": "0c01c52ba71dab4a97f64f5d4cf7c9d585809b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
