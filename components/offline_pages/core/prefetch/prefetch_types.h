@@ -68,6 +68,10 @@ struct RenderPageInfo {
 // List of states a prefetch item can be at during its progress through the
 // prefetching process. They follow somewhat the order below, but some states
 // might be skipped.
+//
+// Changes to this enum must be reflected in the respective metrics enum named
+// PrefetchItemState in enums.xml. Use the exact same integer value for each
+// mirrored entry.
 enum class PrefetchItemState {
   // New request just received from the client.
   NEW_REQUEST = 0,
@@ -101,6 +105,8 @@ enum class PrefetchItemState {
   // to confirm that the same URL is not being repeatedly requested by its
   // client.
   ZOMBIE = 100,
+  // Max item state, needed for histograms
+  MAX = ZOMBIE
 };
 
 // Error codes used to identify the reason why a prefetch entry has finished
