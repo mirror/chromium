@@ -10,6 +10,7 @@
 -PythonUtils*
 -SQLite*
 -TokenBindingURLRequest*
+-UDPSocketTest.PartialRecv # Partial recv() is broken for UDP, NET-169 .
 -UnixDomain*Socket*
 -URLRequest*FTP*
 -URLRequestQuic*
