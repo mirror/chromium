@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d253b15a_3af21b27",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-07T16:31:02Z",
+      "side": 1,
+      "message": "IIUC, mSigninPromoController will be non-null even if user is signed in, so this line will record impressions even if the personalized promo is never shown. Am I missing something?",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 54
+      },
+      "revId": "77e2ae54478d0818e9deb1e22347e6ed25963f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46cc394d_9c400cde",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-07T16:31:02Z",
+      "side": 1,
+      "message": "I have a feeling that you should record mImpressionsTilDismissHistogramName, not mImpressionsTilSigninButtonsHistogramName. Am I missing something?",
+      "range": {
+        "startLine": 182,
+        "startChar": 16,
+        "endLine": 182,
+        "endChar": 57
+      },
+      "revId": "77e2ae54478d0818e9deb1e22347e6ed25963f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20313610_57c6bbd7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-07T16:31:02Z",
+      "side": 1,
+      "message": "The same here: I have a feeling that you should record mImpressionsTilSigninButtonsHistogramName, not mImpressionsTilDismissHistogramName.",
+      "range": {
+        "startLine": 278,
+        "startChar": 20,
+        "endLine": 278,
+        "endChar": 55
+      },
+      "revId": "77e2ae54478d0818e9deb1e22347e6ed25963f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
