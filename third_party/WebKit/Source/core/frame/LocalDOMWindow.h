@@ -59,7 +59,7 @@ class External;
 class FrameConsole;
 class FrameRequestCallback;
 class History;
-class IdleRequestCallback;
+class V8IdleRequestCallback;
 class IdleRequestOptions;
 class MediaQueryList;
 class MessageEvent;
@@ -225,7 +225,7 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
   void cancelAnimationFrame(int id);
 
   // Idle callback extensions
-  int requestIdleCallback(IdleRequestCallback*, const IdleRequestOptions&);
+  int requestIdleCallback(V8IdleRequestCallback*, const IdleRequestOptions&);
   void cancelIdleCallback(int id);
 
   // Custom elements
