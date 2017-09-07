@@ -24,10 +24,10 @@
 #include "components/keep_alive_registry/keep_alive_registry.h"
 #include "components/keep_alive_registry/keep_alive_types.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/message_center_switches.h"
 #include "ui/message_center/message_center_types.h"
 #include "ui/message_center/notification_types.h"
 #include "ui/message_center/notifier_settings.h"
+#include "ui/message_center/public/cpp/message_center_switches.h"
 
 class TestAddObserver : public message_center::MessageCenterObserver {
  public:
@@ -303,8 +303,8 @@ class MessageCenterNotificationsTestWithoutChangeQueue
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     MessageCenterNotificationsTest::SetUpCommandLine(command_line);
-    command_line->AppendSwitchASCII(switches::kMessageCenterChangesWhileOpen,
-                                    "enabled");
+    command_line->AppendSwitchASCII(
+        message_center::switches::kMessageCenterChangesWhileOpen, "enabled");
   }
 
  private:
@@ -382,8 +382,8 @@ class MessageCenterNotificationsTestWithChangeQueue
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     MessageCenterNotificationsTest::SetUpCommandLine(command_line);
-    command_line->AppendSwitchASCII(switches::kMessageCenterChangesWhileOpen,
-                                    "disabled");
+    command_line->AppendSwitchASCII(
+        message_center::switches::kMessageCenterChangesWhileOpen, "disabled");
   }
 
  private:
