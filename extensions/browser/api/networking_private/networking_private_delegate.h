@@ -35,33 +35,8 @@ class NetworkingPrivateDelegate : public KeyedService {
   using DeviceStateList = std::vector<
       std::unique_ptr<api::networking_private::DeviceStateProperties>>;
 
-  // Delegate for forwarding UI requests, e.g. for showing the account UI.
-  class UIDelegate {
-   public:
-    UIDelegate();
-    virtual ~UIDelegate();
-
-    // Navigate to the acoount details page for the cellular network associated
-    // with |guid|.
-    virtual void ShowAccountDetails(const std::string& guid) const = 0;
-
-    // Possibly handle a connection failure, e.g. by showing the configuration
-    // UI. Returns true if the error was handled, i.e. the UI was shown.
-    virtual bool HandleConnectFailed(const std::string& guid,
-                                     const std::string error) const = 0;
-
-   private:
-    DISALLOW_COPY_AND_ASSIGN(UIDelegate);
-  };
-
   NetworkingPrivateDelegate();
   ~NetworkingPrivateDelegate() override;
-
-  void set_ui_delegate(std::unique_ptr<UIDelegate> ui_delegate) {
-    ui_delegate_ = std::move(ui_delegate);
-  }
-
-  const UIDelegate* ui_delegate() { return ui_delegate_.get(); }
 
   // Asynchronous methods
   virtual void GetProperties(const std::string& guid,
@@ -160,9 +135,6 @@ class NetworkingPrivateDelegate : public KeyedService {
   virtual void RemoveObserver(NetworkingPrivateDelegateObserver* observer);
 
  private:
-  // Interface for UI methods. May be null.
-  std::unique_ptr<UIDelegate> ui_delegate_;
-
   DISALLOW_COPY_AND_ASSIGN(NetworkingPrivateDelegate);
 };
 

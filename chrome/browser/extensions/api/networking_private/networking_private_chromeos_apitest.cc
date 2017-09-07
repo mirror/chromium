@@ -3,7 +3,9 @@
 // found in the LICENSE file.
 
 #include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/callback.h"
@@ -14,10 +16,10 @@
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/login/helper.h"
+#include "chrome/browser/chromeos/net/network_connect_delegate_chromeos.h"
 #include "chrome/browser/chromeos/net/network_portal_detector_test_impl.h"
 #include "chrome/browser/extensions/api/networking_cast_private/chrome_networking_cast_private_delegate.h"
 #include "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter.h"
-#include "chrome/browser/extensions/api/networking_private/networking_private_ui_delegate_chromeos.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/cryptohome/cryptohome_parameters.h"
@@ -30,6 +32,7 @@
 #include "chromeos/dbus/shill_service_client.h"
 #include "chromeos/network/managed_network_configuration_handler.h"
 #include "chromeos/network/network_certificate_handler.h"
+#include "chromeos/network/network_connect.h"
 #include "chromeos/network/network_handler.h"
 #include "chromeos/network/network_state_handler.h"
 #include "chromeos/network/onc/onc_utils.h"
@@ -70,6 +73,7 @@ using chromeos::CryptohomeClient;
 using chromeos::DBUS_METHOD_CALL_SUCCESS;
 using chromeos::DBusMethodCallStatus;
 using chromeos::DBusThreadManager;
+using chromeos::NetworkConnect;
 using chromeos::NetworkPortalDetector;
 using chromeos::NetworkPortalDetectorTestImpl;
 using chromeos::ShillDeviceClient;
@@ -144,24 +148,6 @@ class TestNetworkingCastPrivateDelegate
   DISALLOW_COPY_AND_ASSIGN(TestNetworkingCastPrivateDelegate);
 };
 
-class UIDelegateStub : public NetworkingPrivateDelegate::UIDelegate {
- public:
-  static int s_show_account_details_called_;
-
- private:
-  // UIDelegate
-  void ShowAccountDetails(const std::string& guid) const override {
-    ++s_show_account_details_called_;
-  }
-  bool HandleConnectFailed(const std::string& guid,
-                           const std::string error) const override {
-    return false;
-  }
-};
-
-// static
-int UIDelegateStub::s_show_account_details_called_ = 0;
-
 class TestListener : public content::NotificationObserver {
  public:
   TestListener(const std::string& message, const base::Closure& callback)
@@ -186,6 +172,45 @@ class TestListener : public content::NotificationObserver {
   content::NotificationRegistrar registrar_;
 
   DISALLOW_COPY_AND_ASSIGN(TestListener);
+};
+
+class TestNetworkConnectDelegate : public NetworkConnect::Delegate {
+ public:
+  TestNetworkConnectDelegate() {}
+  ~TestNetworkConnectDelegate() override {}
+
+  void ShowNetworkConfigure(const std::string& network_id) override {
+    ADD_FAILURE() << "Should not be reached.";
+  }
+  void ShowNetworkSettings(const std::string& network_id) override {
+    ADD_FAILURE() << "Should not be reached.";
+  }
+  bool ShowEnrollNetwork(const std::string& network_id) override {
+    ADD_FAILURE() << "Should not be reached.";
+    return false;
+  }
+  void ShowMobileSimDialog() override {
+    ADD_FAILURE() << "Should not be reached.";
+  }
+  void ShowMobileSetupDialog(const std::string& network_id) override {
+    set_up_mobile_networks_.push_back(network_id);
+  }
+  void ShowNetworkConnectError(const std::string& error_name,
+                               const std::string& network_id) override {
+    ADD_FAILURE() << "Should not be reached.";
+  }
+  void ShowMobileActivationError(const std::string& network_id) override {
+    ADD_FAILURE() << "Should not be reached.";
+  }
+
+  const std::vector<std::string>& set_up_mobile_networks() const {
+    return set_up_mobile_networks_;
+  }
+
+ private:
+  std::vector<std::string> set_up_mobile_networks_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestNetworkConnectDelegate);
 };
 
 class NetworkingPrivateChromeOSApiTest : public ExtensionApiTest {
@@ -251,8 +276,6 @@ class NetworkingPrivateChromeOSApiTest : public ExtensionApiTest {
   }
 
   void SetupCellular() {
-    UIDelegateStub::s_show_account_details_called_ = 0;
-
     // Add a Cellular GSM Device.
     device_test_->AddDevice(kCellularDevicePath, shill::kTypeCellular,
                             "stub_cellular_device1");
@@ -329,12 +352,7 @@ class NetworkingPrivateChromeOSApiTest : public ExtensionApiTest {
 
   static std::unique_ptr<KeyedService> CreateNetworkingPrivateDelegate(
       content::BrowserContext* context) {
-    std::unique_ptr<NetworkingPrivateDelegate> result(
-        new NetworkingPrivateChromeOS(context));
-    std::unique_ptr<NetworkingPrivateDelegate::UIDelegate> ui_delegate(
-        new UIDelegateStub);
-    result->set_ui_delegate(std::move(ui_delegate));
-    return result;
+    return base::MakeUnique<NetworkingPrivateChromeOS>(context);
   }
 
   void SetUp() override {
@@ -343,6 +361,10 @@ class NetworkingPrivateChromeOSApiTest : public ExtensionApiTest {
         base::Unretained(this));
     ChromeNetworkingCastPrivateDelegate::SetFactoryCallbackForTest(
         &networking_cast_delegate_factory_);
+
+    network_connect_delegate_ = base::MakeUnique<TestNetworkConnectDelegate>();
+    chromeos::NetworkConnect::InitializeForTesting(
+        network_connect_delegate_.get());
 
     ExtensionApiTest::SetUp();
   }
@@ -486,6 +508,7 @@ class NetworkingPrivateChromeOSApiTest : public ExtensionApiTest {
   void TearDown() override {
     ExtensionApiTest::TearDown();
     ChromeNetworkingCastPrivateDelegate::SetFactoryCallbackForTest(nullptr);
+    chromeos::NetworkConnect::Shutdown();
   }
 
   std::unique_ptr<ChromeNetworkingCastPrivateDelegate>
@@ -511,6 +534,8 @@ class NetworkingPrivateChromeOSApiTest : public ExtensionApiTest {
   }
 
  protected:
+  std::unique_ptr<TestNetworkConnectDelegate> network_connect_delegate_;
+
   NetworkPortalDetectorTestImpl* detector() { return detector_; }
 
   NetworkPortalDetectorTestImpl* detector_;
@@ -543,7 +568,11 @@ IN_PROC_BROWSER_TEST_F(NetworkingPrivateChromeOSApiTest, StartDisconnect) {
 IN_PROC_BROWSER_TEST_F(NetworkingPrivateChromeOSApiTest, StartActivate) {
   SetupCellular();
   EXPECT_TRUE(RunNetworkingSubtest("startActivate")) << message_;
-  EXPECT_EQ(1, UIDelegateStub::s_show_account_details_called_);
+
+  ASSERT_TRUE(network_connect_delegate_);
+  ASSERT_EQ(1u, network_connect_delegate_->set_up_mobile_networks().size());
+  EXPECT_EQ("stub_cellular1_guid",
+            network_connect_delegate_->set_up_mobile_networks()[0]);
 }
 
 IN_PROC_BROWSER_TEST_F(NetworkingPrivateChromeOSApiTest, StartActivateSprint) {
@@ -552,7 +581,8 @@ IN_PROC_BROWSER_TEST_F(NetworkingPrivateChromeOSApiTest, StartActivateSprint) {
   device_test_->SetDeviceProperty(kCellularDevicePath, shill::kCarrierProperty,
                                   base::Value(shill::kCarrierSprint));
   EXPECT_TRUE(RunNetworkingSubtest("startActivateSprint")) << message_;
-  EXPECT_EQ(0, UIDelegateStub::s_show_account_details_called_);
+  ASSERT_TRUE(network_connect_delegate_);
+  EXPECT_TRUE(network_connect_delegate_->set_up_mobile_networks().empty());
 }
 
 IN_PROC_BROWSER_TEST_F(NetworkingPrivateChromeOSApiTest,
