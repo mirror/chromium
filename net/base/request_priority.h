@@ -15,12 +15,8 @@ namespace net {
 // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.net
 // GENERATED_JAVA_CLASS_NAME_OVERRIDE: RequestPriority
 enum RequestPriority {
-  THROTTLED = 0,  // Used to signal that resources
-                  // should be reserved for following
-                  // requests (i.e. that higher priority
-                  // following requests are expected).
-  MINIMUM_PRIORITY = THROTTLED,
-  IDLE,  // Default "as resources available" level.
+  IDLE = 0,
+  MINIMUM_PRIORITY = IDLE,
   LOWEST,
   DEFAULT_PRIORITY = LOWEST,
   LOW,

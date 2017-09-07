@@ -22,7 +22,6 @@
 #include "base/trace_event/memory_dump_request_args.h"
 #include "base/trace_event/process_memory_dump.h"
 #include "base/values.h"
-#include "net/base/network_throttle_manager_impl.h"
 #include "net/http/http_auth_handler_factory.h"
 #include "net/http/http_response_body_drainer.h"
 #include "net/http/http_stream_factory_impl.h"
@@ -217,7 +216,6 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
                          context.proxy_delegate),
       http_stream_factory_(new HttpStreamFactoryImpl(this, false)),
       http_stream_factory_for_websocket_(new HttpStreamFactoryImpl(this, true)),
-      network_stream_throttler_(new NetworkThrottleManagerImpl()),
       params_(params),
       context_(context) {
   DCHECK(proxy_service_);

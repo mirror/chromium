@@ -98,6 +98,10 @@ class ResourcePrefetchPredictorTables : public PredictorTableBase {
   void CreateTableIfNonExistent() override;
   void LogDatabaseStats() override;
 
+  // Database version. Always increment it when any change is made to the data
+  // schema (including the .proto).
+  static constexpr int kDatabaseVersion = 5;
+
   static bool DropTablesIfOutdated(sql::Connection* db);
   static int GetDatabaseVersion(sql::Connection* db);
   static bool SetDatabaseVersion(sql::Connection* db, int version);
