@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "ef1bf58b_71804f51",
+        "filename": "third_party/WebKit/Source/modules/webgl/OESTextureHalfFloat.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-09-07T13:19:46Z",
+      "side": 1,
+      "message": "That works for me, is there any need for the CHROMIUM_color_buffer_float_rgb[a] extensions anymore?",
+      "parentUuid": "4c79c924_6b7eb821",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "b0e9eb5432fb3402a3e4ef84ac727de935484319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dfec7c0_7056d524",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContext.cpp",
         "patchSetId": 5
