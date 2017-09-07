@@ -1,0 +1,23 @@
+# Start with a minimal android project
+# (http://czak.pl/2016/01/13/minimal-android-project.html for instance) and
+# build an unsigned apk:
+
+gradle assembleRelease
+
+# Generate two keystores:
+
+keytool -genkey -v -keystore 1.jks -validity 36500
+keytool -genkey -v -keystore 2.jks -validity 36500
+
+# Sign the apk with the certificate from each of the keystores, then with both:
+
+apksigner sign --v1-signing-enabled=false --ks 1.jks --out signed-1.apk unsigned.apk
+apksigner sign --v1-signing-enabled=false --ks 2.jks --out signed-2.apk unsigned.apk
+apksigner sign --v1-signing-enabled=false --ks 1.jks --next-signer --ks 2.jks --out signed-1-2.apk unsigned.apk
+
+# Export the certificate from each keystore:
+
+keytool -keystore 1.jks -export > 1.crt
+keytool -keystore 2.jks -export > 2.crt
+
+# The keystores 1.jks and 2.jks are no longer needed.
