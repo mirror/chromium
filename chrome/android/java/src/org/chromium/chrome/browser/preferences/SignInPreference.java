@@ -60,7 +60,7 @@ public class SignInPreference
     /**
      * Starts listening for updates to the sign-in and sync state.
      */
-    public void registerForUpdates() {
+    void registerForUpdates() {
         AccountManagerFacade.get().addObserver(this);
         SigninManager.get(getContext()).addSignInAllowedObserver(this);
         mProfileDataCache.addObserver(this);
@@ -78,7 +78,7 @@ public class SignInPreference
      * Stops listening for updates to the sign-in and sync state. Every call to registerForUpdates()
      * must be matched with a call to this method.
      */
-    public void unregisterForUpdates() {
+    void unregisterForUpdates() {
         AccountManagerFacade.get().removeObserver(this);
         SigninManager.get(getContext()).removeSignInAllowedObserver(this);
         mProfileDataCache.removeObserver(this);
@@ -86,6 +86,12 @@ public class SignInPreference
         ProfileSyncService syncService = ProfileSyncService.get();
         if (syncService != null) {
             syncService.removeSyncStateChangedListener(this);
+        }
+    }
+
+    void onPreferenceActivityDestroyed() {
+        if (mSigninPromoController != null) {
+            mSigninPromoController.recordImpressionsTilDismiss();
         }
     }
 
@@ -108,13 +114,8 @@ public class SignInPreference
             setupSignedIn(accountName);
         }
 
-        setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                return AccountSigninActivity.startIfAllowed(
-                        getContext(), SigninAccessPoint.SETTINGS);
-            }
-        });
+        setOnPreferenceClickListener(preference
+                -> AccountSigninActivity.startIfAllowed(getContext(), SigninAccessPoint.SETTINGS));
     }
 
     private void setupSigninDisabled() {
@@ -148,14 +149,14 @@ public class SignInPreference
         if (mSigninPromoController == null) {
             mSigninPromoController =
                     new SigninPromoController(mProfileDataCache, SigninAccessPoint.SETTINGS);
-            mSigninPromoController.setAccountName(defaultAccountName);
+        }
+
+        mSigninPromoController.setAccountName(defaultAccountName);
+        if (!mShowingPromo) {
             mSigninPromoController.recordSigninPromoImpression();
-        } else {
-            mSigninPromoController.setAccountName(defaultAccountName);
         }
 
         mShowingPromo = true;
-
         notifyChanged();
     }
 
@@ -195,7 +196,7 @@ public class SignInPreference
     }
 
     // This just changes visual representation. Actual enabled flag in preference stays
-    // always true to receive clicks (necessary to show "Managed by administator" toast).
+    // always true to receive clicks (necessary to show "Managed by administrator" toast).
     private void setViewEnabled(boolean enabled) {
         if (mViewEnabled == enabled) {
             return;
@@ -214,34 +215,31 @@ public class SignInPreference
         }
     }
 
-    // ProfileSyncServiceListener implementation:
-
+    // ProfileSyncServiceListener implementation.
     @Override
     public void syncStateChanged() {
         update();
     }
 
-    // SignInAllowedObserver
-
+    // SignInAllowedObserver implementation.
     @Override
     public void onSignInAllowedChanged() {
         update();
     }
 
-    // ProfileDataCacheObserver implementation.
-
+    // ProfileDataCache.Observer implementation.
     @Override
     public void onProfileDataUpdated(String accountId) {
         update();
     }
 
-    // AndroidSyncSettings.AndroidSyncSettingsObserver
+    // AndroidSyncSettings.AndroidSyncSettingsObserver implementation.
     @Override
     public void androidSyncSettingsChanged() {
         update();
     }
 
-    // AccountsChangeObserver
+    // AccountsChangeObserver implementation.
     @Override
     public void onAccountsChanged() {
         update();
