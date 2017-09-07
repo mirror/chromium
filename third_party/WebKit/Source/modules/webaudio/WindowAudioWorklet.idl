@@ -8,4 +8,5 @@
     RuntimeEnabled=AudioWorklet
 ] partial interface Window {
     readonly attribute Worklet audioWorklet;
+    attribute AudioWorkletNodeConstructor AudioWorkletNode;
 };

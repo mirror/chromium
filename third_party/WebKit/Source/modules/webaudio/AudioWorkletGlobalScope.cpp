@@ -151,9 +151,12 @@ AudioWorkletProcessor* AudioWorkletGlobalScope::CreateInstance(
   if (!definition)
     return nullptr;
 
+  ScriptState* script_state = ScriptController()->GetScriptState();
+  ScriptState::Scope scope(script_state);
+
   // V8 object instance construction: this construction process is here to make
   // the AudioWorkletProcessor class a thin wrapper of V8::Object instance.
-  v8::Isolate* isolate = ScriptController()->GetScriptState()->GetIsolate();
+  v8::Isolate* isolate = script_state->GetIsolate();
   v8::Local<v8::Object> instance_local;
   if (!V8ObjectConstructor::NewInstance(isolate,
                                         definition->ConstructorLocal(isolate))

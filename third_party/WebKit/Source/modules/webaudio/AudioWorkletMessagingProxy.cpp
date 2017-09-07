@@ -4,9 +4,13 @@
 
 #include "modules/webaudio/AudioWorkletMessagingProxy.h"
 
-#include "modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h"
+#include "core/dom/TaskRunnerHelper.h"
+#include "modules/webaudio/AudioWorkletGlobalScope.h"
+#include "modules/webaudio/AudioWorkletNode.h"
 #include "modules/webaudio/AudioWorkletObjectProxy.h"
+#include "modules/webaudio/AudioWorkletProcessor.h"
 #include "modules/webaudio/AudioWorkletThread.h"
+#include "modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h"
 
 namespace blink {
 
@@ -17,10 +21,31 @@ AudioWorkletMessagingProxy::AudioWorkletMessagingProxy(
 
 AudioWorkletMessagingProxy::~AudioWorkletMessagingProxy() {}
 
+void AudioWorkletMessagingProxy::CreateProcessor(
+    AudioWorkletHandler* handler) {
+  DCHECK(IsMainThread());
+  TaskRunnerHelper::Get(TaskType::kMiscPlatformAPI, GetWorkerThread())
+      ->PostTask(
+          BLINK_FROM_HERE,
+          CrossThreadBind(
+              &AudioWorkletMessagingProxy::CreateProcessorOnRenderingThread,
+              WrapCrossThreadPersistent(this),
+              CrossThreadUnretained(handler),
+              handler->Name(),
+              CrossThreadUnretained(GetWorkerThread())));
+}
+
+void AudioWorkletMessagingProxy::CreateProcessorOnRenderingThread(
+    AudioWorkletHandler* handler, const String& name, WorkerThread* worker_thread) {
+  AudioWorkletGlobalScope* global_scope =
+      static_cast<AudioWorkletGlobalScope*>(worker_thread->GlobalScope());
+  AudioWorkletProcessor* processor = global_scope->CreateInstance(name);
+  handler->SetProcessorOnRenderingThread(processor);
+}
+
 void AudioWorkletMessagingProxy::SynchronizeWorkletProcessorInfoList(
     std::unique_ptr<Vector<CrossThreadAudioWorkletProcessorInfo>> info_list) {
   DCHECK(IsMainThread());
-
   for (auto& processor_info : *info_list) {
     processor_info_map_.insert(processor_info.Name(),
                                processor_info.ParamInfoList());
