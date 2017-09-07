@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a2d00d4_62e367b6",
+        "filename": "chrome/browser/ui/blocked_content/popup_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-07T18:43:37Z",
+      "side": 1,
+      "message": "Well, you totally could, as nothing in WCUD prevents you from removing it when you\u0027re done.",
+      "range": {
+        "startLine": 16,
+        "startChar": 61,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "bcd8a08c68a751e128928dca22cc521fb04a14ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5680e1a_43a9436c",
+        "filename": "chrome/browser/ui/blocked_content/popup_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-07T18:43:37Z",
+      "side": 1,
+      "message": "blank line",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 63
+      },
+      "revId": "bcd8a08c68a751e128928dca22cc521fb04a14ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
