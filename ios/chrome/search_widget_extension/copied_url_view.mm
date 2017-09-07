@@ -65,7 +65,7 @@ const CGFloat kURLButtonMargin = 10;
 
     UIVibrancyEffect* primaryEffect;
     UIVibrancyEffect* secondaryEffect;
-    if (base::ios::IsRunningOnIOS10OrLater()) {
+    if (@available(iOS 10, *)) {
       primaryEffect = [UIVibrancyEffect widgetPrimaryVibrancyEffect];
       secondaryEffect = [UIVibrancyEffect widgetSecondaryVibrancyEffect];
     } else {
