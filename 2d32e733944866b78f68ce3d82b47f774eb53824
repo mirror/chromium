@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e95f86e0_679bd687",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_result_consumer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:23:49Z",
+      "side": 1,
+      "message": "Comments?",
+      "range": {
+        "startLine": 12,
+        "startChar": 8,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "2d32e733944866b78f68ce3d82b47f774eb53824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b37b261_1434e4bf",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_result_wrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:23:49Z",
+      "side": 1,
+      "message": "Naming nits: \"Wrapper\" is an implementation detail. Can this just be \u0027AutocompleteResult\u0027.\n\n(I also worry about confusion between autocomplete-in-the-omnibox-popup and autocomplete-in-forms).",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 35
+      },
+      "revId": "2d32e733944866b78f68ce3d82b47f774eb53824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5078a4_013f0016",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_result_wrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:23:49Z",
+      "side": 1,
+      "message": "Comments?",
+      "range": {
+        "startLine": 13,
+        "startChar": 8,
+        "endLine": 13,
+        "endChar": 24
+      },
+      "revId": "2d32e733944866b78f68ce3d82b47f774eb53824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892fb100_a9becaaf",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_result_wrapper_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:23:49Z",
+      "side": 1,
+      "message": "Naming nits, part two: If the protocol is \u0027AutocompleteResult\u0027, then this implementation can be \u0027AutocompleteMatchFormatter\u0027",
+      "range": {
+        "startLine": 11,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 40
+      },
+      "revId": "2d32e733944866b78f68ce3d82b47f774eb53824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bdd20c0_76d2150c",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_result_wrapper_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:23:49Z",
+      "side": 1,
+      "message": "Why not -initWithMatch:? Technically everything will explode if that isn\u0027t set before any other methods are called.",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 16
+      },
+      "revId": "2d32e733944866b78f68ce3d82b47f774eb53824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2b8d5a_a9e58267",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_result_wrapper_impl.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:23:49Z",
+      "side": 1,
+      "message": "Any reason this can\u0027t be a SuggestionAnswer instead of an int?",
+      "range": {
+        "startLine": 212,
+        "startChar": 51,
+        "endLine": 212,
+        "endChar": 54
+      },
+      "revId": "2d32e733944866b78f68ce3d82b47f774eb53824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0332aaa_ae82cef4",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_result_wrapper_impl.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:23:49Z",
+      "side": 1,
+      "message": "as -\u003e string, or styledText, or something that makes sense.",
+      "range": {
+        "startLine": 309,
+        "startChar": 29,
+        "endLine": 309,
+        "endChar": 31
+      },
+      "revId": "2d32e733944866b78f68ce3d82b47f774eb53824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80dbd5b3_b7b0e735",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_material_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:23:49Z",
+      "side": 1,
+      "message": "Not needed here?",
+      "range": {
+        "startLine": 10,
+        "startChar": 39,
+        "endLine": 10,
+        "endChar": 66
+      },
+      "revId": "2d32e733944866b78f68ce3d82b47f774eb53824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f014a952_7b86b383",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_material_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:23:49Z",
+      "side": 1,
+      "message": "Forward declare instead?",
+      "range": {
+        "startLine": 11,
+        "startChar": 39,
+        "endLine": 11,
+        "endChar": 54
+      },
+      "revId": "2d32e733944866b78f68ce3d82b47f774eb53824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac374e8_3f7b76e4",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_material_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:23:49Z",
+      "side": 1,
+      "message": "Not needed here?",
+      "range": {
+        "startLine": 12,
+        "startChar": 39,
+        "endLine": 12,
+        "endChar": 61
+      },
+      "revId": "2d32e733944866b78f68ce3d82b47f774eb53824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0850f6c_8e5d9848",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_material_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:23:49Z",
+      "side": 1,
+      "message": "Not for this CL, but at some point we should drop \u0027Material\u0027 from the name of this class.",
+      "range": {
+        "startLine": 16,
+        "startChar": 11,
+        "endLine": 16,
+        "endChar": 45
+      },
+      "revId": "2d32e733944866b78f68ce3d82b47f774eb53824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "541c1bc8_08131750",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:23:49Z",
+      "side": 1,
+      "message": "Not needed?",
+      "range": {
+        "startLine": 13,
+        "startChar": 39,
+        "endLine": 13,
+        "endChar": 77
+      },
+      "revId": "2d32e733944866b78f68ce3d82b47f774eb53824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3daecc_58439897",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:23:49Z",
+      "side": 1,
+      "message": "nit: getter\u003disIncognito",
+      "range": {
+        "startLine": 41,
+        "startChar": 21,
+        "endLine": 41,
+        "endChar": 27
+      },
+      "revId": "2d32e733944866b78f68ce3d82b47f774eb53824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
