@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff5f6ed8_668879c7",
+        "filename": "components/arc/common/lock_screen.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-07T16:45:01Z",
+      "side": 1,
+      "message": "one final nit: remove this empty line",
+      "revId": "d4b546c06e8a6f720865658c92cdbe574f05c632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
