@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "815abf15_959f18a1",
+        "filename": "build/android/gyp/bytecode_processor.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-07T02:23:56Z",
+      "side": 1,
+      "message": "os.exec*() takes over the process. lines of code after it will not be run. Either change this to subprocess, or move depfile before lines before.",
+      "revId": "2d4352f1d057a4aab20c51ce696d3066020b19f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

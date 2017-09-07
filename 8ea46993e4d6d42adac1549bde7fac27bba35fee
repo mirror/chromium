@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "fa416e1e_9d18803b",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooksAndroid.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-07T02:23:56Z",
+      "side": 1,
+      "message": "Yes. I think that would make the code a bit clearer.",
+      "parentUuid": "1fd70713_ee5de316",
+      "revId": "8ea46993e4d6d42adac1549bde7fac27bba35fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd87aad4_222f9069",
         "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooksAndroid.java",
         "patchSetId": 4
