@@ -161,6 +161,8 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer {
   // |TraceWrappersWithManualWriteBarrier()| below.
   template <typename T>
   void TraceWrappers(const TraceWrapperMember<T>& t) const {
+    static_assert(std::is_base_of<TraceWrapperBase, T>::value,
+                  "T must inherit from TraceWrapperBase");
     MarkAndTraceWrappers(t.Get());
   }
 
