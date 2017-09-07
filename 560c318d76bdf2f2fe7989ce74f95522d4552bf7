@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2ae3533_1080eb70",
+        "filename": "ash/shutdown_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T23:35:49Z",
+      "side": 1,
+      "message": "kDescription is super generic. Maybe kRestartDescription?",
+      "range": {
+        "startLine": 22,
+        "startChar": 15,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "560c318d76bdf2f2fe7989ce74f95522d4552bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8250e28a_8896aaa6",
+        "filename": "chrome/browser/lifetime/application_lifetime.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T23:35:49Z",
+      "side": 1,
+      "message": "Did you consider expanding the enum rather than adding the string? The string is certainly more readable, but if users are going to report in a bug they could just as easily copy a number.",
+      "range": {
+        "startLine": 270,
+        "startChar": 6,
+        "endLine": 270,
+        "endChar": 42
+      },
+      "revId": "560c318d76bdf2f2fe7989ce74f95522d4552bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
