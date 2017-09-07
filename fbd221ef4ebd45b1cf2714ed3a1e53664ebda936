@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e794ef82_e7ae0a1f",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-07T23:42:27Z",
+      "side": 1,
+      "message": "We don\u0027t want users to dismiss dialog by navigating away or switching tabs, because when they see this warning, they are under severe security risk (a.k.a being phished).\nAnd we\u0027re using same modality for other security related warnings, such as Foil\u0027s chrome cleanup warning on Windows.\n\nPlease refer to UI design deck for details:\nhttps://docs.google.com/presentation/d/19myBgS0O5CIXB4Rtz8qkWFo_bo1NnoHjWnlzTde09j0/edit?ts\u003d59a59ea6#slide\u003did.g1d8b6eb17f_0_63",
+      "parentUuid": "6861f446_80c0bd74",
+      "range": {
+        "startLine": 75,
+        "startChar": 3,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "fbd221ef4ebd45b1cf2714ed3a1e53664ebda936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c2ff661_c7a88c6b",
         "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
         "patchSetId": 17
