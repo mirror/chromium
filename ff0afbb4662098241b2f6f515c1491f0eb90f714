@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ddd20045_a04f16c0",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T17:25:22Z",
+      "side": 1,
+      "message": "The text message might be updated: 1st attempt message is different from the 2nd attempt message. So we basically close the previous bubble and open a new one when the auth_success\u003dfalse.",
+      "parentUuid": "6bfb00a5_06d42961",
+      "revId": "ff0afbb4662098241b2f6f515c1491f0eb90f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "744ff465_903b5afa",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-07T17:02:03Z",
       "side": 1,
       "message": "Can you put this block of code in SwapToAuthUser?",
+      "revId": "ff0afbb4662098241b2f6f515c1491f0eb90f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a72acf2_a5f508f7",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T17:25:22Z",
+      "side": 1,
+      "message": "I put it in LayoutAuth because I feel that SwapPrimaryAndSecondaryAuth and OnUsersChanged will also update the current auth user? I can move this to these places but LayoutAuth seems to be the central place where we update the auth user/auth method. What do you think?",
+      "parentUuid": "744ff465_903b5afa",
       "revId": "ff0afbb4662098241b2f6f515c1491f0eb90f714",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
