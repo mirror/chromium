@@ -27,6 +27,10 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 
+extern "C" {
+void _sigtramp(int, int, struct sigset*);
+}
+
 namespace base {
 
 namespace {
@@ -316,6 +320,26 @@ const char* LibSystemKernelName() {
   return name;
 }
 
+void GetSigtrampRange(uintptr_t* start, uintptr_t* end) {
+  uintptr_t address = reinterpret_cast<uintptr_t>(&_sigtramp);
+  DCHECK(address != 0);
+
+  *start = address;
+
+  unw_context_t context;
+  unw_cursor_t cursor;
+  unw_proc_info_t info;
+
+  unw_getcontext(&context);
+  // Set the context's RIP to the beginning of sigtramp.
+  context.data[16] = address;
+  unw_init_local(&cursor, &context);
+  unw_get_proc_info(&cursor, &info);
+
+  DCHECK_EQ(info.start_ip, address);
+  *end = info.end_ip;
+}
+
 // Walks the stack represented by |thread_state|, calling back to the provided
 // lambda for each frame.
 template <typename StackFrameCallback>
@@ -433,6 +457,10 @@ class NativeStackSamplerMac : public NativeStackSampler {
   // current_modules_.
   std::vector<ModuleIndex> profile_module_index_;
 
+  // The address range of |_sigtramp|, the signal trampoline function.
+  uintptr_t sigtramp_start_;
+  uintptr_t sigtramp_end_;
+
   DISALLOW_COPY_AND_ASSIGN(NativeStackSamplerMac);
 };
 
@@ -447,6 +475,7 @@ NativeStackSamplerMac::NativeStackSamplerMac(
           pthread_get_stackaddr_np(pthread_from_mach_thread_np(thread_port))) {
   DCHECK(annotator_);
 
+  GetSigtrampRange(&sigtramp_start_, &sigtramp_end_);
   // This class suspends threads, and those threads might be suspended in dyld.
   // Therefore, for all the system functions that might be linked in dynamically
   // that are used while threads are suspended, make calls to them to make sure
@@ -514,6 +543,11 @@ void NativeStackSamplerMac::SuspendThreadAndRecordStack(
     new_stack_top =
         reinterpret_cast<uintptr_t>(stack_buffer->buffer()) + stack_size;
   }  // ScopedSuspendThread
+
+  // Unwinding sigtramp remotely is very fragile, so bail.
+  uintptr_t ip = thread_state.__rip;
+  if (ip >= sigtramp_start_ && ip < sigtramp_end_)
+    return;
 
   if (test_delegate_)
     test_delegate_->OnPreStackWalk();
