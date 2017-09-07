@@ -28,29 +28,19 @@ using testing::Return;
 
 namespace media_router {
 
-namespace {
-
-const char kSource[] = "source1";
-const char kOrigin[] = "http://origin/";
-
-class NullMessageObserver : public RouteMessageObserver {
+class MediaRouterDesktopTest : public testing::Test {
  public:
-  NullMessageObserver(MediaRouter* router, const MediaRoute::Id& route_id)
-      : RouteMessageObserver(router, route_id) {}
-  ~NullMessageObserver() final {}
-
-  void OnMessagesReceived(
-      const std::vector<content::PresentationConnectionMessage>& messages)
-      final {}
-};
-
-
-
-}  // namespace
-
-class MediaRouterDesktopTest : public MediaRouterMojoTest {
- public:
-  MediaRouterDesktopTest() {}
+  MediaRouterDesktopTest() {
+    request_manager_ = static_cast<MockEventPageRequestManager*>(
+        EventPageRequestManagerFactory::GetInstance()->SetTestingFactoryAndUse(
+            profile(), &MockEventPageRequestManager::Create));
+    request_manager_->set_mojo_connections_ready_for_test(true);
+    ON_CALL(*request_manager_, RunOrDeferInternal(_, _))
+        .WillByDefault(Invoke([](base::OnceClosure& request,
+                                 MediaRouteProviderWakeReason wake_reason) {
+          std::move(request).Run();
+        }));
+  }
   ~MediaRouterDesktopTest() override {}
 
  protected:
@@ -65,47 +55,10 @@ class MediaRouterDesktopTest : public MediaRouterMojoTest {
       content::BrowserContext* context) {
     return std::unique_ptr<KeyedService>(new MediaRouterDesktop(context));
   }
+
+  MockMediaRouteProvider mock_media_route_provider_;
+  MockEventPageRequestManager* request_manager_ = nullptr;
 };
-
-TEST_F(MediaRouterDesktopTest, CreateRoute) {
-  TestCreateRoute();
-}
-
-TEST_F(MediaRouterDesktopTest, JoinRoute) {
-  TestJoinRoute();
-}
-
-TEST_F(MediaRouterDesktopTest, ConnectRouteByRouteId) {
-  TestConnectRouteByRouteId();
-}
-
-TEST_F(MediaRouterDesktopTest, TerminateRoute) {
-  TestTerminateRoute();
-}
-
-TEST_F(MediaRouterDesktopTest, SendRouteMessage) {
-  TestSendRouteMessage();
-}
-
-TEST_F(MediaRouterDesktopTest, SendRouteBinaryMessage) {
-  TestSendRouteBinaryMessage();
-}
-
-TEST_F(MediaRouterDesktopTest, DetachRoute) {
-  TestDetachRoute();
-}
-
-TEST_F(MediaRouterDesktopTest, SearchSinks) {
-  TestSearchSinks();
-}
-
-TEST_F(MediaRouterDesktopTest, ProvideSinks) {
-  TestProvideSinks();
-}
-
-TEST_F(MediaRouterDesktopTest, CreateMediaRouteController) {
-  TestCreateMediaRouteController();
-}
 
 #if defined(OS_WIN)
 TEST_F(MediaRouterDesktopTest, EnableMdnsAfterEachRegister) {
@@ -144,7 +97,7 @@ TEST_F(MediaRouterDesktopTest, MAYBE_UpdateMediaSinksOnUserGesture) {
 }
 
 TEST_F(MediaRouterDesktopTest, SyncStateToMediaRouteProvider) {
-  MediaSource media_source(kSource);
+  MediaSource media_source("source1");
   std::unique_ptr<MockMediaSinksObserver> sinks_observer;
   std::unique_ptr<MockMediaRoutesObserver> routes_observer;
   std::unique_ptr<NullMessageObserver> messages_observer;
@@ -155,7 +108,7 @@ TEST_F(MediaRouterDesktopTest, SyncStateToMediaRouteProvider) {
     EXPECT_CALL(mock_media_route_provider_,
                 StartObservingMediaSinks(media_source.id()));
     sinks_observer = base::MakeUnique<MockMediaSinksObserver>(
-        router(), media_source, url::Origin(GURL(kOrigin)));
+        router(), media_source, url::Origin(GURL("http://origin/")));
     EXPECT_TRUE(sinks_observer->Init());
 
     EXPECT_CALL(mock_media_route_provider_,

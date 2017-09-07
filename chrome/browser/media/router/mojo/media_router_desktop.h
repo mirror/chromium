@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_MEDIA_ROUTER_MOJO_MEDIA_ROUTER_DESKTOP_H_
 
 #include "build/build_config.h"
+#include "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_impl.h"
 
 namespace content {
@@ -43,65 +44,8 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   void OnUserGesture() override;
 
  protected:
-  // These methods override MediaRouterMojoImpl methods. They call the base
-  // methods if the connection to the MediaRouteProvider is valid. Otherwise,
-  // they queue themselves to be called again later by |request_manager_| when
-  // the connection is valid.
-  void DoCreateRoute(const MediaSource::Id& source_id,
-                     const MediaSink::Id& sink_id,
-                     const url::Origin& origin,
-                     int tab_id,
-                     std::vector<MediaRouteResponseCallback> callbacks,
-                     base::TimeDelta timeout,
-                     bool incognito) override;
-  void DoJoinRoute(const MediaSource::Id& source_id,
-                   const std::string& presentation_id,
-                   const url::Origin& origin,
-                   int tab_id,
-                   std::vector<MediaRouteResponseCallback> callbacks,
-                   base::TimeDelta timeout,
-                   bool incognito) override;
-  void DoConnectRouteByRouteId(
-      const MediaSource::Id& source_id,
-      const MediaRoute::Id& route_id,
-      const url::Origin& origin,
-      int tab_id,
-      std::vector<MediaRouteResponseCallback> callbacks,
-      base::TimeDelta timeout,
-      bool incognito) override;
-  void DoTerminateRoute(const MediaRoute::Id& route_id) override;
-  void DoDetachRoute(const MediaRoute::Id& route_id) override;
-  void DoSendRouteMessage(const MediaRoute::Id& route_id,
-                          const std::string& message,
-                          SendRouteMessageCallback callback) override;
-  void DoSendRouteBinaryMessage(const MediaRoute::Id& route_id,
-                                std::unique_ptr<std::vector<uint8_t>> data,
-                                SendRouteMessageCallback callback) override;
-  void DoStartListeningForRouteMessages(
-      const MediaRoute::Id& route_id) override;
-  void DoStopListeningForRouteMessages(const MediaRoute::Id& route_id) override;
-  void DoStartObservingMediaSinks(const MediaSource::Id& source_id) override;
-  void DoStopObservingMediaSinks(const MediaSource::Id& source_id) override;
-  void DoStartObservingMediaRoutes(const MediaSource::Id& source_id) override;
-  void DoStopObservingMediaRoutes(const MediaSource::Id& source_id) override;
-  void DoSearchSinks(const MediaSink::Id& sink_id,
-                     const MediaSource::Id& source_id,
-                     const std::string& search_input,
-                     const std::string& domain,
-                     MediaSinkSearchResponseCallback sink_callback) override;
-  void DoCreateMediaRouteController(
-      const MediaRoute::Id& route_id,
-      mojom::MediaControllerRequest mojo_media_controller_request,
-      mojom::MediaStatusObserverPtr mojo_observer) override;
-  void DoProvideSinks(const std::string& provider_name,
-                      std::vector<MediaSinkInternal> sinks) override;
-  void DoUpdateMediaSinks(const MediaSource::Id& source_id) override;
-#if defined(OS_WIN)
-  void DoEnsureMdnsDiscoveryEnabled();
-#endif
-
-  // Error handler callback for |binding_| and |media_route_provider_|.
-  void OnConnectionError() override;
+  // Error handler callback for |binding_|.
+  void OnConnectionError();
 
   // Issues 0+ calls to |media_route_provider_| to ensure its state is in sync
   // with MediaRouter on a best-effort basis.
@@ -157,6 +101,10 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   // Request manager responsible for waking the component extension and calling
   // the requests to it.
   EventPageRequestManager* const request_manager_;
+
+  // MediaRouteProvider proxy that forwards calls to the MRPM in the component
+  // extension.
+  ExtensionMediaRouteProviderProxy extension_provider_;
 
   // Binds |this| to a Mojo connection stub for mojom::MediaRouter.
   mojo::Binding<mojom::MediaRouter> binding_;
