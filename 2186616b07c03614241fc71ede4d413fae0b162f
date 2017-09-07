@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db79b5dd_0ad4f809",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:03:14Z",
+      "side": 1,
+      "message": "There should be, and it should theoretically be weak, but that means that RootCoordinator can\u0027t override it to be strong. I\u0027ll make it explicitly strong and get rid of the override in RootCoordinator.",
+      "parentUuid": "29eec91b_acc41616",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "2186616b07c03614241fc71ede4d413fae0b162f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81feed68_76037359",
         "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-07T07:18:07Z",
       "side": 1,
       "message": "Same",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "2186616b07c03614241fc71ede4d413fae0b162f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea8e4c7_97d4213e",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:03:14Z",
+      "side": 1,
+      "message": "It\u0027s readonly, so the storage attribute is by definition an implementation detail, and in fact there is no storage for this property.",
+      "parentUuid": "81feed68_76037359",
       "range": {
         "startLine": 42,
         "startChar": 10,
@@ -95,6 +143,24 @@
       "side": 1,
       "message": "It has no memory attributes on the BrowserCoordinator, and the default should be strong.",
       "parentUuid": "105724a3_704ad01b",
+      "revId": "2186616b07c03614241fc71ede4d413fae0b162f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f073654_08f515ed",
+        "filename": "ios/clean/chrome/browser/ui/root/root_coordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T10:03:14Z",
+      "side": 1,
+      "message": "Yep, this is removed now.",
+      "parentUuid": "98edd200_7f8ed255",
       "revId": "2186616b07c03614241fc71ede4d413fae0b162f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
