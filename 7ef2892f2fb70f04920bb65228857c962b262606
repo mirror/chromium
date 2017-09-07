@@ -22,6 +22,30 @@
       "revId": "7ef2892f2fb70f04920bb65228857c962b262606",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf5f763_d598270c",
+        "filename": "chrome/test/chromedriver/chrome_launcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-07T19:47:07Z",
+      "side": 1,
+      "message": "It\u0027s when people want to run Chrome under control by ChromeDriver, while still allowing it access their default profile, such as history list, etc. People had been asking for it from time to time (e.g., https://stackoverflow.com/questions/31062789/how-to-load-default-profile-in-chrome-using-python-selenium-webdriver), and the only way to do it previously was to find the location of default user data dir and explicitly set user-data-dir to point to it. Allowing exclusion of user-data-dir switch makes this easier.",
+      "parentUuid": "aebf9e39_2fd92fa6",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 3
+      },
+      "revId": "7ef2892f2fb70f04920bb65228857c962b262606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
