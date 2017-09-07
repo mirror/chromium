@@ -22,6 +22,30 @@
       "revId": "0bdc36c868e210d4d4fee76924db9155bc95c8e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96792d50_edd1485a",
+        "filename": "components/offline_items_collection/core/offline_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-07T17:23:26Z",
+      "side": 1,
+      "message": "Oh, missed this one. I can probably make this base::FilePath. Thanks!",
+      "parentUuid": "884f5621_c22f631b",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 13
+      },
+      "revId": "0bdc36c868e210d4d4fee76924db9155bc95c8e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
