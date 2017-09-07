@@ -10,9 +10,10 @@
 #include <numeric>
 #include <set>
 
-#include "base/i18n/break_iterator.h"
+#include "base/logging.h"
 #include "base/i18n/case_conversion.h"
 #include "base/strings/string_util.h"
+#include "components/omnibox/browser/break_iterator_adapter.h"
 #include "net/base/escape.h"
 
 namespace {
@@ -110,9 +111,10 @@ String16Vector String16VectorFromString16(
     WordStarts* word_starts) {
   if (word_starts)
     word_starts->clear();
-  base::i18n::BreakIterator iter(cleaned_uni_string,
-      break_on_space ? base::i18n::BreakIterator::BREAK_SPACE :
-          base::i18n::BreakIterator::BREAK_WORD);
+  BreakIteratorAdapter iter(cleaned_uni_string,
+                            break_on_space
+                                ? base::i18n::BreakIterator::BREAK_SPACE
+                                : base::i18n::BreakIterator::BREAK_WORD);
   String16Vector words;
   if (!iter.Init())
     return words;

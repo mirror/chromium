@@ -188,5 +188,13 @@ StringPiece16 BreakIterator::GetStringPiece() const {
   return string_.substr(prev_, pos_ - prev_);
 }
 
+size_t BreakIterator::prev() const {
+  return prev_;
+}
+
+size_t BreakIterator::pos() const {
+  return pos_;
+}
+
 }  // namespace i18n
 }  // namespace base
