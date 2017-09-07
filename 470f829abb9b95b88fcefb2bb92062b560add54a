@@ -2,6 +2,114 @@
   "comments": [
     {
       "key": {
+        "uuid": "64895b47_5c8eca38",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T23:24:37Z",
+      "side": 1,
+      "message": "Are these needed?",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8cfac12_6362f51c",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T23:24:37Z",
+      "side": 1,
+      "message": "nit: Blank line after, just like the end of the namespace.",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7338457_cab153e3",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T23:24:37Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859d947d_b654cb15",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T23:24:37Z",
+      "side": 1,
+      "message": "Move to the end.",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0f77e4_4fd9b372",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler_win_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T23:24:37Z",
+      "side": 1,
+      "message": "Left over old code?",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6bdf335_927fa002",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler_win_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T23:24:37Z",
+      "side": 1,
+      "message": "Is StickySettings normal nullptr?",
+      "range": {
+        "startLine": 131,
+        "startChar": 70,
+        "endLine": 131,
+        "endChar": 77
+      },
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08be5a22_702b2db0",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
         "patchSetId": 7
@@ -13,6 +121,126 @@
       "writtenOn": "2017-09-07T19:26:35Z",
       "side": 1,
       "message": "These two functions preserved as plumbing for https://cs.chromium.org/chromium/src/chrome/browser/printing/print_preview_pdf_generated_browsertest.cc",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac2bcd0a_3debef6f",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T23:24:37Z",
+      "side": 1,
+      "message": "Do we want to rename the method to FileSelectedForTesting then?",
+      "parentUuid": "08be5a22_702b2db0",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3101800a_38b9f407",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T23:24:37Z",
+      "side": 1,
+      "message": "Alphabetical order.",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf273f54_a571bc5f",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T23:24:37Z",
+      "side": 1,
+      "message": "No native_layer.js changes?",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de9d934_1cc82935",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T23:24:37Z",
+      "side": 1,
+      "message": "GetPrinterHandler()",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b68c498_8597de57",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T23:24:37Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need to forward-decl here?",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25b12c2_c01d051b",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T23:24:37Z",
+      "side": 1,
+      "message": "Would you mind moving this to the end of the forward-decl list?",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9327b444_0315b46d",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T23:24:37Z",
+      "side": 1,
+      "message": "And do this change separately too.",
       "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

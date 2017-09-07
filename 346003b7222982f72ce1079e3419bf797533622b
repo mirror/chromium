@@ -22,6 +22,30 @@
       "revId": "346003b7222982f72ce1079e3419bf797533622b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a19769b_b70078d1",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T23:24:37Z",
+      "side": 0,
+      "message": "Do we want to remove this in a separate CL first? It\u0027s from r100260, BTW.",
+      "parentUuid": "a668090c_eeeefff0",
+      "range": {
+        "startLine": 758,
+        "startChar": 4,
+        "endLine": 758,
+        "endChar": 28
+      },
+      "revId": "346003b7222982f72ce1079e3419bf797533622b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
