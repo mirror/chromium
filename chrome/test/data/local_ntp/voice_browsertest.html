@@ -11,6 +11,7 @@
   <script src="voice_microphone_browsertest.js"></script>
   <script src="voice_text_browsertest.js"></script>
   <script src="voice_view_browsertest.js"></script>
+  <script src="voice_speech_browsertest.js"></script>
   <!-- Templates: (keep in sync with local_ntp.html) -->
   <template id="voice-microphone-template">
     <div id="voice-button-container" class="button-container">
@@ -59,6 +60,19 @@
         </div>
       </div>
       <div id="voice-close-button" class="close-button">&times;</div>
+    </div>
+  </template>
+  <template id="voice-fakebox-template">
+    <div id="ntp-contents">
+      <div id="search">
+        <div id="fakebox">
+          <div id="fakebox-text"></div>
+          <input id="fakebox-input" autocomplete="off" tabIndex="-1" type="url"
+              aria-hidden="true">
+          <div id="fakebox-cursor"></div>
+          <div id="fakebox-microphone" tabIndex="0" hidden></div>
+        </div>
+      </div>
     </div>
   </template>
 </head>
