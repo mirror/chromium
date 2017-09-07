@@ -35,7 +35,7 @@ PaymentRequestState::PaymentRequestState(
     content::BrowserContext* context,
     JourneyLogger* journey_logger)
     : is_ready_to_pay_(false),
-      polling_instruments_finished_(false),
+      polling_instruments_finished_(true),
       is_waiting_for_merchant_validation_(false),
       app_locale_(app_locale),
       spec_(spec),
@@ -50,12 +50,14 @@ PaymentRequestState::PaymentRequestState(
       profile_comparator_(app_locale, *spec),
       weak_ptr_factory_(this) {
   PopulateProfileCache();
-  // if (base::FeatureList::IsEnabled(features::kServiceWorkerPaymentApps)) {
-  content::PaymentAppProvider::GetInstance()->GetAllPaymentApps(
-      context, base::BindOnce(&PaymentRequestState::GetAllPaymentAppsCallback,
-                              weak_ptr_factory_.GetWeakPtr()));
-  //}
-  SetDefaultProfileSelections();
+  if (base::FeatureList::IsEnabled(features::kServiceWorkerPaymentApps)) {
+    polling_instruments_finished_ = false;
+    content::PaymentAppProvider::GetInstance()->GetAllPaymentApps(
+        context, base::BindOnce(&PaymentRequestState::GetAllPaymentAppsCallback,
+                                weak_ptr_factory_.GetWeakPtr()));
+  } else {
+    SetDefaultProfileSelections();
+  }
   spec_->AddObserver(this);
 }
 PaymentRequestState::~PaymentRequestState() {}
@@ -90,6 +92,8 @@ void PaymentRequestState::GetAllPaymentAppsCallback(
         base::MakeUnique<ServiceWorkerPaymentInstrument>(std::move(it->second));
     available_instruments_.push_back(std::move(instrument));
   }
+
+  SetDefaultProfileSelections();
 
   polling_instruments_finished_ = true;
   NotifyOnPollPaymentInstrumentsFinished();
