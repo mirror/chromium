@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7da39c7b_3996fdf8",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T19:15:47Z",
+      "side": 1,
+      "message": "Why these 2 function names don\u0027t have leading underscore?",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 38
+      },
+      "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f1ad4d_7df38dfe",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T19:15:47Z",
+      "side": 1,
+      "message": "You can use collections.defaultdict instead of this",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 22
+      },
+      "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71120843_bdfb4231",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T19:15:47Z",
+      "side": 1,
+      "message": "_ExportCodeCoverageToJson ?",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 27
+      },
+      "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93ccb2e_2940aa3f",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T19:15:47Z",
+      "side": 1,
+      "message": "nit: Do you need this variable?",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 15
+      },
+      "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a02f299_ecd800d9",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T19:15:47Z",
+      "side": 1,
+      "message": "|if coverage is None| ?",
+      "range": {
+        "startLine": 224,
+        "startChar": 61,
+        "endLine": 224,
+        "endChar": 69
+      },
+      "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f52da9e_7c429e3f",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T19:15:47Z",
+      "side": 1,
+      "message": "assert(not os.path.exists(filter_abspath), \u0027\u0027)",
+      "range": {
+        "startLine": 489,
+        "startChar": 13,
+        "endLine": 489,
+        "endChar": 18
+      },
+      "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee516311_19f36d73",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T19:15:47Z",
+      "side": 1,
+      "message": "nit: Do you need this variable?",
+      "range": {
+        "startLine": 512,
+        "startChar": 2,
+        "endLine": 512,
+        "endChar": 14
+      },
+      "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
