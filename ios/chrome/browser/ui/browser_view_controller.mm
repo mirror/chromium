@@ -2442,6 +2442,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     _voiceSearchController->SetDelegate(nil);
   [_rateThisAppDialog setDelegate:nil];
   [_model closeAllTabs];
+  [_paymentRequestManager setActiveWebState:nullptr];
 }
 
 #pragma mark - SnapshotOverlayProvider methods
