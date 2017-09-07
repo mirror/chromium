@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd7582ae_ae5fd142",
+        "filename": "third_party/WebKit/Source/core/frame/BrowserControlsTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-07T08:20:51Z",
+      "side": 1,
+      "message": "If we focus on replacing TestBlinkWebUnitTestSupport rather than deprecating Platform::CreateURLLoaderMockFactory, this should be at least FetchTestingPlatformSupport of platform/loader/testing/ or something. Ditto for other ScopedTestingPlatformSupport instances.\n\nFetchTestingPlatformSupport also replaces scheduler backend with one for testing, but it may not work for webkit_unit_tests, and should not be needed.\n\nProbably, you may want to add MockedURLLoaderTestingPlatform in core/testing or core/loader, and use it in webkit_unit_tests?",
+      "range": {
+        "startLine": 141,
+        "startChar": 31,
+        "endLine": 141,
+        "endChar": 53
+      },
+      "revId": "cb5dc445b5c9596b3fcef560b0dc077143c9814a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
