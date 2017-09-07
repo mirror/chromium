@@ -44,10 +44,7 @@
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/message_center_style.h"
-
-#if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/note_taking_helper.h"
-#endif  // defined(OS_CHROMEOS)
 
 using base::UserMetricsAction;
 using message_center::MessageCenter;
@@ -56,6 +53,9 @@ namespace {
 
 const char kDownloadNotificationNotifierId[] =
     "chrome://downloads/notification/id-notifier";
+
+const char kDownloadNotificationOrigin[] =
+    "chrome://downloads";
 
 // Background color of the preview images
 const SkColor kImageBackgroundColor = SK_ColorWHITE;
@@ -196,7 +196,7 @@ DownloadItemNotification::DownloadItemNotification(
           IDS_DOWNLOAD_NOTIFICATION_DISPLAY_SOURCE),  // display_source
       GURL(kDownloadNotificationOrigin),              // origin_url
       base::UintToString(item_->GetId()),             // tag
-      rich_notification_data, watcher()));
+      rich_notification_data, this));
 
   notification_->set_progress(0);
   notification_->set_never_timeout(false);
@@ -204,20 +204,38 @@ DownloadItemNotification::DownloadItemNotification(
   Update();
 }
 
-DownloadItemNotification::~DownloadItemNotification() {
-  if (image_decode_status_ == IN_PROGRESS)
-    ImageDecoder::Cancel(this);
+void DownloadItemNotification::OnDownloadUpdated(content::DownloadItem* item) {
+  DCHECK_EQ(item, item_);
+
+  Update();
 }
 
-bool DownloadItemNotification::HasNotificationClickedListener() {
-  if (item_->IsDangerous()) {
-    // Dangerous notifications don't have a click handler.
-    return false;
+void DownloadItemNotification::OnDownloadRemoved(content::DownloadItem* item) {
+  // The given |item| may be already free'd.
+  DCHECK_EQ(item, item_);
+
+  // Removing the notification causes calling |NotificationDelegate::Close()|.
+  if (g_browser_process->notification_ui_manager()) {
+    g_browser_process->notification_ui_manager()->CancelById(
+        id(), NotificationUIManager::GetProfileID(profile()));
   }
-  return true;
+
+  item_ = nullptr;
 }
 
-void DownloadItemNotification::OnNotificationClose() {
+void DownloadItemNotification::DisablePopup() {
+  if (notification_->priority() == message_center::LOW_PRIORITY)
+    return;
+  // Hides a notification from popup notifications if it's a pop-up, by
+  // decreasing its priority and reshowing itself. Low-priority notifications
+  // doesn't pop-up itself so this logic works as disabling pop-up.
+  CloseNotificationByNonUser();
+  notification_->set_priority(message_center::LOW_PRIORITY);
+  closed_ = false;
+  g_browser_process->notification_ui_manager()->Add(*notification_, profile());
+}
+
+void DownloadItemNotification::Close(bool by_user) {
   if (item_ && item_->IsDangerous() && !item_->IsDone()) {
     base::RecordAction(
         UserMetricsAction("DownloadNotification.Close_Dangerous"));
@@ -232,7 +250,7 @@ void DownloadItemNotification::OnNotificationClose() {
   }
 }
 
-void DownloadItemNotification::OnNotificationClick() {
+void DownloadItemNotification::Click() {
   if (item_->IsDangerous()) {
     base::RecordAction(
         UserMetricsAction("DownloadNotification.Click_Dangerous"));
@@ -267,7 +285,15 @@ void DownloadItemNotification::OnNotificationClick() {
   }
 }
 
-void DownloadItemNotification::OnNotificationButtonClick(int button_index) {
+bool DownloadItemNotification::HasClickedListener() {
+  if (item_->IsDangerous()) {
+    // Dangerous notifications don't have a click handler.
+    return false;
+  }
+  return true;
+}
+
+void DownloadItemNotification::ButtonClick(int button_index) {
   if (button_index < 0 ||
       static_cast<size_t>(button_index) >= button_actions_->size()) {
     // Out of boundary.
@@ -292,23 +318,20 @@ void DownloadItemNotification::OnNotificationButtonClick(int button_index) {
   }
 }
 
-// DownloadItem::Observer methods
-void DownloadItemNotification::OnDownloadUpdated(content::DownloadItem* item) {
-  DCHECK_EQ(item, item_);
-
-  Update();
-}
-
-std::string DownloadItemNotification::GetNotificationId() const {
+std::string DownloadItemNotification::id() const {
   return base::UintToString(item_->GetId());
 }
 
+DownloadItemNotification::~DownloadItemNotification() {
+  if (image_decode_status_ == IN_PROGRESS)
+    ImageDecoder::Cancel(this);
+}
+
 void DownloadItemNotification::CloseNotificationByNonUser() {
-  const std::string& notification_id = watcher()->id();
   const ProfileID profile_id = NotificationUIManager::GetProfileID(profile());
 
   g_browser_process->notification_ui_manager()->
-      CancelById(notification_id, profile_id);
+      CancelById(id(), profile_id);
 }
 
 void DownloadItemNotification::CloseNotificationByUser() {
@@ -316,7 +339,7 @@ void DownloadItemNotification::CloseNotificationByUser() {
   if (!item_)
     return;
 
-  const std::string& notification_id = watcher()->id();
+  std::string notification_id = id();
   const ProfileID profile_id = NotificationUIManager::GetProfileID(profile());
   const std::string notification_id_in_message_center =
       ProfileNotification::GetProfileNotificationId(notification_id,
@@ -481,11 +504,6 @@ void DownloadItemNotification::UpdateNotificationData(
 void DownloadItemNotification::UpdateNotificationIcon() {
   if (item_->IsDangerous()) {
     DownloadItemModel model(item_);
-#if defined(OS_MACOSX)
-    SetNotificationIcon(model.MightBeMalicious()
-                            ? IDR_DOWNLOAD_NOTIFICATION_WARNING_BAD
-                            : IDR_DOWNLOAD_NOTIFICATION_WARNING_UNWANTED);
-#else
     if (MessageCenter::IsNewStyleNotificationEnabled()) {
       SetNotificationVectorIcon(
           kNotificationDownloadIcon,
@@ -499,7 +517,6 @@ void DownloadItemNotification::UpdateNotificationIcon() {
                                     ? gfx::kGoogleRed700
                                     : gfx::kGoogleYellow700);
     }
-#endif
     return;
   }
 
@@ -514,12 +531,8 @@ void DownloadItemNotification::UpdateNotificationIcon() {
             message_center::kSystemNotificationColorNormal);
       } else {
         if (is_off_the_record) {
-#if defined(OS_MACOSX)
-          SetNotificationIcon(IDR_DOWNLOAD_NOTIFICATION_INCOGNITO);
-#else
           SetNotificationVectorIcon(kFileDownloadIncognitoIcon,
                                     gfx::kChromeIconGrey);
-#endif
         } else {
           SetNotificationVectorIcon(kFileDownloadIcon, gfx::kGoogleBlue500);
         }
@@ -527,9 +540,6 @@ void DownloadItemNotification::UpdateNotificationIcon() {
       break;
 
     case content::DownloadItem::INTERRUPTED:
-#if defined(OS_MACOSX)
-      SetNotificationIcon(IDR_DOWNLOAD_NOTIFICATION_ERROR);
-#else
       if (MessageCenter::IsNewStyleNotificationEnabled()) {
         SetNotificationVectorIcon(
             kNotificationDownloadIcon,
@@ -538,7 +548,6 @@ void DownloadItemNotification::UpdateNotificationIcon() {
         SetNotificationVectorIcon(vector_icons::kErrorCircleIcon,
                                   gfx::kGoogleRed700);
       }
-#endif
       break;
 
     case content::DownloadItem::CANCELLED:
@@ -548,19 +557,6 @@ void DownloadItemNotification::UpdateNotificationIcon() {
       NOTREACHED();
       break;
   }
-}
-
-void DownloadItemNotification::OnDownloadRemoved(content::DownloadItem* item) {
-  // The given |item| may be already free'd.
-  DCHECK_EQ(item, item_);
-
-  // Removing the notification causes calling |NotificationDelegate::Close()|.
-  if (g_browser_process->notification_ui_manager()) {
-    g_browser_process->notification_ui_manager()->CancelById(
-        watcher()->id(), NotificationUIManager::GetProfileID(profile()));
-  }
-
-  item_ = nullptr;
 }
 
 void DownloadItemNotification::SetNotificationIcon(int resource_id) {
@@ -579,18 +575,6 @@ void DownloadItemNotification::SetNotificationVectorIcon(
   } else {
     notification_->set_icon(gfx::Image(gfx::CreateVectorIcon(icon, 40, color)));
   }
-}
-
-void DownloadItemNotification::DisablePopup() {
-  if (notification_->priority() == message_center::LOW_PRIORITY)
-    return;
-  // Hides a notification from popup notifications if it's a pop-up, by
-  // decreasing its priority and reshowing itself. Low-priority notifications
-  // doesn't pop-up itself so this logic works as disabling pop-up.
-  CloseNotificationByNonUser();
-  notification_->set_priority(message_center::LOW_PRIORITY);
-  closed_ = false;
-  g_browser_process->notification_ui_manager()->Add(*notification_, profile());
 }
 
 void DownloadItemNotification::OnImageLoaded(const std::string& image_data) {
@@ -664,10 +648,8 @@ DownloadItemNotification::GetExtraActions() const {
       actions->push_back(DownloadCommands::SHOW_IN_FOLDER);
       if (!notification_->image().IsEmpty()) {
         actions->push_back(DownloadCommands::COPY_TO_CLIPBOARD);
-#if defined(OS_CHROMEOS)
         if (chromeos::NoteTakingHelper::Get()->IsAppAvailable(profile()))
           actions->push_back(DownloadCommands::ANNOTATE);
-#endif  // defined(OS_CHROMEOS)
       }
       break;
     case content::DownloadItem::MAX_DOWNLOAD_STATE:
@@ -960,12 +942,11 @@ Profile* DownloadItemNotification::profile() const {
 }
 
 bool DownloadItemNotification::IsNotificationVisible() const {
-  const std::string& delegate_id = watcher()->id();
   const ProfileID profile_id = NotificationUIManager::GetProfileID(profile());
   if (!g_browser_process->notification_ui_manager())
     return false;
   const Notification* notification =
-      g_browser_process->notification_ui_manager()->FindById(delegate_id,
+      g_browser_process->notification_ui_manager()->FindById(id(),
                                                              profile_id);
   if (!notification)
     return false;

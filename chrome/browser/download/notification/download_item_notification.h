@@ -6,9 +6,8 @@
 #define CHROME_BROWSER_DOWNLOAD_NOTIFICATION_DOWNLOAD_ITEM_NOTIFICATION_H_
 
 #include "base/macros.h"
-#include "base/strings/string_number_conversions.h"
 #include "chrome/browser/download/download_commands.h"
-#include "chrome/browser/download/notification/download_notification.h"
+#include "chrome/browser/notifications/notification_delegate.h"
 #include "chrome/browser/image_decoder.h"
 #include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_delegate.h"
@@ -31,25 +30,27 @@ struct VectorIcon;
 
 class DownloadNotificationManagerForProfile;
 
-class DownloadItemNotification : public DownloadNotification,
+class DownloadItemNotification : public NotificationDelegate,
                                  public ImageDecoder::ImageRequest {
  public:
   DownloadItemNotification(content::DownloadItem* item,
                            DownloadNotificationManagerForProfile* manager);
 
-  ~DownloadItemNotification() override;
-
-  // Methods called from NotificationWatcher.
-  void OnDownloadUpdated(content::DownloadItem* item) override;
-  void OnDownloadRemoved(content::DownloadItem* item) override;
-  bool HasNotificationClickedListener() override;
-  void OnNotificationClose() override;
-  void OnNotificationClick() override;
-  void OnNotificationButtonClick(int button_index) override;
-  std::string GetNotificationId() const override;
+  void OnDownloadUpdated(content::DownloadItem* item);
+  void OnDownloadRemoved(content::DownloadItem* item);
 
   // Disables popup by setting low priority.
   void DisablePopup();
+
+  // NotificationDelegate overrides:
+  void Close(bool by_user) override;
+  void Click() override;
+  bool HasClickedListener() override;
+  void ButtonClick(int button_index) override;
+  std::string id() const override;
+
+ protected:
+  ~DownloadItemNotification() override;
 
  private:
   friend class test::DownloadItemNotificationTest;

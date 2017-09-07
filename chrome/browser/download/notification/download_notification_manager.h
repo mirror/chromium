@@ -62,7 +62,7 @@ class DownloadNotificationManagerForProfile
   Profile* profile_ = nullptr;
   DownloadNotificationManager* parent_manager_;  // weak
   std::set<content::DownloadItem*> downloading_items_;
-  std::map<content::DownloadItem*, std::unique_ptr<DownloadItemNotification>>
+  std::map<content::DownloadItem*, scoped_refptr<DownloadItemNotification>>
       items_;
 
   // Pointer to the message center instance.
