@@ -12,6 +12,7 @@
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/interfaces/window_pin_type.mojom.h"
 #include "ash/wm/drag_window_resizer.h"
+#include "ash/wm/window_animations.h"
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
@@ -445,6 +446,10 @@ void ShellSurface::Maximize() {
   widget_->Maximize();
 }
 
+void ShellSurface::MaximizeWithCommit() {
+  pending_window_state_ = ui::SHOW_STATE_MAXIMIZED;
+}
+
 void ShellSurface::Minimize() {
   TRACE_EVENT0("exo", "ShellSurface::Minimize");
 
@@ -467,6 +472,10 @@ void ShellSurface::Restore() {
   // maximized or minimized.
   ScopedConfigure scoped_configure(this, true);
   widget_->Restore();
+}
+
+void ShellSurface::RestoreWithCommit() {
+  pending_window_state_ = ui::SHOW_STATE_NORMAL;
 }
 
 void ShellSurface::SetFullscreen(bool fullscreen) {
@@ -755,6 +764,13 @@ void ShellSurface::OnSurfaceCommit() {
   if (pending_shadow_underlay_in_surface_ && shadow_content_bounds_changed_)
     host_window()->AllocateLocalSurfaceId();
 
+  // In case of pending window states, create fresh layers for the window and
+  // all its children to paint into and keep the old one for a cross fade
+  // animation fired below.
+  std::unique_ptr<ui::LayerTreeOwner> layer_owner_for_cross_fade;
+  if (pending_window_state_ != ui::SHOW_STATE_DEFAULT && widget_)
+    layer_owner_for_cross_fade = wm::RecreateLayers(widget_->GetNativeWindow());
+
   SurfaceTreeHost::OnSurfaceCommit();
 
   // Apply the accumulated pending origin offset to reflect acknowledged
@@ -824,6 +840,46 @@ void ShellSurface::OnSurfaceCommit() {
   } else {
     compositor_lock_.reset();
   }
+
+  // Fire pending window state changes, if any.
+  if (pending_window_state_ != ui::SHOW_STATE_DEFAULT) {
+    // Animate the window state with a cross fade.
+    if (layer_owner_for_cross_fade) {
+      ui::Layer* old_layer = layer_owner_for_cross_fade->root();
+      DCHECK(old_layer);
+      ui::Layer* new_layer = widget_->GetNativeWindow()->layer();
+
+      // Ensure the higher-resolution layer is on top.
+      bool old_on_top = (old_layer->size().width() > new_layer->size().width());
+      if (old_on_top)
+        old_layer->parent()->StackBelow(new_layer, old_layer);
+      else
+        old_layer->parent()->StackAbove(new_layer, old_layer);
+
+      ash::CrossFadeAnimation(widget_->GetNativeWindow(),
+                              std::move(layer_owner_for_cross_fade),
+                              gfx::Tween::EASE_OUT);
+    }
+
+    switch (pending_window_state_) {
+      case ui::SHOW_STATE_NORMAL: {
+        Restore();
+        break;
+      }
+      case ui::SHOW_STATE_MAXIMIZED: {
+        Maximize();
+        break;
+      }
+      case ui::SHOW_STATE_DEFAULT:
+      case ui::SHOW_STATE_FULLSCREEN:
+      case ui::SHOW_STATE_MINIMIZED:
+      case ui::SHOW_STATE_INACTIVE:
+      case ui::SHOW_STATE_END:
+        NOTREACHED();
+        break;
+    }
+    pending_window_state_ = ui::SHOW_STATE_DEFAULT;
+  }
 }
 
 void ShellSurface::OnSurfaceContentSizeChanged() {
@@ -836,6 +892,7 @@ void ShellSurface::OnSurfaceContentSizeChanged() {
     }
 
     CreateShellSurfaceWidget(ui::SHOW_STATE_NORMAL);
+    // Takes ownership of the old layer and all its children.
   }
 }
 
@@ -992,8 +1049,9 @@ void ShellSurface::OnPreWindowStateTypeChange(
     // account and without this cross-fade animations are unreliable.
     // TODO(domlaskowski): For BoundsMode::CLIENT, the configure callback does
     // not yet support window state changes. See crbug.com/699746.
-    if (configure_callback_.is_null() || bounds_mode_ == BoundsMode::CLIENT)
+    if (configure_callback_.is_null() || bounds_mode_ == BoundsMode::CLIENT) {
       scoped_animations_disabled_.reset(new ScopedAnimationsDisabled(this));
+    }
   }
 }
 
