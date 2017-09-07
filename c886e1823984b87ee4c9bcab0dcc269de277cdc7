@@ -22,6 +22,30 @@
       "revId": "c886e1823984b87ee4c9bcab0dcc269de277cdc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88dd67eb_79a248b0",
+        "filename": "chrome/browser/download/notification/download_item_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-07T00:37:14Z",
+      "side": 0,
+      "message": "This is a very old hack to work around the fact that the notification center used to refuse to update visible notifications (those inside the MC, not standalone ones) except those of type PROGRESS. It handled the case of a download completing, and the notification switching from PROGRESS to BASE_FORMAT. The hack is no longer needed.\n\nDiscovering this block of code and wanting to remove it is what led me to realize the queue was obsolete.",
+      "parentUuid": "50f3a1c3_3f61a2f2",
+      "range": {
+        "startLine": 453,
+        "startChar": 8,
+        "endLine": 456,
+        "endChar": 65
+      },
+      "revId": "c886e1823984b87ee4c9bcab0dcc269de277cdc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
