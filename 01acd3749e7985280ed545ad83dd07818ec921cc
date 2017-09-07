@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe8c127a_119c2595",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-07T18:38:58Z",
+      "side": 1,
+      "message": "Done. Calculated from the view\u0027s preferred size now.",
+      "parentUuid": "753309ee_67d39ba0",
+      "range": {
+        "startLine": 15,
+        "startChar": 28,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "01acd3749e7985280ed545ad83dd07818ec921cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41da70ef_7a91f2a2",
         "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-07T00:51:14Z",
       "side": 1,
       "message": "personally I don\u0027t think there\u0027s any benefit to putting all these once-used constants at the top of the file. They\u0027re more contextual when inlined.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 43
+      },
+      "revId": "01acd3749e7985280ed545ad83dd07818ec921cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ecc8e4_0cefa571",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-07T18:38:58Z",
+      "side": 1,
+      "message": "I feel it will be easier to tweak these values if they are all defined on the top. I don\u0027t feel strongly about this though. I can inline them if you insist.",
+      "parentUuid": "41da70ef_7a91f2a2",
       "range": {
         "startLine": 17,
         "startChar": 0,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "7c1b0195_4a5721dc",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-07T18:38:58Z",
+      "side": 1,
+      "message": "Done. I used to get an opacity animation unexpectedly by just calling Hide(). Looks like I couldn\u0027t repro it any more. Weird.",
+      "parentUuid": "6ab0e1af_622d7a59",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 9
+      },
+      "revId": "01acd3749e7985280ed545ad83dd07818ec921cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d775ecfd_31acef3a",
         "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
         "patchSetId": 12
@@ -114,6 +186,30 @@
       "revId": "01acd3749e7985280ed545ad83dd07818ec921cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92dd12d2_81da12ce",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-07T18:38:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d775ecfd_31acef3a",
+      "range": {
+        "startLine": 83,
+        "startChar": 10,
+        "endLine": 83,
+        "endChar": 20
+      },
+      "revId": "01acd3749e7985280ed545ad83dd07818ec921cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
