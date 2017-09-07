@@ -62,23 +62,24 @@ PaymentRequestState::~PaymentRequestState() {}
 
 void PaymentRequestState::GetAllPaymentAppsCallback(
     content::PaymentAppProvider::PaymentApps apps) {
-  std::vector<GURL> method_urls = spec_->url_payment_method_identifiers();
-  if (apps.empty() || method_urls.size() > 0) {
+  std::vector<GURL> requested_method_urls =
+      spec_->url_payment_method_identifiers();
+  if (apps.empty() || requested_method_urls.size() == 0) {
     polling_instruments_finished_ = true;
     NotifyOnPollPaymentInstrumentsFinished();
     return;
   }
 
-  std::unordered_set<std::string> method_strings;
-  for (auto url : method_urls) {
-    method_strings.insert(url.spec());
+  std::unordered_set<std::string> requested_method_strings;
+  for (auto url : requested_method_urls) {
+    requested_method_strings.insert(url.spec());
   }
   for (content::PaymentAppProvider::PaymentApps::iterator it = apps.begin();
        it != apps.end(); it++) {
     size_t i = 0;
     for (; i < it->second->enabled_methods.size(); i++) {
-      if (method_strings.find(it->second->enabled_methods[i]) ==
-          method_strings.end()) {
+      if (requested_method_strings.find(it->second->enabled_methods[i]) !=
+          requested_method_strings.end()) {
         break;
       }
     }
