@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "758a6abe_1160d4dd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-07T21:24:45Z",
+      "side": 1,
+      "message": "At first glance this looks redundant with the asserts below... but I realize now that it adds guarantees on the ordering of these events. So fine to keep it assuming we want to guarantee this ordering.... do we?",
+      "range": {
+        "startLine": 180,
+        "startChar": 13,
+        "endLine": 180,
+        "endChar": 61
+      },
+      "revId": "66e201c92ef4c5dc5e8d56912f984cfa79101ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa200cc_465ff570",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-07T21:24:45Z",
+      "side": 1,
+      "message": "nit: s/Initial \u0027loadedmetadata\u0027 also fires/The first append\u0027s init segment triggers an initial/",
+      "range": {
+        "startLine": 190,
+        "startChar": 46,
+        "endLine": 190,
+        "endChar": 56
+      },
+      "revId": "66e201c92ef4c5dc5e8d56912f984cfa79101ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb061bc_8ca5ac44",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-07T21:24:45Z",
+      "side": 1,
+      "message": "just noticing this is here. seems like a potential source of flakiness. does the spec guarantee the pending duration changed events will be fired after a single timeout (stable state?). You might need to setTimeout(..., 0) until you observe the event count reach the expected value.",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 92
+      },
+      "revId": "66e201c92ef4c5dc5e8d56912f984cfa79101ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3dd3d72_a85b28bc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-07T21:24:45Z",
+      "side": 1,
+      "message": "Test might be even cleaner if we wait to call end-of-stream until *after* the 2nd duration changed event.",
+      "range": {
+        "startLine": 229,
+        "startChar": 36,
+        "endLine": 229,
+        "endChar": 65
+      },
+      "revId": "66e201c92ef4c5dc5e8d56912f984cfa79101ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
