@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cda61790_300e4e8d",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/event-composed-false-path.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-07T07:49:04Z",
+      "side": 1,
+      "message": "minor nit: id\u003d\"host\" is duplicated with line 36 in document tree.\n(id namespace is per-treescope).\n\nOriginal test (event-composed-path.html) also has this issue :)",
+      "revId": "6c06685f1584966e28ee97481d8dc64d709b8f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
