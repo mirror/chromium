@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "64e6534f_d8ee93de",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T06:29:11Z",
+      "side": 1,
+      "message": "For reason (1), would it be necessary and sufficient to run the callback in the dtor of SWProviderHost? As written, it seems there could be times we get destructed before calling the callback. (But yea, I agree we\u0027ll need an error param).\n\nFor reason (2), I\u0027m not sure we need to worry so much about promptly calling the callback because the ServiceWorkerContainer just has the lifetime of a Document and it should eventually get cleaned up. We\u0027re already in a weird state here: if there\u0027s no dispatcher the process is already dead, and if context isn\u0027t alive the browser is shutting down or the service worker db got corrupted. Seems like we can just let Blink clean itself up when the Document is closed... it\u0027s simpler than trying hard in these multi-line statements here and below.",
+      "parentUuid": "00af6106_c692f0c0",
+      "revId": "7e8f08e02613c1feb5f07566472416e990242e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b61187a5_61a66a08",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 3
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "If we just use |callback| directly, the condition \u0027if (!callback)\u0027 will have two possible cases:\n  1. There is not any |callback| ever set at all.\nor\n  2. The |callback| has been set but has already run.\n\nBut, our code logic needs to differentiate above 2 cases, we must ensure |callback| to be set only once, and after that we must reject all other getRegistrationForReady requests. The logic is inside ServiceWorkerProviderHost::IsValidGetRegistrationForReadyMessage().",
       "parentUuid": "ff29ea87_2b41047f",
+      "revId": "7e8f08e02613c1feb5f07566472416e990242e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636bf2e3_c0d5cfb0",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T06:29:11Z",
+      "side": 1,
+      "message": "Right, and we are tracking these states using std::unique_ptr\u003cOneShotCallback\u003e one_shot_callback_. When one_shot_callback_.is_null(), we are in (1). When one_shot_callback_-\u003ecallback.is_null(), we are in (2). It seems we can just do this using std::unique_ptr\u003cOnceCallback\u003e callback_. When callback_.is_null(), we are in (1). When callback_-\u003ecallback.is_null(), we are in (2). No?",
+      "parentUuid": "45c79027_fdb91aab",
       "revId": "7e8f08e02613c1feb5f07566472416e990242e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
