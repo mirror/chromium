@@ -493,11 +493,20 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         }
     }
 
+    public static void setPasteAsPlainTextMenuItemTitle(Context context, Menu menu) {
+        MenuItem item = menu.findItem(R.id.select_action_menu_paste_as_plain_text);
+        if (item == null) return;
+        item.setTitle(
+                context.getResources().getIdentifier("paste_as_plain_text", "string", "android"));
+    }
+
     private void createActionMenu(ActionMode mode, Menu menu) {
         initializeMenu(mContext, mode, menu);
 
         mActionMenuDescriptor = createActionMenuDescriptor();
         mActionMenuDescriptor.apply(menu);
+
+        setPasteAsPlainTextMenuItemTitle(mContext, menu);
 
         if (!hasSelection() || isSelectionPassword()) return;
 
