@@ -74,8 +74,12 @@ CloudExternalDataPolicyObserver::PolicyServiceObserver::PolicyServiceObserver(
     const PolicyMap::Entry* entry = policy_service_->GetPolicies(
         PolicyNamespace(POLICY_DOMAIN_CHROME, std::string()))
             .Get(parent_->policy_);
-    if (entry)
+
+    // Emit the notification if the policy is set or cleared.
+    if (entry || (!entry && parent_->delegate_->HasExternalDataSet(
+                                parent_->policy_, user_id))) {
       parent_->HandleExternalDataPolicyUpdate(user_id_, entry);
+    }
   }
 }
 
@@ -116,6 +120,12 @@ void CloudExternalDataPolicyObserver::Delegate::OnExternalDataFetched(
     const std::string& policy,
     const std::string& user_id,
     std::unique_ptr<std::string> data) {}
+
+bool CloudExternalDataPolicyObserver::Delegate::HasExternalDataSet(
+    const std::string& policy,
+    const std::string& user_id) {
+  return false;
+}
 
 CloudExternalDataPolicyObserver::Delegate::~Delegate() {
 }

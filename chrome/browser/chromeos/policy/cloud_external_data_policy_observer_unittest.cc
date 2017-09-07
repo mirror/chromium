@@ -110,8 +110,11 @@ class CloudExternalDataPolicyObserverTest
   void OnExternalDataFetched(const std::string& policy,
                              const std::string& user_id,
                              std::unique_ptr<std::string> data) override;
+  bool HasExternalDataSet(const std::string& policy,
+                          const std::string& user_id) override;
 
   void CreateObserver();
+  void RemoveObserver();
 
   void ClearObservations();
 
@@ -162,6 +165,8 @@ class CloudExternalDataPolicyObserverTest
   ExternalDataFetcher::FetchCallback fetch_callback_;
 
   TestingProfileManager profile_manager_;
+
+  bool has_managed_avatar_ = false;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CloudExternalDataPolicyObserverTest);
@@ -226,6 +231,7 @@ void CloudExternalDataPolicyObserverTest::OnExternalDataSet(
     const std::string& user_id) {
   EXPECT_EQ(key::kUserAvatarImage, policy);
   set_calls_.push_back(user_id);
+  has_managed_avatar_ = true;
 }
 
 void CloudExternalDataPolicyObserverTest::OnExternalDataCleared(
@@ -233,6 +239,7 @@ void CloudExternalDataPolicyObserverTest::OnExternalDataCleared(
     const std::string& user_id) {
   EXPECT_EQ(key::kUserAvatarImage, policy);
   cleared_calls_.push_back(user_id);
+  has_managed_avatar_ = false;
 }
 
 void CloudExternalDataPolicyObserverTest::OnExternalDataFetched(
@@ -244,6 +251,12 @@ void CloudExternalDataPolicyObserverTest::OnExternalDataFetched(
   fetched_calls_.back().second.swap(*data);
 }
 
+bool CloudExternalDataPolicyObserverTest::HasExternalDataSet(
+    const std::string& policy,
+    const std::string& user_id) {
+  return has_managed_avatar_;
+}
+
 void CloudExternalDataPolicyObserverTest::CreateObserver() {
   observer_.reset(new CloudExternalDataPolicyObserver(
       &cros_settings_,
@@ -251,6 +264,10 @@ void CloudExternalDataPolicyObserverTest::CreateObserver() {
       key::kUserAvatarImage,
       this));
   observer_->Init();
+}
+
+void CloudExternalDataPolicyObserverTest::RemoveObserver() {
+  observer_.reset();
 }
 
 void CloudExternalDataPolicyObserverTest::ClearObservations() {
@@ -952,6 +969,49 @@ TEST_F(CloudExternalDataPolicyObserverTest, RegularUserSetSet) {
   ASSERT_EQ(1u, fetched_calls_.size());
   EXPECT_EQ(kRegularUserID, fetched_calls_.front().first);
   EXPECT_EQ(avatar_policy_2_data_, fetched_calls_.front().second);
+  ClearObservations();
+}
+
+// Tests that if external data reference for a regular user was cleared when
+// the user logged out, the notification will still be emitted when the user
+// logs back in.
+TEST_F(CloudExternalDataPolicyObserverTest, RegularUserLogoutTest) {
+  SetRegularUserAvatarPolicy(avatar_policy_1_);
+  CreateObserver();
+
+  EXPECT_CALL(external_data_manager_, Fetch(key::kUserAvatarImage, _))
+      .Times(1)
+      .WillOnce(SaveArg<1>(&fetch_callback_));
+
+  LogInAsRegularUser();
+
+  EXPECT_TRUE(cleared_calls_.empty());
+  EXPECT_TRUE(fetched_calls_.empty());
+  ASSERT_EQ(1u, set_calls_.size());
+  EXPECT_EQ(kRegularUserID, set_calls_.front());
+  ClearObservations();
+
+  // Now simulate log out the user. Simply reset the external data policy
+  // observer.
+  RemoveObserver();
+
+  Mock::VerifyAndClear(&external_data_manager_);
+  EXPECT_CALL(external_data_manager_, Fetch(key::kUserAvatarImage, _)).Times(0);
+
+  SetRegularUserAvatarPolicy("");
+
+  // Now simulate log back the user.
+  CreateObserver();
+  content::NotificationService::current()->Notify(
+      chrome::NOTIFICATION_LOGIN_USER_PROFILE_PREPARED,
+      content::NotificationService::AllSources(),
+      content::Details<Profile>(profile_.get()));
+
+  // Test that clear notification is emitted.
+  EXPECT_TRUE(set_calls_.empty());
+  EXPECT_TRUE(fetched_calls_.empty());
+  ASSERT_EQ(1u, cleared_calls_.size());
+  EXPECT_EQ(kRegularUserID, cleared_calls_.front());
   ClearObservations();
 }
 

@@ -179,6 +179,11 @@ void ChromeUserManagerImpl::RegisterPrefs(PrefRegistrySimple* registry) {
                                std::string());
   registry->RegisterListPref(kReportingUsers);
 
+  // A vector pref of the users who have the policy |kUserAvatarImage| enforced.
+  registry->RegisterListPref(policy::key::kUserAvatarImage);
+  // A vector pref of the users who have the policy |kWallpaperImage| enforced.
+  registry->RegisterListPref(policy::key::kWallpaperImage);
+
   SupervisedUserManager::RegisterPrefs(registry);
   SessionLengthLimiter::RegisterPrefs(registry);
   BootstrapManager::RegisterPrefs(registry);
@@ -536,24 +541,34 @@ void ChromeUserManagerImpl::OnExternalDataSet(const std::string& policy,
                                               const std::string& user_id) {
   const AccountId account_id = user_manager::known_user::GetAccountId(
       user_id, std::string() /* id */, AccountType::UNKNOWN);
-  if (policy == policy::key::kUserAvatarImage)
+  if (policy == policy::key::kUserAvatarImage) {
+    ListPrefUpdate prefs_update_avatar(GetLocalState(), policy);
+    prefs_update_avatar->AppendString(user_id);
     GetUserImageManager(account_id)->OnExternalDataSet(policy);
-  else if (policy == policy::key::kWallpaperImage)
+  } else if (policy == policy::key::kWallpaperImage) {
+    ListPrefUpdate prefs_update_wallpaper(GetLocalState(), policy);
+    prefs_update_wallpaper->AppendString(user_id);
     WallpaperManager::Get()->OnPolicySet(policy, account_id);
-  else
+  } else {
     NOTREACHED();
+  }
 }
 
 void ChromeUserManagerImpl::OnExternalDataCleared(const std::string& policy,
                                                   const std::string& user_id) {
   const AccountId account_id = user_manager::known_user::GetAccountId(
       user_id, std::string() /* id */, AccountType::UNKNOWN);
-  if (policy == policy::key::kUserAvatarImage)
+  if (policy == policy::key::kUserAvatarImage) {
+    ListPrefUpdate prefs_update_avatar(GetLocalState(), policy);
+    prefs_update_avatar->Remove(base::Value(user_id), nullptr);
     GetUserImageManager(account_id)->OnExternalDataCleared(policy);
-  else if (policy == policy::key::kWallpaperImage)
+  } else if (policy == policy::key::kWallpaperImage) {
+    ListPrefUpdate prefs_update_wallpaper(GetLocalState(), policy);
+    prefs_update_wallpaper->Remove(base::Value(user_id), nullptr);
     WallpaperManager::Get()->OnPolicyCleared(policy, account_id);
-  else
+  } else {
     NOTREACHED();
+  }
 }
 
 void ChromeUserManagerImpl::OnExternalDataFetched(
@@ -570,6 +585,22 @@ void ChromeUserManagerImpl::OnExternalDataFetched(
                                              std::move(data));
   else
     NOTREACHED();
+}
+
+bool ChromeUserManagerImpl::HasExternalDataSet(const std::string& policy,
+                                               const std::string& user_id) {
+  if (policy == policy::key::kUserAvatarImage ||
+      policy == policy::key::kWallpaperImage) {
+    const base::ListValue* user_list = GetLocalState()->GetList(policy);
+    if (user_list) {
+      std::string user_id_in_list;
+      for (const auto& value : *user_list) {
+        if (value.GetAsString(&user_id_in_list) && user_id_in_list == user_id)
+          return true;
+      }
+    }
+  }
+  return false;
 }
 
 void ChromeUserManagerImpl::OnPolicyUpdated(const std::string& user_id) {

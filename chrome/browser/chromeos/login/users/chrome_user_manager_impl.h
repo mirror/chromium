@@ -124,6 +124,8 @@ class ChromeUserManagerImpl
   void OnExternalDataFetched(const std::string& policy,
                              const std::string& user_id,
                              std::unique_ptr<std::string> data) override;
+  bool HasExternalDataSet(const std::string& policy,
+                          const std::string& user_id) override;
 
   // policy::DeviceLocalAccountPolicyService::Observer implementation.
   void OnPolicyUpdated(const std::string& user_id) override;

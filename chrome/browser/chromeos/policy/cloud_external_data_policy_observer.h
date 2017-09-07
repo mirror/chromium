@@ -53,6 +53,10 @@ class CloudExternalDataPolicyObserver
                                        const std::string& user_id,
                                        std::unique_ptr<std::string> data);
 
+    // Returns true if an external data reference has been set for |user_id|.
+    virtual bool HasExternalDataSet(const std::string& policy,
+                                    const std::string& user_id);
+
    protected:
     virtual ~Delegate();
   };
