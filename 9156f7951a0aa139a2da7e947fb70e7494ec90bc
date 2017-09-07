@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "731870d7_be2b23c8",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation_struct_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-07T15:32:06Z",
+      "side": 1,
+      "message": "apparently not :)",
+      "parentUuid": "4726d07f_4bac53c3",
+      "range": {
+        "startLine": 104,
+        "startChar": 52,
+        "endLine": 104,
+        "endChar": 53
+      },
+      "revId": "9156f7951a0aa139a2da7e947fb70e7494ec90bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66e0046e_b4b80cbd",
         "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
         "patchSetId": 1
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "f96567ef_6bd01011",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-07T15:32:06Z",
+      "side": 1,
+      "message": "yeah but seems safer than trying to reconstruct the parent-\u003echild relationship",
+      "parentUuid": "66e0046e_b4b80cbd",
+      "range": {
+        "startLine": 71,
+        "startChar": 16,
+        "endLine": 71,
+        "endChar": 31
+      },
+      "revId": "9156f7951a0aa139a2da7e947fb70e7494ec90bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "720a89c8_b3b83d18",
         "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
         "patchSetId": 1
@@ -82,6 +130,30 @@
       "writtenOn": "2017-09-07T12:54:20Z",
       "side": 1,
       "message": "It\u0027s annoying that we have to send every name twice. :(",
+      "range": {
+        "startLine": 78,
+        "startChar": 6,
+        "endLine": 78,
+        "endChar": 12
+      },
+      "revId": "9156f7951a0aa139a2da7e947fb70e7494ec90bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeaf591c_d7b70254",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-07T15:32:06Z",
+      "side": 1,
+      "message": "ah good point, I think we might not need to, lemme have a try.",
+      "parentUuid": "720a89c8_b3b83d18",
       "range": {
         "startLine": 78,
         "startChar": 6,
