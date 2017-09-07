@@ -5,8 +5,6 @@
 #include "content/browser/service_worker/service_worker_script_url_loader_factory.h"
 
 #include <memory>
-#include "content/browser/service_worker/service_worker_context_core.h"
-#include "content/browser/service_worker/service_worker_provider_host.h"
 #include "content/browser/service_worker/service_worker_script_url_loader.h"
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/browser/url_loader_factory_getter.h"
@@ -17,13 +15,11 @@
 namespace content {
 
 ServiceWorkerScriptURLLoaderFactory::ServiceWorkerScriptURLLoaderFactory(
-    base::WeakPtr<ServiceWorkerContextCore> context,
-    base::WeakPtr<ServiceWorkerProviderHost> provider_host,
+    scoped_refptr<ServiceWorkerVersion> version,
     scoped_refptr<URLLoaderFactoryGetter> loader_factory_getter)
-    : context_(context),
-      provider_host_(provider_host),
-      loader_factory_getter_(loader_factory_getter) {
-  DCHECK(provider_host_->IsHostToRunningServiceWorker());
+    : version_(version), loader_factory_getter_(loader_factory_getter) {
+  DCHECK(version_);
+  DCHECK(loader_factory_getter_);
 }
 
 ServiceWorkerScriptURLLoaderFactory::~ServiceWorkerScriptURLLoaderFactory() =
@@ -52,8 +48,7 @@ void ServiceWorkerScriptURLLoaderFactory::CreateLoaderAndStart(
   mojo::MakeStrongBinding(
       base::MakeUnique<ServiceWorkerScriptURLLoader>(
           routing_id, request_id, options, resource_request, std::move(client),
-          provider_host_->running_hosted_version(), loader_factory_getter_,
-          traffic_annotation),
+          version_, loader_factory_getter_, traffic_annotation),
       std::move(request));
 }
 
@@ -66,7 +61,7 @@ void ServiceWorkerScriptURLLoaderFactory::Clone(
 
 bool ServiceWorkerScriptURLLoaderFactory::ShouldHandleScriptRequest(
     const ResourceRequest& resource_request) {
-  if (!context_ || !provider_host_)
+  if (!version_->context())
     return false;
 
   // We only use the script cache for main script loading and
@@ -79,15 +74,12 @@ bool ServiceWorkerScriptURLLoaderFactory::ShouldHandleScriptRequest(
     return false;
   }
 
-  scoped_refptr<ServiceWorkerVersion> version =
-      provider_host_->running_hosted_version();
-
   // This could happen if browser-side has set the status to redundant but
   // the worker has not yet stopped. The worker is already doomed so just
   // reject the request. Handle it specially here because otherwise it'd be
   // unclear whether "REDUNDANT" should count as installed or not installed
   // when making decisions about how to handle the request and logging UMA.
-  if (!version || version->status() == ServiceWorkerVersion::REDUNDANT)
+  if (version_->is_redundant())
     return false;
 
   // TODO: Make sure we don't handle the redirected request.
@@ -107,7 +99,7 @@ bool ServiceWorkerScriptURLLoaderFactory::ShouldHandleScriptRequest(
   // sets the main script's HTTP Response Info (via
   // ServiceWorkerVersion::SetMainScriptHttpResponseInfo()) which otherwise
   // would never be set.
-  if (ServiceWorkerVersion::IsInstalled(version->status()) &&
+  if (ServiceWorkerVersion::IsInstalled(version_->status()) &&
       ServiceWorkerUtils::IsScriptStreamingEnabled()) {
     return false;
   }
