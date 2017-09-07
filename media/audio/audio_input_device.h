@@ -59,6 +59,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/shared_memory.h"
+#include "base/power_monitor/power_observer.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "media/audio/audio_device_thread.h"
@@ -78,7 +79,8 @@ namespace media {
 // to any clients using this class.
 class MEDIA_EXPORT AudioInputDevice : public AudioCapturerSource,
                                       public AudioInputIPCDelegate,
-                                      public ScopedTaskRunnerObserver {
+                                      public ScopedTaskRunnerObserver,
+                                      public base::PowerObserver {
  public:
   // NOTE: Clients must call Initialize() before using.
   AudioInputDevice(
@@ -119,6 +121,10 @@ class MEDIA_EXPORT AudioInputDevice : public AudioCapturerSource,
   void OnMuted(bool is_muted) override;
   void OnIPCClosed() override;
 
+  // base::PowerObserver implementation.
+  void OnSuspend() override;
+  void OnResume() override;
+
   // Methods called on IO thread ----------------------------------------------
   // The following methods are tasks posted on the IO thread that needs to
   // be executed on that thread. They interact with AudioInputMessageFilter and
@@ -137,13 +143,24 @@ class MEDIA_EXPORT AudioInputDevice : public AudioCapturerSource,
   // callback. Must be called on IO thread.
   void CheckIfInputStreamIsAlive();
 
-  // Sets the last callback time |last_callback_time_ms_| to the current time.
-  // SetLastCallbackTimeToNow() posts a task on the IO thread to run
-  // SetLastCallbackTimeToNowOnIOThread() which actually sets the variable. We
-  // don't need high precision so we don't have to care about the delay added
-  // with posting the task.
-  void SetLastCallbackTimeToNow();
+  // Called by AudioInputDevice::AudioThreadCallback to inform that audio data
+  // was received the last period of time. Posts task to run
+  // AudioDataNotificationUpdatesOnIOThread().
+  void AudioDataNotification();
+
+  // Updates last callback time and stops the alive timer on Linux.
+  void AudioDataNotificationOnIOThread();
+
+  // Sets |last_callback_time_ms_| to the current time.
   void SetLastCallbackTimeToNowOnIOThread();
+
+  // Sets suspending flag on IO thread. Resume also resets the last callback
+  // time.
+  void SetIsSuspendingOnIOThread();
+  void SetIsResumingOnIOThread();
+
+  // Stops and clears |check_alive_timer_|.
+  void StopCheckAliveTimerOnIOThread();
 
   AudioParameters audio_parameters_;
 
@@ -185,7 +202,7 @@ class MEDIA_EXPORT AudioInputDevice : public AudioCapturerSource,
   // |last_callback_time_| stores the time for the last callback.
   // Both must only be accessed on the IO thread.
   // TODO(grunell): Change from TimeTicks to Atomic32 and remove the task
-  // posting in SetLastCallbackTimeToNow(). The Atomic32 variable would have to
+  // posting in AudioDataNotification(). The Atomic32 variable would have to
   // represent some time in seconds or tenths of seconds to be able to span over
   // enough time. Atomic64 cannot be used since it's not supported on 32-bit
   // platforms.
@@ -195,6 +212,9 @@ class MEDIA_EXPORT AudioInputDevice : public AudioCapturerSource,
   // Flags that missing callbacks has been detected. Used for statistics,
   // reported when stopping. Must only be accessed on the IO thread.
   bool missing_callbacks_detected_;
+
+  // Flags whether we're suspedning or not.
+  bool is_suspending_ = false;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(AudioInputDevice);
 };
