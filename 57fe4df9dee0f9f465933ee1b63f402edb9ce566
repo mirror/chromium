@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e0aaf7f_e31eb79a",
+        "filename": "components/arc/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-07T05:56:29Z",
+      "side": 1,
+      "message": "Maybe components/session_manager/core, instead?",
+      "revId": "57fe4df9dee0f9f465933ee1b63f402edb9ce566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e198fbc2_86fde3cc",
+        "filename": "components/arc/common/lock_screen.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-07T05:56:29Z",
+      "side": 1,
+      "message": "nit: s/Notify/Notifies the/",
+      "revId": "57fe4df9dee0f9f465933ee1b63f402edb9ce566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
