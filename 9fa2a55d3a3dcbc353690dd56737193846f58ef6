@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9d45cf1_6cfe151e",
+        "filename": "chrome/browser/extensions/external_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-07T00:53:50Z",
+      "side": 0,
+      "message": "Checked all the functions here:\n\nNumber of crash/ reports except ExternalLoader::LoadFinished was very low (\u003c\u003d 5), or none. But even LoadFinished was ~17.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 32
+      },
+      "revId": "9fa2a55d3a3dcbc353690dd56737193846f58ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2653c3a2_5e8c960f",
+        "filename": "chrome/browser/extensions/external_pref_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-07T00:53:50Z",
+      "side": 0,
+      "message": "\u003c 10 occurrences for each of these.",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 56
+      },
+      "revId": "9fa2a55d3a3dcbc353690dd56737193846f58ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be172e3_1a6fd17c",
+        "filename": "chrome/browser/extensions/external_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-07T00:53:50Z",
+      "side": 0,
+      "message": "The two changes with nontrivial # of crashes are:\na) ExternalProviderImpl::SetPrefs\n31 instances: https://crash.corp.google.com/browse?stbtiq\u003dExternalProviderImpl%3A%3ASetPrefs\u0026sql_dialect\u003ddremelsql#reports:35\n\nb) ExternalProviderImpl::~ExternalProviderImpl\nThis have lots of crashes. However, I couldn\u0027t find any pointing to the CHECK",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 43
+      },
+      "revId": "9fa2a55d3a3dcbc353690dd56737193846f58ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6a5c41_1daf0b20",
+        "filename": "chrome/browser/extensions/external_registry_loader_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-07T00:53:50Z",
+      "side": 0,
+      "message": "This signature appears a lot in crashes. My understanding is that these are unrelated to the CHECK below.\ne.g.\nhttps://crash.corp.google.com/browse?q\u003d\u0026sql_dialect\u003ddremelsql\u0026ignore_case\u003dfalse\u0026enable_rewrite\u003dtrue\u0026omit_field_name\u003d\u0026omit_field_value\u003d\u0026omit_field_opt\u003d\u0026unnest\u003d\u0026stbtiq\u003dExternalRegistryLoader::StartLoading\u0026reportid\u003d70cd14e2cced8a66\u0026index\u003d0#4\nShows that the crash in this very CHECK line, however the stack looks like:\nextensions::ExternalRegistryLoader::StartLoading()\nExtensionService::CheckForExternalUpdates()\nExtensionService::Init()\n...\nExtensionService::Init() has already a CHECK for UI thread, so this is likely red herring.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "9fa2a55d3a3dcbc353690dd56737193846f58ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
