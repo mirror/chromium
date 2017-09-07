@@ -16,6 +16,7 @@
 #include "content/child/service_worker/service_worker_handle_reference.h"
 #include "content/child/service_worker/service_worker_registration_handle_reference.h"
 #include "content/child/service_worker/service_worker_subresource_loader.h"
+#include "content/child/service_worker/web_service_worker_impl.h"
 #include "content/child/thread_safe_sender.h"
 #include "content/child/worker_thread_registry.h"
 #include "content/common/service_worker/service_worker_utils.h"
@@ -48,6 +49,8 @@ struct ServiceWorkerProviderContext::ControlleeState {
 
   // Tracks feature usage for UseCounter.
   std::set<uint32_t> used_features;
+
+  blink::WebServiceWorkerProviderClient* controllee_;
 
   // Keeps ServiceWorkerWorkerClient pointers of dedicated or shared workers
   // which are associated with the ServiceWorkerProviderContext.
@@ -135,10 +138,23 @@ void ServiceWorkerProviderContext::GetRegistration(
 }
 
 void ServiceWorkerProviderContext::SetController(
-    std::unique_ptr<ServiceWorkerHandleReference> controller,
-    const std::set<uint32_t>& used_features,
-    mojom::ServiceWorkerEventDispatcherPtrInfo event_dispatcher_ptr_info) {
+    mojom::SetControllerParamsPtr params) {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
+
+  mojom::ServiceWorkerEventDispatcherPtrInfo event_dispatcher_ptr_info;
+  if (params->controller_event_dispatcher.is_valid()) {
+    // Chrome doesn't use interface versioning.
+    event_dispatcher_ptr_info = mojom::ServiceWorkerEventDispatcherPtrInfo(
+        std::move(params->controller_event_dispatcher), 0u /* version */);
+  }
+  ServiceWorkerDispatcher* dispatcher =
+      ServiceWorkerDispatcher::GetThreadSpecificInstance();
+
+  // Adopt the reference sent from the browser process and pass it to the
+  // provider context if it exists.
+  std::unique_ptr<ServiceWorkerHandleReference> controller =
+      dispatcher->Adopt(params->object_info);
+
   ControlleeState* state = controllee_state_.get();
   DCHECK(state);
   DCHECK(!state->controller ||
@@ -152,7 +168,8 @@ void ServiceWorkerProviderContext::SetController(
     }
   }
   state->controller = std::move(controller);
-  state->used_features = used_features;
+  state->used_features = std::set<uint32_t>(params->used_features.begin(),
+                                            params->used_features.end());
   if (event_dispatcher_ptr_info.is_valid()) {
     CHECK(ServiceWorkerUtils::IsServicificationEnabled());
     state->event_dispatcher =
@@ -164,6 +181,25 @@ void ServiceWorkerProviderContext::SetController(
             state->controller->url().GetOrigin()),
         mojo::MakeRequest(&state->subresource_loader_factory));
   }
+
+  // Sync the controllee's use counter with the service worker's one.
+  for (uint32_t feature : params->used_features)
+    state->controllee_->CountFeature(feature);
+
+  // Get the existing worker object or create a new one with a new reference
+  // to populate the .controller field.
+  scoped_refptr<WebServiceWorkerImpl> worker =
+      dispatcher->GetOrCreateServiceWorker(ServiceWorkerHandleReference::Create(
+          params->object_info, dispatcher->thread_safe_sender()));
+  state->controllee_->SetController(WebServiceWorkerImpl::CreateHandle(worker),
+                                    params->should_notify_controllerchange);
+}
+
+void ServiceWorkerProviderContext::set_controllee(
+    blink::WebServiceWorkerProviderClient* controllee) {
+  DCHECK(controllee);
+  ControlleeState* state = controllee_state_.get();
+  state->controllee_ = controllee;
 }
 
 ServiceWorkerHandleReference* ServiceWorkerProviderContext::controller() {

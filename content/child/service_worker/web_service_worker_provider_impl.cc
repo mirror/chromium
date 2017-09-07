@@ -51,6 +51,8 @@ void WebServiceWorkerProviderImpl::SetClient(
   // for more context)
   GetDispatcher()->AddProviderClient(context_->provider_id(), client);
 
+  context_->set_controllee(client);
+
   if (!context_->controller())
     return;
   scoped_refptr<WebServiceWorkerImpl> controller =

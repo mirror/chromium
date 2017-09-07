@@ -396,11 +396,9 @@ TEST_F(ServiceWorkerProviderHostTest, Controller) {
           ->AsWeakPtr());
 
   // The page should be controlled since there was an active version at the
-  // time navigation started. The SetController IPC should have been sent.
+  // time navigation started.
   EXPECT_TRUE(host->active_version());
   EXPECT_EQ(host->active_version(), host->controller());
-  EXPECT_TRUE(helper_->ipc_sink()->GetUniqueMessageMatching(
-      ServiceWorkerMsg_SetControllerServiceWorker::ID));
 }
 
 TEST_F(ServiceWorkerProviderHostTest, ActiveIsNotController) {
@@ -435,12 +433,9 @@ TEST_F(ServiceWorkerProviderHostTest, ActiveIsNotController) {
           ->AsWeakPtr());
 
   // The page should not be controlled since there was no active version at the
-  // time navigation started. Furthermore, no SetController IPC should have been
-  // sent.
+  // time navigation started.
   EXPECT_TRUE(host->active_version());
   EXPECT_FALSE(host->controller());
-  EXPECT_EQ(nullptr, helper_->ipc_sink()->GetFirstMessageMatching(
-                         ServiceWorkerMsg_SetControllerServiceWorker::ID));
 }
 
 }  // namespace content

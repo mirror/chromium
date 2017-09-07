@@ -19,4 +19,5 @@ type_mappings = [
   "content.mojom.ServiceWorkerRegistrationObjectInfo=::content::ServiceWorkerRegistrationObjectInfo",
   "content.mojom.ServiceWorkerRegistrationOptions=::content::ServiceWorkerRegistrationOptions",
   "content.mojom.ServiceWorkerVersionAttributes=::content::ServiceWorkerVersionAttributes",
+  "content.mojom.ServiceWorkerObjectInfo=::content::ServiceWorkerObjectInfo",
 ]
