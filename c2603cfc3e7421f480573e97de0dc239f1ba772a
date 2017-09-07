@@ -46,6 +46,30 @@
       "revId": "c2603cfc3e7421f480573e97de0dc239f1ba772a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024c6b88_8bae858a",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T22:24:35Z",
+      "side": 1,
+      "message": "That\u0027s a good point. Fortunately I changed this so that the only assumption we make is that there will only be one default cellular network, which is still true, even with more than one device (the dummy network will be associated with the first device).\n\nThat said, I would be unsurprised if we have issues with more than one Cellular device, especially if the only service is associated with the second device. I\u0027ve added some more debugging in https://chromium-review.googlesource.com/c/chromium/src/+/656377, I\u0027ll try to investigate next week (I am out Mon and Fri).",
+      "parentUuid": "90abed29_2c5eefc2",
+      "range": {
+        "startLine": 1487,
+        "startChar": 0,
+        "endLine": 1492,
+        "endChar": 3
+      },
+      "revId": "c2603cfc3e7421f480573e97de0dc239f1ba772a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
