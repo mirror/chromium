@@ -170,7 +170,6 @@ static const char* const kSwitchNames[] = {
     switches::kDisableGpuDriverBugWorkarounds,
     switches::kUsePassthroughCmdDecoder,
     switches::kIgnoreGpuBlacklist,
-    switches::kForceVideoOverlays,
 };
 
 enum GPUProcessLifetimeEvent {
