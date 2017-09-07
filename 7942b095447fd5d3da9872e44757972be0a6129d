@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "15e4a61a_ddc7dfbe",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-07T22:03:26Z",
+      "side": 1,
+      "message": "I think this is a shared component, so it might be necessary to track the max time here?",
+      "revId": "7942b095447fd5d3da9872e44757972be0a6129d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c64fa67_2ecdf5a9",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
         "patchSetId": 5
