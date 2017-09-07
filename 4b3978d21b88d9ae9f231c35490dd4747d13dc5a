@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "703329c1_756e15ae",
+        "filename": "services/ui/ws/server_window_drawn_tracker_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-09-07T20:01:31Z",
+      "side": 1,
+      "message": "Right that\u0027s cleaner. Since resetting between each test is not needed, added it to the anonymous namespace.",
+      "parentUuid": "9838f46d_6aaf4faa",
+      "revId": "4b3978d21b88d9ae9f231c35490dd4747d13dc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce3feb5a_454d8637",
         "filename": "services/ui/ws/window_manager_access_policy.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9b43ec96_633e62ab",
+        "filename": "services/ui/ws/window_manager_access_policy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-09-07T20:01:31Z",
+      "side": 1,
+      "message": "good point. we already filled in the tree-\u003eid() if client_id is zero by the time we reach NewWindow so changed the check here to be \u003d\u003d client_id_.",
+      "parentUuid": "ce3feb5a_454d8637",
+      "revId": "4b3978d21b88d9ae9f231c35490dd4747d13dc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4d225cf_6c181655",
         "filename": "services/ui/ws/window_tree.cc",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-06T15:21:19Z",
       "side": 1,
       "message": "Some comments: (1) I think it\u0027s better to update DefaultAccessPolicy::IsValidIdForNewWindow() (2) the client is never told about its own client-id. So it should not be able to set the client id correctly. So instead of checking against |client_id_|, it should really check that the client-id is set to zero. (3) if we do check for zero, then I don\u0027t think you need to check GetWindowByClientId() anymore. You can just do a DCHECK() instead.",
+      "revId": "4b3978d21b88d9ae9f231c35490dd4747d13dc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f3770c_d01df324",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-09-07T20:01:31Z",
+      "side": 1,
+      "message": "changed IsValidForNewWindow as in the reply to the last comment.\nchanged GetWindowByClientId(client_window_id) to be in DCHECK.",
+      "parentUuid": "c4d225cf_6c181655",
       "revId": "4b3978d21b88d9ae9f231c35490dd4747d13dc5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
