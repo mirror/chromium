@@ -124,6 +124,8 @@ class StyleBuilderConverter {
       const CSSValue&);
   static FontVariantNumeric ConvertFontVariantNumeric(StyleResolverState&,
                                                       const CSSValue&);
+  static FontVariantEastAsian ConvertFontVariantEastAsian(StyleResolverState&,
+                                                          const CSSValue&);
   static StyleSelfAlignmentData ConvertSelfOrDefaultAlignmentData(
       StyleResolverState&,
       const CSSValue&);
