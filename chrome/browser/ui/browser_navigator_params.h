@@ -12,6 +12,7 @@
 #include "build/build_config.h"
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/site_instance.h"
+#include "content/public/browser/web_contents.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/resource_request_body.h"
 #include "ui/base/page_transition_types.h"
@@ -23,7 +24,6 @@ class Browser;
 class Profile;
 
 namespace content {
-class WebContents;
 struct OpenURLParams;
 }
 
@@ -248,6 +248,9 @@ struct NavigateParams {
   // the SiteInstance that will be used for the resulting frame in the case of
   // an about:blank or a data url navigation.
   scoped_refptr<content::SiteInstance> source_site_instance;
+
+  // True if this navigation is gated by the popup blocker.
+  bool is_popup;
 
  private:
   NavigateParams();

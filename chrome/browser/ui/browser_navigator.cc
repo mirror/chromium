@@ -5,6 +5,8 @@
 #include "chrome/browser/ui/browser_navigator.h"
 
 #include <algorithm>
+#include <memory>
+#include <string>
 
 #include "base/command_line.h"
 #include "base/macros.h"
@@ -18,6 +20,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/browser/task_manager/web_contents_tags.h"
+#include "chrome/browser/ui/blocked_content/popup_tracker.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
@@ -375,6 +378,9 @@ content::WebContents* CreateTargetContents(const chrome::NavigateParams& params,
 #endif
 
   WebContents* target_contents = WebContents::Create(create_params);
+
+  if (params.is_popup)
+    PopupTracker::CreateForWebContents(target_contents);
 
   // New tabs can have WebUI URLs that will make calls back to arbitrary
   // tab helpers, so the entire set of tab helpers needs to be set up
