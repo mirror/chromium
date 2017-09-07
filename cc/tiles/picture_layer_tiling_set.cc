@@ -93,10 +93,9 @@ void PictureLayerTilingSet::CopyTilingsAndPropertiesFromPendingTwin(
       this_tiling = nullptr;
     }
     if (!this_tiling) {
-      std::unique_ptr<PictureLayerTiling> new_tiling(new PictureLayerTiling(
+      tilings_.emplace_back(new PictureLayerTiling(
           tree_, raster_transform, raster_source_, client_,
           kMaxSoonBorderDistanceInScreenPixels, max_preraster_distance_));
-      tilings_.push_back(std::move(new_tiling));
       this_tiling = tilings_.back().get();
       tiling_sort_required = true;
       state_since_last_tile_priority_update_.added_tilings = true;
@@ -280,7 +279,7 @@ PictureLayerTiling* PictureLayerTilingSet::AddTiling(
   }
 #endif  // DCHECK_IS_ON()
 
-  tilings_.push_back(std::make_unique<PictureLayerTiling>(
+  tilings_.emplace_back(new PictureLayerTiling(
       tree_, raster_transform, raster_source, client_,
       kMaxSoonBorderDistanceInScreenPixels, max_preraster_distance_));
   PictureLayerTiling* appended = tilings_.back().get();
