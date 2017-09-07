@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55567d92_63845d52",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-07T04:56:48Z",
+      "side": 1,
+      "message": "since we now build against O, you can use R.string.paste_as_plain_text here.  The difference is that we should early exit at the top of the function if Build.SDK_INT isn\u0027t \u003e\u003d O.  That way we are sure we\u0027re only accessing the value on O (in which case we\u0027ll be able to add a NewApi exclusion if it complains to just this function as we know it is safe.",
+      "range": {
+        "startLine": 500,
+        "startChar": 24,
+        "endLine": 500,
+        "endChar": 36
+      },
+      "revId": "84ead569c32487cdd1bb17eb9a6ecb1db611ff22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
