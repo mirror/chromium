@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "325c6e0c_fbbb35df",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation_struct_traits.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-07T12:54:20Z",
+      "side": 1,
+      "message": "This is so much nicer with the unique_ptr trick! :)",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 74
+      },
+      "revId": "e45531457b012ba26410fd30146d47ce22623e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
