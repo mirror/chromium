@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5cba88ec_e46452ff",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-07T20:45:01Z",
+      "side": 1,
+      "message": "IMO, closing the bubble is expected when user submits password (or starts to type password again).",
+      "parentUuid": "95ec98a9_c008774c",
+      "revId": "ff0afbb4662098241b2f6f515c1491f0eb90f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "744ff465_903b5afa",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 3
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Sure. Can you eliminate the extra caching of current_auth_user_ and make it a getter?\n\n  LoginAuthUser* CurrentAuthUser() {\n    // Return secondary auth instance if it is showing some auth\n    // input mechanism.\n    if (opt_secondary_auth_ \u0026\u0026\n        opt_secondary_auth_-\u003eauth_methods() !\u003d LoginAuthUserView::AUTH_NONE) {\n      DCHECK(primary_auth_-\u003eauth_methods() \u003d\u003d LoginAuthUserView::AUTH_NONE);\n      return opt_secondary_auth_;\n    }\n\n    return primary_auth_;\n  }\n\nThis means that this if block will probably move to the top of the function.",
       "parentUuid": "0a72acf2_a5f508f7",
+      "revId": "ff0afbb4662098241b2f6f515c1491f0eb90f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37a59e4_86a8ae3b",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-07T20:45:01Z",
+      "side": 1,
+      "message": "Besides that, let\u0027s check user info instead of LoginAuthUserView pointer as mentioned in the other CL.",
+      "parentUuid": "22cc7f62_812f34aa",
       "revId": "ff0afbb4662098241b2f6f515c1491f0eb90f714",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
