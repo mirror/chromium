@@ -41,6 +41,13 @@ class OmniboxPopupContentsView : public views::View,
 
   virtual void LayoutChildren();
 
+  // Sets the line specified by |index| as selected.
+  virtual void SetSelectedLine(size_t index);
+
+  // Opens a match from the list specified by |index| with the type of tab or
+  // window specified by |disposition|.
+  void OpenMatch(size_t index, WindowOpenDisposition disposition);
+
   // OmniboxPopupView:
   bool IsOpen() const override;
   void InvalidateLine(size_t line) override;
@@ -56,13 +63,10 @@ class OmniboxPopupContentsView : public views::View,
   // views::View:
   void Layout() override;
   views::View* GetTooltipHandlerForPoint(const gfx::Point& point) override;
-  bool OnMousePressed(const ui::MouseEvent& event) override;
   bool OnMouseDragged(const ui::MouseEvent& event) override;
-  void OnMouseReleased(const ui::MouseEvent& event) override;
-  void OnMouseCaptureLost() override;
   void OnGestureEvent(ui::GestureEvent* event) override;
 
-  bool IsSelectedIndex(size_t index) const;
+  virtual bool IsSelectedIndex(size_t index) const;
   gfx::Image GetIconIfExtensionMatch(size_t index) const;
   bool IsStarredMatch(const AutocompleteMatch& match) const;
 
@@ -102,14 +106,6 @@ class OmniboxPopupContentsView : public views::View,
   // the specified point.
   size_t GetIndexForPoint(const gfx::Point& point);
 
-  // Sets the line corresponding to |event| as selected.
-  void SetSelectedLine(const ui::LocatedEvent& event);
-
-  // Opens an entry from the list depending on the event and the selected
-  // disposition.
-  void OpenSelectedLine(const ui::LocatedEvent& event,
-                        WindowOpenDisposition disposition);
-
   OmniboxResultView* result_view_at(size_t i);
 
   std::unique_ptr<OmniboxPopupModel> model_;
@@ -127,14 +123,6 @@ class OmniboxPopupContentsView : public views::View,
 
   // The font list used for result rows, based on the omnibox font list.
   gfx::FontList font_list_;
-
-  // If the user cancels a dragging action (i.e. by pressing ESC), we don't have
-  // a convenient way to release mouse capture. Instead we use this flag to
-  // simply ignore all remaining drag events, and the eventual mouse release
-  // event. Since OnDragCanceled() can be called when we're not dragging, this
-  // flag is reset to false on a mouse pressed event, to make sure we don't
-  // erroneously ignore the next drag.
-  bool ignore_mouse_drag_;
 
   // The popup sizes vertically using an animation when the popup is getting
   // shorter (not larger, that makes it look "slow").

@@ -81,7 +81,6 @@ OmniboxPopupContentsView::OmniboxPopupContentsView(
       omnibox_view_(omnibox_view),
       location_bar_view_(location_bar_view),
       font_list_(font_list),
-      ignore_mouse_drag_(false),
       size_animation_(this),
       start_margin_(0),
       end_margin_(0) {
@@ -165,6 +164,18 @@ void OmniboxPopupContentsView::LayoutChildren() {
       top = v->bounds().bottom();
     }
   }
+}
+
+void OmniboxPopupContentsView::SetSelectedLine(size_t index) {
+  if (HasMatchAt(index))
+    model_->SetSelectedLine(index, false, false);
+}
+
+void OmniboxPopupContentsView::OpenMatch(size_t index,
+                                         WindowOpenDisposition disposition) {
+  if (HasMatchAt(index))
+    omnibox_view_->OpenMatch(model_->result().match_at(index), disposition,
+                             GURL(), base::string16(), index);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -328,7 +339,7 @@ void OmniboxPopupContentsView::PaintUpdatesNow() {
 }
 
 void OmniboxPopupContentsView::OnDragCanceled() {
-  ignore_mouse_drag_ = true;
+  SetMouseHandler(nullptr);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -377,34 +388,20 @@ views::View* OmniboxPopupContentsView::GetTooltipHandlerForPoint(
   return nullptr;
 }
 
-bool OmniboxPopupContentsView::OnMousePressed(const ui::MouseEvent& event) {
-  ignore_mouse_drag_ = false;  // See comment on |ignore_mouse_drag_| in header.
-  if (event.IsLeftMouseButton())
-    SetSelectedLine(event);
-  return true;
-}
-
 bool OmniboxPopupContentsView::OnMouseDragged(const ui::MouseEvent& event) {
-  if (event.IsLeftMouseButton() && !ignore_mouse_drag_)
-    SetSelectedLine(event);
-  return true;
-}
-
-void OmniboxPopupContentsView::OnMouseReleased(const ui::MouseEvent& event) {
-  if (ignore_mouse_drag_) {
-    OnMouseCaptureLost();
-    return;
+  size_t index = GetIndexForPoint(event.location());
+  if (HasMatchAt(index)) {
+    // If the drag event is over the bounds of one of the result views, pass
+    // control to that view.
+    SetMouseHandler(result_view_at(index));
+    return false;
+  } else {
+    // If the drag event is not over any of the result views, that means that it
+    // has passed outside the bounds of the popup view. Return true to keep
+    // receiving the drag events, as the drag may return in which case we will
+    // want to respond to it again.
+    return true;
   }
-
-  if (event.IsOnlyMiddleMouseButton() || event.IsOnlyLeftMouseButton()) {
-    OpenSelectedLine(event, event.IsOnlyLeftMouseButton()
-                                ? WindowOpenDisposition::CURRENT_TAB
-                                : WindowOpenDisposition::NEW_BACKGROUND_TAB);
-  }
-}
-
-void OmniboxPopupContentsView::OnMouseCaptureLost() {
-  ignore_mouse_drag_ = false;
 }
 
 void OmniboxPopupContentsView::OnGestureEvent(ui::GestureEvent* event) {
@@ -412,11 +409,12 @@ void OmniboxPopupContentsView::OnGestureEvent(ui::GestureEvent* event) {
     case ui::ET_GESTURE_TAP_DOWN:
     case ui::ET_GESTURE_SCROLL_BEGIN:
     case ui::ET_GESTURE_SCROLL_UPDATE:
-      SetSelectedLine(*event);
+      SetSelectedLine(GetIndexForPoint(event->location()));
       break;
     case ui::ET_GESTURE_TAP:
     case ui::ET_GESTURE_SCROLL_END:
-      OpenSelectedLine(*event, WindowOpenDisposition::CURRENT_TAB);
+      OpenMatch(GetIndexForPoint(event->location()),
+                WindowOpenDisposition::CURRENT_TAB);
       break;
     default:
       return;
@@ -517,22 +515,6 @@ size_t OmniboxPopupContentsView::GetIndexForPoint(
       return i;
   }
   return OmniboxPopupModel::kNoMatch;
-}
-
-void OmniboxPopupContentsView::SetSelectedLine(const ui::LocatedEvent& event) {
-  size_t index = GetIndexForPoint(event.location());
-  if (HasMatchAt(index))
-    model_->SetSelectedLine(index, false, false);
-}
-
-void OmniboxPopupContentsView::OpenSelectedLine(
-    const ui::LocatedEvent& event,
-    WindowOpenDisposition disposition) {
-  size_t index = GetIndexForPoint(event.location());
-  if (!HasMatchAt(index))
-    return;
-  omnibox_view_->OpenMatch(model_->result().match_at(index), disposition,
-                           GURL(), base::string16(), index);
 }
 
 OmniboxResultView* OmniboxPopupContentsView::result_view_at(size_t i) {
