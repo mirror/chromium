@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a896a50f_6ea53c02",
+        "filename": "chrome/utility/extensions/extensions_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-07T22:09:24Z",
+      "side": 0,
+      "message": "This file and messages file should be gone with the itunes CL, right? Depending on which one you land first, I\u0027ll keep a reminder here to remove these files in the latter CL (or separately might be fine too).",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "d01cae4f4597662544a4c406b3a5f0f42e51242d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
