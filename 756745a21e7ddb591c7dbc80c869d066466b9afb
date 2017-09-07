@@ -104,6 +104,24 @@
       "revId": "756745a21e7ddb591c7dbc80c869d066466b9afb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a88916d2_7ae1b051",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-07T21:53:57Z",
+      "side": 1,
+      "message": "Since Chrome is almost always 32-bit, that would be a patch I care about.\n\nRather than contrib/inffast64, maybe we can name it contrib/large_inffast or something similar which could contain both the 64-bit and 32-bit patches?",
+      "parentUuid": "a0f6c679_dcdc57ec",
+      "revId": "756745a21e7ddb591c7dbc80c869d066466b9afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

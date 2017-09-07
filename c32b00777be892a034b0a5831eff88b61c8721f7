@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "8fe6d8ab_3915bbce",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-07T21:53:57Z",
+      "side": 1,
+      "message": "I think you meant either \"The first patch\" or 0004 here. It looks like 004.",
+      "range": {
+        "startLine": 81,
+        "startChar": 31,
+        "endLine": 81,
+        "endChar": 38
+      },
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39cf61b_fe3ea627",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-07T21:53:57Z",
+      "side": 1,
+      "message": "Can remove this blank line.",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53348e0b_8aebdff1",
         "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
         "patchSetId": 9
@@ -30,6 +70,24 @@
       "writtenOn": "2017-09-07T15:50:21Z",
       "side": 1,
       "message": "This block is repeated what, 3x along the file?\n\nCan you turn it in a macro or an inline function?",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92637663_ecac24c4",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-07T21:53:57Z",
+      "side": 1,
+      "message": "Agreed.\n\nIn fact, that might simplify this file quite a bit. Rather than a bunch of #ifdef / #else for the different code paths, you can simply include 2 different files depending on the architecture. One of the files uses the new way, the other uses the old way. Both files provide the inlined function with the same name.\n\nSo only one of the files gets included / inlined -- the ideal one for that architecture. It is like a C version of policies. :)",
+      "parentUuid": "59738a76_5c94d23d",
       "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -98,6 +156,46 @@
       "writtenOn": "2017-09-07T15:50:21Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3a33ed_53c59aaa",
+        "filename": "third_party/zlib/inffast.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-07T21:53:57Z",
+      "side": 1,
+      "message": "I know this was discussed earlier. But I think this should be #error \"This file shouldn\u0027t be included in your build. Instead, include contrib/inffast64/inffast64.c\"\n\nOr alternatively, this shouldn\u0027t exist at all. (That\u0027s probably the better option)\n\nI know the #ifdef ASMINF set a precedent. But it is a big ask to land changes outside of contrib/.",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a3ecdd_9264a50c",
+        "filename": "third_party/zlib/inffast.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-07T21:53:57Z",
+      "side": 1,
+      "message": "Should these changes be in a separate patch?\n\nI definitely like the macros over magic numbers. Since it is a small change, I don\u0027t mind clumping it into this change. However, it is difficult to land these upstream. Making them minimal and easy-to-accept might be useful for upstreaming.\n\nAlso, this added assumption seems to have always been true but missing, right? Or is it new to inffast64? I would imagine that is also fairly easy to accept independently. But if it is coupled with inffast64, it becomes harder to accept the whole upstream.",
+      "range": {
+        "startLine": 32,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 36
+      },
       "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
