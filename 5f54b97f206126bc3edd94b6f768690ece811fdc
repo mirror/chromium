@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b695b4a_b0b07683",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T01:31:07Z",
+      "side": 1,
+      "message": "PDF, like below.",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "5f54b97f206126bc3edd94b6f768690ece811fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204df25b_dfcb4358",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T01:31:07Z",
+      "side": 1,
+      "message": "This is the other place that posts a viewport message to the plugin. Can we change this to pass in userInitiated as well? That way both senders are consistent, and we don\u0027t have to worry about the implementation details in out_of_process_instance.cc, where the viewport message handler just happens to work without any change here.",
+      "revId": "5f54b97f206126bc3edd94b6f768690ece811fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
