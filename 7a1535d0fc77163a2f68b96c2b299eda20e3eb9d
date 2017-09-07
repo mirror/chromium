@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf87a93b_7bc1b04e",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-07T01:58:58Z",
+      "side": 1,
+      "message": "Could you add comment for |event_data_|? It seems set of flags since its\ntype is |unsigned|. But, I\u0027m not sure.",
+      "revId": "7a1535d0fc77163a2f68b96c2b299eda20e3eb9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
