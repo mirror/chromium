@@ -797,7 +797,9 @@ v8::Local<v8::Value> WebAXObjectProxy::InPageLinkTarget() {
 int WebAXObjectProxy::IntValue() {
   accessibility_object_.UpdateLayoutAndCheckValidity();
   if (accessibility_object_.SupportsRangeValue())
-    return accessibility_object_.ValueForRange();
+    float value = 0.0f;
+  accessibility_object_.ValueForRange(&value);
+  return value;
   else if (accessibility_object_.Role() == blink::kWebAXRoleHeading)
     return accessibility_object_.HeadingLevel();
   else
@@ -806,12 +808,16 @@ int WebAXObjectProxy::IntValue() {
 
 int WebAXObjectProxy::MinValue() {
   accessibility_object_.UpdateLayoutAndCheckValidity();
-  return accessibility_object_.MinValueForRange();
+  float min_value = 0.0f;
+  accessibility_object_.MinValueForRange(&min_value);
+  return min_value;
 }
 
 int WebAXObjectProxy::MaxValue() {
   accessibility_object_.UpdateLayoutAndCheckValidity();
-  return accessibility_object_.MaxValueForRange();
+  float max_value = 0.0f;
+  accessibility_object_.MaxValueForRange(&max_value);
+  return max_value;
 }
 
 std::string WebAXObjectProxy::ValueDescription() {
