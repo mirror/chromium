@@ -103,6 +103,8 @@ source_set("test_support") {
   testonly = true
 
   sources = [
+    "test/exo_perftest.cc",
+    "test/exo_perftest.h",
     "test/exo_test_base.cc",
     "test/exo_test_base.h",
     "test/exo_test_helper.cc",
@@ -216,4 +218,39 @@ test("exo_unittests") {
   if (is_linux) {
     deps += [ "//components/exo/wayland:unit_tests" ]
   }
+}
+
+test("exo_perftests") {
+  sources = [
+    "../../ash/test/ash_test_suite.cc",
+    "../../ash/test/ash_test_suite.h",
+    "exo_perftests.cc",
+    "test/run_all_unittests.cc",
+  ]
+
+  deps = [
+    ":exo",
+    ":test_support",
+    "//ash:test_support_without_content",
+    "//ash/public/cpp:ash_public_cpp",
+    "//base",
+    "//base/test:test_support",
+    "//cc:test_support",
+    "//components/exo/wayland",
+    "//components/exo/wayland:client_lib",
+    "//components/viz/test:test_support",
+    "//device/gamepad:test_helpers",
+    "//mojo/edk/embedder:headers",
+    "//testing/gtest",
+    "//ui/aura",
+    "//ui/base",
+    "//ui/compositor:test_support",
+    "//ui/gl:test_support",
+  ]
+
+  data_deps = [
+    "//ash/strings:ash_test_strings",
+    "//ash/resources:ash_test_resources_100_percent",
+    "//ash/resources:ash_test_resources_200_percent",
+  ]
 }

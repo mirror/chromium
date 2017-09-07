@@ -26,8 +26,8 @@ config("aura_shell_protocol_config") {
 source_set("aura_shell_protocol") {
   sources = [
     "aura-shell-client-protocol.h",
-    "aura-shell-server-protocol.h",
     "aura-shell-protocol.c",
+    "aura-shell-server-protocol.h",
   ]
 
   deps = [
@@ -120,6 +120,7 @@ source_set("client_lib") {
     "clients/client_base.h",
     "clients/client_helper.cc",
     "clients/client_helper.h",
+    "clients/rects.cc",
   ]
   deps = [
     ":aura_shell_protocol",

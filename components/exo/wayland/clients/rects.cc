@@ -138,6 +138,7 @@ void FrameCallback(void* data, wl_callback* callback, uint32_t time) {
   static uint32_t initial_time = time;
   schedule->time = time - initial_time;
   schedule->callback_pending = false;
+  fprintf(stderr, "EEE FrameCallback\n");
 }
 
 struct Frame {
@@ -479,11 +480,8 @@ const char kShowFpsCounter[] = "show-fps-counter";
 
 }  // namespace switches
 
-int main(int argc, char* argv[]) {
-  base::AtExitManager exit_manager;
-  base::CommandLine::Init(argc, argv);
+int RectMain() {
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-
   exo::wayland::clients::ClientBase::InitParams params;
   if (!params.FromCommandLine(*command_line))
     return 1;
