@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f280019_8b0ed3c1",
+        "filename": "extensions/common/api/feedback_private.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-07T21:30:31Z",
+      "side": 1,
+      "message": "the current power manager session",
+      "revId": "e5adaaa2878c8c98a7f250bec61c6f3ce941c2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5290fa8_b592f260",
+        "filename": "extensions/common/api/feedback_private.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-07T21:30:31Z",
+      "side": 1,
+      "message": "the previous power manager session.",
+      "revId": "e5adaaa2878c8c98a7f250bec61c6f3ce941c2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
