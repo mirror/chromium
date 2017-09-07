@@ -16,6 +16,24 @@
       "revId": "0d446c1782672bac1bb48b333f58f0983880c58d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a7d6f8_7f54b6ac",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-07T20:41:26Z",
+      "side": 1,
+      "message": "ooookay. I think this was fundamentally flawed by me trying to use both a Lock, as well as thread.join().\n\nIt now just uses a lock and I think is much easier to reason about. please have one more look.",
+      "parentUuid": "3784e29c_b44dc6ee",
+      "revId": "0d446c1782672bac1bb48b333f58f0983880c58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
