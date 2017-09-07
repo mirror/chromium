@@ -67,6 +67,13 @@ config("runtime_library") {
     asmflags += sysroot_flags
     ldflags += sysroot_flags
 
+    ldflags += [
+        "-Wl,-dynamic-linker," + sysroot + "/lib/x86_64-linux-gnu/ld-2.19.so",
+        "-Wl,-rpath,\$ORIGIN/" + rebase_path(sysroot, root_build_dir) + "/lib/x86_64-linux-gnu",
+        "-Wl,-rpath,\$ORIGIN/" + rebase_path(sysroot, root_build_dir) + "/lib/x86_64-linux-gnu/lib",
+        "-Wl,-rpath,\$ORIGIN/" + rebase_path(sysroot, root_build_dir) + "/usr/lib/x86_64-linux-gnu",
+    ]
+
     # When use_custom_libcxx=true, some -isystem flags get passed to
     # cflags_cc to set up libc++ include paths.  We want to make sure
     # the sysroot includes take lower precendence than the libc++
