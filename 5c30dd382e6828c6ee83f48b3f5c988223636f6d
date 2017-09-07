@@ -616,6 +616,30 @@
     },
     {
       "key": {
+        "uuid": "4cadb537_a15eaaef",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1459,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T21:33:28Z",
+      "side": 1,
+      "message": "I certain agree that it is complicated.\n\nWhen the networkingPrivate API was designed, we didn\u0027t envision a scenario where the UI had to deal with Device state beyond enable / disable + scanning.\n\nAdding SIM state to networkingPrivate.DeviceState was a bit of a hack (which could be removed with this CL). I contemplated adding FoundNetworks also but that would have been much more complicated. This approach also has the advantage of allowing us to show a \"details\" page in Settings for Cellular when there is only a Device available, since many of the interesting Cellular \"details\" actually comes from the Device state.\n\nSo I am open to further suggestions, but there has definitely been a lot of accumulated thought put into this :)",
+      "parentUuid": "9769705b_13aa60f7",
+      "range": {
+        "startLine": 1459,
+        "startChar": 45,
+        "endLine": 1459,
+        "endChar": 52
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26919b41_5700ae04",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 2
