@@ -1,0 +1,265 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfd9dc7e_ab1abcbe",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "unlock_button_ is a bit of a confusing name (even though the label says \"Unlock\") since it implies that the device will be unlocked. What about something like dismiss_note_unlock_button_?",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22d887cf_2a737408",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "You may want to move the on_click_ registration into AddButton().\n\n  AddButton(\n    IDS_ASH_SHELF_SHUTDOWN_BUTTON,\n    gfx::ImageSkia(),\n    base::Bind(\u0026LoginShelfView::ShutdownOrRestart, base::Unretained(this));",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "016ac3b1_5aa2f765",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "on_click_ can go from a views::View* to a base::Closure which will remove this static_cast.",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7d42bb_a9c8e96e",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "Why does the button need layer painting?",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5cfde88_47fa905a",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "nit: since these are all event handlers prefix the names with |On| or |Handle|, ie, |OnShutdownOrRestart|, |OnSignOut|, etc.",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eec07af_0012bab7",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "Was this a copy paste? I\u0027m not sure why we need to clear errors.",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5904c9_c213ca76",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "nit: just Click is good enough.",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e28977_c08ddc9f",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "Please write a |TestApi| class instead, as that seems to be the more common approach.",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20f2c2d_0551ad85",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "I think there is enough sequence checking here that writing a helper function will improve readability, ie,\n\n  EXPECT_SHELF_BUTTONS({shutdown_button(), cancel_button()});",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "828214fa_5ca7c274",
+        "filename": "ash/shelf/shelf.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "Inline this method. It is only called once and it sounds/feels like one-time initialization code.",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d732cf_bfe0d75a",
+        "filename": "ash/shelf/shelf_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "Nice comment.",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17824046_60f84d14",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "Please move this below AddChildView(shelf_view_) so the two AddChildView calls are together (fwiw, doing this is better for cache/icache).",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13017462_39c1a541",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "Please add brief high-level comments to each of these test sections.",
+      "range": {
+        "startLine": 413,
+        "startChar": 2,
+        "endLine": 413,
+        "endChar": 20
+      },
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1805e2fb_9104fbc1",
+        "filename": "ash/shutdown_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "nit: // Unowned.",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3eba082_cdaa22dc",
+        "filename": "ash/shutdown_controller_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "Could this defined as an inner class of ShutdownController, ie, ShutdownController::Observer?",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

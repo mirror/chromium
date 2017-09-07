@@ -412,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "7125807d_599dba48",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T23:54:37Z",
+      "side": 1,
+      "message": "I\u0027m not familiar enough with the code and it has changed a fair amount since the design doc, so it makes sense to get an owners opinion.\n\nIMO, since there are multiple view-types per ShelfWidget it makes since for Shelf or ShelfWidget to do the observing.",
+      "parentUuid": "0e210fc5_4af80ce9",
+      "range": {
+        "startLine": 311,
+        "startChar": 2,
+        "endLine": 311,
+        "endChar": 19
+      },
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98f818d5_1770c55f",
         "filename": "ash/tray_action/test_tray_action_client.h",
         "patchSetId": 7
