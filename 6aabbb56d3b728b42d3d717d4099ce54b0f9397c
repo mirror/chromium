@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dba8237_4aaff2ef",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/EditFileSystemView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-07T21:48:07Z",
+      "side": 1,
+      "message": "Let\u0027s add a test.",
+      "revId": "6aabbb56d3b728b42d3d717d4099ce54b0f9397c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23732dfb_a9097bfd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/EditFileSystemView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-07T21:48:07Z",
+      "side": 1,
+      "message": "see moduleSetting comment below.",
+      "revId": "6aabbb56d3b728b42d3d717d4099ce54b0f9397c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ce231e_22ffe110",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/FileSystemMapping.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-07T21:48:07Z",
+      "side": 1,
+      "message": "Should just use module setting right? It\u0027s weird setting a default setting value here and in the module.json.\n\nCommon.moduleSetting(\u0027...\u0027)",
+      "revId": "6aabbb56d3b728b42d3d717d4099ce54b0f9397c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abcd1f4b_24c40f85",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/FileSystemMapping.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-07T21:48:07Z",
+      "side": 1,
+      "message": "call this \"interceptingFileSystemPaths\" to be consistent with what you named it below?",
+      "revId": "6aabbb56d3b728b42d3d717d4099ce54b0f9397c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b5b94b_027833a3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/FileSystemMapping.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-07T21:48:07Z",
+      "side": 1,
+      "message": "Couldn\u0027t this be something like .xhtml or .php?",
+      "revId": "6aabbb56d3b728b42d3d717d4099ce54b0f9397c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
