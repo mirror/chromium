@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bfafda83_d118e3b4",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T02:01:31Z",
+      "side": 1,
+      "message": "Thanks, that\u0027s good to know :)",
+      "parentUuid": "310af4f3_3f3969aa",
+      "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06d095ad_6e2a57a0",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 1
@@ -88,6 +106,41 @@
       "writtenOn": "2017-09-07T01:28:46Z",
       "side": 1,
       "message": "Do you know what happen if the connection to the renderer is destroyed just before calling callback?\nI\u0027m worried that in that case the refcount for SWRegistrationObject/SWObject will be leaked.\n\nOne possible straightforward solution would be mojoifing SWRegistrationObject/SWObject and using their error callbacks.",
+      "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e48395_3dce9b04",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T02:01:31Z",
+      "side": 1,
+      "message": "Good thought. Haven\u0027t looked in detail, but how do we deal with the issue in with the non-mojofied path?",
+      "parentUuid": "650f4cd8_82042ca9",
+      "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce84b8ba_a3533140",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T02:01:31Z",
+      "side": 1,
+      "message": "I feel having both GetRegistrationForReadyCompleteCallback and GetRegistrationForReadyCallback is getting too confusing.\n\nThis whole OneShotGetReadyCallback() is a bit suspect. We already have OnceCallback which should guarantee \"one-shot\".\n\nCould we do some better refactoring here? If this struct just has a `base::OnceCallback\u003c\u003e callback`, do we need bool |called|? After running the callback, I think if (!callback) can be used to detect the callback was called.",
       "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
