@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "748d1e9a_f16f6968",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-07T20:53:01Z",
+      "side": 1,
+      "message": "nit: gaia password",
+      "range": {
+        "startLine": 51,
+        "startChar": 38,
+        "endLine": 51,
+        "endChar": 42
+      },
+      "revId": "27863d1c5e3b73a95dced38931d3f128ca89e498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf4bd37_69a5e72e",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-07T20:53:01Z",
+      "side": 1,
+      "message": "optional: Consider calling this OnGaiaPasswordChanged to be more explicit",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 34
+      },
+      "revId": "27863d1c5e3b73a95dced38931d3f128ca89e498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ff21a4_13bea629",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-07T20:53:01Z",
+      "side": 1,
+      "message": "Can some of these be private, not protected?",
+      "range": {
+        "startLine": 165,
+        "startChar": 31,
+        "endLine": 165,
+        "endChar": 45
+      },
+      "revId": "27863d1c5e3b73a95dced38931d3f128ca89e498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191e0641_9defd27d",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-07T20:53:01Z",
+      "side": 1,
+      "message": "Is it OK for service to be nullptr outside of tests?",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 14
+      },
+      "revId": "27863d1c5e3b73a95dced38931d3f128ca89e498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
