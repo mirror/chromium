@@ -88,6 +88,12 @@
 namespace ash {
 namespace {
 
+// Returns true if we are using md-based login/lock.
+bool IsUsingMdLogin() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      chromeos::switches::kShowMdLogin);
+}
+
 bool IsWindowAboveContainer(aura::Window* window,
                             aura::Window* blocking_container) {
   std::vector<aura::Window*> target_path;
@@ -655,6 +661,11 @@ void RootWindowController::UpdateAfterLoginStatusChange(LoginStatus status) {
     status_area_widget->UpdateAfterLoginStatusChange(status);
 }
 
+void RootWindowController::UpdateAfterSessionStateChange(
+    session_manager::SessionState state) {
+  shelf_->UpdateAfterSessionStateChange(state);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // RootWindowController, private:
 
@@ -869,9 +880,11 @@ void RootWindowController::CreateContainers() {
   wm::SetSnapsChildrenToPhysicalPixelBoundary(app_list_container);
   app_list_container->SetProperty(kUsesScreenCoordinatesKey, true);
 
-  aura::Window* shelf_container =
-      CreateContainer(kShellWindowId_ShelfContainer, "ShelfContainer",
-                      non_lock_screen_containers);
+  aura::Window* shelf_container_parent = IsUsingMdLogin()
+                                             ? lock_screen_related_containers
+                                             : non_lock_screen_containers;
+  aura::Window* shelf_container = CreateContainer(
+      kShellWindowId_ShelfContainer, "ShelfContainer", shelf_container_parent);
   wm::SetSnapsChildrenToPhysicalPixelBoundary(shelf_container);
   shelf_container->SetProperty(kUsesScreenCoordinatesKey, true);
   shelf_container->SetProperty(kLockedToRootKey, true);

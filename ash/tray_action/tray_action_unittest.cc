@@ -9,6 +9,7 @@
 
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/tray_action/test_tray_action_client.h"
 #include "ash/tray_action/tray_action_observer.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -46,31 +47,6 @@ class ScopedTestStateObserver : public TrayActionObserver {
   std::vector<TrayActionState> observed_states_;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedTestStateObserver);
-};
-
-class TestTrayActionClient : public mojom::TrayActionClient {
- public:
-  TestTrayActionClient() : binding_(this) {}
-
-  ~TestTrayActionClient() override = default;
-
-  mojom::TrayActionClientPtr CreateInterfacePtrAndBind() {
-    mojom::TrayActionClientPtr ptr;
-    binding_.Bind(mojo::MakeRequest(&ptr));
-    return ptr;
-  }
-
-  // mojom::TrayActionClient:
-  void RequestNewLockScreenNote() override { action_requests_count_++; }
-
-  int action_requests_count() const { return action_requests_count_; }
-
- private:
-  mojo::Binding<ash::mojom::TrayActionClient> binding_;
-
-  int action_requests_count_ = 0;
-
-  DISALLOW_COPY_AND_ASSIGN(TestTrayActionClient);
 };
 
 using TrayActionTest = AshTestBase;

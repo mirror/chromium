@@ -46,6 +46,9 @@ class ASH_EXPORT TrayAction : public mojom::TrayAction {
   // action.
   void RequestNewLockScreenNote();
 
+  // If the client is set, sends a request to close the lock screen note.
+  void CloseLockScreenNote();
+
   // mojom::TrayAction:
   void SetClient(mojom::TrayActionClientPtr action_handler,
                  mojom::TrayActionState lock_screen_note_state) override;
