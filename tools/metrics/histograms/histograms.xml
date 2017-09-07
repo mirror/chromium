@@ -70022,6 +70022,47 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Scheduling.CommitIntervalWithCompositedAnimations2"
+    units="microseconds">
+  <owner>paint-dev@chromium.org</owner>
+  <summary>
+    The time delta between the *draw* times of back-to-back BeginMainFrames that
+    result in a commit, when there is at least one composited animation.
+
+    The interval is only recorded when the BeginMainFrames are running and
+    committing continuously, where continuously means when another
+    BeginMainFrame is requested by the next BeginImplFrame after activation.
+  </summary>
+</histogram>
+
+<histogram name="Scheduling.CommitIntervalWithMainThreadAnimations2"
+    units="microseconds">
+  <owner>paint-dev@chromium.org</owner>
+  <summary>
+    The time delta between the *draw* times of back-to-back BeginMainFrames that
+    result in a commit, when there is at least one main thread animation.
+
+    The interval is only recorded when the BeginMainFrames are running and
+    committing continuously, where continuously means when another
+    BeginMainFrame is requested by the next BeginImplFrame after activation.
+  </summary>
+</histogram>
+
+<histogram
+    name="Scheduling.CommitIntervalWithMainThreadCompositableAnimations2"
+    units="microseconds">
+  <owner>paint-dev@chromium.org</owner>
+  <summary>
+    The time delta between the *draw* times of back-to-back BeginMainFrames that
+    result in a commit, when there is at least one main thread animation that
+    could be composited but not, due to running experiment.
+
+    The interval is only recorded when the BeginMainFrames are running and
+    committing continuously, where continuously means when another
+    BeginMainFrame is requested by the next BeginImplFrame after activation.
+  </summary>
+</histogram>
+
 <histogram name="Scheduling.CommitToReadyToActivateDuration"
     units="microseconds">
   <obsolete>
@@ -70075,6 +70116,43 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The time delta between the draw times of back-to-back BeginImplFrames,
     regardless of whether or not they result in a swap.
+
+    The interval is only recorded when every BeginImplFrame wants to draw.
+  </summary>
+</histogram>
+
+<histogram name="Scheduling.DrawIntervalWithCompositedAnimations2"
+    units="microseconds">
+  <owner>paint-dev@chromium.org</owner>
+  <summary>
+    The time delta between the draw times of back-to-back BeginImplFrames,
+    regardless of whether or not they result in a swap, when there is at least
+    one composited animation.
+
+    The interval is only recorded when every BeginImplFrame wants to draw.
+  </summary>
+</histogram>
+
+<histogram name="Scheduling.DrawIntervalWithMainThreadAnimations2"
+    units="microseconds">
+  <owner>paint-dev@chromium.org</owner>
+  <summary>
+    The time delta between the draw times of back-to-back BeginImplFrames,
+    regardless of whether or not they result in a swap, when there is at least
+    one main thread animation.
+
+    The interval is only recorded when every BeginImplFrame wants to draw.
+  </summary>
+</histogram>
+
+<histogram name="Scheduling.DrawIntervalWithMainThreadCompositableAnimations2"
+    units="microseconds">
+  <owner>paint-dev@chromium.org</owner>
+  <summary>
+    The time delta between the draw times of back-to-back BeginImplFrames,
+    regardless of whether or not they result in a swap, when there is at least
+    one main thread animation that could be composited but not, due to running
+    experiment.
 
     The interval is only recorded when every BeginImplFrame wants to draw.
   </summary>
@@ -93809,9 +93887,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       name="Scheduling.BeginMainFrameQueueDurationNotCritical2"/>
   <affected-histogram name="Scheduling.BeginMainFrameStartToCommitDuration2"/>
   <affected-histogram name="Scheduling.CommitInterval2"/>
+  <affected-histogram
+      name="Scheduling.CommitIntervalWithCompositedAnimations2"/>
+  <affected-histogram
+      name="Scheduling.CommitIntervalWithMainThreadAnimations2"/>
+  <affected-histogram
+      name="Scheduling.CommitIntervalWithMainThreadCompositableAnimations2"/>
   <affected-histogram name="Scheduling.CommitToReadyToActivateDuration2"/>
   <affected-histogram name="Scheduling.DrawDuration2"/>
   <affected-histogram name="Scheduling.DrawInterval2"/>
+  <affected-histogram name="Scheduling.DrawIntervalWithCompositedAnimations2"/>
+  <affected-histogram name="Scheduling.DrawIntervalWithMainThreadAnimations2"/>
+  <affected-histogram
+      name="Scheduling.DrawIntervalWithMainThreadCompositableAnimations2"/>
   <affected-histogram name="Scheduling.InvalidationToReadyToActivateDuration2"/>
   <affected-histogram name="Scheduling.MainAndImplFrameTimeDelta2"/>
   <affected-histogram name="Scheduling.PrepareTilesDuration2"/>
