@@ -22,6 +22,30 @@
       "revId": "a4d7ce3def7a91b7b87eafe5b398dd16aed599de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65e9369_67e91aaf",
+        "filename": "content/browser/web_contents/web_contents_view_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-09-07T01:10:29Z",
+      "side": 0,
+      "message": "The location in ui:MouseEvent may be relative to the target rather than relative to the screen.",
+      "parentUuid": "676e57e4_f3e7f70b",
+      "range": {
+        "startLine": 1167,
+        "startChar": 21,
+        "endLine": 1167,
+        "endChar": 73
+      },
+      "revId": "a4d7ce3def7a91b7b87eafe5b398dd16aed599de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
