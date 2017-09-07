@@ -16,6 +16,24 @@
       "revId": "9e3c4aacce692e023b83a9c3fe1f6d6a4292e021",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a48bfd_d081f956",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-07T14:13:01Z",
+      "side": 1,
+      "message": "Done. Thanks, I will remember that :-)",
+      "parentUuid": "ddf31fd0_2e2eb8ed",
+      "revId": "9e3c4aacce692e023b83a9c3fe1f6d6a4292e021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
