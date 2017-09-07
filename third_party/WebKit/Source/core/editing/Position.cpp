@@ -334,6 +334,33 @@ Node* PositionTemplate<Strategy>::CommonAncestorContainer(
                                   *other.ComputeContainerNode());
 }
 
+bool IsPositionValidFor(const Position& position, const Document& document) {
+  if (position.IsNull())
+    return true;
+  if (position.GetDocument() != document)
+    return false;
+
+  const Node* const container_node = position.ComputeContainerNode();
+  return container_node && container_node->isConnected();
+}
+
+bool IsPositionValidFor(const PositionInFlatTree& position,
+                        const Document& document) {
+  if (position.IsNull())
+    return true;
+
+  Node* node = position.ComputeContainerNode();
+  while (node && node != document)
+    node = EditingInFlatTreeStrategy::Parent(*node);
+
+  return node;
+}
+
+template <typename Strategy>
+bool PositionTemplate<Strategy>::IsValidFor(const Document& document) const {
+  return IsPositionValidFor(*this, document);
+}
+
 int ComparePositions(const PositionInFlatTree& position_a,
                      const PositionInFlatTree& position_b) {
   DCHECK(position_a.IsNotNull());
