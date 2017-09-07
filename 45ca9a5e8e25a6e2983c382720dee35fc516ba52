@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4683d0e5_30d27535",
+        "filename": "chrome/android/java/res/layout/other_forms_of_history_dialog.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-07T00:11:08Z",
+      "side": 1,
+      "message": "I believe there is some weirdness around linespacingextra that causes single line text on KK and JB to also add this additional padding (so it isn\u0027t just in the event of multi-line).  Here, I suspect this is multi-line always so it shouldn\u0027t matter, but it might be good to quickly check on older devices to verify.",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "45ca9a5e8e25a6e2983c382720dee35fc516ba52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5956584b_1070934b",
+        "filename": "chrome/android/java/res/layout/powered_by_chrome_footer.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-07T00:11:08Z",
+      "side": 1,
+      "message": "why style vs textAppearance like the other files?",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 13
+      },
+      "revId": "45ca9a5e8e25a6e2983c382720dee35fc516ba52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc7a3ae_4cbfbdef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/BluetoothChooserDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-07T00:11:08Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed as the super constructor is implicit.",
+      "range": {
+        "startLine": 308,
+        "startChar": 12,
+        "endLine": 308,
+        "endChar": 17
+      },
+      "revId": "45ca9a5e8e25a6e2983c382720dee35fc516ba52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
