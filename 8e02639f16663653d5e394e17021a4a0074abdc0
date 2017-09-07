@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "37a83a3a_a8410d5b",
+        "filename": "third_party/WebKit/LayoutTests/fast/media/media-element-move-to-new-document-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-07T20:22:00Z",
+      "side": 1,
+      "message": "I\u0027d be inclined to do that in a followup patch if it would be useful. Though, I\u0027m curious: what information are you thinking we should record in such a trace event?",
+      "parentUuid": "8af745e9_4ec4b344",
+      "revId": "8e02639f16663653d5e394e17021a4a0074abdc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6a422de_562e856c",
         "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2017-09-07T20:12:59Z",
       "side": 1,
       "message": "Do we want to retain a reference to XMLDocuments created by DocumentResource?",
+      "range": {
+        "startLine": 77,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 14
+      },
+      "revId": "8e02639f16663653d5e394e17021a4a0074abdc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "948f3b63_abff23cc",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-07T20:22:00Z",
+      "side": 1,
+      "message": "I could go either way, the DocumentResource case was just the first case I looked at, not necessarily the most common or canonical. I think the one now described is the most common case.",
+      "parentUuid": "c6a422de_562e856c",
       "range": {
         "startLine": 77,
         "startChar": 9,
