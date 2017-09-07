@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac5c9d36_fb8c17e1",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-07T01:19:39Z",
+      "side": 1,
+      "message": "Can you do BackdropFilterInternal()?",
+      "revId": "b5e05083c01b5a4106a8fdbd6f5477560049efca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
