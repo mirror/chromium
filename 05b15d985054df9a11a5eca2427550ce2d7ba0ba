@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a97e2371_5d6a5c59",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/DeviceConditions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-07T00:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d23bb6c_d2627d32",
+      "revId": "05b15d985054df9a11a5eca2427550ce2d7ba0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5190f55_48d973b1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/DeviceConditions.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "05b15d985054df9a11a5eca2427550ce2d7ba0ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c62a18ce_a9fe15ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/DeviceConditions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-07T00:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5190f55_48d973b1",
+      "revId": "05b15d985054df9a11a5eca2427550ce2d7ba0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c9146ff7_04ec1c86",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/DeviceConditions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-07T00:35:47Z",
+      "side": 1,
+      "message": "The intent is for the other one to be the getter used publicly to get the current state (we want that to just return the state that the object comes with instead of get the state from android every time), and this one is the method we use at DeviceConditions construction time to get the live android conditions.  For testing, we use the other constructor, so we don\u0027t want to try to get the live conditions from the test.  This leads to having two methods, one getter for the member, and one that does the real work of calling out to android OS.\n\nSo, I plan to leave these unmerged for better testability.",
+      "parentUuid": "1bcc0007_212f83f9",
+      "revId": "05b15d985054df9a11a5eca2427550ce2d7ba0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aa8a315_98369888",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskUnitTest.java",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "56d98fbd_b4fd4be2",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskUnitTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-07T00:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aa8a315_98369888",
+      "revId": "05b15d985054df9a11a5eca2427550ce2d7ba0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b194d07d_de5b1131",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskUnitTest.java",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "05b15d985054df9a11a5eca2427550ce2d7ba0ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f89ea8f_1d8a2c4f",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskUnitTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-07T00:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b194d07d_de5b1131",
+      "revId": "05b15d985054df9a11a5eca2427550ce2d7ba0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
