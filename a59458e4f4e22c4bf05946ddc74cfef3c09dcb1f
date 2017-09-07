@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4329ba88_2adcb3a8",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-07T22:59:52Z",
+      "side": 1,
+      "message": "And thank you for fixing that! When I started this CL I was hitting some cryptic CHECKs because I assumed |max| actually meant max. :)",
+      "parentUuid": "fa367afc_845da2fd",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 5
+      },
+      "revId": "a59458e4f4e22c4bf05946ddc74cfef3c09dcb1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63864700_fc8b1649",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
