@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cdfb38d4_d91c5279",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-07T16:50:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce18ff2f_467e7f99",
+      "revId": "64da37a5bf55b704a240e90246558ae78f08d863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f019a2fc_52c9bd55",
         "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
         "patchSetId": 13
@@ -89,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "c7587fe6_3665c64a",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-07T16:50:44Z",
+      "side": 1,
+      "message": "Made it private.",
+      "parentUuid": "baa970bc_7aea1609",
+      "revId": "64da37a5bf55b704a240e90246558ae78f08d863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f48a1bcc_209ccfed",
         "filename": "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.cc",
         "patchSetId": 13
@@ -103,6 +139,24 @@
       "revId": "64da37a5bf55b704a240e90246558ae78f08d863",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "355099a5_a4c07565",
+        "filename": "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-07T16:50:44Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "f48a1bcc_209ccfed",
+      "revId": "64da37a5bf55b704a240e90246558ae78f08d863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
