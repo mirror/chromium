@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1084ac49_a18100c0",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-07T23:09:02Z",
+      "side": 0,
+      "message": "Please keep this. You\u0027ll need it for the timer (see other comments).",
+      "range": {
+        "startLine": 199,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 31
+      },
+      "revId": "97fbcea35a6a0da9d49193bc6a1646b64163636d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4960739_51b8731d",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-07T23:09:02Z",
+      "side": 0,
+      "message": "Please bring back this function. Previously, we would pass a success and error callback to SetPowered() to see if things worked. With the new flow, we no longer need a special success callback, since we know things succeeded if DeviceListChanged() gets called. However, we don\u0027t have any special callback if enabling Bluetooth failed. Thus, we need to use a Timer here. Let\u0027s use 2 seconds as the time limit, since this really should happen almost instantaneously. If a timeout occurs, let\u0027s set the toggle back to off, as we did in OnsetPoweredError().\n\nAlso, please do not call ToggleBluetoothEnabled(). You never know if some other code *just* tried to enable it before you called this. Instead, let\u0027s use SetPrimaryUserBluetoothPowerSetting().",
+      "range": {
+        "startLine": 315,
+        "startChar": 0,
+        "endLine": 315,
+        "endChar": 26
+      },
+      "revId": "97fbcea35a6a0da9d49193bc6a1646b64163636d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

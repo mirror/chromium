@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf5802f6_2057e19a",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-07T23:09:02Z",
+      "side": 1,
+      "message": "This DCHECK() is error-prone. If you click on the toggle twice quickly before things get updated, you will hit this when status_ !\u003d IDLE.\n\nInstead, let\u0027s use the following. Note that we keep EnableBluetooth() as a function. You\u0027ll need to add more to that (see other comments):\n\n// If Bluetooth is in the process of being enabled, continue\n// waiting for this to occur.\nif (status_ !\u003d IDLE)\n  return;\n\nEnableBluetooth();",
+      "range": {
+        "startLine": 249,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 38
+      },
+      "revId": "d40f996559293a9fc8e839c3ad16ff447e08885b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
