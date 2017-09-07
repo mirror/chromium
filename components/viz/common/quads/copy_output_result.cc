@@ -8,8 +8,10 @@
 
 namespace viz {
 
-CopyOutputResult::CopyOutputResult(Format format, const gfx::Rect& rect)
-    : format_(format), rect_(rect) {
+CopyOutputResult::CopyOutputResult(Format format,
+                                   const gfx::Rect& rect,
+                                   const gfx::ColorSpace& color_space)
+    : format_(format), rect_(rect), color_space_(color_space) {
   DCHECK(format_ == Format::RGBA_BITMAP || format_ == Format::RGBA_TEXTURE);
 }
 
@@ -44,9 +46,11 @@ CopyOutputResult::TakeTextureOwnership() {
   return nullptr;
 }
 
-CopyOutputSkBitmapResult::CopyOutputSkBitmapResult(const gfx::Rect& rect,
-                                                   const SkBitmap& bitmap)
-    : CopyOutputResult(Format::RGBA_BITMAP, rect) {
+CopyOutputSkBitmapResult::CopyOutputSkBitmapResult(
+    const gfx::Rect& rect,
+    const gfx::ColorSpace& color_space,
+    const SkBitmap& bitmap)
+    : CopyOutputResult(Format::RGBA_BITMAP, rect, color_space) {
   if (!rect.IsEmpty()) {
     // Hold a reference to the |bitmap|'s pixels, for AsSkBitmap().
     *(cached_bitmap()) = bitmap;
@@ -87,7 +91,9 @@ CopyOutputTextureResult::CopyOutputTextureResult(
     const gfx::Rect& rect,
     const TextureMailbox& texture_mailbox,
     std::unique_ptr<SingleReleaseCallback> release_callback)
-    : CopyOutputResult(Format::RGBA_TEXTURE, rect),
+    : CopyOutputResult(Format::RGBA_TEXTURE,
+                       rect,
+                       texture_mailbox.color_space()),
       texture_mailbox_(texture_mailbox),
       release_callback_(std::move(release_callback)) {
   DCHECK(rect.IsEmpty() || texture_mailbox_.IsTexture());
