@@ -115,4 +115,83 @@ bool StructTraits<memory_instrumentation::mojom::RequestArgsDataView,
   return true;
 }
 
+// static
+bool StructTraits<
+    memory_instrumentation::mojom::RawAllocatorDumpEdgeDataView,
+    base::trace_event::ProcessMemoryDump::MemoryAllocatorDumpEdge>::
+    Read(memory_instrumentation::mojom::RawAllocatorDumpEdgeDataView input,
+         base::trace_event::ProcessMemoryDump::MemoryAllocatorDumpEdge* out) {
+  out->source = base::trace_event::MemoryAllocatorDumpGuid(input.source_id());
+  out->target = base::trace_event::MemoryAllocatorDumpGuid(input.target_id());
+  out->importance = input.importance();
+  out->overridable = input.overridable();
+  return true;
+}
+
+// static
+bool StructTraits<memory_instrumentation::mojom::RawAllocatorDumpEntryDataView,
+                  base::trace_event::MemoryAllocatorDump::Entry>::
+    Read(memory_instrumentation::mojom::RawAllocatorDumpEntryDataView input,
+         base::trace_event::MemoryAllocatorDump::Entry* out) {
+  std::string name, units;
+  if (!input.ReadName(&name) || !input.ReadUnits(&units))
+    return false;
+  if (input.is_uint64()) {
+    *out = base::trace_event::MemoryAllocatorDump::Entry(name, units,
+                                                         input.value_uint64());
+  } else {
+    std::string value_string;
+    if (!input.ReadValueString(&value_string))
+      return false;
+    *out = base::trace_event::MemoryAllocatorDump::Entry(name, units,
+                                                         value_string);
+  }
+  return true;
+}
+
+// static
+bool StructTraits<memory_instrumentation::mojom::RawAllocatorDumpDataView,
+                  std::unique_ptr<base::trace_event::MemoryAllocatorDump>>::
+    Read(memory_instrumentation::mojom::RawAllocatorDumpDataView input,
+         std::unique_ptr<base::trace_event::MemoryAllocatorDump>* out) {
+  std::string absolute_name;
+  if (!input.ReadAbsoluteName(&absolute_name))
+    return false;
+  base::trace_event::MemoryDumpLevelOfDetail level_of_detail;
+  if (!input.ReadLevelOfDetail(&level_of_detail))
+    return false;
+  auto mad = std::make_unique<base::trace_event::MemoryAllocatorDump>(
+      absolute_name, level_of_detail,
+      base::trace_event::MemoryAllocatorDumpGuid(input.id()));
+  if (input.weak())
+    mad->set_flags(base::trace_event::MemoryAllocatorDump::WEAK);
+  if (!input.ReadEntries(mad->mutable_entries_for_serialization()))
+    return false;
+  *out = std::move(mad);
+  return true;
+}
+
+// static
+bool StructTraits<memory_instrumentation::mojom::RawProcessMemoryDumpDataView,
+                  std::unique_ptr<base::trace_event::ProcessMemoryDump>>::
+    Read(memory_instrumentation::mojom::RawProcessMemoryDumpDataView input,
+         std::unique_ptr<base::trace_event::ProcessMemoryDump>* out) {
+  base::trace_event::MemoryDumpArgs dump_args;
+  if (!input.ReadLevelOfDetail(&dump_args.level_of_detail))
+    return false;
+  std::vector<base::trace_event::ProcessMemoryDump::MemoryAllocatorDumpEdge>
+      edges;
+  if (!input.ReadAllocatorDumpEdges(&edges))
+    return false;
+  std::vector<std::unique_ptr<base::trace_event::MemoryAllocatorDump>> dumps;
+  if (!input.ReadAllocatorDumps(&dumps))
+    return false;
+  auto pmd = std::make_unique<base::trace_event::ProcessMemoryDump>(nullptr,
+                                                                    dump_args);
+  pmd->SetAllocatorDumpsForSerialization(&dumps);
+  pmd->SetAllEdgesForSerialization(edges);
+  *out = std::move(pmd);
+  return true;
+}
+
 }  // namespace mojo
