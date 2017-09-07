@@ -1204,9 +1204,11 @@ RendererBlinkPlatformImpl::CreatePlatformEventObserverFromType(
     case blink::kWebPlatformEventTypeDeviceMotion:
       return base::MakeUnique<DeviceMotionEventPump>(thread);
     case blink::kWebPlatformEventTypeDeviceOrientation:
-      return base::MakeUnique<DeviceOrientationEventPump>(thread);
+      return base::MakeUnique<DeviceOrientationEventPump>(thread,
+                                                          false /* absolute */);
     case blink::kWebPlatformEventTypeDeviceOrientationAbsolute:
-      return base::MakeUnique<DeviceOrientationAbsoluteEventPump>(thread);
+      return base::MakeUnique<DeviceOrientationEventPump>(thread,
+                                                          true /* absolute */);
     case blink::kWebPlatformEventTypeGamepad:
       return base::MakeUnique<GamepadSharedMemoryReader>(thread);
     default:
