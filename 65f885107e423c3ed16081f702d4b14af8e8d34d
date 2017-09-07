@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "952fa289_0712140c",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-07T02:59:20Z",
+      "side": 1,
+      "message": "Added a clarification, thanks.",
+      "parentUuid": "b69211c5_40fa7c1f",
+      "range": {
+        "startLine": 178,
+        "startChar": 36,
+        "endLine": 178,
+        "endChar": 49
+      },
+      "revId": "65f885107e423c3ed16081f702d4b14af8e8d34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7465869b_7be8c39e",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 2
