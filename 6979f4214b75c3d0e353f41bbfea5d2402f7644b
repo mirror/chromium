@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08ecc043_62ac2f81",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:56:07Z",
+      "side": 1,
+      "message": "#include was correct",
+      "range": {
+        "startLine": 30,
+        "startChar": 25,
+        "endLine": 30,
+        "endChar": 48
+      },
+      "revId": "6979f4214b75c3d0e353f41bbfea5d2402f7644b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b2b25e_b2570353",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:56:07Z",
+      "side": 1,
+      "message": "/*argument_name\u003d*/nullptr",
+      "range": {
+        "startLine": 233,
+        "startChar": 21,
+        "endLine": 233,
+        "endChar": 28
+      },
+      "revId": "6979f4214b75c3d0e353f41bbfea5d2402f7644b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e24b43a_f8afe0ee",
+        "filename": "ios/net/cookies/cookie_store_ios_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:56:07Z",
+      "side": 1,
+      "message": "Could you please explain in the comments why this is not a leak.",
+      "range": {
+        "startLine": 150,
+        "startChar": 26,
+        "endLine": 150,
+        "endChar": 39
+      },
+      "revId": "6979f4214b75c3d0e353f41bbfea5d2402f7644b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79697b18_dc50c35a",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:56:07Z",
+      "side": 1,
+      "message": "nit: s/It/NSHTTPSystemCookieStore\n\n\"It\" may refer to \"this class\" or \"SystemCookieStore\"",
+      "revId": "6979f4214b75c3d0e353f41bbfea5d2402f7644b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2aac7b_d48d8268",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:56:07Z",
+      "side": 1,
+      "message": "nit: \n\nNSHTTPSystemCookieStore::~NSHTTPSystemCookieStore() \u003d default;",
+      "range": {
+        "startLine": 24,
+        "startChar": 26,
+        "endLine": 24,
+        "endChar": 49
+      },
+      "revId": "6979f4214b75c3d0e353f41bbfea5d2402f7644b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc6cea7_97b05245",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:56:07Z",
+      "side": 1,
+      "message": "Optional nit:\n\nNSArray* copy \u003d [[cookie_store_ cookies] copy];",
+      "range": {
+        "startLine": 59,
+        "startChar": 35,
+        "endLine": 59,
+        "endChar": 48
+      },
+      "revId": "6979f4214b75c3d0e353f41bbfea5d2402f7644b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d99600_c92ec2ab",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:56:07Z",
+      "side": 1,
+      "message": "Inherit from PlatformTest, which has NSAutoreleasePool and will prevent leaks.",
+      "range": {
+        "startLine": 23,
+        "startChar": 52,
+        "endLine": 23,
+        "endChar": 56
+      },
+      "revId": "6979f4214b75c3d0e353f41bbfea5d2402f7644b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952ac1dc_a92fcec2",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:56:07Z",
+      "side": 1,
+      "message": "nit: Do you need this variable?",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "6979f4214b75c3d0e353f41bbfea5d2402f7644b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c02772_15fd28cb",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:56:07Z",
+      "side": 1,
+      "message": "Is it possible to clear cookie in constructor? The problem with SetUp is that it\u0027s very easy to forget testing::Test::SetUp() call ;).",
+      "range": {
+        "startLine": 38,
+        "startChar": 26,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "6979f4214b75c3d0e353f41bbfea5d2402f7644b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6de4c5f_801a51d0",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:56:07Z",
+      "side": 1,
+      "message": "This should be unnecessary.",
+      "range": {
+        "startLine": 40,
+        "startChar": 3,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "6979f4214b75c3d0e353f41bbfea5d2402f7644b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86eaa2f3_83ab70b4",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:56:07Z",
+      "side": 1,
+      "message": "s/Acceptance/Accept",
+      "range": {
+        "startLine": 50,
+        "startChar": 24,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "6979f4214b75c3d0e353f41bbfea5d2402f7644b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

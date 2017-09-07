@@ -460,6 +460,30 @@
     },
     {
       "key": {
+        "uuid": "6cd09e7c_617343c6",
+        "filename": "ios/net/cookies/cookie_store_ios_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:56:07Z",
+      "side": 1,
+      "message": "Thanks for the explanation. I think you want to do this:\n\nCookieStoreIOSTest() {\n  std::unique_ptr\u003cNSHTTPSystemCookieStore\u003e system_store(base::MakeUnique\u003cNSHTTPSystemCookieStore\u003e());\n  // comment explaining memory management.\n  system_store_ \u003d system_store.get();\n  store_ \u003d base::MakeUnique\u003cnet::CookieStoreIOS\u003e(std::move(system_store));\n}",
+      "parentUuid": "f97ba398_75de6465",
+      "range": {
+        "startLine": 93,
+        "startChar": 31,
+        "endLine": 93,
+        "endChar": 54
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fbb4db4_f8140c37",
         "filename": "ios/net/cookies/cookie_store_ios_unittest.mm",
         "patchSetId": 3
@@ -976,6 +1000,30 @@
     },
     {
       "key": {
+        "uuid": "7ca0f828_1e1cb559",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:56:07Z",
+      "side": 1,
+      "message": "Right... Then we should not use k prefix.",
+      "parentUuid": "a094e073_f23f972b",
+      "range": {
+        "startLine": 53,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 23
+      },
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d98dd8c4_c34ce6c0",
         "filename": "ios/net/cookies/nshttp_system_cookie_store_unittest.mm",
         "patchSetId": 3
@@ -1058,6 +1106,24 @@
     },
     {
       "key": {
+        "uuid": "4b69f01b_8dec3b24",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:56:07Z",
+      "side": 1,
+      "message": "1 liners still need tests. Otherwise future refactorings can break them.",
+      "parentUuid": "cf7ad453_5f6a1ba6",
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c584176c_5954e527",
         "filename": "ios/net/cookies/nshttp_system_cookie_store_unittest.mm",
         "patchSetId": 3
@@ -1087,6 +1153,24 @@
       "side": 1,
       "message": "Is there objective c++ style guide other than the one for google ?",
       "parentUuid": "c584176c_5954e527",
+      "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db03f2b8_4eba7254",
+        "filename": "ios/net/cookies/nshttp_system_cookie_store_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:56:07Z",
+      "side": 1,
+      "message": "No. Objective-C Style Guide does not require using dot syntax for properties. It just looks prettier, and you don\u0027t have to make a change.",
+      "parentUuid": "c7d1c252_98ebb0f4",
       "revId": "f019a85942e7b12c6a33531ca40d72d6e8552147",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
