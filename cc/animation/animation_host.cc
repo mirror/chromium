@@ -254,6 +254,9 @@ void AnimationHost::PushPropertiesToImplThread(AnimationHost* host_impl) {
   // Update the impl-only scroll offset animations.
   scroll_offset_animations_->PushPropertiesTo(
       host_impl->scroll_offset_animations_impl_.get());
+  host_impl->main_thread_animations_count_ = main_thread_animations_count_;
+  host_impl->main_thread_compositable_animations_count_ =
+      main_thread_compositable_animations_count_;
 }
 
 scoped_refptr<ElementAnimations>
@@ -586,6 +589,36 @@ void AnimationHost::SetLayerTreeMutator(
 
 void AnimationHost::SetNeedsMutate() {
   mutator_needs_mutate_ = true;
+}
+
+size_t AnimationHost::CompositedAnimationsCount() const {
+  size_t composited_animations_count = 0;
+  for (const auto& it : ticking_players_)
+    composited_animations_count += it->TickingAnimationsCount();
+  return composited_animations_count;
+}
+
+void AnimationHost::SetMainThreadAnimationsCount(size_t num) {
+  int composited_animations_count = CompositedAnimationsCount();
+  if (main_thread_animations_count_ != num - composited_animations_count) {
+    main_thread_animations_count_ = num - composited_animations_count;
+    SetNeedsPushProperties();
+  }
+}
+
+size_t AnimationHost::MainThreadAnimationsCount() const {
+  return main_thread_animations_count_;
+}
+
+void AnimationHost::SetMainThreadCompositableAnimationsCount(size_t num) {
+  if (main_thread_compositable_animations_count_ != num) {
+    main_thread_compositable_animations_count_ = num;
+    SetNeedsPushProperties();
+  }
+}
+
+size_t AnimationHost::MainThreadCompositableAnimationsCount() const {
+  return main_thread_compositable_animations_count_;
 }
 
 }  // namespace cc
