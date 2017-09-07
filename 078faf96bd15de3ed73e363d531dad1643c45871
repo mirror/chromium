@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64b5f899_0c5de466",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-07T23:13:09Z",
+      "side": 1,
+      "message": "Please add a comment about why the setTimeout is being used.",
+      "revId": "078faf96bd15de3ed73e363d531dad1643c45871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
