@@ -99,6 +99,24 @@
       "revId": "89d66a5dc17f1c9101325ad08c61d91f5364d933",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61b321f2_d04a53de",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListMarker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-07T16:20:00Z",
+      "side": 1,
+      "message": "Done, I\u0027ve added a comment for that here, as well as some comments in the header describing the difference between GetText() and TextAlternative() -- hope that\u0027s ok.",
+      "parentUuid": "4261ada7_de205cf3",
+      "revId": "89d66a5dc17f1c9101325ad08c61d91f5364d933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
