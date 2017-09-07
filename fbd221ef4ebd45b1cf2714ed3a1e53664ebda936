@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "76350f9f_264ea3c1",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-07T23:47:15Z",
+      "side": 1,
+      "message": "OK, but the dialog as-is looks nothing like the mock. The button colors are wrong, and it\u0027s entirely in the spoofable area of the page.",
+      "parentUuid": "e794ef82_e7ae0a1f",
+      "range": {
+        "startLine": 75,
+        "startChar": 3,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "fbd221ef4ebd45b1cf2714ed3a1e53664ebda936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c2ff661_c7a88c6b",
         "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
         "patchSetId": 17
