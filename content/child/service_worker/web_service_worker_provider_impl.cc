@@ -173,8 +173,15 @@ void WebServiceWorkerProviderImpl::GetRegistrations(
 void WebServiceWorkerProviderImpl::GetRegistrationForReady(
     std::unique_ptr<WebServiceWorkerGetRegistrationForReadyCallbacks>
         callbacks) {
-  GetDispatcher()->GetRegistrationForReady(context_->provider_id(),
-                                           std::move(callbacks));
+  TRACE_EVENT_ASYNC_BEGIN0(
+      "ServiceWorker", "WebServiceWorkerProviderImpl::GetRegistrationForReady",
+      this);
+  // As |this| owns |context_| which owns the
+  // mojom::ServiceWorkerContainerHostAssociatedPtr, using Unretained() here
+  // should be guaranteed safe.
+  context_->container_host()->GetRegistrationForReady(base::BindOnce(
+      &WebServiceWorkerProviderImpl::OnDidGetRegistrationForReady,
+      base::Unretained(this), std::move(callbacks)));
 }
 
 bool WebServiceWorkerProviderImpl::ValidateScopeAndScriptURL(
@@ -297,6 +304,37 @@ void WebServiceWorkerProviderImpl::OnDidGetRegistrations(
         GetDispatcher()->GetOrAdoptRegistration((*infos)[i], (*attrs)[i]));
   }
   callbacks->OnSuccess(std::move(registrations));
+}
+
+void WebServiceWorkerProviderImpl::OnDidGetRegistrationForReady(
+    std::unique_ptr<WebServiceWorkerGetRegistrationForReadyCallbacks> callbacks,
+    blink::mojom::ServiceWorkerErrorType error,
+    const base::Optional<std::string>& error_msg,
+    const base::Optional<ServiceWorkerRegistrationObjectInfo>& registration,
+    const base::Optional<ServiceWorkerVersionAttributes>& attributes) {
+  TRACE_EVENT_ASYNC_END2(
+      "ServiceWorker", "WebServiceWorkerProviderImpl::GetRegistrationForReady",
+      this, "Error", ServiceWorkerUtils::ErrorTypeToString(error), "Message",
+      error_msg ? *error_msg : "Success");
+  if (error != blink::mojom::ServiceWorkerErrorType::kNone) {
+    // Do nothing because the only possible reason we may reach here is that
+    // service worker system is aborting, and
+    // WebServiceWorkerGetRegistrationForReadyCallbacks does not expect any
+    // error notification, see here:
+    // https://w3c.github.io/ServiceWorker/#navigator-service-worker-ready.
+    DCHECK_EQ(blink::mojom::ServiceWorkerErrorType::kAbort, error);
+    DCHECK(error_msg);
+    DCHECK(!registration);
+    DCHECK(!attributes);
+    return;
+  }
+
+  DCHECK(!error_msg);
+  DCHECK(registration);
+  DCHECK(attributes);
+  DCHECK_NE(kInvalidServiceWorkerRegistrationHandleId, registration->handle_id);
+  callbacks->OnSuccess(WebServiceWorkerRegistrationImpl::CreateHandle(
+      GetDispatcher()->GetOrAdoptRegistration(*registration, *attributes)));
 }
 
 }  // namespace content
