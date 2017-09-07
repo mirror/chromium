@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "f6f41831_a38cf76a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1880,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-07T07:24:06Z",
+      "side": 1,
+      "message": "If frame_selection.LayoutSelectionStart() is null,we reassign uninitialized value, right?",
+      "parentUuid": "e13964f9_58f4d84a",
+      "revId": "613fbe90aeeec93da34a79217bf57025e7a2f41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9b55b1f_afb9d851",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
         "patchSetId": 4
