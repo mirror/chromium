@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "1c053f83_be3bc574",
+        "filename": "chromeos/network/network_configuration_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T20:06:59Z",
+      "side": 1,
+      "message": "This is tricky in a unit test because it requires creating the default cellular network in NSH which is a bit more awkward than adding a tether network, but there should definitely be an API test for this so I added one to networking_private_chromeos_apitest.cc.",
+      "parentUuid": "2ab54335_e24dbc32",
+      "range": {
+        "startLine": 236,
+        "startChar": 7,
+        "endLine": 237,
+        "endChar": 59
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d51cb1_10303b1c",
+        "filename": "chromeos/network/network_configuration_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T20:06:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8958ca34_1771fcf0",
+      "range": {
+        "startLine": 236,
+        "startChar": 6,
+        "endLine": 237,
+        "endChar": 59
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "172d3892_76644961",
         "filename": "chromeos/network/network_state.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df63bc9_cf04eace",
+        "filename": "chromeos/network/network_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T20:06:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "172d3892_76644961",
+      "range": {
+        "startLine": 435,
+        "startChar": 48,
+        "endLine": 435,
+        "endChar": 69
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "f6fe6909_bec197d5",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T20:06:59Z",
+      "side": 1,
+      "message": "Agreed. Added a comment.",
+      "parentUuid": "7de88e95_a40aa9e2",
+      "range": {
+        "startLine": 1294,
+        "startChar": 19,
+        "endLine": 1294,
+        "endChar": 27
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "362324f5_25ccfce8",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 2
@@ -129,6 +225,30 @@
       "writtenOn": "2017-09-07T04:56:21Z",
       "side": 1,
       "message": "not quite follow what \u0027update_received\u0027 (or new_networks) actually means, but wondering if the update of |cellular| above should be moved after this check like how the code handles |active|, |*wifi*|.",
+      "range": {
+        "startLine": 1303,
+        "startChar": 18,
+        "endLine": 1303,
+        "endChar": 33
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f593b9c2_bba6dc9c",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T20:06:59Z",
+      "side": 1,
+      "message": "For other network types, we may receive an entry in the list of networks but have not yet received the properties for the network. In that case we want to include those networks in the list for lookup later, but not show them. This does not apply to Cellular where we will (now) create a default network if we do not have an existing entry.",
+      "parentUuid": "362324f5_25ccfce8",
       "range": {
         "startLine": 1303,
         "startChar": 18,
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "56f5bc09_ddf54aba",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1308,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T20:06:59Z",
+      "side": 1,
+      "message": "Heh. Done.",
+      "parentUuid": "4784043f_8eb54808",
+      "range": {
+        "startLine": 1308,
+        "startChar": 8,
+        "endLine": 1308,
+        "endChar": 67
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "952326f1_a207ef20",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 2
@@ -175,6 +319,30 @@
       "writtenOn": "2017-09-07T04:56:21Z",
       "side": 1,
       "message": "nit: It seems like the order of Ethernet, \u0027connecting\u0027, and \u0027connected\u0027 service could be arbitrary. It isn\u0027t a big deal, but I guess a consistent order may be more pleasant in UI, e.g.\n\n    A connecting service\n    A connected service\n    Ethernet",
+      "range": {
+        "startLine": 1310,
+        "startChar": 6,
+        "endLine": 1310,
+        "endChar": 41
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f11419a_f48709e7",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T20:06:59Z",
+      "side": 1,
+      "message": "In practice Ethernet will always be connecting or connected. This is just documenting that so that the comment at line 1326 makes a little more sense.",
+      "parentUuid": "952326f1_a207ef20",
       "range": {
         "startLine": 1310,
         "startChar": 6,
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "be7d7b5c_015e7c21",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T20:06:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a18f01ca_8598970a",
+      "range": {
+        "startLine": 1323,
+        "startChar": 2,
+        "endLine": 1323,
+        "endChar": 24
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "504e63a2_f7348f1d",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 2
@@ -230,6 +422,30 @@
       "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f69069_f1b58a9f",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T20:06:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "504e63a2_f7348f1d",
+      "range": {
+        "startLine": 1329,
+        "startChar": 52,
+        "endLine": 1329,
+        "endChar": 57
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "3e6c35c6_5c7fe4e6",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1459,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T20:06:59Z",
+      "side": 1,
+      "message": "I considered pseudo but I prefer Default. From the UI perspective most of the interesting Cellular properties come from the Device (which are copied to the Network). The fact that there isn\u0027t always a Cellular Service in Shill is an (annoying) Shill implementation detail :)",
+      "parentUuid": "8d00815c_9e59fd62",
+      "range": {
+        "startLine": 1459,
+        "startChar": 45,
+        "endLine": 1459,
+        "endChar": 52
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26919b41_5700ae04",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 2
@@ -267,6 +507,30 @@
       "writtenOn": "2017-09-07T04:56:21Z",
       "side": 1,
       "message": "this seems a bit violation of encapsulation\n\nsee related comment about NetworkState::CreatePsuedoCellularNetwork()",
+      "range": {
+        "startLine": 1464,
+        "startChar": 4,
+        "endLine": 1464,
+        "endChar": 43
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bda50d3_85c9338e",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1464,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T20:06:59Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "26919b41_5700ae04",
       "range": {
         "startLine": 1464,
         "startChar": 4,
@@ -326,6 +590,30 @@
     },
     {
       "key": {
+        "uuid": "5a39a9c2_1bd1ce16",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T20:06:59Z",
+      "side": 1,
+      "message": "Changed the comment and the code to hopefully be more clear.",
+      "parentUuid": "783c7c96_d9af17cd",
+      "range": {
+        "startLine": 1469,
+        "startChar": 0,
+        "endLine": 1469,
+        "endChar": 75
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5e802a5_9b5234a9",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 2
@@ -346,6 +634,30 @@
       "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669c2c90_ad137422",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T20:06:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c5e802a5_9b5234a9",
+      "range": {
+        "startLine": 1471,
+        "startChar": 0,
+        "endLine": 1479,
+        "endChar": 53
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
