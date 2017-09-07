@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29423df9_5b8f94d6",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollableArea.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-07T18:27:02Z",
+      "side": 1,
+      "message": "Actually, instead of making this ForTesting function, use the FRIEND_TEST_ALL_PREFIXES macro to give the test access to ScrollableArea\u0027s internals. See other uses of the macro in WebKit/ to examples.",
+      "range": {
+        "startLine": 384,
+        "startChar": 2,
+        "endLine": 384,
+        "endChar": 77
+      },
+      "revId": "d8f068343195886150db67402e8d663aed2f6162",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
