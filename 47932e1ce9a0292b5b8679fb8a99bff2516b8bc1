@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6e3e96bd_d021a60e",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-07T03:17:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3adeb4fe_35c4c6e0",
+      "range": {
+        "startLine": 685,
+        "startChar": 109,
+        "endLine": 685,
+        "endChar": 127
+      },
+      "revId": "47932e1ce9a0292b5b8679fb8a99bff2516b8bc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f714264_36b89aa7",
         "filename": "chrome/browser/resources/sys_internals/line_chart/README.md",
         "patchSetId": 11
