@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dfa9ef3a_58dc3986",
+        "filename": "chrome/browser/chromeos/policy/DEPS",
+        "patchSetId": 16
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-07T15:36:10Z",
+      "side": 1,
+      "message": "But there is no top-level \"/unicode/gregocal.h\" in the Chromium repo. My guess is that the compiler is using the system-wide headers (i.e., goes outside from the Chromium repo), and checkdeps just isn\u0027t clever enough to catch that.\n\nSo I\u0027m still feeling that what you really want is src/third_party/icu (which contains the header you need under src/third_party/icu/source/i18n/unicode/gregocal.h).",
+      "parentUuid": "830c03c6_c7f521c6",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 12
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd3d7495_48ac4eee",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 16
@@ -93,6 +117,30 @@
       "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad830890_d559e99d",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-07T15:36:10Z",
+      "side": 1,
+      "message": "Yes, that\u0027s a good idea.",
+      "parentUuid": "0cbd9d4a_40313b40",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 78
+      },
+      "revId": "9a38538e801d24c760d2c199eb438802fc97f8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
