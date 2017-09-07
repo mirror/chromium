@@ -42,8 +42,6 @@
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 
-using namespace blink;
-
 namespace {
 
 bool SupportsUIStateTransitionProgress() {
