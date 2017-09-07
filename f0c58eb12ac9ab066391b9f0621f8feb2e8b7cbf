@@ -16,6 +16,24 @@
       "revId": "f0c58eb12ac9ab066391b9f0621f8feb2e8b7cbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311f2aef_7e214183",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/update_flaky_expectations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-07T03:45:49Z",
+      "side": 1,
+      "message": "yes, that is more consistent nice spot! i\u0027ve also now added a space after the commas in the bug list",
+      "parentUuid": "762be931_28d15b34",
+      "revId": "f0c58eb12ac9ab066391b9f0621f8feb2e8b7cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
