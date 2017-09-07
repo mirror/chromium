@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f48fd01b_84657440",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-07T06:45:21Z",
+      "side": 1,
+      "message": "Would it make sense to add a default:NOTREACHED() case?",
+      "revId": "5c1d82dfdf80ce1c0b93186987eb2f9ffa9c18c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed02900b_fc560828",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-07T06:45:21Z",
+      "side": 1,
+      "message": "Why don\u0027t these Record* functions take a count to increment the histogram by, so that you can get rid of the for loop here and just do:\n\nRecordAddToHomescreenHistogram(manifest_status, add_to_homescreen_manifest_timeout_count_);\nadd_to_homescreen_manifest_timeout_count_ \u003d 0;",
+      "revId": "5c1d82dfdf80ce1c0b93186987eb2f9ffa9c18c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
