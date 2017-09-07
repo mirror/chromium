@@ -7,7 +7,7 @@
 #include "content/browser/child_process_launcher.h"
 #include "content/browser/child_process_launcher_helper.h"
 #include "content/browser/child_process_launcher_helper_posix.h"
-#include "content/browser/renderer_host/render_sandbox_host_linux.h"
+#include "content/browser/sandbox_host_linux.h"
 #include "content/browser/zygote_host/zygote_communication_linux.h"
 #include "content/browser/zygote_host/zygote_host_impl_linux.h"
 #include "content/common/sandbox_linux/sandbox_linux.h"
@@ -48,7 +48,7 @@ void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
 
   if (GetProcessType() == switches::kRendererProcess) {
     const int sandbox_fd =
-        RenderSandboxHostLinux::GetInstance()->GetRendererSocket();
+        SandboxHostLinux::GetInstance()->GetSandboxedSocket();
     options->fds_to_remap.push_back(std::make_pair(sandbox_fd, GetSandboxFD()));
   }
 
