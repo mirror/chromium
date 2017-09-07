@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "8958ca34_1771fcf0",
+        "filename": "chromeos/network/network_configuration_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T04:56:21Z",
+      "side": 1,
+      "message": "nit: |kDefaultCellularNetworkPath| looks more like an implementation detail and should probably abstracted away.\n\nWhat if we define:\n\n  class NetworkState {\n   public:\n    ...\n    static std::unique_ptr\u003cNetworkState\u003e CreatePsuedoCellularNetwork();\n    bool IsPseudoCellularNetwork() const;\n    ...\n  };\n\nthen |kDefaultCellularNetworkPath| can be defined in an unnamed namespace inside network_state.cc.",
+      "range": {
+        "startLine": 236,
+        "startChar": 6,
+        "endLine": 237,
+        "endChar": 59
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "172d3892_76644961",
         "filename": "chromeos/network/network_state.cc",
         "patchSetId": 2
@@ -71,6 +94,53 @@
     },
     {
       "key": {
+        "uuid": "7de88e95_a40aa9e2",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T04:56:21Z",
+      "side": 1,
+      "message": "\u0027cellular\u0027 seems to be the correct term here as |cellular| could contain a connecting/connected (i.e. active) cellular service",
+      "parentUuid": "73e079bf_05c46bd4",
+      "range": {
+        "startLine": 1294,
+        "startChar": 19,
+        "endLine": 1294,
+        "endChar": 27
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362324f5_25ccfce8",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T04:56:21Z",
+      "side": 1,
+      "message": "not quite follow what \u0027update_received\u0027 (or new_networks) actually means, but wondering if the update of |cellular| above should be moved after this check like how the code handles |active|, |*wifi*|.",
+      "range": {
+        "startLine": 1303,
+        "startChar": 18,
+        "endLine": 1303,
+        "endChar": 33
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4784043f_8eb54808",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 2
@@ -94,6 +164,121 @@
     },
     {
       "key": {
+        "uuid": "952326f1_a207ef20",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T04:56:21Z",
+      "side": 1,
+      "message": "nit: It seems like the order of Ethernet, \u0027connecting\u0027, and \u0027connected\u0027 service could be arbitrary. It isn\u0027t a big deal, but I guess a consistent order may be more pleasant in UI, e.g.\n\n    A connecting service\n    A connected service\n    Ethernet",
+      "range": {
+        "startLine": 1310,
+        "startChar": 6,
+        "endLine": 1310,
+        "endChar": 41
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18f01ca_8598970a",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T04:56:21Z",
+      "side": 1,
+      "message": "nit: it seems unnecessary to call `network_list_.clear()` here.",
+      "range": {
+        "startLine": 1323,
+        "startChar": 2,
+        "endLine": 1323,
+        "endChar": 24
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504e63a2_f7348f1d",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T04:56:21Z",
+      "side": 1,
+      "message": "nit: WiMAX",
+      "range": {
+        "startLine": 1329,
+        "startChar": 52,
+        "endLine": 1329,
+        "endChar": 57
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d00815c_9e59fd62",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1459,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T04:56:21Z",
+      "side": 1,
+      "message": "nit: \u0027default\u0027 sounds like it could be a valid cellular network, I\u0027m wondering if \u0027pseudo\u0027 would be a better name",
+      "range": {
+        "startLine": 1459,
+        "startChar": 45,
+        "endLine": 1459,
+        "endChar": 52
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26919b41_5700ae04",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1464,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T04:56:21Z",
+      "side": 1,
+      "message": "this seems a bit violation of encapsulation\n\nsee related comment about NetworkState::CreatePsuedoCellularNetwork()",
+      "range": {
+        "startLine": 1464,
+        "startChar": 4,
+        "endLine": 1464,
+        "endChar": 43
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "870a323b_b418e977",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 2
@@ -110,6 +295,53 @@
         "startChar": 0,
         "endLine": 1469,
         "endChar": 75
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783c7c96_d9af17cd",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T04:56:21Z",
+      "side": 1,
+      "message": "i wonder about the same thing. some explanation in the comment would be helpful",
+      "parentUuid": "870a323b_b418e977",
+      "range": {
+        "startLine": 1469,
+        "startChar": 0,
+        "endLine": 1469,
+        "endChar": 75
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e802a5_9b5234a9",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T04:56:21Z",
+      "side": 1,
+      "message": "nit: the code could be simplified a bit if this method returns a new list instead of modifying |cellular_network|",
+      "range": {
+        "startLine": 1471,
+        "startChar": 0,
+        "endLine": 1479,
+        "endChar": 53
       },
       "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
