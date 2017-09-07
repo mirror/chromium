@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b36f4ec5_6f878903",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
+        "patchSetId": 16
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-09-07T05:35:17Z",
+      "side": 1,
+      "message": "This resolves alias IDs to their equivalent non-alias IDs. Trying to do it from the caller will, I think, lead to it being done a lot. Do you think there are any cases where doing it here will cause a problem?",
+      "parentUuid": "5f47694d_4e28702e",
+      "revId": "a4f6e8a1dc6898218a5220e1ab55c4f53c435492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26007cf6_7acdf591",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
         "patchSetId": 16
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-07T04:41:03Z",
       "side": 1,
       "message": "nit: Should use spaces, not tabs",
+      "revId": "a4f6e8a1dc6898218a5220e1ab55c4f53c435492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8e733f_b1c2af6b",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-09-07T05:35:17Z",
+      "side": 1,
+      "message": "Done.\n\nSorry. Sublime seems to randomly change this setting sometimes.",
+      "parentUuid": "26007cf6_7acdf591",
       "revId": "a4f6e8a1dc6898218a5220e1ab55c4f53c435492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "a4f6e8a1dc6898218a5220e1ab55c4f53c435492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626f8e4b_8da024dd",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperty.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-09-07T05:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d40cb8cf_74af47ec",
+      "revId": "a4f6e8a1dc6898218a5220e1ab55c4f53c435492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
