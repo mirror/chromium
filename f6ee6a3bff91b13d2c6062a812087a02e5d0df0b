@@ -70,6 +70,24 @@
       "revId": "f6ee6a3bff91b13d2c6062a812087a02e5d0df0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c5353b_1b4af31c",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_drag_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-07T00:58:31Z",
+      "side": 1,
+      "message": "Done and done - thanks Sidney for pointing this out, I was really confused for a while but I get it now :) I added a static_assert to enforce it, since I think this only works if fabs(vertOffset) \u003e kLargeVertTearDistance being true implies fabs(vertOffset) \u003e kVertTearDistance being true.",
+      "parentUuid": "1cba246b_28a3d5e9",
+      "revId": "f6ee6a3bff91b13d2c6062a812087a02e5d0df0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
