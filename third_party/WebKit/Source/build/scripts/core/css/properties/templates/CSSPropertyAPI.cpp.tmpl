@@ -9,11 +9,8 @@
 #include "core/css/properties/CSSPropertyAPI.h"
 
 {% for api_class in api_classnames %}
-{% if api_class != "CSSPropertyAPIVariable" %}
 #include "core/css/properties/{{api_class}}.h"
-{% endif %}
 {% endfor %}
-#include "core/css/properties/CSSPropertyAPIVariable.h"
 
 namespace blink {
 
@@ -61,7 +58,7 @@ const CSSPropertyAPI& Get{{api_class_data.property_id}}API() {
 const CSSPropertyAPI& CSSPropertyAPI::Get(CSSPropertyID id) {
   DCHECK_NE(id, CSSPropertyInvalid);
   DCHECK_LE(id, {{last_property_id}});  // last_property_id
-  return GetAPI(id);
+  return GetAPI(resolved_property_id);
 }
 
 }  // namespace blink
