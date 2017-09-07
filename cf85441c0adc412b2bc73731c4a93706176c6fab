@@ -186,6 +186,52 @@
     },
     {
       "key": {
+        "uuid": "7cbb86a0_72bb3e1c",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/sub_chart.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-07T16:32:22Z",
+      "side": 1,
+      "message": "rename to visibleStartTime_ to avoid ambiguation.",
+      "range": {
+        "startLine": 30,
+        "startChar": 9,
+        "endLine": 30,
+        "endChar": 19
+      },
+      "revId": "cf85441c0adc412b2bc73731c4a93706176c6fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9eddb1_94cc0763",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/sub_chart.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-07T16:32:22Z",
+      "side": 1,
+      "message": "visibleStartTime",
+      "range": {
+        "startLine": 89,
+        "startChar": 39,
+        "endLine": 89,
+        "endChar": 48
+      },
+      "revId": "cf85441c0adc412b2bc73731c4a93706176c6fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2aece600_ecd66fb5",
         "filename": "chrome/browser/resources/sys_internals/line_chart/sub_chart.js",
         "patchSetId": 13
