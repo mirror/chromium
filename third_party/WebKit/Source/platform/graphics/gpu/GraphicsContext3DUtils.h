@@ -11,6 +11,7 @@
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/WeakPtr.h"
 #include "third_party/skia/include/gpu/GrTexture.h"
+#include "third_party/skia/include/core/SkImage.h"
 
 namespace blink {
 
