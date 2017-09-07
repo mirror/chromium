@@ -336,7 +336,10 @@ void AXNodeObject::AlterSliderValue(bool increase) {
   if (RoleValue() != kSliderRole)
     return;
 
-  float value = ValueForRange();
+  float value;
+  if (!ValueForRange(&value))
+    return;
+
   float step = StepValueForRange();
 
   value += increase ? step : -step;
@@ -1862,46 +1865,64 @@ String AXNodeObject::ValueDescription() const {
       .GetString();
 }
 
-float AXNodeObject::ValueForRange() const {
+bool AXNodeObject::ValueForRange(float* out_value) const {
   float value_now;
-  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueNow, value_now))
-    return value_now;
+  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueNow, value_now)) {
+    *out_value = value_now;
+    return true;
+  }
 
-  if (IsNativeSlider())
-    return toHTMLInputElement(*GetNode()).valueAsNumber();
+  if (IsNativeSlider()) {
+    *out_value = toHTMLInputElement(*GetNode()).valueAsNumber();
+    return true;
+  }
 
-  if (isHTMLMeterElement(GetNode()))
-    return toHTMLMeterElement(*GetNode()).value();
+  if (isHTMLMeterElement(GetNode())) {
+    *out_value = toHTMLMeterElement(*GetNode()).value();
+    return true;
+  }
 
-  return 0.0;
+  return false;
 }
 
-float AXNodeObject::MaxValueForRange() const {
+bool AXNodeObject::MaxValueForRange(float* out_value) const {
   float value_max;
-  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueMax, value_max))
-    return value_max;
+  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueMax, value_max)) {
+    *out_value = value_max;
+    return true;
+  }
 
-  if (IsNativeSlider())
-    return toHTMLInputElement(*GetNode()).Maximum();
+  if (IsNativeSlider()) {
+    *out_value = toHTMLInputElement(*GetNode()).Maximum();
+    return true;
+  }
 
-  if (isHTMLMeterElement(GetNode()))
-    return toHTMLMeterElement(*GetNode()).max();
+  if (isHTMLMeterElement(GetNode())) {
+    *out_value = toHTMLMeterElement(*GetNode()).max();
+    return true;
+  }
 
-  return 0.0;
+  return false;
 }
 
-float AXNodeObject::MinValueForRange() const {
+bool AXNodeObject::MinValueForRange(float* out_value) const {
   float value_min;
-  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueMin, value_min))
-    return value_min;
+  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueMin, value_min)) {
+    *out_value = value_min;
+    return true;
+  }
 
-  if (IsNativeSlider())
-    return toHTMLInputElement(*GetNode()).Minimum();
+  if (IsNativeSlider()) {
+    *out_value = toHTMLInputElement(*GetNode()).Minimum();
+    return true;
+  }
 
-  if (isHTMLMeterElement(GetNode()))
-    return toHTMLMeterElement(*GetNode()).min();
+  if (isHTMLMeterElement(GetNode())) {
+    *out_value = toHTMLMeterElement(*GetNode()).min();
+    return true;
+  }
 
-  return 0.0;
+  return false;
 }
 
 float AXNodeObject::StepValueForRange() const {
@@ -2021,7 +2042,9 @@ String AXNodeObject::TextAlternative(bool recursive,
           GetAOMPropertyOrARIAAttribute(AOMStringProperty::kValueText);
       if (!aria_valuetext.IsNull())
         return aria_valuetext.GetString();
-      return String::Number(ValueForRange());
+      float value;
+      if (ValueForRange(&value))
+        return String::Number(value);
     }
 
     return StringValue();
