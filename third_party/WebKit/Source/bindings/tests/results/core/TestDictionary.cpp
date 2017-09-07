@@ -239,15 +239,6 @@ const DoubleOrString& TestDictionary::otherDoubleOrStringMember() const {
 void TestDictionary::setOtherDoubleOrStringMember(const DoubleOrString& value) {
   other_double_or_string_member_ = value;
 }
-bool TestDictionary::hasPrefixGetMember() const {
-  return !(prefix_get_member_.IsEmpty() || prefix_get_member_.IsNull() || prefix_get_member_.IsUndefined());
-}
-ScriptValue TestDictionary::getPrefixGetMember() const {
-  return prefix_get_member_;
-}
-void TestDictionary::setPrefixGetMember(ScriptValue value) {
-  prefix_get_member_ = value;
-}
 bool TestDictionary::hasRecordMember() const {
   return has_record_member_;
 }

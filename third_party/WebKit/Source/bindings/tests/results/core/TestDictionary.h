@@ -123,10 +123,6 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   const DoubleOrString& otherDoubleOrStringMember() const;
   void setOtherDoubleOrStringMember(const DoubleOrString&);
 
-  bool hasPrefixGetMember() const;
-  ScriptValue getPrefixGetMember() const;
-  void setPrefixGetMember(ScriptValue);
-
   bool hasRecordMember() const;
   const Vector<std::pair<String, int8_t>>& recordMember() const;
   void setRecordMember(const Vector<std::pair<String, int8_t>>&);
@@ -245,7 +241,6 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   ScriptValue object_member_;
   ScriptValue object_or_null_member_;
   DoubleOrString other_double_or_string_member_;
-  ScriptValue prefix_get_member_;
   Vector<std::pair<String, int8_t>> record_member_;
   double restricted_double_member_;
   bool runtime_member_;
