@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "22632ede_1a934065",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-07T14:32:46Z",
+      "side": 1,
+      "message": "I thought if clicking the submit button in test triggers PasswordAutofillAgent::WillSendSubmitEvent, provisionally save would be called and if this feature was disabled it wouldn\u0027t show bubble. But now I see that it is not necessary. Removed.",
+      "parentUuid": "c9d9dc80_eb27b43d",
+      "range": {
+        "startLine": 100,
+        "startChar": 37,
+        "endLine": 100,
+        "endChar": 56
+      },
+      "revId": "58e5f35128e4b03f5436cfe0c2faa8985a0c3d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a5a9d0e_d4589fe9",
         "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
         "patchSetId": 2
