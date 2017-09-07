@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8b6dd46b_30d9db9e",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T22:14:15Z",
+      "side": 1,
+      "message": "You can fetch the initial auth user at the top of this function and only call MaybeUpdateCurrentAuthUser if the user has changed. Be wary though as things might be null (you probably want a base::Optional\u003cAccountId\u003e existing_auth_user).",
+      "revId": "52059155a1a3fd42caf5d45cbc444c4f827e98c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00db51a1_976c38be",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 5
