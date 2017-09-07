@@ -239,6 +239,11 @@ class CONTENT_EXPORT NavigationHandle {
   // NavigationHandle.
   virtual const GlobalRequestID& GetGlobalRequestID() = 0;
 
+  // Whether the navigation request is a download. This is useful when the
+  // navigation hasn't committed yet, in which case HasCommitted() will return
+  // false even if the navigation request is not a download.
+  virtual bool IsDownload() const = 0;
+
   // Testing methods ----------------------------------------------------------
   //
   // The following methods should be used exclusively for writing unit tests.
