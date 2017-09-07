@@ -15,6 +15,8 @@
 #include "components/payments/content/payment_response_helper.h"
 #include "components/payments/core/address_normalizer.h"
 #include "components/payments/core/payments_profile_comparator.h"
+#include "content/public/browser/browser_context.h"
+#include "content/public/browser/payment_app_provider.h"
 #include "third_party/WebKit/public/platform/modules/payments/payment_request.mojom.h"
 
 namespace autofill {
@@ -46,6 +48,8 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
     // shipping option) changes.
     virtual void OnSelectedInformationChanged() = 0;
 
+    virtual void OnPollPaymentInstrumentsFinished() = 0;
+
    protected:
     virtual ~Observer() {}
   };
@@ -72,6 +76,7 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
                       const std::string& app_locale,
                       autofill::PersonalDataManager* personal_data_manager,
                       PaymentRequestDelegate* payment_request_delegate,
+                      content::BrowserContext* context,
                       JourneyLogger* journey_logger);
   ~PaymentRequestState() override;
 
@@ -171,6 +176,10 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
 
   bool is_ready_to_pay() { return is_ready_to_pay_; }
 
+  bool is_polling_instruments_finished() {
+    return polling_instruments_finished_;
+  }
+
   const std::string& GetApplicationLocale();
   autofill::PersonalDataManager* GetPersonalDataManager();
   autofill::RegionDataLoader* GetRegionDataLoader();
@@ -205,6 +214,8 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   // Notifies all observers that selected information has changed.
   void NotifyOnSelectedInformationChanged();
 
+  void NotifyOnPollPaymentInstrumentsFinished();
+
   // Returns whether the selected data satisfies the PaymentDetails requirements
   // (payment methods).
   bool ArePaymentDetailsSatisfied();
@@ -212,7 +223,11 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   // (contact info, shipping address).
   bool ArePaymentOptionsSatisfied();
 
+  void GetAllPaymentAppsCallback(content::PaymentAppProvider::PaymentApps apps);
+
   bool is_ready_to_pay_;
+
+  bool polling_instruments_finished_;
 
   // Whether the data is currently being validated by the merchant.
   bool is_waiting_for_merchant_validation_;
@@ -246,6 +261,8 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   PaymentsProfileComparator profile_comparator_;
 
   base::ObserverList<Observer> observers_;
+
+  base::WeakPtrFactory<PaymentRequestState> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PaymentRequestState);
 };

@@ -388,6 +388,8 @@ void PaymentSheetViewController::OnSelectedInformationChanged() {
   UpdateContentView();
 }
 
+void PaymentSheetViewController::OnPollPaymentInstrumentsFinished() {}
+
 std::unique_ptr<views::Button>
 PaymentSheetViewController::CreatePrimaryButton() {
   std::unique_ptr<views::Button> button(

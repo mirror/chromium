@@ -8,6 +8,7 @@
 #include <set>
 #include <utility>
 
+#include "base/feature_list.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/autofill/core/browser/autofill_country.h"
 #include "components/autofill/core/browser/autofill_data_util.h"
@@ -20,6 +21,7 @@
 #include "components/payments/core/payment_instrument.h"
 #include "components/payments/core/payment_request_data_util.h"
 #include "components/payments/core/payment_request_delegate.h"
+#include "content/public/common/content_features.h"
 
 namespace payments {
 
@@ -29,8 +31,10 @@ PaymentRequestState::PaymentRequestState(
     const std::string& app_locale,
     autofill::PersonalDataManager* personal_data_manager,
     PaymentRequestDelegate* payment_request_delegate,
+    content::BrowserContext* context,
     JourneyLogger* journey_logger)
     : is_ready_to_pay_(false),
+      polling_instruments_finished_(false),
       is_waiting_for_merchant_validation_(false),
       app_locale_(app_locale),
       spec_(spec),
@@ -42,12 +46,24 @@ PaymentRequestState::PaymentRequestState(
       selected_contact_profile_(nullptr),
       selected_instrument_(nullptr),
       payment_request_delegate_(payment_request_delegate),
-      profile_comparator_(app_locale, *spec) {
+      profile_comparator_(app_locale, *spec),
+      weak_ptr_factory_(this) {
   PopulateProfileCache();
+  // if (base::FeatureList::IsEnabled(features::kServiceWorkerPaymentApps)) {
+  content::PaymentAppProvider::GetInstance()->GetAllPaymentApps(
+      context, base::Bind(&PaymentRequestState::GetAllPaymentAppsCallback,
+                          weak_ptr_factory_.GetWeakPtr()));
+  //}
   SetDefaultProfileSelections();
   spec_->AddObserver(this);
 }
 PaymentRequestState::~PaymentRequestState() {}
+
+void PaymentRequestState::GetAllPaymentAppsCallback(
+    content::PaymentAppProvider::PaymentApps apps) {
+  polling_instruments_finished_ = true;
+  NotifyOnPollPaymentInstrumentsFinished();
+}
 
 void PaymentRequestState::OnPaymentResponseReady(
     mojom::PaymentResponsePtr payment_response) {
@@ -359,6 +375,11 @@ void PaymentRequestState::UpdateIsReadyToPayAndNotifyObservers() {
 void PaymentRequestState::NotifyOnSelectedInformationChanged() {
   for (auto& observer : observers_)
     observer.OnSelectedInformationChanged();
+}
+
+void PaymentRequestState::NotifyOnPollPaymentInstrumentsFinished() {
+  for (auto& observer : observers_)
+    observer.OnPollPaymentInstrumentsFinished();
 }
 
 bool PaymentRequestState::ArePaymentDetailsSatisfied() {
