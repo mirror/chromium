@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "215dc82f_21076f7b",
+        "filename": "chrome/browser/extensions/api/runtime/chrome_runtime_api_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-07T22:28:14Z",
+      "side": 1,
+      "message": "Can we pull this into a separate change?  (It\u0027d be super easy to land, and reduces the number of files to look at in each patch set. :))",
+      "revId": "ec9821caf09c88b44fe7224fe2ec0672b7d61c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e93393_5cedd9bf",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-07T22:28:14Z",
+      "side": 1,
+      "message": "Given this is called from more than just EnableExtension(), it seems like having a more generic name (like NotifyExtensionLoaded()) made sense?",
+      "revId": "ec9821caf09c88b44fe7224fe2ec0672b7d61c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e0a04d_e78d82a5",
+        "filename": "chrome/browser/extensions/extension_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-07T22:28:14Z",
+      "side": 1,
+      "message": "?",
+      "revId": "ec9821caf09c88b44fe7224fe2ec0672b7d61c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a42a313_e0b0d28b",
+        "filename": "extensions/shell/browser/default_shell_browser_main_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-07T22:28:14Z",
+      "side": 1,
+      "message": "debuggery?",
+      "revId": "ec9821caf09c88b44fe7224fe2ec0672b7d61c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
