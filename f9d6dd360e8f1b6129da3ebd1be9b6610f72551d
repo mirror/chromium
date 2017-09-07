@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8bed8f3_49e8de68",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-07T16:41:13Z",
+      "side": 1,
+      "message": "I\u0027m starting to wonder if this complication makes sense to\nput in Blink - what if instead we did some more collapsing\nafter we\u0027ve converted this to an AXTree? That way we know\nexactly what we\u0027re exposing to AT and walking the tree is\nmuch faster.",
+      "revId": "f9d6dd360e8f1b6129da3ebd1be9b6610f72551d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb077468_ee2e86fc",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-07T16:41:13Z",
+      "side": 1,
+      "message": "There\u0027s probably a helper function for this, maybe one\nthat handles some additional unicode whitespace",
+      "revId": "f9d6dd360e8f1b6129da3ebd1be9b6610f72551d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
