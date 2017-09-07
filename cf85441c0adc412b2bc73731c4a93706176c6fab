@@ -2,6 +2,282 @@
   "comments": [
     {
       "key": {
+        "uuid": "c49ae41a_e53d8b2a",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/data_series.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-07T16:08:41Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 46,
+        "startChar": 9,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "cf85441c0adc412b2bc73731c4a93706176c6fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14059af0_ad558645",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/data_series.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-07T16:08:41Z",
+      "side": 1,
+      "message": "the logic of this function is finding the first datapoint not less than time.\nit\u0027s equivalent to lower_bound() in c++ std lib.\nyou may rename this function to findLowerBoundIndex_()\nand reference the following lower_bound implementation:\nhttps://stackoverflow.com/questions/6443569/implementation-of-c-lower-bound/#39100135",
+      "range": {
+        "startLine": 188,
+        "startChar": 2,
+        "endLine": 188,
+        "endChar": 22
+      },
+      "revId": "cf85441c0adc412b2bc73731c4a93706176c6fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf30b08_54ddd31a",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/data_series.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-07T16:08:41Z",
+      "side": 1,
+      "message": "no data point",
+      "range": {
+        "startLine": 206,
+        "startChar": 17,
+        "endLine": 206,
+        "endChar": 34
+      },
+      "revId": "cf85441c0adc412b2bc73731c4a93706176c6fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42fad5ff_1b5f4120",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/data_series.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-07T16:08:41Z",
+      "side": 1,
+      "message": "currentValueNum to be correspond to currentValueSum",
+      "range": {
+        "startLine": 216,
+        "startChar": 22,
+        "endLine": 216,
+        "endChar": 37
+      },
+      "revId": "cf85441c0adc412b2bc73731c4a93706176c6fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de4a790_7ff5a81c",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/data_series.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-07T16:08:41Z",
+      "side": 1,
+      "message": "the logic of filling the first and the last value are identical.\nHow about extract method:\nbackfillValuePoint_(valueIndex, dataIndex, boundaryTime) {\n  const dataPoints \u003d this.dataPoints_;\n  const values \u003d this.cacheValues_;\n  let maxValue \u003d this.cacheMaxValue_;\n  if (values[valueIndex] \u003d\u003d null \u0026\u0026 dataIndex \u003e 0 \u0026\u0026\n      dataIndex \u003c dataPoints.length) {\n    values[valueIndex] \u003d this.constructor.dataPointLinerInterpolation(\n        dataPoints[dataIndex - 1], dataPoints[dataIndex], boundaryTime);\n    this.cacheMaxValue_ \u003d Math.max(this.cacheMaxValue_, values[valueIndex]);\n  }\n}\nconst startTime \u003d this.cacheStartTime_;\nconst endTime \u003d startTime + this.cacheStepSize_ * count;\nconst count \u003d this.cacheValues_.length;\nbackfillValuePoint_(0, firstIndex, startTime);\nbackfillValuePoint_(count - 1, lastIndex, endTime);",
+      "range": {
+        "startLine": 241,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 31
+      },
+      "revId": "cf85441c0adc412b2bc73731c4a93706176c6fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb9957b_c60b5152",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/data_series.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-07T16:08:41Z",
+      "side": 1,
+      "message": "linear interpolation",
+      "range": {
+        "startLine": 265,
+        "startChar": 12,
+        "endLine": 265,
+        "endChar": 31
+      },
+      "revId": "cf85441c0adc412b2bc73731c4a93706176c6fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b317e38c_35b0d218",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/data_series.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-07T16:08:41Z",
+      "side": 1,
+      "message": "just call it x",
+      "range": {
+        "startLine": 282,
+        "startChar": 21,
+        "endLine": 282,
+        "endChar": 29
+      },
+      "revId": "cf85441c0adc412b2bc73731c4a93706176c6fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d7bc24_b22e0111",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/data_series.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-07T16:08:41Z",
+      "side": 1,
+      "message": "ratio",
+      "range": {
+        "startLine": 286,
+        "startChar": 24,
+        "endLine": 286,
+        "endChar": 28
+      },
+      "revId": "cf85441c0adc412b2bc73731c4a93706176c6fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aece600_ecd66fb5",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/sub_chart.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-07T16:08:41Z",
+      "side": 1,
+      "message": "this member variable is not accessed.",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 19
+      },
+      "revId": "cf85441c0adc412b2bc73731c4a93706176c6fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f3a6fa_a3aa31af",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/sub_chart.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-07T16:08:41Z",
+      "side": 1,
+      "message": "this member variable is not accessed.",
+      "range": {
+        "startLine": 93,
+        "startChar": 9,
+        "endLine": 93,
+        "endChar": 15
+      },
+      "revId": "cf85441c0adc412b2bc73731c4a93706176c6fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6725a190_4d806130",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/sub_chart.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-07T16:08:41Z",
+      "side": 1,
+      "message": "UnitLabel.setMaxValue() also has same value check, no need to check same value here, and this.maxValue_ can be removed.",
+      "range": {
+        "startLine": 122,
+        "startChar": 8,
+        "endLine": 122,
+        "endChar": 34
+      },
+      "revId": "cf85441c0adc412b2bc73731c4a93706176c6fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88d9e24_01c3e425",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/unit_label.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-07T16:08:41Z",
+      "side": 1,
+      "message": "minLabelSpacing",
+      "range": {
+        "startLine": 230,
+        "startChar": 24,
+        "endLine": 230,
+        "endChar": 39
+      },
+      "revId": "cf85441c0adc412b2bc73731c4a93706176c6fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45c2a49d_1b38ef7b",
         "filename": "chrome/test/data/webui/sys_internals/line_chart/sub_chart_test.js",
         "patchSetId": 13
