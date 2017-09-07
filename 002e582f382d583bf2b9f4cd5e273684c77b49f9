@@ -52,6 +52,24 @@
       "revId": "002e582f382d583bf2b9f4cd5e273684c77b49f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e810935d_00ee02f0",
+        "filename": "tools/perf/perf_device_trigger_unittest.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-07T22:57:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f41e2c82_27cebef4",
+      "revId": "002e582f382d583bf2b9f4cd5e273684c77b49f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
