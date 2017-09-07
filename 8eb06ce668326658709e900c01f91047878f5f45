@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb3e1763_a671f15f",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-07T01:40:01Z",
+      "side": 1,
+      "message": "This might be OK, but could you please explain when this would happen? Thanks!",
+      "revId": "8eb06ce668326658709e900c01f91047878f5f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
