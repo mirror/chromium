@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cca10aa7_20adebc9",
+        "filename": "components/offline_pages/core/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T18:49:52Z",
+      "side": 1,
+      "message": "let\u0027s bring this up with the team.\nI am all for using a nested structure here, but perhaps model/ would make more sense.",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 48,
+        "endChar": 10
+      },
+      "revId": "30d5aa05dcc77399565fc2d857eef2ddbf42033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b69f1323_a994311a",
+        "filename": "components/offline_pages/core/tasks/add_page_task.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T18:49:52Z",
+      "side": 1,
+      "message": "put this directly in the query.",
+      "range": {
+        "startLine": 22,
+        "startChar": 34,
+        "endLine": 22,
+        "endChar": 49
+      },
+      "revId": "30d5aa05dcc77399565fc2d857eef2ddbf42033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a373396_bd1842fd",
+        "filename": "components/offline_pages/core/tasks/add_page_task.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T18:49:52Z",
+      "side": 1,
+      "message": "document the class and fields.",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 17
+      },
+      "revId": "30d5aa05dcc77399565fc2d857eef2ddbf42033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004ab180_df792522",
+        "filename": "components/offline_pages/core/tasks/add_page_task.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T18:49:52Z",
+      "side": 1,
+      "message": "document the ownership.",
+      "range": {
+        "startLine": 36,
+        "startChar": 31,
+        "endLine": 36,
+        "endChar": 37
+      },
+      "revId": "30d5aa05dcc77399565fc2d857eef2ddbf42033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7be95c9_130fb1f6",
+        "filename": "components/offline_pages/core/tasks/add_page_task.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T18:49:52Z",
+      "side": 1,
+      "message": "weak_ptr_factory_",
+      "range": {
+        "startLine": 40,
+        "startChar": 36,
+        "endLine": 40,
+        "endChar": 52
+      },
+      "revId": "30d5aa05dcc77399565fc2d857eef2ddbf42033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
