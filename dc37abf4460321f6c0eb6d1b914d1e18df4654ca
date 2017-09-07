@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b88f519_160c7a50",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2414,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-07T14:13:30Z",
+      "side": 1,
+      "message": "This comment is redundant now.",
+      "range": {
+        "startLine": 2414,
+        "startChar": 5,
+        "endLine": 2414,
+        "endChar": 71
+      },
+      "revId": "dc37abf4460321f6c0eb6d1b914d1e18df4654ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5809e3b7_fa304d20",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2440,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-07T14:13:30Z",
+      "side": 1,
+      "message": "Check the state before checking the password value.",
+      "range": {
+        "startLine": 2440,
+        "startChar": 2,
+        "endLine": 2440,
+        "endChar": 13
+      },
+      "revId": "dc37abf4460321f6c0eb6d1b914d1e18df4654ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
