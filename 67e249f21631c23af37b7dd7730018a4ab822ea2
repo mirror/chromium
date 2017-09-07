@@ -22,6 +22,30 @@
       "revId": "67e249f21631c23af37b7dd7730018a4ab822ea2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dbb79dd_cfec33d8",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-07T15:24:37Z",
+      "side": 1,
+      "message": "You are right. I always run \u0027git cl format\u0027 before uploading. For some reason it is okay with 4 spaces. However, when I changed it to 2 spaces manually, it didn\u0027t changed it back.",
+      "parentUuid": "e8a30151_ce1d52f0",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 31
+      },
+      "revId": "67e249f21631c23af37b7dd7730018a4ab822ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
