@@ -55,7 +55,7 @@ class ViewAndroidBoundsTest : public testing::Test {
         view2_(&client2_),
         view3_(&client3_) {
     root_.GetEventForwarder();
-    root_.layout_params_ = ViewAndroid::LayoutParams::MatchParent();
+    root_.SetLayout(ViewAndroid::LayoutParams::MATCH_PARENT);
   }
 
   void Reset() {
@@ -141,8 +141,8 @@ TEST_F(ViewAndroidBoundsTest, MatchesViewAfterMove) {
 
 TEST_F(ViewAndroidBoundsTest, MatchesViewSizeOfkMatchParent) {
   view1_.layout_params_ = ViewAndroid::LayoutParams::Normal(20, 20, 400, 600);
-  view3_.layout_params_ = ViewAndroid::LayoutParams::MatchParent();
   view2_.layout_params_ = ViewAndroid::LayoutParams::Normal(50, 50, 200, 200);
+  view3_.SetLayout(ViewAndroid::LayoutParams::MATCH_PARENT);
 
   root_.AddChild(&view1_);
   root_.AddChild(&view2_);
@@ -187,9 +187,7 @@ TEST_F(ViewAndroidBoundsTest, OnSizeChanged) {
   view1_.AddChild(&view2_);
   view1_.AddChild(&view3_);
 
-  view1_.layout_params_ = ViewAndroid::LayoutParams::Normal(0, 0, 0, 0);
-  view2_.layout_params_ = ViewAndroid::LayoutParams::MatchParent();
-  view3_.layout_params_ = ViewAndroid::LayoutParams::Normal(0, 0, 0, 0);
+  view2_.SetLayout(ViewAndroid::LayoutParams::MATCH_PARENT);
 
   // Size event propagates to non-match-parent children only.
   view1_.OnSizeChanged(100, 100);
@@ -199,13 +197,10 @@ TEST_F(ViewAndroidBoundsTest, OnSizeChanged) {
 
   Reset();
 
-  // TODO(jinsukkim): Enable following test once the top view can be
-  //     set to have match-parent property.
-
-  // Match-parent view should ignore the size event.
-  // view2_.OnSizeChanged(100, 200);
-  // EXPECT_FALSE(client2_.OnSizeCalled());
-  // EXPECT_FALSE(client3_.OnSizeCalled());
+  // Match-parent view should not receivee size events in the first place.
+  EXPECT_DCHECK_DEATH(view2_.OnSizeChanged(100, 200));
+  EXPECT_FALSE(client2_.OnSizeCalled());
+  EXPECT_FALSE(client3_.OnSizeCalled());
 
   Reset();
 

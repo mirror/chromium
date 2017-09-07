@@ -85,14 +85,23 @@ class UI_ANDROID_EXPORT ViewAndroid {
 
   // Layout parameters used to set the view's position and size.
   // Position is in parent's coordinate space, and all the values
-  // are in CSS pixel.
+  // are in DIP. ViewAndroid is initialized with a normal, zero-sized
+  // layout by default.
   struct LayoutParams {
-    static LayoutParams MatchParent() { return {true, 0, 0, 0, 0}; }
-    static LayoutParams Normal(int x, int y, int width, int height) {
-      return {false, x, y, width, height};
+    enum {
+      // Can have its own size given by |OnSizeChanged| events.
+      NORMAL = 0,
+      // Always follows its parent's size.
+      MATCH_PARENT = 1
     };
+    static LayoutParams Normal(int x, int y, int width, int height) {
+      return {NORMAL, x, y, width, height};
+    }
 
-    bool match_parent;  // Bounds matches that of the parent if true.
+    bool match_parent() { return layout == MATCH_PARENT; }
+    bool is_empty() { return width == 0 || height == 0; }
+
+    int layout;  // Bounds matches that of the parent if true.
     int x;
     int y;
     int width;
@@ -101,12 +110,8 @@ class UI_ANDROID_EXPORT ViewAndroid {
     LayoutParams(const LayoutParams& p) = default;
 
    private:
-    LayoutParams(bool match_parent, int x, int y, int width, int height)
-        : match_parent(match_parent),
-          x(x),
-          y(y),
-          width(width),
-          height(height) {}
+    LayoutParams(int layout, int x, int y, int width, int height)
+        : layout(layout), x(x), y(y), width(width), height(height) {}
   };
 
   explicit ViewAndroid(ViewClient* view_client);
@@ -180,6 +185,8 @@ class UI_ANDROID_EXPORT ViewAndroid {
   // ViewAndroid does not own |observer|s.
   void AddObserver(ViewAndroidObserver* observer);
   void RemoveObserver(ViewAndroidObserver* observer);
+
+  void SetLayout(int layout);
 
  protected:
   ViewAndroid* parent_;

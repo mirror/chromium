@@ -83,7 +83,7 @@ ViewAndroid::ScopedAnchorView::view() const {
 ViewAndroid::ViewAndroid(ViewClient* view_client)
     : parent_(nullptr),
       client_(view_client),
-      layout_params_(LayoutParams::MatchParent()) {}
+      layout_params_(LayoutParams::Normal(0, 0, 0, 0)) {}
 
 ViewAndroid::ViewAndroid() : ViewAndroid(nullptr) {}
 
@@ -144,8 +144,7 @@ void ViewAndroid::AddChild(ViewAndroid* child) {
 
   // Empty view size also need not propagating down in order to prevent
   // spurious events with empty size from being sent down.
-  if (child->layout_params_.match_parent && layout_params_.width != 0 &&
-      layout_params_.height != 0) {
+  if (child->layout_params_.match_parent() && !layout_params_.is_empty()) {
     child->OnSizeChangedInternal(layout_params_.width, layout_params_.height);
     DispatchOnSizeChanged();
   }
@@ -383,8 +382,9 @@ int ViewAndroid::GetSystemWindowInsetBottom() {
 }
 
 void ViewAndroid::OnSizeChanged(int width, int height) {
-  // TODO(jinsukkim): Assert match-parent here. Match-parent view should keep
-  // its size in sync with its parent, ignoring the incoming size change event.
+  // Match-parent view must not receive size events.
+  DCHECK(layout_params_.layout != LayoutParams::MATCH_PARENT);
+
   float scale = GetDipScale();
   OnSizeChangedInternal(std::ceil(width / scale), std::ceil(height / scale));
 
@@ -399,7 +399,7 @@ void ViewAndroid::OnSizeChangedInternal(int width, int height) {
   layout_params_.width = width;
   layout_params_.height = height;
   for (auto* child : children_) {
-    if (child->layout_params_.match_parent)
+    if (child->layout_params_.match_parent())
       child->OnSizeChangedInternal(width, height);
   }
 }
@@ -407,7 +407,7 @@ void ViewAndroid::OnSizeChangedInternal(int width, int height) {
 void ViewAndroid::DispatchOnSizeChanged() {
   client_->OnSizeChanged();
   for (auto* child : children_) {
-    if (child->layout_params_.match_parent)
+    if (child->layout_params_.match_parent())
       child->DispatchOnSizeChanged();
   }
 }
@@ -492,7 +492,7 @@ bool ViewAndroid::HitTest(ViewClientCallback<E> send_to_client,
 
     // Match from back to front for hit testing.
     for (auto* child : base::Reversed(children_)) {
-      bool matched = child->layout_params_.match_parent;
+      bool matched = child->layout_params_.match_parent();
       if (!matched) {
         gfx::Rect bound(child->layout_params_.x, child->layout_params_.y,
                         child->layout_params_.width,
@@ -504,6 +504,12 @@ bool ViewAndroid::HitTest(ViewClientCallback<E> send_to_client,
     }
   }
   return false;
+}
+
+void ViewAndroid::SetLayout(int layout) {
+  DCHECK(layout == LayoutParams::MATCH_PARENT ||
+         layout == LayoutParams::NORMAL);
+  layout_params_.layout = layout;
 }
 
 }  // namespace ui
