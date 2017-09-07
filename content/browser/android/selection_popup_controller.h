@@ -15,6 +15,7 @@
 namespace content {
 
 class RenderWidgetHostViewAndroid;
+class WebContents;
 struct ContextMenuParams;
 
 class SelectionPopupController : public RenderWidgetHostConnector {
@@ -37,9 +38,13 @@ class SelectionPopupController : public RenderWidgetHostConnector {
   void OnSelectWordAroundCaretAck(bool did_select,
                                   int start_adjust,
                                   int end_adjust);
+  std::unique_ptr<ui::TouchHandleDrawable> CreateTouchHandleDrawable();
 
  private:
   ~SelectionPopupController() override {}
+  base::android::ScopedJavaLocalRef<jobject> GetContext() const;
+
+  WebContents* const web_contents_;
   JavaObjectWeakGlobalRef java_obj_;
 };
 
