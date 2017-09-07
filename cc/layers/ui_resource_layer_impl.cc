@@ -94,6 +94,14 @@ bool UIResourceLayerImpl::WillDraw(DrawMode draw_mode,
 void UIResourceLayerImpl::AppendQuads(
     RenderPass* render_pass,
     AppendQuadsData* append_quads_data) {
+  if (!ui_resource_id_)
+    return;
+
+  viz::ResourceId resource =
+      layer_tree_impl()->ResourceIdForUIResource(ui_resource_id_);
+  if (!resource)
+    return;
+
   viz::SharedQuadState* shared_quad_state =
       render_pass->CreateAndAppendSharedQuadState();
   bool are_contents_opaque =
@@ -103,16 +111,6 @@ void UIResourceLayerImpl::AppendQuads(
 
   AppendDebugBorderQuad(render_pass, bounds(), shared_quad_state,
                         append_quads_data);
-
-  if (!ui_resource_id_)
-    return;
-
-  viz::ResourceId resource =
-      layer_tree_impl()->ResourceIdForUIResource(ui_resource_id_);
-
-  if (!resource)
-    return;
-
   static const bool flipped = false;
   static const bool nearest_neighbor = false;
   static const bool premultiplied_alpha = true;
