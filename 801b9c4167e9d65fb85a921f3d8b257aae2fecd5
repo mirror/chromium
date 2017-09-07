@@ -16,6 +16,24 @@
       "revId": "801b9c4167e9d65fb85a921f3d8b257aae2fecd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e825fee_3f9a38c6",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_browsing_mode_pages.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-07T16:05:15Z",
+      "side": 1,
+      "message": "Currently, we have no good signal when Chrome went into VR browsing mode. I didn\u0027t want to do too much in this CL. Would it be ok if I add a TODO here and address that in a future CL?",
+      "parentUuid": "de5a8b22_938290b6",
+      "revId": "801b9c4167e9d65fb85a921f3d8b257aae2fecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
