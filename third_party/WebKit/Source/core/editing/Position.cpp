@@ -529,7 +529,7 @@ PositionTemplate<Strategy>::LastPositionInOrAfterNode(Node* node) {
                                       : LastPositionInNode(*node);
 }
 
-PositionInFlatTree ToPositionInFlatTree(const Position& pos) {
+static PositionInFlatTree ToPositionInFlatTreeInternal(const Position& pos) {
   if (pos.IsNull())
     return PositionInFlatTree();
 
@@ -580,6 +580,22 @@ PositionInFlatTree ToPositionInFlatTree(const Position& pos) {
   // TODO(yosin): Once we have a test case for SLOT or active insertion point,
   // this function should handle it.
   return PositionInFlatTree(anchor, pos.AnchorType());
+}
+
+PositionInFlatTree ToPositionInFlatTree(const Position& position) {
+  const PositionInFlatTree& candidate = ToPositionInFlatTreeInternal(position);
+  if (candidate.IsNull())
+    return {};
+  Node* const anchor = candidate.AnchorNode();
+  // TODO(editing-dev): ToPositionInFlatTreeInternal may return |candidate|
+  // not in flat tree. Fix it and keep |ToPosInDOM(ToPosInFlat(pos)) == pos|.
+  if (!anchor->isConnected())
+    return {};
+  anchor->UpdateDistribution();
+  if (anchor != &anchor->GetDocument() &&
+      !FlatTreeTraversal::IsDescendantOf(*anchor, anchor->GetDocument()))
+    return {};
+  return candidate;
 }
 
 Position ToPositionInDOMTree(const Position& position) {
