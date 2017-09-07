@@ -12,6 +12,7 @@
 
 class Profile;
 class SubresourceFilterContentSettingsManager;
+class SubresourceFilterFailsafe;
 
 // This class holds profile scoped context for subresource filtering.
 class SubresourceFilterProfileContext : public KeyedService {
@@ -23,11 +24,14 @@ class SubresourceFilterProfileContext : public KeyedService {
     return settings_manager_.get();
   }
 
+  SubresourceFilterFailsafe* failsafe() { return failsafe_.get(); }
+
  private:
   // KeyedService:
   void Shutdown() override;
 
   std::unique_ptr<SubresourceFilterContentSettingsManager> settings_manager_;
+  std::unique_ptr<SubresourceFilterFailsafe> failsafe_;
 
   DISALLOW_COPY_AND_ASSIGN(SubresourceFilterProfileContext);
 };

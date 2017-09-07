@@ -79202,6 +79202,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="SubresourceFilter.Failsafe.Status"
+    enum="SubresourceFilterFailsafeStatus">
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    Logged every time the &quot;Ad blocked&quot; UI is about to be shown. The
+    enum records the status of the UI action and whether it should proceed.
+    Buckets other than &quot;Safe&quot; will only be logged in the event of a
+    critical configuration or logic error.
+  </summary>
+</histogram>
+
 <histogram name="SubresourceFilter.IndexRuleset.CPUDuration" units="ms">
   <owner>pkalinnikov@chromium.org</owner>
   <summary>

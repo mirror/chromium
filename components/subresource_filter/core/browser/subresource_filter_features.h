@@ -6,6 +6,7 @@
 #define COMPONENTS_SUBRESOURCE_FILTER_CORE_BROWSER_SUBRESOURCE_FILTER_FEATURES_H_
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "base/feature_list.h"
@@ -179,20 +180,18 @@ class ConfigurationList : public base::RefCountedThreadSafe<ConfigurationList> {
 // Retrieves all currently enabled subresource filtering configurations. The
 // configurations are parsed on first access and then the result is cached.
 //
-// In tests, however, the config may be changed in-between navigations, so
-// callers should not hold on to the result for long.
+// In rare cases (e.g. triggered by tests or the failsafe mechanism), the config
+// list may be changed in-between navigations, so callers should not hold on to
+// the result for long.
 scoped_refptr<ConfigurationList> GetEnabledConfigurations();
 
 bool HasEnabledConfiguration(const Configuration& config);
-
-namespace testing {
 
 // Returns the currently cached enabled ConfigurationList, if any, and replaces
 // it with |new_configs|, which may be nullptr to clear the cache.
 scoped_refptr<ConfigurationList> GetAndSetActivateConfigurations(
     scoped_refptr<ConfigurationList> new_configs);
 
-}  // namespace testing
 
 // Feature and variation parameter definitions -------------------------------
 
