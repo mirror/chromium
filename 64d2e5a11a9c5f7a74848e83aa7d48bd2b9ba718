@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff00e790_5f352b34",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-09-07T21:26:39Z",
+      "side": 1,
+      "message": "I swear I had a good comment written up for this but seems like I lost it. Will upload tomorrow",
+      "range": {
+        "startLine": 547,
+        "startChar": 58,
+        "endLine": 547,
+        "endChar": 0
+      },
+      "revId": "64d2e5a11a9c5f7a74848e83aa7d48bd2b9ba718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
