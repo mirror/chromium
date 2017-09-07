@@ -145,6 +145,30 @@
       "revId": "09bff39dd2604bf2a26f20a73032504bdf0e1d1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66858341_2a2f8b15",
+        "filename": "third_party/WebKit/Source/core/animation/DocumentTimeline.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-09-07T00:59:35Z",
+      "side": 1,
+      "message": "We have an IDL exposed attribute\nreadonly attribute AnimationPlayState playState;\nhttps://w3c.github.io/web-animations/#the-animation-interface\n\nSo we should not change the name of\nString playState() const { return PlayStateString(PlayStateInternal()); }\n\nThe Internal in PlayStateInternal means it isn\u0027t exposed through IDL.\nCalling it from animation/*.cpp is fine.",
+      "parentUuid": "213f5c74_eddb4ea0",
+      "range": {
+        "startLine": 199,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 63
+      },
+      "revId": "09bff39dd2604bf2a26f20a73032504bdf0e1d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
