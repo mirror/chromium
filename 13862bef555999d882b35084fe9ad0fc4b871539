@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd4c17db_eb4a018b",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-07T19:32:45Z",
+      "side": 1,
+      "message": "nit: enable / disable\nIf mode is disabled, we are actually disabling in child process.",
+      "range": {
+        "startLine": 238,
+        "startChar": 35,
+        "endLine": 238,
+        "endChar": 41
+      },
+      "revId": "13862bef555999d882b35084fe9ad0fc4b871539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc030020_affdd548",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-07T19:32:45Z",
+      "side": 1,
+      "message": "maybe DLOG. if enabled on users without command line flag, we do not want to spam log with these failures.",
+      "range": {
+        "startLine": 238,
+        "startChar": 8,
+        "endLine": 238,
+        "endChar": 20
+      },
+      "revId": "13862bef555999d882b35084fe9ad0fc4b871539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56701811_2c905c27",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-07T19:32:45Z",
+      "side": 1,
+      "message": "This todo seems unnecessary here. The devtools handler should just use this api. and the devtools api is defined in the protocol file, and unrelated to memory instrumentation service. So, this file need not know about devtools.",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 53,
+        "endChar": 62
+      },
+      "revId": "13862bef555999d882b35084fe9ad0fc4b871539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
