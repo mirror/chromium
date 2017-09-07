@@ -52,6 +52,24 @@
       "revId": "31e32833c691cd302d9a56a1c69bf4026cfdd288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa021ac_19315630",
+        "filename": "ash/wm/splitview/split_view_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-07T00:45:00Z",
+      "side": 1,
+      "message": "I believe [1] is the scenario you describe.\n\n[1] https://cs.chromium.org/chromium/src/ash/wm/splitview/split_view_controller_unittest.cc?rcl\u003dbd5b0a0372ff4d793715cda5269b9d5c7f806b2e\u0026l\u003d176",
+      "parentUuid": "5b9a509b_2be0619d",
+      "revId": "31e32833c691cd302d9a56a1c69bf4026cfdd288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
