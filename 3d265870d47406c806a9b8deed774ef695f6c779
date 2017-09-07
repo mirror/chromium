@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00f3f140_3950feb9",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-07T21:45:38Z",
+      "side": 1,
+      "message": "This fixed the checkdeps problem but doesn\u0027t seem like the best solution to me.",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 76
+      },
+      "revId": "3d265870d47406c806a9b8deed774ef695f6c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc8f37a7_b30a7c99",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-07T21:45:38Z",
+      "side": 1,
+      "message": "Putting this here didn\u0027t fix the checkdeps problem.",
+      "range": {
+        "startLine": 551,
+        "startChar": 0,
+        "endLine": 551,
+        "endChar": 34
+      },
+      "revId": "3d265870d47406c806a9b8deed774ef695f6c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

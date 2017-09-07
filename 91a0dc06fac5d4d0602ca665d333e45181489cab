@@ -22,6 +22,30 @@
       "revId": "91a0dc06fac5d4d0602ca665d333e45181489cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a6c382_58be8b52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-07T21:45:38Z",
+      "side": 1,
+      "message": "Nah, toast is good. Toast describes a short informational popup.",
+      "parentUuid": "bce1e351_07255cb3",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "91a0dc06fac5d4d0602ca665d333e45181489cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

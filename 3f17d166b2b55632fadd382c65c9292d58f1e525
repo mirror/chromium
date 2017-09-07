@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "9b189d3f_d7df65bf",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-07T21:45:38Z",
+      "side": 1,
+      "message": "I\u0027d rather not make any changes in other parts of the codebase that I absolutely don\u0027t have to.",
+      "parentUuid": "c4ac185e_ff665162",
+      "range": {
+        "startLine": 445,
+        "startChar": 35,
+        "endLine": 445,
+        "endChar": 61
+      },
+      "revId": "3f17d166b2b55632fadd382c65c9292d58f1e525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de943f3e_6be0f920",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 1
