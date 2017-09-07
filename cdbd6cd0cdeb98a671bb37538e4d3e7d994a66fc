@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44320c53_1bf8bbfd",
+        "filename": "third_party/WebKit/Source/core/paint/SelectionPaintingUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-07T18:47:56Z",
+      "side": 1,
+      "message": "Can this be different from |node-\u003eGetDocument()|?",
+      "range": {
+        "startLine": 58,
+        "startChar": 37,
+        "endLine": 58,
+        "endChar": 45
+      },
+      "revId": "cdbd6cd0cdeb98a671bb37538e4d3e7d994a66fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658c1097_2c40726c",
+        "filename": "third_party/WebKit/Source/core/paint/SelectionPaintingUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-07T18:47:56Z",
+      "side": 1,
+      "message": "Same question.",
+      "range": {
+        "startLine": 89,
+        "startChar": 20,
+        "endLine": 89,
+        "endChar": 28
+      },
+      "revId": "cdbd6cd0cdeb98a671bb37538e4d3e7d994a66fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7d62ca0_88e7ccb2",
+        "filename": "third_party/WebKit/Source/core/paint/SelectionPaintingUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-07T18:47:56Z",
+      "side": 1,
+      "message": "Same question.",
+      "range": {
+        "startLine": 106,
+        "startChar": 20,
+        "endLine": 106,
+        "endChar": 28
+      },
+      "revId": "cdbd6cd0cdeb98a671bb37538e4d3e7d994a66fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d89888_2b21de51",
+        "filename": "third_party/WebKit/Source/core/paint/SelectionPaintingUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-07T18:47:56Z",
+      "side": 1,
+      "message": "Same question.",
+      "range": {
+        "startLine": 115,
+        "startChar": 20,
+        "endLine": 115,
+        "endChar": 28
+      },
+      "revId": "cdbd6cd0cdeb98a671bb37538e4d3e7d994a66fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5749bc72_e048e539",
+        "filename": "third_party/WebKit/Source/core/paint/SelectionPaintingUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-07T18:47:56Z",
+      "side": 1,
+      "message": "Same question.",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 124,
+        "endChar": 28
+      },
+      "revId": "cdbd6cd0cdeb98a671bb37538e4d3e7d994a66fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

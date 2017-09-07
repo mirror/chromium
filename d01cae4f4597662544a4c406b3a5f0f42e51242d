@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd761823_3bffef78",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-07T18:47:56Z",
+      "side": 0,
+      "message": "Is it OK to have refactoring and implementation change in the same CL?",
+      "range": {
+        "startLine": 83,
+        "startChar": 23,
+        "endLine": 83,
+        "endChar": 32
+      },
+      "revId": "d01cae4f4597662544a4c406b3a5f0f42e51242d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
