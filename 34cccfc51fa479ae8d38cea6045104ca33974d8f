@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "258c1d7d_c8bf613f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-07T21:27:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "368e1bd3_63b66c67",
+      "range": {
+        "startLine": 414,
+        "startChar": 38,
+        "endLine": 414,
+        "endChar": 61
+      },
+      "revId": "34cccfc51fa479ae8d38cea6045104ca33974d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0e320fe_0604dc1d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-07T15:52:17Z",
       "side": 1,
       "message": "who calls this? *Internal and public doesn\u0027t mesh that well imho :). Is there a way to restrict access further or a better name?",
+      "range": {
+        "startLine": 430,
+        "startChar": 16,
+        "endLine": 430,
+        "endChar": 35
+      },
+      "revId": "34cccfc51fa479ae8d38cea6045104ca33974d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e910810_97d6c779",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-07T21:27:12Z",
+      "side": 1,
+      "message": "Ah yes, public was an oversight; changed to private.",
+      "parentUuid": "b0e320fe_0604dc1d",
       "range": {
         "startLine": 430,
         "startChar": 16,
