@@ -19,6 +19,7 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -28,6 +29,7 @@ import org.chromium.chrome.browser.notifications.NotificationChannelStatus;
 import org.chromium.chrome.browser.notifications.NotificationManagerProxy;
 import org.chromium.chrome.browser.notifications.NotificationManagerProxyImpl;
 import org.chromium.chrome.browser.notifications.NotificationSettingsBridge;
+import org.chromium.content.browser.test.NativeLibraryTestRule;
 
 import java.util.Arrays;
 
@@ -43,9 +45,15 @@ import java.util.Arrays;
 @RunWith(BaseJUnit4ClassRunner.class)
 public class SiteChannelsManagerTest {
     private SiteChannelsManager mSiteChannelsManager;
+    @Rule
+    public NativeLibraryTestRule mNativeLibraryTestRule = new NativeLibraryTestRule();
 
     @Before
     public void setUp() throws Exception {
+        // Not initializing the browser process is safe because
+        // UrlFormatter.formatUrlForSecurityDisplay() is stand-alone.
+        mNativeLibraryTestRule.loadNativeLibraryNoBrowserProcess();
+
         Context mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         NotificationManagerProxy notificationManagerProxy = new NotificationManagerProxyImpl(
                 (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE));
