@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd138df6_693f35e1",
+        "filename": "components/password_manager/core/browser/password_reuse_detector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-07T15:44:07Z",
+      "side": 1,
+      "message": "Good job in updating this algorithm to find all matches!",
+      "range": {
+        "startLine": 127,
+        "startChar": 3,
+        "endLine": 131,
+        "endChar": 29
+      },
+      "revId": "3866c1153a22068a789ee522bd978d75ed2ee145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
