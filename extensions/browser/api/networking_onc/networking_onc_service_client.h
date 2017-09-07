@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_SERVICE_CLIENT_H_
-#define EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_SERVICE_CLIENT_H_
+#ifndef EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_SERVICE_CLIENT_H_
+#define EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_SERVICE_CLIENT_H_
 
 #include <stdint.h>
 
@@ -23,7 +23,7 @@
 #include "components/wifi/wifi_service.h"
 #include "content/public/browser/utility_process_host.h"
 #include "content/public/browser/utility_process_host_client.h"
-#include "extensions/browser/api/networking_private/networking_private_delegate.h"
+#include "extensions/browser/api/networking_onc/networking_onc_delegate.h"
 #include "net/base/network_change_notifier.h"
 
 namespace base {
@@ -32,23 +32,23 @@ class SequencedTaskRunner;
 
 namespace extensions {
 
-// Windows / Mac NetworkingPrivateApi implementation. This implements
-// NetworkingPrivateDelegate, making WiFiService calls on the worker thead.
+// Windows / Mac NetworkingOncApi implementation. This implements
+// NetworkingOncDelegate, making WiFiService calls on the worker thead.
 // It also observes |OnNetworkChanged| notifications and posts them to
 // WiFiService on the worker thread. Created and called from the UI thread.
-class NetworkingPrivateServiceClient
-    : public NetworkingPrivateDelegate,
+class NetworkingOncServiceClient
+    : public NetworkingOncDelegate,
       net::NetworkChangeNotifier::NetworkChangeObserver {
  public:
   // Takes ownership of |wifi_service| which is accessed and deleted on the
   // worker thread. The deletion task is posted from the destructor.
-  explicit NetworkingPrivateServiceClient(
+  explicit NetworkingOncServiceClient(
       std::unique_ptr<wifi::WiFiService> wifi_service);
 
   // KeyedService
   void Shutdown() override;
 
-  // NetworkingPrivateDelegate
+  // NetworkingOncDelegate
   void GetProperties(const std::string& guid,
                      const DictionaryCallback& success_callback,
                      const FailureCallback& failure_callback) override;
@@ -112,8 +112,8 @@ class NetworkingPrivateServiceClient
   bool EnableNetworkType(const std::string& type) override;
   bool DisableNetworkType(const std::string& type) override;
   bool RequestScan() override;
-  void AddObserver(NetworkingPrivateDelegateObserver* observer) override;
-  void RemoveObserver(NetworkingPrivateDelegateObserver* observer) override;
+  void AddObserver(NetworkingOncDelegateObserver* observer) override;
+  void RemoveObserver(NetworkingOncDelegateObserver* observer) override;
 
   // NetworkChangeNotifier::NetworkChangeObserver implementation.
   void OnNetworkChanged(
@@ -122,7 +122,7 @@ class NetworkingPrivateServiceClient
  private:
   // Callbacks to extension api function objects. Keep reference to API object
   // and are released in ShutdownOnUIThread. Run when WiFiService calls back
-  // into NetworkingPrivateServiceClient's callback wrappers.
+  // into NetworkingOncServiceClient's callback wrappers.
   typedef int32_t ServiceCallbacksID;
   struct ServiceCallbacks {
     ServiceCallbacks();
@@ -140,7 +140,7 @@ class NetworkingPrivateServiceClient
   };
   using ServiceCallbacksMap = base::IDMap<std::unique_ptr<ServiceCallbacks>>;
 
-  ~NetworkingPrivateServiceClient() override;
+  ~NetworkingOncServiceClient() override;
 
   // Callback wrappers.
   void AfterGetProperties(ServiceCallbacksID callback_id,
@@ -172,18 +172,17 @@ class NetworkingPrivateServiceClient
   // Callbacks to run when callback is called from WiFiService.
   ServiceCallbacksMap callbacks_map_;
   // Observers to Network Events.
-  base::ObserverList<NetworkingPrivateDelegateObserver>
-      network_events_observers_;
+  base::ObserverList<NetworkingOncDelegateObserver> network_events_observers_;
   // Interface to WiFiService. Used and deleted on the worker thread.
   std::unique_ptr<wifi::WiFiService> wifi_service_;
   // Task runner for worker tasks.
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
   // Use WeakPtrs for callbacks from |wifi_service_|.
-  base::WeakPtrFactory<NetworkingPrivateServiceClient> weak_factory_;
+  base::WeakPtrFactory<NetworkingOncServiceClient> weak_factory_;
 
-  DISALLOW_COPY_AND_ASSIGN(NetworkingPrivateServiceClient);
+  DISALLOW_COPY_AND_ASSIGN(NetworkingOncServiceClient);
 };
 
 }  // namespace extensions
 
-#endif  // EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_SERVICE_CLIENT_H_
+#endif  // EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_SERVICE_CLIENT_H_

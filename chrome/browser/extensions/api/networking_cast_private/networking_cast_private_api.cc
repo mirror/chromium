@@ -5,12 +5,13 @@
 #include "chrome/browser/extensions/api/networking_cast_private/networking_cast_private_api.h"
 
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/common/extensions/api/networking_cast_private.h"
 #include "extensions/browser/api/extensions_api_client.h"
-#include "extensions/browser/api/networking_private/networking_cast_private_delegate.h"
+#include "extensions/browser/api/networking_onc/networking_cast_private_delegate.h"
 
 #if defined(OS_CHROMEOS)
 #include "chromeos/network/network_device_handler.h"
@@ -18,7 +19,6 @@
 #include "third_party/cros_system_api/dbus/shill/dbus-constants.h"
 #endif
 
-namespace private_api = extensions::api::networking_private;
 namespace cast_api = extensions::api::networking_cast_private;
 
 namespace extensions {
@@ -46,7 +46,7 @@ cast_api::TDLSStatus ParseTDLSStatus(const std::string& status) {
 #endif
 
 std::unique_ptr<NetworkingCastPrivateDelegate::Credentials> AsCastCredentials(
-    api::networking_cast_private::VerificationProperties& properties) {
+    const api::networking_cast_private::VerificationProperties& properties) {
   return base::MakeUnique<NetworkingCastPrivateDelegate::Credentials>(
       properties.certificate,
       properties.intermediate_certificates

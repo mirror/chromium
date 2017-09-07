@@ -323,7 +323,7 @@
   "networking.onc": {
     "dependencies": ["permission:networking.onc"],
     "contexts": ["blessed_extension"],
-    "source": "networkingPrivate"
+    "alias": "networkingPrivate"
   },
   "networkingPrivate": [{
     "dependencies": ["permission:networkingPrivate"],
@@ -333,7 +333,7 @@
     // networking.onc, but until current usages are migrated to the new
     // name, use API aliasing to expose the API under both names.
     // (http://crbug.com/672186).
-    "alias": "networking.onc"
+    "source": "networking.onc"
   }, {
     "channel": "stable",
     "contexts": ["webui"],

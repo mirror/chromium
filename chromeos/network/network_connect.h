@@ -60,6 +60,16 @@ class CHROMEOS_EXPORT NetworkConnect {
   // caller.
   static void Initialize(Delegate* delegate);
 
+  // Creates the global NetworkConnect object for testing purposes - unlike
+  // |Initialize|, this will set |InitializedForTesting| flag, which can be used
+  // by callers to skip initialization step if the instance has been initialized
+  // for testing.
+  static void InitializeForTesting(Delegate* delegate);
+
+  // Whether the NetworkConnect instance has been initialized using
+  // |InitializeForTesting|.
+  static bool InitializedForTesting();
+
   // Destroys the global NetworkConnect object.
   static void Shutdown();
 

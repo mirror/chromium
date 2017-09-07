@@ -66,7 +66,7 @@ source_set("api") {
     "//extensions/browser/api/messaging",
     "//extensions/browser/api/metrics_private",
     "//extensions/browser/api/mime_handler_private",
-    "//extensions/browser/api/networking_private",
+    "//extensions/browser/api/networking_onc",
     "//extensions/browser/api/power",
     "//extensions/browser/api/printer_provider",
     "//extensions/browser/api/printer_provider_internal",

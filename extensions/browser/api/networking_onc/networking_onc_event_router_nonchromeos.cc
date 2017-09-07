@@ -2,26 +2,25 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "extensions/browser/api/networking_private/networking_private_event_router.h"
+#include "extensions/browser/api/networking_onc/networking_onc_event_router.h"
 
 #include "base/macros.h"
 #include "content/public/browser/browser_context.h"
-#include "extensions/browser/api/networking_private/networking_private_api.h"
-#include "extensions/browser/api/networking_private/networking_private_delegate_factory.h"
-#include "extensions/browser/api/networking_private/networking_private_delegate_observer.h"
-#include "extensions/common/api/networking_private.h"
+#include "extensions/browser/api/networking_onc/networking_onc_api.h"
+#include "extensions/browser/api/networking_onc/networking_onc_delegate_factory.h"
+#include "extensions/browser/api/networking_onc/networking_onc_delegate_observer.h"
+#include "extensions/common/api/networking_onc.h"
 
 namespace extensions {
 
 // This is an event router that will observe listeners to |NetworksChanged| and
 // |NetworkListChanged| events.
-class NetworkingPrivateEventRouterImpl
-    : public NetworkingPrivateEventRouter,
-      public NetworkingPrivateDelegateObserver {
+class NetworkingOncEventRouterImpl : public NetworkingOncEventRouter,
+                                     public NetworkingOncDelegateObserver {
  public:
-  explicit NetworkingPrivateEventRouterImpl(
+  explicit NetworkingOncEventRouterImpl(
       content::BrowserContext* browser_context);
-  ~NetworkingPrivateEventRouterImpl() override;
+  ~NetworkingOncEventRouterImpl() override;
 
  protected:
   // KeyedService overrides:
@@ -31,7 +30,7 @@ class NetworkingPrivateEventRouterImpl
   void OnListenerAdded(const EventListenerInfo& details) override;
   void OnListenerRemoved(const EventListenerInfo& details) override;
 
-  // NetworkingPrivateDelegateObserver overrides:
+  // NetworkingOncDelegateObserver overrides:
   void OnNetworksChangedEvent(
       const std::vector<std::string>& network_guids) override;
   void OnNetworkListChangedEvent(
@@ -47,10 +46,10 @@ class NetworkingPrivateEventRouterImpl
   content::BrowserContext* browser_context_;
   bool listening_;
 
-  DISALLOW_COPY_AND_ASSIGN(NetworkingPrivateEventRouterImpl);
+  DISALLOW_COPY_AND_ASSIGN(NetworkingOncEventRouterImpl);
 };
 
-NetworkingPrivateEventRouterImpl::NetworkingPrivateEventRouterImpl(
+NetworkingOncEventRouterImpl::NetworkingOncEventRouterImpl(
     content::BrowserContext* browser_context)
     : browser_context_(browser_context), listening_(false) {
   // Register with the event router so we know when renderers are listening to
@@ -61,17 +60,17 @@ NetworkingPrivateEventRouterImpl::NetworkingPrivateEventRouterImpl(
   if (!event_router)
     return;
   event_router->RegisterObserver(
-      this, api::networking_private::OnNetworksChanged::kEventName);
+      this, api::networking_onc::OnNetworksChanged::kEventName);
   event_router->RegisterObserver(
-      this, api::networking_private::OnNetworkListChanged::kEventName);
+      this, api::networking_onc::OnNetworkListChanged::kEventName);
   StartOrStopListeningForNetworkChanges();
 }
 
-NetworkingPrivateEventRouterImpl::~NetworkingPrivateEventRouterImpl() {
+NetworkingOncEventRouterImpl::~NetworkingOncEventRouterImpl() {
   DCHECK(!listening_);
 }
 
-void NetworkingPrivateEventRouterImpl::Shutdown() {
+void NetworkingOncEventRouterImpl::Shutdown() {
   // Unregister with the event router. We first check and see if there *is* an
   // event router, because some unit tests try to shutdown all profile services,
   // but didn't initialize the event router first.
@@ -82,47 +81,45 @@ void NetworkingPrivateEventRouterImpl::Shutdown() {
   if (!listening_)
     return;
   listening_ = false;
-  NetworkingPrivateDelegate* delegate =
-      NetworkingPrivateDelegateFactory::GetForBrowserContext(browser_context_);
+  NetworkingOncDelegate* delegate =
+      NetworkingOncDelegateFactory::GetForBrowserContext(browser_context_);
   if (delegate)
     delegate->RemoveObserver(this);
 }
 
-void NetworkingPrivateEventRouterImpl::OnListenerAdded(
+void NetworkingOncEventRouterImpl::OnListenerAdded(
     const EventListenerInfo& details) {
   // Start listening to events from the network state handler.
   StartOrStopListeningForNetworkChanges();
 }
 
-void NetworkingPrivateEventRouterImpl::OnListenerRemoved(
+void NetworkingOncEventRouterImpl::OnListenerRemoved(
     const EventListenerInfo& details) {
   // Stop listening to events from the network state handler if there are no
   // more listeners.
   StartOrStopListeningForNetworkChanges();
 }
 
-void NetworkingPrivateEventRouterImpl::StartOrStopListeningForNetworkChanges() {
+void NetworkingOncEventRouterImpl::StartOrStopListeningForNetworkChanges() {
   EventRouter* event_router = EventRouter::Get(browser_context_);
   if (!event_router)
     return;
 
   bool should_listen =
       event_router->HasEventListener(
-          api::networking_private::OnNetworksChanged::kEventName) ||
+          api::networking_onc::OnNetworksChanged::kEventName) ||
       event_router->HasEventListener(
-          api::networking_private::OnNetworkListChanged::kEventName);
+          api::networking_onc::OnNetworkListChanged::kEventName);
 
   if (should_listen && !listening_) {
-    NetworkingPrivateDelegate* delegate =
-        NetworkingPrivateDelegateFactory::GetForBrowserContext(
-            browser_context_);
+    NetworkingOncDelegate* delegate =
+        NetworkingOncDelegateFactory::GetForBrowserContext(browser_context_);
     if (delegate)
       delegate->AddObserver(this);
   }
   if (!should_listen && listening_) {
-    NetworkingPrivateDelegate* delegate =
-        NetworkingPrivateDelegateFactory::GetForBrowserContext(
-            browser_context_);
+    NetworkingOncDelegate* delegate =
+        NetworkingOncDelegateFactory::GetForBrowserContext(browser_context_);
     if (delegate)
       delegate->RemoveObserver(this);
   }
@@ -130,36 +127,35 @@ void NetworkingPrivateEventRouterImpl::StartOrStopListeningForNetworkChanges() {
   listening_ = should_listen;
 }
 
-void NetworkingPrivateEventRouterImpl::OnNetworksChangedEvent(
+void NetworkingOncEventRouterImpl::OnNetworksChangedEvent(
     const std::vector<std::string>& network_guids) {
   EventRouter* event_router = EventRouter::Get(browser_context_);
   if (!event_router)
     return;
   std::unique_ptr<base::ListValue> args(
-      api::networking_private::OnNetworksChanged::Create(network_guids));
+      api::networking_onc::OnNetworksChanged::Create(network_guids));
   std::unique_ptr<Event> netchanged_event(new Event(
       events::NETWORKING_PRIVATE_ON_NETWORKS_CHANGED,
-      api::networking_private::OnNetworksChanged::kEventName, std::move(args)));
+      api::networking_onc::OnNetworksChanged::kEventName, std::move(args)));
   event_router->BroadcastEvent(std::move(netchanged_event));
 }
 
-void NetworkingPrivateEventRouterImpl::OnNetworkListChangedEvent(
+void NetworkingOncEventRouterImpl::OnNetworkListChangedEvent(
     const std::vector<std::string>& network_guids) {
   EventRouter* event_router = EventRouter::Get(browser_context_);
   if (!event_router)
     return;
   std::unique_ptr<base::ListValue> args(
-      api::networking_private::OnNetworkListChanged::Create(network_guids));
-  std::unique_ptr<Event> netlistchanged_event(
-      new Event(events::NETWORKING_PRIVATE_ON_NETWORK_LIST_CHANGED,
-                api::networking_private::OnNetworkListChanged::kEventName,
-                std::move(args)));
+      api::networking_onc::OnNetworkListChanged::Create(network_guids));
+  std::unique_ptr<Event> netlistchanged_event(new Event(
+      events::NETWORKING_PRIVATE_ON_NETWORK_LIST_CHANGED,
+      api::networking_onc::OnNetworkListChanged::kEventName, std::move(args)));
   event_router->BroadcastEvent(std::move(netlistchanged_event));
 }
 
-NetworkingPrivateEventRouter* NetworkingPrivateEventRouter::Create(
+NetworkingOncEventRouter* NetworkingOncEventRouter::Create(
     content::BrowserContext* browser_context) {
-  return new NetworkingPrivateEventRouterImpl(browser_context);
+  return new NetworkingOncEventRouterImpl(browser_context);
 }
 
 }  // namespace extensions

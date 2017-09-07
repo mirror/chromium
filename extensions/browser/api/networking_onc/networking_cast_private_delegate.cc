@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "extensions/browser/api/networking_private/networking_cast_private_delegate.h"
+#include "extensions/browser/api/networking_onc/networking_cast_private_delegate.h"
 
 #include <utility>
 

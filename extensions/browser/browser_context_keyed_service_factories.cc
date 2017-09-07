@@ -18,7 +18,7 @@
 #include "extensions/browser/api/idle/idle_manager_factory.h"
 #include "extensions/browser/api/management/management_api.h"
 #include "extensions/browser/api/networking_config/networking_config_service_factory.h"
-#include "extensions/browser/api/networking_private/networking_private_event_router_factory.h"
+#include "extensions/browser/api/networking_onc/networking_onc_event_router_factory.h"
 #include "extensions/browser/api/power/power_api.h"
 #include "extensions/browser/api/runtime/runtime_api.h"
 #include "extensions/browser/api/serial/serial_connection.h"
@@ -81,7 +81,7 @@ void EnsureBrowserContextKeyedServiceFactoriesBuilt() {
   NetworkingConfigServiceFactory::GetInstance();
 #endif
 #if defined(OS_LINUX) || defined(OS_WIN) || defined(OS_MACOSX)
-  NetworkingPrivateEventRouterFactory::GetInstance();
+  NetworkingOncEventRouterFactory::GetInstance();
 #endif
   PowerAPI::GetFactoryInstance();
   ProcessManagerFactory::GetInstance();
