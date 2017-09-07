@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad64ea04_bd6b9917",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-07T00:35:53Z",
+      "side": 1,
+      "message": "TextEmphasisPosition should be a bit field, so it shouldn\u0027t be here.",
+      "revId": "e78eba72afeb511bf8cbbd09bbb1e82ca85a30ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38354d67_c18e97d1",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-07T00:35:53Z",
+      "side": 1,
+      "message": "Maybe set backdrop-filter to have custom getter, so that it generates an BackdropFilterInternal() instead of having to do ComputedStyleBase::BackdropFilter?",
+      "revId": "e78eba72afeb511bf8cbbd09bbb1e82ca85a30ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d51b4f_c0ffeba1",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-07T00:35:53Z",
+      "side": 1,
+      "message": "Same here?",
+      "revId": "e78eba72afeb511bf8cbbd09bbb1e82ca85a30ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
