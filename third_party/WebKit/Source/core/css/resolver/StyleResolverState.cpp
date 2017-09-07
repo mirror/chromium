@@ -27,6 +27,7 @@
 #include "core/dom/Node.h"
 #include "core/dom/NodeComputedStyle.h"
 #include "core/layout/api/LayoutViewItem.h"
+#include "core/style/ComputedStyle.h"
 
 namespace blink {
 
@@ -97,8 +98,56 @@ CSSToLengthConversionData StyleResolverState::FontSizeConversionData() const {
   return CSSToLengthConversionData(Style(), font_sizes, viewport_size, 1);
 }
 
+void StyleResolverState::SetParentStyle(
+    RefPtr<const ComputedStyle> parent_style) {
+  parent_style_ = std::move(parent_style);
+}
+
+void StyleResolverState::SetLayoutParentStyle(
+    RefPtr<const ComputedStyle> parent_style) {
+  layout_parent_style_ = std::move(parent_style);
+}
+
+void StyleResolverState::CacheUserAgentBorderAndBackground() {
+  // LayoutTheme only needs the cached style if it has an appearance,
+  // and constructing it is expensive so we avoid it if possible.
+  if (!Style()->HasAppearance())
+    return;
+
+  cached_ua_style_ = CachedUAStyle::Create(Style());
+}
+
 void StyleResolverState::LoadPendingResources() {
   element_style_resources_.LoadPendingResources(Style());
+}
+
+const FontDescription& StyleResolverState::ParentFontDescription() const {
+  return parent_style_->GetFontDescription();
+}
+
+void StyleResolverState::SetZoom(float f) {
+  if (style_->SetZoom(f))
+    font_builder_.DidChangeEffectiveZoom();
+}
+
+void StyleResolverState::SetEffectiveZoom(float f) {
+  if (style_->SetEffectiveZoom(f))
+    font_builder_.DidChangeEffectiveZoom();
+}
+
+void StyleResolverState::SetWritingMode(WritingMode new_writing_mode) {
+  if (style_->GetWritingMode() == new_writing_mode) {
+    return;
+  }
+  style_->SetWritingMode(new_writing_mode);
+  font_builder_.DidChangeWritingMode();
+}
+
+void StyleResolverState::SetTextOrientation(ETextOrientation text_orientation) {
+  if (style_->GetTextOrientation() != text_orientation) {
+    style_->SetTextOrientation(text_orientation);
+    font_builder_.DidChangeTextOrientation();
+  }
 }
 
 void StyleResolverState::SetCustomPropertySetForApplyAtRule(
