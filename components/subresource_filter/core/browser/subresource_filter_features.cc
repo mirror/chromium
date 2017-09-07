@@ -4,10 +4,10 @@
 
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
 
+#include <algorithm>
 #include <map>
 #include <ostream>
 #include <sstream>
-#include <string>
 #include <tuple>
 #include <utility>
 
@@ -29,7 +29,7 @@ namespace {
 
 class CommaSeparatedStrings {
  public:
-  CommaSeparatedStrings(std::string comma_separated_strings)
+  explicit CommaSeparatedStrings(std::string comma_separated_strings)
       : backing_string_(comma_separated_strings),
         pieces_(base::SplitStringPiece(backing_string_,
                                        ",",
@@ -419,8 +419,6 @@ bool HasEnabledConfiguration(const Configuration& config) {
       GetEnabledConfigurations()->configs_by_decreasing_priority(), config);
 }
 
-namespace testing {
-
 scoped_refptr<ConfigurationList> GetAndSetActivateConfigurations(
     scoped_refptr<ConfigurationList> new_configs) {
   base::AutoLock lock(g_active_configurations_lock.Get());
@@ -428,7 +426,5 @@ scoped_refptr<ConfigurationList> GetAndSetActivateConfigurations(
   g_active_configurations.Get() = std::move(new_configs);
   return old_configs;
 }
-
-}  // namespace testing
 
 }  // namespace subresource_filter
