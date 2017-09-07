@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dc40841_381141d3",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-07T07:05:46Z",
+      "side": 1,
+      "message": "does this need to be updated? (I\u0027m guessing \u0027no\u0027, since radio buttons use the same ripple, and their size is not changing.. just thought I\u0027d check :).",
+      "range": {
+        "startLine": 207,
+        "startChar": 46,
+        "endLine": 207,
+        "endChar": 48
+      },
+      "revId": "093b276e3941b25033f2221a48727c1152b94b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4562fe77_d071c304",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-07T07:05:46Z",
+      "side": 1,
+      "message": "For good results, I think this needs to be a factor or multiple of CANVAS_DIMENSIONS in the .icon files - commented on the bug.",
+      "range": {
+        "startLine": 218,
+        "startChar": 50,
+        "endLine": 218,
+        "endChar": 52
+      },
+      "revId": "093b276e3941b25033f2221a48727c1152b94b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
