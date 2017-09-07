@@ -1,0 +1,72 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// The <code>terminalPrivate</code> API provides means of creating and managing
+// Chrome OS terminal process.
+[implemented_in="chrome/browser/extensions/api/terminal/terminal_private_api.h"]
+namespace terminalPrivate  {
+  // Type of the output stream from which output came. When process exits,
+  // output type will be set to <code>exit</code>.
+  enum OutputType {
+    stdout,
+    stderr,
+    exit
+  };
+
+  // Supported terminals.
+  enum TerminalProcess {
+    crosh
+  };
+
+  callback TerminalProcessCallback = void(long processId);
+  callback SuccessCallback = void(boolean success);
+
+  interface Functions {
+    // Launches a new terminal process.
+    // |process|: The type of the process to start.
+    // |callback|: Returns the launched terminal process ID. Returns -1 if the
+    //     process launch failed.
+    static void openTerminalProcess(TerminalProcess process,
+                                    TerminalProcessCallback callback);
+
+    // Closes prevously opened process.
+    // |processId|: ID of the process to close.
+    static void closeTerminalProcess(long processId,
+                                     optional SuccessCallback callback);
+
+    // Sends input that will be routed to stdin of the process with the
+    // specified id.
+    // |processId|: The ID of the terminal process to which to send data.
+    // |data|: The data to send to the process input.
+    static void sendInput(long processId, DOMString data,
+                          optional SuccessCallback callback);
+
+   // Notifies a terminal process that terminal window size has changed.
+   // |processId|: ID of the terminal process that was resized.
+   // |width|: The new terminal window width.
+   // |height|: The new terminal window height.
+   static void onTerminalResize(long processId, long width, long height,
+                                optional SuccessCallback callback);
+
+   // Should be called from $(ref:onProcessOutput) when the event is dispatched
+   // to a terminal extension. Observing the terminal process output will be
+   // paused after $(ref: onProcessOutput) is dispatched until this method is
+   // called.
+   static void ackOutput(long tabId, long processId);
+  };
+
+  interface Events {
+
+    // Fired when an opened process writes something to its output. Observing
+    // further process output will be blocked until $(ref: ackOutput) for the
+    // terminal is called. Internally, first event argument will be ID of the
+    // tab that contains terminal instance for which this event is intended.
+    // This argument will be stripped before passing the event to the extension.
+    // |processId|: ID of the process from which the output came.
+    // |type|: Type of the output stream from which output came. When process
+    //     exits, output type will be set to <code>exit</code>.
+    // |data|: Data written to the output stream.
+    static void onProcessOutput(long processId, OutputType type, DOMString data);
+  };
+};

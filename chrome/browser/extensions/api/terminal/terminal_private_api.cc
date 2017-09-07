@@ -38,7 +38,6 @@ namespace AckOutput = extensions::api::terminal_private::AckOutput;
 
 namespace {
 
-const char kCroshName[] = "crosh";
 const char kCroshCommand[] = "/usr/bin/crosh";
 // We make stubbed crosh just echo back input.
 const char kStubbedCroshCommand[] = "cat";
@@ -54,11 +53,11 @@ std::string GetCroshPath() {
   return std::string(kStubbedCroshCommand);
 }
 
-std::string GetProcessCommandForName(const std::string& name) {
-  if (name == kCroshName)
-    return GetCroshPath();
-  else
+std::string GetProcessCommandForName(
+    extensions::api::terminal_private::TerminalProcess process) {
+  if (process != extensions::api::terminal_private::TERMINAL_PROCESS_CROSH)
     return std::string();
+  return GetCroshPath();
 }
 
 void NotifyProcessOutput(content::BrowserContext* browser_context,
@@ -119,7 +118,7 @@ TerminalPrivateOpenTerminalProcessFunction::Run() {
       OpenTerminalProcess::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params.get());
 
-  command_ = GetProcessCommandForName(params->process_name);
+  command_ = GetProcessCommandForName(params->process);
   if (command_.empty())
     return RespondNow(Error("Invalid process name."));
 
@@ -189,7 +188,7 @@ ExtensionFunction::ResponseAction TerminalPrivateSendInputFunction::Run() {
       FROM_HERE,
       base::BindOnce(
           &TerminalPrivateSendInputFunction::SendInputOnRegistryTaskRunner,
-          this, params->pid, params->input));
+          this, params->process_id, params->data));
   return RespondLater();
 }
 
@@ -222,7 +221,7 @@ TerminalPrivateCloseTerminalProcessFunction::Run() {
   chromeos::ProcessProxyRegistry::GetTaskRunner()->PostTask(
       FROM_HERE, base::BindOnce(&TerminalPrivateCloseTerminalProcessFunction::
                                     CloseOnRegistryTaskRunner,
-                                this, params->pid));
+                                this, params->process_id));
 
   return RespondLater();
 }
@@ -258,7 +257,7 @@ TerminalPrivateOnTerminalResizeFunction::Run() {
       FROM_HERE,
       base::BindOnce(&TerminalPrivateOnTerminalResizeFunction::
                          OnResizeOnRegistryTaskRunner,
-                     this, params->pid, params->width, params->height));
+                     this, params->process_id, params->width, params->height));
 
   return RespondLater();
 }
@@ -303,7 +302,7 @@ ExtensionFunction::ResponseAction TerminalPrivateAckOutputFunction::Run() {
       FROM_HERE,
       base::BindOnce(
           &TerminalPrivateAckOutputFunction::AckOutputOnRegistryTaskRunner,
-          this, params->pid));
+          this, params->process_id));
 
   return RespondNow(NoArguments());
 }

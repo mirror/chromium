@@ -113,7 +113,7 @@ if (is_chromeos) {
     "platform_keys.idl",
     "platform_keys_internal.idl",
     "quick_unlock_private.idl",
-    "terminal_private.json",
+    "terminal_private.idl",
     "users_private.idl",
     "wallpaper.json",
     "wallpaper_private.json",

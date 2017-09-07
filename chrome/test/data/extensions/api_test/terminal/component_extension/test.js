@@ -12,9 +12,6 @@ var testLine = 'abcdefgh\n';
 var startCharacter = '#';
 
 var croshName = 'crosh';
-var invalidName = 'some name';
-
-var invalidNameError = 'Invalid process name.';
 
 var testLineNum = 10;
 var testProcessTotal = 2;
@@ -252,9 +249,4 @@ chrome.test.runTests([
       });
     }
   },
-
-  function invalidProcessNameTest() {
-    chrome.terminalPrivate.openTerminalProcess(invalidName,
-        chrome.test.callbackFail(invalidNameError));
-  }
 ]);
