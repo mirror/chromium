@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8e69978_339d9812",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-07T20:14:39Z",
+      "side": 1,
+      "message": "nit: You probably want a const reference here. At the moment it\u0027s just a boolean (so it\u0027s actually cheaper this way), but if you ever add more stuff, const\u0026 will rapidly become more efficient here.",
+      "revId": "3e24b31aa0b2d51e0c43af71ee3f0a6f7b03342a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe14f003_b05770af",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-07T20:14:39Z",
+      "side": 1,
+      "message": "nit: std::move(syntax_descriptor), since you probably want to pass ownership of the underlying vector rather than copy it.",
+      "revId": "3e24b31aa0b2d51e0c43af71ee3f0a6f7b03342a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f767859_5c57c8aa",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-07T20:14:39Z",
+      "side": 1,
+      "message": "Why are so many parameters passed by non-const reference? Many of these, like |context| and |constructor|, are never modified.\n\nBesides that, v8::Local is just a pointer, so taking a reference to one is unnecessary unless you actually want to modify a variable in the caller. So this, for instance, should just be \"v8::Local\u003cv8::Context\u003e context\".",
+      "revId": "3e24b31aa0b2d51e0c43af71ee3f0a6f7b03342a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e332cf7_563984b5",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-07T20:14:39Z",
+      "side": 1,
+      "message": "Probably this code isn\u0027t presently hot enough for it to matter, but adding and removing a TryCatch does require calling into V8 and isn\u0027t entirely free. If this were in one method, I\u0027d suggest just using a single TryCatch for the entire thing.\n\nAs multiple functions, the need to pass the TryCatch by reference makes things a little less clear.",
+      "revId": "3e24b31aa0b2d51e0c43af71ee3f0a6f7b03342a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
