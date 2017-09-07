@@ -148,19 +148,43 @@ void PaintWorkletGlobalScope::registerPaint(const String& name,
     }
   }
 
-  // Parse 'alpha' AKA hasAlpha property.
-  v8::Local<v8::Value> alpha_value;
-  if (!constructor->Get(context, V8AtomicString(isolate, "alpha"))
-           .ToLocal(&alpha_value))
+  // Parse paintRenderingContext2DSettings object.
+  v8::Local<v8::Value> context_settings_value;
+  if (!constructor
+           ->Get(context,
+                 V8AtomicString(isolate, "paintRenderingContext2DSettings"))
+           .ToLocal(&context_settings_value))
     return;
-  if (!IsUndefinedOrNull(alpha_value) && !alpha_value->IsBoolean()) {
+  if (!IsUndefinedOrNull(context_settings_value) &&
+      !context_settings_value->IsObject()) {
     exception_state.ThrowTypeError(
-        "The 'alpha' property on the class is not a boolean.");
+        "The 'paintRenderingContext2DSettings' property on the class is not an "
+        "object.");
     return;
   }
-  bool has_alpha = alpha_value->IsBoolean()
-                       ? v8::Local<v8::Boolean>::Cast(alpha_value)->Value()
-                       : true;
+  bool has_alpha = true;
+  if (context_settings_value->IsObject()) {
+    v8::Local<v8::Object> context_settings_object =
+        context_settings_value.As<v8::Object>();
+    v8::Local<v8::Value> alpha_value;
+    static const char* const kKeys[] = {"alpha"};
+    const v8::Eternal<v8::Name>* keys =
+        V8PerIsolateData::From(isolate)->FindOrCreateEternalNameCache(
+            kKeys, kKeys, WTF_ARRAY_LENGTH(kKeys));
+    if (!context_settings_object->Get(context, keys[0].Get(isolate))
+             .ToLocal(&alpha_value)) {
+      exception_state.ThrowTypeError(
+          "The 'PaintRenderingContext2DSettings' property on the class has no "
+          "alpha property");
+      return;
+    }
+    if (alpha_value.IsEmpty() || alpha_value->IsUndefined()) {
+      // Fall back to default
+    } else {
+      has_alpha = NativeValueTraits<IDLBoolean>::NativeValue(
+          isolate, alpha_value, exception_state);
+    }
+  }
 
   v8::Local<v8::Value> prototype_value;
   if (!constructor->Get(context, V8AtomicString(isolate, "prototype"))
@@ -201,10 +225,12 @@ void PaintWorkletGlobalScope::registerPaint(const String& name,
 
   v8::Local<v8::Function> paint = v8::Local<v8::Function>::Cast(paint_value);
 
+  PaintRenderingContext2DSettings context_settings;
+  context_settings.setAlpha(has_alpha);
   CSSPaintDefinition* definition = CSSPaintDefinition::Create(
       ScriptController()->GetScriptState(), constructor, paint,
       native_invalidation_properties, custom_invalidation_properties,
-      input_argument_types, has_alpha);
+      input_argument_types, context_settings);
   paint_definitions_.Set(name, definition);
 
   // TODO(xidachen): the following steps should be done with a postTask when

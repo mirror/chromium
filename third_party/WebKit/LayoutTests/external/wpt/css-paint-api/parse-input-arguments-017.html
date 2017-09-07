@@ -20,8 +20,8 @@
 var testsPassed = false;
 try {
     registerPaint('foo13', class {
-        static get alpha() {
-            return true;
+        static get paintRenderingContext2DSettings() {
+            return {alpha: true};
         }
         paint() { }
     });
