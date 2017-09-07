@@ -253,3 +253,15 @@ source_set("unit_tests") {
     "//third_party/webrtc/modules/desktop_capture",
   ]
 }
+
+executable("process_metrics_test_stub") {
+  testonly = true
+
+  sources = [
+    "process_metrics_test_stub_main.cc"
+  ]
+
+  deps = [
+    "//base"
+  ]
+}
