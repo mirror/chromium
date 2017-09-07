@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa3a0eda_975debd6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-07T23:56:48Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "5368ec7b83e0e10d713f6e8253ea3e2038a752e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c3f5a7_a5e5e041",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-07T23:56:48Z",
+      "side": 1,
+      "message": "why? This can go in before that cl :)\n\nAlso, instead of linking the dependent cl here, maybe say that this will be used to close the note taking app from views based login shelf.",
+      "range": {
+        "startLine": 10,
+        "startChar": 52,
+        "endLine": 11,
+        "endChar": 45
+      },
+      "revId": "5368ec7b83e0e10d713f6e8253ea3e2038a752e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65b5d77_de1bcd49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-07T23:56:48Z",
+      "side": 1,
+      "message": "mention adding shared TestTrayActionClient",
+      "revId": "5368ec7b83e0e10d713f6e8253ea3e2038a752e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a686736_aa075a7a",
+        "filename": "ash/tray_action/tray_action_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-07T23:56:48Z",
+      "side": 1,
+      "message": "can you add tests for CloseLockScreenNote (both with and without client set)",
+      "range": {
+        "startLine": 190,
+        "startChar": 23,
+        "endLine": 190,
+        "endChar": 36
+      },
+      "revId": "5368ec7b83e0e10d713f6e8253ea3e2038a752e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96516752_d4fbe8bd",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-07T23:56:48Z",
+      "side": 1,
+      "message": "can you add a test for this?",
+      "revId": "5368ec7b83e0e10d713f6e8253ea3e2038a752e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
