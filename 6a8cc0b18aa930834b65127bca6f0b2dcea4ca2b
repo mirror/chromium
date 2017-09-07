@@ -77,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "c637e9ff_239aaac2",
+        "filename": "chrome/test/data/chromeos/app_mode/webstore/downloads/fmmbbdiapbcicajbpkpkdbcgidgppada.crx",
+        "patchSetId": 37
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-07T01:35:08Z",
+      "side": 1,
+      "message": "The KioskBrowserTest is already a subclass of ExtensionBrowserTest, which has methods to do this (check out callers of PackExtension).  Additionally, if all you need is a consistent ID, putting a \"key\" field in your manifest will do that (look for manifest.json files with \"key\").",
+      "parentUuid": "6fa4fa72_0cc356fe",
+      "revId": "6a8cc0b18aa930834b65127bca6f0b2dcea4ca2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37122d26_b74600da",
         "filename": "extensions/browser/api/virtual_keyboard/virtual_keyboard_api.cc",
         "patchSetId": 37
