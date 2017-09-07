@@ -10,6 +10,9 @@
 
 #include "core/CSSPropertyNames.h"
 #include "core/css/properties/CSSPropertyAPI.h"
+{% if property.runtime_flag %}
+#include "platform/RuntimeEnabledFeatures.h"
+{% endif %}
 #include "platform/heap/HeapAllocator.h"
 
 namespace blink {
@@ -44,6 +47,13 @@ class {{api_classname}} : public CSSPropertyAPI {
   {% endif %}
   {% if not property.is_property %}
   bool IsProperty() const override { return false; }
+  {% endif %}
+  {% if property.is_internal %}
+  bool IsEnabled() const override { return false; }
+  {% elif property.runtime_flag %}
+  bool IsEnabled() const override {
+    return RuntimeEnabledFeatures::{{property.runtime_flag}}Enabled();
+  }
   {% endif %}
 };
 
