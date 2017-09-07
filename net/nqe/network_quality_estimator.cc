@@ -892,6 +892,8 @@ void NetworkQualityEstimator::RecordNetworkIDAvailability() const {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (current_network_id_.type ==
           NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI ||
+      current_network_id_.type ==
+          NetworkChangeNotifier::ConnectionType::CONNECTION_ETHERNET ||
       NetworkChangeNotifier::IsConnectionCellular(current_network_id_.type)) {
     UMA_HISTOGRAM_BOOLEAN("NQE.NetworkIdAvailable",
                           !current_network_id_.id.empty());
@@ -1513,6 +1515,8 @@ bool NetworkQualityEstimator::ReadCachedNetworkQualityEstimate() {
 
   if (current_network_id_.type !=
           NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI &&
+      current_network_id_.type !=
+          NetworkChangeNotifier::ConnectionType::CONNECTION_ETHERNET &&
       !disable_offline_check_) {
     return false;
   }
@@ -1733,12 +1737,10 @@ void NetworkQualityEstimator::
     observer.OnEffectiveConnectionTypeChanged(effective_connection_type_);
 
   // Add the estimates of the current network to the cache store.
-  if (effective_connection_type_ != EFFECTIVE_CONNECTION_TYPE_UNKNOWN) {
     network_quality_store_->Add(current_network_id_,
                                 nqe::internal::CachedNetworkQuality(
                                     tick_clock_->NowTicks(), network_quality_,
                                     effective_connection_type_));
-  }
 }
 
 void NetworkQualityEstimator::NotifyObserversOfRTTOrThroughputComputed() const {
@@ -1865,6 +1867,8 @@ void NetworkQualityEstimator::MaybeUpdateNetworkQualityFromCache(
     return;
   if (network_id.type !=
           NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI &&
+      network_id.type !=
+          NetworkChangeNotifier::ConnectionType::CONNECTION_ETHERNET &&
       !disable_offline_check_) {
     return;
   }
