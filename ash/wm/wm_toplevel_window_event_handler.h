@@ -122,6 +122,8 @@ class ASH_EXPORT WmToplevelWindowEventHandler
 
   EndClosure end_closure_;
 
+  std::unique_ptr<gfx::Point> mouse_start_drag_point_;
+
   DISALLOW_COPY_AND_ASSIGN(WmToplevelWindowEventHandler);
 };
 

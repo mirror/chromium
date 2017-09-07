@@ -22,6 +22,11 @@
 namespace {
 const double kMinHorizVelocityForWindowSwipe = 1100;
 const double kMinVertVelocityForWindowMinimize = 1000;
+
+// Minimum distance a mouse drag must have traveled from the start drag point to
+// trigger an window resize. (Such epsilon for touch scroll is not neccessary
+// here as it already exists in ui::GestureDetector.)
+const double kMouseDragEpsilon = 20;
 }
 
 namespace ash {
@@ -399,6 +404,7 @@ bool WmToplevelWindowEventHandler::AttemptToStartDrag(
 
   end_closure_ = end_closure;
   window_resizer_.reset(new ScopedWindowResizer(this, std::move(resizer)));
+  mouse_start_drag_point_.reset(new gfx::Point(point_in_parent));
 
   pre_drag_window_bounds_ = window->bounds();
   in_gesture_drag_ = (source == ::wm::WINDOW_MOVE_SOURCE_TOUCH);
@@ -488,7 +494,12 @@ void WmToplevelWindowEventHandler::HandleDrag(aura::Window* target,
   gfx::Point location_in_parent = event->location();
   aura::Window::ConvertPointToTarget(target, target->parent(),
                                      &location_in_parent);
-  window_resizer_->resizer()->Drag(location_in_parent, event->flags());
+  if (!mouse_start_drag_point_ ||
+      (location_in_parent - *mouse_start_drag_point_).Length() >=
+          kMouseDragEpsilon) {
+    mouse_start_drag_point_.reset();
+    window_resizer_->resizer()->Drag(location_in_parent, event->flags());
+  }
   event->StopPropagation();
 }
 
