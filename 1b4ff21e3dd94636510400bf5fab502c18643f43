@@ -22,6 +22,30 @@
       "revId": "1b4ff21e3dd94636510400bf5fab502c18643f43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3d5c22_70ecac7a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 31164,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-07T23:52:59Z",
+      "side": 1,
+      "message": "That\u0027s actually what the current bucket 0 represents - that a print preview was shown, so that there is a baseline for how many print previews are done vs how many times users use the various PDF features like rotation. Would it be more clear if renamed to PRINT_PREVIEW_SHOWN?",
+      "parentUuid": "7b62f6a4_39bb1d2b",
+      "range": {
+        "startLine": 31159,
+        "startChar": 0,
+        "endLine": 31164,
+        "endChar": 7
+      },
+      "revId": "1b4ff21e3dd94636510400bf5fab502c18643f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
