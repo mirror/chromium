@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2283c6d7_8af783a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-07T11:15:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c35a2136_b5521c04",
+      "revId": "e46dada090d1c120a515c85c60ccfd7bb73b952e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29c438b4_3e6137bd",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/notifications/channels/ChannelsInitializerTest.java",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "e46dada090d1c120a515c85c60ccfd7bb73b952e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c9a609_d83e838d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/notifications/channels/ChannelsInitializerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-07T11:15:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29c438b4_3e6137bd",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 223,
+        "endChar": 100
+      },
+      "revId": "e46dada090d1c120a515c85c60ccfd7bb73b952e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
