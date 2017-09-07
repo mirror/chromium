@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d127b81_96b3a656",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-07T22:58:09Z",
+      "side": 1,
+      "message": "Prefer to keep cast_media_sink_service_impl_ IO only...task_runner() might be invoked from UI thread, do not feel like adding it...\n\nWill keep a task_runner_ in CastMediaSinkService, and pass it to CMSSImpl instead...",
+      "parentUuid": "ca3de5f4_f0926681",
+      "revId": "e82d5cfa8533001187026378f12b52e46561cb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e0ba5e0_7f1feb13",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-05T22:06:34Z",
       "side": 1,
       "message": "I\u0027m not sure exactly how the discovery logic works, but aren\u0027t you potentially losing things by clearing out the whole list here?",
+      "revId": "e82d5cfa8533001187026378f12b52e46561cb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11c0d02_3c6b4c6c",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-07T22:58:09Z",
+      "side": 1,
+      "message": "|cast_sinks_| just keeps what mDNS found in current round of discovery. It is not incremental. (will write a design doc for this, sorry for the confusion)",
+      "parentUuid": "4e0ba5e0_7f1feb13",
       "revId": "e82d5cfa8533001187026378f12b52e46561cb09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "e82d5cfa8533001187026378f12b52e46561cb09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e92ea1f_3649f89d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-07T22:58:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "867d33aa_e75ebe02",
+      "revId": "e82d5cfa8533001187026378f12b52e46561cb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
