@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51572e57_2954a359",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-07T21:45:18Z",
+      "side": 1,
+      "message": "Left over from debugging?",
+      "range": {
+        "startLine": 980,
+        "startChar": 8,
+        "endLine": 981,
+        "endChar": 27
+      },
+      "revId": "71580e6b434a165407c47afcec398be02db9fa03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39bf9752_9e72d5cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-07T21:45:18Z",
+      "side": 1,
+      "message": "Should we still initialize Suggestions so that it\u0027s ready if the omnibox gets defocused before onDeferredStartup is called?",
+      "revId": "71580e6b434a165407c47afcec398be02db9fa03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea97d854_2041f4b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-07T21:45:18Z",
+      "side": 1,
+      "message": "This should be in the if block since the sheet may be open due to non-home content showing e.g. select \"Show full history\" on recent tabs.",
+      "range": {
+        "startLine": 112,
+        "startChar": 12,
+        "endLine": 112,
+        "endChar": 52
+      },
+      "revId": "71580e6b434a165407c47afcec398be02db9fa03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28cddaa1_1556ffc2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-07T21:45:18Z",
+      "side": 1,
+      "message": "Is it possible for the user to focus the omnibox and tap on the home button before onDeferredStartup finishes? If so, are we properly setting mDefaultContentInitialized \u003d true or do we need a call to initializeDefaultContent() somewhere to handle that case?",
+      "range": {
+        "startLine": 312,
+        "startChar": 19,
+        "endLine": 312,
+        "endChar": 43
+      },
+      "revId": "71580e6b434a165407c47afcec398be02db9fa03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
