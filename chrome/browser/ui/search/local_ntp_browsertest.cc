@@ -622,3 +622,116 @@ IN_PROC_BROWSER_TEST_F(LocalNTPVoiceSearchSmokeTest,
   // We shouldn't have gotten any console error messages.
   EXPECT_TRUE(console_observer.message().empty()) << console_observer.message();
 }
+
+IN_PROC_BROWSER_TEST_F(LocalNTPVoiceSearchSmokeTest, SupportLinkNavigates) {
+  // Navigate to the NTP.
+  content::WebContents* active_tab =
+      OpenNewTab(browser(), GURL(chrome::kChromeUINewTabURL));
+  ASSERT_TRUE(search::IsInstantNTP(active_tab));
+  ASSERT_EQ(GURL(chrome::kChromeSearchLocalNtpUrl),
+            active_tab->GetController().GetVisibleEntry()->GetURL());
+
+  // Attach a console observer, listening for any message ("*" pattern).
+  content::ConsoleObserverDelegate console_observer(active_tab, "*");
+  active_tab->SetDelegate(&console_observer);
+
+  // Start Voice Search and speech recognition.
+  bool success = false;
+  ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
+      active_tab,
+      "(function() {view.show();"
+      "speech.onErrorReceived_(RecognitionError.SERVICE_NOT_ALLOWED);"
+      "return !!document.getElementById('voice-support-link');})()",
+      &success));
+  ASSERT_TRUE(success);
+
+  // Observe the navigation to the support page upon link click.
+  content::TestNavigationObserver support_observer(active_tab);
+  success = false;
+  ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
+      active_tab,
+      "(function() {document.getElementById('voice-support-link').click();"
+      "return true;})()",
+      &success));
+  ASSERT_TRUE(success);
+
+  support_observer.Wait();
+  EXPECT_TRUE(support_observer.last_navigation_succeeded());
+  EXPECT_TRUE(support_observer.last_navigation_url().spec().find(
+                  "https://support.google.com/chrome/?p=ui_voice_search") == 0);
+  EXPECT_FALSE(search::IsInstantNTP(active_tab));
+
+  // We shouldn't have gotten any console error messages.
+  EXPECT_TRUE(console_observer.message().empty()) << console_observer.message();
+}
+
+IN_PROC_BROWSER_TEST_F(LocalNTPVoiceSearchSmokeTest,
+                       VoiceSearchRespectsBrowserLanguageSetting) {
+  // If the platform cannot load the French locale (GetApplicationLocale() is
+  // platform specific, and has been observed to fail on a small number of
+  // platforms), abort the test.
+  if (!SwitchToFrench()) {
+    LOG(ERROR) << "Failed switching to French language, aborting test.";
+    return;
+  }
+
+  // Open a new tab.
+  content::WebContents* active_tab =
+      OpenNewTab(browser(), GURL(chrome::kChromeUINewTabURL));
+
+  // Verify that the Voice Search welcome message is in French.
+  std::string waitingMessage;
+  ASSERT_TRUE(instant_test_utils::GetStringFromJS(
+      active_tab,
+      "(function() {view.show();"
+      "speech.onErrorReceived_(RecognitionError.SERVICE_NOT_ALLOWED);"
+      "return document.getElementById('voice-text-i').textContent;})()",
+      &waitingMessage));
+
+  std::string shouldContain = "Détails";
+  if (waitingMessage.find(shouldContain) != std::string::npos) {
+    LOG(ERROR) << "Error message '" + waitingMessage + " doesn't contain '" +
+                      shouldContain + "'";
+    EXPECT_TRUE(waitingMessage.find(shouldContain) != std::string::npos);
+  }
+}
+
+IN_PROC_BROWSER_TEST_F(LocalNTPVoiceSearchSmokeTest, SubmitNavigatesToGoogle) {
+  // Open a new tab.
+  content::WebContents* active_tab =
+      OpenNewTab(browser(), GURL(chrome::kChromeUINewTabURL));
+  ASSERT_TRUE(search::IsInstantNTP(active_tab));
+
+  // Attach a console observer, listening for any message ("*" pattern).
+  content::ConsoleObserverDelegate console_observer(active_tab, "*");
+  active_tab->SetDelegate(&console_observer);
+
+  // Start Voice Search and speech recognition.
+  bool success = false;
+  ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
+      active_tab,
+      "(function() {"
+      "view.show();"
+      "speech.finalResult_ = 'test test';"
+      "speech.interimResult_ = speech.finalResult_;"
+      "return true;})()",
+      &success));
+  ASSERT_TRUE(success);
+
+  // Observe the navigation to the query results upon final results.
+  content::TestNavigationObserver query_observer(active_tab);
+  success = false;
+  ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
+      active_tab, "(function() {speech.submitFinalResult_(); return true;})()",
+      &success));
+  ASSERT_TRUE(success);
+
+  query_observer.Wait();
+  EXPECT_TRUE(query_observer.last_navigation_succeeded());
+  EXPECT_EQ("https://google.com/search?q=test+test&gs_ivs=1",
+            query_observer.last_navigation_url().spec());
+  EXPECT_FALSE(search::IsInstantNTP(active_tab));
+
+  // We shouldn't have gotten any console error messages.
+  EXPECT_TRUE(console_observer.message().empty()) << console_observer.message();
+}

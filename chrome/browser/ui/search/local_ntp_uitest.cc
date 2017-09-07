@@ -16,6 +16,7 @@
 #include "components/omnibox/common/omnibox_focus_state.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/test/test_navigation_observer.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
@@ -23,19 +24,31 @@
 
 // A test class that sets up local_ntp_browsertest.html (which is mostly a copy
 // of the real local_ntp.html) as the NTP URL.
-class LocalNTPUITest : public InProcessBrowserTest, public InstantUITestBase {
+class CustomNTPUrlUITest : public InProcessBrowserTest,
+                           public InstantUITestBase {
  public:
-  LocalNTPUITest() {}
+  explicit CustomNTPUrlUITest(const std::string& ntp_file_path)
+      : ntp_file_path_(ntp_file_path) {}
 
  protected:
   void SetUpInProcessBrowserTestFixture() override {
     ASSERT_TRUE(https_test_server().Start());
     GURL instant_url =
         https_test_server().GetURL("/instant_extended.html?strk=1&");
-    GURL ntp_url = https_test_server().GetURL(
-        "/local_ntp/local_ntp_browsertest.html?strk=1&");
+    GURL ntp_url = https_test_server().GetURL(ntp_file_path_ + "?strk=1&");
     InstantTestBase::Init(instant_url, ntp_url, false);
   }
+
+ private:
+  std::string ntp_file_path_;
+};
+
+// A test class that sets up local_ntp_browsertest.html (which is mostly a copy
+// of the real local_ntp.html) as the NTP URL.
+class LocalNTPUITest : public CustomNTPUrlUITest {
+ public:
+  LocalNTPUITest()
+      : CustomNTPUrlUITest("/local_ntp/local_ntp_browsertest.html") {}
 };
 
 IN_PROC_BROWSER_TEST_F(LocalNTPUITest, FakeboxRedirectsToOmnibox) {
@@ -112,4 +125,71 @@ IN_PROC_BROWSER_TEST_F(LocalNTPUITest, FakeboxRedirectsToOmnibox) {
   ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
       active_tab, "!!fakeboxIsVisible()", &result));
   EXPECT_FALSE(result);
+}
+
+// A test class that sets up voice_browsertest.html (which is mostly a copy
+// of the real local_ntp.html) as the NTP URL.
+class LocalNTPVoiceUITest : public CustomNTPUrlUITest {
+ public:
+  LocalNTPVoiceUITest()
+      : CustomNTPUrlUITest("/local_ntp/voice_browsertest.html") {}
+};
+
+IN_PROC_BROWSER_TEST_F(LocalNTPVoiceUITest, GoogleNTPVoiceFinalResult) {
+  ASSERT_NO_FATAL_FAILURE(SetupInstant(browser()));
+  FocusOmnibox();
+
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), ntp_url(), WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_TAB |
+          ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+  content::WebContents* active_tab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  ASSERT_TRUE(search::IsInstantNTP(active_tab));
+
+  // This is required to make the mouse events we send below arrive at the right
+  // place. It *should* be the default for all interactive_ui_tests anyway, but
+  // on Mac it isn't; see crbug.com/641969.
+  ASSERT_TRUE(ui_test_utils::BringBrowserWindowToFront(browser()));
+
+  // Attach a console observer, listening for any message ("*" pattern).
+  content::ConsoleObserverDelegate console_observer(active_tab, "*");
+  active_tab->SetDelegate(&console_observer);
+
+  // Start Voice Search and speech recognition.
+  bool success = false;
+  ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
+      active_tab,
+      "(function() {"
+      "setUpPage('voice-view-template');"
+      "document.body.appendChild($('voice-fakebox-template').content"
+      ".cloneNode(true));"
+      "speech.init("
+      "test.speech.TEST_BASE_URL, test.speech.TEST_STRINGS,"
+      "document.getElementById(test.speech.FAKEBOX_MICROPHONE_ID),"
+      "window.chrome.embeddedSearch.searchBox);"
+      "document.getElementById('fakebox-microphone').onmouseup(new "
+      "MouseEvent('test'));"
+      "view.setReadyForSpeech(); view.setReceivingSpeech();"
+      "return true;})()",
+      &success));
+
+  // Observe the navigation to the query results upon final results.
+  content::TestNavigationObserver query_observer(active_tab);
+  success = false;
+  ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
+      active_tab,
+      "speech.recognition_.onresult({results: [{0:{transcript:'test "
+      "test',confidence:0.9}, isFinal: true},{0:{transcript:'low', "
+      "confidence:0.1},isFinal: false}], resultIndex:0})",
+      &success));
+
+  query_observer.Wait();
+  EXPECT_TRUE(query_observer.last_navigation_succeeded());
+  EXPECT_EQ("https://google.com/search?q=test+test&gs_ivs=1",
+            query_observer.last_navigation_url().spec());
+  EXPECT_FALSE(search::IsInstantNTP(active_tab));
+
+  // We shouldn't have gotten any console error messages.
+  EXPECT_TRUE(console_observer.message().empty()) << console_observer.message();
 }
