@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e66d1cf_f3137261",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/transform-inside-opacity.html",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-07T18:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9715a67b_5d162934",
+      "revId": "69af38ae16f9058284d4156830b9a9014fe3c084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9458cd9_c91ab4dd",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
         "patchSetId": 19
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-07T12:15:40Z",
       "side": 1,
       "message": "If fragment size changes is an issue, does it really matter whether it has an enclosing pagination layer or not?\n\nAlso, do we really need to do this if NeedsLayout()?",
+      "revId": "69af38ae16f9058284d4156830b9a9014fe3c084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dcf2595_27fd3bc8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1851,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-07T18:22:01Z",
+      "side": 1,
+      "message": "You\u0027re right, this was over-aggressive. Moved this code to another place where\nwe are doing the same kind of dirty bit setting of property trees for other kinds\nof clips.",
+      "parentUuid": "e9458cd9_c91ab4dd",
       "revId": "69af38ae16f9058284d4156830b9a9014fe3c084",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "34534144_5d55877b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-07T18:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b7f063d_00a819db",
+      "revId": "69af38ae16f9058284d4156830b9a9014fe3c084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1802870_5888b8f6",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
         "patchSetId": 19
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-07T12:15:40Z",
       "side": 1,
       "message": "Why can\u0027t hit-testing call this too? Do we really need both CollectFragments() and CollectFragmentsForPaint()?",
+      "revId": "69af38ae16f9058284d4156830b9a9014fe3c084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a51edb98_64768814",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-07T18:22:01Z",
+      "side": 1,
+      "message": "It\u0027s because hit-testing does not yet use the new geometry hotness. The only reason\nit does not yet do so is that it hasn\u0027t been implemented fully. I plan to do so soon,\nbut in the meantime staging and incremental rollout require two methods.",
+      "parentUuid": "d1802870_5888b8f6",
       "revId": "69af38ae16f9058284d4156830b9a9014fe3c084",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "14643a35_a0a50686",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipperTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-07T18:22:01Z",
+      "side": 1,
+      "message": "No - the rect has -infinity as its conceptual top-left (limited to -1e6 due to an early\npatch by me). The bottom-right is at (100, 100).\n\nIf you think it\u0027s clearer I can test maxX and maxY explicitly.",
+      "parentUuid": "693fa6aa_25d09ce7",
+      "revId": "69af38ae16f9058284d4156830b9a9014fe3c084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9488e6f4_71be20ee",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
         "patchSetId": 19
@@ -101,6 +191,24 @@
       "revId": "69af38ae16f9058284d4156830b9a9014fe3c084",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77eaf1dc_f75394fe",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-07T18:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9488e6f4_71be20ee",
+      "revId": "69af38ae16f9058284d4156830b9a9014fe3c084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
