@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5aa3f166_d7ae49d0",
+        "filename": "ash/shutdown_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-07T23:50:02Z",
+      "side": 1,
+      "message": "it\u0027s used for both shutting down and restarting. i\u0027ll just move it down into the ShutDownOrReboot function, if that sounds reasonable to you.",
+      "parentUuid": "f2ae3533_1080eb70",
+      "range": {
+        "startLine": 22,
+        "startChar": 15,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "560c318d76bdf2f2fe7989ce74f95522d4552bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8250e28a_8896aaa6",
         "filename": "chrome/browser/lifetime/application_lifetime.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-07T23:35:49Z",
       "side": 1,
       "message": "Did you consider expanding the enum rather than adding the string? The string is certainly more readable, but if users are going to report in a bug they could just as easily copy a number.",
+      "range": {
+        "startLine": 270,
+        "startChar": 6,
+        "endLine": 270,
+        "endChar": 42
+      },
+      "revId": "560c318d76bdf2f2fe7989ce74f95522d4552bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f343536e_7be5f0b4",
+        "filename": "chrome/browser/lifetime/application_lifetime.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-07T23:50:02Z",
+      "side": 1,
+      "message": "there are almost 20 different places that this gets called from within chrome, plus more across other processes. i don\u0027t think we can ask people to add a new value to the enum in the system_api, wait hours to days for the chrome os CQ to land that, and then update DEPS to pull it into chrome before they can start using it whenever they add another call or refactor code.",
+      "parentUuid": "8250e28a_8896aaa6",
       "range": {
         "startLine": 270,
         "startChar": 6,
