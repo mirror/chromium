@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27bb5e48_4851b4d0",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T20:58:05Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be true if it\u0027s a pinch event?",
+      "revId": "c06cf63e73d05de1c963cb6f31dbe43894e98a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -116,6 +116,24 @@
       "revId": "5f54b97f206126bc3edd94b6f768690ece811fdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178b83b9_d9e0f41f",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T20:58:05Z",
+      "side": 1,
+      "message": "There\u0027s 2 ways for resize_() in viewport.js to trigger:\n1) User resize the window - resize event fires.\n2) setDocumentDimensions() calls this.resize_().\n\nFor (2), setDocumentDimensions() is only called by pdf.js when it receives the message from the browser. So I think it\u0027s possible to avoid adding plumbing by:\n\na) Change |didForceFitToPage_| to |isUserInitiatedEvent_|, initialized to true.\nb) Set |isUserInitiatedEvent_| to false for resetPrintPreviewMode, and reset it when done.\nc) Same for the \u0027documentDimensions\" event.\nd) Pass an additional callback that sets |isUserInitiatedEvent_| to the Viewport.\ne) Connect the viewport\u0027s resize listener to a resize_() wrapper. One that calls:\n\nthis.setUserInitializeCallback(false);\nthis.resize_();                                                                                                                      \nthis.setUserInitializeCallback(true);",
+      "parentUuid": "812b1642_4d74385e",
+      "revId": "5f54b97f206126bc3edd94b6f768690ece811fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
