@@ -122,6 +122,24 @@
       "revId": "29279851c9ef9f4e09bbcb604bed310ea3d2db6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0957a14b_0c321aeb",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-07T19:10:47Z",
+      "side": 1,
+      "message": "Hmm, That should be safe as well though, since one will just call .join() on the other... Although, this logic depends on the global-interpreter-lock for a critical section, which maybe isn\u0027t correct. I\u0027ve add an explicit critical section just in case.",
+      "parentUuid": "75ba622b_8d334535",
+      "revId": "29279851c9ef9f4e09bbcb604bed310ea3d2db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
