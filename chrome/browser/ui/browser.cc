@@ -1561,7 +1561,7 @@ void Browser::AddNewContents(WebContents* source,
                              bool user_gesture,
                              bool* was_blocked) {
   chrome::AddWebContents(this, source, new_contents, disposition, initial_rect,
-                         user_gesture, was_blocked);
+                         user_gesture);
 }
 
 void Browser::ActivateContents(WebContents* contents) {
