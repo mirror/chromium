@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "182652b2_77d310fc",
+        "filename": "media/midi/midi_manager_usb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-07T09:39:10Z",
+      "side": 1,
+      "message": "will fix this line in the next patch set. this was written before I know how std::move works in the previous change.",
+      "revId": "061a693689392e3fa01d571a058cc49dab312970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
