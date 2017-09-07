@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd58c26c_45e07599",
+        "filename": "ash/public/interfaces/tray_action.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-07T23:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c548a500_66f6596d",
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dceabb57_141b1942",
         "filename": "ash/root_window_controller.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-07T18:36:29Z",
       "side": 1,
       "message": "Any reason not to have shelf observe session state changes by itself?",
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31267f04_917ab41a",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-07T23:05:45Z",
+      "side": 1,
+      "message": "I think it\u0027s because Shell is already an observer of session state, so all events related to session states are dispatched from there.",
+      "parentUuid": "dceabb57_141b1942",
       "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "13aa25b4_b2ae9964",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-07T23:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c323fc91_009024c0",
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90ae610d_e7cd66f3",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a5b100_b835ca3b",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-07T23:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90ae610d_e7cd66f3",
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4047f307_710933e4",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-07T23:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9556ebfa_8cd12db5",
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "482095d2_3f2a02fe",
         "filename": "ash/shelf/login_shelf_view.h",
         "patchSetId": 7
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "1e213815_5d6266f4",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-07T23:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "482095d2_3f2a02fe",
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c92e92e_fe452a32",
         "filename": "ash/shelf/login_shelf_view.h",
         "patchSetId": 7
@@ -118,6 +226,24 @@
       "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d62b52_fdee382e",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-07T23:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c92e92e_fe452a32",
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "29718bc2_122b8479",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-07T23:05:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f3934ea0_2f29a02a",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 20
+      },
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7071c3aa_f0fc55e6",
         "filename": "ash/shelf/login_shelf_view.h",
         "patchSetId": 7
@@ -191,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "434a1aac_93affe9d",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-07T23:05:45Z",
+      "side": 1,
+      "message": "The maps, enum and tags are not needed anymore.",
+      "parentUuid": "7071c3aa_f0fc55e6",
+      "range": {
+        "startLine": 82,
+        "startChar": 54,
+        "endLine": 82,
+        "endChar": 68
+      },
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0ee4439_61bf3e93",
         "filename": "ash/shelf/shelf_widget.cc",
         "patchSetId": 7
@@ -202,6 +376,30 @@
       "writtenOn": "2017-09-07T18:36:29Z",
       "side": 1,
       "message": "What\u0027s wrong with login_shelf_view observing these on its own, instead of propagating events from Shelf",
+      "range": {
+        "startLine": 311,
+        "startChar": 2,
+        "endLine": 311,
+        "endChar": 19
+      },
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e210fc5_4af80ce9",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-07T23:05:45Z",
+      "side": 1,
+      "message": "+jdufault. I think it\u0027s because we don\u0027t want to expose login_shelf_view outside, according to the design doc. \n\nRight now I have Shelf observe the states, and then notify ShelfWidget, and then LoginShelfView. I think maybe it\u0027s OK to let ShelfWidget observe these instead of Shelf?",
+      "parentUuid": "a0ee4439_61bf3e93",
       "range": {
         "startLine": 311,
         "startChar": 2,
@@ -231,6 +429,24 @@
     },
     {
       "key": {
+        "uuid": "98ad6c38_c5d22658",
+        "filename": "ash/tray_action/test_tray_action_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-07T23:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98f818d5_1770c55f",
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae3d6f04_fc3dee28",
         "filename": "ui/login/account_picker/md_user_pod_row.js",
         "patchSetId": 7
@@ -242,6 +458,24 @@
       "writtenOn": "2017-09-07T18:36:29Z",
       "side": 1,
       "message": "is this really needed?\ni.e. is there a situation where views based shelf will be shown with Web UI based account picker UI (given that both are guarded by the same feature flag)?",
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116a6eb5_e0db681b",
+        "filename": "ui/login/account_picker/md_user_pod_row.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 4771,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-07T23:05:45Z",
+      "side": 1,
+      "message": "Right now the add user screen is a combination of Web UI account picker and the views-based shelf. It\u0027s temporary.",
+      "parentUuid": "ae3d6f04_fc3dee28",
       "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
