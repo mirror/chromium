@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a14efca_8801d74c",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-07T21:55:10Z",
+      "side": 1,
+      "message": "I am guessing sending the name over mojo one extra time is more expensive than making all these string copies for map to vector and vector to map.",
+      "range": {
+        "startLine": 311,
+        "startChar": 4,
+        "endLine": 311,
+        "endChar": 28
+      },
+      "revId": "28606e2d316779e24b89693e13ab6313f3f7d632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b33fa6_cc1fc904",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/struct_traits_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-07T21:55:10Z",
+      "side": 1,
+      "message": "worth checking level of detail \u003d\u003d detailed.",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 11
+      },
+      "revId": "28606e2d316779e24b89693e13ab6313f3f7d632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45033b9_3a94376b",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/struct_traits_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-07T21:55:10Z",
+      "side": 1,
+      "message": "just pmd?",
+      "range": {
+        "startLine": 130,
+        "startChar": 25,
+        "endLine": 130,
+        "endChar": 48
+      },
+      "revId": "28606e2d316779e24b89693e13ab6313f3f7d632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
