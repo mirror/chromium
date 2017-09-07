@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "434d0b52_5dba2a44",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-07T18:57:45Z",
+      "side": 1,
+      "message": "Off topic: I\u0027ve been wondering how is this comparison between pointer and reference done.\n\nDoes Blink have its own implementation?",
+      "range": {
+        "startLine": 340,
+        "startChar": 15,
+        "endLine": 340,
+        "endChar": 40
+      },
+      "revId": "cca10d1839d26ba2904e8d2c1b4b7aae64e89631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a49e2ba_e4297f72",
         "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
         "patchSetId": 8
@@ -13,6 +36,24 @@
       "writtenOn": "2017-09-05T17:53:14Z",
       "side": 1,
       "message": "Does this method properly handle the case where ComputeContainerNode() returns null (a before/after position anchored to a node with no parent)?",
+      "revId": "cca10d1839d26ba2904e8d2c1b4b7aae64e89631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7397b132_15925696",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-07T18:57:45Z",
+      "side": 1,
+      "message": "No. ComputeContainerNode() can return null. Please also check that.",
+      "parentUuid": "4a49e2ba_e4297f72",
       "revId": "cca10d1839d26ba2904e8d2c1b4b7aae64e89631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
