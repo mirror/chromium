@@ -59,14 +59,15 @@ CastWebView::CastWebView(Delegate* delegate,
                          CastWebContentsManager* web_contents_manager,
                          content::BrowserContext* browser_context,
                          scoped_refptr<content::SiteInstance> site_instance,
-                         bool transparent)
+                         bool transparent,
+                         bool is_headless) {
     : delegate_(delegate),
       web_contents_manager_(web_contents_manager),
       browser_context_(browser_context),
       site_instance_(std::move(site_instance)),
       transparent_(transparent),
       web_contents_(CreateWebContents(browser_context_, site_instance_)),
-      window_(shell::CastContentWindow::Create(delegate)),
+      window_(shell::CastContentWindow::Create(delegate, is_headless)),
       did_start_navigation_(false),
       weak_factory_(this) {
   DCHECK(delegate_);
