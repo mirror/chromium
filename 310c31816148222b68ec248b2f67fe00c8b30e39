@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "8b20fe44_a7c9248e",
+        "filename": "device/hid/hid_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-07T05:21:39Z",
+      "side": 1,
+      "message": "Thanks. Change the GetDevices() and Connect() to use AdaptCallbackForRepeating.\nDone.",
+      "parentUuid": "63db3b5a_d759a131",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 73
+      },
+      "revId": "310c31816148222b68ec248b2f67fe00c8b30e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b56c1626_4690a7e6",
         "filename": "device/hid/hid_manager.cc",
         "patchSetId": 3
