@@ -592,8 +592,8 @@ void SoftwareRenderer::CopyDrawnRenderPass(
                                    window_copy_rect.y()))
     return;  // |request| auto-sends empty result on out-of-scope.
 
-  request->SendResult(
-      std::make_unique<viz::CopyOutputSkBitmapResult>(copy_rect, bitmap));
+  request->SendResult(std::make_unique<viz::CopyOutputSkBitmapResult>(
+      copy_rect, gfx::ColorSpace::CreateSRGB(), bitmap));
 }
 
 void SoftwareRenderer::SetEnableDCLayers(bool enable) {

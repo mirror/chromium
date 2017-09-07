@@ -87,12 +87,16 @@ bool StructTraits<cc::mojom::CopyOutputResultDataView,
 
   switch (format) {
     case viz::CopyOutputResult::Format::RGBA_BITMAP: {
+      gfx::ColorSpace color_space;
       SkBitmap bitmap;
+      if (!data.ReadColorSpace(&color_space))
+        return false;
       if (!rect.IsEmpty() &&
           (!data.ReadBitmap(&bitmap) || !bitmap.readyToDraw())) {
         return false;  // Missing image data!
       }
-      out_p->reset(new viz::CopyOutputSkBitmapResult(rect, bitmap));
+      out_p->reset(
+          new viz::CopyOutputSkBitmapResult(rect, color_space, bitmap));
       return true;
     }
 

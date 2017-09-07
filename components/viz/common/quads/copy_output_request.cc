@@ -24,7 +24,8 @@ CopyOutputRequest::CopyOutputRequest(ResultFormat result_format,
 CopyOutputRequest::~CopyOutputRequest() {
   if (!result_callback_.is_null()) {
     // Send an empty result to indicate the request was never satisfied.
-    SendResult(std::make_unique<CopyOutputResult>(result_format_, gfx::Rect()));
+    SendResult(std::make_unique<CopyOutputResult>(
+        result_format_, gfx::Rect(), gfx::ColorSpace::CreateSRGB()));
   }
 }
 

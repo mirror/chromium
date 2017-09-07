@@ -56,6 +56,11 @@ struct StructTraits<cc::mojom::CopyOutputResultDataView,
     return result->rect();
   }
 
+  static const gfx::ColorSpace& color_space(
+      const std::unique_ptr<viz::CopyOutputResult>& result) {
+    return result->color_space();
+  }
+
   static const SkBitmap& bitmap(
       const std::unique_ptr<viz::CopyOutputResult>& result) {
     return result->AsSkBitmap();

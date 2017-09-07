@@ -8,6 +8,8 @@ import "cc/ipc/texture_mailbox.mojom";
 import "cc/ipc/texture_mailbox_releaser.mojom";
 import "skia/public/interfaces/bitmap.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
+import "ui/gfx/geometry/mojo/geometry.mojom";
+import "ui/gfx/mojo/color_space.mojom";
 
 // See components/viz/common/quads/copy_output_result.h.
 enum CopyOutputResultFormat {
@@ -19,6 +21,7 @@ enum CopyOutputResultFormat {
 struct CopyOutputResult {
   CopyOutputResultFormat format;
   gfx.mojom.Rect rect;
+  gfx.mojom.ColorSpace color_space;
   skia.mojom.Bitmap? bitmap;
   TextureMailbox? texture_mailbox;
   TextureMailboxReleaser? releaser;

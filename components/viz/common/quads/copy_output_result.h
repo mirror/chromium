@@ -25,7 +25,7 @@ class VIZ_COMMON_EXPORT CopyOutputResult {
  public:
   enum class Format : uint8_t {
     // A normal bitmap in system memory. AsSkBitmap() will return a bitmap in
-    // "N32Premul" form.
+    // "N32Premul" form and with no attached color space.
     RGBA_BITMAP,
     // A GL_RGBA texture, referenced by a TextureMailbox. Client code can
     // optionally take ownership of the texture (via TakeTextureOwnership()), if
@@ -33,8 +33,9 @@ class VIZ_COMMON_EXPORT CopyOutputResult {
     RGBA_TEXTURE,
   };
 
-  CopyOutputResult(Format format, const gfx::Rect& rect);
-
+  CopyOutputResult(Format format,
+                   const gfx::Rect& rect,
+                   const gfx::ColorSpace& color_space);
   virtual ~CopyOutputResult();
 
   // Returns false if the request succeeded and the data accessors will return
@@ -48,6 +49,9 @@ class VIZ_COMMON_EXPORT CopyOutputResult {
   // within the surface/layer (see CopyOutputRequest::set_area()).
   const gfx::Rect& rect() const { return rect_; }
   const gfx::Size& size() const { return rect_.size(); }
+
+  // Returns the color space of the bitmap or texture.
+  const gfx::ColorSpace& color_space() const { return color_space_; }
 
   // Convenience to provide this result in SkBitmap form. Returns a
   // !readyToDraw() bitmap if this result is empty or if a conversion is not
@@ -71,6 +75,7 @@ class VIZ_COMMON_EXPORT CopyOutputResult {
  private:
   const Format format_;
   const gfx::Rect rect_;
+  const gfx::ColorSpace color_space_;
 
   // Cached bitmap returned by the default implementation of AsSkBitmap().
   mutable SkBitmap cached_bitmap_;
@@ -82,7 +87,9 @@ class VIZ_COMMON_EXPORT CopyOutputResult {
 // SkBitmap.
 class VIZ_COMMON_EXPORT CopyOutputSkBitmapResult : public CopyOutputResult {
  public:
-  CopyOutputSkBitmapResult(const gfx::Rect& rect, const SkBitmap& bitmap);
+  CopyOutputSkBitmapResult(const gfx::Rect& rect,
+                           const gfx::ColorSpace& color_space,
+                           const SkBitmap& bitmap);
   ~CopyOutputSkBitmapResult() override;
 
   const SkBitmap& AsSkBitmap() const override;

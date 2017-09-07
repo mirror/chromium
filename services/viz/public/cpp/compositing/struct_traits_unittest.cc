@@ -242,6 +242,7 @@ TEST_F(StructTraitsTest, CopyOutputRequest_BitmapRequest) {
 
   const auto result_format = CopyOutputRequest::ResultFormat::RGBA_BITMAP;
   const gfx::Rect area(5, 7, 44, 55);
+  const gfx::ColorSpace color_space = gfx::ColorSpace::CreateDisplayP3D65();
   const auto source =
       base::UnguessableToken::Deserialize(0xdeadbeef, 0xdeadf00d);
 
@@ -254,7 +255,8 @@ TEST_F(StructTraitsTest, CopyOutputRequest_BitmapRequest) {
             EXPECT_EQ(expected_rect, result->rect());
             quit_closure.Run();
           },
-          run_loop.QuitClosure(), area)));
+          run_loop.QuitClosure(), area),
+      color_space));
   input->set_area(area);
   input->set_source(source);
   std::unique_ptr<CopyOutputRequest> output;
@@ -268,7 +270,8 @@ TEST_F(StructTraitsTest, CopyOutputRequest_BitmapRequest) {
 
   SkBitmap bitmap;
   bitmap.allocN32Pixels(area.width(), area.height());
-  output->SendResult(std::make_unique<CopyOutputSkBitmapResult>(area, bitmap));
+  output->SendResult(
+      std::make_unique<CopyOutputSkBitmapResult>(area, bitmap, color_space));
   // If the CopyOutputRequest callback is called, this ends. Otherwise, the test
   // will time out and fail.
   run_loop.Run();
@@ -307,17 +310,20 @@ TEST_F(StructTraitsTest, CopyOutputRequest_TextureRequest) {
   mailbox.SetName(mailbox_name);
   TextureMailbox texture_mailbox(mailbox, gpu::SyncToken(), target);
   const gfx::Rect result_rect(10, 10);
+  gfx::ColorSpace result_color_space = gfx::ColorSpace::CreateDisplayP3D65();
 
   base::RunLoop run_loop_for_result;
-  std::unique_ptr<CopyOutputRequest> input(new CopyOutputRequest(
-      result_format,
-      base::BindOnce(
-          [](const base::Closure& quit_closure, const gfx::Rect& expected_rect,
-             std::unique_ptr<CopyOutputResult> result) {
-            EXPECT_EQ(expected_rect, result->rect());
-            quit_closure.Run();
-          },
-          run_loop_for_result.QuitClosure(), result_rect)));
+  std::unique_ptr<CopyOutputRequest> input(
+      new CopyOutputRequest(
+          result_format, base::BindOnce(
+                             [](const base::Closure& quit_closure,
+                                const gfx::Rect& expected_rect,
+                                std::unique_ptr<CopyOutputResult> result) {
+                               EXPECT_EQ(expected_rect, result->rect());
+                               quit_closure.Run();
+                             },
+                             run_loop_for_result.QuitClosure(), result_rect)),
+      result_color_space);
   input->SetTextureMailbox(texture_mailbox);
   std::unique_ptr<CopyOutputRequest> output;
   SerializeAndDeserialize<mojom::CopyOutputRequest>(input, &output);

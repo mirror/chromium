@@ -58,7 +58,8 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
 
 TEST_F(StructTraitsTest, CopyOutputResult_Empty) {
   auto input = std::make_unique<viz::CopyOutputResult>(
-      viz::CopyOutputResult::Format::RGBA_BITMAP, gfx::Rect());
+      viz::CopyOutputResult::Format::RGBA_BITMAP, gfx::Rect(),
+      gfx::ColorSpace::CreateSRGB());
 
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
   std::unique_ptr<viz::CopyOutputResult> output;
@@ -74,12 +75,13 @@ TEST_F(StructTraitsTest, CopyOutputResult_Empty) {
 TEST_F(StructTraitsTest, CopyOutputResult_Bitmap) {
   const gfx::Rect result_rect(42, 43, 7, 8);
   SkBitmap bitmap;
-  const sk_sp<SkColorSpace> adobe_rgb = SkColorSpace::MakeRGB(
-      SkColorSpace::kSRGB_RenderTargetGamma, SkColorSpace::kAdobeRGB_Gamut);
-  bitmap.allocN32Pixels(7, 8, adobe_rgb);
+  const gfx::ColorSpace adobe_rgb(gfx::ColorSpace::PrimaryID::ADOBE_RGB,
+                                  gfx::ColorSpace::TransferID::IEC61966_2_1);
+  const sk_sp<SkColorSpace> sk_adobe_rgb = adobe_rgb.ToSkColorSpace();
+  bitmap.allocN32Pixels(7, 8, sk_adobe_rgb);
   bitmap.eraseARGB(123, 213, 77, 33);
-  auto input =
-      std::make_unique<viz::CopyOutputSkBitmapResult>(result_rect, bitmap);
+  auto input = std::make_unique<viz::CopyOutputSkBitmapResult>(
+      result_rect, adobe_rgb, bitmap);
 
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
   std::unique_ptr<viz::CopyOutputResult> output;
@@ -88,6 +90,7 @@ TEST_F(StructTraitsTest, CopyOutputResult_Bitmap) {
   EXPECT_FALSE(output->IsEmpty());
   EXPECT_EQ(output->format(), viz::CopyOutputResult::Format::RGBA_BITMAP);
   EXPECT_EQ(output->rect(), result_rect);
+  EXPECT_EQ(output->color_space(), adobe_rgb);
   EXPECT_EQ(output->GetTextureMailbox(), nullptr);
 
   const SkBitmap& out_bitmap = output->AsSkBitmap();
@@ -98,7 +101,7 @@ TEST_F(StructTraitsTest, CopyOutputResult_Bitmap) {
   // Check that the pixels are the same as the input and the color spaces are
   // equivalent.
   SkBitmap expected_bitmap;
-  expected_bitmap.allocN32Pixels(7, 8, adobe_rgb);
+  expected_bitmap.allocN32Pixels(7, 8, sk_adobe_rgb);
   expected_bitmap.eraseARGB(123, 213, 77, 33);
   EXPECT_EQ(expected_bitmap.getSize(), out_bitmap.getSize());
   EXPECT_EQ(0, std::memcmp(expected_bitmap.getPixels(), out_bitmap.getPixels(),
@@ -109,6 +112,8 @@ TEST_F(StructTraitsTest, CopyOutputResult_Bitmap) {
 
 TEST_F(StructTraitsTest, CopyOutputResult_Texture) {
   const gfx::Rect result_rect(12, 34, 56, 78);
+  const gfx::ColorSpace result_color_space =
+      gfx::ColorSpace::CreateDisplayP3D65();
   const int8_t mailbox_name[GL_MAILBOX_SIZE_CHROMIUM] = {
       0, 9, 8, 7, 6, 5, 4, 3, 2, 1, 9, 7, 5, 3, 1, 3};
   const uint32_t target = 3;
@@ -127,6 +132,7 @@ TEST_F(StructTraitsTest, CopyOutputResult_Texture) {
   gpu::Mailbox mailbox;
   mailbox.SetName(mailbox_name);
   viz::TextureMailbox texture_mailbox(mailbox, gpu::SyncToken(), target);
+  texture_mailbox.set_color_space(result_color_space);
   auto input = std::make_unique<viz::CopyOutputTextureResult>(
       result_rect, texture_mailbox, std::move(callback));
 
@@ -137,6 +143,7 @@ TEST_F(StructTraitsTest, CopyOutputResult_Texture) {
   EXPECT_FALSE(output->IsEmpty());
   EXPECT_EQ(output->format(), viz::CopyOutputResult::Format::RGBA_TEXTURE);
   EXPECT_EQ(output->rect(), result_rect);
+  EXPECT_EQ(output->color_space(), result_color_space);
   ASSERT_NE(output->GetTextureMailbox(), nullptr);
   EXPECT_EQ(output->GetTextureMailbox()->mailbox(), mailbox);
 
