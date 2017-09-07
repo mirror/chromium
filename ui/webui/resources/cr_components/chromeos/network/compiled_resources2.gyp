@@ -12,6 +12,14 @@
       'includes': ['../../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
+      'target_name': 'network_choose_mobile',
+      'dependencies': [
+        '<(DEPTH)/ui/webui/resources/cr_elements/chromeos/network/compiled_resources2.gyp:cr_onc_types',
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:i18n_behavior',
+      ],
+      'includes': ['../../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
       'target_name': 'network_ip_config',
       'dependencies': [
         '<(DEPTH)/ui/webui/resources/cr_elements/chromeos/network/compiled_resources2.gyp:cr_onc_types',
