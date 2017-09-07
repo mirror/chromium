@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4520bf93_596e4a7d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-09-07T23:46:52Z",
+      "side": 1,
+      "message": "I\u0027m not sure but do we have a better way to initialize the value?\n\nOr should I just check if it\u0027s WebView directly?",
+      "range": {
+        "startLine": 491,
+        "startChar": 20,
+        "endLine": 491,
+        "endChar": 53
+      },
+      "revId": "469714d1282d121fe559352fb4675551e32e177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
