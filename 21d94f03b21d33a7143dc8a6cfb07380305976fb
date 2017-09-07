@@ -34,6 +34,24 @@
       "revId": "21d94f03b21d33a7143dc8a6cfb07380305976fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e99870_25982600",
+        "filename": "cc/layers/ui_resource_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1195064
+      },
+      "writtenOn": "2017-09-07T17:28:37Z",
+      "side": 1,
+      "message": "Sure. What do debug quads in other layer types do?",
+      "parentUuid": "0ac3816a_a7e988b6",
+      "revId": "21d94f03b21d33a7143dc8a6cfb07380305976fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
