@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52176e54_61824dd4",
+        "filename": "ppapi/proxy/pdf_resource.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-09-07T10:53:41Z",
+      "side": 1,
+      "message": "I\u0027m not super keen on this being implicitly imported via gin/v8_initializer.h - seems like we are side-stepping deps (I realize this due to how gin/v8_initializer.h exposes v8.h), and there are no other references to the v8 namespace in ppapi. I would rather we did this explicitly (add the include and the deps dependency) but interested in Raymes thoughts as owner of ppapi.",
+      "range": {
+        "startLine": 169,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 25
+      },
+      "revId": "07e78608e30cd9044c70cbb95352d6fd38ff1da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
