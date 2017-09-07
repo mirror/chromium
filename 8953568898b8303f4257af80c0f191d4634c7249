@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "d57e9765_61d91721",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-07T21:20:30Z",
+      "side": 1,
+      "message": "depends on OS. On macOS, traces are regularly 125KB+ [compressed]",
+      "parentUuid": "b77315fe_fcd1a91b",
+      "revId": "8953568898b8303f4257af80c0f191d4634c7249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e035bbd7_cfbd3af2",
         "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
         "patchSetId": 8
