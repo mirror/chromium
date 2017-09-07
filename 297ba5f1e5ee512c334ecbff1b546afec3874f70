@@ -39,6 +39,48 @@
       "revId": "297ba5f1e5ee512c334ecbff1b546afec3874f70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d2b15e_a359ecfb",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-07T20:40:32Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f6754b84_962f0ace",
+      "revId": "297ba5f1e5ee512c334ecbff1b546afec3874f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be9ffc53_dc812a8e",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-07T20:40:32Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "d727a4a8_d45055c7",
+      "range": {
+        "startLine": 98,
+        "startChar": 42,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "297ba5f1e5ee512c334ecbff1b546afec3874f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
