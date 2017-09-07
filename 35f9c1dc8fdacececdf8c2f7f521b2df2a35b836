@@ -561,6 +561,24 @@
       "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97abea81_e68591b9",
+        "filename": "components/vector_icons/ic_close.icon",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-07T00:51:14Z",
+      "side": 1,
+      "message": "The new one is the more generic close icon. The other one is specifically tweaked for 16x16.",
+      "parentUuid": "3d002223_ac8eacc9",
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
