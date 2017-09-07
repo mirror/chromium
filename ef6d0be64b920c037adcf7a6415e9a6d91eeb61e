@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21e30cad_f7c5392c",
+        "filename": "base/win/com_base_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-07T06:33:07Z",
+      "side": 1,
+      "message": "I suggested move them here, but now I\u0027m afraid of race conditions.\n\nE.g., MidiManagerWinrt runs mainly on the Chrome I/O thread, but some methods and callbacks run on other threads. Probably, other users may call them on the main thread. So thread-safety should be ensured inside this library to make this library usable.\n\nProbably the easiest way to ensure the thread-safety is to use local static variables in each function. That works like base::LazyInstance does.\n\nFor instance,\n\nHMODULE GetComBaseModuleHandle() {\n  static combase_dll \u003d ::LoadLibrary(L\"combae.dll\");\n  return combase_dll;\n}\n\nHere, combase_dll is initialized only at the first call of GetComBaseModuleHandle in a thread-safe way, and will return the same initialized combase_dll always.\n\nOther wrappers will be something like\n\nHRESULT RoGetActivationFactory(HSTRING class_id,\n                               const IID\u0026 iid,\n                               void** out_factory) {\n  static get_factory_func \u003d ResolveRoGetActivationFactory();\n  DCHECK(get_factory_func);\n  return get_factory_func(class_id, iid, out_factory);\n}\n\nGetComBaseModuleHandle, ResolveRoGetActivationFactory, and so on can be functions in anonymous namespace. All callers have to do is just call RoGetActivationFactory without any preparation.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "ef6d0be64b920c037adcf7a6415e9a6d91eeb61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
