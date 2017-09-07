@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68ed5ce0_123f8e88",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-07T22:18:14Z",
+      "side": 1,
+      "message": "Looking at this I wonder if it might be better to perform these checks in the various OnFoo() methods, instead of changing which observers we listen to... but I\u0027m not convinced either way. What do you think",
+      "range": {
+        "startLine": 774,
+        "startChar": 54,
+        "endLine": 774,
+        "endChar": 0
+      },
+      "revId": "d0630b956573a320f3425b2c755b2b18e1e6a797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f48adb71_428fe124",
+        "filename": "net/quic/chromium/quic_stream_factory_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1767,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-07T22:18:14Z",
+      "side": 1,
+      "message": "Do we have a test in which NotifyIPAddressChanged() is called, but nothing happens because we\u0027re doing connection migration?",
+      "range": {
+        "startLine": 1767,
+        "startChar": 51,
+        "endLine": 1767,
+        "endChar": 0
+      },
+      "revId": "d0630b956573a320f3425b2c755b2b18e1e6a797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
