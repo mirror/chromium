@@ -102,7 +102,7 @@ Dispatcher::Type WatcherDispatcher::GetType() const {
 MojoResult WatcherDispatcher::Close() {
   // We swap out all the watched handle information onto the stack so we can
   // call into their dispatchers without our own lock held.
-  std::map<uintptr_t, scoped_refptr<Watch>> watches;
+  base::flat_map<uintptr_t, scoped_refptr<Watch>> watches;
   {
     base::AutoLock lock(lock_);
     if (closed_)
