@@ -1382,7 +1382,7 @@ void TestRunnerBindings::SimulateWebNotificationClick(const std::string& title,
   if (!runner_)
     return;
   runner_->SimulateWebNotificationClick(title, action_index,
-                                        base::NullableString16());
+                                        base::nullopt /* reply */);
 }
 
 void TestRunnerBindings::SimulateWebNotificationClickWithReply(
@@ -1391,9 +1391,8 @@ void TestRunnerBindings::SimulateWebNotificationClickWithReply(
     const std::string& reply) {
   if (!runner_)
     return;
-  runner_->SimulateWebNotificationClick(
-      title, action_index,
-      base::NullableString16(base::UTF8ToUTF16(reply), false /* is_null */));
+  runner_->SimulateWebNotificationClick(title, action_index,
+                                        base::UTF8ToUTF16(reply));
 }
 
 void TestRunnerBindings::SimulateWebNotificationClose(const std::string& title,
@@ -2761,8 +2760,8 @@ void TestRunner::SetMIDIAccessorResult(midi::mojom::Result result) {
 
 void TestRunner::SimulateWebNotificationClick(
     const std::string& title,
-    int action_index,
-    const base::NullableString16& reply) {
+    const base::Optional<int>& action_index,
+    const base::Optional<base::string16>& reply) {
   delegate_->SimulateWebNotificationClick(title, action_index, reply);
 }
 
