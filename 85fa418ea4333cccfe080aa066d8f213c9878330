@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94ea5e1b_74aaa4b7",
+        "filename": "content/browser/dom_storage/session_storage_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-07T16:46:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aefc3e5c_c709e3eb",
+      "revId": "85fa418ea4333cccfe080aa066d8f213c9878330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88317aa8_2d8ec3b4",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-05T23:10:12Z",
       "side": 1,
       "message": "If I understand correctly, this logic will cause all the untracked databases to be reported as \"leveldatabase/0x00000000\" (8 more zeroes on 64-bit). I mildly prefer the approach I suggested in https://crrev.com/2983723002 where ToTrackedDB() behaves more like blink\u0027s To*. (unconditional static_cast with DCHECK)\n\nI\u0027d be happy to chat about this in person and learn about your reasoning for this approach, if you have some time!",
+      "revId": "85fa418ea4333cccfe080aa066d8f213c9878330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b441e925_a0d99421",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1330,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-07T16:46:03Z",
+      "side": 1,
+      "message": "I went to IsTrackedDB as the downcast was unnecessary.",
+      "parentUuid": "88317aa8_2d8ec3b4",
       "revId": "85fa418ea4333cccfe080aa066d8f213c9878330",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
