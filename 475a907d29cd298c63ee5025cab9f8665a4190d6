@@ -22,6 +22,30 @@
       "revId": "475a907d29cd298c63ee5025cab9f8665a4190d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b5061b_bdb0df39",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/ProfileDataSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-07T12:06:37Z",
+      "side": 1,
+      "message": "Good catch. Sorry, I didn\u0027t put a lot of thought in this constructor (I hope to remove it soon).",
+      "parentUuid": "a3e8855f_fb072361",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "475a907d29cd298c63ee5025cab9f8665a4190d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
