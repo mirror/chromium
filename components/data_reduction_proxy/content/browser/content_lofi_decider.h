@@ -5,10 +5,12 @@
 #ifndef COMPONENTS_DATA_REDUCTION_PROXY_CONTENT_BROWSER_CONTENT_LOFI_DECIDER_H_
 #define COMPONENTS_DATA_REDUCTION_PROXY_CONTENT_BROWSER_CONTENT_LOFI_DECIDER_H_
 
-#include "components/data_reduction_proxy/core/common/lofi_decider.h"
-#include "base/macros.h"
+#include <string>
 
-class GURL;
+#include "base/macros.h"
+#include "base/supports_user_data.h"
+#include "components/data_reduction_proxy/core/common/lofi_decider.h"
+#include "url/gurl.h"
 
 namespace net {
 class HttpRequestHeaders;
@@ -20,6 +22,23 @@ class PreviewsDecider;
 }
 
 namespace data_reduction_proxy {
+
+// Holds information about the AMP redirection previews applied to a main frame
+// URLRequest.
+class AMPRedirectionPreviewsUserData : public base::SupportsUserData::Data {
+ public:
+  explicit AMPRedirectionPreviewsUserData(const GURL& url) : orig_url_(url) {}
+
+  ~AMPRedirectionPreviewsUserData() override {}
+
+  const GURL& orig_url() { return orig_url_; }
+
+  static const void* const kAMPRedirectionPreviewsUserDataKey;
+
+ private:
+  // Original URL before previews transformation is applied.
+  const GURL orig_url_;
+};
 
 // Class responsible for deciding whether a request should be requested with low
 // fidelity (Lo-Fi) or not. Relies on the Lo-Fi mode state stored in the
@@ -52,6 +71,11 @@ class ContentLoFiDecider : public LoFiDecider {
       net::URLRequest* request,
       GURL* new_url,
       previews::PreviewsDecider* previews_decider) const override;
+
+  void MaybeContinueOrDisableAMPPreview(
+      net::URLRequest* request,
+      int response_code,
+      LoFiUIService* lofi_ui_service) const override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ContentLoFiDecider);

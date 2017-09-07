@@ -17,41 +17,42 @@ namespace data_reduction_proxy {
 
 ContentLoFiUIService::ContentLoFiUIService(
     const scoped_refptr<base::SingleThreadTaskRunner>& ui_task_runner,
-    const OnLoFiResponseReceivedCallback&
-        notify_lofi_response_received_callback)
+    const OnPreviewsShownCallback& notify_previews_shown_callback)
     : ui_task_runner_(ui_task_runner),
-      on_lofi_response_received_callback_(
-          notify_lofi_response_received_callback) {
-  DCHECK(!on_lofi_response_received_callback_.is_null());
+      on_previews_shown_callback_(notify_previews_shown_callback) {
+  DCHECK(!on_previews_shown_callback_.is_null());
 }
 
 ContentLoFiUIService::~ContentLoFiUIService() {}
 
-void ContentLoFiUIService::OnLoFiReponseReceived(
-    const net::URLRequest& request) {
+void ContentLoFiUIService::OnPreviewsShown(const net::URLRequest& request,
+                                           previews::PreviewsType type,
+                                           const GURL& non_preview_url) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   int render_process_id = -1;
   int render_frame_id = -1;
   if (content::ResourceRequestInfo::GetRenderFrameForRequest(
           &request, &render_process_id, &render_frame_id)) {
     ui_task_runner_->PostTask(
-        FROM_HERE,
-        base::Bind(&ContentLoFiUIService::OnLoFiResponseReceivedOnUIThread,
-                   base::Unretained(this), render_process_id, render_frame_id));
+        FROM_HERE, base::Bind(&ContentLoFiUIService::OnPreviewsShownOnUIThread,
+                              base::Unretained(this), render_process_id,
+                              render_frame_id, type, non_preview_url));
   }
 }
 
-void ContentLoFiUIService::OnLoFiResponseReceivedOnUIThread(
+void ContentLoFiUIService::OnPreviewsShownOnUIThread(
     int render_process_id,
-    int render_frame_id) {
+    int render_frame_id,
+    previews::PreviewsType type,
+    const GURL& non_preview_url) {
   DCHECK(ui_task_runner_->BelongsToCurrentThread());
   content::RenderFrameHost* frame =
       content::RenderFrameHost::FromID(render_process_id, render_frame_id);
   if (frame) {
-    DCHECK(!on_lofi_response_received_callback_.is_null());
+    DCHECK(!on_previews_shown_callback_.is_null());
     content::WebContents* web_contents =
         content::WebContents::FromRenderFrameHost(frame);
-    on_lofi_response_received_callback_.Run(web_contents);
+    on_previews_shown_callback_.Run(web_contents, type, non_preview_url);
   }
 }
 

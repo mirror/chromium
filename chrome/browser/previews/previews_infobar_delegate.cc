@@ -69,11 +69,11 @@ void IncrementDataReductionProxyPrefs(content::WebContents* web_contents) {
 
 // Reloads the content of the page without previews.
 void ReloadWithoutPreviews(previews::PreviewsType previews_type,
-                           content::WebContents* web_contents) {
+                           content::WebContents* web_contents,
+                           const GURL& non_preview_url) {
   switch (previews_type) {
     case previews::PreviewsType::LITE_PAGE:
     case previews::PreviewsType::OFFLINE:
-    case previews::PreviewsType::AMP_REDIRECTION:
       // Prevent LoFi and lite page modes from showing after reload.
       // TODO(ryansturm): rename DISABLE_LOFI_MODE to DISABLE_PREVIEWS.
       // crbug.com/707272
@@ -82,6 +82,10 @@ void ReloadWithoutPreviews(previews::PreviewsType previews_type,
       break;
     case previews::PreviewsType::LOFI:
       web_contents->ReloadLoFiImages();
+      break;
+    case previews::PreviewsType::AMP_REDIRECTION:
+      // TODO(rajendrant): Navigate to the |non_preview_url| with previews
+      // disabled. crbug.com/745942
       break;
     case previews::PreviewsType::NONE:
     case previews::PreviewsType::LAST:
@@ -113,6 +117,7 @@ PreviewsInfoBarDelegate::~PreviewsInfoBarDelegate() {
 void PreviewsInfoBarDelegate::Create(
     content::WebContents* web_contents,
     previews::PreviewsType previews_type,
+    const GURL& non_preview_url,
     base::Time previews_freshness,
     bool is_data_saver_user,
     bool is_reload,
@@ -130,8 +135,8 @@ void PreviewsInfoBarDelegate::Create(
     return;
 
   std::unique_ptr<PreviewsInfoBarDelegate> delegate(new PreviewsInfoBarDelegate(
-      infobar_tab_helper, previews_type, previews_freshness, is_data_saver_user,
-      is_reload, on_dismiss_callback));
+      infobar_tab_helper, previews_type, non_preview_url, previews_freshness,
+      is_data_saver_user, is_reload, on_dismiss_callback));
 
 #if defined(OS_ANDROID)
   std::unique_ptr<infobars::InfoBar> infobar_ptr(
@@ -159,6 +164,7 @@ void PreviewsInfoBarDelegate::Create(
 PreviewsInfoBarDelegate::PreviewsInfoBarDelegate(
     PreviewsInfoBarTabHelper* infobar_tab_helper,
     previews::PreviewsType previews_type,
+    const GURL& non_preview_url,
     base::Time previews_freshness,
     bool is_data_saver_user,
     bool is_reload,
@@ -168,6 +174,7 @@ PreviewsInfoBarDelegate::PreviewsInfoBarDelegate(
       previews_type_(previews_type),
       previews_freshness_(previews_freshness),
       is_reload_(is_reload),
+      non_preview_url_(non_preview_url),
       infobar_dismissed_action_(INFOBAR_DISMISSED_BY_TAB_CLOSURE),
       message_text_(l10n_util::GetStringUTF16(
           is_data_saver_user ? IDS_PREVIEWS_INFOBAR_SAVED_DATA_TITLE
@@ -239,7 +246,7 @@ bool PreviewsInfoBarDelegate::LinkClicked(WindowOpenDisposition disposition) {
     IncrementDataReductionProxyPrefs(web_contents);
   }
 
-  ReloadWithoutPreviews(previews_type_, web_contents);
+  ReloadWithoutPreviews(previews_type_, web_contents, non_preview_url_);
 
   return true;
 }
