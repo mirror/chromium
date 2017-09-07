@@ -16,7 +16,6 @@
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread.h"
 #include "base/time/time.h"
-#include "base/tracking_info.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 // Various tests use the address of the line number as a fake unique PC for
