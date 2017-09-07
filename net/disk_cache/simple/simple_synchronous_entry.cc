@@ -108,6 +108,11 @@ void CalculateSHA256OfKey(const std::string& key,
   hash->Finish(out_hash_value, sizeof(*out_hash_value));
 }
 
+SimpleFileTracker::SubFile SubFileForFileIndex(int file_index) {
+  return file_index == 0 ? SimpleFileTracker::SubFile::FILE_0
+                         : SimpleFileTracker::SubFile::FILE_1;
+}
+
 }  // namespace
 
 using simple_util::GetEntryHashKey;
@@ -318,8 +323,10 @@ void SimpleSynchronousEntry::ReadData(const EntryOperationData& in_entry_op,
   DCHECK(initialized_);
   DCHECK_NE(0, in_entry_op.index);
   int file_index = GetFileIndexFromStreamIndex(in_entry_op.index);
-  if (header_and_key_check_needed_[file_index] &&
-      !CheckHeaderAndKey(file_index)) {
+  FileHandle file(this, SubFileForFileIndex(file_index));
+
+  if (!file.IsOK() || (header_and_key_check_needed_[file_index] &&
+                       !CheckHeaderAndKey(file_index))) {
     *out_result = net::ERR_FAILED;
     Doom();
     return;
@@ -330,8 +337,8 @@ void SimpleSynchronousEntry::ReadData(const EntryOperationData& in_entry_op,
   // be handled in the SimpleEntryImpl.
   DCHECK_GT(in_entry_op.buf_len, 0);
   DCHECK(!empty_file_omitted_[file_index]);
-  int bytes_read = files_[file_index].Read(file_offset, out_buf->data(),
-                                           in_entry_op.buf_len);
+  int bytes_read =
+      file->Read(file_offset, out_buf->data(), in_entry_op.buf_len);
   if (bytes_read > 0) {
     entry_stat->set_last_used(Time::Now());
     if (crc_request != nullptr) {
@@ -413,11 +420,20 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
   }
   DCHECK(!empty_file_omitted_[file_index]);
 
+  // This needs to be grabbed after the above block, since that's what may
+  // create the file (for stream 2/file 1).
+  FileHandle file(this, SubFileForFileIndex(file_index));
+  if (!file.IsOK()) {
+    *out_result = net::ERR_FAILED;
+    Doom();
+    return;
+  }
+
   if (extending_by_write) {
     // The EOF record and the eventual stream afterward need to be zeroed out.
     const int64_t file_eof_offset =
         out_entry_stat->GetEOFOffsetInFile(key_.size(), index);
-    if (!files_[file_index].SetLength(file_eof_offset)) {
+    if (!file->SetLength(file_eof_offset)) {
       RecordWriteResult(cache_type_, SYNC_WRITE_RESULT_PRETRUNCATE_FAILURE);
       Doom();
       *out_result = net::ERR_CACHE_WRITE_FAILURE;
@@ -425,8 +441,7 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
     }
   }
   if (buf_len > 0) {
-    if (files_[file_index].Write(file_offset, in_buf->data(), buf_len) !=
-        buf_len) {
+    if (file->Write(file_offset, in_buf->data(), buf_len) != buf_len) {
       RecordWriteResult(cache_type_, SYNC_WRITE_RESULT_WRITE_FAILURE);
       Doom();
       *out_result = net::ERR_CACHE_WRITE_FAILURE;
@@ -440,7 +455,7 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
     out_entry_stat->set_data_size(index, offset + buf_len);
     int file_eof_offset =
         out_entry_stat->GetLastEOFOffsetInFile(key_.size(), index);
-    if (!files_[file_index].SetLength(file_eof_offset)) {
+    if (!file->SetLength(file_eof_offset)) {
       RecordWriteResult(cache_type_, SYNC_WRITE_RESULT_TRUNCATE_FAILURE);
       Doom();
       *out_result = net::ERR_CACHE_WRITE_FAILURE;
@@ -732,20 +747,27 @@ void SimpleSynchronousEntry::Close(
     if (empty_file_omitted_[file_index])
       continue;
 
+    FileHandle file(this, SubFileForFileIndex(file_index));
+    if (!file.IsOK()) {
+      RecordCloseResult(cache_type_, CLOSE_RESULT_WRITE_FAILURE);
+      Doom();
+      break;
+    }
+
     if (stream_index == 0) {
       // Write stream 0 data.
       int stream_0_offset = entry_stat.GetOffsetInFile(key_.size(), 0, 0);
-      if (files_[0].Write(stream_0_offset, stream_0_data->data(),
-                          entry_stat.data_size(0)) != entry_stat.data_size(0)) {
+      if (file->Write(stream_0_offset, stream_0_data->data(),
+                      entry_stat.data_size(0)) != entry_stat.data_size(0)) {
         RecordCloseResult(cache_type_, CLOSE_RESULT_WRITE_FAILURE);
         DVLOG(1) << "Could not write stream 0 data.";
         Doom();
       }
       net::SHA256HashValue hash_value;
       CalculateSHA256OfKey(key_, &hash_value);
-      if (files_[0].Write(stream_0_offset + entry_stat.data_size(0),
-                          reinterpret_cast<char*>(hash_value.data),
-                          sizeof(hash_value)) != sizeof(hash_value)) {
+      if (file->Write(stream_0_offset + entry_stat.data_size(0),
+                      reinterpret_cast<char*>(hash_value.data),
+                      sizeof(hash_value)) != sizeof(hash_value)) {
         RecordCloseResult(cache_type_, CLOSE_RESULT_WRITE_FAILURE);
         DVLOG(1) << "Could not write stream 0 data.";
         Doom();
@@ -765,17 +787,14 @@ void SimpleSynchronousEntry::Close(
     // If stream 0 changed size, the file needs to be resized, otherwise the
     // next open will yield wrong stream sizes. On stream 1 and stream 2 proper
     // resizing of the file is handled in SimpleSynchronousEntry::WriteData().
-    if (stream_index == 0 &&
-        !files_[file_index].SetLength(eof_offset)) {
+    if (stream_index == 0 && !file->SetLength(eof_offset)) {
       RecordCloseResult(cache_type_, CLOSE_RESULT_WRITE_FAILURE);
       DVLOG(1) << "Could not truncate stream 0 file.";
       Doom();
       break;
     }
-    if (files_[file_index].Write(eof_offset,
-                                 reinterpret_cast<const char*>(&eof_record),
-                                 sizeof(eof_record)) !=
-        sizeof(eof_record)) {
+    if (file->Write(eof_offset, reinterpret_cast<const char*>(&eof_record),
+                    sizeof(eof_record)) != sizeof(eof_record)) {
       RecordCloseResult(cache_type_, CLOSE_RESULT_WRITE_FAILURE);
       DVLOG(1) << "Could not write eof record.";
       Doom();
@@ -789,7 +808,7 @@ void SimpleSynchronousEntry::Close(
     if (header_and_key_check_needed_[i] && !CheckHeaderAndKey(i)) {
       Doom();
     }
-    files_[i].Close();
+    file_tracker_.Close(entry_file_key_, SubFileForFileIndex(i));
     const int64_t file_size = entry_stat.GetFileSize(key_.size(), i);
     SIMPLE_CACHE_UMA(CUSTOM_COUNTS,
                      "LastClusterSize", cache_type_,
@@ -801,8 +820,9 @@ void SimpleSynchronousEntry::Close(
                          cluster_loss * 100 / (cluster_loss + file_size)));
   }
 
-  if (sparse_file_open())
-    sparse_file_.Close();
+  if (sparse_file_open()) {
+    CloseSparseFile();
+  }
 
   if (files_created_) {
     const int stream2_file_index = GetFileIndexFromStreamIndex(2);
@@ -827,7 +847,8 @@ SimpleSynchronousEntry::SimpleSynchronousEntry(net::CacheType cache_type,
       had_index_(had_index),
       key_(key),
       have_open_files_(false),
-      initialized_(false) {
+      initialized_(false),
+      sparse_file_open_(false) {
   for (int i = 0; i < kSimpleEntryFileCount; ++i)
     empty_file_omitted_[i] = false;
 }
@@ -846,16 +867,22 @@ bool SimpleSynchronousEntry::MaybeOpenFile(
   FilePath filename = GetFilenameFromFileIndex(file_index);
   int flags = File::FLAG_OPEN | File::FLAG_READ | File::FLAG_WRITE |
               File::FLAG_SHARE_DELETE;
-  files_[file_index].Initialize(filename, flags);
-  *out_error = files_[file_index].error_details();
+  std::unique_ptr<base::File> file = base::MakeUnique<base::File>();
+  file->Initialize(filename, flags);
+  *out_error = file->error_details();
 
-  if (CanOmitEmptyFile(file_index) && !files_[file_index].IsValid() &&
+  if (CanOmitEmptyFile(file_index) && !file->IsValid() &&
       *out_error == File::FILE_ERROR_NOT_FOUND) {
     empty_file_omitted_[file_index] = true;
     return true;
   }
 
-  return files_[file_index].IsValid();
+  if (file->IsValid()) {
+    file_tracker_.Register(entry_file_key_, SubFileForFileIndex(file_index),
+                           std::move(file));
+    return true;
+  }
+  return false;
 }
 
 bool SimpleSynchronousEntry::MaybeCreateFile(
@@ -872,23 +899,27 @@ bool SimpleSynchronousEntry::MaybeCreateFile(
   FilePath filename = GetFilenameFromFileIndex(file_index);
   int flags = File::FLAG_CREATE | File::FLAG_READ | File::FLAG_WRITE |
               File::FLAG_SHARE_DELETE;
-  files_[file_index].Initialize(filename, flags);
+  std::unique_ptr<base::File> file = base::MakeUnique<base::File>();
+  file->Initialize(filename, flags);
 
   // It's possible that the creation failed because someone deleted the
   // directory (e.g. because someone pressed "clear cache" on Android).
   // If so, we would keep failing for a while until periodic index snapshot
   // re-creates the cache dir, so try to recover from it quickly here.
-  if (!files_[file_index].IsValid() &&
-      files_[file_index].error_details() == File::FILE_ERROR_NOT_FOUND &&
+  if (!file->IsValid() && file->error_details() == File::FILE_ERROR_NOT_FOUND &&
       !base::DirectoryExists(path_)) {
     if (base::CreateDirectory(path_))
-      files_[file_index].Initialize(filename, flags);
+      file->Initialize(filename, flags);
   }
 
-  *out_error = files_[file_index].error_details();
+  *out_error = file->error_details();
   empty_file_omitted_[file_index] = false;
-
-  return files_[file_index].IsValid();
+  if (file->IsValid()) {
+    file_tracker_.Register(entry_file_key_, SubFileForFileIndex(file_index),
+                           std::move(file));
+    return true;
+  }
+  return false;
 }
 
 bool SimpleSynchronousEntry::OpenFiles(SimpleEntryStat* out_entry_stat) {
@@ -929,7 +960,8 @@ bool SimpleSynchronousEntry::OpenFiles(SimpleEntryStat* out_entry_stat) {
     }
 
     File::Info file_info;
-    bool success = files_[i].GetInfo(&file_info);
+    FileHandle file(this, SubFileForFileIndex(i));
+    bool success = file.IsOK() && file->GetInfo(&file_info);
     base::Time file_last_modified;
     if (!success) {
       DLOG(WARNING) << "Could not get platform file info.";
@@ -1016,8 +1048,7 @@ void SimpleSynchronousEntry::CloseFile(int index) {
   if (empty_file_omitted_[index]) {
     empty_file_omitted_[index] = false;
   } else {
-    DCHECK(files_[index].IsValid());
-    files_[index].Close();
+    file_tracker_.Close(entry_file_key_, SubFileForFileIndex(index));
   }
 
   if (sparse_file_open())
@@ -1030,6 +1061,13 @@ void SimpleSynchronousEntry::CloseFiles() {
 }
 
 bool SimpleSynchronousEntry::CheckHeaderAndKey(int file_index) {
+  FileHandle file(this, SubFileForFileIndex(file_index));
+  if (!file.IsOK()) {
+    // ### different enum?
+    RecordSyncOpenResult(cache_type_, OPEN_ENTRY_CANT_READ_HEADER, had_index_);
+    return false;
+  }
+
   // TODO(gavinp): Frequently we are doing this at the same time as we read from
   // the beginning of an entry. It might improve performance to make a single
   // read(2) call rather than two separate reads. On the other hand, it would
@@ -1038,8 +1076,7 @@ bool SimpleSynchronousEntry::CheckHeaderAndKey(int file_index) {
   // actually already reading stream 1 data here, and tossing it out.
   std::vector<char> header_data(key_.empty() ? kInitialHeaderRead
                                              : GetHeaderSize(key_.size()));
-  int bytes_read =
-      files_[file_index].Read(0, header_data.data(), header_data.size());
+  int bytes_read = file->Read(0, header_data.data(), header_data.size());
   const SimpleFileHeader* header =
       reinterpret_cast<const SimpleFileHeader*>(header_data.data());
 
@@ -1068,8 +1105,8 @@ bool SimpleSynchronousEntry::CheckHeaderAndKey(int file_index) {
     int bytes_to_read = expected_header_size - old_size;
     // This resize will invalidate iterators, since it is enlarging header_data.
     header_data.resize(expected_header_size);
-    int bytes_read = files_[file_index].Read(
-        old_size, header_data.data() + old_size, bytes_to_read);
+    int bytes_read =
+        file->Read(old_size, header_data.data() + old_size, bytes_to_read);
     if (bytes_read != bytes_to_read) {
       RecordSyncOpenResult(cache_type_, OPEN_ENTRY_CANT_READ_KEY, had_index_);
       return false;
@@ -1174,6 +1211,13 @@ int SimpleSynchronousEntry::InitializeForOpen(
 bool SimpleSynchronousEntry::InitializeCreatedFile(
     int file_index,
     CreateEntryResult* out_result) {
+  FileHandle file(this, SubFileForFileIndex(file_index));
+  if (!file.IsOK()) {
+    // ### different enum?
+    *out_result = CREATE_ENTRY_CANT_WRITE_HEADER;
+    return false;
+  }
+
   SimpleFileHeader header;
   header.initial_magic_number = kSimpleInitialMagicNumber;
   header.version = kSimpleEntryVersionOnDisk;
@@ -1181,15 +1225,14 @@ bool SimpleSynchronousEntry::InitializeCreatedFile(
   header.key_length = key_.size();
   header.key_hash = base::Hash(key_);
 
-  int bytes_written = files_[file_index].Write(
-      0, reinterpret_cast<char*>(&header), sizeof(header));
+  int bytes_written =
+      file->Write(0, reinterpret_cast<char*>(&header), sizeof(header));
   if (bytes_written != sizeof(header)) {
     *out_result = CREATE_ENTRY_CANT_WRITE_HEADER;
     return false;
   }
 
-  bytes_written = files_[file_index].Write(sizeof(header), key_.data(),
-                                           key_.size());
+  bytes_written = file->Write(sizeof(header), key_.data(), key_.size());
   if (bytes_written != base::checked_cast<int>(key_.size())) {
     *out_result = CREATE_ENTRY_CANT_WRITE_KEY;
     return false;
@@ -1224,6 +1267,10 @@ int SimpleSynchronousEntry::ReadAndValidateStream0AndMaybe1(
     int file_size,
     SimpleEntryStat* out_entry_stat,
     SimpleStreamPrefetchData stream_prefetch_data[2]) {
+  FileHandle file(this, SubFileForFileIndex(0));
+  if (!file.IsOK())
+    return net::ERR_FAILED;
+
   // If the file is sufficiently small, we will prefetch everything --
   // in which case |prefetch_buf| will be non-null, and we should look at it
   // rather than call ::Read for the bits.
@@ -1235,7 +1282,7 @@ int SimpleSynchronousEntry::ReadAndValidateStream0AndMaybe1(
   } else {
     RecordWhetherOpenDidPrefetch(cache_type_, true);
     prefetch_buf = base::MakeUnique<char[]>(file_size);
-    if (files_[0].Read(0, prefetch_buf.get(), file_size) != file_size)
+    if (file->Read(0, prefetch_buf.get(), file_size) != file_size)
       return net::ERR_FAILED;
     file_0_prefetch.set(prefetch_buf.get(), file_size);
   }
@@ -1329,7 +1376,10 @@ bool SimpleSynchronousEntry::ReadFromFileOrPrefetched(
     int size,
     char* dest) {
   if (file_0_prefetch.empty() || file_index != 0) {
-    return files_[file_index].Read(offset, dest, size) == size;
+    FileHandle file(this, SubFileForFileIndex(file_index));
+    if (!file.IsOK())
+      return false;
+    return file->Read(offset, dest, size) == size;
   } else {
     if (offset < 0 || size < 0)
       return false;
@@ -1454,11 +1504,17 @@ bool SimpleSynchronousEntry::OpenSparseFileIfExists(
       path_.AppendASCII(GetSparseFilenameFromEntryFileKey(entry_file_key_));
   int flags = File::FLAG_OPEN | File::FLAG_READ | File::FLAG_WRITE |
               File::FLAG_SHARE_DELETE;
-  sparse_file_.Initialize(filename, flags);
-  if (sparse_file_.IsValid())
+  std::unique_ptr<base::File> sparse_file = base::MakeUnique<base::File>();
+  sparse_file->Initialize(filename, flags);
+  if (sparse_file->IsValid()) {
+    file_tracker_.Register(entry_file_key_,
+                           SimpleFileTracker::SubFile::FILE_SPARSE,
+                           std::move(sparse_file));
+    sparse_file_open_ = true;
     return ScanSparseFile(out_sparse_data_size);
+  }
 
-  return sparse_file_.error_details() == File::FILE_ERROR_NOT_FOUND;
+  return sparse_file->error_details() == File::FILE_ERROR_NOT_FOUND;
 }
 
 bool SimpleSynchronousEntry::CreateSparseFile() {
@@ -1468,23 +1524,30 @@ bool SimpleSynchronousEntry::CreateSparseFile() {
       path_.AppendASCII(GetSparseFilenameFromEntryFileKey(entry_file_key_));
   int flags = File::FLAG_CREATE | File::FLAG_READ | File::FLAG_WRITE |
               File::FLAG_SHARE_DELETE;
-  sparse_file_.Initialize(filename, flags);
-  if (!sparse_file_.IsValid())
+  std::unique_ptr<base::File> sparse_file = base::MakeUnique<base::File>();
+  sparse_file->Initialize(filename, flags);
+  if (!sparse_file->IsValid())
     return false;
+  file_tracker_.Register(entry_file_key_,
+                         SimpleFileTracker::SubFile::FILE_SPARSE,
+                         std::move(sparse_file));
+  sparse_file_open_ = true;
 
   return InitializeSparseFile();
 }
 
 void SimpleSynchronousEntry::CloseSparseFile() {
   DCHECK(sparse_file_open());
-  sparse_file_.Close();
+  file_tracker_.Close(entry_file_key_, SimpleFileTracker::SubFile::FILE_SPARSE);
+  sparse_file_open_ = false;
 }
 
 bool SimpleSynchronousEntry::TruncateSparseFile() {
   DCHECK(sparse_file_open());
 
   int64_t header_and_key_length = sizeof(SimpleFileHeader) + key_.size();
-  if (!sparse_file_.SetLength(header_and_key_length)) {
+  FileHandle sparse_file(this, SimpleFileTracker::SubFile::FILE_SPARSE);
+  if (!sparse_file.IsOK() || !sparse_file->SetLength(header_and_key_length)) {
     DLOG(WARNING) << "Could not truncate sparse file";
     return false;
   }
@@ -1495,8 +1558,15 @@ bool SimpleSynchronousEntry::TruncateSparseFile() {
   return true;
 }
 
+// ### for this + scan, it might make sense to just move in the base::File and
+// do the registration at the end. For that matter generally whether stuff gets
+// cleaned up properly on error cases needs double-checking.
 bool SimpleSynchronousEntry::InitializeSparseFile() {
   DCHECK(sparse_file_open());
+
+  FileHandle sparse_file(this, SimpleFileTracker::SubFile::FILE_SPARSE);
+  if (!sparse_file.IsOK())
+    return false;
 
   SimpleFileHeader header;
   header.initial_magic_number = kSimpleInitialMagicNumber;
@@ -1505,14 +1575,14 @@ bool SimpleSynchronousEntry::InitializeSparseFile() {
   header.key_hash = base::Hash(key_);
 
   int header_write_result =
-      sparse_file_.Write(0, reinterpret_cast<char*>(&header), sizeof(header));
+      sparse_file->Write(0, reinterpret_cast<char*>(&header), sizeof(header));
   if (header_write_result != sizeof(header)) {
     DLOG(WARNING) << "Could not write sparse file header";
     return false;
   }
 
-  int key_write_result = sparse_file_.Write(sizeof(header), key_.data(),
-                                            key_.size());
+  int key_write_result =
+      sparse_file->Write(sizeof(header), key_.data(), key_.size());
   if (key_write_result != base::checked_cast<int>(key_.size())) {
     DLOG(WARNING) << "Could not write sparse file key";
     return false;
@@ -1526,12 +1596,15 @@ bool SimpleSynchronousEntry::InitializeSparseFile() {
 
 bool SimpleSynchronousEntry::ScanSparseFile(int32_t* out_sparse_data_size) {
   DCHECK(sparse_file_open());
+  FileHandle sparse_file(this, SimpleFileTracker::SubFile::FILE_SPARSE);
+  if (!sparse_file.IsOK())
+    return false;
 
   int64_t sparse_data_size = 0;
 
   SimpleFileHeader header;
   int header_read_result =
-      sparse_file_.Read(0, reinterpret_cast<char*>(&header), sizeof(header));
+      sparse_file->Read(0, reinterpret_cast<char*>(&header), sizeof(header));
   if (header_read_result != sizeof(header)) {
     DLOG(WARNING) << "Could not read header from sparse file.";
     return false;
@@ -1553,10 +1626,9 @@ bool SimpleSynchronousEntry::ScanSparseFile(int32_t* out_sparse_data_size) {
   int64_t range_header_offset = sizeof(header) + key_.size();
   while (1) {
     SimpleFileSparseRangeHeader range_header;
-    int range_header_read_result =
-        sparse_file_.Read(range_header_offset,
-                          reinterpret_cast<char*>(&range_header),
-                          sizeof(range_header));
+    int range_header_read_result = sparse_file->Read(
+        range_header_offset, reinterpret_cast<char*>(&range_header),
+        sizeof(range_header));
     if (range_header_read_result == 0)
       break;
     if (range_header_read_result != sizeof(range_header)) {
@@ -1596,7 +1668,11 @@ bool SimpleSynchronousEntry::ReadSparseRange(const SparseRange* range,
   DCHECK_LE(offset, range->length);
   DCHECK_LE(offset + len, range->length);
 
-  int bytes_read = sparse_file_.Read(range->file_offset + offset, buf, len);
+  FileHandle sparse_file(this, SimpleFileTracker::SubFile::FILE_SPARSE);
+  if (!sparse_file.IsOK())
+    return false;
+
+  int bytes_read = sparse_file->Read(range->file_offset + offset, buf, len);
   if (bytes_read < len) {
     DLOG(WARNING) << "Could not read sparse range.";
     return false;
@@ -1622,6 +1698,10 @@ bool SimpleSynchronousEntry::WriteSparseRange(SparseRange* range,
   DCHECK_LE(offset, range->length);
   DCHECK_LE(offset + len, range->length);
 
+  FileHandle sparse_file(this, SimpleFileTracker::SubFile::FILE_SPARSE);
+  if (!sparse_file.IsOK())
+    return false;
+
   uint32_t new_crc32 = 0;
   if (offset == 0 && len == range->length) {
     new_crc32 = simple_util::Crc32(buf, len);
@@ -1636,16 +1716,16 @@ bool SimpleSynchronousEntry::WriteSparseRange(SparseRange* range,
     header.length = range->length;
     header.data_crc32 = range->data_crc32;
 
-    int bytes_written = sparse_file_.Write(range->file_offset - sizeof(header),
-                                           reinterpret_cast<char*>(&header),
-                                           sizeof(header));
+    int bytes_written =
+        sparse_file->Write(range->file_offset - sizeof(header),
+                           reinterpret_cast<char*>(&header), sizeof(header));
     if (bytes_written != base::checked_cast<int>(sizeof(header))) {
       DLOG(WARNING) << "Could not rewrite sparse range header.";
       return false;
     }
   }
 
-  int bytes_written = sparse_file_.Write(range->file_offset + offset, buf, len);
+  int bytes_written = sparse_file->Write(range->file_offset + offset, buf, len);
   if (bytes_written < len) {
     DLOG(WARNING) << "Could not write sparse range.";
     return false;
@@ -1669,16 +1749,19 @@ bool SimpleSynchronousEntry::AppendSparseRange(int64_t offset,
   header.length = len;
   header.data_crc32 = data_crc32;
 
-  int bytes_written = sparse_file_.Write(sparse_tail_offset_,
-                                         reinterpret_cast<char*>(&header),
-                                         sizeof(header));
+  FileHandle sparse_file(this, SimpleFileTracker::SubFile::FILE_SPARSE);
+  if (!sparse_file.IsOK())
+    return false;
+
+  int bytes_written = sparse_file->Write(
+      sparse_tail_offset_, reinterpret_cast<char*>(&header), sizeof(header));
   if (bytes_written != base::checked_cast<int>(sizeof(header))) {
     DLOG(WARNING) << "Could not append sparse range header.";
     return false;
   }
   sparse_tail_offset_ += bytes_written;
 
-  bytes_written = sparse_file_.Write(sparse_tail_offset_, buf, len);
+  bytes_written = sparse_file->Write(sparse_tail_offset_, buf, len);
   if (bytes_written < len) {
     DLOG(WARNING) << "Could not append sparse range data.";
     return false;
@@ -1694,6 +1777,47 @@ bool SimpleSynchronousEntry::AppendSparseRange(int64_t offset,
   sparse_ranges_.insert(std::make_pair(offset, range));
 
   return true;
+}
+
+base::File* SimpleSynchronousEntry::AcquireFile(
+    SimpleFileTracker::SubFile subfile) {
+  AcquiredFileState* state = &acquired_files_[static_cast<int>(subfile)];
+  ++state->ref_count;
+  if (state->ref_count == 1)
+    state->file = file_tracker_.Acquire(entry_file_key_, subfile);
+  return state->file;
+}
+
+void SimpleSynchronousEntry::ReleaseFile(SimpleFileTracker::SubFile subfile) {
+  AcquiredFileState* state = &acquired_files_[static_cast<int>(subfile)];
+  --state->ref_count;
+  if (state->ref_count == 0) {
+    // Note that entry_file_key_ here may be different then what it was during
+    // construction, if SimpleFileTracker::Doom got called. That's what's
+    // expected, since the SimpleFileTracker would have adjusted its state
+    // to the new key.
+    file_tracker_.Release(entry_file_key_, subfile);
+    state->file = nullptr;
+  }
+}
+
+SimpleSynchronousEntry::FileHandle::FileHandle(
+    SimpleSynchronousEntry* entry,
+    SimpleFileTracker::SubFile subfile)
+    : entry_(entry), subfile_(subfile) {
+  file_ = entry_->AcquireFile(subfile_);
+}
+
+SimpleSynchronousEntry::FileHandle::~FileHandle() {
+  entry_->ReleaseFile(subfile_);
+}
+
+base::File* SimpleSynchronousEntry::FileHandle::operator->() const {
+  return file_;
+}
+
+bool SimpleSynchronousEntry::FileHandle::IsOK() const {
+  return file_ && file_->IsValid();
 }
 
 }  // namespace disk_cache
