@@ -277,6 +277,11 @@ class BASE_EXPORT MemoryDumpManager {
   // profiler are enabled.
   void InitializeHeapProfilerStateIfNeededLocked();
 
+  // Sends OnHeapProfilingEnabled() notifcation to mdp ensuring OnMemoryDump is
+  // not called at the same time.
+  void NotifyHeapProfilingEnabled(scoped_refptr<MemoryDumpProviderInfo> mdpinfo,
+                                  bool enabled);
+
   // Returns true if Initialize() has been called, false otherwise.
   bool is_initialized() const { return !request_dump_function_.is_null(); }
 
