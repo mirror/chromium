@@ -16,6 +16,24 @@
       "revId": "5ce60acaede2cf4de5fc72060c7fb1f47b88c13d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd9d716_fccb7a58",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 8
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-07T11:11:57Z",
+      "side": 1,
+      "message": "It has 3 different fields to inherit together, so we need to have either custom converter or custom inherit/initial code. Since we use custom converter for other similar case, I think this is better.\n\nI wish these 3 different fields are separate long hands, so that style engine can handle these complexities in the general shorthand engine.",
+      "parentUuid": "70a635b0_b45644c2",
+      "revId": "5ce60acaede2cf4de5fc72060c7fb1f47b88c13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
