@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfed7aa7_1e0eeaa3",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-07T15:36:04Z",
+      "side": 1,
+      "message": "You can declare and init passwords here with {}",
+      "range": {
+        "startLine": 241,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 11
+      },
+      "revId": "f91123ec8d23740c0aa7760a029206950a8ac35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "017b4f49_20172267",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-07T15:36:04Z",
+      "side": 1,
+      "message": "If you look at the ASCIIToUTF16 implementation then you see that they just implicitly cast char to char16. You can just directly construct base::string16 the same way.",
+      "range": {
+        "startLine": 241,
+        "startChar": 28,
+        "endLine": 241,
+        "endChar": 40
+      },
+      "revId": "f91123ec8d23740c0aa7760a029206950a8ac35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c231c2cc_c16a9f1b",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-07T15:36:04Z",
+      "side": 1,
+      "message": "const base::string16\u0026",
+      "range": {
+        "startLine": 242,
+        "startChar": 7,
+        "endLine": 242,
+        "endChar": 21
+      },
+      "revId": "f91123ec8d23740c0aa7760a029206950a8ac35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d936e05a_ed8e454f",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-07T15:36:04Z",
+      "side": 1,
+      "message": "You can directly construct a new element without creating a copy.",
+      "range": {
+        "startLine": 243,
+        "startChar": 16,
+        "endLine": 243,
+        "endChar": 27
+      },
+      "revId": "f91123ec8d23740c0aa7760a029206950a8ac35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70be426c_d13c07b6",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-07T15:36:04Z",
+      "side": 1,
+      "message": "This expression contains a memory leak.",
+      "range": {
+        "startLine": 246,
+        "startChar": 2,
+        "endLine": 247,
+        "endChar": 67
+      },
+      "revId": "f91123ec8d23740c0aa7760a029206950a8ac35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e7f941_8535074d",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-07T15:36:04Z",
+      "side": 1,
+      "message": "you can just return std::make_unique",
+      "range": {
+        "startLine": 248,
+        "startChar": 9,
+        "endLine": 248,
+        "endChar": 17
+      },
+      "revId": "f91123ec8d23740c0aa7760a029206950a8ac35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
