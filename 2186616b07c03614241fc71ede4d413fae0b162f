@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "29eec91b_acc41616",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-07T07:18:07Z",
+      "side": 1,
+      "message": "Why is there no explicit memory attribute for this property?",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "2186616b07c03614241fc71ede4d413fae0b162f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81feed68_76037359",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-07T07:18:07Z",
+      "side": 1,
+      "message": "Same",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "2186616b07c03614241fc71ede4d413fae0b162f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aee98256_2c97170c",
         "filename": "ios/clean/chrome/browser/ui/root/root_coordinator.h",
         "patchSetId": 4
@@ -31,6 +77,24 @@
       "side": 1,
       "message": "Exactly, yes -- is the comment not clear?",
       "parentUuid": "aee98256_2c97170c",
+      "revId": "2186616b07c03614241fc71ede4d413fae0b162f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98edd200_7f8ed255",
+        "filename": "ios/clean/chrome/browser/ui/root/root_coordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-07T07:18:07Z",
+      "side": 1,
+      "message": "It has no memory attributes on the BrowserCoordinator, and the default should be strong.",
+      "parentUuid": "105724a3_704ad01b",
       "revId": "2186616b07c03614241fc71ede4d413fae0b162f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
