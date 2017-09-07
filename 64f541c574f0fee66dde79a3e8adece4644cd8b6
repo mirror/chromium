@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "162db886_42ad3168",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-07T20:44:47Z",
+      "side": 1,
+      "message": "s/6/3",
+      "range": {
+        "startLine": 50,
+        "startChar": 37,
+        "endLine": 50,
+        "endChar": 38
+      },
+      "revId": "64f541c574f0fee66dde79a3e8adece4644cd8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b9f1c9_2643770d",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-07T20:44:47Z",
+      "side": 1,
+      "message": "We can still get one long frame if an animation just started right? Can we only report if we had composited animations last frame too?",
+      "revId": "64f541c574f0fee66dde79a3e8adece4644cd8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6e5b12_4763a407",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-07T20:44:47Z",
+      "side": 1,
+      "message": "This should be the end time from the last time we used a new active tree, draw_end_time_prev_ could be just since the last impl frame. Also, we should do the same as for the impl metric and only report these times if we had main thread animations the last time we used a new active tree otherwise we could generate long times at the start of an animation.",
+      "range": {
+        "startLine": 906,
+        "startChar": 54,
+        "endLine": 906,
+        "endChar": 73
+      },
+      "revId": "64f541c574f0fee66dde79a3e8adece4644cd8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
