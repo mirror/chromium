@@ -36,14 +36,24 @@
 // All of these macros must be called with |name| as a runtime constant.
 
 // Sample usage:
-//   UMA_HISTOGRAM_ENUMERATION("My.Enumeration", VALUE, EVENT_MAX_VALUE);
+//   // This enum is used to back an UMA histogram, and should therefore be
+//   // treated as append-only.
+//   enum class MyEnum {
+//     VALUE_1,
+//     VALUE_2,
+//     ...
+//     VALUE_N,
+//     COUNT
+//   };
+//   UMA_HISTOGRAM_ENUMERATION("My.Enumeration",
+//                             MyEnum::VALUE_2, MyEnum::COUNT);
 // New Enum values can be added, but existing enums must never be renumbered or
 // delete and reused. The value in |sample| must be strictly less than
-// |enum_max|.
+// |enum_size|.
 
-#define UMA_HISTOGRAM_ENUMERATION(name, sample, enum_max) \
-  INTERNAL_HISTOGRAM_ENUMERATION_WITH_FLAG(               \
-      name, sample, enum_max, base::HistogramBase::kUmaTargetedHistogramFlag)
+#define UMA_HISTOGRAM_ENUMERATION(name, sample, enum_size) \
+  INTERNAL_HISTOGRAM_ENUMERATION_WITH_FLAG(                \
+      name, sample, enum_size, base::HistogramBase::kUmaTargetedHistogramFlag)
 
 // Histogram for boolean values.
 
