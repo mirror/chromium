@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "455f21ac_20cb091c",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3877,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-07T06:20:19Z",
+      "side": 1,
+      "message": "I originally planned to add getter/setter for this, but I started to think that maybe we should just use the default value for this property instead i.e., YES in iOS 10 or later, and NO for iOS 9 or before.\n\nBecause we can enable/disable the link preview by implementing WebStateDelegate::ShouldPreviewLink() instead. It returns false by default, so it won\u0027t immediately enable the link preview on Chromium.\n\nWhat do you think?",
+      "parentUuid": "af5864f6_725716c9",
+      "revId": "2eba4006e0a6dea30f37d99b2cb04f20161736f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fa1c5e9_fabbc062",
         "filename": "ios/web/web_state/web_state_impl.mm",
         "patchSetId": 1
