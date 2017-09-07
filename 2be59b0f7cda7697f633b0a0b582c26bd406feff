@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "84e5e099_a6764996",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-07T14:37:42Z",
+      "side": 1,
+      "message": "Assigning null to a variable that is null shouldn\u0027t cause problems, right?",
+      "parentUuid": "826add12_ec91ec31",
+      "revId": "2be59b0f7cda7697f633b0a0b582c26bd406feff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4939a012_90cb6f09",
         "filename": "components/cronet/ios/cronet_environment.mm",
         "patchSetId": 5
@@ -168,6 +186,24 @@
       "revId": "2be59b0f7cda7697f633b0a0b582c26bd406feff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f382e97e_fb2499e0",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-07T14:37:42Z",
+      "side": 1,
+      "message": "I think you addressed this; marking done.",
+      "parentUuid": "4939a012_90cb6f09",
+      "revId": "2be59b0f7cda7697f633b0a0b582c26bd406feff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
