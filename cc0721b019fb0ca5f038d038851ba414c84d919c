@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ba96655_d27bfb12",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1314,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-07T04:42:46Z",
+      "side": 1,
+      "message": "I don\u0027t think moving this to a function is much useful, its just one line (which is a function in itself and already being re-used). Made this inline instead.\nThe way blocks are re-used is to declare it as a global literal(https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Blocks/Articles/bxDeclaringCreating.html#//apple_ref/doc/uid/TP40007502-CH4-SW1) in the file. And since this is a one-liner, we could either re-use the one-liner inline or create a block which is an extra overhead.",
+      "parentUuid": "cfaaccc6_61d565ad",
+      "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7446fb_8f4df9db",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcb63b5_66c3e21a",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-07T04:42:46Z",
+      "side": 1,
+      "message": "This is mostly the only place where its a single node (which requires creation of set of nodes to be able to call the moveNodes function), other move case is multiple selection.\nAlso as mentioned before, the move functionality is already re-used, we wont gain much from making this block a global literal to re-use.",
+      "parentUuid": "5a7446fb_8f4df9db",
+      "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a0ffec48_11401e82",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-07T04:42:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea61bb27_a1ac2d68",
+      "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2013a14f_0b526f20",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f52029_78cf86cc",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-07T04:42:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2013a14f_0b526f20",
+      "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "168d91d7_6f784114",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-07T04:42:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa986efa_550aef6c",
+      "range": {
+        "startLine": 760,
+        "startChar": 0,
+        "endLine": 763,
+        "endChar": 52
+      },
+      "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
