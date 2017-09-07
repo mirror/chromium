@@ -22,6 +22,30 @@
       "revId": "b868fc6aa27786ea5126ad6090f93363d39629d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13977ddc_f3c66382",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-09-07T21:26:58Z",
+      "side": 1,
+      "message": "This is a good question, my theory is ViewStructure.class in Android SDK doesn\u0027t have setAssitBlocked() public method because it is @hide, so I didn\u0027t get error in compile time, also my implementation doesn\u0027t use setAssitBlocked(), so I didn\u0027t get issue at runtime either.",
+      "parentUuid": "79045ded_5ae8cced",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 64
+      },
+      "revId": "b868fc6aa27786ea5126ad6090f93363d39629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
