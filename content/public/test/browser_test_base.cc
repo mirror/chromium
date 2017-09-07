@@ -15,7 +15,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
+#include "base/metrics/statistics_recorder.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
@@ -63,7 +63,7 @@
 namespace content {
 namespace {
 
-#if defined(OS_POSIX) && !defined(OS_FUCHSIA)
+#if defined(OS_POSIX)
 // On SIGSEGV or SIGTERM (sent by the runner on timeouts), dump a stack trace
 // (to make debugging easier) and also exit with a known error code (so that
 // the test framework considers this a failure -- http://crbug.com/57578).
@@ -82,7 +82,7 @@ void DumpStackTraceSignalHandler(int signal) {
   }
   _exit(128 + signal);
 }
-#endif  // defined(OS_POSIX) && !defined(OS_FUCHSIA)
+#endif  // defined(OS_POSIX)
 
 void RunTaskOnRendererThread(const base::Closure& task,
                              const base::Closure& quit_task) {
@@ -129,6 +129,8 @@ BrowserTestBase::BrowserTestBase()
   // TODO(fdoray): Remove this once the SequencedWorkerPool to TaskScheduler
   // redirection experiment concludes https://crbug.com/622400.
   base::SequencedWorkerPool::DisableForProcessForTesting();
+
+  base::StatisticsRecorder::SetRecordCheckerEnabled(false);
 }
 
 BrowserTestBase::~BrowserTestBase() {
@@ -278,13 +280,13 @@ void BrowserTestBase::TearDown() {
 }
 
 void BrowserTestBase::ProxyRunTestOnMainThreadLoop() {
-#if defined(OS_POSIX) && !defined(OS_FUCHSIA)
+#if defined(OS_POSIX)
   g_browser_process_pid = base::GetCurrentProcId();
   signal(SIGSEGV, DumpStackTraceSignalHandler);
 
   if (handle_sigterm_)
     signal(SIGTERM, DumpStackTraceSignalHandler);
-#endif  // defined(OS_POSIX) && !defined(OS_FUCHSIA)
+#endif  // defined(OS_POSIX)
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableTracing)) {
