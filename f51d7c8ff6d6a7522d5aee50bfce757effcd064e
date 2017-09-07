@@ -45,6 +45,30 @@
       "revId": "f51d7c8ff6d6a7522d5aee50bfce757effcd064e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0450fbb_a5eb5a2e",
+        "filename": "components/update_client/configurator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T20:13:29Z",
+      "side": 1,
+      "message": "I thought about the same thing but I am ok with the code as is because:\n* we do the same at line 125\n* returning the unique_ptr means a new instance is created every time the function is called.",
+      "parentUuid": "c0fc6e73_d2899c5a",
+      "range": {
+        "startLine": 135,
+        "startChar": 29,
+        "endLine": 135,
+        "endChar": 30
+      },
+      "revId": "f51d7c8ff6d6a7522d5aee50bfce757effcd064e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
