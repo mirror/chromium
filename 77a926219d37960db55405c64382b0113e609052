@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b290212_1ece764a",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_material_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T09:33:12Z",
+      "side": 1,
+      "message": "Nit: Avoid \u0027we\u0027 in comments. \u0027but we additionally\u0027 -\u003e \u0027but still\u0027.",
+      "range": {
+        "startLine": 326,
+        "startChar": 74,
+        "endLine": 326,
+        "endChar": 76
+      },
+      "revId": "77a926219d37960db55405c64382b0113e609052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d95433c_ec0a87c2",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_material_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-07T09:33:12Z",
+      "side": 1,
+      "message": "Invert this pattern (here and elsewhere) so that instead of \n\nfoo \u003d !bar ? B : A;\n\nit\u0027s\n\nfoo \u003d bar ? A : B;",
+      "range": {
+        "startLine": 348,
+        "startChar": 31,
+        "endLine": 348,
+        "endChar": 36
+      },
+      "revId": "77a926219d37960db55405c64382b0113e609052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
