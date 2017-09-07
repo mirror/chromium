@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4983d796_98de3ff7",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-07T18:13:55Z",
+      "side": 1,
+      "message": "This works as long as neither iterator points to end().  If they do, though, this could potentially leave them with invalid values, since vector::swap() may invalidate end() iterators.  Critically, if one of the containers is empty, its default_match_ will be end(), so I don\u0027t think this is safe.  (In practice, I suspect it always works, but let\u0027s not rely on undefined behavior.)\n\nYou could go back to the old code, but an even better fix might be to see if |default_match_| can be removed as a concept.  It dates from when we could have a non-first entry as default, but I don\u0027t think we\u0027re going back to that world, so maybe you can assume the first result (if any) is always default.  The only caveat would be cases where there is no legal default, which could maybe happen if the user has searching disabled (by enterprise policy) and types an input that can\u0027t be navigated to?  But in those cases I suspect there no matches at all.  So I bet if the result is non-empty, the first result is always default, and we don\u0027t need default_match_.\n\nYou might want to try tackling that in a separate CL though.",
+      "revId": "536c88b771209399767b4a8043ddf558d6bf1150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980bcf32_74ee5d20",
+        "filename": "components/omnibox/browser/autocomplete_result.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-07T18:13:55Z",
+      "side": 1,
+      "message": "Nit: Might want to note that |old_matches| may be overwritten due to swapping.",
+      "revId": "536c88b771209399767b4a8043ddf558d6bf1150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
