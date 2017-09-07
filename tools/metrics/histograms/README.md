@@ -47,13 +47,15 @@ You may append to your enum if the possible states/actions grows.  However, you
 should not reorder, renumber, or otherwise reuse existing values.  As such,
 please put this warning by the enum definition:
 ```
-// These values are written to logs.  New enum values can be added, but existing
-// enums must never be renumbered or deleted and reused.
-enum NEW_TAB_PAGE_ACTION {
+// These values are persisted to logs; so once a value has been used, its
+// meaning must never change. It's safe to add new values or to deprecate
+// existing ones; but never renumber existing entries, nor reuse a
+// previously-used value (even if it was deprecated).
+enum class NEW_TAB_PAGE_ACTION {
   USE_OMNIBOX = 0,
   CLICK_TILE = 1,
   OPEN_BOOKMARK = 2,
-  NEW_TAB_PAGE_ACTION_COUNT
+  COUNT
 };
 ```
 
