@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3b42316c_dab8d7ca",
+        "filename": "chromecast/browser/cast_web_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-09-07T22:45:17Z",
+      "side": 1,
+      "message": "Oh ok. For some reason I thought these are two different mechanism to enable it, either via command line or DCS flag, where the command line approach is mainly for development purpose. It seems a bit odd to require both.",
+      "parentUuid": "7aaa0bed_b4101717",
+      "range": {
+        "startLine": 144,
+        "startChar": 59,
+        "endLine": 144,
+        "endChar": 61
+      },
+      "revId": "c07fa5f97f0cadf1f50610b924333c896b6cb2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21039bf0_acdb0529",
         "filename": "chromecast/browser/cast_web_view.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-07T22:40:27Z",
       "side": 1,
       "message": "Need to add allow_media_access_ check here as well.",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 61
+      },
+      "revId": "c07fa5f97f0cadf1f50610b924333c896b6cb2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ecb06ab_6e6ed981",
+        "filename": "chromecast/browser/cast_web_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-09-07T22:45:17Z",
+      "side": 1,
+      "message": "Oops, will do.",
+      "parentUuid": "21039bf0_acdb0529",
       "range": {
         "startLine": 174,
         "startChar": 0,
