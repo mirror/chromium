@@ -48,7 +48,7 @@ public abstract class SuggestionsSheetVisibilityChangeObserver
 
         // This event is swallowed when the observer is registered after the sheet is opened.
         // (e.g. Chrome starts on the NTP). This allows taking it into account.
-        if (mBottomSheet.isSheetOpen()) onSheetOpened();
+        if (mBottomSheet.isSheetOpen()) onSheetOpened(BottomSheet.STATE_CHANGE_REASON_NONE);
     }
 
     public void onDestroy() {
@@ -75,7 +75,7 @@ public abstract class SuggestionsSheetVisibilityChangeObserver
 
     @Override
     @CallSuper
-    public void onSheetOpened() {
+    public void onSheetOpened(int reason) {
         mWasShownSinceLastOpen = false;
         onStateChange();
     }

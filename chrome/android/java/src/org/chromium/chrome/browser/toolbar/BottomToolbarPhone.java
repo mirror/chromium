@@ -59,7 +59,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
      */
     private final BottomSheetObserver mBottomSheetObserver = new EmptyBottomSheetObserver() {
         @Override
-        public void onSheetOpened() {
+        public void onSheetOpened(int reason) {
             if (!mUseModernDesign) {
                 mToolbarShadowPermanentlyHidden = false;
             }
@@ -499,7 +499,8 @@ public class BottomToolbarPhone extends ToolbarPhone {
         if (mBottomSheet == null || !hasFocus) return;
 
         boolean wasSheetOpen = mBottomSheet.isSheetOpen();
-        mBottomSheet.setSheetState(BottomSheet.SHEET_STATE_FULL, true);
+        mBottomSheet.setSheetState(
+                BottomSheet.SHEET_STATE_FULL, true, BottomSheet.STATE_CHANGE_REASON_OMNIBOX);
 
         if (!wasSheetOpen) {
             mBottomSheet.getBottomSheetMetrics().recordSheetOpenReason(
