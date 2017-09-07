@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f23fa15_6dc39b19",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-07T17:55:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ca9bf20_417b79f1",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "28586103013bc68d980f39aa93f6acc0d3b0d572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "649cc18f_a739bbf2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "28586103013bc68d980f39aa93f6acc0d3b0d572",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f324fe_16749430",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-07T17:55:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "649cc18f_a739bbf2",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 20
+      },
+      "revId": "28586103013bc68d980f39aa93f6acc0d3b0d572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "38e4b1b4_1be175e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-07T17:55:59Z",
+      "side": 1,
+      "message": "Right now the ReferencePool doesn\u0027t actually support that, but it will be garbage-collected anyway.",
+      "parentUuid": "6625ee34_080a8a0a",
+      "range": {
+        "startLine": 101,
+        "startChar": 37,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "28586103013bc68d980f39aa93f6acc0d3b0d572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe9c529b_332a4c4e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-07T15:33:27Z",
       "side": 1,
       "message": "Should we still allow the deduplication cache to store weak references to bitmaps on low-end devices so that multiple clients holding strong references to the same bitmap can share an Object?",
+      "range": {
+        "startLine": 195,
+        "startChar": 16,
+        "endLine": 195,
+        "endChar": 74
+      },
+      "revId": "28586103013bc68d980f39aa93f6acc0d3b0d572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5abc80c1_9ea39801",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-07T17:55:59Z",
+      "side": 1,
+      "message": "Yes, good point! Done.",
+      "parentUuid": "fe9c529b_332a4c4e",
       "range": {
         "startLine": 195,
         "startChar": 16,

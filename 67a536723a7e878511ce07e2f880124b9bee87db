@@ -241,6 +241,30 @@
     },
     {
       "key": {
+        "uuid": "ea1710fb_b6ed9ac2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-07T17:55:59Z",
+      "side": 1,
+      "message": "\u003e I agree that we should devise good caching strategy and that avoiding duplicate bitmaps is a win. We are introducing code complexity, so I want to understand the magnitude of the potential positive impacts.\n\u003e \n\u003e Each client having it\u0027s own LRU Cache that can be destroyed when its ThumbnailProviderImpl is destroyed (or that can be drained separately) is great, so I\u0027m happy to see that coupled with this change.\n\u003e \n\u003e If article suggestions don\u0027t go through ThumbnailProviderImpl at all, then this won\u0027t have an impact on the memory for SuggestionsBottomSheetContent?\n\nYeah, that\u0027s correct.",
+      "parentUuid": "f30209fc_45345251",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 53,
+        "endChar": 2
+      },
+      "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b7bdd53_548799d0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
         "patchSetId": 2
