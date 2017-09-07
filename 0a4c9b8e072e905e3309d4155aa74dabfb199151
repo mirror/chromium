@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "d88cd1c6_6c8726c6",
+        "filename": "chromecast/browser/cast_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-09-07T20:58:57Z",
+      "side": 1,
+      "message": "MediaDrm is also used for Cast authentication, outside web page. And MediaDrm will generate a cert file on the device.",
+      "parentUuid": "f644e1f9_d9b31645",
+      "range": {
+        "startLine": 272,
+        "startChar": 51,
+        "endLine": 272,
+        "endChar": 55
+      },
+      "revId": "0a4c9b8e072e905e3309d4155aa74dabfb199151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63b51fbc_c4acc1c6",
         "filename": "components/cdm/browser/cdm_message_filter_android.cc",
         "patchSetId": 1
