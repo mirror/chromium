@@ -440,19 +440,19 @@ void AnimationTimelinesTest::TickAnimationsTransferEvents(
   host_->SetAnimationEvents(std::move(events));
 }
 
-AnimationPlayer* AnimationTimelinesTest::GetPlayerForElementId(
+AnimationTicker* AnimationTimelinesTest::GetTickerForElementId(
     ElementId element_id) {
   const scoped_refptr<ElementAnimations> element_animations =
       host_->GetElementAnimationsForElementId(element_id);
-  return element_animations ? &*element_animations->players_list().begin()
+  return element_animations ? &*element_animations->tickers_list().begin()
                             : nullptr;
 }
 
-AnimationPlayer* AnimationTimelinesTest::GetImplPlayerForLayerId(
+AnimationTicker* AnimationTimelinesTest::GetImplTickerForLayerId(
     ElementId element_id) {
   const scoped_refptr<ElementAnimations> element_animations =
       host_impl_->GetElementAnimationsForElementId(element_id);
-  return element_animations ? &*element_animations->players_list().begin()
+  return element_animations ? &*element_animations->tickers_list().begin()
                             : nullptr;
 }
 
