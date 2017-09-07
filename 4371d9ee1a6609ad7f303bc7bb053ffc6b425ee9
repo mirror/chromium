@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "7512dfea_fd9f8f6f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-07T07:26:18Z",
+      "side": 1,
+      "message": "can we make these two lines a static here? I feel like it will just read better.",
+      "range": {
+        "startLine": 44,
+        "startChar": 28,
+        "endLine": 44,
+        "endChar": 33
+      },
+      "revId": "4371d9ee1a6609ad7f303bc7bb053ffc6b425ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d30b16c1_2f3939fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-07T07:26:18Z",
+      "side": 1,
+      "message": "that is a bit strange. I do think we should avoid hiding and showing, but more than that, add this point the tab is not in the model at all right? so it is not mVisibleTab yet. Are we talking about the old Activity\u0027s model? I guess not, but why does anything we do to this one affect mVisibleTab in the model? \n\nand I wonder instead of exposing detach, we should have a reparent() that calls the two back to back as the only public call. I worry about people calling detach without the right idea od what to follow it with.",
+      "range": {
+        "startLine": 49,
+        "startChar": 15,
+        "endLine": 49,
+        "endChar": 26
+      },
+      "revId": "4371d9ee1a6609ad7f303bc7bb053ffc6b425ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436024e8_02ad9aa7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-07T07:26:18Z",
+      "side": 1,
+      "message": "Nonnull",
+      "range": {
+        "startLine": 166,
+        "startChar": 61,
+        "endLine": 166,
+        "endChar": 64
+      },
+      "revId": "4371d9ee1a6609ad7f303bc7bb053ffc6b425ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95231a08_c977d877",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1446,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-07T07:26:18Z",
+      "side": 1,
+      "message": "yes, I think that is a good idea.",
+      "range": {
+        "startLine": 1446,
+        "startChar": 32,
+        "endLine": 1446,
+        "endChar": 0
+      },
+      "revId": "4371d9ee1a6609ad7f303bc7bb053ffc6b425ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edd1e3ff_17bfcbfa",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/FullscreenActivityTest.java",
         "patchSetId": 3
