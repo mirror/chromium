@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87b44b3b_2d161280",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_fab_indicator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-07T00:00:35Z",
+      "side": 1,
+      "message": "Obsolete. Not using slide animation any more.",
+      "parentUuid": "444980d7_8b2f7ab1",
+      "range": {
+        "startLine": 25,
+        "startChar": 19,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ed7ef82_b1046956",
         "filename": "chrome/browser/ui/views/exit_fullscreen_fab_indicator.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8af500a_0dc68b9b",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_fab_indicator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-07T00:00:35Z",
+      "side": 1,
+      "message": "Looks like not needed. Removed.",
+      "parentUuid": "2ed7ef82_b1046956",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 35
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "b9e2abfd_e892ff71",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_fab_indicator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-07T00:00:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b69a5b56_3d9730bf",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 3
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3921c66e_49865a3f",
         "filename": "chrome/browser/ui/views/fab_icon_view.cc",
         "patchSetId": 9
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "a79d709e_9d71ad80",
+        "filename": "chrome/browser/ui/views/fab_icon_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-07T00:00:35Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "3921c66e_49865a3f",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1098e69d_0baeedd8",
         "filename": "chrome/browser/ui/views/fab_icon_view.cc",
         "patchSetId": 9
@@ -162,6 +258,30 @@
       "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8b8891_b7405080",
+        "filename": "chrome/browser/ui/views/fab_icon_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-07T00:00:35Z",
+      "side": 1,
+      "message": "I copied this from SubtleNotificationView. I\u0027ve now moved this to ExitFullscreenIndicator.",
+      "parentUuid": "1098e69d_0baeedd8",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 14
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "6658fe54_cd410d13",
+        "filename": "chrome/browser/ui/views/fab_icon_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-07T00:00:35Z",
+      "side": 1,
+      "message": "I just removed \"fab\" from the names and changed the comments to be more descriptive.\n\nExitFullscreenFabIndicator-\u003eExitFullscreenIndicator\nFabIconView-\u003eExitFullscreenIndicatorView",
+      "parentUuid": "cd92b84a_b0553ce7",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01d1d5d1_d51bcfee",
         "filename": "chrome/browser/ui/views/fab_icon_view.h",
         "patchSetId": 9
@@ -304,6 +448,30 @@
       "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2874fe9b_1e2800a8",
+        "filename": "chrome/browser/ui/views/fab_icon_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-07T00:00:35Z",
+      "side": 1,
+      "message": "Maybe better to keep it in a separate file...\n\nI\u0027ve renamed it to ExitFullscreenIndicatorView and set the icon inside its constructor.",
+      "parentUuid": "1b45d7d8_f4e8fe06",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 17
+      },
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -372,6 +540,24 @@
       "side": 1,
       "message": "no, we can\u0027t remove the old close icon. This is an unfortunate limitation of the vector icons but one we don\u0027t run into very often[1]. I would say the least bad approach is to rename the current close.icon and close.1x.icon to close_16* and add this one as close.icon.\n\n[1]crbug.com/647286",
       "parentUuid": "d1953f6a_67f94393",
+      "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d002223_ac8eacc9",
+        "filename": "components/vector_icons/ic_close.icon",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-07T00:00:35Z",
+      "side": 1,
+      "message": "Could we just rename the new ic_close to close_24 instead?",
+      "parentUuid": "7c0d2fb5_1c3306c6",
       "revId": "35f9c1dc8fdacececdf8c2f7f521b2df2a35b836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

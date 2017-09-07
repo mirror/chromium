@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49f05a3d_849cf56f",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-07T00:00:35Z",
+      "side": 1,
+      "message": "Looks like GetLayer() may return nullptr in some cases. I\u0027m not sure whether/when it will happen...?",
+      "range": {
+        "startLine": 56,
+        "startChar": 10,
+        "endLine": 56,
+        "endChar": 18
+      },
+      "revId": "01acd3749e7985280ed545ad83dd07818ec921cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
