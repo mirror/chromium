@@ -11,7 +11,7 @@ import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetCon
  */
 public class EmptyBottomSheetObserver implements BottomSheetObserver {
     @Override
-    public void onSheetOpened() {}
+    public void onSheetOpened(int reason) {}
 
     @Override
     public void onSheetClosed() {}
