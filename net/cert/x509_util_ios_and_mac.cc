@@ -22,7 +22,6 @@ CreateSecCertificateArrayForX509Certificate(X509Certificate* cert) {
       CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks));
   if (!cert_list)
     return base::ScopedCFTypeRef<CFMutableArrayRef>();
-#if BUILDFLAG(USE_BYTE_CERTS)
   std::string bytes;
   base::ScopedCFTypeRef<SecCertificateRef> sec_cert(
       CreateSecCertificateFromBytes(CRYPTO_BUFFER_data(cert->os_cert_handle()),
@@ -39,13 +38,6 @@ CreateSecCertificateArrayForX509Certificate(X509Certificate* cert) {
       return base::ScopedCFTypeRef<CFMutableArrayRef>();
     CFArrayAppendValue(cert_list, sec_cert);
   }
-#else
-  X509Certificate::OSCertHandles intermediate_ca_certs =
-      cert->GetIntermediateCertificates();
-  CFArrayAppendValue(cert_list, cert->os_cert_handle());
-  for (size_t i = 0; i < intermediate_ca_certs.size(); ++i)
-    CFArrayAppendValue(cert_list, intermediate_ca_certs[i]);
-#endif
   return cert_list;
 }
 
