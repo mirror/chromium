@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d2c09ad_e475a8e0",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-07T06:04:16Z",
+      "side": 1,
+      "message": "You seem to rely upon agent being enabled. Is this just a convenience wrapper over StopWorker(version_id)? Why not to use the StopWorker(version_id) explicitly?\n\nThis API (SW domain) is nowhere stable btw, so it is likely to move under your feet. It would not be a great idea to rely upon it in the perf tests - you end up being vulnerable to the changes to the API and would be constraining out flexibility wrt changes to the API.\n\nCan we agree on the higher-level goals of your project? Can restarting browser be used to stop the versions?",
+      "revId": "ef0285d352107171212f140f07476d1c6ec33a0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
