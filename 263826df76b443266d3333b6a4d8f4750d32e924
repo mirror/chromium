@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6e91601_64141397",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-09-07T17:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "901887c4_ad6b9679",
+      "range": {
+        "startLine": 65,
+        "startChar": 52,
+        "endLine": 66,
+        "endChar": 22
+      },
+      "revId": "263826df76b443266d3333b6a4d8f4750d32e924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b961163_e162ba5a",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "263826df76b443266d3333b6a4d8f4750d32e924",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f63511_42787581",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-09-07T17:01:48Z",
+      "side": 1,
+      "message": "I am using it for memcpy. I have to memcpy the buffer returned by FileProxy::Read() because FileProxy creates and manages its own buffer for reading which gets deleted after the read callback is run.",
+      "parentUuid": "9b961163_e162ba5a",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "263826df76b443266d3333b6a4d8f4750d32e924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "31adac95_5b1d8d7a",
+        "filename": "remoting/host/file_proxy_wrapper_linux_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-09-07T17:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c77b4cc4_81559d56",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 16
+      },
+      "revId": "263826df76b443266d3333b6a4d8f4750d32e924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03a48c02_cfbc64e0",
         "filename": "remoting/host/file_proxy_wrapper_linux_unittest.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "263826df76b443266d3333b6a4d8f4750d32e924",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38472761_0bac53f5",
+        "filename": "remoting/host/file_proxy_wrapper_linux_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-09-07T17:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03a48c02_cfbc64e0",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 22
+      },
+      "revId": "263826df76b443266d3333b6a4d8f4750d32e924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
