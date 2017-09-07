@@ -87,6 +87,24 @@
       "revId": "87624453d618dc59cd06ef90a7c22006e73cf393",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad99edae_a608f14d",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-07T03:59:32Z",
+      "side": 1,
+      "message": "GetSelectionOffsets returns node ids of the start and end of the selection.  So maybe this is an absolutely horrible name. Since this is a straight up copy from BrowserAccessibilityComWin::GetSelectionOffsets(), i\u0027ll leave it as is and follow up with a better name in the future.\n\n\nvoid AXPlatformNodeWin::GetSelectionOffsets(int* selection_start,\n                                            int* selection_end) {\n...\n\n  *selection_start \u003d GetSelectionAnchor();\n  *selection_end \u003d GetSelectionFocus();\n\n...",
+      "parentUuid": "a4c83f0e_5f7f26e2",
+      "revId": "87624453d618dc59cd06ef90a7c22006e73cf393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
