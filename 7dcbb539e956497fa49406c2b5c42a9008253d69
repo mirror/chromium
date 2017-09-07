@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d5373044_000ba5c5",
+        "filename": "chrome/browser/chromeos/arc/lock_screen/arc_lock_screen_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-07T01:01:00Z",
+      "side": 1,
+      "message": "OK, I will try to move it there and add deps to components/session_manager/core",
+      "parentUuid": "c7f42f5b_95541c49",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 50
+      },
+      "revId": "7dcbb539e956497fa49406c2b5c42a9008253d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b65e02e_374efb47",
         "filename": "components/arc/common/lock_screen.mojom",
         "patchSetId": 1
