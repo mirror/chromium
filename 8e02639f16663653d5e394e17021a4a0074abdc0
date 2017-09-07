@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e145d16c_fc33c971",
+        "filename": "third_party/WebKit/LayoutTests/fast/media/media-element-move-to-new-document-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-07T19:43:12Z",
+      "side": 1,
+      "message": "I have no idea what this block of HTML is doing or why it causes the crash. I have attempted to minimize further to no avail. Thanks, clusterfuzz!",
+      "revId": "8e02639f16663653d5e394e17021a4a0074abdc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
