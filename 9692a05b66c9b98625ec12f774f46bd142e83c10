@@ -16,6 +16,24 @@
       "revId": "9692a05b66c9b98625ec12f774f46bd142e83c10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd48412_ecf4a30c",
+        "filename": "third_party/WebKit/Source/core/dom/TaskTypeTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-07T11:38:41Z",
+      "side": 1,
+      "message": "Technically we can, but the only place using this is core/workers/ParentFrameTaskRunners, so I suggest that we keep it here. If you still have concerns, let\u0027s discuss it in another patch — I want to land this ASAP to unblock per-frame content/ work.",
+      "parentUuid": "8c2f2470_a6d6ff96",
+      "revId": "9692a05b66c9b98625ec12f774f46bd142e83c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
