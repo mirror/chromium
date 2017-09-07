@@ -353,11 +353,11 @@ void SimpleIndex::StartEvictionIfNeeded() {
   std::vector<std::pair<uint64_t, const EntrySet::value_type*>> entries;
   entries.reserve(entries_set_.size());
   uint32_t now = (base::Time::Now() - base::Time::UnixEpoch()).InSeconds();
-  bool use_size = false;
+  bool use_size = true;
   SimpleExperiment experiment = GetSimpleExperiment(cache_type_);
   if (experiment.type == SimpleExperimentType::EVICT_WITH_SIZE &&
-      experiment.param) {
-    use_size = true;
+      !experiment.param) {
+    use_size = false;
   }
   for (EntrySet::const_iterator i = entries_set_.begin();
        i != entries_set_.end(); ++i) {
