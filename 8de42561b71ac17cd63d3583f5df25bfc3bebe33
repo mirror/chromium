@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "9b43609a_dc941424",
+        "filename": "cc/layers/ui_resource_layer_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:03:19Z",
+      "side": 1,
+      "message": "Yeah it uses a quad from a QuadList",
+      "parentUuid": "9df29877_10aeec1f",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "8de42561b71ac17cd63d3583f5df25bfc3bebe33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "699e4297_61a6542f",
         "filename": "cc/output/bsp_tree_perftest.cc",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-07T13:08:24Z",
       "side": 1,
       "message": "Do we need this?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 50
+      },
+      "revId": "8de42561b71ac17cd63d3583f5df25bfc3bebe33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "922f1bb9_9dcec2ea",
+        "filename": "cc/output/bsp_tree_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:03:19Z",
+      "side": 1,
+      "message": "Looks unused.",
+      "parentUuid": "699e4297_61a6542f",
       "range": {
         "startLine": 27,
         "startChar": 0,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "4b8011d9_a8d763a9",
+        "filename": "cc/output/overlay_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:03:19Z",
+      "side": 1,
+      "message": "Think unused.",
+      "parentUuid": "b9b17a24_0f5d3ea3",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 49
+      },
+      "revId": "8de42561b71ac17cd63d3583f5df25bfc3bebe33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f435ff01_0e306b1e",
         "filename": "cc/output/overlay_strategy_single_on_top.cc",
         "patchSetId": 2
@@ -105,6 +177,30 @@
       "writtenOn": "2017-09-07T13:08:24Z",
       "side": 1,
       "message": "Do we need this?",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "8de42561b71ac17cd63d3583f5df25bfc3bebe33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e608d1a6_e1337c18",
+        "filename": "cc/output/overlay_strategy_single_on_top.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:03:19Z",
+      "side": 1,
+      "message": "Ya, it\u0027s iterating a quad list.",
+      "parentUuid": "f435ff01_0e306b1e",
       "range": {
         "startLine": 9,
         "startChar": 11,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "c4f47279_8794aaaf",
+        "filename": "cc/output/overlay_strategy_underlay.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:03:19Z",
+      "side": 1,
+      "message": "Think its unused.",
+      "parentUuid": "1236159b_e934f330",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "8de42561b71ac17cd63d3583f5df25bfc3bebe33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49653f86_e8e396f7",
         "filename": "cc/output/renderer_pixeltest.cc",
         "patchSetId": 2
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "c84e01e5_139bc432",
+        "filename": "cc/output/renderer_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:03:19Z",
+      "side": 1,
+      "message": "Thank it\u0027s not used, only subclass files.",
+      "parentUuid": "49653f86_e8e396f7",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 49
+      },
+      "revId": "8de42561b71ac17cd63d3583f5df25bfc3bebe33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c9b1a3f_f1f563ae",
         "filename": "cc/trees/single_thread_proxy.cc",
         "patchSetId": 2
@@ -174,6 +318,30 @@
       "writtenOn": "2017-09-07T13:08:24Z",
       "side": 1,
       "message": "Do we need this?",
+      "range": {
+        "startLine": 26,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "8de42561b71ac17cd63d3583f5df25bfc3bebe33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb749d33_ec8f02de",
+        "filename": "cc/trees/single_thread_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:03:19Z",
+      "side": 1,
+      "message": "Looks unused.",
+      "parentUuid": "7c9b1a3f_f1f563ae",
       "range": {
         "startLine": 26,
         "startChar": 10,
