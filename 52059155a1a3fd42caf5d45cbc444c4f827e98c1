@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00db51a1_976c38be",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T22:11:22Z",
+      "side": 1,
+      "message": "Rename to OnAuthUserChanged(), remove |account_id| parameter. Make sure to add in the comment that this is called *after* the auth user change has taken place.",
+      "revId": "52059155a1a3fd42caf5d45cbc444c4f827e98c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf09d4e2_892718c9",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T22:11:22Z",
+      "side": 1,
+      "message": "Remove current_auth_account_id_; this information is available via CurrentAuthUserView()-\u003ecurrent_user()-\u003eaccount_id.",
+      "revId": "52059155a1a3fd42caf5d45cbc444c4f827e98c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
