@@ -46,6 +46,30 @@
       "revId": "02af67214f4658e75d2a6cc39a4dcf75a2abf792",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950ad2a7_2187b9fa",
+        "filename": "skia/ext/image_operations.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-07T21:59:08Z",
+      "side": 0,
+      "message": "Ah, I see.  You may want to land this as a second patch.  BGRAConvolve2D is not colorspace aware, so I\u0027m a little unclear what impact preserving the colorspace implies.  I think it may just be confusing things to make it appear that an incoming image with a color space will be treated properly here.",
+      "parentUuid": "66295a23_68491742",
+      "range": {
+        "startLine": 377,
+        "startChar": 17,
+        "endLine": 377,
+        "endChar": 99
+      },
+      "revId": "02af67214f4658e75d2a6cc39a4dcf75a2abf792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
