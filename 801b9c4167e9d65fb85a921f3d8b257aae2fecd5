@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "43bf9e88_fb5c4248",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_browsing_mode_pages.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-07T17:41:29Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "5956345a_f480db07",
+      "revId": "801b9c4167e9d65fb85a921f3d8b257aae2fecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5bc8342_7430e3aa",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_page.py",
         "patchSetId": 10
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "e7de7876_5b788a68",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_page.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-07T17:41:29Z",
+      "side": 1,
+      "message": "This is used in vr_browsing_mode_pages.py at \u0027self.platform.LaunchAndroidApplication(\u0027.",
+      "parentUuid": "b5bc8342_7430e3aa",
+      "revId": "801b9c4167e9d65fb85a921f3d8b257aae2fecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f7a8ccf_84a2f721",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
         "patchSetId": 10
@@ -83,6 +119,24 @@
       "writtenOn": "2017-09-07T16:36:35Z",
       "side": 1,
       "message": "I see: WebVrSamplePage \u003c- VrSamplePage \u003c- VrPage\n\nDo you actually need 3 layers of inheritances whereas the first two layers are not used by anywhere else?",
+      "revId": "801b9c4167e9d65fb85a921f3d8b257aae2fecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f19a90_791b768d",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-07T17:41:29Z",
+      "side": 1,
+      "message": "WebVrSamplePage is used by WebVrSamplePageSet and Simple2dStillPage (also subclass of VrSamplePage) is used by VrBrowsingModePageSet. Currently, VrPage is only used by VrSamplePage. However, I wanted to separate the task of getting an actual sample page from the task of keeping hold of the shared page state. The latter will be required by all VR pages. The former only simplifies referencing the sample pages.",
+      "parentUuid": "8f7a8ccf_84a2f721",
       "revId": "801b9c4167e9d65fb85a921f3d8b257aae2fecd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
