@@ -155,14 +155,6 @@ UIImage* GetFallbackImageWithStringAndColor(NSString* string,
   NSString* scheme = base::mac::ObjCCast<NSString>([[NSBundle mainBundle]
       objectForInfoDictionaryKey:@"KSChannelChromeScheme"]);
 
-  if (scheme) {
-    std::map<std::string, std::string> parameters;
-    parameters["url"] = urlToOpen.spec();
-    urlToOpen = CreateXCallbackURLWithParameters(
-        base::SysNSStringToUTF8(scheme), "open", GURL::EmptyGURL(),
-        GURL::EmptyGURL(), GURL::EmptyGURL(), parameters);
-  }
-
   NSURL* nsURL = net::NSURLWithGURL(urlToOpen);
   std::string description = indexedURL.SchemeIsCryptographic()
                                 ? indexedURL.GetOrigin().spec()
