@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88524604_4f5f9f3d",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T05:20:59Z",
+      "side": 1,
+      "message": "It seems we could save some lines of code by just not running the callback here, since the renderer ignores it anyway?",
+      "revId": "7e8f08e02613c1feb5f07566472416e990242e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61187a5_61a66a08",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T05:20:59Z",
+      "side": 1,
+      "message": "ditto, should we just ignore this?",
+      "revId": "7e8f08e02613c1feb5f07566472416e990242e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff29ea87_2b41047f",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T05:20:59Z",
+      "side": 1,
+      "message": "great! since now the struct is just a |callback|, we could remove the struct and use |callback| directly everywhere?",
+      "revId": "7e8f08e02613c1feb5f07566472416e990242e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6763b48d_ee0c8cb7",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T05:20:59Z",
+      "side": 1,
+      "message": "more succinctly: \"We reach here only if the service worker system is aborting. But since ServiceWorkerContainer#ready should never reject (https://w3c.github.io/ServiceWorker/#navigator-service-worker-ready), just do nothing.\"\n\nBut this is making me feel like the browser process just shouldn\u0027t send this message? Then the callback doesn\u0027t need |error| or |error_msg| params.",
+      "revId": "7e8f08e02613c1feb5f07566472416e990242e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
