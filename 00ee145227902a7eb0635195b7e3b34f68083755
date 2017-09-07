@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f511c39_30a968fb",
+        "filename": "ios/chrome/browser/browsing_data/browsing_data_removal_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-07T15:56:55Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment. Should this be removed?\n\nBTW, it looks like -removeExternalFilesForBrowserState:completionHandler: does not use anything from BVC, so should probably be moved to here and the delegation removed (may be done in a followup CL).",
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f8155e_9154bb10",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2417,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-07T15:56:55Z",
+      "side": 1,
+      "message": "nit: use std::make_unique\n\n  _externalFileRemover \u003d std::make_unique\u003cExternalFileRemover\u003e(self.browserState);",
+      "range": {
+        "startLine": 2417,
+        "startChar": 22,
+        "endLine": 2417,
+        "endChar": 72
+      },
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f830cc30_886c28f6",
+        "filename": "ios/chrome/browser/ui/external_file_remover.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-07T15:56:55Z",
+      "side": 1,
+      "message": "style:\n\n1. this is a C++ class, so \"bookmark_model_\", and similarly for \"tab_restore_service_\", \"browser_state_\"\n\n\u003e The names of variables (including function parameters) and data members are all lowercase, with underscores between words.\n\u003e\n\u003e https://google.github.io/styleguide/cppguide.html#Variable_Names\n\n2. put all the member variables after the methods, so order should be \"RemoveFiles(...)\", \n\"Remove(...)\", \"bookmark_model_\", \"tab_restore_service_\", \"browser_state_\", \"weak_ptr_factory_\"\n\n\u003e Within each section, generally prefer grouping similar kinds of declarations together, and generally prefer the following order: types (including typedef, using, and nested structs and classes), constants, factory functions, constructors, assignment operators, destructor, all other methods, data members.\n\u003e\n\u003e https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 42
+      },
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4da198_4caf8ca5",
+        "filename": "ios/chrome/browser/ui/external_file_remover.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-07T15:56:55Z",
+      "side": 1,
+      "message": "nit:\n\n  DISALLOW_COPY_AND_ASSIGN(ExternalFileRemover)",
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94223a98_f3f59fef",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-07T15:56:55Z",
+      "side": 1,
+      "message": "I think all this added code should be moved to a separate method.",
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93cdf049_534bf0af",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-07T15:56:55Z",
+      "side": 1,
+      "message": "This is a c++ method, so should use c++ naming for variables, so \"tab_model_files\", \"tab_models\", ...",
+      "range": {
+        "startLine": 77,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 22
+      },
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5869545_e57d8d76",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-07T15:56:55Z",
+      "side": 1,
+      "message": "I think you should DCHECK() here or DCHECK() that \"tabModels\" only has one item at most (since more than one TabModel could have a non-nil currentTab). Or maybe what you want to test is whether TabModel -active is YES (note that the value is not saved, so you\u0027d have to change TabModel to save it).",
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a308a3b_90791251",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-07T15:56:55Z",
+      "side": 1,
+      "message": "You removed a DCHECK that bookmark_model was loaded. I think it should be added back.",
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b398aae_b681d1e3",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-07T15:56:55Z",
+      "side": 1,
+      "message": "I think it is a wasted of effort to collect the list of all files if they are not used, instead I would do:\n\n  NSSet* referenced_files \u003d nil;\n  if (all_files) {\n    // Add files from current TabModel.\n    ...\n  }",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 54
+      },
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
