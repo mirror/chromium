@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "202b61a2_2e00e997",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-07T11:59:20Z",
+      "side": 1,
+      "message": "perhaps add a comment that destruction races other tasks being posted to network thread that may try to use destructed members, and this is avoided by performing destruction in Thread::Cleanup() so no future tasks will be executed.",
+      "revId": "2be59b0f7cda7697f633b0a0b582c26bd406feff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ce1642_68c7bd2e",
+        "filename": "components/cronet/ios/cronet_environment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-07T11:59:20Z",
+      "side": 1,
+      "message": "Move this up to right below \"private:\" as per recommendations here:\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "range": {
+        "startLine": 189,
+        "startChar": 51,
+        "endLine": 189,
+        "endChar": 0
+      },
+      "revId": "2be59b0f7cda7697f633b0a0b582c26bd406feff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49bd5189_185af1ca",
+        "filename": "components/cronet/ios/cronet_environment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-07T11:59:20Z",
+      "side": 1,
+      "message": "Add DISALLOW_COPY_AND_ASSIGN as per:\nhttps://google.github.io/styleguide/cppguide.html#Copyable_Movable_Types",
+      "revId": "2be59b0f7cda7697f633b0a0b582c26bd406feff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5099570f_7b3b2507",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-07T11:59:20Z",
+      "side": 1,
+      "message": "Can we replace this code:\n  if (network_io_thread_) {\n    network_io_thread_.reset(nullptr);\n  }\nWith the simpler:\n  network_io_thread_.reset();",
+      "revId": "2be59b0f7cda7697f633b0a0b582c26bd406feff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4939a012_90cb6f09",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-07T11:59:20Z",
+      "side": 1,
+      "message": "add new line between functions to match style of file",
+      "revId": "2be59b0f7cda7697f633b0a0b582c26bd406feff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
