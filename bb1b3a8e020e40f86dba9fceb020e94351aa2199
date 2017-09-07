@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f0a148fa_61a326d4",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T04:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e82c96f0_368de6d5",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdc2f5a4_f51a7d56",
         "filename": "ash/login/lock_screen_controller.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1f8a20_71decf15",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T04:58:39Z",
+      "side": 1,
+      "message": "Thanks! I\u0027ve added the comment.\nash:: is probably needed here because we have a mojo interface ash::mojom::LockScreen as well. without the ash:: namespace, compiler is confused with these two.",
+      "parentUuid": "cdc2f5a4_f51a7d56",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f0e4b17c_fb29fc08",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T04:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "787bd929_ef390cd6",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "162707d7_b35d194b",
         "filename": "ash/login/lock_screen_controller.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-06T22:33:50Z",
       "side": 1,
       "message": "Out of curiosity, why do we need to do this test to set |hashed_password|? And if the condition stands, do we still need to call back to the other side?",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5300ed8_e23631d7",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T04:58:39Z",
+      "side": 1,
+      "message": "Besides the pin, password could be numbers too. Since we hashed the password/pin differently before sending to chrome, if the user has numeric password and we hashed it as pin, authentication will fail. This checks whether it is a pin or a normal password.\nWe still need to send it to chrome since we need to reset unlock_attempt in PinStorage.\nI\u0027ve added some comments here.\n\nAlso removed the else leg so the we will try to authenticate the pin first if the password is numeric(following the existing behavior).",
+      "parentUuid": "162707d7_b35d194b",
       "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "624fb0f1_7b0a1bd1",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T04:58:39Z",
+      "side": 1,
+      "message": "Existing test covers the password hash. I\u0027ve added test case for the pin hash.",
+      "parentUuid": "c59cf1c5_168a1df9",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "500edabd_280e529d",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-06T22:33:50Z",
       "side": 1,
       "message": "Is this the right place to call OnFocusPod? It seems LayoutAuth is called from multiple places and not all of them are related to pod focusing.",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c62cd2_144bbd9a",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T04:58:39Z",
+      "side": 1,
+      "message": "If I understand it correctly OnFocusPod should happen when the current auth user changes. I\u0027ve updated this part, please let me know if this makes sense.",
+      "parentUuid": "500edabd_280e529d",
       "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "26d1af2e_da12eb64",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T04:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc0926c7_0097431f",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67f11183_a27e11b2",
         "filename": "ash/public/cpp/ash_pref_names.cc",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d3e529_c8b2027d",
+        "filename": "ash/public/cpp/ash_pref_names.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T04:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67f11183_a27e11b2",
+      "revId": "bb1b3a8e020e40f86dba9fceb020e94351aa2199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
