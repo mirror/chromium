@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e900fe1_ce91b125",
+        "filename": "components/history/core/browser/top_sites_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-07T18:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d51bc44b_63776799",
+      "range": {
+        "startLine": 164,
+        "startChar": 14,
+        "endLine": 164,
+        "endChar": 37
+      },
+      "revId": "5dcab4ea861577a0bde4aa4fc34388564ddb02fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3720b5bf_23491c6a",
         "filename": "components/history/core/browser/top_sites_impl_unittest.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "07444d83_c61577df",
+        "filename": "components/history/core/browser/top_sites_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-07T18:36:25Z",
+      "side": 1,
+      "message": "Sure. I have made changes accordingly. However, I haven\u0027t applied this change to other three similar APIs, as it involves lots of changes in places where are called. I plan to use another CL for that purpose.",
+      "parentUuid": "3720b5bf_23491c6a",
+      "range": {
+        "startLine": 351,
+        "startChar": 42,
+        "endLine": 351,
+        "endChar": 75
+      },
+      "revId": "5dcab4ea861577a0bde4aa4fc34388564ddb02fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d5664b5_68e46162",
         "filename": "components/history/core/browser/top_sites_impl_unittest.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-07T16:27:02Z",
       "side": 1,
       "message": "This is ok, but a better test is to ensure the observer is called appropriately. Can you test that instead?",
+      "range": {
+        "startLine": 405,
+        "startChar": 7,
+        "endLine": 405,
+        "endChar": 48
+      },
+      "revId": "5dcab4ea861577a0bde4aa4fc34388564ddb02fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c12a39_3bdf4400",
+        "filename": "components/history/core/browser/top_sites_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-07T18:36:25Z",
+      "side": 1,
+      "message": "Sure. I think the simplest way to do this is to let SetTopSites() return |should_notify_observers| as in the new patch set. How do you think plz?",
+      "parentUuid": "9d5664b5_68e46162",
       "range": {
         "startLine": 405,
         "startChar": 7,
