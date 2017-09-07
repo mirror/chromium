@@ -49,7 +49,7 @@ class CC_EXPORT SoftwareRenderer : public DirectRenderer {
   bool FlippedFramebuffer() const override;
   void EnsureScissorTestEnabled() override;
   void EnsureScissorTestDisabled() override;
-  void CopyDrawnRenderPass(
+  void CopyCurrentRenderPassToBitmap(
       std::unique_ptr<viz::CopyOutputRequest> request) override;
   void SetEnableDCLayers(bool enable) override;
   void DidChangeVisibility() override;

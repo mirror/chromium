@@ -63,11 +63,9 @@ class SoftwareRendererTest : public testing::Test {
     base::RunLoop loop;
 
     list->back()->copy_requests.push_back(
-        std::make_unique<viz::CopyOutputRequest>(
-            viz::CopyOutputRequest::ResultFormat::RGBA_BITMAP,
-            base::BindOnce(&SoftwareRendererTest::SaveBitmapResult,
-                           base::Unretained(&bitmap_result),
-                           loop.QuitClosure())));
+        viz::CopyOutputRequest::CreateBitmapRequest(base::BindOnce(
+            &SoftwareRendererTest::SaveBitmapResult,
+            base::Unretained(&bitmap_result), loop.QuitClosure())));
 
     renderer()->DrawFrame(list, device_scale_factor, viewport_size);
     loop.Run();
@@ -77,10 +75,8 @@ class SoftwareRendererTest : public testing::Test {
   static void SaveBitmapResult(std::unique_ptr<SkBitmap>* bitmap_result,
                                const base::Closure& quit_closure,
                                std::unique_ptr<viz::CopyOutputResult> result) {
-    DCHECK(!result->IsEmpty());
-    DCHECK_EQ(result->format(), viz::CopyOutputResult::Format::RGBA_BITMAP);
-    *bitmap_result = std::make_unique<SkBitmap>(result->AsSkBitmap());
-    DCHECK((*bitmap_result)->readyToDraw());
+    DCHECK(result->HasBitmap());
+    *bitmap_result = result->TakeBitmap();
     quit_closure.Run();
   }
 

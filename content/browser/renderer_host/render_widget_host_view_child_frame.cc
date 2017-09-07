@@ -797,8 +797,7 @@ void RenderWidgetHostViewChildFrame::SubmitSurfaceCopyRequest(
   DCHECK(support_);
 
   std::unique_ptr<viz::CopyOutputRequest> request =
-      std::make_unique<viz::CopyOutputRequest>(
-          viz::CopyOutputRequest::ResultFormat::RGBA_TEXTURE,
+      viz::CopyOutputRequest::CreateRequest(
           base::BindOnce(&CopyFromCompositingSurfaceHasResult, output_size,
                          preferred_color_type, callback));
   if (!src_subrect.IsEmpty())

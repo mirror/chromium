@@ -200,11 +200,10 @@ void ScreenRotationAnimator::StartRotationAnimation(
           rotation_request->mode) {
     StartSlowAnimation(std::move(rotation_request));
   } else {
-    RequestCopyScreenRotationContainerLayer(
-        std::make_unique<viz::CopyOutputRequest>(
-            viz::CopyOutputRequest::ResultFormat::RGBA_TEXTURE,
-            CreateAfterCopyCallbackBeforeRotation(
-                std::move(rotation_request))));
+    std::unique_ptr<viz::CopyOutputRequest> copy_output_request =
+        viz::CopyOutputRequest::CreateRequest(
+            CreateAfterCopyCallbackBeforeRotation(std::move(rotation_request)));
+    RequestCopyScreenRotationContainerLayer(std::move(copy_output_request));
     screen_rotation_state_ = COPY_REQUESTED;
   }
 }
@@ -279,16 +278,9 @@ void ScreenRotationAnimator::OnScreenRotationContainerLayerCopiedBeforeRotation(
   }
   // Abort animation and set the rotation to target rotation when the copy
   // request has been canceled or failed. It would fail if, for examples: a) The
-  // layer is removed from the compositor and destroyed before committing the
+  // layer is removed from the compositor and destroye before committing the
   // request to the compositor. b) The compositor is shutdown.
-  //
-  // Note that it is also possible that the compositor does not support texture
-  // mailboxes.
-  //
-  // TODO(miu): Use DCHECK(result->GetTextureMailbox()) here instead once legacy
-  // support support for Texture→SkBitmap fallback is removed.
-  // http://crbug.com/754872
-  if (result->IsEmpty() || !result->GetTextureMailbox()) {
+  if (result->IsEmpty()) {
     Shell::Get()->display_manager()->SetDisplayRotation(
         rotation_request->display_id, rotation_request->new_rotation,
         rotation_request->source);
@@ -300,11 +292,10 @@ void ScreenRotationAnimator::OnScreenRotationContainerLayerCopiedBeforeRotation(
   AddLayerAtTopOfWindowLayers(root_window_, old_layer_tree_owner_->root());
   SetRotation(rotation_request->display_id, rotation_request->old_rotation,
               rotation_request->new_rotation, rotation_request->source);
-
-  RequestCopyScreenRotationContainerLayer(
-      std::make_unique<viz::CopyOutputRequest>(
-          viz::CopyOutputRequest::ResultFormat::RGBA_TEXTURE,
-          CreateAfterCopyCallbackAfterRotation(std::move(rotation_request))));
+  std::unique_ptr<viz::CopyOutputRequest> copy_output_request =
+      viz::CopyOutputRequest::CreateRequest(
+          CreateAfterCopyCallbackAfterRotation(std::move(rotation_request)));
+  RequestCopyScreenRotationContainerLayer(std::move(copy_output_request));
 }
 
 void ScreenRotationAnimator::OnScreenRotationContainerLayerCopiedAfterRotation(
@@ -319,10 +310,9 @@ void ScreenRotationAnimator::OnScreenRotationContainerLayerCopiedAfterRotation(
   // for examples: a) The layer is removed from the compositor and destroye
   // before committing the request to the compositor. b) The compositor is
   // shutdown.
-  // 4) the compositor does not support texture mailboxes.
   if (RootWindowChangedForDisplayId(root_window_,
                                     rotation_request->display_id) ||
-      result->IsEmpty() || !result->GetTextureMailbox()) {
+      result->IsEmpty()) {
     ProcessAnimationQueue();
     return;
   }
@@ -342,10 +332,7 @@ std::unique_ptr<ui::LayerTreeOwner> ScreenRotationAnimator::CopyLayerTree(
     std::unique_ptr<viz::CopyOutputResult> result) {
   viz::TextureMailbox texture_mailbox;
   std::unique_ptr<viz::SingleReleaseCallback> release_callback;
-  if (auto* mailbox = result->GetTextureMailbox()) {
-    texture_mailbox = *mailbox;
-    release_callback = result->TakeTextureOwnership();
-  }
+  result->TakeTexture(&texture_mailbox, &release_callback);
   DCHECK(texture_mailbox.IsTexture());
   const gfx::Rect rect(
       GetScreenRotationContainer(root_window_)->layer()->size());

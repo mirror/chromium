@@ -236,8 +236,8 @@ void SurfaceAggregator::HandleSurfaceQuad(
 
   const cc::RenderPassList& render_pass_list = frame.render_pass_list;
   if (!valid_surfaces_.count(surface->surface_id())) {
-    // As |copy_requests| goes out-of-scope, all copy requests in that container
-    // will auto-send an empty result upon destruction.
+    for (auto& request : copy_requests)
+      request.second->SendEmptyResult();
     return;
   }
 

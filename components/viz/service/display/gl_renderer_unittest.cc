@@ -1915,6 +1915,8 @@ void MailboxReleased(const gpu::SyncToken& sync_token,
                      bool lost_resource,
                      cc::BlockingTaskRunner* main_thread_task_runner) {}
 
+void IgnoreCopyResult(std::unique_ptr<CopyOutputResult> result) {}
+
 TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   cc::FakeOutputSurfaceClient output_surface_client;
   std::unique_ptr<cc::FakeOutputSurface> output_surface(
@@ -1948,7 +1950,8 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
       AddRenderPass(&render_passes_in_draw_order_, 1, gfx::Rect(viewport_size),
                     gfx::Transform(), cc::FilterOperations());
   root_pass->has_transparent_background = false;
-  root_pass->copy_requests.push_back(CopyOutputRequest::CreateStubForTesting());
+  root_pass->copy_requests.push_back(
+      CopyOutputRequest::CreateRequest(base::BindOnce(&IgnoreCopyResult)));
 
   TextureMailbox mailbox =
       TextureMailbox(gpu::Mailbox::Generate(), gpu::SyncToken(), GL_TEXTURE_2D,

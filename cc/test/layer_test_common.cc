@@ -232,9 +232,12 @@ void LayerTestCommon::LayerImplTest::AppendSurfaceQuadsWithOcclusion(
                             render_pass_.get(), &data);
 }
 
+void EmptyCopyOutputCallback(std::unique_ptr<viz::CopyOutputResult> result) {}
+
 void LayerTestCommon::LayerImplTest::RequestCopyOfOutput() {
   root_layer_for_testing()->test_properties()->copy_requests.push_back(
-      viz::CopyOutputRequest::CreateStubForTesting());
+      viz::CopyOutputRequest::CreateRequest(
+          base::BindOnce(&EmptyCopyOutputCallback)));
 }
 
 }  // namespace cc

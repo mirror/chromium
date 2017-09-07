@@ -7,7 +7,6 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "cc/ipc/copy_output_result_struct_traits.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
 namespace {
@@ -18,18 +17,15 @@ namespace {
 class CopyOutputResultSenderImpl : public viz::mojom::CopyOutputResultSender {
  public:
   CopyOutputResultSenderImpl(
-      viz::CopyOutputRequest::ResultFormat result_format,
       viz::CopyOutputRequest::CopyOutputRequestCallback result_callback)
-      : result_format_(result_format),
-        result_callback_(std::move(result_callback)) {
+      : result_callback_(std::move(result_callback)) {
     DCHECK(result_callback_);
   }
 
   ~CopyOutputResultSenderImpl() override {
     if (result_callback_) {
       std::move(result_callback_)
-          .Run(std::make_unique<viz::CopyOutputResult>(result_format_,
-                                                       gfx::Rect()));
+          .Run(viz::CopyOutputResult::CreateEmptyResult());
     }
   }
 
@@ -41,7 +37,6 @@ class CopyOutputResultSenderImpl : public viz::mojom::CopyOutputResultSender {
   }
 
  private:
-  const viz::CopyOutputRequest::ResultFormat result_format_;
   viz::CopyOutputRequest::CopyOutputRequestCallback result_callback_;
 };
 
@@ -61,7 +56,7 @@ StructTraits<viz::mojom::CopyOutputRequestDataView,
     result_sender(const std::unique_ptr<viz::CopyOutputRequest>& request) {
   viz::mojom::CopyOutputResultSenderPtr result_sender;
   auto impl = std::make_unique<CopyOutputResultSenderImpl>(
-      request->result_format(), std::move(request->result_callback_));
+      std::move(request->result_callback_));
   MakeStrongBinding(std::move(impl), MakeRequest(&result_sender));
   return result_sender;
 }
@@ -71,14 +66,9 @@ bool StructTraits<viz::mojom::CopyOutputRequestDataView,
                   std::unique_ptr<viz::CopyOutputRequest>>::
     Read(viz::mojom::CopyOutputRequestDataView data,
          std::unique_ptr<viz::CopyOutputRequest>* out_p) {
-  viz::CopyOutputRequest::ResultFormat result_format;
-  if (!data.ReadResultFormat(&result_format))
-    return false;
+  auto request = viz::CopyOutputRequest::CreateEmptyRequest();
 
-  auto result_sender =
-      data.TakeResultSender<viz::mojom::CopyOutputResultSenderPtr>();
-  auto request = std::make_unique<viz::CopyOutputRequest>(
-      result_format, base::BindOnce(SendResult, base::Passed(&result_sender)));
+  request->force_bitmap_result_ = data.force_bitmap_result();
 
   if (!data.ReadSource(&request->source_))
     return false;
@@ -88,6 +78,11 @@ bool StructTraits<viz::mojom::CopyOutputRequestDataView,
 
   if (!data.ReadTextureMailbox(&request->texture_mailbox_))
     return false;
+
+  auto result_sender =
+      data.TakeResultSender<viz::mojom::CopyOutputResultSenderPtr>();
+  request->result_callback_ =
+      base::BindOnce(SendResult, base::Passed(&result_sender));
 
   *out_p = std::move(request);
 

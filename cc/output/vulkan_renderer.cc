@@ -78,7 +78,7 @@ void VulkanRenderer::EnsureScissorTestDisabled() {
   NOTIMPLEMENTED();
 }
 
-void VulkanRenderer::CopyDrawnRenderPass(
+void VulkanRenderer::CopyCurrentRenderPassToBitmap(
     DrawingFrame* frame,
     std::unique_ptr<viz::CopyOutputRequest> request) {
   NOTIMPLEMENTED();
