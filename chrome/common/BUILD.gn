@@ -385,12 +385,6 @@ static_library("common") {
     }
   }
 
-  if (is_win || is_mac) {
-    sources += [
-      "media_galleries/itunes_library.cc",
-      "media_galleries/itunes_library.h",
-    ]
-  }
   if (is_mac) {
     public_deps += [ ":app_mode_app_support" ]
   }

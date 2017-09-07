@@ -10,7 +10,6 @@
 #include "base/files/file_path.h"
 #include "base/path_service.h"
 #include "chrome/common/extensions/chrome_extensions_client.h"
-#include "chrome/common/extensions/chrome_utility_extensions_messages.h"
 #include "chrome/common/extensions/media_parser.mojom.h"
 #include "chrome/common/extensions/removable_storage_writer.mojom.h"
 #include "chrome/common/media_galleries/metadata_types.h"
@@ -28,14 +27,8 @@
 
 #if defined(OS_WIN)
 #include "chrome/common/extensions/wifi_credentials_getter.mojom.h"
-#include "chrome/utility/media_galleries/itunes_pref_parser_win.h"
 #include "components/wifi/wifi_service.h"
 #endif  // defined(OS_WIN)
-
-#if defined(OS_WIN) || defined(OS_MACOSX)
-#include "chrome/utility/media_galleries/iapps_xml_utils.h"
-#include "chrome/utility/media_galleries/itunes_library_parser.h"
-#endif  // defined(OS_WIN) || defined(OS_MACOSX)
 
 namespace {
 
@@ -199,45 +192,7 @@ void ExtensionsHandler::ExposeInterfacesToBrowser(
 }
 
 bool ExtensionsHandler::OnMessageReceived(const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(ExtensionsHandler, message)
-#if defined(OS_WIN)
-    IPC_MESSAGE_HANDLER(ChromeUtilityMsg_ParseITunesPrefXml,
-                        OnParseITunesPrefXml)
-#endif  // defined(OS_WIN)
-
-#if defined(OS_WIN) || defined(OS_MACOSX)
-    IPC_MESSAGE_HANDLER(ChromeUtilityMsg_ParseITunesLibraryXmlFile,
-                        OnParseITunesLibraryXmlFile)
-#endif  // defined(OS_WIN) || defined(OS_MACOSX)
-
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-
-  return handled;
+  return false;
 }
-
-#if defined(OS_WIN)
-void ExtensionsHandler::OnParseITunesPrefXml(
-    const std::string& itunes_xml_data) {
-  base::FilePath library_path(
-      itunes::FindLibraryLocationInPrefXml(itunes_xml_data));
-  content::UtilityThread::Get()->Send(
-      new ChromeUtilityHostMsg_GotITunesDirectory(library_path));
-  content::UtilityThread::Get()->ReleaseProcess();
-}
-#endif  // defined(OS_WIN)
-
-#if defined(OS_WIN) || defined(OS_MACOSX)
-void ExtensionsHandler::OnParseITunesLibraryXmlFile(
-    const IPC::PlatformFileForTransit& itunes_library_file) {
-  itunes::ITunesLibraryParser parser;
-  base::File file = IPC::PlatformFileForTransitToFile(itunes_library_file);
-  bool result = parser.Parse(iapps::ReadFileAsString(std::move(file)));
-  content::UtilityThread::Get()->Send(
-      new ChromeUtilityHostMsg_GotITunesLibrary(result, parser.library()));
-  content::UtilityThread::Get()->ReleaseProcess();
-}
-#endif  // defined(OS_WIN) || defined(OS_MACOSX)
 
 }  // namespace extensions
