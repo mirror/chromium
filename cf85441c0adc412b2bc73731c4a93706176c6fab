@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45c2a49d_1b38ef7b",
+        "filename": "chrome/test/data/webui/sys_internals/line_chart/sub_chart_test.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-07T08:46:45Z",
+      "side": 1,
+      "message": "I will remove this at next patch.",
+      "revId": "cf85441c0adc412b2bc73731c4a93706176c6fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
