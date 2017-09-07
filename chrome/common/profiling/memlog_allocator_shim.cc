@@ -6,6 +6,7 @@
 
 #include "base/allocator/allocator_shim.h"
 #include "base/allocator/features.h"
+#include "base/allocator/partition_allocator/partition_alloc.h"
 #include "base/debug/debugging_flags.h"
 #include "base/debug/stack_trace.h"
 #include "base/synchronization/lock.h"
@@ -173,19 +174,35 @@ AllocatorDispatch g_memlog_hooks = {
 };
 #endif  // BUILDFLAG(USE_ALLOCATOR_SHIM)
 
+void HookPartitionAlloc(void* address, size_t size, const char* type) {
+  AllocatorShimLogAlloc(address, size);
+}
+
+void HookPartitionFree(void* address) {
+  AllocatorShimLogFree(address);
+}
+
 }  // namespace
 
 void InitAllocatorShim(MemlogSenderPipe* sender_pipe) {
   g_send_buffers = new SendBuffer[kNumSendBuffers];
 
   g_sender_pipe = sender_pipe;
+
+  // Normal malloc allocator shim.
 #if BUILDFLAG(USE_ALLOCATOR_SHIM)
   base::allocator::InsertAllocatorDispatch(&g_memlog_hooks);
 #endif
+
+  // PartitionAlloc allocator shim.
+  base::PartitionAllocHooks::SetAllocationHook(&HookPartitionAlloc);
+  base::PartitionAllocHooks::SetFreeHook(&HookPartitionFree);
 }
 
 void StopAllocatorShimDangerous() {
   g_send_buffers = nullptr;
+  base::PartitionAllocHooks::SetAllocationHook(nullptr);
+  base::PartitionAllocHooks::SetFreeHook(nullptr);
 }
 
 void AllocatorShimLogAlloc(void* address, size_t sz) {
