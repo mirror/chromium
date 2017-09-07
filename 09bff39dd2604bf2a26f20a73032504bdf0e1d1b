@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "79c0a241_ee63a29a",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-07T18:45:07Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s true...\nI moved the report in there outside of the |if (used_new_active_tree)| to make sure that we are reporting all the samples.",
+      "parentUuid": "c9b9ba25_47bf9441",
+      "revId": "09bff39dd2604bf2a26f20a73032504bdf0e1d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6f4b6b3_9392413d",
         "filename": "third_party/WebKit/Source/core/animation/DocumentAnimations.cpp",
         "patchSetId": 18
@@ -89,6 +107,30 @@
       "side": 1,
       "message": "Isn\u0027t that correct? If there are no animations then it is set to zero..",
       "parentUuid": "e6f4b6b3_9392413d",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 56
+      },
+      "revId": "09bff39dd2604bf2a26f20a73032504bdf0e1d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2436d3a_83bfc1f5",
+        "filename": "third_party/WebKit/Source/core/animation/DocumentAnimations.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-07T18:45:07Z",
+      "side": 1,
+      "message": "Sorry for the confusion. Yes, the logic is correct. My concern was on the perf side. Given that all the above function calls are trivial, it should be fine?",
+      "parentUuid": "66666c98_3fb9b9fe",
       "range": {
         "startLine": 75,
         "startChar": 4,
@@ -169,6 +211,30 @@
       "revId": "09bff39dd2604bf2a26f20a73032504bdf0e1d1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1234949f_b2db1479",
+        "filename": "third_party/WebKit/Source/core/animation/DocumentTimeline.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-07T18:45:07Z",
+      "side": 1,
+      "message": "Ah, thanks for the clarification! Will leave it as it is.",
+      "parentUuid": "66858341_2a2f8b15",
+      "range": {
+        "startLine": 199,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 63
+      },
+      "revId": "09bff39dd2604bf2a26f20a73032504bdf0e1d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
