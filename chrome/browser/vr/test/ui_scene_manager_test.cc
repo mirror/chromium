@@ -86,6 +86,23 @@ bool UiSceneManagerTest::VerifyVisibility(const std::set<UiElementName>& names,
   return true;
 }
 
+bool UiSceneManagerTest::VerifyRequiresLayout(
+    const std::set<UiElementName>& names,
+    bool requires_layout) const {
+  scene_->root_element().UpdateInheritedProperties();
+  for (auto name : names) {
+    SCOPED_TRACE(name);
+    auto* element = scene_->GetUiElementByName(name);
+    if (!element && requires_layout) {
+      return false;
+    }
+    if (element && element->requires_layout() != requires_layout) {
+      return false;
+    }
+  }
+  return true;
+}
+
 void UiSceneManagerTest::AnimateBy(base::TimeDelta delta) {
   base::TimeTicks target_time = current_time_ + delta;
   base::TimeDelta frame_time = base::TimeDelta::FromSecondsD(1.0 / 60.0);
