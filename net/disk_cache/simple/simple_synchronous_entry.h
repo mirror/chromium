@@ -24,6 +24,7 @@
 #include "net/base/cache_type.h"
 #include "net/base/net_export.h"
 #include "net/disk_cache/simple/simple_entry_format.h"
+#include "net/disk_cache/simple/simple_file_tracker.h"
 
 namespace net {
 class GrowableIOBuffer;
@@ -404,7 +405,7 @@ class SimpleSynchronousEntry {
 
   const net::CacheType cache_type_;
   const base::FilePath path_;
-  const uint64_t entry_hash_;
+  SimpleFileTracker::EntryFileKey entry_file_key_;
   const bool had_index_;
   std::string key_;
 
