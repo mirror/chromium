@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f60a33d6_8e1371af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:57:18Z",
+      "side": 1,
+      "message": "This seems suited to go in ui/gfx/geometry?",
+      "revId": "b6d7561830a014efbcdefd0e0007654ea1113141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca8aed6_5d5238b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:57:18Z",
+      "side": 1,
+      "message": "This seems suited to go in ui/gfx/geometry also?",
+      "revId": "b6d7561830a014efbcdefd0e0007654ea1113141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d03a22_00aac308",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:57:18Z",
+      "side": 1,
+      "message": "This one isn\u0027t geometry specific. How about naming where it goes \"ranges\" instead of \"math_util\" such \"util\" just takes up space?",
+      "revId": "b6d7561830a014efbcdefd0e0007654ea1113141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
