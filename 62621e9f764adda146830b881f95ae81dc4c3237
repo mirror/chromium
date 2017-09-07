@@ -16,6 +16,24 @@
       "revId": "62621e9f764adda146830b881f95ae81dc4c3237",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e39dc80_a04c653c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/View.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-07T22:25:40Z",
+      "side": 1,
+      "message": "Hm, good point. Perhaps I can check for activeElement being a descendant of the tab contents?",
+      "parentUuid": "4e1e9d36_f4b0aa73",
+      "revId": "62621e9f764adda146830b881f95ae81dc4c3237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
