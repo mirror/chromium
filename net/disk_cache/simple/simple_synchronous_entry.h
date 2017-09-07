@@ -238,6 +238,21 @@ class SimpleSynchronousEntry {
   FRIEND_TEST_ALL_PREFIXES(::DiskCacheBackendTest,
                            SimpleCacheEnumerationLongKeys);
 
+  class FileHandle {
+   public:
+    FileHandle(SimpleSynchronousEntry* entry,
+               SimpleFileTracker::SubFile stream);
+    ~FileHandle();
+    base::File* operator->() const;
+    bool IsOK() const;
+
+   private:
+    SimpleSynchronousEntry* entry_;
+    SimpleFileTracker::SubFile stream_;
+    base::File* file_;
+    DISALLOW_COPY_AND_ASSIGN(FileHandle);
+  };
+
   enum CreateEntryResult {
     CREATE_ENTRY_SUCCESS = 0,
     CREATE_ENTRY_PLATFORM_FILE_ERROR = 1,
@@ -399,9 +414,7 @@ class SimpleSynchronousEntry {
 
   base::FilePath GetFilenameFromFileIndex(int file_index);
 
-  bool sparse_file_open() const {
-    return sparse_file_.IsValid();
-  }
+  bool sparse_file_open() const { return sparse_file_open_; }
 
   const net::CacheType cache_type_;
   const base::FilePath path_;
@@ -419,7 +432,7 @@ class SimpleSynchronousEntry {
       false,
   };
 
-  base::File files_[kSimpleEntryFileCount];
+  SimpleFileTracker file_tracker_;
 
   // True if the corresponding stream is empty and therefore no on-disk file
   // was created to store it.
@@ -428,7 +441,8 @@ class SimpleSynchronousEntry {
   typedef std::map<int64_t, SparseRange> SparseRangeOffsetMap;
   typedef SparseRangeOffsetMap::iterator SparseRangeIterator;
   SparseRangeOffsetMap sparse_ranges_;
-  base::File sparse_file_;
+  bool sparse_file_open_;
+
   // Offset of the end of the sparse file (where the next sparse range will be
   // written).
   int64_t sparse_tail_offset_;
