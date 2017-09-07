@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f82d26bb_10d460a1",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-07T11:57:45Z",
+      "side": 1,
+      "message": "Add\n@param {!Array\u003cnumber\u003e} permutation",
+      "revId": "dc2bc810595623e09d5f6c9139aeeecc3a640eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
