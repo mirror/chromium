@@ -5,6 +5,7 @@
 #ifndef BASE_TEST_HISTOGRAM_TESTER_H_
 #define BASE_TEST_HISTOGRAM_TESTER_H_
 
+#include <stdint.h>
 #include <map>
 #include <memory>
 #include <ostream>

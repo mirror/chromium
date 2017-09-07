@@ -5,6 +5,7 @@
 #include "base/test/histogram_tester.h"
 
 #include <stddef.h>
+#include <memory>
 
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_samples.h"
@@ -15,6 +16,12 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
+
+class DummyRecordChecker : public RecordHistogramChecker {
+ public:
+  ~DummyRecordChecker() override {}
+  bool ShouldRecord(uint64_t histogram_hash) const override { return true; }
+};
 
 HistogramTester::HistogramTester() {
   StatisticsRecorder::Initialize();  // Safe to call multiple times.

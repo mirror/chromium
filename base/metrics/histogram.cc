@@ -22,6 +22,7 @@
 #include "base/debug/crash_logging.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/dummy_histogram.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/metrics_hashes.h"
 #include "base/metrics/persistent_histogram_allocator.h"
@@ -85,6 +86,9 @@ bool ReadHistogramArguments(PickleIterator* iter,
 
 bool ValidateRangeChecksum(const HistogramBase& histogram,
                            uint32_t range_checksum) {
+  if (histogram.GetHistogramType() != HISTOGRAM)
+    return true;
+
   const Histogram& casted_histogram =
       static_cast<const Histogram&>(histogram);
 
@@ -160,6 +164,11 @@ class Histogram::Factory {
 };
 
 HistogramBase* Histogram::Factory::Build() {
+  bool should_record =
+      StatisticsRecorder::ShouldRecordHistogram(HashMetricName(name_));
+  if (!should_record)
+    return DummyHistogram::GetInstance();
+
   HistogramBase* histogram = StatisticsRecorder::FindHistogram(name_);
   if (!histogram) {
     // To avoid racy destruction at shutdown, the following will be leaked.
@@ -873,6 +882,9 @@ class LinearHistogram::Factory : public Histogram::Factory {
   }
 
   void FillHistogram(HistogramBase* base_histogram) override {
+    if (base_histogram->GetHistogramType() != LINEAR_HISTOGRAM)
+      return;
+
     Histogram::Factory::FillHistogram(base_histogram);
     LinearHistogram* histogram = static_cast<LinearHistogram*>(base_histogram);
     // Set range descriptions.

@@ -15,7 +15,7 @@ import extract_histograms
 import merge_xml
 
 _SCRIPT_NAME = "generate_expired_histograms_array.py"
-_HASH_DATATYPE = "unit64_t"
+_HASH_DATATYPE = "uint64_t"
 _HEADER = """// Generated from {script_name}. Do not edit!
 
 #ifndef {include_guard}
@@ -56,20 +56,21 @@ def _GetExpiredHistograms(histograms, base_date):
   Raises:
     Error if there is an expiry date that doesn't match expected format.
   """
-  expired_histograms_names = []
-  for name, content in histograms.items():
-    if "obsolete" in content or "expiry_date" not in content:
-      continue
-    expiry_date_str = content["expiry_date"]
-    try:
-      expiry_date = datetime.datetime.strptime(
-          expiry_date_str, extract_histograms.EXPIRY_DATE_PATTERN).date()
-    except ValueError:
-      raise Error("Unable to parse expiry date {date} in histogram {name}.".
-                  format(date=expiry_date_str, name=name))
-    if expiry_date < base_date:
-      expired_histograms_names.append(name)
-  return expired_histograms_names
+  # expired_histograms_names = []
+  # for name, content in histograms.items():
+  #   if "obsolete" in content or "expiry_date" not in content:
+  #     continue
+  #   expiry_date_str = content["expiry_date"]
+  #   try:
+  #     expiry_date = datetime.datetime.strptime(
+  #         expiry_date_str, extract_histograms.EXPIRY_DATE_PATTERN).date()
+  #   except ValueError:
+  #     raise Error("Unable to parse expiry date {date} in histogram {name}.".
+  #                 format(date=expiry_date_str, name=name))
+  #   if expiry_date < base_date:
+  #     expired_histograms_names.append(name)
+  # return expired_histograms_names
+  return histograms.keys()
 
 
 def _HashName(name):
@@ -99,6 +100,9 @@ def _GenerateHeaderFileContent(header_filename, namespace, hash_datatype,
     String with the generated content.
   """
   include_guard = re.sub("[^A-Z]", "_", header_filename.upper()) + "_"
+  if not histograms_map:
+    # Some platforms don't allow creating empty arrays.
+    histograms_map["0x0000000000000000"] = "Dummy.Histogram"
   hashes = "\n".join([
       "  {hash},  // {name}".format(hash=value, name=histograms_map[value])
       for value in sorted(histograms_map.keys())

@@ -25,6 +25,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_base.h"
+#include "base/metrics/record_histogram_checker.h"
 #include "base/strings/string_piece.h"
 #include "base/synchronization/lock.h"
 
@@ -189,6 +190,24 @@ class BASE_EXPORT StatisticsRecorder {
   // by a call to Initialize().
   static void UninitializeForTesting();
 
+  // Sets the record checker for determining if a histogram should be recorded.
+  // Record checker doesn't affect any already recorded histograms, so this
+  // method must be called very early, before any threads have started.
+  // Record checker methods can be called on any thread, so they shouldn't
+  // mutate any state.
+  // TODO(iburak): This is not yet hooked up to histogram recording
+  // infrastructure.
+  static void SetRecordChecker(
+      std::unique_ptr<RecordHistogramChecker> record_checker);
+
+  // static
+  static void SetRecordCheckerEnabled(bool enabled);
+
+  // Returns true iff the given histogram should be recorded based on
+  // the ShouldRecord() method of the record checker.
+  // If the record checker is not set, returns true.
+  static bool ShouldRecordHistogram(uint64_t histogram_hash);
+
  private:
   // We keep a map of callbacks to histograms, so that as histograms are
   // created, we can set the callback properly.
@@ -228,8 +247,11 @@ class BASE_EXPORT StatisticsRecorder {
   std::unique_ptr<CallbackMap> existing_callbacks_;
   std::unique_ptr<RangesMap> existing_ranges_;
   std::unique_ptr<HistogramProviders> existing_providers_;
+  std::unique_ptr<RecordHistogramChecker> existing_record_checker_;
 
   bool vlog_initialized_ = false;
+
+  static bool record_checker_enabled_;
 
   static void Reset();
   static void DumpHistogramsToVlog(void* instance);
@@ -238,6 +260,7 @@ class BASE_EXPORT StatisticsRecorder {
   static CallbackMap* callbacks_;
   static RangesMap* ranges_;
   static HistogramProviders* providers_;
+  static RecordHistogramChecker* record_checker_;
 
   // Lock protects access to above maps. This is a LazyInstance to avoid races
   // when the above methods are used before Initialize(). Previously each method
