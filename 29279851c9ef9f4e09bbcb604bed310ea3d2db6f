@@ -105,6 +105,23 @@
       "revId": "29279851c9ef9f4e09bbcb604bed310ea3d2db6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ba622b_8d334535",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-07T18:31:36Z",
+      "side": 1,
+      "message": "Theory 2: we\u0027re somehow using the same instance for multiple transformations at once. I think we could do so if multiple threads call TransformLines before either starts using their deobfuscator -- i.e., before the first one becomes un-ready.",
+      "revId": "29279851c9ef9f4e09bbcb604bed310ea3d2db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
