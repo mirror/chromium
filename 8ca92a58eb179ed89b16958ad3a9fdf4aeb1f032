@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "723f122a_eab49b1b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-07T18:55:03Z",
+      "side": 1,
+      "message": "will this always be the case in O?  Do we remove it before calling this?\n\nI would potentially add an assert instead of this that the SDK_INT is \u003e\u003d O to ensure this isn\u0027t call incorrectly in the future.",
+      "revId": "8ca92a58eb179ed89b16958ad3a9fdf4aeb1f032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
