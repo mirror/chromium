@@ -70,6 +70,30 @@
       "revId": "1fddabdf8b6e832a79722510edf486d1549803c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80ebfa13_ffa1fc8b",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-07T18:05:17Z",
+      "side": 0,
+      "message": "Okay, I\u0027m convinced by that point now. I originally moved the \u003cdialog\u003e into \u003csidebar\u003e so that \u003csidebar\u003e knows when it is opened, but considering the fact that I\u0027m now just calling updateSelected() manually anyway (instead of hooking into the open() call), that benefit is lost and having \u003cdialog\u003e outside is fine.",
+      "parentUuid": "b11516b5_8fc743da",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 71
+      },
+      "revId": "1fddabdf8b6e832a79722510edf486d1549803c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
