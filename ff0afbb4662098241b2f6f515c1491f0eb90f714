@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "c610428d_33c1d198",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T22:00:52Z",
+      "side": 1,
+      "message": "Move this line to auth_success\u003dtrue since for auth_success\u003dfalse case, the bubble should be already dismissed before reach here(dismissed by mouse/key/touch events when submit the password).",
+      "parentUuid": "5cba88ec_e46452ff",
+      "revId": "ff0afbb4662098241b2f6f515c1491f0eb90f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "744ff465_903b5afa",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 3
