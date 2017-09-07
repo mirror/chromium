@@ -24,6 +24,8 @@ FeatureTracker::FeatureTracker(
       session_duration_observer_(this),
       feature_(feature),
       field_trial_time_delta_(default_time_required_to_show_promo) {
+  session_duration_updater_->SetActiveSessionTimeRequirement(
+      field_trial_time_delta_);
   AddSessionDurationObserver();
 }
 
