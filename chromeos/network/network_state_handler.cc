@@ -98,6 +98,8 @@ bool ShouldIncludeNetworkInList(const NetworkState* network_state,
 const char NetworkStateHandler::kDefaultCheckPortalList[] =
     "ethernet,wifi,cellular";
 
+const char NetworkStateHandler::kDefaultCellularNetworkPath[] = "/cellular";
+
 NetworkStateHandler::NetworkStateHandler() {}
 
 NetworkStateHandler::~NetworkStateHandler() {
@@ -1289,15 +1291,22 @@ void NetworkStateHandler::SortNetworkList() {
   // Note: usually active networks will precede inactive networks, however
   // this may briefly be untrue during state transitions (e.g. a network may
   // transition to idle before the list is updated).
-  ManagedStateList active, non_wifi_visible, wifi_visible, hidden, new_networks;
+  ManagedStateList cellular, active, non_wifi_visible, wifi_visible, hidden,
+      new_networks;
   for (ManagedStateList::iterator iter = network_list_.begin();
        iter != network_list_.end(); ++iter) {
     NetworkState* network = (*iter)->AsNetworkState();
+    if (NetworkTypePattern::Cellular().MatchesType(network->type())) {
+      cellular.push_back(std::move(*iter));
+      continue;
+    }
     if (!network->update_received()) {
       new_networks.push_back(std::move(*iter));
       continue;
     }
-    if (network->IsConnectedState() || network->IsConnectingState()) {
+    // Ethernet networks are always considered active.
+    if (network->IsConnectedState() || network->IsConnectingState() ||
+        NetworkTypePattern::Ethernet().MatchesType(network->type())) {
       active.push_back(std::move(*iter));
       continue;
     }
@@ -1310,12 +1319,21 @@ void NetworkStateHandler::SortNetworkList() {
       hidden.push_back(std::move(*iter));
     }
   }
+  EnsureCellularNetwork(&cellular);
   network_list_.clear();
+  // List active non Cellular network first.
   network_list_ = std::move(active);
+  // Ethernet is always active so list any Cellular network next.
+  std::move(cellular.begin(), cellular.end(),
+            std::back_inserter(network_list_));
+  // List any other non WiFi visible networks (i.e. Wimax).
   std::move(non_wifi_visible.begin(), non_wifi_visible.end(),
             std::back_inserter(network_list_));
+  // List WiFi networks last.
   std::move(wifi_visible.begin(), wifi_visible.end(),
             std::back_inserter(network_list_));
+  // Include hidden and new networks in the list at the end; they should not
+  // be shown by the UI.
   std::move(hidden.begin(), hidden.end(), std::back_inserter(network_list_));
   std::move(new_networks.begin(), new_networks.end(),
             std::back_inserter(network_list_));
@@ -1426,6 +1444,39 @@ void NetworkStateHandler::UpdateGuid(NetworkState* network) {
     specifier_guid_map_[specifier] = guid;
   }
   network->SetGuid(guid);
+}
+
+void NetworkStateHandler::EnsureCellularNetwork(
+    ManagedStateList* cellular_networks) {
+  const DeviceState* device =
+      GetDeviceStateByType(NetworkTypePattern::Cellular());
+  if (!device) {
+    cellular_networks->clear();
+    return;
+  }
+  if (cellular_networks->empty()) {
+    std::unique_ptr<ManagedState> new_state = ManagedState::Create(
+        ManagedState::MANAGED_TYPE_NETWORK, kDefaultCellularNetworkPath);
+    NetworkState* network = new_state->AsNetworkState();
+    network->set_type(shill::kTypeCellular);
+    network->set_update_received();
+    network->set_visible(true);
+    network->device_path_ = device->path();
+    UpdateGuid(network);
+    cellular_networks->push_back(std::move(new_state));
+    return;
+  }
+  // If we have a Cellular device, ensure that we have exactly one Cellular
+  // network by removing all but the first non default Cellular network.
+  while (cellular_networks->size() > 1) {
+    const NetworkState* network =
+        (*cellular_networks->begin())->AsNetworkState();
+    if (network->path() != kDefaultCellularNetworkPath)
+      break;
+    cellular_networks->erase(cellular_networks->begin());
+  }
+  cellular_networks->erase(cellular_networks->begin() + 1,
+                           cellular_networks->end());
 }
 
 void NetworkStateHandler::NotifyNetworkListChanged() {
