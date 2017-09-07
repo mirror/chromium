@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0afdf6af_4dd9210a",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-07T00:14:08Z",
+      "side": 1,
+      "message": "Yea, this does change behavior. Viz speaks in pixels, not DIP, and the current expectation is the LocalSurfaceId is allocated if either physical pixels or the device scale factor changes. I do need to introduce the appropriate plumbing to call WasResized if DSF changes. I don\u0027t think that work blocks this CL though? This only becomes an issue when surface sync is enabled.",
+      "parentUuid": "9251f9e5_8c955e06",
+      "revId": "a5b8610d79dc045033966018b8515f4af6bd2a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f57fad9a_5c2ddd02",
         "filename": "content/browser/renderer_host/delegated_frame_host.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-06T23:53:43Z",
       "side": 1,
       "message": "Trying to work through the logic... in which case do we get here and primary_surface_info is null? In particular is it possible that this would be called with an older surface after ClearDelegatedFrame() was called? In that case we wouldn\u0027t want to set the primary surface (or, for that matter, the fallback), because that would be a security issue.",
+      "revId": "a5b8610d79dc045033966018b8515f4af6bd2a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a7d638_807ccf56",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-07T00:14:08Z",
+      "side": 1,
+      "message": "The first frame...currently we don\u0027t do guttering in Viz (I will change that in the near future), so we don\u0027t show anything until we have a fallback frame, then it becomes both primary and fallback.\n\nIf surface sync is enabled, then yes, this can get called up to 4 frames later.\n\nIf we clear the delegated frame then I suppose the primary surface goes away too, and so yes, we would go into this code path. Why is this a security issue?",
+      "parentUuid": "f57fad9a_5c2ddd02",
       "revId": "a5b8610d79dc045033966018b8515f4af6bd2a48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
