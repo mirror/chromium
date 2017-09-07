@@ -74,6 +74,7 @@
         "content_utility": [ "browser" ],
         "data_decoder": [ "image_decoder" ],
         "device": [
+          "device:hid",
           "device:generic_sensor",
           "device:nfc",
           "device:serial",
