@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c461f6e2_20650a95",
+        "filename": "chrome/installer/linux/rpm/calculate_package_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-07T19:20:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a566fd6d_f4ad454f",
+      "revId": "67c64e440d4c1daccafab1d032026aac42afaf7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94212ced_becb2b8a",
         "filename": "chrome/installer/linux/rpm/calculate_package_deps.py",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-07T00:13:31Z",
       "side": 1,
       "message": "Is this stripping excess newlines at the end?",
+      "revId": "67c64e440d4c1daccafab1d032026aac42afaf7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b91bebc_c6e9f44c",
+        "filename": "chrome/installer/linux/rpm/calculate_package_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-07T19:20:39Z",
+      "side": 1,
+      "message": "yes -- changed rstrip() to rstrip(\u0027\\n\u0027) to make this clearer",
+      "parentUuid": "94212ced_becb2b8a",
       "revId": "67c64e440d4c1daccafab1d032026aac42afaf7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "67c64e440d4c1daccafab1d032026aac42afaf7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d6effe_0710d8d3",
+        "filename": "chrome/installer/linux/rpm/calculate_package_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-07T19:20:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de83e7dd_2fd2a441",
+      "revId": "67c64e440d4c1daccafab1d032026aac42afaf7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
