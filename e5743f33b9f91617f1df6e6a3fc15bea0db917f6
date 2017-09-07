@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5627862d_9a45df98",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-07T04:22:20Z",
+      "side": 1,
+      "message": "nit: I think this logic could be tidier by having an if (page_status) at the top to set the histogram value, instead of in each loop.",
+      "revId": "e5743f33b9f91617f1df6e6a3fc15bea0db917f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3359dd6_d04d8a1c",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-07T04:22:20Z",
+      "side": 1,
+      "message": "This logic feels like it is getting repetitious / hard to follow, and could be abstracted pretty easily. For example, we could wrap all this into an object that has a list of counters, and for each counter a histogram name / value to log.",
+      "revId": "e5743f33b9f91617f1df6e6a3fc15bea0db917f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
