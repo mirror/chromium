@@ -586,6 +586,30 @@
       "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bdd5e75_314e6346",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-07T18:50:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a3d6d57_31137562",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
