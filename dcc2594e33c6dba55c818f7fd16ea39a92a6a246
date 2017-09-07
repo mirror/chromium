@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daf63157_b12828fa",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-07T07:43:49Z",
+      "side": 1,
+      "message": "nit: s/child/children/\n\nOtherwise, \"child(ren)\".",
+      "range": {
+        "startLine": 944,
+        "startChar": 51,
+        "endLine": 944,
+        "endChar": 56
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c674625_0c240b3e",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-07T07:43:49Z",
+      "side": 1,
+      "message": "Can we say \"set_extended_attributes\" rather than \"set_type_extended_attributes\"?\n\nMy understanding is that Web IDL does NOT distinguish extended attributes applied to types from ones applied to else, i.e. no concept of \"type extended attributes\".\n\nI\u0027d be rather asking a question than proposing.  Should we distinguish \"type extended attributes\" from other \"extended attributes\"?",
+      "range": {
+        "startLine": 165,
+        "startChar": 8,
+        "endLine": 165,
+        "endChar": 36
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38c9253_66515c63",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-07T07:43:49Z",
+      "side": 1,
+      "message": "Why don\u0027t you import at the top of the file?",
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b89ee34_8e95b35e",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-07T07:43:49Z",
+      "side": 1,
+      "message": "Just to clarify my question (or intent), I think that it\u0027s okay to write here that:\n  type_extended_attributes \u003d idl_type.extended_attributes\n\nI\u0027m fine with \"type_extended_attributes\" as a local variable name.  I\u0027m questioning if idl_type.type_extended_attributes makes sense or not.",
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bfbb2be_905bf1af",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-07T07:43:49Z",
+      "side": 1,
+      "message": "I\u0027d suggest \"GroupExtAttrsInApplicableToTypes\", but I\u0027m open to other options.  I meant \"(this function) groups the given extended attributs in ones applicable to types and ones not\".\n\nIf you prefer \"separate\", then I\u0027d suggest \"separate A from B\".",
+      "range": {
+        "startLine": 146,
+        "startChar": 4,
+        "endLine": 146,
+        "endChar": 37
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
