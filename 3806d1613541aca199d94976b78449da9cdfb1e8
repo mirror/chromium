@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e9903f5_90133e95",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-07T21:03:14Z",
+      "side": 1,
+      "message": "CurrentAuthUserChanged -\u003e MaybeUpdateCurrentAuthUser since we may or may out change |current_auth_account_id_|.\n\nAccountId -\u003e const AccountId\u0026 to avoid copying\n\nAnd add a brief comment to document the method.",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 29
+      },
+      "revId": "3806d1613541aca199d94976b78449da9cdfb1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65436809_dc61271f",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-07T21:03:14Z",
+      "side": 1,
+      "message": "nit: document the method",
+      "revId": "3806d1613541aca199d94976b78449da9cdfb1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0950473a_559416ea",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-07T21:03:14Z",
+      "side": 1,
+      "message": "nit: #include \"components/signin/core/account_id/account_id.h\"",
+      "revId": "3806d1613541aca199d94976b78449da9cdfb1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
