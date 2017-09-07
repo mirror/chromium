@@ -210,3 +210,18 @@ class ThreadTimesToughScrollingCases(_ThreadTimes):
       def SetExpectations(self):
         pass # Nothing disabled.
     return StoryExpectations()
+
+class ThreadTimesToughAnimatedImageCases(_ThreadTimes):
+  """Measure timeline metrics while performing smoothness action on tough
+  scrolling cases."""
+  page_set = page_sets.ToughAnimatedImageCasesPageSet
+
+  @classmethod
+  def Name(cls):
+    return 'thread_times.tough_animated_image_cases'
+
+  def GetExpectations(self):
+    class StoryExpectations(story.expectations.StoryExpectations):
+      def SetExpectations(self):
+        pass # Nothing disabled.
+    return StoryExpectations()

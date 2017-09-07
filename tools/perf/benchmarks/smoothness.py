@@ -686,6 +686,18 @@ class SmoothnessGpuRasterizationToughScrollingCases(_Smoothness):
         pass # Nothing.
     return StoryExpectations()
 
+class SmoothnessToughAnimatedImageCases(_Smoothness):
+  page_set = page_sets.ToughAnimatedImageCasesPageSet
+
+  @classmethod
+  def Name(cls):
+    return 'smoothness.tough_animated_image_cases'
+
+  def GetExpectations(self):
+    class StoryExpectations(story_module.expectations.StoryExpectations):
+      def SetExpectations(self):
+        pass # Nothing.
+    return StoryExpectations()
 
 class SmoothnessToughImageDecodeCases(_Smoothness):
   page_set = page_sets.ToughImageDecodeCasesPageSet
