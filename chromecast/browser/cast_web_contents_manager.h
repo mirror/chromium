@@ -36,6 +36,7 @@ class CastWebContentsManager {
   ~CastWebContentsManager();
 
   std::unique_ptr<CastWebView> CreateWebView(
+      bool is_service,
       CastWebView::Delegate* delegate,
       scoped_refptr<content::SiteInstance> site_instance,
       bool transparent);

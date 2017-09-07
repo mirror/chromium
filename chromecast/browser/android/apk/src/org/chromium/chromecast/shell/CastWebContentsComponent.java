@@ -139,12 +139,12 @@ public class CastWebContentsComponent {
     private String mInstanceId;
     private boolean mStarted = false;
 
-    public CastWebContentsComponent(String instanceId,
+    public CastWebContentsComponent(boolean isService, String instanceId,
             OnComponentClosedHandler onComponentClosedHandler, OnKeyDownHandler onKeyDownHandler) {
         mComponentClosedHandler = onComponentClosedHandler;
         mKeyDownHandler = onKeyDownHandler;
         mInstanceId = instanceId;
-        if (BuildConfig.DISPLAY_WEB_CONTENTS_IN_SERVICE) {
+        if (BuildConfig.DISPLAY_WEB_CONTENTS_IN_SERVICE || isService) {
             mDelegate = new ServiceDelegate();
         } else {
             mDelegate = new ActivityDelegate();

@@ -31,12 +31,13 @@ CastWebContentsManager::CastWebContentsManager(
 CastWebContentsManager::~CastWebContentsManager() = default;
 
 std::unique_ptr<CastWebView> CastWebContentsManager::CreateWebView(
+    bool is_service,
     CastWebView::Delegate* delegate,
     scoped_refptr<content::SiteInstance> site_instance,
     bool transparent) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  return base::MakeUnique<CastWebView>(delegate, this, browser_context_,
-                                       site_instance, transparent);
+  return base::MakeUnique<CastWebView>(
+      is_service, delegate, this, browser_context_, site_instance, transparent);
 }
 
 void CastWebContentsManager::DelayWebContentsDeletion(
