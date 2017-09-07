@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a566fd6d_f4ad454f",
+        "filename": "chrome/installer/linux/rpm/calculate_package_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T00:13:31Z",
+      "side": 1,
+      "message": "nit: blank line after sys.exit().",
+      "revId": "67c64e440d4c1daccafab1d032026aac42afaf7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94212ced_becb2b8a",
+        "filename": "chrome/installer/linux/rpm/calculate_package_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T00:13:31Z",
+      "side": 1,
+      "message": "Is this stripping excess newlines at the end?",
+      "revId": "67c64e440d4c1daccafab1d032026aac42afaf7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de83e7dd_2fd2a441",
+        "filename": "chrome/installer/linux/rpm/calculate_package_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T00:13:31Z",
+      "side": 1,
+      "message": "Might be a little easier to read if you break it up into:\n\nfoo \u003d open(os.path.join(script_dir, \u0027dist-package-provides.json\u0027)))\ndistro_package_provides \u003d json.load(foo)",
+      "revId": "67c64e440d4c1daccafab1d032026aac42afaf7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
