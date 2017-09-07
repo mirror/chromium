@@ -404,6 +404,24 @@
       "revId": "0ab2490ae7a1d711d8b840a49f5d0c228d05ee0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd110ef_4c0d0b10",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIApplyAtRule.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-09-07T03:26:28Z",
+      "side": 1,
+      "message": "Yeah it is :)\n\nsgtm",
+      "parentUuid": "5df5a92e_17675a49",
+      "revId": "0ab2490ae7a1d711d8b840a49f5d0c228d05ee0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
