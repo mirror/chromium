@@ -5,6 +5,7 @@
 import logging
 import os
 import subprocess
+import threading
 import uuid
 
 from devil.utils import reraiser_thread
@@ -26,6 +27,7 @@ class Deobfuscator(object):
         cmd, bufsize=1, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
         close_fds=True)
     self._logged_error = False
+    self._lock = threading.Lock()
 
   def IsClosed(self):
     return self._proc.returncode is not None
@@ -50,44 +52,55 @@ class Deobfuscator(object):
     if not lines:
       return []
 
-    # Allow only one thread to communicate with the subprocess at a time.
-    if self._reader_thread:
-      logging.warning('Having to wait for Java deobfuscation.')
-      self._reader_thread.join()
-
-    if self._proc.returncode is not None:
-      if not self._logged_error:
-        logging.warning('java_deobfuscate process exited with code=%d.',
-                        self._proc.returncode)
-        self._logged_error = True
-      return lines
-
-    out_lines = []
+    # Deobfuscated stacks contain more frames than obfuscated ones when method
+    # inlining occurs. To account for the extra output lines, keep reading until
+    # this eof_line token is reached.
     eof_line = uuid.uuid4().hex
+    out_lines = []
 
     def deobfuscate_reader():
       while True:
-        line = self._proc.stdout.readline()[:-1]
-        # Due to inlining, deobfuscated stacks may contain more frames than
-        # obfuscated ones. To account for the variable number of lines, keep
-        # reading until eof_line.
+        line = self._proc.stdout.readline()
+        # Return an empty string at EOF (when stdin is closed).
+        if not line:
+          break
+        line = line[:-1]
         if line == eof_line:
           break
         out_lines.append(line)
 
-    # TODO(agrieve): Can probably speed this up by only sending lines through
-    #     that might contain an obfuscated name.
-    self._reader_thread = reraiser_thread.ReraiserThread(deobfuscate_reader)
-    self._reader_thread.start()
+    with self._lock:
+      # Allow only one thread to communicate with the subprocess at a time.
+      if self._reader_thread:
+        logging.warning('Having to wait for Java deobfuscation.')
+        self._reader_thread.join()
+
+      if self._proc.returncode is not None:
+        if not self._logged_error:
+          logging.warning('java_deobfuscate process exited with code=%d.',
+                          self._proc.returncode)
+          self._logged_error = True
+        return lines
+
+      # TODO(agrieve): Can probably speed this up by only sending lines through
+      #     that might contain an obfuscated name.
+      reader_thread = reraiser_thread.ReraiserThread(deobfuscate_reader)
+      reader_thread.start()
+      self._reader_thread = reader_thread
+
     try:
       self._proc.stdin.write('\n'.join(lines))
       self._proc.stdin.write('\n{}\n'.format(eof_line))
       self._proc.stdin.flush()
       timeout = max(_MINIUMUM_TIMEOUT, len(lines) * _PER_LINE_TIMEOUT)
-      self._reader_thread.join(timeout)
-      if self._reader_thread.is_alive():
+      reader_thread.join(timeout)
+      if not self._reader_thread:
+        logging.warning('Close() called by another thread during join().')
+        return lines
+      if reader_thread.is_alive():
         logging.error('java_deobfuscate timed out.')
         self.Close()
+        return lines
       self._reader_thread = None
       return out_lines
     except IOError:
@@ -96,11 +109,12 @@ class Deobfuscator(object):
       return lines
 
   def Close(self):
-    if not self.IsClosed():
-      self._proc.stdin.close()
-      self._proc.kill()
-      self._proc.wait()
-    self._reader_thread = None
+    with self._lock:
+      if not self.IsClosed():
+        self._proc.stdin.close()
+        self._proc.kill()
+        self._proc.wait()
+      self._reader_thread = None
 
   def __del__(self):
     if not self.IsClosed():
