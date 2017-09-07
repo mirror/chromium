@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d30159e_60691a9b",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-07T11:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad7901ac_baee479c",
+      "range": {
+        "startLine": 92,
+        "startChar": 6,
+        "endLine": 92,
+        "endChar": 52
+      },
+      "revId": "58e5f35128e4b03f5436cfe0c2faa8985a0c3d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cf79826_21773c10",
         "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "58e5f35128e4b03f5436cfe0c2faa8985a0c3d65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb30fd7_41b71933",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-07T11:59:57Z",
+      "side": 1,
+      "message": "ProvisionallySavePassword only shows the bubble if manual saving is on, see here:\nhttps://cs.chromium.org/chromium/src/components/autofill/content/renderer/password_autofill_agent.cc?l\u003d1824\n\nI remember I have read somewhere that this check will be removed after a point, when the feature is fully merged iirc.",
+      "parentUuid": "4cf79826_21773c10",
+      "range": {
+        "startLine": 100,
+        "startChar": 37,
+        "endLine": 100,
+        "endChar": 56
+      },
+      "revId": "58e5f35128e4b03f5436cfe0c2faa8985a0c3d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d12800b9_183f9308",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2416,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-07T11:59:57Z",
+      "side": 1,
+      "message": "I actually have a comment on line #2413 to say we expect to show the save bubble for 3 different passwords; but maybe it should be right next to this line and a bit more explanatory. Updated.",
+      "parentUuid": "0a5a9d0e_d4589fe9",
+      "range": {
+        "startLine": 2416,
+        "startChar": 14,
+        "endLine": 2416,
+        "endChar": 29
+      },
+      "revId": "58e5f35128e4b03f5436cfe0c2faa8985a0c3d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d2257d0_ad1ca8d0",
         "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a9cc9a8a_494777b0",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2426,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-07T11:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d2257d0_ad1ca8d0",
+      "range": {
+        "startLine": 2426,
+        "startChar": 26,
+        "endLine": 2426,
+        "endChar": 61
+      },
+      "revId": "58e5f35128e4b03f5436cfe0c2faa8985a0c3d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "228dc410_b4013d05",
         "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "58e5f35128e4b03f5436cfe0c2faa8985a0c3d65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278bd4f2_d5756a4b",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-07T11:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "228dc410_b4013d05",
+      "range": {
+        "startLine": 1622,
+        "startChar": 27,
+        "endLine": 1622,
+        "endChar": 51
+      },
+      "revId": "58e5f35128e4b03f5436cfe0c2faa8985a0c3d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
