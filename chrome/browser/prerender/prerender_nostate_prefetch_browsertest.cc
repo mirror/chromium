@@ -13,6 +13,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/test/simple_test_tick_clock.h"
+#include "content/public/common/content_features.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/history/history_test_utils.h"
 #include "chrome/browser/prerender/prerender_handle.h"
@@ -413,11 +414,13 @@ IN_PROC_BROWSER_TEST_F(NoStatePrefetchBrowserTest, Prefetch301LoadFlags) {
 
 // Checks that a subresource 301 redirect is followed.
 IN_PROC_BROWSER_TEST_F(NoStatePrefetchBrowserTest, Prefetch301Subresource) {
+  CHECK(base::FeatureList::IsEnabled(
+      features::kKeepAliveRendererForKeepaliveRequests));
   RequestCounter script_counter;
   CountRequestFor(kPrefetchScript, &script_counter);
   PrefetchFromFile(kPrefetchSubresourceRedirectPage,
                    FINAL_STATUS_NOSTATE_PREFETCH_FINISHED);
-  script_counter.WaitForCount(1);
+  script_counter.WaitForCount (1);
 }
 
 // Checks a client redirect is not followed.
