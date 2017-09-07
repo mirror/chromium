@@ -66,9 +66,13 @@ component("url") {
     "//base/third_party/dynamic_annotations",
   ]
 
+  cflags = []
   if (is_win) {
     # Don't conflict with Windows' "url.dll".
     output_name = "url_lib"
+
+    # Suppress __declspec(dllexport)/extern conflict (C4910).
+    cflags += [ "/wd4910" ]
   }
 
   # ICU support.

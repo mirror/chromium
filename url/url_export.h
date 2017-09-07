@@ -5,6 +5,8 @@
 #ifndef URL_URL_EXPORT_H_
 #define URL_URL_EXPORT_H_
 
+#include "build/build_config.h"
+
 #if defined(COMPONENT_BUILD)
 #if defined(WIN32)
 
@@ -29,5 +31,29 @@
 #define URL_EXPORT
 
 #endif  // define(COMPONENT_BUILD)
+
+#if defined(URL_IMPLEMENTATION)
+
+#if defined(COMPILER_MSVC)
+
+#define URL_TEMPLATE_CLASS_EXPORT
+#define URL_EXTERN_TEMPLATE_EXPORT URL_EXPORT
+#define URL_TEMPLATE_EXPORT URL_EXPORT
+
+#elif defined(COMPILER_GCC)
+
+#define URL_TEMPLATE_CLASS_EXPORT URL_EXPORT
+#define URL_EXTERN_TEMPLATE_EXPORT URL_EXPORT
+#define URL_TEMPLATE_EXPORT
+
+#endif
+
+#else  // !defined(URL_IMPLEMENTATION)
+
+#define URL_TEMPLATE_CLASS_EXPORT
+#define URL_EXTERN_TEMPLATE_EXPORT URL_EXPORT
+#define URL_TEMPLATE_EXPORT
+
+#endif  // defined(URL_IMPLEMENTATION)
 
 #endif  // URL_URL_EXPORT_H_
