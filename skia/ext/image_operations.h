@@ -6,6 +6,7 @@
 #define SKIA_EXT_IMAGE_OPERATIONS_H_
 
 #include "third_party/skia/include/core/SkBitmap.h"
+#include "third_party/skia/include/core/SkPixmap.h"
 #include "third_party/skia/include/core/SkTypes.h"
 
 struct SkIRect;
@@ -89,6 +90,12 @@ class SK_API ImageOperations {
   // will save work if you do not need the entire bitmap.
   //
   // The destination subset must be smaller than the destination image.
+  static SkBitmap Resize(const SkPixmap& source,
+                         ResizeMethod method,
+                         int dest_width,
+                         int dest_height,
+                         const SkIRect& dest_subset,
+                         SkBitmap::Allocator* allocator = NULL);
   static SkBitmap Resize(const SkBitmap& source,
                          ResizeMethod method,
                          int dest_width, int dest_height,
