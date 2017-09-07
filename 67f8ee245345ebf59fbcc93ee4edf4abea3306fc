@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b47d6446_f8ff5d4e",
+        "filename": "components/download/internal/navigation_monitor_impl_unittests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-07T16:49:46Z",
+      "side": 1,
+      "message": "Do we have to wait 500ms?  Can you try something like https://cs.chromium.org/chromium/src/components/download/internal/file_monitor_unittest.cc where we have a fake taskrunner/handle and push the queue forward as much as we want?  just want to avoid actual delays in our code.\n\nYou could also use a mock and validate the state at an expect call site with a custom matcher (which seems like what you really want).",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 19
+      },
+      "revId": "67f8ee245345ebf59fbcc93ee4edf4abea3306fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
