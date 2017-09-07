@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b46cb452_71ef5f8e",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-07T19:00:14Z",
+      "side": 1,
+      "message": "Xida, what do you imagine getting out of the impl frames when we have main thread animations or the main frames when we have impl animations? I don\u0027t think these are useful values. We should just record the composited animations here and the main thread animations when we use a new active tree. They are both draw intervals.",
+      "parentUuid": "e7d21f5b_e32d9a04",
+      "revId": "09bff39dd2604bf2a26f20a73032504bdf0e1d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9b9ba25_47bf9441",
         "filename": "cc/scheduler/compositor_timing_history.cc",
         "patchSetId": 18

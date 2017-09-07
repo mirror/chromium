@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "230a6718_45811899",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-07T19:00:14Z",
+      "side": 1,
+      "message": "I don\u0027t think this is right. We should be recording only if used_new_active_tree is true and recording the time since the last draw using the new active tree (only when there were active animations)",
+      "revId": "129caa1f52670e9c6e062b13e5f51958adb67d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
