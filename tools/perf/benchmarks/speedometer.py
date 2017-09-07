@@ -16,20 +16,15 @@ these types of operations depends on the speed of the DOM APIs, the JavaScript
 engine, CSS style resolution, layout, and other technologies.
 """
 
-import os
 
-from core import perf_benchmark
-
-from telemetry import benchmark
-from telemetry import page as page_module
-from telemetry.page import legacy_page_test
-from telemetry import story
+from benchmarks import press
 from telemetry.value import list_of_scalar_values
 
-from metrics import keychain_metric
 
+class Speedometer(press.PressPage):
+  NAME = 'Speedometer'
+  URL = 'http://browserbench.org/Speedometer/'
 
-class SpeedometerMeasurement(legacy_page_test.LegacyPageTest):
   enabled_suites = [
       'VanillaJS-TodoMVC',
       'EmberJS-TodoMVC',
@@ -40,13 +35,7 @@ class SpeedometerMeasurement(legacy_page_test.LegacyPageTest):
       'FlightJS-TodoMVC'
   ]
 
-  def __init__(self):
-    super(SpeedometerMeasurement, self).__init__()
-
-  def CustomizeBrowserOptions(self, options):
-    keychain_metric.KeychainMetric.CustomizeBrowserOptions(options)
-
-  def ValidateAndMeasurePage(self, page, tab, results):
+  def StartTest(self, page, tab, results):
     tab.WaitForDocumentReadyStateToBeComplete()
     iterationCount = 10
     # A single iteration on android takes ~75 seconds, the benchmark times out
@@ -65,9 +54,13 @@ class SpeedometerMeasurement(legacy_page_test.LegacyPageTest):
         startTest();
         """,
         count=iterationCount)
+
+  def WaitForTestToFinish(self, page, tab, results):
     tab.WaitForJavaScriptCondition(
         'benchmarkClient._finishedTestCount == benchmarkClient.testsCount',
         timeout=600)
+
+  def ParseTestResults(self, page, tab, results):
     results.AddValue(list_of_scalar_values.ListOfScalarValues(
         page, 'Total', 'ms',
         tab.EvaluateJavaScript('benchmarkClient._timeValues'),
@@ -86,30 +79,3 @@ class SpeedometerMeasurement(legacy_page_test.LegacyPageTest):
               suite_times;
               """,
               key=suite_name), important=False))
-    keychain_metric.KeychainMetric().AddResults(tab, results)
-
-
-@benchmark.Owner(emails=['bmeurer@chromium.org', 'mvstanton@chromium.org'])
-class Speedometer(perf_benchmark.PerfBenchmark):
-  test = SpeedometerMeasurement
-
-  @classmethod
-  def Name(cls):
-    return 'speedometer'
-
-  def CreateStorySet(self, options):
-    ps = story.StorySet(
-        base_dir=os.path.dirname(os.path.abspath(__file__)),
-        archive_data_file='../page_sets/data/speedometer.json',
-        cloud_storage_bucket=story.PUBLIC_BUCKET)
-    ps.AddStory(page_module.Page(
-        'http://browserbench.org/Speedometer/', ps, ps.base_dir,
-        make_javascript_deterministic=False,
-        name='http://browserbench.org/Speedometer/'))
-    return ps
-
-  def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # http://browserbench.org/Speedometer/ not disabled.
-    return StoryExpectations()
