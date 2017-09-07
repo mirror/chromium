@@ -532,5 +532,10 @@
     "prefix": "longtask-v2",
     "base": "http/tests/performance-timing/longtask-v2",
     "args": ["--enable-features=LongTaskV2"]
+  },
+  {
+    "prefix": "virtual-buggy",
+    "base": "buggy",
+    "args": ["--garbage-arg"]
   }
 ]
