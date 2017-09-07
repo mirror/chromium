@@ -39,6 +39,23 @@
       "revId": "5f54b97f206126bc3edd94b6f768690ece811fdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967160c8_e95abe1b",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T08:08:08Z",
+      "side": 1,
+      "message": "There\u0027s a lot of plumbing in JS. Do we need it all?\n\nCan we revert most of the other changes in pdf.js, leave viewport.js alone, and instead just check |this.didForceFitToPage_| in afterZoom_() to determine the userInitiated value?\nThen reset |this.didForceFitToPage_| to false after the next line.",
+      "revId": "5f54b97f206126bc3edd94b6f768690ece811fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
