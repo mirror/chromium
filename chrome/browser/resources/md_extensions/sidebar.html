@@ -50,25 +50,25 @@
         width: 15px;
       }
     </style>
-    <paper-menu id="section-menu" selected="0">
-      <paper-item class="section-item" id="sections-extensions"
-          on-tap="onExtensionsTap_">
-        <span>$i18n{sidebarExtensions}</span>
-      </paper-item>
-      <paper-item class="section-item" id="sections-apps"
-          on-tap="onAppsTap_">
-        <span>$i18n{sidebarApps}</span>
-      </paper-item>
-      <paper-item class="section-item" id="sections-shortcuts"
-          on-tap="onKeyboardShortcutsTap_">
-        <span>$i18n{keyboardShortcuts}</span>
-      </paper-item>
-    </paper-menu>
-    <a class="section-item" id="more-extensions" target="_blank"
-        href="$i18n{getMoreExtensionsUrl}">
-      <span>$i18n{getMoreExtensions}</span>
-      <button class="open-in-new" is="paper-icon-button-light"></button>
-    </a>
+        <paper-menu id="section-menu" selected="{{selected_}}">
+          <paper-item class="section-item" id="sections-extensions"
+              on-tap="onExtensionsTap_">
+            <span>$i18n{sidebarExtensions}</span>
+          </paper-item>
+          <paper-item class="section-item" id="sections-apps"
+              on-tap="onAppsTap_">
+            <span>$i18n{sidebarApps}</span>
+          </paper-item>
+          <paper-item class="section-item" id="sections-shortcuts"
+              on-tap="onKeyboardShortcutsTap_">
+            <span>$i18n{keyboardShortcuts}</span>
+          </paper-item>
+        </paper-menu>
+        <a class="section-item" id="more-extensions" target="_blank"
+            href="$i18n{getMoreExtensionsUrl}">
+          <span>$i18n{getMoreExtensions}</span>
+          <button class="open-in-new" is="paper-icon-button-light"></button>
+        </a>
   </template>
   <script src="chrome://extensions/sidebar.js"></script>
 </dom-module>
