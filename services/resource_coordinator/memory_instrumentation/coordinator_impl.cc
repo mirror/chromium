@@ -86,7 +86,9 @@ CoordinatorImpl* CoordinatorImpl::GetInstance() {
 }
 
 CoordinatorImpl::CoordinatorImpl(service_manager::Connector* connector)
-    : next_dump_id_(0) {
+    : next_dump_id_(0),
+      heap_profiling_mode_(base::trace_event::kHeapProfilingModeInvalid) {
+
   process_map_ = base::MakeUnique<ProcessMap>(connector);
   DCHECK(!g_coordinator_impl);
   g_coordinator_impl = this;
@@ -174,6 +176,27 @@ void CoordinatorImpl::RequestGlobalMemoryDump(
   PerformNextQueuedGlobalMemoryDump();
 }
 
+void CoordinatorImpl::EnableHeapProfiling(
+    base::trace_event::HeapProfilingMode mode,
+    const EnableHeapProfilingCallback& callback) {
+
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  if (!base::trace_event::MemoryDumpManager::GetInstance()->
+           EnableHeapProfiling(mode)) {
+    callback.Run(false);
+  }
+  // Broadcast request to children.
+  auto child_callback = [](bool success) {
+    if (!success)
+      LOG(WARNING) << "Failed to enable heap profiling in child process.";
+  };
+  for (const auto& kv : clients_) {
+    mojom::ClientProcess* client = kv.second->client.get();
+    client->EnableHeapProfiling(mode, base::Bind(child_callback));
+  }
+  callback.Run(true);
+}
+
 void CoordinatorImpl::GetVmRegionsForHeapProfiler(
     const GetVmRegionsForHeapProfilerCallback& callback) {
   base::trace_event::MemoryDumpRequestArgs args{
@@ -205,6 +228,16 @@ void CoordinatorImpl::RegisterClientProcess(
   auto iterator_and_inserted =
       clients_.emplace(client_process, std::move(client_info));
   DCHECK(iterator_and_inserted.second);
+
+  // Enable heap profiling in newly created processes.
+  if (heap_profiling_mode_ != base::trace_event::kHeapProfilingModeInvalid) {
+    auto child_callback = [](bool success) {
+      if (!success)
+        LOG(WARNING) << "Failed to enable heap profiling in the child process.";
+    };
+    client_process->EnableHeapProfiling(heap_profiling_mode_,
+                                        base::Bind(child_callback));
+  }
 }
 
 void CoordinatorImpl::UnregisterClientProcess(
