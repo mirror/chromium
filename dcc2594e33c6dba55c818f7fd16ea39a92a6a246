@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "f4657f7a_2f7538f0",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-07T08:04:37Z",
+      "side": 1,
+      "message": "nit: child(ren)",
+      "range": {
+        "startLine": 944,
+        "startChar": 51,
+        "endLine": 944,
+        "endChar": 56
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bc3ea17_7545880d",
         "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
         "patchSetId": 6
@@ -41,6 +64,52 @@
         "startChar": 57,
         "endLine": 146,
         "endChar": 81
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f5e97b_8b09ddda",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-07T08:04:37Z",
+      "side": 1,
+      "message": "Having an empty list \u0027[]\u0027 as a default value for type_extended_attributes,\nit may be easy to work with IdlType.extended_attributes.",
+      "range": {
+        "startLine": 146,
+        "startChar": 82,
+        "endLine": 146,
+        "endChar": 86
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ea43f0_22b29288",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-07T08:04:37Z",
+      "side": 1,
+      "message": "I feel \"extended_attributes\" is enough and consistent with other classes.",
+      "range": {
+        "startLine": 152,
+        "startChar": 13,
+        "endLine": 152,
+        "endChar": 37
       },
       "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -140,6 +209,29 @@
     },
     {
       "key": {
+        "uuid": "6a2bf83c_9ef325ce",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-07T08:04:37Z",
+      "side": 1,
+      "message": "I\u0027m not sure it is possible, but I hope ext_attriutes_node_to_extended_attributes be moved to another place, in idl_types.py or a new file.",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 55
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82a8c612_9117b374",
         "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
         "patchSetId": 6
@@ -174,6 +266,29 @@
     },
     {
       "key": {
+        "uuid": "2d66cd9e_bc67ba6b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-07T08:04:37Z",
+      "side": 1,
+      "message": "A comment in idl_types.py affects here.\nOr you can do\n  type_extended_attributes \u003d idl_type.extended_attributes or []\non line #158.\n\nThen you don\u0027t need #167",
+      "range": {
+        "startLine": 167,
+        "startChar": 11,
+        "endLine": 167,
+        "endChar": 35
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4aa450d6_12274c15",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
         "patchSetId": 6
@@ -202,6 +317,29 @@
       "writtenOn": "2017-09-07T07:56:22Z",
       "side": 1,
       "message": "IIUC we want to remove line 618-621 when we fully support annotated types. Could you add a TODO comment?",
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9b3c26_c6467511",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-07T08:04:37Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 622,
+        "startChar": 8,
+        "endLine": 622,
+        "endChar": 36
+      },
       "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -259,6 +397,29 @@
     },
     {
       "key": {
+        "uuid": "c7288afc_d5424c48",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestDictionary.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-07T08:04:37Z",
+      "side": 1,
+      "message": "Could you rename these members to show what they checks?\nannotatedTypeLong and annotatedTypeString?",
+      "range": {
+        "startLine": 46,
+        "startChar": 24,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bfbb2be_905bf1af",
         "filename": "tools/idl_parser/idl_parser.py",
         "patchSetId": 6
@@ -270,6 +431,30 @@
       "writtenOn": "2017-09-07T07:43:49Z",
       "side": 1,
       "message": "I\u0027d suggest \"GroupExtAttrsInApplicableToTypes\", but I\u0027m open to other options.  I meant \"(this function) groups the given extended attributs in ones applicable to types and ones not\".\n\nIf you prefer \"separate\", then I\u0027d suggest \"separate A from B\".",
+      "range": {
+        "startLine": 146,
+        "startChar": 4,
+        "endLine": 146,
+        "endChar": 37
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8999c12d_ad4cf179",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-07T08:04:37Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "6bfbb2be_905bf1af",
       "range": {
         "startLine": 146,
         "startChar": 4,
