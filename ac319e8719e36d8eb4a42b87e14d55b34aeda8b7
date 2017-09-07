@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "d722480d_eda3bb76",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-07T23:10:12Z",
+      "side": 1,
+      "message": "- Idea #4: LocalStorageFactory\n   - The race is avoided because browser can guarantee that the LocalStorageFactory\n     will live longer than any RenderFrame hosting the associated origin\n   - The LocalStorageFactory can be passed to a RenderFrame at commit time\n     (maybe in a (renamed?) FrameMsg_CommitDataNetworkService_Params struct)",
+      "parentUuid": "55eebd28_3ea14177",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 16
+      },
+      "revId": "ac319e8719e36d8eb4a42b87e14d55b34aeda8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b19fff89_59ef458d",
         "filename": "content/test/BUILD.gn",
         "patchSetId": 2
