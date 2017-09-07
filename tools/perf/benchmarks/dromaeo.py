@@ -4,35 +4,16 @@
 
 import json
 import math
-import os
 
-from core import perf_benchmark
+from benchmarks import press
 
-from telemetry import benchmark
-from telemetry import page as page_module
-from telemetry.page import legacy_page_test
-from telemetry import story
 from telemetry.value import scalar
 
-from metrics import power
 
+class Dromaeo(press.PressPage):
+  ABSTRACT_PAGE = True
 
-class _DromaeoMeasurement(legacy_page_test.LegacyPageTest):
-
-  def __init__(self):
-    super(_DromaeoMeasurement, self).__init__()
-    self._power_metric = None
-
-  def CustomizeBrowserOptions(self, options):
-    power.PowerMetric.CustomizeBrowserOptions(options)
-
-  def WillStartBrowser(self, platform):
-    self._power_metric = power.PowerMetric(platform)
-
-  def DidNavigateToPage(self, page, tab):
-    self._power_metric.Start(page, tab)
-
-  def ValidateAndMeasurePage(self, page, tab, results):
+  def StartTest(self, page, tab, results):
     tab.WaitForJavaScriptCondition(
         'window.document.getElementById("pause") &&' +
         'window.document.getElementById("pause").value == "Run"',
@@ -57,11 +38,10 @@ class _DromaeoMeasurement(legacy_page_test.LegacyPageTest):
     # Starts benchmark.
     tab.ExecuteJavaScript('window.document.getElementById("pause").click();')
 
+  def WaitForTestToFinish(self, page, tab, results):
     tab.WaitForJavaScriptCondition('!!window.results_', timeout=600)
 
-    self._power_metric.Stop(page, tab)
-    self._power_metric.AddResults(tab, results)
-
+  def ParseTestResults(self, page, tab, results):
     score = json.loads(tab.EvaluateJavaScript('window.results_ || "[]"'))
 
     def Escape(k):
@@ -100,113 +80,21 @@ class _DromaeoMeasurement(legacy_page_test.LegacyPageTest):
       AddResult(key, math.exp(value['sum'] / value['count']))
 
 
-class _DromaeoBenchmark(perf_benchmark.PerfBenchmark):
-  """A base class for Dromaeo benchmarks."""
-  test = _DromaeoMeasurement
-
-  @classmethod
-  def Name(cls):
-    return 'dromaeo'
-
-  def CreateStorySet(self, options):
-    """Makes a PageSet for Dromaeo benchmarks."""
-    # Subclasses are expected to define class members called query_param and
-    # tag.
-    if not hasattr(self, 'query_param') or not hasattr(self, 'tag'):
-      raise NotImplementedError('query_param or tag not in Dromaeo benchmark.')
-    archive_data_file = '../page_sets/data/dromaeo.%s.json' % self.tag
-    ps = story.StorySet(
-        archive_data_file=archive_data_file,
-        base_dir=os.path.dirname(os.path.abspath(__file__)),
-        cloud_storage_bucket=story.PUBLIC_BUCKET)
-    url = 'http://dromaeo.com?%s' % self.query_param
-    ps.AddStory(page_module.Page(
-        url, ps, ps.base_dir, make_javascript_deterministic=False, name=url))
-    return ps
+class DomCoreAttr(Dromaeo):
+  NAME = 'dromaeo.domcoreattr'
+  URL = 'http://dromaeo.com?dom-attr'
 
 
-@benchmark.Owner(emails=['jbroman@chromium.org',
-                         'yukishiino@chromium.org',
-                         'haraken@chromium.org'])
-class DromaeoDomCoreAttr(_DromaeoBenchmark):
-  """Dromaeo DOMCore attr JavaScript benchmark.
-
-  Tests setting and getting DOM node attributes.
-  """
-  tag = 'domcoreattr'
-  query_param = 'dom-attr'
-
-  @classmethod
-  def Name(cls):
-    return 'dromaeo.domcoreattr'
-
-  def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # http://dromaeo.com?dom-attr not disabled.
-    return StoryExpectations()
-
-@benchmark.Owner(emails=['jbroman@chromium.org',
-                         'yukishiino@chromium.org',
-                         'haraken@chromium.org'])
-class DromaeoDomCoreModify(_DromaeoBenchmark):
-  """Dromaeo DOMCore modify JavaScript benchmark.
-
-  Tests creating and injecting DOM nodes.
-  """
-  tag = 'domcoremodify'
-  query_param = 'dom-modify'
-
-  @classmethod
-  def Name(cls):
-    return 'dromaeo.domcoremodify'
-
-  def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # http://dromaeo.com?dom-modify not disabled.
-    return StoryExpectations()
+class DomCoreModify(Dromaeo):
+  NAME = 'dromaeo.domcoremodify'
+  URL = 'http://dromaeo.com?dom-modify'
 
 
-@benchmark.Owner(emails=['jbroman@chromium.org',
-                         'yukishiino@chromium.org',
-                         'haraken@chromium.org'])
-class DromaeoDomCoreQuery(_DromaeoBenchmark):
-  """Dromaeo DOMCore query JavaScript benchmark.
-
-  Tests querying DOM elements in a document.
-  """
-  tag = 'domcorequery'
-  query_param = 'dom-query'
-
-  @classmethod
-  def Name(cls):
-    return 'dromaeo.domcorequery'
-
-  def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # http://dromaeo.com?dom-query not disabled.
-    return StoryExpectations()
+class DomCoreQuery(Dromaeo):
+  NAME = 'dromaeo.domcorequery'
+  URL = 'http://dromaeo.com?dom-query'
 
 
-@benchmark.Owner(emails=['jbroman@chromium.org',
-                         'yukishiino@chromium.org',
-                         'haraken@chromium.org'])
-class DromaeoDomCoreTraverse(_DromaeoBenchmark):
-  """Dromaeo DOMCore traverse JavaScript benchmark.
-
-  Tests traversing a DOM structure.
-  """
-  tag = 'domcoretraverse'
-  query_param = 'dom-traverse'
-
-  @classmethod
-  def Name(cls):
-    return 'dromaeo.domcoretraverse'
-
-  def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # http://dromaeo.com?dom-traverse not disabled.
-    return StoryExpectations()
+class DomCoreTraverse(Dromaeo):
+  NAME = 'dromaeo.domcoretraverse'
+  URL = 'http://dromaeo.com?dom-traverse'
