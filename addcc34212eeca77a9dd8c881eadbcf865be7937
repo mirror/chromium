@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd840c3d_677ff185",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-07T12:14:43Z",
+      "side": 1,
+      "message": "You say that account_reconcilor_lock_ is destroyed on the UI thread. How can you make sure of that? Could we add a DCHECK in dtor that this is only called on the UI thread?",
+      "range": {
+        "startLine": 91,
+        "startChar": 3,
+        "endLine": 91,
+        "endChar": 31
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c37c21e_d98c38f7",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-07T12:14:43Z",
+      "side": 1,
+      "message": "Does this mean that we lock the reconcilor on every request to GAIA and potentially unlock on each response is received? If it is done on request, then there is a risk that we lock the reconcilor too much.",
+      "range": {
+        "startLine": 106,
+        "startChar": 11,
+        "endLine": 106,
+        "endChar": 33
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de97b290_0f38da14",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-07T12:14:43Z",
+      "side": 1,
+      "message": "There is a behavior change in the way we set the headers when DICE is enabled:\n* before your CL, both DICE and Mirror headers were set (Mirror header will have enable_account_consistency\u003dfalse)\n* after your CL, only the DICE header is set\n\nI this we\u0027ll have to preserve sending the Mirror header as it is used by Drive (see https://docs.google.com/document/d/1upvMERWetLovb0XoGQBuhgMSCd_jLLn9otMqMKU-lHk/edit#bookmark\u003did.ve8j60bpta8d ). Or maybe it makes sense to stop sending it, but then we\u0027ll have to tell drive to change.",
+      "range": {
+        "startLine": 336,
+        "startChar": 6,
+        "endLine": 336,
+        "endChar": 23
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de09203_fcf0411d",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-07T12:14:43Z",
+      "side": 1,
+      "message": "Reading this code made me wonder if this check is needed - I mean if we added a DICE header than I expect that DICE is enabled. This is of course incorrect as DICE fix auth error may be enabled, right.\nMaybe in a future CL, we should rename IsAccountConsistencyDiceEnabled to IsAccountConsistencyDiceFullyEnabled",
+      "range": {
+        "startLine": 341,
+        "startChar": 7,
+        "endLine": 341,
+        "endChar": 39
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356e5c21_794086b1",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-07T12:14:43Z",
+      "side": 1,
+      "message": "Here and everywhere else: I think I would prefer myself to inline the checks here as it would make the test code more readable (even thought it would be more verbose).",
+      "range": {
+        "startLine": 472,
+        "startChar": 2,
+        "endLine": 472,
+        "endChar": 30
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6689c214_8b2ee543",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-07T12:14:43Z",
+      "side": 1,
+      "message": "I would move this log outside the if and just keep it as (abort reconcile already logs the fact that the reconcile is aborted):\nVLOG(1) \u003c\u003c \"AccountReconcilor::OnBlockReconcile\"",
+      "range": {
+        "startLine": 572,
+        "startChar": 10,
+        "endLine": 572,
+        "endChar": 11
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67280d9d_1994fe7e",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-07T12:14:43Z",
+      "side": 1,
+      "message": "I just want to make sure we thought about the order in which we call the observer:\n* for block reconcile, we fist abort and then send |OnReconcilorBlocked|\n* for unlock, we first sent |OnReconcilorUnblocked| and then start reconcilor\n\nFor the observers, the current implementation guarantees the following order (in case of block when reconcilor is working):\n* OnReconcilorBlocked\n* OnReconcilorUnblocked\n* OnReconcileStarted\n\n1. Is this order important (do observers depend on it?)? Should we document it in the header file?\n2. Do we want a call to OnReconcileAborted before / after OnReconcilorBlocked?",
+      "range": {
+        "startLine": 582,
+        "startChar": 13,
+        "endLine": 582,
+        "endChar": 21
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364e7ab2_cfaf070e",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-07T12:14:43Z",
+      "side": 1,
+      "message": "Ditto about log statement.",
+      "range": {
+        "startLine": 585,
+        "startChar": 35,
+        "endLine": 585,
+        "endChar": 53
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b5eb20_5fc0dd77",
+        "filename": "components/signin/core/browser/account_reconcilor.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-07T12:14:43Z",
+      "side": 1,
+      "message": "For consistency, should we rename this method to OnReconcilorStated? Or rename the others to OnBlockReconcile and OnAbortReconcile?",
+      "range": {
+        "startLine": 59,
+        "startChar": 17,
+        "endLine": 59,
+        "endChar": 32
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13c1a7e_19822a3f",
+        "filename": "components/signin/core/browser/account_reconcilor.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-07T12:14:43Z",
+      "side": 1,
+      "message": "Remove \"by AccountReconcilor::Lock\" - maybe in the future something else may block the reconcilor.",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 78
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9a0eff_6febe144",
+        "filename": "components/signin/core/browser/account_reconcilor.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-07T12:14:43Z",
+      "side": 1,
+      "message": "s/OnBlockReconcile/BlockReconcile (there are not events, but operations)",
+      "range": {
+        "startLine": 195,
+        "startChar": 7,
+        "endLine": 195,
+        "endChar": 23
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5e1a8d_fd46a8f5",
+        "filename": "components/signin/core/browser/account_reconcilor.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-07T12:14:43Z",
+      "side": 1,
+      "message": "s/OnUnblockReconcile/UnblockReconcile",
+      "range": {
+        "startLine": 196,
+        "startChar": 7,
+        "endLine": 196,
+        "endChar": 25
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36079eec_adbd906a",
+        "filename": "components/signin/core/browser/signin_header_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-07T12:14:43Z",
+      "side": 1,
+      "message": "Please add a comment explaining when this method returns \"true\" (it is not clear what returning true means for a method named AppendOrRemoveXXX).",
+      "range": {
+        "startLine": 161,
+        "startChar": 21,
+        "endLine": 161,
+        "endChar": 48
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54a17a3_e2d25856",
+        "filename": "components/signin/core/browser/signin_header_helper.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-07T12:14:43Z",
+      "side": 1,
+      "message": "Should this method even be defined when building DICE is not enabled?",
+      "range": {
+        "startLine": 174,
+        "startChar": 5,
+        "endLine": 174,
+        "endChar": 36
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
