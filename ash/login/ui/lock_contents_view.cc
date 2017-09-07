@@ -4,11 +4,17 @@
 
 #include "ash/login/ui/lock_contents_view.h"
 
+#include "ash/ime/ime_controller.h"
 #include "ash/login/ui/lock_screen.h"
 #include "ash/login/ui/login_auth_user_view.h"
+#include "ash/login/ui/login_bubble.h"
 #include "ash/login/ui/login_display_style.h"
 #include "ash/login/ui/login_user_view.h"
 #include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
+#include "base/strings/string16.h"
+#include "base/strings/utf_string_conversions.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/display/display.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/managed_display_info.h"
@@ -127,6 +133,7 @@ LockContentsView::LockContentsView(LoginDataDispatcher* data_dispatcher)
     : data_dispatcher_(data_dispatcher), display_observer_(this) {
   data_dispatcher_->AddObserver(this);
   display_observer_.Add(display::Screen::GetScreen());
+  error_bubble_ = base::MakeUnique<LoginBubble>();
 }
 
 LockContentsView::~LockContentsView() {
@@ -186,6 +193,7 @@ void LockContentsView::OnUsersChanged(
   else if (users.size() >= 7)
     CreateHighDensityLayout(users);
 
+  CurrentAuthUserChanged(primary_auth_->current_user()->account_id);
   LayoutAuth(primary_auth_, opt_secondary_auth_, false /*animate*/);
 
   // Force layout.
@@ -370,17 +378,25 @@ void LockContentsView::AddRotationAction(const OnRotate& on_rotate) {
 void LockContentsView::SwapPrimaryAndSecondaryAuth(bool is_primary) {
   if (is_primary &&
       primary_auth_->auth_methods() == LoginAuthUserView::AUTH_NONE) {
+    CurrentAuthUserChanged(primary_auth_->current_user()->account_id);
     LayoutAuth(primary_auth_, opt_secondary_auth_, true /*animate*/);
   } else if (!is_primary && opt_secondary_auth_ &&
              opt_secondary_auth_->auth_methods() ==
                  LoginAuthUserView::AUTH_NONE) {
+    CurrentAuthUserChanged(opt_secondary_auth_->current_user()->account_id);
     LayoutAuth(opt_secondary_auth_, primary_auth_, true /*animate*/);
   }
 }
 
 void LockContentsView::OnAuthenticate(bool auth_success) {
-  if (auth_success)
+  error_bubble_->Close();
+  if (auth_success) {
+    unlock_attempt_ = 0;
     ash::LockScreen::Get()->Destroy();
+  } else {
+    ShowErrorMessage();
+    ++unlock_attempt_;
+  }
 }
 
 LockContentsView::UserState* LockContentsView::FindStateForUser(
@@ -429,7 +445,51 @@ void LockContentsView::SwapToAuthUser(int user_index) {
 
   view->UpdateForUser(previous_auth_user, true /*animate*/);
   primary_auth_->UpdateForUser(new_auth_user);
+  CurrentAuthUserChanged(new_auth_user->account_id);
   LayoutAuth(primary_auth_, nullptr, true /*animate*/);
+}
+
+void LockContentsView::ShowErrorMessage() {
+  std::string error_text = l10n_util::GetStringUTF8(
+      unlock_attempt_ ? IDS_ASH_LOGIN_ERROR_AUTHENTICATING_2ND_TIME
+                      : IDS_ASH_LOGIN_ERROR_AUTHENTICATING);
+  ImeController* ime_controller = Shell::Get()->ime_controller();
+  if (ime_controller->IsCapsLockEnabled()) {
+    error_text +=
+        "\n" + l10n_util::GetStringUTF8(IDS_ASH_LOGIN_ERROR_CAPS_LOCK_HINT);
+  }
+
+  // Display a hint to switch keyboards if there are other active input
+  // methods.
+  if (ime_controller->available_imes().size() > 1) {
+    error_text += "\n" + l10n_util::GetStringUTF8(
+                             IDS_ASH_LOGIN_ERROR_KEYBOARD_SWITCH_HINT);
+  }
+
+  error_bubble_->ShowErrorBubble(
+      base::UTF8ToUTF16(error_text),
+      CurrentAuthUserView()->password_view() /*anchor_view*/);
+}
+
+void LockContentsView::CurrentAuthUserChanged(AccountId account_id) {
+  if (current_auth_account_id_ == account_id)
+    return;
+  current_auth_account_id_ = account_id;
+
+  // Reset unlock attempt when the auth user changes.
+  unlock_attempt_ = 0;
+}
+
+LoginAuthUserView* LockContentsView::CurrentAuthUserView() {
+  if (opt_secondary_auth_ &&
+      opt_secondary_auth_->auth_methods() != LoginAuthUserView::AUTH_NONE &&
+      opt_secondary_auth_->current_user()->account_id ==
+          current_auth_account_id_) {
+    DCHECK(primary_auth_->auth_methods() == LoginAuthUserView::AUTH_NONE);
+    return opt_secondary_auth_;
+  }
+
+  return primary_auth_;
 }
 
 }  // namespace ash
