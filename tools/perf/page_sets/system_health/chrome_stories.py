@@ -40,18 +40,25 @@ class SearchOmniboxStory(system_health_story.SystemHealthStory):
   TAGS = [story_tags.EMERGING_MARKET]
 
   def _DidLoadDocument(self, action_runner):
+    print("[TEST] _DidLoadDocument starting");
     app_ui = action_runner.tab.browser.GetAppUi()
     platform = action_runner.tab.browser.platform
     app_ui.WaitForUiNode(resource_id='url_bar')
     url_bar = app_ui.GetUiNode(resource_id='url_bar')
     url_bar.Tap()
+    print("Tap() completed");
     action_runner.Wait(1) # user wait before typing
+    print("Wait(1)");
     platform.android_action_runner.InputText('drake')
     action_runner.Wait(0.5) # user wait after typing
+    print("InputText completed, pressing enter");
     platform.android_action_runner.InputKeyEvent(keyevent.KEYCODE_ENTER)
 
+    print("Waiting for navigate");
     action_runner.WaitForNavigate()
+    print("Navigate completed");
     action_runner.ScrollPage(use_touch=True, distance=500)
+    print("Test completed");
 
 
 class MobileNewTabPageStory(system_health_story.SystemHealthStory):

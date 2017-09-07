@@ -3439,7 +3439,10 @@ void WebViewImpl::DidCommitLoad(bool is_new_navigation,
 }
 
 void WebViewImpl::ResizeAfterLayout() {
-  DCHECK(MainFrameImpl());
+  if (!MainFrameImpl()) {
+    LOG(ERROR) << "WebViewImpl::ResizeAfterLayout: MainFrameImpl is NULL";
+    return;
+  }
   if (!client_ || !client_->CanUpdateLayout())
     return;
 
@@ -3465,7 +3468,10 @@ void WebViewImpl::ResizeAfterLayout() {
 }
 
 void WebViewImpl::LayoutUpdated() {
-  DCHECK(MainFrameImpl());
+  if (!MainFrameImpl()) {
+    LOG(ERROR) << "WebViewImpl::LayoutUpdated called while Page has no local main frame";
+    return;
+  }
   if (!client_)
     return;
 
