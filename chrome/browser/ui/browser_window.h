@@ -229,6 +229,10 @@ class BrowserWindow : public ui::BaseWindow {
   // Shows the Update Recommended dialog box.
   virtual void ShowUpdateChromeDialog() = 0;
 
+  // Shows the intent picker bubble. |url| is the potential candidate to launch
+  // via ARC apps.
+  virtual void ShowIntentPickerBubble(const GURL& url) = 0;
+
   // Shows the Bookmark bubble. |url| is the URL being bookmarked,
   // |already_bookmarked| is true if the url is already bookmarked.
   virtual void ShowBookmarkBubble(const GURL& url, bool already_bookmarked) = 0;
