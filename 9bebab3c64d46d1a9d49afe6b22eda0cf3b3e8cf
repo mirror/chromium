@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22742d33_acff880d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-07T09:43:03Z",
+      "side": 1,
+      "message": "Could you either put it into () as well or the whole windows string in \"\". With the line wrapping I can\u0027t connect Windows and \"Creators Update\" in my mind.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "9bebab3c64d46d1a9d49afe6b22eda0cf3b3e8cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
