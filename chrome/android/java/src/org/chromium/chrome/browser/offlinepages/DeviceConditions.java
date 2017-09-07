@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.BatteryManager;
+import android.os.PowerManager;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.net.ConnectionType;
@@ -20,6 +21,7 @@ public class DeviceConditions {
     private final boolean mPowerConnected;
     private final int mBatteryPercentage;
     private final int mNetConnectionType;
+    private final boolean mPowerSaveOn;
 
     /**
      * Creates set of device network and power conditions.
@@ -27,10 +29,12 @@ public class DeviceConditions {
      * @param batteryPercentage percentage (0-100) of remaining battery power
      * @param connectionType the org.chromium.net.ConnectionType value for the network connection
      */
-    public DeviceConditions(boolean powerConnected, int batteryPercentage, int netConnectionType) {
+    public DeviceConditions(boolean powerConnected, int batteryPercentage, int netConnectionType,
+            boolean powerSaveOn) {
         mPowerConnected = powerConnected;
         mBatteryPercentage = batteryPercentage;
         mNetConnectionType = netConnectionType;
+        mPowerSaveOn = powerSaveOn;
     }
 
     @VisibleForTesting
@@ -38,6 +42,7 @@ public class DeviceConditions {
         mPowerConnected = false;
         mBatteryPercentage = 0;
         mNetConnectionType = ConnectionType.CONNECTION_NONE;
+        mPowerSaveOn = false;
     }
 
     /** Returns the current device conditions. May be overridden for testing. */
@@ -46,7 +51,8 @@ public class DeviceConditions {
         if (batteryStatus == null) return null;
 
         return new DeviceConditions(isPowerConnected(batteryStatus),
-                getBatteryPercentage(batteryStatus), getConnectionType(context));
+                getBatteryPercentage(batteryStatus), getConnectionType(context),
+                getInPowerSaveMode(context));
     }
 
     /** @return Whether power is connected. */
@@ -57,6 +63,13 @@ public class DeviceConditions {
     /** @return Battery percentage. */
     public static int getBatteryPercentage(Context context) {
         return getBatteryPercentage(getBatteryStatus(context));
+    }
+
+    /**
+     * @return true if the device is in power save mode.
+     */
+    public static boolean getInPowerSaveMode(Context context) {
+        return isPowerSaveModeOn(context);
     }
 
     /**
@@ -84,6 +97,7 @@ public class DeviceConditions {
     public int getNetConnectionType() {
         return mNetConnectionType;
     }
+
     /**
      * @return true if the active network is a metered network
      */
@@ -91,6 +105,13 @@ public class DeviceConditions {
         ConnectivityManager cm =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.isActiveNetworkMetered();
+    }
+
+    /**
+     * @return true if the device is in power save mode.
+     */
+    public boolean inPowerSaveMode() {
+        return mPowerSaveOn;
     }
 
     private static Intent getBatteryStatus(Context context) {
@@ -142,6 +163,11 @@ public class DeviceConditions {
             }
         }
         return connectionType;
+    }
+
+    private static boolean isPowerSaveModeOn(Context context) {
+        PowerManager powerManager = (PowerManager) context.getSystemService(context.POWER_SERVICE);
+        return powerManager.isPowerSaveMode();
     }
 
     /** Returns the NCN network type corresponding to the connectivity manager network type */
