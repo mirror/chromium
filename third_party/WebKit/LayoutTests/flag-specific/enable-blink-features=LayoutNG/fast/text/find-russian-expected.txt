@@ -1,5 +1,8 @@
 Tests find for strings with Russian letters й and ё in them.
+
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
+
+
 Exact matches first as a baseline
 
 PASS canFind(decomposedCyrillicShortI, decomposedCyrillicShortI) is true
