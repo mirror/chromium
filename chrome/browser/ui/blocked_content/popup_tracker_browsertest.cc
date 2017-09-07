@@ -7,7 +7,9 @@
 #include <string>
 
 #include "base/supports_user_data.h"
+#include "base/test/histogram_tester.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_list.h"
@@ -24,6 +26,8 @@
 #include "ui/events/keycodes/dom/dom_key.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 
+const char kPopupEngagement[] = "Popups.FirstDocument.EngagementTime";
+
 class PopupTrackerBrowserTest : public InProcessBrowserTest {
  public:
   PopupTrackerBrowserTest() {}
@@ -35,13 +39,17 @@ class PopupTrackerBrowserTest : public InProcessBrowserTest {
 };
 
 IN_PROC_BROWSER_TEST_F(PopupTrackerBrowserTest, NoPopup_NoTracker) {
+  base::HistogramTester tester;
   ui_test_utils::NavigateToURL(browser(),
                                embedded_test_server()->GetURL("/title1.html"));
   ASSERT_FALSE(PopupTracker::FromWebContents(
       browser()->tab_strip_model()->GetActiveWebContents()));
+
+  tester.ExpectTotalCount(kPopupEngagement, 0);
 }
 
 IN_PROC_BROWSER_TEST_F(PopupTrackerBrowserTest, WindowOpenPopup_HasTracker) {
+  base::HistogramTester tester;
   ui_test_utils::NavigateToURL(browser(),
                                embedded_test_server()->GetURL("/title1.html"));
   std::string script = R"(
@@ -56,6 +64,14 @@ IN_PROC_BROWSER_TEST_F(PopupTrackerBrowserTest, WindowOpenPopup_HasTracker) {
   ASSERT_EQ(2, browser()->tab_strip_model()->count());
   ASSERT_TRUE(PopupTracker::FromWebContents(
       browser()->tab_strip_model()->GetActiveWebContents()));
+
+  // Close the popup and check metric.
+  content::WebContentsDestroyedWatcher destroyed_watcher(
+      browser()->tab_strip_model()->GetActiveWebContents());
+  browser()->tab_strip_model()->CloseAllTabs();
+  destroyed_watcher.Wait();
+
+  tester.ExpectTotalCount(kPopupEngagement, 1);
 }
 
 // OpenURLFromTab goes through a different code path than traditional popups
@@ -76,8 +92,17 @@ IN_PROC_BROWSER_TEST_F(PopupTrackerBrowserTest, OpenURLPopup_HasTracker) {
   wait_for_new_tab.Wait();
 
   ASSERT_EQ(2u, chrome::GetBrowserCount(browser()->profile()));
-  ASSERT_TRUE(PopupTracker::FromWebContents(BrowserList::GetInstance()
-                                                ->GetLastActive()
-                                                ->tab_strip_model()
-                                                ->GetActiveWebContents()));
+  content::WebContents* new_contents = BrowserList::GetInstance()
+                                           ->GetLastActive()
+                                           ->tab_strip_model()
+                                           ->GetActiveWebContents();
+  ASSERT_TRUE(PopupTracker::FromWebContents(new_contents));
+
+  // Close the popup and check metric.
+  content::WebContentsDestroyedWatcher destroyed_watcher(new_contents);
+  BrowserList::CloseAllBrowsersWithProfile(
+      Profile::FromWebContents(new_contents));
+  destroyed_watcher.Wait();
+
+  tester.ExpectTotalCount(kPopupEngagement, 1);
 }
