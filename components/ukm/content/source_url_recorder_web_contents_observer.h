@@ -1,0 +1,21 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef COMPONENTS_UKM_CONTENT_SOURCE_URL_RECORDER_WEB_CONTENTS_OBSERVER_H_
+#define COMPONENTS_UKM_CONTENT_SOURCE_URL_RECORDER_WEB_CONTENTS_OBSERVER_H_
+
+namespace content {
+class WebContents;
+}  // namespace content
+
+namespace ukm {
+
+// Creates a UKM source URL recorder for the given WebContents. If a source URL
+// recorder is already associated with the WebContents, this method is a no-op.
+void InitializeSourceUrlRecorderForWebContents(
+    content::WebContents* web_contents);
+
+}  // namespace ukm
+
+#endif  // COMPONENTS_UKM_CONTENT_SOURCE_URL_RECORDER_WEB_CONTENTS_OBSERVER_H_
