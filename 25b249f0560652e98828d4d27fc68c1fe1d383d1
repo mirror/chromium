@@ -87,6 +87,29 @@
     },
     {
       "key": {
+        "uuid": "7ff5163f_c9c770fb",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-07T04:00:29Z",
+      "side": 1,
+      "message": "nitty nit: (parens) is not necessary here.",
+      "range": {
+        "startLine": 71,
+        "startChar": 47,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "855c77c6_d0dc1461",
         "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
         "patchSetId": 14
