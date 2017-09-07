@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a391173b_2d187dac",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-07T15:37:22Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s unfortunate the theming is a singleton...\n\nOk, how about this...\n\nReplace (in a separate patch), all calls to ScrollbarTheme::GetTheme() with a call to Page-\u003eGetScrollbarTheme(). Page::GetScrollbarTheme can check settings and return the appropriate theme. The wrinkle is that some of these calls currently come from Source/platform which can\u0027t call Page methods. You\u0027ll have to add a method on ScrollableArea to get the theme and implement it in PLSA/FrameView which can.\n\nI think we can also make ScrollbarTheme non-static/singleton. That is, actually create the correct ScrollbarTheme and store it as a member in Page.\n\nThat should help clean some of this up.",
+      "parentUuid": "81270865_8e37b0bf",
+      "range": {
+        "startLine": 500,
+        "startChar": 4,
+        "endLine": 500,
+        "endChar": 62
+      },
+      "revId": "1541c7de7ba383bc28a5b3408cc10547206971ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d51dacc_ab09bb67",
         "filename": "third_party/WebKit/Source/core/inspector/DevToolsEmulator.cpp",
         "patchSetId": 7
@@ -93,6 +117,30 @@
       "revId": "1541c7de7ba383bc28a5b3408cc10547206971ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b50d2c_b68dd2e2",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsEmulator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-07T15:37:22Z",
+      "side": 1,
+      "message": "True, but all the REFs that we set here are also static per process I think so we already have this issue. Anyway, see my other comment - lets make ScrollbarTheme non-global.",
+      "parentUuid": "faf77b87_6d21f573",
+      "range": {
+        "startLine": 283,
+        "startChar": 38,
+        "endLine": 283,
+        "endChar": 71
+      },
+      "revId": "1541c7de7ba383bc28a5b3408cc10547206971ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
