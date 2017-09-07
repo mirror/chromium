@@ -125,7 +125,7 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
                                    base::OnceClosure failure_callback) override;
   void StartServiceWorkerForNavigationHint(
       const GURL& document_url,
-      const StartServiceWorkerForNavigationHintCallback& callback) override;
+      StartServiceWorkerForNavigationHintCallback callback) override;
   void StopAllServiceWorkersForOrigin(const GURL& origin) override;
 
   // These methods must only be called from the IO thread.
@@ -303,20 +303,20 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
 
   void StartServiceWorkerForNavigationHintOnIO(
       const GURL& document_url,
-      const StartServiceWorkerForNavigationHintCallback& callback);
+      StartServiceWorkerForNavigationHintCallback callback);
 
   void DidFindRegistrationForNavigationHint(
-      const StartServiceWorkerForNavigationHintCallback& callback,
+      StartServiceWorkerForNavigationHintCallback callback,
       ServiceWorkerStatusCode status,
       scoped_refptr<ServiceWorkerRegistration> registration);
 
   void DidStartServiceWorkerForNavigationHint(
       const GURL& pattern,
-      const StartServiceWorkerForNavigationHintCallback& callback,
+      StartServiceWorkerForNavigationHintCallback callback,
       ServiceWorkerStatusCode code);
 
   void RecordStartServiceWorkerForNavigationHintResult(
-      const StartServiceWorkerForNavigationHintCallback& callback,
+      StartServiceWorkerForNavigationHintCallback callback,
       StartServiceWorkerForNavigationHintResult result);
 
   // The core context is only for use on the IO thread.
