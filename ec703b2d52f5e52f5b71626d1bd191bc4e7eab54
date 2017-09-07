@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b1f7f2e_89799568",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-07T14:48:23Z",
+      "side": 1,
+      "message": "switch order?",
+      "revId": "ec703b2d52f5e52f5b71626d1bd191bc4e7eab54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
