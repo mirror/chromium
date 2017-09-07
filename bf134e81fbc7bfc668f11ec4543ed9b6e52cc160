@@ -46,6 +46,30 @@
       "revId": "bf134e81fbc7bfc668f11ec4543ed9b6e52cc160",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93930c37_ad66be46",
+        "filename": "tools/perf/page_sets/tough_pinch_zoom_cases.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-07T14:57:22Z",
+      "side": 1,
+      "message": "\u003e It is okay because we only CHECK whether a touch point is inside the frame rect at a touch start. I think that is correct design because the intuitive behavior is to perform hit testing at a touch start, and later events for the same touch point will be delivered to the same widget.\n\nAh, ok, thanks for the explanation. In that case, coordinate mappings are definitely broken.",
+      "parentUuid": "3658405f_66c5e4aa",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "bf134e81fbc7bfc668f11ec4543ed9b6e52cc160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
