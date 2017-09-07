@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "a1c324fc_6717b684",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-09-07T21:18:18Z",
+      "side": 1,
+      "message": "what about !sizes_list.empty()",
+      "revId": "8953568898b8303f4257af80c0f191d4634c7249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0acd2534_d0222bb1",
         "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
         "patchSetId": 8
@@ -53,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "b77315fe_fcd1a91b",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-09-07T21:18:18Z",
+      "side": 1,
+      "message": "125K, that\u0027s no longer true, as we are pruning nodes.\nIIRC, trace are about 10K. Is that number recent?",
+      "revId": "8953568898b8303f4257af80c0f191d4634c7249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e035bbd7_cfbd3af2",
         "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
         "patchSetId": 8
@@ -64,6 +98,23 @@
       "writtenOn": "2017-09-07T21:07:31Z",
       "side": 1,
       "message": "this is insufficient count to flush, but I think you already know that and are planning on fixing in a followup CL.",
+      "revId": "8953568898b8303f4257af80c0f191d4634c7249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f431aa36_4e40e7bc",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-09-07T21:18:18Z",
+      "side": 1,
+      "message": "Do we really need to leak them?\nI\u0027m not sure what happen for a browsertest when we run with gtest_repeat",
       "revId": "8953568898b8303f4257af80c0f191d4634c7249",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
