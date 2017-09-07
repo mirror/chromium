@@ -335,6 +335,11 @@ class flat_tree {
   template <class... Args>
   iterator unsafe_emplace(const_iterator position, Args&&... args);
 
+  iterator const_cast_it(const_iterator c_it) {
+    auto distance = std::distance(cbegin(), c_it);
+    return std::next(begin(), distance);
+  }
+
  private:
   // Helper class for e.g. lower_bound that can compare a value on the left
   // to a key on the right.
@@ -363,11 +368,6 @@ class flat_tree {
   };
 
   const flat_tree& as_const() { return *this; }
-
-  iterator const_cast_it(const_iterator c_it) {
-    auto distance = std::distance(cbegin(), c_it);
-    return std::next(begin(), distance);
-  }
 
   // This method is inspired by both std::map::insert(P&&) and
   // std::map::insert_or_assign(const K&, V&&). It inserts val if an equivalent
