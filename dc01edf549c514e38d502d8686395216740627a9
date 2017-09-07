@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb83e294_095917c2",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-07T13:35:17Z",
+      "side": 1,
+      "message": "This processing must be done in media_stream_constraints_util_audio.cc and the result should be in |current_request_info_-\u003eaudio-capture_settings()|",
+      "range": {
+        "startLine": 1027,
+        "startChar": 3,
+        "endLine": 1027,
+        "endChar": 4
+      },
+      "revId": "dc01edf549c514e38d502d8686395216740627a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
