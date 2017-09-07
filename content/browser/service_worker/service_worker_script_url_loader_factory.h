@@ -10,8 +10,7 @@
 
 namespace content {
 
-class ServiceWorkerContextCore;
-class ServiceWorkerProviderHost;
+class ServiceWorkerVersion;
 class URLLoaderFactoryGetter;
 
 // S13nServiceWorker:
@@ -22,8 +21,7 @@ class URLLoaderFactoryGetter;
 class ServiceWorkerScriptURLLoaderFactory : public mojom::URLLoaderFactory {
  public:
   ServiceWorkerScriptURLLoaderFactory(
-      base::WeakPtr<ServiceWorkerContextCore> context,
-      base::WeakPtr<ServiceWorkerProviderHost> provider_host,
+      scoped_refptr<ServiceWorkerVersion> version,
       scoped_refptr<URLLoaderFactoryGetter> loader_factory_getter);
   ~ServiceWorkerScriptURLLoaderFactory() override;
 
@@ -41,8 +39,7 @@ class ServiceWorkerScriptURLLoaderFactory : public mojom::URLLoaderFactory {
  private:
   bool ShouldHandleScriptRequest(const ResourceRequest& resource_request);
 
-  base::WeakPtr<ServiceWorkerContextCore> context_;
-  base::WeakPtr<ServiceWorkerProviderHost> provider_host_;
+  scoped_refptr<ServiceWorkerVersion> version_;
   scoped_refptr<URLLoaderFactoryGetter> loader_factory_getter_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerScriptURLLoaderFactory);
