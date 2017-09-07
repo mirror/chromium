@@ -158,6 +158,24 @@
       "revId": "29279851c9ef9f4e09bbcb604bed310ea3d2db6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f19e6d_3b44fd67",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-07T19:40:44Z",
+      "side": 1,
+      "message": "Ah, okay, didn\u0027t look too closely at this one. Added a lock here as well.",
+      "parentUuid": "7cb54a73_15c9c2b8",
+      "revId": "29279851c9ef9f4e09bbcb604bed310ea3d2db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

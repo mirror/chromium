@@ -16,6 +16,24 @@
       "revId": "aab6ff7b503c3e25ae6d08b1cb54c901831ce78d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185b0538_88b67088",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-07T19:40:44Z",
+      "side": 1,
+      "message": "Added a comment. It\u0027s just guarding assignment of self._reader_thread.\n\nthe reader_thread local variable exists so that the logic further down doesn\u0027t require the lock.",
+      "parentUuid": "8f57c72e_ebb39d56",
+      "revId": "aab6ff7b503c3e25ae6d08b1cb54c901831ce78d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
