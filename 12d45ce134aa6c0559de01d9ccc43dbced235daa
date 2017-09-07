@@ -60,6 +60,42 @@
     },
     {
       "key": {
+        "uuid": "c92e8596_3f2b33f8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-07T23:18:02Z",
+      "side": 1,
+      "message": "I just tried visibility:collapse and blink seems buggy, and found crbug.com/174167. Also even if we handle it correctly, it seems that we should still paint collapsed borders around a visibility:collapse row, in which case the row\u0027s visual rect should not be empty.\n\nI would like to let the layout module determine the visual overflow of visibility:collapse. If the layout module gives zero visual overflow of a visibility:collapse row, then LayoutTableRow::LocalVisualRectIgnoringVisibility() will return an empty rect.\n\nAdded comment here about visibility:collapse.",
+      "parentUuid": "de39b871_822192e9",
+      "revId": "12d45ce134aa6c0559de01d9ccc43dbced235daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83cf3ffe_f2dd10b9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-07T23:18:02Z",
+      "side": 1,
+      "message": "Having LocalVisualRect() and LocalVisualRectIgnoringVisibility() has another benefit: we no longer need most implentations of LocalVisualrect() to repeat  visibility check.\n\nIt would be also hard to restrict this to table-related classes. This is the current LayoutBox::LocalVisualRect():\n\nLayoutRect LayoutBox::LocalVisualRect() const {\n  if (StyleRef().Visibility() !\u003d EVisibility::kVisible)\n    return LayoutRect();\n\n  if (HasMask() \u0026\u0026 !ShouldClipOverflow() \u0026\u0026\n      !RuntimeEnabledFeatures::SlimmingPaintV2Enabled())\n    return LayoutRect(Layer()-\u003eBoxForFilterOrMask());\n\n  return SelfVisualOverflowRect();\n}\n\nI would need to override LayoutBox::LocalVisualRect() in table-related classes by removing the visibility check but keeping the remaining logic.",
+      "parentUuid": "221af979_3dbb0938",
+      "revId": "12d45ce134aa6c0559de01d9ccc43dbced235daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cc0eb71_7150f1b9",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCol.cpp",
         "patchSetId": 2
