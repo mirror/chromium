@@ -19,15 +19,14 @@
 <script id="code" type="text/worklet">
 var testsPassed = false;
 try {
-    registerPaint('foo13', class {
+    registerPaint('foo', class {
         static get paintRenderingContext2DSettings() {
-            return {alpha: true};
+            return {alpha: 42};
         }
-        paint() { }
     });
-    testsPassed = true;
 } catch(ex) {
-    testsPassed = false;
+    if (ex.name == "TypeError" && ex.message == "Failed to execute 'registerPaint' on 'PaintWorkletGlobalScope': The 'PaintRenderingContext2DSettings' property on the class has no alpha property.")
+        testsPassed = true;
 }
 
 registerPaint('geometry', class {
