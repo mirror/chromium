@@ -436,6 +436,9 @@ void PasswordProtectionService::RequestFinished(
                  response.get(), base::Time::Now());
   }
 
+  LoginReputationClientRequest request_proto;
+  LoginReputationClientResponse response_proto;
+  ShowModalWarning(request->web_contents(), &request_proto, &response_proto);
   // Finished processing this request. Remove it from pending list.
   for (auto it = requests_.begin(); it != requests_.end(); it++) {
     if (it->get() == request) {
