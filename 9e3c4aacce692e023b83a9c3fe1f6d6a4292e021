@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddf31fd0_2e2eb8ed",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T13:53:35Z",
+      "side": 1,
+      "message": "break; here too as a good habit",
+      "revId": "9e3c4aacce692e023b83a9c3fe1f6d6a4292e021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
