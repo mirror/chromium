@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b73ed0de_59b6a2e6",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-07T18:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c70cf699_9ed8ec1c",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac84a1f8_7d66621f",
         "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55aad2f0_8317376d",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-07T18:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac84a1f8_7d66621f",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3bf7ed7b_de59db3c",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-07T18:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84b8dd48_ef62e28c",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e2668df_3351a1e7",
         "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f97df5f6_6dd81fdc",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-07T18:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e2668df_3351a1e7",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac16aa80_3c469d9a",
         "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
         "patchSetId": 11
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-06T21:20:32Z",
       "side": 1,
       "message": "What about test without HTML for the response?",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39b74fdd_c2492d5c",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-07T18:12:27Z",
+      "side": 1,
+      "message": "I already had BlockRequestCustomNetErrorWithoutErrorHTML above. I\u0027ve swapped it with BlockRequestCustomNetErrorAndErrorHTML in the latest patch so that it\u0027s not snuck between the \"NetErrorAndErrorHTML\" tests.\n\nWas that what you were thinking of, or did have something additional in mind?",
+      "parentUuid": "ac16aa80_3c469d9a",
       "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f4fac247_1a7f6517",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-07T18:12:27Z",
+      "side": 1,
+      "message": "Refactoring mistake. :-(\n\nI\u0027ve added them back in.",
+      "parentUuid": "797a2d11_3eb54031",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0130f712_99ee07a0",
         "filename": "content/public/browser/navigation_throttle.h",
         "patchSetId": 11
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b98cd0ed_6937124f",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-07T18:12:27Z",
+      "side": 1,
+      "message": "I had trouble getting multiple fields to work, but I think that all turned out to be issues with constexpr (see below). I\u0027ve restored the extra two.",
+      "parentUuid": "0130f712_99ee07a0",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "377529a9_60c2680f",
         "filename": "content/public/browser/navigation_throttle.h",
         "patchSetId": 11
@@ -132,6 +258,24 @@
       "writtenOn": "2017-09-06T21:20:32Z",
       "side": 1,
       "message": "Why not keep the constexpr?",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e42f3f_a6116d6f",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-07T18:12:27Z",
+      "side": 1,
+      "message": "It results in an error due to the base::Optional\u003cstd::string\u003e:\n\n    error: [chromium-style] Complex constructor has an inlined body.",
+      "parentUuid": "377529a9_60c2680f",
       "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -173,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "1ad9b0d1_a5f14ed5",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-07T18:12:27Z",
+      "side": 1,
+      "message": "As discussed in chat, I\u0027ve added back the operator for testing.",
+      "parentUuid": "15bcd405_0ec33edd",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9114b41c_c6613193",
         "filename": "content/public/test/navigation_simulator.cc",
         "patchSetId": 11
@@ -187,6 +349,24 @@
       "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb33052_2041ab8f",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-07T18:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9114b41c_c6613193",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
