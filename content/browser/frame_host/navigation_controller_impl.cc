@@ -1357,6 +1357,7 @@ void NavigationControllerImpl::RendererDidNavigateToExistingPage(
         UMA_HISTOGRAM_BOOLEAN(
             "Navigation.SecureSchemeHasSSLStatus.ExistingPageBrowserInitiated",
             has_cert);
+        CHECK(has_cert);
       }
     }
   } else {
