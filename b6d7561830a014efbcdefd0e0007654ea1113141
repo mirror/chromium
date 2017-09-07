@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5a1bf1c3_5c076c7f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T19:18:10Z",
+      "side": 1,
+      "message": "On ui/gfx/ less so, on ui/gfx/geometry yes I am fine with it. They are doing geometry things if they\u0027re doing radians.\n\nWe considered //geom or something before, I am not sure that base is the right place for such things. net/ doesn\u0027t need it so it doesn\u0027t need to be in base/ roughly..",
+      "parentUuid": "28f46df3_f01a8412",
+      "revId": "b6d7561830a014efbcdefd0e0007654ea1113141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fca8aed6_5d5238b2",
         "filename": "/COMMIT_MSG",
         "patchSetId": 22
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "So, base/numerics/ranges.h?",
       "parentUuid": "15d03a22_00aac308",
+      "revId": "b6d7561830a014efbcdefd0e0007654ea1113141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba05e86_e745a615",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T19:18:10Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "41fb97ed_ab149472",
       "revId": "b6d7561830a014efbcdefd0e0007654ea1113141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
