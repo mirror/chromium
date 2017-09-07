@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "17bfff89_07802a06",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
+        "patchSetId": 16
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-09-07T05:48:57Z",
+      "side": 1,
+      "message": "There might now be places where we do it unnecessarily in the caller. I can go hunt those down either in this CL or a new one.",
+      "parentUuid": "956ad0e3_61c9e256",
+      "revId": "a4f6e8a1dc6898218a5220e1ab55c4f53c435492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26007cf6_7acdf591",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
         "patchSetId": 16
