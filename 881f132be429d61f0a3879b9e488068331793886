@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "84fd6fd0_a9937d43",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-07T03:35:24Z",
+      "side": 1,
+      "message": "Changed the description of all newly added tabs.",
+      "parentUuid": "8eaf2279_6ac97b2c",
+      "range": {
+        "startLine": 417,
+        "startChar": 132,
+        "endLine": 417,
+        "endChar": 147
+      },
+      "revId": "881f132be429d61f0a3879b9e488068331793886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59daf179_9ff2931d",
         "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "33ff91a2_9ba44b01",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-07T03:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59daf179_9ff2931d",
+      "range": {
+        "startLine": 1144,
+        "startChar": 2,
+        "endLine": 1144,
+        "endChar": 4
+      },
+      "revId": "881f132be429d61f0a3879b9e488068331793886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8120e87e_6109a089",
         "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "881f132be429d61f0a3879b9e488068331793886",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b2f0b1_2c0b0bf9",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-07T03:35:24Z",
+      "side": 1,
+      "message": "Ah good idea. Done.",
+      "parentUuid": "8120e87e_6109a089",
+      "range": {
+        "startLine": 1149,
+        "startChar": 6,
+        "endLine": 1149,
+        "endChar": 29
+      },
+      "revId": "881f132be429d61f0a3879b9e488068331793886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
