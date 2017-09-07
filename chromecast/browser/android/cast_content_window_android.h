@@ -42,7 +42,8 @@ class CastContentWindowAndroid : public CastContentWindow {
   friend class CastContentWindow;
 
   // This class should only be instantiated by CastContentWindow::Create.
-  explicit CastContentWindowAndroid(CastContentWindow::Delegate* delegate);
+  explicit CastContentWindowAndroid(bool isService,
+                                    CastContentWindow::Delegate* delegate);
 
   CastContentWindow::Delegate* const delegate_;
   base::android::ScopedJavaGlobalRef<jobject> java_window_;

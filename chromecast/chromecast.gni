@@ -47,6 +47,9 @@ declare_args() {
 
   # Set true for builds targeting Android Things.
   is_android_things = false
+
+  # Set false to starting music apps as services.
+  music_as_a_service = false
 }
 
 declare_args() {

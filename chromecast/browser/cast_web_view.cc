@@ -55,7 +55,8 @@ std::unique_ptr<content::WebContents> CreateWebContents(
 
 }  // namespace
 
-CastWebView::CastWebView(Delegate* delegate,
+CastWebView::CastWebView(bool is_service,
+                         Delegate* delegate,
                          CastWebContentsManager* web_contents_manager,
                          content::BrowserContext* browser_context,
                          scoped_refptr<content::SiteInstance> site_instance,
@@ -66,7 +67,7 @@ CastWebView::CastWebView(Delegate* delegate,
       site_instance_(std::move(site_instance)),
       transparent_(transparent),
       web_contents_(CreateWebContents(browser_context_, site_instance_)),
-      window_(shell::CastContentWindow::Create(delegate)),
+      window_(shell::CastContentWindow::Create(is_service, delegate)),
       did_start_navigation_(false),
       weak_factory_(this) {
   DCHECK(delegate_);

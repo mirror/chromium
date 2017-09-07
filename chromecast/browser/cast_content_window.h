@@ -38,6 +38,7 @@ class CastContentWindow {
   // Creates the platform specific CastContentWindow. |delegate| should outlive
   // the created CastContentWindow.
   static std::unique_ptr<CastContentWindow> Create(
+      bool is_service,
       CastContentWindow::Delegate* delegate);
 
   virtual ~CastContentWindow() {}
