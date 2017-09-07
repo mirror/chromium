@@ -23,6 +23,7 @@
 #include "chrome/browser/ui/browser_instant_controller.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/browser_window.h"
+#include "chrome/browser/ui/extra_navigation_info_utils.h"
 #include "chrome/browser/ui/location_bar/location_bar.h"
 #include "chrome/browser/ui/search/instant_search_prerenderer.h"
 #include "chrome/browser/ui/singleton_tabs.h"
@@ -554,10 +555,16 @@ void Navigate(NavigateParams* params) {
         // Perform the actual navigation, tracking whether it came from the
         // renderer.
 
+        chrome::SetExtraNavigationInfo(
+            params->target_contents, params->disposition,
+            true /* was_target_contents_null */, source_browser->is_app());
         LoadURLInContents(params->target_contents, params->url, params);
       }
     }
   } else {
+    chrome::SetExtraNavigationInfo(params->target_contents, params->disposition,
+                                   false /* was_target_contents_null */,
+                                   source_browser->is_app());
     // |target_contents| was specified non-NULL, and so we assume it has already
     // been navigated appropriately. We need to do nothing more other than
     // add it to the appropriate tabstrip.
@@ -600,6 +607,9 @@ void Navigate(NavigateParams* params) {
     WebContents* target =
         params->browser->tab_strip_model()->GetWebContentsAt(singleton_index);
 
+    chrome::SetExtraNavigationInfo(target, params->disposition,
+                                   false /* was_target_contents_null */,
+                                   source_browser->is_app());
     if (target->IsCrashed()) {
       target->GetController().Reload(content::ReloadType::NORMAL, true);
     } else if (params->path_behavior == NavigateParams::IGNORE_AND_NAVIGATE &&
