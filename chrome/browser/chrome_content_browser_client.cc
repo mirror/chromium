@@ -368,13 +368,6 @@
 #include "chrome/browser/plugins/flash_download_interception.h"
 #endif
 
-#if BUILDFLAG(ENABLE_SPELLCHECK)
-#include "chrome/browser/spellchecker/spell_check_host_impl.h"
-#if BUILDFLAG(HAS_SPELLCHECK_PANEL)
-#include "chrome/browser/spellchecker/spell_check_panel_host_impl.h"
-#endif
-#endif
-
 #if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
 #include "components/spellcheck/browser/spellcheck_message_filter_platform.h"
 #endif
@@ -2847,15 +2840,6 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
   registry->AddInterface(
       base::Bind(&BudgetServiceImpl::Create, render_process_host->GetID()),
       ui_task_runner);
-#if BUILDFLAG(ENABLE_SPELLCHECK)
-  registry->AddInterface(
-      base::Bind(&SpellCheckHostImpl::Create, render_process_host->GetID()),
-      ui_task_runner);
-#if BUILDFLAG(HAS_SPELLCHECK_PANEL)
-  registry->AddInterface(base::Bind(&SpellCheckPanelHostImpl::Create),
-                         ui_task_runner);
-#endif
-#endif
   registry->AddInterface(
       base::Bind(&rappor::RapporRecorderImpl::Create,
                  g_browser_process->rappor_service()),
