@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6e500fd_73923c8b",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-07T20:26:09Z",
+      "side": 1,
+      "message": "Discussed on Hangouts: I have an alternative implementation that only requires 2 TLS slots. Using 2 TLS slots is less complex than instantiating a struct and registering a destructor.",
+      "parentUuid": "95418dcf_7f96efda",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 6
+      },
+      "revId": "7b3829464d123b112e8edbce4f5b232595f1375d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fedd6b6b_3a33bd5d",
         "filename": "base/threading/scoped_blocking_call.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-07T16:59:36Z",
       "side": 1,
       "message": "Should this policy decision be made by the observer or here?\n\nThere\u0027s a clear case for SchedulerWorkerPoolImpl to upgrade MAY_BLOCK to WILL_BLOCK for purposes of capacity. This is in general useful to all observers? (I think I\u0027m leaning yes, but it\u0027s worth thinking about)",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 42
+      },
+      "revId": "7b3829464d123b112e8edbce4f5b232595f1375d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873ff3f8_43766db6",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-07T20:26:09Z",
+      "side": 1,
+      "message": "An observer is interested in knowing whether the thread is blocked or unblocked. When BlockingScopeEntered(WILL_BLOCK) is called, it means that some code is 100% sure that the thread will block. I don\u0027t see a scenario in which the observer would then be interested in knowing that some other code is x% sure (MAY_BLOCK) that the thread will block.\n\nHaving this policy here will allow it to be reused outside of SchedulerWorkerPoolImpl (e.g. a single-threaded SchedulerWorker that blocks could allow the thread pool to grow).",
+      "parentUuid": "fedd6b6b_3a33bd5d",
       "range": {
         "startLine": 57,
         "startChar": 2,
