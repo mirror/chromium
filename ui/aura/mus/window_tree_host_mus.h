@@ -90,7 +90,7 @@ class AURA_EXPORT WindowTreeHostMus : public aura::WindowTreeHostPlatform {
   // Intended only for WindowTreeClient to call.
   void set_display_id(int64_t id) { display_id_ = id; }
   int64_t display_id() const { return display_id_; }
-  display::Display GetDisplay() const;
+  display::Display GetDisplay();
 
   // aura::WindowTreeHostPlatform:
   void HideImpl() override;
