@@ -115,12 +115,19 @@ class ASH_EXPORT LockContentsView : public views::View,
   // the actual user may change.
   void SwapToAuthUser(int user_index);
 
+  // Called after the auth user change has taken place.
+  void OnAuthUserChanged();
+
+  // Get the LoginAuthUserView of the current auth user.
+  LoginAuthUserView* CurrentAuthUserView();
+
   std::vector<UserState> users_;
 
   LoginDataDispatcher* const data_dispatcher_;  // Unowned.
 
   LoginAuthUserView* primary_auth_ = nullptr;
   LoginAuthUserView* opt_secondary_auth_ = nullptr;
+  LoginAuthUserView* current_auth_user_ = nullptr;
 
   // All non-auth users; |primary_auth_| and |secondary_auth_| are not contained
   // in this list.
