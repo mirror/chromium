@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79045ded_5ae8cced",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-09-07T20:13:38Z",
+      "side": 1,
+      "message": "how can you instantiate that class - maybe I am confused but this is extending an abstract class which has hidden methods (such as setAssistBlocked) and you don\u0027t overwrite them.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 64
+      },
+      "revId": "b868fc6aa27786ea5126ad6090f93363d39629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
