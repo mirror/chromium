@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec10dd1b_0c02d815",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-07T17:42:55Z",
+      "side": 1,
+      "message": "Declare and init should_sample_ad just before this i.e. only when we know it is going to be used.",
+      "range": {
+        "startLine": 140,
+        "startChar": 7,
+        "endLine": 140,
+        "endChar": 23
+      },
+      "revId": "4aa4b5fc8551f49831e7800428861573297661be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6944a7_1c2f2318",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-07T17:42:55Z",
+      "side": 1,
+      "message": "nit: \"was activated\"?",
+      "range": {
+        "startLine": 496,
+        "startChar": 36,
+        "endLine": 496,
+        "endChar": 56
+      },
+      "revId": "4aa4b5fc8551f49831e7800428861573297661be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
