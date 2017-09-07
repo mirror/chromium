@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9965e372_6a282925",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-07T23:25:09Z",
+      "side": 1,
+      "message": "In what form does the multi-instance bits complicate things? Because of different Activity instances or because of multiple Windows? If it is the former than it is not a multi-instance problem but an overall ChromeActivity related complication, right?",
+      "range": {
+        "startLine": 21,
+        "startChar": 31,
+        "endLine": 21,
+        "endChar": 39
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62713e97_4c1929e4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
         "patchSetId": 6
@@ -18,6 +41,29 @@
         "startChar": 23,
         "endLine": 25,
         "endChar": 30
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "502c89f9_65d847dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-07T23:25:09Z",
+      "side": 1,
+      "message": "For an outsider using this public getter, it will be tempting and straightforward to just do ContentUtils.getApplicationContext() here. Does that worry us? Are the multiple keys above Activities in fact? Note that each tab even will have a different Context depending on the ChromeActivity they sit in (because their Application Context is a ThemedContext with the theme depending on the ChromeActivity).\n\nI guess my overall worry is reading for the first time, it is not clear to me what type of Context is OK to use here.",
+      "range": {
+        "startLine": 44,
+        "startChar": 64,
+        "endLine": 44,
+        "endChar": 65
       },
       "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -255,6 +301,29 @@
     },
     {
       "key": {
+        "uuid": "5f1b408d_4fa04634",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-07T23:25:09Z",
+      "side": 1,
+      "message": "do we wanna consider this extending AnimatorListener or the Adaptor? Not sure if it is needed or not but wanted to point it out since you are extending Animator.",
+      "range": {
+        "startLine": 96,
+        "startChar": 21,
+        "endLine": 96,
+        "endChar": 43
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "257cc77c_f6658809",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
         "patchSetId": 6
@@ -301,6 +370,75 @@
     },
     {
       "key": {
+        "uuid": "060c6701_43035dda",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-07T23:25:09Z",
+      "side": 1,
+      "message": "I believe this should be AnimatorUpdateListener in the param",
+      "range": {
+        "startLine": 174,
+        "startChar": 37,
+        "endLine": 174,
+        "endChar": 53
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e5acba_87182599",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-07T23:25:09Z",
+      "side": 1,
+      "message": "Going back to the above question here, if we are OK with AnimatorListeners listening in on this, why not just extend it with the new call you are adding and have a single list of listeners?",
+      "range": {
+        "startLine": 206,
+        "startChar": 28,
+        "endLine": 206,
+        "endChar": 44
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762a9bca_211c4a53",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-07T23:25:09Z",
+      "side": 1,
+      "message": "I kinda feel like these will be hard to keep track of as well. Even if we need the same interface that exposes these bits separately (since Animator has them), I would use a state machine inside to make sense of them internally.",
+      "range": {
+        "startLine": 226,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 18
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b9edfec_b2f3a96b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
         "patchSetId": 6
@@ -317,6 +455,29 @@
         "startChar": 8,
         "endLine": 256,
         "endChar": 62
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e0040d_6671cde6",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimatorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-07T23:25:09Z",
+      "side": 1,
+      "message": "just to avoid going insane later, I would add a test for the multiwindow stuff here with the necessary annotations and check the keying logic (no need to check the actual animation running).",
+      "range": {
+        "startLine": 38,
+        "startChar": 32,
+        "endLine": 38,
+        "endChar": 33
       },
       "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
