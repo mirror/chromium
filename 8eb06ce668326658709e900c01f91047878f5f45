@@ -16,6 +16,24 @@
       "revId": "8eb06ce668326658709e900c01f91047878f5f45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aba8a39_adfd241d",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-07T09:31:03Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "eb3e1763_a671f15f",
+      "revId": "8eb06ce668326658709e900c01f91047878f5f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
