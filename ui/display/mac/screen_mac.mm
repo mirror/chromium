@@ -159,8 +159,7 @@ class ScreenMac : public Screen {
   }
 
   bool IsWindowUnderCursor(gfx::NativeWindow window) override {
-    NOTIMPLEMENTED();
-    return false;
+    return NSPointInRect([NSEvent mouseLocation], [window frame]);
   }
 
   gfx::NativeWindow GetWindowAtScreenPoint(const gfx::Point& point) override {
