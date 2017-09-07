@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0789fe27_ae957a63",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-09-07T09:01:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f25a2651_5fe26766",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "fe3d4d0ba8e26dd59a03979a86431474f36d2fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed365fd0_df6ec577",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-07T07:28:46Z",
       "side": 1,
       "message": "Seems legit: https://html.spec.whatwg.org/multipage/canvas.html#dom-context-2d-settransform\n\nWhat\u0027s the status of that? Why do this in pieces and not all together?",
+      "revId": "fe3d4d0ba8e26dd59a03979a86431474f36d2fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c52e15_d27b14aa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-09-07T09:01:51Z",
+      "side": 1,
+      "message": "@fserb is taking care of using DOMMatrix2dInit in canvas side.",
+      "parentUuid": "ed365fd0_df6ec577",
       "revId": "fe3d4d0ba8e26dd59a03979a86431474f36d2fed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
