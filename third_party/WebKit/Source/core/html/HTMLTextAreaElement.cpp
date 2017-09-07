@@ -474,23 +474,6 @@ void HTMLTextAreaElement::setDefaultValue(const String& default_value) {
     SetNonDirtyValue(value);
 }
 
-String HTMLTextAreaElement::SuggestedValue() const {
-  return suggested_value_;
-}
-
-void HTMLTextAreaElement::SetSuggestedValue(const String& value) {
-  suggested_value_ = value;
-
-  if (!value.IsNull())
-    SetInnerEditorValue(suggested_value_);
-  else
-    SetInnerEditorValue(value_);
-  UpdatePlaceholderVisibility();
-  SetNeedsStyleRecalc(
-      kSubtreeStyleChange,
-      StyleChangeReasonForTracing::Create(StyleChangeReason::kControlValue));
-}
-
 String HTMLTextAreaElement::validationMessage() const {
   if (!willValidate())
     return String();

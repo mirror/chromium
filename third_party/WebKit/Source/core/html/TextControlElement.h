@@ -142,6 +142,9 @@ class CORE_EXPORT TextControlElement : public HTMLFormControlElementWithState {
 
   String DirectionForFormData() const;
 
+  void SetSuggestedValue(const String& value);
+  const String& SuggestedValue() const;
+
  protected:
   TextControlElement(const QualifiedName&, Document&);
   bool IsPlaceholderEmpty() const;
@@ -159,6 +162,8 @@ class CORE_EXPORT TextControlElement : public HTMLFormControlElementWithState {
   String ValueWithHardLineBreaks() const;
 
   void CopyNonAttributePropertiesFromElement(const Element&) override;
+
+  String suggested_value_;
 
  private:
   unsigned ComputeSelectionStart() const;
@@ -183,7 +188,7 @@ class CORE_EXPORT TextControlElement : public HTMLFormControlElementWithState {
   virtual bool IsEmptyValue() const = 0;
   // Returns true if suggested value is empty. Used to check placeholder
   // visibility.
-  virtual bool IsEmptySuggestedValue() const { return true; }
+  bool IsEmptySuggestedValue() const { return SuggestedValue().IsEmpty(); }
   // Called in dispatchFocusEvent(), after placeholder process, before calling
   // parent's dispatchFocusEvent().
   virtual void HandleFocusEvent(Element* /* oldFocusedNode */, WebFocusType) {}

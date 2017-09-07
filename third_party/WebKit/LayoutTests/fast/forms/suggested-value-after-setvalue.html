@@ -62,8 +62,8 @@ else {
     select.value = 'CA';
 
     log();
-    var innerTextValue = internals.shadowRoot(input).firstChild.innerText;
-    var innerTextAreaValue = internals.shadowRoot(textarea).firstChild.innerText;
+    var innerTextValue = internals.shadowRoot(input).lastChild.innerText;
+    var innerTextAreaValue = internals.shadowRoot(textarea).lastChild.innerText;
     var selectedValues = getSelectedValues(select);
     addText(innerTextValue == 'new value' &&
             innerTextAreaValue == 'new value' &&
