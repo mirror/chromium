@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e687c7a7_5eb23316",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-07T15:26:44Z",
+      "side": 1,
+      "message": "I know some other tests here do this, but do we have to use a fixed port?",
+      "range": {
+        "startLine": 249,
+        "startChar": 30,
+        "endLine": 249,
+        "endChar": 0
+      },
+      "revId": "1a0249da0800974e5f2916f5cc63d64eb438bda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f80c815c_61871c2d",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-07T15:26:44Z",
+      "side": 1,
+      "message": "Send a different message instead?  (i.e., make sure the old message wasn\u0027t buffered and we\u0027re just getting the old results on the second read)",
+      "range": {
+        "startLine": 276,
+        "startChar": 27,
+        "endLine": 276,
+        "endChar": 32
+      },
+      "revId": "1a0249da0800974e5f2916f5cc63d64eb438bda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
