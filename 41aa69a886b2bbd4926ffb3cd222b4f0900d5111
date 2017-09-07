@@ -16,6 +16,24 @@
       "revId": "41aa69a886b2bbd4926ffb3cd222b4f0900d5111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70df9dec_093707d2",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-07T01:45:31Z",
+      "side": 1,
+      "message": "Agreed - thanks for catching this. Should be fixed in latest patch set. I also updated the code above that makes the same mistake.",
+      "parentUuid": "03b6da76_e01b406b",
+      "revId": "41aa69a886b2bbd4926ffb3cd222b4f0900d5111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
