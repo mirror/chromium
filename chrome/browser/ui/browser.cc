@@ -114,6 +114,7 @@
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller.h"
 #include "chrome/browser/ui/exclusive_access/mouse_lock_controller.h"
 #include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
+#include "chrome/browser/ui/extra_navigation_info_utils.h"
 #include "chrome/browser/ui/fast_unload_controller.h"
 #include "chrome/browser/ui/find_bar/find_bar.h"
 #include "chrome/browser/ui/find_bar/find_bar_controller.h"
@@ -1514,6 +1515,16 @@ WebContents* Browser::OpenURLFromTab(WebContents* source,
 
 void Browser::NavigationStateChanged(WebContents* source,
                                      content::InvalidateTypes changed_flags) {
+  // chrome::Navigate() updates the navigation info for the current navigation,
+  // but it doesn't get called for renderer-initiated main frame navigations
+  // that start via a BeginNavigation IPC. So we assume all navigation state
+  // changes that invalidate the URL are CURREN_TAB navigations. If they are
+  // not, chrome::Navigate() will correct them when called.
+  if (changed_flags & content::INVALIDATE_TYPE_URL) {
+    chrome::SetExtraNavigationInfo(source, WindowOpenDisposition::CURRENT_TAB,
+                                   true /* had_target_contents */, is_app());
+  }
+
   // Only update the UI when something visible has changed.
   if (changed_flags)
     ScheduleUIUpdate(source, changed_flags);
