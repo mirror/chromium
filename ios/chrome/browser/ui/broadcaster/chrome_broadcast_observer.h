@@ -30,6 +30,8 @@
 // NTP.
 - (void)broadcastSelectedNTPPanel:(ntp_home::PanelIdentifier)panelIdentifier;
 
+- (void)broadcastIsIncognito:(BOOL)incognito;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_BROADCASTER_CHROME_BROADCAST_OBSERVER_H_

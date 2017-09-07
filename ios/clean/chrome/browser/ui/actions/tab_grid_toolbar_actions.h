@@ -12,6 +12,8 @@
 @protocol TabGridToolbarActions
 // Shows the ToolsMenu from the TabGrid button. This way we can access settings.
 - (void)showToolsMenu:(id)sender;
+// Toggle the incognito mode.
+- (void)toggleIncognito:(id)sender;
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_ACTIONS_TAB_GRID_TOOLBAR_ACTIONS_H_

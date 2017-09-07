@@ -8,6 +8,8 @@
 // Command protocol for commands relating to the Commands UI.
 // (Commands are for communicating into or within the coordinator layer).
 @protocol NTPCommands
+// Display a Incognito panel inside the NTP.
+- (void)showNTPIncognitoPanel;
 // Display a Chrome Home panel inside the NTP.
 - (void)showNTPHomePanel;
 // Display a bookmarks panel inside the NTP on iPad or present a bookmarks panel
