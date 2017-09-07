@@ -1,7 +1,17 @@
 include_rules = [
+  "+chrome/browser/chromeos/login/easy_unlock",
+  "+components/cryptauth",
+  "+components/prefs",
+  "+components/pref_registry",
+  "+components/signin/core/browser",
+  "+components/version_info",
   "+mojo/public/cpp",
+  "+net/url_request",
+  "+services/identity/public",
+  "+services/preferences/public",
   "+services/service_manager/public/cpp",
-  "+components/cryptauth"
+  "+ui/display",
+  "+ui/gfx",
 ]
 
 specific_include_rules = {
