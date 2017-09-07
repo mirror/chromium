@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "129d2a25_97affb48",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1529,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-09-07T21:56:32Z",
+      "side": 1,
+      "message": "Why does this suddenly need i18n?",
+      "revId": "d581e9037170c1392ebe660d4f00d2c914a92c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

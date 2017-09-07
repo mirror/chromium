@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36455e13_b88c65d7",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1499,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-09-07T21:56:32Z",
+      "side": 0,
+      "message": "Why is this part of this change?",
+      "revId": "0a1d3e903a663a0c229e8d4aac1407c8219d6b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984ec767_642b81c6",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1499,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-09-07T21:56:32Z",
+      "side": 0,
+      "message": "Why is this part of this change?",
+      "revId": "0a1d3e903a663a0c229e8d4aac1407c8219d6b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
