@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3153d8d8_3ca2d1e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-09-07T08:21:54Z",
+      "side": 1,
+      "message": "I don\u0027t see any code which does this?",
+      "revId": "24217b29db01cac749aeadeb01209890318cf4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13368d08_a1b64e23",
+        "filename": "chrome/browser/resources/md_bookmarks/folder_node.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-09-07T08:21:54Z",
+      "side": 1,
+      "message": "Part of the motivation for removing this button from the a11y tree is because (a) it\u0027s kinda hard to get to in the first place, and (b) it\u0027s unlabelled. If you want to add it back, then it needs a label as well.",
+      "revId": "24217b29db01cac749aeadeb01209890318cf4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
