@@ -16,6 +16,24 @@
       "revId": "e4025519dafda22bfefa390058fc59636dcb5abc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c1d560f_141a9d6c",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-09-07T02:00:29Z",
+      "side": 1,
+      "message": "It does, and I should refresh my C++ :)",
+      "parentUuid": "a66f817d_c0191c46",
+      "revId": "e4025519dafda22bfefa390058fc59636dcb5abc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
