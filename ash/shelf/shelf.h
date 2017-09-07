@@ -11,7 +11,10 @@
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/shelf/shelf_layout_manager_observer.h"
 #include "ash/shelf/shelf_locking_manager.h"
+#include "ash/shutdown_controller_observer.h"
+#include "ash/tray_action/tray_action_observer.h"
 #include "base/observer_list.h"
+#include "base/scoped_observer.h"
 
 namespace aura {
 class Window;
@@ -29,19 +32,24 @@ class MouseWheelEvent;
 namespace ash {
 
 enum class AnimationChangeType;
+class LoginShelfView;
 class ShelfBezelEventHandler;
 class ShelfLayoutManager;
 class ShelfLayoutManagerTest;
 class ShelfLockingManager;
 class ShelfView;
 class ShelfWidget;
+class ShutdownController;
 class StatusAreaWidget;
 class ShelfObserver;
+class TrayAction;
 
 // Controller for the shelf state. One per display, because each display might
 // have different shelf alignment, autohide, etc. Exists for the lifetime of the
 // root window controller.
-class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver {
+class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver,
+                         public TrayActionObserver,
+                         public ShutdownControllerObserver {
  public:
   Shelf();
   ~Shelf() override;
@@ -131,11 +139,14 @@ class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver {
   void RemoveObserver(ShelfObserver* observer);
 
   void NotifyShelfIconPositionsChanged();
+
+  void UpdateAfterSessionStateChange(session_manager::SessionState state);
   StatusAreaWidget* GetStatusAreaWidget() const;
 
   void SetVirtualKeyboardBoundsForTesting(const gfx::Rect& bounds);
   ShelfLockingManager* GetShelfLockingManagerForTesting();
   ShelfView* GetShelfViewForTesting();
+  LoginShelfView* GetLoginShelfViewForTesting();
 
  protected:
   // ShelfLayoutManagerObserver:
@@ -145,9 +156,19 @@ class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver {
   void OnBackgroundUpdated(ShelfBackgroundType background_type,
                            AnimationChangeType change_type) override;
 
+  // ShutdownControllerObserver:
+  void OnShutdownPolicyChanged(bool reboot_on_shutdown) override;
+
+  // TrayActionObserver:
+  void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override;
+
  private:
   class AutoHideEventHandler;
   friend class ShelfLayoutManagerTest;
+
+  // Adds observers and sets initial values for states that affect the
+  // visiblity of different buttons on the login shelf.
+  void AddObserversForLoginShelf();
 
   // Layout manager for the shelf container window. Instances are constructed by
   // ShelfWidget and lifetimes are managed by the container windows themselves.
@@ -161,6 +182,11 @@ class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver {
 
   // Sets shelf alignment to bottom during login and screen lock.
   ShelfLockingManager shelf_locking_manager_;
+
+  ScopedObserver<TrayAction, TrayActionObserver> tray_action_observer_;
+
+  ScopedObserver<ShutdownController, ShutdownControllerObserver>
+      shutdown_controller_observer_;
 
   base::ObserverList<ShelfObserver> observers_;
 

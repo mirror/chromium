@@ -9,6 +9,7 @@
 
 #include "ash/ash_export.h"
 #include "ash/public/cpp/shelf_types.h"
+#include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/shelf/shelf_background_animator.h"
 #include "ash/shelf/shelf_background_animator_observer.h"
 #include "ash/shelf/shelf_layout_manager_observer.h"
@@ -20,10 +21,16 @@ namespace app_list {
 class ApplicationDragAndDropHost;
 }
 
+namespace session_manager {
+enum class SessionState;
+}
+
 namespace ash {
 enum class AnimationChangeType;
+enum class LockScreenAppsState;
 class AppListButton;
 class FocusCycler;
+class LoginShelfView;
 class Shelf;
 class ShelfLayoutManager;
 class ShelfView;
@@ -73,6 +80,15 @@ class ASH_EXPORT ShelfWidget : public views::Widget,
   // See Shelf::UpdateIconPositionForPanel().
   void UpdateIconPositionForPanel(aura::Window* panel);
 
+  // Called when session state changes.
+  void UpdateAfterSessionStateChange(session_manager::SessionState state);
+
+  // Called when shutdown policy changes.
+  void UpdateShutdownPolicy(bool reboot_on_shutdown);
+
+  // Called when lock screen note state changes.
+  void UpdateLockScreenNoteState(mojom::TrayActionState state);
+
   // See Shelf::GetScreenBoundsOfItemIconForWindow().
   gfx::Rect GetScreenBoundsOfItemIconForWindow(aura::Window* window);
 
@@ -94,6 +110,11 @@ class ASH_EXPORT ShelfWidget : public views::Widget,
   // Internal implementation detail. Do not expose outside of tests.
   ShelfView* shelf_view_for_testing() const { return shelf_view_; }
 
+  // Internal implementation detail. Do not expose outside of tests.
+  LoginShelfView* login_shelf_view_for_testing() const {
+    return login_shelf_view_;
+  }
+
  private:
   class DelegateView;
   friend class DelegateView;
@@ -109,8 +130,15 @@ class ASH_EXPORT ShelfWidget : public views::Widget,
   // |delegate_view_| is the contents view of this widget and is cleaned up
   // during CloseChildWindows of the associated RootWindowController.
   DelegateView* delegate_view_;
-  // View containing the shelf items. Owned by the views hierarchy.
+
+  // View containing the shelf items within an active user session. Owned by
+  // the views hierarchy.
   ShelfView* const shelf_view_;
+
+  // View containing the shelf items for Login/Lock/OOBE/Add User screens.
+  // Owned by the views hierarchy.
+  LoginShelfView* const login_shelf_view_;
+
   ShelfBackgroundAnimator background_animator_;
 
   DISALLOW_COPY_AND_ASSIGN(ShelfWidget);

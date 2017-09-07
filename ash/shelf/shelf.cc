@@ -9,12 +9,15 @@
 #include "ash/public/cpp/shelf_model.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
+#include "ash/session/session_controller.h"
 #include "ash/shelf/shelf_bezel_event_handler.h"
 #include "ash/shelf/shelf_controller.h"
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shelf/shelf_observer.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
+#include "ash/shutdown_controller.h"
+#include "ash/tray_action/tray_action.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "ui/app_list/presenter/app_list.h"
@@ -62,7 +65,10 @@ class Shelf::AutoHideEventHandler : public ui::EventHandler {
 
 // Shelf ---------------------------------------------------------------------
 
-Shelf::Shelf() : shelf_locking_manager_(this) {
+Shelf::Shelf()
+    : shelf_locking_manager_(this),
+      tray_action_observer_(this),
+      shutdown_controller_observer_(this) {
   // TODO: ShelfBezelEventHandler needs to work with mus too.
   // http://crbug.com/636647
   if (Shell::GetAshConfig() != Config::MASH)
@@ -92,6 +98,8 @@ void Shelf::CreateShelfWidget(aura::Window* root) {
   aura::Window* status_container =
       root->GetChildById(kShellWindowId_StatusContainer);
   shelf_widget_->CreateStatusAreaWidget(status_container);
+
+  AddObserversForLoginShelf();
 }
 
 void Shelf::ShutdownShelfWidget() {
@@ -283,6 +291,13 @@ void Shelf::NotifyShelfIconPositionsChanged() {
     observer.OnShelfIconPositionsChanged();
 }
 
+void Shelf::UpdateAfterSessionStateChange(session_manager::SessionState state) {
+  // |Shell| observes session state changes on behalf of |Shelf|. This may be
+  // called before |shelf_widget_| is created.
+  if (shelf_widget_)
+    shelf_widget_->UpdateAfterSessionStateChange(state);
+}
+
 StatusAreaWidget* Shelf::GetStatusAreaWidget() const {
   return shelf_widget_->status_area_widget();
 }
@@ -297,6 +312,10 @@ ShelfLockingManager* Shelf::GetShelfLockingManagerForTesting() {
 
 ShelfView* Shelf::GetShelfViewForTesting() {
   return shelf_widget_->shelf_view_for_testing();
+}
+
+LoginShelfView* Shelf::GetLoginShelfViewForTesting() {
+  return shelf_widget_->login_shelf_view_for_testing();
 }
 
 void Shelf::WillDeleteShelfLayoutManager() {
@@ -337,6 +356,29 @@ void Shelf::OnBackgroundUpdated(ShelfBackgroundType background_type,
     return;
   for (auto& observer : observers_)
     observer.OnBackgroundTypeChanged(background_type, change_type);
+}
+
+void Shelf::OnShutdownPolicyChanged(bool reboot_on_shutdown) {
+  shelf_widget_->UpdateShutdownPolicy(reboot_on_shutdown);
+}
+
+void Shelf::OnLockScreenNoteStateChanged(ash::mojom::TrayActionState state) {
+  shelf_widget_->UpdateLockScreenNoteState(state);
+}
+
+void Shelf::AddObserversForLoginShelf() {
+  TrayAction* tray_action_controller = Shell::Get()->tray_action();
+  tray_action_observer_.Add(tray_action_controller);
+
+  ShutdownController* shutdown_controller = Shell::Get()->shutdown_controller();
+  shutdown_controller_observer_.Add(shutdown_controller);
+
+  // Sets initial states.
+  OnLockScreenNoteStateChanged(
+      tray_action_controller->GetLockScreenNoteState());
+  OnShutdownPolicyChanged(shutdown_controller->reboot_on_shutdown());
+  UpdateAfterSessionStateChange(
+      Shell::Get()->session_controller()->GetSessionState());
 }
 
 }  // namespace ash
