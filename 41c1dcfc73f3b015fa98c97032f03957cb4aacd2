@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1243654_b275e73a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLInputElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-07T18:43:48Z",
+      "side": 1,
+      "message": "I see that we now have 3 parts that are almost the same:\n1- TextControlElement::SetSuggestedValue\n2- HTMLTextArea::UpdatePlaceholderText\n3- TextFieldInputType::UpdatePlaceholderText\n\nI was thinking of moving all of that to a function in TextControlElement, since they all have this in common. What do you think?",
+      "parentUuid": "a14a9ab8_fbe2fef8",
+      "revId": "41c1dcfc73f3b015fa98c97032f03957cb4aacd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "daf20dc9_e33729ea",
         "filename": "third_party/WebKit/Source/core/html/HTMLInputElement.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "41c1dcfc73f3b015fa98c97032f03957cb4aacd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42e6f26_d5bc587a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLInputElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-07T18:43:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daf20dc9_e33729ea",
+      "revId": "41c1dcfc73f3b015fa98c97032f03957cb4aacd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e41d81ca_06efdb84",
+        "filename": "third_party/WebKit/Source/core/html/HTMLInputElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-07T18:43:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0226b7b2_317d3dc8",
+      "revId": "41c1dcfc73f3b015fa98c97032f03957cb4aacd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0333016_36523574",
         "filename": "third_party/WebKit/Source/core/html/HTMLInputElement.cpp",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "41c1dcfc73f3b015fa98c97032f03957cb4aacd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abcf7987_196b93a4",
+        "filename": "third_party/WebKit/Source/core/html/HTMLInputElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-07T18:43:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0333016_36523574",
+      "revId": "41c1dcfc73f3b015fa98c97032f03957cb4aacd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
