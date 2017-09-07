@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "48166e38_7dec8e6e",
+        "filename": "content/public/android/java/res/values-v17/styles.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-07T23:42:48Z",
+      "side": 1,
+      "message": "Yes, the idea here is to match the behavior of the native Android text widget\u0027s suggestion menu. I believe applications can set their own values for textColorPrimary and textColorSecondary, in which case I think we want to use those values if we show this menu in an embedded WebView.\n\nWe already pick up the colorAccent color so we can show the menu items using the correct color for each app. I think this is similar, but I haven\u0027t seen an example in practice yet.",
+      "parentUuid": "0f9215d7_5d3294b5",
+      "range": {
+        "startLine": 20,
+        "startChar": 51,
+        "endLine": 20,
+        "endChar": 69
+      },
+      "revId": "1c9af8a39b52d88e52ec224425741eaf5c187d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59bd7c60_69e7cd1a",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
         "patchSetId": 15
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-07T23:26:16Z",
       "side": 1,
       "message": "same thing, can we use one of the values in ui just to reduce the new colors?  Again, if this is meant to reflect the default Android one, then we can just comment here as well.",
+      "range": {
+        "startLine": 83,
+        "startChar": 61,
+        "endLine": 83,
+        "endChar": 71
+      },
+      "revId": "1c9af8a39b52d88e52ec224425741eaf5c187d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f0533b_67ceb056",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-07T23:42:48Z",
+      "side": 1,
+      "message": "This is the default color from Android\u0027s Editor.java. It probably doesn\u0027t *really* matter what color we use here, since we only use this if reflection fails (in which case significant changes have most likely been made to SuggestionSpan). I think I\u0027ll probably just add the comment.",
+      "parentUuid": "59bd7c60_69e7cd1a",
       "range": {
         "startLine": 83,
         "startChar": 61,
@@ -105,6 +153,30 @@
       "writtenOn": "2017-09-07T23:26:16Z",
       "side": 1,
       "message": "any reason not to have these methods in SuggestionInfo directly?\n\nWe could then use your awesome comment below as the javadoc and then we wouldn\u0027t need them on these methods since they\u0027d be private.",
+      "range": {
+        "startLine": 22,
+        "startChar": 36,
+        "endLine": 22,
+        "endChar": 47
+      },
+      "revId": "1c9af8a39b52d88e52ec224425741eaf5c187d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ae75d8_87f22f9a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SuggestionInfoBridge.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-07T23:42:48Z",
+      "side": 1,
+      "message": "Not really, this is just how dtrainor@ suggested I set it up. I\u0027ll move them.",
+      "parentUuid": "927548b8_2bc84952",
       "range": {
         "startLine": 22,
         "startChar": 36,
