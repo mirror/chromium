@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14f6a80c_509bafaf",
+        "filename": "chromecast/browser/android/cast_content_window_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-07T01:05:08Z",
+      "side": 1,
+      "message": "nits ... (1) no longer explicit, (2) prefer to add new parameter at end.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 10
+      },
+      "revId": "b7165dd6cd065de7459fff8de6f4a431e854b6e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a7ea84_b40f05d1",
+        "filename": "chromecast/browser/cast_web_contents_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-07T01:05:08Z",
+      "side": 1,
+      "message": "nit, seems like new parameter belongs at end.",
+      "revId": "b7165dd6cd065de7459fff8de6f4a431e854b6e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0263431_359358c4",
+        "filename": "chromecast/browser/cast_web_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-07T01:05:08Z",
+      "side": 1,
+      "message": "nit, move to end.",
+      "revId": "b7165dd6cd065de7459fff8de6f4a431e854b6e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc431f2_b3fbcfc4",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-07T01:05:08Z",
+      "side": 1,
+      "message": "true",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 13
+      },
+      "revId": "b7165dd6cd065de7459fff8de6f4a431e854b6e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
