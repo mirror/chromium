@@ -75,6 +75,17 @@ ActivationState SubresourceFilterAgent::GetParentActivationState(
     content::RenderFrame* render_frame) {
   blink::WebFrame* parent =
       render_frame ? render_frame->GetWebFrame()->Parent() : nullptr;
+
+  // It's possible that a special url navigation changes its process
+  // from its parent process to the initiator in case the navigation is done
+  // after the frame was initially created. The special url frame should then
+  // be able to inherit the activation state of its initiator, by
+  // traversing the frame tree and stopping at the first frame which is local
+  // to this frame.
+  while (parent && !parent->IsWebLocalFrame()) {
+    parent = parent->Parent();
+  }
+
   if (parent && parent->IsWebLocalFrame()) {
     auto* agent = SubresourceFilterAgent::Get(
         content::RenderFrame::FromWebFrame(parent->ToWebLocalFrame()));
