@@ -53,10 +53,7 @@ class LevelDB {
   virtual bool Get(const std::string& key, bool* found, std::string* entry);
 
   static bool Destroy(const base::FilePath& database_dir);
-
- protected:
-  virtual bool InitWithOptions(const base::FilePath& database_dir,
-                               const leveldb_env::Options& options);
+  static leveldb_env::Options DefaultOptions();
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ProtoDatabaseImplLevelDBTest, TestDBInitFail);
