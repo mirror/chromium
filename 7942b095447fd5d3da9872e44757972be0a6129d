@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c64fa67_2ecdf5a9",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-07T21:54:47Z",
+      "side": 1,
+      "message": "Could this lead to OnSessionEnded(...) being invoked with 0 for the observers the first time the time limit is reached? If so, could that lead to the \"time not being long enough\", etc., in the end making the IPH not show?\n\nShould we instead ensure that we conceptually invoke OnSessionEnded(...) one last time with the elapsed_session_time before we clear it?",
+      "revId": "7942b095447fd5d3da9872e44757972be0a6129d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
