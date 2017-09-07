@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "81270865_8e37b0bf",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-09-07T15:04:55Z",
+      "side": 1,
+      "message": "I have tried this approach (https://chromium-review.googlesource.com/c/chromium/src/+/646727/1), but ScrollbarTheme::GetTheme is Singleton in process, this may effect other tabs.",
+      "parentUuid": "6e3a447a_3c51f613",
+      "range": {
+        "startLine": 500,
+        "startChar": 4,
+        "endLine": 500,
+        "endChar": 62
+      },
+      "revId": "1541c7de7ba383bc28a5b3408cc10547206971ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d51dacc_ab09bb67",
         "filename": "third_party/WebKit/Source/core/inspector/DevToolsEmulator.cpp",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-07T14:22:41Z",
       "side": 1,
       "message": "Hmm, how come entering mobile emulation today (without setting UseSolidColorScrollbars) causes it to create Android style scrollbars? AFAICT this is only read in ScrollingCoordinator and creates either a SolidColorScrollbarLayer vs ScrollbarLayer. Does this mean that emulation is creating regular ScrollbarLayers that are just styled/painted as Android scrollbars?\n\nAlso, the settings to make them thin/color usually come from WebThemeEngineAndroid which isn\u0027t even compiled into Desktop. So how do we end up styling them to be thin like Android?",
+      "range": {
+        "startLine": 283,
+        "startChar": 38,
+        "endLine": 283,
+        "endChar": 71
+      },
+      "revId": "1541c7de7ba383bc28a5b3408cc10547206971ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf77b87_6d21f573",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsEmulator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-09-07T15:04:55Z",
+      "side": 1,
+      "message": "Because we never support PLSA scrollbar to Android style. We only change the root frame scrollbar see below. `web_view_-\u003eGetPage()-\u003eGetVisualViewport().InitializeScrollbars()`",
+      "parentUuid": "5d51dacc_ab09bb67",
       "range": {
         "startLine": 283,
         "startChar": 38,
