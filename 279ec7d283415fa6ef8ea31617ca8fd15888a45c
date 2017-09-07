@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09aa3d34_7a86907a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-07T17:46:37Z",
+      "side": 1,
+      "message": "Rename if ready for review!",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "279ec7d283415fa6ef8ea31617ca8fd15888a45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f5813b_a6c2f6fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-07T17:46:37Z",
+      "side": 1,
+      "message": "Reword?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 73
+      },
+      "revId": "279ec7d283415fa6ef8ea31617ca8fd15888a45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff7217e_95bf6918",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-07T17:46:37Z",
+      "side": 1,
+      "message": "Remove?  Looks like we\u0027re adding ourselves twice",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 212,
+        "endChar": 0
+      },
+      "revId": "279ec7d283415fa6ef8ea31617ca8fd15888a45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d7cd4db_76111334",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-07T17:46:37Z",
+      "side": 1,
+      "message": "Yes! :D",
+      "range": {
+        "startLine": 570,
+        "startChar": 8,
+        "endLine": 570,
+        "endChar": 78
+      },
+      "revId": "279ec7d283415fa6ef8ea31617ca8fd15888a45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f965051f_08df7eec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-07T17:46:37Z",
+      "side": 1,
+      "message": "Is this only suggested items?",
+      "range": {
+        "startLine": 587,
+        "startChar": 23,
+        "endLine": 587,
+        "endChar": 35
+      },
+      "revId": "279ec7d283415fa6ef8ea31617ca8fd15888a45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f9725f_e67a0454",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-07T17:46:37Z",
+      "side": 1,
+      "message": "At what point are we pruning out transient entries when they\u0027re done downloading?  Just an FYI to make sure downloads home properly respects isTransient and isOpenable?",
+      "range": {
+        "startLine": 587,
+        "startChar": 17,
+        "endLine": 587,
+        "endChar": 47
+      },
+      "revId": "279ec7d283415fa6ef8ea31617ca8fd15888a45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2334ed_8856b8ec",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-07T17:46:37Z",
+      "side": 1,
+      "message": "Does observer.OnItemsAdded({ item.second-\u003eui_item.get() }); work?",
+      "range": {
+        "startLine": 231,
+        "startChar": 32,
+        "endLine": 231,
+        "endChar": 37
+      },
+      "revId": "279ec7d283415fa6ef8ea31617ca8fd15888a45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
