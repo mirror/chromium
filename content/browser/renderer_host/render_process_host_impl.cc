@@ -181,6 +181,7 @@
 #include "ipc/ipc_channel.h"
 #include "ipc/ipc_channel_mojo.h"
 #include "ipc/ipc_logging.h"
+#include "media/audio/audio_system.h"
 #include "media/base/media_switches.h"
 #include "media/media_features.h"
 #include "mojo/edk/embedder/embedder.h"
@@ -1684,8 +1685,7 @@ void RenderProcessHostImpl::CreateMessageFilters() {
   AddFilter(audio_input_renderer_host_.get());
   if (!RendererAudioOutputStreamFactoryContextImpl::UseMojoFactories()) {
     AddFilter(base::MakeRefCounted<AudioRendererHost>(
-                  GetID(), audio_manager,
-                  BrowserMainLoop::GetInstance()->audio_system(),
+                  GetID(), audio_manager, media::AudioSystem::GetInstance(),
                   AudioMirroringManager::GetInstance(), media_stream_manager,
                   browser_context->GetMediaDeviceIDSalt())
                   .get());
@@ -2259,12 +2259,11 @@ RenderProcessHostImpl::GetRendererAudioOutputStreamFactoryContext() {
         BrowserMainLoop::GetInstance()->audio_manager();
     MediaStreamManager* media_stream_manager =
         BrowserMainLoop::GetInstance()->media_stream_manager();
-    media::AudioSystem* audio_system =
-        BrowserMainLoop::GetInstance()->audio_system();
     std::string salt = GetBrowserContext()->GetMediaDeviceIDSalt();
     audio_output_stream_factory_context_.reset(
         new RendererAudioOutputStreamFactoryContextImpl(
-            GetID(), audio_system, audio_manager, media_stream_manager, salt));
+            GetID(), media::AudioSystem::GetInstance(), audio_manager,
+            media_stream_manager, salt));
   }
   return audio_output_stream_factory_context_.get();
 }

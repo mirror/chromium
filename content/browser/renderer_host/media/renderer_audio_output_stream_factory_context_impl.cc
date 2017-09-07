@@ -21,15 +21,14 @@ namespace content {
 RendererAudioOutputStreamFactoryContextImpl::
     RendererAudioOutputStreamFactoryContextImpl(
         int render_process_id,
-        media::AudioSystem* audio_system,
+        std::unique_ptr<media::AudioSystem> audio_system,
         media::AudioManager* audio_manager,
         MediaStreamManager* media_stream_manager,
         const std::string& salt)
     : salt_(salt),
-      audio_system_(audio_system),
       audio_manager_(audio_manager),
       media_stream_manager_(media_stream_manager),
-      authorization_handler_(audio_system_,
+      authorization_handler_(std::move(audio_system),
                              media_stream_manager_,
                              render_process_id,
                              salt_),
