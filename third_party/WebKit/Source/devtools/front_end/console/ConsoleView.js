@@ -189,7 +189,7 @@ Console.ConsoleView = class extends UI.VBox {
     this._messagesElement.addEventListener('wheel', this._updateStickToBottomOnWheel.bind(this), false);
 
     this._sidebar.addEventListener(Console.ConsoleSidebar.Events.GroupSelected, event => {
-      this._filter.onSidebarFilterChanged(/** @type {?TextUtils.FilterParser.ParsedFilter} */ (event.data));
+      this._filter.onSidebarFilterChanged(/** @type {!Console.ConsoleSidebar.GroupItem} */ (event.data));
     });
 
     ConsoleModel.consoleModel.addEventListener(
@@ -1004,8 +1004,8 @@ Console.ConsoleViewFilter = class {
    */
   constructor(filterChangedCallback) {
     this._filterChanged = filterChangedCallback;
-    /** @type {?TextUtils.FilterParser.ParsedFilter} */
-    this._sidebarFilter = null;
+    /** @type {?Console.ConsoleSidebar.GroupItem} */
+    this._sidebarItem = null;
 
     this._messageURLFiltersSetting = Common.settings.createSetting('messageURLFilters', {});
     this._messageLevelFiltersSetting = Console.ConsoleViewFilter.levelFilterSetting();
@@ -1069,11 +1069,11 @@ Console.ConsoleViewFilter = class {
   }
 
   /**
-   * @param {?TextUtils.FilterParser.ParsedFilter} filter
+   * @param {!Console.ConsoleSidebar.GroupItem} item
    */
-  onSidebarFilterChanged(filter) {
-    if (filter !== this._sidebarFilter) {
-      this._sidebarFilter = filter;
+  onSidebarFilterChanged(item) {
+    if (item !== this._sidebarItem) {
+      this._sidebarItem = item;
       this._filterChanged();
     }
   }
@@ -1167,9 +1167,10 @@ Console.ConsoleViewFilter = class {
   shouldBeVisible(viewMessage) {
     var message = viewMessage.consoleMessage();
     var executionContext = UI.context.flavor(SDK.ExecutionContext);
+    var runtimeModel = message.runtimeModel();
 
     if (this._filterByExecutionContextSetting.get() && executionContext) {
-      if (message.runtimeModel() !== executionContext.runtimeModel)
+      if (runtimeModel !== executionContext.runtimeModel)
         return false;
       if (message.executionContextId && message.executionContextId !== executionContext.id)
         return false;
@@ -1197,7 +1198,15 @@ Console.ConsoleViewFilter = class {
         message.source !== ConsoleModel.ConsoleMessage.MessageSource.ConsoleAPI)
       return false;
 
-    var filters = this._sidebarFilter ? this._filters.concat([this._sidebarFilter]) : this._filters;
+    if (this._sidebarItem && this._sidebarItem.executionContext) {
+      var messageExecutionContext = runtimeModel && runtimeModel.executionContext(message.executionContextId);
+      if (messageExecutionContext !== this._sidebarItem.executionContext)
+        return false;
+    }
+
+    var filters = this._filters;
+    if (this._sidebarItem && this._sidebarItem.filter)
+      filters = filters.concat(this._sidebarItem.filter);
     for (var filter of filters) {
       if (!filter.key) {
         if (filter.regex && viewMessage.matchesFilterRegex(filter.regex) === filter.negative)
@@ -1244,7 +1253,7 @@ Console.ConsoleViewFilter = class {
   }
 
   reset() {
-    this._sidebarFilter = null;
+    this._sidebarItem = null;
     this._messageURLFiltersSetting.set({});
     this._messageLevelFiltersSetting.set(Console.ConsoleViewFilter.defaultLevelsFilterValue());
     this._filterByExecutionContextSetting.set(false);

@@ -68,17 +68,7 @@ Console.ConsoleContextSelector = class {
    * @return {string}
    */
   titleFor(executionContext) {
-    var target = executionContext.target();
-    var label = executionContext.label() ? target.decorateLabel(executionContext.label()) : '';
-    if (executionContext.frameId) {
-      var resourceTreeModel = target.model(SDK.ResourceTreeModel);
-      var frame = resourceTreeModel && resourceTreeModel.frameForId(executionContext.frameId);
-      if (frame)
-        label = label || frame.displayName();
-    }
-    label = label || executionContext.origin;
-
-    return label;
+    return executionContext.displayTitle();
   }
 
   /**

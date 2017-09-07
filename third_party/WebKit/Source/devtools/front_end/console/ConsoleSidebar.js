@@ -50,23 +50,37 @@ Console.ConsoleSidebar = class extends UI.VBox {
   onMessageAdded(message) {
     if (!Runtime.experiments.isEnabled('logManagement'))
       return;
-    this._addItem(message.level, Console.ConsoleSidebar.AllGroupType, this._allGroup.name);
+    this._addItem(
+        message.level, Console.ConsoleSidebar.NonTextFilterType.All, this._allGroup.name, this._allGroup.name);
     if (message.context)
-      this._addItem(message.level, Console.ConsoleViewFilter.FilterType.Context, message.context);
+      this._addItem(message.level, Console.ConsoleViewFilter.FilterType.Context, message.context, message.context);
     if (message.source === ConsoleModel.ConsoleMessage.MessageSource.Violation)
-      this._addItem(message.level, Console.ConsoleViewFilter.FilterType.Source, message.source);
+      this._addItem(message.level, Console.ConsoleViewFilter.FilterType.Source, message.source, message.source);
+    var executionContext =
+        message.runtimeModel() && message.runtimeModel().executionContext(message.executionContextId);
+    if (executionContext) {
+      this._addItem(
+          message.level, Console.ConsoleSidebar.NonTextFilterType.ExecutionContext, executionContext,
+          executionContext.displayTitle());
+    }
   }
 
   /**
    * @param {?ConsoleModel.ConsoleMessage.MessageLevel} level
    * @param {!Console.ConsoleSidebar.GroupType} key
-   * @param {string} value
+   * @param {string|!SDK.ExecutionContext} value
+   * @param {string} name
    */
-  _addItem(level, key, value) {
-    var item = key === Console.ConsoleSidebar.AllGroupType ? this._allGroup : this._valueToItemMaps[key].get(value);
+  _addItem(level, key, value, name) {
+    var item =
+        key === Console.ConsoleSidebar.NonTextFilterType.All ? this._allGroup : this._valueToItemMaps[key].get(value);
     if (!item) {
-      item = /** @type {!Console.ConsoleSidebar.GroupItem} */ (
-          {name: value, info: 0, warning: 0, error: 0, filter: {key: key, text: value, negative: false}});
+      item =
+          /** @type {!Console.ConsoleSidebar.GroupItem} */ ({name: name, info: 0, warning: 0, error: 0, filter: null});
+      if (key === Console.ConsoleSidebar.NonTextFilterType.ExecutionContext)
+        item.executionContext = /** @type {!SDK.ExecutionContext} */ (value);
+      else
+        item.filter = {key: key, text: name, negative: false};
       this._valueToItemMaps[key].set(value, item);
       this._pendingItemsToAdd.add(item);
     } else {
@@ -90,14 +104,19 @@ Console.ConsoleSidebar = class extends UI.VBox {
   }
 
   /**
-   * @return {!Object<!Console.ConsoleSidebar.GroupType, !Map<string, !Console.ConsoleSidebar.GroupItem>>}
+   * @return {!Object<!Console.ConsoleSidebar.GroupType, !Map<(string|!SDK.ExecutionContext), !Console.ConsoleSidebar.GroupItem>>}
    */
   _createValueToItemMaps() {
-    /** @type {!Object<!Console.ConsoleSidebar.GroupType, !Map<string, !Console.ConsoleSidebar.GroupItem>>} */
+    /** @type {!Object<!Console.ConsoleSidebar.GroupType, !Map<(string|!SDK.ExecutionContext), !Console.ConsoleSidebar.GroupItem>>} */
     var valueToItemMaps = {};
-    valueToItemMaps[Console.ConsoleSidebar.AllGroupType] = new Map([[this._allGroup.name, this._allGroup]]);
-    for (var type of Object.values(Console.ConsoleViewFilter.FilterType))
-      valueToItemMaps[type] = /** @type {!Map<string, !Console.ConsoleSidebar.GroupItem>} */ (new Map());
+    for (var type of Object.values(Console.ConsoleSidebar.NonTextFilterType)) {
+      valueToItemMaps[type] =
+          /** @type {!Map<string|!SDK.ExecutionContext, !Console.ConsoleSidebar.GroupItem>} */ (new Map());
+    }
+    for (var type of Object.values(Console.ConsoleViewFilter.FilterType)) {
+      valueToItemMaps[type] =
+          /** @type {!Map<string|!SDK.ExecutionContext, !Console.ConsoleSidebar.GroupItem>} */ (new Map());
+    }
     return valueToItemMaps;
   }
 
@@ -134,7 +153,7 @@ Console.ConsoleSidebar = class extends UI.VBox {
    */
   createElementForItem(item) {
     var element = createElementWithClass('div', 'context-item');
-    element.createChild('div', 'name').textContent = item.name;
+    element.createChild('div', 'name').textContent = item.name.trimMiddle(30);
     element.title = item.name;
     var counters = element.createChild('div', 'counters');
     if (item.error)
@@ -178,13 +197,11 @@ Console.ConsoleSidebar = class extends UI.VBox {
       return;
 
     toElement.classList.add('selected');
-    this.dispatchEventToListeners(Console.ConsoleSidebar.Events.GroupSelected, to.filter);
+    this.dispatchEventToListeners(Console.ConsoleSidebar.Events.GroupSelected, to);
   }
 };
 
-Console.ConsoleSidebar.AllGroupType = Symbol('All');
-
-/** @typedef {!Console.ConsoleViewFilter.FilterType|symbol} */
+/** @typedef {(!Console.ConsoleViewFilter.FilterType|!Console.ConsoleSidebar.NonTextFilterType)} */
 Console.ConsoleSidebar.GroupType;
 
 /** @enum {symbol} */
@@ -192,9 +209,16 @@ Console.ConsoleSidebar.Events = {
   GroupSelected: Symbol('GroupSelected')
 };
 
+/** @enum {symbol} */
+Console.ConsoleSidebar.NonTextFilterType = {
+  All: Symbol('All'),
+  ExecutionContext: Symbol('ExecutionContext')
+};
+
 /** @typedef {{
         name: string,
         filter: ?TextUtils.FilterParser.ParsedFilter,
+        executionContext: (!SDK.ExecutionContext|undefined),
         info: number,
         warning: number,
         error: number
