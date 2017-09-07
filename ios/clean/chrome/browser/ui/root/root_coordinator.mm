@@ -25,6 +25,7 @@
 @implementation RootCoordinator
 @synthesize viewController = _viewController;
 @synthesize tabGridCoordinator = _tabGridCoordinator;
+@dynamic dispatcher;
 
 #pragma mark - BrowserCoordinator
 
