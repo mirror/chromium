@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1298bd8_44d05320",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-07T22:23:55Z",
+      "side": 1,
+      "message": "You can factor this out above line 1284, since it is the same as lines 1287-1288.",
+      "revId": "a35c24c8f9823b9d6ac15e8cd785f368ec707883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d6197c_7d86cc9a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1328,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-07T22:23:55Z",
+      "side": 1,
+      "message": "Why do you need this conditional and the code below it? Can\u0027t it always use\nthe multiply at line 1326?",
+      "revId": "a35c24c8f9823b9d6ac15e8cd785f368ec707883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
