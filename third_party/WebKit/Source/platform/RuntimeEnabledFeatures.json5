@@ -391,6 +391,12 @@
       name: "EncryptedMediaHdcpPolicyCheck",
       status: "test",
     },
+    // Introduced this flag as stable so web developers can test their sites
+    // without Event.path property for preparing its removal.
+    {
+      name: "EventPath",
+      status: "stable",
+    },
     {
       name: "ExecCommandInJavaScript",
       status: "test",
