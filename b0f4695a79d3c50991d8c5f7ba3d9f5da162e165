@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a24afbc7_c4d2f683",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-07T07:23:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a019ae24_e2b21b55",
+      "range": {
+        "startLine": 137,
+        "startChar": 38,
+        "endLine": 137,
+        "endChar": 59
+      },
+      "revId": "b0f4695a79d3c50991d8c5f7ba3d9f5da162e165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "985906f7_d889a730",
         "filename": "tools/idl_parser/idl_parser.py",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-05T04:50:32Z",
       "side": 1,
       "message": "How about\n\nif ext_attr_list:\n  for attr in ext_attr_list.GetChildren():\n    ...\n\n?",
+      "revId": "b0f4695a79d3c50991d8c5f7ba3d9f5da162e165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809e44dd_e8f0136a",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-07T07:23:20Z",
+      "side": 1,
+      "message": "I already changed codes around this line as bashi@\u0027s advice",
+      "parentUuid": "985906f7_d889a730",
       "revId": "b0f4695a79d3c50991d8c5f7ba3d9f5da162e165",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "c0afa404_7f0b5c8c",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-07T07:23:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c051c82_fa7e4067",
+      "revId": "b0f4695a79d3c50991d8c5f7ba3d9f5da162e165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54cddb05_a47ccfa5",
         "filename": "tools/idl_parser/idl_parser.py",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "b0f4695a79d3c50991d8c5f7ba3d9f5da162e165",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "466b918a_5dcdad85",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-07T07:23:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54cddb05_a47ccfa5",
+      "revId": "b0f4695a79d3c50991d8c5f7ba3d9f5da162e165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "f194951d_36906cf5",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-07T07:23:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27529ab0_7e0171d6",
+      "range": {
+        "startLine": 366,
+        "startChar": 28,
+        "endLine": 366,
+        "endChar": 34
+      },
+      "revId": "b0f4695a79d3c50991d8c5f7ba3d9f5da162e165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "256cd6e6_8c8a4624",
         "filename": "tools/idl_parser/idl_parser.py",
         "patchSetId": 3
@@ -110,6 +212,24 @@
       "writtenOn": "2017-09-05T04:50:32Z",
       "side": 1,
       "message": "Can we use \"ExtendedAttributeList Type\" for this pattern?",
+      "revId": "b0f4695a79d3c50991d8c5f7ba3d9f5da162e165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0622bd9d_7faf36ea",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-07T07:23:20Z",
+      "side": 1,
+      "message": "Yes.\nHowever, current code is good in terms of strictly following WebIDL\u0027s specification.",
+      "parentUuid": "256cd6e6_8c8a4624",
       "revId": "b0f4695a79d3c50991d8c5f7ba3d9f5da162e165",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -150,6 +270,30 @@
       "writtenOn": "2017-09-05T04:50:32Z",
       "side": 1,
       "message": "Can\u0027t we see a \u0027REQUIRED\u0027 node?",
+      "range": {
+        "startLine": 121,
+        "startChar": 10,
+        "endLine": 121,
+        "endChar": 18
+      },
+      "revId": "b0f4695a79d3c50991d8c5f7ba3d9f5da162e165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8abaa6f_17e38bad",
+        "filename": "tools/idl_parser/test_parser/dictionary_web.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-07T07:23:20Z",
+      "side": 1,
+      "message": "No.\nNow \u0027REQUIRED\u0027nodes are not displayed.",
+      "parentUuid": "6095a767_f680d532",
       "range": {
         "startLine": 121,
         "startChar": 10,
