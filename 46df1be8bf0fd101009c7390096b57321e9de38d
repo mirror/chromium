@@ -22,6 +22,30 @@
       "revId": "46df1be8bf0fd101009c7390096b57321e9de38d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178a40f9_60eb8820",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2017-09-07T23:44:50Z",
+      "side": 1,
+      "message": "I think for us it should be OK. Maybe you\u0027d hit an obscure compilation failure once in a while but this is C++) We already diviate from the standard in a similar way fot lookup, so I think this is ok.",
+      "parentUuid": "0f0c3d5f_2c6634ed",
+      "range": {
+        "startLine": 233,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 74
+      },
+      "revId": "46df1be8bf0fd101009c7390096b57321e9de38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
