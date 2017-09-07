@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e48001a_3a1af9a8",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-07T18:15:31Z",
+      "side": 1,
+      "message": "Nit: Maybe link to original bug or file a new one?  And also add note that this only applies to WebAudio AudioBuffers?",
+      "revId": "681368891193e8048a1b0c6c8e3231b22919dd5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
