@@ -13,11 +13,11 @@
 #include "ios/chrome/grit/ios_theme_resources.h"
 #import "ios/clean/chrome/browser/ui/commands/find_in_page_visibility_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/navigation_commands.h"
-#import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_button+factory.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_button.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_constants.h"
 #import "ios/clean/chrome/browser/ui/tools/menu_overflow_controls_stackview.h"
+#import "ios/clean/chrome/browser/ui/tools/tools_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/tools/tools_menu_item.h"
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 

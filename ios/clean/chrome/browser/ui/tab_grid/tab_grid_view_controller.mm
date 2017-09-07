@@ -8,13 +8,12 @@
 #import "ios/chrome/browser/ui/tab_switcher/tab_switcher_panel_overlay_view.h"
 #import "ios/clean/chrome/browser/ui/actions/settings_actions.h"
 #import "ios/clean/chrome/browser/ui/actions/tab_grid_actions.h"
-#import "ios/clean/chrome/browser/ui/commands/settings_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tab_grid_commands.h"
-#import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/tab_collection/tab_collection_tab_cell.h"
 #import "ios/clean/chrome/browser/ui/tab_grid/mdc_floating_button+cr_tab_grid.h"
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_collection_view_layout.h"
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_toolbar.h"
+#import "ios/clean/chrome/browser/ui/tools/tools_menu_commands.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -94,12 +93,6 @@
   // We need to dismiss the ToolsMenu every time the Toolbar frame changes
   // (e.g. Size changes, rotation changes, etc.)
   [self.dispatcher closeToolsMenu];
-}
-
-#pragma mark - SettingsActions
-
-- (void)showSettings:(id)sender {
-  [self.dispatcher showSettings];
 }
 
 #pragma mark - ToolsMenuActions

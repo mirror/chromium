@@ -9,6 +9,7 @@ source_set("tools") {
     "tools_mediator.h",
     "tools_mediator.mm",
     "tools_mediator_private.h",
+    "tools_menu_commands.h",
   ]
 
   configs += [ "//build/config/compiler:enable_arc" ]

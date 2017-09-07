@@ -12,11 +12,9 @@ source_set("commands") {
     "java_script_dialog_commands.h",
     "navigation_commands.h",
     "ntp_commands.h",
-    "settings_commands.h",
     "tab_commands.h",
     "tab_grid_commands.h",
     "tab_strip_commands.h",
-    "tools_menu_commands.h",
   ]
   deps = [
     "//base",
