@@ -551,6 +551,7 @@ if (is_android) {
 
 if (is_clang && !is_nacl) {
   default_compiler_configs += [
+    "//build/config/clang:find_suspicious_classes",
     "//build/config/clang:find_bad_constructs",
     "//build/config/clang:extra_warnings",
   ]

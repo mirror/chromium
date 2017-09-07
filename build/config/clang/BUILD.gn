@@ -51,6 +51,22 @@ config("find_bad_constructs") {
   }
 }
 
+config("find_suspicious_classes") {
+  if (is_android) {
+    cflags = [
+      "-Xclang",
+      "-load",
+      "-Xclang",
+      rebase_path("${clang_base_path}/lib/libFindBadConstructs.so",
+                  root_build_dir),
+      "-Xclang",
+      "-add-plugin",
+      "-Xclang",
+      "find-suspicious-classes",
+    ]
+  }
+}
+
 # Enables some extra Clang-specific warnings. Some third-party code won't
 # compile with these so may want to remove this config.
 config("extra_warnings") {
