@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e13964f9_58f4d84a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1880,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-07T06:17:46Z",
+      "side": 1,
+      "message": "When start_pos \u003d\u003d end_pos \u003d\u003d -1, we can return at L1903 before\ncalling |EllipsisRectForBox()|.\n\nSince |start_pos| and |end_pos| are assigned in if-else statements,\nwe don\u0027t need to initialize them.\n\n\n1900  LayoutRect rect;\n1901\n1902  if (start_pos \u003d\u003d end_pos)\n1903    return rect;",
+      "parentUuid": "0d9601f4_dc4c64c8",
+      "revId": "613fbe90aeeec93da34a79217bf57025e7a2f41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9b55b1f_afb9d851",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
         "patchSetId": 4
