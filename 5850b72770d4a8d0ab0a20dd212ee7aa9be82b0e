@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43b253c8_4fd9bd55",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-07T21:14:36Z",
+      "side": 1,
+      "message": "can we use gfx::Transform::TransformRectReverse here with the appropriate matrix instead of all the logic below?",
+      "revId": "5850b72770d4a8d0ab0a20dd212ee7aa9be82b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
