@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a1bd289_979bb518",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-09-07T22:47:56Z",
+      "side": 1,
+      "message": "kUnknown ?  kUndefined?",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 11
+      },
+      "revId": "6ac71196e4395b4e114822271236ed699d08cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282f09ca_23447a4b",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-09-07T22:47:56Z",
+      "side": 1,
+      "message": "else if instead of two separate ifs?",
+      "range": {
+        "startLine": 436,
+        "startChar": 5,
+        "endLine": 438,
+        "endChar": 4
+      },
+      "revId": "6ac71196e4395b4e114822271236ed699d08cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
