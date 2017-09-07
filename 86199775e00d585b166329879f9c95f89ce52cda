@@ -25,6 +25,47 @@
     },
     {
       "key": {
+        "uuid": "f42bdf28_eb1126ea",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-07T05:35:05Z",
+      "side": 1,
+      "message": "(ctor seems to be private)",
+      "parentUuid": "8ecc98fe_0b0fef3f",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 22
+      },
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b2fbe4_76cb3a2d",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-07T05:35:05Z",
+      "side": 1,
+      "message": "nit: can you comment that this object\u0027s lifetime is tied to the Mojo connection?",
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7b84b78_63c69f48",
         "filename": "content/browser/shared_worker/shared_worker_host.cc",
         "patchSetId": 16
@@ -36,6 +77,23 @@
       "writtenOn": "2017-09-07T02:05:37Z",
       "side": 1,
       "message": "features.reserve(used_features_.size());",
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7faae9f2_93dcc8b3",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-07T05:35:05Z",
+      "side": 1,
+      "message": "features(used_features_.begin(), used_features_.end()) works?",
       "revId": "86199775e00d585b166329879f9c95f89ce52cda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +174,23 @@
       "writtenOn": "2017-09-07T01:47:09Z",
       "side": 1,
       "message": "Thanks for the comments! One thing that\u0027s bit me is \"client\" is super overloaded in the codebase (especially \"WorkerClient\"). Can we clarify with language like \"currently, a client is a Document that called new SharedWorker()\" (assuming that\u0027s accurate?)",
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf13236_673ed1f4",
+        "filename": "content/renderer/shared_worker/shared_worker_repository.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-07T05:35:05Z",
+      "side": 1,
+      "message": "Wondered if we really need this code, while a doc re-creating a new one may suggest that the old one\u0027s gone... so probably it\u0027s good.",
       "revId": "86199775e00d585b166329879f9c95f89ce52cda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
