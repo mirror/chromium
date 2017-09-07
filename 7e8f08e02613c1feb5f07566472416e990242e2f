@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "00af6106_c692f0c0",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-07T06:03:32Z",
+      "side": 1,
+      "message": "There are 2 reasons to run |callback| here:\n  1. Mojo forces us to run it for whatever cases, except the case that the mojo connection has broken.\n  2. Running |callback| here enables renderer side release the corresponding pending callback there.",
+      "parentUuid": "88524604_4f5f9f3d",
+      "revId": "7e8f08e02613c1feb5f07566472416e990242e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b61187a5_61a66a08",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "45c79027_fdb91aab",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-07T06:03:32Z",
+      "side": 1,
+      "message": "If we just use |callback| directly, the condition \u0027if (!callback)\u0027 will have two possible cases:\n  1. There is not any |callback| ever set at all.\nor\n  2. The |callback| has been set but has already run.\n\nBut, our code logic needs to differentiate above 2 cases, we must ensure |callback| to be set only once, and after that we must reject all other getRegistrationForReady requests. The logic is inside ServiceWorkerProviderHost::IsValidGetRegistrationForReadyMessage().",
+      "parentUuid": "ff29ea87_2b41047f",
+      "revId": "7e8f08e02613c1feb5f07566472416e990242e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6763b48d_ee0c8cb7",
         "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
         "patchSetId": 3
@@ -64,6 +100,24 @@
       "writtenOn": "2017-09-07T05:20:59Z",
       "side": 1,
       "message": "more succinctly: \"We reach here only if the service worker system is aborting. But since ServiceWorkerContainer#ready should never reject (https://w3c.github.io/ServiceWorker/#navigator-service-worker-ready), just do nothing.\"\n\nBut this is making me feel like the browser process just shouldn\u0027t send this message? Then the callback doesn\u0027t need |error| or |error_msg| params.",
+      "revId": "7e8f08e02613c1feb5f07566472416e990242e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a3bbff_849eaafa",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-07T06:03:32Z",
+      "side": 1,
+      "message": "Yeah it\u0027s true that there is not any legacy IPC being sent to notify such an error case before, but it just leaves the callback added here https://cs.chromium.org/chromium/src/content/child/service_worker/service_worker_dispatcher.cc?rcl\u003da34790c47ddf793fb011ceba391abb4b405806fc\u0026l\u003d136 to be pending for ever.\n\nAck about the clearer comment suggestion, will change later.",
+      "parentUuid": "6763b48d_ee0c8cb7",
       "revId": "7e8f08e02613c1feb5f07566472416e990242e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
