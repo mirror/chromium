@@ -233,7 +233,9 @@ class TopSitesImpl : public TopSites, public HistoryServiceObserver {
   // if the list of forced URLs overflows, the oldest ones are dropped.
   // All mutations to cache_ *must* go through this. Should
   // be called from the UI thread.
-  void SetTopSites(const MostVisitedURLList& new_top_sites,
+  // Returns if there's a change in top sites list so that its observers are
+  // notified.
+  bool SetTopSites(const MostVisitedURLList& new_top_sites,
                    const CallLocation location);
 
   // Returns the number of most visited results to request from history. This
