@@ -3338,21 +3338,17 @@ void LocalFrameView::PaintTree() {
       PaintGraphicsLayerRecursively(root_graphics_layer);
     }
 
-    // TODO(sataya.m):Main frame doesn't create RootFrameViewport in some
-    // webkit_unit_tests (http://crbug.com/644788).
-    if (viewport_scrollable_area_) {
-      if (GraphicsLayer* layer_for_horizontal_scrollbar =
-              viewport_scrollable_area_->LayerForHorizontalScrollbar()) {
-        PaintGraphicsLayerRecursively(layer_for_horizontal_scrollbar);
-      }
-      if (GraphicsLayer* layer_for_vertical_scrollbar =
-              viewport_scrollable_area_->LayerForVerticalScrollbar()) {
-        PaintGraphicsLayerRecursively(layer_for_vertical_scrollbar);
-      }
-      if (GraphicsLayer* layer_for_scroll_corner =
-              viewport_scrollable_area_->LayerForScrollCorner()) {
-        PaintGraphicsLayerRecursively(layer_for_scroll_corner);
-      }
+    if (GraphicsLayer* layer_for_horizontal_scrollbar =
+            viewport_scrollable_area_->LayerForHorizontalScrollbar()) {
+      PaintGraphicsLayerRecursively(layer_for_horizontal_scrollbar);
+    }
+    if (GraphicsLayer* layer_for_vertical_scrollbar =
+            viewport_scrollable_area_->LayerForVerticalScrollbar()) {
+      PaintGraphicsLayerRecursively(layer_for_vertical_scrollbar);
+    }
+    if (GraphicsLayer* layer_for_scroll_corner =
+            viewport_scrollable_area_->LayerForScrollCorner()) {
+      PaintGraphicsLayerRecursively(layer_for_scroll_corner);
     }
   }
 
