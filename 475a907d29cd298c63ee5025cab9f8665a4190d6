@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3e8855f_fb072361",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/ProfileDataSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-07T11:42:22Z",
+      "side": 1,
+      "message": "Nit: Consider calling this(null, avater, fullName, givenName) instead of setting the values.",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "475a907d29cd298c63ee5025cab9f8665a4190d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
