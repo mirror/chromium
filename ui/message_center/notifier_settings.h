@@ -74,7 +74,10 @@ struct MESSAGE_CENTER_EXPORT NotifierId {
   GURL url;
 
   // The identifier of the profile where the notification is created. This is
-  // used for ChromeOS multi-profile support and can be empty.
+  // used for ChromeOS multi-profile support. If |profile_id| is non-empty, the
+  // notification will only display to the profile specified by |profile_id|.
+  // Otherwise, the notification will display to any profile. This property is
+  // ignored if the notification is an Ash system notification.
   std::string profile_id;
 
  private:

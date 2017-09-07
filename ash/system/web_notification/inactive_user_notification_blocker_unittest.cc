@@ -102,6 +102,27 @@ class InactiveUserNotificationBlockerTest
     return blocker_->ShouldShowNotification(notification);
   }
 
+  void VerifyShouldShowWithEmptyProfileId() {
+    message_center::NotifierId notifier_id(
+        message_center::NotifierId::APPLICATION, "test-app");
+    // Only allowed the system notifier.
+    message_center::NotifierId ash_system_notifier(
+        message_center::NotifierId::SYSTEM_COMPONENT,
+        system_notifier::kNotifierDisplay);
+    // Other system notifiers should be treated as same as a normal notifier.
+    message_center::NotifierId random_system_notifier(
+        message_center::NotifierId::SYSTEM_COMPONENT,
+        "random_system_component");
+
+    const std::string kEmptyUserId;
+    EXPECT_TRUE(ShouldShowAsPopup(notifier_id, kEmptyUserId));
+    EXPECT_TRUE(ShouldShowAsPopup(ash_system_notifier, kEmptyUserId));
+    EXPECT_TRUE(ShouldShowAsPopup(random_system_notifier, kEmptyUserId));
+    EXPECT_TRUE(ShouldShow(notifier_id, kEmptyUserId));
+    EXPECT_TRUE(ShouldShow(ash_system_notifier, kEmptyUserId));
+    EXPECT_TRUE(ShouldShow(random_system_notifier, kEmptyUserId));
+  }
+
  private:
   int state_changed_count_ = 0;
 
@@ -124,17 +145,22 @@ TEST_F(InactiveUserNotificationBlockerTest, Basic) {
       message_center::NotifierId::SYSTEM_COMPONENT, "random_system_component");
 
   // Notifications from a user other than the active one (in this case, default)
-  // are generally blocked unless they're ash system notifications.
-  const std::string kInvalidUserId;
+  // are generally blocked unless they're ash system notifications. However,
+  // if the user (profile_id) has not been specified, the notification should
+  // not be blocked.
+  const std::string kInvalidUserId = "foobar";
+
   EXPECT_FALSE(ShouldShowAsPopup(notifier_id, kInvalidUserId));
   EXPECT_TRUE(ShouldShowAsPopup(ash_system_notifier, kInvalidUserId));
   EXPECT_FALSE(ShouldShowAsPopup(random_system_notifier, kInvalidUserId));
   EXPECT_TRUE(ShouldShowAsPopup(notifier_id, GetDefaultUserId()));
+  EXPECT_TRUE(ShouldShowAsPopup(random_system_notifier, GetDefaultUserId()));
   EXPECT_FALSE(ShouldShow(notifier_id, kInvalidUserId));
   EXPECT_TRUE(ShouldShow(ash_system_notifier, kInvalidUserId));
   EXPECT_FALSE(ShouldShow(random_system_notifier, kInvalidUserId));
   EXPECT_TRUE(ShouldShow(notifier_id, GetDefaultUserId()));
   EXPECT_TRUE(ShouldShow(random_system_notifier, GetDefaultUserId()));
+  VerifyShouldShowWithEmptyProfileId();
 
   // Add a second user and try with a recognized but inactive user as well.
   AddUserSession("user1@tray");
@@ -153,6 +179,7 @@ TEST_F(InactiveUserNotificationBlockerTest, Basic) {
   EXPECT_FALSE(ShouldShow(notifier_id, "user1@tray"));
   EXPECT_TRUE(ShouldShow(random_system_notifier, GetDefaultUserId()));
   EXPECT_FALSE(ShouldShow(random_system_notifier, "user1@tray"));
+  VerifyShouldShowWithEmptyProfileId();
 
   // Activate the second user and make sure the original/default user's
   // notifications are now hidden.
@@ -171,6 +198,7 @@ TEST_F(InactiveUserNotificationBlockerTest, Basic) {
   EXPECT_TRUE(ShouldShow(notifier_id, "user1@tray"));
   EXPECT_FALSE(ShouldShow(random_system_notifier, GetDefaultUserId()));
   EXPECT_TRUE(ShouldShow(random_system_notifier, "user1@tray"));
+  VerifyShouldShowWithEmptyProfileId();
 
   // Switch back and verify the active user's notifications are once again
   // shown.
@@ -189,6 +217,7 @@ TEST_F(InactiveUserNotificationBlockerTest, Basic) {
   EXPECT_FALSE(ShouldShow(notifier_id, "user1@tray"));
   EXPECT_TRUE(ShouldShow(random_system_notifier, GetDefaultUserId()));
   EXPECT_FALSE(ShouldShow(random_system_notifier, "user1@tray"));
+  VerifyShouldShowWithEmptyProfileId();
 }
 
 }  // namespace
