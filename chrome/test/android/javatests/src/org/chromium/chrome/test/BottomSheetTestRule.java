@@ -64,7 +64,7 @@ public class BottomSheetTestRule extends ChromeTabbedActivityTestRule {
         }
 
         @Override
-        public void onSheetOpened() {
+        public void onSheetOpened(int reason) {
             mOpenedCallbackHelper.notifyCalled();
         }
 
