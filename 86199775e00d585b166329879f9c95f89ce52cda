@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "869c71c0_55c170a2",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-07T14:25:32Z",
+      "side": 1,
+      "message": "Right, ctor is private, so I can\u0027t use std::make_unique. Nico told me that WrapUnique(new ...) is the recommended approach in these cases.",
+      "parentUuid": "f42bdf28_eb1126ea",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 22
+      },
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83b2fbe4_76cb3a2d",
         "filename": "content/browser/shared_worker/shared_worker_connector_impl.h",
         "patchSetId": 16
@@ -63,6 +87,24 @@
       "revId": "86199775e00d585b166329879f9c95f89ce52cda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1481f629_c73640f0",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-07T14:25:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83b2fbe4_76cb3a2d",
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "78a47ae8_6f904e5a",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-07T14:25:32Z",
+      "side": 1,
+      "message": "I went with this solution, thanks!",
+      "parentUuid": "7faae9f2_93dcc8b3",
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6bc0a32_8860f35e",
         "filename": "content/browser/shared_worker/shared_worker_host.cc",
         "patchSetId": 16
@@ -111,6 +171,24 @@
       "writtenOn": "2017-09-07T02:05:37Z",
       "side": 1,
       "message": "Can you initialize |connection_request_id| in ClientInfo\u0027s ctor like other ids (process_id and frame_id)?",
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816138eb_d782037a",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-07T14:25:32Z",
+      "side": 1,
+      "message": "Yes, good idea.",
+      "parentUuid": "f6bc0a32_8860f35e",
       "revId": "86199775e00d585b166329879f9c95f89ce52cda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -140,6 +218,30 @@
     },
     {
       "key": {
+        "uuid": "b4fcc0b3_ad5133fd",
+        "filename": "content/browser/shared_worker/shared_worker_host.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-07T14:25:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f6fbf84_54e26bc9",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 17
+      },
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3c36919_5a4c076f",
         "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
         "patchSetId": 16
@@ -163,6 +265,30 @@
     },
     {
       "key": {
+        "uuid": "6e855045_0d5a8ed2",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-07T14:25:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3c36919_5a4c076f",
+      "range": {
+        "startLine": 202,
+        "startChar": 4,
+        "endLine": 202,
+        "endChar": 49
+      },
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6549f6b6_c0d70acb",
         "filename": "content/common/shared_worker/shared_worker_client.mojom",
         "patchSetId": 16
@@ -174,6 +300,24 @@
       "writtenOn": "2017-09-07T01:47:09Z",
       "side": 1,
       "message": "Thanks for the comments! One thing that\u0027s bit me is \"client\" is super overloaded in the codebase (especially \"WorkerClient\"). Can we clarify with language like \"currently, a client is a Document that called new SharedWorker()\" (assuming that\u0027s accurate?)",
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb49b10_ddc5a27f",
+        "filename": "content/common/shared_worker/shared_worker_client.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-07T14:25:32Z",
+      "side": 1,
+      "message": "That\u0027s technically accurate today. However, you could also imagine it being a dedicated worker or another shared worker in the future that is the client. I was trying to make a more future proof comment :) I will see what I can do to achieve that goal while making it still clearer what is meant by client.",
+      "parentUuid": "6549f6b6_c0d70acb",
       "revId": "86199775e00d585b166329879f9c95f89ce52cda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -197,6 +341,24 @@
     },
     {
       "key": {
+        "uuid": "6633fd9d_6955add3",
+        "filename": "content/renderer/shared_worker/shared_worker_repository.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-07T14:25:32Z",
+      "side": 1,
+      "message": "Yeah, I added it in case script decides to call \u0027new SharedWorker\u0027 a bunch, which would open a lot of connections. Since the ClientList just holds onto WeakPtrs to the StrongBinding\u003cSharedWorkerClientImpl\u003e, I figured it would be good to add some kind of garbage collection to the ClientList.\n\nAn alternative would have been to watch the Mojo connection for errors and handle them by removing the WeakPtr from the list. I started down this path but it was getting pretty complicated, and I just wasn\u0027t sure it was worth the code. The garbage collection code here is small and simple, and so long as a page doesn\u0027t open a huge amount of shared workers, it shouldn\u0027t have performance implications to worry about.",
+      "parentUuid": "9cf13236_673ed1f4",
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a218942b_ab6e0dcb",
         "filename": "third_party/WebKit/public/platform/ContentSecurityPolicyStructTraits.h",
         "patchSetId": 16
@@ -211,6 +373,24 @@
       "revId": "86199775e00d585b166329879f9c95f89ce52cda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33bf664a_29aa3b3f",
+        "filename": "third_party/WebKit/public/platform/ContentSecurityPolicyStructTraits.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-07T14:25:32Z",
+      "side": 1,
+      "message": "Done, ditto for AddressSpaceStructTraits.h",
+      "parentUuid": "a218942b_ab6e0dcb",
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
