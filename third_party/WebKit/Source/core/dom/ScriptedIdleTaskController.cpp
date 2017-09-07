@@ -5,7 +5,6 @@
 #include "core/dom/ScriptedIdleTaskController.h"
 
 #include "core/dom/ExecutionContext.h"
-#include "core/dom/IdleRequestCallback.h"
 #include "core/dom/IdleRequestOptions.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/probe/CoreProbes.h"
@@ -80,6 +79,26 @@ class IdleRequestCallbackWrapper
 
 }  // namespace internal
 
+ScriptedIdleTaskController::V8IdleTask::V8IdleTask(
+    V8IdleRequestCallback* callback)
+    : callback_(callback) {}
+
+ScriptedIdleTaskController::V8IdleTask::~V8IdleTask() {}
+
+DEFINE_TRACE(ScriptedIdleTaskController::V8IdleTask) {
+  visitor->Trace(callback_);
+  ScriptedIdleTaskController::IdleTask::Trace(visitor);
+}
+
+DEFINE_TRACE_WRAPPERS(ScriptedIdleTaskController::V8IdleTask) {
+  visitor->TraceWrappers(callback_);
+  ScriptedIdleTaskController::IdleTask::TraceWrappers(visitor);
+}
+
+void ScriptedIdleTaskController::V8IdleTask::invoke(IdleDeadline* deadline) {
+  callback_->call(nullptr, deadline);
+}
+
 ScriptedIdleTaskController::ScriptedIdleTaskController(
     ExecutionContext* context)
     : SuspendableObject(context),
@@ -94,6 +113,12 @@ ScriptedIdleTaskController::~ScriptedIdleTaskController() {}
 DEFINE_TRACE(ScriptedIdleTaskController) {
   visitor->Trace(callbacks_);
   SuspendableObject::Trace(visitor);
+}
+DEFINE_TRACE_WRAPPERS(ScriptedIdleTaskController) {
+  for (const auto& callback : callbacks_.Values()) {
+    visitor->TraceWrappers(callback);
+  }
+  TraceWrapperBase::TraceWrappers(visitor);
 }
 
 int ScriptedIdleTaskController::NextCallbackId() {
@@ -110,7 +135,7 @@ int ScriptedIdleTaskController::NextCallbackId() {
 
 ScriptedIdleTaskController::CallbackId
 ScriptedIdleTaskController::RegisterCallback(
-    IdleRequestCallback* callback,
+    ScriptedIdleTaskController::IdleTask* callback,
     const IdleRequestOptions& options) {
   CallbackId id = NextCallbackId();
   callbacks_.Set(id, callback);
@@ -181,7 +206,7 @@ void ScriptedIdleTaskController::RunCallback(
     double deadline_seconds,
     IdleDeadline::CallbackType callback_type) {
   DCHECK(!suspended_);
-  IdleRequestCallback* callback = callbacks_.Take(id);
+  IdleTask* callback = callbacks_.Take(id);
   if (!callback)
     return;
 
@@ -202,7 +227,7 @@ void ScriptedIdleTaskController::RunCallback(
       InspectorIdleCallbackFireEvent::Data(
           GetExecutionContext(), id, allotted_time_millis,
           callback_type == IdleDeadline::CallbackType::kCalledByTimeout));
-  callback->handleEvent(IdleDeadline::Create(deadline_seconds, callback_type));
+  callback->invoke(IdleDeadline::Create(deadline_seconds, callback_type));
 
   double overrun_millis =
       std::max((MonotonicallyIncreasingTime() - deadline_seconds) * 1000, 0.0);
