@@ -12,6 +12,8 @@
 #include "content/public/browser/browser_thread.h"
 #include "extensions/browser/app_sorting.h"
 #include "ui/app_list/app_list_constants.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
 #include "ui/gfx/image/image_skia.h"
 
 // static
@@ -46,7 +48,13 @@ const char* ArcAppItem::GetItemType() const {
 }
 
 void ArcAppItem::Activate(int event_flags) {
-  if (!arc::LaunchApp(profile(), id(), event_flags))
+  auto* screen = display::Screen::GetScreen();
+  int64_t display_id =
+      screen
+          ? screen->GetDisplayNearestWindow(GetController()->GetAppListWindow())
+                .id()
+          : display::kInvalidDisplayId;
+  if (!arc::LaunchApp(profile(), id(), event_flags, display_id))
     return;
 
   // Manually close app_list view because focus is not changed on ARC app start,

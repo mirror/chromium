@@ -13,6 +13,8 @@
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h"
 #include "chrome/grit/generated_resources.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
 
 ArcAppContextMenu::ArcAppContextMenu(
     app_list::AppContextMenuDelegate* delegate,
@@ -100,8 +102,12 @@ void ArcAppContextMenu::ShowPackageInfo() {
             << app_id() << ".";
     return;
   }
+  int64_t display_id =
+      display::Screen::GetScreen()
+          ->GetDisplayNearestWindow(controller()->GetAppListWindow())
+          .id();
   if (arc::ShowPackageInfo(app_info->package_name,
-                           arc::mojom::ShowPackageInfoPage::MAIN)) {
+                           arc::mojom::ShowPackageInfoPage::MAIN, display_id)) {
     controller()->DismissView();
   }
 }
