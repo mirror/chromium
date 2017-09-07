@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb86cf40_f8732b3f",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-07T21:52:49Z",
+      "side": 1,
+      "message": "Done.\n\nThe documentation in histogram_macros.h and its usage show a different pattern though.",
+      "parentUuid": "cc9475d5_22a3b573",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 5
+      },
+      "revId": "a59458e4f4e22c4bf05946ddc74cfef3c09dcb1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63864700_fc8b1649",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a59458e4f4e22c4bf05946ddc74cfef3c09dcb1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9601a824_8114d4b1",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 28193,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-07T21:52:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63864700_fc8b1649",
+      "range": {
+        "startLine": 28193,
+        "startChar": 39,
+        "endLine": 28193,
+        "endChar": 43
+      },
+      "revId": "a59458e4f4e22c4bf05946ddc74cfef3c09dcb1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
