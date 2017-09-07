@@ -1140,6 +1140,24 @@
     },
     {
       "key": {
+        "uuid": "a6bd4127_9656f52c",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-07T20:58:58Z",
+      "side": 1,
+      "message": "I made the reader not copy any more. And used a sub-reader for this case.\n\nI put it in a separate CL so it\u0027s easier to see. We can either submit together or I\u0027ll merge it back here. https://chromium-review.googlesource.com/c/chromium/src/+/656137",
+      "parentUuid": "8070733e_efe28e06",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8c61eb5_d88b1a6f",
         "filename": "net/ntlm/ntlm_buffer_reader.h",
         "patchSetId": 8
