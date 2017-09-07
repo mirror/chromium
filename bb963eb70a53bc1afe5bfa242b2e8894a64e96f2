@@ -16,6 +16,24 @@
       "revId": "bb963eb70a53bc1afe5bfa242b2e8894a64e96f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b3a437_38581b15",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-09-07T18:56:16Z",
+      "side": 1,
+      "message": "I opened a CL with this change: https://chromium-review.googlesource.com/c/chromium/src/+/655805",
+      "parentUuid": "5a92b220_a60f682f",
+      "revId": "bb963eb70a53bc1afe5bfa242b2e8894a64e96f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
