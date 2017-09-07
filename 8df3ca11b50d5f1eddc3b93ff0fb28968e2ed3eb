@@ -19,6 +19,58 @@
     },
     {
       "key": {
+        "uuid": "020b22b4_68bf6ff4",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-07T19:55:36Z",
+      "side": 1,
+      "message": "When the pin is stored in cryptohome, we can use the same hash for pin and password and avoid this problem.\n\nNumeric password is an edge case and I am not sure whether Gaia allows numeric password these days. So I think it is reasonable that we assume the input is a pin when pin keyboard is shown and the input is numeric.\n\nIMHO, changing the API to send back two keys are okay too. But I don\u0027t think we need to do this ATM.",
+      "parentUuid": "dba293e5_b5660535",
+      "revId": "8df3ca11b50d5f1eddc3b93ff0fb28968e2ed3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2e958d_6c59465d",
+        "filename": "ash/login/lock_screen_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-07T19:55:36Z",
+      "side": 1,
+      "message": "nit: We might want to make this wait more explicit by calling Quit in the lambda.",
+      "revId": "8df3ca11b50d5f1eddc3b93ff0fb28968e2ed3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd321684_8d060240",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-07T19:55:36Z",
+      "side": 1,
+      "message": "We should check the current_user() of |to_update| instead. Because |to_update| does not necessarily point to a different view, e.g. when LayoutAuth is called from LockContentsView::SwapToAuthUser where we update the user of |primary_auth_| instead of creating a new view.",
+      "revId": "8df3ca11b50d5f1eddc3b93ff0fb28968e2ed3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "456a7740_077dd543",
         "filename": "ash/login/ui/lock_screen.h",
         "patchSetId": 2
