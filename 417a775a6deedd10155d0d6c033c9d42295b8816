@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9885ac4a_0f467e74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-07T10:17:21Z",
+      "side": 1,
+      "message": "Nit: Of course the user ignoring the promo is not an action :) We record this one when the UI is destroyed and the user has not interacted with the promo (the difference being that this formulation mentions the exact point when the histogram is recorded).",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 13
+      },
+      "revId": "417a775a6deedd10155d0d6c033c9d42295b8816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "009a9253_9900ec32",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-07T10:17:21Z",
+      "side": 1,
+      "message": "The description for this histogram mentions that it\u0027s only on iOS, which isn\u0027t correct anymore.",
+      "range": {
+        "startLine": 107,
+        "startChar": 25,
+        "endLine": 107,
+        "endChar": 80
+      },
+      "revId": "417a775a6deedd10155d0d6c033c9d42295b8816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7aa28c_af08eabf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-07T10:17:21Z",
+      "side": 1,
+      "message": "Nit: I find this method name not particularly clear -- it reads to me like it starts recording impressions until a dismissal. In terms of the contract, it might be easier to just say that this method is called when the signin promo is destroyed (and name it accordingly) and treat the fact that this might trigger a histogram as an implementation detail.",
+      "range": {
+        "startLine": 177,
+        "startChar": 16,
+        "endLine": 177,
+        "endChar": 45
+      },
+      "revId": "417a775a6deedd10155d0d6c033c9d42295b8816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
