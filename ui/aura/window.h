@@ -24,6 +24,7 @@
 #include "ui/compositor/layer_animator.h"
 #include "ui/compositor/layer_delegate.h"
 #include "ui/compositor/layer_owner.h"
+#include "ui/compositor/layer_owner_delegate.h"
 #include "ui/events/event_constants.h"
 #include "ui/events/event_target.h"
 #include "ui/events/event_targeter.h"
@@ -72,6 +73,7 @@ class WindowTestApi;
 // TODO(beng): resolve ownership.
 class AURA_EXPORT Window : public ui::LayerDelegate,
                            public ui::LayerOwner,
+                           public ui::LayerOwnerDelegate,
                            public ui::EventTarget,
                            public ui::GestureConsumer,
                            public ui::PropertyHandler {
@@ -449,6 +451,9 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   ui::EventTargeter* GetEventTargeter() override;
   void ConvertEventToTarget(ui::EventTarget* target,
                             ui::LocatedEvent* event) override;
+
+  // Overridden from ui::LayerOwnerDelegate:
+  void OnLayerRecreated(ui::Layer* old_layer, ui::Layer* new_layer) override;
 
   // Updates the layer name based on the window's name and id.
   void UpdateLayerName();

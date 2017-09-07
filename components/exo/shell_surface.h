@@ -130,11 +130,20 @@ class ShellSurface : public SurfaceTreeHost,
   // Maximizes the shell surface.
   void Maximize();
 
+  // Maximizes the shell surface with the next surface commit.
+  void MaximizeWithCommit();
+
   // Minimize the shell surface.
   void Minimize();
 
+  // Maximizes the shell surface with the next surface commit.
+  void MinimizeWithCommit();
+
   // Restore the shell surface.
   void Restore();
+
+  // Restore the shell surface with the next surface commit.
+  void RestoreWithCommit();
 
   // Set fullscreen state for shell surface.
   void SetFullscreen(bool fullscreen);
@@ -410,6 +419,8 @@ class ShellSurface : public SurfaceTreeHost,
   std::unique_ptr<ui::CompositorLock> compositor_lock_;
   bool system_modal_ = false;
   gfx::ImageSkia icon_;
+  ui::WindowShowState window_state_ = ui::SHOW_STATE_DEFAULT;
+  ui::WindowShowState pending_window_state_ = ui::SHOW_STATE_DEFAULT;
 
   DISALLOW_COPY_AND_ASSIGN(ShellSurface);
 };
