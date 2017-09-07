@@ -196,3 +196,22 @@ TEST(PrefHashCalculatorTest, TestCompatibilityWithLegacyDeviceId) {
             PrefHashCalculator(kSeed, kNewDeviceId, kLegacyDeviceId)
                 .Validate("pref.path", &string_value, kExpectedValue));
 }
+
+TEST(PrefHashCalculatorTest, TestNotCompatibleWithEmptyLegacyDeviceId) {
+  static const char kSeed[] = "0123456789ABCDEF0123456789ABCDEF";
+  static const char kNewDeviceId[] = "unused";
+  static const char kLegacyDeviceId[] = "";
+
+  const base::Value string_value("testing with special chars:\n<>{}:^^@#$\\/");
+  static const char kExpectedValue[] =
+      "F14F989B7CAABF3B36ECAE34492C4D8094D2500E7A86D9A3203E54B274C27CB5";
+
+  EXPECT_EQ(PrefHashCalculator::INVALID,
+            PrefHashCalculator(kSeed, kNewDeviceId, kLegacyDeviceId)
+                .Validate("pref.path", &string_value, kExpectedValue));
+
+  // Verify that the invalid result is not due to an incorrect expected value.
+  EXPECT_EQ(PrefHashCalculator::VALID,
+            PrefHashCalculator(kSeed, kLegacyDeviceId, kLegacyDeviceId)
+                .Validate("pref.path", &string_value, kExpectedValue));
+}
