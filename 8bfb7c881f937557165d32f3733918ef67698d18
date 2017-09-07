@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32136f65_4cc909ee",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Gain/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-07T20:36:59Z",
+      "side": 1,
+      "message": "Perhaps we can move the comment in the JS code. (i.e. l.17)",
+      "revId": "8bfb7c881f937557165d32f3733918ef67698d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12a3425_0bf62ef0",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Gain/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-07T20:36:59Z",
+      "side": 1,
+      "message": "Perhaps we don\u0027t need this?",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 36
+      },
+      "revId": "8bfb7c881f937557165d32f3733918ef67698d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a4ca69d_5acc12ac",
+        "filename": "third_party/WebKit/Source/modules/webaudio/GainNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-07T20:36:59Z",
+      "side": 1,
+      "message": "The comment fits in one line.",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 16
+      },
+      "revId": "8bfb7c881f937557165d32f3733918ef67698d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86712240_2356852f",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioBus.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-07T20:36:59Z",
+      "side": 1,
+      "message": "Is this only used by GainNode?",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 64
+      },
+      "revId": "8bfb7c881f937557165d32f3733918ef67698d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
