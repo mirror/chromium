@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aebf9e39_2fd92fa6",
+        "filename": "chrome/test/chromedriver/chrome_launcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-09-07T18:37:45Z",
+      "side": 1,
+      "message": "What\u0027s the usecase to use the default user data directory?\nI\u0027m trying to understand the usecase to exclude \"user-data-dir\" and not give it a value from the test.\n\nIIRC, the default user-data-dir created by ChromeDriver has some specific set-up to disable some features.",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 3
+      },
+      "revId": "7ef2892f2fb70f04920bb65228857c962b262606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
