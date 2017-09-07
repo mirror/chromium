@@ -22,6 +22,30 @@
       "revId": "c2603cfc3e7421f480573e97de0dc239f1ba772a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd999b6_628c3160",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T22:21:31Z",
+      "side": 1,
+      "message": "It\u0027s not a common use, but could happen when a user travels and finds that the built-in LTE modem doesn\u0027t support the local network, they may use an external dongle. Since we don\u0027t have any control in the UI to individually turn off the built-in modem, we will either have \"Mobile Data\" completely disabled or have two cellular devices exposing 0, 1, or 2 services",
+      "parentUuid": "90abed29_2c5eefc2",
+      "range": {
+        "startLine": 1487,
+        "startChar": 0,
+        "endLine": 1492,
+        "endChar": 3
+      },
+      "revId": "c2603cfc3e7421f480573e97de0dc239f1ba772a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
