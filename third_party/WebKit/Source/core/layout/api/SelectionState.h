@@ -11,19 +11,20 @@
 namespace blink {
 
 enum class SelectionState {
-  /* The object is not selected. */
+  // LayoutObject is not selected.
   kNone,
-  /* The object either contains the start of a selection run or is the */
-  /* start of a run. */
+  // LayoutObject is the start of a selection run and doesn't have children.
   kStart,
-  /* The object is fully encompassed by a selection run. */
+  // LayoutObject is fully encompassed by a selection run and
+  // doesn't have children.
   kInside,
-  /* The object either contains the end of a selection run or is the */
-  /* end of a run. */
+  // LayoutObject is the end of a selection run and doesn't have children.
   kEnd,
-  /* The object contains an entire run or is the sole selected object */
-  /* in that run. */
-  kStartAndEnd
+  // LayoutObject contains an entire selection run and doesn't have children.
+  kStartAndEnd,
+  // LayoutObject is a containing block and has at least a LayoutObject child
+  // which SelectionState is not kNone.
+  kContain
 };
 
 CORE_EXPORT std::ostream& operator<<(std::ostream&, const SelectionState);
