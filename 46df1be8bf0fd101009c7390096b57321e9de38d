@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f0c3d5f_2c6634ed",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-07T15:03:44Z",
+      "side": 1,
+      "message": "We could reduce code duplication even more by generalizing the key parameter. E.g. instead of \n\n\n  template \u003cclass M\u003e\n  std::pair\u003citerator, bool\u003e insert_or_assign(const key_type\u0026 k, M\u0026\u0026 obj);\n  template \u003cclass M\u003e\n  std::pair\u003citerator, bool\u003e insert_or_assign(key_type\u0026\u0026 k, M\u0026\u0026 obj);\n\nwe just have\n\n  template \u003cclass K, class M\u003e\n  std::pair\u003citerator, bool\u003e insert_or_assign(K\u0026\u0026 key, M\u0026\u0026 obj);\n\nand forward everything. This was hinted at as future work in the proposal, but is currently not in the standard, which is why I didn\u0027t do it yet. How do you feel about this, given that we could take advantage of it using the transparant comparators?",
+      "range": {
+        "startLine": 233,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 74
+      },
+      "revId": "46df1be8bf0fd101009c7390096b57321e9de38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
