@@ -158,6 +158,24 @@
       "revId": "801b9c4167e9d65fb85a921f3d8b257aae2fecd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad6c725_2ed40c3f",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-07T19:09:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caadaed4_b7f1d0e6",
+      "revId": "801b9c4167e9d65fb85a921f3d8b257aae2fecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
