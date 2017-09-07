@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0ffa504c_df167376",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/focus-navigation-slot-fallback-default-tabindex.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-07T04:28:38Z",
+      "side": 1,
+      "message": "Okay, keeping them is fine.",
+      "parentUuid": "5fb1d815_6f93eb3a",
+      "revId": "2b147c38633c71b7d460928a17c5590d72bd1137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83956834_1309e33b",
         "filename": "third_party/WebKit/LayoutTests/shadow-dom/focus-navigation-slot-fallback-default-tabindex.html",
         "patchSetId": 10
