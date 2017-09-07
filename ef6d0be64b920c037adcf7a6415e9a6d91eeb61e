@@ -22,6 +22,30 @@
       "revId": "ef6d0be64b920c037adcf7a6415e9a6d91eeb61e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae3b068_f2ad4c48",
+        "filename": "base/win/com_base_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-07T15:30:24Z",
+      "side": 1,
+      "message": "Thanks! Did something along those lines (still have to expose the PreloadFoo functions for callers that need to know upfront whether the functions are available).",
+      "parentUuid": "21e30cad_f7c5392c",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "ef6d0be64b920c037adcf7a6415e9a6d91eeb61e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

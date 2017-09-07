@@ -297,6 +297,30 @@
     },
     {
       "key": {
+        "uuid": "56f91d35_96ad18d8",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-07T15:30:24Z",
+      "side": 1,
+      "message": "I think I met you half way there with the ScopedHString changes. See if this fits the bill.",
+      "parentUuid": "23f36bbb_329e65ec",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "9380ba7c6385b7f265f57f2906197a31ec47845a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82ef4107_d7e355fb",
         "filename": "base/win/com_base_util.h",
         "patchSetId": 4
