@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bfb00a5_06d42961",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T17:02:03Z",
+      "side": 1,
+      "message": "Do we need to always close the error bubble or only when |auth_success| is true? I wonder if closing when |auth_success| is false will lead to a visual flash.",
+      "revId": "ff0afbb4662098241b2f6f515c1491f0eb90f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744ff465_903b5afa",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T17:02:03Z",
+      "side": 1,
+      "message": "Can you put this block of code in SwapToAuthUser?",
+      "revId": "ff0afbb4662098241b2f6f515c1491f0eb90f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b52e68e_12ed690c",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T17:02:03Z",
+      "side": 1,
+      "message": "nit: move the comment above the \u0027if\u0027",
+      "revId": "ff0afbb4662098241b2f6f515c1491f0eb90f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7499b68_b0df965e",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T17:02:03Z",
+      "side": 1,
+      "message": "Does just using HasFocus() work? ie,\n\n  if (bubble_opener_ \u0026\u0026 bubble_opener_-\u003eHasFocus())\n    return;",
+      "revId": "ff0afbb4662098241b2f6f515c1491f0eb90f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67045cb8_03541cf7",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T17:02:03Z",
+      "side": 1,
+      "message": "comment |anchor_view|",
+      "revId": "ff0afbb4662098241b2f6f515c1491f0eb90f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "125f1904_32387b28",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T17:02:03Z",
+      "side": 1,
+      "message": "comment |anchor_view|",
+      "revId": "ff0afbb4662098241b2f6f515c1491f0eb90f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf84bbb_37da4eab",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T17:02:03Z",
+      "side": 1,
+      "message": "Can user_menu_-\u003ebubble_view() be changed to user_menu_-\u003eIsVisible()?\n\nThen bubble_view() can be renamed to bubble_view_for_test().",
+      "revId": "ff0afbb4662098241b2f6f515c1491f0eb90f714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
