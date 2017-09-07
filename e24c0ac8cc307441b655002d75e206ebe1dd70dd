@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f25281b6_2584073b",
+        "filename": "tools/grit/grit/format/policy_templates_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-07T15:46:18Z",
+      "side": 1,
+      "message": "Can you add some test coverage for this file to `grit unit`?",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "e24c0ac8cc307441b655002d75e206ebe1dd70dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
