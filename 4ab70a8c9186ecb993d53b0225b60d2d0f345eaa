@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be08ae1f_ec29e5ec",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-response-with-body.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-07T00:41:55Z",
+      "side": 1,
+      "message": "That sounds a lot better. Thank you!",
+      "parentUuid": "05e9ceb1_94e893ec",
+      "revId": "4ab70a8c9186ecb993d53b0225b60d2d0f345eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9762bb57_45dc3f62",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-response-with-body.htm",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4ab70a8c9186ecb993d53b0225b60d2d0f345eaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec8ff1d4_d72952a1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-response-with-body.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-07T00:41:55Z",
+      "side": 1,
+      "message": "Oops! Good call, thanks for catching that!",
+      "parentUuid": "9762bb57_45dc3f62",
+      "revId": "4ab70a8c9186ecb993d53b0225b60d2d0f345eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "0f390e53_4b72b899",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-allow-with-body.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-07T00:41:55Z",
+      "side": 1,
+      "message": "Got it! Thanks for telling me about it!",
+      "parentUuid": "b536d7a0_02d07ecb",
+      "range": {
+        "startLine": 3,
+        "startChar": 37,
+        "endLine": 3,
+        "endChar": 38
+      },
+      "revId": "4ab70a8c9186ecb993d53b0225b60d2d0f345eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "637a3e59_e498b75e",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-allow-with-body.py",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "4ab70a8c9186ecb993d53b0225b60d2d0f345eaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfccd2f3_adf5ca03",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-allow-with-body.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-07T00:41:55Z",
+      "side": 1,
+      "message": "That\u0027s awesome! Looks a lot better than the way I had it. Thanks for the tip!!",
+      "parentUuid": "637a3e59_e498b75e",
+      "revId": "4ab70a8c9186ecb993d53b0225b60d2d0f345eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
