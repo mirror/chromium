@@ -391,6 +391,45 @@ class DragDropControllerTest : public AshTestBase {
   DISALLOW_COPY_AND_ASSIGN(DragDropControllerTest);
 };
 
+TEST_F(DragDropControllerTest, StartDragAndDropLockCursor) {
+  std::unique_ptr<views::Widget> widget(CreateNewWidget());
+  DragTestView* drag_view = new DragTestView;
+  AddViewToWidgetAndResize(widget.get(), drag_view);
+  ui::OSExchangeData data;
+  data.SetString(base::UTF8ToUTF16("I am being dragged"));
+  ui::test::EventGenerator generator(Shell::GetPrimaryRootWindow(),
+                                     widget->GetNativeView());
+  generator.PressLeftButton();
+
+  int num_drags = 17;
+  SetCheckIfCaptureLost(widget.get(), true);
+  for (int i = 0; i < num_drags; ++i) {
+    // Because we are not doing a blocking drag and drop, the original
+    // OSDragExchangeData object is lost as soon as we return from the drag
+    // initiation in DragDropController::StartDragAndDrop(). Hence we set the
+    // drag_data_ to a fake drag data object that we created.
+    if (i > 0)
+      UpdateDragData(&data);
+    // 7 comes from views::View::GetVerticalDragThreshold()).
+    if (i >= 7)
+      SetCheckIfCaptureLost(widget.get(), false);
+
+    generator.MoveMouseBy(0, 1);
+
+    // Execute any scheduled draws to process deferred mouse events.
+    RunAllPendingInMessageLoop();
+  }
+
+  ::wm::CursorManager* cursor_manager = Shell::Get()->cursor_manager();
+  EXPECT_TRUE(cursor_manager->IsCursorLocked());
+  EXPECT_TRUE(cursor_manager->IsCursorVisible());
+  generator.PressKey(ui::VKEY_A, ui::EF_NONE);
+  generator.ReleaseKey(ui::VKEY_A, ui::EF_NONE);
+  EXPECT_TRUE(cursor_manager->IsCursorVisible());
+  generator.ReleaseLeftButton();
+  EXPECT_FALSE(cursor_manager->IsCursorLocked());
+}
+
 TEST_F(DragDropControllerTest, DragDropInSingleViewTest) {
   std::unique_ptr<views::Widget> widget(CreateNewWidget());
   DragTestView* drag_view = new DragTestView;
