@@ -105,6 +105,8 @@ class PaymentRequest : public mojom::PaymentRequest,
   // the first one being the most precise.
   void RecordFirstAbortReason(JourneyLogger::AbortReason completion_status);
 
+  void CanMakePaymentCallback(bool can_make_payment);
+
   content::WebContents* web_contents_;
   std::unique_ptr<PaymentRequestDelegate> delegate_;
   // |manager_| owns this PaymentRequest.

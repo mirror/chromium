@@ -71,6 +71,8 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
     virtual ~Delegate() {}
   };
 
+  using CanMakePaymentCallback = base::OnceCallback<void(bool)>;
+
   PaymentRequestState(PaymentRequestSpec* spec,
                       Delegate* delegate,
                       const std::string& app_locale,
@@ -95,7 +97,7 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
 
   // Returns whether the user has at least one instrument that satisfies the
   // specified supported payment methods.
-  bool CanMakePayment() const;
+  void CanMakePayment(CanMakePaymentCallback callback);
 
   // Returns true if the payment methods that the merchant website have
   // requested are supported. For example, may return true for "basic-card", but
@@ -225,6 +227,8 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
 
   void GetAllPaymentAppsCallback(content::PaymentAppProvider::PaymentApps apps);
 
+  void CheckCanMakePayment(CanMakePaymentCallback callback);
+
   bool is_ready_to_pay_;
 
   bool polling_instruments_finished_;
@@ -239,6 +243,8 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   Delegate* delegate_;
   autofill::PersonalDataManager* personal_data_manager_;
   JourneyLogger* journey_logger_;
+
+  CanMakePaymentCallback can_make_payment_callback_;
 
   autofill::AutofillProfile* selected_shipping_profile_;
   autofill::AutofillProfile* selected_shipping_option_error_profile_;

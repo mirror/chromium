@@ -235,7 +235,11 @@ void PaymentRequest::Complete(mojom::PaymentComplete result) {
 }
 
 void PaymentRequest::CanMakePayment() {
-  bool can_make_payment = state()->CanMakePayment();
+  state()->CanMakePayment(base::BindOnce(
+      &PaymentRequest::CanMakePaymentCallback, weak_ptr_factory_.GetWeakPtr()));
+}
+
+void PaymentRequest::CanMakePaymentCallback(bool can_make_payment) {
   if (delegate_->IsIncognito()) {
     client_->OnCanMakePayment(
         mojom::CanMakePaymentQueryResult::CAN_MAKE_PAYMENT);

@@ -52,8 +52,8 @@ PaymentRequestState::PaymentRequestState(
   PopulateProfileCache();
   // if (base::FeatureList::IsEnabled(features::kServiceWorkerPaymentApps)) {
   content::PaymentAppProvider::GetInstance()->GetAllPaymentApps(
-      context, base::Bind(&PaymentRequestState::GetAllPaymentAppsCallback,
-                          weak_ptr_factory_.GetWeakPtr()));
+      context, base::BindOnce(&PaymentRequestState::GetAllPaymentAppsCallback,
+                              weak_ptr_factory_.GetWeakPtr()));
   //}
   SetDefaultProfileSelections();
   spec_->AddObserver(this);
@@ -93,6 +93,9 @@ void PaymentRequestState::GetAllPaymentAppsCallback(
 
   polling_instruments_finished_ = true;
   NotifyOnPollPaymentInstrumentsFinished();
+
+  if (can_make_payment_callback_)
+    CheckCanMakePayment(std::move(can_make_payment_callback_));
 }
 
 void PaymentRequestState::OnPaymentResponseReady(
@@ -125,18 +128,33 @@ void PaymentRequestState::OnSpecUpdated() {
   UpdateIsReadyToPayAndNotifyObservers();
 }
 
-bool PaymentRequestState::CanMakePayment() const {
+void PaymentRequestState::CanMakePayment(CanMakePaymentCallback callback) {
+  if (!polling_instruments_finished_) {
+    can_make_payment_callback_ = std::move(callback);
+    return;
+  }
+
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&PaymentRequestState::CheckCanMakePayment,
+                     weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+}
+
+void PaymentRequestState::CheckCanMakePayment(CanMakePaymentCallback callback) {
+  bool can_make_payment = false;
   for (const auto& instrument : available_instruments_) {
     if (instrument->IsValidForCanMakePayment()) {
       // AddAutofillPaymentInstrument() filters out available instruments based
       // on supported card networks (visa, amex) and types (credit, debit).
       DCHECK(spec_->supported_card_networks_set().find(
                  instrument->method_name()) !=
-             spec_->supported_card_networks_set().end());
-      return true;
+                 spec_->supported_card_networks_set().end() ||
+             instrument->type() != PaymentInstrument::Type::AUTOFILL);
+      can_make_payment = true;
+      break;
     }
   }
-  return false;
+  std::move(callback).Run(can_make_payment);
 }
 
 bool PaymentRequestState::AreRequestedMethodsSupported() const {

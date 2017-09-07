@@ -32,7 +32,7 @@ base::string16 ServiceWorkerPaymentInstrument::GetMissingInfoLabel() const {
 }
 
 bool ServiceWorkerPaymentInstrument::IsValidForCanMakePayment() const {
-  NOTIMPLEMENTED();
+  // NOTIMPLEMENTED();
   return true;
 }
 
