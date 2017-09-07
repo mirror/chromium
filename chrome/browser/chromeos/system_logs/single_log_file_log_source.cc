@@ -46,6 +46,14 @@ base::FilePath GetLogFileSourceRelativeFilePath(
       return base::FilePath("atrus.log");
     case SupportedSource::kNetLog:
       return base::FilePath("net.log");
+    case SupportedSource::kEventLog:
+      return base::FilePath("eventlog.txt");
+    case SupportedSource::kUpdateEngineLog:
+      return base::FilePath("update_engine.log");
+    case SupportedSource::kPowerManagerLatest:
+      return base::FilePath("power_manager/power_manager.LATEST");
+    case SupportedSource::kPowerManagerPrevious:
+      return base::FilePath("power_manager/power_manager.PREVIOUS");
   }
   NOTREACHED();
   return base::FilePath();
