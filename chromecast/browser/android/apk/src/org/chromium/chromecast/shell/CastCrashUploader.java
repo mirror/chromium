@@ -45,12 +45,13 @@ public final class CastCrashUploader {
     private final String mCrashDumpPath;
     private final String mCrashReportUploadUrl;
 
-    public CastCrashUploader(String crashDumpPath, boolean uploadCrashToStaging) {
+    public CastCrashUploader(ScheduledExecutorService executorService, String crashDumpPath,
+            boolean uploadCrashToStaging) {
+        mExecutorService = executorService;
         this.mCrashDumpPath = crashDumpPath;
         mCrashReportUploadUrl = uploadCrashToStaging
                 ? "https://clients2.google.com/cr/staging_report"
                 : "https://clients2.google.com/cr/report";
-        mExecutorService = Executors.newScheduledThreadPool(1);
     }
 
     /** Sets up a periodic uploader, that checks for new dumps to upload every 20 minutes */
@@ -65,6 +66,14 @@ public final class CastCrashUploader {
                 0, // Do first run immediately
                 20, // Run once every 20 minutes
                 TimeUnit.MINUTES);
+    }
+
+    public void uploadOnce(){
+        mExecutorService.schedule(new Runnable() {
+            public void run() {
+                queueAllCrashDumpUploads(false);
+            }
+        }, 0, TimeUnit.MINUTES);
     }
 
     public void removeCrashDumps() {
