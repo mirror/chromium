@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ab54335_e24dbc32",
+        "filename": "chromeos/network/network_configuration_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-07T00:41:00Z",
+      "side": 1,
+      "message": "Please add a test (I added a similar one for Tether networks).",
+      "range": {
+        "startLine": 236,
+        "startChar": 7,
+        "endLine": 237,
+        "endChar": 59
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "172d3892_76644961",
+        "filename": "chromeos/network/network_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-07T00:41:00Z",
+      "side": 1,
+      "message": "super nit: Ethernet and Cellular.",
+      "range": {
+        "startLine": 435,
+        "startChar": 48,
+        "endLine": 435,
+        "endChar": 69
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e079bf_05c46bd4",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-07T00:41:00Z",
+      "side": 1,
+      "message": "nit: Call this |non_active_cellular| or add a comment about it.",
+      "range": {
+        "startLine": 1294,
+        "startChar": 19,
+        "endLine": 1294,
+        "endChar": 27
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4784043f_8eb54808",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1308,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-07T00:41:00Z",
+      "side": 1,
+      "message": "nit: We can use network-\u003eIsConnectingOrConnected() now!",
+      "range": {
+        "startLine": 1308,
+        "startChar": 8,
+        "endLine": 1308,
+        "endChar": 67
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "870a323b_b418e977",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-07T00:41:00Z",
+      "side": 1,
+      "message": "Can you also explain why this case might occur and what it means? Your code looks good, but I still don\u0027t truly understand why it is necessary.",
+      "range": {
+        "startLine": 1469,
+        "startChar": 0,
+        "endLine": 1469,
+        "endChar": 75
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
