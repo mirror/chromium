@@ -8678,7 +8678,7 @@ TEST_F(LayerTreeHostCommonTest, SkippingSubtreeMain) {
   update_list = GetUpdateLayerList();
   EXPECT_TRUE(VerifyLayerInList(grandchild, update_list));
 
-  RemoveAnimationFromElementWithExistingPlayer(child->element_id(), timeline(),
+  RemoveAnimationFromElementWithExistingTicker(child->element_id(), timeline(),
                                                animation_id);
   child->SetTransform(gfx::Transform());
   child->SetOpacity(0.f);
@@ -8702,7 +8702,7 @@ TEST_F(LayerTreeHostCommonTest, SkippingSubtreeMain) {
       animation_id, 1, TargetProperty::OPACITY);
   animation->set_fill_mode(Animation::FillMode::NONE);
   animation->set_time_offset(base::TimeDelta::FromMilliseconds(-1000));
-  AddAnimationToElementWithExistingPlayer(child->element_id(), timeline(),
+  AddAnimationToElementWithExistingTicker(child->element_id(), timeline(),
                                           std::move(animation));
   ExecuteCalculateDrawPropertiesAndSaveUpdateLayerList(root.get());
   update_list = GetUpdateLayerList();
@@ -9784,7 +9784,7 @@ TEST_F(LayerTreeHostCommonTest, OpacityAnimationsTrackingTest) {
   animation->set_fill_mode(Animation::FillMode::NONE);
   animation->set_time_offset(base::TimeDelta::FromMilliseconds(-1000));
   Animation* animation_ptr = animation.get();
-  AddAnimationToElementWithExistingPlayer(animated->element_id(), timeline(),
+  AddAnimationToElementWithExistingTicker(animated->element_id(), timeline(),
                                           std::move(animation));
 
   ExecuteCalculateDrawPropertiesAndSaveUpdateLayerList(root.get());
@@ -9840,7 +9840,7 @@ TEST_F(LayerTreeHostCommonTest, TransformAnimationsTrackingTest) {
   animation->set_fill_mode(Animation::FillMode::NONE);
   animation->set_time_offset(base::TimeDelta::FromMilliseconds(-1000));
   Animation* animation_ptr = animation.get();
-  AddAnimationToElementWithExistingPlayer(animated->element_id(), timeline(),
+  AddAnimationToElementWithExistingTicker(animated->element_id(), timeline(),
                                           std::move(animation));
 
   ExecuteCalculateDrawPropertiesAndSaveUpdateLayerList(root.get());
