@@ -6829,13 +6829,13 @@ blink::WebPageVisibilityState RenderFrameImpl::VisibilityState() const {
 
 std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader(
     const blink::WebURLRequest& request,
-    base::SingleThreadTaskRunner* task_runner) {
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   UpdatePeakMemoryStats();
 
   ChildThreadImpl* child_thread = ChildThreadImpl::current();
   if (!child_thread) {
     return RenderThreadImpl::current()->blink_platform_impl()->CreateURLLoader(
-        request, task_runner);
+        request, std::move(task_runner));
   }
 
   mojom::URLLoaderFactory* factory = custom_url_loader_factory_.get();
@@ -6858,7 +6858,7 @@ std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader(
     GetFrameHost()->IssueKeepAliveHandle(mojo::MakeRequest(&keep_alive_handle));
   }
   return base::MakeUnique<WebURLLoaderImpl>(child_thread->resource_dispatcher(),
-                                            task_runner, factory,
+                                            std::move(task_runner), factory,
                                             std::move(keep_alive_handle));
 }
 
@@ -6875,15 +6875,18 @@ bool RenderFrameImpl::IsBrowserSideNavigationPending() {
   return browser_side_navigation_pending_;
 }
 
-base::SingleThreadTaskRunner* RenderFrameImpl::GetTimerTaskRunner() {
+scoped_refptr<base::SingleThreadTaskRunner>
+RenderFrameImpl::GetTimerTaskRunner() {
   return GetWebFrame()->TimerTaskRunner();
 }
 
-base::SingleThreadTaskRunner* RenderFrameImpl::GetLoadingTaskRunner() {
+scoped_refptr<base::SingleThreadTaskRunner>
+RenderFrameImpl::GetLoadingTaskRunner() {
   return GetWebFrame()->LoadingTaskRunner();
 }
 
-base::SingleThreadTaskRunner* RenderFrameImpl::GetUnthrottledTaskRunner() {
+scoped_refptr<base::SingleThreadTaskRunner>
+RenderFrameImpl::GetUnthrottledTaskRunner() {
   return GetWebFrame()->UnthrottledTaskRunner();
 }
 
