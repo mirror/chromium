@@ -34,6 +34,24 @@
       "revId": "da7614f3d1a0630ce926379f5e3bacbf784f4e88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9c0095_d26ec00f",
+        "filename": "chromeos/dbus/power_policy_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-07T01:52:38Z",
+      "side": 1,
+      "message": "thanks for the suggestion! uploaded https://chromium-review.googlesource.com/c/chromium/src/+/653854",
+      "parentUuid": "b876c794_f9812e7e",
+      "revId": "da7614f3d1a0630ce926379f5e3bacbf784f4e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
