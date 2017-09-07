@@ -43,10 +43,11 @@ class CONTENT_EXPORT AudioOutputAuthorizationHandler {
                               const std::string& raw_device_id,
                               const std::string& device_id_for_renderer)>;
 
-  AudioOutputAuthorizationHandler(media::AudioSystem* audio_system,
-                                  MediaStreamManager* media_stream_manager,
-                                  int render_process_id_,
-                                  const std::string& salt);
+  AudioOutputAuthorizationHandler(
+      std::unique_ptr<media::AudioSystem> audio_system,
+      MediaStreamManager* media_stream_manager,
+      int render_process_id_,
+      const std::string& salt);
 
   ~AudioOutputAuthorizationHandler();
 
@@ -88,7 +89,7 @@ class CONTENT_EXPORT AudioOutputAuthorizationHandler {
       const std::string& raw_device_id,
       const base::Optional<media::AudioParameters>& params) const;
 
-  media::AudioSystem* const audio_system_;
+  std::unique_ptr<media::AudioSystem> const audio_system_;
   MediaStreamManager* const media_stream_manager_;
   const int render_process_id_;
   const std::string salt_;

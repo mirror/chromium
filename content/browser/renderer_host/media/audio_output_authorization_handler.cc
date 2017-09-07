@@ -69,11 +69,11 @@ url::Origin GetOriginOnUIThread(int render_process_id, int render_frame_id) {
 }  // namespace
 
 AudioOutputAuthorizationHandler::AudioOutputAuthorizationHandler(
-    media::AudioSystem* audio_system,
+    std::unique_ptr<media::AudioSystem> audio_system,
     MediaStreamManager* media_stream_manager,
     int render_process_id,
     const std::string& salt)
-    : audio_system_(audio_system),
+    : audio_system_(std::move(audio_system)),
       media_stream_manager_(media_stream_manager),
       render_process_id_(render_process_id),
       salt_(salt),
