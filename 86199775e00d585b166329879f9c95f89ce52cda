@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6549f6b6_c0d70acb",
+        "filename": "content/common/shared_worker/shared_worker_client.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T01:47:09Z",
+      "side": 1,
+      "message": "Thanks for the comments! One thing that\u0027s bit me is \"client\" is super overloaded in the codebase (especially \"WorkerClient\"). Can we clarify with language like \"currently, a client is a Document that called new SharedWorker()\" (assuming that\u0027s accurate?)",
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a218942b_ab6e0dcb",
+        "filename": "third_party/WebKit/public/platform/ContentSecurityPolicyStructTraits.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T01:47:09Z",
+      "side": 1,
+      "message": "NOTREACHED() here too?",
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
