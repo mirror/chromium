@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc9475d5_22a3b573",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-07T20:58:33Z",
+      "side": 1,
+      "message": "optional nit: I\u0027d name this \"count\" rather than \"max\" -- \"max\" is typically used as an alias for the last element of an enum, whereas \"count\" is used to count the number of entries in the enum.",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 5
+      },
+      "revId": "a59458e4f4e22c4bf05946ddc74cfef3c09dcb1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63864700_fc8b1649",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 28193,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-07T20:58:33Z",
+      "side": 1,
+      "message": "nit: I\u0027d probably replace this \"and\" with a comma, to match the two entries below.",
+      "range": {
+        "startLine": 28193,
+        "startChar": 39,
+        "endLine": 28193,
+        "endChar": 43
+      },
+      "revId": "a59458e4f4e22c4bf05946ddc74cfef3c09dcb1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
