@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03ed014e_ac9de777",
+        "filename": "chromeos/dbus/fake_shill_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T00:20:37Z",
+      "side": 1,
+      "message": "Note: This is the only change, it allows testing a Cellular device with no Service by passing e.g. --shill-stub\u003dcellular\u003dLTE,cellular\u003d0. The rest is whitespace from clang-formatting this clause.",
+      "revId": "e816ee95f917f527f180b3864d34565908ea110a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
