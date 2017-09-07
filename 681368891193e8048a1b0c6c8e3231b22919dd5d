@@ -16,6 +16,24 @@
       "revId": "681368891193e8048a1b0c6c8e3231b22919dd5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "699e6433_90ea6c31",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002783
+      },
+      "writtenOn": "2017-09-07T18:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e48001a_3a1af9a8",
+      "revId": "681368891193e8048a1b0c6c8e3231b22919dd5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
