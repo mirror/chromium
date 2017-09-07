@@ -22,6 +22,30 @@
       "revId": "624c2acd3d93b95a3f6be3daebb59b5ba9add66c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d577454e_6980595d",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-07T20:04:24Z",
+      "side": 1,
+      "message": "base::MakeUnique has trouble forwarding the initializer list, I\u0027m not sure why.\n\nI removed the temporary by just using std::move",
+      "parentUuid": "29c8afdb_674a7d55",
+      "range": {
+        "startLine": 180,
+        "startChar": 60,
+        "endLine": 180,
+        "endChar": 68
+      },
+      "revId": "624c2acd3d93b95a3f6be3daebb59b5ba9add66c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
