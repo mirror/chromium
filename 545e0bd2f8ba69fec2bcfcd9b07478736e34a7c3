@@ -36,6 +36,91 @@
     },
     {
       "key": {
+        "uuid": "c323fc91_009024c0",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T18:58:00Z",
+      "side": 1,
+      "message": "InitializeButton -\u003e AddButton?",
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90ae610d_e7cd66f3",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T18:58:00Z",
+      "side": 1,
+      "message": "\u003d default",
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9556ebfa_8cd12db5",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T18:58:00Z",
+      "side": 1,
+      "message": "Instead of splitting the initialization code around just pass the text to InitializeButton. Ditto for the image.\n\nPassing the state around like this keeps all of the initialization code relatively local, and as a benefit there is less abstraction and less code.\n\n  shutdown_button_ \u003d CreateButton(\n    l10n_util::GetStringUTF16(IDS_ASH_SHELF_SHUTDOWN_BUTTON),\n    gfx::ImageSkia());\n  // ...\n\nvs\n\n  AddButton(ButtonType::kShutdown);\n  GetButtonText(ButtonType type) {\n    if (type \u003d\u003d ButtonType::kShutdown)\n      return l10n_util(...)\n  }\n  GetButtonImage(ButtonType type) {\n    ...\n    return gfx::ImageSkia();\n  }",
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "482095d2_3f2a02fe",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T18:58:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure what the advantage of this ButtonType enum is? Why not just introduce 5 separate button views? ie\n\n  views::View* shutdown_button_;\n  views::View* restart_button_;\n  // ..\n\nThis eliminates a bunch of complexity (ie, the two maps, the custom hasher, etc).",
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c92e92e_fe452a32",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T18:58:00Z",
+      "side": 1,
+      "message": "Just make this public?",
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13075014_f565e2e5",
         "filename": "ash/shelf/login_shelf_view.h",
         "patchSetId": 7
@@ -47,6 +132,30 @@
       "writtenOn": "2017-09-07T18:36:29Z",
       "side": 1,
       "message": "can we just use map here (given that the container has 5 entries at most)",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 20
+      },
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3934ea0_2f29a02a",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T18:58:00Z",
+      "side": 1,
+      "message": "base::flat_map is a good option for this as well",
+      "parentUuid": "13075014_f565e2e5",
       "range": {
         "startLine": 78,
         "startChar": 7,
