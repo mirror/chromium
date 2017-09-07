@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af3a8e65_7f0dbdb4",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/webp/WEBPImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-09-07T21:01:33Z",
+      "side": 1,
+      "message": "Yeah, I considered that. (And it wouldn\u0027t be too hard, despite the lack of a libwebp API.) This would behave better for files that tell the truth. But a malicious file could report the maximum size, in an attempt to crash the browser. I would think we wouldn\u0027t want to be vulnerable to that.",
+      "parentUuid": "2de50b56_91cb07c0",
+      "range": {
+        "startLine": 202,
+        "startChar": 12,
+        "endLine": 202,
+        "endChar": 27
+      },
+      "revId": "58fbd0c32713898987b7a32230c16ca5191da2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae745d02_3d12d941",
         "filename": "third_party/WebKit/Source/platform/image-decoders/webp/WEBPImageDecoder.cpp",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-07T20:41:29Z",
       "side": 1,
       "message": "btw: i\u0027m not sure why demux_ is not deleted right away here, in case of error (along with always deleting consolidated_data_).\nIn case of error, there\u0027s no point in accessing demux_ afterward, so it might as well be wiped out right now.\n\nNote that it\u0027s safe to call WebPDemuxDelete() with a NULL argument.",
+      "range": {
+        "startLine": 220,
+        "startChar": 4,
+        "endLine": 220,
+        "endChar": 6
+      },
+      "revId": "58fbd0c32713898987b7a32230c16ca5191da2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d893a89e_5062c85c",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/webp/WEBPImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-09-07T21:01:33Z",
+      "side": 1,
+      "message": "Probably an oversight, rather than deliberate. We may want to override SetFailed() to both WebPDemuxDelete and reset consolidated_data_.",
+      "parentUuid": "ae745d02_3d12d941",
       "range": {
         "startLine": 220,
         "startChar": 4,
