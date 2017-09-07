@@ -16,6 +16,24 @@
       "revId": "078faf96bd15de3ed73e363d531dad1643c45871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6181c9_9fbd9747",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-07T23:21:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64b5f899_0c5de466",
+      "revId": "078faf96bd15de3ed73e363d531dad1643c45871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
