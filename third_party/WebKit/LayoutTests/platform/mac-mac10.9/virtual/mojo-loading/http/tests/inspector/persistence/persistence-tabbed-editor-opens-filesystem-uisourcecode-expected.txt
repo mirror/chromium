@@ -6,7 +6,6 @@ Binding created: {
     exactMatch: false
 }
 Opened tabs before opening any UISourceCodes:
-    file:///var/www/inspector/persistence/resources/foo.js
 request open uiSourceCode: file:///var/www/inspector/persistence/resources/foo.js
 Opened tabs after opening UISourceCode:
     file:///var/www/inspector/persistence/resources/foo.js
