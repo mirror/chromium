@@ -121,6 +121,7 @@ class ASH_EXPORT LockContentsView : public views::View,
 
   LoginAuthUserView* primary_auth_ = nullptr;
   LoginAuthUserView* opt_secondary_auth_ = nullptr;
+  LoginAuthUserView* current_auth_user_ = nullptr;
 
   // All non-auth users; |primary_auth_| and |secondary_auth_| are not contained
   // in this list.

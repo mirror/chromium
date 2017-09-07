@@ -4,6 +4,7 @@
 
 #include "ash/login/ui/lock_contents_view.h"
 
+#include "ash/login/lock_screen_controller.h"
 #include "ash/login/ui/lock_screen.h"
 #include "ash/login/ui/login_auth_user_view.h"
 #include "ash/login/ui/login_display_style.h"
@@ -418,6 +419,12 @@ void LockContentsView::LayoutAuth(LoginAuthUserView* to_update,
     to_update->ApplyAnimationPostLayout();
     if (opt_to_hide)
       opt_to_hide->ApplyAnimationPostLayout();
+  }
+
+  if (current_auth_user_ != to_update) {
+    current_auth_user_ = to_update;
+    Shell::Get()->lock_screen_controller()->OnFocusPod(
+        to_update->current_user()->account_id);
   }
 }
 

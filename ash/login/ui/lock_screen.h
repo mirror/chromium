@@ -30,6 +30,8 @@ class LockScreen {
   // backend C++ via a mojo API.
   static void Show();
 
+  static bool IsInitialized();
+
   // Destroys an existing lock screen instance.
   void Destroy();
 
