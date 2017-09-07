@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0336767b_94c159cd",
+        "filename": "components/omnibox/browser/omnibox_edit_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-07T18:30:15Z",
+      "side": 1,
+      "message": "Run AutocompleteResult::SortAndCull()?  That should set the default match.",
+      "revId": "fe540aa4d336ded5fcd416fa7461380b6d68fc4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
