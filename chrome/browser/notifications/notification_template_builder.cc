@@ -39,6 +39,8 @@ std::unique_ptr<NotificationTemplateBuilder> NotificationTemplateBuilder::Build(
   std::unique_ptr<NotificationTemplateBuilder> builder =
       base::WrapUnique(new NotificationTemplateBuilder);
 
+  LOG(ERROR) << "Len: " << buttons.size();
+
   // TODO(finnur): Can we set <toast scenario="reminder"> for notifications
   // that have set the never_timeout() flag?
   builder->StartToastElement(notification_id);
