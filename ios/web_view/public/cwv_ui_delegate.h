@@ -65,6 +65,22 @@ CWV_EXPORT
                         completionHandler:
                             (void (^)(NSString*))completionHandler;
 
+// Determines whether the given link with |linkURL| should show a preview on
+// force touch.
+- (BOOL)webView:(CWVWebView*)webView shouldPreviewLinkWithURL:(NSURL*)linkURL;
+
+// Called when the user performs a peek action on a link with |linkURL| with
+// force touch. Returns a view controller shown as a pop-up. Uses Webkit's
+// default preview behavior when it returns nil.
+- (UIViewController*)webView:(CWVWebView*)webView
+    previewingViewControllerForLinkWithURL:(NSURL*)linkURL;
+
+// Called when the user performs a pop action on the preview on force touch.
+// |previewing_view_controller| is the view controller that is popped.
+// It should display |previewingViewController| inside the app.
+- (void)webView:(CWVWebView*)webView
+    commitPreviewingViewController:(UIViewController*)previewingViewController;
+
 @end
 
 #endif  // IOS_WEB_VIEW_PUBLIC_CWV_UI_DELEGATE_H_
