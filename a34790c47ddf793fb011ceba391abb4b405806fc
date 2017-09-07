@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61f29045_4aa293be",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/IdleSpellCheckCallback.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-07T10:57:30Z",
+      "side": 0,
+      "message": "Why did you need to remove \"override\"?",
+      "range": {
+        "startLine": 37,
+        "startChar": 28,
+        "endLine": 37,
+        "endChar": 36
+      },
+      "revId": "a34790c47ddf793fb011ceba391abb4b405806fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
