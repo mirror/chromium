@@ -29,6 +29,7 @@ class ImeInstance;
 class IntentHelperInstance;
 class KioskInstance;
 class MetricsInstance;
+class MidisInstance;
 class NetInstance;
 class NotificationsInstance;
 class ObbMounterInstance;
@@ -84,6 +85,7 @@ class ArcBridgeService {
   }
   InstanceHolder<mojom::KioskInstance>* kiosk() { return &kiosk_; }
   InstanceHolder<mojom::MetricsInstance>* metrics() { return &metrics_; }
+  InstanceHolder<mojom::MidisInstance>* midis() { return &midis_; }
   InstanceHolder<mojom::NetInstance>* net() { return &net_; }
   InstanceHolder<mojom::NotificationsInstance>* notifications() {
     return &notifications_;
@@ -131,6 +133,7 @@ class ArcBridgeService {
   InstanceHolder<mojom::IntentHelperInstance> intent_helper_;
   InstanceHolder<mojom::KioskInstance> kiosk_;
   InstanceHolder<mojom::MetricsInstance> metrics_;
+  InstanceHolder<mojom::MidisInstance> midis_;
   InstanceHolder<mojom::NetInstance> net_;
   InstanceHolder<mojom::NotificationsInstance> notifications_;
   InstanceHolder<mojom::ObbMounterInstance> obb_mounter_;
