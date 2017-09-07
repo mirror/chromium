@@ -932,6 +932,8 @@ component("platform") {
     "graphics/GraphicsTypes.cpp",
     "graphics/GraphicsTypes.h",
     "graphics/GraphicsTypes3D.h",
+    "graphics/HighContrastImageClassifier.cpp",
+    "graphics/HighContrastImageClassifier.h",
     "graphics/HighContrastSettings.h",
     "graphics/Image.cpp",
     "graphics/Image.h",

@@ -131,6 +131,12 @@ enum MailboxSyncMode {
   kOrderingBarrier,
 };
 
+enum HighContrastClassification {
+  kNotClassified,
+  kPositive,
+  kNegative,
+};
+
 enum ImageInitializationMode {
   kInitializeImagePixels,
   kDoNotInitializeImagePixels,
