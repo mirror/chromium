@@ -382,6 +382,7 @@ static Resource* PrefetchIfNeeded(Document& document,
           referrer_policy, href, document.OutgoingReferrer()));
     }
 
+    resource_request.SetKeepalive(true);
     ResourceLoaderOptions options;
     options.initiator_info.name = FetchInitiatorTypeNames::link;
     FetchParameters link_fetch_params(resource_request, options);
