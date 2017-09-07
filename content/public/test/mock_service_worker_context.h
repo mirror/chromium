@@ -37,6 +37,7 @@ class MockServiceWorkerContext : public ServiceWorkerContext {
   void CountExternalRequestsForTest(
       const GURL& url,
       const CountExternalRequestsCallback& callback) override;
+  void StopAllServiceWorkersForOrigin(const GURL&, ResultCallback) override;
   MOCK_METHOD1(GetAllOriginsInfo,
                void(const ServiceWorkerContext::GetUsageInfoCallback&));
   void DeleteForOrigin(const GURL& origin, ResultCallback callback) override;
@@ -53,7 +54,6 @@ class MockServiceWorkerContext : public ServiceWorkerContext {
   MOCK_METHOD2(StartServiceWorkerForNavigationHint,
                void(const GURL&,
                     const StartServiceWorkerForNavigationHintCallback&));
-  MOCK_METHOD1(StopAllServiceWorkersForOrigin, void(const GURL&));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockServiceWorkerContext);

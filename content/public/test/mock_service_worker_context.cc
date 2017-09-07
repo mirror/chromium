@@ -40,4 +40,9 @@ void MockServiceWorkerContext::StartActiveWorkerForPattern(
   NOTREACHED();
 }
 
+void MockServiceWorkerContext::StopAllServiceWorkersForOrigin(const GURL&,
+                                                              ResultCallback) {
+  NOTREACHED();
+}
+
 }  // namespace content
