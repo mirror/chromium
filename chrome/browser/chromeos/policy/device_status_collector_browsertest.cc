@@ -44,6 +44,7 @@
 #include "chromeos/dbus/fake_update_engine_client.h"
 #include "chromeos/dbus/shill_device_client.h"
 #include "chromeos/dbus/shill_ipconfig_client.h"
+#include "chromeos/dbus/shill_profile_client.h"
 #include "chromeos/dbus/shill_service_client.h"
 #include "chromeos/disks/disk_mount_manager.h"
 #include "chromeos/disks/mock_disk_mount_manager.h"
@@ -1430,46 +1431,58 @@ class DeviceStatusCollectorNetworkInterfacesTest
   void SetUp() override {
     chromeos::DBusThreadManager::Initialize();
     chromeos::NetworkHandler::Initialize();
-    chromeos::ShillDeviceClient::TestInterface* test_device_client =
-        chromeos::DBusThreadManager::Get()->GetShillDeviceClient()->
-            GetTestInterface();
-    test_device_client->ClearDevices();
+    base::RunLoop().RunUntilIdle();
+
+    chromeos::ShillDeviceClient::TestInterface* device_client =
+        chromeos::DBusThreadManager::Get()
+            ->GetShillDeviceClient()
+            ->GetTestInterface();
+    chromeos::ShillServiceClient::TestInterface* service_client =
+        chromeos::DBusThreadManager::Get()
+            ->GetShillServiceClient()
+            ->GetTestInterface();
+    chromeos::ShillIPConfigClient::TestInterface* ip_config_test =
+        chromeos::DBusThreadManager::Get()
+            ->GetShillIPConfigClient()
+            ->GetTestInterface();
+
+    device_client->ClearDevices();
+    service_client->ClearServices();
+
     for (size_t i = 0; i < arraysize(kFakeDevices); ++i) {
       const FakeDeviceData& dev = kFakeDevices[i];
-      test_device_client->AddDevice(dev.device_path, dev.type,
-                                    dev.object_path);
+      device_client->AddDevice(dev.device_path, dev.type, dev.object_path);
       if (*dev.mac_address) {
-        test_device_client->SetDeviceProperty(dev.device_path,
-                                              shill::kAddressProperty,
-                                              base::Value(dev.mac_address));
+        device_client->SetDeviceProperty(dev.device_path,
+                                         shill::kAddressProperty,
+                                         base::Value(dev.mac_address));
       }
       if (*dev.meid) {
-        test_device_client->SetDeviceProperty(
-            dev.device_path, shill::kMeidProperty, base::Value(dev.meid));
+        device_client->SetDeviceProperty(dev.device_path, shill::kMeidProperty,
+                                         base::Value(dev.meid));
       }
       if (*dev.imei) {
-        test_device_client->SetDeviceProperty(
-            dev.device_path, shill::kImeiProperty, base::Value(dev.imei));
+        device_client->SetDeviceProperty(dev.device_path, shill::kImeiProperty,
+                                         base::Value(dev.imei));
       }
     }
 
-    chromeos::ShillServiceClient::TestInterface* service_client =
-        chromeos::DBusThreadManager::Get()->GetShillServiceClient()->
-            GetTestInterface();
-    service_client->ClearServices();
+    const std::string fake_profile_path = "/profile/user1/shill";
+    chromeos::DBusThreadManager::Get()
+        ->GetShillProfileClient()
+        ->GetTestInterface()
+        ->AddProfile(fake_profile_path, "user1");
 
     // Now add services for every fake network.
     for (const FakeNetworkState& fake_network : kFakeNetworks) {
       // Shill forces non-visible networks to report a disconnected state.
       bool is_visible =
           fake_network.connection_status != shill::kStateDisconnect;
-      service_client->AddService(
-          fake_network.name,       /* service_path */
-          fake_network.name        /* guid */,
-          fake_network.name        /* name */,
-          fake_network.type        /* type */,
-          fake_network.connection_status,
-          is_visible);
+      service_client->AddService(fake_network.name, /* service_path */
+                                 fake_network.name /* guid */,
+                                 fake_network.name /* name */,
+                                 fake_network.type /* type */,
+                                 fake_network.connection_status, is_visible);
       service_client->SetServiceProperty(
           fake_network.name, shill::kSignalStrengthProperty,
           base::Value(fake_network.signal_strength));
@@ -1479,7 +1492,7 @@ class DeviceStatusCollectorNetworkInterfacesTest
       // Set the profile so this shows up as a configured network.
       service_client->SetServiceProperty(fake_network.name,
                                          shill::kProfileProperty,
-                                         base::Value(fake_network.name));
+                                         base::Value(fake_profile_path));
       if (strlen(fake_network.address) > 0) {
         // Set the IP config.
         base::DictionaryValue ip_config_properties;
@@ -1487,9 +1500,6 @@ class DeviceStatusCollectorNetworkInterfacesTest
                                     base::Value(fake_network.address));
         ip_config_properties.SetKey(shill::kGatewayProperty,
                                     base::Value(fake_network.gateway));
-        chromeos::ShillIPConfigClient::TestInterface* ip_config_test =
-            chromeos::DBusThreadManager::Get()->GetShillIPConfigClient()->
-            GetTestInterface();
         const std::string kIPConfigPath = "test_ip_config";
         ip_config_test->AddIPConfig(kIPConfigPath, ip_config_properties);
         service_client->SetServiceProperty(fake_network.name,
@@ -1500,13 +1510,12 @@ class DeviceStatusCollectorNetworkInterfacesTest
 
     // Now add an unconfigured network - it should not show up in the
     // reported list of networks because it doesn't have a profile specified.
-    service_client->AddService(
-        kUnconfiguredNetwork.name,       /* service_path */
-        kUnconfiguredNetwork.name        /* guid */,
-        kUnconfiguredNetwork.name        /* name */,
-        kUnconfiguredNetwork.type        /* type */,
-        kUnconfiguredNetwork.connection_status,
-        true /* visible */);
+    service_client->AddService(kUnconfiguredNetwork.name, /* service_path */
+                               kUnconfiguredNetwork.name /* guid */,
+                               kUnconfiguredNetwork.name /* name */,
+                               kUnconfiguredNetwork.type /* type */,
+                               kUnconfiguredNetwork.connection_status,
+                               true /* visible */);
     service_client->SetServiceProperty(
         kUnconfiguredNetwork.name, shill::kSignalStrengthProperty,
         base::Value(kUnconfiguredNetwork.signal_strength));
