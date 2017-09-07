@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e21a9090_f142a681",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-07T13:07:08Z",
+      "side": 1,
+      "message": "It makes sense to record this user action whenever user clicks UNDO button (even if it\u0027s in confirmation-only mode).",
+      "range": {
+        "startLine": 662,
+        "startChar": 0,
+        "endLine": 662,
+        "endChar": 62
+      },
+      "revId": "5a40e6c426f1e149c3d21f048cae509504c8519d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
