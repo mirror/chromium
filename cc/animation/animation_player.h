@@ -63,6 +63,8 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   }
   void SetAnimationTimeline(AnimationTimeline* timeline);
 
+  AnimationTicker* animation_ticker() const { return animation_ticker_.get(); }
+
   scoped_refptr<ElementAnimations> element_animations() const;
 
   void set_animation_delegate(AnimationDelegate* delegate) {
@@ -87,12 +89,17 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   void UpdateTickingState(UpdateTickingType type);
   void AddToTicking();
   void RemoveFromTicking();
+  void RemoveFromTickingTmp();
 
   // AnimationDelegate routing.
   bool NotifyAnimationStarted(const AnimationEvent& event);
+  void NotifyAnimationStartedTmp(const AnimationEvent& event);
   bool NotifyAnimationFinished(const AnimationEvent& event);
+  void NotifyAnimationFinishedTmp(const AnimationEvent& event);
   bool NotifyAnimationAborted(const AnimationEvent& event);
+  void NotifyAnimationAbortedTmp(const AnimationEvent& event);
   void NotifyAnimationTakeover(const AnimationEvent& event);
+  void NotifyAnimationTakeoverTmp(const AnimationEvent& event);
   bool NotifyAnimationFinishedForTesting(TargetProperty::Type target_property,
                                          int group_id);
   // TODO(smcgruer): Once ElementAnimations points at AnimationTicker directly,

@@ -93,6 +93,7 @@ class CC_ANIMATION_EXPORT AnimationTicker {
 
   bool NotifyAnimationStarted(const AnimationEvent& event);
   bool NotifyAnimationFinished(const AnimationEvent& event);
+  void NotifyAnimationTakeover(const AnimationEvent& event);
   bool NotifyAnimationAborted(const AnimationEvent& event);
 
   bool HasTickingAnimation() const;

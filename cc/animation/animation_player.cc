@@ -199,41 +199,34 @@ void AnimationPlayer::AddToTicking() {
 }
 
 void AnimationPlayer::RemoveFromTicking() {
-  DCHECK(animation_host_);
-  // Resetting last_tick_time_ here ensures that calling ::UpdateState
-  // before ::Animate doesn't start an animation.
   animation_ticker_->RemoveFromTicking();
+}
+
+void AnimationPlayer::RemoveFromTickingTmp() {
+  DCHECK(animation_host_);
   animation_host_->RemoveFromTicking(this);
 }
 
 bool AnimationPlayer::NotifyAnimationStarted(const AnimationEvent& event) {
-  DCHECK(!event.is_impl_only);
+  return animation_ticker_->NotifyAnimationStarted(event);
+}
 
-  if (animation_ticker_->NotifyAnimationStarted(event)) {
-    if (animation_delegate_) {
-      animation_delegate_->NotifyAnimationStarted(
-          event.monotonic_time, event.target_property, event.group_id);
-    }
-    return true;
+void AnimationPlayer::NotifyAnimationStartedTmp(const AnimationEvent& event) {
+  if (animation_delegate_) {
+    animation_delegate_->NotifyAnimationStarted(
+        event.monotonic_time, event.target_property, event.group_id);
   }
-  return false;
 }
 
 bool AnimationPlayer::NotifyAnimationFinished(const AnimationEvent& event) {
-  DCHECK(!event.is_impl_only);
-  if (animation_ticker_->NotifyAnimationFinished(event)) {
-    if (animation_delegate_) {
-      animation_delegate_->NotifyAnimationFinished(
-          event.monotonic_time, event.target_property, event.group_id);
-    }
-    return true;
-  }
+  return animation_ticker_->NotifyAnimationFinished(event);
+}
 
-  // This is for the case when an animation is already removed on main thread,
-  // but the impl version of it sent a finished event and is now waiting for
-  // deletion. We would need to delete that animation during push properties.
-  SetNeedsPushProperties();
-  return false;
+void AnimationPlayer::NotifyAnimationFinishedTmp(const AnimationEvent& event) {
+  if (animation_delegate_) {
+    animation_delegate_->NotifyAnimationFinished(
+        event.monotonic_time, event.target_property, event.group_id);
+  }
 }
 
 bool AnimationPlayer::NotifyAnimationFinishedForTesting(
@@ -242,23 +235,25 @@ bool AnimationPlayer::NotifyAnimationFinishedForTesting(
   AnimationEvent event(AnimationEvent::FINISHED,
                        animation_ticker_->element_id(), group_id,
                        target_property, base::TimeTicks());
-  return NotifyAnimationFinished(event);
+  return animation_ticker_->NotifyAnimationFinished(event);
 }
 
 bool AnimationPlayer::NotifyAnimationAborted(const AnimationEvent& event) {
-  DCHECK(!event.is_impl_only);
-  if (animation_ticker_->NotifyAnimationAborted(event)) {
-    if (animation_delegate_) {
-      animation_delegate_->NotifyAnimationAborted(
-          event.monotonic_time, event.target_property, event.group_id);
-    }
-    return true;
+  return animation_ticker_->NotifyAnimationAborted(event);
+}
+
+void AnimationPlayer::NotifyAnimationAbortedTmp(const AnimationEvent& event) {
+  if (animation_delegate_) {
+    animation_delegate_->NotifyAnimationAborted(
+        event.monotonic_time, event.target_property, event.group_id);
   }
-  return false;
 }
 
 void AnimationPlayer::NotifyAnimationTakeover(const AnimationEvent& event) {
-  DCHECK(!event.is_impl_only);
+  animation_ticker_->NotifyAnimationTakeover(event);
+}
+
+void AnimationPlayer::NotifyAnimationTakeoverTmp(const AnimationEvent& event) {
   DCHECK(event.target_property == TargetProperty::SCROLL_OFFSET);
 
   // We need to purge animations marked for deletion on CT.
