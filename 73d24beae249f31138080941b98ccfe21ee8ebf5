@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2368a0b7_2c1fe7f1",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-07T17:07:47Z",
+      "side": 1,
+      "message": "Exceptions thrown by Get should be caught (using v8::TryCatch) and rethrown by the ExceptionState. Failing to do so will can have weird consequences in a number of situations (e.g. unit tests, or if the auto-generated callback does anything in its epilogue).\n\nThis applies to all direct calls to Get in this CL. (The auto-generated dictionary code does this implicitly.)\n\nAside: it strikes me as a little unfortunate that the spec explicitly specifies the exact order of gets in a way that might not be exactly compatible with WebIDL dictionary syntax. Otherwise it would seem convenient to me to just make the whole thing a WebIDL dictionary and use our bindings logic.",
+      "revId": "73d24beae249f31138080941b98ccfe21ee8ebf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fccbc8a_3a1cea38",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-07T17:07:47Z",
+      "side": 1,
+      "message": "nit: the handle cannot be empty here, so you can just say \"input_argument_type_values-\u003eIsNullOrUndefined()\".",
+      "revId": "73d24beae249f31138080941b98ccfe21ee8ebf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76be8b2e_cf9f3715",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-07T17:07:47Z",
+      "side": 1,
+      "message": "nit: the handle cannot be empty here, so you can just say \"input_argument_type_values-\u003eIsNullOrUndefined()\".",
+      "revId": "73d24beae249f31138080941b98ccfe21ee8ebf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
