@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ec40c4b_f1010bf2",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-07T22:50:08Z",
+      "side": 1,
+      "message": "Whoops, didn\u0027t notice in the last round...\n\nThe flat tree version should also have this check to reject positions in other documents faster.",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 17
+      },
+      "revId": "260ec5a2a35a50d37e24920e958876a4301a1400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
