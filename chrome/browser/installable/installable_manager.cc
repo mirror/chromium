@@ -87,10 +87,6 @@ InstallableManager::InstallableManager(content::WebContents* web_contents)
       valid_manifest_(base::MakeUnique<ValidManifestProperty>()),
       worker_(base::MakeUnique<ServiceWorkerProperty>()),
       service_worker_context_(nullptr),
-      page_status_(InstallabilityCheckStatus::NOT_STARTED),
-      menu_open_count_(0),
-      menu_item_add_to_homescreen_count_(0),
-      is_pwa_check_complete_(false),
       weak_factory_(this) {
   // This is null in unit tests.
   if (web_contents) {
@@ -144,61 +140,28 @@ void InstallableManager::GetData(const InstallableParams& params,
   if (was_active)
     return;
 
-  if (page_status_ == InstallabilityCheckStatus::NOT_STARTED)
-    page_status_ = InstallabilityCheckStatus::NOT_COMPLETED;
-
+  metrics_.Start();
   WorkOnTask();
 }
 
 void InstallableManager::RecordMenuOpenHistogram() {
-  if (is_pwa_check_complete_)
-    InstallableMetrics::RecordMenuOpenHistogram(page_status_);
-  else
-    ++menu_open_count_;
+  metrics_.RecordMenuOpen();
 }
 
 void InstallableManager::RecordMenuItemAddToHomescreenHistogram() {
-  if (is_pwa_check_complete_)
-    InstallableMetrics::RecordMenuItemAddToHomescreenHistogram(page_status_);
-  else
-    ++menu_item_add_to_homescreen_count_;
+  metrics_.RecordMenuItemAddToHomescreen();
 }
 
-void InstallableManager::RecordQueuedMetricsOnTaskCompletion(
-    const InstallableParams& params,
-    bool check_passed) {
-  // Don't do anything if we've:
-  //  - already finished the PWA check, or
-  //  - we passed the check AND it was not for the full PWA params.
-  // In the latter case (i.e. the check passed but we weren't checking
-  // everything), we don't yet know if the site is installable. However, if the
-  // check didn't pass, we know for sure the site isn't installable, regardless
-  // of how much we checked.
-  //
-  // Once a full check is completed, metrics will be directly recorded in
-  // Record*Histogram since |is_pwa_check_complete_| will be true.
-  if (is_pwa_check_complete_ || (check_passed && !IsParamsForPwaCheck(params)))
-    return;
+void InstallableManager::RecordAddToHomescreenNoTimeout() {
+  metrics_.RecordAddToHomescreenNoTimeout();
+}
 
-  is_pwa_check_complete_ = true;
-  page_status_ =
-      check_passed
-          ? InstallabilityCheckStatus::COMPLETE_PROGRESSIVE_WEB_APP
-          : InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP;
+void InstallableManager::RecordAddToHomescreenManifestAndIconTimeout() {
+  metrics_.RecordAddToHomescreenManifestAndIconTimeout();
+}
 
-  // Compute what the status would have been for any queued calls to
-  // Record*Histogram, and record appropriately.
-  InstallabilityCheckStatus prev_status =
-      check_passed
-          ? InstallabilityCheckStatus::IN_PROGRESS_PROGRESSIVE_WEB_APP
-          : InstallabilityCheckStatus::IN_PROGRESS_NON_PROGRESSIVE_WEB_APP;
-  for (; menu_open_count_ > 0; --menu_open_count_)
-    InstallableMetrics::RecordMenuOpenHistogram(prev_status);
-
-  for (; menu_item_add_to_homescreen_count_ > 0;
-       --menu_item_add_to_homescreen_count_) {
-    InstallableMetrics::RecordMenuItemAddToHomescreenHistogram(prev_status);
-  }
+void InstallableManager::RecordAddToHomescreenInstallabilityTimeout() {
+  metrics_.RecordAddToHomescreenInstallabilityTimeout();
 }
 
 InstallableManager::IconParams InstallableManager::ParamsForPrimaryIcon(
@@ -305,27 +268,27 @@ bool InstallableManager::IsComplete(const InstallableParams& params) const {
           IsIconFetched(ParamsForBadgeIcon(params)));
 }
 
+void InstallableManager::RecordQueuedMetricsOnTaskCompletion(
+    const InstallableParams& params,
+    bool check_passed) {
+  // Don't do anything if we passed the check AND it was not for the full PWA
+  // params. We don't yet know if the site is installable. However, if the check
+  // didn't pass, we know for sure the site isn't installable, regardless of how
+  // much we checked.
+  if (check_passed && !IsParamsForPwaCheck(params))
+    return;
+
+  metrics_.RecordQueuedMetrics(check_passed);
+}
+
 void InstallableManager::Reset() {
   // Prevent any outstanding callbacks to or from this object from being called.
   weak_factory_.InvalidateWeakPtrs();
   task_queue_.Reset();
   icons_.clear();
 
-  // We may have reset prior to completion, in which case |menu_open_count_| or
-  // |menu_item_add_to_homescreen_count_| might be nonzero and |page_status_| is
-  // one of NOT_STARTED or NOT_COMPLETED. If we completed, then these values
-  // cannot be anything except 0.
-  is_pwa_check_complete_ = false;
+  metrics_.RecordMetricsOnNavigationAndReset();
 
-  for (; menu_open_count_ > 0; --menu_open_count_)
-    InstallableMetrics::RecordMenuOpenHistogram(page_status_);
-
-  for (; menu_item_add_to_homescreen_count_ > 0;
-       --menu_item_add_to_homescreen_count_) {
-    InstallableMetrics::RecordMenuItemAddToHomescreenHistogram(page_status_);
-  }
-
-  page_status_ = InstallabilityCheckStatus::NOT_STARTED;
   manifest_ = base::MakeUnique<ManifestProperty>();
   valid_manifest_ = base::MakeUnique<ValidManifestProperty>();
   worker_ = base::MakeUnique<ServiceWorkerProperty>();
