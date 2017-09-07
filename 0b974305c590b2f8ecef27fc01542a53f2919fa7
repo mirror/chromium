@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8379c2c4_95b05587",
+        "filename": "content/test/test_content_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-07T09:20:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a8d582c_a069783d",
+      "revId": "0b974305c590b2f8ecef27fc01542a53f2919fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17f73af0_6ed9c583",
         "filename": "content/test/test_content_client.cc",
         "patchSetId": 16
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-05T15:11:27Z",
       "side": 1,
       "message": "Sharing my lack of knowledge here: what\u0027s that for?",
+      "revId": "0b974305c590b2f8ecef27fc01542a53f2919fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0cc15e3_a502dd8b",
+        "filename": "content/test/test_content_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-07T09:20:21Z",
+      "side": 1,
+      "message": "It loads ui::ResourceBundle which provides a shared instance for accessing the resource bundle. This is only for the test content shell though as this is already done if you build chrome.",
+      "parentUuid": "17f73af0_6ed9c583",
       "revId": "0b974305c590b2f8ecef27fc01542a53f2919fa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a614ac2b_38a38b82",
+        "filename": "third_party/WebKit/Source/core/css/CSSDefaultStyleSheets.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-07T09:20:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac805af8_62e7f27b",
+      "revId": "0b974305c590b2f8ecef27fc01542a53f2919fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5c6f970_6a8bc120",
         "filename": "third_party/WebKit/Source/core/css/CSSDefaultStyleSheets.h",
         "patchSetId": 16
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-05T15:11:27Z",
       "side": 1,
       "message": "Make it virtual pure:\n`virtual String GetUAStyleSheet() \u003d 0;`",
+      "revId": "0b974305c590b2f8ecef27fc01542a53f2919fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793e09a6_6804f740",
+        "filename": "third_party/WebKit/Source/core/css/CSSDefaultStyleSheets.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-07T09:20:21Z",
+      "side": 1,
+      "message": "I tried that and it causes a compiler error: Left-most base class \u0027UAStyleSheetLoader\u0027 of derived class \u0027UAStyleSheetLoader\u0027 must be polymorphic.",
+      "parentUuid": "d5c6f970_6a8bc120",
       "revId": "0b974305c590b2f8ecef27fc01542a53f2919fa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "50bfb25e_889912db",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-07T09:20:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04061193_91c99c27",
+      "revId": "0b974305c590b2f8ecef27fc01542a53f2919fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e009d19_a2b9c27a",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.h",
         "patchSetId": 16
@@ -101,6 +191,24 @@
       "revId": "0b974305c590b2f8ecef27fc01542a53f2919fa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1bfe4b7_962868a9",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-07T09:20:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e009d19_a2b9c27a",
+      "revId": "0b974305c590b2f8ecef27fc01542a53f2919fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d4783b4d_552d84db",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-07T09:20:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1711534d_1fce2a71",
+      "revId": "0b974305c590b2f8ecef27fc01542a53f2919fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d234594f_a4cb0221",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.h",
         "patchSetId": 16
@@ -135,6 +261,24 @@
       "revId": "0b974305c590b2f8ecef27fc01542a53f2919fa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ca40a0_74bb3b71",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-07T09:20:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d234594f_a4cb0221",
+      "revId": "0b974305c590b2f8ecef27fc01542a53f2919fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -169,6 +313,24 @@
       "revId": "0b974305c590b2f8ecef27fc01542a53f2919fa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ac5160_20ea77d1",
+        "filename": "third_party/WebKit/Source/platform/ResourceLoader.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-07T09:20:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ea06bfd_03bd9fde",
+      "revId": "0b974305c590b2f8ecef27fc01542a53f2919fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
