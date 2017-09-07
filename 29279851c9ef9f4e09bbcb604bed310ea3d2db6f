@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c2ee0e35_7eb09382",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-07T17:17:02Z",
+      "side": 1,
+      "message": "I don\u0027t want to mess with whitespace that might exist on the line. Only remove the \\n added during .write().\n\nThat said, I\u0027ll probably change this to have \"lines\" contain \\ns (like would happen with .readlines()), and so won\u0027t need this (in a follow-up)",
+      "parentUuid": "8dbfab02_edd2609a",
+      "revId": "29279851c9ef9f4e09bbcb604bed310ea3d2db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3df1210_1e8e044a",
         "filename": "build/android/pylib/symbols/deobfuscator.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-07T16:37:06Z",
       "side": 1,
       "message": "So, on seeing this, I looked a bit more at the implementation here, how it uses threading, and how we could get into this scenario. I think this is very badly broken w/ multiple devices, as all device executors share a single test instance and thus a single deobfuscator. I\u0027m wondering about ways to either have dedicated threads \u0026 processes per call to TransformLines, pools of each used for TransformLines, or separate deobfuscators for each device.",
+      "revId": "29279851c9ef9f4e09bbcb604bed310ea3d2db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14d9dc6_e95d8087",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-07T17:17:02Z",
+      "side": 1,
+      "message": "They all share a DeobfuscatorPool, and the pool has a lifetime associated with the environment rather than tests. I suspect Close() is being called from environment.__exit__ when some test shard has timed out.",
+      "parentUuid": "a3df1210_1e8e044a",
       "revId": "29279851c9ef9f4e09bbcb604bed310ea3d2db6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
