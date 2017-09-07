@@ -153,6 +153,9 @@ def cpp_type(idl_type, extended_attributes=None, raw_type=False, used_as_rvalue_
             bool, True if the C++ type is used as an element of a container.
             Containers can be an array, a sequence, a dictionary or a record.
     """
+
+    type_extended_attributes = idl_type.type_extended_attributes
+
     def string_mode():
         if idl_type.is_nullable:
             return 'kTreatNullAndUndefinedAsNullString'
@@ -160,6 +163,11 @@ def cpp_type(idl_type, extended_attributes=None, raw_type=False, used_as_rvalue_
             return 'kTreatNullAsEmptyString'
         if extended_attributes.get('TreatNullAs') == 'NullString':
             return 'kTreatNullAsNullString'
+        if type_extended_attributes:
+            if type_extended_attributes.get('TreatNullAs') == 'EmptyString':
+                return 'kTreatNullAsEmptyString'
+            if type_extended_attributes.get('TreatNullAs') == 'NullString':
+                return 'kTreatNullAsNullString'
         return ''
 
     extended_attributes = extended_attributes or {}
@@ -587,6 +595,8 @@ def v8_value_to_cpp_value(idl_type, extended_attributes, v8_value, variable_name
     if idl_type.name == 'void':
         return ''
 
+    type_extended_attributes = idl_type.type_extended_attributes
+
     # Simple types
     idl_type = idl_type.preprocessed_type
     base_idl_type = idl_type.as_union_type.name if idl_type.is_union_type else idl_type.base_type
@@ -605,6 +615,11 @@ def v8_value_to_cpp_value(idl_type, extended_attributes, v8_value, variable_name
             configuration = 'kEnforceRange'
         elif 'Clamp' in extended_attributes:
             configuration = 'kClamp'
+        if type_extended_attributes:
+            if 'EnforceRange' in type_extended_attributes:
+                configuration = 'kEnforceRange'
+            elif 'Clamp' in type_extended_attributes:
+                configuration = 'kClamp'
         arguments = ', '.join([v8_value, 'exceptionState', configuration])
     elif base_idl_type == 'SerializedScriptValue':
         arguments = ', '.join([
