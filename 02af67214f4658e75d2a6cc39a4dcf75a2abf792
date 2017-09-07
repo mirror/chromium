@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04a53c9b_15a7a37d",
+        "filename": "skia/ext/image_operations.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-07T13:40:49Z",
+      "side": 0,
+      "message": "This change is just a no-op refactor, right?  Seems fine, though I kind of think the original was a bit more explicit in setting up BGRA inputs and outputs for BGRAConvolve2D().",
+      "range": {
+        "startLine": 377,
+        "startChar": 17,
+        "endLine": 377,
+        "endChar": 99
+      },
+      "revId": "02af67214f4658e75d2a6cc39a4dcf75a2abf792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
