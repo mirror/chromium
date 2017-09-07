@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13100003_f37c295a",
+        "filename": "components/metrics/proto/system_profile.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-07T00:01:34Z",
+      "side": 1,
+      "message": "Also, clarify that if the same extension is installed in multiple profiles than it gets recorded multiple times.",
+      "revId": "2d1d2666d93d7bfe4feab00d40b2c64287f768b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63bc1351_19270a76",
+        "filename": "components/metrics/proto/system_profile.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-07T00:01:34Z",
+      "side": 1,
+      "message": "nit: loaded -\u003e active\n(if that makes sense)\n\nOtherwise, clarify \"loaded\"",
+      "range": {
+        "startLine": 949,
+        "startChar": 25,
+        "endLine": 949,
+        "endChar": 31
+      },
+      "revId": "2d1d2666d93d7bfe4feab00d40b2c64287f768b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
