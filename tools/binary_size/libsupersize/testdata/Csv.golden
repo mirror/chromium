@@ -1,0 +1,101 @@
+********************************************************************************
+Entering interactive Python shell. Quick reference:
+
+SizeInfo: metadata, raw_symbols, section_sizes, size_path, symbols
+Symbol: FlagsString, IsBss, IsDelta, IsGeneratedByToolchain, IsGroup, IterLeafSymbols, address, aliases, end_address, flags, full_name, generated_source, is_anonymous, name, num_aliases, object_path, padding, padding_pss, pss, pss_without_padding, section, section_name, size, size_without_padding, source_path, template_name
+
+SymbolGroup (extends Symbol): CountUniqueSymbols, Filter, GroupedBy, GroupedByFullName, GroupedByName, GroupedByPath, GroupedBySectionName, Inverted, IterUniqueSymbols, SetName, Sorted, SortedByAddress, SortedByCount, SortedByName, WhereAddressInRange, WhereFullNameMatches, WhereGeneratedByToolchain, WhereHasAnyAttribution, WhereHasPath, WhereInSection, WhereIsGroup, WhereIsTemplate, WhereMatches, WhereNameMatches, WhereObjectPathMatches, WherePathMatches, WherePssBiggerThan, WhereSizeBiggerThan, WhereSourceIsGenerated, WhereSourcePathMatches, WhereTemplateNameMatches, index, is_sorted
+
+DeltaSizeInfo: after_metadata, before_metadata, raw_symbols, section_sizes, symbols
+DeltaSymbol (extends Symbol): after_symbol, before_symbol, diff_status
+DeltaSymbolGroup (extends SymbolGroup): CountsByDiffStatus, WhereDiffStatusIs, diff_status
+
+canned_queries: CategorizeByChromeComponent, CategorizeGenerated, StaticInitializers, TemplatesByName
+
+Functions: Csv(), Diff(), Disassemble(), ExpandRegex(), Print(), ShowExamples()
+Variables:
+  printed: List of objects passed to Print().
+  size_info: Loaded from {redacted}
+********************************************************************************
+# Show pydoc for main types:
+import models
+help(models)
+
+# Show all attributes of all symbols & per-section totals:
+Print(size_info, verbose=True)
+
+# Dump symbols & per-section totals in CSV format:
+Csv(size_info)
+
+# Show two levels of .text, grouped by first two subdirectories
+text_syms = size_info.symbols.WhereInSection("t")
+by_path = text_syms.GroupedByPath(depth=2)
+Print(by_path.WherePssBiggerThan(1024))
+
+# Show all generated symbols, then show only non-vtable ones
+Print(size_info.symbols.WhereGeneratedByToolchain())
+Print(printed[-1].WhereNameMatches(r"vtable").Inverted().Sorted())
+
+# Show all symbols that have "print" in their name or path, except
+# those within components/.
+# Note: Could have also used Inverted(), as above.
+# Note: Use "help(ExpandRegex)" for more about what {{_print_}} does.
+print_syms = size_info.symbols.WhereMatches(r"{{_print_}}")
+Print(print_syms - print_syms.WherePathMatches(r"^components/"))
+
+# Diff two .size files and save result to a file:
+Print(Diff(size_info1, size_info2), to_file="output.txt")
+
+# View per-component breakdowns, then drill into the last entry.
+c = canned_queries.CategorizeByChromeComponent()
+Print(c)
+Print(c[-1].GroupedByPath(depth=2).Sorted())
+
+# For even more inspiration, look at canned_queries.py
+# (and feel free to add your own!).
+PSS,Symbol
+16.0,t@0x28d900   16             base/page_allocator.cc
+56.0,t@0x28d910   56             base/page_allocator.cc
+28.0,t@0x28d948   28             base/page_allocator.cc
+38.0,t@0x28d964   38             base/page_allocator.cc
+32.0,t@0x28d98a   32             base/page_allocator.cc
+35830760.0,t@Group      35830760       {no path}
+448.0,t@0x28f000   448            third_party/icu/ucnv_ext.c
+28.0,t@0x28f1c8   28             third_party/icu/ucnv_ext.c
+69124.0,t@0x28f1e0   69124          third_party/icu/ucnv_ext.c
+24.0,t@0x2a0000   24 (size=48)   {no path}
+24.0,t@0x2a0000   24 (size=48)   third_party/icu/ucnv_ext.c
+4.0,t@0x2a0010   4 (size=12)    third_party/{shared}/2
+4.0,t@0x2a0010   4 (size=12)    third_party/fft_float.cc
+4.0,t@0x2a0010   4 (size=12)    third_party/fft_float.cc
+28.0,t@0x2a0020   28             third_party/container.c
+94.0,t@0x2a1000   94             third_party/container.c
+2637969.0,r@Group      2637969        {no path}
+3425.0,r@0x284d600  3425           {no path}
+3286115.0,r@Group      3286115        {no path}
+8.0,r@0x284e364  8              base/page_allocator.cc
+44.0,r@0x284e370  44             base/page_allocator.cc
+32.0,r@0x284e398  32             third_party/container.c
+55.0,r@0x28f3450  55             third_party/paint.cc
+4.0,r@0x28f3480  4              third_party/paint.cc
+56.0,R@0x2c176f0  56             third_party/icu/ucnv_ext.c
+24.0,R@0x2c17728  24             third_party/icu/ucnv_ext.c
+789904.0,R@0x2c17740  789904         third_party/container.c
+32.0,R@0x2cd84e0  32             third_party/gvr-android-sdk/libgvr_shim_static_arm.a/libcontroller_api_impl.a_controller_api_impl.o
+8.0,R@0x2cd84f0  8              third_party/gvr-android-sdk/libgvr_shim_static_arm.a/libport_android_jni.a_jni_utils.o
+56.0,R@0x2cd8500  56             third_party/paint.cc
+24.0,R@0x2cd8538  24             base/page_allocator.cc
+12.0,R@0x2cd8550  12             base/page_allocator.cc
+1065132.0,R@0x2ddc608  1065132        {no path}
+4.0,d@0x2de7000  4              base/page_allocator.cc
+4.0,d@0x2de7004  4              third_party/container.c
+152.0,d@0x2de7008  152            third_party/container.c
+4.0,d@0x2de70a0  4              third_party/container.c
+4.0,d@0x2de70a4  4              third_party/container.c
+101600.0,d@0x2dffd88  101600         {no path}
+0,b@0x0        262144         third_party/fft_float.cc
+0,b@0x0        131072         third_party/fft_fixed.cc
+0,b@0x0        131072         third_party/fft_float.cc
+0,b@0x2dffda0  28             third_party/icu/ucnv_ext.c
+0,b@0x2dffe80  200            third_party/icu/ucnv_ext.c
+0,b@0x2dffe84  4              third_party/icu/ucnv_ext.c

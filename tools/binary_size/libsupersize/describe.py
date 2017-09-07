@@ -3,7 +3,9 @@
 # found in the LICENSE file.
 """Methods for converting model objects to human-readable formats."""
 
+import cStringIO
 import collections
+import csv
 import datetime
 import itertools
 import time
@@ -45,6 +47,50 @@ def _FormatPss(pss, force_sign=False):
 
 def _Divide(a, b):
   return float(a) / b if b else 0
+
+
+class _Annotation:
+  # |field_specs| is a list of (title, index) tuples: |title| is used to render
+  # column title, and |field| is used to select item for each column.
+  def __init__(self, field_specs):
+    self.field_specs = field_specs
+
+  def Titles(self):
+    return [f[0] for f in self.field_specs]
+
+  def Select(self, fields):
+    return [fields[f[1]] for f in self.field_specs]
+
+
+class _TextFilter:
+  def Apply(self, lines):
+    for line in lines:
+      if isinstance(line, tuple):
+        yield line[0].format(*line[1])
+      elif isinstance(line, basestring):
+        yield line
+      # Ignore _Annotation.
+
+
+class _CsvFilter:
+  def __init__(self):
+    self.stringio = cStringIO.StringIO()
+    self.writer = csv.writer(self.stringio)
+    self.annotation = None
+
+  def _Render(self, array):
+    self.stringio.truncate(0)
+    self.writer.writerow(array)
+    return self.stringio.getvalue().rstrip()
+
+  def Apply(self, lines):
+    for line in lines:
+      if isinstance(line, _Annotation):
+        self.annotation = line
+        yield self._Render(self.annotation.Titles())
+      elif isinstance(line, tuple):
+        yield self._Render(self.annotation.Select(line[1]))
+      # Ignore basestring.
 
 
 class Describer(object):
@@ -170,9 +216,13 @@ class Describer(object):
     indent_prefix = '> ' * indent
     diff_prefix = ''
     total = group.pss
+    # _Annotation to extract from data line below.
+    yield _Annotation([('PSS', 3), ('Symbol', 7)])
     for index, s in enumerate(group):
+      pss = 0
       if group.IsBss() or not s.IsBss():
-        running_total += s.pss
+        pss = s.pss
+        running_total += pss
         running_percent = _Divide(running_total, total)
       for l in self._DescribeSymbol(s, single_line=all_groups):
         if l[:4].isspace():
@@ -181,9 +231,11 @@ class Describer(object):
         else:
           if is_delta:
             diff_prefix = models.DIFF_PREFIX_BY_STATUS[s.diff_status]
-          yield '{}{}{:<4} {:>8} {:7} {}'.format(
+          # Data line.
+          yield ('{0}{1}{2:<4} {4:>8} {6:7} {7}', (
               indent_prefix, diff_prefix, str(index) + ')',
-              _FormatPss(running_total), '({:.1%})'.format(running_percent), l)
+              pss, _FormatPss(running_total),
+              running_percent, '({:.1%})'.format(running_percent), l))
 
       if self.recursive and s.IsGroup():
         for l in self._DescribeSymbolGroupChildren(s, indent=indent + 1):
@@ -405,7 +457,6 @@ def DescribeSizeInfoCoverage(size_info):
       yield '* 0 symbols have shared ownership'
 
 
-
 def _UtcToLocal(utc):
   epoch = time.mktime(utc.timetuple())
   offset = (datetime.datetime.fromtimestamp(epoch) -
@@ -426,10 +477,29 @@ def DescribeMetadata(metadata):
   return sorted('%s=%s' % t for t in display_dict.iteritems())
 
 
-def GenerateLines(obj, verbose=False, recursive=False, summarize=True):
+def _GetFilter(format_name, verbose, recursive):
+  if format_name == 'text':
+    return _TextFilter();
+  elif format_name == 'csv':
+    if verbose:
+      raise Exception('format_name=\'csv\' requires verbose=False')
+    if recursive:
+      raise Exception('format_name=\'csv\' requires recursive=False')
+    return _CsvFilter();
+  raise Exception('Unknown format_name \'{}\''.format(format_name))
+
+
+def GenerateLines(obj, verbose=False, recursive=False, summarize=True,
+                  format_name='text'):
   """Returns an iterable of lines (without \n) that describes |obj|."""
+  # Describer.GenerateLines() yields 3 types of lines:
+  # - basestring: Printed by _TextFilter, ignored by _CsvFilter.
+  # - 2-tuple of (str format, tuple of data): Directly rendered by _TextFilter,
+  #   rendered by _CsvFilter.
+  # - _Annotation: Ignored by _TextFilter, used by _CsvFilter to print title on
+  #   first encounter, and subsequently used to render 2-tuples.
   d = Describer(verbose=verbose, recursive=recursive, summarize=summarize)
-  return d.GenerateLines(obj)
+  return _GetFilter(format_name, verbose, recursive).Apply(d.GenerateLines(obj))
 
 
 def WriteLines(lines, func):
