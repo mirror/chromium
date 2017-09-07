@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe8bc55b_5e55730a",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-07T17:12:50Z",
+      "side": 1,
+      "message": "and page scales?",
+      "revId": "d3a83493828afeb1c4617de2bf45c99c73dc75a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5936a1b2_5a880ad0",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-07T17:12:50Z",
+      "side": 1,
+      "message": "\"if there were evicted UI resource\" \u003d\u003e \"if the compositor thread evicted UI resources because it when invisible or there was a lost context\"",
+      "revId": "d3a83493828afeb1c4617de2bf45c99c73dc75a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
