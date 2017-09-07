@@ -4,6 +4,8 @@
 
 source_set("tab_grid") {
   sources = [
+    "tab_grid_container_coordinator.h",
+    "tab_grid_container_coordinator.mm",
     "tab_grid_coordinator.h",
     "tab_grid_coordinator.mm",
     "tab_grid_mediator.h",
@@ -45,6 +47,8 @@ source_set("tab_grid_ui") {
     "tab_grid_collection_view_layout.h",
     "tab_grid_collection_view_layout.mm",
     "tab_grid_consumer.h",
+    "tab_grid_container_view_controller.h",
+    "tab_grid_container_view_controller.mm",
     "tab_grid_toolbar.h",
     "tab_grid_toolbar.mm",
     "tab_grid_view_controller.h",
@@ -76,6 +80,7 @@ source_set("unit_tests") {
   testonly = true
 
   sources = [
+    "tab_grid_container_coordinator_unittest.mm",
     "tab_grid_mediator_unittest.mm",
   ]
 

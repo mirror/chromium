@@ -7,13 +7,13 @@
 
 // Command protocol for commands related to the ToolsMenu.
 @protocol ToolsMenuCommands<NSObject>
-@optional
 // Shows the tools menu.
 - (void)showToolsMenu;
 
 // Closes the tools menu.
 - (void)closeToolsMenu;
 
+@optional
 // Displays the Share menu.
 - (void)showShareMenu;
 @end
