@@ -52,6 +52,7 @@
 #include "components/arc/obb_mounter/arc_obb_mounter_bridge.h"
 #include "components/arc/power/arc_power_bridge.h"
 #include "components/arc/storage_manager/arc_storage_manager.h"
+#include "components/arc/timer/arc_timer_bridge.h"
 #include "components/arc/volume_mounter/arc_volume_mounter_bridge.h"
 #include "components/prefs/pref_member.h"
 #include "ui/arc/notification/arc_notification_manager.h"
@@ -154,6 +155,7 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   ArcProcessService::GetForBrowserContext(profile);
   ArcProvisionNotificationService::GetForBrowserContext(profile);
   ArcSettingsService::GetForBrowserContext(profile);
+  ArcTimerBridge::GetForBrowserContext(profile);
   ArcTracingBridge::GetForBrowserContext(profile);
   ArcTtsService::GetForBrowserContext(profile);
   ArcUserSessionService::GetForBrowserContext(profile);

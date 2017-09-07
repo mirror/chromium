@@ -149,6 +149,15 @@ int FakePowerManagerClient::GetNumPendingSuspendReadinessCallbacks() {
   return num_pending_suspend_readiness_callbacks_;
 }
 
+void FakePowerManagerClient::CreateArcTimers(
+    const std::vector<arc::mojom::ArcTimerArgsPtr>& arc_timers_args,
+    const CreateArcTimersCallback& callback) {}
+
+void FakePowerManagerClient::SetArcTimer(int32_t clock_id,
+                                         int64_t seconds,
+                                         int64_t nanoseconds,
+                                         const SetArcTimerCallback& callback) {}
+
 bool FakePowerManagerClient::PopVideoActivityReport() {
   CHECK(!video_activity_reports_.empty());
   bool fullscreen = video_activity_reports_.front();

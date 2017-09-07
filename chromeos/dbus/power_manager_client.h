@@ -6,6 +6,7 @@
 #define CHROMEOS_DBUS_POWER_MANAGER_CLIENT_H_
 
 #include <string>
+#include <vector>
 
 #include "base/callback.h"
 #include "base/macros.h"
@@ -14,12 +15,13 @@
 #include "chromeos/chromeos_export.h"
 #include "chromeos/dbus/dbus_client.h"
 #include "chromeos/dbus/dbus_client_implementation_type.h"
+#include "components/arc/common/timer.mojom.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 
 namespace power_manager {
 class PowerManagementPolicy;
 class PowerSupplyProperties;
-}
+}  // namespace power_manager
 
 namespace chromeos {
 
@@ -47,6 +49,12 @@ class CHROMEOS_EXPORT PowerManagerClient : public DBusClient {
 
   // Callback passed to GetSwitchStates().
   typedef base::Callback<void(LidState, TabletMode)> GetSwitchStatesCallback;
+
+  // Callback passed to CreateArcTimers().
+  typedef base::Callback<void(int result)> CreateArcTimersCallback;
+
+  // Callback passed to SetArcTimer().
+  typedef base::Callback<void(int result)> SetArcTimerCallback;
 
   // Interface for observing changes from the power manager.
   class Observer {
@@ -230,6 +238,21 @@ class CHROMEOS_EXPORT PowerManagerClient : public DBusClient {
   // Returns the number of callbacks returned by GetSuspendReadinessCallback()
   // for the current suspend attempt but not yet called. Used by tests.
   virtual int GetNumPendingSuspendReadinessCallbacks() = 0;
+
+  // Creates timers backed by specific clock types for the ARC++ instance.
+  // |callback| returns 0 on successful creation of all timers and < 0
+  // otherwise.
+  virtual void CreateArcTimers(
+      const std::vector<arc::mojom::ArcTimerArgsPtr>& arc_timers_args,
+      const CreateArcTimersCallback& callback) = 0;
+
+  // Sets timer corresponding to |clock_id| |seconds| + |nanoseconds| in the
+  // future. |callback| returns 0 on successful setting of timer and < 0
+  // otherwise.
+  virtual void SetArcTimer(int32_t clock_id,
+                           int64_t seconds,
+                           int64_t nanoseconds,
+                           const SetArcTimerCallback& callback) = 0;
 
   // Creates the instance.
   static PowerManagerClient* Create(DBusClientImplementationType type);
