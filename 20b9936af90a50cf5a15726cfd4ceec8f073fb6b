@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "539ae11b_044f6038",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T21:02:00Z",
+      "side": 1,
+      "message": "Return a unique_ptr to make ownership clear.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 14
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2e5827_e41cc021",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T21:02:00Z",
+      "side": 1,
+      "message": "You should show the popup *after* you set opacity and bounds. Otherwise you run the risk of flicker.",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78e40a3b_f882e8cc",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T21:02:00Z",
+      "side": 1,
+      "message": "initial_offset.",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 19
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfaf3014_22623244",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T21:02:00Z",
+      "side": 1,
+      "message": "Does this really do what you want on windows/linux? I think this will immediately set the bounds on windows/linux.",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 51
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8937cadf_46caaca0",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T21:02:00Z",
+      "side": 1,
+      "message": "initial_offset",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 19
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a2f8ae_dfe3a950",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T21:02:00Z",
+      "side": 1,
+      "message": "no {}",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 19
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48e57cf_b1572846",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T21:02:00Z",
+      "side": 1,
+      "message": "What is parent_widget_? Do you know it\u0027s entirely on screen?",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 55
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e67a66_cd84b3cc",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T21:02:00Z",
+      "side": 1,
+      "message": "Why do you need to control animation? When will you pass in false?",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 25
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
