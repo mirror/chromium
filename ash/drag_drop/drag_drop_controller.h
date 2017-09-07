@@ -86,6 +86,7 @@ class ASH_EXPORT DragDropController : public aura::client::DragDropClient,
   virtual void DoDragCancel(base::TimeDelta drag_cancel_animation_duration);
 
  private:
+  class ScopedCursorLocker;
   friend class DragDropControllerTest;
 
   // Overridden from gfx::AnimationDelegate:
@@ -107,11 +108,11 @@ class ASH_EXPORT DragDropController : public aura::client::DragDropClient,
 
   std::unique_ptr<DragImageView> drag_image_;
   gfx::Vector2d drag_image_offset_;
-  const ui::OSExchangeData* drag_data_;
-  int drag_operation_;
+  const ui::OSExchangeData* drag_data_ = nullptr;
+  int drag_operation_ = 0;
 
   // Window that is currently under the drag cursor.
-  aura::Window* drag_window_;
+  aura::Window* drag_window_ = nullptr;
 
   // Starting and final bounds for the drag image for the drag cancel animation.
   gfx::Rect drag_image_initial_bounds_for_cancel_animation_;
@@ -120,11 +121,11 @@ class ASH_EXPORT DragDropController : public aura::client::DragDropClient,
   std::unique_ptr<gfx::LinearAnimation> cancel_animation_;
 
   // Window that started the drag.
-  aura::Window* drag_source_window_;
+  aura::Window* drag_source_window_ = nullptr;
 
   // Indicates whether the caller should be blocked on a drag/drop session.
   // Only be used for tests.
-  bool should_block_during_drag_drop_;
+  bool should_block_during_drag_drop_ = true;
 
   // Closure for quitting nested run loop.
   base::Closure quit_closure_;
@@ -132,11 +133,15 @@ class ASH_EXPORT DragDropController : public aura::client::DragDropClient,
   std::unique_ptr<ash::DragDropTracker> drag_drop_tracker_;
   std::unique_ptr<DragDropTrackerDelegate> drag_drop_window_delegate_;
 
-  ui::DragDropTypes::DragEventSource current_drag_event_source_;
+  ui::DragDropTypes::DragEventSource current_drag_event_source_ =
+      ui::DragDropTypes::DRAG_EVENT_SOURCE_MOUSE;
 
   // Holds a synthetic long tap event to be sent to the |drag_source_window_|.
   // See comment in OnGestureEvent() on why we need this.
   std::unique_ptr<ui::GestureEvent> pending_long_tap_;
+
+  // The object to lock cursor when starting drag.
+  std::unique_ptr<ScopedCursorLocker> cursor_locker_;
 
   base::ObserverList<aura::client::DragDropClientObserver> observers_;
 
