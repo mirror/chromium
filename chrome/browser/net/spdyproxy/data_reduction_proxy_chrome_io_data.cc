@@ -55,20 +55,28 @@ void AddPreviewNavigationToBlackListCallback(
   }
 }
 
-// If this is the first Lo-Fi response for a page load, a
-// PreviewsInfoBarDelegate is created, which handles showing Lo-Fi UI.
-void OnLoFiResponseReceivedOnUI(content::WebContents* web_contents) {
+// Called when a previews is shown on UI thread. Creates infobar for the
+// previews shown. Used for Lo-Fi previews and AMP redirection previews.
+// |non_preview_url| is the URL to redirect if user opted out of previews, used
+// for AMP redirection preview.
+void OnPreviewsShownOnUI(content::WebContents* web_contents,
+                         previews::PreviewsType type,
+                         const GURL& non_preview_url) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  GURL url;
+  if (non_preview_url.is_empty()) {
+    url = web_contents->GetController()
+              .GetLastCommittedEntry()
+              ->GetRedirectChain()[0];
+  }
   PreviewsInfoBarDelegate::Create(
-      web_contents, previews::PreviewsType::LOFI,
+      web_contents, type, non_preview_url,
       base::Time() /* previews_freshness */, true /* is_data_saver_user */,
       false /* is_reload */,
       base::Bind(&AddPreviewNavigationToBlackListCallback,
                  web_contents->GetBrowserContext(),
-                 web_contents->GetController()
-                     .GetLastCommittedEntry()
-                     ->GetRedirectChain()[0],
-                 previews::PreviewsType::LOFI));
+                 url.is_empty() ? non_preview_url : url, type));
 }
 
 } // namespace
@@ -98,7 +106,7 @@ CreateDataReductionProxyChromeIOData(
       base::MakeUnique<data_reduction_proxy::ContentResourceTypeProvider>());
   data_reduction_proxy_io_data->set_lofi_ui_service(
       base::MakeUnique<data_reduction_proxy::ContentLoFiUIService>(
-          ui_task_runner, base::Bind(&OnLoFiResponseReceivedOnUI)));
+          ui_task_runner, base::Bind(&OnPreviewsShownOnUI)));
 
   return data_reduction_proxy_io_data;
 }

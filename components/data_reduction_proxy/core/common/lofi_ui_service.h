@@ -7,8 +7,14 @@
 
 #include "base/macros.h"
 
+class GURL;
+
 namespace net {
 class URLRequest;
+}
+
+namespace previews {
+enum class PreviewsType;
 }
 
 namespace data_reduction_proxy {
@@ -19,8 +25,10 @@ class LoFiUIService {
  public:
   virtual ~LoFiUIService() {}
 
-  // Notifies the UI thread that |request| has a Lo-Fi response.
-  virtual void OnLoFiReponseReceived(const net::URLRequest& request) = 0;
+  // Notifies the UI thread that previews type |type| is applied for |request|.
+  virtual void OnPreviewsShown(const net::URLRequest& request,
+                               previews::PreviewsType type,
+                               const GURL& non_preview_url) = 0;
 };
 
 }  // namespace data_reduction_proxy

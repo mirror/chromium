@@ -497,6 +497,17 @@ void DataReductionProxyNetworkDelegate::OnBeforeRedirectInternal(
   }
 }
 
+void DataReductionProxyNetworkDelegate::OnResponseStartedInternal(
+    net::URLRequest* request) {
+  if (data_reduction_proxy_io_data_ && request &&
+      data_reduction_proxy_io_data_->IsEnabled()) {
+    data_reduction_proxy_io_data_->lofi_decider()
+        ->MaybeContinueOrDisableAMPPreview(
+            request, request->GetResponseCode(),
+            data_reduction_proxy_io_data_->lofi_ui_service());
+  }
+}
+
 void DataReductionProxyNetworkDelegate::OnCompletedInternal(
     net::URLRequest* request,
     bool started) {
@@ -526,8 +537,8 @@ void DataReductionProxyNetworkDelegate::OnCompletedInternal(
   if ((server_lofi || will_show_client_lofi_placeholder) &&
       data_reduction_proxy_io_data_ &&
       data_reduction_proxy_io_data_->lofi_ui_service()) {
-    data_reduction_proxy_io_data_->lofi_ui_service()->OnLoFiReponseReceived(
-        *request);
+    data_reduction_proxy_io_data_->lofi_ui_service()->OnPreviewsShown(
+        *request, previews::PreviewsType::LOFI, GURL());
   } else if (data_reduction_proxy_io_data_ && request->response_headers() &&
              IsLitePagePreview(*(request->response_headers()))) {
     RecordLitePageTransformationType(LITE_PAGE);

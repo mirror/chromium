@@ -20,6 +20,8 @@ class PreviewsDecider;
 
 namespace data_reduction_proxy {
 
+class LoFiUIService;
+
 // Interface to determine if a request should be made for a low fidelity version
 // of the resource.
 class LoFiDecider {
@@ -66,11 +68,20 @@ class LoFiDecider {
   virtual bool IsClientLoFiAutoReloadRequest(
       const net::URLRequest& request) const = 0;
 
-  // Applies the AMP redirection preview by changing the |new_url|.
+  // Applies the AMP redirection preview by changing the |new_url|, if |request|
+  // is main frame.
   virtual void MaybeApplyAMPPreview(
       net::URLRequest* request,
       GURL* new_url,
       previews::PreviewsDecider* previews_decider) const = 0;
+
+  // If AMP redirection preview is applied for main frame |request| and the
+  // response is successful, continues with the AMP preview. Otherwise disabled
+  // AMP redirection and navigates to the original request.
+  virtual void MaybeContinueOrDisableAMPPreview(
+      net::URLRequest* request,
+      int response_code,
+      LoFiUIService* lofi_ui_service) const = 0;
 };
 
 }  // namespace data_reduction_proxy
