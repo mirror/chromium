@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de39b871_822192e9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-07T19:40:02Z",
+      "side": 1,
+      "message": "Hm... but what about visibility:collapse? Then the table track / track-group doesn\u0027t even take up space in layout.\n\nI think we should always return LayoutRect() if visibility is collapse.",
+      "revId": "12d45ce134aa6c0559de01d9ccc43dbced235daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
