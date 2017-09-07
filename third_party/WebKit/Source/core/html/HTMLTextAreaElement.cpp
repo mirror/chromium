@@ -414,7 +414,6 @@ void HTMLTextAreaElement::SetValueCommon(
   SetNeedsStyleRecalc(
       kSubtreeStyleChange,
       StyleChangeReasonForTracing::Create(StyleChangeReason::kControlValue));
-  suggested_value_ = String();
   SetNeedsValidityCheck();
   if (IsFinishedParsingChildren() &&
       selection == TextControlSetValueSelection::kSetSelectionToEnd) {
@@ -472,23 +471,6 @@ void HTMLTextAreaElement::setDefaultValue(const String& default_value) {
 
   if (!is_dirty_)
     SetNonDirtyValue(value);
-}
-
-String HTMLTextAreaElement::SuggestedValue() const {
-  return suggested_value_;
-}
-
-void HTMLTextAreaElement::SetSuggestedValue(const String& value) {
-  suggested_value_ = value;
-
-  if (!value.IsNull())
-    SetInnerEditorValue(suggested_value_);
-  else
-    SetInnerEditorValue(value_);
-  UpdatePlaceholderVisibility();
-  SetNeedsStyleRecalc(
-      kSubtreeStyleChange,
-      StyleChangeReasonForTracing::Create(StyleChangeReason::kControlValue));
 }
 
 String HTMLTextAreaElement::validationMessage() const {

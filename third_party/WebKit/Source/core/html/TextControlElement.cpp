@@ -43,6 +43,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLBRElement.h"
+#include "core/html/HTMLDivElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html/shadow/ShadowElementNames.h"
 #include "core/layout/LayoutBlock.h"
@@ -156,8 +157,8 @@ bool TextControlElement::IsPlaceholderEmpty() const {
 }
 
 bool TextControlElement::PlaceholderShouldBeVisible() const {
-  return SupportsPlaceholder() && IsEmptyValue() && IsEmptySuggestedValue() &&
-         !IsPlaceholderEmpty();
+  return SupportsPlaceholder() && IsEmptyValue() &&
+         (!IsPlaceholderEmpty() || !IsEmptySuggestedValue());
 }
 
 HTMLElement* TextControlElement::PlaceholderElement() const {
@@ -966,6 +967,47 @@ String TextControlElement::DirectionForFormData() const {
   }
 
   return "ltr";
+}
+
+void TextControlElement::SetSuggestedValue(const String& value) {
+  suggested_value_ = value;
+
+  HTMLElement* placeholder = PlaceholderElement();
+
+  String new_placeholder_value = value;
+  if (value.IsEmpty()) {
+    // Get the placeholder value from the DOM.
+    String placeholder_text = StrippedPlaceholder();
+
+    // If there is no placeholder value in the DOM, remove the placeholder from
+    // the ShadowDOM.
+    if (placeholder_text.IsEmpty() && placeholder) {
+      UserAgentShadowRoot()->RemoveChild(placeholder);
+      return;
+    }
+
+    // Reset the ShadowDOM placeholder value to reflect the DOM.
+    new_placeholder_value = placeholder_text;
+  }
+
+  // If there is not already a placeholder element, create one in the ShadowDOM.
+  if (!placeholder) {
+    HTMLDivElement* new_element = HTMLDivElement::Create(GetDocument());
+    placeholder = new_element;
+    placeholder->SetShadowPseudoId(AtomicString("-webkit-input-placeholder"));
+    placeholder->setAttribute(idAttr, ShadowElementNames::Placeholder());
+    placeholder->SetInlineStyleProperty(
+        CSSPropertyDisplay,
+        IsPlaceholderVisible() ? CSSValueBlock : CSSValueNone, true);
+    UserAgentShadowRoot()->InsertBefore(placeholder, InnerEditorElement());
+  }
+
+  // Set the new value in the ShadowDOM placeholder.
+  placeholder->setTextContent(new_placeholder_value);
+}
+
+const String& TextControlElement::SuggestedValue() const {
+  return suggested_value_;
 }
 
 HTMLElement* TextControlElement::InnerEditorElement() const {

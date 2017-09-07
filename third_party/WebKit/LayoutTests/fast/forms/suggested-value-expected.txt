@@ -8,8 +8,14 @@ instead of "initial value".
 |   this.value="initial value"
 |   <shadow:root>
 |     <div>
-|       id="inner-editor"
+|       id="placeholder"
+|       pseudo="-webkit-input-placeholder"
+|       style="display: none !important;"
+|       shadow:pseudoId="-webkit-input-placeholder"
 |       "suggested value"
+|     <div>
+|       id="inner-editor"
+|       "initial value"
 | <input>
 |   id="month"
 |   type="month"
@@ -27,12 +33,11 @@ instead of "initial value".
 |           aria-help="Month"
 |           aria-valuemax="12"
 |           aria-valuemin="1"
-|           aria-valuenow="1"
-|           aria-valuetext="January"
+|           aria-valuetext="---------"
 |           pseudo="-webkit-datetime-edit-month-field"
 |           role="spinbutton"
 |           shadow:pseudoId="-webkit-datetime-edit-month-field"
-|           "January"
+|           "---------"
 |         <div>
 |           pseudo="-webkit-datetime-edit-text"
 |           shadow:pseudoId="-webkit-datetime-edit-text"
@@ -41,16 +46,15 @@ instead of "initial value".
 |           aria-help="Year"
 |           aria-valuemax="275760"
 |           aria-valuemin="1"
-|           aria-valuenow="2014"
-|           aria-valuetext="2014"
+|           aria-valuetext="----"
 |           pseudo="-webkit-datetime-edit-year-field"
 |           role="spinbutton"
 |           shadow:pseudoId="-webkit-datetime-edit-year-field"
-|           "2014"
+|           "----"
 |     <div>
 |       id="clear"
 |       pseudo="-webkit-clear-button"
-|       style=""
+|       style="opacity: 0; pointer-events: none;"
 |       shadow:pseudoId="-webkit-clear-button"
 |     <div>
 |       id="spin"
@@ -60,13 +64,25 @@ instead of "initial value".
 |       id="picker"
 |       pseudo="-webkit-calendar-picker-indicator"
 |       shadow:pseudoId="-webkit-calendar-picker-indicator"
+|     <div>
+|       id="placeholder"
+|       pseudo="-webkit-input-placeholder"
+|       style="display: none !important;"
+|       shadow:pseudoId="-webkit-input-placeholder"
+|       "2014-01"
 | <textarea>
 |   id="textarea"
 |   this.value="initial value"
 |   <shadow:root>
 |     <div>
-|       id="inner-editor"
+|       id="placeholder"
+|       pseudo="-webkit-input-placeholder"
+|       style="display: none !important;"
+|       shadow:pseudoId="-webkit-input-placeholder"
 |       "suggested value"
+|     <div>
+|       id="inner-editor"
+|       "initial value"
 | <select>
 |   id="select"
 |   <option>

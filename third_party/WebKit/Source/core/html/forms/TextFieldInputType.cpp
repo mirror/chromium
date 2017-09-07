@@ -531,10 +531,7 @@ void TextFieldInputType::SpinButtonStepUp() {
 }
 
 void TextFieldInputType::UpdateView() {
-  if (!GetElement().SuggestedValue().IsNull()) {
-    GetElement().SetInnerEditorValue(GetElement().SuggestedValue());
-    GetElement().UpdatePlaceholderVisibility();
-  } else if (GetElement().NeedsToUpdateViewValue()) {
+  if (GetElement().NeedsToUpdateViewValue()) {
     // Update the view only if needsToUpdateViewValue is true. It protects
     // an unacceptable view value from being overwritten with the DOM value.
     //

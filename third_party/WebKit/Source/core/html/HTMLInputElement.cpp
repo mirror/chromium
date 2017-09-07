@@ -1064,21 +1064,6 @@ void HTMLInputElement::SetValueForUser(const String& value) {
   setValue(value, kDispatchChangeEvent);
 }
 
-const String& HTMLInputElement::SuggestedValue() const {
-  return suggested_value_;
-}
-
-void HTMLInputElement::SetSuggestedValue(const String& value) {
-  if (!input_type_->CanSetSuggestedValue())
-    return;
-  needs_to_update_view_value_ = true;
-  suggested_value_ = SanitizeValue(value);
-  SetNeedsStyleRecalc(
-      kSubtreeStyleChange,
-      StyleChangeReasonForTracing::Create(StyleChangeReason::kControlValue));
-  input_type_view_->UpdateView();
-}
-
 void HTMLInputElement::SetEditingValue(const String& value) {
   if (!GetLayoutObject() || !IsTextField())
     return;
@@ -1122,8 +1107,6 @@ void HTMLInputElement::setValue(const String& value,
 
   SetLastChangeWasNotUserEdit();
   needs_to_update_view_value_ = true;
-  // Prevent TextFieldInputType::setValue from using the suggested value.
-  suggested_value_ = String();
 
   input_type_->SetValue(sanitized_value, value_changed, event_behavior,
                         selection);
@@ -1194,8 +1177,6 @@ void HTMLInputElement::setValueAsNumber(double new_value,
 void HTMLInputElement::SetValueFromRenderer(const String& value) {
   // File upload controls will never use this.
   DCHECK_NE(type(), InputTypeNames::file);
-
-  suggested_value_ = String();
 
   // Renderer and our event handler are responsible for sanitizing values.
   DCHECK(value == input_type_->SanitizeUserInputValue(value) ||
@@ -1698,7 +1679,7 @@ bool HTMLInputElement::SupportsPlaceholder() const {
 }
 
 void HTMLInputElement::UpdatePlaceholderText() {
-  return input_type_view_->UpdatePlaceholderText();
+  input_type_view_->UpdatePlaceholderText();
 }
 
 bool HTMLInputElement::SupportsAutocapitalize() const {
