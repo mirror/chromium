@@ -529,57 +529,39 @@ PositionTemplate<Strategy>::LastPositionInOrAfterNode(Node* node) {
                                       : LastPositionInNode(*node);
 }
 
+// TODO(editing-dev): We should guarantee
+// |ToPositionInDOMTree(ToPositionInFlatTree(pos)) == pos| unless |pos|
+// appears in flat tree.
 PositionInFlatTree ToPositionInFlatTree(const Position& pos) {
   if (pos.IsNull())
-    return PositionInFlatTree();
+    return {};
 
+  // Confirm |anchor| is connected to Document.
   Node* const anchor = pos.AnchorNode();
-  if (pos.IsOffsetInAnchor()) {
-    if (anchor->IsCharacterDataNode())
-      return PositionInFlatTree(anchor, pos.ComputeOffsetInContainerNode());
-    DCHECK(!anchor->IsActiveSlotOrActiveV0InsertionPoint());
-    int offset = pos.ComputeOffsetInContainerNode();
-    Node* child = NodeTraversal::ChildAt(*anchor, offset);
-    if (!child) {
-      if (anchor->IsShadowRoot())
-        return PositionInFlatTree(anchor->OwnerShadowHost(),
-                                  PositionAnchorType::kAfterChildren);
-      return PositionInFlatTree(anchor, PositionAnchorType::kAfterChildren);
+  if (!anchor->isConnected())
+    return {};
+  // TODO(yoichio):  Clarify Selection API interop for shadow dom.
+  // (crbug.com/762799)
+  if (anchor->IsShadowRoot()) {
+    // Before/after of Shadowroot is not projected in flat tree.
+    if (pos.IsBeforeAnchor() || pos.IsAfterAnchor())
+      return {};
+    // If |pos| is in shadow root, we consider it as shadow host position.
+    if (pos.IsOffsetInAnchor()) {
+      return ToPositionInFlatTree(
+          {anchor->OwnerShadowHost(), pos.OffsetInContainerNode()});
     }
-    child->UpdateDistribution();
-    if (child->IsActiveSlotOrActiveV0InsertionPoint()) {
-      if (anchor->IsShadowRoot())
-        return PositionInFlatTree(anchor->OwnerShadowHost(), offset);
-      return PositionInFlatTree(anchor, offset);
-    }
-    if (Node* parent = FlatTreeTraversal::Parent(*child))
-      return PositionInFlatTree(parent, FlatTreeTraversal::Index(*child));
-    // When |pos| isn't appeared in flat tree, we map |pos| to after
-    // children of shadow host.
-    // e.g. "foo",0 in <progress>foo</progress>
-    if (anchor->IsShadowRoot())
-      return PositionInFlatTree(anchor->OwnerShadowHost(),
-                                PositionAnchorType::kAfterChildren);
-    return PositionInFlatTree(anchor, PositionAnchorType::kAfterChildren);
+    // BeforeChildren or AfterChildren.
+    return ToPositionInFlatTree({anchor->OwnerShadowHost(), pos.AnchorType()});
   }
+  anchor->UpdateDistribution();
+  if (anchor != &anchor->GetDocument() &&
+      !FlatTreeTraversal::IsDescendantOf(*anchor, anchor->GetDocument()))
+    return {};
 
-  if (anchor->IsShadowRoot())
-    return PositionInFlatTree(anchor->OwnerShadowHost(), pos.AnchorType());
-  if (pos.IsBeforeAnchor() || pos.IsAfterAnchor()) {
-    if (anchor->CanParticipateInFlatTree() &&
-        !FlatTreeTraversal::Parent(*anchor)) {
-      // For Before/AfterAnchor, if |anchor| doesn't have parent in the flat
-      // tree, there is no valid corresponding PositionInFlatTree.
-      // Since this function is a primitive function, we do not adjust |pos|
-      // to somewhere else in flat tree.
-      // Reached by unit test
-      // FrameSelectionTest.SelectInvalidPositionInFlatTreeDoesntCrash.
-      return PositionInFlatTree();
-    }
-  }
-  // TODO(yosin): Once we have a test case for SLOT or active insertion point,
-  // this function should handle it.
-  return PositionInFlatTree(anchor, pos.AnchorType());
+  if (pos.IsOffsetInAnchor())
+    return {anchor, pos.OffsetInContainerNode()};
+  return {anchor, pos.AnchorType()};
 }
 
 Position ToPositionInDOMTree(const Position& position) {
