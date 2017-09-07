@@ -1741,8 +1741,6 @@ LRESULT HWNDMessageHandler::OnPointerEvent(UINT message,
   }
 
   switch (pointer_type) {
-    case PT_TOUCH:
-      return HandlePointerEventTypeTouch(message, w_param, l_param);
     case PT_PEN:
       return HandlePointerEventTypePen(message, w_param, l_param);
     default:
