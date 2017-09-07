@@ -5,6 +5,8 @@
 #ifndef ASH_LOGIN_UI_CONTENTS_VIEW_H_
 #define ASH_LOGIN_UI_CONTENTS_VIEW_H_
 
+#include <memory>
+
 #include "ash/ash_export.h"
 #include "ash/login/ui/login_data_dispatcher.h"
 #include "base/macros.h"
@@ -22,6 +24,7 @@ class ScrollView;
 namespace ash {
 
 class LoginAuthUserView;
+class LoginBubble;
 class LoginUserView;
 
 // LockContentsView hosts the root view for the lock screen. All other lock
@@ -115,12 +118,16 @@ class ASH_EXPORT LockContentsView : public views::View,
   // the actual user may change.
   void SwapToAuthUser(int user_index);
 
+  // Opens an error bubble to indicate authentication failure.
+  void ShowErrorMessage();
+
   std::vector<UserState> users_;
 
   LoginDataDispatcher* const data_dispatcher_;  // Unowned.
 
   LoginAuthUserView* primary_auth_ = nullptr;
   LoginAuthUserView* opt_secondary_auth_ = nullptr;
+  LoginAuthUserView* current_auth_user_ = nullptr;
 
   // All non-auth users; |primary_auth_| and |secondary_auth_| are not contained
   // in this list.
@@ -133,6 +140,9 @@ class ASH_EXPORT LockContentsView : public views::View,
   std::vector<OnRotate> rotation_actions_;
 
   ScopedObserver<display::Screen, display::DisplayObserver> display_observer_;
+
+  std::unique_ptr<LoginBubble> error_bubble_;
+  int unlock_attempt_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(LockContentsView);
 };
