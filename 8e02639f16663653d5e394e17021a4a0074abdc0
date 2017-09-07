@@ -16,6 +16,47 @@
       "revId": "8e02639f16663653d5e394e17021a4a0074abdc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af745e9_4ec4b344",
+        "filename": "third_party/WebKit/LayoutTests/fast/media/media-element-move-to-new-document-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-07T20:12:59Z",
+      "side": 1,
+      "message": "Out of curiosity — could you add a trace event to TaskRunnerHelper::Get (probably permanently) and record a trace with it?",
+      "parentUuid": "e145d16c_fc33c971",
+      "revId": "8e02639f16663653d5e394e17021a4a0074abdc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a422de_562e856c",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-07T20:12:59Z",
+      "side": 1,
+      "message": "Do we want to retain a reference to XMLDocuments created by DocumentResource?",
+      "range": {
+        "startLine": 77,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 14
+      },
+      "revId": "8e02639f16663653d5e394e17021a4a0074abdc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
