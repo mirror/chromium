@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af5864f6_725716c9",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3877,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T00:59:31Z",
+      "side": 1,
+      "message": "FYI: web_view_internal_creation_util.mm sets this to NO.",
+      "revId": "2eba4006e0a6dea30f37d99b2cb04f20161736f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa1c5e9_fabbc062",
+        "filename": "ios/web/web_state/web_state_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T00:59:31Z",
+      "side": 1,
+      "message": "nit: s/nullptr/nil",
+      "range": {
+        "startLine": 522,
+        "startChar": 21,
+        "endLine": 522,
+        "endChar": 28
+      },
+      "revId": "2eba4006e0a6dea30f37d99b2cb04f20161736f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8251a5eb_70bbc620",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T00:59:31Z",
+      "side": 1,
+      "message": "nit: From Chromium Style Guide: \"Don\u0027t use else after return\"\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#code-formatting",
+      "range": {
+        "startLine": 337,
+        "startChar": 4,
+        "endLine": 337,
+        "endChar": 8
+      },
+      "revId": "2eba4006e0a6dea30f37d99b2cb04f20161736f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56346b5b_08b7c3a4",
+        "filename": "ios/web_view/public/cwv_ui_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T00:59:31Z",
+      "side": 1,
+      "message": "Is this called only for links or for all elements? Should this be webView:shouldPreviewElement: instead to be fully compatible with WKWebView API?",
+      "range": {
+        "startLine": 68,
+        "startChar": 37,
+        "endLine": 68,
+        "endChar": 61
+      },
+      "revId": "2eba4006e0a6dea30f37d99b2cb04f20161736f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68464973_ca60f72b",
+        "filename": "ios/web_view/public/cwv_ui_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T00:59:31Z",
+      "side": 1,
+      "message": "Same question here. Should this be fully compatible with WKWebView API?",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 42
+      },
+      "revId": "2eba4006e0a6dea30f37d99b2cb04f20161736f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
