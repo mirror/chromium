@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54f204c1_2533ffe8",
+        "filename": "tools/perf/contrib/dromaeo_extras/dromaeo_extras.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-07T14:05:21Z",
+      "side": 1,
+      "message": "You can just ignore all the things in contrib/",
+      "revId": "201261f5eef718a4a9fccdd82f4bccf82f2ba062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
