@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "960c62b9_f0355814",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T21:08:12Z",
+      "side": 1,
+      "message": "Rename to OnActiveAuthUserChanged, add comment.",
+      "revId": "3806d1613541aca199d94976b78449da9cdfb1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65436809_dc61271f",
         "filename": "ash/login/ui/lock_contents_view.h",
         "patchSetId": 4
@@ -42,6 +59,23 @@
     },
     {
       "key": {
+        "uuid": "5b92589d_c296b644",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T21:08:12Z",
+      "side": 1,
+      "message": "Comment",
+      "revId": "3806d1613541aca199d94976b78449da9cdfb1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0950473a_559416ea",
         "filename": "ash/login/ui/lock_contents_view.h",
         "patchSetId": 4
@@ -53,6 +87,125 @@
       "writtenOn": "2017-09-07T21:03:14Z",
       "side": 1,
       "message": "nit: #include \"components/signin/core/account_id/account_id.h\"",
+      "revId": "3806d1613541aca199d94976b78449da9cdfb1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696ea3ab_bed18d46",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T21:08:12Z",
+      "side": 1,
+      "message": "put in public:",
+      "revId": "3806d1613541aca199d94976b78449da9cdfb1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61844e17_b55f4e79",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T21:08:12Z",
+      "side": 1,
+      "message": "public:",
+      "revId": "3806d1613541aca199d94976b78449da9cdfb1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d0036f_5e9096cb",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T21:08:12Z",
+      "side": 1,
+      "message": "DCHECK_NOT_NULL(bubble_view_);\n\nor just flip the ordering (you want to read bubble_view_ first since it is more interesting).",
+      "revId": "3806d1613541aca199d94976b78449da9cdfb1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e94526c_db743ff3",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T21:08:12Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "3806d1613541aca199d94976b78449da9cdfb1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed074f3_859a65a7",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T21:08:12Z",
+      "side": 1,
+      "message": "nit: remove {}",
+      "revId": "3806d1613541aca199d94976b78449da9cdfb1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c52a79_89007b44",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T21:08:12Z",
+      "side": 1,
+      "message": "Put above overrides.",
+      "revId": "3806d1613541aca199d94976b78449da9cdfb1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb07c17_167c86ff",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T21:08:12Z",
+      "side": 1,
+      "message": "Comment",
       "revId": "3806d1613541aca199d94976b78449da9cdfb1e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
