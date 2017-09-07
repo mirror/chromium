@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "2c5b2b85_db603357",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/FramebustBlockInfoBar.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-07T23:19:20Z",
+      "side": 1,
+      "message": "Just out of curiosity, has UX looked at this at all? The reason I ask is because I believe this just pops to the new size (no animation) right?",
+      "range": {
+        "startLine": 94,
+        "startChar": 12,
+        "endLine": 94,
+        "endChar": 38
+      },
+      "revId": "ee8c61b3983ee632ab9189b63d0d7259301236fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f7bdf2_6648b60b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/FramebustBlockInfoBar.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-07T23:19:20Z",
+      "side": 1,
+      "message": "nit: doc.",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 47
+      },
+      "revId": "ee8c61b3983ee632ab9189b63d0d7259301236fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17ab20f_b2241fbc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-07T23:19:20Z",
+      "side": 1,
+      "message": "Lets make addInfoBarForTesting to discourage use of this api. The new method can simply call this one, but it will be absolutely clear that someone is doing something wrong it they try to use the testing version.",
+      "range": {
+        "startLine": 298,
+        "startChar": 4,
+        "endLine": 298,
+        "endChar": 45
+      },
+      "revId": "ee8c61b3983ee632ab9189b63d0d7259301236fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "352a68a0_72152e3a",
         "filename": "chrome/browser/ui/interventions/framebust_block_message_delegate.h",
         "patchSetId": 26
