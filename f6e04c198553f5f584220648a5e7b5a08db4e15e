@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92981eb4_44fc9d89",
+        "filename": "content/browser/dom_storage/dom_storage_context_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-07T21:25:13Z",
+      "side": 1,
+      "message": "\"site_storage/session_storage_0x?/cache_size\" unless michaeln@ prefers dom_storage. I think we can just assume this code is used for session_storage only.",
+      "range": {
+        "startLine": 548,
+        "startChar": 28,
+        "endLine": 548,
+        "endChar": 40
+      },
+      "revId": "f6e04c198553f5f584220648a5e7b5a08db4e15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
