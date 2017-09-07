@@ -16,6 +16,24 @@
       "revId": "c06cf63e73d05de1c963cb6f31dbe43894e98a38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d69c646_f454022e",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-07T22:03:49Z",
+      "side": 1,
+      "message": "Done. Figured we will catch it in afterZoom_ anyway (no reason to send it twice), but can also set it true here since it will just be ignored the second time.",
+      "parentUuid": "27bb5e48_4851b4d0",
+      "revId": "c06cf63e73d05de1c963cb6f31dbe43894e98a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
