@@ -140,6 +140,7 @@ http://ftp.us.debian.org/debian/pool/main/p/pcre3/libpcre3-dev_8.35-3.3+deb8u4_a
 http://ftp.us.debian.org/debian/pool/main/p/pcre3/libpcrecpp0_8.35-3.3+deb8u4_armhf.deb
 http://ftp.us.debian.org/debian/pool/main/p/pixman/libpixman-1-0_0.32.6-3_armhf.deb
 http://ftp.us.debian.org/debian/pool/main/p/pixman/libpixman-1-dev_0.32.6-3_armhf.deb
+http://ftp.us.debian.org/debian/pool/main/p/pkgconf/pkgconf_0.9.7-1_armhf.deb
 http://ftp.us.debian.org/debian/pool/main/p/pulseaudio/libpulse0_5.0-13_armhf.deb
 http://ftp.us.debian.org/debian/pool/main/p/pulseaudio/libpulse-dev_5.0-13_armhf.deb
 http://ftp.us.debian.org/debian/pool/main/p/pulseaudio/libpulse-mainloop-glib0_5.0-13_armhf.deb
