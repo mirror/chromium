@@ -216,6 +216,23 @@
       "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18611d28_b73fe4da",
+        "filename": "third_party/zlib/inffast.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-07T22:03:40Z",
+      "side": 1,
+      "message": "Chrome is a product, not a research project. And zlib is used all over the place by Chrome.\n\nIf you really want to enable this for PPC, we need data proving the benefits. If getting this data is too complicated/hard, we ship this for the tested platform (i.e. Intel) and can later revisit the issue (i.e. enabling for PowerPC).",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
