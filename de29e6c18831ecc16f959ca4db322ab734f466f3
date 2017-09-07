@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1c6c205_a718c9ef",
+        "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-07T19:03:08Z",
+      "side": 1,
+      "message": "My instinct would be to have the caller open the file by pathname, and then pass a FileReader (or, more generally, an InputStreamReader) to this method/any other methods. This avoids potential race conditions, in which the file named by the pathname changes between the time the caller calls this method and when this method runs, or between the time this method returns and when the caller uses the APK in question. TL;DR: fstat is a better design than stat. :)",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03870c64_ca905df1",
+        "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-07T19:03:08Z",
+      "side": 1,
+      "message": "SecurityException, NoSuchAlgorithmException, InvalidKeyException, NoSuchProviderException,                   SignatureException, CertificateException are all subclasses of GeneralSecurityException. You could simplify/clarify this by declaring just GSE.",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5154f7b0_6e011de2",
+        "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-07T19:03:08Z",
+      "side": 1,
+      "message": "If you follow my InputStreamReader advice above, this API may need to change (or an overloaded method created).",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a9cd14_91aff515",
+        "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-07T19:03:08Z",
+      "side": 1,
+      "message": "What if |certChains| has 0 items? Or if all the chains are of length 0?",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb309bd_40b62efa",
+        "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-07T19:03:08Z",
+      "side": 1,
+      "message": "FileNotFoundException is-a IOException, so this declaration is redundant.",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb433b8_bef4c20e",
+        "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-07T19:03:08Z",
+      "side": 1,
+      "message": "FileInputStream implements AutoCloseable, so you could use the try-with-resources form instead of finally. That would be consistent with the usage in e.g. ApkSignatureSchemeV2Verifier.java.",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c028ad50_be24f9b5",
+        "filename": "components/update_client/component_unpacker_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-07T19:03:08Z",
+      "side": 1,
+      "message": "What about other IOExceptions, such as permission denied? (java.nio.file.AccessDeniedException)",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a6cc79_23973be9",
+        "filename": "third_party/android_apk_signature_verifier/java/src/org/chromium/third_party/android/util/apk/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-07T19:03:08Z",
+      "side": 1,
+      "message": "As a subclass of RuntimeException, I\u0027m not sure SecurityException is the right choice here. SEs are thrown by the JRE\u0027s Security Manager, e.g. for violations of the VM\u0027s policy or constraints.\n\nFor crypto problems, java.security.GeneralSecurityException and its subclasses (e.g. CertificateException, CertPathBuilderException, CertPathValidatorException, and CertStoreException) seem like better fits.\n\nI realize this is a problem in upstream code, and fixing it would be an API change, but it may be a good idea to fix it upstream.",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3cd7ecf_59289f3b",
+        "filename": "third_party/android_apk_signature_verifier/java/src/org/chromium/third_party/android/util/apk/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-07T19:03:08Z",
+      "side": 1,
+      "message": "Is this redundant? This should always be the same as `signerCerts.size()`, right?",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
