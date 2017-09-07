@@ -16,6 +16,24 @@
       "revId": "c4e30b5d7734ad30a01dc468692f3097dd756713",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f304c437_5f06a0c5",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1841,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-07T23:07:09Z",
+      "side": 1,
+      "message": "I actually have https://chromium-review.googlesource.com/c/chromium/src/+/619929 somewhere, though I need to wrestle a bit more with Mac and it seems we\u0027ve been relying on cert_database_nss.cc to initialize NSS even though it doesn\u0027t use it.",
+      "parentUuid": "c15ea893_10dbd690",
+      "revId": "c4e30b5d7734ad30a01dc468692f3097dd756713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
