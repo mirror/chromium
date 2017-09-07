@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c295fdec_161eb8c9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/appcache/resources/offline-access.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-07T02:58:58Z",
+      "side": 1,
+      "message": "These layout test changes are about subresource loading, I just put them here to try them on the bots. I\u0027ll put these changes in a different CL that also deletes the buggy DISABLED_VerifyRedirectedSubresourceAppCacheLoad browsertest.",
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
