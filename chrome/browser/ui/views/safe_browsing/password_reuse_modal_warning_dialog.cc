@@ -18,7 +18,7 @@
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/controls/label.h"
-#include "ui/views/layout/grid_layout.h"
+#include "ui/views/layout/fill_layout.h"
 
 namespace safe_browsing {
 
@@ -37,25 +37,25 @@ PasswordReuseModalWarningDialog::PasswordReuseModalWarningDialog(
     : show_softer_warning_(
           PasswordProtectionService::ShouldShowSofterWarning()),
       done_callback_(std::move(done_callback)) {
-  set_margins(ChromeLayoutProvider::Get()->GetInsetsMetric(
-      views::INSETS_DIALOG_CONTENTS));
+  set_margins(ChromeLayoutProvider::Get()->GetInsetsForContentType(
+      views::TEXT, views::TEXT));
 
   // TODO(jialiul): Dialog message should align with title.
-  views::GridLayout* layout = views::GridLayout::CreateAndInstall(this);
-  views::ColumnSet* column_set = layout->AddColumnSet(0);
-  column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
-                        views::GridLayout::FIXED, 400, 0);
+  SetLayoutManager(new views::FillLayout());
 
   views::Label* message_body_label = new views::Label(
       l10n_util::GetStringUTF16(IDS_PAGE_INFO_CHANGE_PASSWORD_DETAILS));
   message_body_label->SetMultiLine(true);
   message_body_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-
-  layout->StartRow(0, 0);
-  layout->AddView(message_body_label);
+  AddChildView(message_body_label);
 }
 
 PasswordReuseModalWarningDialog::~PasswordReuseModalWarningDialog() {}
+
+gfx::Size PasswordReuseModalWarningDialog::CalculatePreferredSize() const {
+  constexpr int kWidth = 400;
+  return gfx::Size(kWidth, GetHeightForWidth(kWidth));
+}
 
 ui::ModalType PasswordReuseModalWarningDialog::GetModalType() const {
   return ui::MODAL_TYPE_CHILD;
