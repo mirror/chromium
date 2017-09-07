@@ -24,6 +24,8 @@ namespace autofill {
 
 namespace {
 
+const char* kDocumentationUrl = "https://goo.gl/RTXiTv";
+
 const char* kTypeAttributes[] = {"text", "email", "tel", "password"};
 const char* kTypeTextAttributes[] = {"text", "email", "tel"};
 
@@ -71,6 +73,17 @@ class ConsoleLogger {
   blink::WebLocalFrame* frame_;
   std::map<ConsoleLevel, std::vector<Entry>> node_buffer_;
 };
+
+// Produce a relevant link to developer documentation regarding the warning or
+// error. If no particular reference is given, the default URL will be provided.
+// Otherwise, the URL will point to the specified anchor.
+std::string LinkDocumentation(const std::string& message,
+                              const char* reference = nullptr) {
+  std::string documented = message + " (More info: " + kDocumentationUrl + ")";
+  if (reference)
+    return documented + std::string("#") + reference;
+  return documented;
+}
 
 // A simple wrapper that provides some extra data about nodes
 // during the DOM traversal (e.g. whether it lies within a <form>
@@ -233,8 +246,9 @@ std::vector<FormInputCollection> ExtractFormsForAnalysis(
       continue;
     // Any password fields inside <form> elements will have been skipped,
     // leaving just those without associated forms.
-    console_logger->Send("Password field is not contained in a form:",
-                         ConsoleLogger::kVerbose, password_inputs[i]);
+    console_logger->Send(
+        LinkDocumentation("Password field is not contained in a form:"),
+        ConsoleLogger::kVerbose, password_inputs[i]);
   }
   // Check for input fields that are not contained inside forms, to make sure
   // their id attributes don't conflict with other fields also not contained
@@ -257,13 +271,14 @@ std::vector<FormInputCollection> ExtractFormsForAnalysis(
     if (nodes.size() <= 1)
       continue;
     if (!id_attr.empty()) {
-      console_logger->Send(
-          base::StringPrintf("Found %lu elements with non-unique id #%s:",
-                             nodes.size(), id_attr.c_str()),
-          ConsoleLogger::kError, nodes);
-    } else {
-      console_logger->Send("The id attribute must be unique and non-empty:",
+      console_logger->Send(LinkDocumentation(base::StringPrintf(
+                               "Found %lu elements with non-unique id #%s:",
+                               nodes.size(), id_attr.c_str())),
                            ConsoleLogger::kError, nodes);
+    } else {
+      console_logger->Send(
+          LinkDocumentation("The id attribute must be unique and non-empty:"),
+          ConsoleLogger::kError, nodes);
     }
   }
 
@@ -375,8 +390,8 @@ void AnalyseForm(const FormInputCollection& form_input_collection,
     // Manager associates the correct account name with the password (for
     // example in password reset forms).
     console_logger->Send(
-        "Password forms should have (optionally hidden) "
-        "username fields for accessibility:",
+        LinkDocumentation("Password forms should have (optionally hidden) "
+                          "username fields for accessibility:"),
         ConsoleLogger::kVerbose, form);
   } else {
     // By default (if the other heuristics fail), the first text field
@@ -390,9 +405,10 @@ void AnalyseForm(const FormInputCollection& form_input_collection,
 
   if (FormIsTooComplex(signature)) {
     console_logger->Send(
-        "Multiple forms should be contained in their own "
-        "form elements; break up complex forms into ones that represent a "
-        "single action:",
+        LinkDocumentation(
+            "Multiple forms should be contained in their own "
+            "form elements; break up complex forms into ones that represent a "
+            "single action:"),
         ConsoleLogger::kVerbose, form);
     return;
   }
@@ -417,9 +433,9 @@ void AnalyseForm(const FormInputCollection& form_input_collection,
     if (autocomplete_suggestions.count(i) &&
         !inputs[i].HasAttribute("autocomplete"))
       console_logger->Send(
-          "Input elements should have autocomplete "
-          "attributes (suggested: \"" +
-              autocomplete_suggestions[i] + "\"):",
+          LinkDocumentation("Input elements should have autocomplete "
+                            "attributes (suggested: \"" +
+                            autocomplete_suggestions[i] + "\"):"),
           ConsoleLogger::kVerbose, inputs[i]);
   }
 }
