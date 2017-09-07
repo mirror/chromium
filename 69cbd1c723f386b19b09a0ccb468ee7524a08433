@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffbb7830_a058edf7",
+        "filename": "ios/chrome/browser/reading_list/reading_list_download_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-07T15:28:41Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think you need \"this-\u003e\" here, \"OfflineRoot()\" alone should work",
+      "range": {
+        "startLine": 169,
+        "startChar": 34,
+        "endLine": 169,
+        "endChar": 53
+      },
+      "revId": "69cbd1c723f386b19b09a0ccb468ee7524a08433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
