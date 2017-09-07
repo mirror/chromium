@@ -16,6 +16,24 @@
       "revId": "002e582f382d583bf2b9f4cd5e273684c77b49f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3e3108_f8146717",
+        "filename": "tools/perf/perf_device_trigger_unittest.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-07T22:24:23Z",
+      "side": 1,
+      "message": "The json_temp on line 31 here is not the same as the json_temp used by the actual code. That\u0027s a different name that I don\u0027t know in here, and isn\u0027t exposed (and I couldn\u0027t think of a good way to expose it)",
+      "parentUuid": "5fac2466_088aa837",
+      "revId": "002e582f382d583bf2b9f4cd5e273684c77b49f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
