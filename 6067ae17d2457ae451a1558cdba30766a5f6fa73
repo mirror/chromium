@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a74da090_ad5025c3",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-07T21:06:27Z",
+      "side": 1,
+      "message": "I think we can remove this check here, now that both callers also check it.",
+      "revId": "6067ae17d2457ae451a1558cdba30766a5f6fa73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc945c1_81c1ed75",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3581,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-07T21:06:27Z",
+      "side": 1,
+      "message": "Is there a reason this is needed?  It seems desirable to leave this check as-is, since otherwise this would be a bug that would lead to crashes (see https://crbug.com/751916 or https://crbug.com/751920).  Since we should never add processes with empty site URLs into the site-process trackers, the rest of the logic should ensure that we don\u0027t place an empty site URL into a process with a different StoragePartition.",
+      "range": {
+        "startLine": 3581,
+        "startChar": 8,
+        "endLine": 3581,
+        "endChar": 31
+      },
+      "revId": "6067ae17d2457ae451a1558cdba30766a5f6fa73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
