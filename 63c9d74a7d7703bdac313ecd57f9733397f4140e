@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57632f98_e2d670a4",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-07T17:53:50Z",
+      "side": 1,
+      "message": "Use |surface_id| here.",
+      "range": {
+        "startLine": 571,
+        "startChar": 33,
+        "endLine": 571,
+        "endChar": 54
+      },
+      "revId": "63c9d74a7d7703bdac313ecd57f9733397f4140e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51741a9_b59494b7",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-07T17:53:50Z",
+      "side": 1,
+      "message": "!label.empty() maybe?",
+      "range": {
+        "startLine": 572,
+        "startChar": 8,
+        "endLine": 572,
+        "endChar": 26
+      },
+      "revId": "63c9d74a7d7703bdac313ecd57f9733397f4140e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
