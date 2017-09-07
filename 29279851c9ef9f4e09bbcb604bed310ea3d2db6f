@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "04ea043e_689ed8e6",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-07T17:53:01Z",
+      "side": 1,
+      "message": "Ack.\n\nI\u0027m not sure that\u0027s the interface we should be trying to match here (vs RunShellCommand).",
+      "parentUuid": "c2ee0e35_7eb09382",
+      "revId": "29279851c9ef9f4e09bbcb604bed310ea3d2db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3df1210_1e8e044a",
         "filename": "build/android/pylib/symbols/deobfuscator.py",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "They all share a DeobfuscatorPool, and the pool has a lifetime associated with the environment rather than tests. I suspect Close() is being called from environment.__exit__ when some test shard has timed out.",
       "parentUuid": "a3df1210_1e8e044a",
+      "revId": "29279851c9ef9f4e09bbcb604bed310ea3d2db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0389c12e_7c9d98a5",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-07T17:53:01Z",
+      "side": 1,
+      "message": "oh right. Missed that on the reread.\n\nGiven the traces on that bug, though, I\u0027m not yet convinced that that\u0027s what\u0027s going on. Looking more.",
+      "parentUuid": "d14d9dc6_e95d8087",
       "revId": "29279851c9ef9f4e09bbcb604bed310ea3d2db6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
