@@ -46,6 +46,30 @@
       "revId": "1fddabdf8b6e832a79722510edf486d1549803c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b11516b5_8fc743da",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-07T01:05:41Z",
+      "side": 0,
+      "message": "That makes sense, but the benefit of having the sidebar be separate from the dialog is that it makes it easier to implement what history does where the sidebar is visible when the window is wide and in the dialog when the window is narrow.\n\nIMO: the drawer should be opened and the side bar told what to highlight.\n\nLet\u0027s have a quick chat to work this out, might be faster than going back and forth on code review.",
+      "parentUuid": "9c64550f_5b0beb6e",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 71
+      },
+      "revId": "1fddabdf8b6e832a79722510edf486d1549803c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

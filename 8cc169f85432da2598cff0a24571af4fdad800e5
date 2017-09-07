@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "991dea64_689d1c27",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-07T01:05:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "78c740e8_f3631250",
+      "range": {
+        "startLine": 166,
+        "startChar": 10,
+        "endLine": 166,
+        "endChar": 29
+      },
+      "revId": "8cc169f85432da2598cff0a24571af4fdad800e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "457b40f2_0f547bff",
         "filename": "chrome/browser/resources/md_extensions/sidebar.js",
         "patchSetId": 10
@@ -93,6 +117,30 @@
       "revId": "8cc169f85432da2598cff0a24571af4fdad800e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf4d8b7_13730312",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-07T01:05:41Z",
+      "side": 1,
+      "message": "Makes sense. Fine keeping as is.",
+      "parentUuid": "faf1b79e_2c4cf4b4",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 7
+      },
+      "revId": "8cc169f85432da2598cff0a24571af4fdad800e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
