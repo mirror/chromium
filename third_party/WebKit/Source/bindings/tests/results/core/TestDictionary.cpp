@@ -281,6 +281,26 @@ void TestDictionary::setRuntimeMember(bool value) {
   runtime_member_ = value;
   has_runtime_member_ = true;
 }
+bool TestDictionary::hasSetLong() const {
+  return has_set_long_;
+}
+int32_t TestDictionary::setLong() const {
+  DCHECK(has_set_long_);
+  return set_long_;
+}
+void TestDictionary::setSetLong(int32_t value) {
+  set_long_ = value;
+  has_set_long_ = true;
+}
+bool TestDictionary::hasSetString() const {
+  return !set_string_.IsNull();
+}
+const String& TestDictionary::setString() const {
+  return set_string_;
+}
+void TestDictionary::setSetString(const String& value) {
+  set_string_ = value;
+}
 bool TestDictionary::hasStringMember() const {
   return !string_member_.IsNull();
 }

@@ -154,12 +154,19 @@ def cpp_type(idl_type, extended_attributes=None, raw_type=False, used_as_rvalue_
             bool, True if the C++ type is used as an element of a container.
             Containers can be an array, a sequence, a dictionary or a record.
     """
+
+    type_extended_attributes = idl_type.extended_attributes or {}
+
     def string_mode():
         if idl_type.is_nullable:
             return 'kTreatNullAndUndefinedAsNullString'
         if extended_attributes.get('TreatNullAs') == 'EmptyString':
             return 'kTreatNullAsEmptyString'
         if extended_attributes.get('TreatNullAs') == 'NullString':
+            return 'kTreatNullAsNullString'
+        if type_extended_attributes.get('TreatNullAs') == 'EmptyString':
+            return 'kTreatNullAsEmptyString'
+        if type_extended_attributes.get('TreatNullAs') == 'NullString':
             return 'kTreatNullAsNullString'
         return ''
 
@@ -591,6 +598,8 @@ def v8_value_to_cpp_value(idl_type, extended_attributes, v8_value, variable_name
     if idl_type.name == 'void':
         return ''
 
+    type_extended_attributes = idl_type.extended_attributes or {}
+
     # Simple types
     idl_type = idl_type.preprocessed_type
     base_idl_type = idl_type.as_union_type.name if idl_type.is_union_type else idl_type.base_type
@@ -605,9 +614,15 @@ def v8_value_to_cpp_value(idl_type, extended_attributes, v8_value, variable_name
 
     if idl_type.is_integer_type:
         configuration = 'kNormalConversion'
+        # TODO(lisabelle): we want to remove these 4 lines from here when we fully support annotated types.
         if 'EnforceRange' in extended_attributes:
             configuration = 'kEnforceRange'
         elif 'Clamp' in extended_attributes:
+            configuration = 'kClamp'
+        # TODO(lisabelle): we want to remove these 4 lines until here when we fully support annotated types.
+        if 'EnforceRange' in type_extended_attributes:
+            configuration = 'kEnforceRange'
+        elif 'Clamp' in type_extended_attributes:
             configuration = 'kClamp'
         arguments = ', '.join([v8_value, 'exceptionState', configuration])
     elif base_idl_type == 'SerializedScriptValue':
@@ -742,6 +757,8 @@ def preprocess_idl_type(idl_type):
         return IdlType('DOMString')
     if idl_type.base_type in ['any', 'object'] or idl_type.is_custom_callback_function:
         return IdlType('ScriptValue')
+    # if idl_type.extended_attributes:
+    #     return IdlType()
     if idl_type.is_callback_function:
         return idl_type
     return idl_type

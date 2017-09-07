@@ -139,6 +139,14 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   bool runtimeMember() const;
   void setRuntimeMember(bool);
 
+  bool hasSetLong() const;
+  int32_t setLong() const;
+  void setSetLong(int32_t);
+
+  bool hasSetString() const;
+  const String& setString() const;
+  void setSetString(const String&);
+
   bool hasStringMember() const;
   const String& stringMember() const;
   void setStringMember(const String&);
@@ -219,6 +227,7 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   bool has_record_member_ = false;
   bool has_restricted_double_member_ = false;
   bool has_runtime_member_ = false;
+  bool has_set_long_ = false;
   bool has_string_sequence_member_ = false;
   bool has_test_interface_garbage_collected_sequence_member_ = false;
   bool has_test_interface_sequence_member_ = false;
@@ -249,6 +258,8 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   Vector<std::pair<String, int8_t>> record_member_;
   double restricted_double_member_;
   bool runtime_member_;
+  int32_t set_long_;
+  String set_string_;
   String string_member_;
   String string_or_null_member_;
   Vector<String> string_sequence_member_;
