@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cfb8704_8b9e8b8f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-07T21:07:31Z",
+      "side": 1,
+      "message": "Could you expand this a little so that people less familiar with memlog hav a better idea what\u0027s going on?\n\ne.g. Create a test that:\n1) Starts the memlog process\n2) Makes a bunch of allocations\n3) Flush the allocations [with more allocations]\n4) Performs a heap dump.\n4) Checks that the allocations from (2) made it into (4).",
+      "revId": "8953568898b8303f4257af80c0f191d4634c7249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0acd2534_d0222bb1",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-07T21:07:31Z",
+      "side": 1,
+      "message": "Should we check that sizes_list.size() \u003d\u003d counts_list.size() ?",
+      "revId": "8953568898b8303f4257af80c0f191d4634c7249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c638c097_f00c3ff1",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-07T21:07:31Z",
+      "side": 1,
+      "message": "hm. I\u0027m not sure why you expect these lines to be true. In general we expect some of the flush allocs to still be in the pipes ,right?",
+      "revId": "8953568898b8303f4257af80c0f191d4634c7249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e035bbd7_cfbd3af2",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-07T21:07:31Z",
+      "side": 1,
+      "message": "this is insufficient count to flush, but I think you already know that and are planning on fixing in a followup CL.",
+      "revId": "8953568898b8303f4257af80c0f191d4634c7249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9871fa5_9992c272",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-07T21:07:31Z",
+      "side": 1,
+      "message": "c/vivi/vive",
+      "revId": "8953568898b8303f4257af80c0f191d4634c7249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f1e69c0_fd142569",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-07T21:07:31Z",
+      "side": 1,
+      "message": "TIL",
+      "revId": "8953568898b8303f4257af80c0f191d4634c7249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
