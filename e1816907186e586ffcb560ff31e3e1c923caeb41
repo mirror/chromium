@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af1853c8_85a56834",
+        "filename": "components/security_interstitials_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-09-07T21:07:58Z",
+      "side": 1,
+      "message": "Good find!",
+      "revId": "e1816907186e586ffcb560ff31e3e1c923caeb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
