@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f76efc43_68bd1703",
+        "filename": "build/config/ios/ios_sdk.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-07T15:54:19Z",
+      "side": 1,
+      "message": "Historically we have several developers working on Xcode betas before we move the rest of the team.  We will have a state where Xcode 9 is required and Xcode 10 works (and is being developed with).  The second assert will prevent this.  What we change this to when that happens?",
+      "revId": "41cfda1031bddb493f65298ba3d95d2e892beef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
