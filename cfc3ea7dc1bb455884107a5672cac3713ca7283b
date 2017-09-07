@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "325ca6d7_9ef22392",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_special_subframe_navigations_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-07T18:46:27Z",
+      "side": 1,
+      "message": "It might be cleaner to expose this as a raw string:\nstd::string script \u003d R\"(\n...\n)\"\n\n...\nbase::StringPrintf(script, ...)",
+      "revId": "cfc3ea7dc1bb455884107a5672cac3713ca7283b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b49495_88e0402e",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_special_subframe_navigations_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-07T18:46:27Z",
+      "side": 1,
+      "message": "nit: just use single quotes instead of escaping double quotes.",
+      "revId": "cfc3ea7dc1bb455884107a5672cac3713ca7283b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
