@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81ab1d71_423061aa",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-07T16:24:15Z",
+      "side": 1,
+      "message": "be consistent with the use (or lack) of base::Passed in the surrounding functions.",
+      "range": {
+        "startLine": 74,
+        "startChar": 23,
+        "endLine": 74,
+        "endChar": 36
+      },
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d0525e_4f638270",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-07T16:24:15Z",
+      "side": 1,
+      "message": "nit: braces can be elided",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 13
+      },
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6bc19a_7a5756fa",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-07T16:24:15Z",
+      "side": 1,
+      "message": "can this be\n\n  enum class HalPixelFormatExtension : uint32_t\n\n?",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 40
+      },
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "961a78df_f56e41a8",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-07T16:24:15Z",
+      "side": 1,
+      "message": "this can be\n\n  enum class State\n\nyou might need to add some ostream\u0026 operator\u003c\u003c implementation so you can use it in DCHECK_EQ() and other similar macros.",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 24
+      },
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcdc6b42_3dfbc574",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-07T16:24:15Z",
+      "side": 1,
+      "message": "Can you enumerate the cases in which asynchronous errors occur?",
+      "range": {
+        "startLine": 112,
+        "startChar": 20,
+        "endLine": 112,
+        "endChar": 38
+      },
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a79995c_ce908920",
+        "filename": "components/arc/video_accelerator/video_decode_accelerator_struct_traits.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-07T16:24:15Z",
+      "side": 1,
+      "message": "Should you return false if any of the data is invalid? You do perform some DCHECKs on the other way.",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 24
+      },
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
