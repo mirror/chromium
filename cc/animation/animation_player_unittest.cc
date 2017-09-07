@@ -39,7 +39,7 @@ TEST_F(AnimationPlayerTest, AttachDetachLayerIfTimelineAttached) {
 
   host_->PushPropertiesTo(host_impl_);
 
-  EXPECT_FALSE(GetImplPlayerForLayerId(element_id_));
+  EXPECT_FALSE(GetImplTickerForLayerId(element_id_));
 
   GetImplTimelineAndPlayerByID();
 
@@ -49,27 +49,28 @@ TEST_F(AnimationPlayerTest, AttachDetachLayerIfTimelineAttached) {
   EXPECT_FALSE(timeline_->needs_push_properties());
 
   player_->AttachElement(element_id_);
-  EXPECT_EQ(player_, GetPlayerForElementId(element_id_));
+  EXPECT_EQ(player_->animation_ticker(), GetTickerForElementId(element_id_));
   EXPECT_TRUE(player_->element_animations());
   EXPECT_EQ(player_->element_id(), element_id_);
   EXPECT_TRUE(CheckPlayerTimelineNeedsPushProperties(true));
 
   host_->PushPropertiesTo(host_impl_);
 
-  EXPECT_EQ(player_impl_, GetImplPlayerForLayerId(element_id_));
+  EXPECT_EQ(player_impl_->animation_ticker(),
+            GetImplTickerForLayerId(element_id_));
   EXPECT_TRUE(player_impl_->element_animations());
   EXPECT_EQ(player_impl_->element_id(), element_id_);
   EXPECT_TRUE(CheckPlayerTimelineNeedsPushProperties(false));
 
   player_->DetachElement();
-  EXPECT_FALSE(GetPlayerForElementId(element_id_));
+  EXPECT_FALSE(GetTickerForElementId(element_id_));
   EXPECT_FALSE(player_->element_animations());
   EXPECT_FALSE(player_->element_id());
   EXPECT_TRUE(CheckPlayerTimelineNeedsPushProperties(true));
 
   host_->PushPropertiesTo(host_impl_);
 
-  EXPECT_FALSE(GetImplPlayerForLayerId(element_id_));
+  EXPECT_FALSE(GetImplTickerForLayerId(element_id_));
   EXPECT_FALSE(player_impl_->element_animations());
   EXPECT_FALSE(player_impl_->element_id());
   EXPECT_TRUE(CheckPlayerTimelineNeedsPushProperties(false));
@@ -94,14 +95,14 @@ TEST_F(AnimationPlayerTest, AttachDetachTimelineIfLayerAttached) {
 
   player_->AttachElement(element_id_);
   EXPECT_FALSE(player_->animation_timeline());
-  EXPECT_FALSE(GetPlayerForElementId(element_id_));
+  EXPECT_FALSE(GetTickerForElementId(element_id_));
   EXPECT_FALSE(player_->element_animations());
   EXPECT_EQ(player_->element_id(), element_id_);
   EXPECT_FALSE(player_->needs_push_properties());
 
   timeline_->AttachPlayer(player_);
   EXPECT_EQ(timeline_, player_->animation_timeline());
-  EXPECT_EQ(player_, GetPlayerForElementId(element_id_));
+  EXPECT_EQ(player_->animation_ticker(), GetTickerForElementId(element_id_));
   EXPECT_TRUE(player_->element_animations());
   EXPECT_EQ(player_->element_id(), element_id_);
   EXPECT_TRUE(player_->needs_push_properties());
@@ -109,7 +110,7 @@ TEST_F(AnimationPlayerTest, AttachDetachTimelineIfLayerAttached) {
   // Removing player from timeline detaches layer.
   timeline_->DetachPlayer(player_);
   EXPECT_FALSE(player_->animation_timeline());
-  EXPECT_FALSE(GetPlayerForElementId(element_id_));
+  EXPECT_FALSE(GetTickerForElementId(element_id_));
   EXPECT_FALSE(player_->element_animations());
   EXPECT_FALSE(player_->element_id());
   EXPECT_TRUE(player_->needs_push_properties());
@@ -386,11 +387,12 @@ TEST_F(AnimationPlayerTest, SwitchToLayer) {
 
   GetImplTimelineAndPlayerByID();
 
-  EXPECT_EQ(player_, GetPlayerForElementId(element_id_));
+  EXPECT_EQ(player_->animation_ticker(), GetTickerForElementId(element_id_));
   EXPECT_TRUE(player_->element_animations());
   EXPECT_EQ(player_->element_id(), element_id_);
 
-  EXPECT_EQ(player_impl_, GetImplPlayerForLayerId(element_id_));
+  EXPECT_EQ(player_impl_->animation_ticker(),
+            GetImplTickerForLayerId(element_id_));
   EXPECT_TRUE(player_impl_->element_animations());
   EXPECT_EQ(player_impl_->element_id(), element_id_);
   EXPECT_TRUE(CheckPlayerTimelineNeedsPushProperties(false));
@@ -399,14 +401,15 @@ TEST_F(AnimationPlayerTest, SwitchToLayer) {
   player_->DetachElement();
   player_->AttachElement(new_element_id);
 
-  EXPECT_EQ(player_, GetPlayerForElementId(new_element_id));
+  EXPECT_EQ(player_->animation_ticker(), GetTickerForElementId(new_element_id));
   EXPECT_TRUE(player_->element_animations());
   EXPECT_EQ(player_->element_id(), new_element_id);
   EXPECT_TRUE(CheckPlayerTimelineNeedsPushProperties(true));
 
   host_->PushPropertiesTo(host_impl_);
 
-  EXPECT_EQ(player_impl_, GetImplPlayerForLayerId(new_element_id));
+  EXPECT_EQ(player_impl_->animation_ticker(),
+            GetImplTickerForLayerId(new_element_id));
   EXPECT_TRUE(player_impl_->element_animations());
   EXPECT_EQ(player_impl_->element_id(), new_element_id);
 }
