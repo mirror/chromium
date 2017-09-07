@@ -1670,6 +1670,7 @@ void RenderWidget::OnImeCommitText(
     const std::vector<WebCompositionUnderline>& underlines,
     const gfx::Range& replacement_range,
     int relative_cursor_pos) {
+  LOG(INFO) << "OnImeCommitText " << text;
   if (!ShouldHandleImeEvents())
     return;
 

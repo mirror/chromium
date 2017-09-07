@@ -13,12 +13,19 @@
 
 @class AutofillPopupViewCocoa;
 @class TabContentsController;
+class WebTextfieldTouchBarBridgeObserver;
+
+namespace content {
+class WebContents;
+}
 
 // Provides a touch bar for the textfields in the WebContents. This class
 // implements the NSTouchBarDelegate and handles the items in the touch bar.
 @interface WebTextfieldTouchBarController : NSObject<NSTouchBarDelegate> {
   TabContentsController* owner_;       // weak.
   AutofillPopupViewCocoa* popupView_;  // weak.
+  std::unique_ptr<WebTextfieldTouchBarBridgeObserver> observer_;
+  content::WebContents* contents_;
 }
 
 // Designated initializer.
@@ -26,6 +33,8 @@
 
 // Display the touch bar that is provided by |popupView|.
 - (void)showCreditCardAutofillForPopupView:(AutofillPopupViewCocoa*)popupView;
+
+- (void)changeWebContents:(content::WebContents*)contents;
 
 // Creates and returns a touch bar.
 - (NSTouchBar*)makeTouchBar;

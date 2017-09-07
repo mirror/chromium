@@ -3322,6 +3322,7 @@ extern NSString *NSTextInputReplacementRangeAttributeName;
   // |markedRange_| will get set on a callback from ImeSetComposition().
   markedTextSelectedRange_ = newSelRange;
   markedText_ = base::SysNSStringToUTF16(im_text);
+  LOG(INFO) << "Marked Text: " << markedText_;
   hasMarkedText_ = (length > 0);
 
   underlines_.clear();

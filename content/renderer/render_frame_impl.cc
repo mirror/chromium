@@ -4116,12 +4116,28 @@ void RenderFrameImpl::AbortClientNavigation() {
 }
 
 void RenderFrameImpl::DidChangeSelection(bool is_empty_selection) {
+  LOG(INFO) << "DidChangeSelection";
+
   if (!GetRenderWidget()->input_handler().handling_input_event() &&
       !handling_select_range_)
     return;
 
   if (is_empty_selection)
     selection_text_.clear();
+
+
+  blink::WebInputMethodController* inputMethodController =
+        frame_->GetInputMethodController();
+  blink::WebTextInputInfo textInfo = inputMethodController->TextInputInfo();
+
+  if (inputMethodController->TextInputType() == blink::kWebTextInputTypeText) {
+    LOG(INFO) << textInfo.value.Utf8();
+
+
+    // Get suggestion word based on the caret location.
+
+
+  }
 
   // UpdateTextInputState should be called before SyncSelectionIfRequired.
   // UpdateTextInputState may send TextInputStateChanged to notify the focus

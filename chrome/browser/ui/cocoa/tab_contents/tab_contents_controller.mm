@@ -211,10 +211,10 @@ class FullscreenObserver : public WebContentsObserver {
 - (id)initWithContents:(WebContents*)contents isPopup:(BOOL)popup {
   if ((self = [super initWithNibName:nil bundle:nil])) {
     fullscreenObserver_.reset(new FullscreenObserver(self));
-    [self changeWebContents:contents];
-    isPopup_ = popup;
     touchBarController_.reset([[WebTextfieldTouchBarController alloc]
         initWithTabContentsController:self]);
+    [self changeWebContents:contents];
+    isPopup_ = popup;
   }
   return self;
 }
@@ -293,6 +293,7 @@ class FullscreenObserver : public WebContentsObserver {
   fullscreenObserver_->Observe(contents_);
   isEmbeddingFullscreenWidget_ =
       contents_ && contents_->GetFullscreenRenderWidgetHostView();
+  [touchBarController_ changeWebContents:newContents];
 }
 
 // Returns YES if the tab represented by this controller is the front-most.
