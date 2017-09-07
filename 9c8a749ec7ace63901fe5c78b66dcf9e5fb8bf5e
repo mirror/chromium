@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56463cb6_35457cb7",
+        "filename": "media/formats/mp4/bitstream_converter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-07T23:50:42Z",
+      "side": 1,
+      "message": "Probably worth a note that some converters allow validation to be disabled and that in this case this function will return true.",
+      "revId": "9c8a749ec7ace63901fe5c78b66dcf9e5fb8bf5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
