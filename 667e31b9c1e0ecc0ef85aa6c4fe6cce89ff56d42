@@ -22,6 +22,30 @@
       "revId": "667e31b9c1e0ecc0ef85aa6c4fe6cce89ff56d42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc972ac_ed013b68",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-07T14:25:06Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "93414f51_e0512d6c",
+      "range": {
+        "startLine": 364,
+        "startChar": 76,
+        "endLine": 364,
+        "endChar": 107
+      },
+      "revId": "667e31b9c1e0ecc0ef85aa6c4fe6cce89ff56d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
