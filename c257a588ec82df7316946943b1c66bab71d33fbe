@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "108b24ea_b9cc5c30",
+        "filename": "base/metrics/histogram_functions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-07T23:40:19Z",
+      "side": 1,
+      "message": "You\u0027re right that we should be consistent, but I actually really dislike the phrasing on our best practices doc...\n\n\u003c_\u003c\n\u003e_\u003e\n\u003c_\u003c\n\n\nMaybe this is a good idea to update the phrasing there too? \u003d)  Here\u0027s a stab at coming up with something I\u0027m happier with:\n\n  // These values are persisted to logs, so it\u0027s important for their semantics\n  // to remain backward-compatible. It\u0027s safe to append additional enum values,\n  // and it\u0027s safe to deprecate existing values. However, it\u0027s not safe to\n  // change the meaning of an existing value. In particular, never insert a new\n  // enum value into the middle of the list (which would cause subsequent enum\n  // values to be renumbered), nor reuse a previously deprecated value.\n\nOkay, that\u0027s really really long.  Let me try to be more succinct:\n\n  // These values are persisted to logs; so once a value has been used, its\n  // meaning must never change. It\u0027s safe to add new values or to deprecate\n  // existing ones; but never renumber existing entries, nor reuse a\n  // previously-used value (even if it was deprecated).\n\nThat\u0027s still twice the length of the existing text, but I think it\u0027s much much clearer.  Perhaps you can help me abbreviate it further, without sacrificing the clarity?",
+      "parentUuid": "3ff1f5c4_08244420",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 7
+      },
+      "revId": "c257a588ec82df7316946943b1c66bab71d33fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d8f9815_1b370b0a",
         "filename": "base/metrics/histogram_macros.h",
         "patchSetId": 2
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "56b5aa41_c659d579",
+        "filename": "base/metrics/histogram_macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-07T23:40:19Z",
+      "side": 1,
+      "message": "Good call!  Done.",
+      "parentUuid": "379452c1_e00ff8a8",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 22
+      },
+      "revId": "c257a588ec82df7316946943b1c66bab71d33fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c424c857_e663fe09",
         "filename": "base/metrics/histogram_macros.h",
         "patchSetId": 2
@@ -76,6 +124,30 @@
       "writtenOn": "2017-09-07T22:50:55Z",
       "side": 1,
       "message": "Saying this is probably not necessary, as we\u0027re emitting enum class values and the compiler enforces it.",
+      "range": {
+        "startLine": 51,
+        "startChar": 22,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "c257a588ec82df7316946943b1c66bab71d33fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b613f65_57a4cd36",
+        "filename": "base/metrics/histogram_macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-07T23:40:19Z",
+      "side": 1,
+      "message": "I think it\u0027s still useful to document that the max should be exclusive rather than inclusive.  I\u0027ll leave this in place unless you feel strongly about remove it.",
+      "parentUuid": "c424c857_e663fe09",
       "range": {
         "startLine": 51,
         "startChar": 22,
