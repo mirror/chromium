@@ -14,6 +14,9 @@ class SyncMessageFilter;
 }
 
 namespace content {
+namespace mojom {
+class WebDatabaseHost;
+}
 
 // A class of utility functions used by RendererBlinkPlatformImpl to handle
 // database file accesses.
@@ -22,7 +25,7 @@ class DatabaseUtil {
   static blink::Platform::FileHandle DatabaseOpenFile(
       const blink::WebString& vfs_file_name,
       int desired_flags,
-      IPC::SyncMessageFilter* sync_message_filter);
+      content::mojom::WebDatabaseHost& sync_message_filter);
   static int DatabaseDeleteFile(
       const blink::WebString& vfs_file_name,
       bool sync_dir,

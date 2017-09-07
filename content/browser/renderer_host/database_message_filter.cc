@@ -97,7 +97,7 @@ base::TaskRunner* DatabaseMessageFilter::OverrideTaskRunnerForMessage(
 bool DatabaseMessageFilter::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(DatabaseMessageFilter, message)
-    IPC_MESSAGE_HANDLER(DatabaseHostMsg_OpenFile, OnDatabaseOpenFile)
+    //    IPC_MESSAGE_HANDLER(DatabaseHostMsg_OpenFile, OnDatabaseOpenFile)
     IPC_MESSAGE_HANDLER_DELAY_REPLY(DatabaseHostMsg_DeleteFile,
                                     OnDatabaseDeleteFile)
     IPC_MESSAGE_HANDLER(DatabaseHostMsg_GetFileAttributes,

@@ -4,6 +4,7 @@
 
 module content.mojom;
 
+import "mojo/common/file.mojom";
 import "mojo/common/string16.mojom";
 import "url/mojo/origin.mojom";
 
@@ -16,4 +17,14 @@ interface WebDatabase {
 
   // Asks the renderer process to close a database immediately.
   CloseImmediately(url.mojom.Origin origin, mojo.common.mojom.String16 name);
+};
+
+interface WebDatabaseHost {
+  // Asks the browser process to open a DB file with the given name.
+  [Sync]
+  OpenFile(mojo.common.mojom.String16 vfs_file_name,
+           int32 desired_flags) => (mojo.common.mojom.File? file_handle);
+
+  // Asks the browser process to delete a DB file
+
 };

@@ -115,6 +115,8 @@
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "url/gurl.h"
 
+#include "base/task_scheduler/post_task.h"
+
 #if defined(OS_MACOSX)
 #include "content/common/mac/font_descriptor.h"
 #include "content/common/mac/font_loader.h"
@@ -300,6 +302,9 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
       new BlinkInterfaceProviderImpl(connector_.get()));
   top_level_blame_context_.Initialize();
   renderer_scheduler_->SetTopLevelBlameContext(&top_level_blame_context_);
+
+  GetInterfaceProvider()->GetInterface(
+      mojo::MakeRequest(&web_database_host_info_));
 }
 
 RendererBlinkPlatformImpl::~RendererBlinkPlatformImpl() {
@@ -649,8 +654,8 @@ void RendererBlinkPlatformImpl::SandboxSupport::GetWebFontRenderStyleForStrike(
 Platform::FileHandle RendererBlinkPlatformImpl::DatabaseOpenFile(
     const WebString& vfs_file_name,
     int desired_flags) {
-  return DatabaseUtil::DatabaseOpenFile(
-      vfs_file_name, desired_flags, sync_message_filter_.get());
+  return DatabaseUtil::DatabaseOpenFile(vfs_file_name, desired_flags,
+                                        GetWebDatabaseHost());
 }
 
 int RendererBlinkPlatformImpl::DatabaseDeleteFile(
@@ -1337,6 +1342,17 @@ void RendererBlinkPlatformImpl::RequestPurgeMemory() {
   // when kMemoryCoordinatorV0 is enabled.
   // Use ChildMemoryCoordinator when memory coordinator is always enabled.
   base::MemoryCoordinatorClientRegistry::GetInstance()->PurgeMemory();
+}
+
+content::mojom::WebDatabaseHost&
+RendererBlinkPlatformImpl::GetWebDatabaseHost() {
+  if (!web_database_host_) {
+    web_database_host_ = content::mojom::ThreadSafeWebDatabaseHostPtr::Create(
+        std::move(web_database_host_info_),
+        base::CreateSequencedTaskRunnerWithTraits(
+            {base::WithBaseSyncPrimitives()}));
+  }
+  return **web_database_host_;
 }
 
 }  // namespace content

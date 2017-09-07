@@ -5,6 +5,7 @@
 #include "content/child/database_util.h"
 
 #include "content/common/database_messages.h"
+#include "content/common/web_database.mojom.h"
 #include "ipc/ipc_sync_message_filter.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -19,14 +20,13 @@ namespace content {
 Platform::FileHandle DatabaseUtil::DatabaseOpenFile(
     const WebString& vfs_file_name,
     int desired_flags,
-    IPC::SyncMessageFilter* sync_message_filter) {
-  IPC::PlatformFileForTransit file_handle =
-      IPC::InvalidPlatformFileForTransit();
+    content::mojom::WebDatabaseHost& web_database_host) {
+  base::File file;
+  if (web_database_host.OpenFile(vfs_file_name.Utf16(), desired_flags, &file)) {
+    return file.TakePlatformFile();
+  }
 
-  sync_message_filter->Send(new DatabaseHostMsg_OpenFile(
-      vfs_file_name.Utf16(), desired_flags, &file_handle));
-
-  return IPC::PlatformFileForTransitToPlatformFile(file_handle);
+  return base::kInvalidPlatformFile;
 }
 
 int DatabaseUtil::DatabaseDeleteFile(

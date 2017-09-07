@@ -88,6 +88,7 @@ class SiteInstance;
 class SiteInstanceImpl;
 class StoragePartition;
 class StoragePartitionImpl;
+class WebDatabaseHostImpl;
 
 typedef base::Thread* (*RendererMainThreadFactoryFunction)(
     const InProcessChildThreadParams& params);
@@ -750,6 +751,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
   std::unique_ptr<GpuClient, BrowserThread::DeleteOnIOThread> gpu_client_;
   std::unique_ptr<PushMessagingManager, BrowserThread::DeleteOnIOThread>
       push_messaging_manager_;
+  std::unique_ptr<WebDatabaseHostImpl, BrowserThread::DeleteOnIOThread>
+      web_database_host_;
 
   std::unique_ptr<OffscreenCanvasProviderImpl> offscreen_canvas_provider_;
 
