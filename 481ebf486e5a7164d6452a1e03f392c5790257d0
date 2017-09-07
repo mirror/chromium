@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa617df4_37f7f50b",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-07T01:19:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b41cb803_65470241",
+      "revId": "481ebf486e5a7164d6452a1e03f392c5790257d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7466c340_45af377a",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0867ccfa_22996996",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-07T01:19:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7466c340_45af377a",
+      "revId": "481ebf486e5a7164d6452a1e03f392c5790257d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d0ea10b_810e7654",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-07T01:09:37Z",
       "side": 1,
       "message": "For a separate change:  C++ enumerators aren\u0027t my forte, but how easy would it be to support them in UI elements, so the recursion is hidden, like:\n\nfor (const auto\u0026 element: root-\u003eTree()) {\n   EXPECT(...);\n}\n\nThat\u0027d be snazzy.",
+      "revId": "481ebf486e5a7164d6452a1e03f392c5790257d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47314da9_8502c4d7",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-07T01:19:37Z",
+      "side": 1,
+      "message": "ooh, yep, that\u0027d be nice. I\u0027ve got an idea for this.",
+      "parentUuid": "7d0ea10b_810e7654",
       "revId": "481ebf486e5a7164d6452a1e03f392c5790257d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
