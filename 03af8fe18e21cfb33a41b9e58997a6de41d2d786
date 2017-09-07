@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4225720_f543e25d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-07T18:47:33Z",
+      "side": 1,
+      "message": "How about:\nRemove unused functions in WizardController",
+      "revId": "03af8fe18e21cfb33a41b9e58997a6de41d2d786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
