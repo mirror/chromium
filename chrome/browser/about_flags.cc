@@ -3446,6 +3446,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kModuleScriptsDynamicImportDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kModuleScriptsDynamicImport)},
 
+#if defined(OS_ANDROID) || defined(OS_LINUX)
+    {"enable-parallel-downloading", flag_descriptions::kParallelDownloadingName,
+     flag_descriptions::kParallelDownloadingDescription, kOsLinux | kOsAndroid,
+     FEATURE_VALUE_TYPE(features::kParallelDownloading)},
+#endif  // OS_ANDROID || OS_LINUX
+
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
     // enums.xml and don't forget to run AboutFlagsHistogramTest unit test.
