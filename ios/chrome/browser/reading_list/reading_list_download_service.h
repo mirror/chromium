@@ -70,9 +70,7 @@ class ReadingListDownloadService
   // not corresponding to a processed ReadingListEntry.
   // Schedules unprocessed entries for distillation.
   void SyncWithModel();
-  // Scans |OfflineRoot()| directory and deletes all subdirectories not listed
-  // in |directories_to_keep|.
-  // Must be called on File thread.
+
   void CleanUpFiles(const std::set<std::string>& directories_to_keep);
   // Schedules all entries in |unprocessed_entries| for distillation.
   void DownloadUnprocessedEntries(const std::set<GURL>& unprocessed_entries);
