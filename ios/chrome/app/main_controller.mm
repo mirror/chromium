@@ -926,6 +926,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   // TODO(crbug.com/648940): Move this logic from BVC into
   // BrowsingDataRemovalController thereby eliminating the need for
   // BrowsingDataRemovalControllerDelegate. .
+  // This will move to browsing_data_removal_controller
   if (_mainBrowserState == browserState) {
     [self.mainBVC removeExternalFilesImmediately:YES
                                completionHandler:completionHandler];

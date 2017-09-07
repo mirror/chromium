@@ -6,11 +6,16 @@
 
 #include "base/logging.h"
 #import "base/mac/bind_objc_block.h"
+#include "base/strings/sys_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
+#include "components/bookmarks/browser/bookmark_model.h"
 #include "components/sessions/core/tab_restore_service.h"
+#include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#include "ios/chrome/browser/chrome_url_util.h"
 #include "ios/chrome/browser/sessions/ios_chrome_tab_restore_service_factory.h"
-#import "ios/chrome/browser/ui/browser_view_controller.h"
+#import "ios/chrome/browser/tabs/tab_model.h"
+#import "ios/chrome/browser/tabs/tab_model_list.h"
 #import "ios/chrome/browser/ui/external_file_controller.h"
 #include "ios/web/public/web_thread.h"
 
@@ -18,8 +23,12 @@
 #error "This file requires ARC support."
 #endif
 
-ExternalFileRemover::ExternalFileRemover(BrowserViewController* bvc)
-    : tabRestoreService_(NULL), bvc_(bvc), weak_ptr_factory_(this) {}
+ExternalFileRemover::ExternalFileRemover(ios::ChromeBrowserState* browserState)
+    : bookmarkModel_(
+          ios::BookmarkModelFactory::GetForBrowserState(browserState)),
+      tabRestoreService_(NULL),
+      browserState_(browserState),
+      weak_ptr_factory_(this) {}
 
 ExternalFileRemover::~ExternalFileRemover() {
   if (tabRestoreService_)
@@ -46,7 +55,7 @@ void ExternalFileRemover::Remove(bool all_files,
   // the UI thread.
   DCHECK_CURRENTLY_ON(web::WebThread::UI);
   tabRestoreService_ =
-      IOSChromeTabRestoreServiceFactory::GetForBrowserState(bvc_.browserState);
+      IOSChromeTabRestoreServiceFactory::GetForBrowserState(browserState_);
   DCHECK(tabRestoreService_);
   if (!tabRestoreService_->IsLoaded()) {
     // TODO(crbug.com/430902): In the case of the presence of tab restore
@@ -64,7 +73,30 @@ void ExternalFileRemover::Remove(bool all_files,
 
 void ExternalFileRemover::RemoveFiles(bool all_files,
                                       const base::Closure& callback) {
-  NSSet* referencedFiles = all_files ? nil : [bvc_ referencedExternalFiles];
+  // Add files from current TabModel.
+  NSSet* tabModelFiles;
+  NSArray<TabModel*>* tabModels =
+      GetTabModelsForChromeBrowserState(browserState_);
+  for (TabModel* tabModel in tabModels) {
+    if (tabModel.currentTab) {
+      tabModelFiles = [tabModel currentlyReferencedExternalFiles];
+    }
+  }
+
+  // Add Files from Bookmarks.
+  std::vector<bookmarks::BookmarkModel::URLAndTitle> bookmarks;
+  bookmarkModel_->GetBookmarks(&bookmarks);
+  NSMutableSet* bookmarkedFiles = [NSMutableSet set];
+  for (const auto& bookmark : bookmarks) {
+    GURL bookmarkUrl = bookmark.url;
+    if (UrlIsExternalFileReference(bookmarkUrl)) {
+      [bookmarkedFiles
+          addObject:base::SysUTF8ToNSString(bookmarkUrl.ExtractFileName())];
+    }
+  }
+  NSSet* allFiles = [tabModelFiles setByAddingObjectsFromSet:bookmarkedFiles];
+
+  NSSet* referencedFiles = all_files ? nil : allFiles;
   const NSInteger kMinimumAgeInDays = 30;
   NSInteger ageInDays = all_files ? 0 : kMinimumAgeInDays;
 
