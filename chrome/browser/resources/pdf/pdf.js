@@ -103,6 +103,7 @@ function PDFViewer(browserApi) {
 
   this.isPrintPreview_ = location.origin === 'chrome://print';
   this.isPrintPreviewLoaded_ = false;
+  this.didForceFitToPage_ = false;
 
   // Parse open pdf parameters.
   this.paramsParser_ =
@@ -675,6 +676,7 @@ PDFViewer.prototype = {
       var pinchPhase = this.viewport_.pinchPhase;
       this.plugin_.postMessage({
         type: 'viewport',
+        userInitiated: false,
         zoom: zoom,
         xOffset: position.x,
         yOffset: position.y,
@@ -684,11 +686,13 @@ PDFViewer.prototype = {
   },
 
   /**
+   * @param {?boolean} opt_userInitiated Whether the change was initiated by
+   *     the user. Defaults to false.
    * @private
    * A callback that's called after the zoom changes. Notify the plugin of the
    * zoom change and to continue reacting to scroll events.
    */
-  afterZoom_: function() {
+  afterZoom_: function(opt_userInitiated) {
     var position = this.viewport_.position;
     var zoom = this.viewport_.zoom;
     var pinchVector = this.viewport_.pinchPanVector || {x: 0, y: 0};
@@ -697,6 +701,7 @@ PDFViewer.prototype = {
 
     this.plugin_.postMessage({
       type: 'viewport',
+      userInitiated: (opt_userInitiated || false) && !this.didForceFitToPage_,
       zoom: zoom,
       xOffset: position.x,
       yOffset: position.y,
@@ -706,6 +711,7 @@ PDFViewer.prototype = {
       pinchVectorX: pinchVector.x,
       pinchVectorY: pinchVector.y
     });
+    this.didForceFitToPage_ = false;
     this.zoomManager_.onPdfZoomChange();
   },
 
@@ -850,6 +856,7 @@ PDFViewer.prototype = {
         this.loadState_ = LoadState.LOADING;
         if (!this.inPrintPreviewMode_) {
           this.inPrintPreviewMode_ = true;
+          this.didForceFitToPage_ = true;
           this.zoomToolbar_.forceFitToPage();
         }
 
