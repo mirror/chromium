@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "eb79c6d6_b74a9eef",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-07T08:13:41Z",
+      "side": 1,
+      "message": "Via chat with Matt, we decided to run |callback| only for success case. Done.",
+      "parentUuid": "2720aba5_10ab53d2",
+      "revId": "7e8f08e02613c1feb5f07566472416e990242e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b61187a5_61a66a08",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 3
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "Right, and we are tracking these states using std::unique_ptr\u003cOneShotCallback\u003e one_shot_callback_. When one_shot_callback_.is_null(), we are in (1). When one_shot_callback_-\u003ecallback.is_null(), we are in (2). It seems we can just do this using std::unique_ptr\u003cOnceCallback\u003e callback_. When callback_.is_null(), we are in (1). When callback_-\u003ecallback.is_null(), we are in (2). No?",
       "parentUuid": "45c79027_fdb91aab",
+      "revId": "7e8f08e02613c1feb5f07566472416e990242e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21abb408_ed513562",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-07T08:13:41Z",
+      "side": 1,
+      "message": "Oops, nice! Done and thanks.",
+      "parentUuid": "636bf2e3_c0d5cfb0",
       "revId": "7e8f08e02613c1feb5f07566472416e990242e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
