@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "ff7a0498_7b13c2b6",
+        "filename": "ios/web_view/public/cwv_ui_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T18:01:05Z",
+      "side": 1,
+      "message": "I think we should follow WKWebView API concepts where possible. Changing ios/web_view API later will be more work for us.",
+      "parentUuid": "3a68dea8_339ea592",
+      "range": {
+        "startLine": 68,
+        "startChar": 37,
+        "endLine": 68,
+        "endChar": 61
+      },
+      "revId": "2eba4006e0a6dea30f37d99b2cb04f20161736f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68464973_ca60f72b",
         "filename": "ios/web_view/public/cwv_ui_delegate.h",
         "patchSetId": 1

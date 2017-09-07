@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b46b2b62_0070083e",
+        "filename": "ios/web/web_state/web_view_internal_creation_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T18:01:05Z",
+      "side": 0,
+      "message": "This code was added an purpose: https://codereview.chromium.org/2151133002\nAnd removing it will regress crbug.com/622746",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 28
+      },
+      "revId": "34bafcf0b406d4810abdcdbfbcb69901db62d02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
