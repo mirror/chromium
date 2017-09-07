@@ -22,6 +22,30 @@
       "revId": "2e5dbe328dfaffa2c74d6d41c34a018c49060c1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f31281e_bf893452",
+        "filename": "content/browser/android/content_feature_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-09-07T14:54:08Z",
+      "side": 1,
+      "message": "According to https://crbug.com/545628 my understanding is that most WebView events are async except actions like script-generated zoom.\n\nWill verify if synchronous input handler is null on other cases.",
+      "parentUuid": "e8b5c482_706f2844",
+      "range": {
+        "startLine": 42,
+        "startChar": 39,
+        "endLine": 42,
+        "endChar": 65
+      },
+      "revId": "2e5dbe328dfaffa2c74d6d41c34a018c49060c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
