@@ -714,6 +714,7 @@ component("net") {
       "disk_cache/simple/simple_entry_operation.h",
       "disk_cache/simple/simple_experiment.cc",
       "disk_cache/simple/simple_experiment.h",
+      "disk_cache/simple/simple_file_tracker.cc",
       "disk_cache/simple/simple_file_tracker.h",
       "disk_cache/simple/simple_histogram_macros.h",
       "disk_cache/simple/simple_index.cc",
