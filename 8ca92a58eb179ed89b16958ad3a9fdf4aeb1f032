@@ -16,6 +16,24 @@
       "revId": "8ca92a58eb179ed89b16958ad3a9fdf4aeb1f032",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed525fa_c4d72ce0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-07T19:04:44Z",
+      "side": 1,
+      "message": "There are two cases we won\u0027t show this menu item: 1) on below O, 2) on O+, but paste is functioning the same to paste as plain text. We have canPasteAsPlainText to check both cases, then remove menu item when necessary, after that we are calling this method. So check item \u003d\u003d null here is necessary.",
+      "parentUuid": "723f122a_eab49b1b",
+      "revId": "8ca92a58eb179ed89b16958ad3a9fdf4aeb1f032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
