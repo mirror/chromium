@@ -359,6 +359,24 @@
     },
     {
       "key": {
+        "uuid": "4e26a6cf_2262650c",
+        "filename": "content/renderer/shared_worker/shared_worker_repository.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-07T16:30:55Z",
+      "side": 1,
+      "message": "Ack, I tried to think about some alternative ideas but concluded the same; the current code seems to hit a good balance.",
+      "parentUuid": "6633fd9d_6955add3",
+      "revId": "86199775e00d585b166329879f9c95f89ce52cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a218942b_ab6e0dcb",
         "filename": "third_party/WebKit/public/platform/ContentSecurityPolicyStructTraits.h",
         "patchSetId": 16
