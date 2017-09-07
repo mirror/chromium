@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6dc8602_998259d9",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-07T23:16:31Z",
+      "side": 1,
+      "message": "Why are we doing sheet-modal? We have machinery to do tab-modal dialogs, and building the dialogs that way would give much more code reuse + visual conformity to dialog standards.",
+      "range": {
+        "startLine": 75,
+        "startChar": 3,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "fbd221ef4ebd45b1cf2714ed3a1e53664ebda936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2ff661_c7a88c6b",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-07T23:16:31Z",
+      "side": 1,
+      "message": "This entire setup becomes about ten lines of code, as well as conformance with UI, with the use of ConstrainedWindowAlert. See the JavaScriptDialogCocoaImpl for an example.",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 19
+      },
+      "revId": "fbd221ef4ebd45b1cf2714ed3a1e53664ebda936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
