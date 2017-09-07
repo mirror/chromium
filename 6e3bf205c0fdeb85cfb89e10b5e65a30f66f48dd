@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5658950_7db38d5e",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T07:21:36Z",
+      "side": 1,
+      "message": "// Resolve skip waiting promises.",
+      "revId": "6e3bf205c0fdeb85cfb89e10b5e65a30f66f48dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8769ede8_6997cada",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T07:21:36Z",
+      "side": 1,
+      "message": "prefer adding braces for the for() loop",
+      "revId": "6e3bf205c0fdeb85cfb89e10b5e65a30f66f48dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7920ff35_c20f90f5",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T07:21:36Z",
+      "side": 1,
+      "message": "break;",
+      "revId": "6e3bf205c0fdeb85cfb89e10b5e65a30f66f48dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd36e22_92a5fd64",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1348,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T07:21:36Z",
+      "side": 1,
+      "message": "haha, I wrote this before and now I didn\u0027t really understand it. expand:\n\n\"Per spec, resolve the skip waiting promise now if activation won\u0027t be triggered here. The ActivateWaitingVersionWhenReady() call below only triggers it if we\u0027re in INSTALLED state. So if we\u0027re not in INSTALLED state, resolve the promise now. If we are in INSTALLED state, there are still cases where ActivateWaitingVersionWhenReady() won\u0027t trigger activation. In that case, it\u0027s is a slight spec violation to not resolve now, but we\u0027ll eventually resolve the promise in SetStatus().\"",
+      "revId": "6e3bf205c0fdeb85cfb89e10b5e65a30f66f48dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
