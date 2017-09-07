@@ -140,6 +140,30 @@
       "revId": "5dcab4ea861577a0bde4aa4fc34388564ddb02fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c002ca_d44b28a2",
+        "filename": "components/history/core/browser/top_sites_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T20:47:26Z",
+      "side": 1,
+      "message": "It would be better to test what you actually care about. Add an observer and assert that it was called.",
+      "parentUuid": "b6c12a39_3bdf4400",
+      "range": {
+        "startLine": 405,
+        "startChar": 7,
+        "endLine": 405,
+        "endChar": 48
+      },
+      "revId": "5dcab4ea861577a0bde4aa4fc34388564ddb02fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
