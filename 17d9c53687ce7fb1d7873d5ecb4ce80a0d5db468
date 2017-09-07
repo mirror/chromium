@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "786c137e_e3a7ecc0",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2194,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-07T22:14:14Z",
+      "side": 1,
+      "message": "you don\u0027t need to specify origin (this is useful only when you wan to test native/platform bounds). Just specifying the size is enough for your test.",
+      "range": {
+        "startLine": 2194,
+        "startChar": 34,
+        "endLine": 2194,
+        "endChar": 35
+      },
+      "revId": "17d9c53687ce7fb1d7873d5ecb4ce80a0d5db468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bfb2ac7_51c06047",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-07T22:14:14Z",
+      "side": 1,
+      "message": "isn\u0027t showing/hiding widget enough? do you have to update the content view\u0027s visibility?",
+      "revId": "17d9c53687ce7fb1d7873d5ecb4ce80a0d5db468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
