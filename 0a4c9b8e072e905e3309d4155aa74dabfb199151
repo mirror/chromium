@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "78804e2a_72500a78",
+        "filename": "android_webview/browser/aw_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-07T22:53:09Z",
+      "side": 1,
+      "message": "Ack. Thanks for the info!",
+      "parentUuid": "135b304d_36f6870a",
+      "revId": "0a4c9b8e072e905e3309d4155aa74dabfb199151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99b55c8d_52821b92",
         "filename": "chromecast/browser/cast_content_browser_client.cc",
         "patchSetId": 1
@@ -132,6 +150,30 @@
     },
     {
       "key": {
+        "uuid": "dc87ccb7_50380b12",
+        "filename": "chromecast/browser/cast_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-07T22:53:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d88cd1c6_6c8726c6",
+      "range": {
+        "startLine": 272,
+        "startChar": 51,
+        "endLine": 272,
+        "endChar": 55
+      },
+      "revId": "0a4c9b8e072e905e3309d4155aa74dabfb199151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63b51fbc_c4acc1c6",
         "filename": "components/cdm/browser/cdm_message_filter_android.cc",
         "patchSetId": 1
@@ -143,6 +185,30 @@
       "writtenOn": "2017-09-07T20:52:30Z",
       "side": 1,
       "message": "This is an unexpected interpretation of the input parameter. In particular `false` (cannot use secure codecs) does not prevent their use - see the comment for this member.",
+      "range": {
+        "startLine": 102,
+        "startChar": 6,
+        "endLine": 102,
+        "endChar": 37
+      },
+      "revId": "0a4c9b8e072e905e3309d4155aa74dabfb199151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89ecdc7_fcab5d59",
+        "filename": "components/cdm/browser/cdm_message_filter_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-07T22:53:09Z",
+      "side": 1,
+      "message": "Good catch. Renamed can_use_secure_codecs to force_to_support_secure_codecs to be correct and consistent.",
+      "parentUuid": "63b51fbc_c4acc1c6",
       "range": {
         "startLine": 102,
         "startChar": 6,
@@ -201,6 +267,54 @@
     },
     {
       "key": {
+        "uuid": "558e7a36_fce9c4de",
+        "filename": "components/cdm/browser/cdm_message_filter_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-07T22:53:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0ff9f01_425129a2",
+      "range": {
+        "startLine": 144,
+        "startChar": 48,
+        "endLine": 144,
+        "endChar": 62
+      },
+      "revId": "0a4c9b8e072e905e3309d4155aa74dabfb199151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cef1cc4b_d29b56f9",
+        "filename": "components/cdm/browser/cdm_message_filter_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-07T22:53:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e79d3cbc_3492f438",
+      "range": {
+        "startLine": 144,
+        "startChar": 33,
+        "endLine": 144,
+        "endChar": 34
+      },
+      "revId": "0a4c9b8e072e905e3309d4155aa74dabfb199151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ea30742_a2ab285f",
         "filename": "components/cdm/browser/cdm_message_filter_android.cc",
         "patchSetId": 1
@@ -215,6 +329,24 @@
       "revId": "0a4c9b8e072e905e3309d4155aa74dabfb199151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9eb52c_0000ec30",
+        "filename": "components/cdm/browser/cdm_message_filter_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-07T22:53:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ea30742_a2ab285f",
+      "revId": "0a4c9b8e072e905e3309d4155aa74dabfb199151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +367,24 @@
     },
     {
       "key": {
+        "uuid": "25909a11_65b630a6",
+        "filename": "components/cdm/browser/cdm_message_filter_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-07T22:53:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebc7bcf5_8812d53e",
+      "revId": "0a4c9b8e072e905e3309d4155aa74dabfb199151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15b7ea0f_cf9d9b9b",
         "filename": "media/blink/key_system_config_selector.cc",
         "patchSetId": 1
@@ -252,6 +402,24 @@
     },
     {
       "key": {
+        "uuid": "4b90e83d_1a0fba3b",
+        "filename": "media/blink/key_system_config_selector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-07T22:53:09Z",
+      "side": 1,
+      "message": "Removed from this CL, and will be uploaded in the next CL. I\u0027ll see how I can add tests.",
+      "parentUuid": "15b7ea0f_cf9d9b9b",
+      "revId": "0a4c9b8e072e905e3309d4155aa74dabfb199151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb0a22e7_fc487ca2",
         "filename": "media/blink/key_system_config_selector.cc",
         "patchSetId": 1
@@ -263,6 +431,30 @@
       "writtenOn": "2017-09-07T20:52:30Z",
       "side": 1,
       "message": "...always...",
+      "range": {
+        "startLine": 35,
+        "startChar": 51,
+        "endLine": 35,
+        "endChar": 52
+      },
+      "revId": "0a4c9b8e072e905e3309d4155aa74dabfb199151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59d6017_52f58918",
+        "filename": "media/blink/key_system_config_selector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-07T22:53:09Z",
+      "side": 1,
+      "message": "Will do in the next CL.",
+      "parentUuid": "cb0a22e7_fc487ca2",
       "range": {
         "startLine": 35,
         "startChar": 51,
