@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "877b9eee_4d704956",
+        "filename": "third_party/closure_compiler/interfaces/networking_private_interface.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T22:14:57Z",
+      "side": 1,
+      "message": "nit: remove some extra spaces",
+      "range": {
+        "startLine": 136,
+        "startChar": 46,
+        "endLine": 136,
+        "endChar": 51
+      },
+      "revId": "dd0b356ab5b687d2b7dc97acb5c92f2dd8328969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f3ff48_2d2be282",
+        "filename": "third_party/closure_compiler/interfaces/networking_private_interface.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T22:14:57Z",
+      "side": 1,
+      "message": "which",
+      "range": {
+        "startLine": 220,
+        "startChar": 13,
+        "endLine": 220,
+        "endChar": 17
+      },
+      "revId": "dd0b356ab5b687d2b7dc97acb5c92f2dd8328969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649df59f_ef62bfbc",
+        "filename": "third_party/closure_compiler/interfaces/networking_private_interface.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T22:14:57Z",
+      "side": 1,
+      "message": "nit: remove extra spaces",
+      "range": {
+        "startLine": 224,
+        "startChar": 16,
+        "endLine": 224,
+        "endChar": 17
+      },
+      "revId": "dd0b356ab5b687d2b7dc97acb5c92f2dd8328969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
