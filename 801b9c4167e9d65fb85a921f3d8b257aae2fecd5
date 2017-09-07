@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de5a8b22_938290b6",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_browsing_mode_pages.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-07T14:03:17Z",
+      "side": 1,
+      "message": "usually these arbitrary wait time can be flaky. Can you find other condition to wait for",
+      "revId": "801b9c4167e9d65fb85a921f3d8b257aae2fecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
