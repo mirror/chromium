@@ -132,6 +132,10 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   // BlockingScopeExited() is called. Access synchronized by |outer_->lock_|.
   TimeTicks may_block_start_time_;
 
+  // Whether this worker is currently running a task (i.e. GetWork() has
+  // returned a non-empty sequence and DidRunTask() hasn't been called yet).
+  bool is_running_task_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerDelegateImpl);
 };
 
@@ -332,13 +336,14 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainEntry(
       StringPrintf("TaskScheduler%sWorker", outer_->name_.c_str()));
 
   outer_->BindToCurrentThread();
-  SetBlockingObserverForCurrentThread(this);
 }
 
 scoped_refptr<Sequence>
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
     SchedulerWorker* worker) {
   {
+    DCHECK(!is_running_task_);
+
     AutoSchedulerLock auto_lock(outer_->lock_);
 
     DCHECK(ContainsWorker(outer_->workers_, worker));
@@ -406,10 +411,15 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
     DCHECK(!outer_->idle_workers_stack_.Contains(worker));
   }
 #endif
+
+  is_running_task_ = true;
   return sequence;
 }
 
 void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::DidRunTask() {
+  DCHECK(is_running_task_);
+  is_running_task_ = false;
+
   ++num_tasks_since_last_wait_;
   ++num_tasks_since_last_detach_;
 }
@@ -507,6 +517,10 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
 
 void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::BlockingScopeEntered(
     BlockingType blocking_type) {
+  // Ignore blocking calls made outside of tasks.
+  if (!is_running_task_)
+    return;
+
   switch (blocking_type) {
     case BlockingType::MAY_BLOCK:
       MayBlockScopeEntered();
@@ -519,6 +533,10 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::BlockingScopeEntered(
 
 void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
     BlockingScopeExited() {
+  // Ignore blocking calls made outside of tasks.
+  if (!is_running_task_)
+    return;
+
   AutoSchedulerLock auto_lock(outer_->lock_);
   if (incremented_worker_capacity_since_blocked_)
     outer_->DecrementWorkerCapacityLockRequired();
