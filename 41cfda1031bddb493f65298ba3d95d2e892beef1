@@ -16,6 +16,24 @@
       "revId": "41cfda1031bddb493f65298ba3d95d2e892beef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcddad10_83b96440",
+        "filename": "build/config/ios/ios_sdk.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-07T16:00:26Z",
+      "side": 1,
+      "message": "We don\u0027t even know if Xcode will use the same version numbering when moving past Xcode 9, so I recommend not adding this second assertion.\n\nAdditionally, it looks like what is not supported is building with iOS 10 SDK, so instead this assertion should check the version of the SDK, not the version of Xcode (i.e. should assert if someone tries to build with Xcode 9 and iOS 10 SDK).\n\nThis will require adding another variable \"ios_sdk_version_int\" in the script too.",
+      "parentUuid": "f76efc43_68bd1703",
+      "revId": "41cfda1031bddb493f65298ba3d95d2e892beef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
