@@ -284,10 +284,9 @@ void InstallableManager::RecordQueuedMetricsOnTaskCompletion(
 void InstallableManager::Reset() {
   // Prevent any outstanding callbacks to or from this object from being called.
   weak_factory_.InvalidateWeakPtrs();
-  task_queue_.Reset();
   icons_.clear();
-
-  metrics_.RecordMetricsOnNavigationAndReset();
+  metrics_.RecordMetricsOnNavigationAndReset(task_queue_.HasPaused());
+  task_queue_.Reset();
 
   manifest_ = base::MakeUnique<ManifestProperty>();
   valid_manifest_ = base::MakeUnique<ValidManifestProperty>();

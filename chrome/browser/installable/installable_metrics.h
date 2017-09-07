@@ -57,7 +57,7 @@ class InstallableMetrics {
 
   // Called to save any queued metrics at the time of navigation, and to reset
   // state.
-  void RecordMetricsOnNavigationAndReset();
+  void RecordMetricsOnNavigationAndReset(bool has_paused);
 
   // Called to indicate that the InstallableManager has started working on the
   // current page.

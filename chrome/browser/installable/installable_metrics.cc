@@ -131,12 +131,19 @@ void InstallableMetrics::RecordQueuedMetrics(bool check_passed) {
                               installability_status);
 }
 
-void InstallableMetrics::RecordMetricsOnNavigationAndReset() {
+void InstallableMetrics::RecordMetricsOnNavigationAndReset(bool has_paused) {
   // We may have reset when the counts are nonzero and |status_| is one of
   // NOT_STARTED or NOT_COMPLETED. If we completed, then these values cannot be
   // anything except 0.
+  InstallabilityCheckStatus status = status_;
+
+  // If we are waiting for a service worker to appear, record this as being
+  // complete and a non-PWA.
+  if (has_paused && status == InstallabilityCheckStatus::NOT_COMPLETED)
+    status = InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP;
+
   RecordMetricsAndResetCounts(
-      status_, AddToHomescreenTimeoutStatus::TIMEOUT_MANIFEST_FETCH_UNKNOWN,
+      status, AddToHomescreenTimeoutStatus::TIMEOUT_MANIFEST_FETCH_UNKNOWN,
       AddToHomescreenTimeoutStatus::TIMEOUT_INSTALLABILITY_CHECK_UNKNOWN);
 
   status_ = InstallabilityCheckStatus::NOT_STARTED;
