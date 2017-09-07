@@ -13,6 +13,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
+#include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_request_args.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
@@ -51,6 +52,8 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   void UnregisterClientProcess(mojom::ClientProcess*);
   void RequestGlobalMemoryDump(const base::trace_event::MemoryDumpRequestArgs&,
                                const RequestGlobalMemoryDumpCallback&) override;
+  void EnableHeapProfiling(base::trace_event::HeapProfilingMode,
+                           const EnableHeapProfilingCallback&) override;
   void GetVmRegionsForHeapProfiler(
       const GetVmRegionsForHeapProfilerCallback&) override;
 
@@ -154,6 +157,8 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   std::unique_ptr<ProcessMap> process_map_;
   uint64_t next_dump_id_;
   std::unique_ptr<TracingObserver> tracing_observer_;
+
+  base::trace_event::HeapProfilingMode heap_profiling_mode_;
 
   THREAD_CHECKER(thread_checker_);
   DISALLOW_COPY_AND_ASSIGN(CoordinatorImpl);
