@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a76ae05d_848a7c66",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item_result.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-07T23:03:27Z",
+      "side": 1,
+      "message": "Let\u0027s try to be consistent in naming and use SetLineOffset here.\n\nLocations are relative to the top left of the document and in a physical coordinate space.\nOffsets are relative to the parent (or another element) and tend to be in a logical coordinate space.",
+      "range": {
+        "startLine": 134,
+        "startChar": 7,
+        "endLine": 134,
+        "endChar": 22
+      },
+      "revId": "ec92299d473ab1ec384ae054a50432bbf151bffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
