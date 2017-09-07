@@ -6,7 +6,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#include "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
+#include "ios/clean/chrome/browser/ui/tools/tools_menu_commands.h"
 #include "ios/clean/chrome/browser/ui/transitions/presenters/menu_presentation_delegate.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)

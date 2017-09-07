@@ -6,6 +6,7 @@ source_set("settings") {
   sources = [
     "material_cell_catalog_coordinator.h",
     "material_cell_catalog_coordinator.mm",
+    "settings_commands.h",
     "settings_coordinator.h",
     "settings_coordinator.mm",
     "settings_main_page_coordinator.h",

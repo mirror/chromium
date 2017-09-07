@@ -8,7 +8,7 @@
 #include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/clean/chrome/browser/ui/commands/find_in_page_visibility_commands.h"
-#import "ios/clean/chrome/browser/ui/commands/settings_commands.h"
+#import "ios/clean/chrome/browser/ui/settings/settings_commands.h"
 
 // Declare all the possible items. If adding or removing items update
 // the value of kToolsMenuNumberOfItems with the new total count.

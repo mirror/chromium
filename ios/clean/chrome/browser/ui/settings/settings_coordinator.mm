@@ -10,7 +10,7 @@
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 #import "ios/chrome/browser/ui/settings/settings_navigation_controller.h"
-#import "ios/clean/chrome/browser/ui/commands/settings_commands.h"
+#import "ios/clean/chrome/browser/ui/settings/settings_commands.h"
 #import "ios/clean/chrome/browser/ui/settings/settings_main_page_coordinator.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -32,10 +32,12 @@ void TraverseCoordinatorHierarchy(BrowserCoordinator* coordinator,
 @interface SettingsCoordinator ()<SettingsNavigationControllerDelegate,
                                   UINavigationControllerDelegate>
 @property(nonatomic, strong) SettingsNavigationController* viewController;
+@property(nonatomic, readonly) id<SettingsCommands> callableDispatcher;
 @end
 
 @implementation SettingsCoordinator
 @synthesize viewController = _viewController;
+@dynamic callableDispatcher;
 
 #pragma mark - BrowserCoordinator
 
@@ -53,6 +55,11 @@ void TraverseCoordinatorHierarchy(BrowserCoordinator* coordinator,
   mainPageCoordinator.viewController.navigationItem.rightBarButtonItem =
       [self.viewController doneButton];
   [super start];
+}
+
+- (void)stop {
+  [self.viewController settingsWillBeDismissed];
+  [super stop];
 }
 
 #pragma mark - SettingsNavigationControllerDelegate
