@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e529d12c_b0af6080",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-07T21:40:00Z",
+      "side": 1,
+      "message": "I don\u0027t understand this. It seems like we now always disconnect after a successful wifi connection? And why bother passing an empty string (in the case of failure) to this method?",
+      "range": {
+        "startLine": 180,
+        "startChar": 22,
+        "endLine": 180,
+        "endChar": 45
+      },
+      "revId": "c5911d8a6b138dd7f033cab96ab1219b71c05d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b38d6bf6_79e99ed9",
+        "filename": "chromeos/components/tether/wifi_hotspot_disconnector_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-07T21:40:00Z",
+      "side": 1,
+      "message": "nit: use std::string() instead",
+      "range": {
+        "startLine": 23,
+        "startChar": 70,
+        "endLine": 23,
+        "endChar": 71
+      },
+      "revId": "c5911d8a6b138dd7f033cab96ab1219b71c05d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecee2322_cf319658",
+        "filename": "chromeos/components/tether/wifi_hotspot_disconnector_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-07T21:40:00Z",
+      "side": 1,
+      "message": "this error message is the same as the one above, and isnt totally accurate. consider combining the two if statements?",
+      "range": {
+        "startLine": 63,
+        "startChar": 28,
+        "endLine": 63,
+        "endChar": 40
+      },
+      "revId": "c5911d8a6b138dd7f033cab96ab1219b71c05d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
