@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69dd2604_cb306ba1",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_misc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-07T04:34:52Z",
+      "side": 0,
+      "message": "nit: It could be even easier to just do:\nif (!render_frame_host()) return;",
+      "range": {
+        "startLine": 753,
+        "startChar": 25,
+        "endLine": 753,
+        "endChar": 42
+      },
+      "revId": "2dee475fbda206f8afa2944ffba9c8b50b78664d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
