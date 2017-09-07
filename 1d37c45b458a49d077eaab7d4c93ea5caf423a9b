@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2f035db_847e7ba7",
+        "filename": "media/gpu/vaapi_jpeg_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-07T02:57:11Z",
+      "side": 1,
+      "message": "I think it is an error, use VLOGF(1).",
+      "revId": "1d37c45b458a49d077eaab7d4c93ea5caf423a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185091ee_c87a20b0",
+        "filename": "media/gpu/vaapi_jpeg_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-07T02:57:11Z",
+      "side": 1,
+      "message": "Actually just DVLOGF(2) is very enough. I thought for level \u003c\u003d 2, we use VLOGF.",
+      "revId": "1d37c45b458a49d077eaab7d4c93ea5caf423a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b548fc2_29001f36",
+        "filename": "media/gpu/vaapi_jpeg_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-07T02:57:11Z",
+      "side": 1,
+      "message": "DVLOGF",
+      "revId": "1d37c45b458a49d077eaab7d4c93ea5caf423a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
