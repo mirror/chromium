@@ -54,7 +54,8 @@ class VIZ_SERVICE_EXPORT SkiaRenderer : public cc::DirectRenderer {
   bool FlippedFramebuffer() const override;
   void EnsureScissorTestEnabled() override;
   void EnsureScissorTestDisabled() override;
-  void CopyDrawnRenderPass(std::unique_ptr<CopyOutputRequest> request) override;
+  void CopyCurrentRenderPassToBitmap(
+      std::unique_ptr<CopyOutputRequest> request) override;
   void SetEnableDCLayers(bool enable) override;
   void DidChangeVisibility() override;
   void FinishDrawingQuadList() override;

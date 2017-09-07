@@ -34,9 +34,7 @@ static void MakeAsyncCopyRequest(
     const gfx::Rect& source_rect,
     viz::CopyOutputRequest::CopyOutputRequestCallback callback) {
   std::unique_ptr<viz::CopyOutputRequest> request =
-      std::make_unique<viz::CopyOutputRequest>(
-          viz::CopyOutputRequest::ResultFormat::RGBA_BITMAP,
-          std::move(callback));
+      viz::CopyOutputRequest::CreateBitmapRequest(std::move(callback));
   request->set_area(source_rect);
   layer->RequestCopyOfOutput(std::move(request));
 }
