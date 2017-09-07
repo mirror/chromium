@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa1886af_655901bb",
+        "filename": "content/renderer/mus/renderer_window_tree_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-07T15:15:41Z",
+      "side": 1,
+      "message": "Set this directly to true.",
+      "revId": "4c8a146232f28da3c864cb414907c1230467bf26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3acd874c_7f7c74b5",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-07T15:15:41Z",
+      "side": 1,
+      "message": "Just set this directly to true, don\u0027t need the |enable_surface_synchronization| temp variable. The variable here was used for readability, because otherwise it\u0027s difficult to interpret what \u0027true\u0027 means. Now that it already has a name, we don\u0027t need the temp var.",
+      "revId": "4c8a146232f28da3c864cb414907c1230467bf26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
