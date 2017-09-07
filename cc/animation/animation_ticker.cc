@@ -118,7 +118,10 @@ void AnimationTicker::TickAnimation(base::TimeTicks monotonic_time,
 
 void AnimationTicker::RemoveFromTicking() {
   is_ticking_ = false;
+  // Resetting last_tick_time_ here ensures that calling ::UpdateState
+  // before ::Animate doesn't start an animation.
   last_tick_time_ = base::TimeTicks();
+  animation_player_->AnimationRemovedFromTicking();
 }
 
 void AnimationTicker::UpdateState(bool start_ready_animations,
@@ -159,7 +162,7 @@ void AnimationTicker::UpdateTickingState(UpdateTickingType type) {
     if (is_ticking_ && ((!was_ticking && has_element_in_any_list) || force)) {
       animation_player_->AddToTicking();
     } else if (!is_ticking_ && (was_ticking || force)) {
-      animation_player_->RemoveFromTicking();
+      RemoveFromTicking();
     }
   }
 }
@@ -218,7 +221,7 @@ void AnimationTicker::RemoveAnimation(int animation_id) {
   animations_.erase(animations_to_remove, animations_.end());
 
   if (has_bound_element_animations()) {
-    animation_player_->UpdateTickingState(UpdateTickingType::NORMAL);
+    UpdateTickingState(UpdateTickingType::NORMAL);
     if (animation_removed)
       element_animations_->UpdateClientAnimationState();
     animation_player_->SetNeedsCommit();
@@ -300,6 +303,7 @@ void AnimationTicker::AnimationAdded() {
 }
 
 bool AnimationTicker::NotifyAnimationStarted(const AnimationEvent& event) {
+  DCHECK(!event.is_impl_only);
   for (size_t i = 0; i < animations_.size(); ++i) {
     if (animations_[i]->group() == event.group_id &&
         animations_[i]->target_property_id() == event.target_property &&
@@ -307,6 +311,7 @@ bool AnimationTicker::NotifyAnimationStarted(const AnimationEvent& event) {
       animations_[i]->set_needs_synchronized_start_time(false);
       if (!animations_[i]->has_set_start_time())
         animations_[i]->set_start_time(event.monotonic_time);
+      animation_player_->NotifyAnimationStarted(event);
       return true;
     }
   }
@@ -314,22 +319,36 @@ bool AnimationTicker::NotifyAnimationStarted(const AnimationEvent& event) {
 }
 
 bool AnimationTicker::NotifyAnimationFinished(const AnimationEvent& event) {
+  DCHECK(!event.is_impl_only);
   for (size_t i = 0; i < animations_.size(); ++i) {
     if (animations_[i]->group() == event.group_id &&
         animations_[i]->target_property_id() == event.target_property) {
       animations_[i]->set_received_finished_event(true);
+      animation_player_->NotifyAnimationFinished(event);
       return true;
     }
   }
+
+  // This is for the case when an animation is already removed on main thread,
+  // but the impl version of it sent a finished event and is now waiting for
+  // deletion. We would need to delete that animation during push properties.
+  animation_player_->SetNeedsPushProperties();
   return false;
 }
 
+void AnimationTicker::NotifyAnimationTakeover(const AnimationEvent& event) {
+  DCHECK(!event.is_impl_only);
+  animation_player_->NotifyAnimationTakeover(event);
+}
+
 bool AnimationTicker::NotifyAnimationAborted(const AnimationEvent& event) {
+  DCHECK(!event.is_impl_only);
   for (size_t i = 0; i < animations_.size(); ++i) {
     if (animations_[i]->group() == event.group_id &&
         animations_[i]->target_property_id() == event.target_property) {
       animations_[i]->SetRunState(Animation::ABORTED, event.monotonic_time);
       animations_[i]->set_received_finished_event(true);
+      animation_player_->NotifyAnimationAborted(event);
       return true;
     }
   }
@@ -784,7 +803,7 @@ void AnimationTicker::PromoteStartedAnimations(AnimationEvents* events) {
         started_event.is_impl_only = animations_[i]->is_impl_only();
         if (started_event.is_impl_only) {
           // Notify delegate directly, do not record the event.
-          animation_player_->NotifyImplOnlyAnimationStarted(started_event);
+          animation_player_->NotifyAnimationStarted(started_event);
         } else {
           events->events_.push_back(started_event);
         }
@@ -834,7 +853,7 @@ void AnimationTicker::MarkAnimationsForDeletion(base::TimeTicks monotonic_time,
           animations_[i]->curve()->ToScrollOffsetAnimationCurve();
       aborted_event.curve = scroll_offset_animation_curve->Clone();
       // Notify the compositor that the animation is finished.
-      animation_player_->NotifyAnimationTakeoverByMain(aborted_event);
+      animation_player_->NotifyAnimationFinished(aborted_event);
       // Notify main thread.
       events->events_.push_back(aborted_event);
 
@@ -903,7 +922,7 @@ void AnimationTicker::MarkAnimationsForDeletion(base::TimeTicks monotonic_time,
               animations_[animation_index]->is_impl_only();
           if (finished_event.is_impl_only) {
             // Notify delegate directly, do not record the event.
-            animation_player_->NotifyImplOnlyAnimationFinished(finished_event);
+            animation_player_->NotifyAnimationFinished(finished_event);
           } else {
             events->events_.push_back(finished_event);
           }
