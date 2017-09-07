@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf682280_d79f670c",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-07T21:10:46Z",
+      "side": 1,
+      "message": "BootTimesRecorder and CryptohomeClient are not thread-safe and probably not expect calls from non UI thread.",
+      "revId": "0f14d4cde317b88d3678ee66257d6d3a7741d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
