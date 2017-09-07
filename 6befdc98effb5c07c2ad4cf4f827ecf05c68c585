@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "556c997a_7d774cca",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_transfer_controller.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-07T09:41:47Z",
+      "side": 1,
+      "message": "Specifying element with class name like .detail-thumbnail is leak of implementation details of FileTable/FileGrid, I\u0027d say.\nI think we can implement a method like getThumbnail() in FileTable and FileGrid and push the implementation details there. Then the below code will be simplified to\nvar thumbnail \u003d list.getThumbnail(index);",
+      "revId": "6befdc98effb5c07c2ad4cf4f827ecf05c68c585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda5f641_5ee18cc3",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_transfer_controller.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-07T09:41:47Z",
+      "side": 1,
+      "message": "No need of var. It\u0027s already declared.",
+      "revId": "6befdc98effb5c07c2ad4cf4f827ecf05c68c585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67717d1c_4e7d736b",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_transfer_controller.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-07T09:41:47Z",
+      "side": 1,
+      "message": "Is it necessary to get entry? Doesn\u0027t\nif (listItem) {\nwork?",
+      "revId": "6befdc98effb5c07c2ad4cf4f827ecf05c68c585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5b2e75_0c2a4db4",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_transfer_controller.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-07T09:41:47Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "6befdc98effb5c07c2ad4cf4f827ecf05c68c585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
