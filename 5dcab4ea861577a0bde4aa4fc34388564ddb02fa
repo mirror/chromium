@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d51bc44b_63776799",
+        "filename": "components/history/core/browser/top_sites_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T16:27:02Z",
+      "side": 1,
+      "message": "\u0027MostVisibtedTitleChanged\u0027 is a verb, you want something like. DoTitlesDiffer(). Also, no need for this to a a member function. Move into anonymous namespace in top_sites_impl.cc.",
+      "range": {
+        "startLine": 164,
+        "startChar": 14,
+        "endLine": 164,
+        "endChar": 37
+      },
+      "revId": "5dcab4ea861577a0bde4aa4fc34388564ddb02fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3720b5bf_23491c6a",
+        "filename": "components/history/core/browser/top_sites_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T16:27:02Z",
+      "side": 1,
+      "message": "Style guide says out params should be last. Also, no reason for this to be static.",
+      "range": {
+        "startLine": 351,
+        "startChar": 42,
+        "endLine": 351,
+        "endChar": 75
+      },
+      "revId": "5dcab4ea861577a0bde4aa4fc34388564ddb02fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d5664b5_68e46162",
+        "filename": "components/history/core/browser/top_sites_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T16:27:02Z",
+      "side": 1,
+      "message": "This is ok, but a better test is to ensure the observer is called appropriately. Can you test that instead?",
+      "range": {
+        "startLine": 405,
+        "startChar": 7,
+        "endLine": 405,
+        "endChar": 48
+      },
+      "revId": "5dcab4ea861577a0bde4aa4fc34388564ddb02fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
