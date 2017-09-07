@@ -11,4 +11,8 @@ if (!is_ios && !is_android) {
       "device_sync.mojom",
     ]
   }
+
+  public_deps = [
+    "//mojo/common:common_custom_types",
+  ]
 }
