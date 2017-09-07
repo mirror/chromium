@@ -592,6 +592,30 @@
     },
     {
       "key": {
+        "uuid": "9769705b_13aa60f7",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1459,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T21:25:12Z",
+      "side": 1,
+      "message": "merely a comment :)  What I tried to say was that we may want to revisit how device and network/service should be coupled in the code.",
+      "parentUuid": "44f531ca_70fc5b22",
+      "range": {
+        "startLine": 1459,
+        "startChar": 45,
+        "endLine": 1459,
+        "endChar": 52
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26919b41_5700ae04",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 2
