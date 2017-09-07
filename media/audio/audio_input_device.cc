@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/power_monitor/power_monitor.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
@@ -100,6 +101,15 @@ AudioInputDevice::AudioInputDevice(
   static_assert(IPC_CLOSED < IDLE, "invalid enum value assignment 0");
   static_assert(IDLE < CREATING_STREAM, "invalid enum value assignment 1");
   static_assert(CREATING_STREAM < RECORDING, "invalid enum value assignment 2");
+
+  // The PowerMonitor is not available under unit tests.
+  // TODO(grunell): We could be suspending when adding this as observer, and we
+  // won't be notified about that. Check if we can add
+  // PowerMonitorSource::IsSuspending() so that this can be checked here. Note
+  // that on Linux suspend/resume information is not supported.
+  base::PowerMonitor* power_monitor = base::PowerMonitor::Get();
+  if (power_monitor)
+    power_monitor->AddObserver(this);
 }
 
 void AudioInputDevice::Initialize(const AudioParameters& params,
@@ -182,7 +192,7 @@ void AudioInputDevice::OnStreamCreated(base::SharedMemoryHandle handle,
 
   audio_callback_ = std::make_unique<AudioInputDevice::AudioThreadCallback>(
       audio_parameters_, handle, kRequestedSharedMemoryCount, callback_,
-      base::BindRepeating(&AudioInputDevice::SetLastCallbackTimeToNow, this));
+      base::BindRepeating(&AudioInputDevice::AudioDataNotification, this));
   audio_thread_ = std::make_unique<AudioDeviceThread>(
       audio_callback_.get(), socket_handle, "AudioInputDevice");
 
@@ -244,6 +254,18 @@ void AudioInputDevice::OnIPCClosed() {
   ipc_.reset();
 }
 
+void AudioInputDevice::OnSuspend() {
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&AudioInputDevice::SetIsSuspendingOnIOThread, this, true));
+}
+
+void AudioInputDevice::OnResume() {
+  task_runner()->PostTask(
+      FROM_HERE, base::BindOnce(&AudioInputDevice::SetIsSuspendingOnIOThread,
+                                this, false));
+}
+
 AudioInputDevice::~AudioInputDevice() {
 #if DCHECK_IS_ON()
   // Make sure we've stopped the stream properly before destructing |this|.
@@ -254,6 +276,11 @@ AudioInputDevice::~AudioInputDevice() {
   DCHECK(!stopping_hack_);
   audio_thread_lock_.Release();
 #endif  // DCHECK_IS_ON()
+
+  // The PowerMonitor is not available under unit tests.
+  base::PowerMonitor* power_monitor = base::PowerMonitor::Get();
+  if (power_monitor)
+    power_monitor->RemoveObserver(this);
 }
 
 void AudioInputDevice::StartUpOnIOThread() {
@@ -276,11 +303,7 @@ void AudioInputDevice::StartUpOnIOThread() {
 void AudioInputDevice::ShutDownOnIOThread() {
   DCHECK(task_runner()->BelongsToCurrentThread());
 
-  if (check_alive_timer_) {
-    check_alive_timer_->Stop();
-    check_alive_timer_.reset();
-  }
-
+  StopCheckAliveTimerOnIOThread();
   UMA_HISTOGRAM_BOOLEAN("Media.Audio.Capture.DetectedMissingCallbacks",
                         missing_callbacks_detected_);
   missing_callbacks_detected_ = false;
@@ -333,6 +356,14 @@ void AudioInputDevice::WillDestroyCurrentMessageLoop() {
 
 void AudioInputDevice::CheckIfInputStreamIsAlive() {
   DCHECK(task_runner()->BelongsToCurrentThread());
+
+  // The reason we check a flag instead of stopping the timer that runs this
+  // function at suspend is that it would require knowing what state we're in
+  // when resuming and maybe start the timer. Also, we would still need this
+  // flag anyway to maybe start the timer at stream creation.
+  if (is_suspending_)
+    return;
+
   if (base::TimeTicks::Now() - last_callback_time_ >
       base::TimeDelta::FromSeconds(kMissingCallbacksTimeBeforeErrorSeconds)) {
     callback_->OnCaptureError("No audio received from audio capture device.");
@@ -340,16 +371,47 @@ void AudioInputDevice::CheckIfInputStreamIsAlive() {
   }
 }
 
-void AudioInputDevice::SetLastCallbackTimeToNow() {
+void AudioInputDevice::AudioDataNotification() {
+  // We don't need high precision for setting |last_callback_time_| so we don't
+  // have to care about the delay added with posting the task.
   task_runner()->PostTask(
       FROM_HERE,
-      base::BindOnce(&AudioInputDevice::SetLastCallbackTimeToNowOnIOThread,
-                     this));
+      base::BindOnce(&AudioInputDevice::AudioDataNotificationOnIOThread, this));
+}
+
+void AudioInputDevice::AudioDataNotificationOnIOThread() {
+  DCHECK(task_runner()->BelongsToCurrentThread());
+  SetLastCallbackTimeToNowOnIOThread();
+
+// There's no suspend/resume notification support on Linux and suspending can
+// cause false positives. So on Linux we stop the detection after we get the
+// first notifaction about audio data.
+#if defined(OS_LINUX)
+  StopCheckAliveTimerOnIOThread();
+#endif
 }
 
 void AudioInputDevice::SetLastCallbackTimeToNowOnIOThread() {
   DCHECK(task_runner()->BelongsToCurrentThread());
   last_callback_time_ = base::TimeTicks::Now();
+}
+
+void AudioInputDevice::SetIsSuspendingOnIOThread(bool suspending) {
+  DCHECK(task_runner()->BelongsToCurrentThread());
+
+  // Reset last callback time if resuming.
+  if (!suspending)
+    SetLastCallbackTimeToNowOnIOThread();
+
+  is_suspending_ = suspending;
+}
+
+void AudioInputDevice::StopCheckAliveTimerOnIOThread() {
+  DCHECK(task_runner()->BelongsToCurrentThread());
+  if (check_alive_timer_) {
+    check_alive_timer_->Stop();
+    check_alive_timer_.reset();
+  }
 }
 
 // AudioInputDevice::AudioThreadCallback
