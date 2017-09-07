@@ -46,6 +46,30 @@
       "revId": "9580368e08bfba2a3b41f37112c502222f753d20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0d9564_32befb58",
+        "filename": "components/cronet/android/cronet_upload_data_stream_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-07T19:21:12Z",
+      "side": 1,
+      "message": "If CronetUploadDataStreamAdapter leaks, we will have an equal number of CronetUploadDataStream.java objects because this class also owns a \" base::android::ScopedJavaGlobalRef\u003cjobject\u003e jupload_data_stream_;\"",
+      "parentUuid": "cb291d66_8c734c48",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 11
+      },
+      "revId": "9580368e08bfba2a3b41f37112c502222f753d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
