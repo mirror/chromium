@@ -16,6 +16,24 @@
       "revId": "5850b72770d4a8d0ab0a20dd212ee7aa9be82b0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12d5a71_1899b166",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1108729
+      },
+      "writtenOn": "2017-09-07T22:07:57Z",
+      "side": 1,
+      "message": "I can convert to using it, but are you sure you want really want me to? \n\nThat function does a full general 4x4 matrix inverse, transforms the four corners of input rectangle with it, and then takes the bounding box.\n\nThat is a lot of CPU cycles spent to replace some swizzling and subtractions.",
+      "parentUuid": "43b253c8_4fd9bd55",
+      "revId": "5850b72770d4a8d0ab0a20dd212ee7aa9be82b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
