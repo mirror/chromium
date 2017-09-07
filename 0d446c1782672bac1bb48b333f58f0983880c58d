@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3784e29c_b44dc6ee",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-07T19:44:11Z",
+      "side": 1,
+      "message": "Should this be protected by the lock too?",
+      "revId": "0d446c1782672bac1bb48b333f58f0983880c58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
