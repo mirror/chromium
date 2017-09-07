@@ -19,11 +19,13 @@
 <script id="code" type="text/worklet">
 var testsPassed = false;
 try {
-    registerPaint('foo13', class {
+    registerPaint('foo', class {
+        // Setting anything other than alpha should not throw exception, and
+        // the alpha value should fall back to default, which is true.
         static get paintRenderingContext2DSettings() {
-            return {alpha: true};
+            return {bogus: true};
         }
-        paint() { }
+        paint() {}
     });
     testsPassed = true;
 } catch(ex) {
