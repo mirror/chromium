@@ -78,6 +78,10 @@ const NSInteger CWVTranslationErrorScriptLoadError =
   _translatePrefs = _translateClient->translate_manager()
                         ->translate_client()
                         ->GetTranslatePrefs();
+
+  NSString* nsString = @"日本語";
+  std::string string = base::SysNSStringToUTF8(nsString);
+  base::string16 string16 = base::SysNSStringToUTF16(nsString);
 }
 
 - (void)updateTranslateStep:(translate::TranslateStep)step
