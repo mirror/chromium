@@ -69,7 +69,7 @@ TEST_F(ExtensionNotificationHandlerTest, CloseHandler) {
   TestExtensionNotificationHandler handler;
   handler.SetTestExpectations(kChromeExtensionId, "notifications.onClosed", 2);
   handler.OnClose(profile.get(), kChromeExtensionOrigin, kChromeNotificationId,
-                  false);
+                  false /* by_user */);
 }
 
 TEST_F(ExtensionNotificationHandlerTest, ClickHandler) {
@@ -80,7 +80,7 @@ TEST_F(ExtensionNotificationHandlerTest, ClickHandler) {
   TestExtensionNotificationHandler handler;
   handler.SetTestExpectations(kChromeExtensionId, "notifications.onClicked", 1);
   handler.OnClick(profile.get(), kChromeExtensionOrigin, kChromeNotificationId,
-                  -1, base::NullableString16() /* reply */);
+                  base::nullopt /* action_index */, base::nullopt /* reply */);
 }
 
 TEST_F(ExtensionNotificationHandlerTest, ClickHandlerButton) {
@@ -92,7 +92,7 @@ TEST_F(ExtensionNotificationHandlerTest, ClickHandlerButton) {
   handler.SetTestExpectations(kChromeExtensionId,
                               "notifications.onButtonClicked", 2);
   handler.OnClick(profile.get(), kChromeExtensionOrigin, kChromeNotificationId,
-                  1, base::NullableString16() /* reply */);
+                  1 /* action_index */, base::nullopt /* reply */);
 }
 
 }  // namespace extensions
