@@ -62,15 +62,19 @@ class Deobfuscator(object):
         self._logged_error = True
       return lines
 
-    out_lines = []
+    # Deobfuscated stacks contain more frames than obfuscated ones when method
+    # inlining occurs. To account for the extra output lines, keep reading until
+    # this eof_line token is reached.
     eof_line = uuid.uuid4().hex
+    out_lines = []
 
     def deobfuscate_reader():
       while True:
-        line = self._proc.stdout.readline()[:-1]
-        # Due to inlining, deobfuscated stacks may contain more frames than
-        # obfuscated ones. To account for the variable number of lines, keep
-        # reading until eof_line.
+        line = self._proc.stdout.readline()
+        # Return an empty string at EOF (when stdin is closed).
+        if not line:
+          break
+        line = line[:-1]
         if line == eof_line:
           break
         out_lines.append(line)
@@ -83,8 +87,14 @@ class Deobfuscator(object):
       self._proc.stdin.write('\n'.join(lines))
       self._proc.stdin.write('\n{}\n'.format(eof_line))
       self._proc.stdin.flush()
+      if not self._reader_thread:
+        logging.warning('Close() called by another thread during flush().')
+        return lines
       timeout = max(_MINIUMUM_TIMEOUT, len(lines) * _PER_LINE_TIMEOUT)
       self._reader_thread.join(timeout)
+      if not self._reader_thread:
+        logging.warning('Close() called by another thread during join().')
+        return lines
       if self._reader_thread.is_alive():
         logging.error('java_deobfuscate timed out.')
         self.Close()
