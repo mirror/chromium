@@ -220,6 +220,23 @@
       "revId": "df3cfb18dc4082a24b56aa7e67c2f42ca59991b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f47cbcb_08024379",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-07T07:26:24Z",
+      "side": 1,
+      "message": "We should use SelectionController.h",
+      "revId": "df3cfb18dc4082a24b56aa7e67c2f42ca59991b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
