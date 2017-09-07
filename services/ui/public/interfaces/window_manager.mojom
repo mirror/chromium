@@ -370,6 +370,10 @@ interface WindowManagerClient {
   // window manager also can manually show/hide it for features.
   WmSetCursorTouchVisible(bool enabled);
 
+  // Dispatches a synthetic event. Used for things like remoting, where the
+  // window manager is receiving input from a remote process.
+  WmInjectEvent(ui.mojom.Event event, int64 display_id);
+
   // Response from WmCreateTopLevelWindow() informing the client of the id for
   // the new window.
   OnWmCreatedTopLevelWindow(uint32 change_id, uint32 window_id);
