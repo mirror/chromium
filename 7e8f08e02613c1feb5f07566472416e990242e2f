@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "2720aba5_10ab53d2",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T07:06:29Z",
+      "side": 1,
+      "message": "Hm, or we could have an AbortReadyCallback() helper function that\u0027s called in these callsites + the dtor?",
+      "parentUuid": "64e6534f_d8ee93de",
+      "revId": "7e8f08e02613c1feb5f07566472416e990242e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b61187a5_61a66a08",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 3
