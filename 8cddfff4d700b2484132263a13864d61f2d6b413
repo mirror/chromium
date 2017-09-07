@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8946efb8_e58c8e45",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-07T23:30:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b9f0fad8_9f7fb7ca",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1abe8a10_e62c16ef",
         "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
         "patchSetId": 1
@@ -184,6 +202,24 @@
       "side": 1,
       "message": "You are right, we don\u0027t have that with an enumeration. Looked good to me but with our offline conversation we should make the switch for simplification.",
       "parentUuid": "e6306499_d047f526",
+      "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f97b254b_f6f3ce79",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-07T23:30:00Z",
+      "side": 1,
+      "message": "Per our offline conversation, changed to use a single enum metric.",
+      "parentUuid": "93efa6b0_3b3ad30a",
       "revId": "8cddfff4d700b2484132263a13864d61f2d6b413",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
