@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d42aac17_d2d0c181",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T02:33:10Z",
+      "side": 1,
+      "message": "BindOnce",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d510ebd_4cc20d88",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T02:33:10Z",
+      "side": 1,
+      "message": "BindOnce",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a90a085_8d847f16",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T02:33:10Z",
+      "side": 1,
+      "message": "BindOnce",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a74e29_f3285525",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T02:33:10Z",
+      "side": 1,
+      "message": "Does just  std::move(callback) work",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2753c8ce_acb41ed0",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T02:33:10Z",
+      "side": 1,
+      "message": "Just FYI I thought Barrier was fine. It was just \"ChildCallBack\" that seemed not so descriptive.",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855c77c6_d0dc1461",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T02:33:10Z",
+      "side": 1,
+      "message": "keep this in the same order at the .h file",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599f4d1a_16dd733c",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T02:33:10Z",
+      "side": 1,
+      "message": "std::move(task_runner)",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a2331c_e593986d",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T02:33:10Z",
+      "side": 1,
+      "message": "Like the other functions in this class, can you document what thread the callback is called on? (Thanks for doing this neatly and having the callback be called on the caller\u0027s thread!)",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81075008_9c8152eb",
+        "filename": "content/public/test/mock_service_worker_context.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T02:33:10Z",
+      "side": 1,
+      "message": "nit: keep the same order as the .h file",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001ad729_20ab7962",
+        "filename": "content/public/test/mock_service_worker_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T02:33:10Z",
+      "side": 1,
+      "message": "nit: keep the same order as the base class ServiceWorkerContext (should be after StartWorkerForNavigationHint)",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
