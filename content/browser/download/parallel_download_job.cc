@@ -29,6 +29,7 @@ ParallelDownloadJob::ParallelDownloadJob(
     const DownloadCreateInfo& create_info)
     : DownloadJobImpl(download_item, std::move(request_handle), true),
       initial_request_offset_(create_info.offset),
+      initial_received_slices_(download_item->GetReceivedSlices()),
       content_length_(create_info.total_bytes),
       requests_sent_(false),
       is_canceled_(false) {}
@@ -205,9 +206,28 @@ void ParallelDownloadJob::ForkSubRequests(
   if (slices_to_download.size() < 2)
     return;
 
-  // Assume the first slice to download will be handled by the initial request.
-  for (auto it = slices_to_download.begin() + 1; it != slices_to_download.end();
+  // If the initial request is working on the first hole, don't create parallel
+  // request for this hole.
+  bool skip_first_slice = true;
+  DownloadItem::ReceivedSlices initial_slices_to_download =
+      FindSlicesToDownload(initial_received_slices_);
+  if (initial_slices_to_download.size() > 1) {
+    DCHECK(initial_slices_to_download[0].received_bytes != 0);
+    int64_t first_hole_min = initial_slices_to_download[0].offset;
+    int64_t first_hole_max =
+        first_hole_min + initial_slices_to_download[0].received_bytes;
+    int64_t starting_offset = slices_to_download[0].offset;
+    skip_first_slice = (starting_offset >= first_hole_min) &&
+                       (starting_offset <= first_hole_max);
+  }
+
+  for (auto it = slices_to_download.begin(); it != slices_to_download.end();
        ++it) {
+    if (skip_first_slice) {
+      skip_first_slice = false;
+      continue;
+    }
+
     DCHECK_GE(it->offset, initial_request_offset_);
     CreateRequest(it->offset, it->received_bytes);
   }

@@ -24,6 +24,7 @@
 using ::testing::_;
 using ::testing::NiceMock;
 using ::testing::Return;
+using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 namespace content {
@@ -133,13 +134,14 @@ class ParallelDownloadJobTest : public testing::Test {
                          int64_t min_slice_size,
                          int min_remaining_time) {
     item_delegate_ = base::MakeUnique<DownloadItemImplDelegate>();
-    download_item_ = base::MakeUnique<NiceMock<MockDownloadItemImpl>>(
-        item_delegate_.get(), slices);
+    download_item_ =
+        base::MakeUnique<NiceMock<MockDownloadItemImpl>>(item_delegate_.get());
     EXPECT_CALL(*download_item_, GetTotalBytes())
-        .WillRepeatedly(
-            testing::Return(initial_request_offset + content_length));
+        .WillRepeatedly(Return(initial_request_offset + content_length));
     EXPECT_CALL(*download_item_, GetReceivedBytes())
-        .WillRepeatedly(testing::Return(initial_request_offset));
+        .WillRepeatedly(Return(initial_request_offset));
+    EXPECT_CALL(*download_item_, GetReceivedSlices())
+        .WillRepeatedly(ReturnRef(slices));
 
     DownloadCreateInfo info;
     info.offset = initial_request_offset;
@@ -290,6 +292,63 @@ TEST_F(ParallelDownloadJobTest, CreateNewDownloadRequestsWithSlices) {
   VerifyWorker(30, 10);
   VerifyWorker(50, 40);
   VerifyWorker(100, 0);
+  DestroyParallelJob();
+}
+
+// Ensure that in download resumption, if the first hole is filled before
+// sending multiple requests, the new requests can be correctly calculated.
+TEST_F(ParallelDownloadJobTest, CreateResumptionRequestsFirstSliceFilled) {
+  DownloadItem::ReceivedSlices slices = {DownloadItem::ReceivedSlice(0, 10),
+                                         DownloadItem::ReceivedSlice(40, 10),
+                                         DownloadItem::ReceivedSlice(80, 10)};
+
+  // The updated slices that has filled the first hole.
+  DownloadItem::ReceivedSlices updated_slices = slices;
+  updated_slices[0].received_bytes = 40;
+
+  CreateParallelJob(10, 90, slices, 3, 1, 10);
+  // Now let download item to return an updated received slice, that the first
+  // hole in the file has been filled.
+  EXPECT_CALL(*download_item_.get(), GetReceivedSlices())
+      .WillRepeatedly(ReturnRef(updated_slices));
+  BuildParallelRequests();
+
+  // Since the first hole is filled, parallel requests are created to fill other
+  // two holes.
+  EXPECT_EQ(2u, job_->workers().size());
+  VerifyWorker(50, 30);
+  VerifyWorker(90, 0);
+  DestroyParallelJob();
+}
+
+// Simulate an edge case that we have one received slice in the middle. The
+// parallel request should be created correctly.
+// This may not happen under current implementation, but should be also handled
+// correctly.
+TEST_F(ParallelDownloadJobTest, CreateResumptionRequestsTwoSlicesToFill) {
+  DownloadItem::ReceivedSlices slices = {DownloadItem::ReceivedSlice(40, 10)};
+
+  CreateParallelJob(0, 100, slices, 3, 1, 10);
+  BuildParallelRequests();
+
+  EXPECT_EQ(1u, job_->workers().size());
+  VerifyWorker(50, 0);
+  DestroyParallelJob();
+
+  DownloadItem::ReceivedSlices updated_slices = {
+      DownloadItem::ReceivedSlice(0, 10), DownloadItem::ReceivedSlice(40, 10)};
+
+  CreateParallelJob(0, 100, slices, 3, 1, 10);
+  // Now let download item to return an updated received slice, that the first
+  // hole in the file is not fully filled.
+  EXPECT_CALL(*download_item_.get(), GetReceivedSlices())
+      .WillRepeatedly(ReturnRef(updated_slices));
+  BuildParallelRequests();
+
+  // Because the initial request is working on the first hole, there should be
+  // only one parallel request to fill the second hole.
+  EXPECT_EQ(1u, job_->workers().size());
+  VerifyWorker(50, 0);
   DestroyParallelJob();
 }
 
