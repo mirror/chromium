@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ff1f5c4_08244420",
+        "filename": "base/metrics/histogram_functions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-07T22:50:55Z",
+      "side": 1,
+      "message": "Please use the same warning and other policies (\u003d0, \u003d1) as the best practices doc.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 7
+      },
+      "revId": "c257a588ec82df7316946943b1c66bab71d33fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d8f9815_1b370b0a",
+        "filename": "base/metrics/histogram_macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-07T22:50:55Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c257a588ec82df7316946943b1c66bab71d33fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379452c1_e00ff8a8",
+        "filename": "base/metrics/histogram_macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-07T22:50:55Z",
+      "side": 1,
+      "message": "This can probably be removed because it\u0027s redundant with the new comment you\u0027re going to put above. :-)",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 22
+      },
+      "revId": "c257a588ec82df7316946943b1c66bab71d33fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c424c857_e663fe09",
+        "filename": "base/metrics/histogram_macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-07T22:50:55Z",
+      "side": 1,
+      "message": "Saying this is probably not necessary, as we\u0027re emitting enum class values and the compiler enforces it.",
+      "range": {
+        "startLine": 51,
+        "startChar": 22,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "c257a588ec82df7316946943b1c66bab71d33fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
