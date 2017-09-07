@@ -38,8 +38,15 @@ class BASE_EXPORT ScopedBlockingCall {
   ~ScopedBlockingCall();
 
  private:
-  BlockingType blocking_type_;
-  internal::BlockingObserver* blocking_observer_;
+  const BlockingType blocking_type_;
+  internal::BlockingObserver* const blocking_observer_;
+
+  // Previous ScopedBlockingCall instantiated on this thread.
+  ScopedBlockingCall* const previous_scoped_blocking_call_;
+
+  // Whether the observer was notified when this ScopedBlockingCall was
+  // instantiated.
+  const bool notified_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedBlockingCall);
 };
@@ -47,17 +54,29 @@ class BASE_EXPORT ScopedBlockingCall {
 namespace internal {
 
 // Interface for an observer to be informed when a thread enters or exits
-// the scope of a ScopedBlockingCall object.
+// the scope of ScopedBlockingCall objects.
 class BASE_EXPORT BlockingObserver {
  public:
   virtual ~BlockingObserver() = default;
 
+  // Invoked when:
+  // - A MAY_BLOCK ScopedBlockingCall is instantiated on a thread where there is
+  //   no active ScopedBlockingCall.
+  // - A WILL_BLOCK ScopedBlockingCall is instantiated on a thread when there is
+  //   no active WILL_BLOCK ScopedBlockingCall.
   virtual void BlockingScopeEntered(BlockingType blocking_type) = 0;
-  virtual void BlockingScopeExited(BlockingType blocking_type) = 0;
+
+  // Invoked when the last ScopedBlockingCall on a thread is destroyed.
+  virtual void BlockingScopeExited() = 0;
 };
 
-void SetBlockingObserverForCurrentThread(BlockingObserver* blocking_observer);
-void ClearBlockingObserverForTesting();
+// Registers |blocking_observer| to be informed when the current thread enters
+// of exits the scope of ScopedBlockingCall objects. It is invalid to call this
+// on a thread where there is an active ScopedBlockingCall.
+BASE_EXPORT void SetBlockingObserverForCurrentThread(
+    BlockingObserver* blocking_observer);
+
+BASE_EXPORT void ClearBlockingObserverForTesting();
 
 }  // namespace internal
 

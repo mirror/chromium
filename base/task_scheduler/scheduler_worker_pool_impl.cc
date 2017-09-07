@@ -86,7 +86,7 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
 
   // BlockingObserver:
   void BlockingScopeEntered(BlockingType blocking_type) override;
-  void BlockingScopeExited(BlockingType blocking_type) override;
+  void BlockingScopeExited() override;
 
   void MayBlockScopeEntered();
   void WillBlockScopeEntered();
@@ -517,8 +517,8 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::BlockingScopeEntered(
   }
 }
 
-void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::BlockingScopeExited(
-    BlockingType blocking_type) {
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
+    BlockingScopeExited() {
   AutoSchedulerLock auto_lock(outer_->lock_);
   if (incremented_worker_capacity_since_blocked_)
     outer_->DecrementWorkerCapacityLockRequired();
@@ -550,8 +550,18 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
       outer_->shared_priority_queue_.BeginTransaction());
   AutoSchedulerLock auto_lock(outer_->lock_);
 
-  DCHECK(!incremented_worker_capacity_since_blocked_);
-  DCHECK(may_block_start_time_.is_null());
+  // Do not do anything if a MAY_BLOCK ScopedBlockingCall instantiated in the
+  // same scope already caused the worker capacity to be incremented.
+  if (incremented_worker_capacity_since_blocked_)
+    return;
+
+  // Cancel the effect of a MAY_BLOCK ScopedBlockingCall instantiated in the
+  // same scope.
+  if (!may_block_start_time_.is_null()) {
+    may_block_start_time_ = TimeTicks();
+    --outer_->num_pending_may_block_workers_;
+  }
+
   incremented_worker_capacity_since_blocked_ = true;
   outer_->IncrementWorkerCapacityLockRequired();
 
