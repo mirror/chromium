@@ -6,7 +6,7 @@
 
 #include "base/time/time.h"
 #include "net/cert/internal/cert_errors.h"
-#include "net/cert/internal/parse_ocsp.h"
+#include "net/cert/internal/ocsp.h"
 #include "net/der/encode_values.h"
 #include "third_party/boringssl/src/include/openssl/digest.h"
 #include "third_party/boringssl/src/include/openssl/sha.h"
