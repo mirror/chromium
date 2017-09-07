@@ -186,9 +186,6 @@ DispatchEventResult EventDispatcher::Dispatch() {
   DispatchEventPostProcess(activation_target,
                            pre_dispatch_event_handler_result);
 
-  // Ensure that after event dispatch, the event's target object is the
-  // outermost shadow DOM boundary.
-  event_->SetTarget(event_->GetEventPath().GetWindowEventContext().Target());
   event_->SetCurrentTarget(nullptr);
 
   return EventTarget::GetDispatchEventResult(*event_);
