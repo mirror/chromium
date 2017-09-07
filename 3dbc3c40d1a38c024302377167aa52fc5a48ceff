@@ -46,6 +46,30 @@
       "revId": "3dbc3c40d1a38c024302377167aa52fc5a48ceff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2413993b_736660c9",
+        "filename": "components/arc/common/midis.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-07T18:16:01Z",
+      "side": 1,
+      "message": "The current signature is fine in that case, as long as the plan is to never add a callback. Just amend the comment where it says \"obtain a handle\" and change it to \"connect the client handle with the server\" or something along those lines.",
+      "parentUuid": "ea1c832e_53d61ad4",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 14
+      },
+      "revId": "3dbc3c40d1a38c024302377167aa52fc5a48ceff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
