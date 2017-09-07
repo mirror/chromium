@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "19a91377_6ef74678",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-07T15:47:52Z",
+      "side": 1,
+      "message": "Why is this needed, if we\u0027re doing to delete it anyways?",
+      "range": {
+        "startLine": 201,
+        "startChar": 21,
+        "endLine": 201,
+        "endChar": 37
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e49fb0_319616a5",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-07T15:47:52Z",
+      "side": 1,
+      "message": "What about capping number of redirects?  Should it be done here as well?",
+      "range": {
+        "startLine": 253,
+        "startChar": 25,
+        "endLine": 253,
+        "endChar": 0
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba5f8aad_174e7f5a",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-07T15:47:52Z",
+      "side": 1,
+      "message": "If this is a subframe, origin needs to be updated, too, I believe?  Or do we not care about that yet.",
+      "range": {
+        "startLine": 264,
+        "startChar": 39,
+        "endLine": 264,
+        "endChar": 53
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abca8fc6_18cafbdc",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-07T15:47:52Z",
+      "side": 1,
+      "message": "referrer_policy_?  token_binding_referrer (ugh...)?",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 79
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847c55ad_7a1ab5a9",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-07T15:47:52Z",
+      "side": 1,
+      "message": "Some redirects maintain the body.  Is this right?  No other handlers care about the body, or can change their mind and redirect us back to using the network service, which will once again care about the body?",
+      "range": {
+        "startLine": 267,
+        "startChar": 29,
+        "endLine": 267,
+        "endChar": 39
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1c98f0_2b13bc21",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-07T15:47:52Z",
+      "side": 1,
+      "message": "Is this still needed, if we\u0027re going to destroy the URLLoader anyways?",
+      "range": {
+        "startLine": 389,
+        "startChar": 36,
+        "endLine": 389,
+        "endChar": 0
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c295fdec_161eb8c9",
         "filename": "third_party/WebKit/LayoutTests/http/tests/appcache/resources/offline-access.js",
         "patchSetId": 2
