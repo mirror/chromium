@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4085bebb_e9af7a11",
+        "filename": "cc/tiles/picture_layer_tiling_set.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-07T23:31:20Z",
+      "side": 1,
+      "message": "For unique_ptrs, I\u0027d prefer we continue using push_back and make_unique. It makes it more clear that we\u0027re wrapping things in smart pointers at the callsite.",
+      "revId": "8ed2974ab90a4fe5c1d2dd86088b7423d2a5a053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8723cc8_f69e9433",
+        "filename": "cc/tiles/picture_layer_tiling_set.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-07T23:31:20Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "8ed2974ab90a4fe5c1d2dd86088b7423d2a5a053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
