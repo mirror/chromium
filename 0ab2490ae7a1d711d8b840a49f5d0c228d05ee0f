@@ -350,6 +350,24 @@
       "revId": "0ab2490ae7a1d711d8b840a49f5d0c228d05ee0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4c99e5_a2a65365",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIApplyAtRule.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-07T01:46:53Z",
+      "side": 1,
+      "message": "what happens if it\u0027s not in build.gn and has no impl?",
+      "parentUuid": "9ffce1b0_11128dd2",
+      "revId": "0ab2490ae7a1d711d8b840a49f5d0c228d05ee0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
