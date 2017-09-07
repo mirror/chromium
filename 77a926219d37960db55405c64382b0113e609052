@@ -45,6 +45,23 @@
       "revId": "77a926219d37960db55405c64382b0113e609052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb8139f_c18dffa3",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_material_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-07T10:18:47Z",
+      "side": 1,
+      "message": "Reverse this as well.",
+      "revId": "77a926219d37960db55405c64382b0113e609052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
