@@ -495,6 +495,15 @@ void WindowSelector::SetBoundsForWindowGridsInScreenIgnoringWindow(
     grid->SetBoundsAndUpdatePositionsIgnoringWindow(bounds, ignored_item);
 }
 
+WindowGrid* WindowSelector::GetGridWithRootWindow(aura::Window* root_window) {
+  for (std::unique_ptr<WindowGrid>& grid : grid_list_) {
+    if (grid->root_window() == root_window)
+      return grid.get();
+  }
+
+  return nullptr;
+}
+
 void WindowSelector::RemoveWindowSelectorItem(WindowSelectorItem* item) {
   if (item->GetWindow()->HasObserver(this)) {
     item->GetWindow()->RemoveObserver(this);

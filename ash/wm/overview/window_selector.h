@@ -90,6 +90,10 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
       const gfx::Rect& bounds,
       WindowSelectorItem* ignored_item);
 
+  // Retrieves the window grid whose root window matches |root_window|. Returns
+  // nullptr if the window grid is not found.
+  WindowGrid* GetGridWithRootWindow(aura::Window* root_window);
+
   // Removes the window selector item from the overview window grid.
   void RemoveWindowSelectorItem(WindowSelectorItem* item);
 
