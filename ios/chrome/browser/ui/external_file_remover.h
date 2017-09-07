@@ -10,7 +10,12 @@
 #include "base/time/time.h"
 #include "components/sessions/core/tab_restore_service_observer.h"
 
-@class BrowserViewController;
+namespace bookmarks {
+class BookmarkModel;
+}
+namespace ios {
+class ChromeBrowserState;
+}
 namespace sessions {
 class TabRestoreService;
 }
@@ -22,7 +27,7 @@ class ExternalFileRemover : public sessions::TabRestoreServiceObserver {
  public:
   // Creates an ExternalFileRemover to remove external documents not referenced
   // by the specified BrowserViewController. Use Remove to initiate the removal.
-  explicit ExternalFileRemover(BrowserViewController* bvc);
+  explicit ExternalFileRemover(ios::ChromeBrowserState* browserState);
   ~ExternalFileRemover() override;
 
   // sessions::TabRestoreServiceObserver methods
@@ -36,6 +41,8 @@ class ExternalFileRemover : public sessions::TabRestoreServiceObserver {
                         const base::Closure& callback);
 
  private:
+  // Cached pointer to the bookmarks model.
+  bookmarks::BookmarkModel* bookmarkModel_;
   // Removes files received from other apps. If |all_files| is true, then
   // all files including files that may be referenced by tabs through restore
   // service or history. Otherwise, only the unreferenced files are removed.
@@ -44,9 +51,9 @@ class ExternalFileRemover : public sessions::TabRestoreServiceObserver {
   // Pointer to the tab restore service in the browser state associated with
   // |bvc_|.
   sessions::TabRestoreService* tabRestoreService_;
-  // BrowserViewController used to get the referenced files. Must outlive this
+  // ChromeBrowserState used to get the referenced files. Must outlive this
   // object.
-  __unsafe_unretained BrowserViewController* bvc_;
+  ios::ChromeBrowserState* browserState_;
   // Used to ensure |Remove()| is not run when this object is destroyed.
   base::WeakPtrFactory<ExternalFileRemover> weak_ptr_factory_;
   // Loads the |tabRestoreService_| if necessary. Removes all files received
