@@ -34,6 +34,24 @@
       "revId": "7915a2c43f1576090a7ae90fcb7a1781a29e67ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e813e78_31ccd4f6",
+        "filename": "content/public/test/mock_service_worker_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-07T14:58:42Z",
+      "side": 1,
+      "message": "Some code bases use the terms loosely, it\u0027s true. But mock does have a specific definition. A mock object allows well-defined expectations about what calls will or won\u0027t be made. For example, in my test, I had Times(1) which would fail if the hint was sent more than once but the fake wouldn\u0027t notice or care. It\u0027s not especially important here, but it can be.\n\nhttps://big.corp.google.com/~jmcmaster/testing/2013/08/episode-296-know-your-test-doubles.html has a nice explainer.",
+      "parentUuid": "4941055c_7f8f31bc",
+      "revId": "7915a2c43f1576090a7ae90fcb7a1781a29e67ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
