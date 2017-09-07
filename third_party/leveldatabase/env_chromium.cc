@@ -1280,6 +1280,7 @@ DBTracker::~DBTracker() {
   NOTREACHED();  // DBTracker is a singleton
 }
 
+// static
 DBTracker* DBTracker::GetInstance() {
   static DBTracker* instance = new DBTracker();
   return instance;
@@ -1289,6 +1290,9 @@ DBTracker* DBTracker::GetInstance() {
 base::trace_event::MemoryAllocatorDump* DBTracker::GetOrCreateAllocatorDump(
     base::trace_event::ProcessMemoryDump* pmd,
     leveldb::DB* tracked_db) {
+  DCHECK(GetInstance()->IsTrackedDB(tracked_db))
+      << std::hex << tracked_db << " is not tracked";
+
   if (pmd->dump_args().level_of_detail ==
       base::trace_event::MemoryDumpLevelOfDetail::BACKGROUND) {
     return nullptr;
@@ -1316,6 +1320,15 @@ base::trace_event::MemoryAllocatorDump* DBTracker::GetOrCreateAllocatorDump(
   if (system_allocator_name)
     pmd->AddSuballocation(dump->guid(), system_allocator_name);
   return dump;
+}
+
+bool DBTracker::IsTrackedDB(const leveldb::DB* db) const {
+  base::AutoLock lock(databases_lock_);
+  for (auto* i = databases_.head(); i != databases_.end(); i = i->next()) {
+    if (i->value() == db)
+      return true;
+  }
+  return false;
 }
 
 leveldb::Status DBTracker::OpenDatabase(const leveldb::Options& options,

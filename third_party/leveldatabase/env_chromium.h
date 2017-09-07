@@ -297,12 +297,15 @@ class DBTracker {
   DBTracker();
   ~DBTracker();
 
+  // Checks if |db| is tracked.
+  bool IsTrackedDB(const leveldb::DB* db) const;
+
   void DatabaseOpened(TrackedDBImpl* database);
   void DatabaseDestroyed(TrackedDBImpl* database);
 
   std::unique_ptr<MemoryDumpProvider> mdp_;
 
-  base::Lock databases_lock_;
+  mutable base::Lock databases_lock_;
   base::LinkedList<TrackedDBImpl> databases_;
 
   DISALLOW_COPY_AND_ASSIGN(DBTracker);
