@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdfe3b54_4a7097d2",
+        "filename": "media/audio/audio_input_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-07T18:24:37Z",
+      "side": 1,
+      "message": "if (auto* pm \u003d PM::Get())\n  pm-\u003eRemoveObserver(this);\n\nlooks better :)",
+      "revId": "5163a812843cbdc7acbc9a60a30a7403c6916939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f9a0b7_d83200bb",
+        "filename": "media/audio/audio_input_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-07T18:24:37Z",
+      "side": 1,
+      "message": "All this is equivalent to check_alive_timer_.reset();",
+      "revId": "5163a812843cbdc7acbc9a60a30a7403c6916939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
