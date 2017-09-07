@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "99f53138_9da51395",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Gain/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-07T22:00:51Z",
+      "side": 1,
+      "message": "There are only two uses of prefix, so using options.prefix instead is ok with me.",
+      "parentUuid": "d12a3425_0bf62ef0",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 36
+      },
+      "revId": "8bfb7c881f937557165d32f3733918ef67698d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a4ca69d_5acc12ac",
         "filename": "third_party/WebKit/Source/modules/webaudio/GainNode.cpp",
         "patchSetId": 6
@@ -76,6 +100,30 @@
       "writtenOn": "2017-09-07T20:36:59Z",
       "side": 1,
       "message": "Is this only used by GainNode?",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 64
+      },
+      "revId": "8bfb7c881f937557165d32f3733918ef67698d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d367941_1014c571",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioBus.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-07T22:00:51Z",
+      "side": 1,
+      "message": "I was surprised about this. It\u0027s also called by PannerNode::process()",
+      "parentUuid": "86712240_2356852f",
       "range": {
         "startLine": 149,
         "startChar": 2,
