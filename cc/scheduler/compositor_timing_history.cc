@@ -47,6 +47,16 @@ class CompositorTimingHistory::UMAReporter {
   virtual void AddSubmitToAckLatency(base::TimeDelta duration) = 0;
   virtual void AddSubmitAckWasFast(bool was_fast) = 0;
 
+  // crbug.com/758439: the following 6 functions are used to reporter timing
+  // in certain conditions targeting blink / compositor animations.
+  // Only the renderer would get the meaningful data.
+  virtual void AddDrawIntervalWithCompositedAnimations(
+      base::TimeDelta duration) = 0;
+  virtual void AddDrawIntervalWithMainThreadAnimations(
+      base::TimeDelta duration) = 0;
+  virtual void AddDrawIntervalWithMainThreadCompositableAnimations(
+      base::TimeDelta duration) = 0;
+
   // Synchronization measurements
   virtual void AddMainAndImplFrameTimeDelta(base::TimeDelta delta) = 0;
 };
@@ -175,6 +185,25 @@ class RendererUMAReporter : public CompositorTimingHistory::UMAReporter {
                                              interval);
   }
 
+  void AddDrawIntervalWithCompositedAnimations(
+      base::TimeDelta interval) override {
+    UMA_HISTOGRAM_CUSTOM_TIMES_VSYNC_ALIGNED(
+        "Scheduling.Renderer.DrawIntervalWithCompositedAnimations", interval);
+  }
+
+  void AddDrawIntervalWithMainThreadAnimations(
+      base::TimeDelta interval) override {
+    UMA_HISTOGRAM_CUSTOM_TIMES_VSYNC_ALIGNED(
+        "Scheduling.Renderer.DrawIntervalWithMainThreadAnimations", interval);
+  }
+
+  void AddDrawIntervalWithMainThreadCompositableAnimations(
+      base::TimeDelta interval) override {
+    UMA_HISTOGRAM_CUSTOM_TIMES_VSYNC_ALIGNED(
+        "Scheduling.Renderer.DrawIntervalWithMainThreadCompositableAnimations",
+        interval);
+  }
+
   void AddBeginImplFrameLatency(base::TimeDelta delta) override {
     UMA_HISTOGRAM_CUSTOM_TIMES_DURATION(
         "Scheduling.Renderer.BeginImplFrameLatency", delta);
@@ -281,6 +310,29 @@ class BrowserUMAReporter : public CompositorTimingHistory::UMAReporter {
                                              interval);
   }
 
+  void AddDrawIntervalWithCompositedAnimations(
+      base::TimeDelta interval) override {
+    // Still report, but the data is not meaningful.
+    UMA_HISTOGRAM_CUSTOM_TIMES_VSYNC_ALIGNED(
+        "Scheduling.Browser.DrawIntervalWithCompositedAnimations", interval);
+  }
+
+  void AddDrawIntervalWithMainThreadAnimations(
+      base::TimeDelta interval) override {
+    // Still report, but the data is not meaningful.
+    UMA_HISTOGRAM_CUSTOM_TIMES_VSYNC_ALIGNED(
+        "Scheduling.Browser.DrawIntervalWithMainThreadAnimations", interval);
+  }
+
+  void AddDrawIntervalWithMainThreadCompositableAnimations(
+      base::TimeDelta interval) override {
+    // Still report, but the data is not meaningful.
+    UMA_HISTOGRAM_CUSTOM_TIMES_VSYNC_ALIGNED(
+        "Scheduling.Browser."
+        "DrawIntervalWithMainThreadCompositableAnimations",
+        interval);
+  }
+
   void AddBeginImplFrameLatency(base::TimeDelta delta) override {
     UMA_HISTOGRAM_CUSTOM_TIMES_DURATION(
         "Scheduling.Browser.BeginImplFrameLatency", delta);
@@ -371,6 +423,12 @@ class NullUMAReporter : public CompositorTimingHistory::UMAReporter {
   }
   void AddCommitInterval(base::TimeDelta interval) override {}
   void AddDrawInterval(base::TimeDelta interval) override {}
+  void AddDrawIntervalWithCompositedAnimations(
+      base::TimeDelta inverval) override {}
+  void AddDrawIntervalWithMainThreadAnimations(
+      base::TimeDelta inverval) override {}
+  void AddDrawIntervalWithMainThreadCompositableAnimations(
+      base::TimeDelta interval) override {}
   void AddBeginImplFrameLatency(base::TimeDelta delta) override {}
   void AddBeginMainFrameQueueDurationCriticalDuration(
       base::TimeDelta duration) override {}
@@ -800,9 +858,13 @@ void CompositorTimingHistory::DrawAborted() {
   active_tree_main_frame_time_ = base::TimeTicks();
 }
 
-void CompositorTimingHistory::DidDraw(bool used_new_active_tree,
-                                      bool main_thread_missed_last_deadline,
-                                      base::TimeTicks impl_frame_time) {
+void CompositorTimingHistory::DidDraw(
+    bool used_new_active_tree,
+    bool main_thread_missed_last_deadline,
+    base::TimeTicks impl_frame_time,
+    size_t composited_animations_count,
+    size_t main_thread_animations_count,
+    size_t main_thread_compositable_animations_count) {
   DCHECK_NE(base::TimeTicks(), draw_start_time_);
   base::TimeTicks draw_end_time = Now();
   base::TimeDelta draw_duration = draw_end_time - draw_start_time_;
@@ -824,8 +886,9 @@ void CompositorTimingHistory::DidDraw(bool used_new_active_tree,
   if (!draw_end_time_prev_.is_null()) {
     base::TimeDelta draw_interval = draw_end_time - draw_end_time_prev_;
     uma_reporter_->AddDrawInterval(draw_interval);
+    if (composited_animations_count > 0)
+      uma_reporter_->AddDrawIntervalWithCompositedAnimations(draw_interval);
   }
-  draw_end_time_prev_ = draw_end_time;
 
   if (used_new_active_tree) {
     DCHECK_NE(base::TimeTicks(), active_tree_main_frame_time_);
@@ -839,6 +902,14 @@ void CompositorTimingHistory::DidDraw(bool used_new_active_tree,
     uma_reporter_->AddMainAndImplFrameTimeDelta(main_and_impl_delta);
     active_tree_main_frame_time_ = base::TimeTicks();
 
+    if (!draw_end_time_prev_.is_null()) {
+      base::TimeDelta draw_interval = draw_end_time - draw_end_time_prev_;
+      if (main_thread_animations_count > 0)
+        uma_reporter_->AddDrawIntervalWithMainThreadAnimations(draw_interval);
+      if (main_thread_compositable_animations_count > 0)
+        uma_reporter_->AddDrawIntervalWithMainThreadCompositableAnimations(
+            draw_interval);
+    }
     if (begin_main_frame_committing_continuously_) {
       if (!new_active_tree_draw_end_time_prev_.is_null()) {
         base::TimeDelta draw_interval =
@@ -848,7 +919,7 @@ void CompositorTimingHistory::DidDraw(bool used_new_active_tree,
       new_active_tree_draw_end_time_prev_ = draw_end_time;
     }
   }
-
+  draw_end_time_prev_ = draw_end_time;
   draw_start_time_ = base::TimeTicks();
 }
 
