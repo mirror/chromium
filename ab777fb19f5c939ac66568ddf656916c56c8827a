@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1fc0827_49c0b7b7",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1745,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T18:14:14Z",
+      "side": 0,
+      "message": "How about a switch to enable PT_TOUCH (default is not to)? Otherwise we have what looks like dead code.",
+      "range": {
+        "startLine": 1745,
+        "startChar": 13,
+        "endLine": 1745,
+        "endChar": 40
+      },
+      "revId": "ab777fb19f5c939ac66568ddf656916c56c8827a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
