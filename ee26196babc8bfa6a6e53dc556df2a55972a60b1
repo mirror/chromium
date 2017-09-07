@@ -16,6 +16,24 @@
       "revId": "ee26196babc8bfa6a6e53dc556df2a55972a60b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe4de7a4_07ccebc5",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-07T01:54:06Z",
+      "side": 1,
+      "message": "\u003e the alternate solution for that would be to simply make the GridLayout column for the second thing in the stack FIXED instead of USE_PREF.\n\nThis actually seems to work.. But it surprised me. Combobox also uses CalculatePreferredSize() for its *minimum* size, so using FIXED-but-stretchy seems to exploit the fact that GridLayout can ignore a View\u0027s specified minimum size when using FIXED. Are we OK with that?\n\nOtherwise, I don\u0027t think there\u0027s a way to do this without modifying logic in views::Combobox.",
+      "parentUuid": "50676820_ba71e440",
+      "revId": "ee26196babc8bfa6a6e53dc556df2a55972a60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
