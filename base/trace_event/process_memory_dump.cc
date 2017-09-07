@@ -184,7 +184,6 @@ base::Optional<size_t> ProcessMemoryDump::CountResidentBytesInSharedMemory(
 
 #endif  // defined(COUNT_RESIDENT_BYTES_SUPPORTED)
 
-ProcessMemoryDump::ProcessMemoryDump() {}
 ProcessMemoryDump::ProcessMemoryDump(
     scoped_refptr<HeapProfilerSerializationState>
         heap_profiler_serialization_state,
@@ -303,6 +302,24 @@ void ProcessMemoryDump::DumpHeapUsage(
   std::string base_name = base::StringPrintf("tracing/heap_profiler_%s",
                                              allocator_name);
   overhead.DumpInto(base_name.c_str(), this);
+}
+
+std::vector<ProcessMemoryDump::MemoryAllocatorDumpEdge>
+ProcessMemoryDump::GetAllEdgesForSerialization() const {
+  std::vector<MemoryAllocatorDumpEdge> edges;
+  edges.reserve(allocator_dumps_edges_.size());
+  for (const auto& it : allocator_dumps_edges_)
+    edges.push_back(it.second);
+  return edges;
+}
+
+void ProcessMemoryDump::SetAllEdgesForSerialization(
+    const std::vector<ProcessMemoryDump::MemoryAllocatorDumpEdge>& edges) {
+  DCHECK(allocator_dumps_edges_.empty());
+  for (const MemoryAllocatorDumpEdge& edge : edges) {
+    auto it_and_inserted = allocator_dumps_edges_.emplace(edge.source, edge);
+    DCHECK(it_and_inserted.second);
+  }
 }
 
 void ProcessMemoryDump::Clear() {
@@ -457,6 +474,17 @@ MemoryAllocatorDump* ProcessMemoryDump::GetBlackHoleMad() {
   if (!black_hole_mad_)
     black_hole_mad_.reset(new MemoryAllocatorDump("discarded", this));
   return black_hole_mad_.get();
+}
+
+bool ProcessMemoryDump::MemoryAllocatorDumpEdge::operator==(
+    const MemoryAllocatorDumpEdge& other) {
+  return source == other.source && target == other.target &&
+         importance == other.importance && overridable == other.overridable;
+}
+
+bool ProcessMemoryDump::MemoryAllocatorDumpEdge::operator!=(
+    const MemoryAllocatorDumpEdge& other) {
+  return !operator==(other);
 }
 
 }  // namespace trace_event
