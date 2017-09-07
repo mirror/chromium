@@ -70,6 +70,29 @@
       "revId": "9580368e08bfba2a3b41f37112c502222f753d20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c2ef07_01341d5f",
+        "filename": "components/cronet/android/io_buffer_with_byte_buffer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-07T22:33:50Z",
+      "side": 1,
+      "message": "We should replace it with:\n  jobject java_buffer \u003d env-\u003eNewDirectByteBuffer(io_buffer_-\u003edata(), io_buffer_len_);\n  byte_buffer_.Reset(env, java_buffer);\n  env-\u003eDeleteLocalRef(java_buffer);",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 73
+      },
+      "revId": "9580368e08bfba2a3b41f37112c502222f753d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
