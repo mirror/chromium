@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfaaccc6_61d565ad",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1314,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-07T02:07:23Z",
+      "side": 1,
+      "message": "I was wondering if we could define this as a function rather than a block.\nSo that it can be reused.",
+      "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a7446fb_8f4df9db",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-07T02:07:23Z",
+      "side": 1,
+      "message": "same here. seems this one could be reused multiple times.",
+      "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea61bb27_a1ac2d68",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-07T02:07:23Z",
+      "side": 1,
+      "message": "wondering if we need to test undo as well?",
+      "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2013a14f_0b526f20",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-07T02:07:23Z",
+      "side": 1,
+      "message": "do we need to verify the options too?",
+      "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa986efa_550aef6c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-07T02:07:23Z",
+      "side": 1,
+      "message": "redundant code?",
+      "range": {
+        "startLine": 760,
+        "startChar": 0,
+        "endLine": 763,
+        "endChar": 52
+      },
+      "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
