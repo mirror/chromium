@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "326eee23_da974506",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 11
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-09-07T04:50:37Z",
+      "side": 1,
+      "message": "Can we make it more clear in the name that this is for ComputedStyle? Otherwise there will be confusion when comparing custom_functions with custom_initial, custom_inherit, custom_value and custom_all.\n\ne.g. computed_style_custom_functions\n\nWe can revisit the naming of custom_initial etc separately.",
+      "revId": "7cb0cccd8b958e507025adf320314c540b7167b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
