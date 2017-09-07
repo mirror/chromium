@@ -364,10 +364,8 @@ bool AndroidVideoDecodeAccelerator::Initialize(const Config& config,
 
   // If we're supposed to use overlays all the time, then they should always
   // be marked as required.
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kForceVideoOverlays)) {
-    surface_chooser_state_.is_required = is_overlay_required_ = true;
-  }
+  surface_chooser_state_.is_required = is_overlay_required_ =
+      base::FeatureList::IsEnabled(media::kForceVideoOverlays);
 
   // For encrypted media, start by initializing the CDM.  Otherwise, start with
   // the surface.
