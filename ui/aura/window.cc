@@ -72,6 +72,7 @@ Window::Window(WindowDelegate* delegate,
       // notification (such as the workspace code).
       observers_(base::ObserverList<WindowObserver>::NOTIFY_EXISTING_ONLY) {
   SetTargetHandler(delegate_);
+  set_layer_owner_delegate(this);
 }
 
 Window::~Window() {
@@ -1103,6 +1104,15 @@ void Window::ConvertEventToTarget(ui::EventTarget* target,
                                   ui::LocatedEvent* event) {
   event->ConvertLocationToTarget(this,
                                  static_cast<Window*>(target));
+}
+
+void Window::OnLayerRecreated(ui::Layer* old_layer, ui::Layer* new_layer) {
+  DCHECK_EQ(layer(), new_layer);
+  // If a frame sink is attached to the window, then allocate a new surface
+  // id when layers are recreated, so the old layer contents are not affected
+  // by a frame sent to the frame sink.
+  if (GetFrameSinkId().is_valid())
+    AllocateLocalSurfaceId();
 }
 
 void Window::UpdateLayerName() {
