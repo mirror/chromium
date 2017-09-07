@@ -46,6 +46,30 @@
       "revId": "2dee475fbda206f8afa2944ffba9c8b50b78664d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33872bf2_11f2ff57",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_misc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-07T04:58:55Z",
+      "side": 0,
+      "message": "Good question. There is no one to respond to, as the frame host is gone, but extension function has some logic, like uma logging which wouldn\u0027t be executed. So yeah, I\u0027m not sure if it\u0027s okay to skip, though we do it in many places in the code base.",
+      "parentUuid": "aecdbae4_9e6cbe71",
+      "range": {
+        "startLine": 753,
+        "startChar": 25,
+        "endLine": 753,
+        "endChar": 42
+      },
+      "revId": "2dee475fbda206f8afa2944ffba9c8b50b78664d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
