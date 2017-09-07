@@ -16,6 +16,24 @@
       "revId": "6183a80f8fd715f75ee991f3b5af1fec2f77a4e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c3b3761_5370f13e",
+        "filename": "ash/drag_drop/drag_drop_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-07T21:39:11Z",
+      "side": 1,
+      "message": "Because cursor type may change during a drag, we should enable this cursor icon change. I updated the CL with:\nif (!cursor_lock_ || cursor.native_type() !\u003d cursor_type_), which should be better.",
+      "parentUuid": "1fb1dc06_20425795",
+      "revId": "6183a80f8fd715f75ee991f3b5af1fec2f77a4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
