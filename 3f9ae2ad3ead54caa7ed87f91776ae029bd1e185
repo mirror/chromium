@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "956098ec_11cb3c88",
+        "filename": "net/url_request/url_request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-07T15:13:57Z",
+      "side": 1,
+      "message": "It would be nice to avoid this conversion, since it copies the string. Does it make sense to store referrer as a string in ErrorDetails instead, or will it have to turn into a GURL eventually anyway?",
+      "revId": "3f9ae2ad3ead54caa7ed87f91776ae029bd1e185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
