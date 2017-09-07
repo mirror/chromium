@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41085c3c_ed3730d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-07T14:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dd8604c_d621f913",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "89d66a5dc17f1c9101325ad08c61d91f5364d933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fe3fd1a_5df37d60",
         "filename": "third_party/WebKit/Source/core/layout/LayoutListMarker.cpp",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "89d66a5dc17f1c9101325ad08c61d91f5364d933",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "521ef2fe_c40722b1",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListMarker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-07T14:51:55Z",
+      "side": 1,
+      "message": "This is still correct as is for RTL.",
+      "parentUuid": "2fe3fd1a_5df37d60",
+      "revId": "89d66a5dc17f1c9101325ad08c61d91f5364d933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
