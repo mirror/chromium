@@ -159,7 +159,7 @@ void PaymentRequestState::CheckCanMakePayment(CanMakePaymentCallback callback) {
 
 bool PaymentRequestState::AreRequestedMethodsSupported() const {
   return !spec_->supported_card_networks().empty() ||
-         !spec_->url_payment_method_identifiers().empty();
+         !available_instruments_.empty();
 }
 
 std::string PaymentRequestState::GetAuthenticatedEmail() const {

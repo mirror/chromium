@@ -63,12 +63,13 @@ class PaymentMethodListItem : public PaymentRequestItemList::Item {
                         PaymentRequestItemList* list,
                         PaymentRequestDialogView* dialog,
                         bool selected)
-      : PaymentRequestItemList::Item(spec,
-                                     state,
-                                     list,
-                                     selected,
-                                     /*clickable=*/true,
-                                     /*show_edit_button=*/true),
+      : PaymentRequestItemList::Item(
+            spec,
+            state,
+            list,
+            selected,
+            /*clickable=*/true,
+            instrument->type() == PaymentInstrument::Type::AUTOFILL),
         instrument_(instrument),
         dialog_(dialog) {
     Init();
