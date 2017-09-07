@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "aff69953_b8c5dadf",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T21:16:23Z",
+      "side": 1,
+      "message": "I\u0027m not really changing that logic here,but I\u0027ll try to add something helpful that isn\u0027t too long.",
+      "parentUuid": "67f55367_b7c9b2a3",
+      "range": {
+        "startLine": 1303,
+        "startChar": 18,
+        "endLine": 1303,
+        "endChar": 33
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4784043f_8eb54808",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 2
@@ -532,6 +556,30 @@
       "side": 1,
       "message": "\u003e\u003e The fact that there isn\u0027t always a Cellular Service in Shill is an (annoying) Shill implementation detail\n\nCellular behaves like other technologies. The existence of a WiFi / Cellular / Ethernet / WiMAX device doesn\u0027t not imply a service must exist for that technology. On the contrary, I\u0027d argue that it\u0027s an implementation detail that UI chooses to mix device properties into network properties, and hence requires device-level operations to be proxied through a network handler :)",
       "parentUuid": "3e6c35c6_5c7fe4e6",
+      "range": {
+        "startLine": 1459,
+        "startChar": 45,
+        "endLine": 1459,
+        "endChar": 52
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44f531ca_70fc5b22",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1459,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T21:16:23Z",
+      "side": 1,
+      "message": "WiFi isn\u0027t interesting (except to enable / disable) without a Service.\n\nEthernet always has a Service.\n\nCellular needs to be able to enable / disable SIM state and select a mobile network without a service, and has a large number of properties that are interesting to the user in the Device state (which is not true for either WiFi or cellular).\n\nAll that aside, is there a question or suggestion here?",
+      "parentUuid": "3db70631_85f93680",
       "range": {
         "startLine": 1459,
         "startChar": 45,
