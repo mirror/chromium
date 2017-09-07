@@ -1,0 +1,383 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f335e655_2f6cd483",
+        "filename": "device/hid/hid_connection_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "Same here in the .cc file.",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 46
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5426c7fe_49dee6a2",
+        "filename": "device/hid/hid_connection_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "Here and below for the other callbacks \"device::mojom::HidConnection\" is not necessary because this class extends device::mojom::HidConnection.",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 54
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877e4f3e_124bd604",
+        "filename": "extensions/browser/api/device_permissions_prompt.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "nit: no braces for single-line if here and below",
+      "range": {
+        "startLine": 207,
+        "startChar": 4,
+        "endLine": 207,
+        "endChar": 5
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4167e1f_5da4d48d",
+        "filename": "extensions/browser/api/device_permissions_prompt.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "service_manager::Connector",
+      "range": {
+        "startLine": 218,
+        "startChar": 4,
+        "endLine": 218,
+        "endChar": 8
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a1e48b_4bc2317a",
+        "filename": "extensions/browser/api/device_permissions_prompt.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "nit: no space required here, |connector| is defined specifically for this line.",
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b87b56_596ed0e3",
+        "filename": "extensions/browser/api/device_permissions_prompt.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "nit: no braces for single-line for loop",
+      "range": {
+        "startLine": 289,
+        "startChar": 33,
+        "endLine": 289,
+        "endChar": 34
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e78452_7c4e3feb",
+        "filename": "extensions/browser/api/hid/hid_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "auto if that allows this to fit on one line",
+      "range": {
+        "startLine": 289,
+        "startChar": 2,
+        "endLine": 289,
+        "endChar": 15
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f48a2a_4cfa0747",
+        "filename": "extensions/browser/api/hid/hid_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 356,
+        "startChar": 2,
+        "endLine": 356,
+        "endChar": 15
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b1d701_be79b5c0",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "nit: explicit keyword needed when there is a single argument to a constructor.",
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c405c4eb_4eb05a94",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "I don\u0027t believe this static_cast is necessary.",
+      "range": {
+        "startLine": 81,
+        "startChar": 20,
+        "endLine": 81,
+        "endChar": 36
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19d737c_cf6008ee",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "Why not use memcmp as before?",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8531df8_e2aa732a",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "If you make expected_report_id a uint8_t then this static_cast is unnecessary.",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 24
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f546e811_a72378e8",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "Same comments here as in Write().",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 5
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbebd10c_c8e8ce68",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "NOTREACHED();",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 14
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3656c469_9c80d808",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "No need to save the return value of this call.",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 18
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b411a0_9f6caa82",
+        "filename": "extensions/browser/api/hid/hid_device_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "This comment is unnecessary.",
+      "range": {
+        "startLine": 280,
+        "startChar": 1,
+        "endLine": 280,
+        "endChar": 61
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f82bf3_b09f2362",
+        "filename": "extensions/browser/api/hid/hid_device_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:57:12Z",
+      "side": 1,
+      "message": "|hid_manager_| is initialized and safe to use whether or not the connection is successful.",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 285,
+        "endChar": 34
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
