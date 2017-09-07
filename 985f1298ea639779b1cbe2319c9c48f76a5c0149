@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ad38542_05aa04e0",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T22:32:47Z",
+      "side": 1,
+      "message": "Need a parameter description?",
+      "revId": "985f1298ea639779b1cbe2319c9c48f76a5c0149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a13cf4_dd4c8d9d",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T22:32:47Z",
+      "side": 1,
+      "message": "Typos.",
+      "revId": "985f1298ea639779b1cbe2319c9c48f76a5c0149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5519801a_0cdb0676",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T22:32:47Z",
+      "side": 1,
+      "message": "I believe it\u0027s possible to assert the two values are not the same. If that assertion fails, then that means there are two callers trying to set |isUserInitiatedEvent_| at the same time. e.g.\n\nif (this.isUserInitiatedEvent_ \u003d\u003d userInitiated) {\n  throw \"...\";\n}",
+      "revId": "985f1298ea639779b1cbe2319c9c48f76a5c0149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce21331_b74cf229",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-07T22:32:47Z",
+      "side": 1,
+      "message": "s/Initialize/Initiated/",
+      "range": {
+        "startLine": 54,
+        "startChar": 21,
+        "endLine": 54,
+        "endChar": 46
+      },
+      "revId": "985f1298ea639779b1cbe2319c9c48f76a5c0149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
