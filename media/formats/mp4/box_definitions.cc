@@ -745,8 +745,6 @@ bool VideoSampleEntry::Parse(BoxReader* reader) {
       DolbyVisionConfiguration dvccConfig;
       if (reader->HasChild(&dvccConfig) && reader->ReadChild(&dvccConfig)) {
         DVLOG(2) << __func__ << " reading DolbyVisionConfiguration (dvcC)";
-        static_cast<AVCBitstreamConverter*>(frame_bitstream_converter.get())
-            ->DisablePostAnnexbValidation();
         video_codec = kCodecDolbyVision;
         video_codec_profile = dvccConfig.codec_profile;
       }
