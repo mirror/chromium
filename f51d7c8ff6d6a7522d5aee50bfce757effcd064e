@@ -69,6 +69,30 @@
       "revId": "f51d7c8ff6d6a7522d5aee50bfce757effcd064e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3235f7_bf9495c9",
+        "filename": "components/update_client/configurator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-09-07T20:30:23Z",
+      "side": 1,
+      "message": "scoped_refptr would also work. We could do a raw pointer if you want. PrefService on :125 doesn\u0027t bother me as much because the PrefService is owned by the browser process itself, and we don\u0027t have much of an option there - this object is owned by the configurator, a refcounted object.\n\nEither way it\u0027s not a big deal, because this class is a thin wrapper around an ExtensionPref*.",
+      "parentUuid": "e0450fbb_a5eb5a2e",
+      "range": {
+        "startLine": 135,
+        "startChar": 29,
+        "endLine": 135,
+        "endChar": 30
+      },
+      "revId": "f51d7c8ff6d6a7522d5aee50bfce757effcd064e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
