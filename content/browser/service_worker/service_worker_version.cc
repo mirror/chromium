@@ -944,6 +944,7 @@ void ServiceWorkerVersion::OnReportConsoleMessage(int source_identifier,
                                                   const base::string16& message,
                                                   int line_number,
                                                   const GURL& source_url) {
+  printf("*** %s\n", base::UTF16ToASCII(message).c_str());
   for (auto& observer : listeners_) {
     observer.OnReportConsoleMessage(this, source_identifier, message_level,
                                     message, line_number, source_url);

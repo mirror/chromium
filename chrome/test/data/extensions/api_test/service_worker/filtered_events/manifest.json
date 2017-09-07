@@ -1,0 +1,10 @@
+{
+  "name": "Extension service worker filtered event test with webNavigation",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Tests the webNavigation API events - filtered.",
+  "background": {
+    "scripts": ["test_filtered.js"]
+  },
+  "permissions": ["webNavigation", "tabs"]
+}

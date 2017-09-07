@@ -500,7 +500,7 @@ IN_PROC_BROWSER_TEST_F(WebNavigationApiTest, MAYBE_Failures) {
 }
 
 IN_PROC_BROWSER_TEST_F(WebNavigationApiTest, FilteredTest) {
-  ASSERT_TRUE(StartEmbeddedTestServer());
+  //ASSERT_TRUE(StartEmbeddedTestServer());
   ASSERT_TRUE(RunExtensionTest("webnavigation/filtered")) << message_;
 }
 

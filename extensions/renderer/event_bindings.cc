@@ -334,6 +334,7 @@ void EventBindings::AttachFilteredEvent(
 
   bool supports_lazy_listeners = args[2]->BooleanValue();
 
+  printf("Built filter\n");
   int id = g_event_filter.Get().AddEventMatcher(
       event_name,
       std::make_unique<EventMatcher>(
