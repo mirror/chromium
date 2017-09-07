@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6ee412b_1a0c86eb",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1390,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-09-07T20:49:11Z",
+      "side": 1,
+      "message": "Add/update unit tests for this?",
+      "range": {
+        "startLine": 1390,
+        "startChar": 13,
+        "endLine": 1390,
+        "endChar": 28
+      },
+      "revId": "12d45ce134aa6c0559de01d9ccc43dbced235daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de39b871_822192e9",
         "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
         "patchSetId": 2
@@ -13,6 +36,29 @@
       "writtenOn": "2017-09-07T19:40:02Z",
       "side": 1,
       "message": "Hm... but what about visibility:collapse? Then the table track / track-group doesn\u0027t even take up space in layout.\n\nI think we should always return LayoutRect() if visibility is collapse.",
+      "revId": "12d45ce134aa6c0559de01d9ccc43dbced235daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc0eb71_7150f1b9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCol.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-09-07T20:49:11Z",
+      "side": 1,
+      "message": "Add a unit test for this?",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 55
+      },
       "revId": "12d45ce134aa6c0559de01d9ccc43dbced235daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
