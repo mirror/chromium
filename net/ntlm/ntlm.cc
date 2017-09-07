@@ -6,11 +6,10 @@
 
 #include <string.h>
 
-// TODO(zentaro): The net package doesn't like this include.
-#include "base/i18n/case_conversion.h"
 #include "base/logging.h"
 #include "base/md5.h"
 #include "base/strings/utf_string_conversions.h"
+#include "net/base/net_string_util.h"
 #include "net/ntlm/des.h"
 #include "net/ntlm/md4.h"
 #include "net/ntlm/ntlm_buffer_writer.h"
@@ -259,7 +258,9 @@ void GenerateNtlmHashV2(const base::string16& domain,
                         uint8_t* v2_hash) {
   // NOTE: According to [MS-NLMP] Section 3.3.2 only the username and not the
   // domain is uppercased.
-  base::string16 upper_username = base::i18n::ToUpper(username);
+  base::string16 upper_username;
+  bool result = ToUpper(username, &upper_username);
+  DCHECK(result);
 
   uint8_t v1_hash[kNtlmHashLen];
   GenerateNtlmHashV1(password, v1_hash);
