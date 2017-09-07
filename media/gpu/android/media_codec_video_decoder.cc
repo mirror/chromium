@@ -197,6 +197,12 @@ void MediaCodecVideoDecoder::Initialize(const VideoDecoderConfig& config,
   init_cb.Run(true);
 }
 
+void MediaCodecVideoDecoder::OnKeyAdded() {
+  DVLOG(2) << __func__;
+  waiting_for_key_ = false;
+  ManageTimer(true);
+}
+
 void MediaCodecVideoDecoder::StartLazyInit() {
   DVLOG(2) << __func__;
   video_frame_factory_->Initialize(
@@ -426,8 +432,8 @@ void MediaCodecVideoDecoder::ManageTimer(bool start_timer) {
 bool MediaCodecVideoDecoder::QueueInput() {
   DVLOG(4) << __func__;
   if (state_ == State::kError || state_ == State::kWaitingForCodec ||
-      state_ == State::kWaitingForKey || state_ == State::kBeforeSurfaceInit ||
-      state_ == State::kSurfaceDestroyed) {
+      state_ == State::kBeforeSurfaceInit ||
+      state_ == State::kSurfaceDestroyed || waiting_for_key_) {
     return false;
   }
 
@@ -445,52 +451,43 @@ bool MediaCodecVideoDecoder::QueueInput() {
   if (pending_decodes_.empty())
     return false;
 
-  int input_buffer = -1;
-  MediaCodecStatus status = codec_->DequeueInputBuffer(&input_buffer);
+  PendingDecode& pending_decode = pending_decodes_.front();
+  MediaCodecStatus status = codec_->QueueInputBuffer(
+      *pending_decode.buffer, decoder_config_.encryption_scheme());
+  if (status == MEDIA_CODEC_TRY_AGAIN_LATER)
+    return false;
+
+  DVLOG(2) << "QueueInput(" << pending_decode.buffer->AsHumanReadableString()
+           << ") status=" << status;
   if (status == MEDIA_CODEC_ERROR) {
-    DVLOG(1) << "DequeueInputBuffer() error";
     EnterTerminalState(State::kError);
     return false;
-  } else if (status == MEDIA_CODEC_TRY_AGAIN_LATER) {
+  }
+  if (status == MEDIA_CODEC_NO_KEY) {
+    // Retry when a key is added.
+    waiting_for_key_ = true;
     return false;
   }
-  DCHECK(status == MEDIA_CODEC_OK);
-  DCHECK_GE(input_buffer, 0);
 
-  PendingDecode pending_decode = std::move(pending_decodes_.front());
-  pending_decodes_.pop_front();
-
+  DCHECK_EQ(status, MEDIA_CODEC_OK);
   if (pending_decode.buffer->end_of_stream()) {
-    DVLOG(2) << ": QueueEOS()";
-    codec_->QueueEOS(input_buffer);
+    // The VideoDecoder interface requires that the EOS DecodeCB is called after
+    // all decodes before it are delivered, so we have to save it and call it
+    // when the EOS is dequeued.
+    DCHECK(!eos_decode_cb_);
     eos_decode_cb_ = std::move(pending_decode.decode_cb);
-    return true;
+  } else {
+    pending_decode.decode_cb.Run(DecodeStatus::OK);
   }
-
-  MediaCodecStatus queue_status = codec_->QueueInputBuffer(
-      input_buffer, pending_decode.buffer->data(),
-      pending_decode.buffer->data_size(), pending_decode.buffer->timestamp());
-  DVLOG(2) << "QueueInputBuffer(pts="
-           << pending_decode.buffer->timestamp().InMilliseconds()
-           << ") status=" << queue_status;
-
-  DCHECK_NE(queue_status, MEDIA_CODEC_NO_KEY)
-      << "Encrypted support not yet implemented";
-  if (queue_status != MEDIA_CODEC_OK) {
-    pending_decode.decode_cb.Run(DecodeStatus::DECODE_ERROR);
-    EnterTerminalState(State::kError);
-    return false;
-  }
-
-  pending_decode.decode_cb.Run(DecodeStatus::OK);
+  pending_decodes_.pop_front();
   return true;
 }
 
 bool MediaCodecVideoDecoder::DequeueOutput() {
   DVLOG(4) << __func__;
   if (state_ == State::kError || state_ == State::kWaitingForCodec ||
-      state_ == State::kWaitingForKey || state_ == State::kBeforeSurfaceInit ||
-      state_ == State::kSurfaceDestroyed) {
+      state_ == State::kBeforeSurfaceInit ||
+      state_ == State::kSurfaceDestroyed || waiting_for_key_) {
     return false;
   }
 
@@ -519,7 +516,7 @@ bool MediaCodecVideoDecoder::DequeueOutput() {
   } else if (status == MEDIA_CODEC_TRY_AGAIN_LATER) {
     return false;
   }
-  DCHECK(status == MEDIA_CODEC_OK);
+  DCHECK_EQ(status, MEDIA_CODEC_OK);
 
   if (eos) {
     DVLOG(2) << "DequeueOutputBuffer(): EOS";
@@ -649,6 +646,7 @@ void MediaCodecVideoDecoder::ReleaseCodec() {
 }
 
 void MediaCodecVideoDecoder::ReleaseCodecAndBundle() {
+  DCHECK(codec_config_);
   ReleaseCodec();
   codec_config_->surface_bundle = nullptr;
 }
