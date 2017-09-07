@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "116f2f3f_533d70ee",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-07T21:20:44Z",
+      "side": 1,
+      "message": "Please change this to:\n\n          # TODO(crbug.com/754777): change to 10.12.6.\n          \u0027os\u0027: \u0027Mac-10.12\u0027\n\nsimilarly to the other Mac Intel bots. I don\u0027t think there are any more 10.12.5 Mac Minis.",
+      "revId": "d5c81ac2addf1c4d55630dd89e9ff1d30dfe1112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b27b894_3c0958de",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-07T21:20:44Z",
+      "side": 1,
+      "message": "Please add:\n\n          # TODO(crbug.com/754777): change to 10.12.6.\n\nSimilarly to the other Mac AMD bots.",
+      "revId": "d5c81ac2addf1c4d55630dd89e9ff1d30dfe1112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
