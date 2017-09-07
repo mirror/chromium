@@ -34,6 +34,24 @@
       "revId": "dd461a8af511aef7fbe376a0a31d9f457aff2973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d895a224_5fdf0112",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-whitelist-response-headers.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-07T11:00:14Z",
+      "side": 1,
+      "message": "Yes, lgtm!",
+      "parentUuid": "e37771df_7f807182",
+      "revId": "dd461a8af511aef7fbe376a0a31d9f457aff2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
