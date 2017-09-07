@@ -17,6 +17,7 @@
 #include "chromeos/dbus/power_manager/power_supply_properties.pb.h"
 #include "chromeos/dbus/power_manager/suspend.pb.h"
 #include "chromeos/dbus/power_manager_client.h"
+#include "components/arc/common/timer.mojom.h"
 
 namespace chromeos {
 
@@ -74,6 +75,13 @@ class CHROMEOS_EXPORT FakePowerManagerClient : public PowerManagerClient {
   void GetSwitchStates(const GetSwitchStatesCallback& callback) override;
   base::Closure GetSuspendReadinessCallback() override;
   int GetNumPendingSuspendReadinessCallbacks() override;
+  void CreateArcTimers(
+      const std::vector<arc::mojom::ArcTimerArgsPtr>& arc_timers_args,
+      const CreateArcTimersCallback& callback) override;
+  void SetArcTimer(int32_t clock_id,
+                   int64_t seconds,
+                   int64_t nanoseconds,
+                   const SetArcTimerCallback& callback) override;
 
   // Pops the first report from |video_activity_reports_|, returning whether the
   // activity was fullscreen or not. There must be at least one report.
