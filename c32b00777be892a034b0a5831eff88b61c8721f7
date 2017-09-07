@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "67a57248_e7c1bce0",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1210809
+      },
+      "writtenOn": "2017-09-07T21:59:04Z",
+      "side": 1,
+      "message": "The script logic is pretty straightforward:\nif (foo) { //bar} else { //foobie }\n\nThis comment is distracting, but if you feel the need to explain why/when a given file is used, just replace it all for:\n# Here we pick the best performance implementation matching the build target.",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d39cf61b_fe3ea627",
         "filename": "third_party/zlib/BUILD.gn",
         "patchSetId": 9
