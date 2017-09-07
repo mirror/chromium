@@ -431,9 +431,8 @@ public class LocaleManager {
      * @return List of engines to show.
      */
     public List<TemplateUrl> getSearchEnginesForPromoDialog(@SearchEnginePromoType int promoType) {
-        TemplateUrlService instance = TemplateUrlService.getInstance();
-        assert instance.isLoaded();
-        return instance.getSearchEngines();
+        throw new IllegalStateException(
+                "Not applicable unless existing or new promos are required");
     }
 
     /** Set a LocaleManager to be used for testing. */
