@@ -9,14 +9,17 @@
 #include <utility>
 
 #include "base/logging.h"
+#include "base/run_loop.h"
 #include "base/strings/string16.h"
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
+#include "chrome/browser/win/taskbar_icon_finder.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "chrome/installer/util/experiment.h"
+#include "chrome/installer/util/experiment_storage.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/image/image.h"
@@ -115,6 +118,52 @@ std::unique_ptr<views::LabelButton> CreateWin10StyleButton(
   return button;
 }
 
+// A helper for updating the experiment state stored in the Windows registry.
+class MetricsUpdater {
+ public:
+  MetricsUpdater() = default;
+  ~MetricsUpdater() = default;
+
+  // Records that the toast was just shown.
+  void OnShow(installer::ExperimentMetrics::ToastLocation toast_location);
+
+  // Records that the toast was closed, resulting in |state|.
+  void OnResult(installer::ExperimentMetrics::State state);
+
+ private:
+  installer::ExperimentStorage storage_;
+
+  // The time at which the toast was shown; used for computing the action delay.
+  base::TimeTicks time_shown_;
+
+  DISALLOW_COPY_AND_ASSIGN(MetricsUpdater);
+};
+
+void MetricsUpdater::OnShow(
+    installer::ExperimentMetrics::ToastLocation toast_location) {
+  time_shown_ = base::TimeTicks::Now();
+
+  auto lock = storage_.AcquireLock();
+  installer::Experiment experiment;
+  if (lock->LoadExperiment(&experiment)) {
+    experiment.SetDisplayTime(base::Time::Now());
+    experiment.SetToastCount(experiment.toast_count() + 1);
+    experiment.SetToastLocation(toast_location);
+    // TODO(skare): SetUserSessionUptime
+    lock->StoreExperiment(experiment);
+  }
+}
+
+void MetricsUpdater::OnResult(installer::ExperimentMetrics::State state) {
+  auto lock = storage_.AcquireLock();
+  installer::Experiment experiment;
+  if (lock->LoadExperiment(&experiment)) {
+    experiment.SetActionDelay(base::TimeTicks::Now() - time_shown_);
+    experiment.SetState(state);
+    lock->StoreExperiment(experiment);
+  }
+}
+
 }  // namespace
 
 // static
@@ -122,30 +171,68 @@ TryChromeDialog::Result TryChromeDialog::Show(
     size_t group,
     ActiveModalDialogListener listener) {
   if (group >= arraysize(kExperiments)) {
-    // This is a test value. We want to make sure we exercise
-    // returning this early. See TryChromeDialogBrowserTest test.
+    // This is a test value. We want to make sure we exercise returning this
+    // early. See TryChromeDialogBrowserTest test.
     return NOT_NOW;
   }
 
-  TryChromeDialog dialog(group);
-  return dialog.ShowDialog(std::move(listener), DialogType::MODAL,
-                           UsageType::FOR_CHROME);
+  Result result = NOT_NOW;
+  MetricsUpdater metrics_updater;
+  base::RunLoop run_loop;
+
+  // Create the dialog with a ResultCallback that will capture the result in
+  // |result|, update metrics, and quit the modal run loop.
+  TryChromeDialog dialog(
+      group, base::BindOnce(
+                 [](Result* result_ptr, MetricsUpdater* metrics_updater,
+                    base::Closure quit_closure, Result result,
+                    installer::ExperimentMetrics::State state) {
+                   *result_ptr = result;
+                   metrics_updater->OnResult(state);
+                   quit_closure.Run();
+                 },
+                 &result, &metrics_updater, run_loop.QuitWhenIdleClosure()));
+
+  // Show the dialog with an on_show closure that will write the initial
+  // metrics state.
+  dialog.ShowDialogAsync(base::BindOnce(&MetricsUpdater::OnShow,
+                                        base::Unretained(&metrics_updater)));
+
+  if (listener) {
+    listener.Run(base::Bind(&TryChromeDialog::OnProcessNotification,
+                            base::Unretained(&dialog)));
+  }
+  run_loop.Run();
+  if (listener)
+    listener.Run(base::Closure());
+
+  return result;
 }
 
-TryChromeDialog::TryChromeDialog(size_t group)
-    : usage_type_(UsageType::FOR_CHROME),
-      group_(group),
-      popup_(nullptr),
-      result_(NOT_NOW) {}
+TryChromeDialog::TryChromeDialog(size_t group, ResultCallback on_close)
+    : group_(group), on_close_(std::move(on_close)) {
+  DCHECK(on_close_);
+}
 
 TryChromeDialog::~TryChromeDialog() {}
 
-TryChromeDialog::Result TryChromeDialog::ShowDialog(
-    ActiveModalDialogListener listener,
-    DialogType dialog_type,
-    UsageType usage_type) {
-  usage_type_ = usage_type;
+void TryChromeDialog::ShowDialogAsync(OnShowCallback on_show) {
+  DCHECK(on_close_);
 
+  // Get the bounding rectangle of Chrome's taskbar icon on the primary monitor.
+  FindTaskbarIcon(base::BindOnce(&TryChromeDialog::OnTaskbarIconRect,
+                                 base::Unretained(this), std::move(on_show)));
+}
+
+void TryChromeDialog::OnTaskbarIconRect(OnShowCallback on_show,
+                                        const gfx::Rect& icon_rect) {
+  if (result_ == OPEN_CHROME_DEFER) {
+    // Rendezvous from another process. Just bail out.
+    std::move(on_close_).Run(result_, state_);
+    return;
+  }
+
+  // Create the popup.
   auto icon = base::MakeUnique<views::ImageView>();
   icon->SetImage(gfx::CreateVectorIcon(kInactiveToastLogoIcon, kHeaderColor));
   gfx::Size icon_size = icon->GetPreferredSize();
@@ -156,6 +243,7 @@ TryChromeDialog::Result TryChromeDialog::ShowDialog(
   params.bounds = gfx::Rect(kToastWidth, 120);
   popup_ = new views::Widget;
   popup_->Init(params);
+  popup_->AddObserver(this);
 
   views::View* root_view = popup_->GetRootView();
   root_view->SetBackground(views::CreateSolidBackground(kBackgroundColor));
@@ -259,105 +347,128 @@ TryChromeDialog::Result TryChromeDialog::ShowDialog(
 
   // Padding between buttons and the edge of the view is via the border.
   gfx::Size preferred = layout->GetPreferredSize(root_view);
-  gfx::Rect pos = ComputePopupBounds(preferred, base::i18n::IsRTL());
-  popup_->SetBounds(pos);
+
+  installer::ExperimentMetrics::ToastLocation location =
+      installer::ExperimentMetrics::kOverTaskbarPin;
+  gfx::Rect bounds = ComputePopupBoundsOverTaskbarIcon(preferred, icon_rect);
+  if (bounds.IsEmpty()) {
+    location = installer::ExperimentMetrics::kOverNotificationArea;
+    bounds = ComputePopupBoundsOverNoficationArea(preferred);
+  }
+
+  popup_->SetBounds(bounds);
   layout->Layout(root_view);
 
-  // Update pre-show stats.
-  time_shown_ = base::TimeTicks::Now();
-
-  if (usage_type_ == UsageType::FOR_CHROME) {
-    auto lock = storage_.AcquireLock();
-    installer::Experiment experiment;
-    if (lock->LoadExperiment(&experiment)) {
-      experiment.SetDisplayTime(base::Time::Now());
-      experiment.SetToastCount(experiment.toast_count() + 1);
-      // TODO(skare): SetToastLocation via checking pinned state.
-      // TODO(skare): SetUserSessionUptime
-      lock->StoreExperiment(experiment);
-    }
-  }
-
   popup_->Show();
-
-  if (dialog_type == DialogType::MODAL) {
-    if (listener) {
-      listener.Run(base::Bind(&TryChromeDialog::OnProcessNotification,
-                              base::Unretained(this)));
-    }
-    run_loop_.reset(new base::RunLoop);
-    run_loop_->Run();
-    if (listener)
-      listener.Run(base::Closure());
-  }
-
-  return result_;
+  std::move(on_show).Run(location);
 }
 
-void TryChromeDialog::CloseDialog(Result result,
-                                  installer::ExperimentMetrics::State state) {
-  // Exit early if somehow a second notification arrives.
-  if (!popup_)
-    return;
+gfx::Rect TryChromeDialog::ComputePopupBoundsOverTaskbarIcon(
+    const gfx::Size& size,
+    const gfx::Rect& icon_rect) {
+  // Was no taskbar icon found?
+  if (icon_rect.IsEmpty())
+    return icon_rect;
 
-  // Record the result of the toast.
-  result_ = result;
+  // Get the bounding rectangle of the taskbar.
+  RECT temp_rect = {};
+  HWND taskbar = ::FindWindow(L"Shell_TrayWnd", nullptr);
+  if (!taskbar || !::GetWindowRect(taskbar, &temp_rect))
+    return gfx::Rect();
 
-  // Update post-action stats.
-  if (usage_type_ == UsageType::FOR_CHROME) {
-    auto lock = storage_.AcquireLock();
-    installer::Experiment experiment;
-    if (lock->LoadExperiment(&experiment)) {
-      base::TimeDelta action_delay = (base::TimeTicks::Now() - time_shown_);
-      experiment.SetActionDelay(action_delay);
-      experiment.SetState(state);
-      lock->StoreExperiment(experiment);
+  gfx::Rect taskbar_rect(temp_rect);
+
+  // Get the bounds and work area of the primary display.
+  constexpr POINT kOrigin = {};
+  MONITORINFO monitor_info = {};
+  monitor_info.cbSize = sizeof(monitor_info);
+  if (!::GetMonitorInfo(::MonitorFromPoint(kOrigin, MONITOR_DEFAULTTOPRIMARY),
+                        &monitor_info)) {
+    return gfx::Rect();
+  }
+  gfx::Rect monitor_rect(monitor_info.rcMonitor);
+
+  // Center the window over/under/next to the taskbar icon, offset by 1/4 the
+  // height/width of the icon.
+  static constexpr int kOffsetDenominator = 4;
+  gfx::Rect result(size);
+
+  // Where is the taskbar? Assume that it's "wider" than it is "tall".
+  if (taskbar_rect.width() > taskbar_rect.height()) {
+    // Horizonal.
+    result.set_x(icon_rect.x() + icon_rect.width() / 2 - size.width() / 2);
+    int offset = icon_rect.height() / kOffsetDenominator;
+    if (taskbar_rect.y() < monitor_rect.y() + monitor_rect.height() / 2) {
+      // Top.
+      result.set_y(icon_rect.y() + icon_rect.height() + offset);
+    } else {
+      // Bottom.
+      result.set_y(icon_rect.y() - size.height() - offset);
+    }
+  } else {
+    // Vertical.
+    result.set_y(icon_rect.y() + icon_rect.height() / 2 - size.height() / 2);
+    int offset = icon_rect.width() / kOffsetDenominator;
+    if (taskbar_rect.x() < monitor_rect.x() + monitor_rect.width() / 2) {
+      // Left.
+      result.set_x(icon_rect.x() + icon_rect.width() + offset);
+    } else {
+      // Right.
+      result.set_x(icon_rect.x() - size.width() - offset);
     }
   }
 
-  // Close the dialog and quit the loop.
-  popup_->Close();
-  popup_ = nullptr;
-  if (run_loop_)
-    run_loop_->QuitWhenIdle();
+  // Make sure it doesn't spill out of the display.
+  result.AdjustToFit(gfx::Rect(monitor_info.rcWork));
+  return result;
+}
+
+gfx::Rect TryChromeDialog::ComputePopupBoundsOverNoficationArea(
+    const gfx::Size& size) {
+  const bool is_RTL = base::i18n::IsRTL();
+  const gfx::Rect work_area = popup_->GetWorkAreaBoundsInScreen();
+  return gfx::Rect(
+      is_RTL ? work_area.x() : work_area.right() - size.width(),
+      work_area.bottom() - size.height() - kHoverAboveTaskbarHeight,
+      size.width(), size.height());
 }
 
 void TryChromeDialog::OnProcessNotification() {
-  CloseDialog(OPEN_CHROME_DEFER, installer::ExperimentMetrics::kOtherLaunch);
-}
-
-gfx::Rect TryChromeDialog::ComputePopupBounds(const gfx::Size& size,
-                                              bool is_RTL) {
-  gfx::Point origin;
-
-  gfx::Rect work_area = popup_->GetWorkAreaBoundsInScreen();
-  origin.set_x(is_RTL ? work_area.x() : work_area.right() - size.width());
-  origin.set_y(work_area.bottom() - size.height() - kHoverAboveTaskbarHeight);
-
-  return gfx::Rect(origin, size);
+  result_ = OPEN_CHROME_DEFER;
+  state_ = installer::ExperimentMetrics::kOtherLaunch;
+  if (popup_)
+    popup_->Close();
 }
 
 void TryChromeDialog::ButtonPressed(views::Button* sender,
                                     const ui::Event& event) {
-  Result result = NOT_NOW;
-  installer::ExperimentMetrics::State state =
-      installer::ExperimentMetrics::kUninitialized;
+  DCHECK_EQ(result_, NOT_NOW);
 
   switch (sender->tag()) {
     case static_cast<int>(ButtonTag::CLOSE_BUTTON):
-      state = installer::ExperimentMetrics::kSelectedClose;
+      state_ = installer::ExperimentMetrics::kSelectedClose;
       break;
     case static_cast<int>(ButtonTag::OK_BUTTON):
-      result = kExperiments[group_].result;
-      state = installer::ExperimentMetrics::kSelectedOpenChromeAndNoCrash;
+      result_ = kExperiments[group_].result;
+      state_ = installer::ExperimentMetrics::kSelectedOpenChromeAndNoCrash;
       break;
     case static_cast<int>(ButtonTag::NO_THANKS_BUTTON):
-      state = installer::ExperimentMetrics::kSelectedNoThanks;
+      state_ = installer::ExperimentMetrics::kSelectedNoThanks;
       break;
     default:
       NOTREACHED();
       break;
   }
 
-  CloseDialog(result, state);
+  popup_->Close();
+}
+
+void TryChromeDialog::OnWidgetDestroyed(views::Widget* widget) {
+  DCHECK_EQ(widget, popup_);
+  DCHECK(on_close_);
+
+  popup_->RemoveObserver(this);
+  popup_ = nullptr;
+
+  std::move(on_close_).Run(result_, state_);
 }
