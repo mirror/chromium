@@ -105,6 +105,20 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment>,
 
   String ToString() const;
 
+  enum DumpFlag {
+    DumpHeaderText = 0x1,
+    DumpSubtree = 0x2,
+    DumpIndentation = 0x4,
+    DumpType = 0x8,
+    DumpOffset = 0x10,
+    DumpSize = 0x20,
+    DumpOverflow = 0x40,
+    DumpTextOffsets = 0x80,
+  };
+  typedef int DumpFlags;
+
+  String DumpFragmentTree(DumpFlags = -1) const;
+
 #ifndef NDEBUG
   void ShowFragmentTree() const;
 #endif
