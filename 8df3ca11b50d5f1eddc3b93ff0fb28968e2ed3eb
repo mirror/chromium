@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dba293e5_b5660535",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T17:19:19Z",
+      "side": 1,
+      "message": "I don\u0027t believe we can do this once PIN is stored in cryptohome, as we will not be able to read the secret.\n\nI wonder if it is even worth doing now. I think it is reasonable that if the PIN keyboard is up and the user has a numeric-only password, we interpret it as PIN.\n\nWe could change the API to send both authentications, ie, one hashed with SHA256 and one hashed with PBKDF2. I wonder if that leaks too much information.\n\nxiyuan@, thoughts?",
+      "revId": "8df3ca11b50d5f1eddc3b93ff0fb28968e2ed3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456a7740_077dd543",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T17:19:19Z",
+      "side": 1,
+      "message": "Please add comment and rename to IsShown().",
+      "revId": "8df3ca11b50d5f1eddc3b93ff0fb28968e2ed3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3654d52_01c87e4a",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T17:19:19Z",
+      "side": 1,
+      "message": "I think the usual pattern is !\u003d 0",
+      "revId": "8df3ca11b50d5f1eddc3b93ff0fb28968e2ed3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8513f14_9c30aa8c",
+        "filename": "chrome/browser/chromeos/login/quick_unlock/pin_storage.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-07T17:19:19Z",
+      "side": 1,
+      "message": "Why are we storing PINs without hashing them?",
+      "revId": "8df3ca11b50d5f1eddc3b93ff0fb28968e2ed3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
