@@ -322,6 +322,7 @@ void StoreCurrentDisplayProperties() {
         new base::DictionaryValue());
     // Don't save the display preference in unified mode because its
     // size and modes can change depending on the combination of displays.
+    // TODO(afakhry): Do we need to change this?
     if (display_manager->IsInUnifiedMode())
       continue;
     property_value->SetInteger("rotation",

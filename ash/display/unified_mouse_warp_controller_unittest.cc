@@ -100,29 +100,60 @@ class UnifiedMouseWarpControllerTest : public AshTestBase {
 
   void BoundaryTestBody(const std::string& displays_with_same_height,
                         const std::string& displays_with_different_heights) {
-    UpdateDisplay(displays_with_same_height);
-    aura::Window::Windows root_windows = Shell::GetAllRootWindows();
-    // Let the UnifiedMouseWarpController compute the bounds by
-    // generating a mouse move event.
-    GetEventGenerator().MoveMouseTo(gfx::Point(0, 0));
-    EXPECT_EQ("399,0 1x400",
-              mouse_warp_controller()->first_edge_bounds_in_native_.ToString());
-    EXPECT_EQ(
-        "0,450 1x400",
-        mouse_warp_controller()->second_edge_bounds_in_native_.ToString());
+    // TODO(afakhry): Make this test more generic.
+    {
+      UpdateDisplay(displays_with_same_height);
+      aura::Window::Windows root_windows = Shell::GetAllRootWindows();
 
-    // Scaled.
-    UpdateDisplay(displays_with_different_heights);
-    root_windows = Shell::GetAllRootWindows();
-    // Let the UnifiedMouseWarpController compute the bounds by
-    // generating a mouse move event.
-    GetEventGenerator().MoveMouseTo(gfx::Point(1, 1));
+      const display::Displays& mirroring_displays =
+          display_manager()->software_mirroring_display_list();
+      ASSERT_EQ(2u, mirroring_displays.size());
+      const int64_t first_id = mirroring_displays[0].id();
+      const int64_t second_id = mirroring_displays[1].id();
+      // Let the UnifiedMouseWarpController compute the bounds by
+      // generating a mouse move event.
+      GetEventGenerator().MoveMouseTo(gfx::Point(0, 0));
 
-    EXPECT_EQ("399,0 1x400",
-              mouse_warp_controller()->first_edge_bounds_in_native_.ToString());
-    EXPECT_EQ(
-        "0,450 1x600",
-        mouse_warp_controller()->second_edge_bounds_in_native_.ToString());
+      const auto& first_edges =
+          mouse_warp_controller()->displays_edges_map_.at(first_id);
+      ASSERT_EQ(1u, first_edges.size());
+      EXPECT_EQ("399,0 1x400",
+                first_edges[0].edge_native_bounds_in_source_display.ToString());
+      const auto& second_edges =
+          mouse_warp_controller()->displays_edges_map_.at(second_id);
+      ASSERT_EQ(1u, second_edges.size());
+      EXPECT_EQ(
+          "0,450 1x400",
+          second_edges[0].edge_native_bounds_in_source_display.ToString());
+    }
+
+    {
+      // Scaled.
+      UpdateDisplay(displays_with_different_heights);
+      aura::Window::Windows root_windows = Shell::GetAllRootWindows();
+
+      const display::Displays& mirroring_displays =
+          display_manager()->software_mirroring_display_list();
+      ASSERT_EQ(2u, mirroring_displays.size());
+      const int64_t first_id = mirroring_displays[0].id();
+      const int64_t second_id = mirroring_displays[1].id();
+      // Let the UnifiedMouseWarpController compute the bounds by
+      // generating a mouse move event.
+      GetEventGenerator().MoveMouseTo(gfx::Point(1, 1));
+
+      const auto& first_edges =
+          mouse_warp_controller()->displays_edges_map_.at(first_id);
+      ASSERT_EQ(1u, first_edges.size());
+      EXPECT_EQ("399,0 1x400",
+                first_edges[0].edge_native_bounds_in_source_display.ToString());
+
+      const auto& second_edges =
+          mouse_warp_controller()->displays_edges_map_.at(second_id);
+      ASSERT_EQ(1u, second_edges.size());
+      EXPECT_EQ(
+          "0,450 1x600",
+          second_edges[0].edge_native_bounds_in_source_display.ToString());
+    }
   }
 
   void NoWarpTestBody() {

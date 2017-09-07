@@ -17,6 +17,7 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/display/display_layout.h"
 #include "ui/display/manager/display_manager.h"
+#include "ui/display/unified_desktop_utils.h"
 
 DECLARE_UI_CLASS_PROPERTY_TYPE(ash::ScreenRotationAnimator*);
 
@@ -83,6 +84,19 @@ void DisplayConfigurationController::SetDisplayLayout(
                    weak_ptr_factory_.GetWeakPtr(), base::Passed(&layout)));
   } else {
     SetDisplayLayoutImpl(std::move(layout));
+  }
+}
+
+void DisplayConfigurationController::SetUnifiedDesktopLayoutMatrix(
+    const display::UnifiedDesktopLayoutMatrix& matrix) {
+  DCHECK(display_manager_->IsInUnifiedMode());
+
+  if (display_animator_) {
+    display_animator_->StartFadeOutAnimation(base::Bind(
+        &DisplayConfigurationController::SetUnifiedDesktopLayoutMatrixImpl,
+        weak_ptr_factory_.GetWeakPtr(), matrix));
+  } else {
+    SetUnifiedDesktopLayoutMatrixImpl(matrix);
   }
 }
 
@@ -190,6 +204,13 @@ void DisplayConfigurationController::SetMirrorModeImpl(bool mirror) {
 void DisplayConfigurationController::SetPrimaryDisplayIdImpl(
     int64_t display_id) {
   window_tree_host_manager_->SetPrimaryDisplayId(display_id);
+  if (display_animator_)
+    display_animator_->StartFadeInAnimation();
+}
+
+void DisplayConfigurationController::SetUnifiedDesktopLayoutMatrixImpl(
+    const display::UnifiedDesktopLayoutMatrix& matrix) {
+  display_manager_->SetUnifiedDesktopMatrix(matrix);
   if (display_animator_)
     display_animator_->StartFadeInAnimation();
 }

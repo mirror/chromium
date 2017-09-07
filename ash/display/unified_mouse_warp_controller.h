@@ -9,6 +9,9 @@
 
 #include <stdint.h>
 
+#include <map>
+#include <vector>
+
 #include "base/macros.h"
 #include "ui/gfx/geometry/rect.h"
 
@@ -46,12 +49,35 @@ class ASH_EXPORT UnifiedMouseWarpController : public MouseWarpController {
 
   void update_location_for_test() { update_location_for_test_ = true; }
 
-  gfx::Rect first_edge_bounds_in_native_;
-  gfx::Rect second_edge_bounds_in_native_;
+  struct DisplayEdge {
+    // The ID of the display where the cursor is now.
+    int64_t source_display_id;
+
+    // The ID of the display with which there's an edge and the cursor would
+    // move to if it resides in that edge.
+    int64_t target_display_id;
+
+    // The native bounds of the edge between the source and target displays
+    // which is part of the source display.
+    gfx::Rect edge_native_bounds_in_source_display;
+
+    DisplayEdge(int64_t source_id,
+                int64_t target_id,
+                const gfx::Rect& edge_bounds)
+        : source_display_id(source_id),
+          target_display_id(target_id),
+          edge_native_bounds_in_source_display(edge_bounds) {}
+  };
+
+  // Maps a display by its ID to all the boundary edges that reside in it with
+  // the surrounding displays.
+  std::map<int64_t, std::vector<DisplayEdge>> displays_edges_map_;
 
   int64_t current_cursor_display_id_;
 
   bool update_location_for_test_;
+
+  bool bounds_computed_;
 
   DISALLOW_COPY_AND_ASSIGN(UnifiedMouseWarpController);
 };

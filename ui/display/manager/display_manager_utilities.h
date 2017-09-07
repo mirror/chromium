@@ -5,7 +5,7 @@
 #ifndef UI_DISPLAY_MANAGER_DISPLAY_MANAGER_UTILITIES_H_
 #define UI_DISPLAY_MANAGER_DISPLAY_MANAGER_UTILITIES_H_
 
-#include <set>
+#include <vector>
 
 #include "ui/display/display.h"
 #include "ui/display/display_layout.h"
@@ -27,12 +27,22 @@ DISPLAY_MANAGER_EXPORT ManagedDisplayInfo::ManagedDisplayModeList
 CreateInternalManagedDisplayModeList(
     const scoped_refptr<ManagedDisplayMode>& native_mode);
 
+struct UnifiedDisplayModeParam {
+  float device_scale_factor = 1.0f;
+
+  float display_bounds_scale = 1.0f;
+
+  bool is_default_mode = false;
+
+  UnifiedDisplayModeParam(float dsf, float scale, bool is_default);
+};
+
 // Creates the display mode list for unified display
 // based on |native_mode| and |scales|.
 DISPLAY_MANAGER_EXPORT ManagedDisplayInfo::ManagedDisplayModeList
 CreateUnifiedManagedDisplayModeList(
     const scoped_refptr<ManagedDisplayMode>& native_mode,
-    const std::set<std::pair<float, float>>& dsf_scale_list);
+    const std::vector<UnifiedDisplayModeParam>& modes_param_list);
 
 // Gets the display mode for |resolution|. Returns false if no display
 // mode matches the resolution, or the display is an internal display.
