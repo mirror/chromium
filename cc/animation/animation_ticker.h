@@ -52,6 +52,7 @@ class CC_ANIMATION_EXPORT AnimationTicker {
 
   ElementId element_id() const { return element_id_; }
 
+  // Returns true if there are any animations at all to process.
   bool has_any_animation() const { return !animations_.empty(); }
 
   // When a scroll animation is removed on the main thread, its compositor
@@ -93,20 +94,37 @@ class CC_ANIMATION_EXPORT AnimationTicker {
 
   bool NotifyAnimationStarted(const AnimationEvent& event);
   bool NotifyAnimationFinished(const AnimationEvent& event);
+  void NotifyAnimationTakeover(const AnimationEvent& event);
   bool NotifyAnimationAborted(const AnimationEvent& event);
 
+  // Returns true if there are any animations that have neither finished nor
+  // aborted.
   bool HasTickingAnimation() const;
+
   bool HasNonDeletedAnimation() const;
 
   bool HasOnlyTranslationTransforms(ElementListType list_type) const;
 
   bool AnimationsPreserveAxisAlignment() const;
 
+  // Sets |start_scale| to the maximum of starting animation scale along any
+  // dimension at any destination in active animations. Returns false if the
+  // starting scale cannot be computed.
   bool AnimationStartScale(ElementListType, float* start_scale) const;
+
+  // Sets |max_scale| to the maximum scale along any dimension at any
+  // destination in active animations. Returns false if the maximum scale cannot
+  // be computed.
   bool MaximumTargetScale(ElementListType, float* max_scale) const;
 
+  // Returns true if there is an animation that is either currently animating
+  // the given property or scheduled to animate this property in the future, and
+  // that affects the given tree type.
   bool IsPotentiallyAnimatingProperty(TargetProperty::Type target_property,
                                       ElementListType list_type) const;
+
+  // Returns true if there is an animation that is currently animating the given
+  // property and that affects the given tree type.
   bool IsCurrentlyAnimatingProperty(TargetProperty::Type target_property,
                                     ElementListType list_type) const;
 

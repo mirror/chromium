@@ -63,6 +63,8 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   }
   void SetAnimationTimeline(AnimationTimeline* timeline);
 
+  AnimationTicker* animation_ticker() const { return animation_ticker_.get(); }
+
   scoped_refptr<ElementAnimations> element_animations() const;
 
   void set_animation_delegate(AnimationDelegate* delegate) {
@@ -84,15 +86,14 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   void Tick(base::TimeTicks monotonic_time);
   void UpdateState(bool start_ready_animations, AnimationEvents* events);
 
-  void UpdateTickingState(UpdateTickingType type);
   void AddToTicking();
-  void RemoveFromTicking();
+  void AnimationRemovedFromTicking();
 
   // AnimationDelegate routing.
-  bool NotifyAnimationStarted(const AnimationEvent& event);
-  bool NotifyAnimationFinished(const AnimationEvent& event);
-  bool NotifyAnimationAborted(const AnimationEvent& event);
-  void NotifyAnimationTakeover(const AnimationEvent& event);
+  void NotifyAnimationStartedTmp(const AnimationEvent& event);
+  void NotifyAnimationFinishedTmp(const AnimationEvent& event);
+  void NotifyAnimationAbortedTmp(const AnimationEvent& event);
+  void NotifyAnimationTakeoverTmp(const AnimationEvent& event);
   bool NotifyAnimationFinishedForTesting(TargetProperty::Type target_property,
                                          int group_id);
   // TODO(smcgruer): Once ElementAnimations points at AnimationTicker directly,
@@ -105,9 +106,6 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   // aborted.
   bool HasTickingAnimation() const;
 
-  // Returns true if there are any animations at all to process.
-  bool has_any_animation() const;
-
   bool needs_push_properties() const { return needs_push_properties_; }
   void SetNeedsPushProperties();
 
@@ -115,30 +113,6 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   // pending elements. Any animations that no longer affect any elements
   // are deleted.
   void ActivateAnimations();
-
-  bool HasOnlyTranslationTransforms(ElementListType list_type) const;
-  bool AnimationsPreserveAxisAlignment() const;
-
-  // Sets |start_scale| to the maximum of starting animation scale along any
-  // dimension at any destination in active animations. Returns false if the
-  // starting scale cannot be computed.
-  bool AnimationStartScale(ElementListType list_type, float* start_scale) const;
-
-  // Sets |max_scale| to the maximum scale along any dimension at any
-  // destination in active animations. Returns false if the maximum scale cannot
-  // be computed.
-  bool MaximumTargetScale(ElementListType list_type, float* max_scale) const;
-
-  // Returns true if there is an animation that is either currently animating
-  // the given property or scheduled to animate this property in the future, and
-  // that affects the given tree type.
-  bool IsPotentiallyAnimatingProperty(TargetProperty::Type target_property,
-                                      ElementListType list_type) const;
-
-  // Returns true if there is an animation that is currently animating the given
-  // property and that affects the given tree type.
-  bool IsCurrentlyAnimatingProperty(TargetProperty::Type target_property,
-                                    ElementListType list_type) const;
 
   // Returns the animation animating the given property that is either
   // running, or is next to run, if such an animation exists.
@@ -151,8 +125,6 @@ class CC_ANIMATION_EXPORT AnimationPlayer
 
   void GetPropertyAnimationState(PropertyAnimationState* pending_state,
                                  PropertyAnimationState* active_state) const;
-
-  bool scroll_offset_animation_was_interrupted() const;
 
   std::string ToString() const;
 
