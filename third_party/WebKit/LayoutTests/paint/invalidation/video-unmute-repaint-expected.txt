@@ -4,29 +4,21 @@
       "name": "LayoutView #document",
       "bounds": [800, 600],
       "contentsOpaque": true,
-      "backgroundColor": "#FFFFFF",
-      "paintInvalidations": [
-        {
-          "object": "LayoutBlockFlow BODY",
-          "rect": [8, 8, 784, 529],
-          "reason": "geometry"
-        }
-      ]
+      "drawsContent": true
     },
     {
       "name": "LayoutVideo VIDEO id='v'",
       "position": [8, 8],
-      "bounds": [700, 525],
-      "drawsContent": false
+      "bounds": [700, 525]
     },
     {
-      "name": "Squashing Containment Layer",
-      "drawsContent": false
+      "name": "Squashing Containment Layer"
     },
     {
       "name": "LayoutFlexibleBox (relative positioned) DIV",
       "position": [8, 8],
       "bounds": [700, 525],
+      "drawsContent": true,
       "paintInvalidations": [
         {
           "object": "LayoutFlexibleBox (relative positioned) DIV",
@@ -39,26 +31,27 @@
       "name": "Squashing Layer (first squashed layer: LayoutFlexibleBox (relative positioned) DIV)",
       "position": [8, 8],
       "bounds": [700, 525],
+      "drawsContent": true,
       "paintInvalidations": [
         {
           "object": "LayoutFlexibleBox DIV",
-          "rect": [580, 508, 70, 2],
+          "rect": [586, 508, 58, 2],
           "reason": "geometry"
         },
         {
-          "object": "LayoutSlider INPUT",
-          "rect": [580, 508, 70, 2],
+          "object": "LayoutBlockFlow (positioned) DIV id='thumb'",
+          "rect": [597, 491, 36, 36],
           "reason": "full"
         },
         {
-          "object": "LayoutBlockFlow DIV id='thumb'",
-          "rect": [632, 485, 36, 48],
+          "object": "LayoutBlockFlow (positioned) DIV id='thumb'",
+          "rect": [568, 491, 36, 36],
           "reason": "full"
         },
         {
-          "object": "LayoutBlockFlow DIV id='thumb'",
-          "rect": [562, 485, 36, 48],
-          "reason": "full"
+          "object": "LayoutBlockFlow (positioned) DIV class='-internal-track-segment-highlight-before'",
+          "rect": [580, 508, 35, 2],
+          "reason": "appeared"
         },
         {
           "object": "LayoutButton INPUT",
@@ -69,14 +62,6 @@
     }
   ],
   "objectPaintInvalidations": [
-    {
-      "object": "LayoutBlockFlow BODY",
-      "reason": "geometry"
-    },
-    {
-      "object": "RootInlineBox",
-      "reason": "geometry"
-    },
     {
       "object": "LayoutVideo VIDEO id='v'",
       "reason": "style change"
@@ -90,16 +75,16 @@
       "reason": "full"
     },
     {
-      "object": "LayoutSlider INPUT",
-      "reason": "full"
-    },
-    {
       "object": "LayoutFlexibleBox DIV",
       "reason": "geometry"
     },
     {
-      "object": "LayoutBlockFlow DIV id='thumb'",
+      "object": "LayoutBlockFlow (positioned) DIV id='thumb'",
       "reason": "full"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='-internal-track-segment-highlight-before'",
+      "reason": "appeared"
     }
   ]
 }
