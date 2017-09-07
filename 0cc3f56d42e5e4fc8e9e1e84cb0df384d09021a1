@@ -16,6 +16,24 @@
       "revId": "0cc3f56d42e5e4fc8e9e1e84cb0df384d09021a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e712bd_3f74a55d",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1110804
+      },
+      "writtenOn": "2017-09-07T07:49:46Z",
+      "side": 1,
+      "message": "Is feature testing at render_widget_compositor ok?\n\nI tried plumbing the feature test information from webmediaplayer_impl -\u003e VideoLayer and VideoLayerImpl, and tried to set in LayerTreeSetting in say VideoLayerImpl::WillDraw(), but realised that, settings.resource_settings.* \u003d someValue is done only in *tests* or RWC.",
+      "parentUuid": "b97738ad_071dbff0",
+      "revId": "0cc3f56d42e5e4fc8e9e1e84cb0df384d09021a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
