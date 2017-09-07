@@ -8,14 +8,9 @@
 
 namespace extensions {
 
-NetworkingPrivateDelegate::UIDelegate::UIDelegate() {}
-
-NetworkingPrivateDelegate::UIDelegate::~UIDelegate() {}
-
 NetworkingPrivateDelegate::NetworkingPrivateDelegate() {}
 
-NetworkingPrivateDelegate::~NetworkingPrivateDelegate() {
-}
+NetworkingPrivateDelegate::~NetworkingPrivateDelegate() {}
 
 void NetworkingPrivateDelegate::AddObserver(
     NetworkingPrivateDelegateObserver* observer) {

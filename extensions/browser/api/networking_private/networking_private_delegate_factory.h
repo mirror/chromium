@@ -23,26 +23,6 @@ namespace extensions {
 class NetworkingPrivateDelegateFactory
     : public BrowserContextKeyedServiceFactory {
  public:
-  // There needs to be a way to allow the application (e.g. Chrome) to provide
-  // additional delegates to the API (in src/extensions). Since this factory is
-  // already a singleton, it provides a good place to hold these delegate
-  // factories. See NetworkingPrivateDelegate for the delegate declarations.
-
-  class UIDelegateFactory {
-   public:
-    UIDelegateFactory();
-    virtual ~UIDelegateFactory();
-
-    virtual std::unique_ptr<NetworkingPrivateDelegate::UIDelegate>
-    CreateDelegate() = 0;
-
-   private:
-    DISALLOW_COPY_AND_ASSIGN(UIDelegateFactory);
-  };
-
-  // Provide optional factories for creating delegate instances.
-  void SetUIDelegateFactory(std::unique_ptr<UIDelegateFactory> factory);
-
   static NetworkingPrivateDelegate* GetForBrowserContext(
       content::BrowserContext* browser_context);
   static NetworkingPrivateDelegateFactory* GetInstance();
@@ -60,8 +40,6 @@ class NetworkingPrivateDelegateFactory
       content::BrowserContext* context) const override;
   bool ServiceIsCreatedWithBrowserContext() const override;
   bool ServiceIsNULLWhileTesting() const override;
-
-  std::unique_ptr<UIDelegateFactory> ui_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkingPrivateDelegateFactory);
 };

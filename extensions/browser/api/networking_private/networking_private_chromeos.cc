@@ -19,6 +19,7 @@
 #include "chromeos/network/managed_network_configuration_handler.h"
 #include "chromeos/network/network_activation_handler.h"
 #include "chromeos/network/network_certificate_handler.h"
+#include "chromeos/network/network_connect.h"
 #include "chromeos/network/network_connection_handler.h"
 #include "chromeos/network/network_device_handler.h"
 #include "chromeos/network/network_event_log.h"
@@ -582,16 +583,14 @@ void NetworkingPrivateChromeOS::StartActivate(
   if (carrier != shill::kCarrierSprint) {
     // Only Sprint is directly activated. For other carriers, show the
     // account details page.
-    if (ui_delegate())
-      ui_delegate()->ShowAccountDetails(guid);
+    chromeos::NetworkConnect::Get()->ShowMobileSetup(guid);
     success_callback.Run();
     return;
   }
 
   if (!network->RequiresActivation()) {
     // If no activation is required, show the account details page.
-    if (ui_delegate())
-      ui_delegate()->ShowAccountDetails(guid);
+    chromeos::NetworkConnect::Get()->ShowMobileSetup(guid);
     success_callback.Run();
     return;
   }

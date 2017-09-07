@@ -22,9 +22,6 @@ namespace extensions {
 
 using content::BrowserContext;
 
-NetworkingPrivateDelegateFactory::UIDelegateFactory::UIDelegateFactory() {}
-
-NetworkingPrivateDelegateFactory::UIDelegateFactory::~UIDelegateFactory() {}
 
 // static
 NetworkingPrivateDelegate*
@@ -49,11 +46,6 @@ NetworkingPrivateDelegateFactory::NetworkingPrivateDelegateFactory()
 NetworkingPrivateDelegateFactory::~NetworkingPrivateDelegateFactory() {
 }
 
-void NetworkingPrivateDelegateFactory::SetUIDelegateFactory(
-    std::unique_ptr<UIDelegateFactory> factory) {
-  ui_factory_ = std::move(factory);
-}
-
 KeyedService* NetworkingPrivateDelegateFactory::BuildServiceInstanceFor(
     BrowserContext* browser_context) const {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -70,9 +62,6 @@ KeyedService* NetworkingPrivateDelegateFactory::BuildServiceInstanceFor(
   NOTREACHED();
   delegate = nullptr;
 #endif
-
-  if (ui_factory_)
-    delegate->set_ui_delegate(ui_factory_->CreateDelegate());
 
   return delegate;
 }

@@ -562,11 +562,23 @@ void NetworkConnectImpl::CreateConfiguration(base::DictionaryValue* properties,
 }  // namespace
 
 static NetworkConnect* g_network_connect = NULL;
+static bool g_initialized_for_testing = false;
 
 // static
 void NetworkConnect::Initialize(Delegate* delegate) {
   CHECK(g_network_connect == NULL);
   g_network_connect = new NetworkConnectImpl(delegate);
+}
+
+// static
+void NetworkConnect::InitializeForTesting(Delegate* delegate) {
+  Initialize(delegate);
+  g_initialized_for_testing = true;
+}
+
+// static
+bool NetworkConnect::InitializedForTesting() {
+  return g_initialized_for_testing;
 }
 
 // static
