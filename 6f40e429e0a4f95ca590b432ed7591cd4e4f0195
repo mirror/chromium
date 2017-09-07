@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "968565ed_f506aa21",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr/WebVrPresentationActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-07T19:42:09Z",
+      "side": 1,
+      "message": "Thanks for bringing this up. Spoke to you offline and we settled on VrMainActivity. \n\nWe discussed that Main may be confusing because it may imply that you\u0027re handling the main intent and should be featured on the launcher as a separate thing.\n\nHere\u0027s the reasoning for it:\n- The main use case today is WebVR auto-presentation, but we will want to support the following use cases in the future making \"WebVrPresentationActivity\" a poor choice:\n  a) Opening a URL in Chrome (and not auto-presenting)\n  b) Opening Chrome VR from a VR launcher app (similar to launching Chrome 2D from the  launcher icon)\n- VrMainActivity gives us the following: 1)  Daydream doesn\u0027t know or care about what we\u0027re opening and we\u0027re not implying CCT, so we can change this later 2) We can support a) and b) above by differentiating it from the auto-present use case by enforcing that auto-present intents have a specific intent extra for example. That is, apps can still target VrMainActivity to support a) and b) without us having to expose a new activity.",
+      "parentUuid": "06d12cf6_31d24d35",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 38
+      },
+      "revId": "6f40e429e0a4f95ca590b432ed7591cd4e4f0195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6c0cb6a_d8fab927",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr/WebVrPresentationActivity.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-07T00:24:40Z",
       "side": 1,
       "message": "I think this should actually be the contents of isStartedUpCorrectly.  If this isn\u0027t a trust daydream intent, we should remove chrome.  We shouldn\u0027t allow this to be an entry point for anything but that.\n\nAlso, I do think we should now change AsyncInitializationActivity#onCreateInternal to call sanitizeIntent.  We could potentially add a function called something like validateIntent that only does this work in this activity (would simply return the passed in intent or do nothing if we don\u0027t mutate the intent), but I think we can first add it to the main entry point and just keep it consistent without this indirection.\n\nWe may long term want to add more machinery around validating stuff only for exported intents, but that is probably outside the scope of this.  I worry that if we don\u0027t at least call that, then we\u0027ll start getting crash reports for bad intents passed to us.",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 83
+      },
+      "revId": "6f40e429e0a4f95ca590b432ed7591cd4e4f0195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "895f9e1a_e7e25a1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr/WebVrPresentationActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-07T19:42:09Z",
+      "side": 1,
+      "message": "\u003e I think this should actually be the contents of isStartedUpCorrectly.  If this isn\u0027t a trust daydream intent, we should remove chrome.  We shouldn\u0027t allow this to be an entry point for anything but that.\n\u003e \nDone.\n\n\u003e Also, I do think we should now change AsyncInitializationActivity#onCreateInternal to call sanitizeIntent.  We could potentially add a function called something like validateIntent that only does this work in this activity (would simply return the passed in intent or do nothing if we don\u0027t mutate the intent), but I think we can first add it to the main entry point and just keep it consistent without this indirection.\n\u003e \n\nAdded validateIntent and calling it first thing from onCreateInternal.\n\n\u003e We may long term want to add more machinery around validating stuff only for exported intents, but that is probably outside the scope of this.  I worry that if we don\u0027t at least call that, then we\u0027ll start getting crash reports for bad intents passed to us.\n\nAck",
+      "parentUuid": "e6c0cb6a_d8fab927",
       "range": {
         "startLine": 22,
         "startChar": 12,
