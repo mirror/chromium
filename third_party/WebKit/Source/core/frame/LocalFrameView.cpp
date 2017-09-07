@@ -3289,7 +3289,14 @@ void LocalFrameView::PrePaint() {
     PrePaintTreeWalk().Walk(*this);
   }
 
-  ForAllNonThrottledLocalFrameViews([](LocalFrameView& frame_view) {
+  ForAllNonThrottledLocalFrameViews([this](LocalFrameView& frame_view) {
+    if (&frame_view != this && !frame_view.frame_->OwnerLayoutObject()) {
+      // This is a detached frame without owner layout object, and was not
+      // reached during the PrePaintTreeWalk::Walk() above. We still need to
+      // make the frame ready for painting because the frame can be printed
+      // via JavaScript window.print().
+      PrePaintTreeWalk().Walk(frame_view);
+    }
     frame_view.Lifecycle().AdvanceTo(DocumentLifecycle::kPrePaintClean);
   });
 }
