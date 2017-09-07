@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "528f6879_e25db079",
+        "filename": "net/disk_cache/simple/simple_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-07T13:53:51Z",
+      "side": 1,
+      "message": "extra from",
+      "range": {
+        "startLine": 72,
+        "startChar": 33,
+        "endLine": 72,
+        "endChar": 37
+      },
+      "revId": "d7054be9169f596aefc9955c75756d334ef43aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b52e8770_2dce7a62",
+        "filename": "net/disk_cache/simple/simple_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-07T13:53:51Z",
+      "side": 1,
+      "message": "const ref",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 21
+      },
+      "revId": "d7054be9169f596aefc9955c75756d334ef43aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f86861_6d8923c3",
+        "filename": "net/disk_cache/simple/simple_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-07T13:53:51Z",
+      "side": 1,
+      "message": "const ref",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 21
+      },
+      "revId": "d7054be9169f596aefc9955c75756d334ef43aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
