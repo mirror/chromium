@@ -93,13 +93,6 @@ struct SessionStateConvertableProxy : public ConvertableToTraceFormat {
   GetterFunctPtr const getter_function;
 };
 
-void NotifyHeapProfilingEnabledOnMDPThread(
-    scoped_refptr<MemoryDumpProviderInfo> mdpinfo,
-    bool profiling_enabled) {
-  DCHECK(!mdpinfo->disabled);
-  mdpinfo->dump_provider->OnHeapProfilingEnabled(profiling_enabled);
-}
-
 inline bool ShouldEnableMDPAllocatorHooks(HeapProfilingMode mode) {
   return (mode == kHeapProfilingModePseudo) ||
          (mode == kHeapProfilingModeNative) ||
@@ -303,14 +296,9 @@ bool MemoryDumpManager::EnableHeapProfiling(HeapProfilingMode profiling_mode) {
   InitializeHeapProfilerStateIfNeededLocked();
   if (notify_mdps) {
     bool enabled = IsHeapProfilingModeEnabled(heap_profiling_mode_);
-    for (const auto& mdpinfo : dump_providers_) {
-      const auto& task_runner = mdpinfo->task_runner
-                                    ? mdpinfo->task_runner
-                                    : GetOrCreateBgTaskRunnerLocked();
-      task_runner->PostTask(
-          FROM_HERE,
-          Bind(&NotifyHeapProfilingEnabledOnMDPThread, mdpinfo, enabled));
-    }
+    AutoUnlock unlock(lock_);
+    for (const auto& mdpinfo : dump_providers_)
+      NotifyHeapProfilingEnabled(mdpinfo, enabled);
   }
   return true;
 #else
@@ -330,7 +318,7 @@ void MemoryDumpManager::Initialize(
   {
     AutoLock lock(lock_);
     DCHECK(!request_dump_function.is_null());
-    DCHECK(request_dump_function_.is_null());
+    DCHECK(!is_initialized());
     request_dump_function_ = request_dump_function;
     is_coordinator_ = is_coordinator;
   }
@@ -405,6 +393,7 @@ void MemoryDumpManager::RegisterDumpProviderInternal(
                                      "polling must NOT be thread bound.";
   }
 
+  bool enable_mdp_allocator_hooks = false;
   {
     AutoLock lock(lock_);
     bool already_registered = !dump_providers_.insert(mdpinfo).second;
@@ -416,15 +405,11 @@ void MemoryDumpManager::RegisterDumpProviderInternal(
     if (options.is_fast_polling_supported)
       MemoryPeakDetector::GetInstance()->NotifyMemoryDumpProvidersChanged();
 
-    if (ShouldEnableMDPAllocatorHooks(heap_profiling_mode_)) {
-      const auto& mdp_task_runner = mdpinfo->task_runner
-                                        ? mdpinfo->task_runner
-                                        : GetOrCreateBgTaskRunnerLocked();
-      mdp_task_runner->PostTask(
-          FROM_HERE,
-          Bind(&NotifyHeapProfilingEnabledOnMDPThread, mdpinfo, true));
-    }
+    enable_mdp_allocator_hooks =
+        ShouldEnableMDPAllocatorHooks(heap_profiling_mode_);
   }
+  if (enable_mdp_allocator_hooks)
+    NotifyHeapProfilingEnabled(mdpinfo, true);
 }
 
 void MemoryDumpManager::UnregisterDumpProvider(MemoryDumpProvider* mdp) {
@@ -767,7 +752,7 @@ void MemoryDumpManager::SetupForTracing(
   InitializeHeapProfilerStateIfNeededLocked();
 
   // At this point we must have the ability to request global dumps.
-  DCHECK(!request_dump_function_.is_null());
+  DCHECK(is_initialized());
 
   MemoryDumpScheduler::Config periodic_config;
   bool peak_detector_configured = false;
@@ -856,6 +841,30 @@ void MemoryDumpManager::InitializeHeapProfilerStateIfNeededLocked() {
       std::make_unique<SessionStateConvertableProxy<TypeNameDeduplicator>>(
           heap_profiler_serialization_state_,
           &HeapProfilerSerializationState::type_name_deduplicator));
+}
+
+void MemoryDumpManager::NotifyHeapProfilingEnabled(
+    scoped_refptr<MemoryDumpProviderInfo> mdpinfo,
+    bool enabled) {
+  // If we do not have ability to request global dumps, then a dump cannot be in
+  // progress. So, the notification can be sent on any thread. This is done not
+  // to create thread early during startup since sandbox initialization that
+  // happens later requires no thread to be created.
+  if (!is_initialized())
+    return mdpinfo->dump_provider->OnHeapProfilingEnabled(enabled);
+
+  AutoLock lock(lock_);
+  const auto& task_runner = mdpinfo->task_runner
+                                ? mdpinfo->task_runner
+                                : GetOrCreateBgTaskRunnerLocked();
+  if (!task_runner->RunsTasksInCurrentSequence()) {
+    // TODO(ssid): Post tasks only for MDPs that support heap profiling.
+    task_runner->PostTask(
+        FROM_HERE, BindOnce(&MemoryDumpManager::NotifyHeapProfilingEnabled,
+                            Unretained(this), mdpinfo, enabled));
+    return;
+  }
+  mdpinfo->dump_provider->OnHeapProfilingEnabled(enabled);
 }
 
 MemoryDumpManager::ProcessMemoryDumpAsyncState::ProcessMemoryDumpAsyncState(
