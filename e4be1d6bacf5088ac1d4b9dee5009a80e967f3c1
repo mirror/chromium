@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9520195b_fc609a43",
+        "filename": "ash/system/power/tray_power.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-07T23:29:47Z",
+      "side": 1,
+      "message": "this logic is pretty tricky!",
+      "revId": "e4be1d6bacf5088ac1d4b9dee5009a80e967f3c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
