@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09981f8f_699f5276",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-07T06:29:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c40a4e86_72baf97a",
+      "revId": "c9af1572b2f40aeea1303290ab46c84f591be17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "961bd3d3_aae66066",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5feced29_d3b00692",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-07T06:29:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "961bd3d3_aae66066",
+      "revId": "c9af1572b2f40aeea1303290ab46c84f591be17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5282e231_2a88dbac",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "c9af1572b2f40aeea1303290ab46c84f591be17a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c90b2c0_83dde1f2",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-07T06:29:47Z",
+      "side": 1,
+      "message": "I\u0027ll defer this to a follow up... I couldn\u0027t think of a better name + verbs for this state.",
+      "parentUuid": "5282e231_2a88dbac",
+      "revId": "c9af1572b2f40aeea1303290ab46c84f591be17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
