@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "67f55367_b7c9b2a3",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T20:22:15Z",
+      "side": 1,
+      "message": "nit: perhaps adding a comment as it isn\u0027t that obvious from reading the code",
+      "parentUuid": "f593b9c2_bba6dc9c",
+      "range": {
+        "startLine": 1303,
+        "startChar": 18,
+        "endLine": 1303,
+        "endChar": 33
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4784043f_8eb54808",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 2
@@ -484,6 +508,30 @@
       "side": 1,
       "message": "I considered pseudo but I prefer Default. From the UI perspective most of the interesting Cellular properties come from the Device (which are copied to the Network). The fact that there isn\u0027t always a Cellular Service in Shill is an (annoying) Shill implementation detail :)",
       "parentUuid": "8d00815c_9e59fd62",
+      "range": {
+        "startLine": 1459,
+        "startChar": 45,
+        "endLine": 1459,
+        "endChar": 52
+      },
+      "revId": "5c30dd382e6828c6ee83f48b3f5c988223636f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db70631_85f93680",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1459,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T20:22:15Z",
+      "side": 1,
+      "message": "\u003e\u003e The fact that there isn\u0027t always a Cellular Service in Shill is an (annoying) Shill implementation detail\n\nCellular behaves like other technologies. The existence of a WiFi / Cellular / Ethernet / WiMAX device doesn\u0027t not imply a service must exist for that technology. On the contrary, I\u0027d argue that it\u0027s an implementation detail that UI chooses to mix device properties into network properties, and hence requires device-level operations to be proxied through a network handler :)",
+      "parentUuid": "3e6c35c6_5c7fe4e6",
       "range": {
         "startLine": 1459,
         "startChar": 45,
