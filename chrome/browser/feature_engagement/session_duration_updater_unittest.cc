@@ -112,6 +112,18 @@ TEST_F(SessionDurationUpdaterTest, TestTimeAdded) {
       50, test_observer_->GetPrefs()->GetInteger(prefs::kObservedSessionTime));
 }
 
+// kObservedSessionTime should be reset to 0 if there is a session time
+// requirement.
+TEST_F(SessionDurationUpdaterTest, TestTimeReseted) {
+  test_observer_->GetSessionDurationUpdater()->SetActiveSessionTimeRequirement(
+      base::TimeDelta::FromMinutes(50));
+  test_observer_->GetSessionDurationUpdater()->OnSessionEnded(
+      base::TimeDelta::FromMinutes(50));
+
+  EXPECT_EQ(
+      0, test_observer_->GetPrefs()->GetInteger(prefs::kObservedSessionTime));
+}
+
 // kObservedSessionTime should not be updated when SessionDurationUpdater has
 // no observers, but should start updating again if another observer is added.
 TEST_F(SessionDurationUpdaterTest, TestAddingAndRemovingObservers) {

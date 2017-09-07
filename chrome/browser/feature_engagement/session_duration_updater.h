@@ -24,13 +24,15 @@ namespace feature_engagement {
 // promos accordingly.
 //
 // When an active session is closed, DesktopSessionDurationTracker calls
-// OnSessionEnded and the observed time is incremented and persisted. Then,
-// OnSessionEnded is called on all of Features observing SessionDurationUpdater.
-// If the feature has its time limit exceeded, it should remove itself as an
-// observer of SessionDurationUpdater. If SessionDurationUpdater has no
-// observers, it means that the time limits of all the observing features has
-// been exceeded, so the SessionDurationUpdater removes itself as an observer of
-// DesktopSessionDurationTracker and stops updating observed session time.
+// OnSessionEnded and the observed time is incremented and persisted. However,
+// if it reaches the active session time limit, the observed time is reset to 0.
+// This is to prevent a runaway timer. OnSessionEnded is called on all of
+// Features observing SessionDurationUpdater. If the feature has its time limit
+// exceeded, it should remove itself as an observer of SessionDurationUpdater.
+// If SessionDurationUpdater has no observers, it means that the time limits of
+// all the observing features has been exceeded, so the SessionDurationUpdater
+// removes itself as an observer of DesktopSessionDurationTracker and stops
+// updating observed session time.
 //
 // If all observers are removed, SessionDurationUpdater doesn't continue
 // updating the observed session time. However, if another feature is added as
@@ -52,6 +54,9 @@ class SessionDurationUpdater
   ~SessionDurationUpdater() override;
 
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
+
+  void SetActiveSessionTimeRequirement(
+      base::TimeDelta active_session_time_requirement);
 
   // For observing the status of the session tracker.
   void AddObserver(Observer* observer);
@@ -76,6 +81,10 @@ class SessionDurationUpdater
 
   // Owned by Profile manager.
   PrefService* const pref_service_;
+
+  // Active sesion time requirement to show a promo.
+  base::TimeDelta active_session_time_requirement_;
+  bool has_active_session_time_requirement_ = false;
 
   base::ObserverList<Observer> observer_list_;
 

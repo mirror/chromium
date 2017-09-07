@@ -28,6 +28,12 @@ void SessionDurationUpdater::RegisterProfilePrefs(
   registry->RegisterIntegerPref(prefs::kObservedSessionTime, 0);
 }
 
+void SessionDurationUpdater::SetActiveSessionTimeRequirement(
+    base::TimeDelta active_session_time_requirement) {
+  active_session_time_requirement_ = active_session_time_requirement;
+  has_active_session_time_requirement_ = true;
+}
+
 void SessionDurationUpdater::AddObserver(Observer* observer) {
   observer_list_.AddObserver(observer);
 
@@ -62,6 +68,10 @@ void SessionDurationUpdater::OnSessionEnded(base::TimeDelta elapsed) {
       base::TimeDelta::FromMinutes(
           pref_service_->GetInteger(prefs::kObservedSessionTime)) +
       elapsed;
+  if (has_active_session_time_requirement_ &&
+      elapsed_session_time >= active_session_time_requirement_) {
+    elapsed_session_time = base::TimeDelta::FromMinutes(0);
+  }
   pref_service_->SetInteger(prefs::kObservedSessionTime,
                             elapsed_session_time.InMinutes());
 
