@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a87e455_ed65a1ad",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_material_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-07T11:44:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b290212_1ece764a",
+      "range": {
+        "startLine": 326,
+        "startChar": 74,
+        "endLine": 326,
+        "endChar": 76
+      },
+      "revId": "77a926219d37960db55405c64382b0113e609052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d95433c_ec0a87c2",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_material_view_controller.mm",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9ea630c9_bad6309d",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_material_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-07T11:44:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d95433c_ec0a87c2",
+      "range": {
+        "startLine": 348,
+        "startChar": 31,
+        "endLine": 348,
+        "endChar": 36
+      },
+      "revId": "77a926219d37960db55405c64382b0113e609052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0eb8139f_c18dffa3",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_material_view_controller.mm",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "77a926219d37960db55405c64382b0113e609052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b55565_868bd1fb",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_material_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-07T11:44:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0eb8139f_c18dffa3",
+      "revId": "77a926219d37960db55405c64382b0113e609052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
