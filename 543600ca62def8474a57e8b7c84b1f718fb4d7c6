@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "9c9ad115_96e0bd01",
+        "filename": "media/audio/audio_system_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-07T09:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ff010cf_98b1128f",
+      "range": {
+        "startLine": 27,
+        "startChar": 47,
+        "endLine": 27,
+        "endChar": 50
+      },
+      "revId": "543600ca62def8474a57e8b7c84b1f718fb4d7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08fa933a_28c702a5",
         "filename": "media/audio/audio_system_helper.cc",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-06T15:56:10Z",
       "side": 1,
       "message": "The channel fix was originally intended for output parameters only, although  \nI guess it does not hurt to also apply it to input.",
+      "range": {
+        "startLine": 125,
+        "startChar": 37,
+        "endLine": 125,
+        "endChar": 53
+      },
+      "revId": "543600ca62def8474a57e8b7c84b1f718fb4d7c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bdebb25_46cacf59",
+        "filename": "media/audio/audio_system_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-07T09:22:09Z",
+      "side": 1,
+      "message": "It may be useful since AudioManager actually returns output parameters in case of tab audio capture. And it should not hurt normal input.",
+      "parentUuid": "08fa933a_28c702a5",
       "range": {
         "startLine": 125,
         "startChar": 37,
