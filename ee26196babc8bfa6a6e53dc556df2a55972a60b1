@@ -52,6 +52,58 @@
       "revId": "ee26196babc8bfa6a6e53dc556df2a55972a60b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35361082_3bcc87c9",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-07T04:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85e1e267_6d4c6581",
+      "revId": "ee26196babc8bfa6a6e53dc556df2a55972a60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a6e8053_a7e5c089",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-07T04:37:50Z",
+      "side": 1,
+      "message": "I tried to use the std::unique_ptr constructor for views::Combobox (which would allow this to go), but it didn\u0027t work out :/. since...",
+      "revId": "ee26196babc8bfa6a6e53dc556df2a55972a60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "458aa1b3_c34b38cc",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-07T04:37:50Z",
+      "side": 1,
+      "message": "... since this line needs the concrete type of the Model. So we\u0027d need to sneakily take a raw  pointer from the unique_ptr before passing it to AddComboboxRow. or static_cast. Which didn\u0027t feel right.",
+      "revId": "ee26196babc8bfa6a6e53dc556df2a55972a60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
