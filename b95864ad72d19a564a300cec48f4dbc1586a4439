@@ -39,6 +39,24 @@
       "revId": "b95864ad72d19a564a300cec48f4dbc1586a4439",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "790abae1_ed31260d",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/webp/WEBPImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-09-07T19:24:00Z",
+      "side": 1,
+      "message": "\u003e Nit: I wonder if you want to factor this out into its own case above these others, because it feels a bit different, and maybe we should do this before the header size check (if you can really get less data on a subsequent call -- can you?):\n\nIt used to be possible. https://bugs.chromium.org/p/chromium/issues/detail?id\u003d335694#c12 describes how it was possible at the time. It may not currently be possible (due to changes in how we decode images before they are needed), but I think it\u0027s reasonable to check (otherwise we\u0027d be relying on knowledge of the upstack code).\n\nI don\u0027t think it belongs before the header check though. Then we could receive less than kWebpHeaderSize a second time and return true instead of false. (I suspect that is very unlikely, FWIW.) OTOH, the existing code already appears like it could return true incorrectly, with have_already_parsed_this_data_. So I think the check for the header size should go first.\n\n\u003e \n\u003e   if (consolidated_data_ \u0026\u0026\n\u003e       consolidated_data_-\u003esize() \u003e\u003d data_-\u003esize())\n\u003e     return true;\n\u003e \n\u003e   // I\u0027m adding the all data received check here so we fail on very short\n\u003e   // truncated streams -- not sure if that\u0027s correct\n\u003e   if (data_-\u003esize() \u003c kWebpHeaderSize)\n\u003e     return IsAllDataReceived() ? SetFailed() : false;\n\nThat\u0027s a slight behavior change, but it looks good to me.\n\n\u003e \n\u003e   if (IsAllDataReceived() \u0026\u0026 !consolidated_data_) {\n\u003e     consolidated_data_ \u003d data_-\u003eGetAsSkData();\n\u003e   } else ... {\n\u003e     ...",
+      "parentUuid": "62ca8db7_385083c1",
+      "revId": "b95864ad72d19a564a300cec48f4dbc1586a4439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
