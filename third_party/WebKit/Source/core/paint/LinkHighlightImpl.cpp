@@ -26,7 +26,7 @@
 #include "core/paint/LinkHighlightImpl.h"
 
 #include <memory>
-#include "core/dom/LayoutTreeBuilderTraversal.h"
+#include "core/css/LayoutTreeBuilderTraversal.h"
 #include "core/dom/Node.h"
 #include "core/exported/WebSettingsImpl.h"
 #include "core/exported/WebViewImpl.h"

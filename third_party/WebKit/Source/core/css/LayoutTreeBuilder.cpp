@@ -25,7 +25,7 @@
  *
  */
 
-#include "core/dom/LayoutTreeBuilder.h"
+#include "core/css/LayoutTreeBuilder.h"
 
 #include "core/HTMLNames.h"
 #include "core/SVGNames.h"
