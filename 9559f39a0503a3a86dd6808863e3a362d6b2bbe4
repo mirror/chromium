@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3267f4bf_ab81dabd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-07T00:37:57Z",
+      "side": 1,
+      "message": "git cl description is your friend (and has the 72 character hint built-in \u003d)",
+      "parentUuid": "bbe204a5_a383c1ca",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 29
+      },
+      "revId": "9559f39a0503a3a86dd6808863e3a362d6b2bbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36ec5bf0_91475671",
         "filename": "chrome/browser/guest_view/web_view/chrome_web_view_permission_helper_delegate.h",
         "patchSetId": 15
