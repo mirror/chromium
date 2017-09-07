@@ -232,7 +232,7 @@ void AwContentBrowserClient::RenderProcessWillLaunch(
       host->GetID(), url::kContentScheme);
 
   host->AddFilter(new AwContentsMessageFilter(host->GetID()));
-  host->AddFilter(new cdm::CdmMessageFilterAndroid());
+  host->AddFilter(new cdm::CdmMessageFilterAndroid(true, false));
   host->AddFilter(new AwPrintingMessageFilter(host->GetID()));
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)

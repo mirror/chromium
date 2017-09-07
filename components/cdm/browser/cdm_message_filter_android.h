@@ -23,7 +23,7 @@ namespace cdm {
 // desktop Chromium's IsPepperCdmAvailable() path.
 class CdmMessageFilterAndroid : public content::BrowserMessageFilter {
  public:
-  explicit CdmMessageFilterAndroid(bool can_use_secure_codecs = false);
+  CdmMessageFilterAndroid(bool can_persist_data, bool can_use_secure_codecs);
 
  private:
   ~CdmMessageFilterAndroid() override;
@@ -40,6 +40,10 @@ class CdmMessageFilterAndroid : public content::BrowserMessageFilter {
   void OnGetPlatformKeySystemNames(std::vector<std::string>* key_systems);
 
   const scoped_refptr<base::SequencedTaskRunner> task_runner_;
+
+  // Whether any data can be persisted (e.g. false in incognito mode). If false,
+  // persistent data and license cannot be supported.
+  const bool can_persist_data_;
 
   // By default, rendering of secure codecs is supported when AndroidOverlay is
   // enabled. However, on platforms like Cast on Android, secure codecs are

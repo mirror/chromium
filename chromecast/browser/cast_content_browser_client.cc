@@ -269,7 +269,7 @@ void CastContentBrowserClient::RenderProcessWillLaunch(
   // TODO(yucliu): On Clank, secure codecs support is tied to AndroidOverlay.
   // Remove kForceVideoOverlays and swtich to the Clank model for secure codecs
   // support.
-  host->AddFilter(new cdm::CdmMessageFilterAndroid(true));
+  host->AddFilter(new cdm::CdmMessageFilterAndroid(true, true));
 #endif  // defined(OS_ANDROID)
 }
 
