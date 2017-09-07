@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99fb3721_2ea68074",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T02:09:48Z",
+      "side": 1,
+      "message": "Made it use a).",
+      "parentUuid": "14bd48d4_023acb9f",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "dc92b12c5b5a3425be332894ab0881c995432949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba16a9b6_27d61413",
         "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
         "patchSetId": 13
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-06T19:14:03Z",
       "side": 1,
       "message": "What if the vector is empty, how does the ResultOnceCallback get called in that case?",
+      "revId": "dc92b12c5b5a3425be332894ab0881c995432949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d125ea5f_96730e5c",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T02:09:48Z",
+      "side": 1,
+      "message": "Thanks, I modified this! If the vector is empty, it use early return. Is this ok?",
+      "parentUuid": "ba16a9b6_27d61413",
       "revId": "dc92b12c5b5a3425be332894ab0881c995432949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "dc92b12c5b5a3425be332894ab0881c995432949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "005a8926_eb6d7279",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T02:09:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7035cd99_5907c861",
+      "revId": "dc92b12c5b5a3425be332894ab0881c995432949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
