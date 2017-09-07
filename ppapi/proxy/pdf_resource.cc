@@ -166,8 +166,13 @@ void PDFResource::GetV8ExternalSnapshotData(const char** natives_data_out,
                                             int* natives_size_out,
                                             const char** snapshot_data_out,
                                             int* snapshot_size_out) {
-  gin::V8Initializer::GetV8ExternalSnapshotData(
-      natives_data_out, natives_size_out, snapshot_data_out, snapshot_size_out);
+  v8::StartupData natives;
+  v8::StartupData snapshot;
+  gin::V8Initializer::GetV8ExternalSnapshotData(&natives, &snapshot);
+  *natives_data_out = natives.data;
+  *natives_size_out = natives.raw_size;
+  *snapshot_data_out = snapshot.data;
+  *snapshot_size_out = snapshot.raw_size;
 }
 
 void PDFResource::SetAccessibilityDocInfo(
