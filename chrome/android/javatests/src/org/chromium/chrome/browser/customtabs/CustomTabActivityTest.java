@@ -46,6 +46,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -117,6 +118,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -1171,15 +1173,17 @@ public class CustomTabActivityTest {
     }
 
     /**
-     * Tests that Time To First Contentful Paint and Load Event Start timings are sent.
+     * Tests that Time To First Contentful Paint, Load Event Start and LoadTimingInfo
+     * metrics are sent.
      */
     @Test
     @SmallTest
     @RetryOnFailure
     public void testPageLoadMetricIsSent() {
-        final AtomicReference<Long> firstContentfulPaintMs = new AtomicReference<>(-1L);
-        final AtomicReference<Long> activityStartTimeMs = new AtomicReference<>(-1L);
-        final AtomicReference<Long> loadEventStartMs = new AtomicReference<>(-1L);
+        final AtomicReference<Long> activityStartTimeMs = new AtomicReference<Long>(-1L);
+        final Semaphore sawFirstContentfulPaint = new Semaphore(0);
+        final Semaphore sawLoadEventStart = new Semaphore(0);
+        final Semaphore sawEffectiveConnectionType = new Semaphore(0);
 
         CustomTabsCallback cb = new CustomTabsCallback() {
             @Override
@@ -1188,20 +1192,31 @@ public class CustomTabActivityTest {
 
                 long navigationStart = args.getLong(PageLoadMetrics.NAVIGATION_START, -1);
                 long current = SystemClock.uptimeMillis();
-                Assert.assertTrue(navigationStart <= current);
-                Assert.assertTrue(navigationStart >= activityStartTimeMs.get());
+                if (navigationStart > 0) {
+                    Assert.assertTrue(navigationStart <= current);
+                    Assert.assertTrue(navigationStart >= activityStartTimeMs.get());
+                } else {
+                    Assert.assertThat(
+                            args.getLong(PageLoadMetrics.RESPONSE_START), Matchers.greaterThan(0L));
+                }
 
                 long firstContentfulPaint =
                         args.getLong(PageLoadMetrics.FIRST_CONTENTFUL_PAINT, -1);
                 if (firstContentfulPaint > 0) {
                     Assert.assertTrue(firstContentfulPaint <= (current - navigationStart));
-                    firstContentfulPaintMs.set(firstContentfulPaint);
+                    sawFirstContentfulPaint.release();
                 }
 
                 long loadEventStart = args.getLong(PageLoadMetrics.LOAD_EVENT_START, -1);
                 if (loadEventStart > 0) {
                     Assert.assertTrue(loadEventStart <= (current - navigationStart));
-                    loadEventStartMs.set(loadEventStart);
+                    sawLoadEventStart.release();
+                }
+
+                long connectionType = args.getLong(PageLoadMetrics.EFFECTIVE_CONNECTION_TYPE, -1);
+                if (connectionType > 0) {
+                    // The effective connection type should not be unknown.
+                    sawEffectiveConnectionType.release();
                 }
             }
         };
@@ -1217,18 +1232,57 @@ public class CustomTabActivityTest {
         try {
             activityStartTimeMs.set(SystemClock.uptimeMillis());
             mCustomTabActivityTestRule.startCustomTabActivityWithIntent(intent);
-            CriteriaHelper.pollInstrumentationThread(new Criteria() {
-                @Override
-                public boolean isSatisfied() {
-                    return firstContentfulPaintMs.get() > 0;
+            Assert.assertTrue(sawFirstContentfulPaint.tryAcquire(10, TimeUnit.SECONDS));
+            Assert.assertTrue(sawLoadEventStart.tryAcquire(10, TimeUnit.SECONDS));
+            Assert.assertTrue(sawEffectiveConnectionType.tryAcquire(10, TimeUnit.SECONDS));
+        } catch (InterruptedException e) {
+            Assert.fail();
+        }
+    }
+
+    /**
+     * Tests that LoadTimingInfo metrics are sent when there is a server-side redirect.
+     */
+    @Test
+    @SmallTest
+    public void testLoadTimingInfoWithRedirect() {
+        final Semaphore sawEffectiveConnectionType = new Semaphore(0);
+        final AtomicInteger updateCount = new AtomicInteger(0);
+        final Semaphore sawFCP = new Semaphore(0);
+
+        CustomTabsCallback cb = new CustomTabsCallback() {
+            @Override
+            public void extraCallback(String callbackName, Bundle args) {
+                Assert.assertEquals(CustomTabsConnection.PAGE_LOAD_METRICS_CALLBACK, callbackName);
+
+                long connectionType = args.getLong(PageLoadMetrics.EFFECTIVE_CONNECTION_TYPE, -1);
+                if (connectionType > 0) {
+                    // The effective connection type should not be unknown.
+                    sawEffectiveConnectionType.release();
+                    updateCount.getAndIncrement();
                 }
-            });
-            CriteriaHelper.pollInstrumentationThread(new Criteria() {
-                @Override
-                public boolean isSatisfied() {
-                    return loadEventStartMs.get() > 0;
+
+                long firstContentfulPaint =
+                        args.getLong(PageLoadMetrics.FIRST_CONTENTFUL_PAINT, -1);
+                if (firstContentfulPaint > 0) {
+                    sawFCP.release();
                 }
-            });
+            }
+        };
+
+        CustomTabsSession session = bindWithCallback(cb);
+        Intent intent = new CustomTabsIntent.Builder(session).build().intent;
+        intent.setData(Uri.parse(mTestServer.getURL("/server-redirect") + "?" + mTestPage));
+        intent.setComponent(
+                new ComponentName(InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                        ChromeLauncherActivity.class));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        try {
+            mCustomTabActivityTestRule.startCustomTabActivityWithIntent(intent);
+            Assert.assertTrue(sawEffectiveConnectionType.tryAcquire(10, TimeUnit.SECONDS));
+            Assert.assertTrue(sawFCP.tryAcquire(10, TimeUnit.SECONDS));
+            Assert.assertEquals(updateCount.get(), 1);
         } catch (InterruptedException e) {
             Assert.fail();
         }
