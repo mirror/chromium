@@ -149,7 +149,8 @@ void OverscanCalibrator::OnDelegatedFrameDamage(
 }
 
 void OverscanCalibrator::OnDeviceScaleFactorChanged(
-    float device_scale_factor) {
+    float old_device_scale_factor,
+    float new_device_scale_factor) {
   // TODO(mukai): Cancel the overscan calibration when the device
   // configuration has changed.
 }
