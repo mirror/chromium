@@ -26,6 +26,7 @@ enum Milestone {
   M63,
   M64,
   M65,
+  M66,
 };
 
 const char* milestoneString(Milestone milestone) {
@@ -45,6 +46,8 @@ const char* milestoneString(Milestone milestone) {
       return "M64, around January 2018";
     case M65:
       return "M65, around March 2018";
+    case M66:
+      return "M66, around April 2018";
   }
 
   NOTREACHED();
@@ -563,6 +566,13 @@ String Deprecation::DeprecationMessage(WebFeature feature) {
       return replacedWillBeRemoved(
           "PaymentRequest's supportedMethods taking an array",
           "a single string", M64, "5177301645918208");
+
+    case WebFeature::kEventPath:
+      return willBeRemoved(
+          "Event.path is a Shadow DOM V0 feature and will be removed and "
+          "use Event.composedPath() instead. See "
+          "https://hayato.io/2016/shadowdomv1/#getting-event-path",
+          M66, "4507242028072960");
 
     // Features that aren't deprecated don't have a deprecation message.
     default:
