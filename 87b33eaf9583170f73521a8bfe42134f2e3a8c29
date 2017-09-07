@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "481439bc_82ae2c6e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-07T22:05:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b1266f8_1fd0912b",
+      "revId": "87b33eaf9583170f73521a8bfe42134f2e3a8c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "829a8f8c_b3890275",
         "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
         "patchSetId": 16
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-07T01:15:02Z",
       "side": 1,
       "message": "Lets make a few variables or an object containing these unique cases (eg: PromiseValue, PromiseStatus, GeneratorStatus, PrimitiveValue) then fill them in here. Then after the loop check if they exist and use insertChild() to append to the beginning. This will keep us from having to look at next or previous item and be less code and easier to read.",
+      "revId": "87b33eaf9583170f73521a8bfe42134f2e3a8c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa8ee4e_c8a5deeb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-07T22:05:26Z",
+      "side": 1,
+      "message": "I actually found it to be less code to do the Promise case first, and leave the other two cases (GeneratorStatus, PrimitiveValue) as conditions inside the loop.",
+      "parentUuid": "829a8f8c_b3890275",
       "revId": "87b33eaf9583170f73521a8bfe42134f2e3a8c29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
