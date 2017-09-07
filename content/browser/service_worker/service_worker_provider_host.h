@@ -81,9 +81,6 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
       public base::SupportsWeakPtr<ServiceWorkerProviderHost>,
       public mojom::ServiceWorkerContainerHost {
  public:
-  using GetRegistrationForReadyCallback =
-      base::Callback<void(ServiceWorkerRegistration* reigstration)>;
-
   using WebContentsGetter = base::Callback<WebContents*(void)>;
 
   // PlzNavigate
@@ -265,11 +262,6 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   // |registration| claims the document to be controlled.
   void ClaimedByRegistration(ServiceWorkerRegistration* registration);
 
-  // Called by dispatcher host to get the registration for the "ready" property.
-  // Returns false if there's a completed or ongoing request for the document.
-  // https://slightlyoff.github.io/ServiceWorker/spec/service_worker/#navigator-service-worker-ready
-  bool GetRegistrationForReady(const GetRegistrationForReadyCallback& callback);
-
   // Methods to support cross site navigations.
   std::unique_ptr<ServiceWorkerProviderHost> PrepareForCrossSiteTransfer();
   void CompleteCrossSiteTransfer(ServiceWorkerProviderHost* provisional_host);
@@ -346,10 +338,8 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
 
   struct OneShotGetReadyCallback {
     GetRegistrationForReadyCallback callback;
-    bool called;
 
-    explicit OneShotGetReadyCallback(
-        const GetRegistrationForReadyCallback& callback);
+    explicit OneShotGetReadyCallback(GetRegistrationForReadyCallback callback);
     ~OneShotGetReadyCallback();
   };
 
@@ -409,6 +399,8 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   void GetRegistration(const GURL& client_url,
                        GetRegistrationCallback callback) override;
   void GetRegistrations(GetRegistrationsCallback callback) override;
+  void GetRegistrationForReady(
+      GetRegistrationForReadyCallback callback) override;
 
   // Callback for ServiceWorkerContextCore::RegisterServiceWorker().
   void RegistrationComplete(RegisterCallback callback,
@@ -436,6 +428,7 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   bool IsValidGetRegistrationMessage(const GURL& client_url,
                                      std::string* out_error) const;
   bool IsValidGetRegistrationsMessage(std::string* out_error) const;
+  bool IsValidGetRegistrationForReadyMessage(std::string* out_error) const;
 
   const std::string client_uuid_;
   const base::TimeTicks create_time_;
