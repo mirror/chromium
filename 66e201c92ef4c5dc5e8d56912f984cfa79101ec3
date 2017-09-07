@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "16cceec8_a1ac60a4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-07T23:41:42Z",
+      "side": 1,
+      "message": "That ordering is per SRC\u003d spec (unmodified by MSE\u0027s extensions): https://www.w3.org/TR/html52/semantics-embedded-content.html#getting-media-metadata\nHence, good to catch regression of that here too. I also don\u0027t see another MSE layout test that does this specific order verification, so yes I\u0027d like to keep it here. Note that this test script doesn\u0027t require updateend before either durationchange or loadedmetadata because expectEvent only enforces ordering for events on the same object (sourceBuffer !\u003d mediaElement).",
+      "parentUuid": "758a6abe_1160d4dd",
+      "range": {
+        "startLine": 180,
+        "startChar": 13,
+        "endLine": 180,
+        "endChar": 61
+      },
+      "revId": "66e201c92ef4c5dc5e8d56912f984cfa79101ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaa200cc_465ff570",
         "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "66e201c92ef4c5dc5e8d56912f984cfa79101ec3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eadd07d3_b199d3ba",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-07T23:41:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaa200cc_465ff570",
+      "range": {
+        "startLine": 190,
+        "startChar": 46,
+        "endLine": 190,
+        "endChar": 56
+      },
+      "revId": "66e201c92ef4c5dc5e8d56912f984cfa79101ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1106ff1f_6c62c19a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-07T23:41:42Z",
+      "side": 1,
+      "message": "I think the spec at least used to guarantee that, though with throttling events/etc, it might no longer. Note though that all potentially currently queued \u0027durationchange\u0027 events were synchronously scheduled in the previous waitForExpectedEvents(...) callback, so at least none should be asynchronously eventually queued.\n\nRegardless, to hopefully end-run that potential flakiness source, as discussed offline, I\u0027m switching this from a step_timeout to instead a seek and only upon handling the \u0027seeked\u0027 will the durationchange count then be verified.",
+      "parentUuid": "6bb061bc_8ca5ac44",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 92
+      },
+      "revId": "66e201c92ef4c5dc5e8d56912f984cfa79101ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3dd3d72_a85b28bc",
         "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "66e201c92ef4c5dc5e8d56912f984cfa79101ec3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b27ef5_c2dc5732",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-07T23:41:42Z",
+      "side": 1,
+      "message": "Done (using a seek to impose mediaElement event ordering, like my comment to l.219 above.)",
+      "parentUuid": "a3dd3d72_a85b28bc",
+      "range": {
+        "startLine": 229,
+        "startChar": 36,
+        "endLine": 229,
+        "endChar": 65
+      },
+      "revId": "66e201c92ef4c5dc5e8d56912f984cfa79101ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
