@@ -23,6 +23,7 @@
 #include "skia/ext/opacity_filter_canvas.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkColor.h"
+#include "third_party/skia/include/core/SkColorSpaceXformCanvas.h"
 #include "third_party/skia/include/core/SkImageFilter.h"
 #include "third_party/skia/include/core/SkMatrix.h"
 #include "third_party/skia/include/core/SkPath.h"
@@ -206,7 +207,7 @@ bool SoftwareRenderer::IsSoftwareResource(viz::ResourceId resource_id) const {
   return false;
 }
 
-void SoftwareRenderer::DoDrawQuad(const DrawQuad* quad,
+void SoftwareRenderer::DoDrawQuad(const viz::DrawQuad* quad,
                                   const gfx::QuadF* draw_region) {
   if (!current_canvas_)
     return;
@@ -271,32 +272,32 @@ void SoftwareRenderer::DoDrawQuad(const DrawQuad* quad,
   }
 
   switch (quad->material) {
-    case DrawQuad::DEBUG_BORDER:
+    case viz::DrawQuad::DEBUG_BORDER:
       DrawDebugBorderQuad(DebugBorderDrawQuad::MaterialCast(quad));
       break;
-    case DrawQuad::PICTURE_CONTENT:
+    case viz::DrawQuad::PICTURE_CONTENT:
       DrawPictureQuad(PictureDrawQuad::MaterialCast(quad));
       break;
-    case DrawQuad::RENDER_PASS:
+    case viz::DrawQuad::RENDER_PASS:
       DrawRenderPassQuad(RenderPassDrawQuad::MaterialCast(quad));
       break;
-    case DrawQuad::SOLID_COLOR:
+    case viz::DrawQuad::SOLID_COLOR:
       DrawSolidColorQuad(SolidColorDrawQuad::MaterialCast(quad));
       break;
-    case DrawQuad::TEXTURE_CONTENT:
+    case viz::DrawQuad::TEXTURE_CONTENT:
       DrawTextureQuad(TextureDrawQuad::MaterialCast(quad));
       break;
-    case DrawQuad::TILED_CONTENT:
+    case viz::DrawQuad::TILED_CONTENT:
       DrawTileQuad(TileDrawQuad::MaterialCast(quad));
       break;
-    case DrawQuad::SURFACE_CONTENT:
+    case viz::DrawQuad::SURFACE_CONTENT:
       // Surface content should be fully resolved to other quad types before
       // reaching a direct renderer.
       NOTREACHED();
       break;
-    case DrawQuad::INVALID:
-    case DrawQuad::YUV_VIDEO_CONTENT:
-    case DrawQuad::STREAM_VIDEO_CONTENT:
+    case viz::DrawQuad::INVALID:
+    case viz::DrawQuad::YUV_VIDEO_CONTENT:
+    case viz::DrawQuad::STREAM_VIDEO_CONTENT:
       DrawUnsupportedQuad(quad);
       NOTREACHED();
       break;
@@ -339,13 +340,17 @@ void SoftwareRenderer::DrawPictureQuad(const PictureDrawQuad* quad) {
 
   TRACE_EVENT0("cc", "SoftwareRenderer::DrawPictureQuad");
 
-  // TODO(ccameron): Determine a color space strategy for software rendering.
-  gfx::ColorSpace canvas_color_space;
-  if (settings_->enable_color_correct_rendering)
-    canvas_color_space = gfx::ColorSpace::CreateSRGB();
+  SkCanvas* raster_canvas = current_canvas_;
 
-  RasterSource::PlaybackSettings playback_settings;
-  playback_settings.playback_to_shared_canvas = true;
+  std::unique_ptr<SkCanvas> color_transform_canvas;
+  if (settings_->enable_color_correct_rendering) {
+    // TODO(enne): color transform needs to be replicated in gles2_cmd_decoder
+    color_transform_canvas = SkCreateColorSpaceXformCanvas(
+        current_canvas_, gfx::ColorSpace::CreateSRGB().ToSkColorSpace());
+    raster_canvas = color_transform_canvas.get();
+  }
+
+  base::Optional<skia::OpacityFilterCanvas> opacity_canvas;
   if (needs_transparency || disable_image_filtering) {
     // TODO(aelias): This isn't correct in all cases. We should detect these
     // cases and fall back to a persistent bitmap backing
@@ -353,21 +358,20 @@ void SoftwareRenderer::DrawPictureQuad(const PictureDrawQuad* quad) {
     // TODO(vmpstr): Fold this canvas into playback and have raster source
     // accept a set of settings on playback that will determine which canvas to
     // apply. (http://crbug.com/594679)
-    skia::OpacityFilterCanvas filtered_canvas(current_canvas_,
-                                              quad->shared_quad_state->opacity,
-                                              disable_image_filtering);
-    quad->raster_source->PlaybackToCanvas(
-        &filtered_canvas, canvas_color_space, quad->content_rect,
-        quad->content_rect,
-        gfx::AxisTransform2d(quad->contents_scale, gfx::Vector2dF()),
-        playback_settings);
-  } else {
-    quad->raster_source->PlaybackToCanvas(
-        current_canvas_, canvas_color_space, quad->content_rect,
-        quad->content_rect,
-        gfx::AxisTransform2d(quad->contents_scale, gfx::Vector2dF()),
-        playback_settings);
+    opacity_canvas.emplace(raster_canvas, quad->shared_quad_state->opacity,
+                           disable_image_filtering);
+    raster_canvas = &*opacity_canvas;
   }
+
+  // Treat all subnormal values as zero for performance.
+  ScopedSubnormalFloatDisabler disabler;
+
+  raster_canvas->save();
+  raster_canvas->translate(-quad->content_rect.x(), -quad->content_rect.y());
+  raster_canvas->clipRect(gfx::RectToSkRect(quad->content_rect));
+  raster_canvas->scale(quad->contents_scale, quad->contents_scale);
+  quad->display_item_list->Raster(raster_canvas);
+  raster_canvas->restore();
 }
 
 void SoftwareRenderer::DrawSolidColorQuad(const SolidColorDrawQuad* quad) {
@@ -553,7 +557,7 @@ void SoftwareRenderer::DrawRenderPassQuad(const RenderPassDrawQuad* quad) {
   current_canvas_->drawRect(dest_visible_rect, current_paint_);
 }
 
-void SoftwareRenderer::DrawUnsupportedQuad(const DrawQuad* quad) {
+void SoftwareRenderer::DrawUnsupportedQuad(const viz::DrawQuad* quad) {
 #ifdef NDEBUG
   current_paint_.setColor(SK_ColorWHITE);
 #else
