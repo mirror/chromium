@@ -16,6 +16,24 @@
       "revId": "659e2e2bd9a8535112d0bb1d5a70571f7a31ae1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886a78f2_6ab06df3",
+        "filename": "ash/system/web_notification/web_notification_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-07T00:53:27Z",
+      "side": 1,
+      "message": "Sorry for late comment.\n\nYes, we want to add a padding to the message center from the screen edge in all the case of shelf alignment.",
+      "parentUuid": "1ff8f099_7f3ca559",
+      "revId": "659e2e2bd9a8535112d0bb1d5a70571f7a31ae1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
