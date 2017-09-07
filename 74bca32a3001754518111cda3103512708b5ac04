@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "bde5e0b9_ce936037",
+        "filename": "chrome/browser/ui/views/harmony/harmony_layout_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-07T00:49:11Z",
+      "side": 1,
+      "message": "Hmm okay you\u0027re right. But to avoid writing the bizarre-looking \"unit * 3/2 - 8\" I had it recursively delegate. I also added a couple comments, so at least the intent is clearer.\n\nI\u0027ll ask Alan about the checkboxes.",
+      "parentUuid": "a5cb8bcc_3fd48af1",
+      "revId": "74bca32a3001754518111cda3103512708b5ac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee18bc46_18749c84",
         "filename": "ui/views/layout/layout_provider.cc",
         "patchSetId": 4
@@ -175,6 +193,24 @@
       "revId": "74bca32a3001754518111cda3103512708b5ac04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8cb2b42_16ae5ace",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-07T00:49:11Z",
+      "side": 1,
+      "message": "Okay, done. If more usages of \"no title\" crop up I might change it, but I think manual is best for now.",
+      "parentUuid": "64139d3f_de292748",
+      "revId": "74bca32a3001754518111cda3103512708b5ac04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
