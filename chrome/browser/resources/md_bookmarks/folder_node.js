@@ -113,6 +113,8 @@ Polymer({
       xDirection = -1;
     } else if (e.key == 'ArrowRight') {
       xDirection = 1;
+    } else if (e.key == ' ') {
+      this.selectFolder_();
     } else {
       handled = false;
     }
@@ -364,7 +366,7 @@ Polymer({
    * @return {string}
    */
   getTabIndex_: function() {
-    return this.isSelectedFolder_ ? '0' : '-1';
+    return this.selectedFolder_ == this.itemId ? '0' : '-1';
   },
 
   /**
