@@ -54,20 +54,6 @@ int RenderProcessHostCount() {
   return count;
 }
 
-std::unique_ptr<net::test_server::HttpResponse> HandleBeacon(
-    const net::test_server::HttpRequest& request) {
-  if (request.relative_url != "/beacon")
-    return nullptr;
-  return base::MakeUnique<net::test_server::BasicHttpResponse>();
-}
-
-std::unique_ptr<net::test_server::HttpResponse> HandleHungBeacon(
-    const net::test_server::HttpRequest& request) {
-  if (request.relative_url != "/beacon")
-    return nullptr;
-  return base::MakeUnique<net::test_server::HungResponse>();
-}
-
 class RenderProcessHostTest : public ContentBrowserTest,
                               public RenderProcessHostObserver {
  public:
@@ -694,60 +680,6 @@ IN_PROC_BROWSER_TEST_F(RenderProcessHostTest,
   EXPECT_EQ(0, rph->get_media_stream_count_for_testing());
   EXPECT_EQ(1, process_exits_);
   EXPECT_EQ(0, host_destructions_);
-  if (!host_destructions_)
-    rph->RemoveObserver(this);
-}
-
-IN_PROC_BROWSER_TEST_F(RenderProcessHostTest, KeepAliveRendererProcess) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeatureWithParameters(
-      features::kKeepAliveRendererForKeepaliveRequests,
-      {std::make_pair("timeout_in_sec", "30")});
-
-  embedded_test_server()->RegisterRequestHandler(
-      base::BindRepeating(HandleBeacon));
-  ASSERT_TRUE(embedded_test_server()->Start());
-  RenderProcessHostImpl* rph = static_cast<RenderProcessHostImpl*>(
-      shell()->web_contents()->GetMainFrame()->GetProcess());
-
-  host_destructions_ = 0;
-  process_exits_ = 0;
-  rph->AddObserver(this);
-
-  NavigateToURL(shell(), embedded_test_server()->GetURL("/send-beacon.html"));
-  base::TimeTicks start = base::TimeTicks::Now();
-  NavigateToURL(shell(), GURL("data:text/html,<p>hello</p>"));
-
-  WaitUntilProcessExits(1);
-
-  EXPECT_LT(base::TimeTicks::Now() - start, base::TimeDelta::FromSeconds(30));
-  if (!host_destructions_)
-    rph->RemoveObserver(this);
-}
-
-IN_PROC_BROWSER_TEST_F(RenderProcessHostTest, KeepAliveRendererProcess_Hung) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeatureWithParameters(
-      features::kKeepAliveRendererForKeepaliveRequests,
-      {std::make_pair("timeout_in_sec", "1")});
-
-  embedded_test_server()->RegisterRequestHandler(
-      base::BindRepeating(HandleHungBeacon));
-  ASSERT_TRUE(embedded_test_server()->Start());
-  RenderProcessHostImpl* rph = static_cast<RenderProcessHostImpl*>(
-      shell()->web_contents()->GetMainFrame()->GetProcess());
-
-  host_destructions_ = 0;
-  process_exits_ = 0;
-  rph->AddObserver(this);
-
-  NavigateToURL(shell(), embedded_test_server()->GetURL("/send-beacon.html"));
-  base::TimeTicks start = base::TimeTicks::Now();
-  NavigateToURL(shell(), GURL("data:text/html,<p>hello</p>"));
-
-  WaitUntilProcessExits(1);
-
-  EXPECT_GE(base::TimeTicks::Now() - start, base::TimeDelta::FromSeconds(1));
   if (!host_destructions_)
     rph->RemoveObserver(this);
 }
