@@ -63,6 +63,7 @@ class ASH_EXPORT SystemTrayItem {
     UMA_VPN = 25,
     UMA_NIGHT_LIGHT = 26,
     UMA_COUNT = 27,
+    UMA_OFF_HOURS_LIMIT = 28,
   };
 
   SystemTrayItem(SystemTray* system_tray, UmaType type);

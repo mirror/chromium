@@ -16,6 +16,7 @@
 #include "base/memory/linked_ptr.h"
 #include "base/memory/ref_counted.h"
 #include "base/observer_list.h"
+#include "chrome/browser/chromeos/policy/device_off_hours_controller.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
 #include "chromeos/dbus/session_manager_client.h"
 #include "components/ownership/owner_settings_service.h"
@@ -45,7 +46,9 @@ class SessionManagerOperation;
 //
 // DeviceSettingsService generates notifications for key and policy update
 // events so interested parties can reload state as appropriate.
-class DeviceSettingsService : public SessionManagerClient::Observer {
+class DeviceSettingsService
+    : public SessionManagerClient::Observer,
+      public policy::DeviceOffHoursController::Observer {
  public:
   // Indicates ownership status of the device (listed in upgrade order).
   enum OwnershipStatus {
@@ -188,6 +191,11 @@ class DeviceSettingsService : public SessionManagerClient::Observer {
   // SessionManagerClient::Observer:
   void OwnerKeySet(bool success) override;
   void PropertyChangeComplete(bool success) override;
+
+  // DeviceOffHoursController::Observer:
+  void OffHoursModeChanged() override;
+  void OffHoursModeUploaded() override;
+  void OffHoursControllerShutDown() override;
 
  private:
   friend class OwnerSettingsServiceChromeOS;

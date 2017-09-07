@@ -168,6 +168,8 @@ SessionControllerClient::SessionControllerClient()
       base::Bind(&SessionControllerClient::SendSessionLengthLimit,
                  base::Unretained(this)));
 
+  policy::DeviceOffHoursController::Get()->AddObserver(this);
+
   DCHECK(!g_instance);
   g_instance = this;
 }
@@ -184,6 +186,8 @@ SessionControllerClient::~SessionControllerClient() {
   SessionManager::Get()->RemoveObserver(this);
   UserManager::Get()->RemoveObserver(this);
   UserManager::Get()->RemoveSessionStateObserver(this);
+
+  policy::DeviceOffHoursController::Get()->RemoveObserver(this);
 }
 
 void SessionControllerClient::Init() {
@@ -195,6 +199,9 @@ void SessionControllerClient::Init() {
   SendSessionLengthLimit();
   // User sessions and their order will be sent via UserSessionStateObserver
   // even for crash-n-restart.
+
+  SendOffHoursMode();
+  SendOffHoursLimit();
 }
 
 // static
@@ -504,6 +511,17 @@ void SessionControllerClient::OnLoginUserProfilePrepared(Profile* profile) {
                      weak_ptr_factory_.GetWeakPtr(), profile));
 }
 
+void SessionControllerClient::OffHoursModeUploaded() {
+  LOG(ERROR) << "Daria: "
+             << "on off hours mode changed";
+  SendOffHoursMode();
+  SendOffHoursLimit();
+}
+
+void SessionControllerClient::OffHoursControllerShutDown() {
+  policy::DeviceOffHoursController::Get()->RemoveObserver(this);
+}
+
 void SessionControllerClient::SendUserSessionForProfile(Profile* profile) {
   DCHECK(profile);
   const User* user = chromeos::ProfileHelper::Get()->GetUserByProfile(profile);
@@ -586,4 +604,25 @@ void SessionControllerClient::SendSessionLengthLimit() {
   // the feature off in the middle of the session.
   session_controller_->SetSessionLengthLimit(session_length_limit,
                                              session_start_time);
+}
+
+void SessionControllerClient::SendOffHoursMode() {
+  policy::DeviceOffHoursController* off_hours_controller =
+      policy::DeviceOffHoursController::Get();
+
+  LOG(ERROR) << "Daria: send off hours mode = "
+             << off_hours_controller->IsOffHoursMode();
+
+  session_controller_->UpdateOffHourMode(
+      off_hours_controller->IsOffHoursMode());
+}
+
+void SessionControllerClient::SendOffHoursLimit() {
+  policy::DeviceOffHoursController* off_hours_controller =
+      policy::DeviceOffHoursController::Get();
+  LOG(ERROR) << "Daria: send off hours limit";
+  base::TimeDelta off_hours_limit = off_hours_controller->GetOffHoursDuration();
+  base::TimeTicks off_hours_start_time =
+      off_hours_controller->GetOffHoursStartTime();
+  session_controller_->SetOffHoursLimit(off_hours_limit, off_hours_start_time);
 }

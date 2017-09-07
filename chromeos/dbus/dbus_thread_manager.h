@@ -36,6 +36,7 @@ class DBusClientsBrowser;
 class DBusClientsCommon;
 class DBusThreadManagerSetter;
 class DebugDaemonClient;
+class DeviceOffHoursClient;
 class EasyUnlockClient;
 class GsmSMSClient;
 class ImageBurnerClient;
@@ -131,6 +132,7 @@ class CHROMEOS_EXPORT DBusThreadManager {
   CrosDisksClient* GetCrosDisksClient();
   CryptohomeClient* GetCryptohomeClient();
   DebugDaemonClient* GetDebugDaemonClient();
+  DeviceOffHoursClient* GetDeviceOffHoursClient();
   EasyUnlockClient* GetEasyUnlockClient();
   GsmSMSClient* GetGsmSMSClient();
   ImageBurnerClient* GetImageBurnerClient();
@@ -190,6 +192,7 @@ class CHROMEOS_EXPORT DBusThreadManagerSetter {
   void SetCrosDisksClient(std::unique_ptr<CrosDisksClient> client);
   void SetCryptohomeClient(std::unique_ptr<CryptohomeClient> client);
   void SetDebugDaemonClient(std::unique_ptr<DebugDaemonClient> client);
+  void SetDeviceOffHoursClient(std::unique_ptr<DeviceOffHoursClient> client);
   void SetShillDeviceClient(std::unique_ptr<ShillDeviceClient> client);
   void SetShillIPConfigClient(std::unique_ptr<ShillIPConfigClient> client);
   void SetShillManagerClient(std::unique_ptr<ShillManagerClient> client);

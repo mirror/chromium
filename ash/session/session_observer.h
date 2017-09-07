@@ -48,6 +48,9 @@ class ASH_EXPORT SessionObserver {
   // with null.
   virtual void OnActiveUserPrefServiceChanged(PrefService* pref_service) {}
 
+  // OFF HOURS
+  virtual void OnOffHoursModeChanged() {}
+
  protected:
   virtual ~SessionObserver() {}
 };

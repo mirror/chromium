@@ -542,4 +542,20 @@ void SessionController::OnProfilePrefServiceInitialized(
   }
 }
 
+void SessionController::SetOffHoursLimit(base::TimeDelta length_limit,
+                                         base::TimeTicks start_time) {
+  LOG(ERROR) << "Daria: send off hours limit";
+  off_hours_limit_ = length_limit;
+  off_hours_start_time_ = start_time;
+  for (auto& observer : observers_)
+    observer.OnOffHoursModeChanged();
+}
+
+void SessionController::UpdateOffHourMode(bool off_hours_mode) {
+  LOG(ERROR) << "Daria: update off hours mode = " << off_hours_mode;
+  off_hours_mode_ = off_hours_mode;
+  for (auto& observer : observers_)
+    observer.OnOffHoursModeChanged();
+}
+
 }  // namespace ash
