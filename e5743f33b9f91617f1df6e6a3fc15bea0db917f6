@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c20a745c_625f7eba",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-07T06:01:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5627862d_9a45df98",
+      "revId": "e5743f33b9f91617f1df6e6a3fc15bea0db917f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3359dd6_d04d8a1c",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "e5743f33b9f91617f1df6e6a3fc15bea0db917f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674ba81e_4bd248e4",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-07T06:01:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3359dd6_d04d8a1c",
+      "revId": "e5743f33b9f91617f1df6e6a3fc15bea0db917f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
