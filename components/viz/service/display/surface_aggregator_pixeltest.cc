@@ -8,7 +8,6 @@
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/test/pixel_comparator.h"
-#include "cc/test/pixel_test.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/display/surface_aggregator.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
@@ -16,6 +15,7 @@
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "components/viz/test/compositor_frame_helpers.h"
+#include "components/viz/test/pixel_test.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if !defined(OS_ANDROID)
@@ -31,7 +31,7 @@ constexpr bool kIsRoot = true;
 constexpr bool kIsChildRoot = false;
 constexpr bool kNeedsSyncPoints = true;
 
-class SurfaceAggregatorPixelTest : public cc::RendererPixelTest<GLRenderer> {
+class SurfaceAggregatorPixelTest : public RendererPixelTest<GLRenderer> {
  public:
   SurfaceAggregatorPixelTest()
       : support_(CompositorFrameSinkSupport::Create(nullptr,
