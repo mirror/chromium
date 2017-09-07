@@ -11,17 +11,19 @@
 namespace net {
 namespace ntlm {
 
+NtlmBufferReader::NtlmBufferReader() : NtlmBufferReader(nullptr, 0) {}
+
 NtlmBufferReader::NtlmBufferReader(const Buffer& buffer)
-    : buffer_(buffer), cursor_(0) {
-  DCHECK(buffer.data());
-}
+    : NtlmBufferReader(
+          base::StringPiece(reinterpret_cast<const char*>(buffer.data()),
+                            buffer.length())) {}
 
 NtlmBufferReader::NtlmBufferReader(base::StringPiece str)
-    : NtlmBufferReader(reinterpret_cast<const uint8_t*>(str.data()),
-                       str.size()) {}
+    : buffer_(str), cursor_(0) {}
 
 NtlmBufferReader::NtlmBufferReader(const uint8_t* ptr, size_t len)
-    : NtlmBufferReader(Buffer(ptr, len)) {}
+    : NtlmBufferReader(
+          base::StringPiece(reinterpret_cast<const char*>(ptr), len)) {}
 
 NtlmBufferReader::~NtlmBufferReader() {}
 
@@ -77,6 +79,15 @@ bool NtlmBufferReader::ReadBytesFrom(const SecurityBuffer& sec_buf,
          reinterpret_cast<const void*>(GetBufferPtr() + sec_buf.offset),
          sec_buf.length);
 
+  return true;
+}
+
+bool NtlmBufferReader::ReadPayloadAsBufferReader(const SecurityBuffer& sec_buf,
+                                                 NtlmBufferReader* reader) {
+  if (!CanReadFrom(sec_buf))
+    return false;
+
+  *reader = NtlmBufferReader(GetBufferPtr() + sec_buf.offset, sec_buf.length);
   return true;
 }
 
@@ -202,13 +213,15 @@ bool NtlmBufferReader::ReadTargetInfoPayload(
       sec_buf.length < ntlm::kAvPairHeaderLen)
     return false;
 
-  size_t old_cursor = GetCursor();
-  SetCursor(sec_buf.offset);
-  if (!ReadTargetInfo(sec_buf.length, av_pairs))
+  NtlmBufferReader payload_reader;
+  if (!ReadPayloadAsBufferReader(sec_buf, &payload_reader))
     return false;
 
-  SetCursor(old_cursor);
-  return true;
+  if (!payload_reader.ReadTargetInfo(sec_buf.length, av_pairs))
+    return false;
+
+  // |ReadTargetInfo| should have consumed the entire contents.
+  return payload_reader.IsEndOfBuffer();
 }
 
 bool NtlmBufferReader::ReadMessageType(MessageType* message_type) {
