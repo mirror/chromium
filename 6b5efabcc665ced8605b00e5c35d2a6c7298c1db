@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4ba539d2_3f8168a6",
+        "filename": "ui/views/cocoa/drag_drop_client_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-07T04:58:13Z",
+      "side": 1,
+      "message": "the problem is that base::scoped_nsobject has a constructor/destructor (same as unique_ptr), so the compiler has to run code before/after `int main()` that invokes it. That slows down startup/shutdown, so it is banned.",
+      "parentUuid": "4e2d0606_e4a2f674",
+      "revId": "6b5efabcc665ced8605b00e5c35d2a6c7298c1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42a53dda_6a807304",
         "filename": "ui/views/cocoa/drag_drop_client_mac.mm",
         "patchSetId": 1
@@ -106,6 +124,24 @@
       "side": 1,
       "message": "It will be impossible to close widget while dragging. If it is closed by some means, then the data will remain not-cleared util next dragging.\nIf there is a obvious way of closing widget while dragging, we will be possible to distinguish source/destination widget and clear the data_source_ on destructor of source widget.",
       "parentUuid": "17e2c592_94c284dc",
+      "revId": "6b5efabcc665ced8605b00e5c35d2a6c7298c1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf4d704_46e41015",
+        "filename": "ui/views/cocoa/drag_drop_client_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-07T04:58:13Z",
+      "side": 1,
+      "message": "Widgets can be torn down any time by code calling Widget::Close() whilst the nested drag RunLoop is executing. We have no control over that. E.g. Chrome Sync may kick in to uninstall a Chrome Extension, which requires all windows that the extension owns to be closed.",
+      "parentUuid": "693e05ed_23edfa47",
       "revId": "6b5efabcc665ced8605b00e5c35d2a6c7298c1db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
