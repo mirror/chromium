@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "72d34be6_7a361d90",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1314,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-07T05:29:12Z",
+      "side": 1,
+      "message": "got it. thx.",
+      "parentUuid": "0ba96655_d27bfb12",
+      "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7446fb_8f4df9db",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "This is mostly the only place where its a single node (which requires creation of set of nodes to be able to call the moveNodes function), other move case is multiple selection.\nAlso as mentioned before, the move functionality is already re-used, we wont gain much from making this block a global literal to re-use.",
       "parentUuid": "5a7446fb_8f4df9db",
+      "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5386f21_b19188d0",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-07T05:29:12Z",
+      "side": 1,
+      "message": "thx.",
+      "parentUuid": "8dcb63b5_66c3e21a",
       "revId": "cc0721b019fb0ca5f038d038851ba414c84d919c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
