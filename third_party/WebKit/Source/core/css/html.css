@@ -1018,6 +1018,7 @@ rt {
 ruby > rt {
     display: block;
     font-size: 50%;
+    font-variant-east-asian: ruby;
     text-align: start;
 }
 
