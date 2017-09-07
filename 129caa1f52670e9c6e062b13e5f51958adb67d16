@@ -16,6 +16,24 @@
       "revId": "129caa1f52670e9c6e062b13e5f51958adb67d16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e8295a_92e7e3ee",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-07T20:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "230a6718_45811899",
+      "revId": "129caa1f52670e9c6e062b13e5f51958adb67d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
