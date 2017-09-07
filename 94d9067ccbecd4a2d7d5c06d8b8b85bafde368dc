@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "060177b2_b184fca1",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-09-07T18:46:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f88d5db2_f9073bff",
+      "range": {
+        "startLine": 374,
+        "startChar": 2,
+        "endLine": 374,
+        "endChar": 28
+      },
+      "revId": "94d9067ccbecd4a2d7d5c06d8b8b85bafde368dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9043f968_43063b09",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "111e340f_28b93985",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-09-07T18:46:22Z",
+      "side": 1,
+      "message": "Changed the whole file for consistency.\n\nIs this convention documented anywhere? (i.e. whether to prefer expected, actual versus actual, expected)",
+      "parentUuid": "9043f968_43063b09",
+      "range": {
+        "startLine": 382,
+        "startChar": 0,
+        "endLine": 382,
+        "endChar": 69
+      },
+      "revId": "94d9067ccbecd4a2d7d5c06d8b8b85bafde368dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f315e30_58e2ec01",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "94d9067ccbecd4a2d7d5c06d8b8b85bafde368dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ef473d_a7b9eb41",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-09-07T18:46:22Z",
+      "side": 1,
+      "message": "yeah, I have a personal preference for less indirection in tests :)\n\nI think however this change is not necessary anymore. After the inlining, the new code looks much better, and the SetText and InsertText are two separate actions which I don\u0027t think should be refactored out into another function (we\u0027d only save one line in the end). If we refactored the whole block, I think the test would lose clarity.\n\nSo for instance see the tests at L329 versus L340 for what I mean.",
+      "parentUuid": "8f315e30_58e2ec01",
+      "range": {
+        "startLine": 508,
+        "startChar": 0,
+        "endLine": 515,
+        "endChar": 61
+      },
+      "revId": "94d9067ccbecd4a2d7d5c06d8b8b85bafde368dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
