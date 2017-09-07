@@ -41,7 +41,7 @@ class InstallableMetrics {
   void RecordAddToHomescreenInstallabilityTimeout();
   void RecordQueuedMetrics(bool check_passed);
 
-  void RecordMetricsOnNavigationAndReset();
+  void RecordMetricsOnNavigationAndReset(bool has_paused);
 
   void Start();
   InstallabilityCheckStatus GetStatusForTesting() const;
