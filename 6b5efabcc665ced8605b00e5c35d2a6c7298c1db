@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "3b6853ac_7fb1ae05",
+        "filename": "ui/views/cocoa/drag_drop_client_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-09-07T06:27:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4ba539d2_3f8168a6",
+      "revId": "6b5efabcc665ced8605b00e5c35d2a6c7298c1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42a53dda_6a807304",
         "filename": "ui/views/cocoa/drag_drop_client_mac.mm",
         "patchSetId": 1
@@ -142,6 +160,24 @@
       "side": 1,
       "message": "Widgets can be torn down any time by code calling Widget::Close() whilst the nested drag RunLoop is executing. We have no control over that. E.g. Chrome Sync may kick in to uninstall a Chrome Extension, which requires all windows that the extension owns to be closed.",
       "parentUuid": "693e05ed_23edfa47",
+      "revId": "6b5efabcc665ced8605b00e5c35d2a6c7298c1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fbaca42_50ba7841",
+        "filename": "ui/views/cocoa/drag_drop_client_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-09-07T06:27:00Z",
+      "side": 1,
+      "message": "I see. But, it seems not to be a common case.",
+      "parentUuid": "2bf4d704_46e41015",
       "revId": "6b5efabcc665ced8605b00e5c35d2a6c7298c1db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
