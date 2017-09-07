@@ -172,9 +172,10 @@ void AnimationPlayer::PushPropertiesTo(AnimationPlayer* player_impl) {
   animation_ticker_->RemoveAnimationsCompletedOnMainThread(
       animation_ticker_impl);
 
-  PushPropertiesToImplThread(player_impl);
+  animation_ticker_->PushPropertiesToImplThread(
+      player_impl->animation_ticker_.get());
 
-  player_impl->UpdateTickingState(UpdateTickingType::NORMAL);
+  player_impl->animation_ticker_->UpdateTickingState(UpdateTickingType::NORMAL);
 }
 
 void AnimationPlayer::Tick(base::TimeTicks monotonic_time) {
@@ -185,12 +186,7 @@ void AnimationPlayer::Tick(base::TimeTicks monotonic_time) {
 void AnimationPlayer::UpdateState(bool start_ready_animations,
                                   AnimationEvents* events) {
   animation_ticker_->UpdateState(start_ready_animations, events);
-
-  UpdateTickingState(UpdateTickingType::NORMAL);
-}
-
-void AnimationPlayer::UpdateTickingState(UpdateTickingType type) {
-  animation_ticker_->UpdateTickingState(type);
+  animation_ticker_->UpdateTickingState(UpdateTickingType::NORMAL);
 }
 
 void AnimationPlayer::AddToTicking() {
@@ -198,67 +194,33 @@ void AnimationPlayer::AddToTicking() {
   animation_host_->AddToTicking(this);
 }
 
-void AnimationPlayer::RemoveFromTicking() {
+void AnimationPlayer::AnimationRemovedFromTicking() {
   DCHECK(animation_host_);
-  // Resetting last_tick_time_ here ensures that calling ::UpdateState
-  // before ::Animate doesn't start an animation.
-  animation_ticker_->RemoveFromTicking();
   animation_host_->RemoveFromTicking(this);
 }
 
-bool AnimationPlayer::NotifyAnimationStarted(const AnimationEvent& event) {
-  DCHECK(!event.is_impl_only);
-
-  if (animation_ticker_->NotifyAnimationStarted(event)) {
-    if (animation_delegate_) {
-      animation_delegate_->NotifyAnimationStarted(
-          event.monotonic_time, event.target_property, event.group_id);
-    }
-    return true;
+void AnimationPlayer::NotifyAnimationStarted(const AnimationEvent& event) {
+  if (animation_delegate_) {
+    animation_delegate_->NotifyAnimationStarted(
+        event.monotonic_time, event.target_property, event.group_id);
   }
-  return false;
 }
 
-bool AnimationPlayer::NotifyAnimationFinished(const AnimationEvent& event) {
-  DCHECK(!event.is_impl_only);
-  if (animation_ticker_->NotifyAnimationFinished(event)) {
-    if (animation_delegate_) {
-      animation_delegate_->NotifyAnimationFinished(
-          event.monotonic_time, event.target_property, event.group_id);
-    }
-    return true;
+void AnimationPlayer::NotifyAnimationFinished(const AnimationEvent& event) {
+  if (animation_delegate_) {
+    animation_delegate_->NotifyAnimationFinished(
+        event.monotonic_time, event.target_property, event.group_id);
   }
-
-  // This is for the case when an animation is already removed on main thread,
-  // but the impl version of it sent a finished event and is now waiting for
-  // deletion. We would need to delete that animation during push properties.
-  SetNeedsPushProperties();
-  return false;
 }
 
-bool AnimationPlayer::NotifyAnimationFinishedForTesting(
-    TargetProperty::Type target_property,
-    int group_id) {
-  AnimationEvent event(AnimationEvent::FINISHED,
-                       animation_ticker_->element_id(), group_id,
-                       target_property, base::TimeTicks());
-  return NotifyAnimationFinished(event);
-}
-
-bool AnimationPlayer::NotifyAnimationAborted(const AnimationEvent& event) {
-  DCHECK(!event.is_impl_only);
-  if (animation_ticker_->NotifyAnimationAborted(event)) {
-    if (animation_delegate_) {
-      animation_delegate_->NotifyAnimationAborted(
-          event.monotonic_time, event.target_property, event.group_id);
-    }
-    return true;
+void AnimationPlayer::NotifyAnimationAborted(const AnimationEvent& event) {
+  if (animation_delegate_) {
+    animation_delegate_->NotifyAnimationAborted(
+        event.monotonic_time, event.target_property, event.group_id);
   }
-  return false;
 }
 
 void AnimationPlayer::NotifyAnimationTakeover(const AnimationEvent& event) {
-  DCHECK(!event.is_impl_only);
   DCHECK(event.target_property == TargetProperty::SCROLL_OFFSET);
 
   // We need to purge animations marked for deletion on CT.
@@ -273,31 +235,13 @@ void AnimationPlayer::NotifyAnimationTakeover(const AnimationEvent& event) {
   }
 }
 
-void AnimationPlayer::NotifyImplOnlyAnimationStarted(
-    AnimationEvent& started_event) {
-  if (animation_delegate_) {
-    animation_delegate_->NotifyAnimationStarted(started_event.monotonic_time,
-                                                started_event.target_property,
-                                                started_event.group_id);
-  }
-}
-
-void AnimationPlayer::NotifyImplOnlyAnimationFinished(
-    AnimationEvent& finished_event) {
-  if (animation_delegate_) {
-    animation_delegate_->NotifyAnimationFinished(finished_event.monotonic_time,
-                                                 finished_event.target_property,
-                                                 finished_event.group_id);
-  }
-}
-
-void AnimationPlayer::NotifyAnimationTakeoverByMain(
-    AnimationEvent& aborted_event) {
-  if (animation_delegate_) {
-    animation_delegate_->NotifyAnimationFinished(aborted_event.monotonic_time,
-                                                 aborted_event.target_property,
-                                                 aborted_event.group_id);
-  }
+bool AnimationPlayer::NotifyAnimationFinishedForTesting(
+    TargetProperty::Type target_property,
+    int group_id) {
+  AnimationEvent event(AnimationEvent::FINISHED,
+                       animation_ticker_->element_id(), group_id,
+                       target_property, base::TimeTicks());
+  return animation_ticker_->NotifyAnimationFinished(event);
 }
 
 void AnimationPlayer::SetNeedsCommit() {
@@ -315,75 +259,14 @@ void AnimationPlayer::SetNeedsPushProperties() {
   element_animations()->SetNeedsPushProperties();
 }
 
-bool AnimationPlayer::HasTickingAnimation() const {
-  return animation_ticker_->HasTickingAnimation();
-}
-
-bool AnimationPlayer::has_any_animation() const {
-  return animation_ticker_->has_any_animation();
-}
-
 void AnimationPlayer::ActivateAnimations() {
   animation_ticker_->ActivateAnimations();
-  UpdateTickingState(UpdateTickingType::NORMAL);
-}
-
-bool AnimationPlayer::HasOnlyTranslationTransforms(
-    ElementListType list_type) const {
-  return animation_ticker_->HasOnlyTranslationTransforms(list_type);
-}
-
-bool AnimationPlayer::AnimationsPreserveAxisAlignment() const {
-  return animation_ticker_->AnimationsPreserveAxisAlignment();
-}
-
-bool AnimationPlayer::AnimationStartScale(ElementListType list_type,
-                                          float* start_scale) const {
-  return animation_ticker_->AnimationStartScale(list_type, start_scale);
-}
-
-bool AnimationPlayer::MaximumTargetScale(ElementListType list_type,
-                                         float* max_scale) const {
-  return animation_ticker_->MaximumTargetScale(list_type, max_scale);
-}
-
-bool AnimationPlayer::IsPotentiallyAnimatingProperty(
-    TargetProperty::Type target_property,
-    ElementListType list_type) const {
-  return animation_ticker_->IsPotentiallyAnimatingProperty(target_property,
-                                                           list_type);
-}
-
-bool AnimationPlayer::IsCurrentlyAnimatingProperty(
-    TargetProperty::Type target_property,
-    ElementListType list_type) const {
-  return animation_ticker_->IsCurrentlyAnimatingProperty(target_property,
-                                                         list_type);
+  animation_ticker_->UpdateTickingState(UpdateTickingType::NORMAL);
 }
 
 Animation* AnimationPlayer::GetAnimation(
     TargetProperty::Type target_property) const {
   return animation_ticker_->GetAnimation(target_property);
-}
-
-Animation* AnimationPlayer::GetAnimationById(int animation_id) const {
-  return animation_ticker_->GetAnimationById(animation_id);
-}
-
-void AnimationPlayer::GetPropertyAnimationState(
-    PropertyAnimationState* pending_state,
-    PropertyAnimationState* active_state) const {
-  animation_ticker_->GetPropertyAnimationState(pending_state, active_state);
-}
-
-void AnimationPlayer::PushPropertiesToImplThread(
-    AnimationPlayer* animation_player_impl) {
-  animation_ticker_->PushPropertiesToImplThread(
-      animation_player_impl->animation_ticker_.get());
-}
-
-bool AnimationPlayer::scroll_offset_animation_was_interrupted() const {
-  return animation_ticker_->scroll_offset_animation_was_interrupted();
 }
 
 std::string AnimationPlayer::ToString() const {
