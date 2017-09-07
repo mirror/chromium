@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76355392_7f88739d",
+        "filename": "mojo/edk/system/watcher_dispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-07T01:50:18Z",
+      "side": 1,
+      "message": "btw it now occurs to me that we also have flat_set and we should use that here",
+      "revId": "2cb886344e8d88d7c86a0f9a9c8f20e2fc9dcfcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
