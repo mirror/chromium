@@ -79,16 +79,45 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
    * @param {!Protocol.Runtime.ObjectPreview} preview
    */
   _appendObjectPropertiesPreview(parentElement, preview) {
+    var promiseStatusName = '[[PromiseStatus]]';
+    var promiseValueName = '[[PromiseValue]]';
+    var generatorStatusName = '[[GeneratorStatus]]';
+    var primitiveValueName = '[[PrimitiveValue]]';
+    var pendingPromiseStatus = 'pending';
     var properties = preview.properties.filter(p => p.type !== 'accessor')
                          .stableSort(ObjectUI.RemoteObjectPreviewFormatter._objectPropertyComparator);
-    for (var i = 0; i < properties.length; ++i) {
+
+    // Append promise properties with special formatting, e.g. `<rejected>: 123`.
+    var statusIndex = properties.findIndex(p => p.name === promiseStatusName);
+    var valueIndex = properties.findIndex(p => p.name === promiseValueName);
+    if (statusIndex !== -1) {
+      var statusText = properties[statusIndex].value;
+      parentElement.createChild('span', 'name').textContent = '<' + statusText + '>';
+      if (valueIndex !== -1 && statusText !== pendingPromiseStatus) {
+        parentElement.createTextChild(': ');
+        parentElement.appendChild(this._renderPropertyPreviewOrAccessor([properties[valueIndex]]));
+      }
+    }
+    var remainingProperties = properties.filter((p, index) => index !== statusIndex && index !== valueIndex);
+    if (remainingProperties.length && remainingProperties.length < properties.length)
+      parentElement.createTextChild(', ');
+
+    // Append remaining properties.
+    for (var i = 0; i < remainingProperties.length; ++i) {
       if (i > 0)
         parentElement.createTextChild(', ');
 
-      var property = properties[i];
-      parentElement.appendChild(this._renderDisplayName(property.name));
-      parentElement.createTextChild(': ');
-      parentElement.appendChild(this._renderPropertyPreviewOrAccessor([property]));
+      var property = remainingProperties[i];
+      var name = property.name;
+      if (preview.subtype === 'generator' && name === generatorStatusName) {
+        parentElement.createChild('span', 'name').textContent = '<' + property.value + '>';
+      } else if (name === primitiveValueName) {
+        parentElement.appendChild(this._renderPropertyPreviewOrAccessor([property]));
+      } else {
+        parentElement.appendChild(this._renderDisplayName(name));
+        parentElement.createTextChild(': ');
+        parentElement.appendChild(this._renderPropertyPreviewOrAccessor([property]));
+      }
     }
   }
 
