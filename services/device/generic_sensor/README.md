@@ -5,8 +5,35 @@ implementation.
 
 Sensors Mojo interfaces are defined in the `services/public/interfaces` subdirectory.
 
-The JS bindings are implemented in `third_party/WebKit/Source/modules/sensor`.
+## Web-exposed Interfaces
 
+### Generic Sensors
+
+The Generic Sensors API is implemented in `third_party/WebKit/Source/modules/sensor` and exposes the following sensor types as JavaScript classes:
+
+* [AbsoluteOrientationSensor](../../../third_party/WebKit/Source/modules/sensor/AbsoluteOrientationSensor.idl): ABSOLUTE_ORIENTATION_QUATERNION
+* [Accelerometer](../../../third_party/WebKit/Source/modules/sensor/Accelerometer.idl): ACCELEROMETER
+* [AmbientLightSensor](../../../third_party/WebKit/Source/modules/sensor/AmbientLightSensor.idl): AMBIENT_LIGHT
+* [Gyroscope](../../../third_party/WebKit/Source/modules/sensor/Gyroscope.idl): GYROSCOPE
+* [LinearAccelerationSensor](../../../third_party/WebKit/Source/modules/sensor/LinearAccelerationSensor.idl): LINEAR_ACCELEROMETER
+* [Magnetometer](../../../third_party/WebKit/Source/modules/sensor/Magnetometer.idl): MAGNETOMETER
+* [RelativeOrientationSensor](../../../third_party/WebKit/Source/modules/sensor/RelativeOrientationSensor.idl): RELATIVE_ORIENTATION_QUATERNION
+
+### DeviceOrientation Events
+
+The DeviceOrientation Events API is implemented in `third_party/WebKit/Source/modules/device_orientation` and exposes two events based on the following sensors:
+
+* [DeviceMotionEvent](../../../third_party/WebKit/Source/modules/device_orientation/DeviceMotionEvent.idl)
+  * ACCELEROMETER: populates the `accelerationIncludingGravity` field
+  * LINEAR_ACCELEROMETER: populates the `acceleration` field
+  * GYROSCOPE: populates the `rotationRate` field
+* [DeviceOrientationEvent](../../../third_party/WebKit/Source/modules/device_orientation/DeviceOrientationEvent.idl)
+  * ABSOLUTE_ORIENTATION_EULER_ANGLES (when a listener for the `'deviceorientationabsolute'` event is added)
+  * RELATIVE_ORIENTATION_EULER_ANGLES (when a listener for the `'deviceorientation'` event is added)
+
+## Permissions
+
+The device service provides no support for permission checks. When the render process requests access to a sensor type this request is proxied through the browser process by [SensorProviderProxyImpl](../../../content/browser/generic_sensor/sensor_provider_proxy_impl.h) which is responsible for checking the permissions granted to the requesting origin.
 
 ## Platform Support
 
