@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a90ca42_b87f6854",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-07T22:46:21Z",
+      "side": 1,
+      "message": "Seemed like anything here would be completely redundant with the description 2 lines below, but sure.",
+      "parentUuid": "4ad38542_05aa04e0",
+      "revId": "985f1298ea639779b1cbe2319c9c48f76a5c0149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8a13cf4_dd4c8d9d",
         "filename": "chrome/browser/resources/pdf/pdf.js",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7e372874_c1a67a17",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-07T22:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8a13cf4_dd4c8d9d",
+      "revId": "985f1298ea639779b1cbe2319c9c48f76a5c0149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5519801a_0cdb0676",
         "filename": "chrome/browser/resources/pdf/pdf.js",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "985f1298ea639779b1cbe2319c9c48f76a5c0149",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d50b75_017e959e",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-07T22:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5519801a_0cdb0676",
+      "revId": "985f1298ea639779b1cbe2319c9c48f76a5c0149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "985f1298ea639779b1cbe2319c9c48f76a5c0149",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69223cfd_bd5ff084",
+        "filename": "chrome/browser/resources/pdf/viewport.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-07T22:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ce21331_b74cf229",
+      "range": {
+        "startLine": 54,
+        "startChar": 21,
+        "endLine": 54,
+        "endChar": 46
+      },
+      "revId": "985f1298ea639779b1cbe2319c9c48f76a5c0149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
