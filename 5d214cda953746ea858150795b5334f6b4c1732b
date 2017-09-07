@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "20234d97_d73bdd52",
+        "filename": "chrome/browser/predictors/loading_stats_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-09-07T21:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efcbb6d0_1be72906",
+      "revId": "5d214cda953746ea858150795b5334f6b4c1732b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f25fc2dc_fc62c896",
         "filename": "chrome/browser/predictors/loading_stats_collector.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "abb4bc73_bfa92ba6",
+        "filename": "chrome/browser/predictors/loading_stats_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-09-07T21:54:37Z",
+      "side": 1,
+      "message": "I had a doubt because the value of .host() also may be used but it\u0027s okay to use rvalues with const references.\nDone",
+      "parentUuid": "f25fc2dc_fc62c896",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 17
+      },
+      "revId": "5d214cda953746ea858150795b5334f6b4c1732b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f764088_1300c4a3",
         "filename": "chrome/browser/predictors/loading_stats_collector_unittest.cc",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-01T11:33:00Z",
       "side": 1,
       "message": "Poor dogs and raccoons!",
+      "revId": "5d214cda953746ea858150795b5334f6b4c1732b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f90e2a_29fd7ab5",
+        "filename": "chrome/browser/predictors/loading_stats_collector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-09-07T21:54:37Z",
+      "side": 1,
+      "message": "Cats conquer the world!",
+      "parentUuid": "8f764088_1300c4a3",
       "revId": "5d214cda953746ea858150795b5334f6b4c1732b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
