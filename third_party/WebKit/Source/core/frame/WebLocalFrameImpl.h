@@ -338,7 +338,8 @@ class CORE_EXPORT WebLocalFrameImpl final
                                             InterfaceRegistry*,
                                             WebFrame* opener,
                                             const WebString& name,
-                                            WebSandboxFlags);
+                                            WebSandboxFlags,
+                                            bool was_created_with_opener);
   static WebLocalFrameImpl* CreateProvisional(WebFrameClient*,
                                               InterfaceRegistry*,
                                               WebRemoteFrame*,

@@ -1015,6 +1015,8 @@ bool DocumentLoader::ShouldClearWindowName(
     return false;
   if (frame.Loader().Opener())
     return false;
+  if (frame.Loader().ExplicitWasCreatedWithOpener())
+    return false;
 
   return !new_document.GetSecurityOrigin()->IsSameSchemeHostPort(
       previous_security_origin);
@@ -1105,13 +1107,12 @@ void DocumentLoader::InstallNewDocument(
       frame_->ClearDocumentHasReceivedUserGesture();
   }
 
+  if (frame_->Tree().GetName() == "fancyname") {
+    int x = 0;
+    x++;
+  }
   if (ShouldClearWindowName(*frame_, previous_security_origin, *document)) {
-    // TODO(andypaicu): experimentalSetNullName will just record the fact
-    // that the name would be nulled and if the name is accessed after we will
-    // fire a UseCounter. If we decide to move forward with this change, we'd
-    // actually clean the name here.
-    // frame_->tree().setName(nullAtom);
-    frame_->Tree().ExperimentalSetNulledName();
+    frame_->Tree().SetName(g_null_atom);
   }
 
   frame_->GetPage()->GetChromeClient().InstallSupplements(*frame_);

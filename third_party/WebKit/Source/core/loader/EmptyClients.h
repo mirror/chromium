@@ -241,6 +241,8 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
 
   Frame* Opener() const override { return 0; }
   void SetOpener(Frame*) override {}
+  bool ExplicitWasCreatedWithOpener() override { return false; }
+  void SetExplicitWasCreatedWithOpener(bool) override {}
 
   Frame* Parent() const override { return 0; }
   Frame* Top() const override { return 0; }
@@ -476,6 +478,9 @@ class CORE_EXPORT EmptyRemoteFrameClient : public RemoteFrameClient {
   void Detached(FrameDetachType) override {}
   Frame* Opener() const override { return nullptr; }
   void SetOpener(Frame*) override {}
+  bool ExplicitWasCreatedWithOpener() override { return false; }
+  void SetExplicitWasCreatedWithOpener(bool) override{};
+
   Frame* Parent() const override { return nullptr; }
   Frame* Top() const override { return nullptr; }
   Frame* NextSibling() const override { return nullptr; }

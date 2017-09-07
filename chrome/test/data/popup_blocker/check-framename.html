@@ -8,12 +8,18 @@
 <script>
   var log = document.querySelector("#console");
   var result;
-  if (window.name == "")
+  if (window.name == "") {
+    console.log('1');
     result = "FAIL: no name";
-  else if (window.name != "fancyname")
+  }
+  else if (window.name != "fancyname") {
+    console.log('2');
     result = "FAIL: incorrect frame name: " + window.name;
-  else
+  }
+  else {
+    console.log('3');
     result = "PASS";
+  }
   log.innerText = result;
   document.title = result;
 </script>

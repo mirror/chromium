@@ -142,6 +142,12 @@ class BLINK_EXPORT WebFrame {
   // Sets the frame that opened this one or 0 if there is none.
   void SetOpener(WebFrame*);
 
+  // Explicitly set that this was created with an opener
+  void SetExplicitWasCreatedWithOpener(bool);
+
+  // Check if the frame has explicitly been created with an opener
+  bool ExplicitWasCreatedWithOpener();
+
   // Reset the frame that opened this frame to 0.
   // This is executed between layout tests runs
   void ClearOpener();
@@ -240,6 +246,7 @@ class BLINK_EXPORT WebFrame {
   WebFrame* last_child_;
 
   WebFrame* opener_;
+  bool explicit_was_created_with_opener_;
   std::unique_ptr<OpenedFrameTracker> opened_frame_tracker_;
 };
 

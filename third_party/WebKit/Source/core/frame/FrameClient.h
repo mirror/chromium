@@ -25,6 +25,8 @@ class CORE_EXPORT FrameClient : public GarbageCollectedFinalized<FrameClient> {
 
   virtual Frame* Opener() const = 0;
   virtual void SetOpener(Frame*) = 0;
+  virtual bool ExplicitWasCreatedWithOpener() = 0;
+  virtual void SetExplicitWasCreatedWithOpener(bool) = 0;
 
   virtual Frame* Parent() const = 0;
   virtual Frame* Top() const = 0;

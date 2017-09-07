@@ -81,7 +81,8 @@ class WebLocalFrame : public WebFrame {
       blink::InterfaceRegistry*,
       WebFrame* opener = nullptr,
       const WebString& name = WebString(),
-      WebSandboxFlags = WebSandboxFlags::kNone);
+      WebSandboxFlags = WebSandboxFlags::kNone,
+      bool explicit_was_created_with_opener_ = false);
 
   // Used to create a provisional local frame. Currently, it's possible for a
   // provisional navigation not to commit (i.e. it might turn into a download),
