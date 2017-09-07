@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "961bd3d3_aae66066",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-07T05:06:18Z",
+      "side": 1,
+      "message": "Perhaps related to Ben\u0027s comment here --\n  https://chromium-review.googlesource.com/c/chromium/src/+/651507/3/chrome/browser/installable/installable_manager.cc#362\n\n-- this overriding of the page status when updating histogram counts would be clearer if the histogram updating code were extracted out.  So you could do something like:\n\nif (page_status_ \u003d\u003d InstallabilityCheckStatus::NOT_COMPLETED \u0026\u0026 \n    task_queue_.HasPaused()) {\n  RecordCounts(InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP);\nelse\n  RecordCounts(page_status_);",
+      "revId": "c9af1572b2f40aeea1303290ab46c84f591be17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5282e231_2a88dbac",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 1
