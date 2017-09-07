@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "39eb8231_442daeb2",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-07T15:09:17Z",
+      "side": 1,
+      "message": "nit: I assume we want to do the same inside AnimationTicker too.",
+      "parentUuid": "7288c4b5_361d4918",
+      "range": {
+        "startLine": 133,
+        "startChar": 25,
+        "endLine": 133,
+        "endChar": 43
+      },
+      "revId": "c4439dfe53a9e7c9a1c9cfcd149e43d9d37759b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9134343e_cd61433f",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 9
