@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baef0f33_57ca07f0",
+        "filename": "content/browser/accessibility/browser_accessibility_com_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-07T04:54:33Z",
+      "side": 1,
+      "message": "Note, we\u0027re leaving this here as-is until we remove the rest of the interface.  The reason is that this method name conflicts with IAccessibleHypertext::get_nCharacters() producing these errors:\n\n../../content/browser/accessibility/browser_accessibility_win_unittest.cc(1736,46):  error: member \u0027get_nCharacters\u0027 found in multiple base classes of different types\n  ASSERT_HRESULT_SUCCEEDED(ax_div-\u003eGetCOM()-\u003eget_nCharacters(\u0026n_characters));",
+      "range": {
+        "startLine": 306,
+        "startChar": 9,
+        "endLine": 306,
+        "endChar": 26
+      },
+      "revId": "7c40cf5bb443e45e10caa99c2abae227764f94bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
