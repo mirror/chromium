@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "c2e1d316_43d75e7a",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_undo_toast.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-07T01:24:34Z",
+      "side": 1,
+      "message": "This is because |open_| is a boolean but aria-hidden expects the string \"true\".\nI\u0027m wondering if aria-hidden$\u003d\"[[!open_.toString()]]\" would work?",
+      "parentUuid": "cf25c0d5_cbd46fc6",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 20
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9115e690_a19dca8f",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_undo_toast.html",
         "patchSetId": 5
@@ -613,6 +637,30 @@
     },
     {
       "key": {
+        "uuid": "62d0e069_69797639",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-07T01:24:34Z",
+      "side": 1,
+      "message": "IMO redo isn\u0027t necessary for delete. If a person wants something deleted, they\u0027ll delete it again.",
+      "parentUuid": "4384ee4b_b0319395",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 63
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbab96b8_3cd20e2c",
         "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
         "patchSetId": 5
@@ -775,6 +823,30 @@
     },
     {
       "key": {
+        "uuid": "f167df0a_6ff9aaaf",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-07T01:24:34Z",
+      "side": 1,
+      "message": "See other comment: we should keep the IDS_SETTINGS* strings.",
+      "parentUuid": "1dde1d33_38270d37",
+      "range": {
+        "startLine": 1141,
+        "startChar": 6,
+        "endLine": 1141,
+        "endChar": 56
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a72c2960_83f5d753",
         "filename": "components/undo_strings.grdp",
         "patchSetId": 5
@@ -833,6 +905,30 @@
       "side": 1,
       "message": "Initially I introduced this to not return 0 from AddPasswordOperation::GetUndoLabelId which is not really a good argument, though. Currently it doesn\u0027t make much sense, however it might in the future when users are able to add a password through the settings page. But I guess there is always delete password in that case as well.",
       "parentUuid": "cc8685cd_3b88246e",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b660686_e4e35aed",
+        "filename": "components/undo_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-07T01:24:34Z",
+      "side": 1,
+      "message": "I\u0027m leaning towards not adding it until we need it, but I\u0027m not OWNER here, so I\u0027ll leave the final decision to them.",
+      "parentUuid": "21eb2955_260e924a",
       "range": {
         "startLine": 42,
         "startChar": 11,

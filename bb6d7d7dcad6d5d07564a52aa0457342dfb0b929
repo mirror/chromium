@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07ee430e_bcc50a81",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-07T01:24:34Z",
+      "side": 1,
+      "message": "We should add them here because there\u0027s a plan to remove the old strings.",
+      "parentUuid": "932773ba_9920e855",
+      "range": {
+        "startLine": 595,
+        "startChar": 0,
+        "endLine": 600,
+        "endChar": 12
+      },
+      "revId": "bb6d7d7dcad6d5d07564a52aa0457342dfb0b929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "549767c4_b14bbc6f",
         "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_apitest.cc",
         "patchSetId": 4
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "0ddc8ed5_18456263",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_undo_toast.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-07T01:24:34Z",
+      "side": 1,
+      "message": "Sorry I missed this on the first review. The preferred location for shared components is: \nhttps://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/",
+      "parentUuid": "0cd2e052_3197725a",
+      "revId": "bb6d7d7dcad6d5d07564a52aa0457342dfb0b929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1989d2d1_04696786",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
         "patchSetId": 4
@@ -70,6 +112,24 @@
       "writtenOn": "2017-09-05T17:19:58Z",
       "side": 1,
       "message": "Given that it takes more than a second for the deleted password to actually disappear from the password list, there is a brief period of time where the UNDO Toast is shown while the password is still visible. This seems a bit confusing to me, but I couldn\u0027t find a better way for now. Would it make sense to add callbacks to removeSavedPassword in order to address this issue?",
+      "revId": "bb6d7d7dcad6d5d07564a52aa0457342dfb0b929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "616beb8a_c5c76ed7",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-07T01:24:34Z",
+      "side": 1,
+      "message": "I test on my machine with --password-store\u003dbasic b/c it\u0027s faster to test things. If it\u0027s taking a full second to delete passwords we should try to improve how fast we add/remove them.\n\nAlternatively, we can be optimistic and remove the password from the list and show the toast. We\u0027ll need to make sure we handle these events in the right order. I\u0027m not familiar w/ the password manager code, so not how how hard/easy it is to do that. This will let the UI feel fast even if the actual deletion of the password is taking a second.\n\nAdding the callback is also an option, to make sure nothing went wrong if we\u0027re being optimistic. What kind of errors are we likely to find when deleting a password? Am I over thinking this?",
+      "parentUuid": "1989d2d1_04696786",
       "revId": "bb6d7d7dcad6d5d07564a52aa0457342dfb0b929",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
