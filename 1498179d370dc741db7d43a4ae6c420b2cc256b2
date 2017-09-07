@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df52c7f9_62ea2fe3",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-07T02:13:21Z",
+      "side": 1,
+      "message": "Old style enums are scary.. the compiler was fine with this. Only caught it because a unit test failed. And in the tests GetSurface() has always been returning a bool :\\",
+      "range": {
+        "startLine": 322,
+        "startChar": 41,
+        "endLine": 322,
+        "endChar": 55
+      },
+      "revId": "1498179d370dc741db7d43a4ae6c420b2cc256b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
