@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a5ccf53_3bb42299",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-07T06:04:13Z",
+      "side": 1,
+      "message": "nit: %s/Null/null position/g",
+      "revId": "f276551f539f26b0b10d3b5c951bfcb427e20a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca01eff_90ea0d4d",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-07T06:04:13Z",
+      "side": 1,
+      "message": "Could you rename |pos| to |position|? Since Blink doesn\u0027t like abbreviation\nand you change most of reference of |pos| in this patch.",
+      "revId": "f276551f539f26b0b10d3b5c951bfcb427e20a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e1fc7c_496f49fb",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-07T06:04:13Z",
+      "side": 1,
+      "message": "Could you make this condition to DCHECK()?\nWe should disallow to have a DOM position before/after shadow root.\n\nPlease change PositionTemplate(Node*, PositionAnchorType) not to accept\nbefore/after anchor of ShadowRoot, like Document.\n\nPositionTemplate\u003cStrategy\u003e::PositionTemplate(const Node* anchor_node,\n                                             PositionAnchorType anchor_type)\n...\n  if (anchor_node_-\u003eIsDocumentNode()) {\n    // Since |RangeBoundaryPoint| can\u0027t represent before/after Document, we\n    // should not use them.\n    DCHECK(IsBeforeChildren() || IsAfterChildren()) \u003c\u003c anchor_type_;\n    return;\n  }",
+      "revId": "f276551f539f26b0b10d3b5c951bfcb427e20a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b3ae29_102aac5c",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-07T06:04:13Z",
+      "side": 1,
+      "message": "I don\u0027t think this is correct conversion.\n\n\u003cshadowHost\u003e\n \u003cchild slot\u003dc0\u003e0\u003c/child\u003e\n \u003cchild slot\u003dc1\u003e1\u003c/child\u003e\n \u003cchild slot\u003dc2\u003e2\u003c/child\u003e\n\u003c/shadowHost\u003e\n\n#shadowRoot\n\u003cslot name\u003d\"c2\"\u003e\u003c/slot\u003e\n\u003cslot name\u003d\"c0\"\u003e\u003c/slot\u003e\n\u003cslot name\u003d\"c1\"\u003e\u003c/slot\u003e\n\nFor PosInDT(shadowHost@0) should be PosInFT(shadowHost@1)\nWe can consider container@offset as BeforeNode(container.childNodes[offset])",
+      "revId": "f276551f539f26b0b10d3b5c951bfcb427e20a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25bf70dc_f4e4d5f6",
+        "filename": "third_party/WebKit/Source/core/editing/PositionTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-07T06:04:13Z",
+      "side": 1,
+      "message": "Could you add test case for active SLOT?\n\n\u003cshadowHost\u003e123\u003c/shadowHost\u003e\n\n#shadowRoot\n\u003cslot\u003e\u003c/slot\u003e\n\nToPositionInFlatTree(PosInDOM(slot, 0))",
+      "revId": "f276551f539f26b0b10d3b5c951bfcb427e20a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
