@@ -22,6 +22,30 @@
       "revId": "02af67214f4658e75d2a6cc39a4dcf75a2abf792",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66295a23_68491742",
+        "filename": "skia/ext/image_operations.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-07T21:12:36Z",
+      "side": 0,
+      "message": "Oh yeah, I should have commented on this: It\u0027s not a 100% no-op refactor: The old code did not transfer the colorspace information. So, I just fixed it while I was in here to help support other efforts \"on the colorspace front.\" But, otherwise, no-op.\n\nAs for the BGRA format aspect (the color type set by MakeN32()), this is guaranteed because on line 364, there is a check for that in the source image. So, by copying over that part of the SkImageInfo as well, the same format should be used in the result.",
+      "parentUuid": "04a53c9b_15a7a37d",
+      "range": {
+        "startLine": 377,
+        "startChar": 17,
+        "endLine": 377,
+        "endChar": 99
+      },
+      "revId": "02af67214f4658e75d2a6cc39a4dcf75a2abf792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
