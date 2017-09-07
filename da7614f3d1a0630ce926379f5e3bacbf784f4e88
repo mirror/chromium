@@ -16,6 +16,24 @@
       "revId": "da7614f3d1a0630ce926379f5e3bacbf784f4e88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b876c794_f9812e7e",
+        "filename": "chromeos/dbus/power_policy_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-07T00:20:24Z",
+      "side": 1,
+      "message": "you could try base::StringAppendF(\u0026str, ...)",
+      "parentUuid": "611364e8_9e7856c3",
+      "revId": "da7614f3d1a0630ce926379f5e3bacbf784f4e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
