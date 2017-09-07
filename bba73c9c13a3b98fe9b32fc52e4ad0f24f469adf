@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09bb28c6_0f8a0292",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-07T09:17:20Z",
+      "side": 1,
+      "message": "oh, that is good to know, thanks. i18nPolymer messed up the html due to how doublequotes got escaped (e.g. href\u003d\"$1\"). Changing them to singlequotes solved this.",
+      "parentUuid": "d845ba42_6371bbf1",
+      "revId": "bba73c9c13a3b98fe9b32fc52e4ad0f24f469adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac7a75df_d51a0db3",
         "filename": "chrome/browser/resources/settings/settings_vars_css.html",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "bba73c9c13a3b98fe9b32fc52e4ad0f24f469adf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb3b897_8cd218c6",
+        "filename": "chrome/browser/resources/settings/settings_vars_css.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-07T09:17:20Z",
+      "side": 1,
+      "message": "Someone else changed this, it only shows up due to the rebase commit\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/634088",
+      "parentUuid": "ac7a75df_d51a0db3",
+      "revId": "bba73c9c13a3b98fe9b32fc52e4ad0f24f469adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

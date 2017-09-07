@@ -16,6 +16,24 @@
       "revId": "2e21537adcb0fd7111198d1db7c206e9f6e07fd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e32db5_db30c955",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-07T09:17:20Z",
+      "side": 0,
+      "message": "The warning about data on history.google.com is moved to the history checkbox description.\nThe warning about clearing synced data is moved to each checkbox that will be affected.\nA checkbox for Content Settings has been added, so we don\u0027t need to warn about this anymore.",
+      "parentUuid": "06bff824_785a5c8a",
+      "revId": "2e21537adcb0fd7111198d1db7c206e9f6e07fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "25b209de_8719151c",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-07T09:17:20Z",
+      "side": 1,
+      "message": "fixed, thanks",
+      "parentUuid": "24c8aed3_e4aef399",
+      "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5d1021b_a9b3bbe6",
         "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b55035_6e3997bb",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-07T09:17:20Z",
+      "side": 1,
+      "message": "After adding the comments I also added ids to both divs, so I think I can just remove the comment",
+      "parentUuid": "f5d1021b_a9b3bbe6",
+      "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1dfd4168_f0991c62",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-07T09:17:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "895013a8_4e935717",
+      "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c6fbc84_4a76c779",
         "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
         "patchSetId": 12
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f244bcf7_c007896f",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-07T09:17:20Z",
+      "side": 1,
+      "message": "I changed it to \u003cspan hidden$\u003d\"...\"\u003e. Thanks",
+      "parentUuid": "1c6fbc84_4a76c779",
+      "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a959666_58728482",
         "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
         "patchSetId": 12
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-02T01:18:37Z",
       "side": 1,
       "message": "Rather than using a subLabelHtml variable, please use $i18nPolymer{} to get the localized strings.\n\nSee\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/site_settings_page/site_settings_page.html?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d254\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/site_settings_page/site_settings_page.js?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d141",
+      "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af127f1_ddc4ab51",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-07T09:17:20Z",
+      "side": 1,
+      "message": "Thanks for the example. I implemented it this way now",
+      "parentUuid": "3a959666_58728482",
       "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6ba8d360_110b2665",
+        "filename": "chrome/browser/resources/settings/settings_vars_css.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-07T09:17:20Z",
+      "side": 1,
+      "message": "paper-tabs-selection-bar-color is used in chrome/browser/resources/settings/device_page/display.html as well, so I moved it here.\n\ntab-height is only used in CBD, I will move it out of this file.",
+      "parentUuid": "a11ae4a8_37598305",
+      "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6293f9c_74cf628e",
         "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
         "patchSetId": 12
@@ -118,6 +226,24 @@
       "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30244e6e_00bdb052",
+        "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-07T09:17:20Z",
+      "side": 1,
+      "message": "I moved the declarations, so that it is in the right place again.",
+      "parentUuid": "d6293f9c_74cf628e",
+      "revId": "bbc914dd9a429eb1afc24f415f1e893db14e9fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
