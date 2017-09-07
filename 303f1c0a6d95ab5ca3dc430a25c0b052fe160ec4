@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fbbcce9_50f1abd5",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-07T04:06:43Z",
+      "side": 1,
+      "message": "nit: you don\u0027t need base::Passed. Ditto for below.",
+      "revId": "303f1c0a6d95ab5ca3dc430a25c0b052fe160ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6091553d_840ca206",
+        "filename": "components/arc/common/video_common.mojom",
+        "patchSetId": 37
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-07T04:06:43Z",
+      "side": 1,
+      "message": "(optional): I\u0027d recommend to focus on decorder deprecation in this CL, and do this kind of clean up in a following CL, instead, if possible.",
+      "revId": "303f1c0a6d95ab5ca3dc430a25c0b052fe160ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
