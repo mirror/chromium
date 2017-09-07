@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "b41cb803_65470241",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-07T01:09:37Z",
+      "side": 1,
+      "message": "nit:  I think the EXPECT prints \"should_be_hit_testable\" or something similar already.  Probably sufficient to just do \"EXPECT() \u003c\u003c \"on element \" \u003c\u003c element-\u003ename()\" - whatever looks best.",
+      "revId": "481ebf486e5a7164d6452a1e03f392c5790257d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7466c340_45af377a",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-07T01:09:37Z",
+      "side": 1,
+      "message": "As you did \u0027const bool\u0027 above, \u0027const auto\u0026\u0027 here?",
+      "revId": "481ebf486e5a7164d6452a1e03f392c5790257d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d0ea10b_810e7654",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-07T01:09:37Z",
+      "side": 1,
+      "message": "For a separate change:  C++ enumerators aren\u0027t my forte, but how easy would it be to support them in UI elements, so the recursion is hidden, like:\n\nfor (const auto\u0026 element: root-\u003eTree()) {\n   EXPECT(...);\n}\n\nThat\u0027d be snazzy.",
+      "revId": "481ebf486e5a7164d6452a1e03f392c5790257d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d13273c8_5c160cc5",
         "filename": "device/BUILD.gn",
         "patchSetId": 1
