@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e22fb18e_bb1d4fd4",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-07T18:16:50Z",
+      "side": 1,
+      "message": "nit: no new line needed",
+      "revId": "0bd849645f3645ea08a6892f0d2300b821c18eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab3487b_f8f5cbf3",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-07T18:16:50Z",
+      "side": 1,
+      "message": "nit: unindent",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 12
+      },
+      "revId": "0bd849645f3645ea08a6892f0d2300b821c18eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
