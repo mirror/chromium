@@ -36,17 +36,27 @@ BASE_EXPORT void UmaHistogramExactLinear(const std::string& name,
 
 // For adding sample to enum histogram.
 // Sample usage:
-//   base::UmaHistogramEnumeration("My.Enumeration", VALUE, EVENT_MAX_VALUE);
+//   // This enum is used to back an UMA histogram, and should therefore be
+//   // treated as append-only.
+//   enum class MyEnum {
+//     VALUE_1,
+//     VALUE_2,
+//     ...
+//     VALUE_N,
+//     COUNT
+//   };
+//   base::UmaHistogramEnumeration("My.Enumeration",
+//                                 MyEnum::VALUE_2, MyEnum::COUNT);
 // Note that new Enum values can be added, but existing enums must never be
 // renumbered or deleted and reused.
 template <typename T>
-void UmaHistogramEnumeration(const std::string& name, T sample, T max) {
+void UmaHistogramEnumeration(const std::string& name, T sample, T enum_size) {
   static_assert(std::is_enum<T>::value,
                 "Non enum passed to UmaHistogramEnumeration");
-  DCHECK_LE(static_cast<uintmax_t>(max), static_cast<uintmax_t>(INT_MAX));
-  DCHECK_LE(static_cast<uintmax_t>(sample), static_cast<uintmax_t>(max));
+  DCHECK_LE(static_cast<uintmax_t>(enum_size), static_cast<uintmax_t>(INT_MAX));
+  DCHECK_LE(static_cast<uintmax_t>(sample), static_cast<uintmax_t>(enum_size));
   return UmaHistogramExactLinear(name, static_cast<int>(sample),
-                                 static_cast<int>(max));
+                                 static_cast<int>(enum_size));
 }
 
 // For adding boolean sample to histogram.
