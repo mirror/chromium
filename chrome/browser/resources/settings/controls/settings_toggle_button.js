@@ -73,6 +73,6 @@ Polymer({
    * @private
    */
   resetTrackLock_: function() {
-    Polymer.Gestures.gestures.tap.reset();
+    setTimeout(() => Polymer.Gestures.gestures.tap.reset());
   },
 });
