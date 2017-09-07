@@ -18,7 +18,7 @@ class ShellRuntimeAPIDelegate : public RuntimeAPIDelegate {
   // RuntimeAPIDelegate implementation.
   void AddUpdateObserver(UpdateObserver* observer) override;
   void RemoveUpdateObserver(UpdateObserver* observer) override;
-  void ReloadExtension(const std::string& extension_id) override;
+  void ReloadExtensionAsync(const std::string& extension_id) override;
   bool CheckForUpdates(const std::string& extension_id,
                        const UpdateCheckCallback& callback) override;
   void OpenURL(const GURL& uninstall_url) override;

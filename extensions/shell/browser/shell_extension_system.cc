@@ -5,29 +5,27 @@
 #include "extensions/shell/browser/shell_extension_system.h"
 
 #include <string>
+#include <utility>
 
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
-#include "base/memory/ptr_util.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
 #include "extensions/browser/api/app_runtime/app_runtime_api.h"
+#include "extensions/browser/extension_loader.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/info_map.h"
 #include "extensions/browser/notification_types.h"
 #include "extensions/browser/null_app_sorting.h"
 #include "extensions/browser/quota_service.h"
-#include "extensions/browser/renderer_startup_helper.h"
 #include "extensions/browser/runtime_data.h"
 #include "extensions/browser/service_worker_manager.h"
 #include "extensions/browser/value_store/value_store_factory_impl.h"
 #include "extensions/common/api/app_runtime.h"
-#include "extensions/common/constants.h"
-#include "extensions/common/file_util.h"
 
 using content::BrowserContext;
 using content::BrowserThread;
@@ -44,27 +42,15 @@ ShellExtensionSystem::~ShellExtensionSystem() {
 
 const Extension* ShellExtensionSystem::LoadExtension(
     const base::FilePath& extension_dir) {
-  // app_shell only supports unpacked extensions.
-  // NOTE: If you add packed extension support consider removing the flag
-  // FOLLOW_SYMLINKS_ANYWHERE below. Packed extensions should not have symlinks.
-  CHECK(base::DirectoryExists(extension_dir)) << extension_dir.AsUTF8Unsafe();
-  int load_flags = Extension::FOLLOW_SYMLINKS_ANYWHERE;
-  std::string load_error;
-  scoped_refptr<Extension> extension = file_util::LoadExtension(
-      extension_dir, Manifest::COMMAND_LINE, load_flags, &load_error);
-  if (!extension.get()) {
-    LOG(ERROR) << "Loading extension at " << extension_dir.value()
-               << " failed with: " << load_error;
-    return nullptr;
-  }
+  // Lazy-initialize the ExtensionLoader, since it depends on the
+  // ExtensionSystem existing. TODO(michaelpg): Remove this dependency by using
+  // ExtensionLoader directly instead of these ShellExtensionSystem helpers.
+  if (!extension_loader_)
+    extension_loader_ = std::make_unique<ExtensionLoader>(browser_context_);
 
-  // Log warnings.
-  if (extension->install_warnings().size()) {
-    LOG(WARNING) << "Warnings loading extension at " << extension_dir.value()
-                 << ":";
-    for (const auto& warning : extension->install_warnings())
-      LOG(WARNING) << warning.message;
-  }
+  // app_shell only supports unpacked extensions.
+  scoped_refptr<const Extension> extension =
+      extension_loader_->LoadExtensionFromCommandLine(extension_dir);
 
   // TODO(jamescook): We may want to do some of these things here:
   // * Create a PermissionsUpdater.
@@ -72,19 +58,6 @@ const Extension* ShellExtensionSystem::LoadExtension(
   // * Call ExtensionService::SatisfyImports().
   // * Call ExtensionPrefs::OnExtensionInstalled().
   // * Call ExtensionRegistryObserver::OnExtensionWillbeInstalled().
-
-  ExtensionRegistry::Get(browser_context_)->AddEnabled(extension.get());
-
-  RegisterExtensionWithRequestContexts(
-      extension.get(),
-      base::Bind(
-          &ShellExtensionSystem::OnExtensionRegisteredWithRequestContexts,
-          weak_factory_.GetWeakPtr(), extension));
-
-  RendererStartupHelperFactory::GetForBrowserContext(browser_context_)
-      ->OnExtensionLoaded(*extension);
-
-  ExtensionRegistry::Get(browser_context_)->TriggerOnLoaded(extension.get());
 
   return extension.get();
 }
@@ -183,7 +156,11 @@ void ShellExtensionSystem::RegisterExtensionWithRequestContexts(
 
 void ShellExtensionSystem::UnregisterExtensionWithRequestContexts(
     const std::string& extension_id,
-    const UnloadedExtensionReason reason) {}
+    const UnloadedExtensionReason reason) {
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::Bind(&InfoMap::RemoveExtension, info_map(), extension_id, reason));
+}
 
 const OneShotEvent& ShellExtensionSystem::ready() const {
   return ready_;

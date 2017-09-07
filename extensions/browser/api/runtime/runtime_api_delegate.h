@@ -51,8 +51,9 @@ class RuntimeAPIDelegate {
   // Unregisters an UpdateObserver on behalf of the runtime API.
   virtual void RemoveUpdateObserver(UpdateObserver* observer) = 0;
 
-  // Reloads an extension.
-  virtual void ReloadExtension(const std::string& extension_id) = 0;
+  // Posts a task to reload an extension. Extension must be unloaded
+  // asynchronously because the caller keeps a scoped_refptr to the extension.
+  virtual void ReloadExtensionAsync(const std::string& extension_id) = 0;
 
   // Requests an extensions update update check. Returns |false| if updates
   // are disabled. Otherwise |callback| is called with the result of the
