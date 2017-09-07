@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53348e0b_8aebdff1",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-07T15:50:21Z",
+      "side": 1,
+      "message": "The assembly generated will change depending on:\na) Compiler brand (gcc x clang)\nb) Compiler Version\nc) Flags\n\nIt makes no sense to add it as a comment. \n\nIf there is something that you believe is worthy discussing, it is better to add a remark (e.g. \"Here we expect the compiler to load data in 64bits chunks using whatever register with whatever instruction\").",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59738a76_5c94d23d",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-07T15:50:21Z",
+      "side": 1,
+      "message": "This block is repeated what, 3x along the file?\n\nCan you turn it in a macro or an inline function?",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f1b9a4_3a9a6350",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-07T15:50:21Z",
+      "side": 1,
+      "message": "Ditto about asm as comments.",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b033e1_4b9af3b0",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-07T15:50:21Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a665da2_bffdae43",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-07T15:50:21Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322c173f_2078db28",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-07T15:50:21Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
