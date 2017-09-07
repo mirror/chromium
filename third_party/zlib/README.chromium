@@ -29,3 +29,5 @@ Local Modifications:
  - 0002-uninitializedcheck.patch: default-initialize state->check, see
    crbug.com/697481
  - 0003-arm-inffast.patch: ARM optimized inflate using NEON.
+ - 0004-inffast64.patch contains optimizations to inffast.c for 64 bit archs.
+   This also adds contrib/inffast64/inffast64.c.
