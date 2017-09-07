@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "46130430_c9cda8ae",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-07T20:11:31Z",
+      "side": 1,
+      "message": "Assuming fullDuration (e.g. the test\u0027s metadata) is correct, even in the presence of appendBuffer() chunking, there should only be one durationchange at this point. In PS3-4, I\u0027ve done as you requested here.",
+      "parentUuid": "391861b2_d1761a76",
+      "range": {
+        "startLine": 189,
+        "startChar": 21,
+        "endLine": 189,
+        "endChar": 28
+      },
+      "revId": "dca6c54be94f8bf84117ccf98016a7229e8d7bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "371fcc91_2c18dbc8",
         "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
         "patchSetId": 1
