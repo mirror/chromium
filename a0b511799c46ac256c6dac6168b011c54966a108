@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55a06aba_29248558",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-07T02:23:07Z",
+      "side": 1,
+      "message": "Would we hit here only for subresource cases?",
+      "revId": "a0b511799c46ac256c6dac6168b011c54966a108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e49f9f7b_201dd112",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-07T02:23:07Z",
+      "side": 1,
+      "message": "Ok, as we chatted offline could we remove this part for now if this code isn\u0027t used for AppCache?",
+      "revId": "a0b511799c46ac256c6dac6168b011c54966a108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "420dd810_12b040dd",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-07T02:23:07Z",
+      "side": 1,
+      "message": "In the current code we usually go through URLRequest::Redirect before we let each request job to handle it, where we do a bit of header modifications, I wonder if we should replicate that here?",
+      "revId": "a0b511799c46ac256c6dac6168b011c54966a108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
