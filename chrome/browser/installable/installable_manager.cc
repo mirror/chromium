@@ -376,19 +376,27 @@ void InstallableManager::RecordAddToHomescreenHistogram() {
 void InstallableManager::Reset() {
   // Prevent any outstanding callbacks to or from this object from being called.
   weak_factory_.InvalidateWeakPtrs();
-  task_queue_.Reset();
   icons_.clear();
 
   // We may have reset prior to completion, in which case |menu_open_count_| or
   // |menu_item_add_to_homescreen_count_| might be nonzero and |page_status_| is
   // one of NOT_STARTED or NOT_COMPLETED. If we completed, then these values
   // cannot be anything except 0.
+  InstallabilityCheckStatus status = page_status_;
+
+  // If we are waiting for a service worker to appear, record this as being
+  // complete and a non-PWA.
+  if (status == InstallabilityCheckStatus::NOT_COMPLETED &&
+      task_queue_.HasPaused()) {
+    status = InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP;
+  }
+
   for (; menu_open_count_ > 0; --menu_open_count_)
-    InstallableMetrics::RecordMenuOpenHistogram(page_status_);
+    InstallableMetrics::RecordMenuOpenHistogram(status);
 
   for (; menu_item_add_to_homescreen_count_ > 0;
        --menu_item_add_to_homescreen_count_) {
-    InstallableMetrics::RecordMenuItemAddToHomescreenHistogram(page_status_);
+    InstallableMetrics::RecordMenuItemAddToHomescreenHistogram(status);
   }
 
   for (; add_to_homescreen_manifest_timeout_count_ > 0;
@@ -403,6 +411,7 @@ void InstallableManager::Reset() {
         AddToHomescreenTimeoutStatus::TIMEOUT_INSTALLABILITY_CHECK_UNKNOWN);
   }
 
+  task_queue_.Reset();
   page_status_ = InstallabilityCheckStatus::NOT_STARTED;
   manifest_ = base::MakeUnique<ManifestProperty>();
   valid_manifest_ = base::MakeUnique<ValidManifestProperty>();
