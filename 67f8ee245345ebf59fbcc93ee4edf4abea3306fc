@@ -22,6 +22,30 @@
       "revId": "67f8ee245345ebf59fbcc93ee4edf4abea3306fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7661f0e6_2a63f8d7",
+        "filename": "components/download/internal/navigation_monitor_impl_unittests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-07T17:21:20Z",
+      "side": 1,
+      "message": "I tried using TestSimpleTaskRunner, but it doesn\u0027t for these tests since it doesn\u0027t honor the delays and executes the tasks in a first-come-first-serve manner which is not what I want. The state of NavigationMonitor is very much dependent on the delays. \n\nIf test run time is a concern, I can scale the delays down.",
+      "parentUuid": "b47d6446_f8ff5d4e",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 19
+      },
+      "revId": "67f8ee245345ebf59fbcc93ee4edf4abea3306fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
