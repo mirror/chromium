@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "43922ff5_2e22b03f",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-07T18:18:06Z",
+      "side": 1,
+      "message": "Hmm I see. Well since you have a TODO either is fine. I assume you will improve this in a future patch.",
+      "parentUuid": "499a7707_b53b2dd9",
+      "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffb094af_abc38942",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
         "patchSetId": 17
