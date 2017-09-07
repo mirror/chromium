@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c63d7071_222c58fe",
+        "filename": "tools/lldb/lldb_chrome.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-07T07:29:23Z",
+      "side": 1,
+      "message": "I believe using \"+\" is preferred to \"\\\":\n\ndebugger.HandleCommand(\n    \u0027type summary add -F \u0027 +\n    \u0027lldb_chrome.basestring16_SummaryProvider base::string16\u0027)",
+      "range": {
+        "startLine": 15,
+        "startChar": 49,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "9c2495593cf694cdcb596ca146d2805b1498c9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f10ba7_65a9261b",
+        "filename": "tools/lldb/lldb_chrome.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-07T07:29:23Z",
+      "side": 1,
+      "message": "Be consistent whether to use \"\" or \u0027\u0027 in a file.",
+      "range": {
+        "startLine": 19,
+        "startChar": 62,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "9c2495593cf694cdcb596ca146d2805b1498c9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4e0ce6_d7f5ebcc",
+        "filename": "tools/lldb/lldb_chrome.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-07T07:29:23Z",
+      "side": 1,
+      "message": "I guess it won\u0027t handle surrogate pairs correctly if you construct a Unicode string this way? Maybe it\u0027s better to first construct a utf-16 *byte* string (str) and convert it from utf-16 to utf-8.\n\nBut it will rarely an issue, so you may instead just add a note or TODO.\n\nAlso, it should be:\n  contents +\u003d unichar(char)",
+      "range": {
+        "startLine": 34,
+        "startChar": 42,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "9c2495593cf694cdcb596ca146d2805b1498c9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb58c34_5a12b4b9",
+        "filename": "tools/lldb/lldb_chrome.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-07T07:29:23Z",
+      "side": 1,
+      "message": "i +\u003d 1",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "9c2495593cf694cdcb596ca146d2805b1498c9db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
