@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfe3a9b7_f26ad12c",
+        "filename": "tools/cygprofile/cygprofile_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-09-07T11:04:05Z",
+      "side": 1,
+      "message": "\u003ccstdint\u003e ?",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "85865e6cb924ef204929600d0dc4ed5a25cbc0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "face596d_018e58e7",
+        "filename": "tools/cygprofile/cygprofile_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-09-07T11:04:05Z",
+      "side": 1,
+      "message": "could stay int ..",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 11
+      },
+      "revId": "85865e6cb924ef204929600d0dc4ed5a25cbc0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6053bcea_8cbaf369",
+        "filename": "tools/cygprofile/cygprofile_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-09-07T11:04:05Z",
+      "side": 1,
+      "message": "from the bot: error: format specifies type \u0027int\u0027 but the argument has type \u0027uintptr_t\u0027 (aka \u0027unsigned long\u0027) [-Werror,-Wformat]\n  auto modifier \u003d base::StringPrintf(\"_%d_%d\", iterations, addresses_count);\n                                          ~~               ^~~~~~~~~~~~~~~\n                                          %lu",
+      "range": {
+        "startLine": 37,
+        "startChar": 38,
+        "endLine": 37,
+        "endChar": 44
+      },
+      "revId": "85865e6cb924ef204929600d0dc4ed5a25cbc0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "961d7849_6fa0ee6e",
+        "filename": "tools/cygprofile/cygprofile_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-09-07T11:04:05Z",
+      "side": 1,
+      "message": "nit: cleanup",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 19
+      },
+      "revId": "85865e6cb924ef204929600d0dc4ed5a25cbc0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
