@@ -60,7 +60,7 @@ ArcPowerBridge::ArcPowerBridge(content::BrowserContext* context,
 }
 
 ArcPowerBridge::~ArcPowerBridge() {
-  ReleaseAllDisplayWakeLocks();
+  ReleaseAllWakeLocks();
   arc_bridge_service_->power()->RemoveObserver(this);
 }
 
@@ -89,7 +89,7 @@ void ArcPowerBridge::OnInstanceClosed() {
     ash::Shell::Get()->display_configurator()->RemoveObserver(this);
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->
       RemoveObserver(this);
-  ReleaseAllDisplayWakeLocks();
+  ReleaseAllWakeLocks();
 }
 
 void ArcPowerBridge::SuspendImminent() {
@@ -148,21 +148,39 @@ void ArcPowerBridge::OnAcquireDisplayWakeLock(mojom::DisplayWakeLockType type) {
       chromeos::PowerPolicyController::Get();
 
   int wake_lock_id = -1;
+  ArcPowerBridge::WakeLockType wake_lock_type;
   switch (type) {
     case mojom::DisplayWakeLockType::BRIGHT:
       wake_lock_id = controller->AddScreenWakeLock(
           chromeos::PowerPolicyController::REASON_OTHER, "ARC");
+      wake_lock_type = ArcPowerBridge::WakeLockType::FULL_WAKE_LOCK_BRIGHT;
       break;
     case mojom::DisplayWakeLockType::DIM:
       wake_lock_id = controller->AddDimWakeLock(
           chromeos::PowerPolicyController::REASON_OTHER, "ARC");
+      wake_lock_type = ArcPowerBridge::WakeLockType::FULL_WAKE_LOCK_DIM;
       break;
     default:
       LOG(WARNING) << "Tried to take invalid wake lock type "
                    << static_cast<int>(type);
       return;
   }
-  wake_locks_.insert(std::make_pair(type, wake_lock_id));
+  wake_locks_.insert(std::make_pair(wake_lock_type, wake_lock_id));
+}
+
+void ArcPowerBridge::OnAcquirePartialWakeLock() {
+  if (!chromeos::PowerPolicyController::IsInitialized()) {
+    LOG(WARNING) << "PowerPolicyController is not available";
+    return;
+  }
+
+  chromeos::PowerPolicyController* controller =
+      chromeos::PowerPolicyController::Get();
+  int wake_lock_id = -1;
+  wake_lock_id = controller->AddSystemWakeLock(
+      chromeos::PowerPolicyController::REASON_OTHER, "ARC");
+  wake_locks_.insert(std::make_pair(
+      ArcPowerBridge::WakeLockType::PARTIAL_WAKE_LOCK, wake_lock_id));
 }
 
 void ArcPowerBridge::OnReleaseDisplayWakeLock(mojom::DisplayWakeLockType type) {
@@ -176,10 +194,28 @@ void ArcPowerBridge::OnReleaseDisplayWakeLock(mojom::DisplayWakeLockType type) {
   // From the perspective of the PowerPolicyController, all wake locks
   // of a given type are equivalent, so it doesn't matter which one
   // we pass to the controller here.
-  auto it = wake_locks_.find(type);
+  ArcPowerBridge::WakeLockType wake_lock_type;
+  if (type == mojom::DisplayWakeLockType::BRIGHT)
+    wake_lock_type = ArcPowerBridge::WakeLockType::FULL_WAKE_LOCK_BRIGHT;
+  else
+    wake_lock_type = ArcPowerBridge::WakeLockType::FULL_WAKE_LOCK_DIM;
+  auto it = wake_locks_.find(wake_lock_type);
   if (it == wake_locks_.end()) {
     LOG(WARNING) << "Tried to release wake lock of type "
                  << static_cast<int>(type) << " when none were taken";
+    return;
+  }
+  controller->RemoveWakeLock(it->second);
+  wake_locks_.erase(it);
+}
+
+void ArcPowerBridge::OnReleasePartialWakeLock() {
+  chromeos::PowerPolicyController* controller =
+      chromeos::PowerPolicyController::Get();
+  auto it = wake_locks_.find(ArcPowerBridge::WakeLockType::PARTIAL_WAKE_LOCK);
+  if (it == wake_locks_.end()) {
+    LOG(WARNING)
+        << "Tried to release a partial wake lock of type when none were taken";
     return;
   }
   controller->RemoveWakeLock(it->second);
@@ -200,7 +236,7 @@ void ArcPowerBridge::OnScreenBrightnessUpdateRequest(double percent) {
       ->SetScreenBrightnessPercent(percent, true);
 }
 
-void ArcPowerBridge::ReleaseAllDisplayWakeLocks() {
+void ArcPowerBridge::ReleaseAllWakeLocks() {
   if (!chromeos::PowerPolicyController::IsInitialized()) {
     LOG(WARNING) << "PowerPolicyController is not available";
     return;
