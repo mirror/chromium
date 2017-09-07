@@ -221,8 +221,9 @@ class FetchManager::Loader final
         bool check_result = SubresourceIntegrity::CheckSubresourceIntegrity(
             integrity_metadata_, buffer_.data(), buffer_.size(), url_,
             report_info);
-        SubresourceIntegrityHelper::DoReport(*loader_->GetExecutionContext(),
-                                             report_info);
+        ExecutionContext* execution_context = loader_->GetExecutionContext();
+        if (execution_context)
+          SubresourceIntegrityHelper::DoReport(*execution_context, report_info);
         if (check_result) {
           updater_->Update(
               new FormDataBytesConsumer(buffer_.data(), buffer_.size()));
