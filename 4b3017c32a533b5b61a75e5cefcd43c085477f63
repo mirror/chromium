@@ -148,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "5f831079_8e5e0fdb",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-07T02:42:49Z",
+      "side": 1,
+      "message": "Yeah, exactly it\u0027s a problem, and I suppose it is an existing problem before? Even in legacy IPC world, if an unexpected renderer crash just happened at the time point after we have incremented the refcount at line1239, renderer has no any chance sending back to browser process the DecreRefCount IPC, so the refcount for SWRegistrationObject/SWObject will be leaked.\n\nI noticed it when I was considering about SWRegistrationHost interface, and have wrote the idea at https://crbug.com/758151 to solve it, exactly the same with yours:) //Hands\n    Using SWRegistrationHost/SWHost mojo connections\u0027 error handlers to count the references of SWRegistrationObject/SWObject.\n\nI\u0027m planning to do that work right after this CL :)",
+      "parentUuid": "f5ab5080_9bf61286",
+      "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce84b8ba_a3533140",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 1
