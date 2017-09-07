@@ -100,7 +100,7 @@ class CONTENT_EXPORT SpeechRecognitionManagerImpl
   friend std::default_delete<SpeechRecognitionManagerImpl>;
   friend class base::DeleteHelper<content::SpeechRecognitionManagerImpl>;
 
-  SpeechRecognitionManagerImpl(media::AudioSystem* audio_system,
+  SpeechRecognitionManagerImpl(std::unique_ptr<media::AudioSystem> audio_system,
                                media::AudioManager* audio_manager,
                                MediaStreamManager* media_stream_manager);
   ~SpeechRecognitionManagerImpl() override;
@@ -176,7 +176,7 @@ class CONTENT_EXPORT SpeechRecognitionManagerImpl
   SpeechRecognitionEventListener* GetDelegateListener() const;
   int GetNextSessionID();
 
-  media::AudioSystem* audio_system_;
+  std::unique_ptr<media::AudioSystem> audio_system_;
   media::AudioManager* audio_manager_;
   MediaStreamManager* media_stream_manager_;
   typedef std::map<int, Session*> SessionsTable;

@@ -88,13 +88,13 @@ class CONTENT_EXPORT MediaStreamManager
   static void SendMessageToNativeLog(const std::string& message);
 
   MediaStreamManager(
-      media::AudioSystem* audio_system,
+      std::unique_ptr<media::AudioSystem> audio_system,
       scoped_refptr<base::SingleThreadTaskRunner> audio_task_runner);
 
   // |audio_system| is required but defaults will be used if either
   // |video_capture_system| or |device_task_runner| are null.
   MediaStreamManager(
-      media::AudioSystem* audio_system,
+      std::unique_ptr<media::AudioSystem> audio_system,
       scoped_refptr<base::SingleThreadTaskRunner> audio_task_runner,
       std::unique_ptr<VideoCaptureProvider> video_capture_provider);
 
@@ -412,7 +412,7 @@ class CONTENT_EXPORT MediaStreamManager
       MediaStreamType stream_type,
       const MediaDeviceInfoArray& device_infos);
 
-  media::AudioSystem* const audio_system_;  // not owned
+  std::unique_ptr<media::AudioSystem> const audio_system_;
   scoped_refptr<AudioInputDeviceManager> audio_input_device_manager_;
   scoped_refptr<VideoCaptureManager> video_capture_manager_;
 #if defined(OS_WIN)

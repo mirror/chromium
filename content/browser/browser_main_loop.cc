@@ -102,7 +102,7 @@
 #include "device/gamepad/gamepad_service.h"
 #include "gpu/vulkan/features.h"
 #include "media/audio/audio_manager.h"
-#include "media/audio/audio_system_impl.h"
+#include "media/audio/audio_system.h"
 #include "media/audio/audio_thread_impl.h"
 #include "media/base/media.h"
 #include "media/base/user_input_monitor.h"
@@ -1587,14 +1587,14 @@ int BrowserMainLoop::BrowserThreadsStarted() {
     TRACE_EVENT0("startup",
       "BrowserMainLoop::BrowserThreadsStarted:InitMediaStreamManager");
     media_stream_manager_.reset(new MediaStreamManager(
-        audio_system_.get(), audio_manager_->GetTaskRunner()));
+        media::AudioSystem::GetInstance(), audio_manager_->GetTaskRunner()));
   }
 
   {
     TRACE_EVENT0("startup",
       "BrowserMainLoop::BrowserThreadsStarted:InitSpeechRecognition");
     speech_recognition_manager_.reset(new SpeechRecognitionManagerImpl(
-        audio_system_.get(), audio_manager_.get(),
+        media::AudioSystem::GetInstance(), audio_manager_.get(),
         media_stream_manager_.get()));
   }
 
@@ -1846,9 +1846,6 @@ void BrowserMainLoop::CreateAudioManager() {
         MediaInternals::GetInstance());
   }
   CHECK(audio_manager_);
-
-  audio_system_ = media::AudioSystemImpl::Create(audio_manager_.get());
-  CHECK(audio_system_);
 }
 
 }  // namespace content

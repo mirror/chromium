@@ -403,15 +403,17 @@ void MediaStreamManager::SendMessageToNativeLog(const std::string& message) {
 }
 
 MediaStreamManager::MediaStreamManager(
-    media::AudioSystem* audio_system,
+    std::unique_ptr<media::AudioSystem> audio_system,
     scoped_refptr<base::SingleThreadTaskRunner> audio_task_runner)
-    : MediaStreamManager(audio_system, std::move(audio_task_runner), nullptr) {}
+    : MediaStreamManager(std::move(audio_system),
+                         std::move(audio_task_runner),
+                         nullptr) {}
 
 MediaStreamManager::MediaStreamManager(
-    media::AudioSystem* audio_system,
+    std::unique_ptr<media::AudioSystem> audio_system,
     scoped_refptr<base::SingleThreadTaskRunner> audio_task_runner,
     std::unique_ptr<VideoCaptureProvider> video_capture_provider)
-    : audio_system_(audio_system),
+    : audio_system_(std::move(audio_system)),
 #if defined(OS_WIN)
       video_capture_thread_("VideoCaptureThread"),
 #endif
@@ -489,7 +491,7 @@ MediaDevicesManager* MediaStreamManager::media_devices_manager() {
 
 media::AudioSystem* MediaStreamManager::audio_system() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  return audio_system_;
+  return audio_system_.get();
 }
 
 void MediaStreamManager::AddVideoCaptureObserver(
@@ -1275,7 +1277,8 @@ void MediaStreamManager::InitializeMaybeAsync(
   // callback threads that we don't own and don't want to attach.
   g_media_stream_manager_tls_ptr.Pointer()->Set(this);
 
-  audio_input_device_manager_ = new AudioInputDeviceManager(audio_system_);
+  audio_input_device_manager_ =
+      new AudioInputDeviceManager(audio_system_.get());
   audio_input_device_manager_->RegisterListener(this);
 
   // We want to be notified of IO message loop destruction to delete the thread
@@ -1287,8 +1290,8 @@ void MediaStreamManager::InitializeMaybeAsync(
                               base::BindRepeating(&SendVideoCaptureLogMessage));
   video_capture_manager_->RegisterListener(this);
 
-  media_devices_manager_.reset(
-      new MediaDevicesManager(audio_system_, video_capture_manager_, this));
+  media_devices_manager_.reset(new MediaDevicesManager(
+      audio_system_.get(), video_capture_manager_, this));
 }
 
 void MediaStreamManager::Opened(MediaStreamType stream_type,

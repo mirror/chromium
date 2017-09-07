@@ -25,6 +25,7 @@
 #include "content/public/browser/media_observer.h"
 #include "content/public/browser/render_frame_host.h"
 #include "media/audio/audio_device_description.h"
+#include "media/audio/audio_system.h"
 #include "media/base/audio_bus.h"
 #include "media/base/limits.h"
 
@@ -59,19 +60,20 @@ void ValidateRenderFrameId(int render_process_id,
 ///////////////////////////////////////////////////////////////////////////////
 // AudioRendererHost implementations.
 
-AudioRendererHost::AudioRendererHost(int render_process_id,
-                                     media::AudioManager* audio_manager,
-                                     media::AudioSystem* audio_system,
-                                     AudioMirroringManager* mirroring_manager,
-                                     MediaStreamManager* media_stream_manager,
-                                     const std::string& salt)
+AudioRendererHost::AudioRendererHost(
+    int render_process_id,
+    media::AudioManager* audio_manager,
+    std::unique_ptr<media::AudioSystem> audio_system,
+    AudioMirroringManager* mirroring_manager,
+    MediaStreamManager* media_stream_manager,
+    const std::string& salt)
     : BrowserMessageFilter(AudioMsgStart),
       render_process_id_(render_process_id),
       audio_manager_(audio_manager),
       mirroring_manager_(mirroring_manager),
       media_stream_manager_(media_stream_manager),
       salt_(salt),
-      authorization_handler_(audio_system,
+      authorization_handler_(std::move(audio_system),
                              media_stream_manager,
                              render_process_id_,
                              salt) {
