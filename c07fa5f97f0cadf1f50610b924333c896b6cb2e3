@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "41c1723b_279d7e12",
+        "filename": "chromecast/browser/cast_web_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-09-07T23:05:23Z",
+      "side": 1,
+      "message": "Update from offline discussion: We\u0027ll use \u0026\u0026 here for now, while we are in development mode, since this is more convenient that messing with DCS flags every time you need to debug something. But in the future we might want to revisit and use || for extra level of protection.",
+      "parentUuid": "3b42316c_dab8d7ca",
+      "range": {
+        "startLine": 144,
+        "startChar": 59,
+        "endLine": 144,
+        "endChar": 61
+      },
+      "revId": "c07fa5f97f0cadf1f50610b924333c896b6cb2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21039bf0_acdb0529",
         "filename": "chromecast/browser/cast_web_view.cc",
         "patchSetId": 1
