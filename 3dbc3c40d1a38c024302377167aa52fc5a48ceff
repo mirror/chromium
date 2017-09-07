@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c9e676b_88cf9044",
+        "filename": "components/arc/common/midis.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-07T16:31:46Z",
+      "side": 1,
+      "message": "Oh forgot to comment about this before. It\u0027s fine that it is a stub for now, but adding a callback later breaks the backwards-compatibility. Can you change this to\n\n  Connect@0() \u003d\u003e ();\n\n? That way we can keep moving forward with no breakages. Or you can even make it\n\n  Connect@0() \u003d\u003e (handle client_handle);\n\nto avoid amending it later.",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 14
+      },
+      "revId": "3dbc3c40d1a38c024302377167aa52fc5a48ceff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
