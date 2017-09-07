@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9b1441f_4a1de7b7",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-07T23:46:29Z",
+      "side": 1,
+      "message": "This was a bug in existing code - main frames created here are already in the tree.",
+      "revId": "b14c3a9b3525c6913a445aacb7bf8fb0b9d01022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
