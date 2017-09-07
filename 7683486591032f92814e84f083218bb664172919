@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eb4fdb7_d567718b",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_special_subframe_navigations_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-07T15:28:35Z",
+      "side": 1,
+      "message": "I would still prefer using the IsDynamicScriptElementLoaded technique, which doesn\u0027t rely on synchronous loading.",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 37
+      },
+      "revId": "7683486591032f92814e84f083218bb664172919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
