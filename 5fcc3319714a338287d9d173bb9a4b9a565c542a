@@ -16,6 +16,24 @@
       "revId": "5fcc3319714a338287d9d173bb9a4b9a565c542a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9766f485_e5dee012",
+        "filename": "third_party/WebKit/public/platform/scheduler/single_thread_task_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-07T17:21:40Z",
+      "side": 1,
+      "message": "Unfortunately, no. The problem here that the wrapper still should be a SingleThreadTaskRunner to allow it to be passed around, so it should be inherited from base::refcounted base class.",
+      "parentUuid": "e9ab2451_0788b9d2",
+      "revId": "5fcc3319714a338287d9d173bb9a4b9a565c542a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
