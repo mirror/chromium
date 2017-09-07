@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c40a4e86_72baf97a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-07T04:37:26Z",
+      "side": 1,
+      "message": "This is totally nitpicking, but I\u0027m also checking my understanding.\n\nWould \u0027highly likely\u0027 be more accurate than \u0027clear\u0027? \u0027Clear\u0027 to me indicates certainty, but I think there are rare cases where it might not be true.",
+      "revId": "c9af1572b2f40aeea1303290ab46c84f591be17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5282e231_2a88dbac",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-07T04:37:26Z",
+      "side": 1,
+      "message": "comment: I find it confusing that HasPaused \u003d\u003d IsWaitingForSWCheck. Maybe we should rename it...",
+      "revId": "c9af1572b2f40aeea1303290ab46c84f591be17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
