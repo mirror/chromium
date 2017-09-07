@@ -1,0 +1,319 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66ee6a7d_f3d328ba",
+        "filename": "chrome/browser/component_updater/chrome_component_updater_configurator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T19:58:52Z",
+      "side": 1,
+      "message": "Are we going to implement an activity data service for components too?",
+      "range": {
+        "startLine": 189,
+        "startChar": 17,
+        "endLine": 189,
+        "endChar": 0
+      },
+      "revId": "2b8f3cb8617e887a960c2adb6e9514d3db360121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f5f149_9acb8742",
+        "filename": "chrome/browser/extensions/updater/chrome_update_client_config.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T19:58:52Z",
+      "side": 1,
+      "message": "This is a matter of personal preference but I think the following execution flow is more readable:\n\nif (last_ping_day.is_null()) \n  return update_client::kDaysFirstTime;\n\nreturn std::max((base::Time::Now() - last_ping_day).InDays(), 0);",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 14
+      },
+      "revId": "2b8f3cb8617e887a960c2adb6e9514d3db360121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744f0863_2b801cd9",
+        "filename": "components/update_client/activity_data_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T19:58:52Z",
+      "side": 1,
+      "message": "class.\n\nOr simply say \"Injects certain update information....\"",
+      "revId": "2b8f3cb8617e887a960c2adb6e9514d3db360121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577e801a_79801ef8",
+        "filename": "components/update_client/activity_data_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T19:58:52Z",
+      "side": 1,
+      "message": "we could just say \"are used for....\"",
+      "range": {
+        "startLine": 22,
+        "startChar": 59,
+        "endLine": 22,
+        "endChar": 66
+      },
+      "revId": "2b8f3cb8617e887a960c2adb6e9514d3db360121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc0eceb_7c4a84c1",
+        "filename": "components/update_client/activity_data_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T19:58:52Z",
+      "side": 1,
+      "message": "Clears",
+      "revId": "2b8f3cb8617e887a960c2adb6e9514d3db360121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b86696b6_edb0f565",
+        "filename": "components/update_client/persisted_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T19:58:52Z",
+      "side": 1,
+      "message": "{} not needed",
+      "range": {
+        "startLine": 98,
+        "startChar": 38,
+        "endLine": 98,
+        "endChar": 0
+      },
+      "revId": "2b8f3cb8617e887a960c2adb6e9514d3db360121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "106cf44a_cb969a7d",
+        "filename": "components/update_client/persisted_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T19:58:52Z",
+      "side": 1,
+      "message": "{} not needed",
+      "range": {
+        "startLine": 114,
+        "startChar": 37,
+        "endLine": 114,
+        "endChar": 38
+      },
+      "revId": "2b8f3cb8617e887a960c2adb6e9514d3db360121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b55d57_8e0b529b",
+        "filename": "components/update_client/persisted_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T19:58:52Z",
+      "side": 1,
+      "message": "() not needed",
+      "range": {
+        "startLine": 156,
+        "startChar": 10,
+        "endLine": 156,
+        "endChar": 33
+      },
+      "revId": "2b8f3cb8617e887a960c2adb6e9514d3db360121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd8d013_a63cdca7",
+        "filename": "components/update_client/persisted_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T19:58:52Z",
+      "side": 1,
+      "message": "{}not needed.\n\ncan use return activity_data_service_ ? ...",
+      "revId": "2b8f3cb8617e887a960c2adb6e9514d3db360121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f319b6bb_a399c877",
+        "filename": "components/update_client/persisted_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T19:58:52Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 169,
+        "startChar": 6,
+        "endLine": 169,
+        "endChar": 28
+      },
+      "revId": "2b8f3cb8617e887a960c2adb6e9514d3db360121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97db5f57_06cfe241",
+        "filename": "components/update_client/persisted_data.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T19:58:52Z",
+      "side": 1,
+      "message": "explicit not needed.",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 11
+      },
+      "revId": "2b8f3cb8617e887a960c2adb6e9514d3db360121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9f25ec_eca918fe",
+        "filename": "components/update_client/persisted_data.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T19:58:52Z",
+      "side": 1,
+      "message": "|there| can be removed.",
+      "range": {
+        "startLine": 95,
+        "startChar": 23,
+        "endLine": 95,
+        "endChar": 29
+      },
+      "revId": "2b8f3cb8617e887a960c2adb6e9514d3db360121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0584585_477145a1",
+        "filename": "components/update_client/persisted_data_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T19:58:52Z",
+      "side": 1,
+      "message": "can use auto to remove some of the clutter.",
+      "revId": "2b8f3cb8617e887a960c2adb6e9514d3db360121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff0bade_fd691cad",
+        "filename": "components/update_client/persisted_data_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T19:58:52Z",
+      "side": 1,
+      "message": "can use ?: here and below.",
+      "range": {
+        "startLine": 128,
+        "startChar": 13,
+        "endLine": 128,
+        "endChar": 14
+      },
+      "revId": "2b8f3cb8617e887a960c2adb6e9514d3db360121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4cee323_c11dba3e",
+        "filename": "components/update_client/persisted_data_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-07T19:58:52Z",
+      "side": 1,
+      "message": "can use auto",
+      "revId": "2b8f3cb8617e887a960c2adb6e9514d3db360121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
