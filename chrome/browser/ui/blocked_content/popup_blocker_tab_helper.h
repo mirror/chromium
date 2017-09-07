@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include <map>
+#include <memory>
 
 #include "base/containers/id_map.h"
 #include "base/macros.h"
@@ -49,6 +50,8 @@ class PopupBlockerTabHelper
 
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
+
+  static bool DispositionIsPopup(WindowOpenDisposition disposition);
 
   // Returns true if the popup request defined by |params| and the optional
   // |open_url_params| should be blocked. In that case, it is also added to the
