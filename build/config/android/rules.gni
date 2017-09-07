@@ -1141,6 +1141,12 @@ if (enable_java_templates) {
 
     _build_config = "$target_gen_dir/$target_name.build_config"
     _build_config_target_name = "${target_name}__build_config"
+    if (defined(invoker.deps)) {
+      # This dep is required if any deps require android (but it doesn't hurt
+      # to add it regardless) and is used by bytecode rewritten classes.
+      invoker.deps +=
+          [ "//build/android/buildhooks:build_hooks_android_impl_java" ]
+    }
     write_build_config(_build_config_target_name) {
       type = "junit_binary"
       build_config = _build_config
@@ -2813,11 +2819,11 @@ if (enable_java_templates) {
       }
       shared_libraries = [ invoker.shared_library ]
       deps += [
+        ":${target_name}__runtime_deps",
+        ":${target_name}__secondary_abi_runtime_deps",
         "//base:base_java",
         "//testing/android/appurify_support:appurify_support_java",
         "//testing/android/reporter:reporter_java",
-        ":${target_name}__runtime_deps",
-        ":${target_name}__secondary_abi_runtime_deps",
       ]
       data_deps += [
         "//build/android/pylib/device/commands",
