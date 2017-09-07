@@ -192,6 +192,23 @@
       "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb9184cf_9cb69a54",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 14
+      },
+      "lineNbr": 4081,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-07T04:37:56Z",
+      "side": 1,
+      "message": "What is the semantics of this method?\nDo I need to enable SW domain for it to work?\nWhat happens to the pages controlled with the worker?\nIf that is for perf benchmarking, why not unregister the worker?",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
