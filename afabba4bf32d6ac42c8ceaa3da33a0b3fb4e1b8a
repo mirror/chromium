@@ -1,0 +1,296 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "914e2db6_9c3c8b69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T20:50:13Z",
+      "side": 1,
+      "message": "for testing.\nIt\u0027s cleaner.",
+      "range": {
+        "startLine": 12,
+        "startChar": 19,
+        "endLine": 12,
+        "endChar": 51
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2177afc4_5c691b2a",
+        "filename": "components/offline_pages/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T20:50:13Z",
+      "side": 1,
+      "message": "please change to model/ per email discussion.",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 10
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "642b9bb2_7241730c",
+        "filename": "components/offline_pages/core/offline_page_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T20:50:13Z",
+      "side": 1,
+      "message": "should definitely by URLPredicate given how we want to select...",
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "944b1a31_bf327f0e",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T20:50:13Z",
+      "side": 1,
+      "message": "already imported in .h",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb92a34a_b36d7c6b",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T20:50:13Z",
+      "side": 1,
+      "message": "1. let\u0027s not \"select *\" anything unless we get all pages...\n2. In this case, let\u0027s use proper projection for URL predicate, meaning \"offline_id, url\"\n3. I believe it only touches cached pages, so we can narrow down to the right namespaces with the right \"WHERE client_namespace \u003d ?\"\n\nThis means of course we need to go for a more specialized predicate than PagePredicate...",
+      "range": {
+        "startLine": 81,
+        "startChar": 23,
+        "endLine": 81,
+        "endChar": 29
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f44b1a_53ad761f",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T20:50:13Z",
+      "side": 1,
+      "message": "yep, this should be:\n\n \"DELETE FROM \" OFFLINE_PAGES_TABLE_NAME \" WHERE client_namespace \u003d ? AND client_id \u003d ?\";",
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6abb20_b2fe3761",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T20:50:13Z",
+      "side": 1,
+      "message": "let\u0027s extract this line to a well named function.",
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5643a25a_05e7793d",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T20:50:13Z",
+      "side": 1,
+      "message": "apply my comment from add task.",
+      "range": {
+        "startLine": 291,
+        "startChar": 21,
+        "endLine": 291,
+        "endChar": 45
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a14a749_81d73b68",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T20:50:13Z",
+      "side": 1,
+      "message": "move to .cc",
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbbc947b_b54c5995",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T20:50:13Z",
+      "side": 1,
+      "message": "please document",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51f2e74_c85dad7e",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T20:50:13Z",
+      "side": 1,
+      "message": "please add documentation and ownership to the fields.",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1610cdc_2598c1c7",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T20:50:13Z",
+      "side": 1,
+      "message": "include base/macros.h",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 26
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7977c79_ad0e49e2",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T20:50:13Z",
+      "side": 1,
+      "message": "This is not a factory. I think this is a collection of factory methods (there is a difference).\n\nAs such, why not make these into static functions on the DeletePageTask?\nThat would allow you to gain more control, through making ctor private.",
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ab3a50_b90600f8",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T20:50:13Z",
+      "side": 1,
+      "message": "include vector",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 23
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
