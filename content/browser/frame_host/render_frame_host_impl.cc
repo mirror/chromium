@@ -2851,6 +2851,7 @@ void RenderFrameHostImpl::CreateNewWindow(
 void RenderFrameHostImpl::IssueKeepAliveHandle(
     mojom::KeepAliveHandleRequest request) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  return;
   if (!base::FeatureList::IsEnabled(
           features::kKeepAliveRendererForKeepaliveRequests)) {
     bad_message::ReceivedBadMessage(
