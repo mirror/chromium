@@ -18,16 +18,16 @@
 #include "components/user_manager/user_manager.h"
 #include "components/wifi/fake_wifi_service.h"
 #include "content/public/test/test_utils.h"
-#include "extensions/browser/api/networking_private/networking_private_delegate_factory.h"
-#include "extensions/browser/api/networking_private/networking_private_event_router.h"
-#include "extensions/browser/api/networking_private/networking_private_event_router_factory.h"
-#include "extensions/browser/api/networking_private/networking_private_service_client.h"
+#include "extensions/browser/api/networking_onc/networking_onc_delegate_factory.h"
+#include "extensions/browser/api/networking_onc/networking_onc_event_router.h"
+#include "extensions/browser/api/networking_onc/networking_onc_event_router_factory.h"
+#include "extensions/browser/api/networking_onc/networking_onc_service_client.h"
 #include "extensions/common/switches.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 // This tests the Windows / Mac implementation of the networkingPrivate API
-// (NetworkingPrivateServiceClient). Note, only a subset of the
-// networkingPrivate API is implemented in NetworkingPrivateServiceClient, so
+// (NetworkingOncServiceClient). Note, only a subset of the
+// networkingPrivate API is implemented in NetworkingOncServiceClient, so
 // this uses its own set of test expectations to reflect that. The expectations
 // should be kept similar to the ChromeOS (primary) implementation as much as
 // possible. See also crbug.com/460119.
@@ -36,11 +36,11 @@ using testing::Return;
 using testing::_;
 
 using extensions::ChromeNetworkingCastPrivateDelegate;
-using extensions::NetworkingPrivateDelegate;
-using extensions::NetworkingPrivateDelegateFactory;
-using extensions::NetworkingPrivateEventRouter;
-using extensions::NetworkingPrivateEventRouterFactory;
-using extensions::NetworkingPrivateServiceClient;
+using extensions::NetworkingOncDelegate;
+using extensions::NetworkingOncDelegateFactory;
+using extensions::NetworkingOncEventRouter;
+using extensions::NetworkingOncEventRouterFactory;
+using extensions::NetworkingOncServiceClient;
 
 namespace {
 
@@ -110,12 +110,12 @@ class NetworkingPrivateServiceClientApiTest : public ExtensionApiTest {
         "epcifkihnkjgphfkloaaleeakhpmgdmn");
   }
 
-  static std::unique_ptr<KeyedService> CreateNetworkingPrivateServiceClient(
+  static std::unique_ptr<KeyedService> CreateNetworkingOncServiceClient(
       content::BrowserContext* context) {
     std::unique_ptr<wifi::FakeWiFiService> wifi_service(
         new wifi::FakeWiFiService());
     return std::unique_ptr<KeyedService>(
-        new NetworkingPrivateServiceClient(std::move(wifi_service)));
+        new NetworkingOncServiceClient(std::move(wifi_service)));
   }
 
   void SetUp() override {
@@ -131,8 +131,8 @@ class NetworkingPrivateServiceClientApiTest : public ExtensionApiTest {
   void SetUpOnMainThread() override {
     ExtensionApiTest::SetUpOnMainThread();
     content::RunAllPendingInMessageLoop();
-    NetworkingPrivateDelegateFactory::GetInstance()->SetTestingFactory(
-        profile(), &CreateNetworkingPrivateServiceClient);
+    NetworkingOncDelegateFactory::GetInstance()->SetTestingFactory(
+        profile(), &CreateNetworkingOncServiceClient);
   }
 
   void TearDownOnMainThread() override {

@@ -9,20 +9,20 @@ assert(enable_extensions,
 
 import("//build/config/features.gni")
 
-source_set("networking_private") {
+source_set("networking_onc") {
   sources = [
     "networking_cast_private_delegate.cc",
     "networking_cast_private_delegate.h",
-    "networking_private_api.cc",
-    "networking_private_api.h",
-    "networking_private_delegate.cc",
-    "networking_private_delegate.h",
-    "networking_private_delegate_factory.cc",
-    "networking_private_delegate_factory.h",
-    "networking_private_delegate_observer.h",
-    "networking_private_event_router.h",
-    "networking_private_event_router_factory.cc",
-    "networking_private_event_router_factory.h",
+    "networking_onc_api.cc",
+    "networking_onc_api.h",
+    "networking_onc_delegate.cc",
+    "networking_onc_delegate.h",
+    "networking_onc_delegate_factory.cc",
+    "networking_onc_delegate_factory.h",
+    "networking_onc_delegate_observer.h",
+    "networking_onc_event_router.h",
+    "networking_onc_event_router_factory.cc",
+    "networking_onc_event_router_factory.h",
   ]
 
   deps = [
@@ -38,25 +38,25 @@ source_set("networking_private") {
     sources += [
       "network_config_dbus_constants_linux.cc",
       "network_config_dbus_constants_linux.h",
-      "networking_private_event_router_nonchromeos.cc",
-      "networking_private_linux.cc",
-      "networking_private_linux.h",
+      "networking_onc_event_router_nonchromeos.cc",
+      "networking_onc_linux.cc",
+      "networking_onc_linux.h",
     ]
     if (use_dbus) {
       deps += [ "//dbus" ]
     }
   } else if (is_win || is_mac) {
     sources += [
-      "networking_private_event_router_nonchromeos.cc",
-      "networking_private_service_client.cc",
-      "networking_private_service_client.h",
+      "networking_onc_event_router_nonchromeos.cc",
+      "networking_onc_service_client.cc",
+      "networking_onc_service_client.h",
     ]
     deps += [ "//components/wifi" ]
   } else if (is_chromeos) {
     sources += [
-      "networking_private_chromeos.cc",
-      "networking_private_chromeos.h",
-      "networking_private_event_router_chromeos.cc",
+      "networking_onc_chromeos.cc",
+      "networking_onc_chromeos.h",
+      "networking_onc_event_router_chromeos.cc",
     ]
     deps += [ "//chromeos" ]
   }

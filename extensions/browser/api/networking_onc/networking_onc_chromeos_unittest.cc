@@ -24,7 +24,7 @@
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
 #include "components/onc/onc_constants.h"
-#include "extensions/browser/api/networking_private/networking_private_api.h"
+#include "extensions/browser/api/networking_onc/networking_onc_api.h"
 #include "extensions/browser/api_unittest.h"
 #include "extensions/common/value_builder.h"
 #include "third_party/cros_system_api/dbus/shill/dbus-constants.h"
@@ -59,10 +59,10 @@ const char kCellularName[] = "cellular";
 
 }  // namespace
 
-class NetworkingPrivateApiTest : public ApiUnitTest {
+class NetworkingOncApiTest : public ApiUnitTest {
  public:
-  NetworkingPrivateApiTest() {}
-  ~NetworkingPrivateApiTest() override {}
+  NetworkingOncApiTest() {}
+  ~NetworkingOncApiTest() override {}
 
   void SetUp() override {
     ApiUnitTest::SetUp();
@@ -286,10 +286,10 @@ class NetworkingPrivateApiTest : public ApiUnitTest {
         ->network_configuration_handler()
         ->GetShillProperties(
             service_path,
-            base::Bind(&NetworkingPrivateApiTest::OnNetworkProperties,
+            base::Bind(&NetworkingOncApiTest::OnNetworkProperties,
                        base::Unretained(this), service_path,
                        base::Unretained(&properties), run_loop.QuitClosure()),
-            base::Bind(&NetworkingPrivateApiTest::OnShillError,
+            base::Bind(&NetworkingOncApiTest::OnShillError,
                        base::Unretained(this), run_loop.QuitClosure()));
     run_loop.Run();
     return properties;
@@ -354,21 +354,21 @@ class NetworkingPrivateApiTest : public ApiUnitTest {
   chromeos::ShillServiceClient::TestInterface* service_test_;
   chromeos::ShillDeviceClient::TestInterface* device_test_;
 
-  DISALLOW_COPY_AND_ASSIGN(NetworkingPrivateApiTest);
+  DISALLOW_COPY_AND_ASSIGN(NetworkingOncApiTest);
 };
 
-TEST_F(NetworkingPrivateApiTest, SetSharedNetworkProperties) {
-  EXPECT_EQ(networking_private::kErrorAccessToSharedConfig,
+TEST_F(NetworkingOncApiTest, SetSharedNetworkProperties) {
+  EXPECT_EQ(networking_onc::kErrorAccessToSharedConfig,
             RunFunctionAndReturnError(
-                new NetworkingPrivateSetPropertiesFunction(),
+                new NetworkingOncSetPropertiesFunction(),
                 base::StringPrintf(
                     R"(["%s", {"WiFi": {"Passphrase": "passphrase"}}])",
                     kSharedWifiGuid)));
 }
 
-TEST_F(NetworkingPrivateApiTest, SetPrivateNetworkPropertiesWebUI) {
-  scoped_refptr<NetworkingPrivateSetPropertiesFunction> set_properties =
-      new NetworkingPrivateSetPropertiesFunction();
+TEST_F(NetworkingOncApiTest, SetPrivateNetworkPropertiesWebUI) {
+  scoped_refptr<NetworkingOncSetPropertiesFunction> set_properties =
+      new NetworkingOncSetPropertiesFunction();
   set_properties->set_source_context_type(Feature::WEBUI_CONTEXT);
 
   RunFunction(
@@ -385,9 +385,9 @@ TEST_F(NetworkingPrivateApiTest, SetPrivateNetworkPropertiesWebUI) {
   EXPECT_EQ(0, GetNetworkPriority(network));
 }
 
-TEST_F(NetworkingPrivateApiTest, SetPrivateNetworkProperties) {
-  scoped_refptr<NetworkingPrivateSetPropertiesFunction> set_properties =
-      new NetworkingPrivateSetPropertiesFunction();
+TEST_F(NetworkingOncApiTest, SetPrivateNetworkProperties) {
+  scoped_refptr<NetworkingOncSetPropertiesFunction> set_properties =
+      new NetworkingOncSetPropertiesFunction();
   RunFunction(
       set_properties.get(),
       base::StringPrintf(R"(["%s", {"Priority": 0}])", kPrivateWifiGuid));
@@ -402,7 +402,7 @@ TEST_F(NetworkingPrivateApiTest, SetPrivateNetworkProperties) {
   EXPECT_EQ(0, GetNetworkPriority(network));
 }
 
-TEST_F(NetworkingPrivateApiTest, SetNetworkRestrictedProperties) {
+TEST_F(NetworkingOncApiTest, SetNetworkRestrictedProperties) {
   const char kProxySettings[] =
       R"({
            "ProxySettings": {
@@ -422,7 +422,7 @@ TEST_F(NetworkingPrivateApiTest, SetNetworkRestrictedProperties) {
 
   EXPECT_EQ("Error.PropertiesNotAllowed: [ProxySettings]",
             RunFunctionAndReturnError(
-                new NetworkingPrivateSetPropertiesFunction(),
+                new NetworkingOncSetPropertiesFunction(),
                 base::StringPrintf(
                     R"(["%s", %s])", kPrivateWifiGuid, kProxySettings)));
 
@@ -437,7 +437,7 @@ TEST_F(NetworkingPrivateApiTest, SetNetworkRestrictedProperties) {
          })";
   EXPECT_EQ("Error.PropertiesNotAllowed: [StaticIPConfig]",
             RunFunctionAndReturnError(
-                new NetworkingPrivateSetPropertiesFunction(),
+                new NetworkingOncSetPropertiesFunction(),
                 base::StringPrintf(
                     R"(["%s", %s])", kPrivateWifiGuid, kStaticIpConfig)));
 
@@ -463,7 +463,7 @@ TEST_F(NetworkingPrivateApiTest, SetNetworkRestrictedProperties) {
   // If the API implementation changes, the expected order can be changed, too.
   EXPECT_EQ("Error.PropertiesNotAllowed: [ProxySettings, StaticIPConfig]",
             RunFunctionAndReturnError(
-                new NetworkingPrivateSetPropertiesFunction(),
+                new NetworkingOncSetPropertiesFunction(),
                 base::StringPrintf(
                     R"(["%s", %s])", kPrivateWifiGuid, kCombinedSettings)));
 
@@ -473,9 +473,9 @@ TEST_F(NetworkingPrivateApiTest, SetNetworkRestrictedProperties) {
                                         nullptr));
 }
 
-TEST_F(NetworkingPrivateApiTest, SetNetworkRestrictedPropertiesFromWebUI) {
-  scoped_refptr<NetworkingPrivateSetPropertiesFunction> set_properties =
-      new NetworkingPrivateSetPropertiesFunction();
+TEST_F(NetworkingOncApiTest, SetNetworkRestrictedPropertiesFromWebUI) {
+  scoped_refptr<NetworkingOncSetPropertiesFunction> set_properties =
+      new NetworkingOncSetPropertiesFunction();
   set_properties->set_source_context_type(Feature::WEBUI_CONTEXT);
   set_properties->set_source_url(GURL("chrome://settings/networkDetail"));
 
@@ -508,7 +508,7 @@ TEST_F(NetworkingPrivateApiTest, SetNetworkRestrictedPropertiesFromWebUI) {
                                        nullptr));
 }
 
-TEST_F(NetworkingPrivateApiTest, CreateSharedNetwork) {
+TEST_F(NetworkingOncApiTest, CreateSharedNetwork) {
   const char kNetworkConfig[] =
       R"({
            "Type": "WiFi",
@@ -517,15 +517,15 @@ TEST_F(NetworkingPrivateApiTest, CreateSharedNetwork) {
              "Security": "None"
            }
          })";
-  EXPECT_EQ(networking_private::kErrorAccessToSharedConfig,
+  EXPECT_EQ(networking_onc::kErrorAccessToSharedConfig,
             RunFunctionAndReturnError(
-                new NetworkingPrivateCreateNetworkFunction(),
+                new NetworkingOncCreateNetworkFunction(),
                 base::StringPrintf("[true, %s]", kNetworkConfig)));
 }
 
-TEST_F(NetworkingPrivateApiTest, CreateSharedNetworkWebUI) {
-  scoped_refptr<NetworkingPrivateCreateNetworkFunction> create_network =
-      new NetworkingPrivateCreateNetworkFunction();
+TEST_F(NetworkingOncApiTest, CreateSharedNetworkWebUI) {
+  scoped_refptr<NetworkingOncCreateNetworkFunction> create_network =
+      new NetworkingOncCreateNetworkFunction();
   create_network->set_source_context_type(Feature::WEBUI_CONTEXT);
 
   const char kNetworkConfig[] =
@@ -552,7 +552,7 @@ TEST_F(NetworkingPrivateApiTest, CreateSharedNetworkWebUI) {
   ASSERT_EQ(1, GetNetworkPriority(network));
 }
 
-TEST_F(NetworkingPrivateApiTest, CreatePrivateNetwork) {
+TEST_F(NetworkingOncApiTest, CreatePrivateNetwork) {
   const char kNetworkConfig[] =
       R"({
            "Type": "WiFi",
@@ -563,7 +563,7 @@ TEST_F(NetworkingPrivateApiTest, CreatePrivateNetwork) {
            }
          })";
   std::unique_ptr<base::Value> result = RunFunctionAndReturnValue(
-      new NetworkingPrivateCreateNetworkFunction(),
+      new NetworkingOncCreateNetworkFunction(),
       base::StringPrintf("[false, %s]", kNetworkConfig));
 
   ASSERT_TRUE(result);
@@ -578,8 +578,8 @@ TEST_F(NetworkingPrivateApiTest, CreatePrivateNetwork) {
   EXPECT_TRUE(network->IsPrivate());
   EXPECT_EQ(1, GetNetworkPriority(network));
 
-  scoped_refptr<NetworkingPrivateSetPropertiesFunction> set_properties =
-      new NetworkingPrivateSetPropertiesFunction();
+  scoped_refptr<NetworkingOncSetPropertiesFunction> set_properties =
+      new NetworkingOncSetPropertiesFunction();
 
   RunFunction(set_properties.get(),
               base::StringPrintf(R"(["%s", {"Priority": 2}])", guid.c_str()));
@@ -588,7 +588,7 @@ TEST_F(NetworkingPrivateApiTest, CreatePrivateNetwork) {
   EXPECT_EQ(2, GetNetworkPriority(network));
 }
 
-TEST_F(NetworkingPrivateApiTest, CreateVpn) {
+TEST_F(NetworkingOncApiTest, CreateVpn) {
   const char kL2tpIpsecConfig[] =
       R"({
            "Type": "VPN",
@@ -610,7 +610,7 @@ TEST_F(NetworkingPrivateApiTest, CreateVpn) {
          })";
   EXPECT_EQ("Error.PropertiesNotAllowed: [VPN.Host, VPN.IPsec, VPN.L2TP]",
             RunFunctionAndReturnError(
-                new NetworkingPrivateCreateNetworkFunction(),
+                new NetworkingOncCreateNetworkFunction(),
                 base::StringPrintf("[false, %s]", kL2tpIpsecConfig)));
 
   const char kOpenVpnConfig[] =
@@ -631,7 +631,7 @@ TEST_F(NetworkingPrivateApiTest, CreateVpn) {
           })";
   EXPECT_EQ("Error.PropertiesNotAllowed: [VPN.Host, VPN.OpenVPN]",
             RunFunctionAndReturnError(
-                new NetworkingPrivateCreateNetworkFunction(),
+                new NetworkingOncCreateNetworkFunction(),
                 base::StringPrintf("[false, %s]", kOpenVpnConfig)));
 
   const char kThirdPartyVpnConfig[] =
@@ -649,11 +649,11 @@ TEST_F(NetworkingPrivateApiTest, CreateVpn) {
          })";
   EXPECT_EQ("Error.PropertiesNotAllowed: [VPN.Host, VPN.ThirdPartyVPN]",
             RunFunctionAndReturnError(
-                new NetworkingPrivateCreateNetworkFunction(),
+                new NetworkingOncCreateNetworkFunction(),
                 base::StringPrintf("[false, %s]", kThirdPartyVpnConfig)));
 }
 
-TEST_F(NetworkingPrivateApiTest, CreateL2TPVpnFromWebUi) {
+TEST_F(NetworkingOncApiTest, CreateL2TPVpnFromWebUi) {
   const char kL2tpIpsecConfig[] =
       R"({
            "Type": "VPN",
@@ -671,8 +671,8 @@ TEST_F(NetworkingPrivateApiTest, CreateL2TPVpnFromWebUi) {
            }
          })";
 
-  scoped_refptr<NetworkingPrivateCreateNetworkFunction> create_network =
-      new NetworkingPrivateCreateNetworkFunction();
+  scoped_refptr<NetworkingOncCreateNetworkFunction> create_network =
+      new NetworkingOncCreateNetworkFunction();
   create_network->set_source_context_type(Feature::WEBUI_CONTEXT);
   create_network->set_source_url(GURL("chrome://settings/networkDetail"));
   std::unique_ptr<base::Value> result = RunFunctionAndReturnValue(
@@ -697,14 +697,14 @@ TEST_F(NetworkingPrivateApiTest, CreateL2TPVpnFromWebUi) {
   EXPECT_EQ(
       "Error.PropertiesNotAllowed: [VPN.L2TP]",
       RunFunctionAndReturnError(
-          new NetworkingPrivateSetPropertiesFunction(),
+          new NetworkingOncSetPropertiesFunction(),
           base::StringPrintf(R"(["%s", %s])", guid.c_str(), kL2tpCredentials)));
 
   EXPECT_FALSE(GetUserSettingStringData(guid, "VPN.L2TP.Username", nullptr));
 
   // VPN properties should be settable from Web UI.
-  scoped_refptr<NetworkingPrivateSetPropertiesFunction> set_properties =
-      new NetworkingPrivateSetPropertiesFunction();
+  scoped_refptr<NetworkingOncSetPropertiesFunction> set_properties =
+      new NetworkingOncSetPropertiesFunction();
   set_properties->set_source_context_type(Feature::WEBUI_CONTEXT);
   set_properties->set_source_url(GURL("chrome://settings/networkDetail"));
   result = RunFunctionAndReturnValue(
@@ -717,7 +717,7 @@ TEST_F(NetworkingPrivateApiTest, CreateL2TPVpnFromWebUi) {
   EXPECT_EQ("user", username);
 }
 
-TEST_F(NetworkingPrivateApiTest, CreateOpenVpnFromWebUiAndSetProperties) {
+TEST_F(NetworkingOncApiTest, CreateOpenVpnFromWebUiAndSetProperties) {
   const char kOpenVpnConfig[] =
       R"({
            "Type": "VPN",
@@ -731,8 +731,8 @@ TEST_F(NetworkingPrivateApiTest, CreateOpenVpnFromWebUiAndSetProperties) {
              }
            }
          })";
-  scoped_refptr<NetworkingPrivateCreateNetworkFunction> create_network =
-      new NetworkingPrivateCreateNetworkFunction();
+  scoped_refptr<NetworkingOncCreateNetworkFunction> create_network =
+      new NetworkingOncCreateNetworkFunction();
   create_network->set_source_context_type(Feature::WEBUI_CONTEXT);
   create_network->set_source_url(GURL("chrome://settings/networkDetail"));
   std::unique_ptr<base::Value> result = RunFunctionAndReturnValue(
@@ -756,15 +756,15 @@ TEST_F(NetworkingPrivateApiTest, CreateOpenVpnFromWebUiAndSetProperties) {
   // Setting OpenVPN properties should fail from non-webui context.
   EXPECT_EQ("Error.PropertiesNotAllowed: [VPN.OpenVPN]",
             RunFunctionAndReturnError(
-                new NetworkingPrivateSetPropertiesFunction(),
+                new NetworkingOncSetPropertiesFunction(),
                 base::StringPrintf(
                     R"(["%s", %s])", guid.c_str(), kOpenVpnCredentials)));
 
   EXPECT_FALSE(GetUserSettingStringData(guid, "VPN.OpenVPN.Username", nullptr));
 
   // VPN properties should be settable from Web UI.
-  scoped_refptr<NetworkingPrivateSetPropertiesFunction> set_properties =
-      new NetworkingPrivateSetPropertiesFunction();
+  scoped_refptr<NetworkingOncSetPropertiesFunction> set_properties =
+      new NetworkingOncSetPropertiesFunction();
   set_properties->set_source_context_type(Feature::WEBUI_CONTEXT);
   set_properties->set_source_url(GURL("chrome://settings/networkDetail"));
   result = RunFunctionAndReturnValue(
@@ -778,7 +778,7 @@ TEST_F(NetworkingPrivateApiTest, CreateOpenVpnFromWebUiAndSetProperties) {
   EXPECT_EQ("user", username);
 }
 
-TEST_F(NetworkingPrivateApiTest, CreateNetworkWithRestrictedProperties) {
+TEST_F(NetworkingOncApiTest, CreateNetworkWithRestrictedProperties) {
   const char kConfigWithProxySettings[] =
       R"({
            "Type": "WiFi",
@@ -802,7 +802,7 @@ TEST_F(NetworkingPrivateApiTest, CreateNetworkWithRestrictedProperties) {
          })";
   EXPECT_EQ("Error.PropertiesNotAllowed: [ProxySettings]",
             RunFunctionAndReturnError(
-                new NetworkingPrivateCreateNetworkFunction(),
+                new NetworkingOncCreateNetworkFunction(),
                 base::StringPrintf("[false, %s]", kConfigWithProxySettings)));
 
   const char kConfigWithStaticIpConfig[] =
@@ -821,7 +821,7 @@ TEST_F(NetworkingPrivateApiTest, CreateNetworkWithRestrictedProperties) {
          })";
   EXPECT_EQ("Error.PropertiesNotAllowed: [StaticIPConfig]",
             RunFunctionAndReturnError(
-                new NetworkingPrivateCreateNetworkFunction(),
+                new NetworkingOncCreateNetworkFunction(),
                 base::StringPrintf("[false, %s]", kConfigWithStaticIpConfig)));
 
   const char kCombinedConfig[] =
@@ -851,12 +851,11 @@ TEST_F(NetworkingPrivateApiTest, CreateNetworkWithRestrictedProperties) {
   // If the API implementation changes, the expected order can be changed, too.
   EXPECT_EQ("Error.PropertiesNotAllowed: [ProxySettings, StaticIPConfig]",
             RunFunctionAndReturnError(
-                new NetworkingPrivateCreateNetworkFunction(),
+                new NetworkingOncCreateNetworkFunction(),
                 base::StringPrintf("[false, %s]", kCombinedConfig)));
 }
 
-TEST_F(NetworkingPrivateApiTest,
-       CreateNetworkWithRestrictedPropertiesFromWebUi) {
+TEST_F(NetworkingOncApiTest, CreateNetworkWithRestrictedPropertiesFromWebUi) {
   const char kNetworkConfig[] =
       R"({
            "Type": "WiFi",
@@ -882,8 +881,8 @@ TEST_F(NetworkingPrivateApiTest,
            }
          })";
 
-  scoped_refptr<NetworkingPrivateCreateNetworkFunction> create_network =
-      new NetworkingPrivateCreateNetworkFunction();
+  scoped_refptr<NetworkingOncCreateNetworkFunction> create_network =
+      new NetworkingOncCreateNetworkFunction();
   create_network->set_source_context_type(Feature::WEBUI_CONTEXT);
   create_network->set_source_url(GURL("chrome://settings/networkDetail"));
   std::unique_ptr<base::Value> result = RunFunctionAndReturnValue(
@@ -908,7 +907,7 @@ TEST_F(NetworkingPrivateApiTest,
   EXPECT_TRUE(ui_data->Get("user_settings.StaticIPConfig", nullptr));
 }
 
-TEST_F(NetworkingPrivateApiTest, CreatePrivateNetwork_NonMatchingSsids) {
+TEST_F(NetworkingOncApiTest, CreatePrivateNetwork_NonMatchingSsids) {
   const std::string ssid = "new_wifi_config";
   const std::string hex_ssid = base::HexEncode(ssid.c_str(), ssid.size());
   const char kNetworkConfig[] =
@@ -923,7 +922,7 @@ TEST_F(NetworkingPrivateApiTest, CreatePrivateNetwork_NonMatchingSsids) {
          })";
 
   std::unique_ptr<base::Value> result = RunFunctionAndReturnValue(
-      new NetworkingPrivateCreateNetworkFunction(),
+      new NetworkingOncCreateNetworkFunction(),
       base::StringPrintf(
           "[false, %s]",
           base::StringPrintf(kNetworkConfig, hex_ssid.c_str()).c_str()));
@@ -943,8 +942,7 @@ TEST_F(NetworkingPrivateApiTest, CreatePrivateNetwork_NonMatchingSsids) {
   EXPECT_EQ(ssid, network->name());
 }
 
-TEST_F(NetworkingPrivateApiTest,
-       CreateAlreadyConfiguredUserPrivateNetwork_BySsid) {
+TEST_F(NetworkingOncApiTest, CreateAlreadyConfiguredUserPrivateNetwork_BySsid) {
   const char kNetworkConfig[] =
       R"({
            "Type": "WiFi",
@@ -955,14 +953,14 @@ TEST_F(NetworkingPrivateApiTest,
          })";
   EXPECT_EQ("NetworkAlreadyConfigured",
             RunFunctionAndReturnError(
-                new NetworkingPrivateCreateNetworkFunction(),
+                new NetworkingOncCreateNetworkFunction(),
                 base::StringPrintf(
                     "[false, %s]",
                     base::StringPrintf(kNetworkConfig, kManagedUserWifiSsid)
                         .c_str())));
 }
 
-TEST_F(NetworkingPrivateApiTest,
+TEST_F(NetworkingOncApiTest,
        CreateAlreadyConfiguredUserPrivateNetwork_ByHexSsid) {
   std::string hex_ssid =
       base::HexEncode(kManagedUserWifiSsid, sizeof(kManagedUserWifiSsid) - 1);
@@ -978,13 +976,13 @@ TEST_F(NetworkingPrivateApiTest,
   EXPECT_EQ(
       "NetworkAlreadyConfigured",
       RunFunctionAndReturnError(
-          new NetworkingPrivateCreateNetworkFunction(),
+          new NetworkingOncCreateNetworkFunction(),
           base::StringPrintf(
               "[false, %s]",
               base::StringPrintf(kNetworkConfig, hex_ssid.c_str()).c_str())));
 }
 
-TEST_F(NetworkingPrivateApiTest,
+TEST_F(NetworkingOncApiTest,
        CreateAlreadyConfiguredUserPrivateNetwork_NonMatchingSsids) {
   std::string hex_ssid =
       base::HexEncode(kManagedUserWifiSsid, sizeof(kManagedUserWifiSsid) - 1);
@@ -1002,13 +1000,13 @@ TEST_F(NetworkingPrivateApiTest,
   EXPECT_EQ(
       "NetworkAlreadyConfigured",
       RunFunctionAndReturnError(
-          new NetworkingPrivateCreateNetworkFunction(),
+          new NetworkingOncCreateNetworkFunction(),
           base::StringPrintf(
               "[false, %s]",
               base::StringPrintf(kNetworkConfig, hex_ssid.c_str()).c_str())));
 }
 
-TEST_F(NetworkingPrivateApiTest,
+TEST_F(NetworkingOncApiTest,
        CreateAlreadyConfiguredUserPrivateNetwork_ByHexSSID) {
   std::string hex_ssid =
       base::HexEncode(kManagedUserWifiSsid, sizeof(kManagedUserWifiSsid) - 1);
@@ -1024,13 +1022,13 @@ TEST_F(NetworkingPrivateApiTest,
   EXPECT_EQ(
       "NetworkAlreadyConfigured",
       RunFunctionAndReturnError(
-          new NetworkingPrivateCreateNetworkFunction(),
+          new NetworkingOncCreateNetworkFunction(),
           base::StringPrintf(
               "[false, %s]",
               base::StringPrintf(kNetworkConfig, hex_ssid.c_str()).c_str())));
 }
 
-TEST_F(NetworkingPrivateApiTest, CreateAlreadyConfiguredDeviceNetwork) {
+TEST_F(NetworkingOncApiTest, CreateAlreadyConfiguredDeviceNetwork) {
   const char kNetworkConfig[] =
       R"({
            "Type": "WiFi",
@@ -1040,15 +1038,14 @@ TEST_F(NetworkingPrivateApiTest, CreateAlreadyConfiguredDeviceNetwork) {
          })";
   EXPECT_EQ("NetworkAlreadyConfigured",
             RunFunctionAndReturnError(
-                new NetworkingPrivateCreateNetworkFunction(),
+                new NetworkingOncCreateNetworkFunction(),
                 base::StringPrintf(
                     "[false, %s]",
                     base::StringPrintf(kNetworkConfig, kManagedDeviceWifiSsid)
                         .c_str())));
 }
 
-TEST_F(NetworkingPrivateApiTest,
-       CreateAlreadyConfiguredDeviceNetwork_ByHexSSID) {
+TEST_F(NetworkingOncApiTest, CreateAlreadyConfiguredDeviceNetwork_ByHexSSID) {
   std::string hex_ssid = base::HexEncode(kManagedDeviceWifiSsid,
                                          sizeof(kManagedDeviceWifiSsid) - 1);
   const char kNetworkConfig[] =
@@ -1062,17 +1059,17 @@ TEST_F(NetworkingPrivateApiTest,
   EXPECT_EQ(
       "NetworkAlreadyConfigured",
       RunFunctionAndReturnError(
-          new NetworkingPrivateCreateNetworkFunction(),
+          new NetworkingOncCreateNetworkFunction(),
           base::StringPrintf(
               "[false, %s]",
               base::StringPrintf(kNetworkConfig, hex_ssid.c_str()).c_str())));
 }
 
-TEST_F(NetworkingPrivateApiTest, GetCellularProperties) {
+TEST_F(NetworkingOncApiTest, GetCellularProperties) {
   SetUpCellular();
 
   std::unique_ptr<base::Value> result =
-      RunFunctionAndReturnValue(new NetworkingPrivateGetPropertiesFunction(),
+      RunFunctionAndReturnValue(new NetworkingOncGetPropertiesFunction(),
                                 base::StringPrintf(R"(["%s"])", kCellularGuid));
 
   ASSERT_TRUE(result);
@@ -1104,11 +1101,11 @@ TEST_F(NetworkingPrivateApiTest, GetCellularProperties) {
   EXPECT_EQ(*expected_result, *result);
 }
 
-TEST_F(NetworkingPrivateApiTest, GetCellularPropertiesFromWebUi) {
+TEST_F(NetworkingOncApiTest, GetCellularPropertiesFromWebUi) {
   SetUpCellular();
 
-  scoped_refptr<NetworkingPrivateGetPropertiesFunction> get_properties =
-      new NetworkingPrivateGetPropertiesFunction();
+  scoped_refptr<NetworkingOncGetPropertiesFunction> get_properties =
+      new NetworkingOncGetPropertiesFunction();
   get_properties->set_source_context_type(Feature::WEBUI_CONTEXT);
   get_properties->set_source_url(GURL("chrome://settings/networkDetail"));
 
@@ -1162,10 +1159,10 @@ TEST_F(NetworkingPrivateApiTest, GetCellularPropertiesFromWebUi) {
   EXPECT_EQ(*expected_result, *result);
 }
 
-TEST_F(NetworkingPrivateApiTest, ForgetSharedNetwork) {
-  EXPECT_EQ(networking_private::kErrorAccessToSharedConfig,
+TEST_F(NetworkingOncApiTest, ForgetSharedNetwork) {
+  EXPECT_EQ(networking_onc::kErrorAccessToSharedConfig,
             RunFunctionAndReturnError(
-                new NetworkingPrivateForgetNetworkFunction(),
+                new NetworkingOncForgetNetworkFunction(),
                 base::StringPrintf(R"(["%s"])", kSharedWifiGuid)));
 
   base::RunLoop().RunUntilIdle();
@@ -1174,17 +1171,17 @@ TEST_F(NetworkingPrivateApiTest, ForgetSharedNetwork) {
   EXPECT_EQ(chromeos::ShillProfileClient::GetSharedProfilePath(), profile_path);
 }
 
-TEST_F(NetworkingPrivateApiTest, ForgetPrivateNetwork) {
-  RunFunction(new NetworkingPrivateForgetNetworkFunction(),
+TEST_F(NetworkingOncApiTest, ForgetPrivateNetwork) {
+  RunFunction(new NetworkingOncForgetNetworkFunction(),
               base::StringPrintf(R"(["%s"])", kPrivateWifiGuid));
 
   std::string profile_path;
   EXPECT_FALSE(GetServiceProfile(kPrivateWifiServicePath, &profile_path));
 }
 
-TEST_F(NetworkingPrivateApiTest, ForgetPrivateNetworkWebUI) {
-  scoped_refptr<NetworkingPrivateForgetNetworkFunction> forget_network =
-      new NetworkingPrivateForgetNetworkFunction();
+TEST_F(NetworkingOncApiTest, ForgetPrivateNetworkWebUI) {
+  scoped_refptr<NetworkingOncForgetNetworkFunction> forget_network =
+      new NetworkingOncForgetNetworkFunction();
   forget_network->set_source_context_type(Feature::WEBUI_CONTEXT);
 
   RunFunction(forget_network.get(),
@@ -1194,10 +1191,10 @@ TEST_F(NetworkingPrivateApiTest, ForgetPrivateNetworkWebUI) {
   EXPECT_FALSE(GetServiceProfile(kPrivateWifiServicePath, &profile_path));
 }
 
-TEST_F(NetworkingPrivateApiTest, ForgetUserPolicyNetwork) {
-  EXPECT_EQ(networking_private::kErrorPolicyControlled,
+TEST_F(NetworkingOncApiTest, ForgetUserPolicyNetwork) {
+  EXPECT_EQ(networking_onc::kErrorPolicyControlled,
             RunFunctionAndReturnError(
-                new NetworkingPrivateForgetNetworkFunction(),
+                new NetworkingOncForgetNetworkFunction(),
                 base::StringPrintf(R"(["%s"])", kManagedUserWifiGuid)));
 
   const chromeos::NetworkState* network =
@@ -1211,12 +1208,12 @@ TEST_F(NetworkingPrivateApiTest, ForgetUserPolicyNetwork) {
   EXPECT_EQ(kUserProfilePath, profile_path);
 }
 
-TEST_F(NetworkingPrivateApiTest, ForgetUserPolicyNetworkWebUI) {
-  scoped_refptr<NetworkingPrivateForgetNetworkFunction> forget_network =
-      new NetworkingPrivateForgetNetworkFunction();
+TEST_F(NetworkingOncApiTest, ForgetUserPolicyNetworkWebUI) {
+  scoped_refptr<NetworkingOncForgetNetworkFunction> forget_network =
+      new NetworkingOncForgetNetworkFunction();
   forget_network->set_source_context_type(Feature::WEBUI_CONTEXT);
 
-  EXPECT_EQ(networking_private::kErrorPolicyControlled,
+  EXPECT_EQ(networking_onc::kErrorPolicyControlled,
             RunFunctionAndReturnError(
                 forget_network.get(),
                 base::StringPrintf(R"(["%s"])", kManagedUserWifiGuid)));
@@ -1232,7 +1229,7 @@ TEST_F(NetworkingPrivateApiTest, ForgetUserPolicyNetworkWebUI) {
   EXPECT_EQ(kUserProfilePath, profile_path);
 }
 
-TEST_F(NetworkingPrivateApiTest, ForgetDevicePolicyNetworkWebUI) {
+TEST_F(NetworkingOncApiTest, ForgetDevicePolicyNetworkWebUI) {
   const chromeos::NetworkState* network =
       chromeos::NetworkHandler::Get()
           ->network_state_handler()
@@ -1244,8 +1241,8 @@ TEST_F(NetworkingPrivateApiTest, ForgetDevicePolicyNetworkWebUI) {
   EXPECT_TRUE(GetServiceProfile(network->path(), &profile_path));
   ASSERT_EQ(kUserProfilePath, profile_path);
 
-  scoped_refptr<NetworkingPrivateForgetNetworkFunction> forget_network =
-      new NetworkingPrivateForgetNetworkFunction();
+  scoped_refptr<NetworkingOncForgetNetworkFunction> forget_network =
+      new NetworkingOncForgetNetworkFunction();
   forget_network->set_source_context_type(Feature::WEBUI_CONTEXT);
   RunFunction(forget_network.get(),
               base::StringPrintf(R"(["%s"])", kManagedDeviceWifiGuid));
@@ -1256,29 +1253,29 @@ TEST_F(NetworkingPrivateApiTest, ForgetDevicePolicyNetworkWebUI) {
 
 // Tests that forgetNetwork in case there is a network config in both user and
 // shared profile - only config from the user profile is expected to be removed.
-TEST_F(NetworkingPrivateApiTest, ForgetNetworkInMultipleProfiles) {
+TEST_F(NetworkingOncApiTest, ForgetNetworkInMultipleProfiles) {
   AddSharedNetworkToUserProfile(kSharedWifiServicePath);
 
   std::string profile_path;
   EXPECT_TRUE(GetServiceProfile(kSharedWifiServicePath, &profile_path));
   ASSERT_EQ(kUserProfilePath, profile_path);
 
-  RunFunction(new NetworkingPrivateForgetNetworkFunction(),
+  RunFunction(new NetworkingOncForgetNetworkFunction(),
               base::StringPrintf(R"(["%s"])", kSharedWifiGuid));
 
   EXPECT_TRUE(GetServiceProfile(kSharedWifiServicePath, &profile_path));
   EXPECT_EQ(chromeos::ShillProfileClient::GetSharedProfilePath(), profile_path);
 }
 
-TEST_F(NetworkingPrivateApiTest, ForgetNetworkInMultipleProfilesWebUI) {
+TEST_F(NetworkingOncApiTest, ForgetNetworkInMultipleProfilesWebUI) {
   AddSharedNetworkToUserProfile(kSharedWifiServicePath);
 
   std::string profile_path;
   EXPECT_TRUE(GetServiceProfile(kSharedWifiServicePath, &profile_path));
   ASSERT_EQ(kUserProfilePath, profile_path);
 
-  scoped_refptr<NetworkingPrivateForgetNetworkFunction> forget_network =
-      new NetworkingPrivateForgetNetworkFunction();
+  scoped_refptr<NetworkingOncForgetNetworkFunction> forget_network =
+      new NetworkingOncForgetNetworkFunction();
   forget_network->set_source_context_type(Feature::WEBUI_CONTEXT);
 
   RunFunction(forget_network.get(),

@@ -10,7 +10,7 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
-#include "extensions/browser/api/networking_private/networking_cast_private_delegate.h"
+#include "extensions/browser/api/networking_onc/networking_cast_private_delegate.h"
 
 namespace extensions {
 

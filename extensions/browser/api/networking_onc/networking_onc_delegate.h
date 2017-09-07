@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_DELEGATE_H_
-#define EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_DELEGATE_H_
+#ifndef EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_DELEGATE_H_
+#define EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_DELEGATE_H_
 
 #include <memory>
 #include <string>
@@ -13,16 +13,16 @@
 #include "base/macros.h"
 #include "base/values.h"
 #include "components/keyed_service/core/keyed_service.h"
-#include "extensions/common/api/networking_private.h"
+#include "extensions/common/api/networking_onc.h"
 
 namespace extensions {
 
-class NetworkingPrivateDelegateObserver;
+class NetworkingOncDelegateObserver;
 
-// Base class for platform dependent networkingPrivate API implementations.
+// Base class for platform dependent networkingOnc API implementations.
 // All inputs and results for this class use ONC values. See
-// networking_private.idl for descriptions of the expected inputs and results.
-class NetworkingPrivateDelegate : public KeyedService {
+// networking_onc.idl for descriptions of the expected inputs and results.
+class NetworkingOncDelegate : public KeyedService {
  public:
   using DictionaryCallback =
       base::Callback<void(std::unique_ptr<base::DictionaryValue>)>;
@@ -32,36 +32,11 @@ class NetworkingPrivateDelegate : public KeyedService {
   using NetworkListCallback =
       base::Callback<void(std::unique_ptr<base::ListValue>)>;
   using FailureCallback = base::Callback<void(const std::string&)>;
-  using DeviceStateList = std::vector<
-      std::unique_ptr<api::networking_private::DeviceStateProperties>>;
+  using DeviceStateList =
+      std::vector<std::unique_ptr<api::networking_onc::DeviceStateProperties>>;
 
-  // Delegate for forwarding UI requests, e.g. for showing the account UI.
-  class UIDelegate {
-   public:
-    UIDelegate();
-    virtual ~UIDelegate();
-
-    // Navigate to the acoount details page for the cellular network associated
-    // with |guid|.
-    virtual void ShowAccountDetails(const std::string& guid) const = 0;
-
-    // Possibly handle a connection failure, e.g. by showing the configuration
-    // UI. Returns true if the error was handled, i.e. the UI was shown.
-    virtual bool HandleConnectFailed(const std::string& guid,
-                                     const std::string error) const = 0;
-
-   private:
-    DISALLOW_COPY_AND_ASSIGN(UIDelegate);
-  };
-
-  NetworkingPrivateDelegate();
-  ~NetworkingPrivateDelegate() override;
-
-  void set_ui_delegate(std::unique_ptr<UIDelegate> ui_delegate) {
-    ui_delegate_ = std::move(ui_delegate);
-  }
-
-  const UIDelegate* ui_delegate() { return ui_delegate_.get(); }
+  NetworkingOncDelegate();
+  ~NetworkingOncDelegate() override;
 
   // Asynchronous methods
   virtual void GetProperties(const std::string& guid,
@@ -136,7 +111,7 @@ class NetworkingPrivateDelegate : public KeyedService {
   virtual std::unique_ptr<DeviceStateList> GetDeviceStateList() = 0;
 
   // Returns a dictionary of global policy values (may be empty). Note: the
-  // dictionary is expected to be a superset of the networkingPrivate
+  // dictionary is expected to be a superset of the networkingOnc
   // GlobalPolicy dictionary. Any properties not in GlobalPolicy will be
   // ignored.
   virtual std::unique_ptr<base::DictionaryValue> GetGlobalPolicy() = 0;
@@ -157,18 +132,15 @@ class NetworkingPrivateDelegate : public KeyedService {
   // explicitly.
   virtual bool RequestScan(const std::string& type) = 0;
 
-  // Optional methods for adding a NetworkingPrivateDelegateObserver for
+  // Optional methods for adding a NetworkingOncDelegateObserver for
   // implementations that require it (non-chromeos).
-  virtual void AddObserver(NetworkingPrivateDelegateObserver* observer);
-  virtual void RemoveObserver(NetworkingPrivateDelegateObserver* observer);
+  virtual void AddObserver(NetworkingOncDelegateObserver* observer);
+  virtual void RemoveObserver(NetworkingOncDelegateObserver* observer);
 
  private:
-  // Interface for UI methods. May be null.
-  std::unique_ptr<UIDelegate> ui_delegate_;
-
-  DISALLOW_COPY_AND_ASSIGN(NetworkingPrivateDelegate);
+  DISALLOW_COPY_AND_ASSIGN(NetworkingOncDelegate);
 };
 
 }  // namespace extensions
 
-#endif  // EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_DELEGATE_H_
+#endif  // EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_DELEGATE_H_

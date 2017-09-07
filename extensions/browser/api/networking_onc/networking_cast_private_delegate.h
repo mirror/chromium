@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_CAST_PRIVATE_DELEGATE_H_
-#define EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_CAST_PRIVATE_DELEGATE_H_
+#ifndef EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_CAST_PRIVATE_DELEGATE_H_
+#define EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_CAST_PRIVATE_DELEGATE_H_
 
 #include <memory>
 #include <string>
@@ -11,7 +11,7 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
-#include "extensions/common/api/networking_private.h"
+#include "extensions/common/api/networking_onc.h"
 
 namespace extensions {
 
@@ -19,9 +19,9 @@ namespace extensions {
 // certificates and encrypt data using public key derived from the verified
 // certificate.
 // TODO(tbarzic): This is to be used during migration of
-//     networkingPrivate.verify* methods to networking.castPrivate API to share
-//     verification logic shared between networkingPrivate and
-//     networking.castPrivate API. When the deprecated networkingPrivate methods
+//     networkingOnc.verify* methods to networking.castPrivate API to share
+//     verification logic shared between networkingOnc and
+//     networking.castPrivate API. When the deprecated networkingOnc methods
 //     are removed, this interface should be removed, too.
 class NetworkingCastPrivateDelegate {
  public:
@@ -92,4 +92,4 @@ class NetworkingCastPrivateDelegate {
 
 }  // namespace extensions
 
-#endif  // EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_CAST_PRIVATE_DELEGATE_H_
+#endif  // EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_CAST_PRIVATE_DELEGATE_H_

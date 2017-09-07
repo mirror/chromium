@@ -351,8 +351,10 @@ class DBusServices {
     NetworkChangeNotifierFactoryChromeos::GetInstance()->Initialize();
 
     // Initialize the NetworkConnect handler.
-    network_connect_delegate_.reset(new NetworkConnectDelegateChromeOS);
-    NetworkConnect::Initialize(network_connect_delegate_.get());
+    if (!NetworkConnect::InitializedForTesting()) {
+      network_connect_delegate_.reset(new NetworkConnectDelegateChromeOS);
+      NetworkConnect::Initialize(network_connect_delegate_.get());
+    }
 
     // Likewise, initialize the upgrade detector for Chrome OS. The upgrade
     // detector starts to monitor changes from the update engine.
@@ -368,7 +370,8 @@ class DBusServices {
   }
 
   ~DBusServices() {
-    NetworkConnect::Shutdown();
+    if (!NetworkConnect::InitializedForTesting())
+      NetworkConnect::Shutdown();
     network_connect_delegate_.reset();
     CertLibrary::Shutdown();
     NetworkHandler::Shutdown();

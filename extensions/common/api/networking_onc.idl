@@ -217,6 +217,35 @@ namespace networking.onc {
 
   // Sub-dictionary types.
 
+  [nodoc] dictionary APNProperties {
+    DOMString AccessPointName;
+    DOMString? Language;
+    DOMString? LocalizedName;
+    DOMString? Name;
+    DOMString? Password;
+    DOMString? Username;
+  };
+
+  [nodoc] dictionary ManagedAPNProperties {
+    ManagedDOMString AccessPointName;
+    ManagedDOMString? Language;
+    ManagedDOMString? LocalizedName;
+    ManagedDOMString? Name;
+    ManagedDOMString? Password;
+    ManagedDOMString? Username;
+  };
+
+  [nodoc] dictionary ManagedAPNList {
+    APNProperties[]? Active;
+    DOMString? Effective;
+    APNProperties[]? UserPolicy;
+    APNProperties[]? DevicePolicy;
+    APNProperties[]? UserSetting;
+    APNProperties[]? SharedSetting;
+    boolean? UserEditable;
+    boolean? DeviceEditable;
+  };
+
   dictionary CellularProviderProperties {
     // The operator name.
     DOMString Name;
@@ -225,6 +254,17 @@ namespace networking.onc {
     DOMString Code;
     // The two-letter country code.
     DOMString? Country;
+  };
+
+  [nodoc] dictionary CellularSimState {
+        // Whether or not a PIN should be required.
+    boolean requirePin;
+
+    // The current PIN (required for any change, even when the SIM is unlocked).
+    DOMString currentPin;
+
+    // If provided, change the PIN to |newPin|. |requirePin| must be true.
+    DOMString? newPin;
   };
 
   dictionary IssuerSubjectPattern {
@@ -240,7 +280,14 @@ namespace networking.onc {
     // If set, the value against which to match the certificate subject's
     // organizational units. At least one organizational unit should match the
     // value.
-    DOMString? OrganizationalUnit;    
+    DOMString? OrganizationalUnit;
+  };
+
+  [nodoc] dictionary ManagedIssuerSubjectPattern {
+    ManagedDOMString? CommonName;
+    ManagedDOMString? Locality;
+    ManagedDOMString? Organization;
+    ManagedDOMString? OrganizationalUnit;
   };
 
   dictionary CertificatePattern {
@@ -254,6 +301,13 @@ namespace networking.onc {
     DOMString[]? IssuerCARef;
     // If set, pattern against which X.509 subject settings should be matched.
     IssuerSubjectPattern? Subject;
+  };
+
+  [nodoc] dictionary ManagedCertificatePattern {
+    ManagedDOMStringList? EnrollmentURI;
+    ManagedIssuerSubjectPattern? Issuer;
+    ManagedDOMStringList? IssuerCARef;
+    ManagedIssuerSubjectPattern? Subject;
   };
 
   dictionary EAPProperties {
@@ -274,6 +328,26 @@ namespace networking.onc {
     ManagedDOMString? SubjectMatch;
     boolean? UseProactiveKeyCaching;
     boolean? UseSystemCAs;
+  };
+
+  [nodoc] dictionary ManagedEAPProperties {
+    ManagedDOMString? AnonymousIdentity;
+    ManagedCertificatePattern? ClientCertPattern;
+    ManagedDOMString? ClientCertPKCS11Id;
+    ManagedDOMString? ClientCertRef;
+    ManagedDOMString? ClientCertType;
+    ManagedDOMString? Identity;
+    ManagedDOMString? Inner;
+    // The outer EAP type. Required by ONC, but may not be provided when
+    // translating from Shill.
+    ManagedDOMString? Outer;
+    ManagedDOMString? Password;
+    ManagedBoolean? SaveCredentials;
+    ManagedDOMStringList? ServerCAPEMs;
+    ManagedDOMStringList? ServerCARefs;
+    ManagedDOMString? SubjectMatch;
+    ManagedBoolean? UseProactiveKeyCaching;
+    ManagedBoolean? UseSystemCAs;
   };
 
   dictionary FoundNetworkProperties {
@@ -318,6 +392,60 @@ namespace networking.onc {
     ManagedDOMString? Type;
     // See $(ref:IPConfigProperties.WebProxyAutoDiscoveryUrl).
     ManagedDOMString? WebProxyAutoDiscoveryUrl;
+  };
+
+  [nodoc] dictionary XAUTHProperties {
+    DOMString? Password;
+    boolean? SaveCredentials;
+    DOMString? Username;
+  };
+
+  [nodoc] dictionary ManagedXAUTHProperties {
+    ManagedDOMString? Password;
+    ManagedBoolean? SaveCredentials;
+    ManagedDOMString? Username;
+  };
+
+  [nodoc] dictionary IPSecProperties {
+    DOMString AuthenticationType;
+    CertificatePattern? ClientCertPattern;
+    DOMString? ClientCertRef;
+    DOMString? ClientCertType;
+    EAPProperties? EAP;
+    DOMString? Group;
+    long? IKEVersion;
+    DOMString? PSK;
+    boolean? SaveCredentials;
+    DOMString[]? ServerCARefs;
+    XAUTHProperties? XAUTH;
+  };
+
+  [nodoc] dictionary ManagedIPSecProperties {
+    ManagedDOMString AuthenticationType;
+    ManagedCertificatePattern? ClientCertPattern;
+    ManagedDOMString? ClientCertRef;
+    ManagedDOMString? ClientCertType;
+    ManagedEAPProperties? EAP;
+    ManagedDOMString? Group;
+    ManagedLong? IKEVersion;
+    ManagedDOMString? PSK;
+    ManagedBoolean? SaveCredentials;
+    ManagedDOMStringList? ServerCARefs;
+    ManagedXAUTHProperties? XAUTH;
+  };
+
+  [nodoc] dictionary L2TPProperties {
+    boolean? LcpEchoDisabled;
+    DOMString? Password;
+    boolean? SaveCredentials;
+    DOMString? Username;
+  };
+
+  [nodoc] dictionary ManagedL2TPProperties {
+    ManagedBoolean? LcpEchoDisabled;
+    ManagedDOMString? Password;
+    ManagedBoolean? SaveCredentials;
+    ManagedDOMString? Username;
   };
 
   dictionary PaymentPortal {
@@ -388,6 +516,90 @@ namespace networking.onc {
     ManagedDOMString? PAC;
   };
 
+  [nodoc] dictionary VerifyX509 {
+    DOMString? Name;
+    DOMString? Type;
+  };
+
+  [nodoc] dictionary ManagedVerifyX509 {
+    ManagedDOMString? Name;
+    ManagedDOMString? Type;
+  };
+
+  [nodoc] dictionary OpenVPNProperties {
+    DOMString? Auth;
+    DOMString? AuthRetry;
+    boolean? AuthNoCache;
+    DOMString? Cipher;
+    DOMString? ClientCertRef;
+    CertificatePattern? ClientCertPattern;
+    DOMString? ClientCertType;
+    DOMString? CompLZO;
+    boolean? CompNoAdapt;
+    boolean? IgnoreDefaultRoute;
+    DOMString? KeyDirection;
+    DOMString? NsCertType;
+    DOMString? OTP;
+    DOMString? Password;
+    long? Port;
+    DOMString? Proto;
+    DOMString? PushPeerInfo;
+    DOMString? RemoteCertEKU;
+    DOMString[]? RemoteCertKU;
+    DOMString? RemoteCertTLS;
+    long? RenegSec;
+    boolean? SaveCredentials;
+    DOMString[]? ServerCARefs;
+    DOMString? ServerCertRef;
+    long? ServerPollTimeout;
+    long? Shaper;
+    DOMString? StaticChallenge;
+    DOMString? TLSAuthContents;
+    DOMString? TLSRemote;
+    DOMString? UserAuthenticationType;
+    DOMString? Username;
+    DOMString? Verb;
+    DOMString? VerifyHash;
+    VerifyX509? VerifyX509;
+  };
+
+  [nodoc] dictionary ManagedOpenVPNProperties {
+    ManagedDOMString? Auth;
+    ManagedDOMString? AuthRetry;
+    ManagedBoolean? AuthNoCache;
+    ManagedDOMString? Cipher;
+    ManagedDOMString? ClientCertRef;
+    ManagedCertificatePattern? ClientCertPattern;
+    ManagedDOMString? ClientCertType;
+    ManagedDOMString? CompLZO;
+    ManagedBoolean? CompNoAdapt;
+    ManagedBoolean? IgnoreDefaultRoute;
+    ManagedDOMString? KeyDirection;
+    ManagedDOMString? NsCertType;
+    ManagedDOMString? OTP;
+    ManagedDOMString? Password;
+    ManagedLong? Port;
+    ManagedDOMString? Proto;
+    ManagedDOMString? PushPeerInfo;
+    ManagedDOMString? RemoteCertEKU;
+    ManagedDOMStringList? RemoteCertKU;
+    ManagedDOMString? RemoteCertTLS;
+    ManagedLong? RenegSec;
+    ManagedBoolean? SaveCredentials;
+    ManagedDOMStringList? ServerCARefs;
+    ManagedDOMString? ServerCertRef;
+    ManagedLong? ServerPollTimeout;
+    ManagedLong? Shaper;
+    ManagedDOMString? StaticChallenge;
+    ManagedDOMString? TLSAuthContents;
+    ManagedDOMString? TLSRemote;
+    ManagedDOMString? UserAuthenticationType;
+    ManagedDOMString? Username;
+    ManagedDOMString? Verb;
+    ManagedDOMString? VerifyHash;
+    ManagedVerifyX509? VerifyX509;
+  };
+
   dictionary SIMLockStatus {
     // The status of SIM lock - possible values are <code>'sim-pin'</code>,
     // <code>'sim-puk'</code> and <code>''</code>.
@@ -417,8 +629,10 @@ namespace networking.onc {
 
   [noinline_doc] dictionary CellularProperties {
     // Whether the cellular network should be connected automatically (when
-    // in range). 
+    // in range).
     boolean? AutoConnect;
+    [nodoc] APNProperties? APN;
+    [nodoc] APNProperties[]? APNList;
     // The cellular network activation type.
     DOMString? ActivationType;
     // Carrier account activation state.
@@ -427,6 +641,7 @@ namespace networking.onc {
     boolean? AllowRoaming;
     // The name of the carrier for which the cellular device is configured.
     DOMString? Carrier;
+    [nodoc] DOMString? ESN;
     // Cellular device technology family - <code>CDMA</code> or
     // <code>GSM</code>.
     DOMString? Family;
@@ -439,8 +654,14 @@ namespace networking.onc {
     // Information about the operator that issued the SIM card currently
     // installed in the modem.
     CellularProviderProperties? HomeProvider;
+    [nodoc] DOMString? ICCID;
+    [nodoc] DOMString? IMEI;
+    [nodoc] APNProperties? LastGoodAPN;
     // The cellular modem manufacturer.
     DOMString? Manufacturer;
+    [nodoc] DOMString? MDN;
+    [nodoc] DOMString? MEID;
+    [nodoc] DOMString? MIN;
     // The cellular modem model ID.
     DOMString? ModelID;
     // If the modem is registered on a network, the network technology
@@ -471,6 +692,8 @@ namespace networking.onc {
   dictionary ManagedCellularProperties {
     // See $(ref:CellularProperties.AutoConnect).
     ManagedBoolean? AutoConnect;
+    [nodoc] ManagedAPNProperties? APN;
+    [nodoc] ManagedAPNList? APNList;
     // See $(ref:CellularProperties.ActivationType).
     DOMString? ActivationType;
     // See $(ref:CellularProperties.ActivationState).
@@ -479,6 +702,7 @@ namespace networking.onc {
     boolean? AllowRoaming;
     // See $(ref:CellularProperties.Carrier).
     ManagedDOMString? Carrier;
+    [nodoc] DOMString? ESN;
     // See $(ref:CellularProperties.Family).
     DOMString? Family;
     // See $(ref:CellularProperties.FirmwareRevision).
@@ -489,8 +713,14 @@ namespace networking.onc {
     DOMString? HardwareRevision;
     // See $(ref:CellularProperties.HomeProvider).
     CellularProviderProperties[]? HomeProvider;
+    [nodoc] DOMString? ICCID;
+    [nodoc] DOMString? IMEI;
+    [nodoc] APNProperties? LastGoodAPN;
     // See $(ref:CellularProperties.Manufacturer).
     DOMString? Manufacturer;
+    [nodoc] DOMString? MDN;
+    [nodoc] DOMString? MEID;
+    [nodoc] DOMString? MIN;
     // See $(ref:CellularProperties.ModelID).
     DOMString? ModelID;
     // See $(ref:CellularProperties.NetworkTechnology).
@@ -529,7 +759,7 @@ namespace networking.onc {
   };
 
   dictionary EthernetProperties {
-    // Whether the Ethernet network should be connected automatically. 
+    // Whether the Ethernet network should be connected automatically.
     boolean? AutoConnect;
     // The authentication used by the Ethernet network. Possible values are
     // <code>None</code> and <code>8021X</code>.
@@ -543,6 +773,7 @@ namespace networking.onc {
     ManagedBoolean? AutoConnect;
     // See $(ref:EthernetProperties.Authentication).
     ManagedDOMString? Authentication;
+    [nodoc] ManagedEAPProperties? EAP;
   };
 
   dictionary EthernetStateProperties {
@@ -550,11 +781,22 @@ namespace networking.onc {
     DOMString Authentication;
   };
 
+  [nodoc] dictionary TetherProperties {
+    long? BatteryPercentage;
+    DOMString? Carrier;
+    boolean HasConnectedToHost;
+    long? SignalStrength;
+  };
+
   dictionary VPNProperties {
     // Whether the VPN network should be connected automatically.
     boolean? AutoConnect;
     // The VPN host.
     DOMString? Host;
+    [nodoc] IPSecProperties? IPsec;
+    [nodoc] L2TPProperties? L2TP;
+    [nodoc] OpenVPNProperties? OpenVPN;
+    [nodoc] ThirdPartyVPNProperties? ThirdPartyVPN;
     // The VPN type.
     DOMString? Type;
   };
@@ -564,6 +806,10 @@ namespace networking.onc {
     ManagedBoolean? AutoConnect;
     // See $(ref:VPNProperties.Host).
     ManagedDOMString? Host;
+    [nodoc] ManagedIPSecProperties? IPsec;
+    [nodoc] ManagedL2TPProperties? L2TP;
+    [nodoc] ManagedOpenVPNProperties? OpenVPN;
+    [nodoc] ManagedThirdPartyVPNProperties? ThirdPartyVPN;
     // See $(ref:VPNProperties.Type).
     ManagedDOMString Type;
   };
@@ -571,6 +817,8 @@ namespace networking.onc {
   dictionary VPNStateProperties {
     // See $(ref:VPNProperties.Type).
     DOMString Type;
+    [nodoc] IPSecProperties? IPsec;
+    [nodoc] ThirdPartyVPNProperties? ThirdPartyVPN;
   };
 
   [noinline_doc] dictionary WiFiProperties {
@@ -593,6 +841,9 @@ namespace networking.onc {
     DOMString? HexSSID;
     // Whether the network SSID will be broadcast.
     boolean? HiddenSSID;
+    // The Wi-Fi network passphrase. This option can only be set - it will not
+    // be returned in $(ref:getProperties) result.
+    DOMString? Passphrase;
     // Signal-to-noise value (in dB) below which roaming to a new network
     // should be attempted.
     long? RoamThreshold;
@@ -611,6 +862,7 @@ namespace networking.onc {
     ManagedBoolean? AutoConnect;
     // See $(ref:WiFiProperties.BSSID).
     DOMString? BSSID;
+    [nodoc] ManagedEAPProperties? EAP;
     // See $(ref:WiFiProperties.Frequency).
     long? Frequency;
     // See $(ref:WiFiProperties.FrequencyList).
@@ -656,6 +908,7 @@ namespace networking.onc {
   dictionary ManagedWiMAXProperties {
     // See $(ref:WiMAXProperties.AutoConnect).
     ManagedBoolean? AutoConnect;
+    [nodoc] ManagedEAPProperties? EAP;
     // See $(ref:WiMAXProperties.SignalStrength).
     long? SignalStrength;
   };
@@ -680,6 +933,8 @@ namespace networking.onc {
     IPConfigType? NameServersConfigType;
     // See $(ref:NetworkProperties.Priority).
     long? Priority;
+    [nodoc] ProxySettings? ProxySettings;
+    [nodoc] IPConfigProperties? StaticIPConfig;
     // See $(ref:NetworkProperties.Type).
     NetworkType? Type;
     // See $(ref:NetworkProperties.VPN).
@@ -729,6 +984,7 @@ namespace networking.onc {
     IPConfigProperties? SavedIPConfig;
     // Indicates whether and how the network is configured.
     DOMString? Source;
+    [nodoc] TetherProperties? Tether;
     // The network type.
     NetworkType Type;
     // For VPN networks, the network VPN properties.
@@ -775,6 +1031,7 @@ namespace networking.onc {
     IPConfigProperties? SavedIPConfig;
     // See $(ref:NetworkProperties.Source).
     DOMString? Source;
+    [nodoc] TetherProperties? Tether;
     // See $(ref:NetworkProperties.Type).
     NetworkType Type;
     // See $(ref:NetworkProperties.VPN).
@@ -804,6 +1061,7 @@ namespace networking.onc {
     long? Priority;
     // See $(ref:NetworkProperties.Source).
     DOMString? Source;
+    [nodoc] TetherProperties? Tether;
     // See $(ref:NetworkProperties.Type).
     NetworkType Type;
     // See $(ref:NetworkProperties.VPN).
@@ -832,6 +1090,42 @@ namespace networking.onc {
     NetworkType Type;
   };
 
+  [nodoc] dictionary VerificationProperties {
+    // A string containing a PEM-encoded (including the 'BEGIN CERTIFICATE'
+    // header and 'END CERTIFICATE' footer) X.509 certificate for use in
+    // verifying the signed data.
+    DOMString certificate;
+
+    // An array of PEM-encoded X.509 intermediate certificate authority
+    // certificates. Each PEM-encoded certificate is expected to have the
+    // 'BEGIN CERTIFICATE' header and 'END CERTIFICATE' footer.
+    DOMString[]? intermediateCertificates;
+
+    // A string containing a base64-encoded RSAPublicKey ASN.1 structure,
+    // representing the public key to be used by
+    // $(ref:verifyAndEncryptCredentials) and $(ref:verifyAndEncryptData)
+    // methods.
+    DOMString publicKey;
+
+    // A string containing a base64-encoded random binary data for use in
+    // verifying the signed data.
+    DOMString nonce;
+
+    // A string containing the identifying data string signed by the device.
+    DOMString signedData;
+
+    // A string containing the serial number of the device.
+    DOMString deviceSerial;
+
+    // A string containing the SSID of the device. Should be empty for new
+    // configurations.
+    DOMString deviceSsid;
+
+    // A string containing the BSSID of the device. Should be empty for new
+    // configurations.
+    DOMString deviceBssid;
+  };
+
   dictionary NetworkFilter {
     // The type of networks to return.
     NetworkType networkType;
@@ -857,6 +1151,34 @@ namespace networking.onc {
     boolean? AllowOnlyPolicyNetworksToConnect;
   };
 
+  [nodoc] dictionary Certificate {
+    // Unique hash for the certificate.
+    DOMString hash;
+
+    // Certificate issuer common name.
+    DOMString issuedBy;
+
+    // Certificate name or nickname.
+    DOMString issuedTo;
+
+    // PEM for server CA certificates.
+    DOMString? pem;
+
+    // PKCS#11 id for user certificates.
+    DOMString? PKCS11Id;
+
+    // Whether or not the certificate is hardware backed.
+    boolean hardwareBacked;
+  };
+
+  [nodoc] dictionary CertificateLists {
+    // List of avaliable server CA certificates.
+    Certificate[] serverCaCertificates;
+
+    // List of available user certificates.
+    Certificate[] userCertificates;
+  };
+
   callback VoidCallback = void();
   callback BooleanCallback = void(boolean result);
   callback StringCallback = void(DOMString result);
@@ -868,6 +1190,7 @@ namespace networking.onc {
   callback GetEnabledNetworkTypesCallback = void(NetworkType[] result);
   callback CaptivePortalStatusCallback = void(CaptivePortalStatus result);
   callback GetGlobalPolicyCallback = void(GlobalPolicy result);
+  callback GetCertificateListsCallback = void(CertificateLists result);
 
   interface Functions {
     // Gets all the properties of the network with id networkGuid. Includes all
@@ -954,6 +1277,16 @@ namespace networking.onc {
     static void getNetworks(NetworkFilter filter,
                             GetNetworksCallback callback);
 
+    // Deprecated. Please use $(ref:networkingPrivate.getNetworks) with
+    // filter.visible = true instead.
+    [nodoc, deprecated="Use getNetworks."] static void getVisibleNetworks(
+        NetworkType networkType,
+        GetNetworksCallback callback);
+
+    // Deprecated. Please use $(ref:networkingPrivate.getDeviceStates) instead.
+    [nodoc, deprecated="Use getDeviceStates."]
+    static void getEnabledNetworkTypes(GetEnabledNetworkTypesCallback callback);
+
     // Returns states of available networking devices.
     // |callback|: Called with a list of devices and their state.
     static void getDeviceStates(GetDeviceStatesCallback callback);
@@ -991,6 +1324,74 @@ namespace networking.onc {
     static void startDisconnect(DOMString networkGuid,
                                 optional VoidCallback callback);
 
+    // Starts activation of the Cellular network with networkGuid. If called
+    // for a network that is already activated, or for a network with a carrier
+    // that can not be directly activated, this will show the account details
+    // page for the carrier if possible.
+    // |networkGuid|: The GUID of the Cellular network to activate.
+    // |carrier|: Optional name of carrier to activate.
+    // |callback|: Called when the activation request has been sent. See note
+    //     for $(ref:startConnect).
+    [nodoc] static void startActivate(DOMString networkGuid,
+                                      optional DOMString carrier,
+                                      optional VoidCallback callback);
+
+    // Verifies that the device is a trusted device.
+    // |properties|: Properties of the destination to use in verifying that it
+    //     is a trusted device.
+    // |callback|: A callback function that indicates whether or not the device
+    //     is a trusted device.
+    [nodoc, deprecated = "Use networking.castPrivate API."]
+    static void verifyDestination(VerificationProperties properties,
+                                  BooleanCallback callback);
+
+    // Verifies that the device is a trusted device and retrieves encrypted
+    // network credentials.
+    // |properties|: Properties of the destination to use in verifying that it
+    //     is a trusted device.
+    // |networkGuid|: The GUID of the Cellular network to activate.
+    // |callback|: A callback function that receives base64-encoded encrypted
+    //     credential data to send to a trusted device.
+    [nodoc, deprecated = "Use networking.castPrivate API."]
+    static void verifyAndEncryptCredentials(VerificationProperties properties,
+                                            DOMString networkGuid,
+                                            StringCallback callback);
+
+    // Verifies that the device is a trusted device and encrypts supplied
+    // data with device public key.
+    // |properties|: Properties of the destination to use in verifying that it
+    //     is a trusted device.
+    // |data|: A string containing the base64-encoded data to encrypt.
+    // |callback|: A callback function that receives base64-encoded encrypted
+    //     data to send to a trusted device.
+    [nodoc, deprecated = "Use networking.castPrivate API."]
+    static void verifyAndEncryptData(VerificationProperties properties,
+                                     DOMString data,
+                                     StringCallback callback);
+
+    // Enables TDLS for WiFi traffic with a specified peer if available.
+    // |ip_or_mac_address|: The IP or MAC address of the peer with which to
+    //     enable a TDLS connection.
+    // |enabled| If true, enable TDLS, otherwise disable TDLS.
+    // |callback|: A callback function that receives a string with an error or
+    //     the current TDLS status. 'Failed' indicates that the request failed
+    //     (e.g. MAC address lookup failed). 'Timeout' indicates that the lookup
+    //     timed out. Otherwise a valid status is returned (see
+    //     $(ref:getWifiTDLSStatus)).
+    [nodoc, deprecated = "Use networking.castPrivate API."]
+    static void setWifiTDLSEnabledState(DOMString ip_or_mac_address,
+                                        boolean enabled,
+                                        optional StringCallback callback);
+
+    // Returns the current TDLS status for the specified peer.
+    // |ip_or_mac_address|: The IP or MAC address of the peer.
+    // |callback|: A callback function that receives a string with the current
+    //     TDLS status which can be 'Connected', 'Disabled', 'Disconnected',
+    //     'Nonexistent', or 'Unknown'.
+    [nodoc, deprecated = "Use networking.castPrivate API."]
+    static void getWifiTDLSStatus(DOMString ip_or_mac_address,
+                                  StringCallback callback);
+
     // Returns captive portal status for the network matching 'networkGuid'.
     // |networkGuid|: The GUID of the network to get captive portal status for.
     // |callback|: A callback function that returns the results of the query for
@@ -998,9 +1399,44 @@ namespace networking.onc {
     static void getCaptivePortalStatus(DOMString networkGuid,
                                        CaptivePortalStatusCallback callback);
 
+    // Unlocks a Cellular SIM card.
+    // * If the SIM is PIN locked, |pin| will be used to unlock the SIM and
+    //   the |puk| argument will be ignored if provided.
+    // * If the SIM is PUK locked, |puk| and |pin| must be provided. If the
+    //   operation succeeds (|puk| is valid), the PIN will be set to |pin|.
+    //   (If |pin| is empty or invalid the operation will fail).
+    // |networkGuid|: The GUID of the cellular network to unlock.
+    //     If empty, the default cellular device will be used.
+    // |pin|: The current SIM PIN, or the new PIN if PUK is provided.
+    // |puk|: The operator provided PUK for unblocking a blocked SIM.
+    // |callback|: Called when the operation has completed.
+    [nodoc] static void unlockCellularSim(DOMString networkGuid,
+                                          DOMString pin,
+                                          optional DOMString puk,
+                                          optional VoidCallback callback);
+
+    // Sets whether or not SIM locking is enabled (i.e a PIN will be required
+    // when the device is powered) and changes the PIN if a new PIN is
+    // specified. If the new PIN is provided but not valid (e.g. too short)
+    // the operation will fail. This will not lock the SIM; that is handled
+    // automatically by the device. NOTE: If the SIM is locked, it must first be
+    // unlocked with unlockCellularSim() before this can be called (otherwise it
+    // will fail and chrome.runtime.lastError will be set to Error.SimLocked).
+    // |networkGuid|: The GUID of the cellular network to set the SIM state of.
+    //     If empty, the default cellular device will be used.
+    // |simState|: The SIM state to set.
+    // |callback|: Called when the operation has completed.
+    [nodoc] static void setCellularSimState(DOMString networkGuid,
+                                            CellularSimState simState,
+                                            optional VoidCallback callback);
+
     // Gets the global policy properties. These properties are not expected to
     // change during a session.
     static void getGlobalPolicy(GetGlobalPolicyCallback callback);
+
+    // Gets the lists of certificates available for network configuration.
+    [nodoc]
+    static void getCertificateLists(GetCertificateListsCallback callback);
   };
 
   interface Events {
@@ -1020,5 +1456,8 @@ namespace networking.onc {
     // the network and the corresponding captive portal status.
     static void onPortalDetectionCompleted(DOMString networkGuid,
                                            CaptivePortalStatus status);
+
+    // Fired when any certificate list has changed.
+    [nodoc] static void onCertificateListsChanged();
   };
 };

@@ -21,8 +21,8 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/onc/onc_constants.h"
 #include "content/public/test/test_utils.h"
-#include "extensions/browser/api/networking_private/networking_private_delegate.h"
-#include "extensions/browser/api/networking_private/networking_private_delegate_factory.h"
+#include "extensions/browser/api/networking_onc/networking_onc_delegate.h"
+#include "extensions/browser/api/networking_onc/networking_onc_delegate_factory.h"
 #include "extensions/common/switches.h"
 
 namespace extensions {
@@ -41,12 +41,11 @@ const char kFailure[] = "Failure";
 const char kSuccess[] = "Success";
 const char kGuid[] = "SOME_GUID";
 
-class TestNetworkingPrivateDelegate : public NetworkingPrivateDelegate {
+class TestNetworkingOncDelegate : public NetworkingOncDelegate {
  public:
-  explicit TestNetworkingPrivateDelegate(bool test_failure)
-      : fail_(test_failure) {}
+  explicit TestNetworkingOncDelegate(bool test_failure) : fail_(test_failure) {}
 
-  ~TestNetworkingPrivateDelegate() override {}
+  ~TestNetworkingOncDelegate() override {}
 
   // Asynchronous methods
   void GetProperties(const std::string& guid,
@@ -180,10 +179,10 @@ class TestNetworkingPrivateDelegate : public NetworkingPrivateDelegate {
     if (fail_)
       return result;
     result.reset(new DeviceStateList);
-    std::unique_ptr<api::networking_private::DeviceStateProperties> properties(
-        new api::networking_private::DeviceStateProperties);
-    properties->type = api::networking_private::NETWORK_TYPE_ETHERNET;
-    properties->state = api::networking_private::DEVICE_STATE_TYPE_ENABLED;
+    std::unique_ptr<api::networking_onc::DeviceStateProperties> properties(
+        new api::networking_onc::DeviceStateProperties);
+    properties->type = api::networking_onc::NETWORK_TYPE_ETHERNET;
+    properties->state = api::networking_onc::DEVICE_STATE_TYPE_ENABLED;
     result->push_back(std::move(properties));
     return result;
   }
@@ -263,7 +262,7 @@ class TestNetworkingPrivateDelegate : public NetworkingPrivateDelegate {
   std::map<std::string, bool> disabled_;
   std::vector<std::string> scan_requested_;
 
-  DISALLOW_COPY_AND_ASSIGN(TestNetworkingPrivateDelegate);
+  DISALLOW_COPY_AND_ASSIGN(TestNetworkingOncDelegate);
 };
 
 class TestNetworkingCastPrivateDelegate
@@ -314,13 +313,13 @@ class TestNetworkingCastPrivateDelegate
 
 class NetworkingPrivateApiTest : public ExtensionApiTest {
  public:
-  using TestNetworkingPrivateDelegateFactory =
+  using TestNetworkingOncDelegateFactory =
       base::Callback<std::unique_ptr<KeyedService>()>;
 
-  static std::unique_ptr<KeyedService> GetNetworkingPrivateDelegate(
+  static std::unique_ptr<KeyedService> GetNetworkingOncDelegate(
       content::BrowserContext* profile) {
-    CHECK(s_networking_private_delegate_factory_ptr);
-    return s_networking_private_delegate_factory_ptr->Run();
+    CHECK(s_networking_onc_delegate_factory_ptr);
+    return s_networking_onc_delegate_factory_ptr->Run();
   }
 
   NetworkingPrivateApiTest() = default;
@@ -333,11 +332,10 @@ class NetworkingPrivateApiTest : public ExtensionApiTest {
     ChromeNetworkingCastPrivateDelegate::SetFactoryCallbackForTest(
         &networking_cast_delegate_factory_);
 
-    networking_private_delegate_factory_ = base::Bind(
-        &NetworkingPrivateApiTest::CreateTestNetworkingPrivateDelegate,
-        base::Unretained(this), test_failure_);
-    s_networking_private_delegate_factory_ptr =
-        &networking_private_delegate_factory_;
+    networking_onc_delegate_factory_ =
+        base::Bind(&NetworkingPrivateApiTest::CreateTestNetworkingOncDelegate,
+                   base::Unretained(this), test_failure_);
+    s_networking_onc_delegate_factory_ptr = &networking_onc_delegate_factory_;
 
     ExtensionApiTest::SetUp();
   }
@@ -352,29 +350,29 @@ class NetworkingPrivateApiTest : public ExtensionApiTest {
 
   void SetUpOnMainThread() override {
     ExtensionApiTest::SetUpOnMainThread();
-    NetworkingPrivateDelegateFactory::GetInstance()->SetTestingFactory(
-        profile(), &NetworkingPrivateApiTest::GetNetworkingPrivateDelegate);
+    NetworkingOncDelegateFactory::GetInstance()->SetTestingFactory(
+        profile(), &NetworkingPrivateApiTest::GetNetworkingOncDelegate);
   }
 
   void TearDown() override {
     ExtensionApiTest::TearDown();
 
-    s_networking_private_delegate_factory_ptr = nullptr;
+    s_networking_onc_delegate_factory_ptr = nullptr;
     ChromeNetworkingCastPrivateDelegate::SetFactoryCallbackForTest(nullptr);
 
-    networking_private_delegate_ = nullptr;
+    networking_onc_delegate_ = nullptr;
   }
 
   bool GetEnabled(const std::string& type) {
-    return networking_private_delegate_->GetEnabled(type);
+    return networking_onc_delegate_->GetEnabled(type);
   }
 
   bool GetDisabled(const std::string& type) {
-    return networking_private_delegate_->GetDisabled(type);
+    return networking_onc_delegate_->GetDisabled(type);
   }
 
   const std::vector<std::string>& GetScanRequested() {
-    return networking_private_delegate_->GetScanRequested();
+    return networking_onc_delegate_->GetScanRequested();
   }
 
  protected:
@@ -390,12 +388,11 @@ class NetworkingPrivateApiTest : public ExtensionApiTest {
     return base::MakeUnique<TestNetworkingCastPrivateDelegate>(test_failure);
   }
 
-  std::unique_ptr<KeyedService> CreateTestNetworkingPrivateDelegate(
+  std::unique_ptr<KeyedService> CreateTestNetworkingOncDelegate(
       bool test_failure) {
-    CHECK(!networking_private_delegate_);
-    auto delegate =
-        base::MakeUnique<TestNetworkingPrivateDelegate>(test_failure);
-    networking_private_delegate_ = delegate.get();
+    CHECK(!networking_onc_delegate_);
+    auto delegate = base::MakeUnique<TestNetworkingOncDelegate>(test_failure);
+    networking_onc_delegate_ = delegate.get();
     return delegate;
   }
 
@@ -405,13 +402,13 @@ class NetworkingPrivateApiTest : public ExtensionApiTest {
  private:
   // Pointer to a networking private delegate created by the test factory
   // callback.
-  TestNetworkingPrivateDelegate* networking_private_delegate_ = nullptr;
+  TestNetworkingOncDelegate* networking_onc_delegate_ = nullptr;
 
-  TestNetworkingPrivateDelegateFactory networking_private_delegate_factory_;
+  TestNetworkingOncDelegateFactory networking_onc_delegate_factory_;
   // Static pointer to |test_delegate_factory_|, so it can be used from
   // |CreateNetwokringPrivateDelegate|.
-  static TestNetworkingPrivateDelegateFactory*
-      s_networking_private_delegate_factory_ptr;
+  static TestNetworkingOncDelegateFactory*
+      s_networking_onc_delegate_factory_ptr;
 
   ChromeNetworkingCastPrivateDelegate::FactoryCallback
       networking_cast_delegate_factory_;
@@ -419,9 +416,8 @@ class NetworkingPrivateApiTest : public ExtensionApiTest {
   DISALLOW_COPY_AND_ASSIGN(NetworkingPrivateApiTest);
 };
 
-NetworkingPrivateApiTest::TestNetworkingPrivateDelegateFactory*
-    NetworkingPrivateApiTest::s_networking_private_delegate_factory_ptr =
-        nullptr;
+NetworkingPrivateApiTest::TestNetworkingOncDelegateFactory*
+    NetworkingPrivateApiTest::s_networking_onc_delegate_factory_ptr = nullptr;
 
 }  // namespace
 
@@ -431,7 +427,7 @@ NetworkingPrivateApiTest::TestNetworkingPrivateDelegateFactory*
 // src/extensions.
 
 // These fail on Windows due to crbug.com/177163. Note: we still have partial
-// coverage in NetworkingPrivateServiceClientApiTest. TODO(stevenjb): Enable
+// coverage in NetworkingOncServiceClientApiTest. TODO(stevenjb): Enable
 // these on Windows once we switch to extensions::ApiUnitTest.
 
 #if !defined(OS_WIN)
@@ -645,6 +641,6 @@ IN_PROC_BROWSER_TEST_F(NetworkingPrivateApiTestFail, SetCellularSimState) {
   EXPECT_FALSE(RunNetworkingSubtest("setCellularSimState")) << message_;
 }
 
-#endif // defined(OS_WIN)
+#endif  // defined(OS_WIN)
 
 }  // namespace extensions

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_EVENT_ROUTER_H_
-#define EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_EVENT_ROUTER_H_
+#ifndef EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_EVENT_ROUTER_H_
+#define EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_EVENT_ROUTER_H_
 
 #include "base/macros.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -18,19 +18,19 @@ namespace extensions {
 // This is an event router that will observe listeners to |NetworksChanged| and
 // |NetworkListChanged| events. On ChromeOS it will forward these events
 // from the NetworkStateHandler to the JavaScript Networking API.
-class NetworkingPrivateEventRouter : public KeyedService,
-                                     public EventRouter::Observer {
+class NetworkingOncEventRouter : public KeyedService,
+                                 public EventRouter::Observer {
  public:
-  static NetworkingPrivateEventRouter* Create(
+  static NetworkingOncEventRouter* Create(
       content::BrowserContext* browser_context);
 
  protected:
-  NetworkingPrivateEventRouter() {}
+  NetworkingOncEventRouter() {}
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(NetworkingPrivateEventRouter);
+  DISALLOW_COPY_AND_ASSIGN(NetworkingOncEventRouter);
 };
 
 }  // namespace extensions
 
-#endif  // EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_EVENT_ROUTER_H_
+#endif  // EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_EVENT_ROUTER_H_

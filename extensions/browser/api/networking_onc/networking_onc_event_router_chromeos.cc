@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "extensions/browser/api/networking_private/networking_private_event_router.h"
+#include "extensions/browser/api/networking_onc/networking_onc_event_router.h"
 
 #include "base/json/json_writer.h"
 #include "base/macros.h"
@@ -18,9 +18,9 @@
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/onc/onc_constants.h"
 #include "content/public/browser/browser_context.h"
-#include "extensions/browser/api/networking_private/networking_private_api.h"
+#include "extensions/browser/api/networking_onc/networking_onc_api.h"
 #include "extensions/browser/extension_system.h"
-#include "extensions/common/api/networking_private.h"
+#include "extensions/common/api/networking_onc.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 
 using chromeos::DeviceState;
@@ -31,14 +31,14 @@ using chromeos::NetworkStateHandler;
 
 namespace extensions {
 
-class NetworkingPrivateEventRouterImpl
-    : public NetworkingPrivateEventRouter,
+class NetworkingOncEventRouterImpl
+    : public NetworkingOncEventRouter,
       public chromeos::NetworkStateHandlerObserver,
       public chromeos::NetworkCertificateHandler::Observer,
       public NetworkPortalDetector::Observer {
  public:
-  explicit NetworkingPrivateEventRouterImpl(content::BrowserContext* context);
-  ~NetworkingPrivateEventRouterImpl() override;
+  explicit NetworkingOncEventRouterImpl(content::BrowserContext* context);
+  ~NetworkingOncEventRouterImpl() override;
 
  protected:
   // KeyedService overrides:
@@ -72,10 +72,10 @@ class NetworkingPrivateEventRouterImpl
   content::BrowserContext* context_;
   bool listening_;
 
-  DISALLOW_COPY_AND_ASSIGN(NetworkingPrivateEventRouterImpl);
+  DISALLOW_COPY_AND_ASSIGN(NetworkingOncEventRouterImpl);
 };
 
-NetworkingPrivateEventRouterImpl::NetworkingPrivateEventRouterImpl(
+NetworkingOncEventRouterImpl::NetworkingOncEventRouterImpl(
     content::BrowserContext* context)
     : context_(context), listening_(false) {
   // Register with the event router so we know when renderers are listening to
@@ -85,24 +85,24 @@ NetworkingPrivateEventRouterImpl::NetworkingPrivateEventRouterImpl(
   EventRouter* event_router = EventRouter::Get(context_);
   if (event_router) {
     event_router->RegisterObserver(
-        this, api::networking_private::OnNetworksChanged::kEventName);
+        this, api::networking_onc::OnNetworksChanged::kEventName);
     event_router->RegisterObserver(
-        this, api::networking_private::OnNetworkListChanged::kEventName);
+        this, api::networking_onc::OnNetworkListChanged::kEventName);
     event_router->RegisterObserver(
-        this, api::networking_private::OnDeviceStateListChanged::kEventName);
+        this, api::networking_onc::OnDeviceStateListChanged::kEventName);
     event_router->RegisterObserver(
-        this, api::networking_private::OnPortalDetectionCompleted::kEventName);
+        this, api::networking_onc::OnPortalDetectionCompleted::kEventName);
     event_router->RegisterObserver(
-        this, api::networking_private::OnCertificateListsChanged::kEventName);
+        this, api::networking_onc::OnCertificateListsChanged::kEventName);
     StartOrStopListeningForNetworkChanges();
   }
 }
 
-NetworkingPrivateEventRouterImpl::~NetworkingPrivateEventRouterImpl() {
+NetworkingOncEventRouterImpl::~NetworkingOncEventRouterImpl() {
   DCHECK(!listening_);
 }
 
-void NetworkingPrivateEventRouterImpl::Shutdown() {
+void NetworkingOncEventRouterImpl::Shutdown() {
   // Unregister with the event router. We first check and see if there *is* an
   // event router, because some unit tests try to shutdown all context services,
   // but didn't initialize the event router first.
@@ -117,32 +117,32 @@ void NetworkingPrivateEventRouterImpl::Shutdown() {
   listening_ = false;
 }
 
-void NetworkingPrivateEventRouterImpl::OnListenerAdded(
+void NetworkingOncEventRouterImpl::OnListenerAdded(
     const EventListenerInfo& details) {
   // Start listening to events from the network state handler.
   StartOrStopListeningForNetworkChanges();
 }
 
-void NetworkingPrivateEventRouterImpl::OnListenerRemoved(
+void NetworkingOncEventRouterImpl::OnListenerRemoved(
     const EventListenerInfo& details) {
   // Stop listening to events from the network state handler if there are no
   // more listeners.
   StartOrStopListeningForNetworkChanges();
 }
 
-void NetworkingPrivateEventRouterImpl::StartOrStopListeningForNetworkChanges() {
+void NetworkingOncEventRouterImpl::StartOrStopListeningForNetworkChanges() {
   EventRouter* event_router = EventRouter::Get(context_);
   bool should_listen =
       event_router->HasEventListener(
-          api::networking_private::OnNetworksChanged::kEventName) ||
+          api::networking_onc::OnNetworksChanged::kEventName) ||
       event_router->HasEventListener(
-          api::networking_private::OnNetworkListChanged::kEventName) ||
+          api::networking_onc::OnNetworkListChanged::kEventName) ||
       event_router->HasEventListener(
-          api::networking_private::OnDeviceStateListChanged::kEventName) ||
+          api::networking_onc::OnDeviceStateListChanged::kEventName) ||
       event_router->HasEventListener(
-          api::networking_private::OnPortalDetectionCompleted::kEventName) ||
+          api::networking_onc::OnPortalDetectionCompleted::kEventName) ||
       event_router->HasEventListener(
-          api::networking_private::OnCertificateListsChanged::kEventName);
+          api::networking_onc::OnCertificateListsChanged::kEventName);
 
   if (should_listen && !listening_) {
     NetworkHandler::Get()->network_state_handler()->AddObserver(this,
@@ -160,10 +160,10 @@ void NetworkingPrivateEventRouterImpl::StartOrStopListeningForNetworkChanges() {
   listening_ = should_listen;
 }
 
-void NetworkingPrivateEventRouterImpl::NetworkListChanged() {
+void NetworkingOncEventRouterImpl::NetworkListChanged() {
   EventRouter* event_router = EventRouter::Get(context_);
   if (!event_router->HasEventListener(
-          api::networking_private::OnNetworkListChanged::kEventName)) {
+          api::networking_onc::OnNetworkListChanged::kEventName)) {
     return;
   }
 
@@ -178,50 +178,49 @@ void NetworkingPrivateEventRouterImpl::NetworkListChanged() {
   }
 
   std::unique_ptr<base::ListValue> args(
-      api::networking_private::OnNetworkListChanged::Create(changes));
-  std::unique_ptr<Event> extension_event(
-      new Event(events::NETWORKING_PRIVATE_ON_NETWORK_LIST_CHANGED,
-                api::networking_private::OnNetworkListChanged::kEventName,
-                std::move(args)));
+      api::networking_onc::OnNetworkListChanged::Create(changes));
+  std::unique_ptr<Event> extension_event(new Event(
+      events::NETWORKING_PRIVATE_ON_NETWORK_LIST_CHANGED,
+      api::networking_onc::OnNetworkListChanged::kEventName, std::move(args)));
   event_router->BroadcastEvent(std::move(extension_event));
 }
 
-void NetworkingPrivateEventRouterImpl::DeviceListChanged() {
+void NetworkingOncEventRouterImpl::DeviceListChanged() {
   EventRouter* event_router = EventRouter::Get(context_);
   if (!event_router->HasEventListener(
-          api::networking_private::OnDeviceStateListChanged::kEventName)) {
+          api::networking_onc::OnDeviceStateListChanged::kEventName)) {
     return;
   }
 
   std::unique_ptr<base::ListValue> args(
-      api::networking_private::OnDeviceStateListChanged::Create());
+      api::networking_onc::OnDeviceStateListChanged::Create());
   std::unique_ptr<Event> extension_event(
       new Event(events::NETWORKING_PRIVATE_ON_DEVICE_STATE_LIST_CHANGED,
-                api::networking_private::OnDeviceStateListChanged::kEventName,
+                api::networking_onc::OnDeviceStateListChanged::kEventName,
                 std::move(args)));
   event_router->BroadcastEvent(std::move(extension_event));
 }
 
-void NetworkingPrivateEventRouterImpl::NetworkPropertiesUpdated(
+void NetworkingOncEventRouterImpl::NetworkPropertiesUpdated(
     const NetworkState* network) {
   EventRouter* event_router = EventRouter::Get(context_);
   if (!event_router->HasEventListener(
-          api::networking_private::OnNetworksChanged::kEventName)) {
-    NET_LOG_EVENT("NetworkingPrivate.NetworkPropertiesUpdated: No Listeners",
+          api::networking_onc::OnNetworksChanged::kEventName)) {
+    NET_LOG_EVENT("NetworkingOnc.NetworkPropertiesUpdated: No Listeners",
                   network->path());
     return;
   }
-  NET_LOG_EVENT("NetworkingPrivate.NetworkPropertiesUpdated", network->path());
+  NET_LOG_EVENT("NetworkingOnc.NetworkPropertiesUpdated", network->path());
   std::unique_ptr<base::ListValue> args(
-      api::networking_private::OnNetworksChanged::Create(
+      api::networking_onc::OnNetworksChanged::Create(
           std::vector<std::string>(1, network->guid())));
   std::unique_ptr<Event> extension_event(new Event(
       events::NETWORKING_PRIVATE_ON_NETWORKS_CHANGED,
-      api::networking_private::OnNetworksChanged::kEventName, std::move(args)));
+      api::networking_onc::OnNetworksChanged::kEventName, std::move(args)));
   event_router->BroadcastEvent(std::move(extension_event));
 }
 
-void NetworkingPrivateEventRouterImpl::DevicePropertiesUpdated(
+void NetworkingOncEventRouterImpl::DevicePropertiesUpdated(
     const DeviceState* device) {
   // DeviceState changes may affect Cellular networks.
   if (device->type() != shill::kTypeCellular)
@@ -236,55 +235,55 @@ void NetworkingPrivateEventRouterImpl::DevicePropertiesUpdated(
   }
 }
 
-void NetworkingPrivateEventRouterImpl::OnCertificatesChanged() {
+void NetworkingOncEventRouterImpl::OnCertificatesChanged() {
   EventRouter* event_router = EventRouter::Get(context_);
   if (!event_router->HasEventListener(
-          api::networking_private::OnCertificateListsChanged::kEventName)) {
-    NET_LOG_EVENT("NetworkingPrivate.OnCertificatesChanged: No Listeners", "");
+          api::networking_onc::OnCertificateListsChanged::kEventName)) {
+    NET_LOG_EVENT("NetworkingOnc.OnCertificatesChanged: No Listeners", "");
     return;
   }
-  NET_LOG_EVENT("NetworkingPrivate.OnCertificatesChanged", "");
+  NET_LOG_EVENT("NetworkingOnc.OnCertificatesChanged", "");
 
   std::unique_ptr<base::ListValue> args(
-      api::networking_private::OnCertificateListsChanged::Create());
+      api::networking_onc::OnCertificateListsChanged::Create());
   std::unique_ptr<Event> extension_event(
       new Event(events::NETWORKING_PRIVATE_ON_CERTIFICATE_LISTS_CHANGED,
-                api::networking_private::OnCertificateListsChanged::kEventName,
+                api::networking_onc::OnCertificateListsChanged::kEventName,
                 std::move(args)));
   event_router->BroadcastEvent(std::move(extension_event));
 }
 
-void NetworkingPrivateEventRouterImpl::OnPortalDetectionCompleted(
+void NetworkingOncEventRouterImpl::OnPortalDetectionCompleted(
     const NetworkState* network,
     const NetworkPortalDetector::CaptivePortalState& state) {
   const std::string path = network ? network->guid() : std::string();
 
   EventRouter* event_router = EventRouter::Get(context_);
   if (!event_router->HasEventListener(
-          api::networking_private::OnPortalDetectionCompleted::kEventName)) {
-    NET_LOG_EVENT("NetworkingPrivate.OnPortalDetectionCompleted: No Listeners",
+          api::networking_onc::OnPortalDetectionCompleted::kEventName)) {
+    NET_LOG_EVENT("NetworkingOnc.OnPortalDetectionCompleted: No Listeners",
                   path);
     return;
   }
-  NET_LOG_EVENT("NetworkingPrivate.OnPortalDetectionCompleted", path);
+  NET_LOG_EVENT("NetworkingOnc.OnPortalDetectionCompleted", path);
 
-  api::networking_private::CaptivePortalStatus status =
-      api::networking_private::CAPTIVE_PORTAL_STATUS_UNKNOWN;
+  api::networking_onc::CaptivePortalStatus status =
+      api::networking_onc::CAPTIVE_PORTAL_STATUS_UNKNOWN;
   switch (state.status) {
     case NetworkPortalDetector::CAPTIVE_PORTAL_STATUS_UNKNOWN:
-      status = api::networking_private::CAPTIVE_PORTAL_STATUS_UNKNOWN;
+      status = api::networking_onc::CAPTIVE_PORTAL_STATUS_UNKNOWN;
       break;
     case NetworkPortalDetector::CAPTIVE_PORTAL_STATUS_OFFLINE:
-      status = api::networking_private::CAPTIVE_PORTAL_STATUS_OFFLINE;
+      status = api::networking_onc::CAPTIVE_PORTAL_STATUS_OFFLINE;
       break;
     case NetworkPortalDetector::CAPTIVE_PORTAL_STATUS_ONLINE:
-      status = api::networking_private::CAPTIVE_PORTAL_STATUS_ONLINE;
+      status = api::networking_onc::CAPTIVE_PORTAL_STATUS_ONLINE;
       break;
     case NetworkPortalDetector::CAPTIVE_PORTAL_STATUS_PORTAL:
-      status = api::networking_private::CAPTIVE_PORTAL_STATUS_PORTAL;
+      status = api::networking_onc::CAPTIVE_PORTAL_STATUS_PORTAL;
       break;
     case NetworkPortalDetector::CAPTIVE_PORTAL_STATUS_PROXY_AUTH_REQUIRED:
-      status = api::networking_private::CAPTIVE_PORTAL_STATUS_PROXYAUTHREQUIRED;
+      status = api::networking_onc::CAPTIVE_PORTAL_STATUS_PROXYAUTHREQUIRED;
       break;
     default:
       NOTREACHED();
@@ -292,18 +291,17 @@ void NetworkingPrivateEventRouterImpl::OnPortalDetectionCompleted(
   }
 
   std::unique_ptr<base::ListValue> args(
-      api::networking_private::OnPortalDetectionCompleted::Create(path,
-                                                                  status));
+      api::networking_onc::OnPortalDetectionCompleted::Create(path, status));
   std::unique_ptr<Event> extension_event(
       new Event(events::NETWORKING_PRIVATE_ON_PORTAL_DETECTION_COMPLETED,
-                api::networking_private::OnPortalDetectionCompleted::kEventName,
+                api::networking_onc::OnPortalDetectionCompleted::kEventName,
                 std::move(args)));
   event_router->BroadcastEvent(std::move(extension_event));
 }
 
-NetworkingPrivateEventRouter* NetworkingPrivateEventRouter::Create(
+NetworkingOncEventRouter* NetworkingOncEventRouter::Create(
     content::BrowserContext* context) {
-  return new NetworkingPrivateEventRouterImpl(context);
+  return new NetworkingOncEventRouterImpl(context);
 }
 
 }  // namespace extensions

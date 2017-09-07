@@ -320,11 +320,20 @@
     "dependencies": ["permission:networking.config"],
     "contexts": ["blessed_extension"]
   },
-  "networking.onc": {
+  "networking.onc": [{
     "dependencies": ["permission:networking.onc"],
     "contexts": ["blessed_extension"],
-    "source": "networkingPrivate"
-  },
+    "alias": "networkingPrivate"
+  }, {
+    "channel": "stable",
+    "contexts": ["webui"],
+    "matches": [
+      "chrome://network/*",
+      "chrome://oobe/*",
+      "chrome://proxy-settings/*",
+      "chrome://settings/*"
+    ]
+  }],
   "networkingPrivate": [{
     "dependencies": ["permission:networkingPrivate"],
     "contexts": ["blessed_extension"],
@@ -333,7 +342,7 @@
     // networking.onc, but until current usages are migrated to the new
     // name, use API aliasing to expose the API under both names.
     // (http://crbug.com/672186).
-    "alias": "networking.onc"
+    "source": "networking.onc"
   }, {
     "channel": "stable",
     "contexts": ["webui"],

@@ -83,13 +83,12 @@
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "apps/browser_context_keyed_service_factories.h"
 #include "chrome/browser/apps/browser_context_keyed_service_factories.h"
-#include "chrome/browser/extensions/api/networking_private/networking_private_ui_delegate_factory_impl.h"
 #include "chrome/browser/extensions/browser_context_keyed_service_factories.h"
 #include "chrome/browser/extensions/extension_management.h"
 #include "chrome/browser/search/hotword_service_factory.h"
 #include "chrome/browser/signin/easy_unlock_service_factory.h"
 #include "chrome/browser/ui/bookmarks/enhanced_bookmark_key_service_factory.h"
-#include "extensions/browser/api/networking_private/networking_private_delegate_factory.h"
+#include "extensions/browser/api/networking_onc/networking_onc_delegate_factory.h"
 #include "extensions/browser/browser_context_keyed_service_factories.h"
 #endif
 
@@ -264,15 +263,6 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
   SupervisedUserServiceFactory::GetInstance();
 #if !defined(OS_ANDROID)
   SupervisedUserSyncServiceFactory::GetInstance();
-#endif
-#endif
-#if BUILDFLAG(ENABLE_EXTENSIONS)
-#if defined(OS_CHROMEOS) || defined(OS_WIN) || defined(OS_MACOSX)
-  std::unique_ptr<extensions::NetworkingPrivateUIDelegateFactoryImpl>
-      networking_private_ui_delegate_factory(
-          new extensions::NetworkingPrivateUIDelegateFactoryImpl);
-  extensions::NetworkingPrivateDelegateFactory::GetInstance()
-      ->SetUIDelegateFactory(std::move(networking_private_ui_delegate_factory));
 #endif
 #endif
   if (MediaEngagementService::IsEnabled())

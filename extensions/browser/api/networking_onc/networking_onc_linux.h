@@ -2,11 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_LINUX_H_
-#define EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_LINUX_H_
+#ifndef EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_LINUX_H_
+#define EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_LINUX_H_
 
 #include <stdint.h>
 
+#include <map>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -14,28 +16,28 @@
 #include "base/message_loop/message_loop.h"
 #include "base/threading/thread.h"
 #include "components/keyed_service/core/keyed_service.h"
-#include "extensions/browser/api/networking_private/networking_private_delegate.h"
+#include "extensions/browser/api/networking_onc/networking_onc_delegate.h"
 
 namespace dbus {
 class Bus;
 class ObjectPath;
 class ObjectProxy;
 class Response;
-};
+};  // namespace dbus
 
 namespace extensions {
 
-// Linux NetworkingPrivateDelegate implementation.
-class NetworkingPrivateLinux : public NetworkingPrivateDelegate {
+// Linux NetworkingOncDelegate implementation.
+class NetworkingOncLinux : public NetworkingOncDelegate {
  public:
   using NetworkMap =
       std::map<base::string16, std::unique_ptr<base::DictionaryValue>>;
 
   typedef std::vector<std::string> GuidList;
 
-  NetworkingPrivateLinux();
+  NetworkingOncLinux();
 
-  // NetworkingPrivateDelegate
+  // NetworkingOncDelegate
   void GetProperties(const std::string& guid,
                      const DictionaryCallback& success_callback,
                      const FailureCallback& failure_callback) override;
@@ -99,11 +101,11 @@ class NetworkingPrivateLinux : public NetworkingPrivateDelegate {
   bool EnableNetworkType(const std::string& type) override;
   bool DisableNetworkType(const std::string& type) override;
   bool RequestScan(const std::string& type) override;
-  void AddObserver(NetworkingPrivateDelegateObserver* observer) override;
-  void RemoveObserver(NetworkingPrivateDelegateObserver* observer) override;
+  void AddObserver(NetworkingOncDelegateObserver* observer) override;
+  void RemoveObserver(NetworkingOncDelegateObserver* observer) override;
 
  private:
-  ~NetworkingPrivateLinux() override;
+  ~NetworkingOncLinux() override;
 
   // https://developer.gnome.org/NetworkManager/unstable/spec.html#type-NM_DEVICE_TYPE
   enum DeviceType {
@@ -207,10 +209,9 @@ class NetworkingPrivateLinux : public NetworkingPrivateDelegate {
   // If the access_point is not already in the map it is added. Otherwise
   // the access point is updated (eg. with the max of the signal
   // strength).
-  void AddOrUpdateAccessPoint(
-      NetworkMap* network_map,
-      const std::string& network_guid,
-      std::unique_ptr<base::DictionaryValue>& access_point);
+  void AddOrUpdateAccessPoint(NetworkMap* network_map,
+                              const std::string& network_guid,
+                              base::DictionaryValue* access_point);
 
   // Maps the WPA security flags to a human readable string.
   void MapSecurityFlagsToString(uint32_t securityFlags, std::string* security);
@@ -268,12 +269,11 @@ class NetworkingPrivateLinux : public NetworkingPrivateDelegate {
   // Holds the current mapping of known networks. Only access on |dbus_thread_|.
   std::unique_ptr<NetworkMap> network_map_;
   // Observers to Network Events.
-  base::ObserverList<NetworkingPrivateDelegateObserver>
-      network_events_observers_;
+  base::ObserverList<NetworkingOncDelegateObserver> network_events_observers_;
 
-  DISALLOW_COPY_AND_ASSIGN(NetworkingPrivateLinux);
+  DISALLOW_COPY_AND_ASSIGN(NetworkingOncLinux);
 };
 
 }  // namespace extensions
 
-#endif  // EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_LINUX_H_
+#endif  // EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_LINUX_H_
