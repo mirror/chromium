@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_CHROMEOS_H_
-#define EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_CHROMEOS_H_
+#ifndef EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_CHROMEOS_H_
+#define EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_CHROMEOS_H_
 
 #include <memory>
 #include <string>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "extensions/browser/api/networking_private/networking_private_delegate.h"
+#include "extensions/browser/api/networking_onc/networking_onc_delegate.h"
 
 namespace base {
 class DictionaryValue;
@@ -22,15 +22,15 @@ class BrowserContext;
 
 namespace extensions {
 
-// Chrome OS NetworkingPrivateDelegate implementation.
+// Chrome OS NetworkingOncDelegate implementation.
 
-class NetworkingPrivateChromeOS : public NetworkingPrivateDelegate {
+class NetworkingOncChromeOS : public NetworkingOncDelegate {
  public:
-  // |verify_delegate| is passed to NetworkingPrivateDelegate and may be NULL.
-  explicit NetworkingPrivateChromeOS(content::BrowserContext* browser_context);
-  ~NetworkingPrivateChromeOS() override;
+  // |verify_delegate| is passed to NetworkingOncDelegate and may be NULL.
+  explicit NetworkingOncChromeOS(content::BrowserContext* browser_context);
+  ~NetworkingOncChromeOS() override;
 
-  // NetworkingPrivateApi
+  // NetworkingOncApi
   void GetProperties(const std::string& guid,
                      const DictionaryCallback& success_callback,
                      const FailureCallback& failure_callback) override;
@@ -101,7 +101,7 @@ class NetworkingPrivateChromeOS : public NetworkingPrivateDelegate {
 
  private:
   // Callback for both GetProperties and GetManagedProperties. Copies
-  // |dictionary| and appends any networkingPrivate API specific properties,
+  // |dictionary| and appends any networkingOnc API specific properties,
   // then calls |callback| with the result.
   void GetPropertiesCallback(const std::string& guid,
                              bool managed,
@@ -119,11 +119,11 @@ class NetworkingPrivateChromeOS : public NetworkingPrivateDelegate {
                                    base::DictionaryValue* dictionary);
 
   content::BrowserContext* browser_context_;
-  base::WeakPtrFactory<NetworkingPrivateChromeOS> weak_ptr_factory_;
+  base::WeakPtrFactory<NetworkingOncChromeOS> weak_ptr_factory_;
 
-  DISALLOW_COPY_AND_ASSIGN(NetworkingPrivateChromeOS);
+  DISALLOW_COPY_AND_ASSIGN(NetworkingOncChromeOS);
 };
 
 }  // namespace extensions
 
-#endif  // EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_CHROMEOS_H_
+#endif  // EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_CHROMEOS_H_

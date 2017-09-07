@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_DELEGATE_OBSERVER_H_
-#define EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_DELEGATE_OBSERVER_H_
+#ifndef EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_DELEGATE_OBSERVER_H_
+#define EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_DELEGATE_OBSERVER_H_
 
 #include <string>
 #include <vector>
@@ -13,9 +13,9 @@
 namespace extensions {
 
 // Implemented by event handlers so they are notified when a change event
-// occurs. Triggered by NetworkingPrivateServiceClient or
-// NetworkingPrivateLinux. Not used on Chrome OS.
-class NetworkingPrivateDelegateObserver {
+// occurs. Triggered by NetworkingOncServiceClient or
+// NetworkingOncLinux. Not used on Chrome OS.
+class NetworkingOncDelegateObserver {
  public:
   // Notifes observers when properties may have changed for the networks listed
   // in |network_guids|.
@@ -28,12 +28,12 @@ class NetworkingPrivateDelegateObserver {
       const std::vector<std::string>& network_guids) = 0;
 
  protected:
-  virtual ~NetworkingPrivateDelegateObserver() {}
+  virtual ~NetworkingOncDelegateObserver() {}
 
  private:
-  DISALLOW_ASSIGN(NetworkingPrivateDelegateObserver);
+  DISALLOW_ASSIGN(NetworkingOncDelegateObserver);
 };
 
 }  // namespace extensions
 
-#endif  // EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORKING_PRIVATE_DELEGATE_OBSERVER_H_
+#endif  // EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORKING_ONC_DELEGATE_OBSERVER_H_

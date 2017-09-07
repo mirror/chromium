@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORK_CONFIG_DBUS_CONSTANTS_LINUX_H_
-#define EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORK_CONFIG_DBUS_CONSTANTS_LINUX_H_
+#ifndef EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORK_CONFIG_DBUS_CONSTANTS_LINUX_H_
+#define EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORK_CONFIG_DBUS_CONSTANTS_LINUX_H_
 
 namespace extensions {
 
-namespace networking_private {
+namespace networking_onc {
 
 // Network manager API strings.
 extern const char kNetworkManagerPath[];
@@ -33,8 +33,8 @@ extern const char kNetworkManagerWpaFlagsProperty[];
 extern const char kNetworkManagerConnectionConfig80211Wireless[];
 extern const char kNetworkManagerConnectionConfigSsid[];
 
-}  // namespace networking_private
+}  // namespace networking_onc
 
 }  // namespace extensions
 
-#endif  // EXTENSIONS_BROWSER_API_NETWORKING_PRIVATE_NETWORK_CONFIG_DBUS_CONSTANTS_LINUX_H_
+#endif  // EXTENSIONS_BROWSER_API_NETWORKING_ONC_NETWORK_CONFIG_DBUS_CONSTANTS_LINUX_H_
