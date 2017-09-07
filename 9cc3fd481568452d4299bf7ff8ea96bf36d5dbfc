@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9205663e_692017cf",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T22:42:08Z",
+      "side": 1,
+      "message": "Align comments please.",
+      "range": {
+        "startLine": 55,
+        "startChar": 18,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "9cc3fd481568452d4299bf7ff8ea96bf36d5dbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51166f3f_c9fa798e",
+        "filename": "components/offline_pages/core/tasks/create_archive_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T22:42:08Z",
+      "side": 1,
+      "message": "move to offlinestoreutils, please.",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "9cc3fd481568452d4299bf7ff8ea96bf36d5dbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0127af6_f5c476c8",
+        "filename": "components/offline_pages/core/tasks/create_archive_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T22:42:08Z",
+      "side": 1,
+      "message": "change it to always use clock (this is linked to my earlier comment)",
+      "range": {
+        "startLine": 131,
+        "startChar": 9,
+        "endLine": 131,
+        "endChar": 23
+      },
+      "revId": "9cc3fd481568452d4299bf7ff8ea96bf36d5dbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98916b2_b5da4a19",
+        "filename": "components/offline_pages/core/tasks/create_archive_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T22:42:08Z",
+      "side": 1,
+      "message": "please document the class",
+      "revId": "9cc3fd481568452d4299bf7ff8ea96bf36d5dbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c6ae99_392f26c0",
+        "filename": "components/offline_pages/core/tasks/create_archive_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T22:42:08Z",
+      "side": 1,
+      "message": "I\u0027d be more into:\nset_clock_for_testing\n\nAnd then take time across this one from clock always.",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 24
+      },
+      "revId": "9cc3fd481568452d4299bf7ff8ea96bf36d5dbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba960b07_3b4e8fe2",
+        "filename": "components/offline_pages/core/tasks/create_archive_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-07T22:42:08Z",
+      "side": 1,
+      "message": "include base macros",
+      "revId": "9cc3fd481568452d4299bf7ff8ea96bf36d5dbfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
