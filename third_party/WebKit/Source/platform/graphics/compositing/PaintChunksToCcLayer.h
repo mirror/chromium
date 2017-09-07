@@ -42,6 +42,12 @@ struct RasterUnderInvalidationCheckingParams {
 
 class PLATFORM_EXPORT PaintChunksToCcLayer {
  public:
+  static void ConvertInto(const Vector<const PaintChunk*>&,
+                          const PropertyTreeState& layer_state,
+                          const gfx::Vector2dF& layer_offset,
+                          const DisplayItemList&,
+                          cc::DisplayItemList&);
+
   static scoped_refptr<cc::DisplayItemList> Convert(
       const Vector<const PaintChunk*>&,
       const PropertyTreeState& layer_state,
