@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "52a35eff_c9806528",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T05:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d42aac17_d2d0c181",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d510ebd_4cc20d88",
         "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e927fafb_607b790d",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T05:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d510ebd_4cc20d88",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "41da235a_e51b9ac5",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T05:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a90a085_8d847f16",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4a74e29_f3285525",
         "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
         "patchSetId": 14
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "fd3fbaf1_73ba835b",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T05:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4a74e29_f3285525",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2753c8ce_acb41ed0",
         "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
         "patchSetId": 14
@@ -84,6 +156,24 @@
       "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98b3544_f5ba40ff",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T05:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2753c8ce_acb41ed0",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,54 @@
     },
     {
       "key": {
+        "uuid": "ab5138b7_6ab755a2",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T05:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ff5163f_c9c770fb",
+      "range": {
+        "startLine": 71,
+        "startChar": 47,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f751e296_fd022f92",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T05:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ff5163f_c9c770fb",
+      "range": {
+        "startLine": 71,
+        "startChar": 47,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "855c77c6_d0dc1461",
         "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
         "patchSetId": 14
@@ -124,6 +262,24 @@
       "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda64847_fa47d0cb",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T05:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "855c77c6_d0dc1461",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "bf34ccc9_067be125",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T05:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "599f4d1a_16dd733c",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6a2331c_e593986d",
         "filename": "content/public/browser/service_worker_context.h",
         "patchSetId": 14
@@ -158,6 +332,24 @@
       "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ed7a18_a85b35bc",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T05:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6a2331c_e593986d",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "e3c92805_4c9258ad",
+        "filename": "content/public/test/mock_service_worker_context.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T05:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81075008_9c8152eb",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "001ad729_20ab7962",
         "filename": "content/public/test/mock_service_worker_context.h",
         "patchSetId": 14
@@ -195,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "dc1a42c5_f4eea533",
+        "filename": "content/public/test/mock_service_worker_context.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T05:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "001ad729_20ab7962",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb9184cf_9cb69a54",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 14
@@ -206,6 +434,24 @@
       "writtenOn": "2017-09-07T04:37:56Z",
       "side": 1,
       "message": "What is the semantics of this method?\nDo I need to enable SW domain for it to work?\nWhat happens to the pages controlled with the worker?\nIf that is for perf benchmarking, why not unregister the worker?",
+      "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4783afc_163566f2",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 14
+      },
+      "lineNbr": 4081,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-07T05:35:54Z",
+      "side": 1,
+      "message": "This method will be used to only stop service worker before running tests, because service worker is not always running on loading page. \nI do not know what enabled_ is for, but I thought it is better to implement this in the same way with other methods. I am asking this to dgozman@\nI am also use Storage.clearDataForOrigin, which clears and unregisters service worker:\nhttps://codereview.chromium.org/3004853002/",
+      "parentUuid": "fb9184cf_9cb69a54",
       "revId": "25b249f0560652e98828d4d27fc68c1fe1d383d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
