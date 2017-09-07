@@ -95,6 +95,9 @@ class ASH_EXPORT TrayPower : public SystemTrayItem,
   std::unique_ptr<DualRoleNotification> dual_role_notification_;
   NotificationState notification_state_;
 
+  // Was the battery full the last time OnPowerStatusChanged() was called?
+  bool battery_was_full_;
+
   // Was a USB charger connected the last time OnPowerStatusChanged() was
   // called?
   bool usb_charger_was_connected_;

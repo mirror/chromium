@@ -152,6 +152,7 @@ TrayPower::TrayPower(SystemTray* system_tray, MessageCenter* message_center)
       message_center_(message_center),
       power_tray_(nullptr),
       notification_state_(NOTIFICATION_NONE),
+      battery_was_full_(false),
       usb_charger_was_connected_(false),
       line_power_was_connected_(false),
       usb_notification_dismissed_(false) {
@@ -209,6 +210,7 @@ void TrayPower::OnPowerStatusChanged() {
     battery_notification_->Update(notification_state_);
   }
 
+  battery_was_full_ = PowerStatus::Get()->IsBatteryFull();
   usb_charger_was_connected_ = PowerStatus::Get()->IsUsbChargerConnected();
   line_power_was_connected_ = PowerStatus::Get()->IsLinePowerConnected();
 }
@@ -217,11 +219,13 @@ bool TrayPower::MaybeShowUsbChargerNotification() {
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
   const PowerStatus& status = *PowerStatus::Get();
 
-  bool usb_charger_is_connected = status.IsUsbChargerConnected();
+  // We show the notification if a USB charger is connected but the battery
+  // isn't full (since some ECs may choose to use a lower power rail when the
+  // battery is full even when a high-power charger is connected).
+  const bool show = status.IsUsbChargerConnected() && !status.IsBatteryFull();
 
-  // Check for a USB charger being connected.
-  if (usb_charger_is_connected && !usb_charger_was_connected_ &&
-      !usb_notification_dismissed_) {
+  // Check if the notification needs to be created.
+  if (show && !usb_charger_was_connected_ && !usb_notification_dismissed_) {
     std::unique_ptr<Notification> notification =
         system_notifier::CreateSystemNotification(
             message_center::NOTIFICATION_TYPE_SIMPLE, kUsbNotificationId,
@@ -241,9 +245,9 @@ bool TrayPower::MaybeShowUsbChargerNotification() {
     notification->set_vector_small_image(gfx::kNoneIcon);
     message_center_->AddNotification(std::move(notification));
     return true;
-  } else if (!usb_charger_is_connected && usb_charger_was_connected_) {
-    // USB charger was unplugged or was identified as a different type while
-    // the USB charger notification was showing.
+  } else if (!show && usb_charger_was_connected_ && !battery_was_full_) {
+    // USB charger was unplugged or identified as a different type or battery
+    // reached the full state while the notification was showing.
     message_center_->RemoveNotification(kUsbNotificationId, false);
     if (!status.IsLinePowerConnected())
       usb_notification_dismissed_ = false;
