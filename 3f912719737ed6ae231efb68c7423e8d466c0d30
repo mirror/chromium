@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2bd2da4_c5d6fc0c",
+        "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-07T19:01:13Z",
+      "side": 1,
+      "message": "Please add a DCHECK to this clause:\n\nDCHECK(notification.notifier_id().profile_id.empty());\n\nSystem notifications should never have a profile_id.",
+      "revId": "3f912719737ed6ae231efb68c7423e8d466c0d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e13d9e_0bd8dce5",
+        "filename": "ui/message_center/notifier_settings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-07T19:01:13Z",
+      "side": 1,
+      "message": "Please clarify that this is *only* used for Chrome OS multi-profile support, any other platform will just ignore it. It might be worthwhile saying that the actual check lives outside of the message_center too.",
+      "revId": "3f912719737ed6ae231efb68c7423e8d466c0d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10fe2eb_468a096f",
+        "filename": "ui/message_center/notifier_settings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-07T19:01:13Z",
+      "side": 1,
+      "message": "\"This property is ignored if the notification is an Ash system notification.\"\n\nLet\u0027s remove the sentence in favor of the DCHECK?",
+      "revId": "3f912719737ed6ae231efb68c7423e8d466c0d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
