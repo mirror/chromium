@@ -321,10 +321,8 @@ void CopyFromCompositingSurfaceFinished(
 }
 
 std::unique_ptr<ui::TouchSelectionController> CreateSelectionController(
-    ui::TouchSelectionControllerClient* client,
-    ContentViewCore* content_view_core) {
+    ui::TouchSelectionControllerClient* client) {
   DCHECK(client);
-  DCHECK(content_view_core);
   ui::TouchSelectionController::Config config;
   config.max_tap_duration = base::TimeDelta::FromMilliseconds(
       gfx::ViewConfiguration::GetLongPressTimeoutInMs());
@@ -441,8 +439,7 @@ void RenderWidgetHostViewAndroid::OnContextLost() {
 }
 
 RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
-    RenderWidgetHostImpl* widget_host,
-    ContentViewCore* content_view_core)
+    RenderWidgetHostImpl* widget_host)
     : host_(widget_host),
       begin_frame_source_(nullptr),
       outstanding_begin_frame_requests_(0),
@@ -492,18 +489,14 @@ RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
   host_->SetView(this);
   touch_selection_controller_client_manager_ =
       base::MakeUnique<TouchSelectionControllerClientManagerAndroid>(this);
-  SetContentViewCore(content_view_core);
 
-  CreateOverscrollControllerIfPossible();
-
+  UpdateContentViewCore(nullptr);
   if (GetTextInputManager())
     GetTextInputManager()->AddObserver(this);
 }
 
 RenderWidgetHostViewAndroid::~RenderWidgetHostViewAndroid() {
-  if (content_view_core_)
-    content_view_core_->RemoveObserver(this);
-  SetContentViewCore(NULL);
+  UpdateContentViewCore(nullptr);
   DCHECK(!ime_adapter_android_);
   DCHECK(ack_callbacks_.empty());
   DCHECK(!delegated_frame_host_);
@@ -1079,7 +1072,7 @@ void RenderWidgetHostViewAndroid::RenderProcessGone(
 
 void RenderWidgetHostViewAndroid::Destroy() {
   host_->ViewDestroyed();
-  SetContentViewCore(NULL);
+  UpdateContentViewCore(nullptr);
   delegated_frame_host_.reset();
 
   // The RenderWidgetHost's destruction led here, so don't call it.
@@ -1415,7 +1408,7 @@ void RenderWidgetHostViewAndroid::SetSelectionControllerClientForTesting(
   touch_selection_controller_client_for_test_.swap(client);
 
   touch_selection_controller_ = CreateSelectionController(
-      touch_selection_controller_client_for_test_.get(), content_view_core_);
+      touch_selection_controller_client_for_test_.get());
 }
 
 std::unique_ptr<ui::TouchHandleDrawable>
@@ -2083,62 +2076,59 @@ viz::FrameSinkId RenderWidgetHostViewAndroid::GetFrameSinkId() {
   return delegated_frame_host_->GetFrameSinkId();
 }
 
-void RenderWidgetHostViewAndroid::SetContentViewCore(
-    ContentViewCore* content_view_core) {
-  DCHECK(!content_view_core || !content_view_core_ ||
-         (content_view_core_ == content_view_core));
+bool RenderWidgetHostViewAndroid::UpdateContentViewCore(
+    ContentViewCore* new_cvc) {
+  DCHECK(!new_cvc || !content_view_core_ || (content_view_core_ == new_cvc));
   StopObservingRootWindow();
 
   bool resize = false;
-  if (content_view_core != content_view_core_) {
+  bool updated = false;
+  if (new_cvc != content_view_core_) {
     touch_selection_controller_.reset();
     RunAckCallbacks();
     // TODO(yusufo) : Get rid of the below conditions and have a better handling
     // for resizing after crbug.com/628302 is handled.
-    bool is_size_initialized = !content_view_core
-        || content_view_core->GetViewportSizeDip().width() != 0
-        || content_view_core->GetViewportSizeDip().height() != 0;
+    bool is_size_initialized = !new_cvc ||
+                               new_cvc->GetViewportSizeDip().width() != 0 ||
+                               new_cvc->GetViewportSizeDip().height() != 0;
     if (content_view_core_ || is_size_initialized)
       resize = true;
     if (content_view_core_) {
-      content_view_core_->RemoveObserver(this);
       view_.RemoveObserver(this);
       view_.RemoveFromParent();
       view_.GetLayer()->RemoveFromParent();
     }
-    if (content_view_core) {
-      content_view_core->AddObserver(this);
+    if (new_cvc) {
       view_.AddObserver(this);
-      ui::ViewAndroid* parent_view = content_view_core->GetViewAndroid();
+      ui::ViewAndroid* parent_view = new_cvc->GetViewAndroid();
       parent_view->AddChild(&view_);
       parent_view->GetLayer()->AddChild(view_.GetLayer());
     }
-    content_view_core_ = content_view_core;
+    content_view_core_ = new_cvc;
+    updated = true;
   }
 
   if (!content_view_core_) {
     sync_compositor_.reset();
-    return;
-  }
+  } else {
+    if (is_showing_ && view_.GetWindowAndroid())
+      StartObservingRootWindow();
 
-  if (is_showing_ && view_.GetWindowAndroid())
-    StartObservingRootWindow();
+    if (resize)
+      WasResized();
 
-  if (resize)
-    WasResized();
+    if (!touch_selection_controller_) {
+      ui::TouchSelectionControllerClient* client =
+          touch_selection_controller_client_manager_.get();
+      if (touch_selection_controller_client_for_test_)
+        client = touch_selection_controller_client_for_test_.get();
 
-  if (!touch_selection_controller_) {
-    ui::TouchSelectionControllerClient* client =
-        touch_selection_controller_client_manager_.get();
-    if (touch_selection_controller_client_for_test_)
-      client = touch_selection_controller_client_for_test_.get();
+      touch_selection_controller_ = CreateSelectionController(client);
+    }
 
-    touch_selection_controller_ =
-        CreateSelectionController(client, content_view_core_);
-  }
-
-  if (content_view_core_)
     CreateOverscrollControllerIfPossible();
+  }
+  return updated;
 }
 
 void RenderWidgetHostViewAndroid::RunAckCallbacks() {
@@ -2188,8 +2178,8 @@ void RenderWidgetHostViewAndroid::OnPhysicalBackingSizeChanged() {
   WasResized();
 }
 
-void RenderWidgetHostViewAndroid::OnContentViewCoreDestroyed() {
-  SetContentViewCore(NULL);
+void RenderWidgetHostViewAndroid::OnContentDestroyed() {
+  UpdateContentViewCore(nullptr);
   overscroll_controller_.reset();
 }
 

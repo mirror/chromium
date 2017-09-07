@@ -21,6 +21,7 @@
 #include "cc/layers/layer.h"
 #include "cc/layers/solid_color_layer.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
+#include "content/browser/android/content_destruction_observer.h"
 #include "content/browser/android/gesture_event_type.h"
 #include "content/browser/android/interstitial_page_delegate_android.h"
 #include "content/browser/android/java/gin_java_bridge_dispatcher_host.h"
@@ -208,19 +209,7 @@ ContentViewCore::ContentViewCore(
   InitWebContents();
 }
 
-void ContentViewCore::AddObserver(ContentViewCoreObserver* observer) {
-  observer_list_.AddObserver(observer);
-}
-
-void ContentViewCore::RemoveObserver(ContentViewCoreObserver* observer) {
-  observer_list_.RemoveObserver(observer);
-}
-
 ContentViewCore::~ContentViewCore() {
-  for (auto& observer : observer_list_)
-    observer.OnContentViewCoreDestroyed();
-  observer_list_.Clear();
-
   JNIEnv* env = base::android::AttachCurrentThread();
   ScopedJavaLocalRef<jobject> j_obj = java_ref_.get(env);
   java_ref_.reset();
@@ -306,12 +295,12 @@ void ContentViewCore::RenderViewHostChanged(RenderViewHost* old_host,
         static_cast<RenderWidgetHostViewAndroid*>(
             old_host->GetWidget()->GetView());
     if (view)
-      view->SetContentViewCore(NULL);
+      view->UpdateContentViewCore(nullptr);
 
     view = static_cast<RenderWidgetHostViewAndroid*>(
         new_host->GetWidget()->GetView());
-    if (view)
-      view->SetContentViewCore(this);
+    if (view && view->UpdateContentViewCore(this))
+      ContentDestructionObserver::Create(web_contents_, view);
   }
   int new_pid =
       GetRenderProcessIdFromRenderViewHost(web_contents_->GetRenderViewHost());
