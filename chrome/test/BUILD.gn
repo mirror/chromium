@@ -548,6 +548,7 @@ if (!is_android) {
       "//chrome:strings",
       "//chrome/browser",
       "//chrome/browser/devtools",
+      "//chrome/browser/ui/views",
       "//chrome/renderer",
       "//components/resources",
       "//components/sync",

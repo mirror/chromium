@@ -10,6 +10,7 @@
 #include "chrome/browser/lifetime/keep_alive_types.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
+#include "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.h"
 #include "chrome/test/base/interactive_test_utils.h"
 #include "extensions/browser/app_window/native_app_window.h"
 #include "extensions/test/extension_test_message_listener.h"
@@ -27,6 +28,10 @@
 #include "ui/views/widget/desktop_aura/desktop_window_tree_host_win.h"
 #include "ui/views/win/hwnd_message_handler_delegate.h"
 #include "ui/views/win/hwnd_util.h"
+#endif
+
+#if defined(OS_CHROMEOS)
+#include "chromeos/login/scoped_test_public_session_login_state.h"
 #endif
 
 using extensions::AppWindow;
@@ -87,6 +92,19 @@ class AppWindowInteractiveTest : public extensions::PlatformAppBrowserTest {
       ASSERT_TRUE(SimulateKeyPress(ui::VKEY_Z));
       content::RunAllPendingInMessageLoop();
     }
+  }
+
+  ChromeNativeAppWindowViewsAuraAsh* GetChromeNativeAppWindowViewsAuraAsh() {
+    return static_cast<ChromeNativeAppWindowViewsAuraAsh*>(
+        GetFirstAppWindow()->GetBaseWindow());
+  }
+
+  bool IsImmersiveModeEnabled() {
+    return GetChromeNativeAppWindowViewsAuraAsh()->IsImmersiveModeEnabled();
+  }
+
+  bool IsExclusiveAccessBubbleShown() {
+    return GetChromeNativeAppWindowViewsAuraAsh()->exclusive_access_bubble();
   }
 
   // This test is a method so that we can test with each frame type.
@@ -490,6 +508,132 @@ IN_PROC_BROWSER_TEST_F(AppWindowInteractiveTest, TestCreateHidden) {
 IN_PROC_BROWSER_TEST_F(AppWindowInteractiveTest, MAYBE_TestFullscreen) {
   ASSERT_TRUE(RunAppWindowInteractiveTest("testFullscreen")) << message_;
 }
+
+IN_PROC_BROWSER_TEST_F(AppWindowInteractiveTest,
+                       NoImmersiveOrBubbleOutsidePublicSessionWindow) {
+#if defined(OS_MACOSX)
+  ui::test::ScopedFakeNSWindowFullscreen fake_fullscreen;
+#endif
+
+  ExtensionTestMessageListener launched_listener("Launched", true);
+  LoadAndLaunchPlatformApp("leave_fullscreen", &launched_listener);
+
+  // We start by making sure the window is actually focused.
+  ASSERT_TRUE(ui_test_utils::ShowAndFocusNativeWindow(
+      GetFirstAppWindow()->GetNativeWindow()));
+
+  // When receiving the reply, the application will try to go fullscreen using
+  // the Window API but there is no synchronous way to know if that actually
+  // succeeded. Also, failure will not be notified. A failure case will only be
+  // known with a timeout.
+  {
+    FullscreenChangeWaiter fs_changed(GetFirstAppWindow()->GetBaseWindow());
+
+    launched_listener.Reply("window");
+
+    fs_changed.Wait();
+  }
+
+  EXPECT_FALSE(IsImmersiveModeEnabled());
+  EXPECT_FALSE(IsExclusiveAccessBubbleShown());
+}
+
+IN_PROC_BROWSER_TEST_F(AppWindowInteractiveTest,
+                       NoImmersiveOrBubbleOutsidePublicSessionDom) {
+#if defined(OS_MACOSX)
+  ui::test::ScopedFakeNSWindowFullscreen fake_fullscreen;
+#endif
+
+  ExtensionTestMessageListener launched_listener("Launched", true);
+  LoadAndLaunchPlatformApp("leave_fullscreen", &launched_listener);
+
+  // We start by making sure the window is actually focused.
+  ASSERT_TRUE(ui_test_utils::ShowAndFocusNativeWindow(
+      GetFirstAppWindow()->GetNativeWindow()));
+
+  launched_listener.Reply("dom");
+
+  // Because the DOM way to go fullscreen requires user gesture, we simulate a
+  // key event to get the window entering in fullscreen mode. The reply will
+  // make the window listen for the key event. The reply will be sent to the
+  // renderer process before the keypress and should be received in that order.
+  // When receiving the key event, the application will try to go fullscreen
+  // using the Window API but there is no synchronous way to know if that
+  // actually succeeded. Also, failure will not be notified. A failure case will
+  // only be known with a timeout.
+  {
+    FullscreenChangeWaiter fs_changed(GetFirstAppWindow()->GetBaseWindow());
+
+    WaitUntilKeyFocus();
+    ASSERT_TRUE(SimulateKeyPress(ui::VKEY_A));
+
+    fs_changed.Wait();
+  }
+
+  EXPECT_FALSE(IsImmersiveModeEnabled());
+  EXPECT_FALSE(IsExclusiveAccessBubbleShown());
+}
+
+#if defined(OS_CHROMEOS)
+IN_PROC_BROWSER_TEST_F(AppWindowInteractiveTest,
+                       ImmersiveNoBubbleInsidePublicSessionWindow) {
+  chromeos::ScopedTestPublicSessionLoginState state;
+  ExtensionTestMessageListener launched_listener("Launched", true);
+  LoadAndLaunchPlatformApp("leave_fullscreen", &launched_listener);
+
+  // We start by making sure the window is actually focused.
+  ASSERT_TRUE(ui_test_utils::ShowAndFocusNativeWindow(
+      GetFirstAppWindow()->GetNativeWindow()));
+
+  // When receiving the reply, the application will try to go fullscreen using
+  // the Window API but there is no synchronous way to know if that actually
+  // succeeded. Also, failure will not be notified. A failure case will only be
+  // known with a timeout.
+  {
+    FullscreenChangeWaiter fs_changed(GetFirstAppWindow()->GetBaseWindow());
+
+    launched_listener.Reply("window");
+
+    fs_changed.Wait();
+  }
+
+  EXPECT_TRUE(IsImmersiveModeEnabled());
+  EXPECT_FALSE(IsExclusiveAccessBubbleShown());
+}
+
+IN_PROC_BROWSER_TEST_F(AppWindowInteractiveTest,
+                       ImmersiveAndBubbleInsidePublicSessionDom) {
+  chromeos::ScopedTestPublicSessionLoginState state;
+  ExtensionTestMessageListener launched_listener("Launched", true);
+  LoadAndLaunchPlatformApp("leave_fullscreen", &launched_listener);
+
+  // We start by making sure the window is actually focused.
+  ASSERT_TRUE(ui_test_utils::ShowAndFocusNativeWindow(
+      GetFirstAppWindow()->GetNativeWindow()));
+
+  launched_listener.Reply("dom");
+
+  // Because the DOM way to go fullscreen requires user gesture, we simulate a
+  // key event to get the window entering in fullscreen mode. The reply will
+  // make the window listen for the key event. The reply will be sent to the
+  // renderer process before the keypress and should be received in that order.
+  // When receiving the key event, the application will try to go fullscreen
+  // using the Window API but there is no synchronous way to know if that
+  // actually succeeded. Also, failure will not be notified. A failure case will
+  // only be known with a timeout.
+  {
+    FullscreenChangeWaiter fs_changed(GetFirstAppWindow()->GetBaseWindow());
+
+    WaitUntilKeyFocus();
+    ASSERT_TRUE(SimulateKeyPress(ui::VKEY_A));
+
+    fs_changed.Wait();
+  }
+
+  EXPECT_TRUE(IsImmersiveModeEnabled());
+  EXPECT_TRUE(IsExclusiveAccessBubbleShown());
+}
+#endif
 
 // Only Linux and Windows use keep-alive to determine when to shut down.
 #if defined(OS_LINUX) || defined(OS_WIN)
