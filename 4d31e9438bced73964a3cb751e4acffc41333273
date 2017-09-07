@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "d0a5b974_af406ccd",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollableAreaTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-07T16:42:58Z",
+      "side": 1,
+      "message": "Yeah, I don\u0027t think this should be a \"unit test\" of just ScrollableArea but more end-to-end. Lets move it to ScrollbarsTest.cpp and make it actually load a file with a \u003cselect\u003e, open the popup and grab the real ScrollableArea from it. You should be able to get at it via WebViewImpl-\u003eGetPagePopup()-\u003eWindow()-\u003eGetFrame()-\u003e...",
+      "parentUuid": "edc67115_a941710c",
+      "range": {
+        "startLine": 290,
+        "startChar": 32,
+        "endLine": 290,
+        "endChar": 71
+      },
+      "revId": "4d31e9438bced73964a3cb751e4acffc41333273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a1fb5b5_34b4a439",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollbarTestSuite.h",
         "patchSetId": 7
