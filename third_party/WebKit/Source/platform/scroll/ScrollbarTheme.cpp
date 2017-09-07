@@ -234,6 +234,7 @@ void ScrollbarTheme::PaintTickmarks(GraphicsContext& context,
                                     const IntRect& rect) {
 // Android paints tickmarks in the browser at FindResultBar.java.
 #if !defined(OS_ANDROID)
+  LOG(ERROR) << "PaintTickmarks 1 " << rect.ToString();
   if (scrollbar.Orientation() != kVerticalScrollbar)
     return;
 
@@ -249,7 +250,7 @@ void ScrollbarTheme::PaintTickmarks(GraphicsContext& context,
   if (DrawingRecorder::UseCachedDrawingIfPossible(
           context, scrollbar, DisplayItem::kScrollbarTickmarks))
     return;
-
+  LOG(ERROR) << "PaintTickmarks 2";
   DrawingRecorder recorder(context, scrollbar, DisplayItem::kScrollbarTickmarks,
                            rect);
   GraphicsContextStateSaver state_saver(context);

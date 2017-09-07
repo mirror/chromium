@@ -3,6 +3,8 @@
 // found in the LICENSE file.
 
 #include "cc/layers/painted_overlay_scrollbar_layer_impl.h"
+
+#include "cc/quads/texture_draw_quad.h"
 #include "cc/trees/layer_tree_impl.h"
 
 namespace cc {
@@ -27,6 +29,7 @@ PaintedOverlayScrollbarLayerImpl::PaintedOverlayScrollbarLayerImpl(
                              is_left_side_vertical_scrollbar,
                              true),
       thumb_ui_resource_id_(0),
+      track_ui_resource_id_(0),
       thumb_thickness_(0),
       thumb_length_(0),
       track_start_(0),
@@ -55,6 +58,7 @@ void PaintedOverlayScrollbarLayerImpl::PushPropertiesTo(LayerImpl* layer) {
   scrollbar_layer->SetAperture(aperture_);
 
   scrollbar_layer->set_thumb_ui_resource_id(thumb_ui_resource_id_);
+  scrollbar_layer->set_track_ui_resource_id(track_ui_resource_id_);
 }
 
 bool PaintedOverlayScrollbarLayerImpl::WillDraw(
@@ -67,8 +71,10 @@ bool PaintedOverlayScrollbarLayerImpl::WillDraw(
 void PaintedOverlayScrollbarLayerImpl::AppendQuads(
     RenderPass* render_pass,
     AppendQuadsData* append_quads_data) {
-  if (aperture_.IsEmpty())
-    return;
+  bool nearest_neighbor = false;
+  viz::SharedQuadState* shared_quad_state =
+      render_pass->CreateAndAppendSharedQuadState();
+  if (!aperture_.IsEmpty()) {
 
   // For overlay scrollbars, the border should match the inset of the aperture
   // and be symmetrical.
@@ -77,7 +83,6 @@ void PaintedOverlayScrollbarLayerImpl::AppendQuads(
   gfx::Rect thumb_quad_rect(ComputeThumbQuadRect());
   gfx::Rect layer_occlusion;
   bool fill_center = true;
-  bool nearest_neighbor = false;
 
   // Avoid drawing a scrollber in the degenerate case where the scroller is
   // smaller than the border size.
@@ -90,8 +95,6 @@ void PaintedOverlayScrollbarLayerImpl::AppendQuads(
                             nearest_neighbor);
   quad_generator_.CheckGeometryLimitations();
 
-  viz::SharedQuadState* shared_quad_state =
-      render_pass->CreateAndAppendSharedQuadState();
   bool are_contents_opaque =
       contents_opaque() ||
       layer_tree_impl()->IsUIResourceOpaque(thumb_ui_resource_id_);
@@ -109,6 +112,35 @@ void PaintedOverlayScrollbarLayerImpl::AppendQuads(
 
   quad_generator_.AppendQuads(this, thumb_ui_resource_id_, render_pass,
                               shared_quad_state, patches);
+  }
+  bool premultipled_alpha = true;
+  bool flipped = false;
+  gfx::PointF uv_top_left(0.f, 0.f);
+  gfx::PointF uv_bottom_right(1.f, 1.f);
+  viz::ResourceId track_resource_id =
+        layer_tree_impl()->ResourceIdForUIResource(track_ui_resource_id_);
+
+  gfx::Rect track_quad_rect(bounds());
+  gfx::Rect scaled_track_quad_rect(bounds());
+  gfx::Rect visible_track_quad_rect =
+      draw_properties().occlusion_in_content_space.GetUnoccludedContentRect(
+          track_quad_rect);
+  gfx::Rect scaled_visible_track_quad_rect = gfx::ScaleToEnclosingRect(
+      visible_track_quad_rect, 1.f);
+  LOG(ERROR) << "track_ui_resource_id_ " << track_ui_resource_id_;
+  if (track_resource_id) {
+    LOG(ERROR) << "add quad ";
+    bool needs_blending = !contents_opaque();
+    const float opacity[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    TextureDrawQuad* quad =
+        render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
+    quad->SetNew(shared_quad_state, scaled_track_quad_rect,
+                 scaled_visible_track_quad_rect, needs_blending,
+                 track_resource_id, premultipled_alpha, uv_top_left,
+                 uv_bottom_right, SK_ColorTRANSPARENT, opacity, flipped,
+                 nearest_neighbor, false);
+    ValidateQuadResources(quad);
+  }
 }
 
 void PaintedOverlayScrollbarLayerImpl::SetThumbThickness(int thumb_thickness) {
