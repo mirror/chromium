@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29c8afdb_674a7d55",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-07T17:52:34Z",
+      "side": 1,
+      "message": "You may be able to skip the temporary here and directly pass\n{safe_browsing::GetUrlSubresourceFilterId()}",
+      "range": {
+        "startLine": 180,
+        "startChar": 60,
+        "endLine": 180,
+        "endChar": 68
+      },
+      "revId": "624c2acd3d93b95a3f6be3daebb59b5ba9add66c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
