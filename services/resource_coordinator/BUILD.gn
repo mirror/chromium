@@ -33,6 +33,29 @@ source_set("lib") {
     "coordination_unit/tab_signal_generator_impl.h",
     "coordination_unit/web_contents_coordination_unit_impl.cc",
     "coordination_unit/web_contents_coordination_unit_impl.h",
+
+    # Alternative implementation, just experimenting with it!
+    "coordination_unit/coordination_unit_base.cc",
+    "coordination_unit/coordination_unit_base.h",
+    "coordination_unit/coordination_unit_base_impl.h",
+    "coordination_unit/coordination_unit_base_impl_details.h",
+    "coordination_unit/coordination_unit_collection.cc",
+    "coordination_unit/coordination_unit_collection.h",
+    "coordination_unit/coordination_unit_relationships.h",
+    "coordination_unit/coordination_unit_relationships_details.h",
+    "coordination_unit/coordination_unit_relationship_types.cc",
+    "coordination_unit/coordination_unit_relationship_types.h",
+    "coordination_unit/coordination_unit_types.cc",
+    "coordination_unit/coordination_unit_types.h",
+    "coordination_unit/coordination_unit_validation.cc",
+    "coordination_unit/coordination_unit_validation.h",
+    "coordination_unit/frame_cu.cc",
+    "coordination_unit/frame_cu.h",
+    "coordination_unit/page_cu.cc",
+    "coordination_unit/page_cu.h",
+    "coordination_unit/process_cu.cc",
+    "coordination_unit/process_cu.h",
+
     "memory_instrumentation/coordinator_impl.cc",
     "memory_instrumentation/coordinator_impl.h",
     "memory_instrumentation/process_map.cc",
@@ -82,6 +105,10 @@ source_set("tests") {
     "coordination_unit/mock_coordination_unit_graphs.h",
     "coordination_unit/tab_signal_generator_impl_unittest.cc",
     "coordination_unit/web_contents_coordination_unit_impl_unittest.cc",
+
+    # Alternative implementation, just experimenting with it!
+    "coordination_unit/coordination_unit_validation_unittest.cc",
+
     "memory_instrumentation/coordinator_impl_unittest.cc",
     "memory_instrumentation/process_map_unittest.cc",
     "public/cpp/memory_instrumentation/os_metrics_unittest.cc",
