@@ -243,6 +243,24 @@
     },
     {
       "key": {
+        "uuid": "766ad824_bb3e9476",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_special_subframe_navigations_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-07T15:12:08Z",
+      "side": 1,
+      "message": "Converted this to sync using document.write.",
+      "parentUuid": "ee3943c7_602a4665",
+      "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a53087f9_db1172d6",
         "filename": "chrome/browser/subresource_filter/subresource_filter_special_subframe_navigations_browsertest.cc",
         "patchSetId": 5
