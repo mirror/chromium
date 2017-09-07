@@ -260,6 +260,16 @@
 #define IntToStringType base::IntToString
 #endif
 
+// This is temporary to try to locate a core trampler.
+// TODO(bcwhite):  Remove when crbug/736675 is resolved.
+#if defined(OS_ANDROID)
+#include "base/metrics/statistics_recorder.h"
+#define VALIDATE_ALL_HISTOGRAMS(x) \
+  base::StatisticsRecorder::ValidateAllHistograms(x)
+#else
+#define VALIDATE_ALL_HISTOGRAMS(x)
+#endif
+
 namespace content {
 namespace {
 
@@ -3618,6 +3628,7 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
   // It should not be possible for a process death notification to come in while
   // we are dying.
   DCHECK(!deleting_soon_);
+  VALIDATE_ALL_HISTOGRAMS(10);
 
   // child_process_launcher_ can be NULL in single process mode or if fast
   // termination happened.
@@ -3642,6 +3653,8 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
 
   RendererClosedDetails details(status, exit_code);
 
+  VALIDATE_ALL_HISTOGRAMS(20);
+
   child_process_launcher_.reset();
   is_dead_ = true;
   if (route_provider_binding_.is_bound())
@@ -3651,6 +3664,8 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
   ResetChannelProxy();
 
   UpdateProcessPriority();
+
+  VALIDATE_ALL_HISTOGRAMS(30);
 
   within_process_died_observer_ = true;
   NotificationService::current()->Notify(
@@ -3662,6 +3677,8 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
 
   RemoveUserData(kSessionStorageHolderKey);
 
+  VALIDATE_ALL_HISTOGRAMS(40);
+
   base::IDMap<IPC::Listener*>::iterator iter(&listeners_);
   while (!iter.IsAtEnd()) {
     iter.GetCurrentValue()->OnMessageReceived(FrameHostMsg_RenderProcessGone(
@@ -3669,12 +3686,16 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
     iter.Advance();
   }
 
+  VALIDATE_ALL_HISTOGRAMS(50);
+
   // Initialize a new ChannelProxy in case this host is re-used for a new
   // process. This ensures that new messages can be sent on the host ASAP (even
   // before Init()) and they'll eventually reach the new process.
   //
   // Note that this may have already been called by one of the above observers
   EnableSendQueue();
+
+  VALIDATE_ALL_HISTOGRAMS(60);
 
   // It's possible that one of the calls out to the observers might have caused
   // this object to be no longer needed.
@@ -3692,6 +3713,7 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
 
   // This object is not deleted at this point and might be reused later.
   // TODO(darin): clean this up
+  VALIDATE_ALL_HISTOGRAMS(99);
 }
 
 size_t RenderProcessHost::GetActiveViewCount() {
