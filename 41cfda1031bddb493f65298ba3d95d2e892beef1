@@ -34,6 +34,24 @@
       "revId": "41cfda1031bddb493f65298ba3d95d2e892beef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847a4f9b_31b60394",
+        "filename": "build/config/ios/ios_sdk.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-09-07T16:20:37Z",
+      "side": 1,
+      "message": "Justin\u003e\nYeah, I\u0027m aware of this :-(\n\nHere\u0027s what I would like for it to happen:\nAs soon as developers start working with the beta, they\u0027d change the second assert.\nThat change would serve as a reminder that once everybody migrates to the new xcode (~2 months later) the 1st assert would need to be fixed.\nI realize it\u0027s far from ideal, but I don\u0027t see any other option.\n\nI guess I\u0027ll remove the 2nd assert.\n\nSylvain\u003e\nAck\nAs Justin said that SDK and Xcode versions are linked, I\u0027ll keep using xcode_version_int because it\u0027s less work for me.",
+      "parentUuid": "f76efc43_68bd1703",
+      "revId": "41cfda1031bddb493f65298ba3d95d2e892beef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
