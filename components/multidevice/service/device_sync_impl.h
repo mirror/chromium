@@ -10,6 +10,7 @@
 #include "components/cryptauth/cryptauth_device_manager.h"
 #include "components/cryptauth/cryptauth_enrollment_manager.h"
 #include "components/cryptauth/cryptauth_service.h"
+#include "components/multidevice/service/public/interfaces/device_sync.mojom-shared.h"
 #include "components/multidevice/service/public/interfaces/device_sync.mojom.h"
 #include "mojo/public/cpp/bindings/interface_ptr_set.h"
 #include "services/identity/public/interfaces/identity_manager.mojom.h"
@@ -69,6 +70,19 @@ class DeviceSyncImpl : public device_sync::mojom::DeviceSync,
   void ForceEnrollmentNow() override;
   void ForceSyncNow() override;
   void GetSyncedDevices(GetSyncedDevicesCallback callback) override;
+  void SetCapabilityEnabled(
+      const std::string& device_id,
+      cryptauth::DeviceCapabilityManager::Capability capability,
+      bool enabled,
+      SetCapabilityEnabledCallback callback) override;
+  void FindEligibleDevicesForCapability(
+      cryptauth::DeviceCapabilityManager::Capability capability,
+      FindEligibleDevicesForCapabilityCallback callback) override;
+  void IsCapabilityPromotable(
+      const std::string& device_id,
+      cryptauth::DeviceCapabilityManager::Capability capability,
+      IsCapabilityPromotableCallback callback) override;
+  void GetUserPublicKey(GetUserPublicKeyCallback callback) override;
   void AddObserver(device_sync::mojom::DeviceSyncObserverPtr observer) override;
 
  protected:
@@ -103,6 +117,27 @@ class DeviceSyncImpl : public device_sync::mojom::DeviceSync,
                                  const identity::AccountState& account_state);
   void OnConnectedToPrefService(std::unique_ptr<PrefService> pref_service);
 
+  // Callback for SetCapabilityEnabled
+  void CapabilityEnabledCallback(SetCapabilityEnabledCallback callback,
+                                 const std::string& response);
+
+  // Callbacks for FindEligibleDevicesForCapability
+  void SuccessEligibleDevicesForCapabilityCallback(
+      FindEligibleDevicesForCapabilityCallback callback,
+      const std::vector<cryptauth::ExternalDeviceInfo>& eligible_devices,
+      const std::vector<cryptauth::IneligibleDevice>& ineligible_devices);
+  void ErrorEligibleDevicesForCapabilityCallback(
+      FindEligibleDevicesForCapabilityCallback callback,
+      const std::string& error_code);
+
+  // Callbacks for IsCapabilityPromotable
+  void SuccessCapabilityPromotableCallback(
+      IsCapabilityPromotableCallback callback,
+      bool is_promotable);
+  void ErrorCapabilityPromotableCallback(
+      IsCapabilityPromotableCallback callback,
+      const std::string& result_code);
+
   void ForceEnrollmentInternal(bool is_initializing);
   void ForceSyncInternal(bool is_initializing);
 
@@ -113,6 +148,7 @@ class DeviceSyncImpl : public device_sync::mojom::DeviceSync,
   // Null when |managers_were_injected| is true; non-null otherwise
   std::unique_ptr<PrefService> pref_service_;
   identity::mojom::IdentityManagerPtr identity_manager_;
+
   // Null when |managers_were_injected_| is true; non-null otherwise.
   std::unique_ptr<cryptauth::CryptAuthGCMManager> gcm_manager_;
 
@@ -125,6 +161,8 @@ class DeviceSyncImpl : public device_sync::mojom::DeviceSync,
   cryptauth::CryptAuthEnrollmentManager* enrollment_manager_raw_ = nullptr;
   cryptauth::CryptAuthDeviceManager* device_manager_raw_ = nullptr;
 
+  std::unique_ptr<cryptauth::DeviceCapabilityManager>
+      device_capability_manager_;
   std::unique_ptr<cryptauth::RemoteDeviceProvider> remote_device_provider_;
 
   AccountInfo primary_account_info_;

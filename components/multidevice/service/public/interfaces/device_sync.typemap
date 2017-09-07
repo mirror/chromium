@@ -5,7 +5,8 @@
 mojom = "//components/multidevice/service/public/interfaces/device_sync.mojom"
 
 public_headers = [
-  "components/cryptauth/proto/cryptauth_api.pb.h",
+  "components/cryptauth/device_capability_manager.h",
+  "//components/cryptauth/proto/cryptauth_api.pb.h",
   "//components/cryptauth/remote_device.h",
 ]
 
@@ -24,5 +25,7 @@ public_deps = [
 
 type_mappings = [
   "device_sync.mojom.BeaconSeed=cryptauth::BeaconSeed",
+  "device_sync.mojom.IneligibleDevice=cryptauth::IneligibleDevice",
   "device_sync.mojom.RemoteDevice=cryptauth::RemoteDevice",
+  "device_sync.mojom.RemoteDeviceCapability=cryptauth::DeviceCapabilityManager::Capability",
 ]
