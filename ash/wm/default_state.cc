@@ -647,7 +647,15 @@ void DefaultState::UpdateBoundsFromState(WindowState* window_state,
       return;
   }
 
-  if (!window_state->IsMinimized()) {
+  // If bounds are set by client, then do not calculate them for the new
+  // window state, as they could be incorrect anyway. Assume, the client
+  // takes care of setting the geometry when changing the window state.
+  // TODO(oshima): Refactor the window state logic when bounds are handled
+  // by the client (ARC). crbug.com/762816
+  const bool bounds_controlled_outside_of_ash =
+      window_state->allow_set_bounds_direct();
+
+  if (!window_state->IsMinimized() && !bounds_controlled_outside_of_ash) {
     if (IsMinimizedWindowState(previous_state_type) ||
         window_state->IsFullscreen() || window_state->IsPinned()) {
       window_state->SetBoundsDirect(bounds_in_parent);
