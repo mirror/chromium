@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3db08acb_c20e77a3",
+        "filename": "content/shell/test_runner/web_ax_object_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-07T21:42:50Z",
+      "side": 1,
+      "message": "This looks like a mistake, should be above",
+      "revId": "4b9a71441d866b5723b72d96bf380a1239782e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c03459_5eecf0b8",
+        "filename": "content/shell/test_runner/web_ax_object_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-07T21:42:50Z",
+      "side": 1,
+      "message": "maybe explicitly static_cast to an int?",
+      "revId": "4b9a71441d866b5723b72d96bf380a1239782e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
