@@ -193,6 +193,30 @@
     },
     {
       "key": {
+        "uuid": "dec8f9ba_4d6193ba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-07T12:28:06Z",
+      "side": 1,
+      "message": "Article suggestions don\u0027t go through this at all, because their thumbnails are stored in a database and/or fetched from the network. Download suggestions (which only exist pre-CH) would request the same bitmaps iff the thumbnails are shown at the same size as downloads.\n\nI\u0027m a bit wary about making assumptions about the likelihood of situations like these though -- I\u0027ve been bitten too much in the past by assuming something that isn\u0027t likely is not going to happen, or is not likely enough to worry about. Deduplication keeps the number of bitmaps the same or reduces them, with negligible overhead, so I think using it is a win over not using it.",
+      "parentUuid": "d2cc20ce_19c655ed",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 53,
+        "endChar": 2
+      },
+      "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b7bdd53_548799d0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
         "patchSetId": 2
@@ -261,6 +285,30 @@
       "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5228398c_f7b6705c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-07T12:28:06Z",
+      "side": 1,
+      "message": "Duh... removed.",
+      "parentUuid": "89b02bdf_dfd5f369",
+      "range": {
+        "startLine": 171,
+        "startChar": 16,
+        "endLine": 171,
+        "endChar": 44
+      },
+      "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

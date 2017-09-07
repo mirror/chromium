@@ -22,6 +22,30 @@
       "revId": "b3825e6edb712e4128d74e45308749baa2d84e56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82533cab_513a9cfe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-07T12:28:06Z",
+      "side": 0,
+      "message": "It was also used to clear the cache under memory pressure, but we\u0027re now using DiscardableReferences for that, because the method wouldn\u0027t have been static anymore.",
+      "parentUuid": "16f8c8bc_674bbd6f",
+      "range": {
+        "startLine": 185,
+        "startChar": 4,
+        "endLine": 185,
+        "endChar": 37
+      },
+      "revId": "b3825e6edb712e4128d74e45308749baa2d84e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

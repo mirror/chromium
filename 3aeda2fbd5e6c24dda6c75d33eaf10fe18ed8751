@@ -22,6 +22,30 @@
       "revId": "3aeda2fbd5e6c24dda6c75d33eaf10fe18ed8751",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052743ff_715d99ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-07T12:28:06Z",
+      "side": 1,
+      "message": "\u003e Is my understanding correct?\n\u003e \n\u003e 1. If the LRU cache contains the bitmap, then we return the bitmap\n\u003e \n\u003e 2. If the LRU cache does not contain the bitmap, we check the deduplication cache.\n\u003e    a. If something is still holding a strong reference to the bitmap, the deduplication cache\u0027s weak reference will point to the actual bitmap, which will be returned.\n\u003e    b. If not, then we will refetch the bitmap from native.\n\u003e \n\u003e \n\u003e Can 2a occur in situations other than 2 clients requesting the same thumbnail? e.g. Client A has already requested it and has a strong reference that\u0027s not in the LRU cache. Client B requests the same bitmap. How often might this actually occur?\n\nIt could also happen if no one has a strong reference anymore, but there just hasn\u0027t been a garbage collection yet. That case would be less problematic I guess, because even without deduplication there wouldn\u0027t be any superfluous bitmaps around after the GC has run.",
+      "parentUuid": "0048eb59_5c8aa080",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 73
+      },
+      "revId": "3aeda2fbd5e6c24dda6c75d33eaf10fe18ed8751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
