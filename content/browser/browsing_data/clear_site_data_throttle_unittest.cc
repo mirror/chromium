@@ -176,17 +176,22 @@ TEST_F(ClearSiteDataThrottleTest, ParseHeaderAndExecuteClearingTask) {
       // One data type.
       {"\"cookies\"", true, false, false},
       {"\"storage\"", false, true, false},
-      {"\"cache\"", false, false, true},
+
+      // TODO(crbug.com/762417): The "cache" parameter is temporarily disabled.
+      {"\"cache\"", false, false, false},
 
       // Two data types.
       {"\"cookies\", \"storage\"", true, true, false},
-      {"\"cookies\", \"cache\"", true, false, true},
-      {"\"storage\", \"cache\"", false, true, true},
+
+      // TODO(crbug.com/762417): The "cache" parameter is temporarily disabled.
+      {"\"cookies\", \"cache\"", true, false, false},
+      {"\"storage\", \"cache\"", false, true, false},
 
       // Three data types.
-      {"\"storage\", \"cache\", \"cookies\"", true, true, true},
-      {"\"cache\", \"cookies\", \"storage\"", true, true, true},
-      {"\"cookies\", \"storage\", \"cache\"", true, true, true},
+      // TODO(crbug.com/762417): The "cache" parameter is temporarily disabled.
+      {"\"storage\", \"cache\", \"cookies\"", true, true, false},
+      {"\"cache\", \"cookies\", \"storage\"", true, true, false},
+      {"\"cookies\", \"storage\", \"cache\"", true, true, false},
 
       // Different formatting.
       {"\"cookies\"", true, false, false},
@@ -199,7 +204,7 @@ TEST_F(ClearSiteDataThrottleTest, ParseHeaderAndExecuteClearingTask) {
 
       // Unknown types are ignored, but we still proceed with the deletion for
       // those that we recognize.
-      {"\"cache\", \"foo\"", false, false, true},
+      {"\"storage\", \"foo\"", false, true, false},
   };
 
   for (const TestCase& test_case : test_cases) {
@@ -548,9 +553,9 @@ TEST_F(ClearSiteDataThrottleTest, FormattedConsoleOutput) {
        "No recognized types specified.\n"},
 
       // Successful deletion on the same URL.
-      {"\"cache\"", "https://origin3.com/bar",
+      {"\"cookies\"", "https://origin3.com/bar",
        "Clear-Site-Data header on 'https://origin3.com/bar': "
-       "Cleared data types: \"cache\".\n"},
+       "Cleared data types: \"cookies\".\n"},
 
       // Redirect to the original URL.
       // Successful deletion outputs one line.
