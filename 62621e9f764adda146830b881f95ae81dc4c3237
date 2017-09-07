@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e1e9d36_f4b0aa73",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/View.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-07T21:56:33Z",
+      "side": 1,
+      "message": "this won\u0027t focus if the tab is selected, but don\u0027t you want to not focus only if the tab already has focus? Consider you have elements tree focused, and open accessibility panel from the menubar. It should focus the accessibility panel regardless of whether or not it was already visible.",
+      "revId": "62621e9f764adda146830b881f95ae81dc4c3237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
