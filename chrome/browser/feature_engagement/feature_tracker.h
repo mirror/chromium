@@ -36,7 +36,7 @@ class FeatureTracker : public SessionDurationUpdater::Observer,
   FeatureTracker(Profile* profile,
                  SessionDurationUpdater* session_duration_updater,
                  const base::Feature* feature,
-                 base::TimeDelta defaultTimeRequiredToShowPromo);
+                 base::TimeDelta default_time_required_to_show_promo);
 
   // Adds the SessionDurationUpdater observer.
   void AddSessionDurationObserver();
