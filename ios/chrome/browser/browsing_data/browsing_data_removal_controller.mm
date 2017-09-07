@@ -176,6 +176,8 @@ void DoNothing(uint32_t n) {}
     DCHECK_EQ(browsing_data::TimePeriod::ALL_TIME, timePeriod)
         << "Partial clearing not supported";
     callbackCounter->IncrementCount();
+    // Not sure if we can get main_controller _mainBrowserState to do the check
+    // against browserState. And I'm not even sure is necessary.
     [_delegate
         removeExternalFilesForBrowserState:browserState
                          completionHandler:decrementCallbackCounterCount];
