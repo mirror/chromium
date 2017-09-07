@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c15ea893_10dbd690",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1841,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-07T22:53:17Z",
+      "side": 1,
+      "message": "There are actually a couple other cert_database_foo that are essentially the same.. should I just make them all use _stub.cc ?",
+      "revId": "c4e30b5d7734ad30a01dc468692f3097dd756713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
