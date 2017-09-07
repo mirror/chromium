@@ -15,6 +15,10 @@
 // frame on the toolbar. The toolbar has a dark blur visual effect as the
 // background.
 @interface TabGridToolbar : UIView<ZoomTransitionDelegate>
+
+// The the incognito mode of the toolbar, adapting its design.
+- (void)setIncognito:(BOOL)incognito;
+
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_TAB_GRID_TAB_GRID_TOOLBAR_H_

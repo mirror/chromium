@@ -5,6 +5,8 @@
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_toolbar.h"
 
 #import "base/mac/foundation_util.h"
+#import "ios/chrome/browser/ui/rtl_geometry.h"
+#import "ios/clean/chrome/browser/ui/tab_grid/ui_button+cr_tab_grid.h"
 #import "ios/clean/chrome/browser/ui/tab_grid/ui_stack_view+cr_tab_grid.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -17,11 +19,13 @@ const CGFloat kToolbarHeight = 44.0f;
 
 @interface TabGridToolbar ()
 @property(nonatomic, weak) UIStackView* toolbarContent;
+@property(nonatomic, weak) UIVisualEffectView* toolbarView;
 @end
 
 @implementation TabGridToolbar
 
 @synthesize toolbarContent = _toolbarContent;
+@synthesize toolbarView = _toolbarView;
 
 - (instancetype)init {
   if (self = [super init]) {
@@ -35,6 +39,7 @@ const CGFloat kToolbarHeight = 44.0f;
 
     UIStackView* toolbarContent = [UIStackView cr_tabGridToolbarStackView];
     [toolbarView.contentView addSubview:toolbarContent];
+    _toolbarView = toolbarView;
     _toolbarContent = toolbarContent;
     // Sets the stackview to a fixed height, anchored to the bottom of the
     // blur view.
@@ -50,6 +55,19 @@ const CGFloat kToolbarHeight = 44.0f;
     ]];
   }
   return self;
+}
+
+- (void)setIncognito:(BOOL)incognito {
+  // TODO: Add correct colors.
+  if (incognito) {
+    UIVisualEffect* blurEffect =
+        [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    self.toolbarView.effect = blurEffect;
+  } else {
+    UIVisualEffect* blurEffect =
+        [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    self.toolbarView.effect = blurEffect;
+  }
 }
 
 #pragma mark - ZoomTransitionDelegate
