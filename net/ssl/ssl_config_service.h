@@ -65,10 +65,6 @@ class NET_EXPORT SSLConfigService
 
   virtual ~SSLConfigService();
 
-  // Process before/after config update.
-  void ProcessConfigUpdate(const SSLConfig& orig_config,
-                           const SSLConfig& new_config);
-
  private:
   base::ObserverList<Observer> observer_list_;
 };

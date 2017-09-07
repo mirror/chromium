@@ -23,9 +23,8 @@ class MockSSLConfigService : public SSLConfigService {
   // Sets the SSLConfig to be returned by GetSSLConfig and processes any
   // updates.
   void SetSSLConfig(const SSLConfig& config) {
-    SSLConfig old_config = config_;
     config_ = config;
-    ProcessConfigUpdate(old_config, config_);
+    NotifySSLConfigChange();
   }
 
  private:
@@ -43,24 +42,6 @@ class MockSSLConfigServiceObserver : public SSLConfigService::Observer {
 };
 
 }  // namespace
-
-TEST(SSLConfigServiceTest, NoChangesWontNotifyObservers) {
-  SSLConfig initial_config;
-  initial_config.rev_checking_enabled = true;
-  initial_config.false_start_enabled = false;
-  initial_config.version_min = SSL_PROTOCOL_VERSION_TLS1;
-  initial_config.version_max = SSL_PROTOCOL_VERSION_TLS1_2;
-
-  scoped_refptr<MockSSLConfigService> mock_service(
-      new MockSSLConfigService(initial_config));
-  MockSSLConfigServiceObserver observer;
-  mock_service->AddObserver(&observer);
-
-  EXPECT_CALL(observer, OnSSLConfigChanged()).Times(0);
-  mock_service->SetSSLConfig(initial_config);
-
-  mock_service->RemoveObserver(&observer);
-}
 
 TEST(SSLConfigServiceTest, ConfigUpdatesNotifyObservers) {
   SSLConfig initial_config;

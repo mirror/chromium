@@ -131,9 +131,8 @@ void SSLConfigServicePref::GetSSLConfig(net::SSLConfig* config) {
 }
 
 void SSLConfigServicePref::SetNewSSLConfig(const net::SSLConfig& new_config) {
-  net::SSLConfig orig_config = cached_config_;
   cached_config_ = new_config;
-  ProcessConfigUpdate(orig_config, new_config);
+  NotifySSLConfigChange();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
