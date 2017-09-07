@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cc54a1b_9131c480",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-07T20:05:35Z",
+      "side": 1,
+      "message": "nit: a comment for why we\u0027re doing this here will probably save us time and bugs 6 months from now :)",
+      "range": {
+        "startLine": 1074,
+        "startChar": 19,
+        "endLine": 1074,
+        "endChar": 27
+      },
+      "revId": "5810153f7fe48a94dacb903e42c02f29dd3f948b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
