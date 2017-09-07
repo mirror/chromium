@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3926dc9d_47a4ca20",
+        "filename": "content/browser/android/text_suggestion_host_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-07T17:05:14Z",
+      "side": 1,
+      "message": "A somewhat cleaner way to do this is to do something like what is in offline_item_bridge.cc/OfflineItemBridge.java.  Basically:\n\nScopedJavaLocalRef\u003cjobject\u003e jlist \u003d Java_SuggestionInfoBridge_createArrayList(env);\n\nfor (size_t i \u003d 0; i \u003c suggestions.size() \u0026\u0026 i \u003c kMaxNumberOfSuggestions; i++) {\n  const blink::mojom::TextSuggestionPtr\u0026 suggestion_ptr \u003d suggestions[i];\n  Java_SuggestionInfoBridge_createSuggestionInfoAndAddToList(\n    env,\n    jlist,\n    /* other parameters */);\n}\n\nYou just need to a Java class to construct a SuggestionInfo from native.  Either make a separate bridge class like SuggestionInfoBridge or put the methods in SuggestionInfo itself (although I like the former).",
+      "parentUuid": "4e9aec4b_64a8b94e",
+      "range": {
+        "startLine": 164,
+        "startChar": 42,
+        "endLine": 164,
+        "endChar": 49
+      },
+      "revId": "c690e8dc96c193b5589f6d141e04cc4fc7f9f2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "991644ab_a66883d1",
         "filename": "content/browser/android/text_suggestion_host_android.cc",
         "patchSetId": 14
