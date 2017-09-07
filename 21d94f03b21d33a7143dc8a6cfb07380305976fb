@@ -16,6 +16,24 @@
       "revId": "21d94f03b21d33a7143dc8a6cfb07380305976fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac3816a_a7e988b6",
+        "filename": "cc/layers/ui_resource_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-09-07T17:20:16Z",
+      "side": 1,
+      "message": "Yes, definitely. Sorry I get too excited when i see the crash report. The opaqueness of the DebugBorderQuad could be different from the UI Resource one. I think i will create 2 different SQS for this particular case. What do you think?",
+      "parentUuid": "3ef43e0e_dc0c1945",
+      "revId": "21d94f03b21d33a7143dc8a6cfb07380305976fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
