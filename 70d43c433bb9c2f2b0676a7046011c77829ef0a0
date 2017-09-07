@@ -52,6 +52,24 @@
       "revId": "70d43c433bb9c2f2b0676a7046011c77829ef0a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09aee978_c372c06a",
+        "filename": "cc/layers/viewport.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-09-07T13:54:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c0ad141_0d9f042b",
+      "revId": "70d43c433bb9c2f2b0676a7046011c77829ef0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
