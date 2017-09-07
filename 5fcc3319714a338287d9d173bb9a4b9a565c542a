@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9ab2451_0788b9d2",
+        "filename": "third_party/WebKit/public/platform/scheduler/single_thread_task_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-07T17:11:13Z",
+      "side": 1,
+      "message": "I\u0027m wondering: would it be unacceptable to create a lightweight wrapper that is copyable that manually refs / unrefs?\n\nThen I think we can still forward declare, and avoid introducing more scoped_refptr into Blink.\n\n(I\u0027ve been thinking about the best way to resolve this problem as part of the using base in Blink work)",
+      "revId": "5fcc3319714a338287d9d173bb9a4b9a565c542a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
