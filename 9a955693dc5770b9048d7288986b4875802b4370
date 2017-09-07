@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9920ca4_35e042f1",
+        "filename": "tools/chrome_proxy/webdriver/run_all_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1162726
+      },
+      "writtenOn": "2017-09-07T00:35:45Z",
+      "side": 1,
+      "message": "Is this where you want to do that? This will only work if you call `python run_all_tests.py` Changing  https://cs.chromium.org/chromium/src/tools/chrome_proxy/webdriver/common.py?l\u003d773\u0026rcl\u003d8da0d01d4f111e47b6e107a4618f43f235790398 instead will make it work everywhere eg: `python smoke.py`",
+      "revId": "9a955693dc5770b9048d7288986b4875802b4370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426de3f9_318b561c",
+        "filename": "tools/chrome_proxy/webdriver/run_all_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1162726
+      },
+      "writtenOn": "2017-09-07T00:35:45Z",
+      "side": 1,
+      "message": "I\u0027ve never seen a negative return code. Check out https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html",
+      "revId": "9a955693dc5770b9048d7288986b4875802b4370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
