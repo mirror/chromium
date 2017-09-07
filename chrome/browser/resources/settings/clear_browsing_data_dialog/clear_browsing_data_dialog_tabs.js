@@ -201,6 +201,9 @@ Polymer({
   onClearBrowsingDataTap_: function() {
     if (this.shouldShowImportantSites_()) {
       var tab = this.$.tabs.selectedItem;
+      console.log('CBD tap');
+      console.log(this.$.tabs);
+      console.log(this.$.tabs.selectedItem);
       this.showImportantSitesDialog_ = true;
       this.showImportantSitesCacheSubtitle =
           tab.querySelector('.cache-checkbox').checked;
