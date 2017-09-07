@@ -22,6 +22,30 @@
       "revId": "3dbc3c40d1a38c024302377167aa52fc5a48ceff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1c832e_53d61ad4",
+        "filename": "components/arc/common/midis.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-09-07T18:12:54Z",
+      "side": 1,
+      "message": "The eventual function signature is planned to be something like this:\n\n interface MidisHost {\n   Connect@0(MidisServer\u0026 server_request, MidisCilient client_handle);\n };\n\nWhere |server_request| will be a pointer to the handle implemented by midis daemon, and |client_handle| is a handle to client callbacks which the midis daemon can call when device events occur.\n\nWhat would you suggest I keep the signature as, for this?",
+      "parentUuid": "3c9e676b_88cf9044",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 14
+      },
+      "revId": "3dbc3c40d1a38c024302377167aa52fc5a48ceff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
