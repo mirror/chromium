@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eb5917e_6a991499",
+        "filename": "content/browser/download/parallel_download_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-07T23:04:48Z",
+      "side": 1,
+      "message": "DCHECK_EQ(initial_request_offset_, initial_slices_to_download[0].offset);",
+      "revId": "ce699e679a136bece28db5c05dbe9b48430e0d80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f8a062_7f5e5cd3",
+        "filename": "content/browser/download/parallel_download_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-07T23:04:48Z",
+      "side": 1,
+      "message": "I think only the 2nd condition matters? the first should always be true?",
+      "revId": "ce699e679a136bece28db5c05dbe9b48430e0d80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
