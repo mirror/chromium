@@ -45,6 +45,13 @@ cr.define('print_preview', function() {
     this.customRadio_ = null;
 
     /**
+     * Custom page range label.
+     * @type {HTMLElement}
+     * @private
+     */
+    this.customLabel_ = null;
+
+    /**
      * All page rage radio button.
      * @type {HTMLInputElement}
      * @private
@@ -68,6 +75,7 @@ cr.define('print_preview', function() {
     ALL_RADIO: 'page-settings-all-radio',
     CUSTOM_HINT: 'page-settings-custom-hint',
     CUSTOM_INPUT: 'page-settings-custom-input',
+    CUSTOM_LABEL: 'page-settings-print-pages-div',
     CUSTOM_RADIO: 'page-settings-custom-radio'
   };
 
@@ -115,6 +123,9 @@ cr.define('print_preview', function() {
       this.tracker.add(
           customInput, 'input', this.onCustomInputChange_.bind(this));
       this.tracker.add(
+          assert(this.customLabel_), 'focus',
+          this.onCustomRadioClick_.bind(this));
+      this.tracker.add(
           this.pageRangeTicketItem_,
           print_preview.ticket_items.TicketItem.EventType.CHANGE,
           this.onPageRangeTicketItemChange_.bind(this));
@@ -139,6 +150,8 @@ cr.define('print_preview', function() {
           PageSettings.Classes_.CUSTOM_RADIO)[0];
       this.customHintEl_ = this.getElement().getElementsByClassName(
           PageSettings.Classes_.CUSTOM_HINT)[0];
+      this.customLabel_ = this.getElement().getElementsByClassName(
+          PageSettings.Classes_.CUSTOM_LABEL)[0];
     },
 
     /**
