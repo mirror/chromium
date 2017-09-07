@@ -82,6 +82,10 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
       weak_factory_(this) {
   if (!IsUsingMus()) {
     GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, this);
+#if DCHECK_IS_ON()
+    GetHostFrameSinkManager()->SetFrameSinkDebugLabel(
+        frame_sink_id_, "RenderWidgetHostViewChildFrame");
+#endif
     CreateCompositorFrameSinkSupport();
   }
 }
