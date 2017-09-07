@@ -70,6 +70,30 @@
       "revId": "a4d7ce3def7a91b7b87eafe5b398dd16aed599de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eafc8e66_3db092fa",
+        "filename": "content/browser/web_contents/web_contents_view_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T16:56:03Z",
+      "side": 0,
+      "message": "You can actually get the screen location from the event. But Trent\u0027s right, given we have the cursor screen point globally accessible it can be used too.",
+      "parentUuid": "d6c4b857_8f97bab5",
+      "range": {
+        "startLine": 1167,
+        "startChar": 21,
+        "endLine": 1167,
+        "endChar": 73
+      },
+      "revId": "a4d7ce3def7a91b7b87eafe5b398dd16aed599de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
