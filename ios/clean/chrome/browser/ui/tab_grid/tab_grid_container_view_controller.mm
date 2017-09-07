@@ -5,7 +5,7 @@
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_view_controller.h"
 
 #import "ios/clean/chrome/browser/ui/actions/tab_grid_toolbar_actions.h"
-#import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
+#import "ios/clean/chrome/browser/ui/commands/tab_grid_toolbar_commands.h"
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_toolbar.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -21,20 +21,29 @@
 @synthesize toolbar = _toolbar;
 @synthesize dispatcher = _dispatcher;
 @synthesize tabGrid = _tabGrid;
+@synthesize incognito = _incognito;
 
 - (void)setTabGrid:(UIViewController*)tabGrid {
+  [_tabGrid removeFromParentViewController];
   _tabGrid = tabGrid;
+
   [self addChildViewController:tabGrid];
+
   [self.view addSubview:tabGrid.view];
   tabGrid.view.translatesAutoresizingMaskIntoConstraints = NO;
   [NSLayoutConstraint activateConstraints:@[
-
     [tabGrid.view.topAnchor constraintEqualToAnchor:self.toolbar.bottomAnchor],
     [tabGrid.view.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
     [tabGrid.view.rightAnchor constraintEqualToAnchor:self.view.rightAnchor],
     [tabGrid.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
   ]];
+
   [tabGrid didMoveToParentViewController:self];
+}
+
+- (void)setIncognito:(BOOL)incognito {
+  _incognito = incognito;
+  [self.toolbar setIncognito:incognito];
 }
 
 #pragma mark - View lifecyle
@@ -70,6 +79,10 @@
 
 - (void)showToolsMenu:(id)sender {
   [self.dispatcher showToolsMenu];
+}
+
+- (void)toggleIncognito:(id)sender {
+  [self.dispatcher toggleIncognito];
 }
 
 #pragma mark - ZoomTransitionDelegate methods

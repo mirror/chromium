@@ -27,6 +27,9 @@
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [button setImage:image forState:UIControlStateNormal];
   [button setTintColor:[UIColor whiteColor]];
+  [button addTarget:nil
+                action:@selector(toggleIncognito:)
+      forControlEvents:UIControlEventTouchUpInside];
   return button;
 }
 
