@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "006eb646_3f2404e4",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-09-07T01:08:42Z",
+      "side": 1,
+      "message": "\"tells us to trigger the download cleanup\" -\u003e \"has requested download cleanup\"",
+      "revId": "38e8e28a9da38ee52c35f0597a327f58be9e7b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3f8be7_6715b784",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-09-07T01:08:42Z",
+      "side": 1,
+      "message": "Please add a TODO to refactor this class to avoid owning the store.",
+      "revId": "38e8e28a9da38ee52c35f0597a327f58be9e7b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
