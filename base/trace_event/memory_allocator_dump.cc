@@ -5,7 +5,6 @@
 #include "base/trace_event/memory_allocator_dump.h"
 
 #include "base/format_macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_provider.h"
@@ -36,8 +35,7 @@ MemoryAllocatorDump::MemoryAllocatorDump(const std::string& absolute_name,
     : absolute_name_(absolute_name),
       process_memory_dump_(process_memory_dump),
       guid_(guid),
-      flags_(Flags::DEFAULT),
-      size_(0) {
+      flags_(Flags::DEFAULT) {
   // The |absolute_name| cannot be empty.
   DCHECK(!absolute_name.empty());
 
@@ -63,8 +61,10 @@ MemoryAllocatorDump::~MemoryAllocatorDump() {
 void MemoryAllocatorDump::AddScalar(const char* name,
                                     const char* units,
                                     uint64_t value) {
-  if (strcmp(kNameSize, name) == 0)
+  if (strcmp(kNameSize, name) == 0) {
     size_ = value;
+    return;
+  }
   entries_.emplace_back(name, units, value);
 }
 
@@ -82,6 +82,15 @@ void MemoryAllocatorDump::AddString(const char* name,
 
 void MemoryAllocatorDump::DumpAttributes(TracedValue* value) const {
   std::string string_conversion_buffer;
+
+  if (size_.has_value()) {
+    SStringPrintf(&string_conversion_buffer, "%" PRIx64, size_.value());
+    value->BeginDictionary(kNameSize);
+    value->SetString("type", kTypeScalar);
+    value->SetString("units", kUnitsBytes);
+    value->SetString("value", string_conversion_buffer);
+    value->EndDictionary();
+  }
 
   for (const Entry& entry : entries_) {
     value->BeginDictionaryWithCopiedName(entry.name);
@@ -116,11 +125,17 @@ void MemoryAllocatorDump::AsValueInto(TracedValue* value) const {
 
 std::unique_ptr<TracedValue> MemoryAllocatorDump::attributes_for_testing()
     const {
-  std::unique_ptr<TracedValue> attributes = base::MakeUnique<TracedValue>();
+  std::unique_ptr<TracedValue> attributes = std::make_unique<TracedValue>();
   DumpAttributes(attributes.get());
   return attributes;
 }
 
+uint64_t MemoryAllocatorDump::GetSizeInBytes() const {
+  DCHECK(size_.has_value());
+  return size_.value_or(0);
+};
+
+MemoryAllocatorDump::Entry::Entry() = default;
 MemoryAllocatorDump::Entry::Entry(Entry&& other) = default;
 
 MemoryAllocatorDump::Entry::Entry(std::string name,
