@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca38f757_cdf6f27e",
+        "filename": "content/common/media/media_stream_controls.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-07T16:55:58Z",
+      "side": 1,
+      "message": "nit: public redundant in struct (and below).",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 23,
+        "endChar": 7
+      },
+      "revId": "79fc91e9ec0cef7330591eb5cc71b92a31f4d619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d1a7c1_0b4f87ac",
+        "filename": "content/common/media/media_stream_controls.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-07T16:55:58Z",
+      "side": 1,
+      "message": "nit: remove commented out code entirely.",
+      "range": {
+        "startLine": 55,
+        "startChar": 33,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "79fc91e9ec0cef7330591eb5cc71b92a31f4d619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
