@@ -927,6 +927,52 @@ IN_PROC_BROWSER_TEST_F(InstallableManagerBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(InstallableManagerBrowserTest,
+                       WaitingForServiceWorkerRecordsNonPwa) {
+  base::RunLoop tester_run_loop, sw_run_loop;
+  base::HistogramTester histograms;
+  std::unique_ptr<CallbackTester> tester(
+      new CallbackTester(tester_run_loop.QuitClosure()));
+
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  auto manager = base::MakeUnique<LazyWorkerInstallableManager>(
+      web_contents, sw_run_loop.QuitClosure());
+
+  {
+    // Load a URL with no service worker.
+    GURL test_url = embedded_test_server()->GetURL(
+        "/banners/manifest_no_service_worker.html");
+    ui_test_utils::NavigateToURL(browser(), test_url);
+
+    // Kick off fetching the data. This should block on waiting for a worker.
+    manager->GetData(GetWebAppParams(),
+                     base::Bind(&CallbackTester::OnDidFinishInstallableCheck,
+                                base::Unretained(tester.get())));
+    sw_run_loop.Run();
+  }
+
+  manager->RecordMenuOpenHistogram();
+  manager->RecordMenuOpenHistogram();
+  manager->RecordMenuItemAddToHomescreenHistogram();
+
+  // Navigate to force metrics recording.
+  ui_test_utils::NavigateToURL(browser(), GURL("about:blank"));
+
+  // Expect to record that we completed the check and found a non-PWA since we
+  // waited until navigation and didn't get a service worker.
+  histograms.ExpectUniqueSample(
+      "Webapp.InstallabilityCheckStatus.MenuOpen",
+      static_cast<int>(
+          InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP),
+      2);
+  histograms.ExpectUniqueSample(
+      "Webapp.InstallabilityCheckStatus.MenuItemAddToHomescreen",
+      static_cast<int>(
+          InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP),
+      1);
+}
+
+IN_PROC_BROWSER_TEST_F(InstallableManagerBrowserTest,
                        CheckServiceWorkerErrorIsNotCached) {
   content::WebContents* web_contents =
       browser()->tab_strip_model()->GetActiveWebContents();
