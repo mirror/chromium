@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e3551f8_29332fb6",
+        "filename": "ios/web/web_state/navigation_callbacks_inttest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T01:19:03Z",
+      "side": 1,
+      "message": "/*renderer_initiated\u003d*/false\n\nSame comment for other places.",
+      "range": {
+        "startLine": 391,
+        "startChar": 53,
+        "endLine": 391,
+        "endChar": 58
+      },
+      "revId": "f85e45b9453a68d56ea731b6f036d46be568dbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
