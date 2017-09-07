@@ -1002,8 +1002,8 @@ void LayerTreeHost::SetBrowserControlsHeight(float top_height,
       browser_controls_shrink_blink_size_ == shrink)
     return;
 
-  top_controls_height_ = top_height;
-  bottom_controls_height_ = bottom_height;
+  top_controls_height_ = top_height * painted_device_scale_factor_;
+  bottom_controls_height_ = bottom_height * painted_device_scale_factor_;
   browser_controls_shrink_blink_size_ = shrink;
   SetNeedsCommit();
 }
