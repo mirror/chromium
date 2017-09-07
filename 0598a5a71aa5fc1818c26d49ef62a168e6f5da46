@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d35f28d_f4cfaf10",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-07T22:58:32Z",
+      "side": 1,
+      "message": "My original intention is to make these two functions public interface so that other modules can call. But now I think it\u0027s unnecessary, and we can expose them if it turns out to be useful in the future.",
+      "parentUuid": "7da39c7b_3996fdf8",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 38
+      },
+      "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09f1ad4d_7df38dfe",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-07T19:15:47Z",
       "side": 1,
       "message": "You can use collections.defaultdict instead of this",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 22
+      },
+      "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67342b74_a63367c6",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-07T22:58:32Z",
+      "side": 1,
+      "message": "Nice! Very handy!",
+      "parentUuid": "09f1ad4d_7df38dfe",
       "range": {
         "startLine": 103,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f9925cb6_1ad5921c",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-07T22:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71120843_bdfb4231",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 27
+      },
+      "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a93ccb2e_2940aa3f",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470bb57f_785b9041",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-07T22:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a93ccb2e_2940aa3f",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 15
+      },
+      "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "dffc0e9f_20eb2245",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-07T22:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a02f299_ecd800d9",
+      "range": {
+        "startLine": 224,
+        "startChar": 61,
+        "endLine": 224,
+        "endChar": 69
+      },
+      "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f52da9e_7c429e3f",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ce3212e8_76bdc2a2",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-07T22:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f52da9e_7c429e3f",
+      "range": {
+        "startLine": 489,
+        "startChar": 13,
+        "endLine": 489,
+        "endChar": 18
+      },
+      "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee516311_19f36d73",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d987d2_11543d33",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-07T22:58:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee516311_19f36d73",
+      "range": {
+        "startLine": 512,
+        "startChar": 2,
+        "endLine": 512,
+        "endChar": 14
+      },
+      "revId": "0598a5a71aa5fc1818c26d49ef62a168e6f5da46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
