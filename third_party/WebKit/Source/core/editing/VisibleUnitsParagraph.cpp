@@ -351,12 +351,13 @@ bool IsEndOfParagraph(const VisiblePositionInFlatTree& pos,
 
 // TODO(editing-dev): We should move |PreviousParagraphPosition()| to
 // "SelectionModifier.cpp"
-VisiblePosition PreviousParagraphPosition(const VisiblePosition& p,
-                                          LayoutUnit x) {
+VisiblePositionInFlatTree PreviousParagraphPosition(
+    const VisiblePositionInFlatTree& p,
+    LayoutUnit x) {
   DCHECK(p.IsValid()) << p;
-  VisiblePosition pos = p;
+  VisiblePositionInFlatTree pos = p;
   do {
-    VisiblePosition n = PreviousLinePosition(pos, x);
+    VisiblePositionInFlatTree n = PreviousLinePosition(pos, x);
     if (n.IsNull() || n.DeepEquivalent() == pos.DeepEquivalent())
       break;
     pos = n;
@@ -366,11 +367,13 @@ VisiblePosition PreviousParagraphPosition(const VisiblePosition& p,
 
 // TODO(editing-dev): We should move |NextParagraphPosition()| to
 // "SelectionModifier.cpp"
-VisiblePosition NextParagraphPosition(const VisiblePosition& p, LayoutUnit x) {
+VisiblePositionInFlatTree NextParagraphPosition(
+    const VisiblePositionInFlatTree& p,
+    LayoutUnit x) {
   DCHECK(p.IsValid()) << p;
-  VisiblePosition pos = p;
+  VisiblePositionInFlatTree pos = p;
   do {
-    VisiblePosition n = NextLinePosition(pos, x);
+    VisiblePositionInFlatTree n = NextLinePosition(pos, x);
     if (n.IsNull() || n.DeepEquivalent() == pos.DeepEquivalent())
       break;
     pos = n;

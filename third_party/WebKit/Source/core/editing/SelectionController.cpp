@@ -74,8 +74,6 @@ DEFINE_TRACE(SelectionController) {
   SynchronousMutationObserver::Trace(visitor);
 }
 
-namespace {
-
 SelectionInDOMTree ConvertToSelectionInDOMTree(
     const SelectionInFlatTree& selection_in_flat_tree) {
   return SelectionInDOMTree::Builder()
@@ -85,6 +83,8 @@ SelectionInDOMTree ConvertToSelectionInDOMTree(
       .SetIsDirectional(selection_in_flat_tree.IsDirectional())
       .Build();
 }
+
+namespace {
 
 DispatchEventResult DispatchSelectStart(Node* node) {
   if (!node || !node->GetLayoutObject())

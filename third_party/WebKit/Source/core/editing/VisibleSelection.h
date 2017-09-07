@@ -180,6 +180,8 @@ CreateVisibleSelectionWithGranularity(const SelectionInFlatTree&,
 // We don't yet support multi-range selections, so we only ever have one range
 // to return.
 CORE_EXPORT EphemeralRange FirstEphemeralRangeOf(const VisibleSelection&);
+CORE_EXPORT EphemeralRange
+FirstEphemeralRangeOf(const VisibleSelectionInFlatTree&);
 
 CORE_EXPORT std::ostream& operator<<(std::ostream&, const VisibleSelection&);
 CORE_EXPORT std::ostream& operator<<(std::ostream&,

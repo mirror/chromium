@@ -79,6 +79,8 @@ class CORE_EXPORT SelectionController final
   void NotifySelectionChanged();
   bool HasExtendedSelection() const {
     return selection_state_ == SelectionState::kExtendedSelection;
+    SelectionInDOMTree ConvertToSelectionInDOMTree(
+        const SelectionInFlatTree& selection_in_flat_tree);
   }
 
  private:

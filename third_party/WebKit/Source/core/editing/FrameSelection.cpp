@@ -186,7 +186,20 @@ void FrameSelection::SetSelection(const SelectionInDOMTree& selection,
     DidSetSelectionDeprecated(data);
 }
 
+void FrameSelection::SetSelection(const SelectionInFlatTree& selection,
+                                  const SetSelectionOptions& data) {
+  if (SetSelectionDeprecated(selection, data))
+    DidSetSelectionDeprecated(data);
+}
+
 void FrameSelection::SetSelection(const SelectionInDOMTree& selection) {
+  SetSelection(selection, SetSelectionOptions::Builder()
+                              .SetShouldCloseTyping(true)
+                              .SetShouldClearTypingStyle(true)
+                              .Build());
+}
+
+void FrameSelection::SetSelection(const SelectionInFlatTree& selection) {
   SetSelection(selection, SetSelectionOptions::Builder()
                               .SetShouldCloseTyping(true)
                               .SetShouldClearTypingStyle(true)
@@ -341,7 +354,7 @@ bool FrameSelection::Modify(SelectionModifyAlteration alter,
                             TextGranularity granularity,
                             SetSelectionBy set_selection_by) {
   SelectionModifier selection_modifier(*GetFrame(),
-                                       ComputeVisibleSelectionInDOMTree(),
+                                       ComputeVisibleSelectionInFlatTree(),
                                        x_pos_for_vertical_arrow_navigation_);
   const bool modified =
       selection_modifier.Modify(alter, direction, granularity);

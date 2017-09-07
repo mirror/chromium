@@ -6,6 +6,7 @@
 #define SelectionForUndoStep_h
 
 #include "base/macros.h"
+#include "core/editing/EditingStrategy.h"
 #include "core/editing/Position.h"
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/TextAffinity.h"
@@ -26,6 +27,7 @@ class SelectionForUndoStep final {
   // with computing direction of selection by base <= extent. Thus, computation
   // time depends O(depth of tree).
   static SelectionForUndoStep From(const SelectionInDOMTree&);
+  static SelectionForUndoStep From(const SelectionInFlatTree&);
 
   SelectionForUndoStep(const SelectionForUndoStep&);
   SelectionForUndoStep();

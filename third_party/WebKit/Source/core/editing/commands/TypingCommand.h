@@ -26,8 +26,9 @@
 #ifndef TypingCommand_h
 #define TypingCommand_h
 
+#include "core/editing/SelectionController.cpp"
+#include "core/editing/VisibleSelection.h"
 #include "core/editing/commands/CompositeEditCommand.h"
-
 namespace blink {
 
 class CORE_EXPORT TypingCommand final : public CompositeEditCommand {
