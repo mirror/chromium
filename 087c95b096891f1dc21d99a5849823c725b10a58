@@ -22,6 +22,30 @@
       "revId": "087c95b096891f1dc21d99a5849823c725b10a58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52a818c_fecd3cc2",
+        "filename": "chrome/browser/extensions/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-07T20:53:39Z",
+      "side": 1,
+      "message": "eventually it shouldn\u0027t need to, but for now it still references message_center.h and notification.h. The reason it\u0027s being added here is that the one in public_deps of chrome/common went away. (I\u0027m not sure why all the deps in chrome/common are public.)",
+      "parentUuid": "e6bef297_b10f83c3",
+      "range": {
+        "startLine": 903,
+        "startChar": 5,
+        "endLine": 903,
+        "endChar": 24
+      },
+      "revId": "087c95b096891f1dc21d99a5849823c725b10a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
