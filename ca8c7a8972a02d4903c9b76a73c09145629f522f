@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61fe8206_c1eeac5b",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-07T19:05:29Z",
+      "side": 1,
+      "message": "sort (other changes in this file too)",
+      "revId": "ca8c7a8972a02d4903c9b76a73c09145629f522f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e67e6b_d9255cb4",
+        "filename": "net/cert/internal/ocsp.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-07T19:05:29Z",
+      "side": 1,
+      "message": "should be top include",
+      "range": {
+        "startLine": 9,
+        "startChar": 28,
+        "endLine": 9,
+        "endChar": 32
+      },
+      "revId": "ca8c7a8972a02d4903c9b76a73c09145629f522f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98493419_98a663ff",
+        "filename": "net/tools/update_ios_bundle_data.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-07T19:05:29Z",
+      "side": 1,
+      "message": "nit: sort",
+      "range": {
+        "startLine": 50,
+        "startChar": 10,
+        "endLine": 50,
+        "endChar": 23
+      },
+      "revId": "ca8c7a8972a02d4903c9b76a73c09145629f522f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
