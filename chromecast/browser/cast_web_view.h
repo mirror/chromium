@@ -43,7 +43,8 @@ class CastWebView : content::WebContentsObserver, content::WebContentsDelegate {
 
   // |delegate| and |browser_context| should outlive the lifetime of this
   // object.
-  CastWebView(Delegate* delegate,
+  CastWebView(bool is_service,
+              Delegate* delegate,
               CastWebContentsManager* web_contents_manager,
               content::BrowserContext* browser_context,
               scoped_refptr<content::SiteInstance> site_instance,

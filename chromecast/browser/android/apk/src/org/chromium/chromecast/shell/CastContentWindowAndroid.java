@@ -35,17 +35,19 @@ public class CastContentWindowAndroid implements CastWebContentsComponent.OnComp
 
     @SuppressWarnings("unused")
     @CalledByNative
-    private static CastContentWindowAndroid create(long nativeCastContentWindowAndroid) {
+    private static CastContentWindowAndroid create(
+            boolean isService, long nativeCastContentWindowAndroid) {
         return new CastContentWindowAndroid(
-                nativeCastContentWindowAndroid, ContextUtils.getApplicationContext());
+                isService, nativeCastContentWindowAndroid, ContextUtils.getApplicationContext());
     }
 
-    private CastContentWindowAndroid(long nativeCastContentWindowAndroid, final Context context) {
+    private CastContentWindowAndroid(
+            boolean isService, long nativeCastContentWindowAndroid, final Context context) {
         mNativeCastContentWindowAndroid = nativeCastContentWindowAndroid;
         mContext = context;
         mInstanceId = Integer.toString(sInstanceId++);
 
-        mComponent = new CastWebContentsComponent(mInstanceId, this, this);
+        mComponent = new CastWebContentsComponent(isService, mInstanceId, this, this);
     }
 
     @SuppressWarnings("unused")

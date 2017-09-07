@@ -19,22 +19,25 @@ namespace shell {
 
 namespace {
 base::android::ScopedJavaLocalRef<jobject> CreateJavaWindow(
+    bool isService,
     jlong nativeWindow) {
   JNIEnv* env = base::android::AttachCurrentThread();
-  return Java_CastContentWindowAndroid_create(env, nativeWindow);
+  return Java_CastContentWindowAndroid_create(env, isService, nativeWindow);
 }
 }  // namespace
 
 // static
 std::unique_ptr<CastContentWindow> CastContentWindow::Create(
+    bool isService,
     CastContentWindow::Delegate* delegate) {
-  return base::WrapUnique(new CastContentWindowAndroid(delegate));
+  return base::WrapUnique(new CastContentWindowAndroid(isService, delegate));
 }
 
 CastContentWindowAndroid::CastContentWindowAndroid(
+    bool isService,
     CastContentWindow::Delegate* delegate)
     : delegate_(delegate),
-      java_window_(CreateJavaWindow(reinterpret_cast<jlong>(this))) {
+      java_window_(CreateJavaWindow(isService, reinterpret_cast<jlong>(this))) {
   DCHECK(delegate_);
 }
 
