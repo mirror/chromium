@@ -73,7 +73,7 @@ class CONTENT_EXPORT DOMStorageContextWrapper
 
   void Flush();
 
-  // See mojom::StoragePartitionService interface.
+  // See mojom::FrameHost::OpenLocalStorage method.
   void OpenLocalStorage(const url::Origin& origin,
                         mojom::LevelDBWrapperRequest request);
 

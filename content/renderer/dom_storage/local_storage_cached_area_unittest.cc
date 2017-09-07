@@ -10,8 +10,8 @@
 
 #include "base/bind.h"
 #include "base/strings/utf_string_conversions.h"
+#include "content/common/frame.mojom.h"
 #include "content/common/leveldb_wrapper.mojom.h"
-#include "content/common/storage_partition_service.mojom.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/renderer/dom_storage/local_storage_cached_areas.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
@@ -21,13 +21,16 @@ namespace content {
 
 namespace {
 
-class MockLevelDBWrapper : public mojom::StoragePartitionService,
+class MockLevelDBWrapper : public mojom::FrameHost,
                            public mojom::LevelDBWrapper {
  public:
-  // StoragePartitionService implementation:
-  void OpenLocalStorage(const url::Origin& origin,
-                        mojom::LevelDBWrapperRequest database) override {
+  // FrameHost implementation:
+  void OpenLocalStorage(mojom::LevelDBWrapperRequest database) override {
     bindings_.AddBinding(this, std::move(database));
+  }
+  void CreateNewWindow(mojom::CreateNewWindowParamsPtr params,
+                       CreateNewWindowCallback callback) override {
+    NOTREACHED();
   }
 
   // LevelDBWrapper implementation:

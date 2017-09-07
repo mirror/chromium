@@ -2867,6 +2867,23 @@ void RenderFrameHostImpl::IssueKeepAliveHandle(
   keep_alive_handle_factory_->Create(std::move(request));
 }
 
+void RenderFrameHostImpl::OpenLocalStorage(
+    mojo::InterfaceRequest<mojom::LevelDBWrapper> request) {
+  // This really is the origin known to the requesting, renderer-side frame:
+  // - If there was a racey cross-process navigation that
+  //   got committed before handling OpenLocalStorage, then
+  //   the OpenLocalStorage IPC would still be handled by the old
+  //   RenderFrameHost (associated with the old origin).
+  // - If there was a racey (initiated by another OOPIF) same-site/diff-origin
+  //   navigation then there is no race between navigation commit and
+  //   OpenLocalStorage.
+  const url::Origin& origin = GetLastCommittedOrigin();
+
+  StoragePartitionImpl* storage_partition =
+      static_cast<StoragePartitionImpl*>(GetProcess()->GetStoragePartition());
+  storage_partition->OpenLocalStorage(origin, std::move(request));
+}
+
 void RenderFrameHostImpl::RunCreateWindowCompleteCallback(
     CreateNewWindowCallback callback,
     mojom::CreateNewWindowReplyPtr reply,

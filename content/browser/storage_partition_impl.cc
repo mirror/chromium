@@ -686,12 +686,6 @@ BlobRegistryWrapper* StoragePartitionImpl::GetBlobRegistry() {
 void StoragePartitionImpl::OpenLocalStorage(
     const url::Origin& origin,
     mojo::InterfaceRequest<mojom::LevelDBWrapper> request) {
-  int process_id = bindings_.dispatch_context();
-  if (!ChildProcessSecurityPolicy::GetInstance()->CanAccessDataForOrigin(
-          process_id, origin.GetURL())) {
-    bindings_.ReportBadMessage("Access denied for localStorage request");
-    return;
-  }
   dom_storage_context_->OpenLocalStorage(origin, std::move(request));
 }
 
@@ -998,12 +992,6 @@ void StoragePartitionImpl::ClearBluetoothAllowedDevicesMapForTesting() {
 
 BrowserContext* StoragePartitionImpl::browser_context() const {
   return browser_context_;
-}
-
-mojo::BindingId StoragePartitionImpl::Bind(
-    int process_id,
-    mojo::InterfaceRequest<mojom::StoragePartitionService> request) {
-  return bindings_.AddBinding(this, std::move(request), process_id);
 }
 
 void StoragePartitionImpl::OverrideQuotaManagerForTesting(

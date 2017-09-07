@@ -12,7 +12,9 @@
 #include "third_party/WebKit/public/platform/WebStorageArea.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 
-class GURL;
+namespace blink {
+class WebLocalFrame;
+}  // namespace blink
 
 namespace content {
 
@@ -22,7 +24,7 @@ class WebStorageAreaImpl : public blink::WebStorageArea {
  public:
   static WebStorageAreaImpl* FromConnectionId(int id);
 
-  WebStorageAreaImpl(int64_t namespace_id, const GURL& origin);
+  WebStorageAreaImpl(int64_t namespace_id, blink::WebLocalFrame* frame);
   ~WebStorageAreaImpl() override;
 
   // See WebStorageArea.h for documentation on these functions.

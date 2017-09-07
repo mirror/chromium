@@ -8,7 +8,6 @@
 #include "content/common/dom_storage/dom_storage_types.h"
 #include "content/renderer/dom_storage/webstoragearea_impl.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
-#include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "url/gurl.h"
 #include "url/origin.h"
 
@@ -30,8 +29,8 @@ WebStorageNamespaceImpl::~WebStorageNamespaceImpl() {
 }
 
 WebStorageArea* WebStorageNamespaceImpl::CreateStorageArea(
-    const blink::WebSecurityOrigin& origin) {
-  return new WebStorageAreaImpl(namespace_id_, url::Origin(origin).GetURL());
+    blink::WebLocalFrame& frame) {
+  return new WebStorageAreaImpl(namespace_id_, &frame);
 }
 
 WebStorageNamespace* WebStorageNamespaceImpl::copy() {
