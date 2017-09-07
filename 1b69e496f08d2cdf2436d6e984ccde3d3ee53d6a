@@ -377,6 +377,24 @@
       "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9bdc1afd_25c70ddc",
+        "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-07T02:28:39Z",
+      "side": 1,
+      "message": "Doing this ended up causing a lot more complication, because it required a new virtual test suite which meant that a lot of EME tests would have to be disabled in the virtual test suite as well. So I\u0027ve kept the extra feature flag for now.",
+      "parentUuid": "4d148eca_aab787fb",
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
