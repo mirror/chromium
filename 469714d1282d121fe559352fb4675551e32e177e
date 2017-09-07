@@ -22,6 +22,30 @@
       "revId": "469714d1282d121fe559352fb4675551e32e177e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "415b5393_1235fe10",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-09-07T23:49:47Z",
+      "side": 1,
+      "message": "This method of initializing the value looks fine to me, thanks.",
+      "parentUuid": "4520bf93_596e4a7d",
+      "range": {
+        "startLine": 491,
+        "startChar": 20,
+        "endLine": 491,
+        "endChar": 53
+      },
+      "revId": "469714d1282d121fe559352fb4675551e32e177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
