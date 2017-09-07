@@ -365,6 +365,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 @implementation Tab
 
 @synthesize browserState = _browserState;
+@synthesize repostFormTabHelperDelegate = _repostFormTabHelperDelegate;
 @synthesize iOSCaptivePortalBlockingPageDelegate =
     _iOSCaptivePortalBlockingPageDelegate;
 @synthesize useGreyImageCache = useGreyImageCache_;
