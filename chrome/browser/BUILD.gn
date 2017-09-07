@@ -365,6 +365,8 @@ split_static_library("browser") {
     "download/download_history.h",
     "download/download_item_model.cc",
     "download/download_item_model.h",
+    "download/download_navigation_throttle.cc",
+    "download/download_navigation_throttle.h",
     "download/download_path_reservation_tracker.cc",
     "download/download_path_reservation_tracker.h",
     "download/download_permission_request.cc",

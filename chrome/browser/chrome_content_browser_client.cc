@@ -46,6 +46,7 @@
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/defaults.h"
+#include "chrome/browser/download/download_navigation_throttle.h"
 #include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/font_family_cache.h"
 #include "chrome/browser/language/chrome_language_detection_client.h"
@@ -3235,6 +3236,11 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
       PDFIFrameNavigationThrottle::MaybeCreateThrottleFor(handle);
   if (pdf_iframe_throttle)
     throttles.push_back(std::move(pdf_iframe_throttle));
+
+  std::unique_ptr<content::NavigationThrottle> download_navigation_throttle =
+      DownloadNavigationThrottle::Create(handle);
+  if (download_navigation_throttle)
+    throttles.push_back(std::move(download_navigation_throttle));
 
   return throttles;
 }
