@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adcd6201_ca6433f1",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T23:20:01Z",
+      "side": 1,
+      "message": "RenderThread can be forward declared.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 50
+      },
+      "revId": "c52f9b439caf3947af2d378535d6e71f6198b667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e24ed5_6118ef72",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T23:20:01Z",
+      "side": 1,
+      "message": "MotionData can be forward declared.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 50
+      },
+      "revId": "c52f9b439caf3947af2d378535d6e71f6198b667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ed795f_97e4e934",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T23:20:01Z",
+      "side": 1,
+      "message": "This means we activate both relative and absolute sensors when relative orientation is requested. We should fall back to absolute orientation only when a request for absolute orientation events fails.",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 47
+      },
+      "revId": "c52f9b439caf3947af2d378535d6e71f6198b667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510f0fd9_37bd00bb",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T23:20:01Z",
+      "side": 1,
+      "message": "This is correct with regard to the spec but changes the behavior of this API. Since your research indicates that other implementations also followed Chrome\u0027s lead on this error we shouldn\u0027t change behavior now. Please add a comment explaining while we work through updating the spec to match the de facto standard.",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 75
+      },
+      "revId": "c52f9b439caf3947af2d378535d6e71f6198b667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69f116a_961c76b0",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T23:20:01Z",
+      "side": 1,
+      "message": "RenderThread can be forward declared.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 50
+      },
+      "revId": "c52f9b439caf3947af2d378535d6e71f6198b667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62219bf6_edf1a1b3",
+        "filename": "content/renderer/device_sensors/device_sensor_event_pump.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T23:20:01Z",
+      "side": 1,
+      "message": "nit: unnecessary space",
+      "revId": "c52f9b439caf3947af2d378535d6e71f6198b667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6789fc59_a0381f3f",
+        "filename": "content/renderer/device_sensors/device_sensor_event_pump.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T23:20:01Z",
+      "side": 1,
+      "message": "Given we always request kDefaultPumpFrequencyHz what is the purpose of these checks?",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 43
+      },
+      "revId": "c52f9b439caf3947af2d378535d6e71f6198b667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1981a776_17bce28d",
+        "filename": "content/renderer/device_sensors/device_sensor_event_pump.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T23:20:01Z",
+      "side": 1,
+      "message": "nit: static",
+      "revId": "c52f9b439caf3947af2d378535d6e71f6198b667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
