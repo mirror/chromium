@@ -77,6 +77,9 @@ class RasterizeAndRecordMicroTop25(_RasterizeAndRecordMicro):
         self.DisableStory('http://sports.yahoo.com/',
                           [story.expectations.ALL_MAC],
                           'crbug.com/756117')
+        self.DisableStory('https://www.google.com/#hl=en&q=barack+obama',
+                          [story.expectations.ALL_DESKTOP],
+                          'crbug.com/763080')
     return StoryExpectations()
 
 
