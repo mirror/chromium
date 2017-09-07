@@ -9,6 +9,8 @@
 #include "components/grpc_support/test/quic_test_server.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+#include "components/cronet/interfaces/cronet.mojom.h"
+
 @interface Cronet (ExposedForTesting)
 + (void)shutdownForTesting;
 @end
