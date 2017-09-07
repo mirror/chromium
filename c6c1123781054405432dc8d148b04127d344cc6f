@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d854e11c_46f29d1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleCategoryPreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-07T17:15:19Z",
+      "side": 1,
+      "message": "Maybe remove the ()?  It\u0027ll be so lonely though :(!",
+      "range": {
+        "startLine": 616,
+        "startChar": 19,
+        "endLine": 616,
+        "endChar": 20
+      },
+      "revId": "c6c1123781054405432dc8d148b04127d344cc6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0339e5fa_429b92bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-07T17:15:19Z",
+      "side": 1,
+      "message": "Should we file a bug to track this?",
+      "range": {
+        "startLine": 262,
+        "startChar": 15,
+        "endLine": 262,
+        "endChar": 49
+      },
+      "revId": "c6c1123781054405432dc8d148b04127d344cc6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
