@@ -9,6 +9,7 @@
 #include "ash/drag_drop/drag_drop_tracker.h"
 #include "ash/drag_drop/drag_image_view.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
@@ -125,17 +126,36 @@ class DragDropTrackerDelegate : public aura::WindowDelegate {
   DISALLOW_COPY_AND_ASSIGN(DragDropTrackerDelegate);
 };
 
+class DragDropController::ScopedCursorLocker {
+ public:
+  static std::unique_ptr<ScopedCursorLocker> Create(
+      ui::CursorType* cursor_type) {
+    DCHECK(cursor_type);
+    Shell::Get()->cursor_manager()->SetCursor(*cursor_type);
+    ShellPort::Get()->LockCursor();
+    return base::WrapUnique(new ScopedCursorLocker(cursor_type));
+  }
+
+  ~ScopedCursorLocker() {
+    *cursor_type_ = ui::CursorType::kPointer;
+    Shell::Get()->cursor_manager()->SetCursor(*cursor_type_);
+    ShellPort::Get()->UnlockCursor();
+  }
+
+ private:
+  explicit ScopedCursorLocker(ui::CursorType* cursor_type)
+      : cursor_type_(cursor_type) {}
+
+  ui::CursorType* cursor_type_;  // Not owned.
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedCursorLocker);
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 // DragDropController, public:
 
 DragDropController::DragDropController()
-    : drag_data_(NULL),
-      drag_operation_(0),
-      drag_window_(NULL),
-      drag_source_window_(NULL),
-      should_block_during_drag_drop_(true),
-      drag_drop_window_delegate_(new DragDropTrackerDelegate(this)),
-      current_drag_event_source_(ui::DragDropTypes::DRAG_EVENT_SOURCE_MOUSE),
+    : drag_drop_window_delegate_(new DragDropTrackerDelegate(this)),
       weak_factory_(this) {
   Shell::Get()->PrependPreTargetHandler(this);
   Shell::Get()->window_tree_host_manager()->AddObserver(this);
@@ -221,7 +241,7 @@ int DragDropController::StartDragAndDrop(
                    drag_image_offset_.y() + drag_image_vertical_offset));
   }
 
-  drag_window_ = NULL;
+  drag_window_ = nullptr;
 
   // Ends cancel animation if it's in progress.
   if (cancel_animation_)
@@ -252,7 +272,7 @@ int DragDropController::StartDragAndDrop(
     // animation completes.
     if (drag_source_window_)
       drag_source_window_->RemoveObserver(this);
-    drag_source_window_ = NULL;
+    drag_source_window_ = nullptr;
   }
 
   return drag_operation_;
@@ -352,8 +372,9 @@ void DragDropController::OnGestureEvent(ui::GestureEvent* event) {
     return;
 
   // Apply kTouchDragImageVerticalOffset to the location.
-  ui::GestureEvent touch_offset_event(*event, static_cast<aura::Window*>(NULL),
-                                      static_cast<aura::Window*>(NULL));
+  ui::GestureEvent touch_offset_event(*event,
+                                      static_cast<aura::Window*>(nullptr),
+                                      static_cast<aura::Window*>(nullptr));
   gfx::PointF touch_offset_location = touch_offset_event.location_f();
   gfx::PointF touch_offset_root_location = touch_offset_event.root_location_f();
   touch_offset_location.Offset(0, kTouchDragImageVerticalOffset);
@@ -399,9 +420,9 @@ void DragDropController::OnGestureEvent(ui::GestureEvent* event) {
 
 void DragDropController::OnWindowDestroyed(aura::Window* window) {
   if (drag_window_ == window)
-    drag_window_ = NULL;
+    drag_window_ = nullptr;
   if (drag_source_window_ == window)
-    drag_source_window_ = NULL;
+    drag_source_window_ = nullptr;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -459,7 +480,11 @@ void DragDropController::DragUpdate(aura::Window* target,
         cursor = ui::CursorType::kAlias;
       else if (op & ui::DragDropTypes::DRAG_MOVE)
         cursor = ui::CursorType::kGrabbing;
-      ash::Shell::Get()->cursor_manager()->SetCursor(cursor);
+      if (cursor.native_type() != cursor_type_) {
+        cursor_locker_.reset();
+        cursor_type_ = cursor.native_type();
+        cursor_locker_ = ScopedCursorLocker::Create(&cursor_type_);
+      }
     }
   }
 
@@ -476,8 +501,6 @@ void DragDropController::DragUpdate(aura::Window* target,
 
 void DragDropController::Drop(aura::Window* target,
                               const ui::LocatedEvent& event) {
-  ash::Shell::Get()->cursor_manager()->SetCursor(ui::CursorType::kPointer);
-
   // We must guarantee that a target gets a OnDragEntered before Drop. WebKit
   // depends on not getting a Drop without DragEnter. This behavior is
   // consistent with drag/drop on other platforms.
@@ -533,13 +556,11 @@ void DragDropController::AnimationEnded(const gfx::Animation* animation) {
 
 void DragDropController::DoDragCancel(
     base::TimeDelta drag_cancel_animation_duration) {
-  ash::Shell::Get()->cursor_manager()->SetCursor(ui::CursorType::kPointer);
-
   // |drag_window_| can be NULL if we have just started the drag and have not
   // received any DragUpdates, or, if the |drag_window_| gets destroyed during
   // a drag/drop.
   aura::client::DragDropDelegate* delegate =
-      drag_window_ ? aura::client::GetDragDropDelegate(drag_window_) : NULL;
+      drag_window_ ? aura::client::GetDragDropDelegate(drag_window_) : nullptr;
   if (delegate)
     delegate->OnDragExited();
 
@@ -587,16 +608,17 @@ void DragDropController::ForwardPendingLongTap() {
   pending_long_tap_.reset();
   if (drag_source_window_)
     drag_source_window_->RemoveObserver(this);
-  drag_source_window_ = NULL;
+  drag_source_window_ = nullptr;
 }
 
 void DragDropController::Cleanup() {
+  cursor_locker_.reset();
   for (aura::client::DragDropClientObserver& observer : observers_)
     observer.OnDragEnded();
   if (drag_window_)
     drag_window_->RemoveObserver(this);
-  drag_window_ = NULL;
-  drag_data_ = NULL;
+  drag_window_ = nullptr;
+  drag_data_ = nullptr;
   // Cleanup can be called again while deleting DragDropTracker, so delete
   // the pointer with a local variable to avoid double free.
   std::unique_ptr<ash::DragDropTracker> holder = std::move(drag_drop_tracker_);
