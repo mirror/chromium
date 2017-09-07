@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c0384ddb_459f6778",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T23:42:23Z",
+      "side": 1,
+      "message": "Removed this check against prefs::kQuickUnlockPinSecret.\nPlease let me know if you have other concerns.",
+      "parentUuid": "020b22b4_68bf6ff4",
+      "revId": "8df3ca11b50d5f1eddc3b93ff0fb28968e2ed3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e2e958d_6c59465d",
         "filename": "ash/login/lock_screen_controller_unittest.cc",
         "patchSetId": 2
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "45c818c9_a761d741",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T23:42:23Z",
+      "side": 1,
+      "message": "Applied same change for the auth user change from the other CL. Will merge it accordingly.",
+      "parentUuid": "cd321684_8d060240",
+      "revId": "8df3ca11b50d5f1eddc3b93ff0fb28968e2ed3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "456a7740_077dd543",
         "filename": "ash/login/ui/lock_screen.h",
         "patchSetId": 2
@@ -85,6 +121,24 @@
       "revId": "8df3ca11b50d5f1eddc3b93ff0fb28968e2ed3eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67366a72_c61aa09f",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T23:42:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "456a7740_077dd543",
+      "revId": "8df3ca11b50d5f1eddc3b93ff0fb28968e2ed3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7ebc60f3_b8fef5c7",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T23:42:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3654d52_01c87e4a",
+      "revId": "8df3ca11b50d5f1eddc3b93ff0fb28968e2ed3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8513f14_9c30aa8c",
         "filename": "chrome/browser/chromeos/login/quick_unlock/pin_storage.cc",
         "patchSetId": 2
@@ -116,6 +188,24 @@
       "writtenOn": "2017-09-07T17:19:19Z",
       "side": 1,
       "message": "Why are we storing PINs without hashing them?",
+      "revId": "8df3ca11b50d5f1eddc3b93ff0fb28968e2ed3eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa15b3e_f9d5587a",
+        "filename": "chrome/browser/chromeos/login/quick_unlock/pin_storage.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-07T23:42:23Z",
+      "side": 1,
+      "message": "The pin is hashed in ComputeSecret() . Set the keytype to Key::KEY_TYPE_PASSWORD_PLAIN here because we only hash plain password, previously hashed pin won\u0027t be hashed again.",
+      "parentUuid": "b8513f14_9c30aa8c",
       "revId": "8df3ca11b50d5f1eddc3b93ff0fb28968e2ed3eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
