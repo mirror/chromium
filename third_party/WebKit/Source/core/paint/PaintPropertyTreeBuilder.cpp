@@ -1233,7 +1233,7 @@ void PaintPropertyTreeBuilder::UpdateForObjectLocationAndSize(
   // CSS mask and clip-path comes with an implicit clip to the border box.
   // Currently only SPv2 generate and take advantage of those.
   const bool box_generates_property_nodes_for_mask_and_clip_path =
-      RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
+      RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
       (box.HasMask() || box.HasClipPath());
   // The overflow clip paint property depends on the border box rect through
   // overflowClipRect(). The border box rect's size equals the frame rect's
@@ -1330,7 +1330,7 @@ void PaintPropertyTreeBuilder::UpdatePropertiesForSelf(
                     full_context.force_subtree_update);
     UpdateCssClip(object, *properties, context,
                   full_context.force_subtree_update, full_context.clip_changed);
-    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
       UpdateEffect(object, *properties, context,
                    full_context.force_subtree_update,
                    full_context.clip_changed);
@@ -1343,7 +1343,7 @@ void PaintPropertyTreeBuilder::UpdatePropertiesForSelf(
   if (object.FirstFragment() && object.FirstFragment()->PaintProperties()) {
     ObjectPaintProperties* properties =
         object.GetMutableForPainting().FirstFragment()->PaintProperties();
-    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
       UpdateScrollbarPaintOffset(object, *properties, context,
                                  full_context.force_subtree_update);
     }

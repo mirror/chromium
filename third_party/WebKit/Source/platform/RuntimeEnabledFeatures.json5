@@ -1001,6 +1001,10 @@
       name: "SlimmingPaintStrictCullRectClipping",
     },
     {
+      name: "SlimmingPaintV175",
+      implied_by: ["SlimmingPaintV2"],
+    },
+    {
       name: "SlimmingPaintV2",
     },
     {
