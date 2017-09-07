@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90abed29_2c5eefc2",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-07T22:17:42Z",
+      "side": 1,
+      "message": "Now I\u0027m thinking more about this, what if we have two cellular devices (e.g. a built-in modem and an external dongle)?  Does the code make an assumption that at most one cellular device per system?",
+      "range": {
+        "startLine": 1487,
+        "startChar": 0,
+        "endLine": 1492,
+        "endChar": 3
+      },
+      "revId": "c2603cfc3e7421f480573e97de0dc239f1ba772a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
