@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8fd0aa96_5399a938",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-07T22:17:11Z",
+      "side": 1,
+      "message": "I mostly did this because it looked wrong, without thinking through the cases too much. I went through all of these dialogs we have BrowserDialogTests for and they still look fine pre-Harmony (except for midi sysex, but that doesn\u0027t seem to be the fault of this patch).\n\nI don\u0027t think we want extra padding in an empty dialog regardless.",
+      "parentUuid": "e9395764_54ae6c39",
+      "revId": "bdc91531960370e3bb6a501dd5e23cdb641e863f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daabc78e_487e3b21",
         "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "bdc91531960370e3bb6a501dd5e23cdb641e863f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547864d9_f6424177",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-07T22:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daabc78e_487e3b21",
+      "revId": "bdc91531960370e3bb6a501dd5e23cdb641e863f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cd09a4b7_c5276767",
+        "filename": "chrome/browser/ui/views/task_manager_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-07T22:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be292a42_d1332733",
+      "revId": "bdc91531960370e3bb6a501dd5e23cdb641e863f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab353a49_bd830144",
         "filename": "ui/views/layout/layout_provider.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "bdc91531960370e3bb6a501dd5e23cdb641e863f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21967131_7943c4de",
+        "filename": "ui/views/layout/layout_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-07T22:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab353a49_bd830144",
+      "revId": "bdc91531960370e3bb6a501dd5e23cdb641e863f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
