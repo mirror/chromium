@@ -1848,6 +1848,10 @@ void LayoutBox::SizeChanged() {
   if (!NeedsLayout())
     SetMayNeedPaintInvalidation();
 
+  // A size change may result in changes to the # or size of fragment clips.
+  if (Layer() && Layer()->EnclosingPaginationLayer())
+    SetNeedsPaintPropertyUpdate();
+
   if (GetNode() && GetNode()->IsElementNode()) {
     Element& element = ToElement(*GetNode());
     element.SetNeedsResizeObserverUpdate();
