@@ -172,8 +172,7 @@ class DragDropClientMacTest : public WidgetTest {
   }
 
   void SetData(OSExchangeData& data) {
-    drag_drop_client()->data_source_.reset(
-        [[CocoaDragDropDataProvider alloc] initWithData:data]);
+    drag_drop_client()->SetDataForTest(data, ui::DragDropTypes::DRAG_COPY);
   }
 
   // testing::Test:
@@ -191,8 +190,6 @@ class DragDropClientMacTest : public WidgetTest {
     target_ = new DragDropView();
     widget_->GetContentsView()->AddChildView(target_);
     target_->SetBoundsRect(bounds);
-
-    drag_drop_client()->operation_ = ui::DragDropTypes::DRAG_COPY;
   }
 
   void TearDown() override {

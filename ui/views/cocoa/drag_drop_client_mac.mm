@@ -55,12 +55,26 @@
 
 @end
 
+namespace {
+
+// Provides the data for the drag and drop session.
+// base::scoped_nsobject<CocoaDragDropDataProvider> data_source_;
+base::scoped_nsobject<CocoaDragDropDataProvider>& GetSharedDataProvider() {
+  CR_DEFINE_STATIC_LOCAL(base::scoped_nsobject<CocoaDragDropDataProvider>,
+                         data_source, ());
+  return data_source;
+}
+
+// The drag and drop operation of the drag source.
+int g_drag_operation;
+
+}  // namespace
+
 namespace views {
 
 DragDropClientMac::DragDropClientMac(BridgedNativeWidget* bridge,
                                      View* root_view)
     : drop_helper_(root_view),
-      operation_(0),
       bridge_(bridge),
       quit_closure_(base::Closure()) {
   DCHECK(bridge);
@@ -73,8 +87,10 @@ void DragDropClientMac::StartDragAndDrop(
     const ui::OSExchangeData& data,
     int operation,
     ui::DragDropTypes::DragEventSource source) {
-  data_source_.reset([[CocoaDragDropDataProvider alloc] initWithData:data]);
-  operation_ = operation;
+  DCHECK(!GetSharedDataProvider());
+  GetSharedDataProvider().reset(
+      [[CocoaDragDropDataProvider alloc] initWithData:data]);
+  g_drag_operation = operation;
 
   const ui::OSExchangeDataProviderMac& provider =
       static_cast<const ui::OSExchangeDataProviderMac&>(data.provider());
@@ -103,7 +119,7 @@ void DragDropClientMac::StartDragAndDrop(
       provider.GetDragImage(), base::mac::GetSRGBColorSpace());
 
   base::scoped_nsobject<NSPasteboardItem> item([[NSPasteboardItem alloc] init]);
-  [item setDataProvider:data_source_.get()
+  [item setDataProvider:GetSharedDataProvider().get()
                forTypes:ui::OSExchangeDataProviderMac::
                             SupportedPasteboardTypes()];
 
@@ -134,30 +150,29 @@ NSDragOperation DragDropClientMac::DragUpdate(id<NSDraggingInfo> sender) {
 
   // Since dragging from non MacView sources does not generate OSExchangeData,
   // we need to generate one based on the provided pasteboard.
-  if (!data_source_.get()) {
-    data_source_.reset([[CocoaDragDropDataProvider alloc]
+  if (!GetSharedDataProvider().get()) {
+    GetSharedDataProvider().reset([[CocoaDragDropDataProvider alloc]
         initWithPasteboard:[sender draggingPasteboard]]);
-    operation_ = ui::DragDropTypes::NSDragOperationToDragOperation(
+    g_drag_operation = ui::DragDropTypes::NSDragOperationToDragOperation(
         [sender draggingSourceOperationMask]);
   }
-
   drag_operation = drop_helper_.OnDragOver(
-      *[data_source_ data], LocationInView([sender draggingLocation]),
-      operation_);
+      *[GetSharedDataProvider() data],
+      LocationInView([sender draggingLocation]), g_drag_operation);
   return ui::DragDropTypes::DragOperationToNSDragOperation(drag_operation);
 }
 
 NSDragOperation DragDropClientMac::Drop(id<NSDraggingInfo> sender) {
   int drag_operation = drop_helper_.OnDrop(
-      *[data_source_ data], LocationInView([sender draggingLocation]),
-      operation_);
-  data_source_.reset();
-  operation_ = 0;
+      *[GetSharedDataProvider() data],
+      LocationInView([sender draggingLocation]), g_drag_operation);
+  GetSharedDataProvider().reset();
+  g_drag_operation = 0;
   return ui::DragDropTypes::DragOperationToNSDragOperation(drag_operation);
 }
 
 void DragDropClientMac::EndDrag() {
-  data_source_.reset();
+  GetSharedDataProvider().reset();
 
   // Allow a test to invoke EndDrag() without spinning the nested run loop.
   if (!quit_closure_.is_null()) {
@@ -168,6 +183,13 @@ void DragDropClientMac::EndDrag() {
 
 gfx::Point DragDropClientMac::LocationInView(NSPoint point) const {
   return gfx::Point(point.x, NSHeight([bridge_->ns_window() frame]) - point.y);
+}
+
+void DragDropClientMac::SetDataForTest(const ui::OSExchangeData& data,
+                                       int operation) {
+  GetSharedDataProvider().reset(
+      [[CocoaDragDropDataProvider alloc] initWithData:data]);
+  g_drag_operation = operation;
 }
 
 }  // namespace views
