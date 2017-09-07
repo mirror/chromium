@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50676820_ba71e440",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-07T00:43:59Z",
+      "side": 1,
+      "message": "It seems sort of sad that the reason AddComboboxRow() can\u0027t return a Combobox object (in parallel with AddTextfieldRow()) is that we need to use this class; and the reason we need to use this class is to prevent wide bookmark bubbles; and the alternate solution for that would be to simply make the GridLayout column for the second thing in the stack FIXED instead of USE_PREF.\n\nCan we do something like that instead?  It seems like every time we create a textfield stack, we want column 1 to be \"max of the preferred widths\", 2 to be \"fixed padding\", and 3 to be \"all remaining available width\".  I\u0027d think that column 3 definition could be achieved using fixed-but-stretchy width.",
+      "revId": "ee26196babc8bfa6a6e53dc556df2a55972a60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
