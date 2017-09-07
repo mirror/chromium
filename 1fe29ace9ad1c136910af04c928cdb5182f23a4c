@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e57d367c_199748e2",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-07T06:02:22Z",
+      "side": 1,
+      "message": "Nit: auto?  Or does that break the call below?",
+      "revId": "1fe29ace9ad1c136910af04c928cdb5182f23a4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e20bab_137700e8",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-07T06:02:22Z",
+      "side": 1,
+      "message": "Nit: It feels slightly misleading that this sayus \"ui::ComboboxModel\" when the whole point of this is to not return that base class :)",
+      "revId": "1fe29ace9ad1c136910af04c928cdb5182f23a4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c16593_acd8c5fa",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-07T06:02:22Z",
+      "side": 1,
+      "message": "Nit: I\u0027d just call this folder_model() and inline it here",
+      "revId": "1fe29ace9ad1c136910af04c928cdb5182f23a4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
