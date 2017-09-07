@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec4dbf4f_6db0bec0",
+        "filename": "components/offline_pages/core/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-07T21:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acd9c78d_9763dad4",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 10
+      },
+      "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4eb4a34a_348858bf",
         "filename": "components/offline_pages/core/tasks/add_page_task.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095e905e_8d077b51",
+        "filename": "components/offline_pages/core/tasks/add_page_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-07T21:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eb4a34a_348858bf",
+      "range": {
+        "startLine": 22,
+        "startChar": 34,
+        "endLine": 22,
+        "endChar": 49
+      },
+      "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ab09c56c_5981d993",
+        "filename": "components/offline_pages/core/tasks/add_page_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-07T21:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6dc383a_1e5b74ec",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 33
+      },
+      "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82f51146_b245a35f",
         "filename": "components/offline_pages/core/tasks/add_page_task.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5bab9ae1_e8a0216b",
+        "filename": "components/offline_pages/core/tasks/add_page_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-07T21:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82f51146_b245a35f",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 16
+      },
+      "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c484584a_4cfb6a73",
         "filename": "components/offline_pages/core/tasks/add_page_task.cc",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-07T18:49:52Z",
       "side": 1,
       "message": "Seems like your flow should be:\nstore_-\u003eExecute(base::BindOnce(\u0026AddOfflinePageSync, offline_page_),\n                  base::BindOnce(\u0026AddPageTask::CompleteAddingPage,\n                                 weak_ptr_factory.GetWeakPtr()));\n\nWhere:\n\nvoid AddPageTask::CompleteAddingPage(ItemActionStatus status) {\n  AddPageResult result \u003d ConvertToAddPageResult(status);\n  // above is a simplified version of this method in the anon namespace\n  // Also if we find conversion to be useful elsewhere, we can move it\n  // to OfflineStoreUtils:: and test it independently.\n\n  callback_.Run(result, offline_page_);\n  TaskComplete();\n}\n\nWDYT?",
+      "range": {
+        "startLine": 95,
+        "startChar": 18,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274ab2fa_bd59f3b9",
+        "filename": "components/offline_pages/core/tasks/add_page_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-07T21:15:24Z",
+      "side": 1,
+      "message": "I\u0027m trying to keep the exit point in a single function, for the following 2 reasons:\n1.since it should always invoke callback_ and then call \u0027TaskComplete()\u0027, keeping it in a single \u0027exit method\u0027 looks clearer to me. There\u0027s no need to search in the code for ending point of the task. (Like in AddPageTask::Run() there is also a InformAddPageDone()).\n2. In case we\u0027re going to collect UMAs inside tasks instead of model, this may introduce a single metric collection point.\n\nIf you insist to have the proposed flow, please let me know and i\u0027ll make the change.",
+      "parentUuid": "c484584a_4cfb6a73",
       "range": {
         "startLine": 95,
         "startChar": 18,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "de523464_a9ac172e",
+        "filename": "components/offline_pages/core/tasks/add_page_task.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-07T21:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e35d1f92_cd0d4edd",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 8,
+        "endChar": 8
+      },
+      "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b47a5e31_194076bf",
         "filename": "components/offline_pages/core/tasks/add_page_task.h",
         "patchSetId": 5
@@ -154,6 +298,24 @@
       "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "329a3439_a4e290e5",
+        "filename": "components/offline_pages/core/tasks/add_page_task.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-07T21:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b47a5e31_194076bf",
+      "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "eca95083_6f33676c",
+        "filename": "components/offline_pages/core/tasks/add_page_task.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-07T21:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9642e7af_6d4f85b7",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 17
+      },
+      "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5137b91b_e7fcdca0",
         "filename": "components/offline_pages/core/tasks/add_page_task.h",
         "patchSetId": 5
@@ -200,6 +386,30 @@
       "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c742c141_83fbb163",
+        "filename": "components/offline_pages/core/tasks/add_page_task.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-07T21:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5137b91b_e7fcdca0",
+      "range": {
+        "startLine": 21,
+        "startChar": 16,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "7dbe09ed_465dcbba",
+        "filename": "components/offline_pages/core/tasks/add_page_task.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-07T21:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ceb0c59_f6413573",
+      "range": {
+        "startLine": 25,
+        "startChar": 20,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a02cb704_23fa3aed",
         "filename": "components/offline_pages/core/tasks/add_page_task.h",
         "patchSetId": 5
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "531fef4d_abdc7f8f",
+        "filename": "components/offline_pages/core/tasks/add_page_task.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-07T21:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a02cb704_23fa3aed",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 29
+      },
+      "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d0805da_f804cb1d",
         "filename": "components/offline_pages/core/tasks/add_page_task.h",
         "patchSetId": 5
@@ -269,6 +527,30 @@
       "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "442ee1c9_77cfaa44",
+        "filename": "components/offline_pages/core/tasks/add_page_task.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-07T21:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d0805da_f804cb1d",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 26
+      },
+      "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
