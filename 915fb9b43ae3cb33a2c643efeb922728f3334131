@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60e1fed9_9e73befd",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1602,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T18:41:31Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "166c4c9d_1f26b524",
+      "range": {
+        "startLine": 1602,
+        "startChar": 1,
+        "endLine": 1602,
+        "endChar": 40
+      },
+      "revId": "915fb9b43ae3cb33a2c643efeb922728f3334131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c567b430_8ee59e68",
         "filename": "extensions/common/api/system_display.idl",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a49d3edc_03c6ded9",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T18:41:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c567b430_8ee59e68",
+      "range": {
+        "startLine": 138,
+        "startChar": 7,
+        "endLine": 138,
+        "endChar": 17
+      },
+      "revId": "915fb9b43ae3cb33a2c643efeb922728f3334131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5001decd_75623913",
         "filename": "extensions/common/api/system_display.idl",
         "patchSetId": 9
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-06T19:17:45Z",
       "side": 1,
       "message": "How about\nShould be used by\n(looking at the code, the property will be provided to extensions, too; the here is that it is not advisable to use this property in an external context).",
+      "range": {
+        "startLine": 139,
+        "startChar": 7,
+        "endLine": 139,
+        "endChar": 19
+      },
+      "revId": "915fb9b43ae3cb33a2c643efeb922728f3334131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29fda53f_7a035e1d",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-07T18:41:31Z",
+      "side": 1,
+      "message": "It\u0027s set to [nodoc] so someone would have to be looking at the code in the first place. It\u0027s more than not advisable, it is only provided for Settings UI and will eventually be removed.",
+      "parentUuid": "5001decd_75623913",
       "range": {
         "startLine": 139,
         "startChar": 7,
