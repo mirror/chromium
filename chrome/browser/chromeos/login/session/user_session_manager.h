@@ -316,6 +316,10 @@ class UserSessionManager
   // the authentication profile.
   void CompleteProfileCreateAfterAuthTransfer(Profile* profile);
 
+  // Asyncronously prepares TPM devices and calls FinalizePrepareProfile on UI
+  // thread.
+  void PrepareTpmDeviceAndFinalizeProfile(Profile* profile);
+
   // Finalized profile preparation.
   void FinalizePrepareProfile(Profile* profile);
 
