@@ -43,6 +43,7 @@ WebFrameSchedulerImpl::WebFrameSchedulerImpl(
       page_visible_(true),
       frame_paused_(false),
       cross_origin_(false),
+      frame_is_main_(false),
       active_connection_count_(0),
       weak_factory_(this) {}
 
@@ -137,6 +138,18 @@ void WebFrameSchedulerImpl::SetCrossOrigin(bool cross_origin) {
   bool was_throttled = ShouldThrottleTimers();
   cross_origin_ = cross_origin;
   UpdateThrottling(was_throttled);
+}
+
+bool WebFrameSchedulerImpl::IsCrossOrigin() {
+  return cross_origin_;
+}
+
+void WebFrameSchedulerImpl::SetFrameIsMain(bool frame_is_main) {
+  frame_is_main_ = frame_is_main;
+}
+
+bool WebFrameSchedulerImpl::FrameIsMain() {
+  return frame_is_main_;
 }
 
 RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::LoadingTaskRunner() {
@@ -318,6 +331,7 @@ void WebFrameSchedulerImpl::AsValueInto(
   state->SetBoolean("frame_visible", frame_visible_);
   state->SetBoolean("page_visible", page_visible_);
   state->SetBoolean("cross_origin", cross_origin_);
+  state->SetBoolean("frame_is_main", frame_is_main_);
   if (loading_task_queue_) {
     state->SetString("loading_task_queue",
                      trace_helper::PointerToString(loading_task_queue_.get()));

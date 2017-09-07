@@ -760,6 +760,7 @@ inline LocalFrame::LocalFrame(LocalFrameClient* client,
   if (IsLocalRoot()) {
     probe_sink_ = new CoreProbeSink();
     performance_monitor_ = new PerformanceMonitor(this);
+    frame_scheduler_->SetFrameIsMain(true);
   } else {
     // Inertness only needs to be updated if this frame might inherit the
     // inert state from a higher-level frame. If this is an OOPIF local root,
