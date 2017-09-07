@@ -16,6 +16,81 @@
       "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310af4f3_3f3969aa",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-07T01:28:46Z",
+      "side": 1,
+      "message": "Pipes for SWContainer/SWContainerHost are associated with the channel, so we no longer have race between legacy IPC messages and Mojo IPC messages in my understanding:)",
+      "parentUuid": "4c252b72_64c8f78d",
+      "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d095ad_6e2a57a0",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-07T01:28:46Z",
+      "side": 1,
+      "message": "You can use base::MakeUnique\u003cOneShotGetReadyCallback\u003e()",
+      "range": {
+        "startLine": 1213,
+        "startChar": 21,
+        "endLine": 1213,
+        "endChar": 56
+      },
+      "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e398380_278673a5",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-07T01:28:46Z",
+      "side": 1,
+      "message": "Ah, we can convert this callback to OnceCallback in later patch.",
+      "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650f4cd8_82042ca9",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-07T01:28:46Z",
+      "side": 1,
+      "message": "Do you know what happen if the connection to the renderer is destroyed just before calling callback?\nI\u0027m worried that in that case the refcount for SWRegistrationObject/SWObject will be leaked.\n\nOne possible straightforward solution would be mojoifing SWRegistrationObject/SWObject and using their error callbacks.",
+      "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
