@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c252b72_64c8f78d",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T00:46:31Z",
+      "side": 1,
+      "message": "We might have a legacy IPC vs Mojo IPC ordering issue here. The intent is to wait for the IPC sent via ServiceWorkerHandle::OnVersionStateChanged() to reach the renderer first, so when .ready resolves, registration.active has \u0027activating\u0027 or \u0027activated\u0027 state. But ServiceWorkerMsg_ServiceWorkerStateChanged is still a legacy IPC message.\n\nSee also the comment in ServiceWorkerVersion::SetStatus.\n\nIs there a guaranteed ordering somehow with the associated interface stuff we\u0027ve been doing?",
+      "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
