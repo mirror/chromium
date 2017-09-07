@@ -16,6 +16,24 @@
       "revId": "ccfcc08b6f77f42fa34353f53e75d3d004d91fbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59afe50b_5bda6d33",
+        "filename": "content/child/child_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-09-07T00:00:15Z",
+      "side": 1,
+      "message": "I thought about this but couldn\u0027t come up with any reason why this wouldn\u0027t work. Mojo is asynchronous to start with and PowerMonitorBroadcastSource only receives messages and never sends anything back. I saw one other example of binding on I/O thread and that has inspired this change.",
+      "parentUuid": "1c1a35ab_3aee83a0",
+      "revId": "ccfcc08b6f77f42fa34353f53e75d3d004d91fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
