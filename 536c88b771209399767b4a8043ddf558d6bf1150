@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9f5e928_b9d11b02",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-07T19:24:32Z",
+      "side": 1,
+      "message": "Ok, it works for g++ and clang on Linux and Mac, but I can understand not trusting non-standardized behavior. I\u0027ll look into removing the default.",
+      "parentUuid": "4983d796_98de3ff7",
+      "revId": "536c88b771209399767b4a8043ddf558d6bf1150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "980bcf32_74ee5d20",
         "filename": "components/omnibox/browser/autocomplete_result.h",
         "patchSetId": 4
