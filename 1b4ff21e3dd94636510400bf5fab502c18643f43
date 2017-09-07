@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b62f6a4_39bb1d2b",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 31164,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-07T23:43:08Z",
+      "side": 1,
+      "message": "It might be worth including \"Shown\" as bucket 0, so that you have a baseline to compare to as far as how often users interact with PDFs at all, in addition the relative frequency of different types of interactions.",
+      "range": {
+        "startLine": 31159,
+        "startChar": 0,
+        "endLine": 31164,
+        "endChar": 7
+      },
+      "revId": "1b4ff21e3dd94636510400bf5fab502c18643f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
