@@ -12,6 +12,7 @@
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/interfaces/window_pin_type.mojom.h"
 #include "ash/wm/drag_window_resizer.h"
+#include "ash/wm/window_animations.h"
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
@@ -33,6 +34,7 @@
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/class_property.h"
 #include "ui/compositor/compositor.h"
+#include "ui/compositor/layer_tree_owner.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/path.h"
@@ -445,6 +447,10 @@ void ShellSurface::Maximize() {
   widget_->Maximize();
 }
 
+void ShellSurface::MaximizeWithCommit() {
+  pending_window_state_ = ui::SHOW_STATE_MAXIMIZED;
+}
+
 void ShellSurface::Minimize() {
   TRACE_EVENT0("exo", "ShellSurface::Minimize");
 
@@ -467,6 +473,10 @@ void ShellSurface::Restore() {
   // maximized or minimized.
   ScopedConfigure scoped_configure(this, true);
   widget_->Restore();
+}
+
+void ShellSurface::RestoreWithCommit() {
+  pending_window_state_ = ui::SHOW_STATE_NORMAL;
 }
 
 void ShellSurface::SetFullscreen(bool fullscreen) {
@@ -755,6 +765,24 @@ void ShellSurface::OnSurfaceCommit() {
   if (pending_shadow_underlay_in_surface_ && shadow_content_bounds_changed_)
     host_window()->AllocateLocalSurfaceId();
 
+  LOG(ERROR) << "pending_window_state: " << pending_window_state_;
+
+  // Cross-fade only if:
+  // (1) maximizing or restoring,
+  // (2) not changing state from minimized.
+  const bool should_cross_fade =
+      (pending_window_state_ == ui::SHOW_STATE_MAXIMIZED ||
+       pending_window_state_ == ui::SHOW_STATE_NORMAL) &&
+      widget_ && !widget_->IsMinimized() && !window_state_unminimized_from_ash_;
+
+  // Create fresh layers for the window and all its children to paint into and
+  // keep the old one for a cross fade animation fired below.
+  std::unique_ptr<ui::LayerTreeOwner> layer_owner_for_cross_fade;
+  if (should_cross_fade) {
+    LOG(ERROR) << "SNAPSHOTTING";
+    layer_owner_for_cross_fade = wm::RecreateLayers(widget_->GetNativeWindow());
+  }
+
   SurfaceTreeHost::OnSurfaceCommit();
 
   // Apply the accumulated pending origin offset to reflect acknowledged
@@ -823,6 +851,48 @@ void ShellSurface::OnSurfaceCommit() {
       compositor_lock_.reset();
   } else {
     compositor_lock_.reset();
+  }
+
+  // Fire pending window state changes, if any.
+  if (pending_window_state_ != ui::SHOW_STATE_DEFAULT) {
+    // Animate the window state with a cross fade.
+    if (layer_owner_for_cross_fade) {
+      ui::Layer* old_layer = layer_owner_for_cross_fade->root();
+      DCHECK(old_layer);
+      ui::Layer* new_layer = widget_->GetNativeWindow()->layer();
+
+      // Ensure the higher-resolution layer is on top.
+      bool old_on_top = (old_layer->size().width() > new_layer->size().width());
+      if (old_on_top)
+        old_layer->parent()->StackBelow(new_layer, old_layer);
+      else
+        old_layer->parent()->StackAbove(new_layer, old_layer);
+
+      ash::CrossFadeAnimation(widget_->GetNativeWindow(),
+                              std::move(layer_owner_for_cross_fade),
+                              gfx::Tween::EASE_OUT);
+    }
+
+    switch (pending_window_state_) {
+      case ui::SHOW_STATE_NORMAL: {
+        Restore();
+        break;
+      }
+      case ui::SHOW_STATE_MAXIMIZED: {
+        Maximize();
+        break;
+      }
+      case ui::SHOW_STATE_DEFAULT:
+      case ui::SHOW_STATE_FULLSCREEN:
+      case ui::SHOW_STATE_MINIMIZED:
+      case ui::SHOW_STATE_INACTIVE:
+      case ui::SHOW_STATE_END:
+        NOTREACHED();
+        break;
+    }
+
+    window_state_unminimized_from_ash_ = false;
+    pending_window_state_ = ui::SHOW_STATE_DEFAULT;
   }
 }
 
@@ -977,6 +1047,10 @@ gfx::Size ShellSurface::GetMinimumSize() const {
 void ShellSurface::OnPreWindowStateTypeChange(
     ash::wm::WindowState* window_state,
     ash::wm::WindowStateType old_type) {
+  window_state_unminimized_from_ash_ =
+      old_type == ash::wm::WINDOW_STATE_TYPE_MINIMIZED &&
+      pending_window_state_ == ui::SHOW_STATE_DEFAULT;
+
   ash::wm::WindowStateType new_type = window_state->GetStateType();
   if (old_type == ash::wm::WINDOW_STATE_TYPE_MINIMIZED ||
       new_type == ash::wm::WINDOW_STATE_TYPE_MINIMIZED) {
