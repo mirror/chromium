@@ -1,9 +1,11 @@
 Simple text path
+
 string「あ、変っ！」。
 string「あ、変っ！」。
 string「あ、変っ！」。
 
 Complex text path
+
 string「あ、変っ！」。
 string「あ、変っ！」。
 string「あ、変っ！」。
