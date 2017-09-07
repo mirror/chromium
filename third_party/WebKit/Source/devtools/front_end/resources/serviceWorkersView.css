@@ -88,3 +88,24 @@
 .link {
     margin-left: 10px;
 }
+
+.notification-editor {
+    border: solid 1px #d8d8d8;
+    flex: auto;
+    max-width: 400px;
+    display: flex;
+}
+
+.service-worker-editor-with-button {
+    align-items: center;
+    align-content: center;
+}
+
+.service-worker-notify-button {
+    align-self: end;
+}
+
+.notification-editor.source-code {
+    /** Simulate CodeMirror that is shown above */
+    padding: 4px;
+}
