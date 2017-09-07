@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83e5bc26_1a03a1c5",
+        "filename": "chrome/browser/resources/policy_tool.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-07T18:12:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2e9ed77_a39dea35",
+      "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8207b36_b64762f7",
         "filename": "chrome/browser/resources/policy_tool.js",
         "patchSetId": 17
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5e29f51d_190e4414",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-07T18:12:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8207b36_b64762f7",
+      "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5292d61e_06a63472",
         "filename": "chrome/browser/resources/policy_tool.js",
         "patchSetId": 17
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-06T22:21:32Z",
       "side": 1,
       "message": "Maybe let\u0027s do a console.log, even at this stage..",
+      "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "499a7707_b53b2dd9",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-07T18:12:47Z",
+      "side": 1,
+      "message": "This would make it basically invisible for the user, which is contrary the intention of this function is to show the message to the user. Do you think that maybe doing both alert and console.log is a good option?",
+      "parentUuid": "5292d61e_06a63472",
       "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8ea24424_6efc092c",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-07T18:12:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ffb094af_abc38942",
+      "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8176e6d3_584fbecb",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
         "patchSetId": 17
@@ -84,6 +156,24 @@
       "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd3424f9_4c8725b9",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-07T18:12:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8176e6d3_584fbecb",
+      "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "c11bf248_1af29f4f",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-07T18:12:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c96a826_73b1e84c",
+      "range": {
+        "startLine": 160,
+        "startChar": 37,
+        "endLine": 160,
+        "endChar": 38
+      },
+      "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1286501_c08980cc",
         "filename": "chrome/common/chrome_switches.h",
         "patchSetId": 17
@@ -124,6 +238,24 @@
       "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6887a241_235e9e2a",
+        "filename": "chrome/common/chrome_switches.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-07T18:12:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1286501_c08980cc",
+      "revId": "0eb25a9cc72dd83021a7e132b2718c535819d57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
