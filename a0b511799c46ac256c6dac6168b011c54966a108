@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62eecfc8_b6d68928",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-07T02:42:33Z",
+      "side": 1,
+      "message": "Yes... but I intend to refactor somewhat to get rid of the need for this. See https://bugs.chromium.org/p/chromium/issues/detail?id\u003d715632#c28",
+      "parentUuid": "55a06aba_29248558",
+      "revId": "a0b511799c46ac256c6dac6168b011c54966a108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e49f9f7b_201dd112",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f80c14fe_52ec1966",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-07T02:42:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e49f9f7b_201dd112",
+      "revId": "a0b511799c46ac256c6dac6168b011c54966a108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "420dd810_12b040dd",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-07T02:23:07Z",
       "side": 1,
       "message": "In the current code we usually go through URLRequest::Redirect before we let each request job to handle it, where we do a bit of header modifications, I wonder if we should replicate that here?",
+      "revId": "a0b511799c46ac256c6dac6168b011c54966a108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acbf9a50_7a841114",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-07T02:42:33Z",
+      "side": 1,
+      "message": "Thnx to the pointer to that method and how it handles \u0027redirect_info\u0027! Yes, i think we probably do need to some of the same here. I\u0027ll take a closer look tomorrow.",
+      "parentUuid": "420dd810_12b040dd",
       "revId": "a0b511799c46ac256c6dac6168b011c54966a108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
