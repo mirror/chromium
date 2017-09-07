@@ -18,6 +18,7 @@
 #include "components/exo/wm_helper.h"
 #include "ui/base/hit_test.h"
 #include "ui/compositor/compositor_lock.h"
+#include "ui/compositor/layer_tree_owner.h"
 #include "ui/display/display_observer.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
@@ -130,11 +131,17 @@ class ShellSurface : public SurfaceTreeHost,
   // Maximizes the shell surface.
   void Maximize();
 
+  // Maximizes the shell surface with the next surface commit.
+  void MaximizeWithCommit();
+
   // Minimize the shell surface.
   void Minimize();
 
   // Restore the shell surface.
   void Restore();
+
+  // Restore the shell surface with the next surface commit.
+  void RestoreWithCommit();
 
   // Set fullscreen state for shell surface.
   void SetFullscreen(bool fullscreen);
@@ -412,6 +419,8 @@ class ShellSurface : public SurfaceTreeHost,
   std::unique_ptr<ui::CompositorLock> compositor_lock_;
   bool system_modal_ = false;
   gfx::ImageSkia icon_;
+  ui::WindowShowState pending_window_state_ = ui::SHOW_STATE_DEFAULT;
+  std::unique_ptr<ui::LayerTreeOwner> layer_owner_for_cross_fade_;
 
   DISALLOW_COPY_AND_ASSIGN(ShellSurface);
 };

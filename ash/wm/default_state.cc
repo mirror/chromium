@@ -589,6 +589,14 @@ void DefaultState::ReenterToCurrentState(
 
 void DefaultState::UpdateBoundsFromState(WindowState* window_state,
                                          WindowStateType previous_state_type) {
+  // If bounds are set by client, then do not calculate them for the new
+  // window state, as they could be incorrect anyway. Assume, the client
+  // takes care of setting the geometry when changing the window state.
+  // TODO(oshima): Refactor the window state logic when bounds are handled
+  // by the client (ARC).
+  if (window_state->allow_set_bounds_direct())
+    return;
+
   aura::Window* window = window_state->window();
   gfx::Rect bounds_in_parent;
   switch (state_type_) {
