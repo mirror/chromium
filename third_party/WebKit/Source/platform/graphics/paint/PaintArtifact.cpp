@@ -52,7 +52,8 @@ PaintArtifact::PaintArtifact(DisplayItemList display_items,
                              Vector<PaintChunk> paint_chunks)
     : display_item_list_(std::move(display_items)),
       paint_chunks_(std::move(paint_chunks)) {
-  ComputeChunkBoundsAndOpaqueness(display_item_list_, paint_chunks_);
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+    ComputeChunkBoundsAndOpaqueness(display_item_list_, paint_chunks_);
 }
 
 PaintArtifact::PaintArtifact(PaintArtifact&& source)

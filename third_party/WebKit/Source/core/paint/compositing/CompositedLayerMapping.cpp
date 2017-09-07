@@ -73,6 +73,7 @@
 #include "platform/graphics/CompositorMutableProperties.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/paint/ClipDisplayItem.h"
+#include "platform/graphics/paint/ClipRecorder.h"
 #include "platform/graphics/paint/CullRect.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/graphics/paint/PaintController.h"
@@ -3143,14 +3144,11 @@ void CompositedLayerMapping::DoPaintTask(
     // FIXME: Is it correct to clip to dirtyRect in slimming paint mode?
     // FIXME: Combine similar code here and LayerClipRecorder.
     dirty_rect.Intersect(paint_info.local_clip_rect_for_squashed_layer);
-    context.GetPaintController().CreateAndAppend<ClipDisplayItem>(
-        graphics_layer, DisplayItem::kClipLayerOverflowControls, dirty_rect);
-
+    ClipRecorder clip_recorder(context, graphics_layer,
+                               DisplayItem::kClipLayerOverflowControls,
+                               dirty_rect);
     PaintLayerPainter(*paint_info.paint_layer)
         .Paint(context, painting_info, paint_layer_flags);
-    context.GetPaintController().EndItem<EndClipDisplayItem>(
-        graphics_layer, DisplayItem::ClipTypeToEndClipType(
-                            DisplayItem::kClipLayerOverflowControls));
   }
 }
 
@@ -3377,6 +3375,24 @@ void CompositedLayerMapping::PaintContents(
       "devtools.timeline,rail", "Paint", "data",
       InspectorPaintEvent::Data(&owning_layer_.GetLayoutObject(),
                                 LayoutRect(interest_rect), graphics_layer));
+
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+      !RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+    // TODO(trchen): It is weird to determine layer property state during
+    // paint. Ideally this should be done at UpdateGraphicsLayerGeometry,
+    // but property tree wasn't ready at the time.
+    if (graphics_layer == graphics_layer_.get()) {
+      LayoutPoint snapped_paint_offset =
+          GetLayoutObject().PaintOffset() - SubpixelAccumulation();
+      DCHECK(snapped_paint_offset == RoundedIntPoint(snapped_paint_offset));
+      IntPoint layer_offset = RoundedIntPoint(snapped_paint_offset) +
+                              graphics_layer_->OffsetFromLayoutObject();
+      graphics_layer_->SetLayerState(
+          *GetLayoutObject().FirstFragment()->LocalBorderBoxProperties(),
+          layer_offset);
+    }
+    // TODO(trchen): Complete for all drawable layers.
+  }
 
   PaintLayerFlags paint_layer_flags = 0;
   if (graphics_layer_painting_phase & kGraphicsLayerPaintBackground)
