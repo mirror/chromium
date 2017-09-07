@@ -16,6 +16,24 @@
       "revId": "201261f5eef718a4a9fccdd82f4bccf82f2ba062",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc88127_f3595cae",
+        "filename": "tools/perf/contrib/dromaeo_extras/dromaeo_extras.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-09-07T18:06:59Z",
+      "side": 1,
+      "message": "I\u0027m hesitant to leave them in an un-runnable state... I would think if we\u0027re bothering to keep them around in a directory they would be things that someone somewhere wants to run at some point, right?",
+      "parentUuid": "54f204c1_2533ffe8",
+      "revId": "201261f5eef718a4a9fccdd82f4bccf82f2ba062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
