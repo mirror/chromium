@@ -1,0 +1,369 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0b2e08c_42953da9",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "I assume this is here for testing (because the actual window.navigator.userAgent can\u0027t be stubbed out/overriden/whatever)? Maybe add a comment to explain?\nOr, alternatively: The test really only cares about Mac/non-Mac, right? Maybe move the isUserAgentMac function out of onKeyDown and stub that?",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f4cbf0d_497640b5",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "Unrelated: Can we use URL(path, base) here to reduce the manual string handling a bit?\nhttps://developer.mozilla.org/en-US/docs/Web/API/URL/URL",
+      "range": {
+        "startLine": 698,
+        "startChar": 18,
+        "endLine": 698,
+        "endChar": 0
+      },
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e11aafed_e43bada4",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "Why this change? (Generally, the difference between stop_ and abort_ isn\u0027t really clear to me. Do we really need both?)",
+      "range": {
+        "startLine": 700,
+        "startChar": 18,
+        "endLine": 700,
+        "endChar": 0
+      },
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a4f9ae_f169e873",
+        "filename": "chrome/test/data/local_ntp/test_utils.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "Can we leave it as nextTimeoutId and just do post-increment instead of pre-increment here?\n(Right now, in the initial state \"lastTimeoutId\" isn\u0027t really accurate.)",
+      "range": {
+        "startLine": 334,
+        "startChar": 46,
+        "endLine": 334,
+        "endChar": 0
+      },
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c9f1e04_6b3fe2bd",
+        "filename": "chrome/test/data/local_ntp/voice_browsertest.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "nit: voice-speech-template to be consistent with the js filename?",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19abc5c2_033620b2",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "FAKEBOX_MICROPHONE_ID?",
+      "range": {
+        "startLine": 21,
+        "startChar": 51,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a105e759_b4275057",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "Do we actually need the view stuff? Looks like most of the code is stubbed out anyway?",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7eadcd8_1b985d8f",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "s/Stars/Starts/",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8688587_78dc143d",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "I think this deserves a comment - why are these empty here?",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "021b915e_6c1676a0",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "This line is the \"user interruption\", right? Comment?",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b28d0b_59f563d1",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "// After stopping, further results from the recognition API should be ignored.\n?",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3db629_b4496df2",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "I\u0027m not sure, but maybe it\u0027ll be better to have separate tests for UMA recording. It\u0027s not good when one test tests multiple things, and these are already not that easy to follow IMO.",
+      "range": {
+        "startLine": 398,
+        "startChar": 74,
+        "endLine": 398,
+        "endChar": 0
+      },
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad9cf8af_af649b71",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "Kinda too unspecific to be useful. What\u0027s the expected behavior in case of an error?",
+      "range": {
+        "startLine": 403,
+        "startChar": 43,
+        "endLine": 403,
+        "endChar": 0
+      },
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38275759_55daf83b",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "Comment above about what we\u0027re testing here? (Maybe it\u0027s enough if the test-level comment above is expanded.)",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118fb494_b66c0f71",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "Similar here: What\u0027s the expected behavior? Something like \"Tests that the proper error message is shown when the input ends before speech is recognized, and that it gets hidden after a timeout.\"",
+      "range": {
+        "startLine": 425,
+        "startChar": 52,
+        "endLine": 425,
+        "endChar": 0
+      },
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30d1e95_c47377e0",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "If we just started again, why\u0027s the view inactive?",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83dbe7d_ce7e91fa",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "Why?",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62dc7a97_5954733e",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "...but a background click wouldn\u0027t have the shouldRetry flag set, right?!",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a253f41e_bca5dba9",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-07T10:22:56Z",
+      "side": 1,
+      "message": "Unrelated, but: Do you know what\u0027s up with the 4 alternatives? As far as I can tell, we only ever use the first one anyway.",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
