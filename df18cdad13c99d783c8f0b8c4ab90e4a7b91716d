@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ce44789_5095183e",
+        "filename": "services/ui/public/interfaces/window_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-07T22:38:36Z",
+      "side": 1,
+      "message": "can we filter the set of events we\u0027ll allow to some subset of all possible events on the receiving end?",
+      "range": {
+        "startLine": 375,
+        "startChar": 2,
+        "endLine": 375,
+        "endChar": 21
+      },
+      "revId": "df18cdad13c99d783c8f0b8c4ab90e4a7b91716d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
