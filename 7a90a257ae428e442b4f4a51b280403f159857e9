@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "240a62bf_0ce3d4e5",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T23:53:43Z",
+      "side": 1,
+      "message": "Please add a description here. Given the usage I\u0027m inclined to name the enum more specifically. How about DialogContentType? And given the usage it doesn\u0027t seem like you need embedders to change this, so can the enum be an enum class?",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 35
+      },
+      "revId": "7a90a257ae428e442b4f4a51b280403f159857e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dece46e_e06bd2ec",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-07T23:53:43Z",
+      "side": 1,
+      "message": "How about GetDialogContentMarginsForType?",
+      "range": {
+        "startLine": 131,
+        "startChar": 14,
+        "endLine": 131,
+        "endChar": 37
+      },
+      "revId": "7a90a257ae428e442b4f4a51b280403f159857e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
