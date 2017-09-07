@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "901887c4_ad6b9679",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-09-07T05:03:42Z",
+      "side": 1,
+      "message": "Instead of a comment, you can give the param a name (i.e. int64_t file_size).",
+      "range": {
+        "startLine": 65,
+        "startChar": 52,
+        "endLine": 66,
+        "endChar": 22
+      },
+      "revId": "263826df76b443266d3333b6a4d8f4750d32e924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b961163_e162ba5a",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-09-07T05:03:42Z",
+      "side": 1,
+      "message": "What is the c header needed for?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "263826df76b443266d3333b6a4d8f4750d32e924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77b4cc4_81559d56",
+        "filename": "remoting/host/file_proxy_wrapper_linux_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-09-07T05:03:42Z",
+      "side": 1,
+      "message": "Does this shorthand work?\nread_chunks_ \u003d {}",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 16
+      },
+      "revId": "263826df76b443266d3333b6a4d8f4750d32e924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a48c02_cfbc64e0",
+        "filename": "remoting/host/file_proxy_wrapper_linux_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-09-07T05:03:42Z",
+      "side": 1,
+      "message": "nit: use c++ style casts instead of c casts:\nstatic_cast\u003cuint64_t\u003e(read_filesize_)",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 22
+      },
+      "revId": "263826df76b443266d3333b6a4d8f4750d32e924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
