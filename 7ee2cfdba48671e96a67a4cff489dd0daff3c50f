@@ -16,6 +16,24 @@
       "revId": "7ee2cfdba48671e96a67a4cff489dd0daff3c50f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ced2b92_14f8781f",
+        "filename": "third_party/WebKit/Source/core/dom/NamedNodeMap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-09-07T12:47:07Z",
+      "side": 1,
+      "message": "Would switching to AttributesWithoutUpdate() work here? Otherwise I can at least file a bug about this.",
+      "parentUuid": "8abbafac_d08fad43",
+      "revId": "7ee2cfdba48671e96a67a4cff489dd0daff3c50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
