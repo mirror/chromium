@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ca9bf20_417b79f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-07T15:33:27Z",
+      "side": 1,
+      "message": "Should we explicitly state that the LRU cache is per-client and automatically destroyed when the ThumbnailProvider instance is destroyed?",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "28586103013bc68d980f39aa93f6acc0d3b0d572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649cc18f_a739bbf2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-07T15:33:27Z",
+      "side": 1,
+      "message": "nit: Can we add JavaDocs for these to follow the format in the rest of the file?",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 20
+      },
+      "revId": "28586103013bc68d980f39aa93f6acc0d3b0d572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6625ee34_080a8a0a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-07T15:33:27Z",
+      "side": 1,
+      "message": "Should we explicitly remove mBitmapCache from the mReferencePool?",
+      "range": {
+        "startLine": 101,
+        "startChar": 37,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "28586103013bc68d980f39aa93f6acc0d3b0d572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe9c529b_332a4c4e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-07T15:33:27Z",
+      "side": 1,
+      "message": "Should we still allow the deduplication cache to store weak references to bitmaps on low-end devices so that multiple clients holding strong references to the same bitmap can share an Object?",
+      "range": {
+        "startLine": 195,
+        "startChar": 16,
+        "endLine": 195,
+        "endChar": 74
+      },
+      "revId": "28586103013bc68d980f39aa93f6acc0d3b0d572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
