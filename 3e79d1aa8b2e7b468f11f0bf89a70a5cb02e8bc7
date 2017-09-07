@@ -83,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "652963c0_12ee7d5d",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-07T18:49:08Z",
+      "side": 1,
+      "message": "Thank you Sadrul. Your suggestion is very similar to my first patch.\nreveman@ pointed out that early return here will prevent any update when the paint_deferred is set. However, we might want to some damage pass through and changed immediately, e.g all the damages by SetYYYYYYFromAnimation().",
+      "parentUuid": "70f2465c_9ef5a7c5",
+      "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bec118a2_0b65f12f",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 4
