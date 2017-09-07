@@ -6,11 +6,11 @@
 
 #include <string.h>
 
-#include <deque>
 #include <memory>
 #include <vector>
 
 #include "base/bind.h"
+#include "base/containers/circular_deque.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -235,7 +235,7 @@ class RTCVideoEncoder::Impl
 
   // Used to match the encoded frame timestamp with WebRTC's given RTP
   // timestamp.
-  std::deque<RTCTimestamps> pending_timestamps_;
+  base::circular_deque<RTCTimestamps> pending_timestamps_;
 
   // Indicates that timestamp match failed and we should no longer attempt
   // matching.
