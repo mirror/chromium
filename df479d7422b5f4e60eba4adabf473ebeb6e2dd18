@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3079138a_cea27e16",
+        "filename": "media/formats/mp4/avc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-07T23:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0346ae4b_ac133c7a",
+      "revId": "df479d7422b5f4e60eba4adabf473ebeb6e2dd18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ed57bb2_dd1a1e9c",
         "filename": "media/formats/mp4/avc.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "df479d7422b5f4e60eba4adabf473ebeb6e2dd18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df225cc6_d5cd4ac8",
+        "filename": "media/formats/mp4/avc.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-07T23:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ed57bb2_dd1a1e9c",
+      "revId": "df479d7422b5f4e60eba4adabf473ebeb6e2dd18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6b97a23d_64ef8eb8",
+        "filename": "media/formats/mp4/avc.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-07T23:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5796957b_17454c49",
+      "revId": "df479d7422b5f4e60eba4adabf473ebeb6e2dd18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5837e792_6839f92e",
         "filename": "media/formats/mp4/mp4_stream_parser.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-07T23:35:43Z",
       "side": 1,
       "message": "Seems there are many things that could be invalid. Why this message?",
+      "revId": "df479d7422b5f4e60eba4adabf473ebeb6e2dd18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601c9c38_e444d477",
+        "filename": "media/formats/mp4/mp4_stream_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-07T23:43:52Z",
+      "side": 1,
+      "message": "In practice only the AVC path does any checking, and all it checks is the order of the NALUs.\n\nI\u0027ve changed the message to be more generic.",
+      "parentUuid": "5837e792_6839f92e",
       "revId": "df479d7422b5f4e60eba4adabf473ebeb6e2dd18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
