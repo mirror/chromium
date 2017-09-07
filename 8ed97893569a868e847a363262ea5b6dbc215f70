@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa67462c_8f414d9e",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-07T19:56:53Z",
+      "side": 1,
+      "message": "Could you please update the logging here? Something like:\n\nDVLOG(1) \u003c\u003c \"ProvideSinks called with \" \u003c\u003c sinks.size() \u003c\u003c \" sinks from provider: \" \u003c\u003c provider_name;",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e37766_950dc94e",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-07T19:56:53Z",
+      "side": 1,
+      "message": "It would be great to provide more information on 2 bits for documentation purposes:\n- how this class interacts with MRDesktop / MRMojoImpl to register itself as a MediaRouteProvider (and therefore how calls are forwarded). \n- how this class interacts with EPRM to establish connection with the extension, and how it processes requests from MRDesktop before/after the connection is established.",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b43cd5b_53530832",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-07T19:56:53Z",
+      "side": 1,
+      "message": "Why original_presentation_id?",
+      "range": {
+        "startLine": 33,
+        "startChar": 38,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2f8cec_be8986d2",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-07T19:56:53Z",
+      "side": 1,
+      "message": "Document that this should only be called once.",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa4bfe9_4ea7cd50",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-07T19:56:53Z",
+      "side": 1,
+      "message": "This is the only remaining use of WeakPtr in MRDesktop, and it\u0027s unlikely there will be another since most of the logic has shifted to other classes (I could be wrong about that though). Add a TODO here to consider replacing the WeakPtrFactory with a CancelableTaskTracker in this class.",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d82b2ba_2b03e82f",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-07T19:56:53Z",
+      "side": 1,
+      "message": "Does it actually work if you pass in a null callback? (I assume that the cb must always be answered, but if there isn\u0027t actually a cb...) Maybe it would be better to use \u0026MediaRouterMojoImpl::OnMediaControllerCreated here so we also get metrics?",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88bb789b_9b9b69f6",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-07T19:56:53Z",
+      "side": 1,
+      "message": "Since MediaRouterMojoImpl inherits mojom::MediaRouter, I think it would make more sense for |binding_| to be in there. In general it seems overall pattern should be: MediaRouterMojoImpl holds the mojo ptrs / bindings, while MRDesktop overrides specific mojom::MediaRouter behaviors.",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f83543_16ffdb11",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-07T19:56:53Z",
+      "side": 1,
+      "message": "Note: in-browser discovery is a desktop only feature, and should be moved to MediaRouterDesktop. Could you please add a TODO here?",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1230845_c7298a74",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-07T19:56:53Z",
+      "side": 1,
+      "message": "This isn\u0027t defined?",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
