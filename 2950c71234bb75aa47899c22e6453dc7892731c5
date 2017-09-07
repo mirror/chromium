@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcc8d93f_72104abe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-09-07T10:42:08Z",
+      "side": 1,
+      "message": "I fear \u0027O notif.\u0027 could still be rather cryptic to non-android sheriffs who are just scanning a blamelist for changes to blame for a test failure. I\u0027d go with something like\n\u0027[Android Notifications] Fix creation of disabled channels\u0027\n\nJust something to bear in mind for future though, no need to change if this is already submitted!",
+      "revId": "2950c71234bb75aa47899c22e6453dc7892731c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
