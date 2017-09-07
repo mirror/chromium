@@ -28,6 +28,7 @@
 #include "core/editing/iterators/TextIterator.h"
 
 #include <unicode/utf16.h>
+#include "core/HTMLElementTypeHelpers.h"
 #include "core/HTMLNames.h"
 #include "core/InputTypeNames.h"
 #include "core/dom/Document.h"
@@ -641,33 +642,6 @@ bool TextIteratorAlgorithm<Strategy>::ShouldEmitNewlineBeforeNode(Node& node) {
   return ShouldEmitNewlinesBeforeAndAfterNode(node);
 }
 
-static bool ShouldEmitExtraNewlineForNode(Node* node) {
-  // When there is a significant collapsed bottom margin, emit an extra
-  // newline for a more realistic result. We end up getting the right
-  // result even without margin collapsing. For example: <div><p>text</p></div>
-  // will work right even if both the <div> and the <p> have bottom margins.
-  LayoutObject* r = node->GetLayoutObject();
-  if (!r || !r->IsBox())
-    return false;
-
-  // NOTE: We only do this for a select set of nodes, and fwiw WinIE appears
-  // not to do this at all
-  if (node->HasTagName(h1Tag) || node->HasTagName(h2Tag) ||
-      node->HasTagName(h3Tag) || node->HasTagName(h4Tag) ||
-      node->HasTagName(h5Tag) || node->HasTagName(h6Tag) ||
-      node->HasTagName(pTag)) {
-    const ComputedStyle* style = r->Style();
-    if (style) {
-      int bottom_margin = ToLayoutBox(r)->CollapsedMarginAfter().ToInt();
-      int font_size = style->GetFontDescription().ComputedPixelSize();
-      if (bottom_margin * 2 >= font_size)
-        return true;
-    }
-  }
-
-  return false;
-}
-
 // Whether or not we should emit a character as we enter m_node (if it's a
 // container) or as we hit it (if it's atomic).
 template <typename Strategy>
@@ -800,8 +774,10 @@ void TextIteratorAlgorithm<Strategy>::ExitNode() {
   // _web_attributedStringFromRange. See <rdar://problem/5428427> for an example
   // of how this mismatch will cause problems.
   if (last_text_node_ && ShouldEmitNewlineAfterNode(*node_)) {
-    // use extra newline to represent margin bottom, as needed
-    bool add_newline = ShouldEmitExtraNewlineForNode(node_);
+    // https://html.spec.whatwg.org/multipage/dom.html#inner-text-collection-steps
+    // 8. If node is a p element, then append 2 (a required line break count) at
+    // the beginning and end of items.
+    bool add_newline = isHTMLParagraphElement(node_);
 
     // FIXME: We need to emit a '\n' as we leave an empty block(s) that
     // contain a VisiblePosition when doing selection preservation.
