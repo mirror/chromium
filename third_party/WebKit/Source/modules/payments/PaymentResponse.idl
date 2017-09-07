@@ -5,8 +5,8 @@
 // https://w3c.github.io/browser-payment-api/#idl-def-paymentcomplete
 
 enum PaymentComplete {
-    "success",
     "fail",
+    "success",
     "unknown"
 };
 
