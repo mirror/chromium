@@ -22,6 +22,30 @@
       "revId": "08020b3a9b0a825bfa7f7e9e9142ab12f4a245e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c76bed_6a3f39d0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-07T20:38:30Z",
+      "side": 1,
+      "message": "Done. I think the new code is easier to read.",
+      "parentUuid": "ecc6695d_5ed5e6c8",
+      "range": {
+        "startLine": 414,
+        "startChar": 2,
+        "endLine": 414,
+        "endChar": 42
+      },
+      "revId": "08020b3a9b0a825bfa7f7e9e9142ab12f4a245e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
