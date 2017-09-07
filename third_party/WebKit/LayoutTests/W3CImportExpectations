@@ -353,6 +353,7 @@ external/wpt/html/semantics/forms/form-submission-0/url-encoded.html [ Skip ]
 external/wpt/svg/linking/scripted [ Skip ]
 
 # Manual tests that fail as TIMEOUT or NOTRUN. Consider adding wpt_automation.
+external/wpt/cssom-view/scrollBoundaryBehavior-manual.html [ Skip ]
 external/wpt/FileAPI/BlobURL/test1-manual.html [ Skip ]
 external/wpt/FileAPI/BlobURL/test2-manual.html [ Skip ]
 external/wpt/FileAPI/BlobURL/test3-manual.html [ Skip ]
