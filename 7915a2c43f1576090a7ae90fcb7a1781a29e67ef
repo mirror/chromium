@@ -16,6 +16,24 @@
       "revId": "7915a2c43f1576090a7ae90fcb7a1781a29e67ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4941055c_7f8f31bc",
+        "filename": "content/public/test/mock_service_worker_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-07T14:20:41Z",
+      "side": 1,
+      "message": "Sure, I can do that but want to understand more. Is it not a mock because it\u0027s not using gmock? From the tests I\u0027ve worked with, we just call the classes made for a test a Mock* or Test*. E.g., content/public/test/mock_render_process_host.h.",
+      "parentUuid": "dfb21a26_0c346d95",
+      "revId": "7915a2c43f1576090a7ae90fcb7a1781a29e67ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
