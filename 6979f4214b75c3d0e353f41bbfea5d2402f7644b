@@ -389,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "4d8cc9b0_1b7efbc5",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-07T22:25:03Z",
+      "side": 1,
+      "message": "Constructor is called before each test case. SetUp is needed only for cases when you want to call a virtual method. \n\nPlatformTest::SetUp() (super class\u0027s SetUp) should be called manually and it is not called here.",
+      "parentUuid": "6736c6e6_5bfdd3d9",
+      "range": {
+        "startLine": 38,
+        "startChar": 26,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "6979f4214b75c3d0e353f41bbfea5d2402f7644b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6de4c5f_801a51d0",
         "filename": "ios/net/cookies/ns_http_system_cookie_store_unittest.mm",
         "patchSetId": 4
