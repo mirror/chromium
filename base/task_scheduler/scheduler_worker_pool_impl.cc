@@ -67,6 +67,7 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   void ReEnqueueSequence(scoped_refptr<Sequence> sequence) override;
   TimeDelta GetSleepTimeout() override;
   void OnMainExit(SchedulerWorker* worker) override;
+  void OnCanScheduleSequence(scoped_refptr<Sequence> sequence) override;
 
   // Sets |is_on_idle_workers_stack_| to be true and DCHECKS that |worker|
   // is indeed on the idle workers stack.
@@ -225,7 +226,7 @@ SchedulerWorkerPoolImpl::~SchedulerWorkerPoolImpl() {
 #endif
 }
 
-void SchedulerWorkerPoolImpl::ScheduleSequence(
+void SchedulerWorkerPoolImpl::OnCanScheduleSequence(
     scoped_refptr<Sequence> sequence) {
   const auto sequence_sort_key = sequence->GetSortKey();
   shared_priority_queue_.BeginTransaction()->Push(std::move(sequence),
@@ -233,6 +234,7 @@ void SchedulerWorkerPoolImpl::ScheduleSequence(
 
   WakeUpOneWorker();
 }
+
 void SchedulerWorkerPoolImpl::GetHistograms(
     std::vector<const HistogramBase*>* histograms) const {
   histograms->push_back(detach_duration_histogram_);
@@ -478,6 +480,11 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainExit(
     DCHECK(!ContainsWorker(outer_->workers_, worker));
   }
 #endif
+}
+
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
+    OnCanScheduleSequence(scoped_refptr<Sequence> sequence) {
+  outer_->OnCanScheduleSequence(std::move(sequence));
 }
 
 void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
