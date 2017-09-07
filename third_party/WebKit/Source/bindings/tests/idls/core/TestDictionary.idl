@@ -43,4 +43,6 @@ dictionary TestDictionary {
     record<ByteString, (long or boolean)> unionInRecordMember;
     record<DOMString, any> anyInRecordMember;
     (Float or BooleanType) unionWithTypedefs;
+    [XAttr, Clamp] long setLong;
+    [TreatNullAs=EmptyString] DOMString setString;
 };
