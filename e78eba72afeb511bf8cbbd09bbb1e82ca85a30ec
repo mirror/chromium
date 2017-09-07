@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "551bfad4_aff3c5e5",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-07T01:10:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad64ea04_bd6b9917",
+      "revId": "e78eba72afeb511bf8cbbd09bbb1e82ca85a30ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38354d67_c18e97d1",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "afcd117e_ffde5572",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-07T01:10:52Z",
+      "side": 1,
+      "message": "mistake, it was storage only and I only put setter as custom function, it should be both getter and setter.",
+      "parentUuid": "38354d67_c18e97d1",
+      "revId": "e78eba72afeb511bf8cbbd09bbb1e82ca85a30ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97d51b4f_c0ffeba1",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-07T00:35:53Z",
       "side": 1,
       "message": "Same here?",
+      "revId": "e78eba72afeb511bf8cbbd09bbb1e82ca85a30ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1bc953_aea00fd2",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-07T01:10:52Z",
+      "side": 1,
+      "message": "mistake, it was storage only and I only put setter as custom function, it should be both getter and setter.",
+      "parentUuid": "97d51b4f_c0ffeba1",
       "revId": "e78eba72afeb511bf8cbbd09bbb1e82ca85a30ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
