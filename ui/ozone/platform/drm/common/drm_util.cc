@@ -121,6 +121,7 @@ display::DisplayConnectionType GetDisplayType(drmModeConnector* connector) {
     case DRM_MODE_CONNECTOR_LVDS:
     case DRM_MODE_CONNECTOR_eDP:
     case DRM_MODE_CONNECTOR_DSI:
+    case DRM_MODE_CONNECTOR_VIRTUAL:
       return display::DISPLAY_CONNECTION_TYPE_INTERNAL;
     case DRM_MODE_CONNECTOR_DisplayPort:
       return display::DISPLAY_CONNECTION_TYPE_DISPLAYPORT;
