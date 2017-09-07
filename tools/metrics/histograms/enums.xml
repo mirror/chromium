@@ -24040,6 +24040,7 @@ from previous Chrome versions.
   <int value="1127427821" label="OmniboxEntitySuggestions:disabled"/>
   <int value="1127900329" label="AutofillUpstreamShowNewUi:enabled"/>
   <int value="1129888794" label="ash-touch-hud"/>
+  <int value="1133363961" label="enable-policy-tool"/>
   <int value="1133635187" label="force-gpu-rasterization"/>
   <int value="1139226452" label="enable-nacl-debug"/>
   <int value="1139363314" label="disable-supervised-user-blacklist"/>
