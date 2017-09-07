@@ -16,6 +16,24 @@
       "revId": "f464da11ea45cb604c6357047eefbc2aea3a54fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0af6d28f_bf460f8a",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-07T05:20:02Z",
+      "side": 1,
+      "message": "I think the getComputedStyle above is also a hit. The whole thing takes about 2ms on my local build of a 16ms frame. Might be an issue if there\u0027s a lot going on in the background..",
+      "parentUuid": "c781ee66_70b972ed",
+      "revId": "f464da11ea45cb604c6357047eefbc2aea3a54fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
