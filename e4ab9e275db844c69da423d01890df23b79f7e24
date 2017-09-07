@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53b73972_fa6c2a09",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-07T16:31:22Z",
+      "side": 1,
+      "message": "Change to not HTML? DUMP? up to you.",
+      "range": {
+        "startLine": 212,
+        "startChar": 25,
+        "endLine": 212,
+        "endChar": 29
+      },
+      "revId": "e4ab9e275db844c69da423d01890df23b79f7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
