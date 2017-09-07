@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9210e3cf_9bcdb284",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/parse-input-arguments-019.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-07T15:43:48Z",
+      "side": 1,
+      "message": "Please refer to PS#13, which updated this test. Basically I think this test should pass, because in JS, any non-zero value is considered a Boolean(true).\nDoes that make sense?",
+      "parentUuid": "4af11f78_daf86186",
+      "range": {
+        "startLine": 28,
+        "startChar": 173,
+        "endLine": 28,
+        "endChar": 194
+      },
+      "revId": "26985404b9aaf5fc52fb6f58603bd039d70ef448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7baa57d_26fce59d",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
         "patchSetId": 12
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-07T15:40:34Z",
       "side": 1,
       "message": "I think I\u0027d prefer to just set the properties on a PaintRenderingContext2DSettings object, that way when we add more settings we don\u0027t have to add / change parameters.",
+      "revId": "26985404b9aaf5fc52fb6f58603bd039d70ef448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6082866a_943cf36e",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-07T15:43:48Z",
+      "side": 1,
+      "message": "Yes, that makes more sense. Please refer to PS#13 which is using the generated bindings code in this function, and makes this function much simpler :)",
+      "parentUuid": "b7baa57d_26fce59d",
       "revId": "26985404b9aaf5fc52fb6f58603bd039d70ef448",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
