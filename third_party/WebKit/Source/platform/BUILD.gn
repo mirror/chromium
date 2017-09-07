@@ -1963,6 +1963,7 @@ test("image_decode_bench") {
 
   deps = [
     ":platform",
+    "//mojo/edk/system",
     "//third_party/WebKit/Source/platform/wtf",
     "//ui/gfx:test_support",
   ]
