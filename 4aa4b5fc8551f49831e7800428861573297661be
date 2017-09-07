@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e03cb899_58171614",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-07T19:40:33Z",
+      "side": 1,
+      "message": "Done, don\u0027t even need these vars actually.",
+      "parentUuid": "ec10dd1b_0c02d815",
+      "range": {
+        "startLine": 140,
+        "startChar": 7,
+        "endLine": 140,
+        "endChar": 23
+      },
+      "revId": "4aa4b5fc8551f49831e7800428861573297661be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d6944a7_1c2f2318",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4aa4b5fc8551f49831e7800428861573297661be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414b62ab_5d1d84d4",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-07T19:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d6944a7_1c2f2318",
+      "range": {
+        "startLine": 496,
+        "startChar": 36,
+        "endLine": 496,
+        "endChar": 56
+      },
+      "revId": "4aa4b5fc8551f49831e7800428861573297661be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
