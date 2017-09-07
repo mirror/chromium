@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9fd289d3_9adb286d",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-07T03:05:41Z",
+      "side": 1,
+      "message": "It doesn\u0027t need to. The code in contrib/inffast64/inffast64.c works whether or not the ZLIB_INTERNAL_HAVE_64_BIT_ETC macros are defined. If one or both are, it uses the fast or faster code path. If they\u0027re not, it falls back to exactly the same implementation as the top-level inffast.c.\n\nI\u0027ve updated the third_party/zlib/BUILD.gn file to avoid conflict with your ARM code, which landed after my change was first sent out.",
+      "parentUuid": "253172e1_7a4ae178",
+      "revId": "4197315b2976174ed746488f328b98220728d814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cb7b62a_9dd68440",
         "filename": "third_party/zlib/inffast.c",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T20:32:57Z",
       "side": 1,
       "message": "In this case, a cleaner approach is to remove this file from sources lists and replace it for inffast64.c (like we do for ARM).\n\nPlus, no need to patch the original file.",
+      "revId": "4197315b2976174ed746488f328b98220728d814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf7eee5_60a27682",
+        "filename": "third_party/zlib/inffast.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-07T03:05:41Z",
+      "side": 1,
+      "message": "Well, this comment here (and the #elif) is what\u0027s in the upstream pull request at https://github.com/madler/zlib/pull/292\n\nIn the upstream https://github.com/madler/zlib/blob/master/CMakeLists.txt, none of the various options (already committed to the repo, not related to my inffast64 patch) remove source files from the list of .c files to build, they only add. For consistency, I followed the same approach.\n\nSimilarly, in the upstream https://github.com/madler/zlib/blob/master/inffast.c, the code is surrounded by an \"#ifdef ASMINF\" instead of using the build mechanism (make or cmake) to disable compiling inffast.c. Again, this is already committed, and unrelated to my change, but again, the approach I took in my change tries to be consistent.\n\nRegardless, I\u0027d still like to patch the top level inffast.c for the comment changes below, and the fact that INFLATE_FAST_MIN_HAVE is now a configurable compile-time constant.",
+      "parentUuid": "0cb7b62a_9dd68440",
       "revId": "4197315b2976174ed746488f328b98220728d814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9c0a383a_5f443114",
+        "filename": "third_party/zlib/inffast.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-07T03:05:41Z",
+      "side": 1,
+      "message": "We don\u0027t *need* the changes, in that the compiler ought to generate the same code either way, but I still like to make the change here (well, make the change upstream, and copied here) because (1) it gives some context to introducing these macros in inffast.h, and (2) it minimizes the diff between inffast.c and contrib/inffast64/inffast64.c.",
+      "parentUuid": "41e252b7_6afc72f8",
+      "revId": "4197315b2976174ed746488f328b98220728d814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6102bbf_9626906d",
         "filename": "third_party/zlib/inffast.h",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-01T20:32:57Z",
       "side": 1,
       "message": "As the macro is defined unconditionally in BUILD.gn, won\u0027t we end up with a INFLATE_FAST_MIN_LEFT of 264 for aarch64 *while* including the NEON code for that platform?\n\nSee: https://cs.chromium.org/chromium/src/third_party/zlib/BUILD.gn?l\u003d78",
+      "revId": "4197315b2976174ed746488f328b98220728d814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618582f1_d7bd2c58",
+        "filename": "third_party/zlib/inffast.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-07T03:05:41Z",
+      "side": 1,
+      "message": "I\u0027ve updated the third_party/zlib/BUILD.gn file to avoid conflict with your ARM code, which landed after my change was first sent out.",
+      "parentUuid": "e6102bbf_9626906d",
       "revId": "4197315b2976174ed746488f328b98220728d814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
