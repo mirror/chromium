@@ -47,6 +47,11 @@ class CC_EXPORT PaintedOverlayScrollbarLayerImpl
     thumb_ui_resource_id_ = uid;
   }
 
+  void set_track_ui_resource_id(UIResourceId uid) {
+    track_ui_resource_id_ = uid;
+    NoteLayerPropertyChanged();
+  }
+
  protected:
   PaintedOverlayScrollbarLayerImpl(LayerTreeImpl* tree_impl,
                                    int id,
@@ -64,6 +69,7 @@ class CC_EXPORT PaintedOverlayScrollbarLayerImpl
   const char* LayerTypeAsString() const override;
 
   UIResourceId thumb_ui_resource_id_;
+  UIResourceId track_ui_resource_id_;
 
   int thumb_thickness_;
   int thumb_length_;
