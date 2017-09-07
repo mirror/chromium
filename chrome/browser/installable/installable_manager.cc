@@ -90,7 +90,8 @@ InstallableManager::InstallableManager(content::WebContents* web_contents)
       page_status_(InstallabilityCheckStatus::NOT_STARTED),
       menu_open_count_(0),
       menu_item_add_to_homescreen_count_(0),
-      is_pwa_check_complete_(false),
+      add_to_homescreen_manifest_timeout_count_(0),
+      add_to_homescreen_installability_timeout_count_(0),
       weak_factory_(this) {
   // This is null in unit tests.
   if (web_contents) {
@@ -151,54 +152,48 @@ void InstallableManager::GetData(const InstallableParams& params,
 }
 
 void InstallableManager::RecordMenuOpenHistogram() {
-  if (is_pwa_check_complete_)
+  if (is_pwa_check_complete())
     InstallableMetrics::RecordMenuOpenHistogram(page_status_);
   else
     ++menu_open_count_;
 }
 
 void InstallableManager::RecordMenuItemAddToHomescreenHistogram() {
-  if (is_pwa_check_complete_)
+  if (is_pwa_check_complete())
     InstallableMetrics::RecordMenuItemAddToHomescreenHistogram(page_status_);
   else
     ++menu_item_add_to_homescreen_count_;
 }
 
-void InstallableManager::RecordQueuedMetricsOnTaskCompletion(
-    const InstallableParams& params,
-    bool check_passed) {
-  // Don't do anything if we've:
-  //  - already finished the PWA check, or
-  //  - we passed the check AND it was not for the full PWA params.
-  // In the latter case (i.e. the check passed but we weren't checking
-  // everything), we don't yet know if the site is installable. However, if the
-  // check didn't pass, we know for sure the site isn't installable, regardless
-  // of how much we checked.
-  //
-  // Once a full check is completed, metrics will be directly recorded in
-  // Record*Histogram since |is_pwa_check_complete_| will be true.
-  if (is_pwa_check_complete_ || (check_passed && !IsParamsForPwaCheck(params)))
-    return;
-
-  is_pwa_check_complete_ = true;
-  page_status_ =
-      check_passed
-          ? InstallabilityCheckStatus::COMPLETE_PROGRESSIVE_WEB_APP
-          : InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP;
-
-  // Compute what the status would have been for any queued calls to
-  // Record*Histogram, and record appropriately.
-  InstallabilityCheckStatus prev_status =
-      check_passed
-          ? InstallabilityCheckStatus::IN_PROGRESS_PROGRESSIVE_WEB_APP
-          : InstallabilityCheckStatus::IN_PROGRESS_NON_PROGRESSIVE_WEB_APP;
-  for (; menu_open_count_ > 0; --menu_open_count_)
-    InstallableMetrics::RecordMenuOpenHistogram(prev_status);
-
-  for (; menu_item_add_to_homescreen_count_ > 0;
-       --menu_item_add_to_homescreen_count_) {
-    InstallableMetrics::RecordMenuItemAddToHomescreenHistogram(prev_status);
+void InstallableManager::RecordAddToHomescreenNoTimeout() {
+  // For there to be no timeout, we must have successfully completed the
+  // installability check, or failed early. We could still be in the
+  // NOT_COMPLETED state since we don't do the full installability check if
+  // WebAPKs are disabled.
+  switch (page_status_) {
+    case InstallabilityCheckStatus::COMPLETE_PROGRESSIVE_WEB_APP:
+      InstallableMetrics::RecordAddToHomescreenHistogram(
+          AddToHomescreenTimeoutStatus::NO_TIMEOUT_PROGRESSIVE_WEB_APP);
+      break;
+    case InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP:
+    case InstallabilityCheckStatus::NOT_COMPLETED:
+      InstallableMetrics::RecordAddToHomescreenHistogram(
+          AddToHomescreenTimeoutStatus::NO_TIMEOUT_NON_PROGRESSIVE_WEB_APP);
+      break;
+    case InstallabilityCheckStatus::NOT_STARTED:
+    case InstallabilityCheckStatus::IN_PROGRESS_NON_PROGRESSIVE_WEB_APP:
+    case InstallabilityCheckStatus::IN_PROGRESS_PROGRESSIVE_WEB_APP:
+    case InstallabilityCheckStatus::COUNT:
+      NOTREACHED();
   }
+}
+
+void InstallableManager::RecordAddToHomescreenManifestAndIconTimeout() {
+  ++add_to_homescreen_manifest_timeout_count_;
+}
+
+void InstallableManager::RecordAddToHomescreenInstallabilityTimeout() {
+  ++add_to_homescreen_installability_timeout_count_;
 }
 
 InstallableManager::IconParams InstallableManager::ParamsForPrimaryIcon(
@@ -305,6 +300,80 @@ bool InstallableManager::IsComplete(const InstallableParams& params) const {
           IsIconFetched(ParamsForBadgeIcon(params)));
 }
 
+void InstallableManager::RecordQueuedMetricsOnTaskCompletion(
+    const InstallableParams& params,
+    bool check_passed) {
+  // Don't do anything if we've:
+  //  - already finished the PWA check, or
+  //  - we passed the check AND it was not for the full PWA params.
+  // In the latter case (i.e. the check passed but we weren't checking
+  // everything), we don't yet know if the site is installable. However, if the
+  // check didn't pass, we know for sure the site isn't installable, regardless
+  // of how much we checked.
+  //
+  // Once a full check is completed, metrics will be directly recorded in
+  // Record{MenuOpen,MenuItemAddToHomescreen}Histogram.
+  if (is_pwa_check_complete() || (check_passed && !IsParamsForPwaCheck(params)))
+    return;
+
+  page_status_ =
+      check_passed
+          ? InstallabilityCheckStatus::COMPLETE_PROGRESSIVE_WEB_APP
+          : InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP;
+
+  // Compute what the status would have been for any queued calls to
+  // Record{MenuOpen,MenuItemAddToHomescreen}Histogram.
+  InstallabilityCheckStatus prev_status =
+      check_passed
+          ? InstallabilityCheckStatus::IN_PROGRESS_PROGRESSIVE_WEB_APP
+          : InstallabilityCheckStatus::IN_PROGRESS_NON_PROGRESSIVE_WEB_APP;
+  for (; menu_open_count_ > 0; --menu_open_count_)
+    InstallableMetrics::RecordMenuOpenHistogram(prev_status);
+
+  for (; menu_item_add_to_homescreen_count_ > 0;
+       --menu_item_add_to_homescreen_count_) {
+    InstallableMetrics::RecordMenuItemAddToHomescreenHistogram(prev_status);
+  }
+
+  RecordAddToHomescreenHistogram();
+}
+
+void InstallableManager::RecordAddToHomescreenHistogram() {
+  DCHECK(page_status_ ==
+             InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP ||
+         page_status_ ==
+             InstallabilityCheckStatus::COMPLETE_PROGRESSIVE_WEB_APP);
+
+  // Record the status for any queued calls to RecordAddToHomescreen*.
+  for (; add_to_homescreen_manifest_timeout_count_ > 0;
+       --add_to_homescreen_manifest_timeout_count_) {
+    if (page_status_ ==
+        InstallabilityCheckStatus::COMPLETE_PROGRESSIVE_WEB_APP) {
+      InstallableMetrics::RecordAddToHomescreenHistogram(
+          AddToHomescreenTimeoutStatus::
+              TIMEOUT_MANIFEST_FETCH_PROGRESSIVE_WEB_APP);
+    } else {
+      InstallableMetrics::RecordAddToHomescreenHistogram(
+          AddToHomescreenTimeoutStatus::
+              TIMEOUT_MANIFEST_FETCH_NON_PROGRESSIVE_WEB_APP);
+    }
+  }
+
+  for (; add_to_homescreen_installability_timeout_count_ > 0;
+       --add_to_homescreen_installability_timeout_count_) {
+    if (page_status_ ==
+        InstallabilityCheckStatus::COMPLETE_PROGRESSIVE_WEB_APP) {
+      InstallableMetrics::RecordAddToHomescreenHistogram(
+          AddToHomescreenTimeoutStatus::
+              TIMEOUT_INSTALLABILITY_CHECK_PROGRESSIVE_WEB_APP);
+    } else {
+      InstallableMetrics::RecordAddToHomescreenHistogram(
+          AddToHomescreenTimeoutStatus::
+              TIMEOUT_INSTALLABILITY_CHECK_NON_PROGRESSIVE_WEB_APP);
+    }
+  }
+}
+
 void InstallableManager::Reset() {
   // Prevent any outstanding callbacks to or from this object from being called.
   weak_factory_.InvalidateWeakPtrs();
@@ -315,14 +384,24 @@ void InstallableManager::Reset() {
   // |menu_item_add_to_homescreen_count_| might be nonzero and |page_status_| is
   // one of NOT_STARTED or NOT_COMPLETED. If we completed, then these values
   // cannot be anything except 0.
-  is_pwa_check_complete_ = false;
-
   for (; menu_open_count_ > 0; --menu_open_count_)
     InstallableMetrics::RecordMenuOpenHistogram(page_status_);
 
   for (; menu_item_add_to_homescreen_count_ > 0;
        --menu_item_add_to_homescreen_count_) {
     InstallableMetrics::RecordMenuItemAddToHomescreenHistogram(page_status_);
+  }
+
+  for (; add_to_homescreen_manifest_timeout_count_ > 0;
+       --add_to_homescreen_manifest_timeout_count_) {
+    InstallableMetrics::RecordAddToHomescreenHistogram(
+        AddToHomescreenTimeoutStatus::TIMEOUT_MANIFEST_FETCH_UNKNOWN);
+  }
+
+  for (; add_to_homescreen_installability_timeout_count_ > 0;
+       --add_to_homescreen_installability_timeout_count_) {
+    InstallableMetrics::RecordAddToHomescreenHistogram(
+        AddToHomescreenTimeoutStatus::TIMEOUT_INSTALLABILITY_CHECK_UNKNOWN);
   }
 
   page_status_ = InstallabilityCheckStatus::NOT_STARTED;
@@ -622,4 +701,11 @@ const content::Manifest& InstallableManager::manifest() const {
 
 bool InstallableManager::is_installable() const {
   return valid_manifest_->is_valid && worker_->has_worker;
+}
+
+bool InstallableManager::is_pwa_check_complete() const {
+  return page_status_ ==
+             InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP ||
+         page_status_ ==
+             InstallabilityCheckStatus::COMPLETE_PROGRESSIVE_WEB_APP;
 }

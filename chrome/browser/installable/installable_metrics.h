@@ -16,11 +16,27 @@ enum class InstallabilityCheckStatus {
   COUNT,
 };
 
+// This enum backs a UMA histogram and must be treated as append-only.
+enum class AddToHomescreenTimeoutStatus {
+  NO_TIMEOUT_NON_PROGRESSIVE_WEB_APP,
+  NO_TIMEOUT_PROGRESSIVE_WEB_APP,
+  TIMEOUT_MANIFEST_FETCH_NON_PROGRESSIVE_WEB_APP,
+  TIMEOUT_MANIFEST_FETCH_PROGRESSIVE_WEB_APP,
+  TIMEOUT_MANIFEST_FETCH_UNKNOWN,
+  TIMEOUT_INSTALLABILITY_CHECK_NON_PROGRESSIVE_WEB_APP,
+  TIMEOUT_INSTALLABILITY_CHECK_PROGRESSIVE_WEB_APP,
+  TIMEOUT_INSTALLABILITY_CHECK_UNKNOWN,
+  COUNT,
+};
+
 class InstallableMetrics {
  public:
   static void RecordMenuOpenHistogram(InstallabilityCheckStatus status);
   static void RecordMenuItemAddToHomescreenHistogram(
       InstallabilityCheckStatus status);
+
+  static void RecordAddToHomescreenHistogram(
+      AddToHomescreenTimeoutStatus status);
 };
 
 #endif  // CHROME_BROWSER_INSTALLABLE_INSTALLABLE_METRICS_H_

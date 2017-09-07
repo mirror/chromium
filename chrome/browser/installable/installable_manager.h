@@ -66,8 +66,13 @@ class InstallableManager
   // is opened on Android.
   void RecordMenuOpenHistogram();
   void RecordMenuItemAddToHomescreenHistogram();
-  void RecordQueuedMetricsOnTaskCompletion(const InstallableParams& params,
-                                           bool check_passed);
+
+  // Called via AddToHomescreenDataFetcher to record metrics on how often the
+  // installable check is completed before timing out when a user is shown the
+  // add to homescreen dialog for a shortcut or PWA on Android.
+  void RecordAddToHomescreenNoTimeout();
+  void RecordAddToHomescreenManifestAndIconTimeout();
+  void RecordAddToHomescreenInstallabilityTimeout();
 
  protected:
   // For mocking in tests.
@@ -158,6 +163,10 @@ class InstallableManager
   // Returns true if |params| requires no more work to be done.
   bool IsComplete(const InstallableParams& params) const;
 
+  void RecordQueuedMetricsOnTaskCompletion(const InstallableParams& params,
+                                           bool check_passed);
+  void RecordAddToHomescreenHistogram();
+
   // Resets members to empty and removes all queued tasks.
   // Called when navigating to a new page or if the WebContents is destroyed
   // whilst waiting for a callback.
@@ -196,6 +205,7 @@ class InstallableManager
   const GURL& manifest_url() const;
   const content::Manifest& manifest() const;
   bool is_installable() const;
+  bool is_pwa_check_complete() const;
 
   InstallableTaskQueue task_queue_;
 
@@ -220,7 +230,10 @@ class InstallableManager
   int menu_open_count_;
   int menu_item_add_to_homescreen_count_;
 
-  bool is_pwa_check_complete_;
+  // Counts for the number of times the add to homescreen dialog times out at
+  // different stages of the installable check.
+  int add_to_homescreen_manifest_timeout_count_;
+  int add_to_homescreen_installability_timeout_count_;
 
   base::WeakPtrFactory<InstallableManager> weak_factory_;
 

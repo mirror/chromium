@@ -18,3 +18,10 @@ void InstallableMetrics::RecordMenuItemAddToHomescreenHistogram(
       "Webapp.InstallabilityCheckStatus.MenuItemAddToHomescreen", status,
       InstallabilityCheckStatus::COUNT);
 }
+
+void InstallableMetrics::RecordAddToHomescreenHistogram(
+    AddToHomescreenTimeoutStatus status) {
+  UMA_HISTOGRAM_ENUMERATION(
+      "Webapp.InstallabilityCheckStatus.AddToHomescreenTimeout", status,
+      AddToHomescreenTimeoutStatus::COUNT);
+}
