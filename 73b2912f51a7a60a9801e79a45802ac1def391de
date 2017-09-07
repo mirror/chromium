@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fd2cb59_cd96715b",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-07T20:05:57Z",
+      "side": 1,
+      "message": "Any ETA for this? Including ComputedStyle.h from that many compilation units should be avoided, as it slows down compilation.",
+      "revId": "73b2912f51a7a60a9801e79a45802ac1def391de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
