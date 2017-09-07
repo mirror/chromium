@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3dab4cb_ddeec0fe",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-07T07:14:12Z",
+      "side": 0,
+      "message": "Please remove this TODO, since we have flat tree version.",
+      "revId": "7dcbe4dd3b6868fdd77f7bc04d47c6c2341d407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7cf1d04_61207b6e",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-07T07:14:12Z",
+      "side": 0,
+      "message": "nit: Please keep this blank line.",
+      "revId": "7dcbe4dd3b6868fdd77f7bc04d47c6c2341d407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
