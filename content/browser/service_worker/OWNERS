@@ -1,5 +1,17 @@
+# Service Worker OWNERS
+#
+# This file also covers ownership of the following directories:
+#   //content/browser/resources/service_worker/
+#   //content/child/service_worker/
+#   //content/common/service_worker/
+#   //content/renderer/service_worker/
+#   //third_party/WebKit/public/web/modules/serviceworker/OWNERS
+#   //third_party/WebKit/public/platform/modules/serviceworker/OWNERS
+#   //third_party/WebKit/Source/modules/serviceworkers/OWNERS
+
 falken@chromium.org
 horo@chromium.org
+kinuko@chromium.org
 mek@chromium.org
 michaeln@chromium.org
 nhiroki@chromium.org
