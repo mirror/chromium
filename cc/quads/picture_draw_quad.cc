@@ -29,15 +29,15 @@ void PictureDrawQuad::SetNew(const viz::SharedQuadState* shared_quad_state,
                              viz::ResourceFormat texture_format,
                              const gfx::Rect& content_rect,
                              float contents_scale,
-                             scoped_refptr<RasterSource> raster_source) {
+                             scoped_refptr<DisplayItemList> display_item_list) {
   ContentDrawQuadBase::SetNew(
-      shared_quad_state, DrawQuad::PICTURE_CONTENT, rect, visible_rect,
+      shared_quad_state, viz::DrawQuad::PICTURE_CONTENT, rect, visible_rect,
       needs_blending, tex_coord_rect, texture_size,
       !viz::PlatformColor::SameComponentOrder(texture_format),
       nearest_neighbor);
   this->content_rect = content_rect;
   this->contents_scale = contents_scale;
-  this->raster_source = raster_source;
+  this->display_item_list = display_item_list;
   this->texture_format = texture_format;
 }
 
@@ -51,20 +51,21 @@ void PictureDrawQuad::SetAll(const viz::SharedQuadState* shared_quad_state,
                              viz::ResourceFormat texture_format,
                              const gfx::Rect& content_rect,
                              float contents_scale,
-                             scoped_refptr<RasterSource> raster_source) {
+                             scoped_refptr<DisplayItemList> display_item_list) {
   ContentDrawQuadBase::SetAll(
-      shared_quad_state, DrawQuad::PICTURE_CONTENT, rect, visible_rect,
+      shared_quad_state, viz::DrawQuad::PICTURE_CONTENT, rect, visible_rect,
       needs_blending, tex_coord_rect, texture_size,
       !viz::PlatformColor::SameComponentOrder(texture_format),
       nearest_neighbor);
   this->content_rect = content_rect;
   this->contents_scale = contents_scale;
-  this->raster_source = raster_source;
+  this->display_item_list = display_item_list;
   this->texture_format = texture_format;
 }
 
-const PictureDrawQuad* PictureDrawQuad::MaterialCast(const DrawQuad* quad) {
-  DCHECK(quad->material == DrawQuad::PICTURE_CONTENT);
+const PictureDrawQuad* PictureDrawQuad::MaterialCast(
+    const viz::DrawQuad* quad) {
+  DCHECK(quad->material == viz::DrawQuad::PICTURE_CONTENT);
   return static_cast<const PictureDrawQuad*>(quad);
 }
 
@@ -73,7 +74,7 @@ void PictureDrawQuad::ExtendValue(base::trace_event::TracedValue* value) const {
   MathUtil::AddToTracedValue("content_rect", content_rect, value);
   value->SetDouble("contents_scale", contents_scale);
   value->SetInteger("texture_format", texture_format);
-  // TODO(piman): raster_source?
+  // TODO(piman): display_item_list?
 }
 
 }  // namespace cc
