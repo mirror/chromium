@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e05ef3ee_3e1d68bf",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1958,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:46:55Z",
+      "side": 0,
+      "message": "Hm, could this just not make a resource via mailbox and just make it directly and then that\u0027s all you need to change?",
+      "revId": "caabcd74f118b4a2dc879c56df972453d65f2738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

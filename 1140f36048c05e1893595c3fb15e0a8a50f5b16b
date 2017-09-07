@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f0a12a1_5731d6ae",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1941,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:46:55Z",
+      "side": 1,
+      "message": "I\u0027d remove this function and call Bind directly.",
+      "revId": "1140f36048c05e1893595c3fb15e0a8a50f5b16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1f6877_cb92e939",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1963,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:46:55Z",
+      "side": 1,
+      "message": "auto",
+      "revId": "1140f36048c05e1893595c3fb15e0a8a50f5b16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90da3708_ad79c205",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1967,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:46:55Z",
+      "side": 1,
+      "message": "TextureMailbox mailbox( ... );  (no \"\u003d TextureMailbox\")",
+      "revId": "1140f36048c05e1893595c3fb15e0a8a50f5b16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20363ed9_cd3b1df0",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1970,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:46:55Z",
+      "side": 1,
+      "message": "auto",
+      "revId": "1140f36048c05e1893595c3fb15e0a8a50f5b16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
