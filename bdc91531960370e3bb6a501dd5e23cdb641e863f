@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9395764_54ae6c39",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-07T01:22:03Z",
+      "side": 1,
+      "message": "This is a behavior change; the old code looks pretty wrong to me, the new code is kinda weird too.  I assume you thought through all the cases here and we get padding rows \"where they make sense\"?  For example, if the bubble content is empty pre-Harmony, we could now get no padding rows at all instead of a lone one; not sure whether that\u0027s right.",
+      "revId": "bdc91531960370e3bb6a501dd5e23cdb641e863f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daabc78e_487e3b21",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-07T01:22:03Z",
+      "side": 1,
+      "message": "Nit: May want a comment here about not using the common method.",
+      "revId": "bdc91531960370e3bb6a501dd5e23cdb641e863f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be292a42_d1332733",
+        "filename": "chrome/browser/ui/views/task_manager_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-07T01:22:03Z",
+      "side": 1,
+      "message": "Nit: Maybe want a comment here about why we don\u0027t use the common method.",
+      "revId": "bdc91531960370e3bb6a501dd5e23cdb641e863f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab353a49_bd830144",
+        "filename": "ui/views/layout/layout_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-07T01:22:03Z",
+      "side": 1,
+      "message": "Nit: Even simpler:\n\n  int top_margin \u003d GetDistanceMetric(\n      leading \u003d\u003d CONTROL ? DISTANCE_DIALOG_CONTENT_MARGIN_TOP_CONTROL\n                         : DISTANCE_DIALOG_CONTENT_MARGIN_TOP_TEXT);\n\n(And similar for bottom)",
+      "revId": "bdc91531960370e3bb6a501dd5e23cdb641e863f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
