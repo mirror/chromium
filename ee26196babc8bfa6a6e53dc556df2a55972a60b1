@@ -34,6 +34,24 @@
       "revId": "ee26196babc8bfa6a6e53dc556df2a55972a60b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e1e267_6d4c6581",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-07T03:31:00Z",
+      "side": 1,
+      "message": "I think we\u0027re OK with that?  If we want to plumb the minimum/preferred sizes to make them available to people using textfield stacks, I suppose we could build a few helpers that could query the underlying views inside the stacks and supply this to callers, so they could manually size dialogs as needed.",
+      "parentUuid": "fe4de7a4_07ccebc5",
+      "revId": "ee26196babc8bfa6a6e53dc556df2a55972a60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
