@@ -78,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "5617e0f6_161e2b58",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-07T03:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06d095ad_6e2a57a0",
+      "range": {
+        "startLine": 1213,
+        "startChar": 21,
+        "endLine": 1213,
+        "endChar": 56
+      },
+      "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e398380_278673a5",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 1
@@ -92,6 +116,24 @@
       "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edca27f0_7de6d198",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-07T03:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e398380_278673a5",
+      "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +222,24 @@
       "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ab0dec_aa8a7ab5",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-07T03:40:25Z",
+      "side": 1,
+      "message": "Done. Yeah I should have done the small refactor from the beginning.. Thanks!",
+      "parentUuid": "ce84b8ba_a3533140",
+      "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
