@@ -27,8 +27,6 @@ using PublicKeyCallbacks = WebAuthenticationClient::PublicKeyCallbacks;
 WebCredentialManagerError GetWebCredentialManagerErrorFromStatus(
     webauth::mojom::blink::AuthenticatorStatus status) {
   switch (status) {
-    case webauth::mojom::blink::AuthenticatorStatus::NOT_IMPLEMENTED:
-      return blink::kWebCredentialManagerNotImplementedError;
     case webauth::mojom::blink::AuthenticatorStatus::NOT_ALLOWED_ERROR:
       return WebCredentialManagerError::kWebCredentialManagerNotAllowedError;
     case webauth::mojom::blink::AuthenticatorStatus::NOT_SUPPORTED_ERROR:
@@ -165,12 +163,6 @@ MakeCredentialOptionsPtr ConvertMakeCredentialOptions(
   mojo_options->user = ConvertPublicKeyCredentialUserEntity(options.user());
   mojo_options->challenge = ConvertBufferSource(options.challenge());
 
-  Vector<webauth::mojom::blink::PublicKeyCredentialParametersPtr> parameters;
-  for (const auto& parameter : options.parameters()) {
-    parameters.push_back(ConvertPublicKeyCredentialParameters(parameter));
-  }
-  mojo_options->crypto_parameters = std::move(parameters);
-
   // Step 4 of https://w3c.github.io/webauthn/#createCredential
   if (options.hasTimeout()) {
     WTF::TimeDelta adjusted_timeout;
@@ -181,6 +173,23 @@ MakeCredentialOptionsPtr ConvertMakeCredentialOptions(
   } else {
     mojo_options->adjusted_timeout = kAdjustedTimeoutLower;
   }
+
+  // Steps 8 and 9 of
+  // https://www.w3.org/TR/2017/WD-webauthn-20170505/#createCredential
+  Vector<PublicKeyCredentialParametersPtr> parameters;
+  for (const auto& parameter : options.parameters()) {
+    PublicKeyCredentialParametersPtr normalized_parameter =
+        ConvertPublicKeyCredentialParameters(parameter);
+    if (!normalized_parameter.is_null()) {
+      parameters.push_back(std::move(normalized_parameter));
+    }
+  }
+
+  if (parameters.IsEmpty() && options.hasParameters()) {
+    return nullptr;
+  }
+
+  mojo_options->crypto_parameters = std::move(parameters);
 
   if (options.hasExcludeList()) {
     // Adds the excludeList members

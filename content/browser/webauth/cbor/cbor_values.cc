@@ -191,7 +191,7 @@ void MapValue::Insert(std::string key, std::vector<uint8_t>& bytestring) {
 }
 
 void MapValue::Insert(std::string key, std::vector<CBORValue>& array) {
-  map_value_->emplace_hint(map_value_->end(), "b",
+  map_value_->emplace_hint(map_value_->end(), key,
                            base::MakeUnique<CBORValue>(CBORValue(array)));
 }
 

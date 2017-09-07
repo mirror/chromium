@@ -70,10 +70,6 @@ static void RejectDueToCredentialManagerError(
       resolver->Reject(DOMException::Create(
           kNotAllowedError, "The user cancelled the operation."));
       break;
-    case kWebCredentialManagerNotImplementedError:
-      resolver->Reject(DOMException::Create(
-          kNotAllowedError, "The operation is not implemented."));
-      break;
     case kWebCredentialManagerUnknownError:
     default:
       resolver->Reject(DOMException::Create(kNotReadableError,

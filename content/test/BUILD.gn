@@ -1388,6 +1388,7 @@ test("content_unittests") {
     "../browser/web_contents/web_drag_dest_mac_unittest.mm",
     "../browser/web_contents/web_drag_source_mac_unittest.mm",
     "../browser/webauth/authenticator_impl_unittest.cc",
+    "../browser/webauth/authenticator_utils_unittest.cc",
     "../browser/webauth/cbor/cbor_writer_unittest.cc",
     "../browser/websockets/websocket_manager_unittest.cc",
     "../browser/webui/i18n_source_stream_unittest.cc",
