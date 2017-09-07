@@ -18,7 +18,7 @@ namespace ash {
 namespace {
 
 // The time duration for transformation animations.
-const int kTransitionMilliseconds = 300;
+const int kTransitionMilliseconds = 3000;
 
 // The time duration for fading out when closing an item.
 const int kCloseFadeOutMilliseconds = 50;
@@ -27,7 +27,7 @@ const int kCloseFadeOutMilliseconds = 50;
 const int kCloseScaleMilliseconds = 100;
 
 // The time duration for widgets to fade in.
-const int kFadeInMilliseconds = 60;
+const int kFadeInMilliseconds = 600;
 
 // The time duration for widgets to fade out.
 const int kFadeOutDelayMilliseconds = kTransitionMilliseconds * 1 / 5;
