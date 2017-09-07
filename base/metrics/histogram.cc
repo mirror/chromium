@@ -22,6 +22,7 @@
 #include "base/debug/crash_logging.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/dummy_histogram.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/metrics_hashes.h"
 #include "base/metrics/persistent_histogram_allocator.h"
@@ -85,6 +86,9 @@ bool ReadHistogramArguments(PickleIterator* iter,
 
 bool ValidateRangeChecksum(const HistogramBase& histogram,
                            uint32_t range_checksum) {
+  if (histogram.GetHistogramType() != HISTOGRAM)
+    return true;
+
   const Histogram& casted_histogram =
       static_cast<const Histogram&>(histogram);
 
@@ -160,6 +164,11 @@ class Histogram::Factory {
 };
 
 HistogramBase* Histogram::Factory::Build() {
+  bool should_record =
+      StatisticsRecorder::ShouldRecordHistogram(HashMetricName(name_));
+  if (!should_record)
+    return DummyHistogram::GetInstance();
+
   HistogramBase* histogram = StatisticsRecorder::FindHistogram(name_);
   if (!histogram) {
     // To avoid racy destruction at shutdown, the following will be leaked.
@@ -546,7 +555,7 @@ void Histogram::WriteAscii(std::string* output) const {
 }
 
 bool Histogram::ValidateHistogramContents(bool crash_if_invalid,
-                                          int identifier) const {
+                                          int corrupted_count) const {
   enum Fields : int {
     kUnloggedBucketRangesField,
     kUnloggedSamplesField,
@@ -569,9 +578,7 @@ bool Histogram::ValidateHistogramContents(bool crash_if_invalid,
     bad_fields |= 1 << kLoggedBucketRangesField;
   else if (logged_samples_->id() == 0)
     bad_fields |= 1 << kIdField;
-  else if (histogram_name().length() > 20 && histogram_name().at(20) == '\0')
-    bad_fields |= 1 << kHistogramNameField;
-  else if (histogram_name().length() > 40 && histogram_name().at(40) == '\0')
+  else if (HashMetricName(histogram_name()) != logged_samples_->id())
     bad_fields |= 1 << kHistogramNameField;
   if (flags() == 0)
     bad_fields |= 1 << kFlagsField;
@@ -583,8 +590,9 @@ bool Histogram::ValidateHistogramContents(bool crash_if_invalid,
     return is_valid;
 
   // Abort if a problem is found (except "flags", which could legally be zero).
-  const std::string debug_string = base::StringPrintf(
-      "%s/%" PRIu32 "#%d", histogram_name().c_str(), bad_fields, identifier);
+  const std::string debug_string =
+      base::StringPrintf("%s/%" PRIu32 "/%d", histogram_name().c_str(),
+                         bad_fields, corrupted_count);
 #if !defined(OS_NACL)
   // Temporary for https://crbug.com/736675.
   base::debug::ScopedCrashKey crash_key("bad_histogram", debug_string);
@@ -874,6 +882,9 @@ class LinearHistogram::Factory : public Histogram::Factory {
   }
 
   void FillHistogram(HistogramBase* base_histogram) override {
+    if (base_histogram->GetHistogramType() != LINEAR_HISTOGRAM)
+      return;
+
     Histogram::Factory::FillHistogram(base_histogram);
     LinearHistogram* histogram = static_cast<LinearHistogram*>(base_histogram);
     // Set range descriptions.
@@ -1040,9 +1051,6 @@ HistogramBase* LinearHistogram::DeserializeInfoImpl(PickleIterator* iter) {
 
   HistogramBase* histogram = LinearHistogram::FactoryGet(
       histogram_name, declared_min, declared_max, bucket_count, flags);
-  if (!histogram)
-    return nullptr;
-
   if (!ValidateRangeChecksum(*histogram, range_checksum)) {
     // The serialized histogram might be corrupted.
     return nullptr;
@@ -1135,9 +1143,6 @@ HistogramBase* BooleanHistogram::DeserializeInfoImpl(PickleIterator* iter) {
 
   HistogramBase* histogram = BooleanHistogram::FactoryGet(
       histogram_name, flags);
-  if (!histogram)
-    return nullptr;
-
   if (!ValidateRangeChecksum(*histogram, range_checksum)) {
     // The serialized histogram might be corrupted.
     return nullptr;
@@ -1298,9 +1303,6 @@ HistogramBase* CustomHistogram::DeserializeInfoImpl(PickleIterator* iter) {
 
   HistogramBase* histogram = CustomHistogram::FactoryGet(
       histogram_name, sample_ranges, flags);
-  if (!histogram)
-    return nullptr;
-
   if (!ValidateRangeChecksum(*histogram, range_checksum)) {
     // The serialized histogram might be corrupted.
     return nullptr;

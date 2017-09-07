@@ -39,11 +39,6 @@ declare_args() {
 
   # Partition alloc is included by default except iOS.
   use_partition_alloc = !is_ios
-
-  # Indicates if the Location object contains the source code information
-  # (file, function, line). False means only the program counter (and currently
-  # file name) is saved.
-  enable_location_source = true
 }
 
 if (is_android) {
@@ -244,7 +239,6 @@ component("base") {
     "containers/linked_list.h",
     "containers/mru_cache.h",
     "containers/small_map.h",
-    "containers/span.h",
     "containers/stack_container.h",
     "containers/vector_buffer.h",
     "cpu.cc",
@@ -535,6 +529,10 @@ component("base") {
     "message_loop/timer_slack.h",
     "metrics/bucket_ranges.cc",
     "metrics/bucket_ranges.h",
+    "metrics/dummy_histogram.cc",
+    "metrics/dummy_histogram.h",
+    "metrics/dummy_histogram_samples.cc",
+    "metrics/dummy_histogram_samples.h",
     "metrics/field_trial.cc",
     "metrics/field_trial.h",
     "metrics/field_trial_param_associator.cc",
@@ -565,6 +563,7 @@ component("base") {
     "metrics/persistent_memory_allocator.h",
     "metrics/persistent_sample_map.cc",
     "metrics/persistent_sample_map.h",
+    "metrics/record_histogram_checker.h",
     "metrics/sample_map.cc",
     "metrics/sample_map.h",
     "metrics/sample_vector.cc",
@@ -808,8 +807,6 @@ component("base") {
     "task_scheduler/initialization_util.h",
     "task_scheduler/lazy_task_runner.cc",
     "task_scheduler/lazy_task_runner.h",
-    "task_scheduler/platform_native_worker_pool_win.cc",
-    "task_scheduler/platform_native_worker_pool_win.h",
     "task_scheduler/post_task.cc",
     "task_scheduler/post_task.h",
     "task_scheduler/priority_queue.cc",
@@ -822,7 +819,6 @@ component("base") {
     "task_scheduler/scheduler_worker.cc",
     "task_scheduler/scheduler_worker.h",
     "task_scheduler/scheduler_worker_params.h",
-    "task_scheduler/scheduler_worker_pool.cc",
     "task_scheduler/scheduler_worker_pool.h",
     "task_scheduler/scheduler_worker_pool_impl.cc",
     "task_scheduler/scheduler_worker_pool_impl.h",
@@ -1243,8 +1239,6 @@ component("base") {
       "base_paths_fuchsia.cc",
       "debug/stack_trace_fuchsia.cc",
       "files/file_path_watcher_fuchsia.cc",
-      "fuchsia/default_job.cc",
-      "fuchsia/default_job.h",
       "fuchsia/scoped_mx_handle.h",
       "memory/shared_memory_fuchsia.cc",
       "memory/shared_memory_handle_fuchsia.cc",
@@ -1686,7 +1680,6 @@ buildflag_header("debugging_flags") {
   header = "debugging_flags.h"
   header_dir = "base/debug"
   flags = [
-    "ENABLE_LOCATION_SOURCE=$enable_location_source",
     "ENABLE_PROFILING=$enable_profiling",
     "CAN_UNWIND_WITH_FRAME_POINTERS=$can_unwind_with_frame_pointers",
   ]
@@ -2085,7 +2078,6 @@ test("base_unittests") {
     "metrics/histogram_delta_serialization_unittest.cc",
     "metrics/histogram_functions_unittest.cc",
     "metrics/histogram_macros_unittest.cc",
-    "metrics/histogram_samples_unittest.cc",
     "metrics/histogram_snapshot_manager_unittest.cc",
     "metrics/histogram_unittest.cc",
     "metrics/metrics_hashes_unittest.cc",
@@ -2163,7 +2155,6 @@ test("base_unittests") {
     "task_scheduler/scheduler_lock_unittest.cc",
     "task_scheduler/scheduler_single_thread_task_runner_manager_unittest.cc",
     "task_scheduler/scheduler_worker_pool_impl_unittest.cc",
-    "task_scheduler/scheduler_worker_pool_unittest.cc",
     "task_scheduler/scheduler_worker_stack_unittest.cc",
     "task_scheduler/scheduler_worker_unittest.cc",
     "task_scheduler/scoped_set_task_priority_for_current_thread_unittest.cc",
@@ -2184,7 +2175,6 @@ test("base_unittests") {
     "test/scoped_feature_list_unittest.cc",
     "test/scoped_mock_time_message_loop_task_runner_unittest.cc",
     "test/scoped_task_environment_unittest.cc",
-    "test/test_mock_time_task_runner_unittest.cc",
     "test/test_pending_task_unittest.cc",
     "test/test_reg_util_win_unittest.cc",
     "test/trace_event_analyzer_unittest.cc",
@@ -2672,7 +2662,6 @@ if (is_android) {
       "//third_party/android_support_test_runner:exposed_instrumentation_api_publish_java",
       "//third_party/android_support_test_runner:rules_java",
       "//third_party/android_support_test_runner:runner_java",
-      "//third_party/android_tools:android_support_annotations_java",
       "//third_party/android_tools:android_support_chromium_java",
       "//third_party/android_tools:android_support_compat_java",
       "//third_party/hamcrest:hamcrest_core_java",

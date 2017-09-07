@@ -214,7 +214,7 @@ class BASE_EXPORT Histogram : public HistogramBase {
   // if available.
   // TODO(bcwhite): Remove this after crbug/736675.
   bool ValidateHistogramContents(bool crash_if_invalid,
-                                 int identifier) const override;
+                                 int corrupted_count) const override;
 
  protected:
   // This class, defined entirely within the .cc file, contains all the
