@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "c648c849_dd4031fa",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1880,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-07T07:53:30Z",
+      "side": 1,
+      "message": "I see. |start_pos| and |end_pos| are always initialize in this if-else statements.",
+      "parentUuid": "f6f41831_a38cf76a",
+      "revId": "613fbe90aeeec93da34a79217bf57025e7a2f41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9b55b1f_afb9d851",
         "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
         "patchSetId": 4
