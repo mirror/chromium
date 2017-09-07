@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31723499_bfce77d9",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1212247
+      },
+      "writtenOn": "2017-09-07T22:35:55Z",
+      "side": 1,
+      "message": "I do not see this being used anywhere. Also, we have switched to specifying per-product features in a separate args.gn file. Would you be able to define your settings in terms of features that can be enabled/disabled in product args.gn?",
+      "revId": "ee8d6a32710100cf1dea100e24feec4896d3c294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
