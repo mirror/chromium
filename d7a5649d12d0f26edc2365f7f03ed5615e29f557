@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "bc30e127_ef06e283",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-07T09:37:16Z",
+      "side": 1,
+      "message": "Done, thanks for pointing out that.",
+      "parentUuid": "08a4ef07_490d2b96",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a54e7328_1c0ec64f",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 3
@@ -76,6 +94,24 @@
     },
     {
       "key": {
+        "uuid": "74c4fc87_7cbbedd2",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-07T09:37:16Z",
+      "side": 1,
+      "message": "Done.\nThere was a test case in SWProviderContextTest that no WebSWProviderClient but has SWProviderContext. Delete the test case instead of adding the check now.",
+      "parentUuid": "a54e7328_1c0ec64f",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e1b99b5_a2fe8118",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 3
@@ -87,6 +123,24 @@
       "writtenOn": "2017-09-06T07:59:00Z",
       "side": 1,
       "message": "Hmm the lifetime model seems error-prone here. Maybe if instead of keeping |provider_client_|, the ServiceWorkerContainer/WebServiceWorkerProviderClientImpl registers a callback/listener on ProviderContext to listen for SetController messages, and it removes itself as a callback/listener when it dies?",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e826b89f_32992b6e",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-07T09:37:16Z",
+      "side": 1,
+      "message": "Thanks, I will try it.",
+      "parentUuid": "8e1b99b5_a2fe8118",
       "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +164,41 @@
     },
     {
       "key": {
+        "uuid": "5d9ccf57_b0a69ec3",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-07T09:37:16Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "65d9dfbe_a0494333",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e487e780_c1350f00",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-07T09:37:16Z",
+      "side": 1,
+      "message": "Do we need also change such names?\nSetClient --\u003e SetCrollee, client --\u003e controllee, RemoveProviderClient --\u003e RemoveControllee,\nAddProviderClient --\u003e AddControllee..\n\nIt seems not proper to do that because there are too many places?",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10ef58d2_811790fa",
         "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
         "patchSetId": 3
@@ -127,6 +216,24 @@
     },
     {
       "key": {
+        "uuid": "28058afc_0f9f1915",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-07T09:37:16Z",
+      "side": 1,
+      "message": "Ok, I will try to do that.",
+      "parentUuid": "10ef58d2_811790fa",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "070ba18b_7aaab5de",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 3
@@ -138,6 +245,24 @@
       "writtenOn": "2017-09-06T10:40:44Z",
       "side": 1,
       "message": "Seems no need to create an additional struct. Can we just remove this struct and put its members directly as parameters of SetController()?",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2ecf11_be09d328",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-07T09:37:16Z",
+      "side": 1,
+      "message": "I was under the impression that falken commented before that it\u0027s better to use a struct if there are several params? @falken, WDYT？",
+      "parentUuid": "070ba18b_7aaab5de",
       "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
