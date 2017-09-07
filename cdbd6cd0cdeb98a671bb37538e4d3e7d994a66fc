@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5100374c_dc699ad0",
+        "filename": "third_party/WebKit/Source/core/paint/SelectionPaintingUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-07T22:52:21Z",
+      "side": 1,
+      "message": "Node can be null (for anonymous wrappers) so we need to explicitly pass in the document.",
+      "parentUuid": "44320c53_1bf8bbfd",
+      "range": {
+        "startLine": 58,
+        "startChar": 37,
+        "endLine": 58,
+        "endChar": 45
+      },
+      "revId": "cdbd6cd0cdeb98a671bb37538e4d3e7d994a66fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "658c1097_2c40726c",
         "filename": "third_party/WebKit/Source/core/paint/SelectionPaintingUtils.cpp",
         "patchSetId": 6
