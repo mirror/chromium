@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "6ac9b7f4_4f70ead2",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-07T13:26:41Z",
+      "side": 1,
+      "message": "+1 to a new kIdleTask task type.",
+      "parentUuid": "56c4fe47_4dddb17c",
+      "revId": "d4479b1346e0a15d4206337044dc7ced07d303ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "475c37df_2b594448",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-07T13:26:41Z",
+      "side": 1,
+      "message": "kUserInteraction maybe?",
+      "range": {
+        "startLine": 79,
+        "startChar": 50,
+        "endLine": 79,
+        "endChar": 56
+      },
+      "revId": "d4479b1346e0a15d4206337044dc7ced07d303ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ba59b7b_8e43c8fd",
         "filename": "third_party/WebKit/Source/core/timing/WorkerPerformance.cpp",
         "patchSetId": 3
@@ -30,6 +71,24 @@
       "writtenOn": "2017-09-07T03:40:55Z",
       "side": 1,
       "message": "TaskType::kPerformanceTimeline ?",
+      "revId": "d4479b1346e0a15d4206337044dc7ced07d303ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2ef136_7dd3a40f",
+        "filename": "third_party/WebKit/Source/core/timing/WorkerPerformance.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-07T13:26:41Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "4ba59b7b_8e43c8fd",
       "revId": "d4479b1346e0a15d4206337044dc7ced07d303ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "125a0573_da339772",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequestProgressEventThrottle.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-07T13:26:41Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "163ab67c_3e2d015a",
+      "revId": "d4479b1346e0a15d4206337044dc7ced07d303ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96506585_8ae03668",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerLinkResource.cpp",
         "patchSetId": 3
@@ -64,6 +141,24 @@
       "writtenOn": "2017-09-07T03:40:55Z",
       "side": 1,
       "message": "TaskType::kUnspecedLoading ??? (not sure)",
+      "revId": "d4479b1346e0a15d4206337044dc7ced07d303ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2ec855_0f9f6db4",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerLinkResource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-07T13:26:41Z",
+      "side": 1,
+      "message": "Workers now use kUnthrottled task type a lot. That\u0027s something we should fix in the future with a worker-specific task type, but it should be fine for now.",
+      "parentUuid": "96506585_8ae03668",
       "revId": "d4479b1346e0a15d4206337044dc7ced07d303ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
