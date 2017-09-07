@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81a9a31d_9f7bb1eb",
+        "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_io_data.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-07T22:31:43Z",
+      "side": 1,
+      "message": "rm this (unnecessary copy).",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 3
+      },
+      "revId": "d1dba767d565bfe581456b56d90c0ff6cf38eb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0d86b7_0c6a4f92",
+        "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_io_data.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-07T22:31:43Z",
+      "side": 1,
+      "message": "may be change to something like:\nurl.is_empty()? non_preview_url : url",
+      "range": {
+        "startLine": 80,
+        "startChar": 52,
+        "endLine": 80,
+        "endChar": 55
+      },
+      "revId": "d1dba767d565bfe581456b56d90c0ff6cf38eb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9ed5d3_7cbdcb42",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-07T22:31:43Z",
+      "side": 1,
+      "message": "typo:\ninfobar",
+      "range": {
+        "startLine": 219,
+        "startChar": 15,
+        "endLine": 219,
+        "endChar": 24
+      },
+      "revId": "d1dba767d565bfe581456b56d90c0ff6cf38eb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e620a9_f708929d",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_ui_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-07T22:31:43Z",
+      "side": 1,
+      "message": "Match the name used in .h file:\non_previews_shown_callback",
+      "range": {
+        "startLine": 20,
+        "startChar": 35,
+        "endLine": 20,
+        "endChar": 64
+      },
+      "revId": "d1dba767d565bfe581456b56d90c0ff6cf38eb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae37ea4_8ef4fbf5",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-07T22:31:43Z",
+      "side": 1,
+      "message": "can this be null?",
+      "range": {
+        "startLine": 503,
+        "startChar": 5,
+        "endLine": 503,
+        "endChar": 50
+      },
+      "revId": "d1dba767d565bfe581456b56d90c0ff6cf38eb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
