@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ef43e0e_dc0c1945",
+        "filename": "cc/layers/ui_resource_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-07T15:59:31Z",
+      "side": 1,
+      "message": "The debug quad used to be emitted even if the resource was not valid though? Can we do that still?",
+      "revId": "21d94f03b21d33a7143dc8a6cfb07380305976fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
