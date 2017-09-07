@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5da93525_3cca04d7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/input/SpellCheckMenuTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-07T23:26:16Z",
+      "side": 1,
+      "message": "Criteria.equals is a way to get nicer error messages when the values differ, but the exception throwing causes issue there (you could return null I guess)",
+      "range": {
+        "startLine": 78,
+        "startChar": 49,
+        "endLine": 78,
+        "endChar": 52
+      },
+      "revId": "1c9af8a39b52d88e52ec224425741eaf5c187d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f9215d7_5d3294b5",
+        "filename": "content/public/android/java/res/values-v17/styles.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-07T23:26:16Z",
+      "side": 1,
+      "message": "is this to match the platform?  Ideally, we don\u0027t add new colors and start reusing those defined in ui/android/java/res/values/colors.xml.  Though if this is meant to look like an android widget, then that is ok.",
+      "range": {
+        "startLine": 20,
+        "startChar": 51,
+        "endLine": 20,
+        "endChar": 69
+      },
+      "revId": "1c9af8a39b52d88e52ec224425741eaf5c187d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59bd7c60_69e7cd1a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-07T23:26:16Z",
+      "side": 1,
+      "message": "same thing, can we use one of the values in ui just to reduce the new colors?  Again, if this is meant to reflect the default Android one, then we can just comment here as well.",
+      "range": {
+        "startLine": 83,
+        "startChar": 61,
+        "endLine": 83,
+        "endChar": 71
+      },
+      "revId": "1c9af8a39b52d88e52ec224425741eaf5c187d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1415192_cc047968",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SuggestionInfo.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-07T23:26:16Z",
+      "side": 1,
+      "message": "what is this?  some documentation might be nice",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "1c9af8a39b52d88e52ec224425741eaf5c187d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "927548b8_2bc84952",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SuggestionInfoBridge.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-07T23:26:16Z",
+      "side": 1,
+      "message": "any reason not to have these methods in SuggestionInfo directly?\n\nWe could then use your awesome comment below as the javadoc and then we wouldn\u0027t need them on these methods since they\u0027d be private.",
+      "range": {
+        "startLine": 22,
+        "startChar": 36,
+        "endLine": 22,
+        "endChar": 47
+      },
+      "revId": "1c9af8a39b52d88e52ec224425741eaf5c187d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e402ef5_1f6957e2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SuggestionsPopupWindow.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-07T23:26:16Z",
+      "side": 1,
+      "message": "Add back the javadoc?",
+      "range": {
+        "startLine": 274,
+        "startChar": 37,
+        "endLine": 274,
+        "endChar": 38
+      },
+      "revId": "1c9af8a39b52d88e52ec224425741eaf5c187d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46051f5f_2d567dac",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-07T23:26:16Z",
+      "side": 1,
+      "message": "one nit (but since the naming is same on the widget vs here), but I like caretXDp here and caretXPx in the other file to make it clear the type of number we\u0027re dealing with.",
+      "range": {
+        "startLine": 33,
+        "startChar": 19,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "1c9af8a39b52d88e52ec224425741eaf5c187d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

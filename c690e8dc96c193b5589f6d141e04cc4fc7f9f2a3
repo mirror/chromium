@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7b3d63d0_d0a9ece2",
+        "filename": "content/browser/android/text_suggestion_host_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-07T23:26:16Z",
+      "side": 1,
+      "message": "Completely on a tangent, but in the realm of JNI improvements being discussed, I think this is a sad pattern that we have to follow.\n\nI actually think we should be able to do what Ryan wanted to do here without all that cruft.\n\nI think it would be nice to get to the Class object natively to be able to do this, and it would be nice to be able to call the constructor as well without needing a static method to do it.  If we are investing in a bunch of JNI improvements, maybe this is something else worth exploring.",
+      "parentUuid": "3926dc9d_47a4ca20",
+      "range": {
+        "startLine": 164,
+        "startChar": 42,
+        "endLine": 164,
+        "endChar": 49
+      },
+      "revId": "c690e8dc96c193b5589f6d141e04cc4fc7f9f2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "991644ab_a66883d1",
         "filename": "content/browser/android/text_suggestion_host_android.cc",
         "patchSetId": 14
