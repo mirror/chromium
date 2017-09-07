@@ -31,6 +31,7 @@ import logging
 import re
 
 from webkitpy.common.memoized import memoized
+from webkitpy.common.path_finder import PathFinder
 from webkitpy.common.system.executive import Executive, ScriptError
 from webkitpy.common.system.filesystem import FileSystem
 
@@ -270,8 +271,9 @@ class Git(object):
     def _patch_order(self):
         # Put code changes at the top of the patch and layout tests
         # at the bottom, this makes for easier reviewing.
-        config_path = self._filesystem.dirname(self._filesystem.path_to_module('webkitpy.common.config'))
-        order_file = self._filesystem.join(config_path, 'orderfile')
+        # TODO(qyearsley): Remove this since it shouldn't matter for Gerrit reviews.
+        order_file = PathFinder(self._filesystem).path_from_tools_scripts(
+            'webkitpy', 'common', 'config', 'orderfile')
         if self._filesystem.exists(order_file):
             return '-O%s' % order_file
         return ''
