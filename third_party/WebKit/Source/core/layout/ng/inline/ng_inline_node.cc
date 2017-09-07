@@ -359,6 +359,12 @@ NGInlineNode::NGInlineNode(LayoutNGBlockFlow* block)
     block->ResetNGInlineNodeData();
 }
 
+bool NGInlineNode::IsEmptyInline() {
+  InvalidatePrepareLayout();
+  PrepareLayout();
+  return Data().is_empty_inline_;
+}
+
 const Vector<NGInlineItem>& NGInlineNode::Items(bool is_first_line) const {
   const NGInlineNodeData& data = Data();
   if (!is_first_line || !data.first_line_items_)
@@ -542,11 +548,11 @@ RefPtr<NGLayoutResult> NGInlineNode::Layout(
                                     ToNGInlineBreakToken(break_token));
   RefPtr<NGLayoutResult> result = algorithm.Layout();
 
-  if (result->Status() == NGLayoutResult::kSuccess &&
+  /*if (result->Status() == NGLayoutResult::kSuccess &&
       result->UnpositionedFloats().IsEmpty() &&
       !RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
     CopyFragmentDataToLayoutBox(constraint_space, result.Get());
-  }
+  }*/
 
   return result;
 }
@@ -567,10 +573,12 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
   NGFragmentBuilder container_builder(node, &node.Style(), space->WritingMode(),
                                       TextDirection::kLtr);
   container_builder.SetBfcOffset(NGBfcOffset{LayoutUnit(), LayoutUnit()});
+  NGLayoutOpportunity opportunity(NGBfcOffset{LayoutUnit(), LayoutUnit()},
+      NGLogicalSize{available_inline_size, NGSizeIndefinite});
 
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats;
   NGLineBreaker line_breaker(node, *space, &container_builder,
-                             &unpositioned_floats);
+                             &unpositioned_floats, opportunity);
 
   NGLineInfo line_info;
   NGExclusionSpace empty_exclusion_space;
@@ -622,7 +630,7 @@ NGLayoutInputNode NGInlineNode::NextSibling() {
 
 void NGInlineNode::CopyFragmentDataToLayoutBox(
     const NGConstraintSpace& constraint_space,
-    NGLayoutResult* layout_result) {
+    const NGLayoutResult& layout_result) {
   LayoutNGBlockFlow* block_flow = GetLayoutBlockFlow();
   block_flow->DeleteLineBoxTree();
 
@@ -643,7 +651,7 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
   BidiRunList<BidiRun> bidi_runs;
   LineInfo line_info;
   NGPhysicalBoxFragment* box_fragment =
-      ToNGPhysicalBoxFragment(layout_result->PhysicalFragment().Get());
+      ToNGPhysicalBoxFragment(layout_result.PhysicalFragment().Get());
   for (const auto& container_child : box_fragment->Children()) {
     // Skip any float children we might have, these are handled by the wrapping
     // parent NGBlockNode.

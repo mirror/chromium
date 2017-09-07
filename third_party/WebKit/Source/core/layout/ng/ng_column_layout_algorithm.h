@@ -16,7 +16,7 @@ class NGBreakToken;
 class NGConstraintSpace;
 
 class CORE_EXPORT NGColumnLayoutAlgorithm
-    : public NGLayoutAlgorithm<NGBlockNode, NGBlockBreakToken> {
+    : public NGLayoutAlgorithm<NGBlockNode, NGFragmentBuilder, NGBlockBreakToken> {
  public:
   NGColumnLayoutAlgorithm(NGBlockNode node,
                           const NGConstraintSpace& space,

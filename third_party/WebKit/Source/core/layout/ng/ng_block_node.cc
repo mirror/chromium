@@ -236,6 +236,12 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
   const NGPhysicalBoxFragment& physical_fragment =
       ToNGPhysicalBoxFragment(*layout_result.PhysicalFragment());
 
+  NGLayoutInputNode first_child = FirstChild();
+  if (first_child && first_child.IsInline()) {
+    
+    ToNGInlineNode(first_child).CopyFragmentDataToLayoutBox(constraint_space, layout_result);
+  }
+
   if (box_->Style()->SpecifiesColumns()) {
     UpdateLegacyMultiColumnFlowThread(box_, constraint_space,
                                       physical_fragment);
@@ -353,6 +359,10 @@ void NGBlockNode::PlaceChildrenInLayoutBox(
       }
       continue;
     }
+
+    if (!child_fragment->IsBox())
+      continue;
+
     const auto& box_fragment = *ToNGPhysicalBoxFragment(child_fragment.Get());
     if (IsFirstFragment(constraint_space, box_fragment))
       CopyChildFragmentPosition(box_fragment, offset_from_start);

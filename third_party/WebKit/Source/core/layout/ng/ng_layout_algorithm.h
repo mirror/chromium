@@ -18,7 +18,7 @@ class ComputedStyle;
 class NGLayoutResult;
 
 // Base class for all LayoutNG algorithms.
-template <typename NGInputNodeType, typename NGBreakTokenType>
+template <typename NGInputNodeType, typename NGBuilderType, typename NGBreakTokenType>
 class CORE_EXPORT NGLayoutAlgorithm {
   STACK_ALLOCATED();
  public:
@@ -78,7 +78,7 @@ class CORE_EXPORT NGLayoutAlgorithm {
   // The break token from which we are currently resuming layout.
   NGBreakTokenType* break_token_;
 
-  NGFragmentBuilder container_builder_;
+  NGBuilderType container_builder_;
 };
 
 }  // namespace blink

@@ -21,13 +21,15 @@ namespace blink {
 NGLineBreaker::NGLineBreaker(
     NGInlineNode node,
     const NGConstraintSpace& space,
-    NGFragmentBuilder* container_builder,
+    NGBaseFragmentBuilder* container_builder,
     Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats,
+    WTF::Optional<NGLayoutOpportunity> opportunity,
     const NGInlineBreakToken* break_token)
     : node_(node),
       constraint_space_(space),
       container_builder_(container_builder),
       unpositioned_floats_(unpositioned_floats),
+      opportunity_(opportunity),
       break_iterator_(node.Text()),
       shaper_(node.Text().Characters16(), node.Text().length()),
       spacing_(node.Text()) {
@@ -183,22 +185,7 @@ bool NGLineBreaker::HasFloatsAffectingCurrentLine() const {
 // Update the inline size of the first layout opportunity from the given
 // content_offset.
 void NGLineBreaker::FindNextLayoutOpportunity() {
-  const NGBfcOffset& bfc_offset = container_builder_->BfcOffset().value();
-
-  NGBfcOffset origin_offset = {
-      bfc_offset.line_offset,
-      bfc_offset.block_offset + content_offset_.block_offset};
-
-  line_.opportunity = line_.exclusion_space->FindLayoutOpportunity(
-      origin_offset, constraint_space_.AvailableSize(),
-      /* minimum_size */ NGLogicalSize());
-
-  // When floats/exclusions occupies the entire line (e.g., float: left; width:
-  // 100%), zero-inline-size opportunities are not included in the iterator.
-  // Instead, the block offset of the first opportunity is pushed down to avoid
-  // such floats/exclusions. Set the line box location to it.
-  content_offset_.block_offset =
-      line_.opportunity.value().BlockStartOffset() - bfc_offset.block_offset;
+  line_.opportunity = opportunity_;
 }
 
 // Finds a layout opportunity that has the given minimum inline size, or the one
@@ -564,14 +551,15 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleFloat(
     NGPositionedFloat positioned_float = PositionFloat(
         origin_block_offset, container_bfc_offset.block_offset,
         unpositioned_float.Get(), constraint_space_,
-        container_builder_->Size().inline_size, line_.exclusion_space.get());
+        container_builder_->InlineSize(), line_.exclusion_space.get());
     container_builder_->AddChild(positioned_float.layout_result,
                                  positioned_float.logical_offset);
 
     // We need to recalculate the available_width as the float probably
     // consumed space on the line.
-    if (container_builder_->BfcOffset())
-      FindNextLayoutOpportunity();
+    if (container_builder_->BfcOffset()) {
+      line_.available_width -= (inline_size + margins.InlineSum());
+    }
   }
 
   MoveToNextOf(item);
@@ -715,6 +703,7 @@ void NGLineBreaker::HandleOverflow(NGLineInfo* line_info) {
   // which will fit the first break opportunity.
   // Doing so will move the line down to where there are narrower floats (and
   // thus wider available width,) or no floats.
+  // TODO REMOVE
   if (HasFloatsAffectingCurrentLine()) {
     FindNextLayoutOpportunityWithMinimumInlineSize(line_.position);
     // Moving the line down widened the available width. Need to rewind items
@@ -824,11 +813,11 @@ void NGLineBreaker::SkipCollapsibleWhitespaces() {
   }
 }
 
-RefPtr<NGInlineBreakToken> NGLineBreaker::CreateBreakToken() const {
+RefPtr<NGInlineBreakToken> NGLineBreaker::CreateBreakToken(std::unique_ptr<const NGInlineLayoutStateStack> state_stack) const {
   const Vector<NGInlineItem>& items = node_.Items();
   if (item_index_ >= items.size())
-    return nullptr;
-  return NGInlineBreakToken::Create(node_, item_index_, offset_);
+    return NGInlineBreakToken::Create(node_);
+  return NGInlineBreakToken::Create(node_, item_index_, offset_, std::move(state_stack));
 }
 
 }  // namespace blink

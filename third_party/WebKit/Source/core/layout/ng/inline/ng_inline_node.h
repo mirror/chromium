@@ -51,7 +51,7 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   MinMaxSize ComputeMinMaxSize();
 
   // Copy fragment data of all lines to LayoutBlockFlow.
-  void CopyFragmentDataToLayoutBox(const NGConstraintSpace&, NGLayoutResult*);
+  void CopyFragmentDataToLayoutBox(const NGConstraintSpace&, const NGLayoutResult&);
 
   // Instruct to re-compute |PrepareLayout| on the next layout.
   void InvalidatePrepareLayout();
@@ -75,7 +75,7 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   bool IsBidiEnabled() const { return Data().is_bidi_enabled_; }
   TextDirection BaseDirection() const { return Data().BaseDirection(); }
 
-  bool IsEmptyInline() const { return Data().is_empty_inline_; }
+  bool IsEmptyInline();
 
   void AssertOffset(unsigned index, unsigned offset) const;
   void AssertEndOffset(unsigned index, unsigned offset) const;
