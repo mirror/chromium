@@ -67,6 +67,7 @@
 
 namespace blink {
 
+  VisibleSelectionInFlatTree Foo(const VisibleSelection& s) { return {}; }
 template <typename PositionType>
 static PositionType CanonicalizeCandidate(const PositionType& candidate) {
   if (candidate.IsNull())

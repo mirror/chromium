@@ -31,10 +31,20 @@
 #include "core/editing/EphemeralRange.h"
 #include "core/editing/PositionWithAffinity.h"
 #include "core/editing/VisiblePosition.h"
+// #include "core/editing/VisibleSelection.h"
 #include "platform/text/TextDirection.h"
 
 namespace blink {
 
+  /*class VisibleSelectionInFlatTree;
+  class VisibleSelection;*/
+  template <typename Strategy>
+  class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate;
+  using VisibleSelection = VisibleSelectionTemplate<EditingStrategy>;
+  using VisibleSelectionInFlatTree =
+    VisibleSelectionTemplate<EditingInFlatTreeStrategy>;
+
+  VisibleSelectionInFlatTree Foo(const VisibleSelection&);
 class LayoutRect;
 class LayoutUnit;
 class LayoutObject;
