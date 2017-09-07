@@ -2,10 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/chromeos/power/peripheral_battery_notifier.h"
+#include "ash/system/power/peripheral_battery_notifier.h"
 
 #include <vector>
 
+#include "ash/resources/grit/ash_resources.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/system_notifier.h"
@@ -16,9 +17,7 @@
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "chrome/grit/theme_resources.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
-#include "content/public/browser/browser_thread.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
 #include "device/bluetooth/bluetooth_device.h"
 #include "third_party/re2/src/re2/re2.h"
@@ -30,7 +29,7 @@
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"
 
-namespace chromeos {
+namespace ash {
 
 namespace {
 
@@ -138,7 +137,7 @@ NotificationParams GetNonStylusNotificationParams(const std::string& address,
       base::ASCIIToUTF16(name),
       l10n_util::GetStringFUTF16Int(
           IDS_ASH_LOW_PERIPHERAL_BATTERY_NOTIFICATION_TEXT, battery_level),
-      IDR_NOTIFICATION_PERIPHERAL_BATTERY_LOW,
+      IDR_AURA_NOTIFICATION_PERIPHERAL_BATTERY_LOW,
       kNotifierId,
       GURL(kNotificationOriginUrl)};
 }
@@ -148,7 +147,7 @@ NotificationParams GetStylusNotificationParams() {
       PeripheralBatteryNotifier::kStylusNotificationId,
       l10n_util::GetStringUTF16(IDS_ASH_LOW_STYLUS_BATTERY_NOTIFICATION_TITLE),
       l10n_util::GetStringUTF16(IDS_ASH_LOW_STYLUS_BATTERY_NOTIFICATION_BODY),
-      IDR_NOTIFICATION_STYLUS_BATTERY_LOW,
+      IDR_AURA_NOTIFICATION_STYLUS_BATTERY_LOW,
       ash::system_notifier::kNotifierStylusBattery,
       GURL()};
 }
@@ -161,7 +160,9 @@ const char PeripheralBatteryNotifier::kStylusNotificationId[] =
 PeripheralBatteryNotifier::PeripheralBatteryNotifier()
     : weakptr_factory_(
           new base::WeakPtrFactory<PeripheralBatteryNotifier>(this)) {
-  DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(this);
+  LOG(ERROR) << "hi";
+  chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
+      this);
   device::BluetoothAdapterFactory::GetAdapter(
       base::Bind(&PeripheralBatteryNotifier::InitializeOnBluetoothReady,
                  weakptr_factory_->GetWeakPtr()));
@@ -170,15 +171,14 @@ PeripheralBatteryNotifier::PeripheralBatteryNotifier()
 PeripheralBatteryNotifier::~PeripheralBatteryNotifier() {
   if (bluetooth_adapter_.get())
     bluetooth_adapter_->RemoveObserver(this);
-  DBusThreadManager::Get()->GetPowerManagerClient()->RemoveObserver(this);
+  chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->RemoveObserver(
+      this);
 }
 
 void PeripheralBatteryNotifier::PeripheralBatteryStatusReceived(
     const std::string& path,
     const std::string& name,
     int level) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
   // TODO(sammiequon): Powerd never sends negative levels. Investigate changing
   // this check and the one below.
   if (level < -1 || level > 100) {
@@ -249,7 +249,6 @@ void PeripheralBatteryNotifier::InitializeOnBluetoothReady(
 
 void PeripheralBatteryNotifier::RemoveBluetoothBattery(
     const std::string& bluetooth_address) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   std::string address_lowercase = base::ToLowerASCII(bluetooth_address);
   for (auto it = batteries_.begin(); it != batteries_.end(); ++it) {
     if (it->second.bluetooth_address == address_lowercase) {
@@ -301,4 +300,4 @@ void PeripheralBatteryNotifier::CancelNotification(const std::string& path) {
   }
 }
 
-}  // namespace chromeos
+}  // namespace ash
