@@ -34,6 +34,24 @@
       "revId": "002e582f382d583bf2b9f4cd5e273684c77b49f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41e2c82_27cebef4",
+        "filename": "tools/perf/perf_device_trigger_unittest.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-07T22:34:07Z",
+      "side": 1,
+      "message": "Oh, I see that the actual code generating their own json. \n\nThough to simplify the comparison logic to this:\njson_ind \u003d python_args.index(\u0027--dump_json\u0027)\n# Remove \u0027--dump_json\u0027, \u0027\u003ctemp file path\u003e\u0027 part of the flag\npython_args.pop(json_ind)\ntemp_json \u003d python_args.pop(json_ind)\n\nself.assertTrue(temp_json.startswith(..))\nself.assertEqual(...)",
+      "parentUuid": "fe3e3108_f8146717",
+      "revId": "002e582f382d583bf2b9f4cd5e273684c77b49f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
