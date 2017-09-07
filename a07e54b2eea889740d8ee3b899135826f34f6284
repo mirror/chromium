@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9837aae5_7fc64ffb",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2186,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-07T16:54:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c904f53_6c362dad",
+      "revId": "a07e54b2eea889740d8ee3b899135826f34f6284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "739b1f8d_eba83285",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 6
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "I\u0027d recommend to update the bounds and show in SetVisible then.\n\nI\u0027m fine with creating here assuming this is created only when overview is enabled, correct?",
       "parentUuid": "93a74d48_3e8e6194",
+      "revId": "a07e54b2eea889740d8ee3b899135826f34f6284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa295e2_b1b340ff",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-07T16:54:16Z",
+      "side": 1,
+      "message": "Yes, this is created in window selector which is created/destroyed when overivew is toggle.",
+      "parentUuid": "a2d0be8e_81c67059",
       "revId": "a07e54b2eea889740d8ee3b899135826f34f6284",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
