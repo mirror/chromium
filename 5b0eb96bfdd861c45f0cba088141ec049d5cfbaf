@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b23905cc_ef0b5cf9",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-07T18:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b69c7278_8b54c451",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 5
+      },
+      "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3446de8a_d37140f0",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 19
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "407bf99e_0068d493",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-07T18:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3446de8a_d37140f0",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 10
+      },
+      "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdcc3169_f8ef9627",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 19
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-07T15:36:10Z",
       "side": 1,
       "message": "nit: I\u0027m feeling uncomfortable about naming this function \"operator\u003c\u003d\". These |WeeklyTime| objects are conceptually wrapping across multiple weeks, and in this sense there\u0027s no particular order on these objects. (I understand that here you\u0027re considering times as non-wrapping, but this ambiguity isn\u0027t good.)",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40d1378_a703f8d5",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-07T18:48:38Z",
+      "side": 1,
+      "message": "EarlierInWeek?",
+      "parentUuid": "cdcc3169_f8ef9627",
       "range": {
         "startLine": 55,
         "startChar": 7,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7ee92ede_7c9bd58b",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-07T18:48:38Z",
+      "side": 1,
+      "message": "I didn\u0027t know hot to do it better. Thanks!",
+      "parentUuid": "3b9405e2_0061b519",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 20
+      },
+      "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ef060ea_6b7f6225",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 19
@@ -114,6 +210,30 @@
       "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86dff1dd_ffcc45fe",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-07T18:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ef060ea_6b7f6225",
+      "range": {
+        "startLine": 116,
+        "startChar": 21,
+        "endLine": 116,
+        "endChar": 35
+      },
+      "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "35059317_410e6b05",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-07T18:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ac88d96_0472ebb0",
+      "range": {
+        "startLine": 123,
+        "startChar": 42,
+        "endLine": 123,
+        "endChar": 44
+      },
+      "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22fd3dec_95d941af",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 19
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "5fb9fc93_4fcf43d1",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-07T18:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22fd3dec_95d941af",
+      "range": {
+        "startLine": 313,
+        "startChar": 4,
+        "endLine": 314,
+        "endChar": 32
+      },
+      "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "befacb7e_f4878cfa",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
         "patchSetId": 19
@@ -174,6 +342,30 @@
       "writtenOn": "2017-09-07T15:36:10Z",
       "side": 1,
       "message": "nit: If this turns out to be the only method in the observer, and if |DeviceSettingsService| will be its only subscriber - then maybe drop the |Observer| class completely, and use a callback instead?\nIt\u0027ll be a bit easier to read, IMHO.",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 43
+      },
+      "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83dce8d6_334a356e",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-07T18:48:38Z",
+      "side": 1,
+      "message": "In future we\u0027ll have more subscribers, i.e. SessionControllerClient which will send \"OffHours\" mode information to ui side.\n(https://cs.chromium.org/chromium/src/chrome/browser/ui/ash/session_controller_client.h?type\u003dcs\u0026q\u003dSessioncontrollerclient\u0026sq\u003dpackage:chromium\u0026l\u003d36)\nAnd I think OffHoursClient which will send information to chromeos side.",
+      "parentUuid": "befacb7e_f4878cfa",
       "range": {
         "startLine": 43,
         "startChar": 17,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "9ed17ffe_c24fecf2",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-07T18:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "466788aa_1019e8c3",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 48
+      },
+      "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f42cfe42_757685f0",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
         "patchSetId": 19
@@ -229,6 +445,30 @@
       "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a1a171_ae8942ff",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-07T18:48:38Z",
+      "side": 1,
+      "message": "No reason, agree.",
+      "parentUuid": "f42cfe42_757685f0",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 8
+      },
+      "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "b611af4b_80ff5023",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-07T18:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8454bd3b_0c2cd894",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 8
+      },
+      "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f16078b6_d045baad",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
         "patchSetId": 19
@@ -275,6 +539,30 @@
       "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cce9db9_aa6beb88",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-07T18:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f16078b6_d045baad",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 6
+      },
+      "revId": "5b0eb96bfdd861c45f0cba088141ec049d5cfbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
