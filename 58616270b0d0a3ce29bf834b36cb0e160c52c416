@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64cd5e7d_d03b44e1",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1290,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-07T00:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0130ae65_90058028",
+      "range": {
+        "startLine": 1290,
+        "startChar": 34,
+        "endLine": 1290,
+        "endChar": 49
+      },
+      "revId": "58616270b0d0a3ce29bf834b36cb0e160c52c416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b75b9e79_f57df7b7",
         "filename": "ios/chrome/app/spotlight/spotlight_util.mm",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "58616270b0d0a3ce29bf834b36cb0e160c52c416",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6401190f_a9e49b9c",
+        "filename": "ios/chrome/app/spotlight/spotlight_util.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-07T00:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b75b9e79_f57df7b7",
+      "range": {
+        "startLine": 197,
+        "startChar": 12,
+        "endLine": 197,
+        "endChar": 25
+      },
+      "revId": "58616270b0d0a3ce29bf834b36cb0e160c52c416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
