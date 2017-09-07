@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e12d56c_4330f551",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2392,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-07T15:39:06Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 2392,
+        "startChar": 32,
+        "endLine": 2392,
+        "endChar": 51
+      },
+      "revId": "5f22b7a9bc96cb1aa0f50fc3fcdb205b0be2d6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096f026a_6e92c1e4",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2435,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-07T15:39:06Z",
+      "side": 1,
+      "message": "I meant just to move the line EXPECT_TRUE(bubble_observer.IsSavePromptShownAutomatically()); here.\nNow it\u0027s too verbose.",
+      "range": {
+        "startLine": 2433,
+        "startChar": 2,
+        "endLine": 2435,
+        "endChar": 79
+      },
+      "revId": "5f22b7a9bc96cb1aa0f50fc3fcdb205b0be2d6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
