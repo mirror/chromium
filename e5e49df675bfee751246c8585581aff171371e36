@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b958030e_7850c089",
+        "filename": "net/data/websocket/connect_check.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:29:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94e150a7_56be0885",
+      "range": {
+        "startLine": 19,
+        "startChar": 21,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "e5e49df675bfee751246c8585581aff171371e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3500b13b_746a6bee",
         "filename": "net/data/websocket/connect_check_worker.js",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "e5e49df675bfee751246c8585581aff171371e36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca92f06_71a91e3b",
+        "filename": "net/data/websocket/connect_check_worker.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-07T18:29:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3500b13b_746a6bee",
+      "range": {
+        "startLine": 6,
+        "startChar": 17,
+        "endLine": 6,
+        "endChar": 18
+      },
+      "revId": "e5e49df675bfee751246c8585581aff171371e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
