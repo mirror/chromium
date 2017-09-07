@@ -31,6 +31,7 @@
 @class NSURLRequest;
 @class NSURLResponse;
 @protocol CRWWebViewNavigationProxy;
+@class UIViewController;
 
 namespace net {
 class HttpResponseHeaders;
@@ -166,6 +167,11 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   // Returns whether the navigation corresponding to |response| should be
   // allowed to continue by asking its policy deciders. Defaults to true.
   bool ShouldAllowResponse(NSURLResponse* response, bool for_main_frame);
+
+  bool ShouldPreviewLink(const GURL& link_url);
+  UIViewController* GetPreviewingViewController(const GURL& link_url);
+  void CommitPreviewingViewController(
+      UIViewController* previewing_view_controller);
 
   // WebState:
   WebStateDelegate* GetDelegate() override;

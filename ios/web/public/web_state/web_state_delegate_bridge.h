@@ -10,6 +10,8 @@
 #import "base/ios/weak_nsobject.h"
 #import "ios/web/public/web_state/web_state_delegate.h"
 
+@class UIViewController;
+
 // Objective-C interface for web::WebStateDelegate.
 @protocol CRWWebStateDelegate<NSObject>
 @optional
@@ -59,6 +61,16 @@
                       proposedCredential:(NSURLCredential*)proposedCredential
                        completionHandler:(void (^)(NSString* username,
                                                    NSString* password))handler;
+
+- (BOOL)webState:(web::WebState*)webState
+    shouldPreviewLinkWithURL:(const GURL&)link_url;
+
+- (UIViewController*)webState:(web::WebState*)webState
+    previewingViewControllerForLinkWithURL:(const GURL&)link_url;
+
+- (void)webState:(web::WebState*)webState
+    commitPreviewingViewController:(UIViewController*)previewingViewController;
+
 @end
 
 namespace web {
@@ -88,6 +100,12 @@ class WebStateDelegateBridge : public web::WebStateDelegate {
                       NSURLProtectionSpace* protection_space,
                       NSURLCredential* proposed_credential,
                       const AuthCallback& callback) override;
+  bool ShouldPreviewLink(WebState* web_state, const GURL& link_url) override;
+  UIViewController* GetPreviewingViewController(WebState* source,
+                                                const GURL& link_url) override;
+  void CommitPreviewingViewController(
+      WebState* source,
+      UIViewController* previewing_view_controller) override;
 
  private:
   // CRWWebStateDelegate which receives forwarded calls.

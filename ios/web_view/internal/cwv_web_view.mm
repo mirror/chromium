@@ -328,6 +328,35 @@ static NSString* gUserAgentProduct = nil;
   return _javaScriptDialogPresenter.get();
 }
 
+- (BOOL)webState:(web::WebState*)webState
+    shouldPreviewLinkWithURL:(const GURL&)linkURL {
+  SEL selector = @selector(webView:shouldPreviewLinkWithURL:);
+  if ([_UIDelegate respondsToSelector:selector]) {
+    return [_UIDelegate webView:self
+        shouldPreviewLinkWithURL:net::NSURLWithGURL(linkURL)];
+  }
+  return NO;
+}
+
+- (UIViewController*)webState:(web::WebState*)webState
+    previewingViewControllerForLinkWithURL:(const GURL&)linkURL {
+  SEL selector = @selector(webView:previewingViewControllerForLinkWithURL:);
+  if ([_UIDelegate respondsToSelector:selector]) {
+    return [_UIDelegate webView:self
+        previewingViewControllerForLinkWithURL:net::NSURLWithGURL(linkURL)];
+  }
+  return nil;
+}
+
+- (void)webState:(web::WebState*)webState
+    commitPreviewingViewController:(UIViewController*)previewingViewController {
+  SEL selector = @selector(webView:commitPreviewingViewController:);
+  if ([_UIDelegate respondsToSelector:selector]) {
+    [_UIDelegate webView:self
+        commitPreviewingViewController:previewingViewController];
+  }
+}
+
 #pragma mark - Translation
 
 - (CWVTranslationController*)translationController {

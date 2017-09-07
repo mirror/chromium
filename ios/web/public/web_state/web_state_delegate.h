@@ -12,6 +12,8 @@
 #include "base/callback.h"
 #import "ios/web/public/web_state/web_state.h"
 
+@class UIViewController;
+
 namespace web {
 
 struct ContextMenuParams;
@@ -71,6 +73,13 @@ class WebStateDelegate {
                               NSURLProtectionSpace* protection_space,
                               NSURLCredential* proposed_credential,
                               const AuthCallback& callback) = 0;
+
+  virtual bool ShouldPreviewLink(WebState* source, const GURL& link_url);
+  virtual UIViewController* GetPreviewingViewController(WebState* source,
+                                                        const GURL& link_url);
+  virtual void CommitPreviewingViewController(
+      WebState* source,
+      UIViewController* previewing_view_controller);
 
  protected:
   virtual ~WebStateDelegate();
