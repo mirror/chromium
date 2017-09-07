@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fb1dc06_20425795",
+        "filename": "ash/drag_drop/drag_drop_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-07T21:27:58Z",
+      "side": 1,
+      "message": "why not always lock the cursor?",
+      "revId": "6183a80f8fd715f75ee991f3b5af1fec2f77a4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
