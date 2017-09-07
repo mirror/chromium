@@ -5,9 +5,11 @@
 #ifndef ScriptedIdleTaskController_h
 #define ScriptedIdleTaskController_h
 
+#include "bindings/core/v8/v8_idle_request_callback.h"
 #include "core/dom/IdleDeadline.h"
 #include "core/dom/SuspendableObject.h"
 #include "platform/Timer.h"
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Vector.h"
 
@@ -17,12 +19,12 @@ class IdleRequestCallbackWrapper;
 }
 
 class ExecutionContext;
-class IdleRequestCallback;
 class IdleRequestOptions;
 
 class CORE_EXPORT ScriptedIdleTaskController
     : public GarbageCollectedFinalized<ScriptedIdleTaskController>,
-      public SuspendableObject {
+      public SuspendableObject,
+      public TraceWrapperBase {
   USING_GARBAGE_COLLECTED_MIXIN(ScriptedIdleTaskController);
 
  public:
@@ -32,10 +34,35 @@ class CORE_EXPORT ScriptedIdleTaskController
   ~ScriptedIdleTaskController();
 
   DECLARE_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
   using CallbackId = int;
 
-  int RegisterCallback(IdleRequestCallback*, const IdleRequestOptions&);
+  class IdleTask : public GarbageCollectedFinalized<IdleTask>,
+                   public TraceWrapperBase {
+   public:
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
+    DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {}
+    virtual ~IdleTask() = default;
+    virtual void invoke(IdleDeadline*) = 0;
+  };
+
+  class V8IdleTask : public IdleTask {
+   public:
+    static V8IdleTask* Create(V8IdleRequestCallback* callback) {
+      return new V8IdleTask(callback);
+    }
+    ~V8IdleTask() = default;
+    void invoke(IdleDeadline*) override;
+    DECLARE_TRACE();
+    DECLARE_TRACE_WRAPPERS();
+
+   private:
+    V8IdleTask(V8IdleRequestCallback*);
+    TraceWrapperMember<V8IdleRequestCallback> callback_;
+  };
+
+  int RegisterCallback(IdleTask*, const IdleRequestOptions&);
   void CancelCallback(CallbackId);
 
   // SuspendableObject interface.
@@ -67,7 +94,7 @@ class CORE_EXPORT ScriptedIdleTaskController
                    IdleDeadline::CallbackType);
 
   WebScheduler* scheduler_;  // Not owned.
-  HeapHashMap<CallbackId, Member<IdleRequestCallback>> callbacks_;
+  HeapHashMap<CallbackId, TraceWrapperMember<IdleTask>> callbacks_;
   Vector<CallbackId> pending_timeouts_;
   CallbackId next_callback_id_;
   bool suspended_;
