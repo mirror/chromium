@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ffabd396_b4de485f",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-07T23:39:51Z",
+      "side": 1,
+      "message": "Isn\u0027t it just a swap if we pass a map? I mean if map\u003cstring, dump\u003e is passed via mojo, we could just do a swap with the result and only map is constructed. By extra copy here i mean constructing a vector and then a map. I am not sure which is more expensive here, passing the strings or, constructing 2 vectors and IsMemoryAllocatorDumpNameWhitelisted() checks.\nThat was my question.",
+      "parentUuid": "9afbc59f_d6c54460",
+      "range": {
+        "startLine": 311,
+        "startChar": 4,
+        "endLine": 311,
+        "endChar": 28
+      },
+      "revId": "28606e2d316779e24b89693e13ab6313f3f7d632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2b33fa6_cc1fc904",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/struct_traits_unittest.cc",
         "patchSetId": 8
