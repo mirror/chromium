@@ -1,32 +1,31 @@
-// Copyright 2015 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/dom_distiller/content/renderer/distillability_agent.h"
+#include "components/dom_distiller/content/renderer/distillability_webagent.h"
 
 #include "base/metrics/histogram_macros.h"
-#include "base/strings/string_util.h"
 #include "components/dom_distiller/content/common/distillability_service.mojom.h"
+#include "components/dom_distiller/content/renderer/document_statistics_collector.h"
+#include "components/dom_distiller/content/renderer/web_distillability.h"
 #include "components/dom_distiller/core/distillable_page_detector.h"
 #include "components/dom_distiller/core/experiments.h"
 #include "components/dom_distiller/core/page_features.h"
 #include "components/dom_distiller/core/url_utils.h"
 #include "content/public/renderer/render_frame.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
-#include "third_party/WebKit/public/platform/WebDistillability.h"
-#include "third_party/WebKit/public/web/WebDocument.h"
-#include "third_party/WebKit/public/web/WebElement.h"
-#include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "third_party/WebKit/webagents/document.h"
+#include "third_party/WebKit/webagents/element.h"
+#include "third_party/WebKit/webagents/frame.h"
+#include "third_party/WebKit/webagents/html_element.h"
 
 namespace dom_distiller {
 
-using namespace blink;
+using namespace webagents;
 
 namespace {
 
-const char* const kBlacklist[] = {
-  "www.reddit.com"
-};
+const char* const kBlacklist[] = {"www.reddit.com"};
 
 enum RejectionBuckets {
   NOT_ARTICLE = 0,
@@ -76,13 +75,14 @@ bool IsBlacklisted(const GURL& url) {
   return false;
 }
 
-bool IsDistillablePageAdaboost(WebDocument& doc,
+bool IsDistillablePageAdaboost(Document& doc,
                                const DistillablePageDetector* detector,
                                const DistillablePageDetector* long_page,
                                bool is_last,
                                bool exclude_mobile) {
-  WebDistillabilityFeatures features = doc.DistillabilityFeatures();
-  GURL parsed_url(doc.Url());
+  WebDistillabilityFeatures features =
+      dom_distiller::DocumentStatisticsCollector::CollectStatistics(doc);
+  GURL parsed_url(doc.URL());
   if (!parsed_url.is_valid()) {
     return false;
   }
@@ -100,10 +100,10 @@ bool IsDistillablePageAdaboost(WebDocument& doc,
     int score_int = std::round(score * 100);
     if (score > 0) {
       UMA_HISTOGRAM_COUNTS_1000("DomDistiller.DistillabilityScoreNMF.Positive",
-          score_int);
+                                score_int);
     } else {
       UMA_HISTOGRAM_COUNTS_1000("DomDistiller.DistillabilityScoreNMF.Negative",
-          -score_int);
+                                -score_int);
     }
     if (distillable) {
       // The long-article model is trained with pages that are
@@ -112,10 +112,10 @@ bool IsDistillablePageAdaboost(WebDocument& doc,
       int long_score_int = std::round(long_score * 100);
       if (long_score > 0) {
         UMA_HISTOGRAM_COUNTS_1000("DomDistiller.LongArticleScoreNMF.Positive",
-            long_score_int);
+                                  long_score_int);
       } else {
         UMA_HISTOGRAM_COUNTS_1000("DomDistiller.LongArticleScoreNMF.Negative",
-            -long_score_int);
+                                  -long_score_int);
       }
     }
   }
@@ -124,25 +124,25 @@ bool IsDistillablePageAdaboost(WebDocument& doc,
                (static_cast<unsigned>(distillable) << 1);
   if (is_last) {
     UMA_HISTOGRAM_ENUMERATION("DomDistiller.PageDistillableAfterLoading",
-        bucket, 4);
+                              bucket, 4);
   } else {
     UMA_HISTOGRAM_ENUMERATION("DomDistiller.PageDistillableAfterParsing",
-        bucket, 4);
+                              bucket, 4);
     if (!distillable) {
       UMA_HISTOGRAM_ENUMERATION("DomDistiller.DistillabilityRejection",
-          NOT_ARTICLE, REJECTION_BUCKET_BOUNDARY);
+                                NOT_ARTICLE, REJECTION_BUCKET_BOUNDARY);
     } else if (features.is_mobile_friendly) {
       UMA_HISTOGRAM_ENUMERATION("DomDistiller.DistillabilityRejection",
-          MOBILE_FRIENDLY, REJECTION_BUCKET_BOUNDARY);
+                                MOBILE_FRIENDLY, REJECTION_BUCKET_BOUNDARY);
     } else if (blacklisted) {
       UMA_HISTOGRAM_ENUMERATION("DomDistiller.DistillabilityRejection",
-          BLACKLISTED, REJECTION_BUCKET_BOUNDARY);
+                                BLACKLISTED, REJECTION_BUCKET_BOUNDARY);
     } else if (!long_article) {
       UMA_HISTOGRAM_ENUMERATION("DomDistiller.DistillabilityRejection",
-          TOO_SHORT, REJECTION_BUCKET_BOUNDARY);
+                                TOO_SHORT, REJECTION_BUCKET_BOUNDARY);
     } else {
       UMA_HISTOGRAM_ENUMERATION("DomDistiller.DistillabilityRejection",
-          NOT_REJECTED, REJECTION_BUCKET_BOUNDARY);
+                                NOT_REJECTED, REJECTION_BUCKET_BOUNDARY);
     }
   }
 
@@ -155,12 +155,13 @@ bool IsDistillablePageAdaboost(WebDocument& doc,
   return distillable && long_article;
 }
 
-bool IsDistillablePage(WebDocument& doc, bool is_last) {
+bool IsDistillablePage(Document& doc, bool is_last) {
   switch (GetDistillerHeuristicsType()) {
     case DistillerHeuristicsType::ALWAYS_TRUE:
       return true;
     case DistillerHeuristicsType::OG_ARTICLE:
-      return doc.DistillabilityFeatures().open_graph;
+      return dom_distiller::DocumentStatisticsCollector::CollectStatistics(doc)
+          .open_graph;
     case DistillerHeuristicsType::ADABOOST_MODEL:
       return IsDistillablePageAdaboost(
           doc, DistillablePageDetector::GetNewModel(),
@@ -177,44 +178,45 @@ bool IsDistillablePage(WebDocument& doc, bool is_last) {
 
 }  // namespace
 
-DistillabilityAgent::DistillabilityAgent(
+DistillabilityWebagent::DistillabilityWebagent(
     content::RenderFrame* render_frame)
-    : RenderFrameObserver(render_frame) {
-}
+    : RenderFrameObserver(render_frame),
+      webagents::Agent(*render_frame->GetWebFrame()) {}
 
-void DistillabilityAgent::DidMeaningfulLayout(
-    WebMeaningfulLayout layout_type) {
-  if (layout_type != WebMeaningfulLayout::kFinishedParsing &&
-      layout_type != WebMeaningfulLayout::kFinishedLoading) {
+void DistillabilityWebagent::DidMeaningfulLayout(
+    blink::WebMeaningfulLayout layout_type) {
+  if (layout_type != blink::WebMeaningfulLayout::kFinishedParsing &&
+      layout_type != blink::WebMeaningfulLayout::kFinishedLoading) {
     return;
   }
 
-  DCHECK(render_frame());
-  if (!render_frame()->IsMainFrame()) return;
-  DCHECK(render_frame()->GetWebFrame());
-  WebDocument doc = render_frame()->GetWebFrame()->GetDocument();
-  if (doc.IsNull() || doc.Body().IsNull())
-    return;
-  if (!url_utils::IsUrlDistillable(doc.Url()))
+  if (!GetFrame().IsMainFrame())
     return;
 
-  bool is_loaded = layout_type == WebMeaningfulLayout::kFinishedLoading;
-  if (!NeedToUpdate(is_loaded)) return;
+  Document doc = GetFrame().GetDocument();
+  if (!doc.body())
+    return;
+  if (!url_utils::IsUrlDistillable(doc.URL()))
+    return;
+
+  bool is_loaded = layout_type == blink::WebMeaningfulLayout::kFinishedLoading;
+  if (!NeedToUpdate(is_loaded))
+    return;
 
   bool is_last = IsLast(is_loaded);
   // Connect to Mojo service on browser to notify page distillability.
   mojom::DistillabilityServicePtr distillability_service;
-  render_frame()->GetRemoteInterfaces()->GetInterface(
-      &distillability_service);
+  render_frame()->GetRemoteInterfaces()->GetInterface(&distillability_service);
   DCHECK(distillability_service);
-  if (!distillability_service.is_bound()) return;
-  distillability_service->NotifyIsDistillable(
-      IsDistillablePage(doc, is_last), is_last);
+  if (!distillability_service.is_bound())
+    return;
+  distillability_service->NotifyIsDistillable(IsDistillablePage(doc, is_last),
+                                              is_last);
 }
 
-DistillabilityAgent::~DistillabilityAgent() {}
+DistillabilityWebagent::~DistillabilityWebagent() {}
 
-void DistillabilityAgent::OnDestruct() {
+void DistillabilityWebagent::OnDestruct() {
   delete this;
 }
 

@@ -24,6 +24,10 @@ class WebInputElement;
 class WebLocalFrame;
 }
 
+namespace webagents {
+class Element;
+}
+
 namespace autofill {
 
 struct PasswordForm;
@@ -35,6 +39,10 @@ typedef std::map<
     const blink::WebFormControlElement,
     std::pair<std::unique_ptr<base::string16>, FieldPropertiesMask>>
     FieldValueAndPropertiesMaskMap;
+typedef std::map<
+    const webagents::Element,
+    std::pair<std::unique_ptr<base::string16>, FieldPropertiesMask>>
+    FieldValueAndPropertiesMaskMapWebagents;
 
 // Create a PasswordForm from DOM form. Webkit doesn't allow storing
 // custom metadata to DOM nodes, so we have to do this every time an event

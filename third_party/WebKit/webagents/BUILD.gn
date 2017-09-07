@@ -1,0 +1,92 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+visibility = [
+  "//components/*",
+  "//third_party/WebKit/webagents/*",
+]
+
+component("webagents") {
+  output_name = "blink_webagents"
+
+  defines = [ "WEBAGENTS_IMPLEMENTATION=1" ]
+
+  sources = [
+    "agent.cc",
+    "agent.h",
+    "character_data.cc",
+    "character_data.h",
+    "css_style_declaration.cc",
+    "css_style_declaration.h",
+    "document.cc",
+    "document.h",
+    "element.cc",
+    "element.h",
+    "event.cc",
+    "event.h",
+    "event_target.cc",
+    "event_target.h",
+    "frame.cc",
+    "frame.h",
+    "html_all_collection.cc",
+    "html_all_collection.h",
+    "html_collection.cc",
+    "html_collection.h",
+    "html_element.cc",
+    "html_element.h",
+    "html_form_controls_collection.cc",
+    "html_form_controls_collection.h",
+    "html_form_element.cc",
+    "html_form_element.h",
+    "html_head_element.cc",
+    "html_head_element.h",
+    "html_input_element.cc",
+    "html_input_element.h",
+    "html_label_element.cc",
+    "html_label_element.h",
+    "html_meta_element.cc",
+    "html_meta_element.h",
+    "html_option_element.cc",
+    "html_option_element.h",
+    "html_options_collection.cc",
+    "html_options_collection.h",
+    "html_select_element.cc",
+    "html_select_element.h",
+    "html_text_area_element.cc",
+    "html_text_area_element.h",
+    "keyboard_event.cc",
+    "keyboard_event.h",
+    "node.cc",
+    "node.h",
+    "node_iterator.cc",
+    "node_iterator.h",
+    "text.cc",
+    "text.h",
+    "ui_event.cc",
+    "ui_event.h",
+    "webagents_export.h",
+  ]
+
+  deps = [
+    "//services/service_manager/public/cpp",
+    "//third_party/WebKit/Source/core",
+    "//third_party/WebKit/public:blink_headers",
+  ]
+}
+
+component("testing") {
+  defines = [ "WEBAGENTS_IMPLEMENTATION=1" ]
+
+  sources = [
+    "test_frame.cc",
+    "test_frame.h",
+  ]
+
+  deps = [
+    ":webagents",
+    "//third_party/WebKit/Source/core",
+    "//third_party/WebKit/Source/core:testing",
+    "//third_party/WebKit/Source/modules",
+  ]
+}

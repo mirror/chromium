@@ -54,7 +54,6 @@ class WebFormElement;
 class WebElementCollection;
 class WebString;
 class WebURL;
-struct WebDistillabilityFeatures;
 
 using WebStyleSheetId = unsigned;
 
@@ -130,7 +129,6 @@ class WebDocument : public WebNode {
 
   BLINK_EXPORT WebURL ManifestURL() const;
   BLINK_EXPORT bool ManifestUseCredentials() const;
-  BLINK_EXPORT WebDistillabilityFeatures DistillabilityFeatures();
 
 #if INSIDE_BLINK
   BLINK_EXPORT WebDocument(Document*);
