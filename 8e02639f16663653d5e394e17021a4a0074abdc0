@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f95d3fb1_cf07a39c",
+        "filename": "third_party/WebKit/LayoutTests/fast/media/media-element-move-to-new-document-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-07T20:34:36Z",
+      "side": 1,
+      "message": "Followup sgtm. I think that just recording that the event happened and the relation to the rest of stacktrace will help us to understand what\u0027s going on. Document or Frame reference could be added to check for null objects.\n\nI\u0027ll also start thinking about annotating TaskRunnerHelper::Get calls with FROM_HERE macro.",
+      "parentUuid": "37a83a3a_a8410d5b",
+      "revId": "8e02639f16663653d5e394e17021a4a0074abdc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6a422de_562e856c",
         "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
         "patchSetId": 1
