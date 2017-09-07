@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2de50b56_91cb07c0",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/webp/WEBPImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002029
+      },
+      "writtenOn": "2017-09-07T20:41:29Z",
+      "side": 1,
+      "message": "note that the total file size is know once the Header is parseable (\u003dat least 12 bytes).\nUnfortunately, there\u0027s no API from libwebp to extract the total size written at offset 4 in a WebP file.\nIf this was critical, one could parse this total size directly and perform only one ReserveCapacity() call.",
+      "range": {
+        "startLine": 202,
+        "startChar": 12,
+        "endLine": 202,
+        "endChar": 27
+      },
+      "revId": "58fbd0c32713898987b7a32230c16ca5191da2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae745d02_3d12d941",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/webp/WEBPImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002029
+      },
+      "writtenOn": "2017-09-07T20:41:29Z",
+      "side": 1,
+      "message": "btw: i\u0027m not sure why demux_ is not deleted right away here, in case of error (along with always deleting consolidated_data_).\nIn case of error, there\u0027s no point in accessing demux_ afterward, so it might as well be wiped out right now.\n\nNote that it\u0027s safe to call WebPDemuxDelete() with a NULL argument.",
+      "range": {
+        "startLine": 220,
+        "startChar": 4,
+        "endLine": 220,
+        "endChar": 6
+      },
+      "revId": "58fbd0c32713898987b7a32230c16ca5191da2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
