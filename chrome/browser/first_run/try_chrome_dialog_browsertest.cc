@@ -60,21 +60,28 @@ class TryChromeDialogBrowserTest : public InProcessBrowserTest {
 IN_PROC_BROWSER_TEST_F(TryChromeDialogBrowserTest, ToastCrasher) {}
 
 // Helper class to display the TryChromeDialog for testing.
-class TryChromeDialogTest : public DialogBrowserTest {
- public:
+class TryChromeDialogTest : public DialogBrowserTest,
+                            public ::testing::WithParamInterface<int> {
+ protected:
   // TODO(ananta)
   // Provide a way to test flavors other than 0.
-  TryChromeDialogTest() : dialog_(0) {}
-
-  // A noop listener for process singleton notifications.
-  static void SetProcessNotificationHandler(base::Closure handler) {}
+  TryChromeDialogTest()
+      : dialog_(GetParam(),
+                base::Bind(&TryChromeDialogTest::OnResult,
+                           base::Unretained(this))) {}
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {
-    dialog_.ShowDialog(
-        base::Bind(&TryChromeDialogTest::SetProcessNotificationHandler),
-        TryChromeDialog::DialogType::MODELESS_FOR_TEST,
-        TryChromeDialog::UsageType::FOR_TESTING);
+    base::RunLoop run_loop;
+    // Fire off the tasks to show the dialog, breaking out of the message loop
+    // once the dialog has been shown.
+    dialog_.ShowDialogAsync(base::BindOnce(
+        [](base::Closure quit_closure,
+           installer::ExperimentMetrics::ToastLocation toast_location) {
+          quit_closure.Run();
+        },
+        run_loop.QuitClosure()));
+    run_loop.Run();
   }
 
   // content::BrowserTestBase:
@@ -82,14 +89,37 @@ class TryChromeDialogTest : public DialogBrowserTest {
     command_line->AppendSwitch(switches::kExtendMdToSecondaryUi);
   }
 
+  TryChromeDialog::Result result() const { return result_; }
+  installer::ExperimentMetrics::State state() const { return state_; }
+
  private:
+  void OnResult(TryChromeDialog::Result result,
+                installer::ExperimentMetrics::State state) {
+    result_ = result;
+    state_ = state;
+  }
+
   TryChromeDialog dialog_;
+  TryChromeDialog::Result result_ = TryChromeDialog::OPEN_CHROME_DEFER;
+  installer::ExperimentMetrics::State state_ =
+      installer::ExperimentMetrics::kUninitialized;
 
   DISALLOW_COPY_AND_ASSIGN(TryChromeDialogTest);
 };
 
-IN_PROC_BROWSER_TEST_F(TryChromeDialogTest, InvokeDialog_default) {
+IN_PROC_BROWSER_TEST_P(TryChromeDialogTest, InvokeDialog_default) {
   RunDialog();
+  EXPECT_EQ(result(), TryChromeDialog::NOT_NOW);
+  EXPECT_EQ(state(), installer::ExperimentMetrics::kOtherClose);
 }
+
+// TODO(skare): Remove " - 1" hack when
+// https://chromium-review.googlesource.com/c/chromium/src/+/645840 lands.
+INSTANTIATE_TEST_CASE_P(
+    Variations,
+    TryChromeDialogTest,
+    ::testing::Range(
+        0,
+        static_cast<int>(installer::ExperimentMetrics::kHoldbackGroup) - 1));
 
 #endif  // defined(OS_WIN)
