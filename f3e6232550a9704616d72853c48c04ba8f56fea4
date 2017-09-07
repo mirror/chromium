@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a15203f_64156bc7",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-09-07T02:45:01Z",
+      "side": 1,
+      "message": "In worker context, |document| will be null here because ToDocument(context) returns nullptr if the ExecutionContext is not a Document.\n\nYou should change this function (and SetPropertyFromString) to take an ExecutionContext instead of a Document.",
+      "revId": "f3e6232550a9704616d72853c48c04ba8f56fea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91139b6a_6d5f2442",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParser.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-09-07T02:45:01Z",
+      "side": 1,
+      "message": "Can we stick with using CSSParserContext? Using ExecutionContext in CSS parser looks weird.\n\nTo make CSSParserContext::CompleteURL() work, you\u0027d need to construct CSSParserContext with base_url\u003dexecution_context-\u003eUrl(), so you may need to add another Create() overload.",
+      "revId": "f3e6232550a9704616d72853c48c04ba8f56fea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70218e71_a22b65c3",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParser.cpp",
         "patchSetId": 2
