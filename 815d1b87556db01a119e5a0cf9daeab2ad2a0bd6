@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b85084ed_20949eaf",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 7056,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-07T01:03:58Z",
+      "side": 1,
+      "message": "Should we probably use a per-frame Interface Provider? Document knows a frame.",
+      "revId": "815d1b87556db01a119e5a0cf9daeab2ad2a0bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea2c1e6_a3e3b6b3",
+        "filename": "third_party/WebKit/Source/platform/weborigin/KURL.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-07T01:03:58Z",
+      "side": 1,
+      "message": "web/ is gone.",
+      "revId": "815d1b87556db01a119e5a0cf9daeab2ad2a0bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
