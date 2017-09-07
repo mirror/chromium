@@ -22,6 +22,30 @@
       "revId": "9580368e08bfba2a3b41f37112c502222f753d20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb291d66_8c734c48",
+        "filename": "components/cronet/android/cronet_upload_data_stream_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-07T19:18:27Z",
+      "side": 1,
+      "message": "CronetUploadDataStreamAdapter is destroyed when CronetUploadDataStream (the c++ object) is destroyed.  CronetUploadDataStream is owned by net::URLRequest\nI don\u0027t think this object leaks unless we are leaking CronetUrlRequestAdapter/net::URLRequest as well...",
+      "parentUuid": "4077c273_a168e2f3",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 11
+      },
+      "revId": "9580368e08bfba2a3b41f37112c502222f753d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
