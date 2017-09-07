@@ -12,6 +12,14 @@ namespace content {
 MockServiceWorkerContext::MockServiceWorkerContext() {}
 MockServiceWorkerContext::~MockServiceWorkerContext() {}
 
+void MockServiceWorkerContext::AddObserver(
+    ServiceWorkerContextObserver* observer) {
+  NOTREACHED();
+}
+void MockServiceWorkerContext::RemoveObserver(
+    ServiceWorkerContextObserver* observer) {
+  NOTREACHED();
+}
 void MockServiceWorkerContext::RegisterServiceWorker(const GURL& pattern,
                                                      const GURL& script_url,
                                                      ResultCallback callback) {
@@ -21,6 +29,18 @@ void MockServiceWorkerContext::UnregisterServiceWorker(
     const GURL& pattern,
     ResultCallback callback) {
   NOTREACHED();
+}
+bool MockServiceWorkerContext::StartingExternalRequest(
+    int64_t service_worker_version_id,
+    const std::string& request_uuid) {
+  NOTREACHED();
+  return false;
+}
+bool MockServiceWorkerContext::FinishedExternalRequest(
+    int64_t service_worker_version_id,
+    const std::string& request_uuid) {
+  NOTREACHED();
+  return false;
 }
 void MockServiceWorkerContext::CountExternalRequestsForTest(
     const GURL& url,
@@ -49,6 +69,15 @@ void MockServiceWorkerContext::StartActiveWorkerForPattern(
     const GURL& pattern,
     ServiceWorkerContext::StartActiveWorkerCallback info_callback,
     base::OnceClosure failure_callback) {
+  NOTREACHED();
+}
+void MockServiceWorkerContext::StartServiceWorkerForNavigationHint(
+    const GURL& document_url,
+    StartServiceWorkerForNavigationHintCallback callback) {
+  start_service_worker_for_navigation_hint_called_ = true;
+}
+void MockServiceWorkerContext::StopAllServiceWorkersForOrigin(
+    const GURL& origin) {
   NOTREACHED();
 }
 
