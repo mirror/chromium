@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a892a78_66a36b68",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cssom-view/scrollBoundaryBehavior-manual.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-07T19:17:01Z",
+      "side": 1,
+      "message": "nit: s/2/two",
+      "range": {
+        "startLine": 47,
+        "startChar": 19,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "6419f3ff0ee6c1a4195318f38febddf0bb5efd86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b67baca_91bcac56",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cssom-view/scrollBoundaryBehavior-manual.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-07T19:17:01Z",
+      "side": 1,
+      "message": "nit: better to say \"same drags as in step 1\"",
+      "range": {
+        "startLine": 48,
+        "startChar": 21,
+        "endLine": 48,
+        "endChar": 30
+      },
+      "revId": "6419f3ff0ee6c1a4195318f38febddf0bb5efd86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11680a68_dc83739a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cssom-view/scrollBoundaryBehavior-manual.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-07T19:17:01Z",
+      "side": 1,
+      "message": "nit: should be consistent with step 1. So either use \"tap on DONE\" here or make step 1 \"click on DONE\"",
+      "range": {
+        "startLine": 48,
+        "startChar": 35,
+        "endLine": 48,
+        "endChar": 40
+      },
+      "revId": "6419f3ff0ee6c1a4195318f38febddf0bb5efd86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54243f85_3ace3b4c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cssom-view/scrollBoundaryBehavior-manual.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-07T19:17:01Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 49,
+        "startChar": 21,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "6419f3ff0ee6c1a4195318f38febddf0bb5efd86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b9b3fc_16423713",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cssom-view/scrollBoundaryBehavior-manual.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-07T19:17:01Z",
+      "side": 1,
+      "message": "Is it possible to setup this step to also use the same drags as in step 1\ni.e, UP and LEFT? I think it will be easier on tester to be more consistent\n\nIf it is not easy or there is other reason (perhaps testing both direction?)\nthen it is fine.",
+      "range": {
+        "startLine": 50,
+        "startChar": 67,
+        "endLine": 50,
+        "endChar": 78
+      },
+      "revId": "6419f3ff0ee6c1a4195318f38febddf0bb5efd86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399dac73_f4804517",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cssom-view/scrollBoundaryBehavior-manual.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-07T19:17:01Z",
+      "side": 1,
+      "message": "nit: s/2/two",
+      "range": {
+        "startLine": 50,
+        "startChar": 19,
+        "endLine": 50,
+        "endChar": 20
+      },
+      "revId": "6419f3ff0ee6c1a4195318f38febddf0bb5efd86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8293d67a_3f300266",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cssom-view/scrollBoundaryBehavior-manual.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-07T19:17:01Z",
+      "side": 1,
+      "message": "nit: move closer to where this is used.",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 16
+      },
+      "revId": "6419f3ff0ee6c1a4195318f38febddf0bb5efd86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a51feefb_db4e58b3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cssom-view/scrollBoundaryBehavior-manual.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-07T19:17:01Z",
+      "side": 1,
+      "message": "nit: Should this be (\u003c verifyAndSetupForNext.length) instead?",
+      "range": {
+        "startLine": 143,
+        "startChar": 22,
+        "endLine": 143,
+        "endChar": 23
+      },
+      "revId": "6419f3ff0ee6c1a4195318f38febddf0bb5efd86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
