@@ -243,9 +243,10 @@ void NetworkState::GetStateProperties(base::DictionaryValue* dictionary) const {
   dictionary->SetKey(shill::kProfileProperty, base::Value(profile_path()));
   dictionary->SetKey(shill::kPriorityProperty, base::Value(priority_));
 
-  if (visible()) {
+  if (visible())
     dictionary->SetKey(shill::kStateProperty, base::Value(connection_state()));
-  }
+  if (!device_path().empty())
+    dictionary->SetKey(shill::kDeviceProperty, base::Value(device_path()));
 
   // VPN properties.
   if (NetworkTypePattern::VPN().MatchesType(type())) {
@@ -429,9 +430,9 @@ std::string NetworkState::GetSpecifier() const {
   }
   if (type() == shill::kTypeWifi)
     return name() + "_" + security_class_;
-  if (!name().empty())
+  if (type() != shill::kTypeCellular && !name().empty())
     return name();
-  return type();  // For unnamed networks such as ethernet.
+  return type();  // For unnamed networks, i.e. ethernet and cellular.
 }
 
 void NetworkState::SetGuid(const std::string& guid) {

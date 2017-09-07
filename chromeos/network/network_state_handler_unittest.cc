@@ -1653,4 +1653,28 @@ TEST_F(NetworkStateHandlerTest, IPConfigChanged) {
       kShillManagerClientStubDefaultWifi));
 }
 
+TEST_F(NetworkStateHandlerTest, EnsureCellularNetwork) {
+  // ClearServices will trigger a kServiceCompleteListProperty property change
+  // which will create a default Cellular network.
+  service_test_->ClearServices();
+  base::RunLoop().RunUntilIdle();
+  NetworkStateHandler::NetworkStateList cellular_networks;
+  network_state_handler_->GetNetworkListByType(
+      NetworkTypePattern::Cellular(), false /* configured_only */,
+      false /* visible_only */, 0, &cellular_networks);
+  ASSERT_EQ(1u, cellular_networks.size());
+  EXPECT_EQ(NetworkStateHandler::kDefaultCellularNetworkPath,
+            cellular_networks[0]->path());
+
+  // Add a Cellular service. This should replace the default cellular network.
+  AddService(kShillManagerClientStubCellular, "cellular1_guid", "cellular1",
+             shill::kTypeCellular, shill::kStateIdle);
+  base::RunLoop().RunUntilIdle();
+  network_state_handler_->GetNetworkListByType(
+      NetworkTypePattern::Cellular(), false /* configured_only */,
+      false /* visible_only */, 0, &cellular_networks);
+  ASSERT_EQ(1u, cellular_networks.size());
+  EXPECT_EQ("/service/cellular1", cellular_networks[0]->path());
+}
+
 }  // namespace chromeos
