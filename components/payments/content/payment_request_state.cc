@@ -21,6 +21,7 @@
 #include "components/payments/core/payment_instrument.h"
 #include "components/payments/core/payment_request_data_util.h"
 #include "components/payments/core/payment_request_delegate.h"
+#include "components/payments/core/service_worker_payment_instrument.h"
 #include "content/public/common/content_features.h"
 
 namespace payments {
@@ -61,6 +62,13 @@ PaymentRequestState::~PaymentRequestState() {}
 
 void PaymentRequestState::GetAllPaymentAppsCallback(
     content::PaymentAppProvider::PaymentApps apps) {
+  for (content::PaymentAppProvider::PaymentApps::iterator it = apps.begin();
+       it != apps.end(); it++) {
+    auto instrument =
+        base::MakeUnique<ServiceWorkerPaymentInstrument>(std::move(it->second));
+    available_instruments_.push_back(std::move(instrument));
+  }
+
   polling_instruments_finished_ = true;
   NotifyOnPollPaymentInstrumentsFinished();
 }

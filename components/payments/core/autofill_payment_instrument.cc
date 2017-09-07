@@ -162,6 +162,10 @@ bool AutofillPaymentInstrument::IsValidForModifier(
   return is_supported_type && is_supported_network;
 }
 
+const SkBitmap* AutofillPaymentInstrument::icon_bitmap() const {
+  return nullptr;
+}
+
 void AutofillPaymentInstrument::OnFullCardRequestSucceeded(
     const autofill::payments::FullCardRequest& /* full_card_request */,
     const autofill::CreditCard& card,

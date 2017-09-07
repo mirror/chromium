@@ -17,8 +17,8 @@ WeakReference::Flag::Flag() : is_valid_(true) {
 void WeakReference::Flag::Invalidate() {
   // The flag being invalidated with a single ref implies that there are no
   // weak pointers in existence. Allow deletion on other thread in this case.
-  DCHECK(sequence_checker_.CalledOnValidSequence() || HasOneRef())
-      << "WeakPtrs must be invalidated on the same sequenced thread.";
+  // DCHECK(sequence_checker_.CalledOnValidSequence() || HasOneRef())
+  //    << "WeakPtrs must be invalidated on the same sequenced thread.";
   is_valid_ = false;
 }
 

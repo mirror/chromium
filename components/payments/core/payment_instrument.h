@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "base/strings/string16.h"
 #include "components/autofill/core/browser/credit_card.h"
+#include "third_party/skia/include/core/SkBitmap.h"
 
 namespace payments {
 
@@ -56,6 +57,7 @@ class PaymentInstrument {
   // Return the sub/label of payment instrument, to be displayed to the user.
   virtual base::string16 GetLabel() const = 0;
   virtual base::string16 GetSublabel() const = 0;
+  virtual const SkBitmap* icon_bitmap() const = 0;
 
   // Returns true if this payment instrument can be used to fulfill a request
   // specifying |method| as a supported method of payment, false otherwise.

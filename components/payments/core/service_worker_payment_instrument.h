@@ -6,13 +6,14 @@
 #define COMPONENTS_PAYMENTS_CORE_SERVICE_WORKER_PAYMENT_INSTRUMENT_H_
 
 #include "components/payments/core/payment_instrument.h"
+#include "content/public/browser/stored_payment_app.h"
 
 namespace payments {
 
 class ServiceWorkerPaymentInstrument : public PaymentInstrument {
  public:
   ServiceWorkerPaymentInstrument(
-      std::unique_ptr<StoredPaymentApp> stored_payment_app_info);
+      std::unique_ptr<content::StoredPaymentApp> stored_payment_app_info);
   ~ServiceWorkerPaymentInstrument() override;
 
   // PaymentInstrument:
@@ -29,9 +30,10 @@ class ServiceWorkerPaymentInstrument : public PaymentInstrument {
       const std::vector<std::string>& supported_networks,
       const std::set<autofill::CreditCard::CardType>& supported_types,
       bool supported_types_specified) const override;
+  const SkBitmap* icon_bitmap() const override;
 
  private:
-  std::unique_ptr<StoredPaymentApp> stored_payment_app_info_;
+  std::unique_ptr<content::StoredPaymentApp> stored_payment_app_info_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerPaymentInstrument);
 };

@@ -52,6 +52,8 @@ static_library("core") {
     "payments_profile_comparator.h",
     "payments_validators.cc",
     "payments_validators.h",
+    "service_worker_payment_instrument.cc",
+    "service_worker_payment_instrument.h",
     "strings_util.cc",
     "strings_util.h",
     "subkey_requester.cc",

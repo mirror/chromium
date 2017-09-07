@@ -3,12 +3,13 @@
 // found in the LICENSE file.
 
 #include "components/payments/core/service_worker_payment_instrument.h"
+#include "base/strings/utf_string_conversions.h"
 
 namespace payments {
 ServiceWorkerPaymentInstrument::ServiceWorkerPaymentInstrument(
-    std::unique_ptr<StoredPaymentApp> stored_payment_app_info)
-    : stored_payment_app_info_(std::move(stored_payment_app_info)),
-      PaymentInstrument("", 0, PaymentInstrument::Type::SERVICE_WORKER_APP) {}
+    std::unique_ptr<content::StoredPaymentApp> stored_payment_app_info)
+    : PaymentInstrument("", 0, PaymentInstrument::Type::SERVICE_WORKER_APP),
+      stored_payment_app_info_(std::move(stored_payment_app_info)) {}
 
 ServiceWorkerPaymentInstrument::~ServiceWorkerPaymentInstrument() {}
 
@@ -27,14 +28,15 @@ bool ServiceWorkerPaymentInstrument::IsExactlyMatchingMerchantRequest() const {
 
 base::string16 ServiceWorkerPaymentInstrument::GetMissingInfoLabel() const {
   NOTREACHED();
-  return "";
+  return base::string16();
 }
 
 bool ServiceWorkerPaymentInstrument::IsValidForCanMakePayment() const {
   NOTIMPLEMENTED();
+  return true;
 }
 
-void RecordUse() {
+void ServiceWorkerPaymentInstrument::RecordUse() {
   NOTIMPLEMENTED();
 }
 
@@ -53,6 +55,10 @@ bool ServiceWorkerPaymentInstrument::IsValidForModifier(
     bool supported_types_specified) const {
   NOTIMPLEMENTED();
   return false;
+}
+
+const SkBitmap* ServiceWorkerPaymentInstrument::icon_bitmap() const {
+  return stored_payment_app_info_->icon.get();
 }
 
 }  // namespace payments

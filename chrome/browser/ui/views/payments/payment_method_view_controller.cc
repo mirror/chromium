@@ -102,10 +102,11 @@ class PaymentMethodListItem : public PaymentRequestItemList::Item {
 
   // PaymentRequestItemList::Item:
   std::unique_ptr<views::View> CreateExtraView() override {
-    std::unique_ptr<views::ImageView> card_icon_view = CreateInstrumentIconView(
-        instrument_->icon_resource_id(), instrument_->GetLabel());
-    card_icon_view->SetImageSize(gfx::Size(32, 20));
-    return std::move(card_icon_view);
+    std::unique_ptr<views::ImageView> icon_view = CreateInstrumentIconView(
+        instrument_->icon_resource_id(), instrument_->icon_bitmap(),
+        instrument_->GetLabel());
+    icon_view->SetImageSize(gfx::Size(32, 20));
+    return std::move(icon_view);
   }
 
   std::unique_ptr<views::View> CreateContentView(
