@@ -1793,7 +1793,8 @@ void ResourceDispatcherHostImpl::CancelRequestsForRoute(
     if (cancel_all_routes || route_id == info->GetRenderFrameID()) {
       if (info->detachable_handler()) {
         if (base::FeatureList::IsEnabled(
-                features::kKeepAliveRendererForKeepaliveRequests)) {
+                features::kKeepAliveRendererForKeepaliveRequests) &&
+            false) {
           // If the feature is enabled, the renderer process's lifetime is
           // prolonged so there's no need to detach.
           if (cancel_all_routes) {
