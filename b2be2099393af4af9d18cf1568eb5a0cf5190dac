@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01bada4c_c2d95c7f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 91270,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-09-07T17:22:00Z",
+      "side": 1,
+      "message": "checking - this is already checked into the webrtc repo?",
+      "range": {
+        "startLine": 91270,
+        "startChar": 29,
+        "endLine": 91270,
+        "endChar": 30
+      },
+      "revId": "b2be2099393af4af9d18cf1568eb5a0cf5190dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
