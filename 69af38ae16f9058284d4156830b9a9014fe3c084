@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "204a34f2_f41a4466",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-07T19:29:45Z",
+      "side": 1,
+      "message": "Exactly the answer I was hoping for. :) Could you explain that in the comment?",
+      "parentUuid": "a51edb98_64768814",
+      "revId": "69af38ae16f9058284d4156830b9a9014fe3c084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "693fa6aa_25d09ce7",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipperTest.cpp",
         "patchSetId": 19
@@ -174,6 +192,24 @@
       "revId": "69af38ae16f9058284d4156830b9a9014fe3c084",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd80019_75f2e918",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipperTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-07T19:29:45Z",
+      "side": 1,
+      "message": "Ah, right. I think it\u0027s good as it is. It might look prettier to me without the scientific notation, but then I guess it wouldn\u0027t fit on one line anymore, so it wouldn\u0027t look that great after all. :)",
+      "parentUuid": "14643a35_a0a50686",
+      "revId": "69af38ae16f9058284d4156830b9a9014fe3c084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
