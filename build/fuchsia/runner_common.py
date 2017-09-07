@@ -15,6 +15,8 @@ import shutil
 import signal
 import subprocess
 import sys
+import time
+import uuid
 
 
 DIR_SOURCE_ROOT = os.path.abspath(
@@ -28,17 +30,31 @@ GUEST_NET = '192.168.3.0/24'
 GUEST_IP_ADDRESS = '192.168.3.9'
 HOST_IP_ADDRESS = '192.168.3.2'
 
+# This is an arbitrary port on localhost that is forwarded to 8080 on the
+# target. The target is listening on that port with a simple `listen cat`
+# of the json output, and on completion of the cat, powers off the machine.
+# This slightly crazy, but ssh is ridiculously slow and unstable over qemu user
+# networking (often crashing and causing bot timeouts), and other solutions
+# (like a tun/tap device on the host) require sudo or image reconfiguration.
+HOST_LOG_PORT = '20710'
+
 
 def _RunAndCheck(dry_run, args):
+  print 'Run:', args
+
   if dry_run:
     print 'Run:', ' '.join(args)
     return 0
-  else:
-    try:
-      subprocess.check_call(args)
-      return 0
-    except subprocess.CalledProcessError as e:
-      return e.returncode
+
+  try:
+    with open(os.devnull, 'r') as nul:
+      subprocess.check_call(args, stdin=nul)
+    return 0
+  except subprocess.CalledProcessError as e:
+    return e.returncode
+  finally:
+    sys.stdout.flush()
+    sys.stderr.flush()
 
 
 def _IsRunningOnBot():
@@ -159,15 +175,43 @@ def ReadRuntimeDeps(deps_path, output_directory):
     result.append((target_path, abs_path))
   return result
 
-def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
-                dry_run, power_off):
+
+class BootfsData(object):
+  """Results from BuildBootfs().
+
+  bootfs: Local path to .bootfs image file.
+  symbols_mapping: A dict mapping executables to their unstripped originals.
+  termination_string: A string to be grep'd for that indicates the target
+                      process on the VM has terminated.
+  """
+  def __init__(self, bootfs_name, symbols_mapping, termination_string):
+    self.bootfs = bootfs_name
+    self.symbols_mapping = symbols_mapping
+    self.termination_string = termination_string
+
+
+def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run):
   # |runtime_deps| already contains (target, source) pairs for the runtime deps,
   # so we can initialize |file_mapping| from it directly.
   file_mapping = dict(runtime_deps)
 
+  # Create our logger-runner script. This can't just be spawned from a subshell
+  # in autorun because autorun doesn't support subshells, so instead it's
+  # launched by creating a separate autorun that's launched via the command line
+  # passed to the qemu command line.
+  logger_file = open(bin_name + '.bootfs_logger', 'w')
+  logger_file.write('#!/boot/bin/sh\n')
+  logger_file.write('launch -r /system/bin/listen 8080 /boot/bin/sh -c '
+                    '\'/system/bin/cat /tmp/summary_output.json ; '
+                    'msleep 3000 ; '
+                    'dm poweroff\'\n')
+  logger_file.flush()
+  os.chmod(logger_file.name, 0750)
+  _DumpFile(dry_run, logger_file.name, 'logger')
+
   # Generate a script that runs the binaries and shuts down QEMU (if used).
   autorun_file = open(bin_name + '.bootfs_autorun', 'w')
-  autorun_file.write('#!/bin/sh\n')
+  autorun_file.write('#!/boot/bin/sh\n')
   if _IsRunningOnBot():
     # TODO(scottmg): Passed through for https://crbug.com/755282.
     autorun_file.write('export CHROME_HEADLESS=1\n')
@@ -182,21 +226,18 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
   for arg in child_args:
     autorun_file.write(' "%s"' % arg);
   autorun_file.write('\n')
-  autorun_file.write('echo Process terminated.\n')
 
-  if power_off:
-    # If shutdown of QEMU happens too soon after the program finishes, log
-    # statements from the end of the run will be lost, so sleep for a bit before
-    # shutting down. When running on device don't power off so the output and
-    # system can be inspected.
-    autorun_file.write('msleep 3000\n')
-    autorun_file.write('dm poweroff\n')
+  # Generate a unique string that the output processor can look for to know
+  # that the target process is finished.
+  termination_string = 'Process terminated %s.' % uuid.uuid4().hex
+  autorun_file.write('echo ' + termination_string + '\n')
 
   autorun_file.flush()
   os.chmod(autorun_file.name, 0750)
   _DumpFile(dry_run, autorun_file.name, 'autorun')
 
-  # Add the autorun file and target binary to |file_mapping|.
+  # Add the autorun file, logger file, and target binary to |file_mapping|.
+  file_mapping['logger'] = logger_file.name
   file_mapping['autorun'] = autorun_file.name
   file_mapping[os.path.basename(bin_name)] = bin_name
 
@@ -224,8 +265,7 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
        '--target=system', manifest_file.name]) != 0:
     return None
 
-  # Return both the name of the bootfs file, and the filename mapping.
-  return (bootfs_name, symbols_mapping)
+  return BootfsData(bootfs_name, symbols_mapping, termination_string)
 
 
 def _SymbolizeEntries(entries):
@@ -329,15 +369,15 @@ def _SymbolizeBacktrace(backtrace, file_mapping):
   return map(lambda entry: symbolized[entry['frame_id']], backtrace)
 
 
-def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
-  bootfs, bootfs_manifest = bootfs_and_manifest
+def RunFuchsia(bootfs_data, use_device, dry_run, test_launcher_summary_output):
   kernel_path = os.path.join(SDK_ROOT, 'kernel', 'magenta.bin')
 
   if use_device:
     # TODO(fuchsia): This doesn't capture stdout as there's no way to do so
     # currently. See https://crbug.com/749242.
     bootserver_path = os.path.join(SDK_ROOT, 'tools', 'bootserver')
-    bootserver_command = [bootserver_path, '-1', kernel_path, bootfs]
+    bootserver_command = [bootserver_path, '-1', kernel_path,
+                          bootfs_data.bootfs]
     return _RunAndCheck(dry_run, bootserver_command)
 
   qemu_path = os.path.join(SDK_ROOT, 'qemu', 'bin', 'qemu-system-x86_64')
@@ -346,7 +386,7 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
       '-nographic',
       '-machine', 'q35',
       '-kernel', kernel_path,
-      '-initrd', bootfs,
+      '-initrd', bootfs_data.bootfs,
       '-smp', '4',
       '-enable-kvm',
       '-cpu', 'host,migratable=no',
@@ -357,6 +397,10 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
           (GUEST_NET, GUEST_IP_ADDRESS, HOST_IP_ADDRESS),
       '-device', 'e1000,netdev=net0',
 
+      # Second device used for getting results json and triggering shutdown.
+      '-netdev', 'user,id=net1,hostfwd=tcp::%s-:8080' % HOST_LOG_PORT,
+      '-device', 'e1000,netdev=net1',
+
       # Use stdio for the guest OS only; don't attach the QEMU interactive
       # monitor.
       '-serial', 'stdio',
@@ -364,7 +408,10 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
 
       # TERM=dumb tells the guest OS to not emit ANSI commands that trigger
       # noisy ANSI spew from the user's terminal emulator.
-      '-append', 'TERM=dumb kernel.halt_on_panic=true',
+      '-append',
+          'magenta.autorun.system=/system/logger '
+          'TERM=dumb '
+          'kernel.halt_on_panic=true',
     ]
 
   if dry_run:
@@ -405,6 +452,28 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
     if 'SUCCESS: all tests passed.' in line:
       success = True
 
+    if bootfs_data.termination_string in line:
+      for i in range(100):
+        sys.stdout.write('flushing before: %s' % i + '\n')
+        sys.stdout.flush()
+
+      # If this string is seen, the target process is done: copy the results
+      # file back if desired and start shutdown.
+      p = subprocess.Popen(['nc', 'localhost', HOST_LOG_PORT],
+                           stdout=subprocess.PIPE)
+      stdout = p.communicate()[0]
+      sys.stdout.write('nc rc=%d' % p.returncode)
+      sys.stdout.write('contents of results\n------------------\n')
+      sys.stdout.write(stdout)
+      sys.stdout.write('end of results\n------------------\n')
+      if test_launcher_summary_output:
+        with open(test_launcher_summary_output, 'w') as f:
+          f.write(stdout)
+
+      for i in range(100):
+        sys.stdout.write('flushing after: %s' % i + '\n')
+        sys.stdout.flush()
+
     # If the line is not from QEMU then don't try to process it.
     matched = qemu_prefix.match(line)
     if not matched:
@@ -424,7 +493,7 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
     if backtrace_line == 'end':
       if backtrace_entries:
         for processed in _SymbolizeBacktrace(backtrace_entries,
-                                             bootfs_manifest):
+                                             bootfs_data.symbols_mapping):
           print processed
       backtrace_entries = []
       continue
