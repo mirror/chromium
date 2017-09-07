@@ -3439,7 +3439,10 @@ void WebViewImpl::DidCommitLoad(bool is_new_navigation,
 }
 
 void WebViewImpl::ResizeAfterLayout() {
-  DCHECK(MainFrameImpl());
+  if (!MainFrameImpl()) {
+    LOG(ERROR) << "WebViewImpl::ResizeAfterLayout: MainFrameImpl is NULL";
+    return;
+  }
   if (!client_ || !client_->CanUpdateLayout())
     return;
 
