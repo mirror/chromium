@@ -922,13 +922,7 @@ Status ChromiumEnv::NewSequentialFile(const std::string& fname,
 }
 
 void ChromiumEnv::RecordOpenFilesLimit(const std::string& type) {
-#if defined(OS_POSIX)
   GetMaxFDHistogram(type)->Add(base::GetMaxFds());
-#elif defined(OS_WIN)
-// Windows is only limited by available memory
-#else
-#error "Need to determine limit to open files for this OS"
-#endif
 }
 
 Status ChromiumEnv::NewRandomAccessFile(const std::string& fname,
