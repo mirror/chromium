@@ -343,9 +343,9 @@ class WindowSelectorItem::RoundedContainerView
     // during the initial animation. Once the initial fade-in completes and the
     // overview header is fully exposed update stacking to keep the label above
     // the item which prevents input events from reaching the window.
-    aura::Window* widget_window = GetWidget()->GetNativeWindow();
-    if (widget_window && item_window_)
-      widget_window->parent()->StackChildAbove(widget_window, item_window_);
+    // aura::Window* widget_window = GetWidget()->GetNativeWindow();
+    // if (widget_window && item_window_)
+    //   widget_window->parent()->StackChildAbove(widget_window, item_window_);
     item_window_ = nullptr;
   }
 
@@ -708,7 +708,7 @@ void WindowSelectorItem::CreateWindowLabel(const base::string16& title) {
   if (transform_window_.GetTopInset()) {
     // For windows with headers the overview header fades in above the
     // original window header.
-    widget_window->parent()->StackChildAbove(widget_window,
+    widget_window->parent()->StackChildBelow(widget_window,
                                              transform_window_.window());
   } else {
     // For tabbed windows the overview header slides from behind. The stacking
