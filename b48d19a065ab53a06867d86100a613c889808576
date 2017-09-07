@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25fad155_f841a942",
+        "filename": "chrome/browser/download/download_navigation_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-07T23:40:25Z",
+      "side": 1,
+      "message": "MakeUnique doesn\u0027t work with private ctor",
+      "parentUuid": "5d75ce83_8989cf57",
+      "range": {
+        "startLine": 24,
+        "startChar": 15,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "b48d19a065ab53a06867d86100a613c889808576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12335a8b_b19d9e7f",
         "filename": "content/browser/frame_host/navigation_handle_impl.h",
         "patchSetId": 2
