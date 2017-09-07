@@ -25,6 +25,8 @@ namespace base {
 
 namespace {
 
+constexpr size_t kNumOfLatencyCheckTasks = 10000;
+
 // A thread that waits for the caller to signal an event before proceeding to
 // call Action::Run().
 class PostingThread {
@@ -161,6 +163,43 @@ class MessageLoopPerfTest : public ::testing::TestWithParam<int> {
     DISALLOW_COPY_AND_ASSIGN(ContinuouslyPostTasks);
   };
 
+  class MeasurePostTaskLatency final : public PostingThread::Action {
+   public:
+    MeasurePostTaskLatency(MessageLoopPerfTest* outer) : outer_(outer) {
+      DCHECK(outer_);
+    }
+    ~MeasurePostTaskLatency() override = default;
+
+   private:
+    void Run() override {
+      RepeatingClosure task_to_run = BindRepeating(
+          [](TimeTicks start_times[], size_t* num_tasks_run_from_this_delegate,
+             size_t* num_tasks_run, TimeDelta* accumulated_latency) {
+            *accumulated_latency +=
+                TimeTicks::Now() -
+                start_times[*num_tasks_run_from_this_delegate];
+
+            ++*num_tasks_run_from_this_delegate;
+            ++*num_tasks_run;
+          },
+          start_times_, &num_tasks_run_from_this_delegate_,
+          &outer_->num_tasks_run_, &outer_->accumulated_latency_);
+      for (size_t i = 0; i < kNumOfLatencyCheckTasks &&
+                         !outer_->stop_posting_threads_.IsSet();
+           ++i) {
+        start_times_[i] = TimeTicks::Now();
+        outer_->message_loop_task_runner_->PostTask(FROM_HERE, task_to_run);
+      }
+    }
+
+    TimeTicks start_times_[kNumOfLatencyCheckTasks];
+    size_t num_tasks_run_from_this_delegate_ = 0;
+
+    MessageLoopPerfTest* const outer_;
+
+    DISALLOW_COPY_AND_ASSIGN(MeasurePostTaskLatency);
+  };
+
   void SetUp() override {
     // This check is here because we can't ASSERT_TRUE in the constructor.
     ASSERT_TRUE(message_loop_task_runner_);
@@ -211,6 +250,8 @@ class MessageLoopPerfTest : public ::testing::TestWithParam<int> {
 
   TimeDelta tasks_run_duration() { return tasks_run_duration_; }
 
+  TimeDelta accumulated_latency() { return accumulated_latency_; }
+
  private:
   MessageLoop message_loop_;
 
@@ -224,6 +265,7 @@ class MessageLoopPerfTest : public ::testing::TestWithParam<int> {
   TimeDelta tasks_posted_duration_;
   TimeDelta tasks_run_duration_;
   size_t num_tasks_run_ = 0;
+  TimeDelta accumulated_latency_;
 
   DISALLOW_COPY_AND_ASSIGN(MessageLoopPerfTest);
 };
@@ -242,6 +284,18 @@ TEST_P(MessageLoopPerfTest, PostTaskRate) {
   perf_test::PrintResult("task_running", "",
                          PostingThreadCountToString(GetParam()),
                          tasks_run_duration().InMicroseconds() /
+                             static_cast<double>(num_tasks_run()),
+                         "us/task", true);
+}
+
+TEST_P(MessageLoopPerfTest, PostTaskLatency) {
+  // Measures the latency between PostTask() and running the task. The numbers
+  // will naturally be proportional to the number of posted tasks as if the
+  // queue is longer, the latency will increase.
+  RunTest<MeasurePostTaskLatency>(GetParam(), TimeDelta::FromSeconds(1));
+  perf_test::PrintResult("task_latency", "",
+                         PostingThreadCountToString(GetParam()),
+                         accumulated_latency().InMicroseconds() /
                              static_cast<double>(num_tasks_run()),
                          "us/task", true);
 }
