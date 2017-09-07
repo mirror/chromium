@@ -140,6 +140,24 @@
       "revId": "801b9c4167e9d65fb85a921f3d8b257aae2fecd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caadaed4_b7f1d0e6",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-07T18:18:30Z",
+      "side": 1,
+      "message": "Deep inheritance hierarchy are an anti-pattern as they usually make code buggy \u0026 hard to reason about. Can you collapse VrPage \u0026 VrSamplePage?",
+      "parentUuid": "22f19a90_791b768d",
+      "revId": "801b9c4167e9d65fb85a921f3d8b257aae2fecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
