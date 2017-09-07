@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c2f2470_a6d6ff96",
+        "filename": "third_party/WebKit/Source/core/dom/TaskTypeTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-07T11:31:49Z",
+      "side": 1,
+      "message": "Can we move this file to platform/scheduler/?",
+      "revId": "9692a05b66c9b98625ec12f774f46bd142e83c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
