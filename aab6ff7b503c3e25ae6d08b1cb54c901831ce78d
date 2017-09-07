@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f57c72e_ebb39d56",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-07T19:18:40Z",
+      "side": 1,
+      "message": "Does modification of reader_thread (or self._reader_thread? It\u0027s not clear to me why they both exist) fall under the lock\u0027s protection?",
+      "revId": "aab6ff7b503c3e25ae6d08b1cb54c901831ce78d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

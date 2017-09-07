@@ -140,6 +140,24 @@
       "revId": "29279851c9ef9f4e09bbcb604bed310ea3d2db6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb54a73_15c9c2b8",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-07T19:18:40Z",
+      "side": 1,
+      "message": "I don\u0027t think it would be -- what if you called this on one thread, got to line 138, then another thread called this?\n\nIt\u0027s true that the GIL would keep them from actually running at the same time, but it could be interleaving their execution in weird ways.",
+      "parentUuid": "0957a14b_0c321aeb",
+      "revId": "29279851c9ef9f4e09bbcb604bed310ea3d2db6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
