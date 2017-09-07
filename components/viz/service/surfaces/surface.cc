@@ -155,8 +155,10 @@ bool Surface::QueueFrame(cc::CompositorFrame frame,
 
 void Surface::RequestCopyOfOutput(
     std::unique_ptr<CopyOutputRequest> copy_request) {
-  if (!active_frame_data_)
-    return;  // |copy_request| auto-sends empty result on out-of-scope.
+  if (!active_frame_data_) {
+    copy_request->SendEmptyResult();
+    return;
+  }
 
   std::vector<std::unique_ptr<CopyOutputRequest>>& copy_requests =
       active_frame_data_->frame.render_pass_list.back()->copy_requests;
@@ -386,9 +388,8 @@ void Surface::UnrefFrameResourcesAndRunDrawCallback(
 void Surface::ClearCopyRequests() {
   if (active_frame_data_) {
     for (const auto& render_pass : active_frame_data_->frame.render_pass_list) {
-      // When the container is cleared, all copy requests within it will
-      // auto-send an empty result as they are being destroyed.
-      render_pass->copy_requests.clear();
+      for (const auto& copy_request : render_pass->copy_requests)
+        copy_request->SendEmptyResult();
     }
   }
 }

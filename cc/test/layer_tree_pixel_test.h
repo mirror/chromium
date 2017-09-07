@@ -80,7 +80,7 @@ class LayerTreePixelTest : public LayerTreeTest {
                                       Layer* target,
                                       base::FilePath file_name);
 
-  SkBitmap CopyTextureMailboxToBitmap(
+  std::unique_ptr<SkBitmap> CopyTextureMailboxToBitmap(
       const gfx::Size& size,
       const viz::TextureMailbox& texture_mailbox);
 

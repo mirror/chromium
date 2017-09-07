@@ -71,8 +71,7 @@ TEST(SurfaceTest, CopyRequestLifetime) {
   ASSERT_TRUE(!!surface);
 
   bool copy_called = false;
-  support->RequestCopyOfSurface(std::make_unique<CopyOutputRequest>(
-      CopyOutputRequest::ResultFormat::RGBA_BITMAP,
+  support->RequestCopyOfSurface(CopyOutputRequest::CreateRequest(
       base::BindOnce(&TestCopyResultCallback, &copy_called)));
   EXPECT_TRUE(surface_manager->GetSurfaceForId(surface_id));
   EXPECT_FALSE(copy_called);
@@ -105,7 +104,7 @@ TEST(SurfaceTest, CopyRequestLifetime) {
   // Last (root) pass should receive copy request.
   ASSERT_EQ(1u, copy_requests.count(last_pass_id));
   EXPECT_FALSE(copy_called);
-  copy_requests.clear();  // Deleted requests will auto-send an empty result.
+  copy_requests.find(last_pass_id)->second->SendEmptyResult();
   EXPECT_TRUE(copy_called);
 
   support->EvictCurrentSurface();

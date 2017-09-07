@@ -195,13 +195,19 @@ class OcclusionTrackerTest : public testing::Test {
     layer_iterator_.reset();
   }
 
+  void CopyOutputCallback(std::unique_ptr<viz::CopyOutputResult> result) {}
+
   void AddCopyRequest(Layer* layer) {
-    layer->RequestCopyOfOutput(viz::CopyOutputRequest::CreateStubForTesting());
+    layer->RequestCopyOfOutput(viz::CopyOutputRequest::CreateBitmapRequest(
+        base::BindOnce(&OcclusionTrackerTest::CopyOutputCallback,
+                       base::Unretained(this))));
   }
 
   void AddCopyRequest(LayerImpl* layer) {
     layer->test_properties()->copy_requests.push_back(
-        viz::CopyOutputRequest::CreateStubForTesting());
+        viz::CopyOutputRequest::CreateBitmapRequest(
+            base::BindOnce(&OcclusionTrackerTest::CopyOutputCallback,
+                           base::Unretained(this))));
   }
 
   void CalcDrawEtc(TestContentLayerImpl* root) {

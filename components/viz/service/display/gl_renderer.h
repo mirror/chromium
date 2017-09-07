@@ -103,7 +103,8 @@ class VIZ_SERVICE_EXPORT GLRenderer : public cc::DirectRenderer {
   bool FlippedRootFramebuffer() const;
   void EnsureScissorTestEnabled() override;
   void EnsureScissorTestDisabled() override;
-  void CopyDrawnRenderPass(std::unique_ptr<CopyOutputRequest> request) override;
+  void CopyCurrentRenderPassToBitmap(
+      std::unique_ptr<CopyOutputRequest> request) override;
   void SetEnableDCLayers(bool enable) override;
   void FinishDrawingQuadList() override;
 

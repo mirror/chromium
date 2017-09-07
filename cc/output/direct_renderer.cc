@@ -507,7 +507,7 @@ void DirectRenderer::DrawRenderPassAndExecuteCopyRequests(
     // we restore the state between readbacks. http://crbug.com/99393.
     if (!first_request)
       UseRenderPass(render_pass);
-    CopyDrawnRenderPass(std::move(copy_request));
+    CopyCurrentRenderPassToBitmap(std::move(copy_request));
     first_request = false;
   }
 }
