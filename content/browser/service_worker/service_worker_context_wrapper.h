@@ -127,7 +127,8 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   void StartServiceWorkerForNavigationHint(
       const GURL& document_url,
       const StartServiceWorkerForNavigationHintCallback& callback) override;
-  void StopAllServiceWorkersForOrigin(const GURL& origin) override;
+  void StopAllServiceWorkersForOrigin(const GURL& origin,
+                                      ResultCallback callback) override;
 
   // These methods must only be called from the IO thread.
   ServiceWorkerRegistration* GetLiveRegistration(int64_t registration_id);
@@ -298,6 +299,11 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   void DidFindRegistrationForUpdate(
       ServiceWorkerStatusCode status,
       scoped_refptr<content::ServiceWorkerRegistration> registration);
+
+  void StopAllServiceWorkersForOriginOnIO(
+      const GURL& origin,
+      ResultCallback callback,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner_for_callback);
 
   void StartServiceWorkerForNavigationHintOnIO(
       const GURL& document_url,

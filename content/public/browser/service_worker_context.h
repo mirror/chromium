@@ -185,8 +185,10 @@ class ServiceWorkerContext {
 
   // Stops all running workers on the given |origin|.
   //
-  // This function can be called from any thread.
-  virtual void StopAllServiceWorkersForOrigin(const GURL& origin) = 0;
+  // This function can be called from any thread, but the callback will always
+  // be called on the UI thread.
+  virtual void StopAllServiceWorkersForOrigin(const GURL& origin,
+                                              ResultCallback callback) = 0;
 
  protected:
   ServiceWorkerContext() {}

@@ -53,7 +53,7 @@ class MockServiceWorkerContext : public ServiceWorkerContext {
   MOCK_METHOD2(StartServiceWorkerForNavigationHint,
                void(const GURL&,
                     const StartServiceWorkerForNavigationHintCallback&));
-  MOCK_METHOD1(StopAllServiceWorkersForOrigin, void(const GURL&));
+  void StopAllServiceWorkersForOrigin(const GURL&, ResultCallback) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockServiceWorkerContext);
