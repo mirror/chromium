@@ -7607,6 +7607,7 @@ class LayerTreeHostTestPaintedDeviceScaleFactor : public LayerTreeHostTest {
  protected:
   void BeginTest() override {
     layer_tree_host()->SetPaintedDeviceScaleFactor(2.0f);
+    layer_tree_host()->SetBrowserControlsHeight(10.0f, 20.0f, true);
     EXPECT_EQ(1.0f, layer_tree_host()->device_scale_factor());
     PostSetNeedsCommitToMainThread();
   }
@@ -7617,6 +7618,8 @@ class LayerTreeHostTestPaintedDeviceScaleFactor : public LayerTreeHostTest {
     EXPECT_EQ(DRAW_SUCCESS, draw_result);
     EXPECT_EQ(2.0f, host_impl->active_tree()->painted_device_scale_factor());
     EXPECT_EQ(1.0f, host_impl->active_tree()->device_scale_factor());
+    EXPECT_EQ(20.0f, host_impl->active_tree()->top_controls_height());
+    EXPECT_EQ(40.0f, host_impl->active_tree()->bottom_controls_height());
     return draw_result;
   }
 
