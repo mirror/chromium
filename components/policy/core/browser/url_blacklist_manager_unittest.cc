@@ -222,6 +222,24 @@ TEST_P(URLBlacklistFilterToComponentsTest, FilterToComponents) {
   EXPECT_EQ(GetParam().path(), path);
 }
 
+TEST_F(URLBlacklistManagerTest, LoadBlacklistOnCreate) {
+  auto blacklist = base::MakeUnique<base::ListValue>();
+  blacklist->AppendString("*.example.com");
+  pref_service_.SetManagedPref(policy_prefs::kUrlBlacklist,
+                               std::move(blacklist));
+  auto manager = base::MakeUnique<TestingURLBlacklistManager>(&pref_service_);
+  EXPECT_EQ(1, manager->update_called())
+}
+
+TEST_F(URLBlacklistManagerTest, LoadWhitelistOnCreate) {
+  auto whitelist = base::MakeUnique<base::ListValue>();
+  whitelist->AppendString("*.example.com");
+  pref_service_.SetManagedPref(policy_prefs::kUrlWhitelist,
+                               std::move(whitelist));
+  auto manager = base::MakeUnique<TestingURLBlacklistManager>(&pref_service_);
+  EXPECT_EQ(1, manager->update_called())
+}
+
 TEST_F(URLBlacklistManagerTest, SingleUpdateForTwoPrefChanges) {
   auto blacklist = base::MakeUnique<base::ListValue>();
   blacklist->AppendString("*.google.com");
