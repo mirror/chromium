@@ -312,6 +312,16 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   std::unique_ptr<TouchSelectionControllerClientChildFrame>
       selection_controller_client_;
 
+  // Used to prevent bubbling of subsequent GestureScrollUpdates in a scroll
+  // gesture if the child consumed the first GSU.
+  // TODO(mcnee): This is only needed for |!wheel_scroll_latching_enabled()|
+  // and can be removed once scroll-latching lands.
+  enum ScrollBubblingState {
+    AWAITING_FIRST_UPDATE,
+    BUBBLE,
+    SCROLL_CHILD,
+  } scroll_bubbling_state_;
+
   // Used to trigger a non-crashing stack dump when this class is destructed
   // without calling Destroy() first.
   bool destroy_was_called_;
