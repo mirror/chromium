@@ -123,6 +123,16 @@ bundle_data("unit_tests_bundle_data") {
     "//components/test/data/update_client/updatecheck_reply_4.xml",
     "//components/test/data/update_client/updatecheck_reply_noupdate.xml",
   ]
+  if (is_android) {
+    sources += [
+      "//components/test/data/update_client/apk/1.crt",
+      "//components/test/data/update_client/apk/2.crt",
+      "//components/test/data/update_client/apk/signed-1-2.apk",
+      "//components/test/data/update_client/apk/signed-1.apk",
+      "//components/test/data/update_client/apk/signed-2.apk",
+      "//components/test/data/update_client/apk/unsigned.apk",
+    ]
+  }
   outputs = [
     "{{bundle_resources_dir}}/" +
         "{{source_root_relative_dir}}/{{source_file_part}}",
@@ -166,4 +176,7 @@ source_set("unit_tests") {
     "//testing/gtest",
     "//third_party/libxml",
   ]
+  if (is_android) {
+    deps += [ "//components/update_client/android:jni_apk_utils_header" ]
+  }
 }
