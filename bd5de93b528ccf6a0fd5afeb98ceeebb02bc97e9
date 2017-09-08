@@ -80,6 +80,24 @@
       "revId": "bd5de93b528ccf6a0fd5afeb98ceeebb02bc97e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d23e7f_df710217",
+        "filename": "third_party/WebKit/Source/core/testing/data/mhtml/xslt.mht",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-08T00:36:46Z",
+      "side": 1,
+      "message": "This is the reason why the MHTML test file fails to be loaded as MHTML.",
+      "parentUuid": "9cba72ed_90fb0ba9",
+      "revId": "bd5de93b528ccf6a0fd5afeb98ceeebb02bc97e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
