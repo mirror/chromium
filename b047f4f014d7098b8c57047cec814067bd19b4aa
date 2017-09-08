@@ -107,6 +107,24 @@
       "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01a7f59_eea0c471",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-08T19:51:55Z",
+      "side": 1,
+      "message": "I mean, return true;",
+      "parentUuid": "29f206a3_f3a5130a",
+      "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
