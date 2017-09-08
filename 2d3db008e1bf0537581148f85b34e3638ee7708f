@@ -22,6 +22,30 @@
       "revId": "2d3db008e1bf0537581148f85b34e3638ee7708f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a0fe36_2f4dd5d1",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 10002,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-09-08T14:36:16Z",
+      "side": 1,
+      "message": "IIRC someone checked in non-UTF characters and I fixed that. Not sure why it still shows up as a change, but a rebase got rid of it *shrug*",
+      "parentUuid": "3f253c4c_94f8337a",
+      "range": {
+        "startLine": 10002,
+        "startChar": 6,
+        "endLine": 10002,
+        "endChar": 144
+      },
+      "revId": "2d3db008e1bf0537581148f85b34e3638ee7708f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
