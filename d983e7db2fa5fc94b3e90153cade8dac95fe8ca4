@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0190ce74_bbe9e281",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T19:56:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c183cc1b_9953d994",
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6ae123a_593f3622",
         "filename": "content/browser/shared_worker/shared_worker_connector_impl.cc",
         "patchSetId": 17
@@ -201,6 +219,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "52f5e6eb_66e4fed5",
+      "range": {
+        "startLine": 270,
+        "startChar": 11,
+        "endLine": 270,
+        "endChar": 17
+      },
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a928232b_6edd76b9",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T19:56:33Z",
+      "side": 1,
+      "message": "Super duper nit: with emplace, there\u0027s no need for std::make_pair (same comment elsewhere)",
+      "parentUuid": "10955e2f_88e43c2e",
       "range": {
         "startLine": 270,
         "startChar": 11,
