@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d5047bb_42aacf87",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-08T15:27:41Z",
+      "side": 1,
+      "message": "This starts to feel responder-chainy, once we start overriding some methods at lower levels and letting other methods bubble up to something higher.",
+      "revId": "59bed247c3f21314cb213656ea7fb0df5feaa657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
