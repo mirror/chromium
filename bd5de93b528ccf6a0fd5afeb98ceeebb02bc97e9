@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab228c5e_40f697ac",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T02:15:21Z",
+      "side": 1,
+      "message": "This was just for debugging (I\u0027ve removed the STREQ)",
+      "parentUuid": "e5aebed4_1df3d845",
+      "revId": "bd5de93b528ccf6a0fd5afeb98ceeebb02bc97e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec382ff2_cd3ca800",
         "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
         "patchSetId": 1
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "3513c2ea_ea5a08c5",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T02:15:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b9b36131_78e852c3",
+      "range": {
+        "startLine": 350,
+        "startChar": 2,
+        "endLine": 350,
+        "endChar": 23
+      },
+      "revId": "bd5de93b528ccf6a0fd5afeb98ceeebb02bc97e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cba72ed_90fb0ba9",
         "filename": "third_party/WebKit/Source/core/testing/data/mhtml/xslt.mht",
         "patchSetId": 1
@@ -98,6 +140,24 @@
       "revId": "bd5de93b528ccf6a0fd5afeb98ceeebb02bc97e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61fbb505_d9459b9a",
+        "filename": "third_party/WebKit/Source/core/testing/data/mhtml/xslt.mht",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T02:15:21Z",
+      "side": 1,
+      "message": "Yep, elawrence pointed this out in chat as well--and I confirmed that it fixed the test.",
+      "parentUuid": "a2d23e7f_df710217",
+      "revId": "bd5de93b528ccf6a0fd5afeb98ceeebb02bc97e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
