@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "beda7b18_dc74eb6a",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-08T03:37:55Z",
+      "side": 1,
+      "message": "oh, I didn\u0027t realize this was an animation when I commented earlier. Perhaps what you want is to set the final bounds on the widget and add a translation to the layer (which is animated).",
+      "parentUuid": "9001cc93_bc476420",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 51
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8937cadf_46caaca0",
         "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
         "patchSetId": 15
@@ -199,6 +223,30 @@
       "side": 1,
       "message": "It is just the widget of BrowserView.\n\nThis doesn\u0027t seem to work on Mac though... Mac uses ExclusiveAccessController instead of BrowserView. It has a NativeView but calling GetWidgetForNativeView on it will always return nullptr. Looks like I\u0027ll need to pass in gfx::NativeView instead of views::Widget and pass in the parent bounds on screen separately...",
       "parentUuid": "a48e57cf_b1572846",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 55
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a74aa92_98301446",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-08T03:37:55Z",
+      "side": 1,
+      "message": "it might be easier not to add a new widget but just to add a view to an existing hierarchy. It\u0027s hard to tell what\u0027s going on here because the code you\u0027re adding isn\u0027t exercised afaict.",
+      "parentUuid": "97e2c9bb_b93b5cd3",
       "range": {
         "startLine": 99,
         "startChar": 2,
