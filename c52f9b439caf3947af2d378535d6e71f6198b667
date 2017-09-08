@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "82d3aa0d_e6c1eef2",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-08T00:32:06Z",
+      "side": 1,
+      "message": "We rarely expect to need both sensors active at the same time and having both active doubles the amount of work the browser process is doing so I think that we want to put the effort into avoiding that situation.",
+      "parentUuid": "7ddd2a19_482bc52f",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 47
+      },
+      "revId": "c52f9b439caf3947af2d378535d6e71f6198b667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "510f0fd9_37bd00bb",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
         "patchSetId": 2
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "There are two [alpha, beta, gamma] in the spec:\nhttps://w3c.github.io/deviceorientation/spec-source-orientation.html\nOne is in DeviceMotionEvent\u0027s DeviceRotationRate, which we found other implementations also followed Chrome\u0027s lead on this error:\nx: alpha\ny: beta\nz: gamma\n\nThe other one is in DeviceOrientationEvent. The Chrome implementation follows the spec which is:\nx: beta\ny: gamma\nz: alpha\nhttps://cs.chromium.org/chromium/src/device/sensors/android/java/src/org/chromium/device/sensors/DeviceSensors.java?l\u003d339-421\n\nSo I don\u0027t think this changes the behavior of this API.",
       "parentUuid": "510f0fd9_37bd00bb",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 75
+      },
+      "revId": "c52f9b439caf3947af2d378535d6e71f6198b667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82867ebe_2485410a",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-08T00:32:06Z",
+      "side": 1,
+      "message": "You\u0027re right. My mistake.",
+      "parentUuid": "e142256b_29472fb1",
       "range": {
         "startLine": 148,
         "startChar": 0,
