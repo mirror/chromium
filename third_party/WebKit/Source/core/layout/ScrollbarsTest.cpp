@@ -3,7 +3,9 @@
 // found in the LICENSE file.
 
 #include "build/build_config.h"
+#include "core/frame/FrameTestHelpers.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/frame/VisualViewport.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutView.h"
@@ -50,6 +52,78 @@ TEST_F(ScrollbarsTest, DocumentStyleRecalcPreservesScrollbars) {
 
   Compositor().BeginFrame();
   ASSERT_TRUE(plsa->VerticalScrollbar() && plsa->HorizontalScrollbar());
+}
+
+class ScrollbarsWebViewClient : public FrameTestHelpers::TestWebViewClient {
+ public:
+  WebScreenInfo GetScreenInfo() override {
+    WebScreenInfo screeninfo = WebScreenInfo();
+    screeninfo.device_scale_factor = device_scale_factor_;
+    return screeninfo;
+  }
+  void set_device_scale_factor(float device_scale_factor) {
+    device_scale_factor_ = device_scale_factor;
+  }
+
+ private:
+  float device_scale_factor_;
+};
+
+TEST_F(ScrollbarsTest, ScrollbarSizeForUseZoomDSF) {
+  ScrollbarsWebViewClient client;
+  client.set_device_scale_factor(1.f);
+
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  WebViewImpl* web_view_impl =
+      web_view_helper.Initialize(nullptr, &client, nullptr, nullptr);
+
+  web_view_impl->Resize(IntSize(800, 600));
+
+  WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
+  FrameTestHelpers::LoadHTMLString(web_view_impl->MainFrameImpl(),
+                                   "<!DOCTYPE html>"
+                                   "<style>"
+                                   "  body {"
+                                   "    width: 1600px;"
+                                   "    height: 1200px;"
+                                   "  }"
+                                   "</style>"
+                                   "<body>"
+                                   "</body>",
+                                   base_url);
+  web_view_impl->UpdateAllLifecyclePhases();
+
+  Document* document =
+      ToLocalFrame(web_view_impl->GetPage()->MainFrame())->GetDocument();
+
+  VisualViewport& visual_viewport = document->GetPage()->GetVisualViewport();
+  int horizontal_scrollbar = clampTo<int>(std::floor(
+      visual_viewport.LayerForHorizontalScrollbar()->Size().Height()));
+  int vertical_scrollbar = clampTo<int>(
+      std::floor(visual_viewport.LayerForVerticalScrollbar()->Size().Width()));
+
+  const float device_scale = 3.5f;
+  client.set_device_scale_factor(device_scale);
+  web_view_impl->Resize(IntSize(400, 300));
+
+  EXPECT_EQ(
+      clampTo<int>(std::floor(horizontal_scrollbar * device_scale)),
+      clampTo<int>(std::floor(
+          visual_viewport.LayerForHorizontalScrollbar()->Size().Height())));
+  EXPECT_EQ(clampTo<int>(std::floor(vertical_scrollbar * device_scale)),
+            clampTo<int>(std::floor(
+                visual_viewport.LayerForVerticalScrollbar()->Size().Width())));
+
+  client.set_device_scale_factor(1.f);
+  web_view_impl->Resize(IntSize(800, 600));
+
+  EXPECT_EQ(
+      horizontal_scrollbar,
+      clampTo<int>(std::floor(
+          visual_viewport.LayerForHorizontalScrollbar()->Size().Height())));
+  EXPECT_EQ(vertical_scrollbar,
+            clampTo<int>(std::floor(
+                visual_viewport.LayerForVerticalScrollbar()->Size().Width())));
 }
 
 // Ensure that causing a change in scrollbar existence causes a nested layout

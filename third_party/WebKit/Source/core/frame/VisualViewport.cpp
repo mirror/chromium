@@ -55,6 +55,7 @@
 #include "platform/scroll/Scrollbar.h"
 #include "platform/scroll/ScrollbarThemeOverlay.h"
 #include "public/platform/WebCompositorSupport.h"
+#include "public/platform/WebScreenInfo.h"
 #include "public/platform/WebScrollbar.h"
 #include "public/platform/WebScrollbarLayer.h"
 
@@ -449,6 +450,16 @@ void VisualViewport::SetupScrollbar(WebScrollbar::Orientation orientation) {
   int thumb_thickness = theme.ThumbThickness();
   int scrollbar_thickness = theme.ScrollbarThickness(kRegularScrollbar);
   int scrollbar_margin = theme.ScrollbarMargin();
+  LocalFrame* frame = MainFrame();
+  if (frame && GetPage().DeviceScaleFactorDeprecated() == 1.f) {
+    float device_scale =
+        GetPage().GetChromeClient().GetScreenInfo().device_scale_factor;
+    thumb_thickness = clampTo<int>(std::floor(thumb_thickness * device_scale));
+    scrollbar_thickness =
+        clampTo<int>(std::floor(scrollbar_thickness * device_scale));
+    scrollbar_margin =
+        clampTo<int>(std::floor(scrollbar_margin * device_scale));
+  }
 
   if (!web_scrollbar_layer) {
     ScrollingCoordinator* coordinator = GetPage().GetScrollingCoordinator();
