@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "68e59f72_ca674c2f",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-09-08T23:52:14Z",
+      "side": 1,
+      "message": "So if we do it at the JS level, I\u0027m not sure how we can make sure all responses are consumed if I don\u0027t have a reference to fake_characteristic by the time the responses are consumed...",
+      "parentUuid": "21552e62_a2bb35e4",
+      "revId": "7d55af3e28ff6b9b41dd95aef1123799b1f534ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5f7fe5e_82b3e0bd",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
         "patchSetId": 1
