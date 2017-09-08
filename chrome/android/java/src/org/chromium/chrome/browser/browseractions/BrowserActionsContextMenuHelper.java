@@ -10,6 +10,7 @@ import android.app.PendingIntent.CanceledException;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.IntDef;
 import android.support.customtabs.browseractions.BrowserActionItem;
 import android.support.customtabs.browseractions.BrowserActionsIntent;
 import android.support.customtabs.browseractions.BrowserActionsIntent.BrowserActionsItemId;
@@ -34,6 +35,8 @@ import org.chromium.chrome.browser.contextmenu.ShareContextMenuItem;
 import org.chromium.chrome.browser.contextmenu.TabularContextMenuUi;
 import org.chromium.ui.base.WindowAndroid.OnCloseContextMenuListener;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -54,6 +57,9 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
 
         /** Called when Browser Actions start opening a tab in background */
         void onOpenTabInBackgroundStart();
+
+        /** Called when Browser Actions start downloading a url */
+        void onDownloadStart();
 
         /** Initializes data needed for testing. */
         void initialize(BrowserActionsContextMenuItemDelegate delegate,
@@ -91,8 +97,15 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
 
     private final ProgressDialog mProgressDialog;
 
+    @IntDef({ITEM_NONE, ITEM_OPEN_IN_BACKGROUND, ITEM_DOWNLOAD})
+    @Retention(RetentionPolicy.SOURCE)
+    private @interface PendingNativeInitItemId {}
+    private static final int ITEM_NONE = -1;
+    private static final int ITEM_OPEN_IN_BACKGROUND = 0;
+    private static final int ITEM_DOWNLOAD = 1;
+
     private BrowserActionsTestDelegate mTestDelegate;
-    private boolean mIsOpenInBackgroundPending;
+    @PendingNativeInitItemId private int mPendingItemId;
     private boolean mIsNativeInitialized;
 
     public BrowserActionsContextMenuHelper(Activity activity, ContextMenuParams params,
@@ -101,6 +114,7 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
         mActivity = activity;
         mCurrentContextMenuParams = params;
         mOnMenuShownListener = listener;
+        mPendingItemId = ITEM_NONE;
         mOnMenuShown = new Runnable() {
             @Override
             public void run() {
@@ -113,7 +127,7 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
         mOnMenuClosed = new Runnable() {
             @Override
             public void run() {
-                if (!mIsOpenInBackgroundPending) {
+                if (mPendingItemId == ITEM_NONE) {
                     mActivity.finish();
                 }
             }
@@ -189,15 +203,19 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
             if (mIsNativeInitialized) {
                 handleOpenInBackground();
             } else {
-                mIsOpenInBackgroundPending = true;
+                mPendingItemId = ITEM_OPEN_IN_BACKGROUND;
                 waitNativeInitialized();
             }
         } else if (itemId == R.id.browser_actions_open_in_incognito_tab) {
             mMenuItemDelegate.onOpenInIncognitoTab(mCurrentContextMenuParams.getLinkUrl());
             notifyBrowserActionSelected(BrowserActionsIntent.ITEM_OPEN_IN_INCOGNITO);
         } else if (itemId == R.id.browser_actions_save_link_as) {
-            mMenuItemDelegate.startDownload(mCurrentContextMenuParams.getLinkUrl());
-            notifyBrowserActionSelected(BrowserActionsIntent.ITEM_DOWNLOAD);
+            if (mIsNativeInitialized) {
+                handleDownload();
+            } else {
+                mPendingItemId = ITEM_DOWNLOAD;
+                waitNativeInitialized();
+            }
         } else if (itemId == R.id.browser_actions_copy_address) {
             mMenuItemDelegate.onSaveToClipboard(mCurrentContextMenuParams.getLinkUrl());
             notifyBrowserActionSelected(BrowserActionsIntent.ITEM_COPY);
@@ -282,10 +300,14 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
         if (mTestDelegate != null) {
             mTestDelegate.onFinishNativeInitialization();
         }
-        if (mIsOpenInBackgroundPending) {
-            mIsOpenInBackgroundPending = false;
+        if (mPendingItemId != ITEM_NONE) {
             dismissProgressDialog();
-            handleOpenInBackground();
+            if (mPendingItemId == ITEM_OPEN_IN_BACKGROUND) {
+                handleOpenInBackground();
+            } else {
+                handleDownload();
+            }
+            mPendingItemId = ITEM_NONE;
             mActivity.finish();
         }
     }
@@ -296,5 +318,13 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
             mTestDelegate.onOpenTabInBackgroundStart();
         }
         notifyBrowserActionSelected(BrowserActionsIntent.ITEM_OPEN_IN_NEW_TAB);
+    }
+
+    private void handleDownload() {
+        mMenuItemDelegate.startDownload(mCurrentContextMenuParams.getLinkUrl());
+        if (mTestDelegate != null) {
+            mTestDelegate.onDownloadStart();
+        }
+        notifyBrowserActionSelected(BrowserActionsIntent.ITEM_DOWNLOAD);
     }
 }
