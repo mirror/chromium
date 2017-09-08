@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "74cf6673_0ebfc4a5",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1147615
+      },
+      "writtenOn": "2017-09-08T20:17:04Z",
+      "side": 1,
+      "message": "Not sure if this is what you meant, please check this.",
+      "parentUuid": "12c090a7_bc5633e0",
+      "range": {
+        "startLine": 55,
+        "startChar": 34,
+        "endLine": 55,
+        "endChar": 51
+      },
+      "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbfd2683_ae712b08",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
         "patchSetId": 1
@@ -56,6 +80,24 @@
       "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbe5be9_896f504f",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1147615
+      },
+      "writtenOn": "2017-09-08T20:17:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbfd2683_ae712b08",
+      "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "8fc3cab2_bdac7682",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1147615
+      },
+      "writtenOn": "2017-09-08T20:17:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48d42c95_5788cae5",
+      "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a9b07d9_b75586b9",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
         "patchSetId": 1
@@ -90,6 +150,24 @@
       "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83496660_78a7b9b6",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1147615
+      },
+      "writtenOn": "2017-09-08T20:17:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a9b07d9_b75586b9",
+      "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +200,24 @@
       "side": 1,
       "message": "I mean, return true;",
       "parentUuid": "29f206a3_f3a5130a",
+      "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef8b526_56fa710a",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1147615
+      },
+      "writtenOn": "2017-09-08T20:17:04Z",
+      "side": 1,
+      "message": "I prepared a new version, tried to optimize it as much as possible",
+      "parentUuid": "e01a7f59_eea0c471",
       "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
