@@ -15,6 +15,8 @@ namespace blink {
 // featurePolicyExperimentalFeatures flag, see getWebFeaturePolicyFeature().
 enum class WebFeaturePolicyFeature {
   kNotFound = 0,
+  // Controls access to the Web Bluetooth API.
+  kBluetooth,
   // Controls access to video input devices.
   kCamera,
   // Controls whether navigator.requestMediaKeySystemAccess is allowed.
