@@ -80,6 +80,7 @@ BaseBlockingPage::CreateDefaultDisplayOptions(
       false,                 // is_scout
       false,                 // kSafeBrowsingProceedAnywayDisabled
       false,                 // should_open_links_in_new_tab
+      true,                  // show_back_to_safety_button
       "cpn_safe_browsing");  // help_center_article_link
 }
 
