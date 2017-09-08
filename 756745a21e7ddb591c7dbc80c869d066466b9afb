@@ -140,6 +140,24 @@
       "revId": "756745a21e7ddb591c7dbc80c869d066466b9afb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471c304c_52bc1cbb",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-08T01:18:05Z",
+      "side": 1,
+      "message": "contrib/large_inffast in addition to or instead of contrib/inffast64??\n\nBut as discussed at https://bugs.chromium.org/p/chromium/issues/detail?id\u003d760853#c25, applying the techniques in this CL would probably have smaller impact on 32-bit systems, simply because 4 is less than 8.\n\nOn mobile, I don\u0027t think 32-bit ARM does unaligned loads, or at least not every 32-bit ARM does, so I don\u0027t think it\u0027s worth trying there.\n\nOn desktop, as I said in this comment thread, there\u0027s 32-bit x86, which is only getting less and less common over time, and... not much else?\n\nAre there any other non-64-bit archs that we care about? As said earlier, Chrome is not a research project. What practical benefit would contrib/large_inffast have over contrib/inffast64?",
+      "parentUuid": "efac12cd_4d6e1685",
+      "revId": "756745a21e7ddb591c7dbc80c869d066466b9afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
