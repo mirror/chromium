@@ -198,6 +198,24 @@
     },
     {
       "key": {
+        "uuid": "db479549_baf50402",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T22:56:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f95db163_cbb100ee",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7031d2b6_843eb82d",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
         "patchSetId": 27
@@ -245,6 +263,24 @@
       "side": 1,
       "message": "Does that implies the hit-testing code already tested again fragment clip and converted the visual coordination to logical coordination of the flow thread? It looks weird that fragment_data was passed but unused.",
       "parentUuid": "18e860cc_6efa1ac1",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "328b4747_592e5113",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T22:56:59Z",
+      "side": 1,
+      "message": "Now passing null and DCHECK\u0027ing.",
+      "parentUuid": "50dd5318_5885c2c5",
       "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
