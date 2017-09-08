@@ -4916,6 +4916,20 @@
                     { "name": "origin", "type": "string", "description": "Security origin." }
                 ],
                 "description": "Unregisters origin from receiving notifications for cache storage."
+            },
+            {
+                "name": "trackIndexedDBForOrigin",
+                "parameters": [
+                    { "name": "origin", "type": "string", "description": "Security origin." }
+                ],
+                "description": "Registers origin to be notified when an update occurs to its IndexedDB."
+            },
+            {
+                "name": "untrackIndexedDBForOrigin",
+                "parameters": [
+                    { "name": "origin", "type": "string", "description": "Security origin." }
+                ],
+                "description": "Unregisters origin from receiving notifications for IndexedDB."
             }
         ],
         "events": [
@@ -4933,6 +4947,13 @@
                     { "name": "cacheName", "type": "string", "description": "Name of cache in origin." }
                 ],
                 "description": "A cache's contents have been modified."
+            },
+            {
+                "name": "indexedDBUpdated",
+                "parameters": [
+                    { "name": "origin", "type": "string", "description": "Origin to update." }
+                ],
+                "description": "The origin's IndexedDB has been modified."
             }
         ]
     },

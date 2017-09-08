@@ -29,6 +29,7 @@
  */
 
 /**
+ * @implements {Protocol.StorageDispatcher}
  * @unrestricted
  */
 Resources.IndexedDBModel = class extends SDK.SDKModel {
@@ -37,13 +38,18 @@ Resources.IndexedDBModel = class extends SDK.SDKModel {
    */
   constructor(target) {
     super(target);
+    target.registerStorageDispatcher(this);
     this._securityOriginManager = target.model(SDK.SecurityOriginManager);
-    this._agent = target.indexedDBAgent();
+    this._indexedDBAgent = target.indexedDBAgent();
+    this._storageAgent = target.storageAgent();
 
     /** @type {!Map.<!Resources.IndexedDBModel.DatabaseId, !Resources.IndexedDBModel.Database>} */
     this._databases = new Map();
     /** @type {!Object.<string, !Array.<string>>} */
     this._databaseNamesBySecurityOrigin = {};
+
+    this._originsUpdated = new Set();
+    this._throttler = new Common.Throttler(1000);
   }
 
   /**
@@ -142,9 +148,11 @@ Resources.IndexedDBModel = class extends SDK.SDKModel {
     if (this._enabled)
       return;
 
-    this._agent.enable();
+    this._indexedDBAgent.enable();
     this._securityOriginManager.addEventListener(
         SDK.SecurityOriginManager.Events.SecurityOriginAdded, this._securityOriginAdded, this);
+    this._securityOriginManager.addEventListener(
+        SDK.SecurityOriginManager.Events.SecurityOriginRemoved, this._securityOriginRemoved, this);
     this._securityOriginManager.addEventListener(
         SDK.SecurityOriginManager.Events.SecurityOriginRemoved, this._securityOriginRemoved, this);
 
@@ -171,7 +179,7 @@ Resources.IndexedDBModel = class extends SDK.SDKModel {
   async deleteDatabase(databaseId) {
     if (!this._enabled)
       return;
-    await this._agent.deleteDatabase(databaseId.securityOrigin, databaseId.name);
+    await this._indexedDBAgent.deleteDatabase(databaseId.securityOrigin, databaseId.name);
     this._loadDatabaseNames(databaseId.securityOrigin);
   }
 
@@ -194,7 +202,7 @@ Resources.IndexedDBModel = class extends SDK.SDKModel {
    * @return {!Promise}
    */
   clearObjectStore(databaseId, objectStoreName) {
-    return this._agent.clearObjectStore(databaseId.securityOrigin, databaseId.name, objectStoreName);
+    return this._indexedDBAgent.clearObjectStore(databaseId.securityOrigin, databaseId.name, objectStoreName);
   }
 
   /**
@@ -220,6 +228,7 @@ Resources.IndexedDBModel = class extends SDK.SDKModel {
     console.assert(!this._databaseNamesBySecurityOrigin[securityOrigin]);
     this._databaseNamesBySecurityOrigin[securityOrigin] = [];
     this._loadDatabaseNames(securityOrigin);
+    this._storageAgent.trackIndexedDBForOrigin(securityOrigin);
   }
 
   /**
@@ -230,6 +239,7 @@ Resources.IndexedDBModel = class extends SDK.SDKModel {
     for (var i = 0; i < this._databaseNamesBySecurityOrigin[securityOrigin].length; ++i)
       this._databaseRemoved(securityOrigin, this._databaseNamesBySecurityOrigin[securityOrigin][i]);
     delete this._databaseNamesBySecurityOrigin[securityOrigin];
+    this._storageAgent.untrackIndexedDBForOrigin(securityOrigin);
   }
 
   /**
@@ -288,7 +298,7 @@ Resources.IndexedDBModel = class extends SDK.SDKModel {
    * @param {string} securityOrigin
    */
   async _loadDatabaseNames(securityOrigin) {
-    var databaseNames = await this._agent.requestDatabaseNames(securityOrigin);
+    var databaseNames = await this._indexedDBAgent.requestDatabaseNames(securityOrigin);
     if (!databaseNames)
       return;
     if (!this._databaseNamesBySecurityOrigin[securityOrigin])
@@ -300,7 +310,8 @@ Resources.IndexedDBModel = class extends SDK.SDKModel {
    * @param {!Resources.IndexedDBModel.DatabaseId} databaseId
    */
   async _loadDatabase(databaseId) {
-    var databaseWithObjectStores = await this._agent.requestDatabase(databaseId.securityOrigin, databaseId.name);
+    var databaseWithObjectStores =
+        await this._indexedDBAgent.requestDatabase(databaseId.securityOrigin, databaseId.name);
 
     if (!databaseWithObjectStores)
       return;
@@ -366,7 +377,7 @@ Resources.IndexedDBModel = class extends SDK.SDKModel {
   async _requestData(databaseId, databaseName, objectStoreName, indexName, idbKeyRange, skipCount, pageSize, callback) {
     var keyRange = Resources.IndexedDBModel.keyRangeFromIDBKeyRange(idbKeyRange) || undefined;
 
-    var response = await this._agent.invoke_requestData({
+    var response = await this._indexedDBAgent.invoke_requestData({
       securityOrigin: databaseId.securityOrigin,
       databaseName,
       objectStoreName,
@@ -394,6 +405,37 @@ Resources.IndexedDBModel = class extends SDK.SDKModel {
     }
     callback(entries, response.hasMore);
   }
+
+  /**
+   * @param {string} origin
+   * @override
+   */
+  indexedDBUpdated(origin) {
+    this._originsUpdated.add(origin);
+
+    this._throttler.schedule(() => {
+      var promises = Array.from(this._originsUpdated, origin => {
+        this._loadDatabaseNames(origin);
+        this.dispatchEventToListeners(Resources.IndexedDBModel.Events.IndexedDBUpdated, {origin: origin});
+      });
+      this._originsUpdated.clear();
+      return Promise.all(promises);
+    });
+  }
+
+  /**
+   * @param {string} origin
+   * @override
+   */
+  cacheStorageListUpdated(origin) {
+  }
+
+  /**
+   * @param {string} origin
+   * @override
+   */
+  cacheStorageContentUpdated(origin) {
+  }
 };
 
 SDK.SDKModel.register(Resources.IndexedDBModel, SDK.Target.Capability.None, false);
@@ -416,7 +458,8 @@ Resources.IndexedDBModel.Events = {
   DatabaseAdded: Symbol('DatabaseAdded'),
   DatabaseRemoved: Symbol('DatabaseRemoved'),
   DatabaseLoaded: Symbol('DatabaseLoaded'),
-  DatabaseNamesRefreshed: Symbol('DatabaseNamesRefreshed')
+  DatabaseNamesRefreshed: Symbol('DatabaseNamesRefreshed'),
+  IndexedDBUpdated: Symbol('IndexedDBUpdated')
 };
 
 /**

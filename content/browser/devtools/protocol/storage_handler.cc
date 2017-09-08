@@ -12,6 +12,7 @@
 #include "base/strings/string_split.h"
 #include "content/browser/cache_storage/cache_storage_context_impl.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
+#include "content/browser/indexed_db/indexed_db_context_impl.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/storage_partition.h"
 #include "storage/browser/quota/quota_client.h"
@@ -104,6 +105,10 @@ StorageHandler::~StorageHandler() {
     BrowserThread::DeleteSoon(BrowserThread::IO, FROM_HERE,
                               cache_storage_observer_.release());
   }
+  if (indexed_db_observer_) {
+    BrowserThread::DeleteSoon(BrowserThread::IO, FROM_HERE,
+                              indexed_db_observer_.release());
+  }
 }
 
 void StorageHandler::Wire(UberDispatcher* dispatcher) {
@@ -182,8 +187,8 @@ void StorageHandler::GetUsageAndQuota(
 // Observer that listens on the IO thread for cache storage notifications and
 // informs the StorageHandler on the UI for origins of interest.
 // Created on the UI thread but predominantly used and deleted on the IO thread.
-// Registered on creation as an observer in CacheStorageContext, unregistered on
-// destruction
+// Registered on creation as an observer in CacheStorageContextImpl,
+// unregistered on destruction.
 class StorageHandler::CacheStorageObserver : CacheStorageContextImpl::Observer {
  public:
   CacheStorageObserver(base::WeakPtr<StorageHandler> owner_storage_handler,
@@ -248,6 +253,64 @@ class StorageHandler::CacheStorageObserver : CacheStorageContextImpl::Observer {
   DISALLOW_COPY_AND_ASSIGN(CacheStorageObserver);
 };
 
+// Observer that listens on the IO thread for IndexedDB notifications and
+// informs the StorageHandler on the UI for origins of interest.
+// Created on the UI thread but predominantly used and deleted on the IO thread.
+// Registered on creation as an observer in IndexedDBContextImpl, unregistered
+// on destruction.
+class StorageHandler::IndexedDBObserver : IndexedDBContextImpl::Observer {
+ public:
+  IndexedDBObserver(base::WeakPtr<StorageHandler> owner_storage_handler,
+                    IndexedDBContextImpl* indexed_db_context)
+      : owner_(owner_storage_handler), context_(indexed_db_context) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&IndexedDBObserver::AddObserverOnIOThread,
+                       base::Unretained(this)));
+  }
+
+  ~IndexedDBObserver() override {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    context_->RemoveObserver(this);
+  }
+
+  void TrackOriginOnIOThread(const url::Origin& origin) {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    if (origins_.find(origin) != origins_.end())
+      return;
+    origins_.insert(origin);
+  }
+
+  void UntrackOriginOnIOThread(const url::Origin& origin) {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    origins_.erase(origin);
+  }
+
+  void OnIndexedDBChanged(const url::Origin& origin) override {
+    auto found = origins_.find(origin);
+    if (found == origins_.end())
+      return;
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&StorageHandler::NotifyIndexedDBChanged, owner_,
+                       origin.Serialize()));
+  }
+
+ private:
+  void AddObserverOnIOThread() {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    context_->AddObserver(this);
+  }
+
+  // Maintained on the IO thread to avoid mutex contention.
+  base::flat_set<url::Origin> origins_;
+
+  base::WeakPtr<StorageHandler> owner_;
+  scoped_refptr<IndexedDBContextImpl> context_;
+
+  DISALLOW_COPY_AND_ASSIGN(IndexedDBObserver);
+};
+
 Response StorageHandler::TrackCacheStorageForOrigin(const std::string& origin) {
   if (!host_)
     return Response::InternalError();
@@ -281,6 +344,38 @@ Response StorageHandler::UntrackCacheStorageForOrigin(
   return Response::OK();
 }
 
+Response StorageHandler::TrackIndexedDBForOrigin(const std::string& origin) {
+  if (!host_)
+    return Response::InternalError();
+
+  GURL origin_url(origin);
+  if (!origin_url.is_valid())
+    return Response::InvalidParams(origin + " is not a valid URL");
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&IndexedDBObserver::TrackOriginOnIOThread,
+                     base::Unretained(GetIndexedDBObserver()),
+                     url::Origin(origin_url)));
+  return Response::OK();
+}
+
+Response StorageHandler::UntrackIndexedDBForOrigin(const std::string& origin) {
+  if (!host_)
+    return Response::InternalError();
+
+  GURL origin_url(origin);
+  if (!origin_url.is_valid())
+    return Response::InvalidParams(origin + " is not a valid URL");
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&IndexedDBObserver::UntrackOriginOnIOThread,
+                     base::Unretained(GetIndexedDBObserver()),
+                     url::Origin(origin_url)));
+  return Response::OK();
+}
+
 StorageHandler::CacheStorageObserver*
 StorageHandler::GetCacheStorageObserver() {
   if (cache_storage_observer_ == nullptr) {
@@ -293,6 +388,16 @@ StorageHandler::GetCacheStorageObserver() {
   return cache_storage_observer_.get();
 }
 
+StorageHandler::IndexedDBObserver* StorageHandler::GetIndexedDBObserver() {
+  if (indexed_db_observer_ == nullptr) {
+    indexed_db_observer_ = base::MakeUnique<IndexedDBObserver>(
+        weak_ptr_factory_.GetWeakPtr(),
+        static_cast<IndexedDBContextImpl*>(
+            host_->GetProcess()->GetStoragePartition()->GetIndexedDBContext()));
+  }
+  return indexed_db_observer_.get();
+}
+
 void StorageHandler::NotifyCacheStorageListChanged(const std::string& origin) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   frontend_->CacheStorageListUpdated(origin);
@@ -302,6 +407,11 @@ void StorageHandler::NotifyCacheStorageContentChanged(const std::string& origin,
                                                       const std::string& name) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   frontend_->CacheStorageContentUpdated(origin, name);
+}
+
+void StorageHandler::NotifyIndexedDBChanged(const std::string& origin) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  frontend_->IndexedDBUpdated(origin);
 }
 
 }  // namespace protocol
