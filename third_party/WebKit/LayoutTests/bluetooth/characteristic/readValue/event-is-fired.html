@@ -6,19 +6,21 @@
 <script src="../../../resources/mojo-helpers.js"></script>
 <script>
 'use strict';
-promise_test(() => {
-  return getMeasurementIntervalCharacteristic()
-    .then(({characteristic, fake_characteristic}) => {
-      return fake_characteristic.setNextReadResponse(GATT_SUCCESS, [0, 1, 2])
-        .then(() => assert_promise_resolves_after_event(
-          characteristic,
-          'readValue',
-          'characteristicvaluechanged'));
-    }).then(results => {
-      let read_value = new Uint8Array(results[0].buffer);
-      let event_value = new Uint8Array(results[1].buffer);
-      assert_equals(event_value.buffer, read_value.buffer);
-      assert_array_equals(event_value, read_value);
-    });
-}, 'Reading a characteristic should fire an event.');
+const test_desc = 'Reading a characteristic should fire an event.';
+let characteristic, fake_characteristic;
+promise_test(() => getMeasurementIntervalCharacteristic()
+  .then(_ => ({characteristic, fake_characteristic} = _))
+  .then(() => fake_characteristic.setNextReadResponse(GATT_SUCCESS, [0, 1, 2]))
+  .then(() => assert_promise_resolves_after_event(
+    characteristic,
+   'readValue',
+   'characteristicvaluechanged'))
+  .then(results => {
+    let read_value = new Uint8Array(results[0].buffer);
+    let event_value = new Uint8Array(results[1].buffer);
+    assert_equals(event_value.buffer, read_value.buffer);
+    assert_array_equals(event_value, read_value);
+  })
+  .then(() => navigator.bluetooth.test.allResponsesConsumed())
+  .then(consumed => assert_true(consumed)), test_desc);
 </script>
