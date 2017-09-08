@@ -37,6 +37,20 @@
 #include "third_party/skia/include/core/SkImage.h"
 
 namespace blink {
+namespace {
+
+float FrameDurationInSeconds(const ImageDecoder* decoder, size_t index) {
+  // Many annoying ads specify a 0 duration to make an image flash as quickly as
+  // possible. We follow Firefox's behavior and use a duration of 100 ms for any
+  // frames that specify a duration of <= 10 ms. See <rdar://problem/7689300>
+  // and <http://webkit.org/b/36082> for more information.
+  const float duration = decoder->FrameDurationAtIndex(index) / 1000.0f;
+  if (duration < 0.011f)
+    return 0.100f;
+  return duration;
+}
+
+}  // namespace
 
 struct DeferredFrameData {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
@@ -122,7 +136,7 @@ sk_sp<PaintImageGenerator> DeferredImageDecoder::CreateGenerator(size_t index) {
   for (size_t i = 0; i < frame_data_.size(); ++i) {
     frames[i].complete = frame_data_[i].is_received_;
     frames[i].duration =
-        base::TimeDelta::FromMillisecondsD(frame_data_[i].duration_);
+        base::TimeDelta::FromSecondsD(frame_data_[i].duration_);
   }
 
   auto generator = DecodingImageGenerator::Create(
@@ -227,20 +241,12 @@ bool DeferredImageDecoder::FrameIsReceivedAtIndex(size_t index) const {
 }
 
 float DeferredImageDecoder::FrameDurationAtIndex(size_t index) const {
-  float duration_ms = 0.f;
   if (metadata_decoder_)
-    duration_ms = metadata_decoder_->FrameDurationAtIndex(index);
+    return FrameDurationInSeconds(metadata_decoder_.get(), index);
   if (index < frame_data_.size())
-    duration_ms = frame_data_[index].duration_;
+    return frame_data_[index].duration_;
 
-  // Many annoying ads specify a 0 duration to make an image flash as quickly as
-  // possible. We follow Firefox's behavior and use a duration of 100 ms for any
-  // frames that specify a duration of <= 10 ms. See <rdar://problem/7689300>
-  // and <http://webkit.org/b/36082> for more information.
-  const float duration_sec = duration_ms / 1000.f;
-  if (duration_sec < 0.011f)
-    return 0.100f;
-  return duration_sec;
+  return 0.f;
 }
 
 ImageOrientation DeferredImageDecoder::OrientationAtIndex(size_t index) const {
@@ -290,7 +296,8 @@ void DeferredImageDecoder::PrepareLazyDecodedFrames() {
     return;
 
   for (size_t i = previous_size; i < frame_data_.size(); ++i) {
-    frame_data_[i].duration_ = metadata_decoder_->FrameDurationAtIndex(i);
+    frame_data_[i].duration_ =
+        FrameDurationInSeconds(metadata_decoder_.get(), i);
     frame_data_[i].orientation_ = metadata_decoder_->Orientation();
     frame_data_[i].is_received_ = metadata_decoder_->FrameIsReceivedAtIndex(i);
   }
