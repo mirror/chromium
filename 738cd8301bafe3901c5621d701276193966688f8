@@ -16,6 +16,24 @@
       "revId": "738cd8301bafe3901c5621d701276193966688f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9c28d2_a670a653",
+        "filename": "components/suggestions/suggestions_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-08T10:18:14Z",
+      "side": 1,
+      "message": "You mean 1 hour vs 2 hours? No, that\u0027s correct, though very much not obvious. The code below computes a \"candidate delay\" as 2 * current_delay. If that\u0027s larger than the max, it just sticks with the existing delay. So with a limit of 2 hours, it\u0027s only guaranteed that the actual max delay will be larger than 1 hour.\n(FWIW, I\u0027m working on a followup to clean up this convoluted logic, but I wanted a minimally-intrusive mitigation first.)",
+      "parentUuid": "55e894d7_fb42c3c2",
+      "revId": "738cd8301bafe3901c5621d701276193966688f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
