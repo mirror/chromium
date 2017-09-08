@@ -16,6 +16,24 @@
       "revId": "f3f9b8370b3d4b0526e5f89981a407abc6d74b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ee0794_e8b7d448",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-08T05:04:37Z",
+      "side": 0,
+      "message": "+1. Theoretically, we could also check that origin is an _origin_, not an arbitrary url, but that\u0027s too much work for little impact.",
+      "parentUuid": "b852f5d5_b8b0d123",
+      "revId": "f3f9b8370b3d4b0526e5f89981a407abc6d74b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
