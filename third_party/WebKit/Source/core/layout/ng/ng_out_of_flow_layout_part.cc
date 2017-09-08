@@ -44,11 +44,11 @@ NGOutOfFlowLayoutPart::NGOutOfFlowLayoutPart(
   NGBoxStrut borders = ComputeBorders(container_space, container_style_);
   container_border_offset_ =
       NGLogicalOffset{borders.inline_start, borders.block_start};
+
+  NGPhysicalBoxStrut physical_borders =
+      borders.ConvertToPhysical(writing_mode, container_style_.Direction());
   container_border_physical_offset_ =
-      container_border_offset_.ConvertToPhysical(
-          writing_mode, container_style_.Direction(),
-          container_builder_->Size().ConvertToPhysical(writing_mode),
-          NGPhysicalSize());
+      NGPhysicalOffset(physical_borders.left, physical_borders.top);
 
   container_size_ = container_builder_->Size();
   container_size_.inline_size -= borders.InlineSum();
