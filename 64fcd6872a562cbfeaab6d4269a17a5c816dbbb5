@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0e94935_de4d1427",
+        "filename": "components/exo/test/run_all_unittests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-08T15:32:39Z",
+      "side": 0,
+      "message": "Is there a issue in running them in parallel?",
+      "revId": "64fcd6872a562cbfeaab6d4269a17a5c816dbbb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
