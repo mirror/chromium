@@ -22,6 +22,30 @@
       "revId": "7e8335e23784774c49e1d5055861788a266ef881",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "044045d5_07a26f74",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-08T02:42:50Z",
+      "side": 1,
+      "message": "size_t is unsigned and we need to perform subtraction on line 35. We could add an additional check that r \u003c\u003d size, but that adds another conditional. Given that this is on the fast path for allocations, I\u0027d prefer to not have that extra conditional.\n\nHow strongly do you feel about this?",
+      "parentUuid": "bc3d45b2_6ed0b1cf",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "7e8335e23784774c49e1d5055861788a266ef881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
