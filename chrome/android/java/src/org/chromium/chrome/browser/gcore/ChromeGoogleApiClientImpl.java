@@ -26,19 +26,16 @@ public class ChromeGoogleApiClientImpl implements ChromeGoogleApiClient {
     private final GoogleApiClient mClient;
 
     /**
+     * Callers should verify that first party Google Play Services can be used before using this
+     * class.
+     *
      * @param context its application context will be exposed through
      *            {@link #getApplicationContext()}.
      * @param client will be exposed through {@link #getApiClient()}.
-     * @param requireFirstPartyBuild true if the given client can only be used in a first-party
-     *            build.
      */
-    public ChromeGoogleApiClientImpl(Context context, GoogleApiClient client,
-            boolean requireFirstPartyBuild) {
+    public ChromeGoogleApiClientImpl(Context context, GoogleApiClient client) {
         mApplicationContext = context.getApplicationContext();
         mClient = client;
-        if (requireFirstPartyBuild && !ExternalAuthUtils.getInstance().isChromeGoogleSigned()) {
-            throw new IllegalStateException("GoogleApiClient requires first-party build");
-        }
     }
 
     @Override

@@ -28,6 +28,7 @@ import org.chromium.base.metrics.CachedMetrics.SparseHistogramSample;
 import org.chromium.base.metrics.CachedMetrics.TimesHistogramSample;
 import org.chromium.chrome.browser.AppHooks;
 
+import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -61,6 +62,7 @@ public class ExternalAuthUtils {
 
     /**
      * Gets the calling package names for the current transaction.
+     *
      * @param context The context to use for accessing the package manager.
      * @return The calling package names.
      */
@@ -72,6 +74,7 @@ public class ExternalAuthUtils {
 
     /**
      * Returns whether the caller application is a part of the system build.
+     *
      * @param pm Package manager to use for getting package related info.
      * @param packageName The package name to inquire about.
      */
@@ -95,6 +98,7 @@ public class ExternalAuthUtils {
 
     /**
      * Returns whether the current build of Chrome is a Google-signed package.
+     *
      * @return whether the currently running application is signed with Google keys.
      */
     public boolean isChromeGoogleSigned() {
@@ -104,6 +108,7 @@ public class ExternalAuthUtils {
 
     /**
      * Returns whether the call is originating from a Google-signed package.
+     *
      * @param packageName The package name to inquire about.
      */
     public boolean isGoogleSigned(String packageName) {
@@ -114,6 +119,7 @@ public class ExternalAuthUtils {
     /**
      * Returns whether the callers of the current transaction contains a package that matches
      * the give authentication requirements.
+     *
      * @param context The context to use for getting package information.
      * @param authRequirements The requirements to be exercised on the caller.
      * @param packageToMatch The package name to compare with the caller.
@@ -141,6 +147,7 @@ public class ExternalAuthUtils {
     /**
      * Returns whether the callers of the current transaction contains a package that matches
      * the give authentication requirements.
+     *
      * @param context The context to use for getting package information.
      * @param authRequirements The requirements to be exercised on the caller.
      * @param packageToMatch The package name to compare with the caller. Should be non-empty.
@@ -156,6 +163,7 @@ public class ExternalAuthUtils {
     /**
      * Returns whether the callers of the current transaction matches the given authentication
      * requirements.
+     *
      * @param context The context to use for getting package information.
      * @param authRequirements The requirements to be exercised on the caller.
      * @return Whether the caller meets the authentication requirements.
@@ -166,9 +174,9 @@ public class ExternalAuthUtils {
 
     /**
      * @return Whether the current device lacks proper Google Play Services. This will return true
-     *         if the service is not authentic or it is totally missing. Return false otherwise.
-     *         Note this method returns false if the service is only temporarily disabled, such as
-     *         when it is updating.
+     * if the service is not authentic or it is totally missing. Return false otherwise.
+     * Note this method returns false if the service is only temporarily disabled, such as
+     * when it is updating.
      */
     public boolean isGooglePlayServicesMissing(final Context context) {
         final int resultCode = checkGooglePlayServicesAvailable(context);
@@ -187,6 +195,7 @@ public class ExternalAuthUtils {
      * helper methods {@link #checkGooglePlayServicesAvailable(Context)},
      * {@link #describeError(int)}, and {@link #isUserRecoverableError(int)} instead, which are
      * called in that order (as necessary) by this method.
+     *
      * @param context The current context.
      * @param errorHandler How to handle user-recoverable errors; must be non-null.
      * @return true if and only if Google Play Services can be used
@@ -224,6 +233,7 @@ public class ExternalAuthUtils {
      * Play Services provides "canned" ways to deal with failures; there is no special handling of
      * the case where the Google Play Services check succeeds and the Google-signed package check
      * fails (the method will simply return false).
+     *
      * @param context The current context.
      * @param userRecoverableErrorHandler How to handle user-recoverable errors from Google
      * Play Services; must be non-null.
@@ -239,32 +249,24 @@ public class ExternalAuthUtils {
     /**
      * Same as {@link #canUseFirstPartyGooglePlayServices(Context, UserRecoverableErrorHandler)},
      * but completes the task in the background to avoid any potentially slow calls blocking the
-     * UI thread.
-     * @param context The current context.
-     * @param userRecoverableErrorHandler How to handle user-recoverable errors from Google
-     * Play Services; must be non-null.
+     * UI thread, and passes the result to the given callback. |callback| is never invoked if
+     * |callingContext| is null by time the background task finishes.
+     *
+     * @param callingContext A reference to the caller; the callback is not invoked if this is
+     * null by the time the background task finishes.
+     * @param checkContext The context to check.
      * @param callback Callback to receive whether or not first party Play Services are available.
      */
-    public void canUseFirstPartyGooglePlayServices(Context context,
-            UserRecoverableErrorHandler userRecoverableErrorHandler, Callback<Boolean> callback) {
-        new AsyncTask<Void, Void, Boolean>() {
-            @Override
-            protected Boolean doInBackground(Void... voids) {
-                return canUseGooglePlayServices(context, userRecoverableErrorHandler)
-                        && isChromeGoogleSigned();
-            }
-
-            @Override
-            protected void onPostExecute(Boolean canUseFirstPartyGooglePlayServices) {
-                callback.onResult(canUseFirstPartyGooglePlayServices);
-            }
-        }
-                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    public void canUseFirstPartyGooglePlayServices(
+            Object callingContext, Context checkContext, Callback<Boolean> callback) {
+        new CheckFirstPartyServicesTask(callback, callingContext)
+                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, checkContext);
     }
 
     /**
      * Record the result of a connection attempt. The default implementation records via a UMA
      * histogram.
+     *
      * @param resultCode the result from {@link #checkGooglePlayServicesAvailable(Context)}
      */
     protected void recordConnectionResult(final int resultCode) {
@@ -275,6 +277,7 @@ public class ExternalAuthUtils {
      * Invokes whatever external code is necessary to check if Google Play Services is available
      * and returns the code produced by the attempt. Subclasses can override to force the behavior
      * one way or another, or to change the way that the check is performed.
+     *
      * @param context The current context.
      * @return The code produced by calling the external code
      */
@@ -296,6 +299,7 @@ public class ExternalAuthUtils {
      * Invokes whatever external code is necessary to check if the specified error code produced
      * by {@link #checkGooglePlayServicesAvailable(Context)} represents a user-recoverable error.
      * Subclasses can override to filter error codes as desired.
+     *
      * @param errorCode The code to check
      * @return true If the code represents a user-recoverable error
      */
@@ -306,10 +310,34 @@ public class ExternalAuthUtils {
     /**
      * Invokes whatever external code is necessary to obtain a textual description of an error
      * code produced by {@link #checkGooglePlayServicesAvailable(Context)}.
+     *
      * @param errorCode The code to check
      * @return a textual description of the error code
      */
     protected String describeError(final int errorCode) {
         return GoogleApiAvailability.getInstance().getErrorString(errorCode);
+    }
+
+    private static class CheckFirstPartyServicesTask extends AsyncTask<Context, Void, Boolean> {
+        private Callback<Boolean> mCallback;
+        private WeakReference<Object> mCallingContext;
+
+        CheckFirstPartyServicesTask(Callback<Boolean> callback, Object callingContext) {
+            mCallback = callback;
+            mCallingContext = new WeakReference<>(callingContext);
+        }
+
+        @Override
+        protected Boolean doInBackground(Context... params) {
+            return ExternalAuthUtils.getInstance().canUseFirstPartyGooglePlayServices(
+                    params[0], new UserRecoverableErrorHandler.Silent());
+        }
+
+        @Override
+        protected void onPostExecute(Boolean canUseFirstPartyGooglePlayServices) {
+            if (mCallingContext.get() != null) {
+                mCallback.onResult(canUseFirstPartyGooglePlayServices);
+            }
+        }
     }
 }
