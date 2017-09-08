@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0136b11_b5ad5458",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T02:25:51Z",
+      "side": 1,
+      "message": "Another route to consider is since WebServiceWorkerProviderImpl holds a strong ref to ProviderContext, we could instead keep a ptr to ProviderImpl here, that way we\u0027re guaranteed the controllee isn\u0027t already destroyed.\n\nOf course we could also do the Callback/Observer model if that works better.",
+      "revId": "d7add142abc36c7e9e0b26c49ac47f54fef7f86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

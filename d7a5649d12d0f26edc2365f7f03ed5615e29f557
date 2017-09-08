@@ -112,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "2888cb17_07e0f50f",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T02:25:51Z",
+      "side": 1,
+      "message": "Can you point me to this test? It might mean that it\u0027s possible to have a null |provider_client_|.",
+      "parentUuid": "74c4fc87_7cbbedd2",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e1b99b5_a2fe8118",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 3
@@ -199,6 +217,24 @@
     },
     {
       "key": {
+        "uuid": "c4f4660f_66ff9b6e",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T02:25:51Z",
+      "side": 1,
+      "message": "Yea, it\u0027s OK for now. What I found really confusing in this case is |provider_client_| was a member of ServiceWorkerProviderContext, so it makes you think the name is saying \"client of SWProviderContext\". But it\u0027s really \"client of WebServiceWorkerProvider\".\n\nI think as Web dies, this will all eventually get a lot simpler. For now I hope we can live with good comments and names.",
+      "parentUuid": "e487e780_c1350f00",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10ef58d2_811790fa",
         "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
         "patchSetId": 3
@@ -263,6 +299,58 @@
       "side": 1,
       "message": "I was under the impression that falken commented before that it\u0027s better to use a struct if there are several params? @falken, WDYT？",
       "parentUuid": "070ba18b_7aaab5de",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "430a3a7f_aec0d881",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T02:25:51Z",
+      "side": 1,
+      "message": "I\u0027m not sure where I said that. In this case I don\u0027t have a strong preference... four params seems reasonable as either a struct or direct params.",
+      "parentUuid": "ab2ecf11_be09d328",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e878328_e6b35f25",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T02:25:51Z",
+      "side": 1,
+      "message": "would prefer |object_info| -\u003e |controller|",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fff07d98_2ea96e45",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T02:25:51Z",
+      "side": 1,
+      "message": "can we use blink.mojom.WebFeature feature here, then don\u0027t need the comment in line 16.",
       "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
