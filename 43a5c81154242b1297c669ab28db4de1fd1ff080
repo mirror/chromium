@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df0c33cb_162788aa",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-08T23:37:53Z",
+      "side": 0,
+      "message": "I think you\u0027ve responded to this one in the other CL: I think this is still a useful test where this deals with the presence of multiple underscore directories.",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 34
+      },
+      "revId": "43a5c81154242b1297c669ab28db4de1fd1ff080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
