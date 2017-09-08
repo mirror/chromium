@@ -24,17 +24,24 @@ base::TimeDelta AppListPresenterDelegate::animation_duration() {
 }
 
 base::TimeDelta AppListPresenterDelegate::animation_duration_fullscreen(
-    bool is_side_shelf) {
+    bool is_side_shelf,
+    bool is_fullscreen) {
   // Duration for hide animation for fullscreen app list while in side shelf.
   static constexpr base::TimeDelta kAnimationDurationSideShelfFullscreenMs =
       base::TimeDelta::FromMilliseconds(150);
 
   // Duration for hide animation for the fullscreen app list.
-  static constexpr base::TimeDelta kAnimationDurationFullscreenMs =
-      base::TimeDelta::FromMilliseconds(300);
+  static constexpr base::TimeDelta kAnimationDurationMs =
+      base::TimeDelta::FromMilliseconds(200);
 
-  return is_side_shelf ? kAnimationDurationSideShelfFullscreenMs
-                       : kAnimationDurationFullscreenMs;
+  static constexpr base::TimeDelta kAnimationDurationFromFullscreenMs =
+      base::TimeDelta::FromMilliseconds(250);
+
+  if (is_side_shelf)
+    return kAnimationDurationSideShelfFullscreenMs;
+
+  return is_fullscreen ? kAnimationDurationFromFullscreenMs
+                       : kAnimationDurationMs;
 }
 
 int AppListPresenterDelegate::GetMinimumBoundsHeightForAppList(
