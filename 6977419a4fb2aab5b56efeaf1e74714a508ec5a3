@@ -16,6 +16,24 @@
       "revId": "6977419a4fb2aab5b56efeaf1e74714a508ec5a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbecb1c0_911775bf",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-09-08T22:51:57Z",
+      "side": 0,
+      "message": "I looked at this. We have a general problem with having a bunch of APIs for opening new tabs/loading urls with subtle differences between them. We should figure out if there is a way to unify them. There is the URLLoader API, but BVC and MainController provide separate APIs as well. \n\nHere, the URLLoader API is used to open the tab in the current mode. It is possible to use OpenURLCommand with the URLLoader APIs, but OpenURLCommand currently requires that command specifies a mode (incognito or regular), and will switch to that mode if necessary.\n\nOpenURLCommand will sometimes use these different APIs from BVC to open the new tab if the command is set as fromChrome (I would expect the page info case to be fromChrome since it is invoked from Chrome UI). If the OpenURLCommand is marked as being from Chrome, it is assumed that the tab should be added in regular mode at the end of the stack (as opposed to next to the current tab, which is done in the Page Security Help case).",
+      "parentUuid": "bbb8db1e_f1440455",
+      "revId": "6977419a4fb2aab5b56efeaf1e74714a508ec5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
