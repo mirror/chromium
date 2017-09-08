@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcbe1eac_ceb2f702",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-08T19:32:09Z",
+      "side": 1,
+      "message": "Please add some unit tests for this.",
+      "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c090a7_bc5633e0",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-08T19:32:09Z",
+      "side": 1,
+      "message": "Remove? StringPiece has an implicit constructor.",
+      "range": {
+        "startLine": 55,
+        "startChar": 34,
+        "endLine": 55,
+        "endChar": 51
+      },
+      "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbfd2683_ae712b08",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-08T19:32:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to work if the user uses other TLDs like www.google.co.uk.\n\nHow about using google_util::IsGoogleHostname() with google_util::DISALLOW_SUBDOMAIN?",
+      "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a9b07d9_b75586b9",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-08T19:32:09Z",
+      "side": 1,
+      "message": "nit: Use {} for multi-line IF.",
+      "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
