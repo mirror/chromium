@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "bbf094f2_3e7d67d1",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-08T01:35:23Z",
+      "side": 1,
+      "message": "It\u0027s a bit unfortunate that we have to do this. It would be nice if our fakes could DCHECK that all responses have been sent. I don\u0027t think you have to fix it in this patch but something to consider.",
+      "revId": "7d55af3e28ff6b9b41dd95aef1123799b1f534ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5f7fe5e_82b3e0bd",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
         "patchSetId": 1
@@ -36,6 +53,30 @@
       "writtenOn": "2017-09-08T01:13:01Z",
       "side": 1,
       "message": "I wonder if ortuno@ had a reason to runGarbageCollection in a .then instead of in the same code block that made the failing function call.  As written currently javascript will yield before GC is run.  (another recent CL also did this)",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "7d55af3e28ff6b9b41dd95aef1123799b1f534ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4dd513_15c76731",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-08T01:35:23Z",
+      "side": 1,
+      "message": "Before, characteristic\u0027s scope was the whole block (we didn\u0027t set it to null). So if we were to call runGarbageCollection in that block, characteristic wouldn\u0027t get garbage collected. Note that even though runGarbageCollection returns a promise, GCController.collect() is called immediately.\n\nSince this patch sets |characteristic| to null, and thus releases the last reference to the object, we could run garbage collection inside the same block. You can test if the new approach works (and if the current test still works) by changing the following line from WrapPersistent(this) to WrapWeakPersistent(this):\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/bluetooth/BluetoothRemoteGATTCharacteristic.cpp?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d137",
+      "parentUuid": "660ec183_495c5fcb",
       "range": {
         "startLine": 29,
         "startChar": 8,
