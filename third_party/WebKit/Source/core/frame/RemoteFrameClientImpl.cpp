@@ -84,6 +84,15 @@ void RemoteFrameClientImpl::SetOpener(Frame* opener) {
   web_frame_->SetOpener(opener_frame);
 }
 
+bool RemoteFrameClientImpl::ExplicitWasCreatedWithOpener() {
+  return web_frame_->ExplicitWasCreatedWithOpener();
+}
+
+void RemoteFrameClientImpl::SetExplicitWasCreatedWithOpener(
+    bool was_created_with_opener) {
+  web_frame_->SetExplicitWasCreatedWithOpener(was_created_with_opener);
+}
+
 Frame* RemoteFrameClientImpl::Parent() const {
   return ToCoreFrame(web_frame_->Parent());
 }

@@ -22,6 +22,8 @@ class RemoteFrameClientImpl final : public RemoteFrameClient {
   void Detached(FrameDetachType) override;
   Frame* Opener() const override;
   void SetOpener(Frame*) override;
+  bool ExplicitWasCreatedWithOpener() override;
+  void SetExplicitWasCreatedWithOpener(bool was_created_with_opener) override;
   Frame* Parent() const override;
   Frame* Top() const override;
   Frame* NextSibling() const override;
