@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfa55b4e_f8abb449",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-08T02:29:32Z",
+      "side": 1,
+      "message": "var promiseStatusProperty \u003d /** @type {?Protocol.Runtime.PropertyPreview} */ (null);\nvar promiseValueProperty \u003d /** @type {?Protocol.Runtime.PropertyPreview} */ (null);",
+      "revId": "19b0993e9dfeb6563ee52d4356c167372a13c9f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
