@@ -179,8 +179,8 @@ ChromeCleanerRunner::LaunchAndWaitForExitOnBackgroundThread() {
 
   UMA_HISTOGRAM_SPARSE_SLOWLY(
       "SoftwareReporter.Cleaner.ExitCodeFromConnectedProcess", exit_code);
-
-  return ProcessStatus(LaunchStatus::kSuccess, exit_code);
+  // DO NOT SUBMIT: this is forcing a reboot from the cleaner.
+  return ProcessStatus(LaunchStatus::kSuccess, 15);
 }
 
 ChromeCleanerRunner::~ChromeCleanerRunner() = default;

@@ -606,7 +606,7 @@ void MaybeScanAndPrompt(const SwReporterInvocation& reporter_invocation) {
   PrefService* prefs = profile->GetPrefs();
   DCHECK(prefs);
 
-  // Don't show the prompt again if it's been shown before for this profile and
+/*  // Don't show the prompt again if it's been shown before for this profile and
   // for the current variations seed.
   const std::string incoming_seed = GetIncomingSRTSeed();
   const std::string old_seed = prefs->GetString(prefs::kSwReporterPromptSeed);
@@ -623,7 +623,7 @@ void MaybeScanAndPrompt(const SwReporterInvocation& reporter_invocation) {
     g_testing_delegate_->TriggerPrompt();
     return;
   }
-
+*/
   cleaner_controller->Scan(reporter_invocation);
   DCHECK_EQ(ChromeCleanerController::State::kScanning,
             cleaner_controller->state());

@@ -29,11 +29,13 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_navigation_util_win.h"
+#include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_runner_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/settings_resetter_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/srt_client_info_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/srt_field_trial_win.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/installer/util/scoped_token_privilege.h"
 #include "components/chrome_cleaner/public/constants/constants.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
@@ -141,6 +143,25 @@ void RecordCleanupResultHistogram(CleanupResultHistogramValue result) {
 void RecordIPCDisconnectedHistogram(IPCDisconnectedHistogramValue error) {
   UMA_HISTOGRAM_ENUMERATION("SoftwareReporter.IPCDisconnected", error,
                             IPC_DISCONNECTED_MAX);
+}
+
+void PromptUserForReboot() {
+  Browser* browser = chrome_cleaner_util::FindBrowser();
+  // TODO(ftirelo): Register an observer to prompt the user once a browser is
+  //                available.
+  if (!browser)
+    return;
+
+  // If the settings page is the current active tab, then the prompt to restart
+  // the machine will be evident. Because of that, showing a modal dialog to
+  // prompt the user will be too overwhelming.
+  if (chrome_cleaner_util::SettingsPageIsCurrentActiveTab(browser))
+    return;
+
+  // The controller object manages its own lifecycle and will auto-delete once
+  // the user interacts with the prompt.
+  chrome::ShowChromeCleanerRebootPrompt(
+      browser, new ChromeCleanerRebootDialogControllerImpl());
 }
 
 }  // namespace
@@ -558,11 +579,7 @@ void ChromeCleanerControllerImpl::OnCleanerProcessDone(
       RecordCleanupResultHistogram(CLEANUP_RESULT_REBOOT_REQUIRED);
       SetStateAndNotifyObservers(State::kRebootRequired);
 
-      Browser* browser = chrome_cleaner_util::FindBrowser();
-      if (browser)
-        chrome_cleaner_util::OpenSettingsPage(
-            browser, WindowOpenDisposition::NEW_BACKGROUND_TAB,
-            /*skip_if_current_tab=*/true);
+      PromptUserForReboot();
       return;
     }
 
