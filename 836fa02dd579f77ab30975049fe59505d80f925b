@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12894d25_91692f24",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-09-08T20:16:56Z",
+      "side": 1,
+      "message": "We do go right into the bubbling with touch scrolling when latching is disabled. Maybe you had latching enabled? I notice the testing config has it enabled by default. I\u0027m using --disable-field-trial-config for non-latching behaviour.\n\nAnd yeah, I should\u0027ve clarified the limitation of this for wheels.",
+      "parentUuid": "96fc6a5e_a8cd44cd",
+      "range": {
+        "startLine": 457,
+        "startChar": 4,
+        "endLine": 458,
+        "endChar": 51
+      },
+      "revId": "836fa02dd579f77ab30975049fe59505d80f925b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24ba76a4_65110bfb",
         "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.h",
         "patchSetId": 1
