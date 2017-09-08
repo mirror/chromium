@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "796c0e4c_8190eeb1",
+        "filename": "components/viz/service/display/vulkan_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-08T20:57:28Z",
+      "side": 1,
+      "message": "Add missing newline.",
+      "revId": "e3249fbdbc8301e28dced8b7a6feaa8fdfe3f0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32aed524_5ade478e",
+        "filename": "components/viz/service/display/vulkan_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-08T20:57:28Z",
+      "side": 1,
+      "message": "This is unused? Should it be removed?",
+      "revId": "e3249fbdbc8301e28dced8b7a6feaa8fdfe3f0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb2bae6_c462bef2",
+        "filename": "components/viz/service/display/vulkan_renderer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-08T20:57:28Z",
+      "side": 1,
+      "message": "You\u0027re not supposed to update these comments really, but this files history is already trashed since it doesn\u0027t recognize the move. Can you remove (c) from h/cc files.",
+      "revId": "e3249fbdbc8301e28dced8b7a6feaa8fdfe3f0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
