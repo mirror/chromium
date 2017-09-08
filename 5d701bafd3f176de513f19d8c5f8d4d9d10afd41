@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cfcb59b_5ae975c1",
+        "filename": "services/device/generic_sensor/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-08T00:54:37Z",
+      "side": 1,
+      "message": "Unsure if links are needed, but if linking consider \"reference-style links\" for text readability.",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 29
+      },
+      "revId": "5d701bafd3f176de513f19d8c5f8d4d9d10afd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
