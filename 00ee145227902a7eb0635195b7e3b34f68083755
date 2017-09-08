@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec44de68_897e201b",
+        "filename": "ios/chrome/browser/browsing_data/browsing_data_removal_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-08T01:12:48Z",
+      "side": 1,
+      "message": "Yes, It was just a comment to make this file show up in the CL since there were no changes here.\n\nAnd yes, that was the goal for this CL, remove the delegate completely. But I think I\u0027ll do that in a follow up CL and just remove external_file_remover dependencies for now.",
+      "parentUuid": "4f511c39_30a968fb",
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59f8155e_9154bb10",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b558fe1b_868f99e6",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2417,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-08T01:12:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59f8155e_9154bb10",
+      "range": {
+        "startLine": 2417,
+        "startChar": 22,
+        "endLine": 2417,
+        "endChar": 72
+      },
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "d6ac69f7_a5eb54b0",
+        "filename": "ios/chrome/browser/ui/external_file_remover.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-08T01:12:48Z",
+      "side": 1,
+      "message": "Done. Also changed the other variables to clean this up a little bit.",
+      "parentUuid": "f830cc30_886c28f6",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 42
+      },
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e4da198_4caf8ca5",
         "filename": "ios/chrome/browser/ui/external_file_remover.h",
         "patchSetId": 2
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "7344fc6d_cdeaa6ff",
+        "filename": "ios/chrome/browser/ui/external_file_remover.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-08T01:12:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e4da198_4caf8ca5",
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94223a98_f3f59fef",
         "filename": "ios/chrome/browser/ui/external_file_remover.mm",
         "patchSetId": 2
@@ -96,6 +180,24 @@
       "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab29aa2_8699004c",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-08T01:12:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94223a98_f3f59fef",
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "4249a3ea_fa437407",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-08T01:12:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93cdf049_534bf0af",
+      "range": {
+        "startLine": 77,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 22
+      },
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5869545_e57d8d76",
         "filename": "ios/chrome/browser/ui/external_file_remover.mm",
         "patchSetId": 2
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "98031ea1_5e6ba9ac",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-08T01:12:48Z",
+      "side": 1,
+      "message": "You mean that this would only work if tabModels only has one item? \nAlso, are you suggesting we should add an active flag to tab_model in order to know which one is active? I\u0027m not familiar with TabModel at all, so I\u0027m willing to go with that you think is best.",
+      "parentUuid": "d5869545_e57d8d76",
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a308a3b_90791251",
         "filename": "ios/chrome/browser/ui/external_file_remover.mm",
         "patchSetId": 2
@@ -153,6 +297,24 @@
       "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c551b2e4_229a2aca",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-08T01:12:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a308a3b_90791251",
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -176,6 +338,30 @@
       "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b52e18ac_6f51c7df",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-08T01:12:48Z",
+      "side": 1,
+      "message": "Agreed, didn\u0027t really do anything else than move code around to check if it was feasible.",
+      "parentUuid": "7b398aae_b681d1e3",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 54
+      },
+      "revId": "00ee145227902a7eb0635195b7e3b34f68083755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
