@@ -66,10 +66,10 @@ bool ForcedURLComparator(const MostVisitedURL& first,
 }
 
 // How many non-forced top sites to store in the cache.
-const size_t kNonForcedTopSitesNumber = 20;
+const size_t kNonForcedTopSitesNumber = 10;
 
 // How many forced top sites to store in the cache.
-const size_t kForcedTopSitesNumber = 20;
+const size_t kForcedTopSitesNumber = 10;
 
 // Max number of temporary images we'll cache. See comment above
 // temp_images_ for details.
