@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5571dc92_a815e9fc",
+        "filename": "chrome/browser/ui/views/payments/payment_method_view_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-08T20:04:51Z",
+      "side": 1,
+      "message": "nit: /*show_edit_button\u003d*/instrument-\u003etype() \u003d\u003d PaymentInstrument::Type::AUTOFILL",
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a09f38c_4612c155",
+        "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-08T20:04:51Z",
+      "side": 1,
+      "message": "hidden",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 10
+      },
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95bd4ae9_b1d600e0",
+        "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-08T20:04:51Z",
+      "side": 1,
+      "message": "Should we only do if the service worker payment apps feature is enabled?",
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18f49f6_72d1c308",
+        "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-08T20:04:51Z",
+      "side": 1,
+      "message": "the {} can be in .h",
+      "range": {
+        "startLine": 179,
+        "startChar": 62,
+        "endLine": 179,
+        "endChar": 64
+      },
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af515160_746cf7fe",
+        "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-08T20:04:51Z",
+      "side": 1,
+      "message": "{} can be in .h",
+      "range": {
+        "startLine": 386,
+        "startChar": 69,
+        "endLine": 386,
+        "endChar": 72
+      },
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe63ae6_4654ec97",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-08T20:04:51Z",
+      "side": 1,
+      "message": "suggestion:extracting this should make it easier to unit-test",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 33
+      },
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "792c6580_8865626d",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-08T20:04:51Z",
+      "side": 1,
+      "message": "Add a comment saying that if there was a pending canmakepayment call, we should fulfill it",
+      "range": {
+        "startLine": 97,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 33
+      },
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11bc484_be33a1a6",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-08T20:04:51Z",
+      "side": 1,
+      "message": "nit: can_make_payment_value",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 23
+      },
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39bc4a4_562d1e8d",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-08T20:04:51Z",
+      "side": 1,
+      "message": "are we favoring credit cards first because they are added first to the vector? If so we should make a note",
+      "range": {
+        "startLine": 405,
+        "startChar": 12,
+        "endLine": 405,
+        "endChar": 62
+      },
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
