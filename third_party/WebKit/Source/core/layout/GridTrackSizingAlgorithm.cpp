@@ -1311,6 +1311,9 @@ void GridTrackSizingAlgorithm::ComputeFlexSizedTracksGrowth(
 
 void GridTrackSizingAlgorithm::StretchFlexibleTracks(
     Optional<LayoutUnit> free_space) {
+  if (flexible_sized_tracks_index_.IsEmpty())
+    return;
+
   double flex_fraction = strategy_->FindUsedFlexFraction(
       flexible_sized_tracks_index_, direction_, free_space);
 
@@ -1338,6 +1341,47 @@ void GridTrackSizingAlgorithm::StretchFlexibleTracks(
                  this->FreeSpace(direction_).value() - total_growth);
   }
   max_content_size_ += total_growth;
+}
+
+static const StyleContentAlignmentData& ContentAlignmentNormalBehavior() {
+  static const StyleContentAlignmentData kNormalBehavior = {
+      kContentPositionNormal, kContentDistributionStretch};
+  return kNormalBehavior;
+}
+
+void GridTrackSizingAlgorithm::StretchAutoTracksIfNeeded() {
+  Optional<LayoutUnit> free_space = FreeSpace(direction_);
+  if (!free_space || free_space.value() <= 0 ||
+      (direction_ == kForColumns &&
+       layout_grid_->StyleRef().ResolvedJustifyContentDistribution(
+           ContentAlignmentNormalBehavior()) != kContentDistributionStretch) ||
+      (direction_ == kForRows &&
+       layout_grid_->StyleRef().ResolvedAlignContentDistribution(
+           ContentAlignmentNormalBehavior()) != kContentDistributionStretch))
+    return;
+
+  // Spec defines auto-sized tracks as the ones with an 'auto' max-sizing
+  // function.
+  Vector<GridTrack>& all_tracks = Tracks(direction_);
+  Vector<unsigned> auto_sized_tracks_index;
+  for (unsigned i = 0; i < all_tracks.size(); ++i) {
+    const GridTrackSize& track_size = GetGridTrackSize(direction_, i);
+    if (track_size.HasAutoMaxTrackBreadth())
+      auto_sized_tracks_index.push_back(i);
+  }
+
+  unsigned number_of_auto_sized_tracks = auto_sized_tracks_index.size();
+  if (number_of_auto_sized_tracks < 1)
+    return;
+
+  LayoutUnit size_to_increase =
+      free_space.value() / number_of_auto_sized_tracks;
+  for (const auto& track_index : auto_sized_tracks_index) {
+    GridTrack* track = all_tracks.data() + track_index;
+    LayoutUnit base_size = track->BaseSize() + size_to_increase;
+    track->SetBaseSize(base_size);
+  }
+  SetFreeSpace(direction_, LayoutUnit());
 }
 
 void GridTrackSizingAlgorithm::AdvanceNextState() {
@@ -1428,11 +1472,11 @@ void GridTrackSizingAlgorithm::Run() {
                                                     ? free_space_columns_
                                                     : free_space_rows_);
 
-  if (flexible_sized_tracks_index_.IsEmpty())
-    return;
-
   // Step 4.
   StretchFlexibleTracks(initial_free_space);
+
+  // Step 5.
+  StretchAutoTracksIfNeeded();
 }
 
 void GridTrackSizingAlgorithm::Reset() {

@@ -211,8 +211,6 @@ class LayoutGrid final : public LayoutBlock {
       const LayoutBox&,
       GridTrackSizingDirection) const;
 
-  void ApplyStretchAlignmentToTracksIfNeeded(GridTrackSizingDirection);
-
   void PaintChildren(const PaintInfo&, const LayoutPoint&) const override;
 
   LayoutUnit AvailableAlignmentSpaceForChildBeforeStretching(
@@ -297,7 +295,6 @@ class LayoutGrid final : public LayoutBlock {
                                                       LineDirectionMode);
   static LayoutUnit SynthesizedBaselineFromBorderBox(const LayoutBox&,
                                                      LineDirectionMode);
-  static const StyleContentAlignmentData& ContentAlignmentNormalBehavior();
 
   typedef HashMap<unsigned,
                   std::unique_ptr<BaselineContext>,
