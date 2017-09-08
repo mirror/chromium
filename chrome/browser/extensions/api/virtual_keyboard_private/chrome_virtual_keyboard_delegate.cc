@@ -61,7 +61,7 @@ keyboard::KeyboardState getKeyboardStateEnum(
 namespace extensions {
 
 ChromeVirtualKeyboardDelegate::ChromeVirtualKeyboardDelegate()
-    : weak_factory_(this) {
+    : audio_system_(media::AudioSystem::CreateInstance()), weak_factory_(this) {
   weak_this_ = weak_factory_.GetWeakPtr();
 }
 
@@ -70,7 +70,7 @@ ChromeVirtualKeyboardDelegate::~ChromeVirtualKeyboardDelegate() {}
 void ChromeVirtualKeyboardDelegate::GetKeyboardConfig(
     OnKeyboardSettingsCallback on_settings_callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  media::AudioSystem::Get()->HasInputDevices(
+  audio_system_->HasInputDevices(
       base::BindOnce(&ChromeVirtualKeyboardDelegate::OnHasInputDevices,
                      weak_this_, std::move(on_settings_callback)));
 }
