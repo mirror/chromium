@@ -128,10 +128,12 @@ void WorkerOrWorkletScriptController::DisposeContextIfNeeded() {
 
   if (global_scope_->IsWorkerGlobalScope() ||
       global_scope_->IsThreadedWorkletGlobalScope()) {
-    ScriptState::Scope scope(script_state_.Get());
     WorkerThreadDebugger* debugger = WorkerThreadDebugger::From(isolate_);
-    debugger->ContextWillBeDestroyed(global_scope_->GetThread(),
-                                     script_state_->GetContext());
+    if (debugger) {
+      ScriptState::Scope scope(script_state_.Get());
+      debugger->ContextWillBeDestroyed(global_scope_->GetThread(),
+                                       script_state_->GetContext());
+    }
   }
   script_state_->DisposePerContextData();
 }
@@ -228,7 +230,8 @@ bool WorkerOrWorkletScriptController::InitializeContextIfNeeded(
   if (global_scope_->IsWorkerGlobalScope() ||
       global_scope_->IsThreadedWorkletGlobalScope()) {
     WorkerThreadDebugger* debugger = WorkerThreadDebugger::From(isolate_);
-    debugger->ContextCreated(global_scope_->GetThread(), context);
+    if (debugger)
+      debugger->ContextCreated(global_scope_->GetThread(), context);
   }
 
   // Set the human readable name for the world if the call passes an actual

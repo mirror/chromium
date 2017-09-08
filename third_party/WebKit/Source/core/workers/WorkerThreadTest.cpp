@@ -72,8 +72,8 @@ class WorkerThreadTest : public ::testing::Test {
     reporting_proxy_ = WTF::MakeUnique<MockWorkerReportingProxy>();
     security_origin_ =
         SecurityOrigin::Create(KURL(kParsedURLString, "http://fake.url/"));
-    worker_thread_ =
-        WTF::WrapUnique(new WorkerThreadForTest(nullptr, *reporting_proxy_));
+    worker_thread_ = WTF::WrapUnique(
+        new WorkerThreadForTest(nullptr, *reporting_proxy_, nullptr));
     lifecycle_observer_ = new MockWorkerThreadLifecycleObserver(
         worker_thread_->GetWorkerThreadLifecycleContext());
   }

@@ -52,63 +52,11 @@ class MockWorkerThreadLifecycleObserver final
   MOCK_METHOD1(ContextDestroyed, void(WorkerThreadLifecycleContext*));
 };
 
-class WorkerThreadForTest : public WorkerThread {
- public:
-  WorkerThreadForTest(ThreadableLoadingContext* loading_context,
-                      WorkerReportingProxy& mock_worker_reporting_proxy)
-      : WorkerThread(loading_context, mock_worker_reporting_proxy),
-        worker_backing_thread_(
-            WorkerBackingThread::CreateForTest("Test thread")) {}
-
-  ~WorkerThreadForTest() override {}
-
-  WorkerBackingThread& GetWorkerBackingThread() override {
-    return *worker_backing_thread_;
-  }
-  void ClearWorkerBackingThread() override { worker_backing_thread_ = nullptr; }
-
-  WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
-      std::unique_ptr<GlobalScopeCreationParams>) override;
-
-  void StartWithSourceCode(SecurityOrigin* security_origin,
-                           const String& source,
-                           ParentFrameTaskRunners* parent_frame_task_runners) {
-    std::unique_ptr<Vector<CSPHeaderAndType>> headers =
-        WTF::MakeUnique<Vector<CSPHeaderAndType>>();
-    CSPHeaderAndType header_and_type("contentSecurityPolicy",
-                                     kContentSecurityPolicyHeaderTypeReport);
-    headers->push_back(header_and_type);
-
-    WorkerClients* clients = nullptr;
-
-    Start(WTF::MakeUnique<GlobalScopeCreationParams>(
-              KURL(kParsedURLString, "http://fake.url/"), "fake user agent",
-              source, nullptr, kDontPauseWorkerGlobalScopeOnStart,
-              headers.get(), "", security_origin, clients,
-              kWebAddressSpaceLocal, nullptr, nullptr, kV8CacheOptionsDefault),
-          WorkerBackingThreadStartupData::CreateDefault(),
-          parent_frame_task_runners);
-  }
-
-  void WaitForInit() {
-    std::unique_ptr<WaitableEvent> completion_event =
-        WTF::MakeUnique<WaitableEvent>();
-    GetWorkerBackingThread().BackingThread().PostTask(
-        BLINK_FROM_HERE,
-        CrossThreadBind(&WaitableEvent::Signal,
-                        CrossThreadUnretained(completion_event.get())));
-    completion_event->Wait();
-  }
-
- private:
-  std::unique_ptr<WorkerBackingThread> worker_backing_thread_;
-};
-
 class FakeWorkerGlobalScope : public WorkerGlobalScope {
  public:
   FakeWorkerGlobalScope(const KURL& url,
                         const String& user_agent,
-                        WorkerThreadForTest* thread,
+                        WorkerThread* thread,
                         std::unique_ptr<SecurityOrigin::PrivilegeData>
                             starter_origin_privilege_data,
                         WorkerClients* worker_clients)
@@ -129,13 +77,82 @@ class FakeWorkerGlobalScope : public WorkerGlobalScope {
   void ExceptionThrown(ErrorEvent*) override {}
 };
 
-inline WorkerOrWorkletGlobalScope* WorkerThreadForTest::CreateWorkerGlobalScope(
-    std::unique_ptr<GlobalScopeCreationParams> creation_params) {
-  return new FakeWorkerGlobalScope(
-      creation_params->script_url, creation_params->user_agent, this,
-      std::move(creation_params->starter_origin_privilege_data),
-      std::move(creation_params->worker_clients));
-}
+class WorkerThreadForTest : public WorkerThread {
+ public:
+  WorkerThreadForTest(ThreadableLoadingContext* loading_context,
+                      WorkerReportingProxy& mock_worker_reporting_proxy,
+                      WorkerBackingThread* worker_backing_thread)
+      : WorkerThread(loading_context, mock_worker_reporting_proxy),
+        worker_backing_thread_(worker_backing_thread) {
+    if (!worker_backing_thread_) {
+      owned_worker_backing_thread_ =
+          WorkerBackingThread::CreateForTest("Test thread");
+      worker_backing_thread_ = owned_worker_backing_thread_.get();
+    }
+  }
+
+  ~WorkerThreadForTest() override {}
+
+  WorkerBackingThread& GetWorkerBackingThread() override {
+    return *worker_backing_thread_;
+  }
+  void ClearWorkerBackingThread() override {
+    worker_backing_thread_ = nullptr;
+    owned_worker_backing_thread_.reset();
+  }
+
+  void StartWithSourceCode(SecurityOrigin* security_origin,
+                           const String& source,
+                           ParentFrameTaskRunners* parent_frame_task_runners,
+                           WorkerClients* worker_clients = nullptr) {
+    std::unique_ptr<Vector<CSPHeaderAndType>> headers =
+        WTF::MakeUnique<Vector<CSPHeaderAndType>>();
+    CSPHeaderAndType header_and_type("contentSecurityPolicy",
+                                     kContentSecurityPolicyHeaderTypeReport);
+    headers->push_back(header_and_type);
+
+    auto creation_params = WTF::MakeUnique<GlobalScopeCreationParams>(
+        KURL(kParsedURLString, "http://fake.url/"), "fake user agent", source,
+        nullptr, kDontPauseWorkerGlobalScopeOnStart, headers.get(), "",
+        security_origin, worker_clients, kWebAddressSpaceLocal, nullptr,
+        nullptr, kV8CacheOptionsDefault);
+
+    WTF::Optional<WorkerBackingThreadStartupData> startup_data =
+        IsOwningBackingThread()
+            ? WTF::make_optional(
+                  WorkerBackingThreadStartupData::CreateDefault())
+            : WTF::nullopt;
+
+    Start(std::move(creation_params), startup_data, parent_frame_task_runners);
+  }
+
+  void WaitForInit() {
+    std::unique_ptr<WaitableEvent> completion_event =
+        WTF::MakeUnique<WaitableEvent>();
+    GetWorkerBackingThread().BackingThread().PostTask(
+        BLINK_FROM_HERE,
+        CrossThreadBind(&WaitableEvent::Signal,
+                        CrossThreadUnretained(completion_event.get())));
+    completion_event->Wait();
+  }
+
+ protected:
+  WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
+      std::unique_ptr<GlobalScopeCreationParams> creation_params) override {
+    return new FakeWorkerGlobalScope(
+        creation_params->script_url, creation_params->user_agent, this,
+        std::move(creation_params->starter_origin_privilege_data),
+        std::move(creation_params->worker_clients));
+  }
+
+  bool IsOwningBackingThread() const override {
+    return !!owned_worker_backing_thread_;
+  }
+
+ private:
+  WorkerBackingThread* worker_backing_thread_;
+  std::unique_ptr<WorkerBackingThread> owned_worker_backing_thread_;
+};
 
 }  // namespace blink
 

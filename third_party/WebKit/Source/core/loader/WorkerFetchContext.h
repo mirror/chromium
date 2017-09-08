@@ -94,6 +94,7 @@ class WorkerFetchContext final : public BaseFetchContext {
                        const ResourceError&,
                        int64_t encodedDataLength,
                        bool isInternalRequest) override;
+  bool ShouldLoadNewResource(Resource::Type) const override;
   void AddResourceTiming(const ResourceTimingInfo&) override;
   void PopulateResourceRequest(Resource::Type,
                                const ClientHintsPreferences&,

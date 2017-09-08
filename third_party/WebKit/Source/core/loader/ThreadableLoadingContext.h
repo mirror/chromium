@@ -13,10 +13,8 @@
 namespace blink {
 
 class BaseFetchContext;
-class Document;
 class ExecutionContext;
 class ResourceFetcher;
-class WorkerGlobalScope;
 
 // A convenient holder for various contexts associated with the loading
 // activity. This should be accessed only from the thread where the loading
@@ -26,8 +24,7 @@ class CORE_EXPORT ThreadableLoadingContext
   WTF_MAKE_NONCOPYABLE(ThreadableLoadingContext);
 
  public:
-  static ThreadableLoadingContext* Create(Document&);
-  static ThreadableLoadingContext* Create(WorkerGlobalScope&);
+  static ThreadableLoadingContext* Create(ExecutionContext*);
 
   ThreadableLoadingContext() = default;
   virtual ~ThreadableLoadingContext() = default;

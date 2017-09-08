@@ -110,6 +110,12 @@ void WorkerBackingThread::InitializeOnBackingThread(
   isolate_->SetAllowAtomicsWait(
       startup_data.atomics_wait_mode ==
       WorkerBackingThreadStartupData::AtomicsWaitMode::kAllow);
+  is_owning_isolate_ = true;
+}
+
+void WorkerBackingThread::InitializeOnBackingThread(v8::Isolate* isolate) {
+  DCHECK(!isolate_);
+  isolate_ = isolate;
 }
 
 void WorkerBackingThread::ShutdownOnBackingThread() {
@@ -117,16 +123,20 @@ void WorkerBackingThread::ShutdownOnBackingThread() {
   if (is_owning_thread_)
     Platform::Current()->WillStopWorkerThread();
 
-  V8PerIsolateData::WillBeDestroyed(isolate_);
+  if (is_owning_isolate_)
+    V8PerIsolateData::WillBeDestroyed(isolate_);
+
   // TODO(yhirano): Remove this when https://crbug.com/v8/1428 is fixed.
   if (should_call_gc_on_shutdown_) {
     // This statement runs only in tests.
     V8GCController::CollectAllGarbageForTesting(isolate_);
   }
-  backing_thread_->ShutdownOnThread();
 
-  RemoveWorkerIsolate(isolate_);
-  V8PerIsolateData::Destroy(isolate_);
+  if (is_owning_isolate_) {
+    backing_thread_->ShutdownOnThread();
+    RemoveWorkerIsolate(isolate_);
+    V8PerIsolateData::Destroy(isolate_);
+  }
   isolate_ = nullptr;
 }
 

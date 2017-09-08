@@ -415,7 +415,7 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
   }
 
   worker_thread_ = WTF::MakeUnique<ServiceWorkerThread>(
-      ThreadableLoadingContext::Create(*document),
+      ThreadableLoadingContext::Create(document),
       ServiceWorkerGlobalScopeProxy::Create(*this, *worker_context_client_),
       std::move(installed_scripts_manager_));
 
