@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eedc951_b0c3b422",
+        "filename": "content/gpu/gpu_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-08T01:21:47Z",
+      "side": 1,
+      "message": "Yes, I think so.  Should these both also be conditional on oop raster command line flag?",
+      "revId": "8a6b6177a25d2e62217f373fbdbd0b1d4bc09721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
