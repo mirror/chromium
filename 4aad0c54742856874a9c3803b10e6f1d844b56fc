@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "781d542c_65f4f966",
+        "filename": "ios/web/web_state/web_state_delegate_bridge.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-08T08:39:03Z",
+      "side": 1,
+      "message": "rm",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 10
+      },
+      "revId": "4aad0c54742856874a9c3803b10e6f1d844b56fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af81c3ee_55ba5940",
         "filename": "ios/web_view/public/cwv_ui_delegate.h",
         "patchSetId": 4
