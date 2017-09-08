@@ -197,6 +197,11 @@
   },
   {
     "prefix": "rootlayerscrolls",
+    "base": "fast/scroll-behavior",
+    "args": ["--root-layer-scrolls"]
+  },
+  {
+    "prefix": "rootlayerscrolls",
     "base": "fast/history/scroll-restoration",
     "args": ["--root-layer-scrolls"]
   },
