@@ -14,7 +14,7 @@
     {
       'target_name': 'on_startup_page',
       'dependencies': [
-        '../compiled_resources2.gyp:route',
+        'on_startup_browser_proxy',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
