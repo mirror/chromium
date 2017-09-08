@@ -157,7 +157,7 @@ class TestUsbMidiDeviceFactory : public UsbMidiDevice::Factory {
   ~TestUsbMidiDeviceFactory() override {}
   void EnumerateDevices(UsbMidiDeviceDelegate* device,
                         Callback callback) override {
-    callback_ = callback;
+    callback_ = std::move(callback);
   }
 
   Callback callback_;
@@ -220,7 +220,7 @@ class MidiManagerUsbTest : public ::testing::Test {
 
   void RunCallbackUntilCallbackInvoked(
       bool result, UsbMidiDevice::Devices* devices) {
-    factory_->callback_.Run(result, devices);
+    std::move(factory_->callback_).Run(result, devices);
     while (!client_->complete_start_session_) {
       base::RunLoop run_loop;
       run_loop.RunUntilIdle();
