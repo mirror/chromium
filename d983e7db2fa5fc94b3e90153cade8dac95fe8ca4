@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c183cc1b_9953d994",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-08T18:22:50Z",
+      "side": 1,
+      "message": "I decided to preserve this aspect of the existing code. My theory is that since the computed ID is based on memory addresses, keeping those memory addresses reserved is important. Imagine another WorkerStoragePartition coming into existence that happens to reuse some of the same memory addresses or something. I think this probably can\u0027t happen given the lifetime of StoragePartition objects, but I didn\u0027t want to prove that yet. I have a plan to clean all of this ID business up in a different way. Stop computing IDs from addresses! To keep the scope of this patch down, I just preserved existing behavior.",
+      "parentUuid": "51cb43b4_8c52d4b2",
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6ae123a_593f3622",
         "filename": "content/browser/shared_worker/shared_worker_connector_impl.cc",
         "patchSetId": 17
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ef45d677_6a606479",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-08T18:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6ae123a_593f3622",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 26
+      },
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86ae4aaa_c22f0b11",
         "filename": "content/browser/shared_worker/shared_worker_connector_impl.h",
         "patchSetId": 17
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "8a1a8014_fea6d42c",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-08T18:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86ae4aaa_c22f0b11",
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "959e6597_402412ea",
         "filename": "content/browser/shared_worker/shared_worker_host.cc",
         "patchSetId": 17
@@ -70,6 +130,30 @@
       "writtenOn": "2017-09-08T06:49:56Z",
       "side": 1,
       "message": "It\u0027s too bad there isn\u0027t a better way to express this with something like InterfacePtrSet.",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 229,
+        "endChar": 3
+      },
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab8a2ed_f4001fd3",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-08T18:22:50Z",
+      "side": 1,
+      "message": "Good point",
+      "parentUuid": "959e6597_402412ea",
       "range": {
         "startLine": 223,
         "startChar": 0,
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "10955e2f_88e43c2e",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-08T18:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52f5e6eb_66e4fed5",
+      "range": {
+        "startLine": 270,
+        "startChar": 11,
+        "endLine": 270,
+        "endChar": 17
+      },
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8357f07_e94d1fb8",
         "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
         "patchSetId": 17
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "634d4c92_4ceb94be",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-08T18:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8357f07_e94d1fb8",
+      "range": {
+        "startLine": 300,
+        "startChar": 9,
+        "endLine": 300,
+        "endChar": 51
+      },
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f53223c_e71fc740",
         "filename": "content/browser/shared_worker/shared_worker_service_impl.h",
         "patchSetId": 17
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "d5d09880_5098d9da",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-08T18:22:50Z",
+      "side": 1,
+      "message": "Thanks, was used in a previous version of the patch.",
+      "parentUuid": "2f53223c_e71fc740",
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08e92442_2815a40d",
         "filename": "content/renderer/shared_worker/shared_worker_repository.cc",
         "patchSetId": 17
@@ -156,6 +306,24 @@
       "writtenOn": "2017-09-08T06:49:56Z",
       "side": 1,
       "message": "Do we need to call Close() if we\u0027re going to erase it anyway?\n\nOh... I see, this is a strong binding and would just hang out indefinitely otherwise.\n\nStupid idea: does it have to be a strong binding? These are usually browser-side objects, right? If that connection closes, we\u0027re probably about to get killed anyway, right?\n\nNot as stupid idea: what about StrongBindingSet instead of maintaining a list of bindings like this?",
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "870b7bb1_ee27d73e",
+        "filename": "content/renderer/shared_worker/shared_worker_repository.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-08T18:22:50Z",
+      "side": 1,
+      "message": "The renderer is not necessarily closing. DocumentDetached corresponds to a single document being closed in the renderer. Here, we are closing any pipes to a shared worker that may have been opened from the document. There may be other documents referencing the same shared worker. The SharedWorkerHost manages lifetime of the shared worker by monitoring for when these client connections close.\n\nUsing StrongBindingSet is a great idea. Thanks, I had not seen that type before!",
+      "parentUuid": "08e92442_2815a40d",
       "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -182,6 +350,30 @@
       "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff5a9f3_e15bce4d",
+        "filename": "content/renderer/shared_worker/shared_worker_repository.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-08T18:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77d180cc_122f9f19",
+      "range": {
+        "startLine": 70,
+        "startChar": 18,
+        "endLine": 70,
+        "endChar": 24
+      },
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
