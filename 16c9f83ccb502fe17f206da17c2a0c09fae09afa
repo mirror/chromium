@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7641aa7f_f13d6d64",
+        "filename": "build/linux/sysroot_scripts/sysroot-creator-jessie.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-08T00:47:18Z",
+      "side": 1,
+      "message": "also add this to the stretch sysroot",
+      "range": {
+        "startLine": 219,
+        "startChar": 2,
+        "endLine": 219,
+        "endChar": 9
+      },
+      "revId": "16c9f83ccb502fe17f206da17c2a0c09fae09afa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
