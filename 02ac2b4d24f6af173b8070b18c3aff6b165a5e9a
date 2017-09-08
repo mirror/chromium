@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5f66ca3_118ef3c5",
+        "filename": "build/util/lib/common/chrome_test_server_spawner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-08T05:51:53Z",
+      "side": 1,
+      "message": "Just for completeness, should there be an \u0027https\u0027: \u0027\u0027, line here?  At least it looks to me like https uses an \"https\" SERVER_TYPE.",
+      "range": {
+        "startLine": 41,
+        "startChar": 15,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "02ac2b4d24f6af173b8070b18c3aff6b165a5e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
