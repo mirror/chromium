@@ -140,6 +140,30 @@
       "revId": "94d9067ccbecd4a2d7d5c06d8b8b85bafde368dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6474df6_ee6561e6",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-08T16:08:31Z",
+      "side": 1,
+      "message": "I don\u0027t think that you lose clarity.\nI think that better readability would be if you create the class\nAppListViewSearchFullscreenTest and implement there\n\nvoid InitializeSearch(bool is_tablet_mode, const std::string\u0026 search, view_mode) {\n....\n}\n\nThis should reduce significantly the complexity.\nI still prefer to see this style.",
+      "parentUuid": "06ef473d_a7b9eb41",
+      "range": {
+        "startLine": 508,
+        "startChar": 0,
+        "endLine": 515,
+        "endChar": 61
+      },
+      "revId": "94d9067ccbecd4a2d7d5c06d8b8b85bafde368dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
