@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b055006_4f3dddae",
+        "filename": "components/multidevice/service/fake_device_sync.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T23:38:49Z",
+      "side": 1,
+      "message": "Add the implementation inline here. Same for should_enroll_successfully().\n\nTrivial getters/setters should always be inline in the .h file.",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 31
+      },
+      "revId": "02a3517a87bb2c979a8b070dbe7107a3a0440582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87862905_8d262d2b",
+        "filename": "components/multidevice/service/multidevice_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T23:38:49Z",
+      "side": 1,
+      "message": "Use multidevice::DeviceSyncImpl::Factory::NewInstance().",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 39
+      },
+      "revId": "02a3517a87bb2c979a8b070dbe7107a3a0440582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e506641_f3407ec8",
+        "filename": "components/multidevice/service/multidevice_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T23:38:49Z",
+      "side": 1,
+      "message": "Don\u0027t pass the parameter here. Just use multidevice::DeviceSyncImpl::Factory::NewInstance() internally.",
+      "range": {
+        "startLine": 21,
+        "startChar": 21,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "02a3517a87bb2c979a8b070dbe7107a3a0440582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73fe4ed_a29926bf",
+        "filename": "components/multidevice/service/multidevice_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T23:38:49Z",
+      "side": 1,
+      "message": "Don\u0027t store this.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 77
+      },
+      "revId": "02a3517a87bb2c979a8b070dbe7107a3a0440582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b4c790_cce68170",
+        "filename": "components/multidevice/service/test_main.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T23:38:49Z",
+      "side": 1,
+      "message": "nit: Newline before.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 1
+      },
+      "revId": "02a3517a87bb2c979a8b070dbe7107a3a0440582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97726d72_086247e3",
+        "filename": "components/multidevice/service/test_main.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T23:38:49Z",
+      "side": 1,
+      "message": "Looks like you forgot to use this:\n\nDeviceSyncImpl::Factory::SetInstanceForTesting(new FakeDeviceSyncFactory());",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 1
+      },
+      "revId": "02a3517a87bb2c979a8b070dbe7107a3a0440582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
