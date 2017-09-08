@@ -576,8 +576,7 @@ bool WindowManagerState::ConvertPointToScreen(int64_t display_id,
   Display* display = display_manager()->GetDisplayById(display_id);
   if (display) {
     const display::Display& originated_display = display->GetDisplay();
-    const display::ViewportMetrics metrics =
-        display->platform_display()->GetViewportMetrics();
+    const display::ViewportMetrics metrics = display->GetViewportMetrics();
     *point = gfx::ConvertPointToDIP(
         originated_display.device_scale_factor() / metrics.ui_scale_factor,
         *point);
@@ -775,40 +774,43 @@ ServerWindow* WindowManagerState::GetRootWindowContaining(
   if (window_manager_display_roots_.empty())
     return nullptr;
 
-  gfx::Point location_in_screen(*location_in_display);
-  if (!ConvertPointToScreen(*display_id, &location_in_screen))
+  Display* display = display_manager()->GetDisplayById(*display_id);
+  if (!display)
     return nullptr;
 
-  WindowManagerDisplayRoot* target_display_root = nullptr;
+  gfx::Point display_origin;
+  const gfx::Rect& display_bounds_in_pixels =
+      display->GetViewportMetrics().bounds_in_pixels;
+  display_origin = display_bounds_in_pixels.origin();
+  if (gfx::Rect(display_bounds_in_pixels.size())
+          .Contains(*location_in_display)) {
+    return display->GetWindowManagerDisplayRootForUser(user_id())
+        ->GetClientVisibleRoot();
+  }
+
+  // The location is outside the bounds of the specified display. This generally
+  // happens when there is a grab and the mouse is moved to another display.
+  // Look for a display containing the location.
+  const gfx::Point screen_pixels =
+      *location_in_display + display_origin.OffsetFromOrigin();
   for (auto& display_root_ptr : window_manager_display_roots_) {
-    if (display_root_ptr->display()->GetDisplay().bounds().Contains(
-            location_in_screen)) {
-      target_display_root = display_root_ptr.get();
-      break;
+    if (display_root_ptr->display()
+            ->GetViewportMetrics()
+            .bounds_in_pixels.Contains(screen_pixels)) {
+      *display_id = display_root_ptr->display()->GetDisplay().id();
+      *location_in_display = screen_pixels - display_root_ptr->display()
+                                                 ->GetViewportMetrics()
+                                                 .bounds_in_pixels.origin()
+                                                 .OffsetFromOrigin();
+      return display_root_ptr->GetClientVisibleRoot();
     }
   }
 
   // TODO(kylechar): Better handle locations outside the window. Overlapping X11
   // windows, dragging and touch sensors need to be handled properly.
-  if (!target_display_root) {
-    DVLOG(1) << "Invalid event location " << location_in_display->ToString()
-             << " / display id " << *display_id;
-    target_display_root = window_manager_display_roots_.begin()->get();
-  }
-
-  // Update |location_in_display| and |display_id| if the target display is
-  // different from the originated display, e.g. drag-and-drop.
-  if (*display_id != target_display_root->display()->GetId()) {
-    gfx::Point origin =
-        target_display_root->display()->GetDisplay().bounds().origin();
-    *location_in_display = location_in_screen - origin.OffsetFromOrigin();
-    *location_in_display = gfx::ConvertPointToPixel(
-        target_display_root->display()->GetDisplay().device_scale_factor(),
-        *location_in_display);
-    *display_id = target_display_root->display()->GetId();
-  }
-
-  return target_display_root->GetClientVisibleRoot();
+  DVLOG(1) << "Invalid event location " << location_in_display->ToString()
+           << " / display id " << *display_id;
+  return window_manager_display_roots_.begin()->get()->GetClientVisibleRoot();
 }
 
 ServerWindow* WindowManagerState::GetRootWindowForEventDispatch(

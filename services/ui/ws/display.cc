@@ -93,6 +93,10 @@ const display::Display& Display::GetDisplay() {
   return display_;
 }
 
+const display::ViewportMetrics& Display::GetViewportMetrics() const {
+  return platform_display_->GetViewportMetrics();
+}
+
 DisplayManager* Display::display_manager() {
   return window_server_->display_manager();
 }
