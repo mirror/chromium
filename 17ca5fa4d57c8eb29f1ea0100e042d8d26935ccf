@@ -34,6 +34,24 @@
       "revId": "17ca5fa4d57c8eb29f1ea0100e042d8d26935ccf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55787ff_1592a91d",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-09-08T20:32:31Z",
+      "side": 1,
+      "message": "Added the SetState(CLOSED) call to fix the tests, and removed the logic in SetState that was causing the apps grid to reset on close (which was messing up the animation). I also added a comment to the function in the header just describing what it does.\n\nLet me know if you want me to rename this function or do something else with it. We are calling the delegate\u0027s dismiss() here, but I confirmed that we need to do more than just that.",
+      "parentUuid": "3b87f2d5_d17d7b2a",
+      "revId": "17ca5fa4d57c8eb29f1ea0100e042d8d26935ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
