@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb339c86_ce3dd1e6",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-09-08T15:17:45Z",
+      "side": 1,
+      "message": "I\u0027m writing to them. Better to return a pair instead?",
+      "parentUuid": "9d52859e_6dcdff49",
+      "range": {
+        "startLine": 323,
+        "startChar": 0,
+        "endLine": 323,
+        "endChar": 57
+      },
+      "revId": "64d2e5a11a9c5f7a74848e83aa7d48bd2b9ba718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff00e790_5f352b34",
         "filename": "base/profiler/native_stack_sampler_mac.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3ccd11a8_25d4eaee",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-09-08T15:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff00e790_5f352b34",
+      "range": {
+        "startLine": 547,
+        "startChar": 58,
+        "endLine": 547,
+        "endChar": 0
+      },
+      "revId": "64d2e5a11a9c5f7a74848e83aa7d48bd2b9ba718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bb50669_06b737bb",
         "filename": "base/profiler/native_stack_sampler_mac.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "64d2e5a11a9c5f7a74848e83aa7d48bd2b9ba718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5a881c_5e0de3a5",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-09-08T15:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bb50669_06b737bb",
+      "range": {
+        "startLine": 550,
+        "startChar": 0,
+        "endLine": 550,
+        "endChar": 11
+      },
+      "revId": "64d2e5a11a9c5f7a74848e83aa7d48bd2b9ba718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
