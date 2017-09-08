@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "30ae2e92_c744cca6",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-08T15:52:08Z",
+      "side": 1,
+      "message": "\u003e Evan, I don\u0027t think animating the layer will work well as the if the layer goes outside the bounds of the nativewidget it\u0027ll be clipped.\n\nThat may not be a bad thing given that this only shows when fullscreen and is clipped by the bounds of the display anyway (assuming the widget extends to the top of the screen).",
+      "parentUuid": "73595629_d68d53e3",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 51
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8937cadf_46caaca0",
         "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
         "patchSetId": 15
