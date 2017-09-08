@@ -291,7 +291,7 @@ void GeolocationPermissionContextTests::SetupRequestManager(
           permission_request_manager));
 
   // Prepare the PermissionRequestManager to display a mock bubble.
-  permission_request_manager->DisplayPendingRequests();
+  permission_request_manager->SetTabActiveForUnitTest();
 }
 
 #if defined(OS_ANDROID)

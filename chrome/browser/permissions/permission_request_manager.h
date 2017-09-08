@@ -75,11 +75,6 @@ class PermissionRequestManager
   // at which time the caller is free to delete the request.
   void CancelRequest(PermissionRequest* request);
 
-  // Will show a permission bubble if there is a pending permission request on
-  // the web contents that the PermissionRequestManager belongs to.
-  // TODO(timloh): Remove this from the public API.
-  void DisplayPendingRequests();
-
   // Will reposition the bubble (may change parent if necessary).
   void UpdateAnchorPosition();
 
@@ -102,6 +97,10 @@ class PermissionRequestManager
   void set_auto_response_for_test(AutoResponseType response) {
     auto_response_for_test_ = response;
   }
+
+  // WasShown() will be called when setting up browser tests but not unit tests.
+  // This function should be called in unit tests to allow prompts to be shown.
+  void SetTabActiveForUnitTest() { tab_can_show_prompts_ = true; }
 
  private:
   friend class test::PermissionRequestManagerTestApi;

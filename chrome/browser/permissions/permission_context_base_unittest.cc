@@ -722,7 +722,7 @@ class PermissionContextBaseTests : public ChromeRenderViewHostTestHarness {
     PermissionRequestManager* manager =
         PermissionRequestManager::FromWebContents(web_contents());
     prompt_factory_.reset(new MockPermissionPromptFactory(manager));
-    manager->DisplayPendingRequests();
+    manager->SetTabActiveForUnitTest();
   }
 
   void TearDown() override {
