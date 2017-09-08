@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c48a0e8_20cdf4a1",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-08T15:21:43Z",
+      "side": 1,
+      "message": "This __init__ seems unnecessary.",
+      "revId": "a7b3dc060804682f7ea292dbdb9df629929050c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf26e33_093a6ff1",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-08T15:21:43Z",
+      "side": 1,
+      "message": "It\u0027s more idiomatic to write:\n\nif \u0027third_party\u0027 not in path:\n    ...",
+      "revId": "a7b3dc060804682f7ea292dbdb9df629929050c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be76705b_93aff509",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-08T15:21:43Z",
+      "side": 1,
+      "message": "A lot of code in webkitpy (e.g. the wpt importer code) puts all functionality in a class like this, which then has a host or filesystem attribute... The main advantage of this is that when testing, we can easily replace the host or filesystem interface object with a fake one.\n\nIn a case like this, where we have one big script, it doesn\u0027t provide as much benefit, but it doesn\u0027t really hurt either.",
+      "revId": "a7b3dc060804682f7ea292dbdb9df629929050c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10a7ae8_cd63b9cb",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-08T15:21:43Z",
+      "side": 1,
+      "message": "For regex strings, you can also use raw strings r\u0027...\u0027 to avoid having to use double backslashes.",
+      "revId": "a7b3dc060804682f7ea292dbdb9df629929050c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6097017_711d477e",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-08T15:21:43Z",
+      "side": 1,
+      "message": "I think that putting important \"public api\" functions of a class at the top improves readability, since reading them first helps provide context for the helper methods.",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 267,
+        "endChar": 36
+      },
+      "revId": "a7b3dc060804682f7ea292dbdb9df629929050c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
