@@ -70,6 +70,24 @@
       "revId": "c1b9e014ec8d0bb04a13795dd8eb66aa399a2819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0bdee1_55acc41d",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T01:58:54Z",
+      "side": 1,
+      "message": "\u003eWe need a null check here too, right?\n\nWhen position is not null, ComputeContainerNode() should not be nullptr.\n\nAlso, please check node.IsConnected(), if it returns false, it isn\u0027t\nappeared in flat tree.",
+      "parentUuid": "c740bcec_349daf2c",
+      "revId": "c1b9e014ec8d0bb04a13795dd8eb66aa399a2819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
