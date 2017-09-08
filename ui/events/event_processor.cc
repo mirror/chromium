@@ -9,7 +9,17 @@
 
 namespace ui {
 
+EventProcessor::EventProcessor() : weak_ptr_factory_(this) {}
+
+EventProcessor::~EventProcessor() {}
+
 EventDispatchDetails EventProcessor::OnEventFromSource(Event* event) {
+  return ProcessEvent(weak_ptr_factory_.GetWeakPtr(), event);
+}
+
+EventDispatchDetails EventProcessor::ProcessEvent(
+    base::WeakPtr<EventProcessor> event_processor,
+    Event* event) {
   // If |event| is in the process of being dispatched or has already been
   // dispatched, then dispatch a copy of the event instead. We expect event
   // target to be already set if event phase is after EP_PREDISPATCH.
@@ -23,23 +33,25 @@ EventDispatchDetails EventProcessor::OnEventFromSource(Event* event) {
   }
 
   EventDispatchDetails details;
-  OnEventProcessingStarted(event_to_dispatch);
+  event_processor->OnEventProcessingStarted(event_to_dispatch);
+
   // GetInitialEventTarget() may handle the event.
-  EventTarget* initial_target = event_to_dispatch->handled()
-                                    ? nullptr
-                                    : GetInitialEventTarget(event_to_dispatch);
+  EventTarget* initial_target =
+      event_to_dispatch->handled()
+          ? nullptr
+          : event_processor->GetInitialEventTarget(event_to_dispatch);
   if (!event_to_dispatch->handled()) {
     EventTarget* target = initial_target;
     EventTargeter* targeter = nullptr;
 
     if (!target) {
-      EventTarget* root = GetRootForEvent(event_to_dispatch);
+      EventTarget* root = event_processor->GetRootForEvent(event_to_dispatch);
       DCHECK(root);
       targeter = root->GetEventTargeter();
       if (targeter) {
         target = targeter->FindTargetForEvent(root, event_to_dispatch);
       } else {
-        targeter = GetDefaultEventTargeter();
+        targeter = event_processor->GetDefaultEventTargeter();
         if (event_to_dispatch->target())
           target = root;
         else
@@ -49,7 +61,7 @@ EventDispatchDetails EventProcessor::OnEventFromSource(Event* event) {
     }
 
     while (target) {
-      details = DispatchEvent(target, event_to_dispatch);
+      details = event_processor->DispatchEvent(target, event_to_dispatch);
 
       if (!dispatch_original_event) {
         if (event_to_dispatch->stopped_propagation())
@@ -61,6 +73,11 @@ EventDispatchDetails EventProcessor::OnEventFromSource(Event* event) {
       if (details.dispatcher_destroyed)
         return details;
 
+      if (!event_processor) {
+        details.dispatcher_destroyed = true;
+        return details;
+      }
+
       if (details.target_destroyed || event->handled() ||
           target == initial_target) {
         break;
@@ -70,7 +87,8 @@ EventDispatchDetails EventProcessor::OnEventFromSource(Event* event) {
       target = targeter->FindNextBestTarget(target, event_to_dispatch);
     }
   }
-  OnEventProcessingFinished(event);
+
+  event_processor->OnEventProcessingFinished(event);
   return details;
 }
 
