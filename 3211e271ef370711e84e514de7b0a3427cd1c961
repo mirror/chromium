@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d079bbf_a6f94678",
+        "filename": "media/base/media_switches.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-08T00:32:55Z",
+      "side": 1,
+      "message": "There are no uses of this (or the switch) in Chromium. Some other code will need to change in order to use the Feature mechanism. It would probably also help to figure out the best solution (e.g., where we could pass a bool) if we knew where that code fits.",
+      "range": {
+        "startLine": 107,
+        "startChar": 40,
+        "endLine": 107,
+        "endChar": 59
+      },
+      "revId": "3211e271ef370711e84e514de7b0a3427cd1c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a55a1f_be616c35",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-08T00:32:55Z",
+      "side": 1,
+      "message": "Can we pass this in WebMediaPlayerParams or similar instead? As with below, this at least removes \"magic\" from inside this class.",
+      "revId": "3211e271ef370711e84e514de7b0a3427cd1c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2d303e_cd1040a9",
+        "filename": "media/gpu/android_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-08T00:32:55Z",
+      "side": 1,
+      "message": "From the comment for this member, it seems like it should be renamed to is_overlay_required.",
+      "range": {
+        "startLine": 367,
+        "startChar": 25,
+        "endLine": 367,
+        "endChar": 36
+      },
+      "revId": "3211e271ef370711e84e514de7b0a3427cd1c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91776a16_b01b5f35",
+        "filename": "media/gpu/android_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-08T00:32:55Z",
+      "side": 1,
+      "message": "The comment for this member needs to be updated.",
+      "range": {
+        "startLine": 367,
+        "startChar": 39,
+        "endLine": 367,
+        "endChar": 59
+      },
+      "revId": "3211e271ef370711e84e514de7b0a3427cd1c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e17884_cce6f26c",
+        "filename": "media/gpu/android_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-08T00:32:55Z",
+      "side": 1,
+      "message": "At a minimum, this should be passed in, such as to the constructor. It doesn\u0027t need to be determined within this class. That shouldn\u0027t require any more plumbing.",
+      "range": {
+        "startLine": 368,
+        "startChar": 6,
+        "endLine": 368,
+        "endChar": 62
+      },
+      "revId": "3211e271ef370711e84e514de7b0a3427cd1c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395f8cd5_fe2b9db5",
+        "filename": "media/gpu/android_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-08T00:32:55Z",
+      "side": 1,
+      "message": "\"force\" seems like a better name for this since it is overriding the default behavior rather than specifying whether one is required, which is determined by requires_secure_video_codec.",
+      "range": {
+        "startLine": 1526,
+        "startChar": 37,
+        "endLine": 1526,
+        "endChar": 57
+      },
+      "revId": "3211e271ef370711e84e514de7b0a3427cd1c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
