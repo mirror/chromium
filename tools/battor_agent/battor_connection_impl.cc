@@ -89,7 +89,10 @@ BattOrConnectionImpl::~BattOrConnectionImpl() {}
 
 void BattOrConnectionImpl::Open() {
   if (io_handler_) {
-    OnOpened(true);
+    LogSerial("Serial connection already open.");
+    base::SequencedTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::Bind(&Listener::OnConnectionOpened,
+                              base::Unretained(listener_), true));
     return;
   }
 
