@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ffb350fd_ff949c53",
+        "filename": "chrome/browser/ui/cocoa/download/download_item_button_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-08T22:53:07Z",
+      "side": 1,
+      "message": "DownloadItem is a pure virtual class, unfortunately.",
+      "parentUuid": "45dd5755_a15b99e3",
+      "range": {
+        "startLine": 20,
+        "startChar": 29,
+        "endLine": 20,
+        "endChar": 45
+      },
+      "revId": "b58ebb8b8cf34667f8c52d73a0b7bdd83dec91dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48555de2_1e478d04",
         "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "b58ebb8b8cf34667f8c52d73a0b7bdd83dec91dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e673398_3d296cc8",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-08T22:53:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48555de2_1e478d04",
+      "range": {
+        "startLine": 163,
+        "startChar": 40,
+        "endLine": 163,
+        "endChar": 62
+      },
+      "revId": "b58ebb8b8cf34667f8c52d73a0b7bdd83dec91dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "98b0d08d_aa9414bf",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-08T22:53:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c577fc48_570b5cc9",
+      "range": {
+        "startLine": 180,
+        "startChar": 10,
+        "endLine": 180,
+        "endChar": 23
+      },
+      "revId": "b58ebb8b8cf34667f8c52d73a0b7bdd83dec91dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf7f2999_4f40891b",
         "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "b58ebb8b8cf34667f8c52d73a0b7bdd83dec91dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6baf2123_23062021",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-08T22:53:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf7f2999_4f40891b",
+      "range": {
+        "startLine": 192,
+        "startChar": 29,
+        "endLine": 192,
+        "endChar": 61
+      },
+      "revId": "b58ebb8b8cf34667f8c52d73a0b7bdd83dec91dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a500a00c_18dbf874",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-08T22:53:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bd0cba1_fb636531",
+      "range": {
+        "startLine": 259,
+        "startChar": 3,
+        "endLine": 259,
+        "endChar": 11
+      },
+      "revId": "b58ebb8b8cf34667f8c52d73a0b7bdd83dec91dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "439ca7c4_a1760898",
         "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
         "patchSetId": 10
@@ -137,6 +257,30 @@
       "revId": "b58ebb8b8cf34667f8c52d73a0b7bdd83dec91dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3387d89f_0de5aa0f",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-08T22:53:07Z",
+      "side": 1,
+      "message": "Yeah :/. I think rsesek@\u0027s preference is to assign the block to a local variable first. I can change to that if you think it\u0027s particularly ugly.",
+      "parentUuid": "439ca7c4_a1760898",
+      "range": {
+        "startLine": 459,
+        "startChar": 24,
+        "endLine": 459,
+        "endChar": 41
+      },
+      "revId": "b58ebb8b8cf34667f8c52d73a0b7bdd83dec91dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "231ef7b4_5711ed63",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-08T22:53:07Z",
+      "side": 1,
+      "message": "As far as I can tell, it\u0027s safe to post this notification as often as the value changes, and VO throttles delivery.",
+      "parentUuid": "b05ee711_40fc11d8",
+      "range": {
+        "startLine": 66,
+        "startChar": 34,
+        "endLine": 66,
+        "endChar": 73
+      },
+      "revId": "b58ebb8b8cf34667f8c52d73a0b7bdd83dec91dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f416febd_ae871571",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
         "patchSetId": 10
@@ -177,6 +345,24 @@
       "revId": "b58ebb8b8cf34667f8c52d73a0b7bdd83dec91dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66926554_90ed1c9e",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-08T22:53:07Z",
+      "side": 1,
+      "message": "This is just a container for the things inside it; it\u0027s intended to be skipped in the a11y tree.",
+      "parentUuid": "f416febd_ae871571",
+      "revId": "b58ebb8b8cf34667f8c52d73a0b7bdd83dec91dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -200,6 +386,30 @@
       "revId": "b58ebb8b8cf34667f8c52d73a0b7bdd83dec91dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12eb4d0_65c1c1e3",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-08T22:53:07Z",
+      "side": 1,
+      "message": "Eek, this was WIP that snuck in. I\u0027m saving it for a round of a11y tweaks (from talking to hwi@). Removed.",
+      "parentUuid": "927d7339_55e7e140",
+      "range": {
+        "startLine": 314,
+        "startChar": 20,
+        "endLine": 314,
+        "endChar": 24
+      },
+      "revId": "b58ebb8b8cf34667f8c52d73a0b7bdd83dec91dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

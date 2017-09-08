@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6022fba2_0d2364c6",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-08T22:53:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e524bd1_7e390eed",
+      "range": {
+        "startLine": 97,
+        "startChar": 73,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "c6590650ed779a95b5eee798c438b1d05c6348b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cafbac75_4c6c6996",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "001448fb_9222535d",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-08T22:53:07Z",
+      "side": 1,
+      "message": "It might be used while inside the mouse tracking loop a few lines down.",
+      "parentUuid": "cafbac75_4c6c6996",
+      "range": {
+        "startLine": 103,
+        "startChar": 66,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "c6590650ed779a95b5eee798c438b1d05c6348b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2f9d675_3e26f4c4",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
         "patchSetId": 11
@@ -68,6 +116,30 @@
       "revId": "c6590650ed779a95b5eee798c438b1d05c6348b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48fc9fca_6f27888b",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-08T22:53:07Z",
+      "side": 1,
+      "message": "It can happen in tests, at least. Good catch re. super — fixed.",
+      "parentUuid": "a2f9d675_3e26f4c4",
+      "range": {
+        "startLine": 186,
+        "startChar": 21,
+        "endLine": 186,
+        "endChar": 0
+      },
+      "revId": "c6590650ed779a95b5eee798c438b1d05c6348b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
