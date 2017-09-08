@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0169455_8df5b77d",
+        "filename": "chrome/installer/linux/rpm/calculate_package_deps.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-08T00:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de0e1497_55834969",
+      "revId": "3883991b825dde508e83e27efa4be3659c4dc26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27b0a85e_7b6d4bb9",
         "filename": "chrome/installer/linux/rpm/calculate_package_deps.py",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-08T00:07:15Z",
       "side": 1,
       "message": "Do you think this will help improve the matching?\n\nreq \u003d requirement[:requirement.find(\u0027(\u0027)]\nif req in bundled_shlibs:",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 41
+      },
+      "revId": "3883991b825dde508e83e27efa4be3659c4dc26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc6a970_262b6cce",
+        "filename": "chrome/installer/linux/rpm/calculate_package_deps.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-08T00:37:30Z",
+      "side": 1,
+      "message": "I think it\u0027s less risky to do it this way -- if for some reason there\u0027s a libfoo(2).so",
+      "parentUuid": "27b0a85e_7b6d4bb9",
       "range": {
         "startLine": 40,
         "startChar": 12,
