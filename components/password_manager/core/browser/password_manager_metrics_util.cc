@@ -227,6 +227,11 @@ void LogIsSyncPasswordHashSaved(IsSyncPasswordHashSaved state) {
 }
 #endif
 
+void LogAboutBlankPasswordSubmission(bool for_main_frame) {
+  UMA_HISTOGRAM_BOOLEAN("PasswordManager.AboutBlankPasswordSubmission",
+                        for_main_frame);
+}
+
 }  // namespace metrics_util
 
 }  // namespace password_manager

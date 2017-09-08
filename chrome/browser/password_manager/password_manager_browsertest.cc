@@ -40,6 +40,7 @@
 #include "components/password_manager/content/browser/content_password_manager_driver.h"
 #include "components/password_manager/content/browser/content_password_manager_driver_factory.h"
 #include "components/password_manager/core/browser/login_model.h"
+#include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/test_password_store.h"
 #include "components/password_manager/core/common/password_manager_features.h"
 #include "components/version_info/version_info.h"
@@ -3348,6 +3349,94 @@ class PasswordManagerDialogBrowserTest
 
 IN_PROC_BROWSER_TEST_F(PasswordManagerDialogBrowserTest, InvokeDialog_normal) {
   RunDialog();
+}
+
+class SitePerProcessPasswordManagerBrowserTest
+    : public PasswordManagerBrowserTestBase {
+ public:
+  SitePerProcessPasswordManagerBrowserTest() {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    content::IsolateAllSitesForTesting(command_line);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(SitePerProcessPasswordManagerBrowserTest);
+};
+
+// Verify that password manager ignores passwords on forms injected into
+// about:blank frames.  See https://crbug.com/756587.
+IN_PROC_BROWSER_TEST_F(SitePerProcessPasswordManagerBrowserTest,
+                       AboutBlankFramesAreIgnored) {
+  // Start from a page without a password form.
+  NavigateToFile("/password/other.html");
+
+  // Add a blank iframe and then inject a password form into it.
+  std::unique_ptr<BubbleObserver> prompt_observer(
+      new BubbleObserver(WebContents()));
+  GURL submit_url = embedded_test_server()->GetURL("/password/done.html");
+  std::string form_html =
+      "<form method='POST' action='" + submit_url.spec() + "'"
+      "      onsubmit='return true;' id='testform'>"
+      "  <input type='password' id='password_field'>"
+      "</form>";
+  std::string inject_blank_frame_with_password_form =
+      "var frame = document.createElement('iframe');"
+      "document.body.appendChild(frame);"
+      "frame.contentDocument.body.innerHTML = \"" + form_html + "\"";
+  ASSERT_TRUE(content::ExecuteScript(WebContents(),
+                                     inject_blank_frame_with_password_form));
+  content::RenderFrameHost* frame =
+      ChildFrameAt(WebContents()->GetMainFrame(), 0);
+  EXPECT_EQ(GURL(url::kAboutBlankURL), frame->GetLastCommittedURL());
+  EXPECT_TRUE(frame->IsRenderFrameLive());
+  EXPECT_FALSE(prompt_observer->IsSavePromptShownAutomatically());
+
+  // Fill in the password and submit the form.  This shouldn't bring up a save
+  // password prompt and shouldn't result in a renderer kill.
+  base::HistogramTester histogram_tester;
+  std::string submit_form =
+      "document.getElementById('password_field').value = 'pa55w0rd';"
+      "document.getElementById('testform').submit();";
+  {
+    NavigationObserver observer(WebContents());
+    observer.SetPathToWaitFor("/password/done.html");
+    ASSERT_TRUE(content::ExecuteScript(frame, submit_form));
+    observer.Wait();
+  }
+  EXPECT_TRUE(frame->IsRenderFrameLive());
+  EXPECT_EQ(GURL(embedded_test_server()->GetURL("/password/done.html")),
+            frame->GetLastCommittedURL());
+  EXPECT_FALSE(prompt_observer->IsSavePromptShownAutomatically());
+  const char kHistogramName[] = "PasswordManager.AboutBlankPasswordSubmission";
+  histogram_tester.ExpectUniqueSample(kHistogramName,
+                                      false /* for_main_frame */, 1);
+
+  // Repeat this for an about:blank popup.
+  content::WindowedNotificationObserver popup_observer(
+      chrome::NOTIFICATION_TAB_ADDED,
+      content::NotificationService::AllSources());
+  EXPECT_TRUE(ExecuteScript(WebContents(),
+      "var w = window.open('about:blank');"
+      "w.document.body.innerHTML = \"" + form_html + "\";"));
+  popup_observer.Wait();
+  ASSERT_EQ(2, browser()->tab_strip_model()->count());
+  content::WebContents* newtab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  {
+    std::unique_ptr<BubbleObserver> prompt_observer(new BubbleObserver(newtab));
+    NavigationObserver observer(newtab);
+    observer.SetPathToWaitFor("/password/done.html");
+    ASSERT_TRUE(content::ExecuteScript(newtab, submit_form));
+    observer.Wait();
+    EXPECT_FALSE(prompt_observer->IsSavePromptShownAutomatically());
+  }
+  EXPECT_TRUE(newtab->GetMainFrame()->IsRenderFrameLive());
+  EXPECT_EQ(GURL(embedded_test_server()->GetURL("/password/done.html")),
+            newtab->GetMainFrame()->GetLastCommittedURL());
+  histogram_tester.ExpectTotalCount(kHistogramName, 2);
+  histogram_tester.ExpectBucketCount(kHistogramName,
+                                     true /* for_main_frame */, 1);
 }
 
 }  // namespace password_manager

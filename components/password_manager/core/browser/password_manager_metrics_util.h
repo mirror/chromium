@@ -366,6 +366,10 @@ void LogSyncPasswordHashChange(SyncPasswordHashChange event);
 void LogIsSyncPasswordHashSaved(IsSyncPasswordHashSaved state);
 #endif
 
+// Log an attempt to submit a form on an about:blank frame.  |for_main_frame|
+// indicates if the form was submitted on a main frame or a subframe.
+void LogAboutBlankPasswordSubmission(bool for_main_frame);
+
 }  // namespace metrics_util
 
 }  // namespace password_manager

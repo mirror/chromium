@@ -15,6 +15,7 @@
 #include "components/password_manager/core/browser/password_manager.h"
 #include "components/password_manager/core/browser/password_manager_client.h"
 #include "components/password_manager/core/browser/password_manager_metrics_recorder.h"
+#include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/navigation_entry.h"
@@ -220,8 +221,13 @@ void ContentPasswordManagerDriver::PasswordFormSubmitted(
     const autofill::PasswordForm& password_form) {
   if (!CheckChildProcessSecurityPolicy(
           password_form.origin,
-          BadMessageReason::CPMD_BAD_ORIGIN_FORM_SUBMITTED))
+          BadMessageReason::CPMD_BAD_ORIGIN_FORM_SUBMITTED)) {
+    if (password_form.origin == GURL(url::kAboutBlankURL)) {
+      bool for_main_frame = !render_frame_host_->GetParent();
+      metrics_util::LogAboutBlankPasswordSubmission(for_main_frame);
+    }
     return;
+  }
   GetPasswordManager()->OnPasswordFormSubmitted(this, password_form);
 }
 
@@ -328,6 +334,12 @@ void ContentPasswordManagerDriver::UserModifiedPasswordField() {
 bool ContentPasswordManagerDriver::CheckChildProcessSecurityPolicy(
     const GURL& url,
     BadMessageReason reason) {
+  // Disallow password manager usage for about:blank frames to prevent security
+  // issues with autofilling passwords for about:blank frames generated from
+  // different origins.
+  if (url == GURL(url::kAboutBlankURL))
+    return false;
+
   content::ChildProcessSecurityPolicy* policy =
       content::ChildProcessSecurityPolicy::GetInstance();
   if (!policy->CanAccessDataForOrigin(render_frame_host_->GetProcess()->GetID(),
