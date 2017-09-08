@@ -16,7 +16,8 @@
 #include "base/location.h"
 #include "base/stl_util.h"
 #include "base/task_runner.h"
-#include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/threading/scoped_blocking_call.h"
 
 namespace net {
 
@@ -45,9 +46,10 @@ ScopedCERTCertificateList NSSCertDatabaseChromeOS::ListCertsSync() {
 
 void NSSCertDatabaseChromeOS::ListCerts(
     const NSSCertDatabase::ListCertsCallback& callback) {
-  base::PostTaskAndReplyWithResult(
-      GetSlowTaskRunner().get(), FROM_HERE,
-      base::Bind(&NSSCertDatabaseChromeOS::ListCertsImpl, profile_filter_),
+  base::PostWithTraitsAndReplyWithResult(
+       FROM_HERE,
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::BindOnce(&NSSCertDatabaseChromeOS::ListCertsImpl, profile_filter_),
       callback);
 }
 
@@ -72,6 +74,14 @@ void NSSCertDatabaseChromeOS::ListModules(
 
 ScopedCERTCertificateList NSSCertDatabaseChromeOS::ListCertsImpl(
     const NSSProfileFilterChromeOS& profile_filter) {
+  // NSS calls below may reenter //net via extension hooks. If the reentered
+  // code needs to synchronously wait for a task to run but the thread pool in
+  // which that task must run doesn't have enough threads to schedule it, a
+  // deadlock occurs. To prevent that, the base::ScopedBlockingCall below
+  // increments the thread pool capacity if this method takes too much time to
+  // run.
+  base::ScopedBlockingCall scoped_blocking_call(base::BlockingType::MAY_BLOCK);
+
   ScopedCERTCertificateList certs(
       NSSCertDatabase::ListCertsImpl(crypto::ScopedPK11Slot()));
 
