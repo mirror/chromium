@@ -210,6 +210,8 @@ const FeatureNameMap& GetDefaultFeatureNameMap() {
                                  WebFeaturePolicyFeature::kFullscreen);
     default_feature_name_map.Set("payment", WebFeaturePolicyFeature::kPayment);
     default_feature_name_map.Set("usb", WebFeaturePolicyFeature::kUsb);
+    default_feature_name_map.Set("bluetooth",
+                                 WebFeaturePolicyFeature::kBluetooth);
     default_feature_name_map.Set("camera", WebFeaturePolicyFeature::kCamera);
     default_feature_name_map.Set("encrypted-media",
                                  WebFeaturePolicyFeature::kEme);
