@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9941fd7_7132866a",
+        "filename": "chrome/browser/task_manager/sampling/task_group.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-08T18:29:52Z",
+      "side": 1,
+      "message": "shared_sampler_win.cc is the path that gathers memory stats on windows. What prevents this codepath from continuing to report memory info after this change?",
+      "revId": "08f31a5ef84b822daefe4e069f1826b0d9fe2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e757312d_d2c807a0",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-08T18:29:52Z",
+      "side": 1,
+      "message": "If physical memory and memory values are always the same on all platforms, I don\u0027t think we need both columns.",
+      "revId": "08f31a5ef84b822daefe4e069f1826b0d9fe2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be26ad4b_3c3bb219",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-08T18:29:52Z",
+      "side": 1,
+      "message": "It looks like you\u0027re gathering these dumps even if the memory column is hidden -- preventing that is the purpose of the REFRESH_TYPE checks.",
+      "revId": "08f31a5ef84b822daefe4e069f1826b0d9fe2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb57354d_138f8fb8",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-08T18:29:52Z",
+      "side": 1,
+      "message": "Let\u0027s talk about performance.\n\nWhat is the latency on these? How many ms does each dump cost? How does it scale with 80 or more child processes?\n\nAre the stats gathered in-process or out-of-process? If they are gathered out-of-process, what guarantees that the helper process stays launched for the duration of the Task Manager being visible?\n\nThe codepath for gathering memory stats is very finely tuned to be efficient on Windows, so I want to make sure that this does not result in a big perf regression. In particular, my worry is that there may be no backpressure mechanism here to slow down dump requests, if our dump throughput falls below 1/sec. In that case, the number of enqueued tasks would simply pile up.\n\nIt looks like https://cs.chromium.org/chromium/src/services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_win.cc is what\u0027s actually doing the computation? I\u0027d like Bruce Dawson\u0027s perspective on the perf of that vs. shared_sampler_win.cc",
+      "revId": "08f31a5ef84b822daefe4e069f1826b0d9fe2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

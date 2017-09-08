@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0ef0f95_33a2c89c",
+        "filename": "chrome/browser/task_manager/sampling/task_group_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-08T18:29:52Z",
+      "side": 0,
+      "message": "You\u0027re deleting some test coverage for the codepath you\u0027re removing. Where\u0027s the test coverage for your new code?\n\nFrom what I can see, there is some basic browsertest coverage for the PHYSICAL_MEMORY column in task_manager_browsertest.cc. That may be good enough, but it might also be beneficial to \namend, say, one of the memory-focused tests -- maybe just add an expectation to TaskManagerBrowserTest.JSHeapMemory?",
+      "revId": "8c577b8ef4675ae2438197941561a4c401a61283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
