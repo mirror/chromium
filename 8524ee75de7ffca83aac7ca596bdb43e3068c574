@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72bc51de_2bf1f339",
+        "filename": "components/history/core/browser/top_sites_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-08T03:40:52Z",
+      "side": 1,
+      "message": "Sorry for the nits. Generally we only use structs for data carrying, no functions and very rarely subclassing. Make this a class and expose functions for the state getters (sorry).",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 27
+      },
+      "revId": "8524ee75de7ffca83aac7ca596bdb43e3068c574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54552da_76124257",
+        "filename": "components/history/core/browser/top_sites_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-08T03:40:52Z",
+      "side": 1,
+      "message": "Sorry for the nits. Generally we only use structs for data carrying, no functions and very rarely subclassing. Make this a class and expose functions for the state getters (sorry).",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 27
+      },
+      "revId": "8524ee75de7ffca83aac7ca596bdb43e3068c574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
