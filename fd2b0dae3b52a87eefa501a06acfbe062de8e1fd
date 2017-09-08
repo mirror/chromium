@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "29d294d7_870344e6",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-08T21:28:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8258202d_3a47ecef",
+      "revId": "fd2b0dae3b52a87eefa501a06acfbe062de8e1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ab3c6f7_4e0e9f75",
         "filename": "content/browser/frame_host/frame_tree.cc",
         "patchSetId": 13
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "After discussing offline, I went ahead and implemented 1+2.  Please take a look :)\n\nI ended up exposing GetPendingMainFrame from WebContentsImpl so RenderViewHostImpl can access it.  Since we already had this in unit tests, I unified the two, though that required some minor refactoring/cleanup in some tests.\n\nI tried also dispatching RenderViewCreated for inactive RVH being used for subframes in PS17 - even though that failed only one test, BrowserActionApiTest.BrowserActionPopupWithIframe, it pointed to a larger problem, where places like ExtensionHost assume RenderViewCreated will be fired only for both current and pending main frame RVHs; it even has a comment:\n  // A weak pointer to the current or pending RenderViewHost. We don\u0027t access\n  // this through the host_contents because we want to deal with the pending\n  // host, so we can send messages to it before it finishes loading.\n  content::RenderViewHost* render_view_host_;\n\nFiring this for OOPIFs overwrites its render_view_host_ with the subframe\u0027s RVH, and then things get confused on resize behavior, etc.\n\nUntil we can move all these off to RenderFrameCreated, I think it\u0027s safest to keep dispatching it in just the main frame cases.\n\nIf we agree on this approach, I\u0027ll file a followup bug for the other cleanup I mentioned above.\n\n(Sorry for the mess with PSes - PS18 and PS19 were supposed to go into a separate CL but didn\u0027t thanks to a gerrit screw-up.)",
       "parentUuid": "70adc629_bfbe493f",
+      "revId": "fd2b0dae3b52a87eefa501a06acfbe062de8e1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643d0858_c333274c",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-08T21:28:13Z",
+      "side": 1,
+      "message": "Thanks-- this sounds like a good plan to me.  Filing a followup bug seems like a good idea, and maybe some of these new comments can include TODOs referencing it.",
+      "parentUuid": "e2e7aca3_b6366a8c",
       "revId": "fd2b0dae3b52a87eefa501a06acfbe062de8e1fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
