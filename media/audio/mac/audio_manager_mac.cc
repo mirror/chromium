@@ -340,6 +340,11 @@ static bool GetDeviceChannels(AudioDeviceID device,
   DCHECK(AudioManager::Get()->GetTaskRunner()->BelongsToCurrentThread());
   CHECK(channels);
 
+  if (true) {
+    *channels = 1;
+    return true;
+  }
+
   // If the device has more channels than possible for layouts to express, use
   // the total count of channels on the device; as of this writing, macOS will
   // only return up to 8 channels in any layout. To allow WebAudio to work with
@@ -357,22 +362,34 @@ static bool GetDeviceChannels(AudioDeviceID device,
   }
 
   ScopedAudioUnit au(device, element);
-  if (!au.is_valid())
+  if (!au.is_valid()) {
+    LOG(ERROR) << "!au.is_valid()";
     return false;
+  }
 
   // Attempt to retrieve the channel layout from the AudioUnit.
   //
   // Note: We don't use kAudioDevicePropertyPreferredChannelLayout on the device
   // because it is not available on all devices.
+  bool use_preferred = false;
   UInt32 size;
   Boolean writable;
   OSStatus result = AudioUnitGetPropertyInfo(
       au.audio_unit(), kAudioUnitProperty_AudioChannelLayout,
       kAudioUnitScope_Output, element, &size, &writable);
   if (result != noErr) {
-    OSSTATUS_DLOG(ERROR, result)
+    OSSTATUS_DLOG(WARNING, result)
         << "Failed to get property info for AudioUnit channel layout.";
-    return false;
+    result = AudioUnitGetPropertyInfo(
+        au.audio_unit(), kAudioDevicePropertyPreferredChannelLayout,
+        kAudioUnitScope_Output, element, &size, &writable);
+    if (result != noErr) {
+      OSSTATUS_DLOG(ERROR, result) << "Failed to get preferred property info "
+                                      "for AudioUnit channel layout.";
+      return false;
+    }
+
+    use_preferred = true;
   }
 
   std::unique_ptr<uint8_t[]> layout_storage(new uint8_t[size]);
@@ -380,7 +397,9 @@ static bool GetDeviceChannels(AudioDeviceID device,
       reinterpret_cast<AudioChannelLayout*>(layout_storage.get());
 
   result = AudioUnitGetProperty(au.audio_unit(),
-                                kAudioUnitProperty_AudioChannelLayout,
+                                use_preferred
+                                    ? kAudioDevicePropertyPreferredChannelLayout
+                                    : kAudioUnitProperty_AudioChannelLayout,
                                 kAudioUnitScope_Output, element, layout, &size);
   if (result != noErr) {
     OSSTATUS_LOG(ERROR, result) << "Failed to get AudioUnit channel layout.";
@@ -625,8 +644,14 @@ AudioParameters AudioManagerMac::GetInputStreamParameters(
   if (GetDeviceChannels(device, AUElement::INPUT, &channels) && channels <= 2) {
     channel_layout = GuessChannelLayout(channels);
   } else {
+#if 1
+    DLOG(ERROR) << "Failed to get the device channels (" << channels
+                << "), use *mono* as default for device '" << device_id << "'";
+    channel_layout = CHANNEL_LAYOUT_MONO;
+#else
     DLOG(ERROR) << "Failed to get the device channels, use stereo as default "
                 << "for device " << device_id;
+#endif
   }
 
   int sample_rate = HardwareSampleRateForDevice(device);
@@ -935,6 +960,8 @@ bool AudioManagerMac::IsSuspending() const {
 
 bool AudioManagerMac::ShouldDeferStreamStart() const {
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
+  if (!power_observer_)
+    return false;
   return power_observer_->ShouldDeferStreamStart();
 }
 
