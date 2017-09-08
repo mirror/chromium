@@ -9,6 +9,9 @@
 #import "ios/chrome/browser/ui/browser_list/browser.h"
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
+#import "ios/chrome/browser/ui/sad_tab/sad_tab_view.h"
+#import "ios/chrome/browser/web/sad_tab_tab_helper.h"
+#import "ios/chrome/browser/web/sad_tab_tab_helper_delegate.h"
 #import "ios/clean/chrome/browser/ui/commands/context_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_dialog_coordinator.h"
 #import "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_dialog_request.h"
@@ -20,6 +23,7 @@
 #import "ios/clean/chrome/browser/ui/web_contents/web_contents_mediator.h"
 #import "ios/clean/chrome/browser/ui/web_contents/web_contents_view_controller.h"
 #include "ios/web/public/navigation_manager.h"
+#import "ios/web/public/web_state/ui/crw_generic_content_view.h"
 #include "ios/web/public/web_state/web_state.h"
 #import "ios/web/public/web_state/web_state_delegate_bridge.h"
 
@@ -27,7 +31,9 @@
 #error "This file requires ARC support."
 #endif
 
-@interface WebCoordinator ()<ContextMenuCommands, CRWWebStateDelegate> {
+@interface WebCoordinator ()<ContextMenuCommands,
+                             CRWWebStateDelegate,
+                             SadTabTabHelperDelegate> {
   std::unique_ptr<web::WebStateDelegateBridge> _webStateDelegate;
 }
 @property(nonatomic, strong) WebContentsViewController* viewController;
@@ -60,6 +66,9 @@
   self.webState->SetDelegate(_webStateDelegate.get());
   self.mediator.webState = self.webState;
   [self setWebStateOverlayParent];
+  SadTabTabHelper* sadTabHelper = SadTabTabHelper::FromWebState(self.webState);
+  if (sadTabHelper)
+    sadTabHelper->SetDelegate(self);
 }
 
 - (void)start {
@@ -73,6 +82,9 @@
 
 - (void)stop {
   [self resetWebStateOverlayParent];
+  SadTabTabHelper* sadTabHelper = SadTabTabHelper::FromWebState(self.webState);
+  if (sadTabHelper)
+    sadTabHelper->SetDelegate(nil);
   [super stop];
 }
 
@@ -171,6 +183,20 @@
         ->GetForBrowserState(self.browser->browser_state())
         ->SetWebStateParentCoordinator(nil, self.webState);
   }
+}
+
+#pragma mark - SadTabTabHelperDelegate
+
+- (void)presentSadTabForRepeatedFailure:(BOOL)repeatedFailure {
+  // Create a SadTabView so |webstate| presents it.
+  SadTabView* sadTabview = [[SadTabView alloc]
+           initWithMode:repeatedFailure ? SadTabViewMode::FEEDBACK
+                                        : SadTabViewMode::RELOAD
+      navigationManager:self.webState->GetNavigationManager()];
+  sadTabview.dispatcher = static_cast<id>(self.browser->dispatcher());
+  CRWContentView* contentView =
+      [[CRWGenericContentView alloc] initWithView:sadTabview];
+  self.webState->ShowTransientContentView(contentView);
 }
 
 @end
