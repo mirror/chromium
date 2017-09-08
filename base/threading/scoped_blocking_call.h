@@ -78,6 +78,17 @@ BASE_EXPORT void SetBlockingObserverForCurrentThread(
 
 BASE_EXPORT void ClearBlockingObserverForTesting();
 
+class BASE_EXPORT ScopedClearBlockingObserverForTesting {
+ public:
+  ScopedClearBlockingObserverForTesting();
+  ~ScopedClearBlockingObserverForTesting();
+
+ private:
+  BlockingObserver* const blocking_observer_;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedClearBlockingObserverForTesting);
+};
+
 }  // namespace internal
 
 }  // namespace base
