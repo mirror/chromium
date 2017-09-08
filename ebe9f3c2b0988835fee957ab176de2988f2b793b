@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed0a3cf7_a43218c6",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-08T06:48:51Z",
+      "side": 1,
+      "message": "Was RegisterCallback, not RegisterIdleCallback.\n\nAnd the following function (on line 70) is CancelCallback, not CancelIdleCallback.",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 26
+      },
+      "revId": "ebe9f3c2b0988835fee957ab176de2988f2b793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
