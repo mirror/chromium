@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fb36c88_911ea072",
+        "filename": "third_party/webrtc_overrides/webrtc/rtc_base/task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-09-08T08:29:23Z",
+      "side": 1,
+      "message": "nit: can you change this to\nCHECK(impl_-\u003eStartWithOptions(options));\n\n(just so that the expression that failed, is clear)",
+      "range": {
+        "startLine": 109,
+        "startChar": 7,
+        "endLine": 109,
+        "endChar": 8
+      },
+      "revId": "e5b2bf9135440248e4ba3303a3701e080ab1b87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
