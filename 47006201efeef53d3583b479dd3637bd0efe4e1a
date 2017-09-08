@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f88c68a3_ca2f7ba8",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:07:49Z",
+      "side": 1,
+      "message": "Explain why we\u0027re doing this. Maybe something like\n// Blocking calls made outside of tasks should not influence the capacity count as no task is running.\n\nOr something like that. Feel free to reword.",
+      "range": {
+        "startLine": 520,
+        "startChar": 5,
+        "endLine": 520,
+        "endChar": 49
+      },
+      "revId": "47006201efeef53d3583b479dd3637bd0efe4e1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3981d328_279d7ee1",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:07:49Z",
+      "side": 1,
+      "message": "Would it be useful to DCHECK here any unmatched BlockingScopeExited?",
+      "range": {
+        "startLine": 537,
+        "startChar": 2,
+        "endLine": 538,
+        "endChar": 11
+      },
+      "revId": "47006201efeef53d3583b479dd3637bd0efe4e1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
