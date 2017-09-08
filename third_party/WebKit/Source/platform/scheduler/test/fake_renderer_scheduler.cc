@@ -112,7 +112,7 @@ void FakeRendererScheduler::VirtualTimePaused() {}
 
 void FakeRendererScheduler::VirtualTimeResumed() {}
 
-void FakeRendererScheduler::SetTimerQueueStoppingWhenBackgroundedEnabled(
+void FakeRendererScheduler::SetQueueStoppingWhenBackgroundedEnabled(
     bool enabled) {}
 
 void FakeRendererScheduler::SetTopLevelBlameContext(
