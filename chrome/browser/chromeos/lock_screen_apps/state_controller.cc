@@ -280,6 +280,10 @@ void StateController::RequestNewLockScreenNote() {
   HandleNewNoteRequest(NewNoteRequestType::kTrayAction);
 }
 
+void StateController::CloseLockScreenNote() {
+  MoveToBackground();
+}
+
 void StateController::OnSessionStateChanged() {
   if (!session_manager::SessionManager::Get()->IsScreenLocked()) {
     lock_screen_data_->SetSessionLocked(false);
