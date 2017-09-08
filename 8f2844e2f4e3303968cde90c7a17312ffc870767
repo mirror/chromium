@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7273b85_9b0ff14c",
+        "filename": "base/i18n/break_iterator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-08T20:32:03Z",
+      "side": 1,
+      "message": "I think you want this to be virtual as well.",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 3
+      },
+      "revId": "8f2844e2f4e3303968cde90c7a17312ffc870767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f514485_e8a461f8",
+        "filename": "base/i18n/break_iterator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-08T20:32:03Z",
+      "side": 1,
+      "message": "You may want to consider making this protected.  That might remove the need to make the GetString functions virtual.",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 24
+      },
+      "revId": "8f2844e2f4e3303968cde90c7a17312ffc870767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc98c82_57057336",
+        "filename": "base/i18n/break_iterator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-08T20:32:03Z",
+      "side": 1,
+      "message": "You may want to consider making these protected, which again gets rid of the need to make some functions virtual.",
+      "range": {
+        "startLine": 174,
+        "startChar": 2,
+        "endLine": 174,
+        "endChar": 21
+      },
+      "revId": "8f2844e2f4e3303968cde90c7a17312ffc870767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd260fc9_761e501a",
+        "filename": "components/omnibox/browser/break_iterator_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-08T20:32:03Z",
+      "side": 1,
+      "message": "nit: order in the .cc should correspond with order in the .h file",
+      "revId": "8f2844e2f4e3303968cde90c7a17312ffc870767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43875063_515534c9",
+        "filename": "components/omnibox/browser/break_iterator_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-08T20:32:03Z",
+      "side": 1,
+      "message": "nit: please construct separately.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 21
+      },
+      "revId": "8f2844e2f4e3303968cde90c7a17312ffc870767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c51ae5_d7e86bfc",
+        "filename": "components/omnibox/browser/break_iterator_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-08T20:32:03Z",
+      "side": 1,
+      "message": "nit: no need for temporary here; it\u0027s readable enough without it.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 46
+      },
+      "revId": "8f2844e2f4e3303968cde90c7a17312ffc870767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b253320c_5c88fd9c",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-08T20:32:03Z",
+      "side": 1,
+      "message": "given other comment, this should probably be marked override as well.",
+      "range": {
+        "startLine": 19,
+        "startChar": 26,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "8f2844e2f4e3303968cde90c7a17312ffc870767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa1b08a_85ab0641",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-08T20:32:03Z",
+      "side": 1,
+      "message": "Please comment these two new functions that don\u0027t come from the base class.",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 15
+      },
+      "revId": "8f2844e2f4e3303968cde90c7a17312ffc870767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "901b8254_d53be59a",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-08T20:32:03Z",
+      "side": 1,
+      "message": "Please comment.  What does this variable represent and when is it valid?",
+      "revId": "8f2844e2f4e3303968cde90c7a17312ffc870767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49399bec_d7b5c239",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-08T20:32:03Z",
+      "side": 1,
+      "message": "Rather than put this logic in the adaptor itself, I\u0027d suggest you change\nin_memory_url_index_types.cc and url_index_private_data.cc\nto simply instantiate the right type in the first place.  I\u0027ll put a more detailed comment there.\n\nI\u0027m willing to be convinced otherwise, but I think the other way is a slightly better design (fewer places that need to test for the experiment flags).",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "8f2844e2f4e3303968cde90c7a17312ffc870767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c8ecbe_32ac5079",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-08T20:32:03Z",
+      "side": 1,
+      "message": "How about using the polymorphism directly so only this code needs to know about the experiment state?\nIn other words, perhaps do something like\n  base::i18n::BreakType break_mode \u003d break_on_space ? base::i18n::BreakIterator::BREAK_SPACE : base::i18n::BreakIterator::BREAK_WORD;\n  unique_ptr\u003cbase::i18n::BreakIterator\u003e iter(\n     experiment_enabled\n         ? new BreakIteratorAdaptor(cleaned_uni_string, break_mode)\n         : new base::i18n::BreakIterator(cleaned_uni_string, break_mode));\nand then user iter-\u003e instead of iter. below.\n\nMaybe you can figure out a way to do this without a memory allocation.  I think having the experiment test here in one spot is the right design, not multiple places in the the adaptor.cc code.",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 22
+      },
+      "revId": "8f2844e2f4e3303968cde90c7a17312ffc870767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c5a44f_975dacb8",
+        "filename": "components/omnibox/browser/omnibox_field_trial.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-08T20:32:03Z",
+      "side": 1,
+      "message": "How about\nkBreakWordsAtUnderscores\n?\n\nIt\u0027s shorter and clearer.\n\nIf you accept this suggestion, please change the string constant in the .cc file as well.",
+      "range": {
+        "startLine": 46,
+        "startChar": 27,
+        "endLine": 46,
+        "endChar": 64
+      },
+      "revId": "8f2844e2f4e3303968cde90c7a17312ffc870767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d86956f_49999c20",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-08T20:32:03Z",
+      "side": 1,
+      "message": "ditto suggestion from in_memory_url_index_types.cc, i.e., do the experiment testing at constructor, not within the implementation.",
+      "range": {
+        "startLine": 732,
+        "startChar": 4,
+        "endLine": 732,
+        "endChar": 24
+      },
+      "revId": "8f2844e2f4e3303968cde90c7a17312ffc870767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
