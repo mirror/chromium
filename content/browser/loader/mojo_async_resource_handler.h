@@ -82,6 +82,7 @@ class CONTENT_EXPORT MojoAsyncResourceHandler : public ResourceHandler,
   void FollowRedirect() override;
   void SetPriority(net::RequestPriority priority,
                    int32_t intra_priority_value) override;
+  void AllowReadingBody() override {}
 
   void OnWritableForTesting();
   static void SetAllocationSizeForTesting(size_t size);

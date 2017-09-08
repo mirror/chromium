@@ -59,6 +59,8 @@ class DelegatingURLLoader final : public mojom::URLLoader {
     loader_->SetPriority(priority, intra_priority_value);
   }
 
+  void AllowReadingBody() override {}
+
   mojom::URLLoaderPtr CreateInterfacePtrAndBind() {
     mojom::URLLoaderPtr loader;
     binding_.Bind(mojo::MakeRequest(&loader));

@@ -40,6 +40,7 @@ class ServiceWorkerScriptURLLoader : public mojom::URLLoader,
   void FollowRedirect() override;
   void SetPriority(net::RequestPriority priority,
                    int32_t intra_priority_value) override;
+  void AllowReadingBody() override {}
 
   // mojom::URLLoaderClient for simply proxying network:
   void OnReceiveResponse(const ResourceResponseHead& response_head,

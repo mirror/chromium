@@ -34,6 +34,7 @@ class CONTENT_EXPORT CORSURLLoader : public mojom::URLLoader,
   void FollowRedirect() override;
   void SetPriority(net::RequestPriority priority,
                    int intra_priority_value) override;
+  void AllowReadingBody() override {}
 
   // mojom::URLLoaderClient overrides:
   void OnReceiveResponse(const ResourceResponseHead& head,

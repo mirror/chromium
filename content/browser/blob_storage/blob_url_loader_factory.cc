@@ -107,6 +107,8 @@ class BlobURLLoader : public storage::MojoBlobReader::Delegate,
   void SetPriority(net::RequestPriority priority,
                    int32_t intra_priority_value) override {}
 
+  void AllowReadingBody() override {}
+
   // storage::MojoBlobReader::Delegate implementation:
   mojo::ScopedDataPipeProducerHandle PassDataPipe() override {
     mojo::DataPipe data_pipe(kDefaultAllocationSize);
