@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b1ec76c8_8390609f",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-08T18:21:08Z",
+      "side": 1,
+      "message": "\u003e Can this actually fail?\n\nYes. ET_GESTURE_SCROLL_UPDATE and ET_GESTURE_SCROLL_END are sent even as you drag your finger outside the view (same as mouse drag events). This early return allows us to ignore those.\n\n\u003e If it can, is introducing this check going to break something, e.g. we previously would have cleared the selected line on a tab outside the list but now we won\u0027t?\n\nGood point, I didn\u0027t consider the fact that introducing this early return will introduce a change where we no longer call SetHandled() on drags outside the view. The new behavior seems like the right thing to me conceptually (we\u0027re not doing anything with the event in this case) but in practice yeah maybe it could have some effect?\n\nRegardless, I just tested this on a Windows touchscreen device and it seems to work fine and behave identically to stable Chrome (e.g. in both versions the scroll event doesn\u0027t bubble up and allow me to scroll the web page if I drag down out of the suggestion popup). I\u0027m now making some other changes for touch UI so I\u0027ll keep an eye on this.",
+      "parentUuid": "da6cf4e4_359085a5",
+      "revId": "5a4a8f41e481a522fe21f2e63554ce622aed8ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55688e06_652e83d7",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "5a4a8f41e481a522fe21f2e63554ce622aed8ca5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b442564c_f622dba4",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-08T18:21:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55688e06_652e83d7",
+      "revId": "5a4a8f41e481a522fe21f2e63554ce622aed8ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
