@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e4afa7b_db3c739a",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-08T15:27:14Z",
+      "side": 1,
+      "message": "This will only happen if the kEnablePasswordSelection is true, which is disabled by default now and user has no access to the flag either (enabling is only through terminal for now). :)\n\nIf password selection is not enabled, user won\u0027t have the eye icon to see which password we are suggesting to save either. And we are suggesting the password without having a strong guess. I don\u0027t know if this was discussed before but I think it is important to take this into consideration.\n\nI remember there was going to be some logic to select the last-edited password among three. Is that still a thing? If so, everything here LGTM. :)",
+      "range": {
+        "startLine": 244,
+        "startChar": 10,
+        "endLine": 244,
+        "endChar": 74
+      },
+      "revId": "202bc03dac6c97660c6d156e1870a862883a02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
