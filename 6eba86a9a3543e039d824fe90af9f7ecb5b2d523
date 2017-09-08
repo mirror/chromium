@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "474a33b9_97e1b831",
+        "filename": "chrome/browser/ui/blocked_content/popup_tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-08T20:29:56Z",
+      "side": 1,
+      "message": "nit: not necessary",
+      "revId": "6eba86a9a3543e039d824fe90af9f7ecb5b2d523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
