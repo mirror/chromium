@@ -6,7 +6,7 @@
 #define COMPONENTS_MULTIDEVICE_SERVICE_H_
 
 #include "base/memory/weak_ptr.h"
-#include "components/multidevice/service/public/interfaces/device_sync.mojom.h"
+#include "components/multidevice/service/device_sync_impl.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
@@ -18,7 +18,9 @@ namespace multidevice {
 // as recieving messages through these connections.
 class MultiDeviceService : public service_manager::Service {
  public:
-  MultiDeviceService();
+  MultiDeviceService(std::unique_ptr<multidevice::DeviceSyncImpl::Factory>
+                         device_sync_factory);
+
   ~MultiDeviceService() override;
 
   // service_manager::Service:
@@ -34,6 +36,7 @@ class MultiDeviceService : public service_manager::Service {
 
   std::unique_ptr<service_manager::ServiceContextRefFactory> ref_factory_;
   service_manager::BinderRegistry registry_;
+  std::unique_ptr<multidevice::DeviceSyncImpl::Factory> device_sync_factory_;
   base::WeakPtrFactory<MultiDeviceService> weak_ptr_factory_;
 };
 

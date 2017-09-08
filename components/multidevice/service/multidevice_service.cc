@@ -9,7 +9,10 @@
 
 namespace multidevice {
 
-MultiDeviceService::MultiDeviceService() : weak_ptr_factory_(this) {}
+MultiDeviceService::MultiDeviceService(
+    std::unique_ptr<multidevice::DeviceSyncImpl::Factory> device_sync_factory)
+    : device_sync_factory_(std::move(device_sync_factory)),
+      weak_ptr_factory_(this) {}
 
 MultiDeviceService::~MultiDeviceService() {}
 
@@ -33,7 +36,7 @@ void MultiDeviceService::CreateDeviceSyncImpl(
     service_manager::ServiceContextRefFactory* ref_factory,
     device_sync::mojom::DeviceSyncRequest request) {
   mojo::MakeStrongBinding(
-      base::MakeUnique<DeviceSyncImpl>(ref_factory->CreateRef()),
+      device_sync_factory_->NewInstance(ref_factory->CreateRef()),
       std::move(request));
 }
 
