@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "19968da9_4db01507",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T02:08:11Z",
+      "side": 1,
+      "message": "As I noted previously, there\u0027s no guidance in our style guide.  I tend to find enum classes most useful when there\u0027s the possibility of accidental conversion to something else, e.g. you pass an enum arg right next to an int arg.  It doesn\u0027t seem like there\u0027s really any risk of that here.  Another use would be forward-declaring these, which also doesn\u0027t seem necessary.\n\nThe one argument I could see for enum class here would be that it would effectively namespace these, since otherwise we\u0027re declaring CONTROL and TEXT in the \"views::\" scope.  Now, arguably, everything in ui/views/layout/ should maybe live in a \"layout::\" sub-namespace (and then LayoutProvider would just be Provider).  But absent that, maybe these names should be scoped better.\n\nIn the end, though, I kinda think an enum\u0027s lower verbosity is a win in this case.  I don\u0027t feel strongly, and my original suggestion was merely a suggestion, so I\u0027m OK with whatever.",
+      "parentUuid": "799e963d_ec920025",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 35
+      },
+      "revId": "7a90a257ae428e442b4f4a51b280403f159857e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dece46e_e06bd2ec",
         "filename": "ui/views/layout/layout_provider.h",
         "patchSetId": 7
