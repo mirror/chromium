@@ -340,8 +340,15 @@ bool NGInlineLayoutAlgorithm::ApplyJustify(NGLineInfo* line_info) {
   if (expansion <= 0)
     return false;  // no expansion is needed.
 
-  const String line_text =
+  String line_text =
       Node().Text(line_info->StartOffset(), line_info->EndOffset()).ToString();
+
+  // Append a hyphen if the last word is hyphenated. The hyphen is in
+  // ShapeResult, but not in text.
+  const NGInlineItemResult& last_item_result = line_info->Results().back();
+  if (last_item_result.text_end_effect == NGTextEndEffect::kHyphen)
+    line_text.append(last_item_result.item->Style()->HyphenString());
+
   ShapeResultSpacing<String> spacing(line_text);
   spacing.SetExpansion(expansion, Node().BaseDirection(),
                        line_info->LineStyle().GetTextJustify());
@@ -355,8 +362,10 @@ bool NGInlineLayoutAlgorithm::ApplyJustify(NGLineInfo* line_info) {
       RefPtr<ShapeResult> shape_result =
           item_result.shape_result->MutableUnique();
       DCHECK_GE(item_result.start_offset, line_info->StartOffset());
-      DCHECK_EQ(shape_result->NumCharacters(),
-                item_result.end_offset - item_result.start_offset);
+      // |shape_result| has more characters if it's hyphenated.
+      DCHECK(item_result.text_end_effect != NGTextEndEffect::kNone ||
+             shape_result->NumCharacters() ==
+                 item_result.end_offset - item_result.start_offset);
       LayoutUnit size_before_justify = item_result.inline_size;
       shape_result->ApplySpacing(
           spacing, item_result.start_offset - line_info->StartOffset() -
