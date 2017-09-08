@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d618db2_0d468f65",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-08T23:12:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c236533_022d9ddf",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 5
+      },
+      "revId": "4745978db5963abbd146e63f6cf25fc67362c567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3ff6a6b_a0db036d",
         "filename": "content/renderer/device_sensors/device_motion_event_pump.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-08T22:58:29Z",
       "side": 1,
       "message": "It is not worth exporting this value in a header.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 45
+      },
+      "revId": "4745978db5963abbd146e63f6cf25fc67362c567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a05383_54939619",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-08T23:12:55Z",
+      "side": 1,
+      "message": "If no \"CONTENT_EXPORT\", when building content_unittests, it will generate link error: \"undefined reference to \u0027content::kRadToDeg\u0027\"\n\nDo you mean also adding a kRadToDeg definition in device_motion_event_pump_unittest.cc instead of using \"CONTENT_EXPORT\" here?",
+      "parentUuid": "b3ff6a6b_a0db036d",
       "range": {
         "startLine": 18,
         "startChar": 0,
