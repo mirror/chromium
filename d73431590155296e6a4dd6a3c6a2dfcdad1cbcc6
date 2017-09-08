@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ef20316_25b6f2bd",
+        "filename": "chrome/browser/vr/elements/textured_element.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-08T20:45:09Z",
+      "side": 1,
+      "message": "Based on the setter method name, this should be \"g_initialized_for_testing_\"",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 36
+      },
+      "revId": "d73431590155296e6a4dd6a3c6a2dfcdad1cbcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e361ac7_9a955b4f",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-08T20:45:09Z",
+      "side": 1,
+      "message": "Should comment this opacity setting, as it\u0027s a key part of the test.",
+      "revId": "d73431590155296e6a4dd6a3c6a2dfcdad1cbcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b89ebfe_a0bbab2d",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-08T20:45:09Z",
+      "side": 1,
+      "message": "We don\u0027t need this parent check anymore, I believe.",
+      "revId": "d73431590155296e6a4dd6a3c6a2dfcdad1cbcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428e972f_868641f5",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-08T20:45:09Z",
+      "side": 1,
+      "message": "Without the animation, is this still needed?  Can it instead be scene_-\u003eOnBeginFrame(), or is this call just easier?  Maybe the class can have OnBeginFrame() instead to be more clear about what it\u0027s doing.",
+      "revId": "d73431590155296e6a4dd6a3c6a2dfcdad1cbcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b8d446c_da3c0578",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-08T20:45:09Z",
+      "side": 1,
+      "message": "s/names/exceptions/, and I think the parameter is worth mentioning in the comment.",
+      "range": {
+        "startLine": 67,
+        "startChar": 68,
+        "endLine": 67,
+        "endChar": 73
+      },
+      "revId": "d73431590155296e6a4dd6a3c6a2dfcdad1cbcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
