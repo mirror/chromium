@@ -862,9 +862,6 @@ class SiteProcessCountTracker : public base::SupportsUserData::Data,
 bool ShouldUseSiteProcessTracking(BrowserContext* browser_context,
                                   StoragePartition* dest_partition,
                                   const GURL& site_url) {
-  if (site_url.is_empty())
-    return false;
-
   // TODO(alexmos): Sites should be tracked separately for each
   // StoragePartition.  For now, track them only in the default one.
   StoragePartition* default_partition =
@@ -878,12 +875,18 @@ bool ShouldUseSiteProcessTracking(BrowserContext* browser_context,
 bool ShouldTrackProcessForSite(BrowserContext* browser_context,
                                RenderProcessHost* render_process_host,
                                const GURL& site_url) {
+  if (site_url.is_empty())
+    return false;
+
   return ShouldUseSiteProcessTracking(
       browser_context, render_process_host->GetStoragePartition(), site_url);
 }
 
 bool ShouldFindReusableProcessHostForSite(BrowserContext* browser_context,
                                           const GURL& site_url) {
+  if (site_url.is_empty())
+    return false;
+
   return ShouldUseSiteProcessTracking(
       browser_context,
       BrowserContext::GetStoragePartitionForSite(browser_context, site_url),
@@ -3572,8 +3575,9 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
 
   // Make sure the chosen process is in the correct StoragePartition for the
   // SiteInstance.
-  CHECK(render_process_host->InSameStoragePartition(
-      BrowserContext::GetStoragePartition(browser_context, site_instance)));
+  CHECK(site_url.is_empty() || render_process_host->InSameStoragePartition(
+                                   BrowserContext::GetStoragePartition(
+                                       browser_context, site_instance)));
 
   return render_process_host;
 }
