@@ -73,6 +73,24 @@
       "revId": "68803042870131f6d47e175c6d1095a87e86b05e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003a74a8_a001ec8e",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-08T23:21:12Z",
+      "side": 1,
+      "message": "For the record, on browser, clicking a button in Play Store web page didn\u0027t open the Play Store app (even without the \u0027previous_url !\u003d \"play.google.com\" \u0026\u0026\u0027 fix) because the click was handled completely in JS and didn\u0027t really trigger a (HTTP) navigation.",
+      "parentUuid": "2241c381_ec47dca0",
+      "revId": "68803042870131f6d47e175c6d1095a87e86b05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
