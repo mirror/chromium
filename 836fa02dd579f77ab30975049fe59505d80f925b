@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24ba76a4_65110bfb",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-08T18:09:53Z",
+      "side": 1,
+      "message": "nit: Add the scroll latching bug number to the comment to make it easier to recognize when this should be removed.",
+      "revId": "836fa02dd579f77ab30975049fe59505d80f925b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
