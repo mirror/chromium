@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d15ccea_033eb5fe",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 1682,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-08T01:15:43Z",
+      "side": 1,
+      "message": "NonNullValue -\u003e NonEmptyValue",
+      "revId": "cb1c1d29d93bd32de20fbfa34f8d00581a2c2d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
