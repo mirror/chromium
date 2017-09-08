@@ -22,6 +22,12 @@ cr.define('login', function() {
   };
 
   /**
+   * The size of new note action element.
+   * @const {number}
+   */
+  var NEW_NOTE_ACTION_ELEMENT_SIZE = 44;
+
+  /**
    * Calculates diagonal length of a rectangle with the provided sides.
    * @param {!number} x The rectangle width.
    * @param {!number} y The rectangle height.
@@ -386,38 +392,64 @@ cr.define('login', function() {
           this.lockScreenAppsState_ != LOCK_SCREEN_APPS_STATE.AVAILABLE &&
           this.lockScreenAppsState_ != LOCK_SCREEN_APPS_STATE.FOREGROUND;
 
+      // This might get set when the action is activated - reset it when the
+      // lock screen action is updated.
+      $('new-note-action-container')
+          .classList.toggle('new-note-action-above-login-header', false);
+
+      var transitionOut = previousState == LOCK_SCREEN_APPS_STATE.FOREGROUND &&
+          this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.AVAILABLE;
+
+      $('new-note-action')
+          .classList.toggle('new-note-action-animated', transitionOut);
+
+      var updateStateOnTransitionEnd =
+          (function() {
+            $('new-note-action')
+                .classList.toggle(
+                    'new-note-action-animated',
+                    this.lockScreenAppsState_ ==
+                        LOCK_SCREEN_APPS_STATE.AVAILABLE);
+
+            $('top-header-bar')
+                .classList.toggle(
+                    'new-note-activated',
+                    this.lockScreenAppsState_ ==
+                        LOCK_SCREEN_APPS_STATE.FOREGROUND);
+
+            this.updateNewNoteActionEnabledState_();
+          }).bind(this);
+
+      if (transitionOut) {
+        this.runOnNoteActionTransitionEnd_(updateStateOnTransitionEnd);
+      } else {
+        updateStateOnTransitionEnd();
+      }
+
+      if (this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.FOREGROUND) {
+        // Make sure the new note action UI state is in activated state, to
+        // handle cases where new note app is not launched directly from the
+        // lock screen UI.
+        this.setActiveNewNoteActionStyle_();
+      } else {
+        // Reset properties that might have been set as a result of activating
+        // new note action.
+        $('new-note-action').style.removeProperty('transform');
+        $('new-note-action').style.removeProperty('background-color');
+      }
+    },
+
+    /**
+     * Updates new note action element enabled/visible state.
+     * @private
+     */
+    updateNewNoteActionEnabledState_: function() {
       var newNoteActionEnabled =
           this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.AVAILABLE;
       $('new-note-action').classList.toggle('disabled', !newNoteActionEnabled);
       $('new-note-action')
           .setAttribute('tabIndex', newNoteActionEnabled ? '0' : '-1');
       $('new-note-action-icon').hidden = !newNoteActionEnabled;
-
-      // This might get set when the action is activated - reset it when the
-      // lock screen action is updated.
-      $('new-note-action-container')
-          .classList.toggle('new-note-action-above-login-header', false);
-
-      if (this.lockScreenAppsState_ != LOCK_SCREEN_APPS_STATE.FOREGROUND) {
-        var transitionOut =
-            previousState == LOCK_SCREEN_APPS_STATE.FOREGROUND &&
-            this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.AVAILABLE;
-        $('new-note-action-container')
-            .classList.toggle(
-                'new-note-action-container-activated', transitionOut);
-        if (transitionOut) {
-          this.runOnNoteActionTransitionEnd_(function() {
-            $('new-note-action-container')
-                .classList.toggle('new-note-action-container-activated', false);
-          });
-        }
-
-        $('new-note-action').style.removeProperty('border-bottom-left-radius');
-        $('new-note-action').style.removeProperty('border-bottom-right-radius');
-        $('new-note-action').style.removeProperty('height');
-        $('new-note-action').style.removeProperty('width');
-        $('new-note-action').style.removeProperty('background-color');
-      }
     },
 
     /**
@@ -467,17 +499,29 @@ cr.define('login', function() {
       $('new-note-action').classList.toggle('disabled', true);
       $('new-note-action-icon').hidden = true;
       $('top-header-bar').classList.toggle('version-labels-unset', true);
+      $('new-note-action-container')
+          .classList.toggle('new-note-action-above-login-header', true);
 
+      $('new-note-action').classList.toggle('new-note-action-animated', true);
       this.runOnNoteActionTransitionEnd_(
           (function() {
-            if (this.lockScreenAppsState_ != LOCK_SCREEN_APPS_STATE.AVAILABLE)
-              return;
-            chrome.send('requestNewLockScreenNote', [requestType]);
+            $('new-note-action')
+                .classList.toggle('new-note-action-animated', false);
+
+            if (this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.AVAILABLE) {
+              chrome.send('requestNewLockScreenNote', [requestType]);
+            }
           }).bind(this));
 
-      var container = $('new-note-action-container');
-      container.classList.toggle('new-note-action-container-activated', true);
-      container.classList.toggle('new-note-action-above-login-header', true);
+      this.setActiveNewNoteActionStyle_();
+    },
+
+    /**
+     * Updates the new note action element style for active note taking.
+     * @private
+     */
+    setActiveNewNoteActionStyle_: function() {
+      $('top-header-bar').classList.toggle('new-note-activated', true);
 
       var newNoteAction = $('new-note-action');
       // Update new-note-action size to cover full screen - the element is a
@@ -487,13 +531,11 @@ cr.define('login', function() {
       // element UI state is full-screen, the element is kept as circle quadrant
       // for purpose of transition animation (to get the effect of the element
       // radius increasing until it covers the whole screen).
-      var targetSize =
-          '' + diag(container.clientWidth, container.clientHeight) + 'px';
-      newNoteAction.style.setProperty('width', targetSize);
-      newNoteAction.style.setProperty('height', targetSize);
+      var container = $('new-note-action-container');
+      var targetSize = diag(container.clientWidth, container.clientHeight);
       newNoteAction.style.setProperty(
-          isRTL() ? 'border-bottom-right-radius' : 'border-bottom-left-radius',
-          targetSize);
+          'transform',
+          'scale(' + (targetSize / NEW_NOTE_ACTION_ELEMENT_SIZE) + ')');
       newNoteAction.style.setProperty('background-color', '#000');
     },
 
