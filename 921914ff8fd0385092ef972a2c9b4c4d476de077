@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "420300bc_c745ad08",
+        "filename": "chrome/browser/media_galleries/media_galleries_histograms.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-08T00:44:17Z",
+      "side": 1,
+      "message": "DELETED. Sorry, I dropped a letter in the comment.",
+      "revId": "921914ff8fd0385092ef972a2c9b4c4d476de077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
