@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49af29e7_7831867c",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-08T05:02:23Z",
+      "side": 1,
+      "message": "What\u0027s the difference between close_() in JS vs ClosePreviewDialog() in C++?",
+      "revId": "556fd4f5647d4a3673a646a307cef8806890a0ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
