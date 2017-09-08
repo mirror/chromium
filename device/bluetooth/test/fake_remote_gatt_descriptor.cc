@@ -29,6 +29,11 @@ void FakeRemoteGattDescriptor::SetNextReadResponse(
   next_read_response_.emplace(gatt_code, value);
 }
 
+bool FakeRemoteGattDescriptor::AllResponsesConsumed() {
+  // TODO(b/569709): Update this when SetNextWriteResponse is implemented.
+  return !next_read_response_;
+}
+
 std::string FakeRemoteGattDescriptor::GetIdentifier() const {
   return descriptor_id_;
 }
