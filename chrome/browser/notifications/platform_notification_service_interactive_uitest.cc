@@ -287,7 +287,7 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   const Notification& default_notification = notifications[0];
   EXPECT_EQ("Some title", base::UTF16ToUTF8(default_notification.title()));
   EXPECT_EQ("", base::UTF16ToUTF8(default_notification.message()));
-  EXPECT_EQ("", default_notification.tag());
+  std::string id_without_tag = default_notification.id();
   EXPECT_TRUE(default_notification.image().IsEmpty());
   EXPECT_TRUE(default_notification.icon().IsEmpty());
   EXPECT_TRUE(default_notification.small_image().IsEmpty());
@@ -315,7 +315,9 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   const Notification& all_options_notification = notifications[1];
   EXPECT_EQ("Title", base::UTF16ToUTF8(all_options_notification.title()));
   EXPECT_EQ("Contents", base::UTF16ToUTF8(all_options_notification.message()));
-  EXPECT_EQ("replace-id", all_options_notification.tag());
+  std::string id_with_tag = all_options_notification.id();
+  EXPECT_NE(id_with_tag.find("replace-id"), std::string::npos);
+  EXPECT_NE(id_with_tag, id_without_tag);
 #if !defined(OS_MACOSX)
   EXPECT_FALSE(all_options_notification.image().IsEmpty());
   EXPECT_EQ(kIconWidth, all_options_notification.image().Width());
@@ -672,8 +674,8 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
       base::StartsWith(notification.id(), "p:", base::CompareCase::SENSITIVE));
 
   display_service_tester_->RemoveNotification(
-      NotificationCommon::PERSISTENT, notification.delegate_id(),
-      false /* by_user */, true /* silent */);
+      NotificationCommon::PERSISTENT, notification.id(), false /* by_user */,
+      true /* silent */);
 
   ASSERT_TRUE(RunScript("GetDisplayedNotifications()", &script_result));
   EXPECT_EQ("ok", script_result);

@@ -258,7 +258,7 @@ void NotificationPlatformBridgeAndroid::Display(
   ScopedJavaLocalRef<jstring> j_origin =
       ConvertUTF8ToJavaString(env, origin_url.spec());
   ScopedJavaLocalRef<jstring> tag =
-      ConvertUTF8ToJavaString(env, notification.tag());
+      ConvertUTF8ToJavaString(env, std::string());
   ScopedJavaLocalRef<jstring> title =
       ConvertUTF16ToJavaString(env, notification.title());
   ScopedJavaLocalRef<jstring> body =
@@ -296,7 +296,7 @@ void NotificationPlatformBridgeAndroid::Display(
 
   regenerated_notification_infos_[notification_id] =
       RegeneratedNotificationInfo(origin_url.spec(), scope_url.spec(),
-                                  notification.tag(), base::nullopt);
+                                  std::string(), base::nullopt);
 }
 
 void NotificationPlatformBridgeAndroid::Close(

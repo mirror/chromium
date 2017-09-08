@@ -94,20 +94,14 @@ void MessageCenterNotificationManager::Add(const Notification& notification,
 
 bool MessageCenterNotificationManager::Update(const Notification& notification,
                                               Profile* profile) {
-  const std::string& tag = notification.tag();
-  if (tag.empty())
-    return false;
-
   const GURL origin_url = notification.origin_url();
   DCHECK(origin_url.is_valid());
 
-  // Since tag is provided by arbitrary JS, we need to use origin_url
-  // (which is an app url in case of app/extension) to scope the tags
-  // in the given profile.
   for (auto iter = profile_notifications_.begin();
        iter != profile_notifications_.end(); ++iter) {
     ProfileNotification* old_notification = (*iter).second.get();
-    if (old_notification->notification().tag() == tag &&
+// FIXME just look up by id?
+    if (old_notification->notification().id() == notification.id() &&
         old_notification->notification().origin_url() == origin_url &&
         old_notification->profile_id() ==
             NotificationUIManager::GetProfileID(profile)) {
@@ -188,7 +182,7 @@ MessageCenterNotificationManager::GetAllIdsByProfileAndSourceOrigin(
     const Notification& notification = pair.second->notification();
     if (pair.second->profile_id() == profile_id &&
         notification.origin_url() == source) {
-      delegate_ids.insert(notification.delegate_id());
+      delegate_ids.insert(notification.id());
     }
   }
 
@@ -200,7 +194,7 @@ std::set<std::string> MessageCenterNotificationManager::GetAllIdsByProfile(
   std::set<std::string> delegate_ids;
   for (const auto& pair : profile_notifications_) {
     if (pair.second->profile_id() == profile_id)
-      delegate_ids.insert(pair.second->notification().delegate_id());
+      delegate_ids.insert(pair.second->notification().id());
   }
 
   return delegate_ids;
