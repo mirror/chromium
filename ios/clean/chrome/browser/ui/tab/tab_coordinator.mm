@@ -8,6 +8,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
+#include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #import "ios/chrome/browser/ui/broadcaster/chrome_broadcaster.h"
 #import "ios/chrome/browser/ui/browser_list/browser.h"
@@ -21,6 +22,8 @@
 #import "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.h"
 #include "ios/clean/chrome/browser/ui/tab/tab_features.h"
 #import "ios/clean/chrome/browser/ui/tab/tab_navigation_controller.h"
+#import "ios/clean/chrome/browser/ui/toolbar/toolbar_configuration_incognito.h"
+#import "ios/clean/chrome/browser/ui/toolbar/toolbar_configuration_normal.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.h"
 #import "ios/clean/chrome/browser/ui/transitions/zoom_transition_controller.h"
 #import "ios/clean/chrome/browser/ui/web_contents/web_coordinator.h"
@@ -165,6 +168,13 @@
 - (TabContainerViewController*)viewController {
   if (!_viewController) {
     _viewController = [self newTabContainer];
+    if (self.browser->browser_state()->IsOffTheRecord()) {
+      _viewController.toolbarConfiguration =
+          [[ToolbarConfigurationIncognito alloc] init];
+    } else {
+      _viewController.toolbarConfiguration =
+          [[ToolbarConfigurationNormal alloc] init];
+    }
     _viewController.usesBottomToolbar =
         base::FeatureList::IsEnabled(kTabFeaturesBottomToolbar);
   }

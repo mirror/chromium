@@ -13,9 +13,11 @@ source_set("toolbar") {
   configs += [ "//build/config/compiler:enable_arc" ]
 
   deps = [
+    ":toolbar_components_ui",
     ":toolbar_ui",
     "//base",
     "//ios/chrome/browser",
+    "//ios/chrome/browser/browser_state",
     "//ios/chrome/browser/ui/broadcaster",
     "//ios/chrome/browser/ui/browser_list",
     "//ios/chrome/browser/ui/commands",
@@ -55,11 +57,19 @@ source_set("toolbar_ui") {
 
 source_set("toolbar_components_ui") {
   sources = [
-    "toolbar_button+factory.h",
-    "toolbar_button+factory.mm",
     "toolbar_button.h",
     "toolbar_button.mm",
+    "toolbar_button_factory.h",
+    "toolbar_button_factory_incognito.h",
+    "toolbar_button_factory_incognito.mm",
+    "toolbar_button_factory_normal.h",
+    "toolbar_button_factory_normal.mm",
     "toolbar_component_options.h",
+    "toolbar_configuration.h",
+    "toolbar_configuration_incognito.h",
+    "toolbar_configuration_incognito.mm",
+    "toolbar_configuration_normal.h",
+    "toolbar_configuration_normal.mm",
     "toolbar_constants.h",
     "toolbar_constants.mm",
   ]
