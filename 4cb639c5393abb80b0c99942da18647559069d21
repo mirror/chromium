@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dae1ca07_78667759",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-08T16:27:04Z",
+      "side": 0,
+      "message": "If I recall correctly, this was initially added it because the toolbar button animation could still be running when the sheet had reached the peek or half state (at which point the omnibox could gain focus). Now that the animation is tied to sheet height, there\u0027s no way to focus the omnibox while it\u0027s in progress.",
+      "range": {
+        "startLine": 487,
+        "startChar": 8,
+        "endLine": 487,
+        "endChar": 10
+      },
+      "revId": "4cb639c5393abb80b0c99942da18647559069d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
