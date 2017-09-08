@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../assert_selection.js"></script>
+<iframe
+    sandbox="allow-scripts allow-same-origin"
+    src="resources/subframe-for-inserttext.html">
+</iframe>
+<script>
+async_test(function(t) {
+    var iframe = document.querySelector("iframe");
+    iframe.onload = t.step_func(function() {
+        var iframedocument = iframe.contentDocument;
+        var test = iframedocument.getElementById('test');
+        test.addEventListener('webkitBeforeTextInserted', () => {
+            iframe.parentNode.removeChild(iframe);
+            t.done();
+        });
+        var selection = iframedocument.getSelection();
+        selection.collapse(test.firstChild, 3);
+        iframedocument.execCommand('insertText', false, 'x');
+}, "InsertText command should not crash");
+});
+
+/*
+selection_test(
+    '<iframe></iframe>',
+    selection => {
+        const document = selection.document;
+        const iframe = document.querySelector('iframe');
+        iframe.srcdoc = 'foo';
+        iframe.contentDocument.documentElement.contentEditable = true;
+        iframe.contentDocument.documentElement.addEventListener(
+            'webkitBeforeTextInserted',
+            () => iframe.parentNode.removeChild(iframe));
+        iframe.contentDocument.documentElement.focus();
+        iframe.contentDocument.execCommand('insertText', false, 'x');
+    },
+    '',
+'InsertText command should not crash');
+*/
+</script>

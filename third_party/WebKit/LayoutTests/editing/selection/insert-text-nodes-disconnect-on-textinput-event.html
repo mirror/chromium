@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../assert_selection.js"></script>
+<script>
+selection_test(
+    '<div id="sample" contenteditable="true">foo<br>bar<div id="end">baz</div></div>',
+    selection => {
+        const document = selection.document;
+        const sample = document.getElementById("sample");
+        selection.collapse(sample, 2);
+        selection.extend(document.getElementById("end"), 0);
+        sample.addEventListener('textInput', () => {
+            // disconnect the node here
+            const focusNode =  selection.focusNode;
+            focusNode.parentNode.removeChild(focusNode);
+        });
+        textInputController.setMarkedText('1', 0, 1);
+        textInputController.insertText('x');
+    },
+    '<div contenteditable="true" id="sample">foo<br><div id="end">x|baz</div></div>',
+    'Inserttext frame invalidation scenario with textInput event');
+</script>
+

@@ -871,6 +871,10 @@ PlainTextRange InputMethodController::CreateRangeForSelection(
   start = std::max(start, 0);
   end = std::max(end, start);
 
+  // Event handler may destroy document or frame.
+  if (!IsAvailable() || !GetDocument().GetFrame())
+    return PlainTextRange();
+
   Element* root_editable_element =
       GetFrame()
           .Selection()
