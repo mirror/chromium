@@ -5,6 +5,7 @@
 #ifndef EXTENSIONS_SHELL_BROWSER_SHELL_EXTENSION_SYSTEM_H_
 #define EXTENSIONS_SHELL_BROWSER_SHELL_EXTENSION_SYSTEM_H_
 
+#include <memory>
 #include <vector>
 
 #include "base/compiler_specific.h"
@@ -23,6 +24,7 @@ class BrowserContext;
 
 namespace extensions {
 
+class ExtensionLoader;
 class ValueStoreFactory;
 
 // A simplified version of ExtensionSystem for app_shell. Allows
@@ -94,6 +96,8 @@ class ShellExtensionSystem : public ExtensionSystem {
 
   // Signaled when the extension system has completed its startup tasks.
   OneShotEvent ready_;
+
+  std::unique_ptr<ExtensionLoader> extension_loader_;
 
   base::WeakPtrFactory<ShellExtensionSystem> weak_factory_;
 

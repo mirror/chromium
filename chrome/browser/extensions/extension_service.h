@@ -58,6 +58,7 @@ class ComponentLoader;
 class CrxInstaller;
 class ExtensionActionStorageManager;
 class ExtensionErrorController;
+class ExtensionLoader;
 class ExtensionRegistry;
 class ExtensionSystem;
 class ExtensionUpdater;
@@ -517,11 +518,6 @@ class ExtensionService
   // Handles sending notification that |extension| was loaded.
   void NotifyExtensionLoaded(const extensions::Extension* extension);
 
-  // Completes extension loading after URLRequestContexts have been updated
-  // on the IO thread.
-  void OnExtensionRegisteredWithRequestContexts(
-      scoped_refptr<const extensions::Extension> extension);
-
   // Handles sending notification that |extension| was unloaded.
   void NotifyExtensionUnloaded(const extensions::Extension* extension,
                                extensions::UnloadedExtensionReason reason);
@@ -727,6 +723,9 @@ class ExtensionService
 
   // Migrates app data when upgrading a legacy packaged app to a platform app
   std::unique_ptr<extensions::AppDataMigrator> app_data_migrator_;
+
+  // Helper object for extension loading/unloading notifications.
+  std::unique_ptr<extensions::ExtensionLoader> extension_loader_;
 
   using InstallGateRegistry = std::map<extensions::ExtensionPrefs::DelayReason,
                                        extensions::InstallGate*>;
