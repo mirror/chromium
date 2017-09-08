@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a7f90e8_7819d801",
+        "filename": "third_party/WebKit/Source/core/frame/VisualViewport.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-09-08T15:34:59Z",
+      "side": 1,
+      "message": "I think so .. If we must explicitly plumb whether the flag is turned on into Blink, IsUseZoomForDSFEnabled() must be used. As far as I checked, the closest place where it is used from Blink is RenderViewImpl::UpdateWebViewWithDeviceScaleFactor(). Here, only when IsUseZoomForDSFEnabled() is false, webview()-\u003eSetDeviceScaleFactor(device_scale_factor_) is executed and GetPage().DeviceScaleFactorDeprecated() is set as DSF. Otherwise, it is 1.f.\n\naelias@, must we plumb IsUseZoomForDSFEnabled() into Blink explicitly?",
+      "parentUuid": "f713d78c_874a6d91",
+      "range": {
+        "startLine": 453,
+        "startChar": 15,
+        "endLine": 453,
+        "endChar": 61
+      },
+      "revId": "d4204b117568dab8dec3475c746b4addab88f2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e79a240a_5b2709fe",
         "filename": "third_party/WebKit/Source/core/frame/VisualViewport.cpp",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "d4204b117568dab8dec3475c746b4addab88f2e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a7714a_26d5462c",
+        "filename": "third_party/WebKit/Source/core/frame/VisualViewport.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-09-08T15:34:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e79a240a_5b2709fe",
+      "range": {
+        "startLine": 454,
+        "startChar": 37,
+        "endLine": 454,
+        "endChar": 53
+      },
+      "revId": "d4204b117568dab8dec3475c746b4addab88f2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
