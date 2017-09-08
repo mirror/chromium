@@ -117,7 +117,7 @@ PermissionRequestManager::PermissionRequestManager(
       view_factory_(base::Bind(&PermissionPrompt::Create)),
       view_(nullptr),
       main_frame_has_fully_loaded_(false),
-      tab_can_show_prompts_(false),
+      tab_can_show_prompts_(web_contents->IsVisible()),
       persist_(true),
       auto_response_for_test_(NONE),
       weak_factory_(this) {}

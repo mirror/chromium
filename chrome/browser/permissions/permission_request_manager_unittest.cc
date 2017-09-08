@@ -230,14 +230,16 @@ TEST_F(PermissionRequestManagerTest, NoRequests) {
   EXPECT_FALSE(prompt_factory_->is_visible());
 }
 
-#if !defined(OS_ANDROID)
 TEST_F(PermissionRequestManagerTest, PermissionRequestWhileTabSwitchedAway) {
+  MockTabSwitchAway();
   manager_->AddRequest(&request1_);
-  // Don't mark the tab as active.
   WaitForBubbleToBeShown();
   EXPECT_FALSE(prompt_factory_->is_visible());
+
+  MockTabSwitchBack();
+  WaitForBubbleToBeShown();
+  EXPECT_TRUE(prompt_factory_->is_visible());
 }
-#endif
 
 TEST_F(PermissionRequestManagerTest, TwoRequestsDoNotCoalesce) {
   manager_->DisplayPendingRequests();

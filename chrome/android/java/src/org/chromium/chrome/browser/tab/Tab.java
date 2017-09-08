@@ -2389,8 +2389,8 @@ public class Tab
             nativeOnPhysicalBackingSizeChanged(mNativeTabAndroid,
                     newContentViewCore.getWebContents(), bounds.right, bounds.bottom);
         }
-        setContentViewCore(newContentViewCore);
         newContentViewCore.onShow();
+        setContentViewCore(newContentViewCore);
 
         destroyNativePageInternal(previousNativePage);
         for (TabObserver observer : mObservers) {
