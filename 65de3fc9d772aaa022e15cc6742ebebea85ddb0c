@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c8f2f53a_9812d3f7",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-09-08T22:51:35Z",
+      "side": 1,
+      "message": "SyncTokens have to be verified before being sent to another process. PrepareSendToParent is where we set the verified bit. Before, this test had no child resource provider so the sync token wasn\u0027t being verified.\n\nI concur with danakj@ here, please call SetVerifyFlush on the sync token instead of adding a new matcher.",
+      "parentUuid": "7de2634f_e01cb370",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "65de3fc9d772aaa022e15cc6742ebebea85ddb0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25987a65_002667b1",
         "filename": "components/viz/service/display/gl_renderer_unittest.cc",
         "patchSetId": 6
