@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02b581a5_272d010d",
+        "filename": "chrome/browser/vr/elements/full_screen_rect.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-08T23:24:08Z",
+      "side": 1,
+      "message": "Awesome. We no longer use a hard coded value for these elements. In my recursive unit test, I explicitly exclude screen dimmer. Can you please remove it from the exception here: https://cs.chromium.org/chromium/src/chrome/browser/vr/ui_scene_manager_unittest.cc?rcl\u003df6e726217556724f6e051f41da166603c0ac3726\u0026l\u003d63\nAnd give that we only have one element in the list, perhaps remove the list completely from the code?",
+      "range": {
+        "startLine": 21,
+        "startChar": 29,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "bf825f12834c789c48932bfd890d89a4a46190e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b127263_211f8abe",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-08T23:24:08Z",
+      "side": 1,
+      "message": "You removed the hierarchy compeletely. Is this intentional? If so, the TODO probably should also be removed.",
+      "revId": "bf825f12834c789c48932bfd890d89a4a46190e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
