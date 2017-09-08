@@ -193,6 +193,7 @@ bool IsSupportedInFeaturePolicy(WebFeaturePolicyFeature feature) {
   switch (feature) {
     case WebFeaturePolicyFeature::kFullscreen:
     case WebFeaturePolicyFeature::kPayment:
+    case WebFeaturePolicyFeature::kSyncXHR:
     case WebFeaturePolicyFeature::kUsb:
     case WebFeaturePolicyFeature::kWebVr:
       return true;
