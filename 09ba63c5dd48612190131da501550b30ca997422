@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "283ddbbb_d1515e32",
+        "filename": "ui/base/cocoa/nsview_additions.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-08T23:37:33Z",
+      "side": 1,
+      "message": "We could probably reuse this elsewhere in Chrome...",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 32
+      },
+      "revId": "09ba63c5dd48612190131da501550b30ca997422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
