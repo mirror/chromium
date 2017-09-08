@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d486a7c_ce862327",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-format-es6-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-08T01:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01625f65_0451315f",
+      "revId": "c076884e999495cf1760e0c5eaa92cbbff454794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b361b002_d9e6235d",
         "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "c076884e999495cf1760e0c5eaa92cbbff454794",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd307a4_8ff6b9e6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-08T01:59:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b361b002_d9e6235d",
+      "revId": "c076884e999495cf1760e0c5eaa92cbbff454794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
