@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "4953a11f_daab9a40",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-08T11:14:23Z",
+      "side": 1,
+      "message": "Thanks! Removed.",
+      "parentUuid": "83058026_12d00f00",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "12b79e22b89d644da8b339084aa81d7d44bcdcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8549eab6_e9e2c5f3",
         "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
         "patchSetId": 14
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-08T09:53:27Z",
       "side": 1,
       "message": "nit: align the corners to the top or bottom of the image view? nested layouts create performance issues so it would be nice if there was an alternative. I don\u0027t think we can have content cards without thumbnails?",
+      "range": {
+        "startLine": 124,
+        "startChar": 37,
+        "endLine": 124,
+        "endChar": 50
+      },
+      "revId": "12b79e22b89d644da8b339084aa81d7d44bcdcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f775fa_ab02cf8a",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-08T11:14:23Z",
+      "side": 1,
+      "message": "I think the issue was that if the card contents are bigger than the thumbnail, we would want to apply the corners still to the card and not the thumbnail. Do you have more information on the performance issues? I would hope that nesting relative layouts is not much more expensive than using them in a flat structure.",
+      "parentUuid": "8549eab6_e9e2c5f3",
       "range": {
         "startLine": 124,
         "startChar": 37,
