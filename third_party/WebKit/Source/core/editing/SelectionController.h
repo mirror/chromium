@@ -145,6 +145,7 @@ class CORE_EXPORT SelectionController final
 
 bool IsLinkSelection(const MouseEventWithHitTestResults&);
 bool IsExtendingSelection(const MouseEventWithHitTestResults&);
+SelectionInDOMTree ConvertToSelectionInDOMTree(const SelectionInFlatTree&);
 
 }  // namespace blink
 

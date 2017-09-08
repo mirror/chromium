@@ -741,7 +741,9 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
   smart_delete_ = false;
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  SelectionModifier selection_modifier(*frame, EndingVisibleSelection());
+  SelectionModifier selection_modifier(
+      *frame, CreateVisibleSelection(ConvertToSelectionInFlatTree(
+                  EndingVisibleSelection().AsSelection())));
   selection_modifier.Modify(SelectionModifyAlteration::kExtend,
                             SelectionModifyDirection::kBackward, granularity);
   if (kill_ring && selection_modifier.Selection().IsCaret() &&
@@ -818,8 +820,11 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
 
   const VisibleSelection& selection_to_delete =
       granularity == TextGranularity::kCharacter
-          ? AdjustSelectionForBackwardDelete(selection_modifier.Selection())
-          : selection_modifier.Selection();
+          ? AdjustSelectionForBackwardDelete(
+                CreateVisibleSelection(ConvertToSelectionInDOMTree(
+                    selection_modifier.Selection().AsSelection())))
+          : CreateVisibleSelection(ConvertToSelectionInDOMTree(
+                selection_modifier.Selection().AsSelection()));
 
   if (!StartingSelection().IsRange() ||
       selection_to_delete.Base() != StartingSelection().Start()) {
@@ -914,7 +919,10 @@ void TypingCommand::ForwardDeleteKeyPressed(TextGranularity granularity,
   // Handle delete at beginning-of-block case.
   // Do nothing in the case that the caret is at the start of a
   // root editable element or at the start of a document.
-  SelectionModifier selection_modifier(*frame, EndingVisibleSelection());
+  SelectionModifier selection_modifier(
+      *frame, CreateVisibleSelection(ConvertToSelectionInFlatTree(
+                  EndingVisibleSelection().AsSelection())));
+
   selection_modifier.Modify(SelectionModifyAlteration::kExtend,
                             SelectionModifyDirection::kForward, granularity);
   if (kill_ring && selection_modifier.Selection().IsCaret() &&
@@ -964,13 +972,18 @@ void TypingCommand::ForwardDeleteKeyPressed(TextGranularity granularity,
                               TextGranularity::kCharacter);
   }
 
-  const VisibleSelection& selection_to_delete = selection_modifier.Selection();
+  const VisibleSelectionInFlatTree& selection_to_delete =
+      selection_modifier.Selection();
   if (!StartingSelection().IsRange() ||
-      MostBackwardCaretPosition(selection_to_delete.Base()) !=
-          StartingSelection().Start()) {
+      MostBackwardCaretPosition(
+          CreateVisibleSelection(
+              ConvertToSelectionInDOMTree(selection_to_delete.AsSelection()))
+              .Base()) != StartingSelection().Start()) {
     ForwardDeleteKeyPressedInternal(
-        selection_to_delete,
-        SelectionForUndoStep::From(selection_to_delete.AsSelection()),
+        CreateVisibleSelection(
+            ConvertToSelectionInDOMTree(selection_to_delete.AsSelection())),
+        SelectionForUndoStep::From(
+            ConvertToSelectionInDOMTree(selection_to_delete.AsSelection())),
         kill_ring, editing_state);
     return;
   }
@@ -979,11 +992,15 @@ void TypingCommand::ForwardDeleteKeyPressed(TextGranularity granularity,
       SelectionForUndoStep::Builder()
           .SetBaseAndExtentAsForwardSelection(
               StartingSelection().Start(),
-              ComputeExtentForForwardDeleteUndo(selection_to_delete,
-                                                StartingSelection().End()))
+              ComputeExtentForForwardDeleteUndo(
+                  CreateVisibleSelection(ConvertToSelectionInDOMTree(
+                      selection_to_delete.AsSelection())),
+                  StartingSelection().End()))
           .Build();
-  ForwardDeleteKeyPressedInternal(selection_to_delete, selection_after_undo,
-                                  kill_ring, editing_state);
+  ForwardDeleteKeyPressedInternal(
+      CreateVisibleSelection(
+          ConvertToSelectionInDOMTree(selection_to_delete.AsSelection())),
+      selection_after_undo, kill_ring, editing_state);
 }
 
 void TypingCommand::ForwardDeleteKeyPressedInternal(
