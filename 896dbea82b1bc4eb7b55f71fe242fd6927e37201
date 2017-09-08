@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f29f1d71_d444805b",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T21:40:18Z",
+      "side": 1,
+      "message": "Changed to close_note_button_",
+      "parentUuid": "dfd9dc7e_ab1abcbe",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22d887cf_2a737408",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf9c0c1_4d129ee2",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T21:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22d887cf_2a737408",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "b565a289_a14bc866",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T21:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c219d3a_39297bc1",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b7d42bb_a9c8e96e",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 8
@@ -84,6 +138,24 @@
       "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ce2989_06e3c8a9",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T21:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b7d42bb_a9c8e96e",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "104590c8_0ca5da58",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T21:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5cfde88_47fa905a",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3eec07af_0012bab7",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 8
@@ -115,6 +205,24 @@
       "writtenOn": "2017-09-07T23:54:37Z",
       "side": 1,
       "message": "Was this a copy paste? I\u0027m not sure why we need to clear errors.",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cebe0f7_f19ee575",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T21:40:18Z",
+      "side": 1,
+      "message": "Yes it\u0027s a copy paste of [1]. I\u0027ll delete it for now. \n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/lock/screen_locker.cc?l\u003d457",
+      "parentUuid": "3eec07af_0012bab7",
       "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "44eefe14_d9c1f588",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T21:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d5904c9_c213ca76",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68e28977_c08ddc9f",
         "filename": "ash/shelf/login_shelf_view_unittest.cc",
         "patchSetId": 8
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "5bfe0c25_45e5b599",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T21:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68e28977_c08ddc9f",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c20f2c2d_0551ad85",
         "filename": "ash/shelf/login_shelf_view_unittest.cc",
         "patchSetId": 8
@@ -166,6 +310,24 @@
       "writtenOn": "2017-09-07T23:54:37Z",
       "side": 1,
       "message": "I think there is enough sequence checking here that writing a helper function will improve readability, ie,\n\n  EXPECT_SHELF_BUTTONS({shutdown_button(), cancel_button()});",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f65d076_15506b74",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T21:40:18Z",
+      "side": 1,
+      "message": "Done. Not sure if the current approach is fine. I have to use a static_cast and also need a vector, because MACRO doesn\u0027t work with initialize list with more than one elements.",
+      "parentUuid": "c20f2c2d_0551ad85",
       "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "0d0d8726_4687f369",
+        "filename": "ash/shelf/shelf.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T21:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "828214fa_5ca7c274",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed03886b_f0ffc4c7",
         "filename": "ash/shelf/shelf.cc",
         "patchSetId": 8
@@ -200,6 +380,24 @@
       "writtenOn": "2017-09-08T00:01:02Z",
       "side": 1,
       "message": "each of these will call updateUi on the login shelf. Could this be avoided? e.g. by initializing the lock screen note, session, and shutdown controller state at once?",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e66bb8_44dc55e8",
+        "filename": "ash/shelf/shelf.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T21:40:18Z",
+      "side": 1,
+      "message": "If we allow LoginShelfView to observe the states then it can easily avoid the duplicate calls. I think it\u0027s fine to let it directly observe but let\u0027s wait for owner\u0027s opinions. Fortunately these codes will only be called once when session state first becomes active and they all will hit the early return in updateUi().",
+      "parentUuid": "ed03886b_f0ffc4c7",
       "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +438,24 @@
     },
     {
       "key": {
+        "uuid": "03a019a5_10ba5a51",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T21:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17824046_60f84d14",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13017462_39c1a541",
         "filename": "ash/shelf/shelf_widget_unittest.cc",
         "patchSetId": 8
@@ -263,6 +479,30 @@
     },
     {
       "key": {
+        "uuid": "45de9067_2073dd95",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T21:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13017462_39c1a541",
+      "range": {
+        "startLine": 413,
+        "startChar": 2,
+        "endLine": 413,
+        "endChar": 20
+      },
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1805e2fb_9104fbc1",
         "filename": "ash/shutdown_controller.h",
         "patchSetId": 8
@@ -280,6 +520,24 @@
     },
     {
       "key": {
+        "uuid": "25c19f6e_2a00d83e",
+        "filename": "ash/shutdown_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T21:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1805e2fb_9104fbc1",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3eba082_cdaa22dc",
         "filename": "ash/shutdown_controller_observer.h",
         "patchSetId": 8
@@ -294,6 +552,24 @@
       "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1e585c_867a19a3",
+        "filename": "ash/shutdown_controller_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T21:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3eba082_cdaa22dc",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
