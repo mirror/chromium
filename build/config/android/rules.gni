@@ -2511,6 +2511,12 @@ if (enable_java_templates) {
             rebase_path(_incremental_install_json_path, root_build_dir),
           ]
         }
+        if (_proguard_enabled) {
+          args += [
+            "--proguard-mapping-path",
+            rebase_path("$_final_apk_path.mapping", root_build_dir),
+          ]
+        }
       }
       _apk_operations += [ ":$_apk_operations_target_name" ]
       _incremental_apk_operations += [ ":$_apk_operations_target_name" ]
@@ -2828,11 +2834,11 @@ if (enable_java_templates) {
       }
       shared_libraries = [ invoker.shared_library ]
       deps += [
+        ":${target_name}__runtime_deps",
+        ":${target_name}__secondary_abi_runtime_deps",
         "//base:base_java",
         "//testing/android/appurify_support:appurify_support_java",
         "//testing/android/reporter:reporter_java",
-        ":${target_name}__runtime_deps",
-        ":${target_name}__secondary_abi_runtime_deps",
       ]
       data_deps += [
         "//build/android/pylib/device/commands",
