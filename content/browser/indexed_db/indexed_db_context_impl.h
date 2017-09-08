@@ -51,6 +51,14 @@ class CONTENT_EXPORT IndexedDBContextImpl : public IndexedDBContext {
     FORCE_CLOSE_REASON_MAX
   };
 
+  class Observer {
+   public:
+    virtual void OnIndexedDBChanged(const url::Origin& origin) = 0;
+
+   protected:
+    virtual ~Observer() {};
+  };
+
   // The indexed db directory.
   static const base::FilePath::CharType kIndexedDBDirectory[];
 
@@ -125,6 +133,12 @@ class CONTENT_EXPORT IndexedDBContextImpl : public IndexedDBContext {
 
   bool is_incognito() const { return data_path_.empty(); }
 
+  // Only callable on the IO thread.
+  void AddObserver(Observer* observer);
+  void RemoveObserver(Observer* observer);
+
+  void NotifyIndexedDBChanged(const GURL& origin);
+
  protected:
   ~IndexedDBContextImpl() override;
 
@@ -162,6 +176,7 @@ class CONTENT_EXPORT IndexedDBContextImpl : public IndexedDBContext {
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
   std::unique_ptr<std::set<url::Origin>> origin_set_;
   std::map<url::Origin, int64_t> origin_size_map_;
+  base::ObserverList<Observer> observers_;
 
   DISALLOW_COPY_AND_ASSIGN(IndexedDBContextImpl);
 };

@@ -1143,6 +1143,7 @@ Resources.IDBDatabaseTreeElement = class extends Resources.BaseStorageTreeElemen
     var icon = UI.Icon.create('mediumicon-database', 'resource-tree-item');
     this.setLeadingIcons([icon]);
     this._model.addEventListener(Resources.IndexedDBModel.Events.DatabaseNamesRefreshed, this._refreshIndexedDB, this);
+    this._model.addEventListener(Resources.IndexedDBModel.Events.IndexedDBUpdated, this._indexedDBUpdated, this);
   }
 
   get itemURL() {
@@ -1165,6 +1166,15 @@ Resources.IDBDatabaseTreeElement = class extends Resources.BaseStorageTreeElemen
 
   _refreshIndexedDB() {
     this._model.refreshDatabase(this._databaseId);
+  }
+
+  /**
+   * @param {!Common.Event} event
+   */
+  _indexedDBUpdated(event) {
+    var origin = /** @type {string} */ (event.data.origin);
+    if (this._databaseId.securityOrigin === origin)
+      this._refreshIndexedDB();
   }
 
   /**

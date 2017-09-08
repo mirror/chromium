@@ -470,6 +470,22 @@ void IndexedDBContextImpl::DatabaseDeleted(const Origin& origin) {
   QueryDiskAndUpdateQuotaUsage(origin);
 }
 
+void IndexedDBContextImpl::AddObserver(
+    IndexedDBContextImpl::Observer* observer) {
+  DCHECK(!observers_.HasObserver(observer));
+  observers_.AddObserver(observer);
+}
+
+void IndexedDBContextImpl::RemoveObserver(
+    IndexedDBContextImpl::Observer* observer) {
+  observers_.RemoveObserver(observer);
+}
+
+void IndexedDBContextImpl::NotifyIndexedDBChanged(const GURL& origin) {
+  for (auto& observer : observers_)
+    observer.OnIndexedDBChanged(url::Origin(origin));
+}
+
 IndexedDBContextImpl::~IndexedDBContextImpl() {
   if (factory_.get()) {
     TaskRunner()->PostTask(FROM_HERE,
@@ -551,6 +567,7 @@ void IndexedDBContextImpl::QueryDiskAndUpdateQuotaUsage(const Origin& origin) {
     quota_manager_proxy()->NotifyStorageModified(
         storage::QuotaClient::kIndexedDatabase, origin.GetURL(),
         storage::kStorageTypeTemporary, difference);
+    NotifyIndexedDBChanged(origin.GetURL());
   }
 }
 

@@ -256,6 +256,13 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
     this.dispatchEventToListeners(
         SDK.ServiceWorkerCacheModel.Events.CacheStorageContentUpdated, {origin: origin, cacheName: cacheName});
   }
+
+  /**
+   * @param {string} origin
+   * @override
+   */
+  indexedDBUpdated(origin) {
+  }
 };
 
 SDK.SDKModel.register(SDK.ServiceWorkerCacheModel, SDK.Target.Capability.Browser, false);
