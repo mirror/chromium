@@ -46,6 +46,29 @@
       "revId": "383af1dbac57a97e256ab6479021bda98fe08aa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8050348_d3aade17",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-08T20:50:14Z",
+      "side": 1,
+      "message": "Hey, calling AllowJavascript on all these methods makes the JavaScript safety mechanisms ineffective.\n\nWe should call AllowJavascript only on the messages that can be the first message received from JavaScript.\n\nAs for any callbacks that may be asynchronous, we should cancel them so they don\u0027t fire if JavaScript is disallowed. See how callback_weak_ptr_factory_ is used in this example handler: https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/settings/profile_info_handler.cc?sq\u003dpackage:chromium",
+      "range": {
+        "startLine": 330,
+        "startChar": 2,
+        "endLine": 330,
+        "endChar": 17
+      },
+      "revId": "383af1dbac57a97e256ab6479021bda98fe08aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
