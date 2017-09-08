@@ -22,6 +22,30 @@
       "revId": "16c9f83ccb502fe17f206da17c2a0c09fae09afa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6faaa07d_19606db2",
+        "filename": "build/linux/sysroot_scripts/sysroot-creator-jessie.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-09-08T08:38:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7641aa7f_f13d6d64",
+      "range": {
+        "startLine": 219,
+        "startChar": 2,
+        "endLine": 219,
+        "endChar": 9
+      },
+      "revId": "16c9f83ccb502fe17f206da17c2a0c09fae09afa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
