@@ -6,33 +6,34 @@
 <script src="../../../resources/mojo-helpers.js"></script>
 <script>
 'use strict';
-promise_test(() => {
-  let typed_array = Uint8Array.of(1, 2);
-  let array_buffer = Uint8Array.of(3, 4).buffer;
-  let data_view = new DataView(new ArrayBuffer(2));
-  data_view.setUint8(0, 5);
-  data_view.setUint8(1, 6);
+const test_desc = 'A regular write request to a writable characteristic ' +
+    'should succeed.';
+let typed_array = Uint8Array.of(1, 2);
+let array_buffer = Uint8Array.of(3, 4).buffer;
+let data_view = new DataView(new ArrayBuffer(2));
+data_view.setUint8(0, 5);
+data_view.setUint8(1, 6);
 
-  let characteristic;
-  let fake_characteristic;
-  return getMeasurementIntervalCharacteristic()
-    .then(result => ({characteristic, fake_characteristic} = result))
-    .then(() => fake_characteristic.getLastWrittenValue())
-    .then(last_value => assert_true(last_value === null))
+let characteristic, fake_characteristic;
+promise_test(() => getMeasurementIntervalCharacteristic()
+  .then(_ => ({characteristic, fake_characteristic} = _))
+  .then(() => fake_characteristic.getLastWrittenValue())
+  .then(last_value => assert_true(last_value === null))
 
-    .then(() => fake_characteristic.setNextWriteResponse(GATT_SUCCESS))
-    .then(() => characteristic.writeValue(typed_array))
-    .then(() => fake_characteristic.getLastWrittenValue())
-    .then(last_value => assert_array_equals(last_value, [1, 2]))
+  .then(() => fake_characteristic.setNextWriteResponse(GATT_SUCCESS))
+  .then(() => characteristic.writeValue(typed_array))
+  .then(() => fake_characteristic.getLastWrittenValue())
+  .then(last_value => assert_array_equals(last_value, [1, 2]))
 
-    .then(() => fake_characteristic.setNextWriteResponse(GATT_SUCCESS))
-    .then(() => characteristic.writeValue(array_buffer))
-    .then(() => fake_characteristic.getLastWrittenValue())
-    .then(last_value => assert_array_equals(last_value, [3, 4]))
+  .then(() => fake_characteristic.setNextWriteResponse(GATT_SUCCESS))
+  .then(() => characteristic.writeValue(array_buffer))
+  .then(() => fake_characteristic.getLastWrittenValue())
+  .then(last_value => assert_array_equals(last_value, [3, 4]))
 
-    .then(() => fake_characteristic.setNextWriteResponse(GATT_SUCCESS))
-    .then(() => characteristic.writeValue(data_view))
-    .then(() => fake_characteristic.getLastWrittenValue())
-    .then(last_value => assert_array_equals(last_value, [5, 6]));
-}, 'A regular write request to a writable characteristic should succeed.');
+  .then(() => fake_characteristic.setNextWriteResponse(GATT_SUCCESS))
+  .then(() => characteristic.writeValue(data_view))
+  .then(() => fake_characteristic.getLastWrittenValue())
+  .then(last_value => assert_array_equals(last_value, [5, 6]))
+  .then(() => navigator.bluetooth.test.allResponsesConsumed())
+  .then(consumed => assert_true(consumed)), test_desc);
 </script>

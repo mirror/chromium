@@ -6,6 +6,8 @@
 <script src="../../../resources/mojo-helpers.js"></script>
 <script>
 "use strict";
+const test_desc = 'Two iframes in the same origin should be able to access ' +
+    "each other's services";
 var firstIframe = true;
 var iframe1 = document.createElement('iframe');
 iframe1.src ='../../../resources/bluetooth/health-thermometer-two-iframes.html';
@@ -38,7 +40,9 @@ async_test(test => {
       });
     }
     else if (messageEvent.data === 'DoneTest') {
-      test.done();
+      navigator.bluetooth.test.allResponsesConsumed()
+        .then(consumed => assert_true(consumed))
+        .then(() => test.done());
     } else {
       assert_unreached('iframe sent invalid data: ' + messageEvent.data);
     }
@@ -59,5 +63,5 @@ async_test(test => {
     .then(() => {
       document.body.appendChild(iframe1);
     });
-}, 'Two iframes in the same origin should be able to access each other\'s services');
+}, test_desc);
 </script>

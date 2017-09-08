@@ -6,20 +6,17 @@
 <script src="../../../resources/mojo-helpers.js"></script>
 <script>
 'use strict';
-promise_test(() => {
-  const EXPECTED_VALUE = [0, 1, 2];
-  return getMeasurementIntervalCharacteristic()
-    .then(({characteristic, fake_characteristic}) => {
-      assert_equals(characteristic.value, null);
-      return fake_characteristic
-        .setNextReadResponse(
-          GATT_SUCCESS, EXPECTED_VALUE)
-        .then(() => characteristic.readValue())
-        .then(() => {
-          assert_array_equals(
-            new Uint8Array(characteristic.value.buffer),
-            EXPECTED_VALUE);
-        });
-    });
-}, 'Succesful read should update characteristic.value');
+const test_desc = 'Succesful read should update characteristic.value';
+const EXPECTED_VALUE = [0, 1, 2];
+let characteristic, fake_characteristic;
+promise_test(() => getMeasurementIntervalCharacteristic()
+  .then(_ => ({characteristic, fake_characteristic} = _))
+  .then(() => assert_equals(characteristic.value, null))
+  .then(() =>
+      fake_characteristic.setNextReadResponse(GATT_SUCCESS, EXPECTED_VALUE))
+  .then(() => characteristic.readValue())
+  .then(() => assert_array_equals(
+       new Uint8Array(characteristic.value.buffer), EXPECTED_VALUE))
+  .then(() => navigator.bluetooth.test.allResponsesConsumed())
+  .then(consumed => assert_true(consumed)), test_desc);
 </script>
