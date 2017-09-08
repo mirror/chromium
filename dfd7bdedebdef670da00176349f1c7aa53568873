@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3a4bccb_77ffcfbd",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-08T23:31:00Z",
+      "side": 1,
+      "message": "we can replace this line as last_button_down_time_ \u003d timestamp. I am not sure which is preferred.",
+      "range": {
+        "startLine": 169,
+        "startChar": 29,
+        "endLine": 169,
+        "endChar": 40
+      },
+      "revId": "dfd7bdedebdef670da00176349f1c7aa53568873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf9e8a7_3ee7f438",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-08T23:31:00Z",
+      "side": 1,
+      "message": "Move from one test case to SetUp(). In real production case, we are far away from TimeTicks(0). It makes sense to setup here.",
+      "revId": "dfd7bdedebdef670da00176349f1c7aa53568873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a5d6fde_d26b787d",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-08T23:31:00Z",
+      "side": 1,
+      "message": "I moved the raw pointer update to ResetPowerButtonController and SendAccelerometerUpdate. Do you like it?",
+      "revId": "dfd7bdedebdef670da00176349f1c7aa53568873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
