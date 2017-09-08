@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "761c265d_5f6cb60a",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T05:47:59Z",
+      "side": 1,
+      "message": "Please add |DCHECK(position.IsNotNull())|",
+      "revId": "35cec3487f98f174fc05530fad6722c00aa904ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecc0d882_68b58c31",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T05:47:59Z",
+      "side": 1,
+      "message": "You can use EditingTestBase::SetSelectionTextToBody()\n\nconst SelectionInDOMTree selection \u003d SetSelectionTextBody(\n  \"\u003cdiv id\u003dhost\u003e\u003cspan\u003e|bar\u003c/span\u003e\u003c/div\u003e\u003cdiv\u003ebaz^\u003c/span\u003e\");\nSetShadowContent(\"foo\", \"host\");\nSelection().SetSelection(selection));\nSelection().CommitAppearanceIfNeeded();\n// Pass if not crashed.",
+      "revId": "35cec3487f98f174fc05530fad6722c00aa904ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
