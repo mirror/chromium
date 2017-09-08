@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "2615b224_6f27075a",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-08T06:53:29Z",
+      "side": 1,
+      "message": "Please describe what this class does, for what purpose this class is designed, etc. rather than a history.\n\nPeople are usually interested in what this class does, what role this class plays, why we need this class, etc.  History is not important.",
+      "revId": "ebe9f3c2b0988835fee957ab176de2988f2b793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db838f0e_3e550779",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-08T06:53:29Z",
+      "side": 1,
+      "message": "s/of/from/ would be easier to understand.",
+      "range": {
+        "startLine": 52,
+        "startChar": 56,
+        "endLine": 52,
+        "endChar": 58
+      },
+      "revId": "ebe9f3c2b0988835fee957ab176de2988f2b793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed0a3cf7_a43218c6",
         "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
         "patchSetId": 12
