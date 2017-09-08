@@ -109,12 +109,25 @@
       next();
     },
     function checkContextFilter(next) {
-      Console.ConsoleView.instance()._filter.setContext('context1');
+      Console.ConsoleView.instance()._filter.onSidebarFilterChanged({
+        key: Console.ConsoleViewFilter.FilterType.Context,
+        text: 'context1',
+        negative: false
+      });
+      dumpVisibleMessages();
+      next();
+    },
+    function checkViolationFilter(next) {
+      Console.ConsoleView.instance()._filter.onSidebarFilterChanged({
+        key: Console.ConsoleViewFilter.FilterType.Violation,
+        text: 'violation',
+        negative: false
+      });
       dumpVisibleMessages();
       next();
     },
     function checkAllContextsFilter(next) {
-      Console.ConsoleView.instance()._filter.setContext(Console.ConsoleSidebar.AllContextsFilter);
+      Console.ConsoleView.instance()._filter.onSidebarFilterChanged(null);
       dumpVisibleMessages();
       next();
     },
