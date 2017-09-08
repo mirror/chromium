@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1d974a92_8feea247",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T20:50:17Z",
+      "side": 1,
+      "message": "It\u0027s necessary because we need to pass |offset_from_root| as the last parameter, rather than\nnullptr. The other callsite passes nullptr so that PaintLarClipper can compute the visual\noffset. It\u0027s all an artifact of paint offsets still being in a not 100% implemented state\nw.r.t fragments.",
+      "parentUuid": "72340a46_40a3fc3a",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a6d5a5c_125a5150",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 27
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-08T07:22:19Z",
       "side": 1,
       "message": "Prefer pass by value.",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7cedc9_abd32b34",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T20:50:17Z",
+      "side": 1,
+      "message": "Ah - forgot to add logic to set these values when clips change. Fixed.",
+      "parentUuid": "6a6d5a5c_125a5150",
       "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7d750528_af59d620",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T20:50:17Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "2f4ecc82_b127a233",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c3124cd_6c8c05bd",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 27
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-08T07:22:19Z",
       "side": 1,
       "message": "nits: Prefer early exit.",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494fd1b0_8ed9ec94",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T20:50:17Z",
+      "side": 1,
+      "message": "I left it like this because it makes it symmetric with the other methods,\neven though this one does not update context.current.clip.",
+      "parentUuid": "1c3124cd_6c8c05bd",
       "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a5246d32_a4ca31b2",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T20:50:17Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "7ea6ab9f_515d8d0a",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcb3a1b7_8a784e06",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 27
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-08T07:22:19Z",
       "side": 1,
       "message": "Feels weird. Why is this adjustment needed?",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9155d09_54933b16",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T20:50:17Z",
+      "side": 1,
+      "message": "Change the code to make it clear what is going on here.",
+      "parentUuid": "fcb3a1b7_8a784e06",
       "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5235d82c_00db7d83",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T20:50:17Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "987f4449_5dc944e4",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17afc127_dfa475a1",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 27
@@ -132,6 +258,24 @@
       "writtenOn": "2017-09-08T07:22:19Z",
       "side": 1,
       "message": "Why isn\u0027t it NOTREACHED()?",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69158f97_875a9d3c",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T20:50:17Z",
+      "side": 1,
+      "message": "What if the parent is not fragmented, but the current object is?",
+      "parentUuid": "17afc127_dfa475a1",
       "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "7b2ac1a6_2f629f67",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T20:50:17Z",
+      "side": 1,
+      "message": "Yes - an object need not have any fragments.",
+      "parentUuid": "4da0cd46_896deed7",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "804b6c17_5570bd83",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 27
@@ -166,6 +328,24 @@
       "writtenOn": "2017-09-08T07:22:19Z",
       "side": 1,
       "message": "Why is needs_paint_properties guaranteed?\n\u003cdiv style\u003d\"column-count:2;\"\u003e\n  \u003cdiv style\u003d\"position:relative;\"\u003eAlways needs paint property?\u003c/div\u003e\n\u003c/div\u003e",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc6a1a95_3f844287",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T20:50:17Z",
+      "side": 1,
+      "message": "Because NeedsFragmentationClip will be true.\n\nI moved the DCHECK out of the for loop because it\u0027s not necessary to DCHECK on every loop.",
+      "parentUuid": "804b6c17_5570bd83",
       "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "627c93e3_af2d1703",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1443,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T20:50:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f14fdd6c_50ad5b8b",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93a8706c_06c9fd28",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 27
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "78327c17_4169808e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1464,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T20:50:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93a8706c_06c9fd28",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "107f15ae_ffc83dc1",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 27
@@ -217,6 +433,24 @@
       "writtenOn": "2017-09-08T07:22:19Z",
       "side": 1,
       "message": "Could this become an early exit at the top?",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba60bcc0_e7fbc22e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T20:50:17Z",
+      "side": 1,
+      "message": "It wouldn\u0027t be a strict win to do so, because the force_subtree_update logic is\nneeded.",
+      "parentUuid": "107f15ae_ffc83dc1",
       "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
