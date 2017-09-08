@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "35f8b958_31eeaa6d",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-08T05:39:28Z",
+      "side": 1,
+      "message": "I saw the chromium-mojo email, Thanks! ReportBadMessage will kill renderer process but |binding_| will get the error notification asynchronously, so I think it\u0027s possible that multiple invalid requests rush in before |binding_| error handler. Maybe we need to get back to run callback with nonsense params.. Let\u0027s see are there some insights about this in chromium-mojo:)",
+      "parentUuid": "67d794fb_bd8c3893",
+      "revId": "0cb29294c55056d589d176f418ffed81bf4a7440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9b854fa_a2384262",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 4
