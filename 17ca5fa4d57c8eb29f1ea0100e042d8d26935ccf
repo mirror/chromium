@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e192ff6b_04852c34",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-08T15:47:14Z",
+      "side": 1,
+      "message": "We have Dismiss in delegate. Can we use it instead?  It finally goes to AppListPresenterImpl::Dismiss, which has reach functionality.",
+      "revId": "17ca5fa4d57c8eb29f1ea0100e042d8d26935ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
