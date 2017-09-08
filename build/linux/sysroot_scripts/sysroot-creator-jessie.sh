@@ -216,6 +216,7 @@ DEBIAN_PACKAGES="\
   libxxf86vm1
   linux-libc-dev
   mesa-common-dev
+  pkgconf
   speech-dispatcher
   x11proto-composite-dev
   x11proto-core-dev

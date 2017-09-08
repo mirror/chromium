@@ -227,6 +227,7 @@ DEBIAN_PACKAGES="\
   libxxf86vm1
   linux-libc-dev
   mesa-common-dev
+  pkgconf
   speech-dispatcher
   wayland-protocols
   x11proto-composite-dev

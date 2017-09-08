@@ -179,6 +179,7 @@ http://ftp.us.debian.org/debian/pool/main/p/pcre3/libpcre3-dev_8.39-3_armhf.deb
 http://ftp.us.debian.org/debian/pool/main/p/pcre3/libpcrecpp0v5_8.39-3_armhf.deb
 http://ftp.us.debian.org/debian/pool/main/p/pixman/libpixman-1-0_0.34.0-1_armhf.deb
 http://ftp.us.debian.org/debian/pool/main/p/pixman/libpixman-1-dev_0.34.0-1_armhf.deb
+http://ftp.us.debian.org/debian/pool/main/p/pkgconf/pkgconf_0.9.12-6_armhf.deb
 http://ftp.us.debian.org/debian/pool/main/p/pulseaudio/libpulse0_10.0-1+deb9u1_armhf.deb
 http://ftp.us.debian.org/debian/pool/main/p/pulseaudio/libpulse-dev_10.0-1+deb9u1_armhf.deb
 http://ftp.us.debian.org/debian/pool/main/p/pulseaudio/libpulse-mainloop-glib0_10.0-1+deb9u1_armhf.deb
@@ -215,6 +216,6 @@ http://security.debian.org/pool/updates/main/g/gnutls28/libgnutls30_3.5.8-5+deb9
 http://security.debian.org/pool/updates/main/g/gnutls28/libgnutls-dane0_3.5.8-5+deb9u1_armhf.deb
 http://security.debian.org/pool/updates/main/g/gnutls28/libgnutls-openssl27_3.5.8-5+deb9u1_armhf.deb
 http://security.debian.org/pool/updates/main/g/gnutls28/libgnutlsxx28_3.5.8-5+deb9u1_armhf.deb
-http://security.debian.org/pool/updates/main/libg/libgcrypt20/libgcrypt20_1.7.6-2+deb9u1_armhf.deb
-http://security.debian.org/pool/updates/main/libg/libgcrypt20/libgcrypt20-dev_1.7.6-2+deb9u1_armhf.deb
-http://security.debian.org/pool/updates/main/l/linux/linux-libc-dev_4.9.30-2+deb9u2_armhf.deb
+http://security.debian.org/pool/updates/main/libg/libgcrypt20/libgcrypt20_1.7.6-2+deb9u2_armhf.deb
+http://security.debian.org/pool/updates/main/libg/libgcrypt20/libgcrypt20-dev_1.7.6-2+deb9u2_armhf.deb
+http://security.debian.org/pool/updates/main/l/linux/linux-libc-dev_4.9.30-2+deb9u3_armhf.deb
