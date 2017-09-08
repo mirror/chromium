@@ -9,6 +9,7 @@
 
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/tray_action/test_tray_action_client.h"
 #include "ash/tray_action/tray_action_observer.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -46,31 +47,6 @@ class ScopedTestStateObserver : public TrayActionObserver {
   std::vector<TrayActionState> observed_states_;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedTestStateObserver);
-};
-
-class TestTrayActionClient : public mojom::TrayActionClient {
- public:
-  TestTrayActionClient() : binding_(this) {}
-
-  ~TestTrayActionClient() override = default;
-
-  mojom::TrayActionClientPtr CreateInterfacePtrAndBind() {
-    mojom::TrayActionClientPtr ptr;
-    binding_.Bind(mojo::MakeRequest(&ptr));
-    return ptr;
-  }
-
-  // mojom::TrayActionClient:
-  void RequestNewLockScreenNote() override { action_requests_count_++; }
-
-  int action_requests_count() const { return action_requests_count_; }
-
- private:
-  mojo::Binding<ash::mojom::TrayActionClient> binding_;
-
-  int action_requests_count_ = 0;
-
-  DISALLOW_COPY_AND_ASSIGN(TestTrayActionClient);
 };
 
 using TrayActionTest = AshTestBase;
@@ -233,6 +209,55 @@ TEST_F(TrayActionTest, RequestAction) {
 TEST_F(TrayActionTest, RequestActionWithNoHandler) {
   TrayAction* tray_action = Shell::Get()->tray_action();
   tray_action->RequestNewLockScreenNote();
+  base::RunLoop().RunUntilIdle();
+}
+
+TEST_F(TrayActionTest, CloseLockScreenNote) {
+  TrayAction* tray_action = Shell::Get()->tray_action();
+
+  TestTrayActionClient action_client;
+  tray_action->SetClient(action_client.CreateInterfacePtrAndBind(),
+                         TrayActionState::kNotAvailable);
+
+  tray_action->UpdateLockScreenNoteState(TrayActionState::kAvailable);
+  EXPECT_EQ(0, action_client.action_close_count());
+  tray_action->CloseLockScreenNote();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1, action_client.action_close_count());
+
+  action_client.ClearCounts();
+  tray_action->UpdateLockScreenNoteState(TrayActionState::kLaunching);
+  EXPECT_EQ(0, action_client.action_close_count());
+  tray_action->CloseLockScreenNote();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1, action_client.action_close_count());
+
+  action_client.ClearCounts();
+  tray_action->UpdateLockScreenNoteState(TrayActionState::kActive);
+  EXPECT_EQ(0, action_client.action_close_count());
+  tray_action->CloseLockScreenNote();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1, action_client.action_close_count());
+
+  action_client.ClearCounts();
+  tray_action->UpdateLockScreenNoteState(TrayActionState::kBackground);
+  EXPECT_EQ(0, action_client.action_close_count());
+  tray_action->CloseLockScreenNote();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1, action_client.action_close_count());
+
+  action_client.ClearCounts();
+  tray_action->UpdateLockScreenNoteState(TrayActionState::kNotAvailable);
+  EXPECT_EQ(0, action_client.action_close_count());
+  tray_action->CloseLockScreenNote();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1, action_client.action_close_count());
+}
+
+// Tests that there is no crash if handler is not set.
+TEST_F(TrayActionTest, CloseLockScreenNoteWithNoHandler) {
+  TrayAction* tray_action = Shell::Get()->tray_action();
+  tray_action->CloseLockScreenNote();
   base::RunLoop().RunUntilIdle();
 }
 
