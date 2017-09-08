@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a3c0f9e4_14fd6972",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintDefinition.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-08T12:15:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8e69978_339d9812",
+      "revId": "3e24b31aa0b2d51e0c43af71ee3f0a6f7b03342a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe14f003_b05770af",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "3e24b31aa0b2d51e0c43af71ee3f0a6f7b03342a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0dd53e1_a346c455",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-08T12:15:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe14f003_b05770af",
+      "revId": "3e24b31aa0b2d51e0c43af71ee3f0a6f7b03342a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5587c454_9cf35d6d",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-08T12:15:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f767859_5c57c8aa",
+      "revId": "3e24b31aa0b2d51e0c43af71ee3f0a6f7b03342a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e332cf7_563984b5",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
         "patchSetId": 15
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-07T20:14:39Z",
       "side": 1,
       "message": "Probably this code isn\u0027t presently hot enough for it to matter, but adding and removing a TryCatch does require calling into V8 and isn\u0027t entirely free. If this were in one method, I\u0027d suggest just using a single TryCatch for the entire thing.\n\nAs multiple functions, the need to pass the TryCatch by reference makes things a little less clear.",
+      "revId": "3e24b31aa0b2d51e0c43af71ee3f0a6f7b03342a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3fc5c43_3f1b3f0e",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-08T12:15:14Z",
+      "side": 1,
+      "message": "OK, I\u0027d support moving this TryCatch to registerPaint, and pass that into multiple functions by reference, that should be faster.",
+      "parentUuid": "4e332cf7_563984b5",
       "revId": "3e24b31aa0b2d51e0c43af71ee3f0a6f7b03342a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
