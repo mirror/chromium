@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04ede354_0207b732",
+        "filename": "chrome/installer/linux/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-08T21:53:15Z",
+      "side": 1,
+      "message": "sort.",
+      "revId": "641c5445139eaee63927c00c6ad8f91575fc40b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97eff0be_3c42d6a0",
+        "filename": "chrome/installer/linux/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-08T21:53:15Z",
+      "side": 1,
+      "message": "s/debian/rpm/ ?",
+      "range": {
+        "startLine": 131,
+        "startChar": 21,
+        "endLine": 131,
+        "endChar": 27
+      },
+      "revId": "641c5445139eaee63927c00c6ad8f91575fc40b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
