@@ -21,7 +21,7 @@ RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type, LocalFrame* frame) {
   DCHECK(frame);
   // TODO(haraken): Optimize the mapping from TaskTypes to task runners.
   switch (type) {
-    case TaskType::kTimer:
+    case TaskType::kJavascriptTimer:
       return frame->FrameScheduler()->ThrottleableTaskRunner();
     case TaskType::kUnspecedLoading:
     case TaskType::kNetworking:
@@ -122,7 +122,7 @@ RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type,
     case TaskType::kMediaElementEvent:
     case TaskType::kCanvasBlobSerialization:
     case TaskType::kMicrotask:
-    case TaskType::kTimer:
+    case TaskType::kJavascriptTimer:
     case TaskType::kRemoteEvent:
     case TaskType::kWebSocket:
     case TaskType::kPostedMessage:
