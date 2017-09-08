@@ -22,6 +22,30 @@
       "revId": "14287cc0f147881cb058d33f0ea538d7a6e5dc5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108cb046_be38cd6b",
+        "filename": "chromeos/components/tether/network_connection_handler_tether_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T21:51:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9701cff4_2d424706",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 20
+      },
+      "revId": "14287cc0f147881cb058d33f0ea538d7a6e5dc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
