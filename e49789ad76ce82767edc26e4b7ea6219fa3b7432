@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffb08705_88a891be",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T20:09:57Z",
+      "side": 1,
+      "message": "Nit: expected should be on LHS (I guess it\u0027s already backwards for all of these, but that\u0027s the convention gtest expects when printing out failures)",
+      "revId": "e49789ad76ce82767edc26e4b7ea6219fa3b7432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
