@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ca0c09d_5a94b818",
+        "filename": "gin/isolate_holder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-08T08:15:02Z",
+      "side": 1,
+      "message": "For v8::SnapshotCreater, it\u0027s an existing startup data on which the new snapshot will be based on.  However, for V8Initializer, is it an \"existing startup data\"?  I guess that it\u0027s something like \"default startup data\" or \"standard startup data\" or ... could be just a \"startup data\".",
+      "range": {
+        "startLine": 80,
+        "startChar": 34,
+        "endLine": 80,
+        "endChar": 71
+      },
+      "revId": "8ee84d948f2527deed3e8c878526dec053e68d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
