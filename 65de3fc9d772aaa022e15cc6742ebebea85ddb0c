@@ -22,6 +22,30 @@
       "revId": "65de3fc9d772aaa022e15cc6742ebebea85ddb0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de2634f_e01cb370",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-08T18:25:45Z",
+      "side": 1,
+      "message": "A little more background about this verified flush flag:\nWhen constructed, this flag is false. https://cs.chromium.org/chromium/src/gpu/command_buffer/common/sync_token.cc?sq\u003dpackage:chromium\u0026l\u003d19\n\nWhen transferred by cc::TestWebGraphicsContext3D, this flag will be set to true:\n#0  gpu::SyncToken::SetVerifyFlush (this\u003d0x7fffffff9b20) at ../../gpu/command_buffer/common/sync_token.h:57\n#1  0x0000000000baddd3 in cc::TestWebGraphicsContext3D::verifySyncTokens (this\u003d0x12c93be761a0, sync_tokens\u003d0x12c93be71360, count\u003d1) at ../../cc/test/test_web_graphics_context_3d.cc:673\n#2  0x0000000000b9ed5c in cc::TestGLES2Interface::VerifySyncTokensCHROMIUM (this\u003d0x12c93bef31a0, sync_tokens\u003d0x12c93be71360, count\u003d1) at ../../cc/test/test_gles2_interface.cc:318\n#3  0x00007ffff4f61bd4 in cc::LayerTreeResourceProvider::PrepareSendToParent (this\u003d0x12c93bf8de20, resource_ids\u003d..., list\u003d0x7fffffffb600) at ../../cc/resources/layer_tree_resource_provider.cc:94\n#4  0x00000000005176aa in viz::(anonymous namespace)::GLRendererTest_OverlaySyncTokensAreProcessed_Test::TestBody (this\u003d0x12c93bee3b60) at ../../components/viz/service/display/gl_renderer_unittest.cc:2249\n#5  0x000000000073f23e in",
+      "parentUuid": "65632444_77567d0c",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "65de3fc9d772aaa022e15cc6742ebebea85ddb0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
