@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#define _USE_MATH_DEFINES  // For VC++ to get M_PI. This has to be first.
+
 #include "content/renderer/device_sensors/device_motion_event_pump.h"
 
 #include "content/public/renderer/render_frame.h"
@@ -10,6 +12,13 @@
 #include "device/sensors/public/cpp/motion_data.h"
 #include "services/device/public/interfaces/sensor.mojom.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
+
+namespace {
+
+// Conversion ratio from radians to degrees.
+constexpr double kRadToDeg = 180.0 / M_PI;
+
+}  // namespace
 
 namespace content {
 
@@ -134,9 +143,9 @@ void DeviceMotionEventPump::GetDataFromSharedMemory(device::MotionData* data) {
   }
 
   if (gyroscope_.SensorReadingCouldBeRead()) {
-    data->rotation_rate_alpha = gyroscope_.reading.gyro.x;
-    data->rotation_rate_beta = gyroscope_.reading.gyro.y;
-    data->rotation_rate_gamma = gyroscope_.reading.gyro.z;
+    data->rotation_rate_alpha = gyroscope_.reading.gyro.x * kRadToDeg;
+    data->rotation_rate_beta = gyroscope_.reading.gyro.y * kRadToDeg;
+    data->rotation_rate_gamma = gyroscope_.reading.gyro.z * kRadToDeg;
     data->has_rotation_rate_alpha = true;
     data->has_rotation_rate_beta = true;
     data->has_rotation_rate_gamma = true;
