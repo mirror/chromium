@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "62649722_b805d526",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5886,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T16:30:07Z",
+      "side": 1,
+      "message": "It\u0027s because the frame loader isn\u0027t replaced, and we grab the fetcher from the frame loader when creating a document associated with a frame.",
+      "parentUuid": "355bfff8_7f618bc4",
+      "range": {
+        "startLine": 5886,
+        "startChar": 6,
+        "endLine": 5886,
+        "endChar": 14
+      },
+      "revId": "25400730392602d7e3deb45665b385a6cb2ca657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d600cf20_57f39e5a",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5886,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T16:30:07Z",
+      "side": 1,
+      "message": "Yeah, due to how subframes for a MHTML page are fetched, archive_ will be set. I double-checked by doing some logging as well.",
+      "parentUuid": "b04b3295_f6a5527e",
+      "range": {
+        "startLine": 5886,
+        "startChar": 6,
+        "endLine": 5886,
+        "endChar": 25
+      },
+      "revId": "25400730392602d7e3deb45665b385a6cb2ca657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe59e276_8562abc0",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-08T16:10:11Z",
       "side": 1,
       "message": "Are there cases where we might want to also include kSandboxPopups or kSandboxPropagatesToAuxiliaryBrowsingContexts flags for mhtml documents?  What if initializer.GetSandboxFlags() includes one of these 2 flags?\n\nBTW - I wondered whether these 2 flags might be irrelevant if the mhtml cannot execute javascript, but I think auxiliary browsing context can be created without javascript (e.g. if an anchor element specified something like target\u003d\"_blank\").",
+      "range": {
+        "startLine": 5894,
+        "startChar": 10,
+        "endLine": 5894,
+        "endChar": 72
+      },
+      "revId": "25400730392602d7e3deb45665b385a6cb2ca657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb71b45_ab4c6af8",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5894,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T16:30:07Z",
+      "side": 1,
+      "message": "Hmm... that\u0027s a good point. I updated this to better match the old behavior by combining the two set of flags. PTAL.",
+      "parentUuid": "fe59e276_8562abc0",
       "range": {
         "startLine": 5894,
         "startChar": 10,
