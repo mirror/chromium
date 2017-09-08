@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "d8efcd2a_ab35875e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T22:51:06Z",
+      "side": 1,
+      "message": "Ah, thanks for explaining. It all makes sense now.",
+      "parentUuid": "8085b815_d230c4f2",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f235c40c_86a4b3d5",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
         "patchSetId": 27
