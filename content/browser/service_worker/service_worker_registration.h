@@ -50,9 +50,10 @@ class CONTENT_EXPORT ServiceWorkerRegistration
     virtual void OnSkippedWaiting(ServiceWorkerRegistration* registation) {}
   };
 
-  ServiceWorkerRegistration(const ServiceWorkerRegistrationOptions& options,
-                            int64_t registration_id,
-                            base::WeakPtr<ServiceWorkerContextCore> context);
+  ServiceWorkerRegistration(
+      const blink::mojom::ServiceWorkerRegistrationOptions& options,
+      int64_t registration_id,
+      base::WeakPtr<ServiceWorkerContextCore> context);
 
   int64_t id() const { return registration_id_; }
   const GURL& pattern() const { return pattern_; }

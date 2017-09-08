@@ -278,7 +278,8 @@ void ServiceWorkerContextWrapper::RegisterServiceWorker(
                             base::BindOnce(std::move(callback), false));
     return;
   }
-  ServiceWorkerRegistrationOptions options(net::SimplifyUrlForRequest(pattern));
+  blink::mojom::ServiceWorkerRegistrationOptions options(
+      net::SimplifyUrlForRequest(pattern));
   context()->RegisterServiceWorker(
       net::SimplifyUrlForRequest(script_url), options,
       nullptr /* provider_host */,

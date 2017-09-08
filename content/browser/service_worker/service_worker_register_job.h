@@ -49,7 +49,7 @@ class ServiceWorkerRegisterJob : public ServiceWorkerRegisterJobBase,
   CONTENT_EXPORT ServiceWorkerRegisterJob(
       base::WeakPtr<ServiceWorkerContextCore> context,
       const GURL& script_url,
-      const ServiceWorkerRegistrationOptions& options);
+      const blink::mojom::ServiceWorkerRegistrationOptions& options);
 
   // For update jobs.
   CONTENT_EXPORT ServiceWorkerRegisterJob(

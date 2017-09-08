@@ -91,7 +91,8 @@ class ServiceWorkerReadFromCacheJobTest : public testing::Test {
 
     // Populate a registration in the storage.
     registration_ = new ServiceWorkerRegistration(
-        ServiceWorkerRegistrationOptions(GURL("http://example.com/scope")),
+        blink::mojom::ServiceWorkerRegistrationOptions(
+            GURL("http://example.com/scope")),
         kRegistrationId, context()->AsWeakPtr());
     version_ = new ServiceWorkerVersion(registration_.get(), main_script_.url,
                                         kVersionId, context()->AsWeakPtr());

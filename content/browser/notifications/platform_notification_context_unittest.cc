@@ -328,7 +328,7 @@ TEST_F(PlatformNotificationContextTest, ServiceWorkerUnregistered) {
 
   // Register a Service Worker to get a valid registration id.
   embedded_worker_test_helper->context()->RegisterServiceWorker(
-      script_url, ServiceWorkerRegistrationOptions(origin),
+      script_url, blink::mojom::ServiceWorkerRegistrationOptions(origin),
       nullptr /* provider_host */,
       base::Bind(&PlatformNotificationContextTest::DidRegisterServiceWorker,
                  base::Unretained(this), &service_worker_registration_id));

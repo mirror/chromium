@@ -78,7 +78,7 @@ ServiceWorkerJobCoordinator::~ServiceWorkerJobCoordinator() {
 
 void ServiceWorkerJobCoordinator::Register(
     const GURL& script_url,
-    const ServiceWorkerRegistrationOptions& options,
+    const blink::mojom::ServiceWorkerRegistrationOptions& options,
     ServiceWorkerProviderHost* provider_host,
     const ServiceWorkerRegisterJob::RegistrationCallback& callback) {
   auto job =

@@ -38,7 +38,7 @@ ServiceWorkerVersionInfo GetVersionInfo(ServiceWorkerVersion* version) {
 }  // namespace
 
 ServiceWorkerRegistration::ServiceWorkerRegistration(
-    const ServiceWorkerRegistrationOptions& options,
+    const blink::mojom::ServiceWorkerRegistrationOptions& options,
     int64_t registration_id,
     base::WeakPtr<ServiceWorkerContextCore> context)
     : pattern_(options.scope),
