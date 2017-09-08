@@ -82,6 +82,10 @@ CONSOLE MESSAGE: line 13: function ( /**/ foo/**/, /*/**/bar,
     /**/baz) {}
 CONSOLE MESSAGE: line 12: 42.0000
 CONSOLE MESSAGE: line 13: 42.0000
+CONSOLE MESSAGE: line 12: 42.0000
+CONSOLE MESSAGE: line 13: 42.0000
+CONSOLE MESSAGE: line 12: abc
+CONSOLE MESSAGE: line 13: abc
 CONSOLE MESSAGE: line 12: abc
 CONSOLE MESSAGE: line 13: abc
 CONSOLE MESSAGE: line 12: [object Uint16Array]
@@ -259,49 +263,57 @@ console-format.html:8 [ƒ]
 globals[31]
 ƒ ( /**/ foo/**/, /*/**/bar,
     /**/baz) {}
-console-format.html:7 Number {[[PrimitiveValue]]: 42}
+console-format.html:7 Number {42}
 console-format.html:8 [Number]
 globals[32]
-Number {[[PrimitiveValue]]: 42}
-console-format.html:7 String {[[PrimitiveValue]]: "abc"}
-console-format.html:8 [String]
+Number {42}
+console-format.html:7 Number {42, 1: "foo", a: "bar"}
+console-format.html:8 [Number]
 globals[33]
-String {[[PrimitiveValue]]: "abc"}
+Number {42, 1: "foo", a: "bar"}
+console-format.html:7 String {"abc"}
+console-format.html:8 [String]
+globals[34]
+String {"abc"}
+console-format.html:7 String {"abc", 3: "foo", 01: "foo", a: "bar"}
+console-format.html:8 [String]
+globals[35]
+String {"abc", 3: "foo", 01: "foo", a: "bar"}
 console-format.html:7 Uint16Array(3) [1, 2, 3]
 console-format.html:8 [Uint16Array(3)]
-globals[34]
+globals[36]
 Uint16Array(3) [1, 2, 3]
 console-format.html:7 #text
 console-format.html:8 [text]
-globals[35]
+globals[37]
 #text
 console-format.html:7 DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
 console-format.html:8 [DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of th…]
-globals[36]
+globals[38]
 DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
 console-format.html:7 Uint8Array [3]
 console-format.html:8 [Uint8Array(1)]
-globals[37]
+globals[39]
 Uint8Array [3]
 console-format.html:7 Uint8Array(400) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …]
 console-format.html:8 [Uint8Array(400)]
-globals[38]
+globals[40]
 Uint8Array(400) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …]
 console-format.html:7 Uint8Array(400000000) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …]
 console-format.html:8 [Uint8Array(400000000)]
-globals[39]
+globals[41]
 Uint8Array(400000000) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …]
 console-format.html:7 namespace.longSubNamespace.x.className {}
 console-format.html:8 [n…e.l…e.x.className]
-globals[40]
+globals[42]
 namespace.longSubNamespace.x.className {}
 console-format.html:7 (200) [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …]
 console-format.html:8 [Array(200)]
-globals[41]
+globals[43]
 (200) [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …]
 console-format.html:7 ["test"]
 console-format.html:8 [Array(1)]
-globals[42]
+globals[44]
 ["test"]
 Expanded all messages
 console-format.html:22 Array(10)
@@ -650,18 +662,33 @@ console-format.html:8 [ƒ]
 globals[31]
 ƒ ( /**/ foo/**/, /*/**/bar,
     /**/baz) {}
-console-format.html:7 Number {[[PrimitiveValue]]: 42}
+console-format.html:7 Number {42}
     __proto__: Number
     [[PrimitiveValue]]: 42
 console-format.html:8 [Number]
-    0: Number {[[PrimitiveValue]]: 42}
+    0: Number {42}
     length: 1
     __proto__: Array(0)
 globals[32]
-Number {[[PrimitiveValue]]: 42}
+Number {42}
     __proto__: Number
     [[PrimitiveValue]]: 42
-console-format.html:7 String {[[PrimitiveValue]]: "abc"}
+console-format.html:7 Number {42, 1: "foo", a: "bar"}
+    1: "foo"
+    a: "bar"
+    __proto__: Number
+    [[PrimitiveValue]]: 42
+console-format.html:8 [Number]
+    0: Number {42, 1: "foo", a: "bar"}
+    length: 1
+    __proto__: Array(0)
+globals[33]
+Number {42, 1: "foo", a: "bar"}
+    1: "foo"
+    a: "bar"
+    __proto__: Number
+    [[PrimitiveValue]]: 42
+console-format.html:7 String {"abc"}
     0: "a"
     1: "b"
     2: "c"
@@ -669,14 +696,39 @@ console-format.html:7 String {[[PrimitiveValue]]: "abc"}
     __proto__: String
     [[PrimitiveValue]]: "abc"
 console-format.html:8 [String]
-    0: String {[[PrimitiveValue]]: "abc"}
+    0: String {"abc"}
     length: 1
     __proto__: Array(0)
-globals[33]
-String {[[PrimitiveValue]]: "abc"}
+globals[34]
+String {"abc"}
     0: "a"
     1: "b"
     2: "c"
+    length: 3
+    __proto__: String
+    [[PrimitiveValue]]: "abc"
+console-format.html:7 String {"abc", 3: "foo", 01: "foo", a: "bar"}
+    0: "a"
+    01: "foo"
+    1: "b"
+    2: "c"
+    3: "foo"
+    a: "bar"
+    length: 3
+    __proto__: String
+    [[PrimitiveValue]]: "abc"
+console-format.html:8 [String]
+    0: String {"abc", 3: "foo", 01: "foo", a: "bar"}
+    length: 1
+    __proto__: Array(0)
+globals[35]
+String {"abc", 3: "foo", 01: "foo", a: "bar"}
+    0: "a"
+    01: "foo"
+    1: "b"
+    2: "c"
+    3: "foo"
+    a: "bar"
     length: 3
     __proto__: String
     [[PrimitiveValue]]: "abc"
@@ -694,7 +746,7 @@ console-format.html:8 [Uint16Array(3)]
     0: Uint16Array(3) [1, 2, 3]
     length: 1
     __proto__: Array(0)
-globals[34]
+globals[36]
 Uint16Array(3) [1, 2, 3]
     0: 1
     1: 2
@@ -710,14 +762,14 @@ console-format.html:8 [text]
     0: text
     length: 1
     __proto__: Array(0)
-globals[35]
+globals[37]
 #text
 console-format.html:7 DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
 console-format.html:8 [DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of th…]
     0: DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
     length: 1
     __proto__: Array(0)
-globals[36]
+globals[38]
 DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
 console-format.html:7 Uint8Array [3]
     0: 3
@@ -731,7 +783,7 @@ console-format.html:8 [Uint8Array(1)]
     0: Uint8Array [3]
     length: 1
     __proto__: Array(0)
-globals[37]
+globals[39]
 Uint8Array [3]
     0: 3
     buffer: (...)
@@ -751,7 +803,7 @@ console-format.html:8 [Uint8Array(400)]
     0: Uint8Array(400) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …]
     length: 1
     __proto__: Array(0)
-globals[38]
+globals[40]
 Uint8Array(400) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …]
     [0 … 99]
     [100 … 199]
@@ -769,7 +821,7 @@ console-format.html:8 [Uint8Array(400000000)]
     0: Uint8Array(400000000) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …]
     length: 1
     __proto__: Array(0)
-globals[39]
+globals[41]
 Uint8Array(400000000) [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …]
     [0 … 99999999]
     [100000000 … 199999999]
@@ -782,7 +834,7 @@ console-format.html:8 [n…e.l…e.x.className]
     0: namespace.longSubNamespace.x.className {}
     length: 1
     __proto__: Array(0)
-globals[40]
+globals[42]
 namespace.longSubNamespace.x.className {}
     __proto__: Object
 console-format.html:7 (200) [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …]
@@ -794,7 +846,7 @@ console-format.html:8 [Array(200)]
     0: (200) [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …]
     length: 1
     __proto__: Array(0)
-globals[41]
+globals[43]
 (200) [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …]
     [0 … 99]
     [100 … 199]
@@ -808,7 +860,7 @@ console-format.html:8 [Array(1)]
     0: ["test"]
     length: 1
     __proto__: Array(0)
-globals[42]
+globals[44]
 ["test"]
     0: "test"
     length: 1
