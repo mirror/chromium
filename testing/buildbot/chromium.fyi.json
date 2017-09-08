@@ -4,6 +4,11 @@
       "all"
     ]
   },
+  "Android Things Cast Audio (dbg)": {
+    "additional_compile_targets": [
+      "cast_shell_apk"
+    ]
+  },
   "Android VR Tests": {
     "gtest_tests": [
       {

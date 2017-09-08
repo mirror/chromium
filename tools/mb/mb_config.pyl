@@ -104,6 +104,7 @@
       'Android Builder Goma Canary (dbg)': 'android_debug_bot',
       'Android deterministic': 'android_without_codecs_release_bot_minimal_symbols',
       'Android deterministic (dbg)': 'android_debug_bot',
+      'Android Things Cast Audio (dbg)': 'android_things_cast_audio_debug_static_bot',
       'Browser Side Navigation Linux': 'release_bot',
       'CFI Linux CF': 'cfi_full_cfi_diag_recover_release_static',
       'CFI Linux ToT': 'clang_tot_cfi_full_cfi_diag_thin_lto_release_static_dcheck_always_on',
@@ -931,6 +932,10 @@
       'android', 'release_trybot', 'arm64',
     ],
 
+    'android_things_cast_audio_debug_static_bot': [
+      'android', 'android_things', 'cast', 'cast_audio', 'clang', 'debug_static_bot',
+    ],
+
     'android_without_codecs_release_bot_minimal_symbols': [
       'android_without_codecs', 'release_bot', 'minimal_symbols', 'strip_debug_info',
     ],
@@ -1617,6 +1622,10 @@
     # which are not allowed to have proprietary codecs enabled.
     'android': {
       'mixins': ['android_without_codecs', 'chrome_with_codecs'],
+    },
+
+    'android_things': {
+      'gn_args': 'is_android_things=true',
     },
 
     'android_without_codecs': {
