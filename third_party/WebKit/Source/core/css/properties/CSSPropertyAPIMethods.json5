@@ -29,5 +29,10 @@
       return_type: "bool",
       parameters: "(CSSPropertyID, bool, CSSParserTokenRange&, const CSSParserContext&, const CSSParserLocalContext&, HeapVector<CSSProperty, 256>&)",
     },
+    {
+      name: "IsAffectedByAll",
+      return_type: "bool",
+      parameters: "()",
+    },
   ]
 }
