@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e5aebed4_1df3d845",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-08T00:34:56Z",
+      "side": 1,
+      "message": "Add \"/\" at the end of URL in order to pass the check at line 357.",
+      "revId": "bd5de93b528ccf6a0fd5afeb98ceeebb02bc97e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec382ff2_cd3ca800",
         "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
         "patchSetId": 1
@@ -43,6 +60,23 @@
         "endLine": 350,
         "endChar": 23
       },
+      "revId": "bd5de93b528ccf6a0fd5afeb98ceeebb02bc97e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cba72ed_90fb0ba9",
+        "filename": "third_party/WebKit/Source/core/testing/data/mhtml/xslt.mht",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-09-08T00:34:56Z",
+      "side": 1,
+      "message": "Add \"--\" at the end.",
       "revId": "bd5de93b528ccf6a0fd5afeb98ceeebb02bc97e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
