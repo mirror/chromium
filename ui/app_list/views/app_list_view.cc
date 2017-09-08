@@ -303,6 +303,13 @@ void AppListView::ShowWhenReady() {
   app_list_main_view_->ShowAppListWhenReady();
 }
 
+void AppListView::Dismiss() {
+  app_list_main_view_->Close();
+  delegate_->Dismiss();
+  SetState(CLOSED);
+  GetWidget()->Deactivate();
+}
+
 void AppListView::UpdateBounds() {
   // if the AppListView is a bubble
   if (!is_fullscreen_app_list_enabled_)
@@ -556,7 +563,7 @@ void AppListView::HandleClickOrTap(ui::LocatedEvent* event) {
   }
 
   if (!search_box_view_->is_search_box_active()) {
-    SetState(CLOSED);
+    Dismiss();
     return;
   }
 
@@ -610,7 +617,7 @@ void AppListView::EndDrag(const gfx::Point& location) {
         case HALF:
         case FULLSCREEN_SEARCH:
         case FULLSCREEN_ALL_APPS:
-          SetState(CLOSED);
+          Dismiss();
           break;
         case CLOSED:
           NOTREACHED();
@@ -670,7 +677,7 @@ void AppListView::EndDrag(const gfx::Point& location) {
     // If the drag ended near the bezel, close the app list and return early.
     if (location_y_in_current_display >=
         (display_height - kAppListBezelMargin)) {
-      SetState(CLOSED);
+      Dismiss();
       return;
     }
     switch (app_list_state_) {
@@ -682,7 +689,7 @@ void AppListView::EndDrag(const gfx::Point& location) {
         break;
       case FULLSCREEN_SEARCH:
         if (std::abs(drag_delta) > app_list_threshold)
-          SetState(CLOSED);
+          Dismiss();
         else
           SetState(app_list_state_);
         break;
@@ -700,7 +707,7 @@ void AppListView::EndDrag(const gfx::Point& location) {
             UMA_HISTOGRAM_ENUMERATION(kAppListPeekingToFullscreenHistogram,
                                       kSwipe, kMaxPeekingToFullscreen);
           } else {
-            SetState(CLOSED);
+            Dismiss();
           }
         } else {
           SetState(app_list_state_);
@@ -966,13 +973,7 @@ bool AppListView::AcceleratorPressed(const ui::Accelerator& accelerator) {
   // If the ContentsView does not handle the back action, then this is the
   // top level, so we close the app list.
   if (!app_list_main_view_->contents_view()->Back()) {
-    if (is_fullscreen_app_list_enabled_) {
-      SetState(CLOSED);
-    } else {
-      app_list_main_view_->Close();
-      delegate_->Dismiss();
-    }
-    GetWidget()->Deactivate();
+    Dismiss();
   }
 
   // Don't let DialogClientView handle the accelerator.
@@ -1122,8 +1123,6 @@ void AppListView::SetState(AppListState new_state) {
         case PEEKING:
         case FULLSCREEN_ALL_APPS:
         case FULLSCREEN_SEARCH:
-          delegate_->Dismiss();
-          app_list_main_view_->Close();
           break;
       }
   }
@@ -1131,7 +1130,9 @@ void AppListView::SetState(AppListState new_state) {
   RecordStateTransitionForUma(new_state_override);
   model_->SetStateFullscreen(new_state_override);
   app_list_state_ = new_state_override;
-
+  if (new_state_override == CLOSED) {
+    return;
+  }
   // Updates the visibility of app list items according to the change of
   // |app_list_state_|.
   app_list_main_view_->contents_view()
