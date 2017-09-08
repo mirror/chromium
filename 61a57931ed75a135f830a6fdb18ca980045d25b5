@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2962da12_b7ef5e68",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-08T22:23:15Z",
+      "side": 1,
+      "message": "I\"m not sure what word you mean here. Maybe \"clever\"? I\u0027m not sure I\u0027d use that to describe a ctor though. Maybe just stick with the single adjective: \"clearer\".",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 6
+      },
+      "revId": "61a57931ed75a135f830a6fdb18ca980045d25b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
