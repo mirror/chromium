@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "787c88f1_5a36cea9",
+        "filename": "extensions/shell/browser/shell_runtime_api_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-08T20:08:13Z",
+      "side": 1,
+      "message": "nit: AppShell",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "fc1656ef2bd9ffe7c6919cfd2b153627aa70ba26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
