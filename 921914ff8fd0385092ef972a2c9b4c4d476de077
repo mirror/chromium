@@ -16,6 +16,24 @@
       "revId": "921914ff8fd0385092ef972a2c9b4c4d476de077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a08393_288a528c",
+        "filename": "chrome/browser/media_galleries/media_galleries_histograms.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-08T00:47:39Z",
+      "side": 1,
+      "message": "My bad, I should have seen it from the other lines! Thanks for catching this.",
+      "parentUuid": "420300bc_c745ad08",
+      "revId": "921914ff8fd0385092ef972a2c9b4c4d476de077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
