@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32c22f23_0faa46ad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2026,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-08T17:35:14Z",
+      "side": 0,
+      "message": "why do we not need this anymore? we are still returning false, so logging the reason might be a good idea?",
+      "range": {
+        "startLine": 2026,
+        "startChar": 55,
+        "endLine": 2026,
+        "endChar": 62
+      },
+      "revId": "29fdafbb90236bf54656e6880e25cad3c0d599b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

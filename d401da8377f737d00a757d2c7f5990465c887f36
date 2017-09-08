@@ -22,6 +22,145 @@
       "revId": "d401da8377f737d00a757d2c7f5990465c887f36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7334c324_74b6eded",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-08T17:35:14Z",
+      "side": 1,
+      "message": "ping about this just to make sure you saw this concern. I think this currently is missing details and we can avoid that by using attach.... in Tab.",
+      "parentUuid": "569f02da_485b73a8",
+      "range": {
+        "startLine": 1059,
+        "startChar": 17,
+        "endLine": 1059,
+        "endChar": 44
+      },
+      "revId": "d401da8377f737d00a757d2c7f5990465c887f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2fc7a9_897ef8f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-08T17:35:14Z",
+      "side": 1,
+      "message": "I think this will cause issues in the long term where it is not clear where and should anybody use which version of getInstance.\n\nI think the implementation of getInstance should be clever enough here and should have only one that might potentially return null. If we think getInstance() will mislead people to think it is always non-null then it is a good idea to rename it but we should have one such call imo.",
+      "range": {
+        "startLine": 91,
+        "startChar": 18,
+        "endLine": 91,
+        "endChar": 48
+      },
+      "revId": "d401da8377f737d00a757d2c7f5990465c887f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c99d86_ed2c892f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-08T17:35:14Z",
+      "side": 1,
+      "message": "if we are checking both again here anyway, would be good to merge these and derive the boolean state from sInstance.",
+      "range": {
+        "startLine": 92,
+        "startChar": 24,
+        "endLine": 92,
+        "endChar": 25
+      },
+      "revId": "d401da8377f737d00a757d2c7f5990465c887f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59dc5eb_114a4a80",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-08T17:35:14Z",
+      "side": 1,
+      "message": "Do we know that this is going to reliably called in onDestroy.",
+      "range": {
+        "startLine": 214,
+        "startChar": 17,
+        "endLine": 214,
+        "endChar": 18
+      },
+      "revId": "d401da8377f737d00a757d2c7f5990465c887f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1df8a7b_f7b9178e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-08T17:35:14Z",
+      "side": 1,
+      "message": "can we get this id in setup once so that it is cached and reused in all tests inside of doing the try-finally\u0027s here?",
+      "range": {
+        "startLine": 204,
+        "startChar": 33,
+        "endLine": 204,
+        "endChar": 67
+      },
+      "revId": "d401da8377f737d00a757d2c7f5990465c887f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05adfd1d_9f1e79d2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-08T17:35:14Z",
+      "side": 1,
+      "message": "Does this test pass on tablets? Overview visible should always be true for tablet UI, I think. So there should actually be no reason to assert anything there other than the right id being selected.",
+      "range": {
+        "startLine": 560,
+        "startChar": 19,
+        "endLine": 560,
+        "endChar": 30
+      },
+      "revId": "d401da8377f737d00a757d2c7f5990465c887f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
