@@ -16,6 +16,24 @@
       "revId": "1b75a0e173e7ed30619cc2f7253fd532a69ef20d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827c38d2_96fc8a7e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-08T19:26:13Z",
+      "side": 1,
+      "message": "Done as insensitive for all 3.  Looks like everywhere else is insensitive by default, even when specifying \"domain:\" in Network filter.",
+      "parentUuid": "a5f30b4e_8cefce1d",
+      "revId": "1b75a0e173e7ed30619cc2f7253fd532a69ef20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
