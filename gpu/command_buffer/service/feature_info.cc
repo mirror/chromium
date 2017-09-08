@@ -177,6 +177,35 @@ bool IsWebGLDrawBuffersSupported(bool webglCompatibilityContext,
 
 }  // anonymous namespace.
 
+namespace {
+
+enum GpuTextureResultR16_L16 {
+  // Values synced with 'GpuTextureResultR16_L16' in
+  // src/tools/metrics/histograms/histograms.xml
+  kHaveR16 = 0,
+  kHaveL16 = 1,
+  kHaveR16AndL16 = 2,
+  kHaveNone = 3,
+  kMax = kHaveNone
+};
+
+// TODO(riju): For UMA, remove after crbug.com/635463 is resolved.
+bool r16_is_present;
+bool l16_is_present;
+
+GpuTextureResultR16_L16 GpuTextureUMAHelper() {
+  if (r16_is_present && l16_is_present) {
+    return GpuTextureResultR16_L16::kHaveR16AndL16;
+  } else if (r16_is_present) {
+    return GpuTextureResultR16_L16::kHaveR16;
+  } else if (l16_is_present) {
+    return GpuTextureResultR16_L16::kHaveL16;
+  }
+  return GpuTextureResultR16_L16::kHaveNone;
+}
+
+}  // anonymous namespace.
+
 FeatureInfo::FeatureFlags::FeatureFlags() {}
 
 FeatureInfo::FeatureInfo() {
@@ -1298,6 +1327,7 @@ void FeatureInfo::InitializeFeatures() {
   if (gl_version_info_->is_desktop_core_profile ||
       gl::HasExtension(extensions, "GL_EXT_texture_norm16")) {
     feature_flags_.ext_texture_norm16 = true;
+    r16_is_present = true;
     AddExtensionString("GL_EXT_texture_norm16");
 
     // Note: EXT_texture_norm16 is not exposed through WebGL API so we validate
@@ -1307,6 +1337,10 @@ void FeatureInfo::InitializeFeatures() {
     validators_.texture_internal_format.AddValue(GL_RED_EXT);
     validators_.texture_unsized_internal_format.AddValue(GL_RED_EXT);
   }
+
+  UMA_HISTOGRAM_ENUMERATION(
+      "GPU.TextureR16Ext_LuminanceF16", GpuTextureUMAHelper(),
+      static_cast<int>(GpuTextureResultR16_L16::kMax) + 1);
 
   bool has_opengl_dual_source_blending =
       gl_version_info_->IsAtLeastGL(3, 3) ||
@@ -1616,6 +1650,9 @@ void FeatureInfo::InitializeFloatAndHalfFloatFeatures(
           GL_LUMINANCE_ALPHA16F_EXT);
     }
   }
+
+  l16_is_present =
+      enable_texture_half_float && feature_flags_.ext_texture_storage;
 }
 
 bool FeatureInfo::IsES3Capable() const {
