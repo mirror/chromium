@@ -117,6 +117,30 @@
       "revId": "4745978db5963abbd146e63f6cf25fc67362c567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7781e4a_18d7fd8b",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-08T23:49:42Z",
+      "side": 1,
+      "message": "I see.\n\nDone.",
+      "parentUuid": "068e6d35_32634543",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 45
+      },
+      "revId": "4745978db5963abbd146e63f6cf25fc67362c567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
