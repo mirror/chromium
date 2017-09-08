@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e0da1ba_041b1e95",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-08T05:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "838370a1_6d1c0517",
+      "range": {
+        "startLine": 93,
+        "startChar": 25,
+        "endLine": 93,
+        "endChar": 68
+      },
+      "revId": "3cd3d4bea47afa6a02a9e5e78950e785d6aeab02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bc7e74f_6bebfa5b",
         "filename": "chrome/browser/installable/installable_metrics.cc",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "cae5ef3f_7f284957",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-08T05:57:57Z",
+      "side": 1,
+      "message": "Neither add_to_homescreen_manifest_timeout_count_ nor add_to_homescreen_installability_timeout_count_ should ever be non-zero if the PWA check is complete and we get here. If the PWA check is done, the add to homescreen dialog should not time out.\n\nPrevious versions of this class had a DCHECK(is_pwa_check_complete()) in the add to homescreen metrics recording, which is obviated by the early return.",
+      "parentUuid": "5bc7e74f_6bebfa5b",
+      "revId": "3cd3d4bea47afa6a02a9e5e78950e785d6aeab02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab587d10_290ea0ad",
         "filename": "chrome/browser/installable/installable_metrics.cc",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-08T01:02:18Z",
       "side": 1,
       "message": "This status_ variable makes me uneasy since it does a lot.  It exerts a lot of influence over the control flow of many of the member functions (switching between incrementing counters vs updating histograms), but also stores the state that should be used when updating those histograms.\n\nOnce RecordQueuedMetrics is called, status_ will remain set to one of COMPLETE_{,NON}PROGRESSIVE_WEB_APP until RecordMetricsOnNavigationAndReset is called, right?\n\nAnd *until* RecordQueuedMetrics is called, the value of status_ is mostly irrelevant (apart from the fact that it is *not* one of COMPLETE_{,NON}PROGRESSIVE_WEB_APP).  (RecordAddToHomescreenNoTimeout adds a bit of a wrinkle to this, but I don\u0027t think it\u0027s a big deal).\n\nIt basically feels like InstallableMetrics can be cleanly divided into two implementations, depending on which \"mode\" we\u0027re in i.e. whether the PWA check is complete or not. Rather than switching between these modes of operation in each method based on the return value of is_pwa_check_complete(), why not create an interface containing the above Record methods, which is implemented by each of two new metrics helper classes, one for when the PWA check is complete, and one for when it is not.  The former can be initialized with the status, and directly update histograms; the other can accumulate counts. You can switch between those implementations here, at the point where you can tell that the PWA check is complete. So instead of storing status_ as a member of InstallableMetrics, you store a pointer to one of these helper classes and you can remove is_pwa_check_complete().",
+      "revId": "3cd3d4bea47afa6a02a9e5e78950e785d6aeab02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a751102_022b1420",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-08T05:57:57Z",
+      "side": 1,
+      "message": "Having gone back and forth and back and forth (and telling you otherwise), I actually think I\u0027ve figured out how to do this splitting. WDYT?",
+      "parentUuid": "ab587d10_290ea0ad",
       "revId": "3cd3d4bea47afa6a02a9e5e78950e785d6aeab02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
