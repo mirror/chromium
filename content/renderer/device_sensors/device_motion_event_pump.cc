@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#define _USE_MATH_DEFINES  // For VC++ to get M_PI. This has to be first.
+
 #include "content/renderer/device_sensors/device_motion_event_pump.h"
 
 #include "content/public/renderer/render_frame.h"
@@ -12,6 +14,8 @@
 #include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace content {
+
+const double kRadToDeg = 180.0 / M_PI;
 
 DeviceMotionEventPump::DeviceMotionEventPump(RenderThread* thread)
     : DeviceSensorEventPump<blink::WebDeviceMotionListener>(thread),
@@ -134,9 +138,9 @@ void DeviceMotionEventPump::GetDataFromSharedMemory(device::MotionData* data) {
   }
 
   if (gyroscope_.SensorReadingCouldBeRead()) {
-    data->rotation_rate_alpha = gyroscope_.reading.gyro.x;
-    data->rotation_rate_beta = gyroscope_.reading.gyro.y;
-    data->rotation_rate_gamma = gyroscope_.reading.gyro.z;
+    data->rotation_rate_alpha = gyroscope_.reading.gyro.x * kRadToDeg;
+    data->rotation_rate_beta = gyroscope_.reading.gyro.y * kRadToDeg;
+    data->rotation_rate_gamma = gyroscope_.reading.gyro.z * kRadToDeg;
     data->has_rotation_rate_alpha = true;
     data->has_rotation_rate_beta = true;
     data->has_rotation_rate_gamma = true;
