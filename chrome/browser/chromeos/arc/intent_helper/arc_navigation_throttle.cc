@@ -14,6 +14,7 @@
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/intent_helper/arc_intent_helper_bridge.h"
 #include "components/arc/intent_helper/page_transition_util.h"
+#include "components/google/core/browser/google_util.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_handle.h"
@@ -49,9 +50,16 @@ bool ShouldOverrideUrlLoading(const GURL& previous_url,
     return false;
   }
 
-  return !net::registry_controlled_domains::SameDomainOrHost(
-      current_url, previous_url,
-      net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES);
+  if (net::registry_controlled_domains::SameDomainOrHost(
+          current_url, previous_url,
+          net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES)) {
+    // Special case so "https://play.google.com/app_name" links can trigger the
+    // intent picker even if the domain for both the |previous_url| and
+    // |current_url| is "google.com". All the other jumps within the same domain
+    // won't show the UI or jump directly to the app.
+    return current_url.host_piece() == "play.google.com";
+  }
+  return true;
 }
 
 // Returns true if |handlers| contain one or more apps. When this function is
