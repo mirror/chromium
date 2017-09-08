@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "713c161f_10b13af1",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:11:34Z",
+      "side": 1,
+      "message": "slightly prefer DoRequest() or something since this kinda looks like a constructor for a class named Request.",
+      "revId": "3ae140d75ee59ccba1e39d2d01ae339405160bb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9afd7c27_4b3ae72e",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:11:34Z",
+      "side": 1,
+      "message": "I dunno if we need this EXPECT, since it\u0027s really just testing TestURLLoaderClient::RunUntilComplete(). If you don\u0027t trust that class, it could be an ASSERT_TRUE.",
+      "revId": "3ae140d75ee59ccba1e39d2d01ae339405160bb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "066200da_fc07f460",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:11:34Z",
+      "side": 1,
+      "message": "Make*",
+      "revId": "3ae140d75ee59ccba1e39d2d01ae339405160bb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e7771e6_f02254c1",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:11:34Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "3ae140d75ee59ccba1e39d2d01ae339405160bb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
