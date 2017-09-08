@@ -330,14 +330,8 @@ void ScriptStreamer::StartStreaming(ClassicPendingScript* script,
                                     Settings* settings,
                                     ScriptState* script_state,
                                     RefPtr<WebTaskRunner> loading_task_runner) {
-  // We don't yet know whether the script will really be streamed. E.g.,
-  // suppressing streaming for short scripts is done later. Record only the
-  // sure negative cases here.
-  bool started_streaming =
-      StartStreamingInternal(script, script_type, settings, script_state,
-                             std::move(loading_task_runner));
-  if (!started_streaming)
-    RecordStartedStreamingHistogram(script_type, 0);
+  // Suppressing streaming temporarily because of a stable blocker:
+  // https://bugs.chromium.org/p/chromium/issues/detail?id=763106
 }
 
 void ScriptStreamer::StartStreamingLoadedScript(
