@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75fe8101_8ba881ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-09-08T06:42:32Z",
+      "side": 1,
+      "message": "As I know, this signed-off-by is not used in Chromium project.",
+      "revId": "6e93dad32c4e39b63d7058b1e415a3ac767183eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54e49af_46d42254",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-09-08T06:42:32Z",
+      "side": 1,
+      "message": "This change is unnecessary?",
+      "revId": "6e93dad32c4e39b63d7058b1e415a3ac767183eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
