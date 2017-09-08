@@ -68,6 +68,7 @@ static_library("core") {
     "//components/link_header_util",
     "//components/pref_registry",
     "//components/strings:components_strings_grit",
+    "//content/public/browser",
     "//net",
     "//services/metrics/public/cpp:metrics_cpp",
     "//services/metrics/public/cpp:ukm_builders",
