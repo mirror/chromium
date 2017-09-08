@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd6f88b1_c75d71c8",
+        "filename": "ios/chrome/browser/web/repost_form_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T13:21:42Z",
+      "side": 1,
+      "message": "I think the tab helper shouldn\u0027t need to keep track of whether a dialog is being shown or not; let the delegate worry about that.",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 27
+      },
+      "revId": "5fe5cfa896cce2dc6be145709061daa5fa0e32b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
