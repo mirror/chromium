@@ -6,6 +6,7 @@
 
 #include "base/message_loop/message_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "platform/scheduler/base/task_queue.h"
 #include "public/platform/WebThread.h"
 
 namespace blink {
@@ -36,6 +37,10 @@ FakeRendererScheduler::LoadingTaskRunner() {
 
 scoped_refptr<SingleThreadIdleTaskRunner>
 FakeRendererScheduler::IdleTaskRunner() {
+  return nullptr;
+}
+
+scoped_refptr<TaskQueue> FakeRendererScheduler::NewDefaultTaskQueue() {
   return nullptr;
 }
 

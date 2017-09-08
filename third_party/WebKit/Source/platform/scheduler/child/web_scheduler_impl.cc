@@ -8,9 +8,9 @@
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "platform/scheduler/child/web_task_runner_impl.h"
-#include "platform/scheduler/child/worker_scheduler.h"
 #include "platform/scheduler/renderer/web_view_scheduler.h"
 #include "public/platform/WebTraceLocation.h"
+#include "public/platform/scheduler/child/child_scheduler.h"
 
 namespace blink {
 namespace scheduler {
@@ -72,6 +72,10 @@ blink::WebTaskRunner* WebSchedulerImpl::TimerTaskRunner() {
 
 blink::WebTaskRunner* WebSchedulerImpl::CompositorTaskRunner() {
   return nullptr;
+}
+
+scoped_refptr<scheduler::TaskQueue> WebSchedulerImpl::NewDefaultTaskQueue() {
+  return child_scheduler_->NewDefaultTaskQueue();
 }
 
 std::unique_ptr<blink::WebViewScheduler>

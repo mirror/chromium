@@ -25,7 +25,7 @@ std::unique_ptr<WorkerScheduler> WorkerScheduler::Create(
   return base::WrapUnique(new WorkerSchedulerImpl(std::move(main_task_runner)));
 }
 
-scoped_refptr<WorkerTaskQueue> WorkerScheduler::CreateTaskRunner() {
+scoped_refptr<TaskQueue> WorkerScheduler::NewDefaultTaskQueue() {
   helper_->CheckOnValidThread();
   return helper_->NewTaskQueue(TaskQueue::Spec("worker_tq")
                                    .SetShouldMonitorQuiescence(true)

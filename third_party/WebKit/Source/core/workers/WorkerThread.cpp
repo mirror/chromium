@@ -52,7 +52,7 @@
 #include "platform/bindings/Microtask.h"
 #include "platform/heap/SafePoint.h"
 #include "platform/heap/ThreadState.h"
-#include "platform/scheduler/child/webthread_impl_for_worker_scheduler.h"
+#include "platform/scheduler/child/web_scheduler.h"
 #include "platform/scheduler/child/worker_global_scope_scheduler.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/Functional.h"
@@ -387,12 +387,11 @@ void WorkerThread::InitializeSchedulerOnWorkerThread(
     WaitableEvent* waitable_event) {
   DCHECK(IsCurrentThread());
   DCHECK(!global_scope_scheduler_);
-  scheduler::WebThreadImplForWorkerScheduler& web_thread_for_worker =
-      static_cast<scheduler::WebThreadImplForWorkerScheduler&>(
-          GetWorkerBackingThread().BackingThread().PlatformThread());
+  WebScheduler* scheduler =
+      GetWorkerBackingThread().BackingThread().PlatformThread().Scheduler();
   global_scope_scheduler_ =
       WTF::MakeUnique<scheduler::WorkerGlobalScopeScheduler>(
-          web_thread_for_worker.GetWorkerScheduler());
+          scheduler->NewDefaultTaskQueue());
   waitable_event->Signal();
 }
 

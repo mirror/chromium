@@ -24,6 +24,7 @@ class FakeRendererScheduler : public RendererScheduler {
   scoped_refptr<base::SingleThreadTaskRunner> CompositorTaskRunner() override;
   scoped_refptr<base::SingleThreadTaskRunner> LoadingTaskRunner() override;
   scoped_refptr<SingleThreadIdleTaskRunner> IdleTaskRunner() override;
+  scoped_refptr<TaskQueue> NewDefaultTaskQueue() override;
   scoped_refptr<base::SingleThreadTaskRunner> TimerTaskRunner() override;
   std::unique_ptr<RenderWidgetSchedulingState> NewRenderWidgetSchedulingState()
       override;

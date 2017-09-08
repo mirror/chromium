@@ -34,7 +34,8 @@ class PLATFORM_EXPORT WorkerScheduler : public ChildScheduler {
   // initialization needed such as initializing idle period detection.
   virtual void Init() = 0;
 
-  scoped_refptr<WorkerTaskQueue> CreateTaskRunner();
+  // ChildScheduler implementation:
+  scoped_refptr<TaskQueue> NewDefaultTaskQueue() override;
 
  protected:
   explicit WorkerScheduler(std::unique_ptr<WorkerSchedulerHelper> helper);
