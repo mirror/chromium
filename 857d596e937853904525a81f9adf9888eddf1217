@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49897e42_69c9ab62",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-08T00:32:04Z",
+      "side": 1,
+      "message": "nit: move this comment to line 584.",
+      "range": {
+        "startLine": 570,
+        "startChar": 2,
+        "endLine": 571,
+        "endChar": 26
+      },
+      "revId": "857d596e937853904525a81f9adf9888eddf1217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
