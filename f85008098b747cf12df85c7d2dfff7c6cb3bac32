@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "79e98202_2d1e75f1",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-08T18:50:51Z",
+      "side": 1,
+      "message": "If I can, I\u0027d like to do it now, can you point me at the URLRequest based impl of what you\u0027re talking about? Besides the code in URLRequest::Redirect() where else should we be looking for bits of logic that need to be replicated?",
+      "parentUuid": "4ed9ce61_3c55a654",
+      "range": {
+        "startLine": 264,
+        "startChar": 39,
+        "endLine": 264,
+        "endChar": 53
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abca8fc6_18cafbdc",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 2
@@ -226,6 +250,30 @@
       "side": 1,
       "message": "Then add a TODO, at least, please.  I think referrer policy is already a part of ResourceRequest, though?  Admittedly, it\u0027s using blink\u0027s enum, not net\u0027s, so you\u0027d need to convert backwards, something we don\u0027t currently do, I assume.",
       "parentUuid": "d7ea746f_20bf3f0a",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 79
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c0f674_607f687f",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-08T18:50:51Z",
+      "side": 1,
+      "message": "I didn\u0027t see a conversion function but also didn\u0027t look very hard yet. I\u0027ll look around some more. Any ideas about \u0027token_binding_referrer\u0027?",
+      "parentUuid": "f25a06f0_42f09e37",
       "range": {
         "startLine": 265,
         "startChar": 0,
@@ -306,6 +354,30 @@
       "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4a4cea_21bfe8b3",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-08T18:50:51Z",
+      "side": 1,
+      "message": "Ack and thnx for the explanation.  I had seen that block of code and replicated the behavior to keep the body when the method name doesn\u0027t change.",
+      "parentUuid": "0f1143a6_2ae38704",
+      "range": {
+        "startLine": 267,
+        "startChar": 29,
+        "endLine": 267,
+        "endChar": 39
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
