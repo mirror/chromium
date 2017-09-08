@@ -130,6 +130,24 @@
     },
     {
       "key": {
+        "uuid": "84c30f4e_7cfe7c71",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-08T06:32:17Z",
+      "side": 1,
+      "message": "Yeah, I find the patchset#4 trybot failures were caused by removing this check.\nThe test case is here: https://cs.chromium.org/chromium/src/content/child/service_worker/service_worker_dispatcher_unittest.cc?q\u003dservice_worker_dispatcher_unittest.cc\u0026dr\u0026l\u003d160\n\nIn this CL, I moved the test into ServiceWorkerProviderContextTest.",
+      "parentUuid": "2888cb17_07e0f50f",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e1b99b5_a2fe8118",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 3
@@ -340,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "ebd60c07_171e64e3",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-08T06:32:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5e878328_e6b35f25",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fff07d98_2ea96e45",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 3
@@ -351,6 +387,24 @@
       "writtenOn": "2017-09-08T02:25:51Z",
       "side": 1,
       "message": "can we use blink.mojom.WebFeature feature here, then don\u0027t need the comment in line 16.",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4db3fb7_6e31a0d4",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-08T06:32:17Z",
+      "side": 1,
+      "message": "Do we need use blink.mojom.WebFeature everywhere that the used_features is used or set? such as ServiceWorkerVersion, ServiceWorkerDatabase::RegistrationData, etc..\nOr just convert uint32 to enum when passing it to mojom in ServiceWorkerProviderHost? but at latest we also need change the other mojo end in ServiceWorkerProviderContext.",
+      "parentUuid": "fff07d98_2ea96e45",
       "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
