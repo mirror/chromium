@@ -13,8 +13,11 @@
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/ui/authentication/signin_promo_view.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_switch_item.h"
+#import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
+#import "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.h"
 #import "ios/chrome/browser/ui/payments/payment_request_error_view_controller.h"
+#import "ios/chrome/browser/ui/payments/payment_request_picker_view_controller.h"
 #import "ios/chrome/browser/ui/payments/payment_request_view_controller.h"
 #import "ios/chrome/browser/ui/settings/accounts_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/clear_browsing_data_collection_view_controller.h"
@@ -296,6 +299,22 @@ id<GREYMatcher> ClearCacheButton() {
 
 id<GREYMatcher> ClearSavedPasswordsButton() {
   return grey_accessibilityID(kClearSavedPasswordsCellId);
+}
+
+id<GREYMatcher> WarningMessageView() {
+  return grey_accessibilityID(kWarningMessageAccessibilityID);
+}
+
+id<GREYMatcher> PaymentRequestPickerRow() {
+  return grey_accessibilityID(kPaymentRequestPickerRowAccessibilityID);
+}
+id<GREYMatcher> PaymentRequestPickerSearchBar() {
+  return grey_accessibilityID(kPaymentRequestPickerSearchBarAccessibilityID);
+}
+
+id<GREYMatcher> CotentSuggestionView() {
+  return grey_accessibilityID(
+      [ContentSuggestionsViewController collectionAccessibilityIdentifier]);
 }
 
 }  // namespace chrome_test_util
