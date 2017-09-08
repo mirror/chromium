@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f2837eb7_bc289f36",
+        "filename": "ios/clean/chrome/browser/ui/actions/tab_grid_toolbar_actions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-08T15:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "718b6cfd_6427580f",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 31
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd1b888a_5384fffb",
         "filename": "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a39bc2_f628a633",
+        "filename": "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-08T15:27:18Z",
+      "side": 1,
+      "message": "I am moving it in the next CL.",
+      "parentUuid": "bd1b888a_5384fffb",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ba2a0a21_bedebbd4",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-08T15:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c964c43a_242f2d45",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c411ae6_1d8d650a",
         "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator.mm",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e116e6_8448e4d0",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-08T15:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c411ae6_1d8d650a",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 49
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "16bea0e6_ab49a980",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-08T15:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8c615ae_19a9eaa7",
+      "range": {
+        "startLine": 126,
+        "startChar": 8,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85ee64c3_f4926d72",
         "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator_unittest.mm",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca64423_ad077985",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-08T15:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85ee64c3_f4926d72",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 6
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3ebcbdb8_37f6977f",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-08T15:27:18Z",
+      "side": 1,
+      "message": "This adds a 20pt inset a the top of the collection, for design reason. Without it, the content is stuck to the top of the collection (i.e. the bottom of the toolbar) and it is ugly.",
+      "parentUuid": "0238bde0_d3a38d28",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 24
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43c181ca_a91b28b5",
         "filename": "ios/clean/chrome/browser/ui/tab_grid/ui_button+cr_tab_grid.mm",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb3408d_19289751",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/ui_button+cr_tab_grid.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-08T15:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43c181ca_a91b28b5",
+      "range": {
+        "startLine": 7,
+        "startChar": 45,
+        "endLine": 7,
+        "endChar": 69
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
