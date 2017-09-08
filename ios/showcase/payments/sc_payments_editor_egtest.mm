@@ -8,9 +8,9 @@
 #import "base/mac/foundation_util.h"
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/ui/autofill/autofill_edit_accessory_view.h"
-#import "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
+#import "ios/chrome/test/earl_grey/chrome_matchers.h"
 #import "ios/showcase/test/showcase_eg_utils.h"
 #import "ios/showcase/test/showcase_test_case.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -215,8 +215,7 @@ id<GREYMatcher> UIAlertViewMessageForDelegateCallWithArgument(
   }
 
   // Initially, no error message is showing.
-  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
-                                          kWarningMessageAccessibilityID)]
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::WarningMessageView()]
       assertWithMatcher:grey_nil()];
 
   // Tap the name textfield.
@@ -256,8 +255,7 @@ id<GREYMatcher> UIAlertViewMessageForDelegateCallWithArgument(
 
   // Assert an error message is showing because the address textfield is
   // required.
-  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
-                                          kWarningMessageAccessibilityID)]
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::WarningMessageView()]
       assertWithMatcher:grey_accessibilityLabel(@"Field is required")];
 
   // Assert the postal code textfield is focused.
@@ -286,8 +284,7 @@ id<GREYMatcher> UIAlertViewMessageForDelegateCallWithArgument(
       assertWithMatcher:grey_enabled()] performAction:grey_tap()];
 
   // Assert the error message disappeared because an address was typed in.
-  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
-                                          kWarningMessageAccessibilityID)]
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::WarningMessageView()]
       assertWithMatcher:grey_notVisible()];
 
   // Assert the province textfield is focused.
