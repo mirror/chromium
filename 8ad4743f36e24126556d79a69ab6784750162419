@@ -16,6 +16,24 @@
       "revId": "8ad4743f36e24126556d79a69ab6784750162419",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac1796a_94421485",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-response-with-expose-headers.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-08T10:19:34Z",
+      "side": 1,
+      "message": "I think it\u0027s a cool idea! It definitely reduces the amount of files needed. Should I refactor some of the previous tests to use pipes, as well?",
+      "parentUuid": "b3df7d9d_2d12b1d5",
+      "revId": "8ad4743f36e24126556d79a69ab6784750162419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
