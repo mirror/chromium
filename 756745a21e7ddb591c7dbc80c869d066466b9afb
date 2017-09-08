@@ -122,6 +122,24 @@
       "revId": "756745a21e7ddb591c7dbc80c869d066466b9afb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efac12cd_4d6e1685",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-08T00:53:35Z",
+      "side": 1,
+      "message": "I completely said this wrong. Let me correct myself:\n\nOn Chrome for Android (where I work) we release 32-bit even if the device is 64-bit.\nHowever, Chrome for Windows, Mac, and Linux released 64-bit versions.\n\nSorry about that.\n\nI think a folder like contrib/large_inffast would still be useful though, since this technique isn\u0027t exclusive to 64-bit.",
+      "parentUuid": "a88916d2_7ae1b051",
+      "revId": "756745a21e7ddb591c7dbc80c869d066466b9afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
