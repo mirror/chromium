@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "540633d9_83a8536c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-09-08T14:26:11Z",
+      "side": 1,
+      "message": "Actually... No. Launch bounds can be anything - but they are ignored from ChromeOS as is. Our M port didn\u0027t use it in the end either. So thanks for cleaning this up!",
+      "range": {
+        "startLine": 12,
+        "startChar": 52,
+        "endLine": 13,
+        "endChar": 49
+      },
+      "revId": "7e4a46ee69125eb996c0f06df51cc7c39219ca68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912b8a46_7cbc2a55",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-09-08T14:26:11Z",
+      "side": 1,
+      "message": "You should be able to remove these as well (and all the passed bounds).",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 42
+      },
+      "revId": "7e4a46ee69125eb996c0f06df51cc7c39219ca68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
