@@ -909,6 +909,7 @@
     // crbug.com/417782 tracks enabling this by default.
     {
       name: "RootLayerScrolling",
+      status: "stable",
     },
     {
       name: "RTCRtpSender",
