@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "976d04b6_1cc159be",
+        "filename": "chrome/browser/chromeos/options/wifi_config_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T00:12:31Z",
+      "side": 1,
+      "message": "The padding values are not based on the overall size of the dialog but on the type of the top and bottom items in the dialog, because what matters is how these items line up against the things adjacent to them.\n\nMore generally, in Harmony, we\u0027re trying to get closer to a world where dialogs are not laid out due to local considerations of how that specific dialog looks, but by consistent rules applied across the UI; if that results in a dialog looking bad, then in general it means the rules themselves are bad and should be changed.",
+      "parentUuid": "0ffb29c5_cd5af818",
+      "range": {
+        "startLine": 910,
+        "startChar": 40,
+        "endLine": 910,
+        "endChar": 64
+      },
+      "revId": "7a90a257ae428e442b4f4a51b280403f159857e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6225380b_d8baa43f",
         "filename": "chrome/browser/chromeos/options/wimax_config_view.cc",
         "patchSetId": 7
