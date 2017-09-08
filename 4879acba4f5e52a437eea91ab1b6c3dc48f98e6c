@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2974447f_e019ef5e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-09-08T06:41:09Z",
+      "side": 1,
+      "message": "IMHO, I think we should fix it here only.\n(This is the same approach in the case of invokePaymentApp())\nThe modifiers will be passed to Native layer finally but I didn\u0027t see any null-checks in the path.\nWe can add null-checks in the all path but I think it\u0027s better to follow exisiting style.\n\nWDYT?",
+      "revId": "4879acba4f5e52a437eea91ab1b6c3dc48f98e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
