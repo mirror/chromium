@@ -5,6 +5,7 @@
 #include "cc/scheduler/compositor_timing_history.h"
 
 #include "base/macros.h"
+#include "base/test/histogram_tester.h"
 #include "cc/debug/rendering_stats_instrumentation.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -17,8 +18,11 @@ class TestCompositorTimingHistory : public CompositorTimingHistory {
  public:
   TestCompositorTimingHistory(CompositorTimingHistoryTest* test,
                               RenderingStatsInstrumentation* rendering_stats)
-      : CompositorTimingHistory(false, NULL_UMA, rendering_stats),
+      : CompositorTimingHistory(false, RENDERER_UMA, rendering_stats),
         test_(test) {}
+  // To avoid hitting the DCHECK in CompositorTimingHistory::DidDraw().
+  void SetDrawTestTime() { draw_start_time_ = Now(); }
+  void SetActiveTreeMainFrameTime() { active_tree_main_frame_time_ = Now(); }
 
  protected:
   base::TimeTicks Now() const override;
@@ -88,7 +92,7 @@ TEST_F(CompositorTimingHistoryTest, AllSequential_Commit) {
   AdvanceNowBy(one_second);
   timing_history_.WillDraw();
   AdvanceNowBy(draw_duration);
-  timing_history_.DidDraw(true, true, Now());
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 0);
 
   EXPECT_EQ(begin_main_frame_queue_duration,
             timing_history_.BeginMainFrameQueueDurationCriticalEstimate());
@@ -138,7 +142,7 @@ TEST_F(CompositorTimingHistoryTest, AllSequential_BeginMainFrameAborted) {
   AdvanceNowBy(one_second);
   timing_history_.WillDraw();
   AdvanceNowBy(draw_duration);
-  timing_history_.DidDraw(false, false, Now());
+  timing_history_.DidDraw(false, false, Now(), 0, 0, 0);
 
   EXPECT_EQ(base::TimeDelta(),
             timing_history_.BeginMainFrameQueueDurationCriticalEstimate());
@@ -261,6 +265,62 @@ TEST_F(CompositorTimingHistoryTest, BeginMainFrames_NewCriticalSlower) {
 
   EXPECT_EQ(begin_main_frame_start_to_commit_duration,
             timing_history_.BeginMainFrameStartToCommitDurationEstimate());
+}
+
+void TestAnimationUMA(const base::HistogramTester& histogram_tester,
+                      base::HistogramBase::Count expected_count1,
+                      base::HistogramBase::Count expected_count2,
+                      base::HistogramBase::Count expected_count3) {
+  histogram_tester.ExpectTotalCount(
+      "Scheduling.Renderer.DrawIntervalWithCompositedAnimations2",
+      expected_count1);
+  histogram_tester.ExpectTotalCount(
+      "Scheduling.Renderer.DrawIntervalWithMainThreadAnimations2",
+      expected_count2);
+  histogram_tester.ExpectTotalCount(
+      "Scheduling.Renderer.DrawIntervalWithMainThreadCompositableAnimations2",
+      expected_count3);
+}
+
+TEST_F(CompositorTimingHistoryTest, AnimationUMA) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  timing_history_.DidDraw(true, true, Now(), 1, 1, 0);
+  // Previous frame had no animation, so won't report anything in this frame.
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  timing_history_.DidDraw(true, true, Now(), 0, 1, 0);
+  // Report the main thread animation since the previous frame had one.
+  TestAnimationUMA(histogram_tester, 0, 1, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  timing_history_.DidDraw(true, true, Now(), 1, 0, 1);
+  // Composited animation won't be reported because previous frame doesn't have
+  // any composited animation.
+  TestAnimationUMA(histogram_tester, 0, 1, 1);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  timing_history_.DidDraw(true, true, Now(), 1, 1, 0);
+  // Start reporting the composited animation.
+  TestAnimationUMA(histogram_tester, 1, 2, 1);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  timing_history_.DidDraw(true, true, Now(), 1, 1, 1);
+  TestAnimationUMA(histogram_tester, 2, 3, 2);
 }
 
 }  // namespace

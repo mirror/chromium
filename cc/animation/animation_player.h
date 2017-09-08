@@ -93,6 +93,7 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   // Returns true if there are any animations that have neither finished nor
   // aborted.
   bool HasTickingAnimation() const;
+  size_t TickingAnimationsCount() const;
 
   // Returns true if there are any animations at all to process.
   bool has_any_animation() const { return !animations_.empty(); }
