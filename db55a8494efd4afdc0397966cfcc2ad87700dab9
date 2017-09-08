@@ -22,6 +22,30 @@
       "revId": "db55a8494efd4afdc0397966cfcc2ad87700dab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093fe6ee_31b1ff5b",
+        "filename": "components/metrics/profiler/tracking_synchronizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-08T21:26:06Z",
+      "side": 0,
+      "message": "Good thinking. But neither of these seem to be in histograms.xml. Please correct me if I\u0027m wrong. I checked for other histograms and didn\u0027t find any.",
+      "parentUuid": "e60bf96f_3dbdcfbe",
+      "range": {
+        "startLine": 136,
+        "startChar": 56,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "db55a8494efd4afdc0397966cfcc2ad87700dab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
