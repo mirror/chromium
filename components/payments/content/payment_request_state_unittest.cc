@@ -64,8 +64,8 @@ class PaymentRequestStateTest : public testing::Test,
         std::move(options), std::move(details), std::move(method_data),
         /*observer=*/nullptr, "en-US");
     state_ = base::MakeUnique<PaymentRequestState>(
-        spec_.get(), this, "en-US", &test_personal_data_manager_,
-        &test_payment_request_delegate_, nullptr /* context */,
+        nullptr /* context */, spec_.get(), this, "en-US",
+        &test_personal_data_manager_, &test_payment_request_delegate_,
         &journey_logger_);
     state_->AddObserver(this);
   }
