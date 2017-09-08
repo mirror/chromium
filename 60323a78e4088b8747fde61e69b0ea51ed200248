@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5fe1cc3_7f38b042",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/appcache/resources/offline-access.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-08T02:04:30Z",
+      "side": 1,
+      "message": "Nit: If you feel like it, you could consider removing the sync XHR. ES7 async/await + fetch should let you keep the linear flow in the function, if that appeals to you.",
+      "revId": "60323a78e4088b8747fde61e69b0ea51ed200248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
