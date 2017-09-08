@@ -1440,6 +1440,10 @@ RenderWidgetHostViewAndroid::CreateDrawable() {
           activityContext));
 }
 
+void RenderWidgetHostViewAndroid::UpdateSelectionBoundsIfNecessary() {
+  // TODO(wjmaclean): Figure out what, if anything, needs to be done here.
+}
+
 void RenderWidgetHostViewAndroid::SynchronousCopyContents(
     const gfx::Rect& src_subrect_in_pixel,
     const gfx::Size& dst_size_in_pixel,
