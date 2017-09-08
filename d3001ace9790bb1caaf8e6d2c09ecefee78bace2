@@ -52,6 +52,24 @@
       "revId": "d3001ace9790bb1caaf8e6d2c09ecefee78bace2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a37651_ef8ae632",
+        "filename": "third_party/WebKit/LayoutTests/inspector/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-08T17:59:00Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "13d050b6_a3c105d5",
+      "revId": "d3001ace9790bb1caaf8e6d2c09ecefee78bace2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
