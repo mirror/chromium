@@ -46,6 +46,30 @@
       "revId": "d1798ee3711f928400ba9a5fa4ec40bf9ddc9d46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c1fc377_ba20c015",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 65391,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-09-08T20:27:06Z",
+      "side": 1,
+      "message": "in your case \"web views\" is probably a good unit. This gets pulled into the visualization tools.",
+      "parentUuid": "88f4a498_0242af13",
+      "range": {
+        "startLine": 65391,
+        "startChar": 57,
+        "endLine": 65391,
+        "endChar": 0
+      },
+      "revId": "d1798ee3711f928400ba9a5fa4ec40bf9ddc9d46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
