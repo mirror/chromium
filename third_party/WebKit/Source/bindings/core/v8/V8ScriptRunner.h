@@ -42,9 +42,10 @@
 namespace blink {
 
 class CachedMetadataHandler;
+class ExecutionContext;
+class ReferrerScriptInfo;
 class ScriptResource;
 class ScriptSourceCode;
-class ExecutionContext;
 class ScriptStreamer;
 
 class CORE_EXPORT V8ScriptRunner final {
@@ -69,21 +70,25 @@ class CORE_EXPORT V8ScriptRunner final {
   // normal scripe resources, CachedMetadataHandler is from ScriptResource.
   // For worker script, ScriptResource is null but CachedMetadataHandler may be
   // set. When ScriptStreamer is set, ScriptResource must be set.
-  static v8::MaybeLocal<v8::Script> CompileScript(ScriptState*,
-                                                  v8::Local<v8::String>,
-                                                  const String& file_name,
-                                                  const String& source_map_url,
-                                                  const TextPosition&,
-                                                  ScriptResource*,
-                                                  ScriptStreamer*,
-                                                  CachedMetadataHandler*,
-                                                  AccessControlStatus,
-                                                  V8CacheOptions);
-  static v8::MaybeLocal<v8::Module> CompileModule(v8::Isolate*,
-                                                  const String& source,
-                                                  const String& file_name,
-                                                  AccessControlStatus,
-                                                  const TextPosition&);
+  static v8::MaybeLocal<v8::Script> CompileScript(
+      ScriptState*,
+      v8::Local<v8::String>,
+      const String& file_name,
+      const String& source_map_url,
+      const TextPosition&,
+      ScriptResource*,
+      ScriptStreamer*,
+      CachedMetadataHandler*,
+      AccessControlStatus,
+      V8CacheOptions,
+      ReferrerScriptInfo* = nullptr);
+  static v8::MaybeLocal<v8::Module> CompileModule(
+      v8::Isolate*,
+      const String& source,
+      const String& file_name,
+      AccessControlStatus,
+      const TextPosition&,
+      ReferrerScriptInfo* = nullptr);
   static v8::MaybeLocal<v8::Value> RunCompiledScript(v8::Isolate*,
                                                      v8::Local<v8::Script>,
                                                      ExecutionContext*);
