@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec30f552_a5cc253a",
+        "filename": "services/device/generic_sensor/android/java/src/org/chromium/device/sensors/PlatformSensor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-09-08T07:06:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8190d090_6c50849b",
+      "range": {
+        "startLine": 197,
+        "startChar": 19,
+        "endLine": 197,
+        "endChar": 35
+      },
+      "revId": "24768dcc8efc5f889e1651cd55728c2c35513b41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3f21eff_c05dbfdc",
         "filename": "services/device/generic_sensor/android/java/src/org/chromium/device/sensors/PlatformSensor.java",
         "patchSetId": 1
@@ -68,6 +92,54 @@
       "revId": "24768dcc8efc5f889e1651cd55728c2c35513b41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30df59b_6deaebbb",
+        "filename": "services/device/generic_sensor/android/java/src/org/chromium/device/sensors/PlatformSensor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-09-08T07:06:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3f21eff_c05dbfdc",
+      "range": {
+        "startLine": 231,
+        "startChar": 46,
+        "endLine": 231,
+        "endChar": 51
+      },
+      "revId": "24768dcc8efc5f889e1651cd55728c2c35513b41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "834fdf64_614ccf70",
+        "filename": "services/device/generic_sensor/android/java/src/org/chromium/device/sensors/PlatformSensor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-09-08T07:06:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2869be97_4d9015ca",
+      "range": {
+        "startLine": 231,
+        "startChar": 83,
+        "endLine": 231,
+        "endChar": 93
+      },
+      "revId": "24768dcc8efc5f889e1651cd55728c2c35513b41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
