@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bee99b6c_4b0fd479",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T22:29:17Z",
+      "side": 1,
+      "message": "Nit: Maybe move down to a block with the other BUILDFLAGs below",
+      "revId": "ea630facbc420b01d7a77de3c6daba1b64524fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6238bec_723676ad",
+        "filename": "components/feature_engagement/public/event_constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T22:29:17Z",
+      "side": 1,
+      "message": "Nit: Tiny bit weird that here in the next file there\u0027s a blank line above the #endif but not below the #if.  I\u0027d expect no blanks.",
+      "revId": "ea630facbc420b01d7a77de3c6daba1b64524fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
