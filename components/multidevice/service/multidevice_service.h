@@ -6,7 +6,7 @@
 #define COMPONENTS_MULTIDEVICE_SERVICE_H_
 
 #include "base/memory/weak_ptr.h"
-#include "components/multidevice/service/public/interfaces/device_sync.mojom.h"
+#include "components/multidevice/service/device_sync_impl.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
@@ -19,6 +19,7 @@ namespace multidevice {
 class MultiDeviceService : public service_manager::Service {
  public:
   MultiDeviceService();
+
   ~MultiDeviceService() override;
 
   // service_manager::Service:
