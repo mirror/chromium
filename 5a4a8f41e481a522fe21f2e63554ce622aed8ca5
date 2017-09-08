@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6cf4e4_359085a5",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T17:17:28Z",
+      "side": 1,
+      "message": "Can this actually fail?  If it can, is introducing this check going to break something, e.g. we previously would have cleared the selected line on a tab outside the list but now we won\u0027t?  I\u0027m not real clear on this conditional.",
+      "revId": "5a4a8f41e481a522fe21f2e63554ce622aed8ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55688e06_652e83d7",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T17:17:28Z",
+      "side": 1,
+      "message": "Nit: constexpr\n\nIt would still be nice to say why this is 7 (basically, it\u0027s an arbitrary non-default value).",
+      "revId": "5a4a8f41e481a522fe21f2e63554ce622aed8ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
