@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4c9b433_3d777b20",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/DeviceConditions.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-08T23:31:04Z",
+      "side": 1,
+      "message": "This should have different javadoc than the static method, so the user can know the difference",
+      "revId": "a13288a116f9dad9f4a2b81731453b1e60a739aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ffa4309_150e6fbb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/DeviceConditions.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-08T23:31:04Z",
+      "side": 1,
+      "message": "optional nit: I think clarity would be better if the static methods had different names than the object methods.  I know this is an existing situation, though.... up to you.",
+      "revId": "a13288a116f9dad9f4a2b81731453b1e60a739aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
