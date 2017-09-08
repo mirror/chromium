@@ -460,6 +460,30 @@
     },
     {
       "key": {
+        "uuid": "6324846d_4a35ba9b",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-08T10:28:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "70819ee9_4361ea1d",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66d362d8_9b5b0c00",
         "filename": "components/arc/common/cert_store.mojom",
         "patchSetId": 3
@@ -504,6 +528,30 @@
       "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4e1405_cf3f7687",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-09-08T10:28:16Z",
+      "side": 1,
+      "message": "Ah, too bad. So we are force to use deviating names either for the method name or the response struct. I think what you have is the best solution then.",
+      "parentUuid": "b7a2163f_ac6fa045",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 7
+      },
+      "revId": "a68d67008a21ac105b3fc71fa0feb3e52b3765c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
