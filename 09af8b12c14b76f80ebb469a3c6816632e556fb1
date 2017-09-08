@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b99fc33_f35dfb2d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-08T22:50:39Z",
+      "side": 1,
+      "message": "do all extending classes need to define this?  If they don\u0027t, does lint complain if they pass a bogus value?",
+      "range": {
+        "startLine": 19,
+        "startChar": 23,
+        "endLine": 19,
+        "endChar": 41
+      },
+      "revId": "09af8b12c14b76f80ebb469a3c6816632e556fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
