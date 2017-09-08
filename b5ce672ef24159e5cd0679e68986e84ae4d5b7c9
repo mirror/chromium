@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b224ae7b_b8c53407",
+        "filename": "net/disk_cache/simple/simple_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-08T18:11:30Z",
+      "side": 1,
+      "message": "Interesting. We\u0027d normally just flip the feature to enabled by default, but that would put everyone\u0027s caches into an experiment. So instead, this CL flips the meaning of the experiment flag.",
+      "range": {
+        "startLine": 356,
+        "startChar": 18,
+        "endLine": 356,
+        "endChar": 22
+      },
+      "revId": "b5ce672ef24159e5cd0679e68986e84ae4d5b7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd5daeb_9939c728",
+        "filename": "net/disk_cache/simple/simple_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-08T18:11:30Z",
+      "side": 1,
+      "message": "I don\u0027t think you want this ! here. 0 means control. So if someone makes it EVICT_WITH_SIZE as a control, you still want use_size to be true, right?",
+      "range": {
+        "startLine": 359,
+        "startChar": 6,
+        "endLine": 359,
+        "endChar": 7
+      },
+      "revId": "b5ce672ef24159e5cd0679e68986e84ae4d5b7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
