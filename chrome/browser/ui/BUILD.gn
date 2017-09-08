@@ -1200,6 +1200,8 @@ split_static_library("ui") {
       "views/apps/chrome_native_app_window_views_aura_ash.h",
       "views/intent_picker_bubble_view.cc",
       "views/intent_picker_bubble_view.h",
+      "views/location_bar/intent_picker_view.cc",
+      "views/location_bar/intent_picker_view.h",
 
       # On chromeos, file manager extension handles the file open/save dialog.
       "views/select_file_dialog_extension.cc",
