@@ -57,6 +57,43 @@ class LitePage(IntegrationTest):
       # Verify that a Lite Page response for the main frame was seen.
       self.assertEqual(1, lite_page_responses)
 
+  # Verifies that a Lite Page is served using HD Previews.
+  # Note: This test require exp=alternative which is supported in M61+
+  @ChromeVersionEqualOrAfterM(61)
+  def testLitePageWithHDPreview(self):
+    # If it was attempted to run with another experiment, skip this test.
+    if common.ParseFlags().browser_args and ('--data-reduction-proxy-experiment'
+        in common.ParseFlags().browser_args):
+      self.skipTest('This test cannot be run with other experiments.')
+    with TestDriver() as test_driver:
+      test_driver.AddChromeArg('--enable-spdy-proxy-auth')
+      test_driver.AddChromeArg('--data-reduction-proxy-lo-fi=always-on')
+      test_driver.AddChromeArg('--data-reduction-proxy-experiment='
+                               'alternative')
+
+      test_driver.LoadURL('http://check.googlezip.net/test.html')
+
+      lite_page_responses = 0
+      for response in test_driver.GetHTTPResponses():
+        # Verify client sends ignore directive on every request for session.
+        self.assertIn('exp=alternative',
+          response.request_headers['chrome-proxy'])
+        if response.url.endswith('html'):
+          self.assertTrue(self.checkLitePageResponse(response))
+          lite_page_responses = lite_page_responses + 1
+          # Expect no fallback page policy
+          if 'chrome-proxy' in response.response_headers:
+            self.assertNotIn('page-policies',
+                             response.response_headers['chrome-proxy'])
+        else:
+          # No subresources should accept transforms.
+          self.assertNotIn('chrome-proxy-accept-transform',
+            response.request_headers)
+
+      # Verify that a Lite Page response for the main frame was seen.
+      self.assertEqual(1, lite_page_responses)
+
+
   # Checks that a Lite Page is served and the force_lite_page experiment
   # directive is provided when always-on.
   # Note: this test is only on M-60+ which supports exp=force_lite_page
