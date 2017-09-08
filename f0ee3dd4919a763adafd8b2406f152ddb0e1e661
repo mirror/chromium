@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72340a46_40a3fc3a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T07:22:19Z",
+      "side": 1,
+      "message": "This special case seems unnecessary? Shouldn\u0027t non-fragmented object have exactly one fragment?",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a6d5a5c_125a5150",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T07:22:19Z",
+      "side": 1,
+      "message": "Prefer pass by value.",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4ecc82_b127a233",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T07:22:19Z",
+      "side": 1,
+      "message": "Unused parameter.",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3124cd_6c8c05bd",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T07:22:19Z",
+      "side": 1,
+      "message": "nits: Prefer early exit.",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea6ab9f_515d8d0a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T07:22:19Z",
+      "side": 1,
+      "message": "Unused variables.",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb3a1b7_8a784e06",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T07:22:19Z",
+      "side": 1,
+      "message": "Feels weird. Why is this adjustment needed?",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987f4449_5dc944e4",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T07:22:19Z",
+      "side": 1,
+      "message": "Should it include paint_offset_root-\u003eGetLayoutObject().PaintOffset() too? (Which is not necessarily zero for subpixel accumulation.)",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17afc127_dfa475a1",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T07:22:19Z",
+      "side": 1,
+      "message": "Why isn\u0027t it NOTREACHED()?",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da0cd46_896deed7",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T07:22:19Z",
+      "side": 1,
+      "message": "Could this happen?",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "804b6c17_5570bd83",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T07:22:19Z",
+      "side": 1,
+      "message": "Why is needs_paint_properties guaranteed?\n\u003cdiv style\u003d\"column-count:2;\"\u003e\n  \u003cdiv style\u003d\"position:relative;\"\u003eAlways needs paint property?\u003c/div\u003e\n\u003c/div\u003e",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f14fdd6c_50ad5b8b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1443,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T07:22:19Z",
+      "side": 1,
+      "message": "Ditto. Should it include paint_offset_root-\u003eGetLayoutObject().PaintOffset()?",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a8706c_06c9fd28",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1464,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T07:22:19Z",
+      "side": 1,
+      "message": "nits: Shorter branch goes first.\nAlso this condition looks weird. We can reach here only if (!needs_paint_properties \u0026\u0026 !object.HasLayer()), the first condition is redundant.\n\nIf we switch it around it becomes:\nif (!needs_paint_properties \u0026\u0026 !object.HasLayer()) {\n  if (had_paint_properties) {\n    // clear all fragments\n  }\n} else {\n  // long branch\n}\n\nOr it could become an early exit if the special case of SVGHiddenContainer can be moved to top:\nif (!needs_paint_properties \u0026\u0026 !object.HasLayer()) {\n  if (had_paint_properties) {\n    // clear all fragments\n  }\n  return;\n}\n// long branch",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107f15ae_ffc83dc1",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T07:22:19Z",
+      "side": 1,
+      "message": "Could this become an early exit at the top?",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0933ad29_455204fd",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T07:22:19Z",
+      "side": 1,
+      "message": "Super nit: I personally prefer Optional\u003cLayoutRect\u003e. It doesn\u0027t seem to be a prevailing pattern though. You make the call.",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
