@@ -2,6 +2,172 @@
   "comments": [
     {
       "key": {
+        "uuid": "5175e068_f3cf5af7",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-nodes-disconnect-on-textinput-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-08T19:29:30Z",
+      "side": 1,
+      "message": "The initial selection can be set directly in the input HTML:\n\n\u003cdiv contenteditable\u003efoo\u003cbr\u003e^bar\u003cdiv\u003e|baz\u003c/div\u003e\u003c/div\u003e",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 12,
+        "endChar": 60
+      },
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecdf7673_bef6a0da",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-nodes-disconnect-on-textinput-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-08T19:29:30Z",
+      "side": 1,
+      "message": "window.textInputController exists only in layout tests.\n\nIts existence should be asserted first.",
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea3b680f_a618e066",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-nodes-disconnect-on-textinput-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-08T19:29:30Z",
+      "side": 1,
+      "message": "The result seems wrong, and should be fixed by correcting the abort condition in InsertText().",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 83
+      },
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afab3f14_ef0e0013",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-nodes-disconnect-on-webkitBeforeTextInserted-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-08T19:29:30Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 44
+      },
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929486ce_6ccd5aa4",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-nodes-disconnect-on-webkitBeforeTextInserted-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-08T19:29:30Z",
+      "side": 1,
+      "message": "The result seems wrong, and should be fixed by correcting the abort condition in InsertText().",
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76388c8_10c96138",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-remove-iframe-on-textInput-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-08T19:29:30Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0616728d_edada9ba",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-remove-iframe-on-textInput-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-08T19:29:30Z",
+      "side": 1,
+      "message": "nit: Please be more specific about \"no crash in frame removal\".",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 72
+      },
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b9b80f_b33f9162",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-remove-iframe-on-webkitBeforeTextInserted-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-08T19:29:30Z",
+      "side": 1,
+      "message": "Please use resources/contenteditable-iframe-src.html instead of creating a new file.",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 47
+      },
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e2719f6_e3fc1c84",
         "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
         "patchSetId": 6
@@ -13,6 +179,47 @@
       "writtenOn": "2017-09-08T13:51:05Z",
       "side": 1,
       "message": "insert-text-remove-iframe-on-textInput-event.html crashes FrameSelection::GetDocument() at\nDCHECK(LifecycleContext());",
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25d511b_f240959d",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-08T19:29:30Z",
+      "side": 1,
+      "message": "Guess this is also due to the incorrect abort condition in InsertText.",
+      "parentUuid": "6e2719f6_e3fc1c84",
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35d4617_ec58bf72",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-08T19:29:30Z",
+      "side": 1,
+      "message": "Should be:\n\n// Event handlers may have invalidated the selection.\nif (!selection_for_insertion.IsValidFor(document))\n  return;\n\n// Do nothing if no need to delete and insert.\nif (selection_for_insertion.IsCaret() \u0026\u0026 new_text.IsEmpty())\n  return;",
+      "range": {
+        "startLine": 340,
+        "startChar": 6,
+        "endLine": 340,
+        "endChar": 50
+      },
       "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

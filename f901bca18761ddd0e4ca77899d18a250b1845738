@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "63050e77_8ca762c4",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/webkitBeforeTextInserted-event-deleteframe.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-08T19:29:30Z",
+      "side": 1,
+      "message": "Good catch.\n\nThere\u0027s no way we change the event dispatching process for this reason. Please keep the async test for this test case.",
+      "parentUuid": "57be52f1_d44763ee",
+      "revId": "f901bca18761ddd0e4ca77899d18a250b1845738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30d984ab_4945eaf9",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 5
