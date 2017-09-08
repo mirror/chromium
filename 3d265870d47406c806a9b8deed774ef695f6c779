@@ -25,6 +25,81 @@
     },
     {
       "key": {
+        "uuid": "cf9c51a3_9f2a3b7b",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-08T01:20:17Z",
+      "side": 1,
+      "message": "yeah - let\u0027s see if we can avoid this",
+      "parentUuid": "00f3f140_3950feb9",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 76
+      },
+      "revId": "3d265870d47406c806a9b8deed774ef695f6c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da11c847_05bbe28c",
+        "filename": "chrome/browser/apps/app_window_interactive_uitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-08T01:20:17Z",
+      "side": 1,
+      "message": "Yeah I don\u0027t see a neat way to introduce the stuff you need into this file. c/b/ui/views #includes are not allowed under c/b/ui . BrowserWindow is able to expose a `GetExclusiveAccessContext()` on its cross-platform API, but the AppWindow class hierarchy isn\u0027t setup the same.\n\nHowever, I wonder whether it needs to be interactive. Desktop platforms need interactive for fullscreen stuff since multiple processes will fight. But on ash, each process gets its own ash desktop. So you might be able to use an existing file -- chrome_native_app_window_views_aura_ash_browsertest.cc (but if it\u0027s flaky, it may need an interactive_uitest.cc file).\n\n\nIf the things your test uses are only on AppWindowInteractiveTest, that can be moved to a header #included by both test files.",
+      "revId": "3d265870d47406c806a9b8deed774ef695f6c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886f0862_d97387d4",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-08T01:20:17Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary - the ExclusiveAccessBubbleViews constructor seems to invoke it. See later comment.",
+      "revId": "3d265870d47406c806a9b8deed774ef695f6c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aab7ffa_64a210cc",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-08T01:20:17Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right. The method is protected in the base class - probably because it\u0027s not meant to be called directly from things that are not implementing it.\n\nHow is it normally called?\n\nI had a peek -- looks like possible paths that call Show() are the ExclusiveAccessBubbleViews() constructor or chrome::NOTIFICATION_FULLSCREEN_CHANGED being broadcast -- they both call UpdateMouseWatcher, and ExclusiveAccessBubble::StartWatchingMouse() invokes `ShowAndStartTimers()`",
+      "revId": "3d265870d47406c806a9b8deed774ef695f6c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc8f37a7_b30a7c99",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 5
