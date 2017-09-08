@@ -502,6 +502,8 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
       in_memory ? base::FilePath() : context->GetPath(),
       relative_partition_path, context->GetSpecialStoragePolicy());
 
+  partition->flags_context_ = new FlagsContext();
+
   base::FilePath path = in_memory ? base::FilePath() : partition_path;
   partition->indexed_db_context_ = new IndexedDBContextImpl(
       path, context->GetSpecialStoragePolicy(), quota_manager_proxy);
@@ -619,6 +621,10 @@ storage::DatabaseTracker* StoragePartitionImpl::GetDatabaseTracker() {
 
 DOMStorageContextWrapper* StoragePartitionImpl::GetDOMStorageContext() {
   return dom_storage_context_.get();
+}
+
+FlagsContext* StoragePartitionImpl::GetFlagsContext() {
+  return flags_context_.get();
 }
 
 IndexedDBContextImpl* StoragePartitionImpl::GetIndexedDBContext() {
