@@ -39,6 +39,40 @@
       "revId": "836fa02dd579f77ab30975049fe59505d80f925b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3bc376_2b76bb40",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-08T19:08:12Z",
+      "side": 1,
+      "message": "You could have a fourth state here for NO_ACTIVE_GESTURE_SCROLL, as a default state (and initialize it with that). Your code works as is, but having that means that, on an ACK for a GestureScrollBegin, we can DCHECK(scroll_bubbling_state_ \u003d\u003d NO_ACTIVE_GESTURE_SCROLL). Also it is a bit nicer not to leave the state hanging as BUBBLE or SCROLL_CHILD after we receive a GestureScrollEnd ACK, just for intuitiveness when inspecting the object state.",
+      "revId": "836fa02dd579f77ab30975049fe59505d80f925b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b90fa8_42731157",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-08T19:08:12Z",
+      "side": 1,
+      "message": "Also add bug number here, that would trigger this test being removed.",
+      "revId": "836fa02dd579f77ab30975049fe59505d80f925b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
