@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec5f036a_5bd542d0",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-08T07:54:44Z",
+      "side": 1,
+      "message": "s/presents/represents/",
+      "range": {
+        "startLine": 41,
+        "startChar": 39,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "revId": "ae6b3d58d22cb3df648f6a82b38dc68b11775167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4bc189_e5bd0d92",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-08T07:54:44Z",
+      "side": 1,
+      "message": "s/the common type/an interface type/",
+      "range": {
+        "startLine": 41,
+        "startChar": 17,
+        "endLine": 41,
+        "endChar": 27
+      },
+      "revId": "ae6b3d58d22cb3df648f6a82b38dc68b11775167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b4ef29_f3e0aad0",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-08T07:54:44Z",
+      "side": 1,
+      "message": "s/invoke/|invoke|/\n\nOur local rule is that a name surrounded with vertical bars (|name|) is a variable name / function name / class name / etc.  In this case,\n    ... and |invoke| is called back in an idle time.\nmakes it clear that |invoke| is a name in the codebase.",
+      "range": {
+        "startLine": 42,
+        "startChar": 57,
+        "endLine": 42,
+        "endChar": 63
+      },
+      "revId": "ae6b3d58d22cb3df648f6a82b38dc68b11775167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4948b2c_d358c7d5",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-08T07:54:44Z",
+      "side": 1,
+      "message": "s/callbacked/called back/",
+      "range": {
+        "startLine": 42,
+        "startChar": 67,
+        "endLine": 42,
+        "endChar": 77
+      },
+      "revId": "ae6b3d58d22cb3df648f6a82b38dc68b11775167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
