@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23d4fe67_0b0c061b",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_result_consumer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T08:47:38Z",
+      "side": 1,
+      "message": "super nit: s/Called/Tells the delegate/ for these.",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 9
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f1db8db_db3e51dc",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_result_consumer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T08:47:38Z",
+      "side": 1,
+      "message": "Eventually these should be -autocompleteResultConsumer:didSelectRow: to be a \u0027proper\u0027 delegate, but this is fine as-is for now.",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 20
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c4b4166_328c27a2",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T08:47:38Z",
+      "side": 1,
+      "message": "Where is the int -\u003e image mapping encoded? Is there an enum?",
+      "range": {
+        "startLine": 24,
+        "startChar": 47,
+        "endLine": 24,
+        "endChar": 64
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c254b3c_921cf218",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T08:47:38Z",
+      "side": 1,
+      "message": "imageID",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 14
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dfe6f02_8f481fc8",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T08:47:38Z",
+      "side": 1,
+      "message": "Note for the future: ideally the UI layer doesn\u0027t know or care about GURL or NSURL objects, just images and strings.",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 7
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "233457d3_c37f86ab",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T08:47:38Z",
+      "side": 1,
+      "message": "nit: I suggested \u0027AutocompleteMatchFormatter\u0027, because this is a class that conforms to the AutocompleteSuggestion protocol by wrapping formatting logic around an AutocompleteMatch object. But this is fine as-is.",
+      "range": {
+        "startLine": 11,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b830a582_1b6fe3f2",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T08:47:38Z",
+      "side": 1,
+      "message": "nit:\n\n@property(nonatomic, assign, getter\u003disIncognito) BOOL incognito;\n@property(nonatomic, assign, getter\u003disStarred) BOOL starred;",
+      "range": {
+        "startLine": 15,
+        "startChar": 34,
+        "endLine": 15,
+        "endChar": 48
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3989f528_c3ffcdd7",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T08:47:38Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 77,
+        "startChar": 32,
+        "endLine": 77,
+        "endChar": 35
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca297738_fdc197f4",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T08:47:38Z",
+      "side": 1,
+      "message": "nullptr?",
+      "range": {
+        "startLine": 105,
+        "startChar": 46,
+        "endLine": 105,
+        "endChar": 49
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4565275b_4e8431ec",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T08:47:38Z",
+      "side": 1,
+      "message": "rephrase to avoid \u0027we\u0027, as previously commented.",
+      "range": {
+        "startLine": 128,
+        "startChar": 72,
+        "endLine": 128,
+        "endChar": 74
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5086d70a_ffde58f0",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T08:47:38Z",
+      "side": 1,
+      "message": "They each need comments.",
+      "range": {
+        "startLine": 187,
+        "startChar": 13,
+        "endLine": 187,
+        "endChar": 20
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de896450_7909d6be",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T08:47:38Z",
+      "side": 1,
+      "message": "why cast to id instead of leaving these as NSStrings?",
+      "range": {
+        "startLine": 221,
+        "startChar": 8,
+        "endLine": 221,
+        "endChar": 10
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42fdaa9b_d8fc5efa",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T08:47:38Z",
+      "side": 1,
+      "message": "I\u0027m assuming these local vars are used because stripping off the \u0027NS\u0027 and \u0027AttributeName\u0027 makes the formatting better, but I\u0027m not sure it\u0027s worthwhile. If it is, I\u0027d prefer to see these as constants in the file\u0027s anonymous namespace and used consistently everywhere.",
+      "range": {
+        "startLine": 223,
+        "startChar": 11,
+        "endLine": 223,
+        "endChar": 25
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
