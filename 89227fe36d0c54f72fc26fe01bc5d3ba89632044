@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03eab07d_9529a8b2",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T20:35:59Z",
+      "side": 1,
+      "message": "nit: Leave the newline before this here.",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 1
+      },
+      "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332f6720_51677e70",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T20:35:59Z",
+      "side": 1,
+      "message": "nit: Part of this comment fits on the previous line.",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 252,
+        "endChar": 35
+      },
+      "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b61533_e36d67c3",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T20:35:59Z",
+      "side": 1,
+      "message": "nit: No need for temporary variable.\n\nShell::Get()-\u003ebluetooth_power_controller()\n    -\u003eSetPrimaryUserBluetoothPowerSetting(true /* enabled *);",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 28
+      },
+      "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "731a06d4_5e23f068",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T20:35:59Z",
+      "side": 1,
+      "message": "nit: /* delay */ unnecessary since it\u0027s clear you\u0027re passing a delay.",
+      "range": {
+        "startLine": 302,
+        "startChar": 60,
+        "endLine": 302,
+        "endChar": 71
+      },
+      "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256daca2_c1686dae",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T20:35:59Z",
+      "side": 1,
+      "message": "Use constant in anonymous namespace.",
+      "range": {
+        "startLine": 302,
+        "startChar": 57,
+        "endLine": 302,
+        "endChar": 58
+      },
+      "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c09bfb_64994a63",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T20:35:59Z",
+      "side": 1,
+      "message": "OnEnableBluetoothTimeout()",
+      "range": {
+        "startLine": 307,
+        "startChar": 7,
+        "endLine": 307,
+        "endChar": 29
+      },
+      "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66fab34c_29aad0b4",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T20:35:59Z",
+      "side": 1,
+      "message": "DCHECK(timer_.IsRunning());",
+      "range": {
+        "startLine": 314,
+        "startChar": 0,
+        "endLine": 314,
+        "endChar": 27
+      },
+      "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
