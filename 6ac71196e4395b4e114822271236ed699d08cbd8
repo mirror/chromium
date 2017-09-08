@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b93e484_164aca5e",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-09-08T18:36:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a1bd289_979bb518",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 11
+      },
+      "revId": "6ac71196e4395b4e114822271236ed699d08cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "282f09ca_23447a4b",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "6ac71196e4395b4e114822271236ed699d08cbd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1770c381_df554757",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-09-08T18:36:44Z",
+      "side": 1,
+      "message": "If state_ is kBusy then both code block should be executed. It is to make sure that both the temp file and target file get deleted if we have already posted a task to move the file from temp to destination but we don\u0027t know if it will succeed or not.",
+      "parentUuid": "282f09ca_23447a4b",
+      "range": {
+        "startLine": 436,
+        "startChar": 5,
+        "endLine": 438,
+        "endChar": 4
+      },
+      "revId": "6ac71196e4395b4e114822271236ed699d08cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
