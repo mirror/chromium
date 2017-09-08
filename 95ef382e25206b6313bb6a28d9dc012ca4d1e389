@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e5eb236_362b41ef",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-08T14:20:20Z",
+      "side": 1,
+      "message": "nit: add a comment explaining the NavigationHandle shouldn\u0027t be notified about renderer-debug URLs. They will be handled by the renderer process.",
+      "revId": "95ef382e25206b6313bb6a28d9dc012ca4d1e389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb47781_46706e68",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-08T14:20:20Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment. Are you trying to say that this function doesn\u0027t call OnRequestFailed unlike the other ChecksComplete methods? If so, can you shorten this comment to say that?",
+      "revId": "95ef382e25206b6313bb6a28d9dc012ca4d1e389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0071d4_f625ef24",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-08T14:20:20Z",
+      "side": 1,
+      "message": "Did you ensure that the error code on the NavigationHandle was properly updated following the throttle decision to abort the error page load?",
+      "revId": "95ef382e25206b6313bb6a28d9dc012ca4d1e389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e91c8d1_eac8c7e9",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-08T14:20:20Z",
+      "side": 1,
+      "message": "I don\u0027t think you can get a NavigationThrottle::BLOCK_RESPONSE from NavigationThrottle::WillFailResponse.",
+      "revId": "95ef382e25206b6313bb6a28d9dc012ca4d1e389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b727f15c_3ea8f270",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-08T14:20:20Z",
+      "side": 1,
+      "message": "1) All these members should be initialized.\n2) Why can\u0027t you get the RFH from the NavigationHandle, like what we\u0027re doing in the OnResponseStarted path? I would like us to do the same thing on both paths, so that it\u0027s easier to understand for people unfamiliar with the class.",
+      "revId": "95ef382e25206b6313bb6a28d9dc012ca4d1e389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1317e750_c6cd48ed",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-08T14:20:20Z",
+      "side": 1,
+      "message": "Remove this methods from the public API if you\u0027re not using them outside of content/ in *this* patch.",
+      "revId": "95ef382e25206b6313bb6a28d9dc012ca4d1e389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b35b0ee_1d625395",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-08T14:20:20Z",
+      "side": 1,
+      "message": "Please rephrase this comment. \"the navigation halts\" seems to mean that it just stops, while what would happen is that an error page commits.",
+      "revId": "95ef382e25206b6313bb6a28d9dc012ca4d1e389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
