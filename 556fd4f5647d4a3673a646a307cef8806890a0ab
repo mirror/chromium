@@ -16,6 +16,24 @@
       "revId": "556fd4f5647d4a3673a646a307cef8806890a0ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d05c6f_940d98a0",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-08T19:31:15Z",
+      "side": 1,
+      "message": "I looked at ClosePreviewDialog() a bit, and with my vague understanding, it looks like ClosePreviewDialog() should be phased out (removed). Someone should look at it more closely than I (and I\u0027d vote for doing it in a separate CL).\n\nSee:\nhttps://cs.chromium.org/search/?q\u003d%5CbClosePreviewDialog\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "49af29e7_7831867c",
+      "revId": "556fd4f5647d4a3673a646a307cef8806890a0ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
