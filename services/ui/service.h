@@ -189,11 +189,9 @@ class Service : public service_manager::Service,
       threaded_image_cursors_factory_;
 
   bool test_config_;
-#if defined(USE_OZONE)
-  std::unique_ptr<gfx::ClientNativePixmapFactory> client_native_pixmap_factory_;
 #if defined(OS_CHROMEOS)
+  std::unique_ptr<gfx::ClientNativePixmapFactory> client_native_pixmap_factory_;
   std::unique_ptr<InputDeviceController> input_device_controller_;
-#endif
 #endif
 
   // Manages display hardware and handles display management. May register Mojo
