@@ -1490,8 +1490,11 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
     frame_->GetNavigationScheduler().Cancel();
   }
 
-  if (frame_load_request.Form())
+  if (frame_load_request.Form()) {
     Client()->DispatchWillSubmitForm(frame_load_request.Form());
+    frame_load_request.Form()->DispatchEvent(
+        Event::Create(AtomicString("TODO:custom-event-formsubmitted")));
+  }
 
   provisional_document_loader_->AppendRedirect(
       provisional_document_loader_->Url());

@@ -37,7 +37,6 @@
 #include "core/css/StyleEngine.h"
 #include "core/css/StyleSheetContents.h"
 #include "core/dom/Document.h"
-#include "core/dom/DocumentStatisticsCollector.h"
 #include "core/dom/DocumentType.h"
 #include "core/dom/Element.h"
 #include "core/dom/events/Event.h"
@@ -56,7 +55,6 @@
 #include "platform/bindings/ScriptState.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/RefPtr.h"
-#include "public/platform/WebDistillability.h"
 #include "public/platform/WebURL.h"
 #include "public/web/WebDOMEvent.h"
 #include "public/web/WebElement.h"
@@ -263,10 +261,6 @@ bool WebDocument::ManifestUseCredentials() const {
   return EqualIgnoringASCIICase(
       link_element->FastGetAttribute(HTMLNames::crossoriginAttr),
       "use-credentials");
-}
-
-WebDistillabilityFeatures WebDocument::DistillabilityFeatures() {
-  return DocumentStatisticsCollector::CollectStatistics(*Unwrap<Document>());
 }
 
 WebDocument::WebDocument(Document* elem) : WebNode(elem) {}

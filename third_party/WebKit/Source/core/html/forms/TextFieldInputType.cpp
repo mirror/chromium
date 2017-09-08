@@ -514,6 +514,8 @@ void TextFieldInputType::DidSetValueByUserEdit() {
     return;
   if (ChromeClient* chrome_client = this->GetChromeClient())
     chrome_client->DidChangeValueInTextField(GetElement());
+  GetElement().DispatchEvent(
+      Event::Create(AtomicString("TODO:custom-event-textfieldchanged")));
 }
 
 void TextFieldInputType::SpinButtonStepDown() {

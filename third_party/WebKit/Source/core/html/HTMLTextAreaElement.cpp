@@ -298,6 +298,8 @@ void HTMLTextAreaElement::SubtreeHasChanged() {
 
   DCHECK(GetDocument().IsActive());
   GetDocument().GetPage()->GetChromeClient().DidChangeValueInTextField(*this);
+  DispatchEvent(
+      Event::Create(AtomicString("TODO:custom-event-textfieldchanged")));
 }
 
 void HTMLTextAreaElement::HandleBeforeTextInsertedEvent(
