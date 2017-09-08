@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7aec4d7_d866ef18",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-08T20:16:50Z",
+      "side": 1,
+      "message": "Yoland, for some reason, when I run this test. The test runner complains that I do not have a size annotation. I do have one here. Do you know what I am missing?\n\n\nTraceback (most recent call last):\n  File \"/usr/local/google/home/xunjieli/chrome/src/build/android/test_runner.py\", line 987, in main\n    return RunTestsCommand(args)\n  File \"/usr/local/google/home/xunjieli/chrome/src/build/android/test_runner.py\", line 731, in RunTestsCommand\n    return RunTestsInPlatformMode(args)\n  File \"/usr/local/google/home/xunjieli/chrome/src/build/android/test_runner.py\", line 851, in RunTestsInPlatformMode\n    raw_results \u003d test_run.RunTests()\n  File \"/usr/local/google/home/xunjieli/chrome/src/build/android/pylib/local/device/local_device_test_run.py\", line 56, in RunTests\n    tests \u003d self._GetTests()\n  File \"/usr/local/google/home/xunjieli/chrome/src/build/android/pylib/local/device/local_device_instrumentation_test_run.py\", line 336, in _GetTests\n    tests \u003d self._test_instance.ProcessRawTests(raw_tests)\n  File \"/usr/local/google/home/xunjieli/chrome/src/build/android/pylib/instrumentation/instrumentation_test_instance.py\", line 858, in ProcessRawTests\n    self._excluded_annotations)\n  File \"/usr/local/google/home/xunjieli/chrome/src/build/android/pylib/instrumentation/instrumentation_test_instance.py\", line 262, in FilterTests\n    raise MissingSizeAnnotationError(GetTestName(t))\nMissingSizeAnnotationError: org.chromium.net.CronetStressTest#initializationError: Test method is missing required size annotation. Add one of: @LargeTest, @Manual, @FlakyTest, @DisabledTest, @MediumTest, @SmallTest, @IntegrationTest, @EnormousTest",
+      "revId": "4d4a01396b151edf6774d30ba440f116470d4ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
