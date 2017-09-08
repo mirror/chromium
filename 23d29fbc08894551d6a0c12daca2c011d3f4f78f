@@ -16,6 +16,24 @@
       "revId": "23d29fbc08894551d6a0c12daca2c011d3f4f78f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3172de67_eb0dab70",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-09-08T22:04:43Z",
+      "side": 1,
+      "message": "I accidentally just replied to this in a reply to the CL, rather than this comment. More info there!",
+      "parentUuid": "d6d2fb8e_a73fd73f",
+      "revId": "23d29fbc08894551d6a0c12daca2c011d3f4f78f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
