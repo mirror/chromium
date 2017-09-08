@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "b4b094b0_0d55dc79",
+        "filename": "ios/clean/chrome/browser/ui/commands/tab_grid_toolbar_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T11:37:13Z",
+      "side": 1,
+      "message": "If this is scoped to the tab grid, it should probably just go into tab_grid/, not commands/.",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "0b42d55f26bfeb46edda130738283add198af6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eac2ee1_7e3aca04",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_incognito_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T11:37:13Z",
+      "side": 1,
+      "message": "TODOs to delete these?",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "0b42d55f26bfeb46edda130738283add198af6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076d85e3_81795b75",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T11:37:13Z",
+      "side": 1,
+      "message": "getter\u003disIncognito",
+      "range": {
+        "startLine": 25,
+        "startChar": 21,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "0b42d55f26bfeb46edda130738283add198af6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a2b3e64_d00e16fd",
         "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_view_controller.mm",
         "patchSetId": 3
@@ -18,6 +87,52 @@
         "startChar": 2,
         "endLine": 27,
         "endChar": 44
+      },
+      "revId": "0b42d55f26bfeb46edda130738283add198af6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2276f95e_54905fd1",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_toolbar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T11:37:13Z",
+      "side": 1,
+      "message": "Any reason this isn\u0027t a property?",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 20
+      },
+      "revId": "0b42d55f26bfeb46edda130738283add198af6c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7229e8_0c8157b7",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/ui_button+cr_tab_grid.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T11:37:13Z",
+      "side": 1,
+      "message": "Move this to the VC",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 9
       },
       "revId": "0b42d55f26bfeb46edda130738283add198af6c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
