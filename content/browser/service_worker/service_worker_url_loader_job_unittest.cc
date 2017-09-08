@@ -446,10 +446,8 @@ class ServiceWorkerURLLoaderJobTest
       return JobResult::kDidNotHandleRequest;
 
     // Start the loader. It will load |request.url|.
-    mojom::URLLoaderPtr loader;
-    std::move(callback).Run(mojo::MakeRequest(&loader),
+    std::move(callback).Run(mojo::MakeRequest(&loader_),
                             client_.CreateInterfacePtr());
-    client_.RunUntilComplete();
 
     return JobResult::kHandledRequest;
   }
@@ -494,11 +492,13 @@ class ServiceWorkerURLLoaderJobTest
   TestURLLoaderClient client_;
   bool was_main_resource_load_failed_called_ = false;
   std::unique_ptr<ServiceWorkerURLLoaderJob> job_;
+  mojom::URLLoaderPtr loader_;
 };
 
 TEST_F(ServiceWorkerURLLoaderJobTest, Basic) {
   JobResult result = TestRequest();
   EXPECT_EQ(JobResult::kHandledRequest, result);
+  client_.RunUntilComplete();
   EXPECT_EQ(net::OK, client_.completion_status().error_code);
   const ResourceResponseHead& info = client_.response_head();
   EXPECT_EQ(200, info.headers->response_code());
@@ -517,6 +517,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, BlobResponse) {
   // Perform the request.
   JobResult result = TestRequest();
   EXPECT_EQ(JobResult::kHandledRequest, result);
+  client_.RunUntilComplete();
   const ResourceResponseHead& info = client_.response_head();
   EXPECT_EQ(200, info.headers->response_code());
   ExpectFetchedViaServiceWorker(info);
@@ -536,6 +537,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, NonExistentBlobUUIDResponse) {
   // Perform the request.
   JobResult result = TestRequest();
   EXPECT_EQ(JobResult::kHandledRequest, result);
+  client_.RunUntilComplete();
   const ResourceResponseHead& info = client_.response_head();
   // TODO(falken): Currently our code returns 404 not found (with net::OK), but
   // the spec seems to say this should act as if a network error has occurred.
@@ -555,13 +557,12 @@ TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponse) {
   // Perform the request.
   JobResult result = TestRequest();
   EXPECT_EQ(JobResult::kHandledRequest, result);
+  client_.RunUntilResponseReceived();
   const ResourceResponseHead& info = client_.response_head();
   EXPECT_EQ(200, info.headers->response_code());
   ExpectFetchedViaServiceWorker(info);
 
-  // TODO(falken): This should be true since the worker is still streaming the
-  // response body. See https://crbug.com/758455
-  EXPECT_FALSE(version_->HasWork());
+  EXPECT_TRUE(version_->HasWork());
 
   // Write the body stream.
   uint32_t written_bytes = sizeof(kResponseBody) - 1;
@@ -570,6 +571,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponse) {
   ASSERT_EQ(MOJO_RESULT_OK, mojo_result);
   EXPECT_EQ(sizeof(kResponseBody) - 1, written_bytes);
   stream_callback->OnCompleted();
+  client_.RunUntilComplete();
   data_pipe.producer_handle.reset();
   EXPECT_EQ(net::OK, client_.completion_status().error_code);
 
@@ -593,6 +595,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponse_Abort) {
   // Perform the request.
   JobResult result = TestRequest();
   EXPECT_EQ(JobResult::kHandledRequest, result);
+  client_.RunUntilResponseReceived();
   const ResourceResponseHead& info = client_.response_head();
   EXPECT_EQ(200, info.headers->response_code());
   ExpectFetchedViaServiceWorker(info);
@@ -604,9 +607,9 @@ TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponse_Abort) {
   ASSERT_EQ(MOJO_RESULT_OK, mojo_result);
   EXPECT_EQ(sizeof(kResponseBody) - 1, written_bytes);
   stream_callback->OnAborted();
+  client_.RunUntilComplete();
   data_pipe.producer_handle.reset();
-  // TODO(falken): This should be an error, see https://crbug.com/758455
-  EXPECT_EQ(net::OK, client_.completion_status().error_code);
+  EXPECT_EQ(net::ERR_CONNECTION_RESET, client_.completion_status().error_code);
 
   // Test the body.
   std::string response;
@@ -628,6 +631,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponseAndCancel) {
   // Perform the request.
   JobResult result = TestRequest();
   EXPECT_EQ(JobResult::kHandledRequest, result);
+  client_.RunUntilResponseReceived();
   const ResourceResponseHead& info = client_.response_head();
   EXPECT_EQ(200, info.headers->response_code());
   ExpectFetchedViaServiceWorker(info);
@@ -640,9 +644,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponseAndCancel) {
   EXPECT_EQ(sizeof(kResponseBody) - 1, written_bytes);
   EXPECT_TRUE(data_pipe.producer_handle.is_valid());
   EXPECT_FALSE(job_->WasCanceled());
-  // TODO(falken): This should be true since the worker is still streaming the
-  // response body. See https://crbug.com/758455
-  EXPECT_FALSE(version_->HasWork());
+  EXPECT_TRUE(version_->HasWork());
   job_->Cancel();
   EXPECT_TRUE(job_->WasCanceled());
   EXPECT_FALSE(version_->HasWork());
@@ -655,12 +657,9 @@ TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponseAndCancel) {
   // TODO(falken): This should probably be an error.
   EXPECT_EQ(MOJO_RESULT_OK, mojo_result);
 
-  stream_callback->OnAborted();
-
-  base::RunLoop().RunUntilIdle();
+  client_.RunUntilComplete();
   EXPECT_FALSE(data_pipe.consumer_handle.is_valid());
-  // TODO(falken): This should be an error, see https://crbug.com/758455
-  EXPECT_EQ(net::OK, client_.completion_status().error_code);
+  EXPECT_EQ(net::ERR_ABORTED, client_.completion_status().error_code);
 }
 
 // Test when the service worker responds with network fallback.
@@ -695,6 +694,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, EarlyResponse) {
   // Perform the request.
   JobResult result = TestRequest();
   EXPECT_EQ(JobResult::kHandledRequest, result);
+  client_.RunUntilComplete();
   const ResourceResponseHead& info = client_.response_head();
   EXPECT_EQ(200, info.headers->response_code());
   ExpectFetchedViaServiceWorker(info);
@@ -733,6 +733,7 @@ TEST_F(ServiceWorkerURLLoaderJobTest, NavigationPreload) {
   helper_->RespondWithNavigationPreloadResponse();
   JobResult result = TestRequest();
   ASSERT_EQ(JobResult::kHandledRequest, result);
+  client_.RunUntilComplete();
   EXPECT_EQ(net::OK, client_.completion_status().error_code);
   const ResourceResponseHead& info = client_.response_head();
   EXPECT_EQ(200, info.headers->response_code());

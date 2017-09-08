@@ -18,6 +18,43 @@
 
 namespace content {
 
+// This class is a helper about stream response.
+// i.e., OnCompleted() is called when the response body finishes, and
+// OnAborted() is called on error.
+class ServiceWorkerURLLoaderJob::StreamWaiter
+    : public blink::mojom::ServiceWorkerStreamCallback {
+ public:
+  StreamWaiter(
+      ServiceWorkerURLLoaderJob* owner,
+      scoped_refptr<ServiceWorkerVersion> streaming_version,
+      blink::mojom::ServiceWorkerStreamCallbackRequest callback_request)
+      : owner_(owner),
+        streaming_version_(streaming_version),
+        binding_(this, std::move(callback_request)) {
+    streaming_version_->AddStreamingURLLoaderJob(owner_);
+    binding_.set_connection_error_handler(
+        base::BindOnce(&StreamWaiter::OnAborted, base::Unretained(this)));
+  }
+  ~StreamWaiter() override {
+    DCHECK(streaming_version_);
+    streaming_version_->RemoveStreamingURLLoaderJob(owner_);
+    streaming_version_ = nullptr;
+  }
+
+  // Implements mojom::ServiceWorkerStreamCallback.
+  void OnCompleted() override { owner_->CommitCompleted(net::OK); }
+  void OnAborted() override {
+    owner_->CommitCompleted(net::ERR_CONNECTION_RESET);
+  }
+
+ private:
+  ServiceWorkerURLLoaderJob* owner_;
+  scoped_refptr<ServiceWorkerVersion> streaming_version_;
+  mojo::Binding<blink::mojom::ServiceWorkerStreamCallback> binding_;
+
+  DISALLOW_COPY_AND_ASSIGN(StreamWaiter);
+};
+
 ServiceWorkerURLLoaderJob::ServiceWorkerURLLoaderJob(
     LoaderCallback callback,
     Delegate* delegate,
@@ -33,7 +70,9 @@ ServiceWorkerURLLoaderJob::ServiceWorkerURLLoaderJob(
       binding_(this),
       weak_factory_(this) {}
 
-ServiceWorkerURLLoaderJob::~ServiceWorkerURLLoaderJob() {}
+ServiceWorkerURLLoaderJob::~ServiceWorkerURLLoaderJob() {
+  stream_waiter_.reset();
+}
 
 void ServiceWorkerURLLoaderJob::FallbackToNetwork() {
   response_type_ = FALLBACK_TO_NETWORK;
@@ -74,11 +113,17 @@ void ServiceWorkerURLLoaderJob::FailDueToLostController() {
 }
 
 void ServiceWorkerURLLoaderJob::Cancel() {
-  url_loader_client_.reset();
   status_ = Status::kCancelled;
   weak_factory_.InvalidateWeakPtrs();
   blob_storage_context_.reset();
   fetch_dispatcher_.reset();
+  stream_waiter_.reset();
+
+  ResourceRequestCompletionStatus completion_status;
+  completion_status.error_code = net::ERR_ABORTED;
+  completion_status.completion_time = base::TimeTicks::Now();
+  url_loader_client_->OnComplete(completion_status);
+  url_loader_client_.reset();
 }
 
 bool ServiceWorkerURLLoaderJob::WasCanceled() const {
@@ -98,7 +143,6 @@ void ServiceWorkerURLLoaderJob::StartRequest() {
     DeliverErrorResponse();
     return;
   }
-
   fetch_dispatcher_.reset(new ServiceWorkerFetchDispatcher(
       ServiceWorkerLoaderHelpers::CreateFetchRequest(resource_request_),
       active_worker, resource_request_.resource_type, base::nullopt,
@@ -127,6 +171,7 @@ void ServiceWorkerURLLoaderJob::CommitCompleted(int error_code) {
   completion_status.error_code = error_code;
   completion_status.completion_time = base::TimeTicks::Now();
   url_loader_client_->OnComplete(completion_status);
+  stream_waiter_.reset();
 }
 
 void ServiceWorkerURLLoaderJob::DeliverErrorResponse() {
@@ -195,12 +240,13 @@ void ServiceWorkerURLLoaderJob::DidDispatchFetchEvent(
 
   std::move(loader_callback_)
       .Run(base::BindOnce(&ServiceWorkerURLLoaderJob::StartResponse,
-                          weak_factory_.GetWeakPtr(), response,
+                          weak_factory_.GetWeakPtr(), response, version,
                           std::move(body_as_stream), std::move(body_as_blob)));
 }
 
 void ServiceWorkerURLLoaderJob::StartResponse(
     const ServiceWorkerResponse& response,
+    const scoped_refptr<ServiceWorkerVersion>& version,
     blink::mojom::ServiceWorkerStreamHandlePtr body_as_stream,
     storage::mojom::BlobPtr body_as_blob,
     mojom::URLLoaderRequest request,
@@ -218,12 +264,11 @@ void ServiceWorkerURLLoaderJob::StartResponse(
 
   // Handle a stream response body.
   if (!body_as_stream.is_null() && body_as_stream->stream.is_valid()) {
+    stream_waiter_.reset(new StreamWaiter(
+        this, version, std::move(body_as_stream->callback_request)));
     CommitResponseHeaders();
     url_loader_client_->OnStartLoadingResponseBody(
         std::move(body_as_stream->stream));
-    // TODO(falken): Call CommitCompleted() when stream finished.
-    // See https://crbug.com/758455
-    CommitCompleted(net::OK);
     return;
   }
 

@@ -30,6 +30,7 @@
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/service_worker/service_worker_installed_scripts_sender.h"
 #include "content/browser/service_worker/service_worker_registration.h"
+#include "content/browser/service_worker/service_worker_url_loader_job.h"
 #include "content/common/origin_trials/trial_token_validator.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
 #include "content/common/service_worker/embedded_worker_start_params.h"
@@ -708,9 +709,25 @@ void ServiceWorkerVersion::AddStreamingURLRequestJob(
   streaming_url_request_jobs_.insert(request_job);
 }
 
+void ServiceWorkerVersion::AddStreamingURLLoaderJob(
+    const ServiceWorkerURLLoaderJob* loader_job) {
+  DCHECK(streaming_url_loader_jobs_.find(loader_job) ==
+         streaming_url_loader_jobs_.end());
+  streaming_url_loader_jobs_.insert(loader_job);
+}
+
 void ServiceWorkerVersion::RemoveStreamingURLRequestJob(
     const ServiceWorkerURLRequestJob* request_job) {
   streaming_url_request_jobs_.erase(request_job);
+  if (!HasWork()) {
+    for (auto& observer : listeners_)
+      observer.OnNoWork(this);
+  }
+}
+
+void ServiceWorkerVersion::RemoveStreamingURLLoaderJob(
+    const ServiceWorkerURLLoaderJob* loader_job) {
+  streaming_url_loader_jobs_.erase(loader_job);
   if (!HasWork()) {
     for (auto& observer : listeners_)
       observer.OnNoWork(this);
@@ -1719,7 +1736,9 @@ void ServiceWorkerVersion::StopWorkerIfIdle() {
 }
 
 bool ServiceWorkerVersion::HasWork() const {
-  return !pending_requests_.IsEmpty() || !streaming_url_request_jobs_.empty() ||
+  return !pending_requests_.IsEmpty() ||
+         (!streaming_url_loader_jobs_.empty() ||
+          !streaming_url_request_jobs_.empty()) ||
          !start_callbacks_.empty();
 }
 
@@ -1920,6 +1939,7 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
 
   // TODO(falken): Call SWURLRequestJob::ClearStream here?
   streaming_url_request_jobs_.clear();
+  streaming_url_loader_jobs_.clear();
 
   for (auto& observer : listeners_)
     observer.OnRunningStateChanged(this);
