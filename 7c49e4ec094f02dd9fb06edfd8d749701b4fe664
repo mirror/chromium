@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec171478_910035c8",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T02:12:33Z",
+      "side": 1,
+      "message": "Nit: I wonder if this deserves a better name, like |extra_views| or |subviews| or something.",
+      "revId": "7c49e4ec094f02dd9fb06edfd8d749701b4fe664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7fc88c5_d7e8d359",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T02:12:33Z",
+      "side": 1,
+      "message": "Nit: To eliminate nesting, I\u0027d do this:\n\n  if (views.empty())\n    return nullptr;\n  if (views.size() \u003d\u003d 1)\n    return views.front();\n  ... build container\n\nThis feels a little easier to understand to me, I dunno",
+      "revId": "7c49e4ec094f02dd9fb06edfd8d749701b4fe664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
