@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5fd138b_8137d34a",
+        "filename": "components/network_error_logging/network_error_logging_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-08T20:52:31Z",
+      "side": 1,
+      "message": "Is this the right thing to check, as opposed to the other stuff in IsOriginSecure()?",
+      "revId": "e2348598795d6bbd53a5ee5fa66c335a5a1cc616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23278e46_3f7d25a7",
+        "filename": "components/network_error_logging/network_error_logging_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-08T20:52:31Z",
+      "side": 1,
+      "message": "I know why the check in line 157 is there, but not this one. Is there a spec reference?",
+      "revId": "e2348598795d6bbd53a5ee5fa66c335a5a1cc616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5ab859_f2d85790",
+        "filename": "components/network_error_logging/network_error_logging_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-08T20:52:31Z",
+      "side": 1,
+      "message": "Is it worth removing expired policies to keep the map smaller?",
+      "revId": "e2348598795d6bbd53a5ee5fa66c335a5a1cc616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2fdb16_fdcab10c",
+        "filename": "components/network_error_logging/network_error_logging_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-08T20:52:31Z",
+      "side": 1,
+      "message": "This is too far from the type information for just \u0027auto\u0027. But I\u0027d be happy with a comment instead of a full type if you want since the full type is messy.",
+      "range": {
+        "startLine": 281,
+        "startChar": 7,
+        "endLine": 281,
+        "endChar": 11
+      },
+      "revId": "e2348598795d6bbd53a5ee5fa66c335a5a1cc616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ea2362_3de53247",
+        "filename": "components/network_error_logging/network_error_logging_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-08T20:52:31Z",
+      "side": 1,
+      "message": "This is simple enough that I think it would be clearer inlined. When I saw it I was expecting you\u0027d have to do some processing of the hostname and add multiple entries or something.",
+      "revId": "e2348598795d6bbd53a5ee5fa66c335a5a1cc616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ca33db_5decb944",
+        "filename": "components/network_error_logging/network_error_logging_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-08T20:52:31Z",
+      "side": 1,
+      "message": "I had trouble parsing this sentence. Splitting it up (\"keys are domain names, values are sets of policies, policies appear in the set if...\" or something) would probably help. Also, some more explanation of how these work would be great, either in the form of comments here or a link to the relevant part of the spec or both.",
+      "revId": "e2348598795d6bbd53a5ee5fa66c335a5a1cc616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51da4636_d97eeaf3",
+        "filename": "components/network_error_logging/network_error_logging_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-08T20:52:31Z",
+      "side": 1,
+      "message": "nit: mixing constant style and trailing underscore looks weird to me. The style guide says to use constant style with no underscore: https://google.github.io/styleguide/cppguide.html#Constant_Names",
+      "range": {
+        "startLine": 116,
+        "startChar": 13,
+        "endLine": 116,
+        "endChar": 18
+      },
+      "revId": "e2348598795d6bbd53a5ee5fa66c335a5a1cc616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
