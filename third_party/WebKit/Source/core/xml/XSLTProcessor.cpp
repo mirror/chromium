@@ -68,8 +68,12 @@ Document* XSLTProcessor::CreateDocumentFromSource(
   Document* owner_document = &source_node->GetDocument();
   if (owner_document == source_node)
     url = owner_document->Url();
+  Document* old_document = frame ? frame->GetDocument() : nullptr;
+  DCHECK(!frame || old_document);
 
-  DocumentInit init = DocumentInit::Create().WithFrame(frame).WithURL(url);
+  DocumentInit init =
+      DocumentInit::Create().WithFrame(frame).WithURL(url).WithOwnerDocument(
+          old_document);
 
   String document_source = source_string;
   bool force_xhtml = source_mime_type == "text/plain";
@@ -79,7 +83,6 @@ Document* XSLTProcessor::CreateDocumentFromSource(
   Document* result = nullptr;
 
   if (frame) {
-    Document* old_document = frame->GetDocument();
     // Before parsing, we need to save & detach the old document and get the new
     // document in place. Document::Shutdown() tears down the LocalFrameView, so
     // remember whether or not there was one.
@@ -90,17 +93,8 @@ Document* XSLTProcessor::CreateDocumentFromSource(
       frame->Client()->TransitionToCommittedForNewPage();
     result = frame->DomWindow()->InstallNewDocument(source_mime_type, init,
                                                     force_xhtml);
-
-    if (old_document) {
+    if (old_document)
       DocumentXSLT::From(*result).SetTransformSourceDocument(old_document);
-      result->UpdateSecurityOrigin(old_document->GetSecurityOrigin());
-      result->SetCookieURL(old_document->CookieURL());
-      result->EnforceSandboxFlags(old_document->GetSandboxFlags());
-
-      ContentSecurityPolicy* csp = ContentSecurityPolicy::Create();
-      csp->CopyStateFrom(old_document->GetContentSecurityPolicy());
-      result->InitContentSecurityPolicy(csp);
-    }
   } else {
     result =
         LocalDOMWindow::CreateDocument(source_mime_type, init, force_xhtml);
