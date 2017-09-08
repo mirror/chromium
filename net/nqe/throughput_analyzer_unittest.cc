@@ -156,6 +156,7 @@ TEST(ThroughputAnalyzerTest, TestThroughputWithMultipleRequestsOverlap) {
   };
 
   for (const auto& test : tests) {
+    LOG(WARNING) << "xxx start_local_request=" << test.start_local_request;
     // Localhost requests are not allowed for estimation purposes.
     std::map<std::string, std::string> variation_params;
     NetworkQualityEstimatorParams params(variation_params);
@@ -167,10 +168,15 @@ TEST(ThroughputAnalyzerTest, TestThroughputWithMultipleRequestsOverlap) {
 
     std::unique_ptr<URLRequest> request_local;
 
-    std::unique_ptr<URLRequest> request_not_local(context.CreateRequest(
-        GURL("http://example.com/echo.html"), DEFAULT_PRIORITY, &test_delegate,
-        TRAFFIC_ANNOTATION_FOR_TESTS));
-    request_not_local->Start();
+    std::vector<std::unique_ptr<URLRequest>> requests_not_local;
+
+    for (size_t i = 0; i < params.throughput_min_requests_in_flight(); ++i) {
+      std::unique_ptr<URLRequest> request_not_local(context.CreateRequest(
+          GURL("http://example.com/echo.html"), DEFAULT_PRIORITY,
+          &test_delegate, TRAFFIC_ANNOTATION_FOR_TESTS));
+      request_not_local->Start();
+      requests_not_local.push_back(std::move(request_not_local));
+    }
 
     if (test.start_local_request) {
       request_local = context.CreateRequest(GURL("http://127.0.0.1/echo.html"),
@@ -190,7 +196,10 @@ TEST(ThroughputAnalyzerTest, TestThroughputWithMultipleRequestsOverlap) {
     // at all times.
     if (test.start_local_request)
       throughput_analyzer.NotifyStartTransaction(*request_local);
-    throughput_analyzer.NotifyStartTransaction(*request_not_local);
+
+    for (size_t i = 0; i < requests_not_local.size(); ++i) {
+      throughput_analyzer.NotifyStartTransaction(*requests_not_local.at(i));
+    }
 
     if (test.local_request_completes_first) {
       ASSERT_TRUE(test.start_local_request);
@@ -198,10 +207,12 @@ TEST(ThroughputAnalyzerTest, TestThroughputWithMultipleRequestsOverlap) {
     }
 
     // Increment the bytes received count to emulate the bytes received for
-    // |request_local| and |request_not_local|.
+    // |request_local| and |requests_not_local|.
     throughput_analyzer.IncrementBitsReceived(100 * 1000 * 8);
 
-    throughput_analyzer.NotifyRequestCompleted(*request_not_local);
+    for (size_t i = 0; i < requests_not_local.size(); ++i) {
+      throughput_analyzer.NotifyRequestCompleted(*requests_not_local.at(i));
+    }
     if (test.start_local_request && !test.local_request_completes_first)
       throughput_analyzer.NotifyRequestCompleted(*request_local);
 
