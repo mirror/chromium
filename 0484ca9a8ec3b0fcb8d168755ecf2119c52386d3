@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ab0f859_f9d9ac95",
+        "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-08T18:06:31Z",
+      "side": 1,
+      "message": "nit: prefer type_changed",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 21
+      },
+      "revId": "0484ca9a8ec3b0fcb8d168755ecf2119c52386d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
