@@ -390,6 +390,23 @@
     },
     {
       "key": {
+        "uuid": "c48b67a6_34f0559f",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/line_chart.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T03:41:12Z",
+      "side": 1,
+      "message": "I don\u0027t think you need any of the @this annotations.",
+      "revId": "47932e1ce9a0292b5b8679fb8a99bff2516b8bc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "436406e0_bfd081ea",
         "filename": "chrome/browser/resources/sys_internals/line_chart/line_chart.js",
         "patchSetId": 11

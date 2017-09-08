@@ -34,6 +34,262 @@
       "revId": "d18e3287c4f153f20bcad38b0bbb8c300c65c5b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa0e46de_b539e80e",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/data_series.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T03:41:12Z",
+      "side": 1,
+      "message": "I believe you mean linearInterpolation here and elsewhere?",
+      "range": {
+        "startLine": 285,
+        "startChar": 9,
+        "endLine": 285,
+        "endChar": 27
+      },
+      "revId": "d18e3287c4f153f20bcad38b0bbb8c300c65c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1799cba_d2077466",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/line_chart.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T03:41:12Z",
+      "side": 1,
+      "message": "Generally we don\u0027t like constructors doing work, often because it\u0027s useful to instantiate a class, then configure it, then actually initialize and do work.\n\nCan you move all of this below this line to an attach(rootDiv) method? Member declarations as null will need to stay in the constructor I think.",
+      "revId": "d18e3287c4f153f20bcad38b0bbb8c300c65c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6299acfc_a6d0f529",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/line_chart.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T03:41:12Z",
+      "side": 1,
+      "message": "Probably better to inline this function inside initCanvas_ since it\u0027s only used there\n\nconst enrollNonPassiveEvent \u003d (name, handler) \u003d\u003e {\n  this.canvas_.addEventListener(name, handler.bind(this), {passive: false});\n};",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 24
+      },
+      "revId": "d18e3287c4f153f20bcad38b0bbb8c300c65c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a338d87_2f604c8b",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/line_chart.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T03:41:12Z",
+      "side": 1,
+      "message": "wheelX/Y\n\nIs the distance going to be consistent across all chromebooks for mouse + trackpads?",
+      "revId": "d18e3287c4f153f20bcad38b0bbb8c300c65c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "710e16da_4f413f94",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/line_chart.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T03:41:12Z",
+      "side": 1,
+      "message": "Consider Math.max(LineChart.MIN_SCALE, Math.min(this.scale_, LineChart.MAX_SCALE)).",
+      "revId": "d18e3287c4f153f20bcad38b0bbb8c300c65c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7d01dd2_49b17a59",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/line_chart.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T03:41:12Z",
+      "side": 1,
+      "message": "Math.max(this.getChartWidth_() - this.canvas_.width, 0);",
+      "revId": "d18e3287c4f153f20bcad38b0bbb8c300c65c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a7be2fb_a6f0a250",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/line_chart.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T03:41:12Z",
+      "side": 1,
+      "message": "nit: shouldRender()",
+      "revId": "d18e3287c4f153f20bcad38b0bbb8c300c65c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebbda66f_7bc679f7",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/line_chart.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T03:41:12Z",
+      "side": 1,
+      "message": "Unused.",
+      "revId": "d18e3287c4f153f20bcad38b0bbb8c300c65c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02aff53c_46392911",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/line_chart.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T03:41:12Z",
+      "side": 1,
+      "message": "renderChartGrid?",
+      "revId": "d18e3287c4f153f20bcad38b0bbb8c300c65c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41678d98_6b760d64",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/line_chart.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T03:41:12Z",
+      "side": 1,
+      "message": "Just use the constant below.",
+      "revId": "d18e3287c4f153f20bcad38b0bbb8c300c65c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be89ef1f_8e891c5d",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/menu.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T03:41:12Z",
+      "side": 1,
+      "message": "Use addEventListener(\u0027click\u0027, handler);",
+      "revId": "d18e3287c4f153f20bcad38b0bbb8c300c65c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2953902d_ee057289",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/menu.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T03:41:12Z",
+      "side": 1,
+      "message": "These colors should be constants somewhere.",
+      "revId": "d18e3287c4f153f20bcad38b0bbb8c300c65c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee791608_90dcf091",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/scrollbar.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T03:41:12Z",
+      "side": 1,
+      "message": "Use Min/Max again.",
+      "revId": "d18e3287c4f153f20bcad38b0bbb8c300c65c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4feeff7_fd8df5d8",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/scrollbar.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T03:41:12Z",
+      "side": 1,
+      "message": "true",
+      "range": {
+        "startLine": 144,
+        "startChar": 12,
+        "endLine": 144,
+        "endChar": 16
+      },
+      "revId": "d18e3287c4f153f20bcad38b0bbb8c300c65c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
