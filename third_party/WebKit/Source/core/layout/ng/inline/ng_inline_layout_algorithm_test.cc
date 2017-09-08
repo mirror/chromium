@@ -363,5 +363,54 @@ TEST_F(NGInlineLayoutAlgorithmTest, PositionFloatsWithMargins) {
   EXPECT_EQ(LayoutUnit(45), inline_text_box1->X());
 }
 
+// Test glyph bounding box causes visual overflow using Ahem.
+TEST_F(NGInlineLayoutAlgorithmTest, VisualRectAhem) {
+  LoadAhem();
+  SetBodyInnerHTML(R"HTML(
+    <!DOCTYPE html>
+    <style>
+      #container {
+        font: 20px/.5 Ahem;
+      }
+    </style>
+    <div id="container">Hello</div>
+  )HTML");
+  Element* element = GetElementById("container");
+  RefPtr<NGConstraintSpace> space;
+  RefPtr<NGPhysicalBoxFragment> box_fragment;
+  std::tie(box_fragment, space) = RunBlockLayoutAlgorithmForElement(element);
+
+  EXPECT_EQ(LayoutUnit(10), box_fragment->Size().height);
+
+  LayoutRect visual_rect = box_fragment->VisualRect();
+  EXPECT_EQ(LayoutUnit(-5), visual_rect.Y());
+  EXPECT_EQ(LayoutUnit(20), visual_rect.Height());
+}
+
+// Test glyph bounding box causes visual overflow using real fonts.
+// U+0940 Devanagari Vowel Sign II is usually taller than 1em.
+TEST_F(NGInlineLayoutAlgorithmTest, VisualRectDevanagari) {
+  FontCachePurgePreventer purge_preventer_;
+  SetBodyInnerHTML(R"HTML(
+    <!DOCTYPE html>
+    <style>
+      #container {
+        font-size: 10px;
+        line-height: 1;
+      }
+    </style>
+    <div id="container">&#091F;&#094D;&#x0930;&#x0940;</div>
+  )HTML");
+  Element* element = GetElementById("container");
+  RefPtr<NGConstraintSpace> space;
+  RefPtr<NGPhysicalBoxFragment> box_fragment;
+  std::tie(box_fragment, space) = RunBlockLayoutAlgorithmForElement(element);
+
+  EXPECT_EQ(LayoutUnit(10), box_fragment->Size().height);
+
+  LayoutRect visual_rect = box_fragment->VisualRect();
+  EXPECT_GT(visual_rect.Height(), LayoutUnit(10));
+}
+
 }  // namespace
 }  // namespace blink
