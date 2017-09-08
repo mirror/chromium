@@ -102,6 +102,12 @@ class BASE_EXPORT Process {
   // Close the process handle. This will not terminate the process.
   void Close();
 
+  // Returns true if this process is still running. This may not be accurate,
+  // the OS can reuse the process id.
+  bool IsRunning() const {
+    return !WaitForExitWithTimeout(base::TimeDelta(), nullptr);
+  }
+
   // Terminates the process with extreme prejudice. The given |exit_code| will
   // be the exit code of the process. If |wait| is true, this method will wait
   // for up to one minute for the process to actually terminate.
