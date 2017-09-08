@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "489d3de2_e2187048",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-09-08T00:17:42Z",
+      "side": 1,
+      "message": "Applying the multiplication here breaks the early-return logic above, so please do it in the caller instead.\n\nAlso, note this doesn\u0027t scale the values in BrowserControls.cpp.  I think that *may* be correct but I\u0027m not 100% sure.  Could you double-check bottom-attached \"position: fixed\" elements such as the one on http://forbes.com/ work fully correctly with your patch?  Please verify with both top-mode and bottom-mode and also make sure touch input on the bottom \"position: fixed\" work properly.",
+      "revId": "af5ce6d100d0bb9bbb7d9a146452bf5ffa421d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
