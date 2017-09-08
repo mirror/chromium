@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "838370a1_6d1c0517",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-08T01:02:18Z",
+      "side": 1,
+      "message": "It\u0027s confusing that there are methods with names that start with \"Record\" that do not immediately record to the histogram. It looks like the convention is that only the free functions which start with \"Record\" and end with \"Histogram\" modify histograms, but it\u0027s hard to see this when the method names are long like this.  I\u0027d suggest using a different verb for staging a count vs updating the histogram with the staged count.",
+      "range": {
+        "startLine": 93,
+        "startChar": 25,
+        "endLine": 93,
+        "endChar": 68
+      },
+      "revId": "3cd3d4bea47afa6a02a9e5e78950e785d6aeab02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc7e74f_6bebfa5b",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-08T01:02:18Z",
+      "side": 1,
+      "message": "It\u0027s a bit confusing what the intent is here.  For menu_open_count_ and menu_item_add_to_homescreen_count_, this early return makes no difference, because they will be 0, and so the relevant histograms wouldn\u0027t be incremented anyway.\n\nFor add_to_homescreen_manifest_timeout_count_ and add_to_homescreen_installability_timeout_count_, this early return will avoid incrementing their relevant histograms; RecordMetricsOnNavigationAndReset must be called to increment those.  Is this the intended behaviour?  It\u0027s not obvious from inspecting this class alone why that\u0027s the case.",
+      "revId": "3cd3d4bea47afa6a02a9e5e78950e785d6aeab02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab587d10_290ea0ad",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-08T01:02:18Z",
+      "side": 1,
+      "message": "This status_ variable makes me uneasy since it does a lot.  It exerts a lot of influence over the control flow of many of the member functions (switching between incrementing counters vs updating histograms), but also stores the state that should be used when updating those histograms.\n\nOnce RecordQueuedMetrics is called, status_ will remain set to one of COMPLETE_{,NON}PROGRESSIVE_WEB_APP until RecordMetricsOnNavigationAndReset is called, right?\n\nAnd *until* RecordQueuedMetrics is called, the value of status_ is mostly irrelevant (apart from the fact that it is *not* one of COMPLETE_{,NON}PROGRESSIVE_WEB_APP).  (RecordAddToHomescreenNoTimeout adds a bit of a wrinkle to this, but I don\u0027t think it\u0027s a big deal).\n\nIt basically feels like InstallableMetrics can be cleanly divided into two implementations, depending on which \"mode\" we\u0027re in i.e. whether the PWA check is complete or not. Rather than switching between these modes of operation in each method based on the return value of is_pwa_check_complete(), why not create an interface containing the above Record methods, which is implemented by each of two new metrics helper classes, one for when the PWA check is complete, and one for when it is not.  The former can be initialized with the status, and directly update histograms; the other can accumulate counts. You can switch between those implementations here, at the point where you can tell that the PWA check is complete. So instead of storing status_ as a member of InstallableMetrics, you store a pointer to one of these helper classes and you can remove is_pwa_check_complete().",
+      "revId": "3cd3d4bea47afa6a02a9e5e78950e785d6aeab02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
