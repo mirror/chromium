@@ -93,15 +93,13 @@ bool NetworkLocationProvider::PositionCache::MakeKey(const WifiData& wifi_data,
 
 // NetworkLocationProvider factory function
 LocationProvider* NewNetworkLocationProvider(
-    const scoped_refptr<net::URLRequestContextGetter>& context,
-    const GURL& url) {
-  return new NetworkLocationProvider(context, url);
+    const scoped_refptr<net::URLRequestContextGetter>& context) {
+  return new NetworkLocationProvider(context);
 }
 
 // NetworkLocationProvider
 NetworkLocationProvider::NetworkLocationProvider(
-    const scoped_refptr<net::URLRequestContextGetter>& url_context_getter,
-    const GURL& url)
+    const scoped_refptr<net::URLRequestContextGetter>& url_context_getter)
     : wifi_data_provider_manager_(nullptr),
       wifi_data_update_callback_(
           base::Bind(&NetworkLocationProvider::OnWifiDataUpdate,
@@ -111,7 +109,6 @@ NetworkLocationProvider::NetworkLocationProvider(
       is_new_data_available_(false),
       request_(new NetworkLocationRequest(
           url_context_getter,
-          url,
           base::Bind(&NetworkLocationProvider::OnLocationResponse,
                      base::Unretained(this)))),
       position_cache_(new PositionCache),
