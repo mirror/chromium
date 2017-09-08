@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "373a470f_f0354b68",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-08T17:58:35Z",
+      "side": 1,
+      "message": "For desktop builds, user is taken to chrome://newtab/ page. \nhttps://cs.chromium.org/chromium/src/chrome/browser/safe_browsing/ui_manager.cc?rcl\u003d06cf072205859c34cabe735ea52d51e7b2872cb4\u0026l\u003d187",
+      "revId": "a09fc3c5aab8d44461a805061a4f72109c5e1f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356268c4_48ec2d8e",
+        "filename": "components/security_interstitials/core/base_safe_browsing_error_ui.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-08T17:58:35Z",
+      "side": 1,
+      "message": "The name of this variable is a little bit confusion.  How about \n\n// Indicates if the \u0027Back to safety\u0027 primary action button should always be shown.\n// Chrome and Chromium builds should always set this option to true, such that\n// \"Back to Safety\" button always presents in safe browsing interstitial. \n// Google Android WebView will set this option to false, such that this button is\n// shown only when there is a proper page to navigate back to.\nbool always_show_back_to_safety;",
+      "revId": "a09fc3c5aab8d44461a805061a4f72109c5e1f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
