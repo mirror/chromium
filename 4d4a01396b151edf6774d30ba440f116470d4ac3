@@ -16,6 +16,24 @@
       "revId": "4d4a01396b151edf6774d30ba440f116470d4ac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a70a53f_0831e243",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-08T20:41:11Z",
+      "side": 1,
+      "message": "Ok. It turns out the setUp() and tearDown() need to be public and not protected. \nThe error msg is a bit misleading",
+      "parentUuid": "b7aec4d7_d866ef18",
+      "revId": "4d4a01396b151edf6774d30ba440f116470d4ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
