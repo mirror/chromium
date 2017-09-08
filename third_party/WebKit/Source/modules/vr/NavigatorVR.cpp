@@ -13,11 +13,13 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Navigator.h"
 #include "core/frame/UseCounter.h"
+#include "core/inspector/ConsoleMessage.h"
 #include "core/page/Page.h"
 #include "modules/vr/VRController.h"
 #include "modules/vr/VRDisplay.h"
 #include "modules/vr/VRGetDevicesCallback.h"
 #include "modules/vr/VRPose.h"
+#include "modules/vr/latest/VR.h"
 #include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
@@ -50,6 +52,28 @@ NavigatorVR& NavigatorVR::From(Navigator& navigator) {
     ProvideTo(navigator, SupplementName(), supplement);
   }
   return *supplement;
+}
+
+VR* NavigatorVR::vr(Navigator& navigator) {
+  return NavigatorVR::From(navigator).vr();
+}
+
+VR* NavigatorVR::vr() {
+  if (!vr_) {
+    // For the sake of simplicity we're going to block developers from using the
+    // new API if they've already made calls to the legacy API.
+    if (controller_) {
+      GetDocument()->AddConsoleMessage(ConsoleMessage::Create(
+          kOtherMessageSource, kErrorMessageLevel,
+          "Cannot use navigator.vr if the legacy VR API is already in use."));
+      return nullptr;
+    }
+    Document* document = GetDocument();
+    if (!document || !document->GetFrame())
+      return nullptr;
+    vr_ = VR::Create(*document->GetFrame());
+  }
+  return vr_;
 }
 
 ScriptPromise NavigatorVR::getVRDisplays(ScriptState* script_state,
@@ -87,6 +111,16 @@ ScriptPromise NavigatorVR::getVRDisplays(ScriptState* script_state) {
   } else if (!frame->HasReceivedUserGesture() &&
              frame->IsCrossOriginSubframe()) {
     RejectNavigatorDetached(resolver);
+  }
+
+  // Similar to the restriciton above, we're going to block developers from
+  // using the legacy API if they've already made calls to the new API.
+  if (vr_) {
+    DOMException* exception =
+        DOMException::Create(kInvalidStateError,
+                             "Cannot use navigator.getVRDisplays if the latest "
+                             "VR API is already in use.");
+    resolver->Reject(exception);
     return promise;
   }
 
@@ -124,6 +158,7 @@ Document* NavigatorVR::GetDocument() {
 }
 
 DEFINE_TRACE(NavigatorVR) {
+  visitor->Trace(vr_);
   visitor->Trace(controller_);
   Supplement<Navigator>::Trace(visitor);
 }
@@ -171,6 +206,10 @@ void NavigatorVR::FocusedFrameChanged() {
 
 void NavigatorVR::DidAddEventListener(LocalDOMWindow* window,
                                       const AtomicString& event_type) {
+  // Don't bother if we're using the newer API
+  if (vr_)
+    return;
+
   if (event_type == EventTypeNames::vrdisplayactivate) {
     listening_for_activate_ = true;
     Controller()->SetListeningForActivate(focused_);
@@ -183,6 +222,10 @@ void NavigatorVR::DidAddEventListener(LocalDOMWindow* window,
 
 void NavigatorVR::DidRemoveEventListener(LocalDOMWindow* window,
                                          const AtomicString& event_type) {
+  // Don't bother if we're using the newer API
+  if (vr_)
+    return;
+
   if (event_type == EventTypeNames::vrdisplayactivate &&
       !window->HasEventListeners(EventTypeNames::vrdisplayactivate)) {
     listening_for_activate_ = false;
@@ -191,7 +234,7 @@ void NavigatorVR::DidRemoveEventListener(LocalDOMWindow* window,
 }
 
 void NavigatorVR::DidRemoveAllEventListeners(LocalDOMWindow* window) {
-  if (!controller_)
+  if (vr_ || !controller_)
     return;
 
   controller_->SetListeningForActivate(false);

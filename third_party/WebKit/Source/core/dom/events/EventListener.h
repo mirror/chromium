@@ -41,6 +41,7 @@ class CORE_EXPORT EventListener
     kCPPEventListenerType,
     kConditionEventListenerType,
     kNativeEventListenerType,
+    kVRSessionEventListenerType
   };
 
   virtual ~EventListener() {}

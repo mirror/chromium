@@ -105,6 +105,148 @@ void VrController::OnPause() {
     controller_api_->Pause();
 }
 
+device::mojom::VRControllerInfoPtr VrController::GetVRControllerInfoPtr() {
+  device::mojom::VRControllerInfoPtr controller_info =
+      device::mojom::VRControllerInfo::New();
+
+  // Only one Daydream Controller
+  controller_info->index = 1;
+
+  // It's a pointing device, not a gaze-cursor-based one.
+  controller_info->gazeCursor = false;
+
+  // Set handedness.
+  switch (handedness_) {
+    case GVR_CONTROLLER_LEFT_HANDED:
+      controller_info->handedness = device::mojom::VRControllerHandedness::LEFT;
+      break;
+    case GVR_CONTROLLER_RIGHT_HANDED:
+      controller_info->handedness =
+          device::mojom::VRControllerHandedness::RIGHT;
+      break;
+    default:
+      controller_info->handedness = device::mojom::VRControllerHandedness::NONE;
+      break;
+  }
+
+  // Set the pointer transform to the appropriate offset/angle.
+  gfx::Transform pointer_transform;
+  pointer_transform.Translate3d(0, 0, -kLaserStartDisplacement);
+  pointer_transform.RotateAboutXAxis(-kErgoAngleOffset * 180.0 / M_PI);
+
+  // TODO(bajones): UUUUUUUUGGGGGGHHHHHH! :P
+  controller_info->pointerTransform.emplace(16);
+  controller_info->pointerTransform.value()[0] =
+      pointer_transform.matrix().getFloat(0, 0);
+  controller_info->pointerTransform.value()[1] =
+      pointer_transform.matrix().getFloat(1, 0);
+  controller_info->pointerTransform.value()[2] =
+      pointer_transform.matrix().getFloat(2, 0);
+  controller_info->pointerTransform.value()[3] =
+      pointer_transform.matrix().getFloat(3, 0);
+  controller_info->pointerTransform.value()[4] =
+      pointer_transform.matrix().getFloat(0, 1);
+  controller_info->pointerTransform.value()[5] =
+      pointer_transform.matrix().getFloat(1, 1);
+  controller_info->pointerTransform.value()[6] =
+      pointer_transform.matrix().getFloat(2, 1);
+  controller_info->pointerTransform.value()[7] =
+      pointer_transform.matrix().getFloat(3, 1);
+  controller_info->pointerTransform.value()[8] =
+      pointer_transform.matrix().getFloat(0, 2);
+  controller_info->pointerTransform.value()[9] =
+      pointer_transform.matrix().getFloat(1, 2);
+  controller_info->pointerTransform.value()[10] =
+      pointer_transform.matrix().getFloat(2, 2);
+  controller_info->pointerTransform.value()[11] =
+      pointer_transform.matrix().getFloat(3, 2);
+  controller_info->pointerTransform.value()[12] =
+      pointer_transform.matrix().getFloat(0, 3);
+  controller_info->pointerTransform.value()[13] =
+      pointer_transform.matrix().getFloat(1, 3);
+  controller_info->pointerTransform.value()[14] =
+      pointer_transform.matrix().getFloat(2, 3);
+  controller_info->pointerTransform.value()[15] =
+      pointer_transform.matrix().getFloat(3, 3);
+
+  device::mojom::VRControllerElementInfoPtr touchpad =
+      device::mojom::VRControllerElementInfo::New();
+
+  touchpad->name = "touchpad";
+  touchpad->hasXAxis = true;
+  touchpad->hasYAxis = true;
+
+  controller_info->elements.push_back(std::move(touchpad));
+
+  return controller_info;
+}
+
+device::mojom::VRControllerStatePtr VrController::GetVRControllerStatePtr() {
+  device::mojom::VRControllerStatePtr controller_state =
+      device::mojom::VRControllerState::New();
+
+  controller_state->index = 1;
+
+  // Set handedness.
+  switch (handedness_) {
+    case GVR_CONTROLLER_LEFT_HANDED:
+      controller_state->handedness =
+          device::mojom::VRControllerHandedness::LEFT;
+      break;
+    case GVR_CONTROLLER_RIGHT_HANDED:
+      controller_state->handedness =
+          device::mojom::VRControllerHandedness::RIGHT;
+      break;
+    default:
+      controller_state->handedness =
+          device::mojom::VRControllerHandedness::NONE;
+      break;
+  }
+
+  // TODO(bajones): UUUUUUUUGGGGGGHHHHHH! :P
+  gfx::Transform pose_matrix;
+  GetTransform(&pose_matrix);
+
+  controller_state->poseMatrix.emplace(16);
+  controller_state->poseMatrix.value()[0] = pose_matrix.matrix().getFloat(0, 0);
+  controller_state->poseMatrix.value()[1] = pose_matrix.matrix().getFloat(1, 0);
+  controller_state->poseMatrix.value()[2] = pose_matrix.matrix().getFloat(2, 0);
+  controller_state->poseMatrix.value()[3] = pose_matrix.matrix().getFloat(3, 0);
+  controller_state->poseMatrix.value()[4] = pose_matrix.matrix().getFloat(0, 1);
+  controller_state->poseMatrix.value()[5] = pose_matrix.matrix().getFloat(1, 1);
+  controller_state->poseMatrix.value()[6] = pose_matrix.matrix().getFloat(2, 1);
+  controller_state->poseMatrix.value()[7] = pose_matrix.matrix().getFloat(3, 1);
+  controller_state->poseMatrix.value()[8] = pose_matrix.matrix().getFloat(0, 2);
+  controller_state->poseMatrix.value()[9] = pose_matrix.matrix().getFloat(1, 2);
+  controller_state->poseMatrix.value()[10] =
+      pose_matrix.matrix().getFloat(2, 2);
+  controller_state->poseMatrix.value()[11] =
+      pose_matrix.matrix().getFloat(3, 2);
+  controller_state->poseMatrix.value()[12] =
+      pose_matrix.matrix().getFloat(0, 3);
+  controller_state->poseMatrix.value()[13] =
+      pose_matrix.matrix().getFloat(1, 3);
+  controller_state->poseMatrix.value()[14] =
+      pose_matrix.matrix().getFloat(2, 3);
+  controller_state->poseMatrix.value()[15] =
+      pose_matrix.matrix().getFloat(3, 3);
+
+  device::mojom::VRControllerElementStatePtr touchpad =
+      device::mojom::VRControllerElementState::New();
+
+  touchpad->name = "touchpad";
+  touchpad->touched = controller_state_->IsTouching();
+  touchpad->pressed =
+      controller_state_->GetButtonState(GVR_CONTROLLER_BUTTON_CLICK);
+  touchpad->value = touchpad->pressed ? 1.0 : 0.0;
+  touchpad->xAxis = TouchPosX();
+  touchpad->yAxis = TouchPosY();
+
+  controller_state->elements.push_back(std::move(touchpad));
+
+  return controller_state;
+}
+
 device::GvrGamepadData VrController::GetGamepadData() {
   device::GvrGamepadData pad = {};
   pad.connected = IsConnected();

@@ -624,6 +624,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   friend class ScopedTexture2DRestorer;
   friend class ScopedFramebufferRestorer;
   friend class ScopedUnpackParametersResetRestore;
+  friend class VRWebGLDrawingBuffer;
 
   WebGLRenderingContextBase(CanvasRenderingContextHost*,
                             std::unique_ptr<WebGraphicsContext3DProvider>,

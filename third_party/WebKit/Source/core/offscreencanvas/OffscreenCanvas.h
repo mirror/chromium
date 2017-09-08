@@ -149,6 +149,11 @@ class CORE_EXPORT OffscreenCanvas final
     return DispatchEvent(event);
   }
 
+  bool HostAddEventListener(const AtomicString& event_type,
+                            EventListener* listener) override {
+    return addEventListener(event_type, listener);
+  }
+
   bool IsWebGLAllowed() const override { return true; }
 
   FontSelector* GetFontSelector() override;
