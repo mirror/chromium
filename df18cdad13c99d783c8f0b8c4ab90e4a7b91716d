@@ -46,6 +46,30 @@
       "revId": "df18cdad13c99d783c8f0b8c4ab90e4a7b91716d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85df6c2_476dea24",
+        "filename": "services/ui/public/interfaces/window_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-08T22:19:44Z",
+      "side": 1,
+      "message": "Those are probably powerful enough events on their own that are required, so filtering the other ones isn\u0027t as compelling as a result. thanks.",
+      "parentUuid": "dee4a404_63e1daf3",
+      "range": {
+        "startLine": 375,
+        "startChar": 2,
+        "endLine": 375,
+        "endChar": 21
+      },
+      "revId": "df18cdad13c99d783c8f0b8c4ab90e4a7b91716d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
