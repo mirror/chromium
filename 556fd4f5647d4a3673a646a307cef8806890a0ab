@@ -34,6 +34,24 @@
       "revId": "556fd4f5647d4a3673a646a307cef8806890a0ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553f285d_6df511fe",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T19:46:16Z",
+      "side": 1,
+      "message": "They are identical. ClosePreviewDialog() just calls PrintPreviewUI::OnClosePrintPreviewDialog(), which in turn does the following:\n(1) Records the dialog is closed to avoid any double-closing (in case print preview also sends the \"dialogClose\" message, because there were several cases in the past where close_() and ClosePreviewDialog() were both called).\n\nThen it does the following 3 steps:\n(1) Gets the ConstrainedWebDialogDelegate (CWDD)\n(2) Calls OnDialogClosed on the Web dialog delegate of the CWDD - PrintPreviewDialogDelegate in this case.\n(3) Calls OnDialogCloseFromWebUI on the CWDD.\n\nThese 3 steps are exactly what happens when the ConstrainedWebDialogUI receives the \"dialogClose\" message sent by Print Preview JS: https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/constrained_web_dialog_ui.cc?l\u003d100\n\nAFAICT this function is a way simulate the Javascript \"dialogClose\" message without actually going through the Print Preview JS.\n\nIn addition to where it was previously called before this CL, ClosePreviewDialog is used when printing for the system dialog (on non Windows): https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/print_preview/print_preview_handler.cc?l\u003d1151\nThis case is a little weird because the system dialog is modal and may prevent print preview from doing anything until it closes. It should work to have print preview close itself immediately after sending that message, but I would need to look into it further.",
+      "parentUuid": "e1d05c6f_940d98a0",
+      "revId": "556fd4f5647d4a3673a646a307cef8806890a0ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
