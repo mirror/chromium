@@ -83,4 +83,8 @@ TEST_F(PrefetchStoreTest, ZombifyTestUtilWorks) {
                                                   item1.url));
 }
 
+TEST_F(PrefetchStoreTest, TestMigration) {
+  // TODO
+}
+
 }  // namespace offline_pages

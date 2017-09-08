@@ -74,6 +74,8 @@ static_library("prefetch") {
     "store/prefetch_downloader_quota.h",
     "store/prefetch_store.cc",
     "store/prefetch_store.h",
+    "store/prefetch_store_schema.cc",
+    "store/prefetch_store_schema.h",
     "store/prefetch_store_utils.cc",
     "store/prefetch_store_utils.h",
     "suggested_articles_observer.cc",
