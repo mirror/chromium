@@ -24,20 +24,29 @@ public class FlushingReTrace {
     // http://proguard.sourceforge.net/manual/retrace/usage.html.
     // But with the "at" part changed to "(?::|\bat)", to account for lines like:
     //     06-22 13:58:02.895  4674  4674 E THREAD_STATE:     bLA.a(PG:173)
-    // And .*=%c\s* added as the second subpattern to account for lines like:
+    // And .*=%c\s* added to account for lines like:
     //     INSTRUMENTATION_STATUS: class=bNs
+    // And .* %c in isTestClass for %c added to account for lines like:
+    //     NoClassDefFoundError: android.content.pm.VersionedPackage in isTestClass for WX
+    // And %c added to allow one-off mappings:
+    //     bLa
     // Normal stack trace lines look like:
     // java.lang.RuntimeException: Intentional Java Crash
     //     at org.chromium.chrome.browser.tab.Tab.handleJavaCrash(Tab.java:682)
     //     at org.chromium.chrome.browser.tab.Tab.loadUrl(Tab.java:644)
     private static final String LINE_PARSE_REGEX =
             "(?:.*?(?::|\\bat)\\s+%c\\.%m\\s*\\(%s(?::%l)?\\)\\s*)|"
+            + "(?:.* %c in isTestClass for %c)|"
             + "(?:.*=%c\\s*)|"
-            + "(?:(?:.*?[:\"]\\s+)?%c(?::.*)?)";
+            + "(?:(?:.*?[:\"]\\s+)?%c(?::.*)?)|"
+            + "(?:%c)";
 
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.err.println("Usage: java_deobfuscate Foo.apk.map < foo.log > bar.log");
+            System.err.println("Usage: echo $OBFUSCATED_CLASS | java_deobfuscate Foo.apk.mapping");
+            System.err.println("Usage: java_deobfuscate Foo.apk.mapping < foo.log > bar.log");
+            System.err.println("Note: Only deobfuscates lines that match the regular expression "
+                    + "in FlushingReTrace.java (and may need to be updated).");
             System.exit(1);
         }
 
