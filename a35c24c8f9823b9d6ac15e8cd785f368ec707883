@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cc62a0bf_2ba44d57",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-09-08T13:57:46Z",
+      "side": 1,
+      "message": "Negated in one case, but yes. Done.",
+      "parentUuid": "d1298bd8_44d05320",
+      "revId": "a35c24c8f9823b9d6ac15e8cd785f368ec707883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97d6197c_7d86cc9a",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-07T22:23:55Z",
       "side": 1,
       "message": "Why do you need this conditional and the code below it? Can\u0027t it always use\nthe multiply at line 1326?",
+      "revId": "a35c24c8f9823b9d6ac15e8cd785f368ec707883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b246d5_4e344fd9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1328,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-09-08T13:57:46Z",
+      "side": 1,
+      "message": "This block is an optimization to push a 2D offset into the geometry map instead of an entire matrix.\n\nThe multiply at 1326 is multiplying the transform from GetTransformFromContainer, and it\u0027s pushing a transform into the geometry map. The code in this block is applying the container_offset translation to the 2D translate pulled out of the skipped ancestor matrix, and pushing a 2D offset into the geometry map. I presume that\u0027s the by far most common case and the most efficient one. It\u0027s basically doing what the old line 1312 did but using values from a matrix instead of the old skipped ancestor adjustment offset.\n\nI could change the code to look more like the old line 1312.\n\nIf it\u0027s really not so bad to always push a matrix onto the geometry map, then this block is functionally identical to the one that follows and I would merge it with that.",
+      "parentUuid": "97d6197c_7d86cc9a",
       "revId": "a35c24c8f9823b9d6ac15e8cd785f368ec707883",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
