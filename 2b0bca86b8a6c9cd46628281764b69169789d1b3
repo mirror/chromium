@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "52394b83_23dc9671",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-09-08T19:29:16Z",
+      "side": 1,
+      "message": "It is used in \"OnTraceDataCollected\" method above (to avoid a substr when returning the result at the end of this method).",
+      "parentUuid": "9eb36074_c91c86a7",
+      "revId": "2b0bca86b8a6c9cd46628281764b69169789d1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2307790b_86bb9218",
         "filename": "content/browser/devtools/protocol/tracing_handler.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "2b0bca86b8a6c9cd46628281764b69169789d1b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece9d8d1_41bea0e2",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-09-08T19:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2307790b_86bb9218",
+      "revId": "2b0bca86b8a6c9cd46628281764b69169789d1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
