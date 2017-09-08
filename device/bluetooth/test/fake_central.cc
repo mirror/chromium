@@ -211,6 +211,22 @@ void FakeCentral::SetNextSubscribeToNotificationsResponse(
   std::move(callback).Run(true);
 }
 
+void FakeCentral::AllCharacteristicResponsesConsumed(
+    const std::string& characteristic_id,
+    const std::string& service_id,
+    const std::string& peripheral_address,
+    AllCharacteristicResponsesConsumedCallback callback) {
+  FakeRemoteGattCharacteristic* fake_remote_gatt_characteristic =
+      GetFakeRemoteGattCharacteristic(peripheral_address, service_id,
+                                      characteristic_id);
+  if (fake_remote_gatt_characteristic == nullptr) {
+    std::move(callback).Run(false, false);
+  }
+
+  std::move(callback).Run(
+      true, fake_remote_gatt_characteristic->AllResponsesConsumed());
+}
+
 void FakeCentral::GetLastWrittenValue(const std::string& characteristic_id,
                                       const std::string& service_id,
                                       const std::string& peripheral_address,

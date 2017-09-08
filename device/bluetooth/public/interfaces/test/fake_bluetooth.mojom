@@ -201,6 +201,17 @@ interface FakeCentral {
       string service_id,
       string peripheral_address) => (bool success);
 
+  // Evaluates whether all set responses have been consumed for characteristic
+  // with |characteristic_id| in |service_id| and in |peripheral_address|.
+  // The callback is called with |success| set to true if there were no errors
+  // evaluating the pending responses.
+  // The callback is called with |consumed| set to true if there are no pending
+  // responses.
+  AllCharacteristicResponsesConsumed(
+      string characteristic_id,
+      string service_id,
+      string peripheral_address) => (bool success, bool consumed);
+
   // Gets the last successfully written value to the characteristic with
   // |characteristics_id| in |service_id| and in |peripheral_address|.
   // If the value can't be retrieved calls its callback with false. Calls its

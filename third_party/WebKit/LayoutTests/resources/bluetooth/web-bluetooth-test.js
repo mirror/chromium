@@ -363,6 +363,16 @@
       if (!success) throw 'setNextSubscribeToNotificationsResponse failed';
     }
 
+    // Returns true if there are no pending responses.
+    async allResponsesConsumed() {
+      let {success, consumed} =
+        await this.fake_central_ptr_.allCharacteristicResponsesConsumed(
+          ...this.ids_);
+
+      if (!success) throw 'setNextWriteResponse failed';
+      return consumed;
+    }
+
     // Gets the last successfully written value to the characteristic.
     // Returns null if no value has yet been written to the characteristic.
     async getLastWrittenValue() {

@@ -80,6 +80,13 @@ void FakeRemoteGattCharacteristic::SetNextSubscribeToNotificationsResponse(
   next_subscribe_to_notifications_response_.emplace(gatt_code);
 }
 
+bool FakeRemoteGattCharacteristic::AllResponsesConsumed() {
+  // TODO(cco3): Update this when SetNextUnsubscribeFromNotificationsResponse is
+  // implemented.
+  return !next_read_response_ && !next_write_response_ &&
+      !next_subscribe_to_notifications_response_;
+}
+
 std::string FakeRemoteGattCharacteristic::GetIdentifier() const {
   return characteristic_id_;
 }
