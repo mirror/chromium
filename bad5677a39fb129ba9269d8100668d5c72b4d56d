@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "16eaceb9_43ae4830",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-08T22:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2562dac_3f9f44fd",
+      "range": {
+        "startLine": 206,
+        "startChar": 16,
+        "endLine": 206,
+        "endChar": 34
+      },
+      "revId": "bad5677a39fb129ba9269d8100668d5c72b4d56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c54e9ee_06ee5ab4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
         "patchSetId": 6
@@ -68,6 +92,30 @@
       "revId": "bad5677a39fb129ba9269d8100668d5c72b4d56d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aae0af6_281dc42e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-08T22:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13605155_e3b14fc4",
+      "range": {
+        "startLine": 202,
+        "startChar": 16,
+        "endLine": 202,
+        "endChar": 46
+      },
+      "revId": "bad5677a39fb129ba9269d8100668d5c72b4d56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
