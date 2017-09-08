@@ -33,6 +33,24 @@
       "revId": "5b398afcab4d128b31ce83161788653001912ea5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8f1a14_0e786817",
+        "filename": "third_party/WebKit/Source/core/loader/ThreadableLoadingContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-08T18:49:59Z",
+      "side": 1,
+      "message": "I was trying to follow chromium convention of passing non-const references as pointers. Also most of the callsites were de-refing the pointer anyway. But I can revert it to reference if you want.",
+      "parentUuid": "1db13671_915f3b2d",
+      "revId": "5b398afcab4d128b31ce83161788653001912ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
