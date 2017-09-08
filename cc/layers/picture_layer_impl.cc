@@ -20,6 +20,7 @@
 #include "cc/debug/debug_colors.h"
 #include "cc/layers/append_quads_data.h"
 #include "cc/layers/solid_color_layer_impl.h"
+#include "cc/paint/display_item_list.h"
 #include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/picture_draw_quad.h"
 #include "cc/quads/solid_color_draw_quad.h"
@@ -119,6 +120,15 @@ PictureLayerImpl::~PictureLayerImpl() {
   if (twin_layer_)
     twin_layer_->twin_layer_ = nullptr;
   layer_tree_impl()->UnregisterPictureLayerImpl(this);
+
+  // Unregister for all images on the current raster source.
+  auto* controller = layer_tree_impl()->image_animation_controller();
+  if (controller && raster_source_ && raster_source_->display_list()) {
+    for (const auto& data : raster_source_->display_list()
+                                ->discardable_image_map()
+                                .animated_images_metadata())
+      controller->UnregisterAnimationDriver(data.paint_image_id, this);
+  }
 }
 
 void PictureLayerImpl::SetLayerMaskType(Layer::LayerMaskType mask_type) {
@@ -599,10 +609,40 @@ void PictureLayerImpl::UpdateRasterSource(
       << " bounds " << bounds().ToString() << " pile "
       << raster_source->GetSize().ToString();
 
+  // We have an updated recording if the DisplayItemList in the new RasterSource
+  // was changed.
+  const bool recording_updated =
+      !raster_source_ ||
+      raster_source_->display_list() != raster_source->display_list();
+
+  // Unregister for all images on the current raster source, if the recording
+  // was updated.
+  auto* controller = layer_tree_impl()->image_animation_controller();
+  if (recording_updated && controller && raster_source_ &&
+      raster_source_->display_list()) {
+    for (const auto& data : raster_source_->display_list()
+                                ->discardable_image_map()
+                                .animated_images_metadata())
+      controller->UnregisterAnimationDriver(data.paint_image_id, this);
+  }
+
   // The |raster_source_| is initially null, so have to check for that for the
   // first frame.
   bool could_have_tilings = raster_source_.get() && CanHaveTilings();
   raster_source_.swap(raster_source);
+
+  // Register images from the new raster source, if the recording was updated.
+  if (recording_updated && controller && raster_source_->display_list()) {
+    for (const auto& data : raster_source_->display_list()
+                                ->discardable_image_map()
+                                .animated_images_metadata()) {
+      // Only update the metadata for an updated recording received from a
+      // commit.
+      if (layer_tree_impl()->IsSyncTree())
+        controller->UpdateAnimatedImage(data);
+      controller->RegisterAnimationDriver(data.paint_image_id, this);
+    }
+  }
 
   // The |new_invalidation| must be cleared before updating tilings since they
   // access the invalidation through the PictureLayerTilingClient interface.
@@ -745,6 +785,14 @@ bool PictureLayerImpl::RequiresHighResToDraw() const {
 
 gfx::Rect PictureLayerImpl::GetEnclosingRectInTargetSpace() const {
   return GetScaledEnclosingRectInTargetSpace(MaximumTilingContentsScale());
+}
+
+bool PictureLayerImpl::ShouldAnimate(PaintImage::Id paint_image_id) const {
+  DCHECK(raster_source_);
+
+  return HasValidTilePriorities() &&
+         raster_source_->GetRectForImage(paint_image_id)
+             .Intersects(visible_layer_rect());
 }
 
 gfx::Size PictureLayerImpl::CalculateTileSize(
@@ -1480,6 +1528,7 @@ void PictureLayerImpl::InvalidateRegionForImages(
   InvalidationRegion image_invalidation;
   for (auto image_id : images_to_invalidate)
     image_invalidation.Union(raster_source_->GetRectForImage(image_id));
+
   Region invalidation;
   image_invalidation.Swap(&invalidation);
 

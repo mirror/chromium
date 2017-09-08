@@ -22,8 +22,9 @@ namespace {
 
 class TestImageGenerator : public StubPaintImageGenerator {
  public:
-  explicit TestImageGenerator(const SkImageInfo& info)
-      : StubPaintImageGenerator(info),
+  explicit TestImageGenerator(const SkImageInfo& info,
+                              std::vector<FrameMetadata> frames = {})
+      : StubPaintImageGenerator(info, std::move(frames)),
         image_backing_memory_(info.getSafeSize(info.minRowBytes()), 0),
         image_pixmap_(info, image_backing_memory_.data(), info.minRowBytes()) {}
 
@@ -89,7 +90,8 @@ PaintImage CreateAnimatedImage(const gfx::Size& size,
   return PaintImageBuilder()
       .set_id(PaintImage::GetNextId())
       .set_paint_image_generator(sk_make_sp<TestImageGenerator>(
-          SkImageInfo::MakeN32Premul(size.width(), size.height())))
+          SkImageInfo::MakeN32Premul(size.width(), size.height()),
+          std::move(frames)))
       .set_animation_type(PaintImage::AnimationType::ANIMATED)
       .set_repetition_count(repetition_count)
       .TakePaintImage();

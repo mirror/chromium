@@ -122,9 +122,13 @@ PaintImage BitmapImage::CreateAndCacheFrame(size_t index) {
 
   PaintImageBuilder builder;
   InitPaintImageBuilder(builder);
+  auto completion_state = all_data_received_
+                              ? PaintImage::CompletionState::DONE
+                              : PaintImage::CompletionState::PARTIALLY_DONE;
   builder.set_paint_image_generator(std::move(generator))
       .set_frame_index(index)
-      .set_repetition_count(repetition_count_);
+      .set_repetition_count(repetition_count_)
+      .set_completion_state(completion_state);
 
   // The caching of the decoded image data by the external users of this image
   // is keyed based on the uniqueID of the underlying SkImage for this
@@ -247,6 +251,14 @@ Image::SizeAvailability BitmapImage::DataChanged(bool all_data_received) {
         cached_frame_ = PaintImage();
     }
   }
+
+  // If the image is being animated by the compositor, clear the cached_frame_
+  // on a data update to push it to the compositor. Since we never advance the
+  // animation here, the |cached_frame_index_| is always the first frame and the
+  // |cached_frame_| might have not have been cleared in the loop above.
+  if (MaybeAnimated() &&
+      RuntimeEnabledFeatures::CompositorDrivenImageAnimationsEnabled())
+    cached_frame_ = PaintImage();
 
   // Feed all the data we've seen so far to the image decoder.
   all_data_received_ = all_data_received;
@@ -381,6 +393,8 @@ PaintImage BitmapImage::PaintImageForCurrentFrame() {
 
 PassRefPtr<Image> BitmapImage::ImageForDefaultFrame() {
   if (FrameCount() > 1) {
+    // TODO(khushalsagar): Set the repetition policy to kAnimationNone on this
+    // image so cc doesn't animate it.
     return StaticBitmapImage::Create(FrameAtIndex(0u));
   }
 
@@ -455,6 +469,9 @@ int BitmapImage::RepetitionCount(bool image_known_to_be_complete) {
 }
 
 bool BitmapImage::ShouldAnimate() {
+  if (RuntimeEnabledFeatures::CompositorDrivenImageAnimationsEnabled())
+    return false;
+
   bool animated = RepetitionCount(false) != kAnimationNone &&
                   !animation_finished_ && GetImageObserver();
   if (animated && animation_policy_ == kImageAnimationPolicyNoAnimation)
@@ -566,6 +583,7 @@ void BitmapImage::StopAnimation() {
 }
 
 void BitmapImage::ResetAnimation() {
+  // TODO(khushalsagar): Plumb this resetting of animation to cc.
   StopAnimation();
   current_frame_index_ = 0;
   repetitions_complete_ = 0;

@@ -52,7 +52,7 @@ class MockDecodeCache : public StubDecodeCache {
 
 TEST(PlaybackImageProviderTest, SkipsAllImages) {
   MockDecodeCache cache;
-  PlaybackImageProvider provider(true, {}, &cache, gfx::ColorSpace());
+  PlaybackImageProvider provider(true, {}, &cache, gfx::ColorSpace(), {});
 
   SkRect rect = SkRect::MakeWH(10, 10);
   SkMatrix matrix = SkMatrix::I();
@@ -75,7 +75,7 @@ TEST(PlaybackImageProviderTest, SkipsSomeImages) {
   MockDecodeCache cache;
   PaintImage skip_image = CreateDiscardablePaintImage(gfx::Size(10, 10));
   PlaybackImageProvider provider(false, {skip_image.stable_id()}, &cache,
-                                 gfx::ColorSpace());
+                                 gfx::ColorSpace(), {});
 
   SkRect rect = SkRect::MakeWH(10, 10);
   SkMatrix matrix = SkMatrix::I();
@@ -86,7 +86,7 @@ TEST(PlaybackImageProviderTest, SkipsSomeImages) {
 
 TEST(PlaybackImageProviderTest, RefAndUnrefDecode) {
   MockDecodeCache cache;
-  PlaybackImageProvider provider(false, {}, &cache, gfx::ColorSpace());
+  PlaybackImageProvider provider(false, {}, &cache, gfx::ColorSpace(), {});
 
   {
     SkRect rect = SkRect::MakeWH(10, 10);

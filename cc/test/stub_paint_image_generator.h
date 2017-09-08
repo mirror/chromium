@@ -11,8 +11,9 @@ namespace cc {
 
 class StubPaintImageGenerator : public PaintImageGenerator {
  public:
-  explicit StubPaintImageGenerator(const SkImageInfo& info)
-      : PaintImageGenerator(info) {}
+  explicit StubPaintImageGenerator(const SkImageInfo& info,
+                                   std::vector<FrameMetadata> frames = {})
+      : PaintImageGenerator(info, std::move(frames)) {}
 
   sk_sp<SkData> GetEncodedData() const override;
   bool GetPixels(const SkImageInfo& info,
