@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "63768899_fdd18d34",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-08T21:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7d71195_37789025",
+      "range": {
+        "startLine": 89,
+        "startChar": 6,
+        "endLine": 89,
+        "endChar": 69
+      },
+      "revId": "2296c12778dab63de50e47fce7ddae2bbef6292c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0028ebc4_4397676f",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "2296c12778dab63de50e47fce7ddae2bbef6292c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef842a3_41d9a303",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-08T21:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0028ebc4_4397676f",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 3
+      },
+      "revId": "2296c12778dab63de50e47fce7ddae2bbef6292c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
