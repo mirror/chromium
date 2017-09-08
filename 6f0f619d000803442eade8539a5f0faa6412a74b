@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ca5bfe5_f2f6b2ac",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-09-08T18:02:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "664c2f30_56c139f0",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61bd3cfa_8ac301e3",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5120c65d_a59e8f3a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-09-08T18:02:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61bd3cfa_8ac301e3",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "797d837b_26b73990",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-09-08T18:02:36Z",
+      "side": 1,
+      "message": "Expectation is that users will most often want to enter JSON as a notification payload. The desire is to provide consistent experience for them (e.g. syntax highlight, matching brackets, etc).\n\nThe other control is a single-line plain text entry. CodeMirror is not designed for this scenario (e.g. copy-paste will insert multiline text, etc)",
+      "parentUuid": "a37df8db_59ab4cc5",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f0b1b50_6c3f7634",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91eabe88_5fdad636",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-09-08T18:02:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f0b1b50_6c3f7634",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ac134075_2b750f56",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-09-08T18:02:36Z",
+      "side": 1,
+      "message": "Answered above.",
+      "parentUuid": "de95ae40_044d6bf8",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dc56ec9_3e3c01d6",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-08T01:04:51Z",
       "side": 1,
       "message": "It would be nice to have some feedback indicating that something is happening here.",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72243a9_61a13a34",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-09-08T18:02:36Z",
+      "side": 1,
+      "message": "Any suggestions? It simply sends a notification, so expected feedback is something like a breakpoint hit, console log, etc.",
+      "parentUuid": "0dc56ec9_3e3c01d6",
       "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "35471d43_5e349d0d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-09-08T18:02:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf328eaa_9b0cfb15",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd069a35_e4083fa1",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cafff8d3_766ab374",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-09-08T18:02:36Z",
+      "side": 1,
+      "message": "The plan is to provide more options for the sync notification firing. E.g. get the list of subscribed sync tags, provide a \"last chance\" control, etc.",
+      "parentUuid": "dd069a35_e4083fa1",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
