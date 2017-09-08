@@ -59,6 +59,23 @@
     },
     {
       "key": {
+        "uuid": "48d42c95_5788cae5",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-08T19:49:34Z",
+      "side": 1,
+      "message": "Is this check necessary? You already checked it at Line 55.",
+      "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a9b07d9_b75586b9",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
         "patchSetId": 1
@@ -70,6 +87,23 @@
       "writtenOn": "2017-09-08T19:32:09Z",
       "side": 1,
       "message": "nit: Use {} for multi-line IF.",
+      "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f206a3_f3a5130a",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-08T19:49:34Z",
+      "side": 1,
+      "message": "One more request: As a slight optimization, isn\u0027t it better to do this domain check first?\n\nif (same_domain())\n  return from_google_tld_to_play_store();\nreturn false;",
       "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
