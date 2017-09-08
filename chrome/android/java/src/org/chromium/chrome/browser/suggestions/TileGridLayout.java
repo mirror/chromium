@@ -26,6 +26,7 @@ public class TileGridLayout extends FrameLayout {
     public static final int PADDING_START_PX = 0;
     public static final int PADDING_END_PX = 0;
 
+    private final boolean mUseAllSpace;
     private final int mVerticalSpacing;
     private final int mMinHorizontalSpacing;
     private final int mMaxHorizontalSpacing;
@@ -43,6 +44,8 @@ public class TileGridLayout extends FrameLayout {
      */
     public TileGridLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        mUseAllSpace = FeatureUtilities.isChromeHomeModernEnabled();
 
         Resources res = getResources();
         mVerticalSpacing = FeatureUtilities.isChromeHomeModernEnabled()
@@ -85,7 +88,7 @@ public class TileGridLayout extends FrameLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int totalWidth = resolveSize(mMaxWidth, widthMeasureSpec);
+        int totalWidth = resolveSize(mUseAllSpace ? widthMeasureSpec : mMaxWidth, widthMeasureSpec);
         int childCount = getChildCount();
         if (childCount == 0) {
             setMeasuredDimension(totalWidth, resolveSize(0, heightMeasureSpec));
@@ -110,15 +113,20 @@ public class TileGridLayout extends FrameLayout {
 
         // Ensure column spacing isn't greater than mMaxHorizontalSpacing.
         int gridWidthMinusColumns = Math.max(0, gridWidth - numColumns * childWidth);
-        int gridSidePadding = gridWidthMinusColumns - mMaxHorizontalSpacing * (numColumns - 1);
-
-        int gridStart = 0;
-        float horizontalSpacing;
-        if (gridSidePadding > 0) {
-            horizontalSpacing = mMaxHorizontalSpacing;
-            gridStart = gridSidePadding / 2;
+        final int gridStart;
+        final float horizontalSpacing;
+        if (mUseAllSpace) {
+            horizontalSpacing = gridWidthMinusColumns / (/* intervals = */ numColumns + 1);
+            gridStart = Math.round(horizontalSpacing);
         } else {
-            horizontalSpacing = (float) gridWidthMinusColumns / Math.max(1, numColumns - 1);
+            int gridSidePadding = gridWidthMinusColumns - mMaxHorizontalSpacing * (numColumns - 1);
+            if (gridSidePadding > 0) {
+                horizontalSpacing = mMaxHorizontalSpacing;
+                gridStart = gridSidePadding / 2;
+            } else {
+                horizontalSpacing = (float) gridWidthMinusColumns / Math.max(1, numColumns - 1);
+                gridStart = 0;
+            }
         }
 
         // Limit the number of rows to mMaxRows.
