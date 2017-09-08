@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ac0cb4a_5d004ac7",
+        "filename": "media/audio/audio_input_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-08T09:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdfe3b54_4a7097d2",
+      "revId": "5163a812843cbdc7acbc9a60a30a7403c6916939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18f9a0b7_d83200bb",
         "filename": "media/audio/audio_input_device.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-07T18:24:37Z",
       "side": 1,
       "message": "All this is equivalent to check_alive_timer_.reset();",
+      "revId": "5163a812843cbdc7acbc9a60a30a7403c6916939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e85f2fd_f83ae86c",
+        "filename": "media/audio/audio_input_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-08T09:07:05Z",
+      "side": 1,
+      "message": "Hmm, it is indeed. Removing this function altogether; just doing reset().",
+      "parentUuid": "18f9a0b7_d83200bb",
       "revId": "5163a812843cbdc7acbc9a60a30a7403c6916939",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
