@@ -52,6 +52,24 @@
       "revId": "07e3bee3267a608e2281d721d2ef8d9c5fc7141e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99952555_884b86fe",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-08T01:11:56Z",
+      "side": 1,
+      "message": "Took your advice and settings-toggle-button will remove the attribute if it\u0027s there",
+      "parentUuid": "d3cff6b4_34e982db",
+      "revId": "07e3bee3267a608e2281d721d2ef8d9c5fc7141e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
