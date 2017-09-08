@@ -81,8 +81,8 @@ class PrefetchDownloadFlowTest : public TaskTestBase {
     RunUntilIdle();
   }
 
-  TestPrefetchDispatcher* prefetch_dispatcher() const {
-    return static_cast<TestPrefetchDispatcher*>(
+  PrefetchDispatcherImpl* prefetch_dispatcher() const {
+    return static_cast<PrefetchDispatcherImpl*>(
         prefetch_service_taco_->prefetch_service()->GetPrefetchDispatcher());
   }
 
