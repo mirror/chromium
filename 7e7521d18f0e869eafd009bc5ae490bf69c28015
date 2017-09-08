@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eea8e72_d75a059e",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T05:08:29Z",
+      "side": 1,
+      "message": "Same comment here as in the other CL: please make sure this line\nis exercised by some unittest.",
+      "revId": "7e7521d18f0e869eafd009bc5ae490bf69c28015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
