@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3fb9199c_3d1d13d4",
+        "filename": "tools/lldb/lldb_chrome.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-08T03:04:59Z",
+      "side": 1,
+      "message": "Turns out there is! Thanks this is much cleaner.",
+      "parentUuid": "d3313c7f_5fe034f8",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 7
+      },
+      "revId": "4f6c396cab238cbd5313fd61abca783ed407b02b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28b6a98f_dc594c9a",
         "filename": "tools/lldb/lldb_chrome.py",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "4f6c396cab238cbd5313fd61abca783ed407b02b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b2c7adf_5c9c04a1",
+        "filename": "tools/lldb/lldb_chrome.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-08T03:04:59Z",
+      "side": 1,
+      "message": "Don\u0027t need this anymore",
+      "parentUuid": "28b6a98f_dc594c9a",
+      "range": {
+        "startLine": 38,
+        "startChar": 20,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "4f6c396cab238cbd5313fd61abca783ed407b02b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
