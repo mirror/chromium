@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d689e99d_c47943a4",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T13:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7d3d7bf_8ec6ee88",
+      "range": {
+        "startLine": 91,
+        "startChar": 3,
+        "endLine": 91,
+        "endChar": 31
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c37c21e_d98c38f7",
         "filename": "chrome/browser/signin/chrome_signin_helper.cc",
         "patchSetId": 15
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "97f74b6d_1e0cb4d3",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T13:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57c24100_9c887f1a",
+      "range": {
+        "startLine": 106,
+        "startChar": 11,
+        "endLine": 106,
+        "endChar": 33
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de97b290_0f38da14",
         "filename": "chrome/browser/signin/chrome_signin_helper.cc",
         "patchSetId": 15
@@ -140,6 +188,30 @@
       "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16095159_ce9b1d90",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T13:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81b134eb_9913e952",
+      "range": {
+        "startLine": 336,
+        "startChar": 6,
+        "endLine": 336,
+        "endChar": 23
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "16e73f1b_03d5de14",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T13:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "356e5c21_794086b1",
+      "range": {
+        "startLine": 472,
+        "startChar": 2,
+        "endLine": 472,
+        "endChar": 30
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6689c214_8b2ee543",
         "filename": "components/signin/core/browser/account_reconcilor.cc",
         "patchSetId": 15
@@ -233,6 +329,30 @@
       "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2f6c27_d27114ca",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T13:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6689c214_8b2ee543",
+      "range": {
+        "startLine": 572,
+        "startChar": 10,
+        "endLine": 572,
+        "endChar": 11
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -283,6 +403,30 @@
     },
     {
       "key": {
+        "uuid": "817f9d78_2d7bcee3",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T13:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05194299_d8f545aa",
+      "range": {
+        "startLine": 582,
+        "startChar": 13,
+        "endLine": 582,
+        "endChar": 21
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "364e7ab2_cfaf070e",
         "filename": "components/signin/core/browser/account_reconcilor.cc",
         "patchSetId": 15
@@ -303,6 +447,30 @@
       "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee87d108_529c705d",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T13:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "364e7ab2_cfaf070e",
+      "range": {
+        "startLine": 585,
+        "startChar": 35,
+        "endLine": 585,
+        "endChar": 53
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -329,6 +497,30 @@
     },
     {
       "key": {
+        "uuid": "245c3d8f_38dd1d11",
+        "filename": "components/signin/core/browser/account_reconcilor.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T13:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41b5eb20_5fc0dd77",
+      "range": {
+        "startLine": 59,
+        "startChar": 17,
+        "endLine": 59,
+        "endChar": 32
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b13c1a7e_19822a3f",
         "filename": "components/signin/core/browser/account_reconcilor.h",
         "patchSetId": 15
@@ -349,6 +541,30 @@
       "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb82a13_874528e2",
+        "filename": "components/signin/core/browser/account_reconcilor.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T13:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b13c1a7e_19822a3f",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 78
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -375,6 +591,30 @@
     },
     {
       "key": {
+        "uuid": "1f9b8ff2_61b2ca52",
+        "filename": "components/signin/core/browser/account_reconcilor.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T13:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d9a0eff_6febe144",
+      "range": {
+        "startLine": 195,
+        "startChar": 7,
+        "endLine": 195,
+        "endChar": 23
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a5e1a8d_fd46a8f5",
         "filename": "components/signin/core/browser/account_reconcilor.h",
         "patchSetId": 15
@@ -398,6 +638,30 @@
     },
     {
       "key": {
+        "uuid": "410ec0cd_d20039fd",
+        "filename": "components/signin/core/browser/account_reconcilor.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T13:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a5e1a8d_fd46a8f5",
+      "range": {
+        "startLine": 196,
+        "startChar": 7,
+        "endLine": 196,
+        "endChar": 25
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36079eec_adbd906a",
         "filename": "components/signin/core/browser/signin_header_helper.cc",
         "patchSetId": 15
@@ -409,6 +673,30 @@
       "writtenOn": "2017-09-07T12:14:43Z",
       "side": 1,
       "message": "Please add a comment explaining when this method returns \"true\" (it is not clear what returning true means for a method named AppendOrRemoveXXX).",
+      "range": {
+        "startLine": 161,
+        "startChar": 21,
+        "endLine": 161,
+        "endChar": 48
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "710b343a_b1cb2d69",
+        "filename": "components/signin/core/browser/signin_header_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T13:31:32Z",
+      "side": 1,
+      "message": "What do you mean? There is already a comment in the .h:\n// Returns whether the request has the request header.",
+      "parentUuid": "36079eec_adbd906a",
       "range": {
         "startLine": 161,
         "startChar": 21,

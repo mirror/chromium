@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db70c542_11af8f29",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T13:31:32Z",
+      "side": 1,
+      "message": "Note: I\u0027m specifically checking XHR here, because it\u0027s simpler for tests. In particular because otherwise the favicon messes with the account reconcilor.\n\nIf you think it is a problem I can probably change this check by excluding the RESOURCE_TYPE_FAVICON instead.",
+      "range": {
+        "startLine": 119,
+        "startChar": 36,
+        "endLine": 119,
+        "endChar": 53
+      },
+      "revId": "4d4652c9d9e122c46da1ddce8cb90ea146cef3a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
