@@ -199,10 +199,10 @@ size_t UrlData::CachedSize() {
   return multibuffer()->map().size();
 }
 
-UrlIndex::UrlIndex(ResourceFetchContext* fetch_context)
+UrlIndex::UrlIndex(blink::WebFetchContext* fetch_context)
     : UrlIndex(fetch_context, kBlockSizeShift) {}
 
-UrlIndex::UrlIndex(ResourceFetchContext* fetch_context, int block_shift)
+UrlIndex::UrlIndex(blink::WebFetchContext* fetch_context, int block_shift)
     : fetch_context_(fetch_context),
       lru_(new MultiBuffer::GlobalLRU(base::ThreadTaskRunnerHandle::Get())),
       block_shift_(block_shift),

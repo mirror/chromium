@@ -242,6 +242,8 @@ target(link_target_type, "renderer") {
     "media/media_factory.h",
     "media/media_permission_dispatcher.cc",
     "media/media_permission_dispatcher.h",
+    "media/media_player_factory.cc",
+    "media/media_player_factory.h",
     "media/midi_message_filter.cc",
     "media/midi_message_filter.h",
     "media/mojo_audio_output_ipc.cc",

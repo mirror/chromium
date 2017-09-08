@@ -297,7 +297,7 @@ bool AutoplayPolicy::IsGestureNeededForPlaybackIfPendingUserGestureIsLocked()
 
 void AutoplayPolicy::OnVisibilityChangedForAutoplay(bool is_visible) {
   if (!is_visible) {
-    if (element_->can_autoplay_ && element_->Autoplay()) {
+    if (element_->can_autoplay_ && element_->autoplay()) {
       element_->PauseInternal();
       element_->can_autoplay_ = true;
     }
@@ -331,7 +331,7 @@ bool AutoplayPolicy::IsAutoplayAllowedPerSettings() const {
 bool AutoplayPolicy::ShouldAutoplay() {
   if (element_->GetDocument().IsSandboxed(kSandboxAutomaticFeatures))
     return false;
-  return element_->can_autoplay_ && element_->paused_ && element_->Autoplay();
+  return element_->can_autoplay_ && element_->paused_ && element_->autoplay();
 }
 
 DEFINE_TRACE(AutoplayPolicy) {
