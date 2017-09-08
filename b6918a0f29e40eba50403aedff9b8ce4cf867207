@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5909eec6_404e69c6",
+        "filename": "components/cryptauth/fake_remote_device_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T18:23:31Z",
+      "side": 1,
+      "message": "Hey Regan - the factory is needed for the implementation, not the fake. Please revert.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 17
+      },
+      "revId": "b6918a0f29e40eba50403aedff9b8ce4cf867207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0417128c_bbdaeda0",
+        "filename": "components/cryptauth/remote_device_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T18:23:31Z",
+      "side": 1,
+      "message": "// static",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 1
+      },
+      "revId": "b6918a0f29e40eba50403aedff9b8ce4cf867207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e951ea37_03c7cd7a",
+        "filename": "components/cryptauth/remote_device_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T18:23:31Z",
+      "side": 1,
+      "message": "// static",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 1
+      },
+      "revId": "b6918a0f29e40eba50403aedff9b8ce4cf867207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "509090a0_28b8787a",
+        "filename": "components/cryptauth/remote_device_provider_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T18:23:31Z",
+      "side": 1,
+      "message": "Please initialize to nullptr in the .cc. See other factory examples.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "b6918a0f29e40eba50403aedff9b8ce4cf867207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
