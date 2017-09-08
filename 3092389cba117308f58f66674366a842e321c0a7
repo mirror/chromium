@@ -505,6 +505,30 @@
     },
     {
       "key": {
+        "uuid": "3207933b_80eaafe2",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-08T14:30:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce72e10a_76801e0b",
+      "range": {
+        "startLine": 403,
+        "startChar": 43,
+        "endLine": 403,
+        "endChar": 0
+      },
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38275759_55daf83b",
         "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
         "patchSetId": 4
@@ -622,6 +646,24 @@
     },
     {
       "key": {
+        "uuid": "6980dbbe_442111c9",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-08T14:30:31Z",
+      "side": 1,
+      "message": "Ah, so the test actually failed before? Alright, that\u0027s comforting :)",
+      "parentUuid": "bdd3a3fe_54b9200a",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f83dbe7d_ce7e91fa",
         "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
         "patchSetId": 4
@@ -651,6 +693,24 @@
       "side": 1,
       "message": "This tests the weird try{ catch {try {catch}}} thing in speech.start_(). The error does not occur when this test runs against the mock :)",
       "parentUuid": "f83dbe7d_ce7e91fa",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ddbd0f_dd8edfcf",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-08T14:30:31Z",
+      "side": 1,
+      "message": "Ah, so this is a regression test for the weird behavior of the actual real SpeechRecognition object? Interesting :)\nThen this is a useful test, but I think it deserves a comment to explain. Probably more or less the same comment that\u0027s in speech.start_().",
+      "parentUuid": "8655e4d8_35073977",
       "revId": "3092389cba117308f58f66674366a842e321c0a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -721,6 +781,24 @@
       "side": 1,
       "message": "AFAICT, they\u0027re useless here. Also, I\u0027m not entirely sure they even were properly mocking the actual alternatives. Removing.",
       "parentUuid": "a253f41e_bca5dba9",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9496c64_def1143a",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-08T14:30:31Z",
+      "side": 1,
+      "message": "Ack.\nI guess I was mostly asking why we even set maxAlternatives to 4 in the real API. Do you know if that makes any difference? Could we just set it to 1 there too? (Not for this CL of course)",
+      "parentUuid": "c02fd26c_6aaa3639",
       "revId": "3092389cba117308f58f66674366a842e321c0a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
