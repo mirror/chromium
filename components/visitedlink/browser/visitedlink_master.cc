@@ -228,7 +228,6 @@ VisitedLinkMaster::VisitedLinkMaster(content::BrowserContext* browser_context,
       delegate_(delegate),
       listener_(base::MakeUnique<VisitedLinkEventListener>(browser_context)),
       persist_to_disk_(persist_to_disk),
-      table_is_loading_from_file_(false),
       weak_ptr_factory_(this) {
   InitMembers();
 }
@@ -239,10 +238,9 @@ VisitedLinkMaster::VisitedLinkMaster(Listener* listener,
                                      bool suppress_rebuild,
                                      const base::FilePath& filename,
                                      int32_t default_table_size)
-    : browser_context_(NULL),
+    : browser_context_(nullptr),
       delegate_(delegate),
       persist_to_disk_(persist_to_disk),
-      table_is_loading_from_file_(false),
       weak_ptr_factory_(this) {
   listener_.reset(listener);
   DCHECK(listener_.get());
@@ -275,15 +273,6 @@ VisitedLinkMaster::~VisitedLinkMaster() {
     PostIOTask(FROM_HERE,
                base::Bind(IgnoreResult(&base::DeleteFile), filename, false));
   }
-}
-
-void VisitedLinkMaster::InitMembers() {
-  file_ = NULL;
-  shared_memory_serial_ = 0;
-  used_items_ = 0;
-  table_size_override_ = 0;
-  suppress_rebuild_ = false;
-  sequence_token_ = base::SequencedWorkerPool::GetSequenceToken();
 }
 
 bool VisitedLinkMaster::Init() {
