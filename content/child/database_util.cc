@@ -5,6 +5,7 @@
 #include "content/child/database_util.h"
 
 #include "content/common/database_messages.h"
+#include "content/common/web_database.mojom.h"
 #include "ipc/ipc_sync_message_filter.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -19,41 +20,36 @@ namespace content {
 Platform::FileHandle DatabaseUtil::DatabaseOpenFile(
     const WebString& vfs_file_name,
     int desired_flags,
-    IPC::SyncMessageFilter* sync_message_filter) {
-  IPC::PlatformFileForTransit file_handle =
-      IPC::InvalidPlatformFileForTransit();
-
-  sync_message_filter->Send(new DatabaseHostMsg_OpenFile(
-      vfs_file_name.Utf16(), desired_flags, &file_handle));
-
-  return IPC::PlatformFileForTransitToPlatformFile(file_handle);
+    content::mojom::WebDatabaseHost& web_database_host) {
+  base::File file;
+  if (web_database_host.OpenFile(vfs_file_name.Utf16(), desired_flags, &file)) {
+    return file.TakePlatformFile();
+  }
+  return base::kInvalidPlatformFile;
 }
 
 int DatabaseUtil::DatabaseDeleteFile(
     const WebString& vfs_file_name,
     bool sync_dir,
-    IPC::SyncMessageFilter* sync_message_filter) {
+    content::mojom::WebDatabaseHost& web_database_host) {
   int rv = SQLITE_IOERR_DELETE;
-  sync_message_filter->Send(
-      new DatabaseHostMsg_DeleteFile(vfs_file_name.Utf16(), sync_dir, &rv));
+  web_database_host.DeleteFile(vfs_file_name.Utf16(), sync_dir, &rv);
   return rv;
 }
 
 long DatabaseUtil::DatabaseGetFileAttributes(
     const WebString& vfs_file_name,
-    IPC::SyncMessageFilter* sync_message_filter) {
+    content::mojom::WebDatabaseHost& web_database_host) {
   int32_t rv = -1;
-  sync_message_filter->Send(
-      new DatabaseHostMsg_GetFileAttributes(vfs_file_name.Utf16(), &rv));
+  web_database_host.GetFileAttributes(vfs_file_name.Utf16(), &rv);
   return rv;
 }
 
 long long DatabaseUtil::DatabaseGetFileSize(
     const WebString& vfs_file_name,
-    IPC::SyncMessageFilter* sync_message_filter) {
+    content::mojom::WebDatabaseHost& web_database_host) {
   int64_t rv = 0LL;
-  sync_message_filter->Send(
-      new DatabaseHostMsg_GetFileSize(vfs_file_name.Utf16(), &rv));
+  web_database_host.GetFileSize(vfs_file_name.Utf16(), &rv);
   return rv;
 }
 
@@ -68,10 +64,9 @@ long long DatabaseUtil::DatabaseGetSpaceAvailable(
 bool DatabaseUtil::DatabaseSetFileSize(
     const WebString& vfs_file_name,
     int64_t size,
-    IPC::SyncMessageFilter* sync_message_filter) {
+    content::mojom::WebDatabaseHost& web_database_host) {
   bool rv = false;
-  sync_message_filter->Send(
-      new DatabaseHostMsg_SetFileSize(vfs_file_name.Utf16(), size, &rv));
+  web_database_host.SetFileSize(vfs_file_name.Utf16(), size, &rv);
   return rv;
 }
 
