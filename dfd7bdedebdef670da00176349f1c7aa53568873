@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "c7372573_2833cde3",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-08T23:51:47Z",
+      "side": 1,
+      "message": "can you use base::WrapUnique here?",
+      "revId": "dfd7bdedebdef670da00176349f1c7aa53568873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bf9e8a7_3ee7f438",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
@@ -42,6 +59,41 @@
     },
     {
       "key": {
+        "uuid": "fa9783a0_6e4815b8",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-08T23:51:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5bf9e8a7_3ee7f438",
+      "revId": "dfd7bdedebdef670da00176349f1c7aa53568873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b92c64c3_cc0387ca",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-08T23:51:47Z",
+      "side": 1,
+      "message": "nit: add a comment documenting what this is for (and consider making the 500 ms constant that i think it\u0027s based on into a static public member so you can just reference that directly here and add a base::TimeDelta to it)\n\nmaybe also rename to AdvanceClockToAvoidIgnoring or something similar?",
+      "revId": "dfd7bdedebdef670da00176349f1c7aa53568873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a5d6fde_d26b787d",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
@@ -53,6 +105,24 @@
       "writtenOn": "2017-09-08T23:31:00Z",
       "side": 1,
       "message": "I moved the raw pointer update to ResetPowerButtonController and SendAccelerometerUpdate. Do you like it?",
+      "revId": "dfd7bdedebdef670da00176349f1c7aa53568873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a90b31_20bb4d37",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-08T23:51:47Z",
+      "side": 1,
+      "message": "sure, seems fine!",
+      "parentUuid": "9a5d6fde_d26b787d",
       "revId": "dfd7bdedebdef670da00176349f1c7aa53568873",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
