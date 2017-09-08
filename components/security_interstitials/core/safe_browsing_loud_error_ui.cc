@@ -94,7 +94,10 @@ void SafeBrowsingLoudErrorUI::PopulateStringsForHtml(
       "primaryButtonText",
       l10n_util::GetStringUTF16(IDS_SAFEBROWSING_OVERRIDABLE_SAFETY_BUTTON));
   load_time_data->SetBoolean("overridable", !is_proceed_anyway_disabled());
-  load_time_data->SetBoolean("hide_primary_button", !controller()->CanGoBack());
+
+  load_time_data->SetBoolean(
+      "hide_primary_button",
+      check_can_go_back_to_safety() ? !controller()->CanGoBack() : false);
 
   switch (interstitial_reason()) {
     case BaseSafeBrowsingErrorUI::SB_REASON_MALWARE:
