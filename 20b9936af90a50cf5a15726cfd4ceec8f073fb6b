@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "b6be550e_d81d1d45",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-08T20:50:53Z",
+      "side": 1,
+      "message": "Sorry if I wasn\u0027t clear. I\u0027m referring to the layer from the popup getting clipped by the bounds of the location set on the popup, not the bounds of the browser\u0027s widget (parent_widget_).",
+      "parentUuid": "30ae2e92_c744cca6",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 51
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8937cadf_46caaca0",
         "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
         "patchSetId": 15
