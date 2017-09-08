@@ -202,7 +202,7 @@ StaticRangeVector* RangesFromCurrentSelectionOrExtendCaret(
     TextGranularity granularity) {
   frame.GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
   SelectionModifier selection_modifier(
-      frame, frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated());
+      frame, frame.Selection().ComputeVisibleSelectionInFlatTree());
   if (selection_modifier.Selection().IsCaret())
     selection_modifier.Modify(SelectionModifyAlteration::kExtend, direction,
                               granularity);
@@ -211,7 +211,8 @@ StaticRangeVector* RangesFromCurrentSelectionOrExtendCaret(
   if (selection_modifier.Selection().IsNone())
     return ranges;
   ranges->push_back(StaticRange::Create(
-      FirstEphemeralRangeOf(selection_modifier.Selection())));
+      FirstEphemeralRangeOf(CreateVisibleSelection(ConvertToSelectionInDOMTree(
+          selection_modifier.Selection().AsSelection())))));
   return ranges;
 }
 
@@ -1237,14 +1238,14 @@ bool ModifySelectionyWithPageGranularity(
     unsigned vertical_distance,
     SelectionModifyVerticalDirection direction) {
   SelectionModifier selection_modifier(
-      frame, frame.Selection().ComputeVisibleSelectionInDOMTree());
+      frame, frame.Selection().ComputeVisibleSelectionInFlatTree());
   if (!selection_modifier.ModifyWithPageGranularity(alter, vertical_distance,
                                                     direction)) {
     return false;
   }
 
   frame.Selection().SetSelection(
-      selection_modifier.Selection().AsSelection(),
+      ConvertToSelectionInDOMTree(selection_modifier.Selection().AsSelection()),
       SetSelectionOptions::Builder()
           .SetSetSelectionBy(SetSelectionBy::kUser)
           .SetShouldCloseTyping(true)

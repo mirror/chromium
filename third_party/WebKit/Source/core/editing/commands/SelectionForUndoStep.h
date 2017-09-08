@@ -6,6 +6,7 @@
 #define SelectionForUndoStep_h
 
 #include "base/macros.h"
+#include "core/editing/EditingStrategy.h"
 #include "core/editing/Position.h"
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/TextAffinity.h"
@@ -68,6 +69,10 @@ class SelectionForUndoStep final {
   // fail "backward and forward delete" case in "undo-delete-boundary.html".
   bool is_base_first_ = true;
   bool is_directional_ = false;
+  // REmove Meeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  //  template <typename Strategy>
+  // SelectionForUndoStep FromAlgorithm(const SelectionTemplate<Strategy>&
+  // selection);
 };
 
 // Builds |SelectionForUndoStep| object with disconnected position. You should
