@@ -49,11 +49,6 @@ class Notification : public message_center::Notification {
     service_worker_scope_ = service_worker_scope;
   }
 
-  // Id of the delegate embedded inside this instance.
-  std::string delegate_id() const { return delegate()->id(); }
-
-  NotificationDelegate* delegate() const { return delegate_.get(); }
-
  private:
   // The user-supplied tag for the notification.
   std::string tag_;
