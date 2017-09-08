@@ -105,6 +105,30 @@
       "revId": "6067ae17d2457ae451a1558cdba30766a5f6fa73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b382d9c1_c99d86fa",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3581,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-08T20:50:57Z",
+      "side": 1,
+      "message": "+1 to add an API to get a StoragePartition without creating it.  If we use it here, it would return null for the empty site, which at first seemed to me like it\u0027d make the InSameStoragePartition check fail, but actually for unit tests it shouldn\u0027t, because MockRenderProcessHost::InSameStoragePartition always returns true.\n\nLet us know if that\u0027s something easy enough to add in this CL.\n\nAlternatively, since this is just for unit tests, we could just make RPH::InSameStoragePartition take in a browser_context and site_url instead of storage partition, and look up the partition internally in RenderProcessHostImpl, but keep always returning true in MockRenderProcessHost.  It seems both of its uses look up the partition before calling it anyway.",
+      "parentUuid": "fb6d9374_6c32c059",
+      "range": {
+        "startLine": 3581,
+        "startChar": 8,
+        "endLine": 3581,
+        "endChar": 31
+      },
+      "revId": "6067ae17d2457ae451a1558cdba30766a5f6fa73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
