@@ -51,6 +51,24 @@
       "revId": "5fcc3319714a338287d9d173bb9a4b9a565c542a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "98be9486_2b28f53f",
+        "filename": "third_party/WebKit/public/platform/scheduler/single_thread_task_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-08T00:41:37Z",
+      "side": 1,
+      "message": "Yeah, this looks nasty...\n\nJust to confirm: In the end state we\u0027re aiming at replacing Blink\u0027s RefPtr with scoped_refptr, right? How close are we getting there? If it\u0027s on our radar, I\u0027m okay with starting using scoped_refptr in Blink.",
+      "parentUuid": "9766f485_e5dee012",
+      "revId": "5fcc3319714a338287d9d173bb9a4b9a565c542a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
