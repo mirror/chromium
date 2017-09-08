@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "3b4c53b6_4fb81cb7",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-08T11:18:02Z",
+      "side": 1,
+      "message": "I can see the intention here but this doesn\u0027t seem ideal, the callback will return immediately even while we\u0027re still sending IPCs to the clients and it will return success even if all the clients fail.",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 42
+      },
+      "revId": "13862bef555999d882b35084fe9ad0fc4b871539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7be7d8_fc1cfacd",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-08T11:18:02Z",
+      "side": 1,
+      "message": "I forget the exact semantics, do you need to ignore the \u0027invalid\u0027 HeapProfilingMode here?",
+      "revId": "13862bef555999d882b35084fe9ad0fc4b871539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69537e94_59dbbe2a",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-08T11:18:02Z",
+      "side": 1,
+      "message": "We\u0027ll hit this code twice right (once here and once through the mojo call below)? And the second time we\u0027ll fail since we\u0027re changing the mode resulting in hitting the warning even though everything went right?",
+      "range": {
+        "startLine": 184,
+        "startChar": 7,
+        "endLine": 185,
+        "endChar": 36
+      },
+      "revId": "13862bef555999d882b35084fe9ad0fc4b871539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd4c17db_eb4a018b",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 6
@@ -64,6 +127,29 @@
         "startChar": 5,
         "endLine": 53,
         "endChar": 62
+      },
+      "revId": "13862bef555999d882b35084fe9ad0fc4b871539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05094bd6_68bafd1a",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-08T11:18:02Z",
+      "side": 1,
+      "message": "Maybe a comment like:\nCallback returns true iff the heap profiling mode was changed to the given mode. Fails if attempting to change to the mode already set.",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 74
       },
       "revId": "13862bef555999d882b35084fe9ad0fc4b871539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
