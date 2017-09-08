@@ -80,6 +80,7 @@ include_rules = [
   "+storage/common",
 
   "-chrome/browser/ui/views",
+  "+chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.h",
   "+chrome/browser/ui/views/chrome_browser_main_extra_parts_views.h",
   "+chrome/browser/ui/views/chrome_browser_main_extra_parts_views_linux.h",
   "+chrome/browser/ui/views/extensions/request_file_system_dialog_view.h",
