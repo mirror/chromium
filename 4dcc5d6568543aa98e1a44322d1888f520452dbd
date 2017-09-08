@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcc73bfc_3db521a4",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-08T14:58:41Z",
+      "side": 1,
+      "message": "can we clarify what the objective of this file is for my own understanding?  I think it might help clarify the name.\n\nObjective of this script from my perspective (please correct me I am coming a little late to this party): \n\n1) path to this script is passed by chromium_test recipe module to the swarming recipe module.\n2) swarming recipe module invokes this script instead of swarming.py trigger\n3) this script then invokes swarming.py trigger n times, where n is the number perf devices for the current unique configuration\n\nIs this script supposed to do anything else besides that?  (full disclosure I haven\u0027t looked at the code in this script yet)\n\nI think the name you have lines up well with that.  I guess I just didn\u0027t get that from the comments at the top of the file.\n\ncan you maybe expand and/or clarify the comments section?",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bc260a_809a0b98",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-08T14:58:41Z",
+      "side": 1,
+      "message": "nit: should probably say perf in here somewhere in case someone misses the name of the file",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5130ff_9284efbc",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-08T14:58:41Z",
+      "side": 1,
+      "message": "nit: can we focus on the scope of this script as it stands?  ie leave out references to device affinity and benchmark sharding for now?  \n\nI think the actual code is easier to consume if we focus on exactly what it does and leave the thoughts of projects down the road (ie device affinity, sharding, etc) to design docs",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3302d1_742be2ff",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-08T14:58:41Z",
+      "side": 1,
+      "message": "I am confused by this statement.  \n\nWhat do we care about from the \"results from each trigger call\"\n\nDon\u0027t we basically just trigger and then don\u0027t care.  I thought we care about the results from the collect (merge script) side?",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
