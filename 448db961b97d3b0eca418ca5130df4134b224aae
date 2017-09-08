@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bbcac92_38ee49c7",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-08T14:41:50Z",
+      "side": 0,
+      "message": "i don\u0027t think that this case is properly handled.  to do so, we\u0027d need to cancel overlay callbacks in TransitionToTargetSurface().  i think that would do it.  need another weak factory, i guess.\n\notherwise, we could switch from overlay 1 to ST, then to overlay 2, and get a destroyed callback on overlay 1 while it\u0027s sitting waiting to be released, maybe in shared state or something.  as written, we\u0027d switch away from overlay 2.\n\nactually, i don\u0027t remember how shared state works in MCVD.  does anything keep the surface bundle tied to the CodecImage?  as in, if we transition away from an overlay, but there are VideoFrames that are backed by it, what happens?\n\nin AVDA, assuming it\u0027s not in response to a SurfaceDestroyed, then the surface bundle stays around until none of the CodecImages need it anymore.   this prevents unbacking the frame early.  leaving fullscreen while paused no longer goes to a black video frame, if i remember, for example.\n\nfor SurfaceDestroyed, i think that we go through and un-back them all immediately.",
+      "revId": "448db961b97d3b0eca418ca5130df4134b224aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef83b94_e992add1",
+        "filename": "media/gpu/avda_codec_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-08T14:41:50Z",
+      "side": 0,
+      "message": "the purpose of this comment was to prevent \"hey! nobody\u0027s using |surface_bundle|, so let\u0027s not pass it around!\" in the future.  i think some sort of comment to that effect is a good idea.  maybe it should be more direct than it was.",
+      "revId": "448db961b97d3b0eca418ca5130df4134b224aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
