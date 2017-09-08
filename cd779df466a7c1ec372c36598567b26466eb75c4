@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66506604_303f35e9",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-08T20:23:43Z",
+      "side": 1,
+      "message": "It is necessary on activation because the active layer needs to register itself as an AnimationDriver. Once we activate, the pending layer becomes the recycle layer and the active layer is the sole decider for whether we animate.\n\nI did update the logic here to only register/unregister if we see a new DisplayItemList, which should happen only when blink updates the recording.",
+      "parentUuid": "f503e059_b437f603",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47dfba8e_ed628a2f",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0391ef28_706818bd",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-08T20:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47dfba8e_ed628a2f",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0a0de5ab_ae863ab2",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-08T20:23:43Z",
+      "side": 1,
+      "message": "Done. I\u0027m going to add a few more for changes in other places, and a LayerTreeTest.",
+      "parentUuid": "12de3aa0_7866133e",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "face4b7f_4ccec7d2",
         "filename": "cc/trees/image_animation_controller.cc",
         "patchSetId": 5
@@ -102,6 +156,24 @@
       "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60fde0f_63c35ae1",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-08T20:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "face4b7f_4ccec7d2",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "a5d89d37_f047ca42",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-08T20:23:43Z",
+      "side": 1,
+      "message": "This is supposed to be repetitions_completed_.",
+      "parentUuid": "d94411f2_25d345aa",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af8d78c1_e4683a0b",
         "filename": "cc/trees/image_animation_controller.cc",
         "patchSetId": 5
@@ -136,6 +226,24 @@
       "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe05597_18e11e07",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-08T20:23:43Z",
+      "side": 1,
+      "message": "This should be updating |repetitions_completed_|. We don\u0027t mark a loop complete until we have all data for an image. So its taking care of the case where at 263 repetitions_completed_ could not be incremented but now it can be.",
+      "parentUuid": "af8d78c1_e4683a0b",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "89d95586_0729cdc1",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-08T20:23:43Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "3412febd_f0703bd3",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f53d9cb_ee942b18",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 5
@@ -173,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "0c579853_73f9513b",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-08T20:23:43Z",
+      "side": 1,
+      "message": "That\u0027s an excellent idea, because I had a bug in this patch because of this unclear naming. :P Done.",
+      "parentUuid": "3f53d9cb_ee942b18",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa80b6f9_da3907e2",
         "filename": "cc/trees/layer_tree_settings.h",
         "patchSetId": 5
@@ -187,6 +331,24 @@
       "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc89aa7_5e1ab9a6",
+        "filename": "cc/trees/layer_tree_settings.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-08T20:23:43Z",
+      "side": 1,
+      "message": "That\u0027s true. It should work for single-threaded mode as well. Done.",
+      "parentUuid": "aa80b6f9_da3907e2",
+      "revId": "cd779df466a7c1ec372c36598567b26466eb75c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
