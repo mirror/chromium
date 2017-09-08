@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34a78442_5a0172bf",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-08T23:42:45Z",
+      "side": 1,
+      "message": "This was needed after removing the UIKit import from synced_sessions_bridge.h",
+      "range": {
+        "startLine": 8,
+        "startChar": 20,
+        "endLine": 8,
+        "endChar": 21
+      },
+      "revId": "79439f4e614b30c3d657c423d7b2c8ee8f44ebd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
