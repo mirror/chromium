@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a3b62e32_deb4235b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/webthread_impl_for_worker_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-08T09:52:45Z",
+      "side": 1,
+      "message": "In platform/scheduler we use scoped_refptr directly.",
+      "parentUuid": "1bbfeaee_daadeee2",
+      "revId": "5fcc3319714a338287d9d173bb9a4b9a565c542a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9ab2451_0788b9d2",
         "filename": "third_party/WebKit/public/platform/scheduler/single_thread_task_runner.h",
         "patchSetId": 1
