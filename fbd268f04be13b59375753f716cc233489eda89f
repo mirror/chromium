@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "032e5469_508f0a63",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T09:01:39Z",
+      "side": 1,
+      "message": "nit: s/settled //",
+      "revId": "fbd268f04be13b59375753f716cc233489eda89f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a99654d_0557785c",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T09:01:39Z",
+      "side": 1,
+      "message": "nit: Could you check |base \u003d\u003d extent| before calling |IsPositionValidFor()|\nto reduce execution time for caret case.",
+      "revId": "fbd268f04be13b59375753f716cc233489eda89f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
