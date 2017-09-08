@@ -1997,6 +1997,9 @@ const FeatureEntry kFeatureEntries[] = {
      ENABLE_DISABLE_VALUE_TYPE(
          switches::kEnableMessageCenterNewStyleNotification,
          switches::kDisableMessageCenterNewStyleNotification)},
+    {"enable-policy-tool", flag_descriptions::kEnablePolicyToolName,
+     flag_descriptions::kEnablePolicyToolDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(features::kPolicyTool)},
 #endif  // !OS_ANDROID
 #if defined(OS_CHROMEOS)
     {"memory-pressure-thresholds",
