@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e466bc52_734522ee",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 6418,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-08T04:55:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "95a98212_23388505",
+      "range": {
+        "startLine": 6418,
+        "startChar": 42,
+        "endLine": 6418,
+        "endChar": 50
+      },
+      "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ad35571_617972f7",
         "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.cpp",
         "patchSetId": 9
@@ -87,6 +111,24 @@
       "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a8dd9b_33a2fc11",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-08T04:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ad35571_617972f7",
+      "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +178,54 @@
     },
     {
       "key": {
+        "uuid": "5fbcd032_3fdfa7f4",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-08T04:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3512fb3b_a1fd4192",
+      "range": {
+        "startLine": 135,
+        "startChar": 42,
+        "endLine": 135,
+        "endChar": 50
+      },
+      "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9df44ec_312599e5",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-08T04:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b8247c0_e1835dfc",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 40
+      },
+      "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a71f801a_ef9dcb31",
         "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
         "patchSetId": 9
@@ -150,6 +240,24 @@
       "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a58972_d12cb450",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-08T04:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a71f801a_ef9dcb31",
+      "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -176,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "9fb4247f_7a1f62c7",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-08T04:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52043df9_544bcb11",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 22
+      },
+      "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e225737d_efcc5d89",
         "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
         "patchSetId": 9
@@ -196,6 +328,30 @@
       "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5cf6ed_ed29087f",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-09-08T04:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e225737d_efcc5d89",
+      "range": {
+        "startLine": 97,
+        "startChar": 56,
+        "endLine": 97,
+        "endChar": 66
+      },
+      "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
