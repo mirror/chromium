@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89600bf9_87cfb976",
+        "filename": "cc/layers/nine_patch_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-08T21:32:56Z",
+      "side": 1,
+      "message": "Thanks for bumping this up here",
+      "revId": "176a41f3330dfdcdf9a1d616417fc42ddf766343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66984e94_d42af842",
+        "filename": "cc/layers/ui_resource_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-08T21:32:56Z",
+      "side": 1,
+      "message": "nit: there\u0027s multiple calls to ResourceIdForUIResource that could be consolidated if you want, though you\u0027ll have to use an if statement then instead to decide if |is_resource|",
+      "revId": "176a41f3330dfdcdf9a1d616417fc42ddf766343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe4c21e0_af1921c0",
+        "filename": "cc/layers/ui_resource_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-08T21:32:56Z",
+      "side": 1,
+      "message": "remove this :)",
+      "revId": "176a41f3330dfdcdf9a1d616417fc42ddf766343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
