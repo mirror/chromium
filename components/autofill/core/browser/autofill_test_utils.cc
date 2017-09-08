@@ -333,10 +333,8 @@ CreditCard GetRandomCreditCard(CreditCard::RecordType record_type) {
           : CreditCard(record_type, base::GenerateGUID().substr(24));
   test::SetCreditCardInfo(
       &credit_card, "Justin Thyme", GetRandomCardNumber().c_str(),
-      base::StringPrintf("%d", base::RandInt(1, 13)).c_str(),
-      base::StringPrintf("%d", base::RandInt(now.year + 1, now.year + 4))
-          .c_str(),
-      "1");
+      base::StringPrintf("%d", base::RandInt(1, 12)).c_str(),
+      base::StringPrintf("%d", now.year + base::RandInt(1, 4)).c_str(), "1");
   if (record_type == CreditCard::MASKED_SERVER_CARD) {
     credit_card.SetNetworkForMaskedCard(
         kNetworks[base::RandInt(0, kNumNetworks)]);
