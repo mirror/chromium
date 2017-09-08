@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "1413795b_cede1efa",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-08T18:44:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82d3aa0d_e6c1eef2",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 47
+      },
+      "revId": "c52f9b439caf3947af2d378535d6e71f6198b667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "510f0fd9_37bd00bb",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
         "patchSetId": 2
