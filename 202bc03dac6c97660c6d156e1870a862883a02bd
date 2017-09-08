@@ -22,6 +22,30 @@
       "revId": "202bc03dac6c97660c6d156e1870a862883a02bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "478d6092_0da53909",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-08T15:38:17Z",
+      "side": 1,
+      "message": "Thanks for your note. Makes sense. For some cases, we will guess correctly. For others, we didn\u0027t work before. So, we will not make worse. \n\nMoreover, I hope we will launch password selection anyway :) \n\nabout last edited password: manual fallback will save the form where last edit happened. But order of field edits doesn\u0027t affect on heuristics. I am preparing a CL where only fields with user input are considered.",
+      "parentUuid": "9e4afa7b_db3c739a",
+      "range": {
+        "startLine": 244,
+        "startChar": 10,
+        "endLine": 244,
+        "endChar": 74
+      },
+      "revId": "202bc03dac6c97660c6d156e1870a862883a02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
