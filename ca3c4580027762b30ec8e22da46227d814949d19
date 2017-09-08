@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3955620e_39c8c870",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-08T21:39:36Z",
+      "side": 1,
+      "message": "I think I would have added UiSceneManagerTest::OnBeginFrame() to make this prettier and lose the args.",
+      "revId": "ca3c4580027762b30ec8e22da46227d814949d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
