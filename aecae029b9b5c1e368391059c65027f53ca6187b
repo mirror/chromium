@@ -16,6 +16,24 @@
       "revId": "aecae029b9b5c1e368391059c65027f53ca6187b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cccaab8_6f1f33ac",
+        "filename": "ui/display/mac/screen_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-09-08T04:16:49Z",
+      "side": 1,
+      "message": "I didn\u0027t think of that. I changed it to use windowNumberAtPoint:belowWindowWithWindowNumber: of NSWindow.",
+      "parentUuid": "6c5930c3_647c1e97",
+      "revId": "aecae029b9b5c1e368391059c65027f53ca6187b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
