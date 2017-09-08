@@ -57,6 +57,24 @@
       "revId": "4d4a01396b151edf6774d30ba440f116470d4ac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef1a5e6_d3ac6bcb",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-09-08T21:50:16Z",
+      "side": 1,
+      "message": "Hmm, I digged more into this on why this message would show up, turns out it\u0027s because how we changed to list our tests through java runner and init error happens in this process when test is not properly written. I will make a change to provide the actually failure message.",
+      "parentUuid": "4a70a53f_0831e243",
+      "revId": "4d4a01396b151edf6774d30ba440f116470d4ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
