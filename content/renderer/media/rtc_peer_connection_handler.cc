@@ -28,7 +28,6 @@
 #include "content/renderer/media/rtc_data_channel_handler.h"
 #include "content/renderer/media/rtc_dtmf_sender_handler.h"
 #include "content/renderer/media/webrtc/peer_connection_dependency_factory.h"
-#include "content/renderer/media/webrtc/rtc_rtp_receiver.h"
 #include "content/renderer/media/webrtc/rtc_stats.h"
 #include "content/renderer/media/webrtc/webrtc_media_stream_adapter.h"
 #include "content/renderer/media/webrtc_audio_device_impl.h"
@@ -939,14 +938,20 @@ std::unique_ptr<RTCRtpReceiver> CreateRTCRtpReceiverForTrack(
     webrtc::MediaStreamTrackInterface* webrtc_track,
     const std::vector<rtc::scoped_refptr<webrtc::RtpReceiverInterface>>&
         webrtc_receivers,
-    scoped_refptr<WebRtcMediaStreamTrackAdapterMap> track_adapter_map) {
+    scoped_refptr<WebRtcMediaStreamTrackAdapterMap> track_adapter_map,
+    std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>
+        stream_adapter_ref) {
   auto webrtc_receiver =
       FindReceiverForTrack(webrtc_track->id(), webrtc_receivers);
   DCHECK(webrtc_receiver);
   auto track_adapter = track_adapter_map->GetRemoteTrackAdapter(webrtc_track);
   DCHECK(track_adapter);
+  std::vector<std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>
+      stream_adapter_refs;
+  stream_adapter_refs.push_back(std::move(stream_adapter_ref));
   return base::MakeUnique<RTCRtpReceiver>(std::move(webrtc_receiver),
-                                          std::move(track_adapter));
+                                          std::move(track_adapter),
+                                          std::move(stream_adapter_refs));
 }
 
 }  // namespace
@@ -1025,6 +1030,33 @@ class RTCPeerConnectionHandler::Observer
     }
   }
 
+  void OnAddTrack(
+      rtc::scoped_refptr<webrtc::RtpReceiverInterface> webrtc_receiver,
+      const std::vector<rtc::scoped_refptr<MediaStreamInterface>>&
+          remote_webrtc_streams) override {
+    std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef>
+        remote_track_adapter_ref =
+            stream_adapter_map_->track_adapter_map()
+                ->GetOrCreateRemoteTrackAdapter(webrtc_receiver->track().get());
+
+    std::vector<std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>
+        remote_stream_adapter_refs;
+    for (const rtc::scoped_refptr<MediaStreamInterface>& stream :
+         remote_webrtc_streams) {
+      remote_stream_adapter_refs.push_back(
+          stream_adapter_map_->GetOrCreateRemoteStreamAdapter(stream.get()));
+    }
+
+    // New remote adapters are initialized asynchronously in a post to the main
+    // thread. This post ensures the passed adapters are initialized.
+    main_thread_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&RTCPeerConnectionHandler::Observer::OnAddTrackImpl,
+                       this, make_scoped_refptr(webrtc_receiver.get()),
+                       base::Passed(&remote_track_adapter_ref),
+                       base::Passed(&remote_stream_adapter_refs)));
+  }
+
   void OnAddStream(
       rtc::scoped_refptr<MediaStreamInterface> remote_webrtc_stream) override {
     DCHECK(!main_thread_->BelongsToCurrentThread());
@@ -1049,13 +1081,15 @@ class RTCPeerConnectionHandler::Observer
          remote_webrtc_stream->GetAudioTracks()) {
       stream_web_receivers.push_back(CreateRTCRtpReceiverForTrack(
           webrtc_audio_track.get(), webrtc_receivers,
-          stream_adapter_map_->track_adapter_map()));
+          stream_adapter_map_->track_adapter_map(),
+          remote_stream_adapter_ref->Copy()));
     }
     for (const auto& webrtc_video_track :
          remote_webrtc_stream->GetVideoTracks()) {
       stream_web_receivers.push_back(CreateRTCRtpReceiverForTrack(
           webrtc_video_track.get(), webrtc_receivers,
-          stream_adapter_map_->track_adapter_map()));
+          stream_adapter_map_->track_adapter_map(),
+          remote_stream_adapter_ref->Copy()));
     }
 
     // The webkit object owned by |RemoteMediaStreamImpl|, will be initialized
@@ -1138,6 +1172,26 @@ class RTCPeerConnectionHandler::Observer
                        candidate->sdp_mline_index(),
                        candidate->candidate().component(),
                        candidate->candidate().address().family()));
+  }
+
+  void OnAddTrackImpl(
+      scoped_refptr<webrtc::RtpReceiverInterface> webrtc_receiver,
+      std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef>
+          remote_track_adapter_ref,
+      std::vector<std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>
+          remote_stream_adapter_refs) {
+    DCHECK(remote_track_adapter_ref->is_initialized());
+    DCHECK(std::all_of(
+        remote_stream_adapter_refs.begin(), remote_stream_adapter_refs.end(),
+        [](const std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>&
+               stream_adapter_ref) {
+          return stream_adapter_ref->adapter().is_initialized();
+        }));
+    if (handler_) {
+      handler_->OnAddRemoteTrack(std::move(webrtc_receiver),
+                                 std::move(remote_track_adapter_ref),
+                                 std::move(remote_stream_adapter_refs));
+    }
   }
 
   void OnAddStreamImpl(std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>
@@ -2045,6 +2099,27 @@ void RTCPeerConnectionHandler::OnRenegotiationNeeded() {
     client_->NegotiationNeeded();
 }
 
+void RTCPeerConnectionHandler::OnAddRemoteTrack(
+    scoped_refptr<webrtc::RtpReceiverInterface> webrtc_receiver,
+    std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef>
+        remote_track_adapter_ref,
+    std::vector<std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>
+        remote_stream_adapter_refs) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::OnAddTrack");
+
+  uintptr_t receiver_id = RTCRtpReceiver::getId(webrtc_receiver.get());
+  DCHECK(rtp_receivers_.find(receiver_id) == rtp_receivers_.end());
+  const std::unique_ptr<RTCRtpReceiver>& rtp_receiver = rtp_receivers_.insert(
+      std::make_pair(
+          receiver_id,
+          base::MakeUnique<RTCRtpReceiver>(
+              webrtc_receiver.get(),
+              std::move(remote_track_adapter_ref),
+              std::move(remote_stream_adapter_refs)))).first->second;
+  client_->DidAddRemoteTrack(rtp_receiver->ShallowCopy());
+}
+
 void RTCPeerConnectionHandler::OnAddStream(
     std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>
         remote_stream_adapter_ref,
@@ -2071,6 +2146,7 @@ void RTCPeerConnectionHandler::OnAddStream(
 
   track_metrics_.AddStream(MediaStreamTrackMetrics::RECEIVED_STREAM,
                            remote_stream_adapter->webrtc_stream().get());
+
   if (!is_closed_) {
     blink::WebVector<std::unique_ptr<blink::WebRTCRtpReceiver>>
         web_vector_stream_webrtc_receivers(stream_webrtc_receivers.size());
@@ -2082,6 +2158,8 @@ void RTCPeerConnectionHandler::OnAddStream(
                                 &web_vector_stream_webrtc_receivers);
   }
 }
+
+// TODO(hbos): Only use |GetReceivers| to DCHECK that it matches |rtp_receivers_|.
 
 void RTCPeerConnectionHandler::OnRemoveStream(
     const scoped_refptr<webrtc::MediaStreamInterface>& remote_webrtc_stream) {
@@ -2226,8 +2304,10 @@ RTCPeerConnectionHandler::GetWebRTCRtpReceiver(
     return nullptr;
   // Create a reference to the receiver. Multiple |RTCRtpReceiver|s can
   // reference the same webrtc track, see |id|.
-  return base::MakeUnique<RTCRtpReceiver>(webrtc_receiver,
-                                          std::move(track_adapter));
+  return base::MakeUnique<RTCRtpReceiver>(
+      webrtc_receiver, std::move(track_adapter),
+      // TODO(hbos):
+      std::vector<std::unique_ptr<WebRtcMediaStreamAdapterMap::AdapterRef>>());
 }
 
 scoped_refptr<base::SingleThreadTaskRunner>
