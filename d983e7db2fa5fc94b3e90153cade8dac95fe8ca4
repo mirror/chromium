@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51cb43b4_8c52d4b2",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T06:49:56Z",
+      "side": 1,
+      "message": "I think this is just because I don\u0027t know the worker code well, but it\u0027s not clear to me why we need to keep the WorkerStoragePartition around if we only extract the ID later to pass to SharedWorkerServiceImpl::CreateWorker.",
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ae123a_593f3622",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T06:49:56Z",
+      "side": 1,
+      "message": "Nit: const ref to avoid one copy.",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 26
+      },
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ae4aaa_c22f0b11",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T06:49:56Z",
+      "side": 1,
+      "message": "Based on this, I guess the class lives on the IO thread? Maybe add a brief class-level comment that notes this?",
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959e6597_402412ea",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T06:49:56Z",
+      "side": 1,
+      "message": "It\u0027s too bad there isn\u0027t a better way to express this with something like InterfacePtrSet.",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 229,
+        "endChar": 3
+      },
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f5e6eb_66e4fed5",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T06:49:56Z",
+      "side": 1,
+      "message": "Nit: emplace",
+      "range": {
+        "startLine": 270,
+        "startChar": 11,
+        "endLine": 270,
+        "endChar": 17
+      },
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8357f07_e94d1fb8",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T06:49:56Z",
+      "side": 1,
+      "message": "Nit: nullptr",
+      "range": {
+        "startLine": 300,
+        "startChar": 9,
+        "endLine": 300,
+        "endChar": 51
+      },
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f53223c_e71fc740",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T06:49:56Z",
+      "side": 1,
+      "message": "This doesn\u0027t appear to be used.",
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e92442_2815a40d",
+        "filename": "content/renderer/shared_worker/shared_worker_repository.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T06:49:56Z",
+      "side": 1,
+      "message": "Do we need to call Close() if we\u0027re going to erase it anyway?\n\nOh... I see, this is a strong binding and would just hang out indefinitely otherwise.\n\nStupid idea: does it have to be a strong binding? These are usually browser-side objects, right? If that connection closes, we\u0027re probably about to get killed anyway, right?\n\nNot as stupid idea: what about StrongBindingSet instead of maintaining a list of bindings like this?",
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d180cc_122f9f19",
+        "filename": "content/renderer/shared_worker/shared_worker_repository.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T06:49:56Z",
+      "side": 1,
+      "message": "Nit: emplace",
+      "range": {
+        "startLine": 70,
+        "startChar": 18,
+        "endLine": 70,
+        "endChar": 24
+      },
+      "revId": "d983e7db2fa5fc94b3e90153cade8dac95fe8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
