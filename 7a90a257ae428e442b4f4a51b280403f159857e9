@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "1d86fc91_61e61ab1",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-08T14:34:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "19968da9_4db01507",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 35
+      },
+      "revId": "7a90a257ae428e442b4f4a51b280403f159857e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dece46e_e06bd2ec",
         "filename": "ui/views/layout/layout_provider.h",
         "patchSetId": 7
@@ -202,6 +226,30 @@
       "side": 1,
       "message": "It\u0027s a bit awkward because it\u0027s really \"GetDialogContentInsetsForDialogContentType\" but that\u0027s way too unwieldy. Do you want it to say \"dialog\" specifically? How about GetDialogInsetsForContentType?",
       "parentUuid": "7dece46e_e06bd2ec",
+      "range": {
+        "startLine": 131,
+        "startChar": 14,
+        "endLine": 131,
+        "endChar": 37
+      },
+      "revId": "7a90a257ae428e442b4f4a51b280403f159857e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d93bebf_840a30d2",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-08T14:34:42Z",
+      "side": 1,
+      "message": "GetDialogInsetsForContentType SGTM",
+      "parentUuid": "4aa184e8_b4cfe4cd",
       "range": {
         "startLine": 131,
         "startChar": 14,
