@@ -70,6 +70,24 @@
       "revId": "17ca5fa4d57c8eb29f1ea0100e042d8d26935ccf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a283d5d_79bc3bae",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-09-08T20:49:37Z",
+      "side": 1,
+      "message": "I think SetStateClosed is a bit confusing as well because we are doing more than that, we are actually calling the delegate\u0027s dismiss. Also I added SetState(CLOSED) again in a later patch (this comment thread is on the initial upload)\n\nI tried Close, it doesn\u0027t work because ../../ui/views/window/dialog_delegate.h:85 defines a Close function which this will then think we are overriding.\n\nI\u0027m open to other name ideas, but I think Dismiss() here is actually accurate because we are supposed to eventually destroy everything (the view is supposed to get destroyed by the delegate when the delegate\u0027s dismiss function is called)\n\nWDYT?",
+      "parentUuid": "7bb2bed4_4021b0a9",
+      "revId": "17ca5fa4d57c8eb29f1ea0100e042d8d26935ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
