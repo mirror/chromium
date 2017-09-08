@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8f16a80f_cd87fd28",
+        "filename": "chromecast/browser/android/cast_content_window_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-08T19:28:50Z",
+      "side": 1,
+      "message": "Please make args match the declaration in header (where it\u0027s referred to as headless).",
+      "revId": "ee8d6a32710100cf1dea100e24feec4896d3c294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31723499_bfce77d9",
         "filename": "chromecast/chromecast.gni",
         "patchSetId": 6
@@ -13,6 +30,24 @@
       "writtenOn": "2017-09-07T22:35:55Z",
       "side": 1,
       "message": "I do not see this being used anywhere. Also, we have switched to specifying per-product features in a separate args.gn file. Would you be able to define your settings in terms of features that can be enabled/disabled in product args.gn?",
+      "revId": "ee8d6a32710100cf1dea100e24feec4896d3c294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7bd1544_415af5df",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-08T19:28:50Z",
+      "side": 1,
+      "message": "It\u0027s for a new product.\n\nAlok: I don\u0027t understand your args.gn comment.  This feature _will_ be enabled in args.gn (for the new product).",
+      "parentUuid": "31723499_bfce77d9",
       "revId": "ee8d6a32710100cf1dea100e24feec4896d3c294",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
