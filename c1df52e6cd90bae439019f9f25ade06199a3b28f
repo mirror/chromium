@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9c312dc2_d6d415a7",
+        "filename": "components/arc/common/power.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-08T22:03:52Z",
+      "side": 1,
+      "message": "after in-person discussion, keeping these separate is fine by me too. (you pointed out that android might change partial and display wake locks to be handled differently in the future.)",
+      "parentUuid": "f5d03055_3faa2d6f",
+      "revId": "c1df52e6cd90bae439019f9f25ade06199a3b28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10be80cd_3270ceec",
         "filename": "components/arc/power/arc_power_bridge.cc",
         "patchSetId": 3
