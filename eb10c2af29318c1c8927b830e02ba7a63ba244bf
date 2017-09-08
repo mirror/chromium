@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02c5d67e_134886c8",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T21:10:19Z",
+      "side": 1,
+      "message": "Optional: Does it make sense to group this with the previous !anchor_view check at the beginning of the constructor?\n\n(If views is unhappy with this, feel free to leave this here)",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 62
+      },
+      "revId": "eb10c2af29318c1c8927b830e02ba7a63ba244bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
