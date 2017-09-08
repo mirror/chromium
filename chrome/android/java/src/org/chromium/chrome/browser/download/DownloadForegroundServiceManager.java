@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.download;
 import static org.chromium.chrome.browser.download.DownloadSnackbarController.INVALID_NOTIFICATION_ID;
 
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -188,8 +189,20 @@ public class DownloadForegroundServiceManager {
     void startOrUpdateForegroundService(int notificationId, Notification notification) {
         if (mBoundService != null && notificationId != INVALID_NOTIFICATION_ID
                 && notification != null) {
-            mPinnedNotificationId = notificationId;
             mBoundService.startOrUpdateForegroundService(notificationId, notification);
+
+            // In the case that there was another notification pinned to the foreground, re-launch
+            // that notification because it gets cancelled in the switching process.
+            if (mPinnedNotificationId != INVALID_NOTIFICATION_ID
+                    && mPinnedNotificationId != notificationId) {
+                NotificationManager notificationManager =
+                        (NotificationManager) ContextUtils.getApplicationContext().getSystemService(
+                                Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(mPinnedNotificationId,
+                        mDownloadUpdateQueue.get(mPinnedNotificationId).mNotification);
+            }
+
+            mPinnedNotificationId = notificationId;
         }
     }
 
@@ -198,6 +211,8 @@ public class DownloadForegroundServiceManager {
     @VisibleForTesting
     void stopAndUnbindService(boolean isCancelled) {
         mIsServiceBound = false;
+        mPinnedNotificationId = INVALID_NOTIFICATION_ID;
+
         if (mBoundService != null) {
             stopAndUnbindServiceInternal(isCancelled);
             mBoundService = null;
