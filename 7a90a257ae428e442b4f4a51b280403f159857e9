@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "0ffb29c5_cd5af818",
+        "filename": "chrome/browser/chromeos/options/wifi_config_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-08T00:01:30Z",
+      "side": 1,
+      "message": "The wifi dialog could have quite some fields. Should we use CONTROL for a smaller margin? Or is it strictly based on the first control?",
+      "range": {
+        "startLine": 910,
+        "startChar": 40,
+        "endLine": 910,
+        "endChar": 64
+      },
+      "revId": "7a90a257ae428e442b4f4a51b280403f159857e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6225380b_d8baa43f",
+        "filename": "chrome/browser/chromeos/options/wimax_config_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-08T00:01:30Z",
+      "side": 1,
+      "message": "Same here. Use CONTROL ?",
+      "range": {
+        "startLine": 202,
+        "startChar": 40,
+        "endLine": 202,
+        "endChar": 64
+      },
+      "revId": "7a90a257ae428e442b4f4a51b280403f159857e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "240a62bf_0ce3d4e5",
         "filename": "ui/views/layout/layout_provider.h",
         "patchSetId": 7
