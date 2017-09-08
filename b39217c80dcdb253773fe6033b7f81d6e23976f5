@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "415925cf_271e7cfa",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 6423,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-08T05:24:11Z",
+      "side": 1,
+      "message": "Given that you rename Document::RequestIdleCallback to RequestIdleTask, then you should also rename CancelIdleCallback to CancelIdleTask to be consistent.",
+      "range": {
+        "startLine": 6423,
+        "startChar": 15,
+        "endLine": 6423,
+        "endChar": 33
+      },
+      "revId": "b39217c80dcdb253773fe6033b7f81d6e23976f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a007fa_0f60d371",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-08T05:24:11Z",
+      "side": 1,
+      "message": "Ditto.  As you rename RegisterCallback to RegisterIdleTask, then CancelCallback should be renamed to CancelIdleTask.",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 21
+      },
+      "revId": "b39217c80dcdb253773fe6033b7f81d6e23976f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
