@@ -28,7 +28,12 @@ bool InactiveUserNotificationBlocker::ShouldShowNotification(
   if (!Shell::Get()->shell_delegate()->IsMultiProfilesEnabled())
     return true;
 
-  if (system_notifier::IsAshSystemNotifier(notification.notifier_id()))
+  if (system_notifier::IsAshSystemNotifier(notification.notifier_id())) {
+    DCHECK(notification.notifier_id().profile_id.empty());
+    return true;
+  }
+
+  if (notification.notifier_id().profile_id.empty())
     return true;
 
   return AccountId::FromUserEmail(notification.notifier_id().profile_id) ==
