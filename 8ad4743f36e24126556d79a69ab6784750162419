@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3df7d9d_2d12b1d5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-response-with-expose-headers.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-08T04:47:07Z",
+      "side": 1,
+      "message": "As I told you before, you can use \"pipes\" (http://wptserve.readthedocs.io/en/latest/pipes.html) instead of custom scripts. What do you think about using them?",
+      "revId": "8ad4743f36e24126556d79a69ab6784750162419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
