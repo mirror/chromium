@@ -411,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "5181c87d_5c0330b2",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:46:47Z",
+      "side": 1,
+      "message": "Let\u0027s not worry about fixing it everywhere, but for new Mojo interfaces let\u0027s use it. So yea I think it means in ServiceWorkerProviderHost we would convert:\nstatic_cast\u003cblink::mojom::WebFeature\u003e(feature).",
+      "parentUuid": "a4db3fb7_6e31a0d4",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d755e4b_6341114b",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 3
