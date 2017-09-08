@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55e894d7_fb42c3c2",
+        "filename": "components/suggestions/suggestions_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-08T09:58:22Z",
+      "side": 1,
+      "message": "Nit: inconsistent comment.",
+      "revId": "738cd8301bafe3901c5621d701276193966688f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
