@@ -16,6 +16,24 @@
       "revId": "d3001ace9790bb1caaf8e6d2c09ecefee78bace2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534c095e_42887359",
+        "filename": "third_party/WebKit/LayoutTests/inspector/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-08T00:11:02Z",
+      "side": 0,
+      "message": "Nope, what\u0027s this used for? Looks like this groups is basically in-active (https://groups.google.com/a/chromium.org/forum/?utm_medium\u003demail\u0026utm_source\u003dfooter#!forum/devtools-dev).",
+      "parentUuid": "5b7178a4_04198ddc",
+      "revId": "d3001ace9790bb1caaf8e6d2c09ecefee78bace2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
