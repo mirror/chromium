@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1498dcc_0674b10b",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-08T19:55:26Z",
+      "side": 1,
+      "message": "nit: drop the (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "0ea278e634ab462c36e2c4922fd19f3022649bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a082ac_333ded78",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-08T19:55:26Z",
+      "side": 1,
+      "message": "nit: Might be easier just to use tempfile.mkdtemp() or build_utils.TempDir(). I think those should work with subprocesses.",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 12
+      },
+      "revId": "0ea278e634ab462c36e2c4922fd19f3022649bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
