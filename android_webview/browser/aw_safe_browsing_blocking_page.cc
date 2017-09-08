@@ -7,6 +7,7 @@
 #include "android_webview/browser/aw_browser_context.h"
 #include "android_webview/browser/aw_safe_browsing_ui_manager.h"
 #include "android_webview/browser/net/aw_url_request_context_getter.h"
+#include "base/lazy_instance.h"
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/browser/threat_details.h"
 #include "components/safe_browsing/triggers/trigger_manager.h"
@@ -26,19 +27,67 @@ using security_interstitials::SecurityInterstitialControllerClient;
 
 namespace android_webview {
 
+// static
+AwSafeBrowsingBlockingPageFactory* AwSafeBrowsingBlockingPage::factory_ = NULL;
+
+// Default AwSafeBrowsingBlockingPageFactory.
+class AwSafeBrowsingBlockingPageFactoryImpl
+    : public AwSafeBrowsingBlockingPageFactory {
+ public:
+  friend class AwSafeBrowsingBlockingPage;
+  AwSafeBrowsingBlockingPage* CreateAwSafeBrowsingPage(
+      AwSafeBrowsingUIManager* ui_manager,
+      WebContents* web_contents,
+      PrefService* pref_service,
+      const GURL& main_frame_url,
+      const AwSafeBrowsingBlockingPage::UnsafeResourceList& unsafe_resources,
+      const AwSafeBrowsingBlockingPage::ErrorUiType errorType) override {
+    BaseSafeBrowsingErrorUI::SBErrorDisplayOptions display_options =
+        BaseSafeBrowsingErrorUI::SBErrorDisplayOptions(
+            AwSafeBrowsingBlockingPage::IsMainPageLoadBlocked(unsafe_resources),
+            safe_browsing::IsExtendedReportingOptInAllowed(*pref_service),
+            false,  // is_off_the_record
+            safe_browsing::IsExtendedReportingEnabled(*pref_service),
+            safe_browsing::IsScout(*pref_service),
+            pref_service->GetBoolean(
+                ::prefs::kSafeBrowsingProceedAnywayDisabled),
+            false,                    // should_open_links_in_new_tab
+            "cpn_safe_browsing_wv");  // help_center_article_link
+
+    return new AwSafeBrowsingBlockingPage(
+        ui_manager, web_contents, pref_service, main_frame_url,
+        unsafe_resources, display_options, errorType);
+  }
+
+ private:
+  friend struct base::LazyInstanceTraitsBase<
+      AwSafeBrowsingBlockingPageFactoryImpl>;
+
+  AwSafeBrowsingBlockingPageFactoryImpl() {}
+
+  DISALLOW_COPY_AND_ASSIGN(AwSafeBrowsingBlockingPageFactoryImpl);
+};
+
+static base::LazyInstance<AwSafeBrowsingBlockingPageFactoryImpl>::
+    DestructorAtExit g_safe_browsing_blocking_page_factory_impl =
+        LAZY_INSTANCE_INITIALIZER;
+
 AwSafeBrowsingBlockingPage::AwSafeBrowsingBlockingPage(
     AwSafeBrowsingUIManager* ui_manager,
     WebContents* web_contents,
+    PrefService* pref_service,
     const GURL& main_frame_url,
     const UnsafeResourceList& unsafe_resources,
-    std::unique_ptr<SecurityInterstitialControllerClient> controller_client,
     const BaseSafeBrowsingErrorUI::SBErrorDisplayOptions& display_options,
-    ErrorUiType errorUiType)
+    const ErrorUiType errorUiType)
     : BaseBlockingPage(ui_manager,
                        web_contents,
                        main_frame_url,
                        unsafe_resources,
-                       std::move(controller_client),
+                       CreateControllerClient(web_contents,
+                                              unsafe_resources,
+                                              ui_manager,
+                                              pref_service),
                        display_options),
       threat_details_in_progress_(false) {
   if (errorUiType == ErrorUiType::QUIET_SMALL ||
@@ -69,6 +118,26 @@ AwSafeBrowsingBlockingPage::AwSafeBrowsingBlockingPage(
 }
 
 // static
+AwSafeBrowsingBlockingPage* AwSafeBrowsingBlockingPage::CreateBlockingPage(
+    AwSafeBrowsingUIManager* ui_manager,
+    WebContents* web_contents,
+    PrefService* pref_service,
+    const GURL& main_frame_url,
+    const UnsafeResource& unsafe_resource) {
+  ErrorUiType errorType =
+      static_cast<ErrorUiType>(ui_manager->GetErrorUiType(unsafe_resource));
+
+  const UnsafeResourceList resources{unsafe_resource};
+  // Set up the factory if this has not been done already (tests do that
+  // before this method is called).
+  if (!factory_)
+    factory_ = g_safe_browsing_blocking_page_factory_impl.Pointer();
+  return factory_->CreateAwSafeBrowsingPage(ui_manager, web_contents,
+                                            pref_service, main_frame_url,
+                                            resources, errorType);
+}
+
+// static
 void AwSafeBrowsingBlockingPage::ShowBlockingPage(
     AwSafeBrowsingUIManager* ui_manager,
     const UnsafeResource& unsafe_resource,
@@ -87,28 +156,9 @@ void AwSafeBrowsingBlockingPage::ShowBlockingPage(
     // the new one will automatically hide the old one.
     content::NavigationEntry* entry =
         unsafe_resource.GetNavigationEntryForResource();
-    const UnsafeResourceList unsafe_resources{unsafe_resource};
-    BaseSafeBrowsingErrorUI::SBErrorDisplayOptions display_options =
-        BaseSafeBrowsingErrorUI::SBErrorDisplayOptions(
-            IsMainPageLoadBlocked(unsafe_resources),
-            safe_browsing::IsExtendedReportingOptInAllowed(*pref_service),
-            false,  // is_off_the_record
-            safe_browsing::IsExtendedReportingEnabled(*pref_service),
-            safe_browsing::IsScout(*pref_service),
-            pref_service->GetBoolean(
-                ::prefs::kSafeBrowsingProceedAnywayDisabled),
-            false,                    // should_open_links_in_new_tab
-            "cpn_safe_browsing_wv");  // help_center_article_link
-
-    ErrorUiType errorType =
-        static_cast<ErrorUiType>(ui_manager->GetErrorUiType(unsafe_resource));
-
-    AwSafeBrowsingBlockingPage* blocking_page = new AwSafeBrowsingBlockingPage(
-        ui_manager, web_contents, entry ? entry->GetURL() : GURL(),
-        unsafe_resources,
-        CreateControllerClient(web_contents, unsafe_resources, ui_manager,
-                               pref_service),
-        display_options, errorType);
+    AwSafeBrowsingBlockingPage* blocking_page =
+        CreateBlockingPage(ui_manager, web_contents, pref_service,
+                           entry ? entry->GetURL() : GURL(), unsafe_resource);
     blocking_page->Show();
   }
 }

@@ -16,6 +16,7 @@ struct UnsafeResource;
 
 namespace android_webview {
 
+class AwSafeBrowsingBlockingPageFactory;
 class AwSafeBrowsingUIManager;
 
 class AwSafeBrowsingBlockingPage : public safe_browsing::BaseBlockingPage {
@@ -26,7 +27,18 @@ class AwSafeBrowsingBlockingPage : public safe_browsing::BaseBlockingPage {
                                const UnsafeResource& unsafe_resource,
                                PrefService* pref_service);
 
+  // Makes the passed |factory| the factory used to instantiate
+  // SafeBrowsingBlockingPage objects. Useful for tests.
+  static void RegisterFactory(AwSafeBrowsingBlockingPageFactory* factory) {
+    factory_ = factory;
+  }
+
  protected:
+  friend class AwSafeBrowsingBlockingPageFactory;
+  friend class AwSafeBrowsingBlockingPageFactoryImpl;
+  //  friend class AwSafeBrowsingUIManagerTest;
+  friend class TestAwSafeBrowsingBlockingPageFactory;
+
   // Used to specify which BaseSafeBrowsingErrorUI to instantiate, and
   // parameters they require.
   // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.android_webview
@@ -36,13 +48,11 @@ class AwSafeBrowsingBlockingPage : public safe_browsing::BaseBlockingPage {
   AwSafeBrowsingBlockingPage(
       AwSafeBrowsingUIManager* ui_manager,
       content::WebContents* web_contents,
+      PrefService* pref_service,
       const GURL& main_frame_url,
       const UnsafeResourceList& unsafe_resources,
-      std::unique_ptr<
-          security_interstitials::SecurityInterstitialControllerClient>
-          controller_client,
       const BaseSafeBrowsingErrorUI::SBErrorDisplayOptions& display_options,
-      ErrorUiType errorUiType);
+      const AwSafeBrowsingBlockingPage::ErrorUiType errorType);
 
   // Called when the interstitial is going away. If there is a
   // pending threat details object, we look at the user's
@@ -52,9 +62,36 @@ class AwSafeBrowsingBlockingPage : public safe_browsing::BaseBlockingPage {
                            bool did_proceed,
                            int num_visits) override;
 
+  // Creates a blocking page. Use ShowBlockingPage if you don't need to access
+  // the blocking page directly.
+  static AwSafeBrowsingBlockingPage* CreateBlockingPage(
+      AwSafeBrowsingUIManager* ui_manager,
+      content::WebContents* web_contents,
+      PrefService* pref_service,
+      const GURL& main_frame_url,
+      const UnsafeResource& unsafe_resource);
+
   // Whether ThreatDetails collection is in progress as part of this
   // interstitial.
   bool threat_details_in_progress_;
+
+  // The factory used to instantiate AwSafeBrowsingBlockingPage objects.
+  // Useful for tests, so they can provide their own implementation of
+  // AwSafeBrowsingBlockingPage.
+  static AwSafeBrowsingBlockingPageFactory* factory_;
+};
+
+// Factory for creating AwSafeBrowsingBlockingPage. Useful for tests.
+class AwSafeBrowsingBlockingPageFactory {
+ public:
+  virtual ~AwSafeBrowsingBlockingPageFactory() {}
+  virtual AwSafeBrowsingBlockingPage* CreateAwSafeBrowsingPage(
+      AwSafeBrowsingUIManager* ui_manager,
+      content::WebContents* web_contents,
+      PrefService* pref_service,
+      const GURL& main_frame_url,
+      const AwSafeBrowsingBlockingPage::UnsafeResourceList& unsafe_resources,
+      const AwSafeBrowsingBlockingPage::ErrorUiType errorType) = 0;
 };
 
 }  // namespace android_webview

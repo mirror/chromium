@@ -9,13 +9,14 @@
 #ifndef ANDROID_WEBVIEW_BROWSER_AW_SAFE_BROWSING_UI_MANAGER_H_
 #define ANDROID_WEBVIEW_BROWSER_AW_SAFE_BROWSING_UI_MANAGER_H_
 
+#include "components/safe_browsing/base_ping_manager.h"
 #include "components/safe_browsing/base_ui_manager.h"
 #include "content/public/browser/web_contents.h"
 
 class PrefService;
 
 namespace safe_browsing {
-class BasePingManager;
+// class BasePingManager;
 class SafeBrowsingURLRequestContextGetter;
 }  // namespace
 
@@ -51,6 +52,14 @@ class AwSafeBrowsingUIManager : public safe_browsing::BaseUIManager {
   void SendSerializedThreatDetails(const std::string& serialized) override;
 
   void SetExtendedReportingAllowed(bool allowed);
+
+  // For testing
+  void SetPingManagerForTesting(
+      std::unique_ptr<safe_browsing::BasePingManager> ping_manager) {
+    ping_manager_ = std::move(ping_manager);
+  }
+
+  safe_browsing::BasePingManager* ping_manager() { return ping_manager_.get(); }
 
  protected:
   ~AwSafeBrowsingUIManager() override;

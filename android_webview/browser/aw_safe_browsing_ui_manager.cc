@@ -52,6 +52,7 @@ AwSafeBrowsingUIManager::~AwSafeBrowsingUIManager() {}
 
 void AwSafeBrowsingUIManager::DisplayBlockingPage(
     const UnsafeResource& resource) {
+  LOG(INFO) << "BLA AwSafeBrowsingUIManager::DisplayBlockingPage";
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   WebContents* web_contents = resource.web_contents_getter.Run();
@@ -86,6 +87,8 @@ int AwSafeBrowsingUIManager::GetErrorUiType(
 
 void AwSafeBrowsingUIManager::SendSerializedThreatDetails(
     const std::string& serialized) {
+  LOG(INFO) << "BLA AwSafeBrowsingUIManager::SendSerializedThreatDetails";
+
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   if (!ping_manager_) {

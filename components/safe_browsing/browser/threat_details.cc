@@ -498,6 +498,7 @@ void ThreatDetails::AddDomElement(
 }
 
 void ThreatDetails::StartCollection() {
+  LOG(INFO) << "BLA ThreatDetails::StartCollection";
   DVLOG(1) << "Starting to compute threat details.";
   report_.reset(new ClientSafeBrowsingReportRequest());
 
@@ -645,6 +646,7 @@ void ThreatDetails::AddDOMDetails(
 // OnReceivedThreatDOMDetails in most cases. If not, we don't include
 // the DOM data in our report.
 void ThreatDetails::FinishCollection(bool did_proceed, int num_visit) {
+  LOG(INFO) << "BLA ThreatDetails::FinishCollection";
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   // Do a second pass over the elements and update iframe elements to have

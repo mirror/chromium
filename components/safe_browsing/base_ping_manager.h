@@ -47,7 +47,7 @@ class BasePingManager : public net::URLFetcherDelegate {
 
   // Users can opt-in on the SafeBrowsing interstitial to send detailed
   // threat reports. |report| is the serialized report.
-  void ReportThreatDetails(const std::string& report);
+  virtual void ReportThreatDetails(const std::string& report);
 
  protected:
   friend class BasePingManagerTest;
