@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7d3d7bf_8ec6ee88",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T09:17:49Z",
+      "side": 1,
+      "message": "We could add a thread checker in AccountReconcilor::Lock. I did not do it because in general we don\u0027t put a thread checker in all our classes, but I can do it if we think there is a risk.",
+      "parentUuid": "dd840c3d_677ff185",
+      "range": {
+        "startLine": 91,
+        "startChar": 3,
+        "endLine": 91,
+        "endChar": 31
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c37c21e_d98c38f7",
         "filename": "chrome/browser/signin/chrome_signin_helper.cc",
         "patchSetId": 15
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-07T12:14:43Z",
       "side": 1,
       "message": "Does this mean that we lock the reconcilor on every request to GAIA and potentially unlock on each response is received? If it is done on request, then there is a risk that we lock the reconcilor too much.",
+      "range": {
+        "startLine": 106,
+        "startChar": 11,
+        "endLine": 106,
+        "endChar": 33
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c24100_9c887f1a",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T09:17:49Z",
+      "side": 1,
+      "message": "In this version, this is only main requests, so it should not be a problem.\n\nHowever, as we discovered yesterday we probably also need to enable this on XHR, which indeed becomes a problem because websites such as gmail make frequent XHRs to Gaia.\n\nI\u0027m going to check if we can check the referrer of the request and lock only requests coming from a Gaia main page.",
+      "parentUuid": "5c37c21e_d98c38f7",
       "range": {
         "startLine": 106,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "81b134eb_9913e952",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T09:17:49Z",
+      "side": 1,
+      "message": "Good point, nice catch. This is indeed a behavior change. I thought we never wanted to have both Dice and Mirror on the same request. For example drive request should not have Dice, and thus will still have Mirror.\n\nHowever, this is not really related to this CL, so maybe we can keep the existing behavior for now, especially if we are not sure if it is correct to do.",
+      "parentUuid": "de97b290_0f38da14",
+      "range": {
+        "startLine": 336,
+        "startChar": 6,
+        "endLine": 336,
+        "endChar": 23
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1de09203_fcf0411d",
         "filename": "chrome/browser/signin/chrome_signin_helper.cc",
         "patchSetId": 15
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-07T12:14:43Z",
       "side": 1,
       "message": "Reading this code made me wonder if this check is needed - I mean if we added a DICE header than I expect that DICE is enabled. This is of course incorrect as DICE fix auth error may be enabled, right.\nMaybe in a future CL, we should rename IsAccountConsistencyDiceEnabled to IsAccountConsistencyDiceFullyEnabled",
+      "range": {
+        "startLine": 341,
+        "startChar": 7,
+        "endLine": 341,
+        "endChar": 39
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b64c54_564c09cd",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T09:17:49Z",
+      "side": 1,
+      "message": "This is to avoid locking the reconcilor when fixing auth errors indeed.\nThere is no reconcilor in this case though, so locking it would not really be a problem.\nI can remove that condition if you prefer.\n\nI\u0027m also fine with renaming the function (later).",
+      "parentUuid": "1de09203_fcf0411d",
       "range": {
         "startLine": 341,
         "startChar": 7,
@@ -151,6 +247,30 @@
       "writtenOn": "2017-09-07T12:14:43Z",
       "side": 1,
       "message": "I just want to make sure we thought about the order in which we call the observer:\n* for block reconcile, we fist abort and then send |OnReconcilorBlocked|\n* for unlock, we first sent |OnReconcilorUnblocked| and then start reconcilor\n\nFor the observers, the current implementation guarantees the following order (in case of block when reconcilor is working):\n* OnReconcilorBlocked\n* OnReconcilorUnblocked\n* OnReconcileStarted\n\n1. Is this order important (do observers depend on it?)? Should we document it in the header file?\n2. Do we want a call to OnReconcileAborted before / after OnReconcilorBlocked?",
+      "range": {
+        "startLine": 582,
+        "startChar": 13,
+        "endLine": 582,
+        "endChar": 21
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05194299_d8f545aa",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-08T09:17:49Z",
+      "side": 1,
+      "message": "Somewhat unrelated: note that this observer is currently only used in tests. There is the option to rename it TestObserver or something like that if we don\u0027t want production code to rely on it.\n\nFor the order of events:\n- it seems intuitive that the reconcilor is not running when OnReconcilorBlocked is called (otherwise it\u0027s not really blocked, if it\u0027s still running).\n- it also seems intuitive that Unblocked() is called before Started(), otherwise it would be like the reconcilor is starting while still being blocked.\n\nSo I don\u0027t think any other order would make sense.\n\nI can document it though, so that it is clearer. We could also add a Aborted() method, although I\u0027m not sure we really need it now.",
+      "parentUuid": "67280d9d_1994fe7e",
       "range": {
         "startLine": 582,
         "startChar": 13,
