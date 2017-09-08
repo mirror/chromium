@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "55a3b5de_3790bc58",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-08T13:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da571bdb_a6a1f0cb",
+      "range": {
+        "startLine": 14,
+        "startChar": 16,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d22d06d3_b316dd55",
         "filename": "tools/traffic_annotation/auditor/auditor_result.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-08T12:24:06Z",
       "side": 1,
       "message": "I think I asked already in a previous CL, but I don\u0027t remember the answer. Why do we say \"similar\" rather than \"equal\"?",
+      "range": {
+        "startLine": 24,
+        "startChar": 46,
+        "endLine": 24,
+        "endChar": 53
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0921303_2ab4a3cc",
+        "filename": "tools/traffic_annotation/auditor/auditor_result.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-08T13:24:07Z",
+      "side": 1,
+      "message": "Both cases changed to \u0027equal\u0027.",
+      "parentUuid": "d22d06d3_b316dd55",
       "range": {
         "startLine": 24,
         "startChar": 46,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f43eb0ce_c1d0a7d7",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-08T13:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "913389f3_bfe8bb7e",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 34
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "741504ff_c13bc90b",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1722d44_745fe090",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-08T13:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "741504ff_c13bc90b",
+      "range": {
+        "startLine": 49,
+        "startChar": 41,
+        "endLine": 49,
+        "endChar": 42
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f6ab3c6f_e8c23d14",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-08T13:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f4fa33a_39c1858e",
+      "range": {
+        "startLine": 63,
+        "startChar": 3,
+        "endLine": 63,
+        "endChar": 14
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffefd3ad_255578c6",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-08T12:24:06Z",
       "side": 1,
       "message": "Is this really an error? If we weren\u0027t testing, we sould simply update the file.",
+      "range": {
+        "startLine": 383,
+        "startChar": 14,
+        "endLine": 383,
+        "endChar": 20
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f668083_932a1d04",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-08T13:24:07Z",
+      "side": 1,
+      "message": "Yes, if it\u0027s not test mode, we update it (in the else case).\nBut test mode is run on the trybot where we cannot update anything, so if the file needs modification, it is reported as an error that should block landing.",
+      "parentUuid": "ffefd3ad_255578c6",
       "range": {
         "startLine": 383,
         "startChar": 14,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "7712c003_96a8f054",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-08T13:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea78aa72_77ea4a68",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 1
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7265febd_931ce6c2",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a663013_4c8aeb1a",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-08T13:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7265febd_931ce6c2",
+      "range": {
+        "startLine": 230,
+        "startChar": 22,
+        "endLine": 230,
+        "endChar": 23
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "294e175f_60593260",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-08T13:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22be17aa_03a52caa",
+      "range": {
+        "startLine": 234,
+        "startChar": 30,
+        "endLine": 234,
+        "endChar": 31
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "808d3b7f_35d2af77",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
         "patchSetId": 3
@@ -229,6 +445,30 @@
       "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fe2be5_6e306538",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-08T13:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "808d3b7f_35d2af77",
+      "range": {
+        "startLine": 22,
+        "startChar": 68,
+        "endLine": 22,
+        "endChar": 69
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "0c861b47_42808fe7",
+        "filename": "tools/traffic_annotation/scripts/annotations_xml_downstream_unittests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-08T13:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cde5592b_fa2a257b",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 15
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "746b86c7_ce4af016",
         "filename": "tools/traffic_annotation/scripts/annotations_xml_downstream_unittests.py",
         "patchSetId": 3
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "90c2ebba_ab79c4f7",
+        "filename": "tools/traffic_annotation/scripts/annotations_xml_downstream_unittests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-08T13:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "746b86c7_ce4af016",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 78
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0098ec09_09e0cde9",
         "filename": "tools/traffic_annotation/scripts/annotations_xml_downstream_updater.py",
         "patchSetId": 3
@@ -298,6 +586,30 @@
       "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c409d0_91e23444",
+        "filename": "tools/traffic_annotation/scripts/annotations_xml_downstream_updater.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-08T13:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0098ec09_09e0cde9",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 15
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
