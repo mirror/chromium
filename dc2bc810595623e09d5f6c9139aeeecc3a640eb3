@@ -16,6 +16,23 @@
       "revId": "dc2bc810595623e09d5f6c9139aeeecc3a640eb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ee9fe1_380a1f43",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-08T05:40:52Z",
+      "side": 1,
+      "message": "With this condition, we\u0027ll leave check-select mode even when 4 files are selected and 3 of them are deleted.\n\nI think you should test the same condition as https://codesearch.chromium.org/chromium/src/ui/webui/resources/js/cr/ui/list_selection_model.js?type\u003dcs\u0026q\u003dadjusttoreordering\u0026sq\u003dpackage:chromium\u0026l\u003d348.",
+      "revId": "dc2bc810595623e09d5f6c9139aeeecc3a640eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
