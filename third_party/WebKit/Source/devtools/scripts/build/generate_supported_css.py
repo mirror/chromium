@@ -37,13 +37,19 @@ import re
 import sys
 
 
+def replace_key(match):
+    if match.group(1) is None:
+        return match.group()
+    return "'" + match.group(1) + "':"
+
 def _json5_load(lines):
     # Use json5.loads when json5 is available. Currently we use simple
     # regexs to convert well-formed JSON5 to PYL format.
     # Strip away comments and quote unquoted keys.
     re_comment = re.compile(r"^\s*//.*$|//+ .*$", re.MULTILINE)
-    re_map_keys = re.compile(r"^\s*([$A-Za-z_][\w]*)\s*:", re.MULTILINE)
-    pyl = re.sub(re_map_keys, r"'\1':", re.sub(re_comment, "", lines))
+    # When matching keys, ignore keys that are surrounded by quotes.
+    re_map_keys = re.compile(r'"(?:\\"|[^"])*"|([$A-Za-z_]\w*)\s*:', re.MULTILINE)
+    pyl = re.sub(re_map_keys, replace_key, re.sub(re_comment, "", lines))
     # Convert map values of true/false to Python version True/False.
     re_true = re.compile(r":\s*true\b")
     re_false = re.compile(r":\s*false\b")

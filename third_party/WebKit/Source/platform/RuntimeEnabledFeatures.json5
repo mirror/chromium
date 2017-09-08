@@ -1149,9 +1149,7 @@
       name: "WebGLDraftExtensions",
       status: "experimental",
     },
-    {
-      name: "WebGLImageChromium",
-    },
+    { name: "WebGLImageChromium" },
     {
       name: "WebNFC",
       status: "experimental",
