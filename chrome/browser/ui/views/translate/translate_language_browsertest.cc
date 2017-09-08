@@ -27,6 +27,7 @@
 #include "components/language/core/browser/url_language_histogram.h"
 #include "components/translate/core/browser/translate_manager.h"
 #include "components/translate/core/browser/translate_ui_delegate.h"
+#include "components/translate/core/common/language_detection_details.h"
 #include "components/translate/core/common/translate_switches.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/test/browser_test_utils.h"
@@ -50,6 +51,7 @@ class TranslateLanguageBrowserTest : public InProcessBrowserTest {
   void SetUp() override {
     set_open_about_blank_on_browser_launch(true);
     translate::TranslateManager::SetIgnoreMissingKeyForTesting(true);
+
     InProcessBrowserTest::SetUp();
   }
 
@@ -58,25 +60,25 @@ class TranslateLanguageBrowserTest : public InProcessBrowserTest {
  protected:
   void SwitchToIncognitoMode() { browser_ = CreateIncognitoBrowser(); }
 
-  void CheckForTranslateUI(const base::FilePath& path, bool expect_translate) {
+  void CheckForTranslateUI(const base::FilePath& path,
+                           bool expect_translate,
+                           const std::string& expected_lang) {
     // Set browser_ here because |browser_| is not available during the
     // InProcessBrowserTest parameter initialization phase.
     if (!browser_) {
       browser_ = browser();
     }
-    const content::WebContents* const current_web_contents =
-        browser_->tab_strip_model()->GetActiveWebContents();
-    const content::Source<content::WebContents> source(current_web_contents);
-    ui_test_utils::WindowedNotificationObserverWithDetails<
-        translate::LanguageDetectionDetails>
-        language_detected_signal(chrome::NOTIFICATION_TAB_LANGUAGE_DETERMINED,
-                                 source);
+    expected_lang_ = expected_lang;
+    content::WindowedNotificationObserver language_detected_signal(
+        chrome::NOTIFICATION_TAB_LANGUAGE_DETERMINED,
+        base::Bind(&TranslateLanguageBrowserTest::OnLanguageDetermined,
+                   base::Unretained(this)));
 
     const GURL url = ui_test_utils::GetTestUrl(base::FilePath(), path);
     ui_test_utils::NavigateToURL(browser_, url);
     language_detected_signal.Wait();
     TranslateBubbleView* const bubble = TranslateBubbleView::GetCurrentBubble();
-    EXPECT_NE(expect_translate, bubble == nullptr);
+    DCHECK_NE(expect_translate, bubble == nullptr);
   }
 
   language::UrlLanguageHistogram* GetUrlLanguageHistogram() {
@@ -91,19 +93,29 @@ class TranslateLanguageBrowserTest : public InProcessBrowserTest {
 
  private:
   Browser* browser_;
+  std::string expected_lang_;
+
+  bool OnLanguageDetermined(const content::NotificationSource& source,
+                            const content::NotificationDetails& details) {
+    const std::string& language =
+        content::Details<translate::LanguageDetectionDetails>(details)
+            ->cld_language;
+    return language == expected_lang_;
+  }
+
   DISALLOW_COPY_AND_ASSIGN(TranslateLanguageBrowserTest);
 };
 
 IN_PROC_BROWSER_TEST_F(TranslateLanguageBrowserTest, LanguageModelLogSucceed) {
   for (int i = 0; i < 10; ++i) {
     ASSERT_NO_FATAL_FAILURE(
-        CheckForTranslateUI(base::FilePath(kFrenchTestPath), true));
+        CheckForTranslateUI(base::FilePath(kFrenchTestPath), true, "fr"));
     ASSERT_NO_FATAL_FAILURE(
-        CheckForTranslateUI(base::FilePath(kEnglishTestPath), false));
+        CheckForTranslateUI(base::FilePath(kEnglishTestPath), false, "en"));
   }
   // Intentionally visit the french page one more time.
   ASSERT_NO_FATAL_FAILURE(
-      CheckForTranslateUI(base::FilePath(kFrenchTestPath), true));
+      CheckForTranslateUI(base::FilePath(kFrenchTestPath), true, "fr"));
 
   // We should expect fr and en. fr should be 11 / (11 + 10) = 0.5238.
   const language::UrlLanguageHistogram* const histograms =
@@ -121,9 +133,9 @@ IN_PROC_BROWSER_TEST_F(TranslateLanguageBrowserTest, DontLogInIncognito) {
   SwitchToIncognitoMode();
   for (int i = 0; i < 10; ++i) {
     ASSERT_NO_FATAL_FAILURE(
-        CheckForTranslateUI(base::FilePath(kEnglishTestPath), false));
+        CheckForTranslateUI(base::FilePath(kEnglishTestPath), false, "en"));
     ASSERT_NO_FATAL_FAILURE(
-        CheckForTranslateUI(base::FilePath(kFrenchTestPath), true));
+        CheckForTranslateUI(base::FilePath(kFrenchTestPath), true, "fr"));
   }
   // We should expect no url language histograms.
   const language::UrlLanguageHistogram* const histograms =
