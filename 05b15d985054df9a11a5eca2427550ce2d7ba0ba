@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "ee6c3683_0ea8d576",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/DeviceConditions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-08T00:06:55Z",
+      "side": 1,
+      "message": "That may be true, but there are currently 3 methods:\n\npublic static getInPowerSaveMode\nprivate static isPowerSaveModeOn\npublic boolean inPowerSaveMode\n\nI think we can merge the public static with the private static.\n\n[commentary not related to this particular CL] Additionally, it\u0027s confusing that this class has static methods that do the real work, and non-static methods for test.  It would be nice in the future to make that separation more explicit, like having a DeviceConditions.Snapshot class or something.",
+      "parentUuid": "c9146ff7_04ec1c86",
+      "revId": "05b15d985054df9a11a5eca2427550ce2d7ba0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aa8a315_98369888",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskUnitTest.java",
         "patchSetId": 1
