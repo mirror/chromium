@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c8b42f20_3890c226",
+        "filename": "components/cronet/android/io_buffer_with_byte_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-09-08T21:34:47Z",
+      "side": 1,
+      "message": "Maybe add a comment to explain that local |java_buffer| is needed to release local reference?",
+      "range": {
+        "startLine": 31,
+        "startChar": 17,
+        "endLine": 31,
+        "endChar": 35
+      },
+      "revId": "4d4a01396b151edf6774d30ba440f116470d4ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7aec4d7_d866ef18",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
         "patchSetId": 3
