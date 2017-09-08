@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e60bf96f_3dbdcfbe",
+        "filename": "components/metrics/profiler/tracking_synchronizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-08T20:18:00Z",
+      "side": 0,
+      "message": "Please mark all histograms you\u0027re removing as \u003cobsolete\u003e in histograms.xml",
+      "range": {
+        "startLine": 136,
+        "startChar": 56,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "db55a8494efd4afdc0397966cfcc2ad87700dab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
