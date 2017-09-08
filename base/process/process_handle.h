@@ -88,6 +88,8 @@ BASE_EXPORT ProcessId GetProcId(ProcessHandle process);
 
 #if !defined(OS_FUCHSIA)
 // Returns the ID for the parent of the given process. Not available on Fuchsia.
+// This function should always return a positive value, returning 0 or negative
+// value indicates that |process| does not exist or has no parent process.
 BASE_EXPORT ProcessId GetParentProcessId(ProcessHandle process);
 #endif  // !defined(OS_FUCHSIA)
 

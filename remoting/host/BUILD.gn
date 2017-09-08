@@ -239,6 +239,8 @@ static_library("host") {
     "policy_watcher.h",
     "posix/signal_handler.cc",
     "posix/signal_handler.h",
+    "process_metrics.cc",
+    "process_metrics.h",
     "process_stats_agent.h",
     "process_stats_sender.cc",
     "process_stats_sender.h",
@@ -539,13 +541,21 @@ source_set("unit_tests") {
     deps += [ "//remoting/host/win:unit_tests" ]
   }
 
+  data_deps = []
+
   if (!is_ios) {
+    sources += [ "process_metrics_unittest.cc" ]
+
     deps += [ "//components/policy/core/browser:test_support" ]
+
+    data_deps += [
+      "//remoting/test:process_metrics_test_stub"
+    ]
   }
 
   if (enable_me2me_host) {
     sources += [ "evaluate_capability_unittest.cc" ]
-    data_deps = [ "//remoting/test:capability_test_stub" ]
+    data_deps += [ "//remoting/test:capability_test_stub" ]
   }
 }
 
