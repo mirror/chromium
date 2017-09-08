@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef5f949d_4d52fdf1",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-08T01:18:49Z",
+      "side": 1,
+      "message": "Given that the state values for the enum are not continuous we will probably be requested to change this histogram to be a sparse one. Metrics owners might be able to assist with how to do that.",
+      "range": {
+        "startLine": 100,
+        "startChar": 41,
+        "endLine": 100,
+        "endChar": 56
+      },
+      "revId": "011a916b18f5073e4d6b5165b16814dc949efc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3de121_b6610e0e",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-08T01:18:49Z",
+      "side": 1,
+      "message": "OfflinePrefetchItemState seems to be the correct name.\nWould you mind fixing the same error in the PrefetchItemErrorCode comments (I also forgot the Offline prefix there)?",
+      "range": {
+        "startLine": 73,
+        "startChar": 3,
+        "endLine": 73,
+        "endChar": 20
+      },
+      "revId": "011a916b18f5073e4d6b5165b16814dc949efc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
