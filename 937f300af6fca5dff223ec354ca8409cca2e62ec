@@ -16,6 +16,24 @@
       "revId": "937f300af6fca5dff223ec354ca8409cca2e62ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcea6b4d_81055ec4",
+        "filename": "chrome/installer/linux/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-08T00:42:19Z",
+      "side": 1,
+      "message": "I added inputs[], otherwise this target won\u0027t get rebuilt when eg. dist-package-versions.json changes.  Just forgot to do this in the deb patches",
+      "parentUuid": "b41a8409_5d745212",
+      "revId": "937f300af6fca5dff223ec354ca8409cca2e62ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
