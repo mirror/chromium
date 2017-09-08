@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6639794e_444ed937",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-08T08:32:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a74da090_ad5025c3",
+      "revId": "6067ae17d2457ae451a1558cdba30766a5f6fa73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbc945c1_81c1ed75",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-07T21:06:27Z",
       "side": 1,
       "message": "Is there a reason this is needed?  It seems desirable to leave this check as-is, since otherwise this would be a bug that would lead to crashes (see https://crbug.com/751916 or https://crbug.com/751920).  Since we should never add processes with empty site URLs into the site-process trackers, the rest of the logic should ensure that we don\u0027t place an empty site URL into a process with a different StoragePartition.",
+      "range": {
+        "startLine": 3581,
+        "startChar": 8,
+        "endLine": 3581,
+        "endChar": 31
+      },
+      "revId": "6067ae17d2457ae451a1558cdba30766a5f6fa73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e310aee6_25728a7f",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3581,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-08T08:32:30Z",
+      "side": 1,
+      "message": "It\u0027s needed because it shortcuts preventing BrowserContext::GetStoragePartition(                                      browser_context, site_instance) on the other side of the ||, which creates the storage partition again unnecessarily. This avoids the various problems due to its posting tasks on the IO thread.\n\nPerhaps you could do the check via the StoragePartitionImplMap to look for the StoragePartition but not actually create it if it doesn\u0027t exist? StoragePartitionImplMap::GetIfExists?",
+      "parentUuid": "fbc945c1_81c1ed75",
       "range": {
         "startLine": 3581,
         "startChar": 8,
