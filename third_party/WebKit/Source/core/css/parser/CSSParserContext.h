@@ -54,6 +54,7 @@ class CORE_EXPORT CSSParserContext
       ReferrerPolicy referrer_policy_override,
       const WTF::TextEncoding& charset = WTF::TextEncoding(),
       SelectorProfile = kDynamicProfile);
+  static CSSParserContext* Create(const ExecutionContext&);
 
   bool operator==(const CSSParserContext&) const;
   bool operator!=(const CSSParserContext& other) const {
