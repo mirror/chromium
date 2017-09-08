@@ -236,6 +236,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
                                 const gfx::PointF& extent) override;
   void OnSelectionEvent(ui::SelectionEventType event) override;
   std::unique_ptr<ui::TouchHandleDrawable> CreateDrawable() override;
+  void UpdateSelectionBoundsIfNecessary() override;
 
   // DelegatedFrameHostAndroid::Client implementation.
   void SetBeginFrameSource(viz::BeginFrameSource* begin_frame_source) override;
