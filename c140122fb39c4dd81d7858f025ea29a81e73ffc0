@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe0ad7fc_f966a85f",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1108729
+      },
+      "writtenOn": "2017-09-08T00:56:52Z",
+      "side": 1,
+      "message": "I used a SkMatrix to set up the rotation here so it would match the similar buffer_to_target_matrix setup. I tried tried composing a matrix using gfx::Transform functions, and it was not obviously the same (no setSinCos equivalent, and its calls to append translation and rotation transformations only did pre-concatenation rather than post)",
+      "revId": "c140122fb39c4dd81d7858f025ea29a81e73ffc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
