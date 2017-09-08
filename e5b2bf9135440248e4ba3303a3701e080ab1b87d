@@ -22,6 +22,30 @@
       "revId": "e5b2bf9135440248e4ba3303a3701e080ab1b87d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a45e01e_8965c812",
+        "filename": "third_party/webrtc_overrides/webrtc/rtc_base/task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1154069
+      },
+      "writtenOn": "2017-09-08T08:58:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fb36c88_911ea072",
+      "range": {
+        "startLine": 109,
+        "startChar": 7,
+        "endLine": 109,
+        "endChar": 8
+      },
+      "revId": "e5b2bf9135440248e4ba3303a3701e080ab1b87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
