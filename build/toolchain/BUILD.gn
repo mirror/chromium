@@ -3,9 +3,14 @@
 # found in the LICENSE file.
 
 import("//build/toolchain/concurrent_links.gni")
+import("//build/toolchain/goma.gni")
 
 if (current_toolchain == default_toolchain) {
   pool("link_pool") {
     depth = concurrent_links
+  }
+
+  pool("action_pool") {
+    depth = action_pool_depth
   }
 }
