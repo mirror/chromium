@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "350b93e3_206faf3c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/cache/resources/etag-200-different.php",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-08T00:18:52Z",
+      "side": 1,
+      "message": "Omit ?\u003e\nhttps://stackoverflow.com/questions/4410704/why-would-one-omit-the-close-tag",
+      "revId": "475322f3c974ce0ebb3d2021d32f663488846684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
