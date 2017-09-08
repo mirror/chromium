@@ -16,22 +16,6 @@
 
 // Database messages sent from the renderer to the browser.
 
-// Asks the browser process to open a DB file with the given name.
-IPC_SYNC_MESSAGE_CONTROL2_1(DatabaseHostMsg_OpenFile,
-                            base::string16 /* vfs file name */,
-                            int /* desired flags */,
-                            IPC::PlatformFileForTransit /* file_handle */)
-
-// Asks the browser process to delete a DB file
-IPC_SYNC_MESSAGE_CONTROL2_1(DatabaseHostMsg_DeleteFile,
-                            base::string16 /* vfs file name */,
-                            bool /* whether or not to sync the directory */,
-                            int /* SQLite error code */)
-
-// Asks the browser process to return the attributes of a DB file
-IPC_SYNC_MESSAGE_CONTROL1_1(DatabaseHostMsg_GetFileAttributes,
-                            base::string16 /* vfs file name */,
-                            int32_t /* the attributes for the given DB file */)
 
 // Asks the browser process to return the size of a DB file
 IPC_SYNC_MESSAGE_CONTROL1_1(DatabaseHostMsg_GetFileSize,
