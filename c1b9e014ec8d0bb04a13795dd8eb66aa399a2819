@@ -16,6 +16,24 @@
       "revId": "c1b9e014ec8d0bb04a13795dd8eb66aa399a2819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "964378e4_d73f73e2",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T01:29:32Z",
+      "side": 1,
+      "message": "Sorry\n\nreturn FlatTreeTraversal::Contains(document, *node);\n\nis simpler.",
+      "parentUuid": "35d0f204_a3245867",
+      "revId": "c1b9e014ec8d0bb04a13795dd8eb66aa399a2819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
