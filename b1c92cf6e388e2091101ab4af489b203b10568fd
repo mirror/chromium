@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d205569b_f2aae7a5",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-08T16:02:40Z",
+      "side": 1,
+      "message": "I changed it to say \"At WillProcessResponse time at the latest\". That it happens at WillProcessResponse is critical because observers will need to match with the *next* navigation, not the previous one. This is basically what the driver factory does.",
+      "parentUuid": "f911e683_2e839732",
+      "range": {
+        "startLine": 35,
+        "startChar": 28,
+        "endLine": 35,
+        "endChar": 70
+      },
+      "revId": "b1c92cf6e388e2091101ab4af489b203b10568fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb0e60b9_5810cd93",
         "filename": "components/subresource_filter/content/browser/subresource_filter_observer.h",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "b1c92cf6e388e2091101ab4af489b203b10568fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2500c8_b383453f",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-08T16:02:40Z",
+      "side": 1,
+      "message": "Oops I meant subresource_filter :) fixed",
+      "parentUuid": "eb0e60b9_5810cd93",
+      "revId": "b1c92cf6e388e2091101ab4af489b203b10568fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
