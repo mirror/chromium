@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e506a47_1c51b78c",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-09-08T23:06:17Z",
+      "side": 1,
+      "message": "Lint tells me to add this line.\nIt works without this line though.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "3d8468257f03d158583b1eff0c9cd353fdc5d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
