@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/chromeos/power/peripheral_battery_notifier.h"
+#include "ash/system/power/peripheral_battery_notifier.h"
 
 #include "ash/test/ash_test_base.h"
 #include "base/macros.h"
@@ -22,7 +22,7 @@ const char kTestDeviceName[] = "test device";
 
 }  // namespace
 
-namespace chromeos {
+namespace ash {
 
 class PeripheralBatteryNotifierTest : public ash::AshTestBase {
  public:
@@ -222,4 +222,4 @@ TEST_F(PeripheralBatteryNotifierTest, StylusNotification) {
                   PeripheralBatteryNotifier::kStylusNotificationId) == nullptr);
 }
 
-}  // namespace chromeos
+}  // namespace ash
