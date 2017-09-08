@@ -23,6 +23,7 @@ DelegatingProvider::GetProviders() {
 }
 
 void DelegatingProvider::Init() {
+  LOG(INFO) << "Init";
   for (auto& provider : metrics_providers_)
     provider->Init();
 }
@@ -88,6 +89,7 @@ void DelegatingProvider::ProvidePreviousSessionData(
 
 void DelegatingProvider::ProvideCurrentSessionData(
     ChromeUserMetricsExtension* uma_proto) {
+  LOG(INFO) << "ProvideCurrentSessionData";
   for (const auto& provider : metrics_providers_)
     provider->ProvideCurrentSessionData(uma_proto);
 }

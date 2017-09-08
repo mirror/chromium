@@ -315,6 +315,7 @@ void UpgradeDetectorImpl::StartUpgradeNotificationTimer() {
 }
 
 void UpgradeDetectorImpl::CheckForUpgrade() {
+  LOG(INFO) << "CheckForUpgrade";
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   // Interrupt any (unlikely) unfinished execution of DetectUpgradeTask, or at
   // least prevent the callback from being executed, because we will potentially
@@ -395,6 +396,8 @@ void UpgradeDetectorImpl::OnExperimentChangesDetected(Severity severity) {
 void UpgradeDetectorImpl::UpgradeDetected(UpgradeAvailable upgrade_available) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   set_upgrade_available(upgrade_available);
+
+  LOG(INFO) << "UpgradeDetected";
 
   // Stop the recurring timer (that is checking for changes).
   detect_upgrade_timer_.Stop();
