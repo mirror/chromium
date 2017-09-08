@@ -30,8 +30,8 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image_skia_rep.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/message_center_style.h"
 #include "ui/message_center/notification_types.h"
+#include "ui/message_center/public/cpp/message_center_constants.h"
 #include "ui/strings/grit/ui_strings.h"
 
 namespace {
