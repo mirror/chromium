@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "cb03c5cd_ead20800",
+        "filename": "base/win/com_base_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T19:24:09Z",
+      "side": 1,
+      "message": "toyoshim@\u0027s comment reminded me you can also use HRESULT_FROM_WIN32(GetLastError()) to have Windows explain what happened.\n\nIMPORTANT: Care must be taken to call GetLastError() immediately after the failing call, which means the Preloads should also provide a return value or set the last result right before returning if other Windows calls were made (and these are hard to spot).",
+      "parentUuid": "63a1eed6_119b37c9",
+      "range": {
+        "startLine": 71,
+        "startChar": 11,
+        "endLine": 71,
+        "endChar": 25
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14dbb8a7_fcbaf536",
         "filename": "base/win/com_base_util.h",
         "patchSetId": 9
@@ -393,6 +417,24 @@
       "writtenOn": "2017-09-08T09:57:15Z",
       "side": 1,
       "message": "apologies if i missed the discussion, but why do this rather than delayload? if it\u0027s because you want to know whether or not the dll/methods exist, you can do a one-time check via __HrLoadAllImportsForDll; see device/bluetooth/bluetooth_init_win.cc for an example. i think you can remove a whole lot of code if you let the loader do the work for you.",
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263c2282_5355ecbd",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T19:24:09Z",
+      "side": 1,
+      "message": "There is a need for notifications to early fail if these functions don\u0027t exist, so finding them out at call time is too late.\n\nI\u0027ll defer to finnur@ on that.",
+      "parentUuid": "14425284_12adab65",
       "revId": "7c94678236651053359d829bbd360f4971b4c84a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
