@@ -14,6 +14,7 @@
 #include "ui/gfx/geometry/box_f.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/point3_f.h"
+#include "ui/gfx/geometry/point_f.h"
 #include "ui/gfx/geometry/quaternion.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
@@ -433,6 +434,11 @@ void Transform::TransformPoint(Point* point) const {
   TransformPointInternal(matrix_, point);
 }
 
+void Transform::TransformPoint(PointF* point) const {
+  DCHECK(point);
+  TransformPointInternal(matrix_, point);
+}
+
 void Transform::TransformPoint(Point3F* point) const {
   DCHECK(point);
   TransformPointInternal(matrix_, point);
@@ -569,6 +575,19 @@ void Transform::TransformVectorInternal(const SkMatrix44& xform,
   vector->set_x(p[0]);
   vector->set_y(p[1]);
   vector->set_z(p[2]);
+}
+
+void Transform::TransformPointInternal(const SkMatrix44& xform,
+                                       PointF* point) const {
+  if (xform.isIdentity())
+    return;
+
+  SkMScalar p[4] = {SkIntToMScalar(point->x()), SkIntToMScalar(point->y()), 0,
+                    1};
+
+  xform.mapMScalars(p);
+
+  point->SetPoint(p[0], p[1]);
 }
 
 void Transform::TransformPointInternal(const SkMatrix44& xform,
