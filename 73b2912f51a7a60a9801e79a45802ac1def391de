@@ -16,6 +16,24 @@
       "revId": "73b2912f51a7a60a9801e79a45802ac1def391de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6c058b_fc7d0432",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-09-08T01:38:43Z",
+      "side": 1,
+      "message": "We\u0027re working on this now, please contact meade@ for more detail. Thanks.",
+      "parentUuid": "5fd2cb59_cd96715b",
+      "revId": "73b2912f51a7a60a9801e79a45802ac1def391de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
