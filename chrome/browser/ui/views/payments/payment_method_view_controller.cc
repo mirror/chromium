@@ -95,7 +95,7 @@ class PaymentMethodListItem : public PaymentRequestItemList::Item {
       case PaymentInstrument::Type::NATIVE_MOBILE_APP:
       case PaymentInstrument::Type::SERVICE_WORKER_APP:
         // We cannot edit a native mobile app instrument and service worker
-        // based payment app.
+        // based payment instrument.
         return;
     }
     NOTREACHED();
