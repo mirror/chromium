@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f911e683_2e839732",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-08T15:54:44Z",
+      "side": 1,
+      "message": "Does the observer need to know that it will be called at WillProcessResponse time? I think it should just be aware that the check is complete irrespective of when it got completed. WDYT?",
+      "range": {
+        "startLine": 35,
+        "startChar": 28,
+        "endLine": 35,
+        "endChar": 70
+      },
+      "revId": "b1c92cf6e388e2091101ab4af489b203b10568fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0e60b9_5810cd93",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-08T15:54:44Z",
+      "side": 1,
+      "message": "Are we explicitly excluding subresource filter threat type from this?",
+      "revId": "b1c92cf6e388e2091101ab4af489b203b10568fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
