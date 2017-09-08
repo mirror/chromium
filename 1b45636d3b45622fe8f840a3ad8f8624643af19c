@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91299cf0_3d2536d9",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-08T18:42:13Z",
+      "side": 1,
+      "message": "Same here",
+      "range": {
+        "startLine": 130,
+        "startChar": 70,
+        "endLine": 130,
+        "endChar": 77
+      },
+      "revId": "1b45636d3b45622fe8f840a3ad8f8624643af19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79480950_44a5697e",
+        "filename": "cc/paint/discardable_image_map.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-08T18:42:13Z",
+      "side": 1,
+      "message": "Why did you pick these defaults?",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 52
+      },
+      "revId": "1b45636d3b45622fe8f840a3ad8f8624643af19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5624a243_db2d9cc5",
+        "filename": "cc/paint/discardable_image_map.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-08T18:42:13Z",
+      "side": 1,
+      "message": "animated_images_metadata",
+      "range": {
+        "startLine": 53,
+        "startChar": 44,
+        "endLine": 53,
+        "endChar": 59
+      },
+      "revId": "1b45636d3b45622fe8f840a3ad8f8624643af19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cedefd7_4eef353a",
+        "filename": "cc/paint/discardable_image_map.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-08T18:42:13Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 27
+      },
+      "revId": "1b45636d3b45622fe8f840a3ad8f8624643af19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75283921_e77652fd",
+        "filename": "cc/paint/discardable_image_map_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-08T18:42:13Z",
+      "side": 1,
+      "message": "nit: ASSERT",
+      "range": {
+        "startLine": 721,
+        "startChar": 2,
+        "endLine": 721,
+        "endChar": 8
+      },
+      "revId": "1b45636d3b45622fe8f840a3ad8f8624643af19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5464bc3b_c88e5398",
+        "filename": "cc/paint/frame_metadata.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-08T18:42:13Z",
+      "side": 1,
+      "message": "Any progress here? :P",
+      "range": {
+        "startLine": 13,
+        "startChar": 23,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "1b45636d3b45622fe8f840a3ad8f8624643af19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
