@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "417eda1a_b6413a1a",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T20:43:57Z",
+      "side": 1,
+      "message": "Offline discussion summary:\n\nWe actually care about thread waiting now, a specific case of blocking.\nThe comments here will discuss waiting and we\u0027ll do the Blocking-\u003eWaiting rename in a separate change.",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 59
+      },
+      "revId": "2e0db88c04ae090ea41adbb397e2427e562fea88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
