@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01625f65_0451315f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-format-es6-expected.txt",
+        "patchSetId": 19
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-08T01:52:04Z",
+      "side": 1,
+      "message": "lets add a promise resolve success to this test.",
+      "revId": "c076884e999495cf1760e0c5eaa92cbbff454794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b361b002_d9e6235d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-08T01:52:04Z",
+      "side": 1,
+      "message": "lets inline these, ie:\nvar promiseStatusProperty \u003d /** @type {!Protocol.Runtime.PropertyPreview} */ (null);",
+      "revId": "c076884e999495cf1760e0c5eaa92cbbff454794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
