@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "58218534_ee3bb412",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-08T05:33:54Z",
+      "side": 1,
+      "message": "nit: When you add a new class, it is encouraged that adding class level comments to describe the purpose of the class.",
+      "revId": "b39217c80dcdb253773fe6033b7f81d6e23976f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd55c1fa_bd7ac717",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-08T05:33:54Z",
+      "side": 1,
+      "message": "nit: Ditto. It\u0027s nice to have a class level comment.",
+      "revId": "b39217c80dcdb253773fe6033b7f81d6e23976f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5a007fa_0f60d371",
         "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
         "patchSetId": 11
