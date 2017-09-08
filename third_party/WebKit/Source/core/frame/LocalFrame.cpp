@@ -768,6 +768,7 @@ inline LocalFrame::LocalFrame(LocalFrameClient* client,
     probe_sink_ = LocalFrameRoot().probe_sink_;
     performance_monitor_ = LocalFrameRoot().performance_monitor_;
   }
+  frame_scheduler_->SetIsMainFrame(IsMainFrame());
 }
 
 WebFrameScheduler* LocalFrame::FrameScheduler() {

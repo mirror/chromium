@@ -47,6 +47,9 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
   void SetPageVisible(bool page_visible) override;
   void SetPaused(bool frame_paused) override;
   void SetCrossOrigin(bool cross_origin) override;
+  bool IsCrossOrigin() override;
+  void SetIsMainFrame(bool is_main_frame) override;
+  bool IsMainFrame() override;
   RefPtr<WebTaskRunner> LoadingTaskRunner() override;
   RefPtr<WebTaskRunner> LoadingControlTaskRunner() override;
   RefPtr<WebTaskRunner> ThrottleableTaskRunner() override;
@@ -121,6 +124,7 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
   bool page_visible_;
   bool frame_paused_;
   bool cross_origin_;
+  bool is_main_frame_;
   int active_connection_count_;
 
   base::WeakPtrFactory<WebFrameSchedulerImpl> weak_factory_;
