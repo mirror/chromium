@@ -32,6 +32,12 @@
 #include "ui/gfx/image/image.h"
 #include "url/gurl.h"
 
+// How many non-forced top sites to store in the cache.
+const size_t kNonForcedTopSitesNumber = 10;
+
+// How many forced top sites to store in the cache.
+const size_t kForcedTopSitesNumber = 10;
+
 class PrefRegistrySimple;
 class PrefService;
 
