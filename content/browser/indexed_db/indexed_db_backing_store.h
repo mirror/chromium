@@ -599,6 +599,12 @@ class CONTENT_EXPORT IndexedDBBackingStore
 
   LevelDBDatabase* db() { return db_.get(); }
 
+  // Returns true if a blob cleanup job is pending on journal_cleaning_timer_.
+  bool IsBlobCleanupPending();
+
+  // Stops the journal_cleaning_timer_ and runs it's pending task.
+  void ForceRunBlobCleanup();
+
  protected:
   friend class base::RefCounted<IndexedDBBackingStore>;
 
@@ -700,6 +706,8 @@ class CONTENT_EXPORT IndexedDBBackingStore
   std::set<int> child_process_ids_granted_;
   std::map<std::string, std::unique_ptr<BlobChangeRecord>> incognito_blob_map_;
   base::OneShotTimer journal_cleaning_timer_;
+  // Stores the first start of the timer before any restarts.
+  base::TimeTicks journal_cleaning_timer_start_;
 
   std::unique_ptr<LevelDBDatabase> db_;
   std::unique_ptr<LevelDBComparator> comparator_;
