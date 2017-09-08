@@ -79,16 +79,55 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
    * @param {!Protocol.Runtime.ObjectPreview} preview
    */
   _appendObjectPropertiesPreview(parentElement, preview) {
+    var promiseStatusName = '[[PromiseStatus]]';
+    var promiseValueName = '[[PromiseValue]]';
+    var generatorStatusName = '[[GeneratorStatus]]';
+    var primitiveValueName = '[[PrimitiveValue]]';
     var properties = preview.properties.filter(p => p.type !== 'accessor')
                          .stableSort(ObjectUI.RemoteObjectPreviewFormatter._objectPropertyComparator);
+
+    var elements = /** @type {!Array<!Array<!Element>>} */ ([]);
+    var promiseStatusProperty;
+    var promiseValueProperty;
     for (var i = 0; i < properties.length; ++i) {
+      var property = properties[i];
+      var name = property.name;
+      if (preview.subtype === 'promise') {
+        if (name === promiseStatusName)
+          promiseStatusProperty = property;
+        else if (name === promiseValueName)
+          promiseValueProperty = property;
+        if (name === promiseStatusName || name === promiseValueName)
+          continue;
+      }
+      elements.push(createPropertyElements.call(this, property));
+    }
+    if (promiseStatusProperty) {
+      var promiseElements = [this._renderDisplayName('<' + promiseStatusProperty.value + '>')];
+      if (promiseValueProperty && promiseStatusProperty.value !== 'pending')
+        promiseElements.push(createTextNode(': '), this._renderPropertyPreviewOrAccessor([promiseValueProperty]));
+      elements.unshift(promiseElements);
+    }
+
+    for (var i = 0; i < elements.length; i++) {
       if (i > 0)
         parentElement.createTextChild(', ');
+      parentElement.appendChildren.apply(parentElement, elements[i]);
+    }
 
-      var property = properties[i];
-      parentElement.appendChild(this._renderDisplayName(property.name));
-      parentElement.createTextChild(': ');
-      parentElement.appendChild(this._renderPropertyPreviewOrAccessor([property]));
+    /**
+     * @this {!ObjectUI.RemoteObjectPreviewFormatter}
+     * @param {!Protocol.Runtime.PropertyPreview} property
+     * @return {!Array<!Element>}
+     */
+    function createPropertyElements(property) {
+      if (preview.subtype === 'generator' && property.name === generatorStatusName)
+        return [this._renderDisplayName('<' + property.value + '>')];
+      if (property.name === primitiveValueName)
+        return [this._renderPropertyPreviewOrAccessor([property])];
+      return [
+        this._renderDisplayName(property.name), createTextNode(': '), this._renderPropertyPreviewOrAccessor([property])
+      ];
     }
   }
 
