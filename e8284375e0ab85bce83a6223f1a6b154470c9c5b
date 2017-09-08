@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8175359_01484bb1",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-08T05:45:19Z",
+      "side": 1,
+      "message": "Do both types of packets (fd watch and ScheduleWork) apply for both calls to HandleEvents()?",
+      "range": {
+        "startLine": 223,
+        "startChar": 2,
+        "endLine": 223,
+        "endChar": 44
+      },
+      "revId": "e8284375e0ab85bce83a6223f1a6b154470c9c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
