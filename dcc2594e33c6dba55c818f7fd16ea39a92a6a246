@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "e27f6fb7_577bf9b0",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daf63157_b12828fa",
+      "range": {
+        "startLine": 944,
+        "startChar": 51,
+        "endLine": 944,
+        "endChar": 56
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c38e9217_7d772e47",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4657f7a_2f7538f0",
+      "range": {
+        "startLine": 944,
+        "startChar": 51,
+        "endLine": 944,
+        "endChar": 56
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bc3ea17_7545880d",
         "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
         "patchSetId": 6
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "ba2ece2c_d854169e",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "I understand your advice, but it would be better not to use [] or {} as  arguments\u0027 default values because these are mutable and can these can be changed unexpectedly.",
+      "parentUuid": "26f5e97b_8b09ddda",
+      "range": {
+        "startLine": 146,
+        "startChar": 82,
+        "endLine": 146,
+        "endChar": 86
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448629b2_4db28b50",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bc3ea17_7545880d",
+      "range": {
+        "startLine": 146,
+        "startChar": 57,
+        "endLine": 146,
+        "endChar": 81
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27ea43f0_22b29288",
         "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
         "patchSetId": 6
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a5fb92ca_9b4ad468",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27ea43f0_22b29288",
+      "range": {
+        "startLine": 152,
+        "startChar": 13,
+        "endLine": 152,
+        "endChar": 37
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2f8e9d0_74d88885",
         "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
         "patchSetId": 6
@@ -131,6 +251,24 @@
       "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5a0f81_5fa232d0",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2f8e9d0_74d88885",
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "8d558b70_bc905055",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de4f0c7d_a309dbc5",
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c674625_0c240b3e",
         "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
         "patchSetId": 6
@@ -162,6 +318,30 @@
       "writtenOn": "2017-09-07T07:43:49Z",
       "side": 1,
       "message": "Can we say \"set_extended_attributes\" rather than \"set_type_extended_attributes\"?\n\nMy understanding is that Web IDL does NOT distinguish extended attributes applied to types from ones applied to else, i.e. no concept of \"type extended attributes\".\n\nI\u0027d be rather asking a question than proposing.  Should we distinguish \"type extended attributes\" from other \"extended attributes\"?",
+      "range": {
+        "startLine": 165,
+        "startChar": 8,
+        "endLine": 165,
+        "endChar": 36
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3d6729_4ba80f01",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "We can use this function for both extended attributes applied to types and ones applied to else, and I think \"set_type_extended_attributes\" is not good because this name makes us feel that this function cannot be used to the latter ones.\nTherefore I changed this function\u0027s name into \"set_extended_attributes\" as your advice.\nThank you.",
+      "parentUuid": "9c674625_0c240b3e",
       "range": {
         "startLine": 165,
         "startChar": 8,
@@ -232,6 +412,48 @@
     },
     {
       "key": {
+        "uuid": "80559617_92051968",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "I imported idl_definitions here, not at the top of the file, in order to prevent a cross-reference between idl_definitions.py and this file.\nHowever, I changed the codes as bashi@\u0027s advice, which could solve the problem.",
+      "parentUuid": "857b7743_55ca5d73",
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4268541c_824afed9",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "As bashi@\u0027s advice, I moved ext_attributes_node_to_extended_attributes part into the idl_definitions.py file, then there is no need to import anything because both type_node_to_type() and ext_attributes_node_to_extended_attributes exist in the same file.",
+      "parentUuid": "6a2bf83c_9ef325ce",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 55
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82a8c612_9117b374",
         "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
         "patchSetId": 6
@@ -249,6 +471,24 @@
     },
     {
       "key": {
+        "uuid": "b605d65f_c7dabb35",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82a8c612_9117b374",
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b89ee34_8e95b35e",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
         "patchSetId": 6
@@ -260,6 +500,24 @@
       "writtenOn": "2017-09-07T07:43:49Z",
       "side": 1,
       "message": "Just to clarify my question (or intent), I think that it\u0027s okay to write here that:\n  type_extended_attributes \u003d idl_type.extended_attributes\n\nI\u0027m fine with \"type_extended_attributes\" as a local variable name.  I\u0027m questioning if idl_type.type_extended_attributes makes sense or not.",
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2e3da8_8ab6132b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "Type_extended_attributes is idl_type\u0027s extended_attributes, not idl_type\u0027s type_extended_attributes.\nIn order to describe the situation better, I think your idea (type_extended_attributes \u003d idl_type.extended_attributes) is better.\nThank you.",
+      "parentUuid": "0b89ee34_8e95b35e",
       "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -289,6 +547,30 @@
     },
     {
       "key": {
+        "uuid": "e8d045e9_5e02788f",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "I did \n  type_extended_attributes \u003d idl_type.extended_attributes or {} and removed #167.\nI could make lines around here more simple.",
+      "parentUuid": "2d66cd9e_bc67ba6b",
+      "range": {
+        "startLine": 167,
+        "startChar": 11,
+        "endLine": 167,
+        "endChar": 35
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4aa450d6_12274c15",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
         "patchSetId": 6
@@ -306,6 +588,24 @@
     },
     {
       "key": {
+        "uuid": "7b789fb2_28e4690c",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aa450d6_12274c15",
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91160f87_9f4ac5e2",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
         "patchSetId": 6
@@ -320,6 +620,24 @@
       "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70311e7_69dddd46",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91160f87_9f4ac5e2",
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -346,6 +664,30 @@
     },
     {
       "key": {
+        "uuid": "7c32dffe_c55ecaea",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f9b3c26_c6467511",
+      "range": {
+        "startLine": 622,
+        "startChar": 8,
+        "endLine": 622,
+        "endChar": 36
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "660f98c4_9ddfe93e",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
         "patchSetId": 6
@@ -363,6 +705,24 @@
     },
     {
       "key": {
+        "uuid": "a6b7ec8b_1e1ad6e4",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "660f98c4_9ddfe93e",
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02c7d49d_e90450d9",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
         "patchSetId": 6
@@ -377,6 +737,24 @@
       "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c29d7d3_59d2de40",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02c7d49d_e90450d9",
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -408,6 +786,48 @@
       "writtenOn": "2017-09-07T08:04:37Z",
       "side": 1,
       "message": "Could you rename these members to show what they checks?\nannotatedTypeLong and annotatedTypeString?",
+      "range": {
+        "startLine": 46,
+        "startChar": 24,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdbb1952_1a768a46",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestDictionary.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "As your advice, I renamed this variable to \"[Clamp] long applicableToTypeLongMember;\".",
+      "parentUuid": "02133b7b_2937ce82",
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5d0a5d_d6159329",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestDictionary.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "I renamed these variables to applicableToTypeLongMember and applicableToTypeStringMember in order to clarify what they check.",
+      "parentUuid": "c7288afc_d5424c48",
       "range": {
         "startLine": 46,
         "startChar": 24,
@@ -467,6 +887,30 @@
     },
     {
       "key": {
+        "uuid": "0ef268f2_c0897777",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "As a result of offline discussion, I renamed it to \"DivideExtAttsIntoApplicableToTypesAndNonApplicable\".",
+      "parentUuid": "8999c12d_ad4cf179",
+      "range": {
+        "startLine": 146,
+        "startChar": 4,
+        "endLine": 146,
+        "endChar": 37
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6710e1f_3e071b43",
         "filename": "tools/idl_parser/idl_parser.py",
         "patchSetId": 6
@@ -478,6 +922,24 @@
       "writtenOn": "2017-09-07T07:56:22Z",
       "side": 1,
       "message": "attributes \u003d ...",
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da6d136_a67c04da",
+        "filename": "tools/idl_parser/idl_parser.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-08T04:44:54Z",
+      "side": 1,
+      "message": "In #378~#380 I changed p[1] into attributes.",
+      "parentUuid": "e6710e1f_3e071b43",
       "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
