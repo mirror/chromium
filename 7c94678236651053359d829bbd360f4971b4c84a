@@ -441,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "0a9dd496_d0611595",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-08T21:40:42Z",
+      "side": 1,
+      "message": "__HrLoadAllImportsForDll can do that, but only if all code that imports from combase.dll are okay with it being delayloaded, and if the imports from it are all-or-nothing.",
+      "parentUuid": "263c2282_5355ecbd",
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8250594e_3e092bc4",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 9
