@@ -51,10 +51,10 @@ public class SiteSection extends OptionalLeaf implements TileGroup.Observer {
                 .inflate(getLayout(), parent, false);
     }
 
-    public static SiteSectionViewHolder createViewHolder(ViewGroup view) {
+    public static SiteSectionViewHolder createViewHolder(ViewGroup view, UiConfig uiConfig) {
         return SuggestionsConfig.useSitesExplorationUi()
                 ? new SiteExploreViewHolder(view, MAX_TILE_COLUMNS)
-                : new TileGridViewHolder(view, getMaxTileRows(), MAX_TILE_COLUMNS);
+                : new TileGridViewHolder(view, getMaxTileRows(), MAX_TILE_COLUMNS, uiConfig);
     }
 
     public SiteSection(SuggestionsUiDelegate uiDelegate, ContextMenuManager contextMenuManager,
