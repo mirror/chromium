@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc1188dc_5baec5c1",
+        "filename": "chrome/test/data/webui/extensions/extension_detail_view_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-08T18:51:13Z",
+      "side": 1,
+      "message": "optional: \"test\" and \"valid\" seem redundant to me, but maybe it\u0027s just me. Maybe a different name (not sure what)?",
+      "revId": "67bdced526b981c2ceaa6e6fd971dfbfcec8bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2dd1da_60c114b4",
+        "filename": "chrome/test/data/webui/extensions/extension_test_util.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-08T18:51:13Z",
+      "side": 1,
+      "message": "nit: try adding another word to pluralize, e.g. \"paper-icon-button-light elements\".\n\n(less favored option: an apostrophe may also work \"paper-icon-button-light\u0027s\").",
+      "revId": "67bdced526b981c2ceaa6e6fd971dfbfcec8bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e344622_dce050f8",
+        "filename": "chrome/test/data/webui/extensions/extension_test_util.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-08T18:51:13Z",
+      "side": 1,
+      "message": "nit: remove extra blank line.\n\nAlso, does the formatter change this code: git cl format --js",
+      "revId": "67bdced526b981c2ceaa6e6fd971dfbfcec8bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
