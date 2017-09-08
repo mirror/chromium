@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "598c5e06_7a521982",
+        "filename": "chrome/browser/chromeos/options/wifi_config_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-08T01:31:09Z",
+      "side": 1,
+      "message": "For all the dialogs I had to scan the class to figure out what the first/last element types were. Here and for the wimax dialog it looks like the first element is a \"name\" label, and the final is an \"error\" label, so I did TEXT for both. If that\u0027s wrong I can change it.",
+      "parentUuid": "976d04b6_1cc159be",
+      "range": {
+        "startLine": 910,
+        "startChar": 40,
+        "endLine": 910,
+        "endChar": 64
+      },
+      "revId": "7a90a257ae428e442b4f4a51b280403f159857e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6225380b_d8baa43f",
         "filename": "chrome/browser/chromeos/options/wimax_config_view.cc",
         "patchSetId": 7
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "799e963d_ec920025",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-08T01:31:09Z",
+      "side": 1,
+      "message": "Description and rename are done. I had it as an enum class originally but Peter didn\u0027t like the verbosity... I\u0027m not sure what the right tradeoff is.",
+      "parentUuid": "240a62bf_0ce3d4e5",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 35
+      },
+      "revId": "7a90a257ae428e442b4f4a51b280403f159857e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dece46e_e06bd2ec",
         "filename": "ui/views/layout/layout_provider.h",
         "patchSetId": 7
@@ -106,6 +154,30 @@
       "writtenOn": "2017-09-07T23:53:43Z",
       "side": 1,
       "message": "How about GetDialogContentMarginsForType?",
+      "range": {
+        "startLine": 131,
+        "startChar": 14,
+        "endLine": 131,
+        "endChar": 37
+      },
+      "revId": "7a90a257ae428e442b4f4a51b280403f159857e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa184e8_b4cfe4cd",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-08T01:31:09Z",
+      "side": 1,
+      "message": "It\u0027s a bit awkward because it\u0027s really \"GetDialogContentInsetsForDialogContentType\" but that\u0027s way too unwieldy. Do you want it to say \"dialog\" specifically? How about GetDialogInsetsForContentType?",
+      "parentUuid": "7dece46e_e06bd2ec",
       "range": {
         "startLine": 131,
         "startChar": 14,
