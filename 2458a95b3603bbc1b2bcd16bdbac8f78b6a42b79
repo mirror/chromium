@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0da67b52_ae7741bb",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-08T01:17:10Z",
+      "side": 1,
+      "message": "That is done right below this. This is only overridden because in unusual circumstances the LockContentsView itself can acquire focus (ie, a test). I\u0027ve tried to make this more clear in the comment.",
+      "parentUuid": "e7be0d34_39c6e2d8",
+      "revId": "2458a95b3603bbc1b2bcd16bdbac8f78b6a42b79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d8dd76d_28417766",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-31T22:18:42Z",
       "side": 1,
       "message": "Can we use\n  GetWidget()-\u003eGetFocusManager()-\u003eAdvanceFocus(reverse) ?",
+      "revId": "2458a95b3603bbc1b2bcd16bdbac8f78b6a42b79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be06ff4_444f714e",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-08T01:17:10Z",
+      "side": 1,
+      "message": "That does not focus the correct child view within the widget.",
+      "parentUuid": "1d8dd76d_28417766",
       "revId": "2458a95b3603bbc1b2bcd16bdbac8f78b6a42b79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6b0d1a58_13f70209",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-08T01:17:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9161e19f_9a1ceb2b",
+      "range": {
+        "startLine": 278,
+        "startChar": 2,
+        "endLine": 278,
+        "endChar": 7
+      },
+      "revId": "2458a95b3603bbc1b2bcd16bdbac8f78b6a42b79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e9e68d_3647342a",
         "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
         "patchSetId": 3
@@ -79,6 +139,30 @@
       "revId": "2458a95b3603bbc1b2bcd16bdbac8f78b6a42b79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85fc8c0_052bba10",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-08T01:17:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77e9e68d_3647342a",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 52
+      },
+      "revId": "2458a95b3603bbc1b2bcd16bdbac8f78b6a42b79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
