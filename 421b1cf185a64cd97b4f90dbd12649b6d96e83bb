@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17165025_49bbca06",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-08T08:01:58Z",
+      "side": 1,
+      "message": "I think I saw in one of the N5x swarming test bot logs:\nhttps://chromium-swarm.appspot.com/task?id\u003d386a2192b13de910\u0026refresh\u003d10\u0026show_raw\u003d1#\nAbort message: \u0027[FATAL:optional.h(190)] Check failed: !storage_.is_null_. \n\nThis indicates that the value of a base::optional is being read when the optional object is null.\n\nThat very likely points to the usage of GetHttpRtt() and GetTransportRtt() here.\nOne of these may be returning null here.\n\nIn any case we should update the CL to check if these are returning null here.\nYou may want to set the estimates to 0 in case the API returns null optional object.",
+      "range": {
+        "startLine": 46,
+        "startChar": 39,
+        "endLine": 46,
+        "endChar": 49
+      },
+      "revId": "421b1cf185a64cd97b4f90dbd12649b6d96e83bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
