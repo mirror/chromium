@@ -45,7 +45,7 @@
 #include "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h"
 #include "chrome/browser/ui/tab_contents/core_tab_helper.h"
 #include "chrome/browser/ui/tab_helpers.h"
-#include "chrome/common/image_context_menu_renderer.mojom.h"
+#include "chrome/common/chrome_render_frame.mojom.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/common/url_constants.h"
 #include "components/bookmarks/browser/bookmark_model.h"
@@ -739,7 +739,7 @@ void TabAndroid::LoadOriginalImage(JNIEnv* env,
                                    const JavaParamRef<jobject>& obj) {
   content::RenderFrameHost* render_frame_host =
       web_contents()->GetFocusedFrame();
-  chrome::mojom::ImageContextMenuRendererPtr renderer;
+  chrome::mojom::ChromeRenderFramePtr renderer;
   render_frame_host->GetRemoteInterfaces()->GetInterface(&renderer);
   renderer->RequestReloadImageForContextNode();
 }
