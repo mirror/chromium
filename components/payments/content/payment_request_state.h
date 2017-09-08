@@ -231,6 +231,12 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   // The PaymentAppProvider::GetAllPaymentAppsCallback.
   void GetAllPaymentAppsCallback(content::PaymentAppProvider::PaymentApps apps);
 
+  // Creates ServiceWorkerPaymentInstrument according to requested payment
+  // methods of the payment request.
+  void CreateServiceWorkerPaymentApps(
+      content::PaymentAppProvider::PaymentApps& apps,
+      std::vector<GURL>& requested_method_urls);
+
   // Checks whether the user has at least one instrument that satisfies the
   // specified supported payment methods and call the |callback| to return the
   // result.

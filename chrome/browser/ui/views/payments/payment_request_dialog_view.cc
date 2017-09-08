@@ -77,7 +77,7 @@ PaymentRequestDialogView::PaymentRequestDialogView(
 
   SetupSpinnerOverlay();
   // Show spinner when getting all payment instruments. The spinner will be
-  // hided in OnGetAllPaymentInstrumentsFinished.
+  // hidden in OnGetAllPaymentInstrumentsFinished.
   if (!request->state()->is_get_all_instruments_finished()) {
     request->state()->AddObserver(this);
     ShowProcessingSpinner();
@@ -175,8 +175,6 @@ void PaymentRequestDialogView::OnSpecUpdated() {
 void PaymentRequestDialogView::OnGetAllPaymentInstrumentsFinished() {
   HideProcessingSpinner();
 }
-
-void PaymentRequestDialogView::OnSelectedInformationChanged() {}
 
 void PaymentRequestDialogView::Pay() {
   request_->Pay();

@@ -67,26 +67,7 @@ void PaymentRequestState::GetAllPaymentAppsCallback(
   std::vector<GURL> requested_method_urls =
       spec_->url_payment_method_identifiers();
   if (!apps.empty() && requested_method_urls.size() > 0) {
-    std::unordered_set<std::string> requested_method_strings;
-    for (auto url : requested_method_urls) {
-      requested_method_strings.insert(url.spec());
-    }
-    for (content::PaymentAppProvider::PaymentApps::iterator it = apps.begin();
-         it != apps.end(); it++) {
-      size_t i = 0;
-      for (; i < it->second->enabled_methods.size(); i++) {
-        if (requested_method_strings.find(it->second->enabled_methods[i]) !=
-            requested_method_strings.end()) {
-          break;
-        }
-      }
-      if (i >= it->second->enabled_methods.size())
-        continue;
-
-      auto instrument = base::MakeUnique<ServiceWorkerPaymentInstrument>(
-          std::move(it->second));
-      available_instruments_.push_back(std::move(instrument));
-    }
+    CreateServiceWorkerPaymentApps(apps, requested_method_urls);
   }
 
   SetDefaultProfileSelections();
@@ -94,8 +75,34 @@ void PaymentRequestState::GetAllPaymentAppsCallback(
   get_all_instruments_finished_ = true;
   NotifyOnGetAllPaymentInstrumentsFinished();
 
+  // Full the pending CanMakePayment call.
   if (can_make_payment_callback_)
     CheckCanMakePayment(std::move(can_make_payment_callback_));
+}
+
+void PaymentRequestState::CreateServiceWorkerPaymentApps(
+    content::PaymentAppProvider::PaymentApps& apps,
+    std::vector<GURL>& requested_method_urls) {
+  std::unordered_set<std::string> requested_method_strings;
+  for (auto url : requested_method_urls) {
+    requested_method_strings.insert(url.spec());
+  }
+  for (content::PaymentAppProvider::PaymentApps::iterator it = apps.begin();
+       it != apps.end(); it++) {
+    size_t i = 0;
+    for (; i < it->second->enabled_methods.size(); i++) {
+      if (requested_method_strings.find(it->second->enabled_methods[i]) !=
+          requested_method_strings.end()) {
+        break;
+      }
+    }
+    if (i >= it->second->enabled_methods.size())
+      continue;
+
+    auto instrument =
+        base::MakeUnique<ServiceWorkerPaymentInstrument>(std::move(it->second));
+    available_instruments_.push_back(std::move(instrument));
+  }
 }
 
 void PaymentRequestState::OnPaymentResponseReady(
@@ -141,14 +148,14 @@ void PaymentRequestState::CanMakePayment(CanMakePaymentCallback callback) {
 }
 
 void PaymentRequestState::CheckCanMakePayment(CanMakePaymentCallback callback) {
-  bool can_make_payment = false;
+  bool can_make_payment_value = false;
   for (const auto& instrument : available_instruments_) {
     if (instrument->IsValidForCanMakePayment()) {
-      can_make_payment = true;
+      can_make_payment_value = true;
       break;
     }
   }
-  std::move(callback).Run(can_make_payment);
+  std::move(callback).Run(can_make_payment_value);
 }
 
 bool PaymentRequestState::AreRequestedMethodsSupported() const {
