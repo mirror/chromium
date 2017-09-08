@@ -52,6 +52,24 @@
       "revId": "21d94f03b21d33a7143dc8a6cfb07380305976fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14be04e8_0bbf0e17",
+        "filename": "cc/layers/ui_resource_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-09-08T20:59:52Z",
+      "side": 1,
+      "message": "Great question. I will double check everything. \nSo DebugBorderQuad is called at 10 different places and they share the opaqueness of the layer. For this particular case, determining the opaqueness of the layer caused the crash.  \n\nI added IsUIResourceOpaque to 4 different places: nine_patch_layer_impl, painted_overlay_scrollbar_layer_impl, UI_resource_layer_impl and nine patch_generator. In nine_patch_generator, the call is added after validation of ui_resource_id. The resource id is not validated in painted_overlay_scrollbar_layer_impl and nine_patch_layer_impl. \n\nhttps://cs.chromium.org/chromium/src/cc/layers/nine_patch_layer_impl.cc?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d60\n\nhttps://cs.chromium.org/chromium/src/cc/layers/painted_overlay_scrollbar_layer_impl.cc?q\u003dpainted_overlay_scrollbar_layer_impl\u0026dr\u003dC\u0026l\u003d97\n\nLet me add the validation for those 2 classes as well.",
+      "parentUuid": "07e99870_25982600",
+      "revId": "21d94f03b21d33a7143dc8a6cfb07380305976fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
