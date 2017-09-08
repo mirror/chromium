@@ -34,6 +34,24 @@
       "revId": "7cb0cccd8b958e507025adf320314c540b7167b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fc4c86d_79fb63a6",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 11
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-09-08T03:35:45Z",
+      "side": 1,
+      "message": "Long names shouldn\u0027t be a problem here. LGTM.",
+      "parentUuid": "b75b28c9_d19ee3ef",
+      "revId": "7cb0cccd8b958e507025adf320314c540b7167b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
