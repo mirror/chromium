@@ -311,6 +311,39 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   }
 }
 
+- (BOOL)tableView:(UITableView*)tableView
+    canMoveRowAtIndexPath:(NSIndexPath*)indexPath {
+  if (indexPath.section == self.promoSection) {
+    // Ignore promo section.
+    return NO;
+  }
+
+  return YES;
+}
+
+- (void)tableView:(UITableView*)tableView
+    moveRowAtIndexPath:(NSIndexPath*)sourceIndexPath
+           toIndexPath:(NSIndexPath*)destinationIndexPath {
+  if (sourceIndexPath.row == destinationIndexPath.row) {
+    return;
+  }
+  const BookmarkNode* node = [self nodeAtIndexPath:sourceIndexPath];
+  // Calculations: Assume we have 3 nodes A B C. Positions are 0, 1, 2
+  // respectively. When we move A to after C, we are moving node at index 0 to 4
+  // (position after C is 4, in terms of the existing contents). Hence add 1
+  // when moving forward. When moving backward, if C is moved to Before B, we
+  // move node at index 2 to index 1 (position before B is 1, in terms of the
+  // existing contents), hence no change in index is necessary. It is required
+  // to make these adjustments because this is how bookmark_model handles move
+  // operations.
+  int newPosition = sourceIndexPath.row < destinationIndexPath.row
+                        ? destinationIndexPath.row + 1
+                        : destinationIndexPath.row;
+  [self.delegate bookmarkTableView:self
+                       didMoveNode:node
+                        toPosition:newPosition];
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView*)tableView
