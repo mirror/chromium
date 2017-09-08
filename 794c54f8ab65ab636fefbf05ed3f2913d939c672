@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18cf3507_b9476650",
+        "filename": "ui/aura/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-08T21:14:20Z",
+      "side": 1,
+      "message": "Might make sense to rearrange like so:\n\n  struct {\n    Window* window;\n    uint32_t flags;\n    int insets;\n  } expecteds \u003d {\n    { window3(), viz::mojom::kHitTestMine | viz::mojom::kHitTestMouse, kMouseInset },\n    ....\n  };\n\nMakes it easier to read.",
+      "revId": "794c54f8ab65ab636fefbf05ed3f2913d939c672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79b8c60_52c2b0e0",
+        "filename": "ui/aura/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-08T21:14:20Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "794c54f8ab65ab636fefbf05ed3f2913d939c672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
