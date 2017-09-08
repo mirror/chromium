@@ -69,6 +69,24 @@
       "revId": "dc2bc810595623e09d5f6c9139aeeecc3a640eb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf5e8c2_6d2ce042",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-08T06:51:44Z",
+      "side": 1,
+      "message": "I didn\u0027t understand how endChange() makes the situation difficult here.\n\nHow about a process like this? :\n-----------------------------------\nvar oldLeadIndex \u003d ...\nvar oldSelectedEntries \u003d ...\n\n(Call super.adjustToReordering)\n\nif (oldSelectedIndexes.length \u003e 0 \u0026\u0026\n    oldSelectedIndexes.filter(index \u003d\u003e index !\u003d -1).length \u003d\u003d 0 \u0026\u0026\n    this.length_ \u003e 0 \u0026\u0026\n    oldLeadIndex !\u003d -1) {\n  (Disable check-select mode)\n}\n-----------------------------------\n\nEven when it is rare case, the inconsistency between expected behavior (i.e. exit check-select mode when all selected entries are deleted) and the actual code can make the maintenance harder.\nI\u0027d prefer keeping the logic for this case, since the duplication won\u0027t be so big.",
+      "parentUuid": "f9745d47_a25674c4",
+      "revId": "dc2bc810595623e09d5f6c9139aeeecc3a640eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
