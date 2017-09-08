@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6da7b80e_bc879d2b",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-08T17:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8701b1ad_8099e340",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 41
+      },
+      "revId": "3a96e7fd4ef9e8297c2e30d757f50564c54e5821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8dd1c47_106b7bda",
         "filename": "base/threading/scoped_blocking_call.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "3a96e7fd4ef9e8297c2e30d757f50564c54e5821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3deecd83_c4b2db94",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-08T17:57:07Z",
+      "side": 1,
+      "message": "Done (I think I understood what you meant...)",
+      "parentUuid": "d8dd1c47_106b7bda",
+      "range": {
+        "startLine": 58,
+        "startChar": 1,
+        "endLine": 61,
+        "endChar": 78
+      },
+      "revId": "3a96e7fd4ef9e8297c2e30d757f50564c54e5821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
