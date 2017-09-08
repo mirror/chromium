@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f4cc133_29e80ddc",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T18:33:49Z",
+      "side": 1,
+      "message": "Might be clearer to just use a struct or a tuple to define the nesting.\n\nThe states for each element in the tuple are\nNO_BLOCK\nMAY_BLOCK\nWILL_BLOCK.\n\nThe checks become easy:\n\nstruct NestedBlockingType {\n  enum OptionalBlockingType {\n    NO_BLOCK,\n    MAY_BLOCK,\n    WILL_BLOCK\n  }\n  BlockingType first;\n  OptionalBlockingType second;\n}\n\nIf nested_blocking_type.first \u003d\u003d MAY_BLOCK, etc.",
+      "range": {
+        "startLine": 759,
+        "startChar": 0,
+        "endLine": 765,
+        "endChar": 2
+      },
+      "revId": "896fa26a04ec10d15fafc5eff24bd6892999c21d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd872fc5_7c7cfd37",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T18:33:49Z",
+      "side": 1,
+      "message": "Let\u0027s go ahead an add a\n  static std::string ParamInfoToString(\n      ::testing::TestParamInfo\u003cTypeWeEndUpUsing\u003e param_info) {\n    return /* String equivalent of the param_info.param */\n  }\nto TaskSchedulerWorkerPoolBlockingTest\nand add that static function as the last parameter of INSTANTIATE_TEST_CASE_P.\n\nSo our tests become easier to read.",
+      "range": {
+        "startLine": 1061,
+        "startChar": 0,
+        "endLine": 1066,
+        "endChar": 76
+      },
+      "revId": "896fa26a04ec10d15fafc5eff24bd6892999c21d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6a947b_06943856",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T18:33:49Z",
+      "side": 1,
+      "message": "Might be clearer as an\ninline bool ScopedBlockingCall::ShouldNotifyObserver()",
+      "range": {
+        "startLine": 40,
+        "startChar": 25,
+        "endLine": 44,
+        "endChar": 54
+      },
+      "revId": "896fa26a04ec10d15fafc5eff24bd6892999c21d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc7b3657_f378bde7",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T18:33:49Z",
+      "side": 1,
+      "message": "Since we\u0027re making the policy decision here now, the scoping isn\u0027t really appropriate anymore as both of these are conditionally called based off of the parameter of the blocking scope.\n\nSomething like\nBlockingStarted(BlockingType blocking_type)\nBlockingEnded()\nwould be clearer.\n\nWe should also mention that blocking scopes only get upgraded, and once they are upgraded, there is no downgrade. As a result,\n\n{\n  ScopedBlockingObserver obs1(MAY_BLOCK)\n  // May block\n  {\n    ScopedBlockingObserver obs2(WILL_BLOCK)\n    // Will block\n  }\n  // Will block\n}\n\nI wonder if it would be even more clear if\n BlockingStarted(BlockingType blocking_type)      \u003c--- Called once per blocking session.\n BlockingTypeUpgraded(BlockingType blocking_type) \u003c--- Called as necessary.\n BlockingEnded                                    \u003c--- Called when all blocking is done.",
+      "range": {
+        "startLine": 67,
+        "startChar": 15,
+        "endLine": 67,
+        "endChar": 35
+      },
+      "revId": "896fa26a04ec10d15fafc5eff24bd6892999c21d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed8833b9_892f7718",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T18:33:49Z",
+      "side": 1,
+      "message": "Nit: or",
+      "range": {
+        "startLine": 74,
+        "startChar": 3,
+        "endLine": 74,
+        "endChar": 5
+      },
+      "revId": "896fa26a04ec10d15fafc5eff24bd6892999c21d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3610081f_8c0be3f1",
+        "filename": "base/threading/scoped_blocking_call_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T18:33:49Z",
+      "side": 1,
+      "message": "Nice.",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 59
+      },
+      "revId": "896fa26a04ec10d15fafc5eff24bd6892999c21d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
