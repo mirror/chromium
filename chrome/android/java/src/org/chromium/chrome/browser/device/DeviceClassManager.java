@@ -63,8 +63,8 @@ public class DeviceClassManager {
         // Flag based configurations.
         CommandLine commandLine = CommandLine.getInstance();
         assert commandLine.isNativeImplementation();
-        mEnableAccessibilityLayout |= commandLine
-                .hasSwitch(ChromeSwitches.ENABLE_ACCESSIBILITY_TAB_SWITCHER);
+        mEnableAccessibilityLayout |=
+                commandLine.hasSwitch(ChromeSwitches.ENABLE_ACCESSIBILITY_TAB_SWITCHER);
         mEnableFullscreen =
                 !commandLine.hasSwitch(ChromeSwitches.DISABLE_FULLSCREEN);
 
