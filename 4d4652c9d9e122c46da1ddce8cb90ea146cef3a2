@@ -22,6 +22,30 @@
       "revId": "4d4652c9d9e122c46da1ddce8cb90ea146cef3a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547922a4_7ece19f5",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-08T13:40:14Z",
+      "side": 1,
+      "message": "I think this should be fine for now.",
+      "parentUuid": "db70c542_11af8f29",
+      "range": {
+        "startLine": 119,
+        "startChar": 36,
+        "endLine": 119,
+        "endChar": 53
+      },
+      "revId": "4d4652c9d9e122c46da1ddce8cb90ea146cef3a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54fe7568_4d567336",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-08T13:40:14Z",
+      "side": 1,
+      "message": "Let\u0027s add a bug for this and mark it as blocking for DICE. We really need to avoid rolling out DICE without this.",
+      "range": {
+        "startLine": 144,
+        "startChar": 19,
+        "endLine": 144,
+        "endChar": 25
+      },
+      "revId": "4686a5492d3492d987d5bd7f0affc2277004466b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b2acd6_ade32239",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-08T13:40:14Z",
+      "side": 1,
+      "message": "Nit: Add a blank line here.",
+      "range": {
+        "startLine": 376,
+        "startChar": 15,
+        "endLine": 376,
+        "endChar": 31
+      },
+      "revId": "4686a5492d3492d987d5bd7f0affc2277004466b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbbc90c_5acad630",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-08T13:40:14Z",
+      "side": 1,
+      "message": "This function does more than just a check - it waits until the count reaches |count|. Let\u0027s rename this to WaitForReconcilorBlockedCound(int expected_count);",
+      "range": {
+        "startLine": 385,
+        "startChar": 7,
+        "endLine": 385,
+        "endChar": 36
+      },
+      "revId": "4686a5492d3492d987d5bd7f0affc2277004466b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c657d86b_348f7c7c",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-08T13:40:14Z",
+      "side": 1,
+      "message": "This will add 100ms delays for all unit tests. Could we override this value for tests and make it 5ms?",
+      "range": {
+        "startLine": 395,
+        "startChar": 20,
+        "endLine": 395,
+        "endChar": 54
+      },
+      "revId": "4686a5492d3492d987d5bd7f0affc2277004466b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

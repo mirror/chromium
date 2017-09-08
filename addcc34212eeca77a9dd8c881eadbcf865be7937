@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "df004b42_6ca21164",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-08T13:40:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "35b64c54_564c09cd",
+      "range": {
+        "startLine": 341,
+        "startChar": 7,
+        "endLine": 341,
+        "endChar": 39
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "356e5c21_794086b1",
         "filename": "chrome/browser/signin/dice_browsertest.cc",
         "patchSetId": 15
@@ -414,6 +438,30 @@
       "writtenOn": "2017-09-08T13:31:32Z",
       "side": 1,
       "message": "Done",
+      "parentUuid": "05194299_d8f545aa",
+      "range": {
+        "startLine": 582,
+        "startChar": 13,
+        "endLine": 582,
+        "endChar": 21
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e355c5d_4e9af056",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-08T13:40:14Z",
+      "side": 1,
+      "message": "Ack",
       "parentUuid": "05194299_d8f545aa",
       "range": {
         "startLine": 582,
@@ -697,6 +745,30 @@
       "side": 1,
       "message": "What do you mean? There is already a comment in the .h:\n// Returns whether the request has the request header.",
       "parentUuid": "36079eec_adbd906a",
+      "range": {
+        "startLine": 161,
+        "startChar": 21,
+        "endLine": 161,
+        "endChar": 48
+      },
+      "revId": "addcc34212eeca77a9dd8c881eadbcf865be7937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c92b994_9fdf407d",
+        "filename": "components/signin/core/browser/signin_header_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-08T13:40:14Z",
+      "side": 1,
+      "message": "I missed that, sorry.",
+      "parentUuid": "710b343a_b1cb2d69",
       "range": {
         "startLine": 161,
         "startChar": 21,
