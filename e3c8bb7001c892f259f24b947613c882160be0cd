@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98b57d1a_6ea52a7b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-08T18:55:10Z",
+      "side": 1,
+      "message": "I\u0027d be surprised if these are ever equal. If we want to handle the case where they are, I\u0027d instead block this call if transitionFraction \u003d\u003d mLastPeekToHalfHeightFraction. That way you only need a single param in updateToolbarButtonAnimation.",
+      "range": {
+        "startLine": 111,
+        "startChar": 12,
+        "endLine": 112,
+        "endChar": 84
+      },
+      "revId": "e3c8bb7001c892f259f24b947613c882160be0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af03ed3_ba645006",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-08T18:55:10Z",
+      "side": 1,
+      "message": "This probably doesn\u0027t need to be an instance var.",
+      "range": {
+        "startLine": 178,
+        "startChar": 25,
+        "endLine": 178,
+        "endChar": 59
+      },
+      "revId": "e3c8bb7001c892f259f24b947613c882160be0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

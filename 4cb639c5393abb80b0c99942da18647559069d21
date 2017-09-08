@@ -22,6 +22,30 @@
       "revId": "4cb639c5393abb80b0c99942da18647559069d21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d12cb7c_0201e3c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-08T18:55:10Z",
+      "side": 0,
+      "message": "Correct, this problem solves itself since the \u0027animation\u0027 and omnibox focus are tied to the height.",
+      "parentUuid": "dae1ca07_78667759",
+      "range": {
+        "startLine": 487,
+        "startChar": 8,
+        "endLine": 487,
+        "endChar": 10
+      },
+      "revId": "4cb639c5393abb80b0c99942da18647559069d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
