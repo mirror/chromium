@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbb8db1e_f1440455",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-08T18:22:23Z",
+      "side": 0,
+      "message": "Longer term, could this command be replaced with a call to openURL?",
+      "revId": "6977419a4fb2aab5b56efeaf1e74714a508ec5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

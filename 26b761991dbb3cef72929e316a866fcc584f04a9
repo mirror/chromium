@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb57bc78_d642e119",
+        "filename": "ios/chrome/browser/ui/page_info/requirements/page_info_constants.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-08T18:22:23Z",
+      "side": 1,
+      "message": "Consider moving these into the header for the coordinator.  requirements/ is suggested to be for things that PageInfo *needs* from other components.  In this case the notification names feel more like public api, something that PageInfo *vends* to other components.",
+      "revId": "26b761991dbb3cef72929e316a866fcc584f04a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

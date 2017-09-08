@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c0fc871_b9503c05",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 5102,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-08T18:22:23Z",
+      "side": 1,
+      "message": "How hard would it be to rewrite the logic so that the presentationProvider directly controlled presenting the PageInfo dialog, rather than simply vending a view?\n\nNot in scope for this CL, but it might make integrating into the new app a bit easier.",
+      "revId": "ec99d767a6ef4c88ed27e1f383f03f4008cc5daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ca9194_39e64ccc",
+        "filename": "ios/chrome/browser/ui/page_info/page_info_legacy_coordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-08T18:22:23Z",
+      "side": 1,
+      "message": "Extra comma.",
+      "range": {
+        "startLine": 20,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "ec99d767a6ef4c88ed27e1f383f03f4008cc5daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c07f55_9eed9a62",
+        "filename": "ios/chrome/browser/ui/page_info/page_info_view_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-08T18:22:23Z",
+      "side": 1,
+      "message": "Doesn\u0027t BrowserCommands inherit from PageInfoCommands?",
+      "revId": "ec99d767a6ef4c88ed27e1f383f03f4008cc5daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7977c0da_30b57635",
+        "filename": "ios/chrome/browser/ui/page_info/page_info_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-08T18:22:23Z",
+      "side": 1,
+      "message": "Why does this need to be in the constructor?  Is it used from init?",
+      "revId": "ec99d767a6ef4c88ed27e1f383f03f4008cc5daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
