@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.PathUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.blink_public.platform.WebDisplayMode;
 import org.chromium.chrome.browser.ShortcutHelper;
@@ -521,9 +522,8 @@ public class WebappDataStorage {
      * SharedPreferences.
      */
     String createAndSetUpdateRequestFilePath(WebApkInfo info) {
-        Context context = ContextUtils.getApplicationContext();
         String filePath =
-                new File(new File(context.getCacheDir(), UPDATE_DIRECTORY_PATH), info.id())
+                new File(new File(PathUtils.getCacheDirectory(), UPDATE_DIRECTORY_PATH), info.id())
                         .toString();
         mPreferences.edit().putString(KEY_PENDING_UPDATE_FILE_PATH, filePath).apply();
         return filePath;
