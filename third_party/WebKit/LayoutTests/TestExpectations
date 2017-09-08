@@ -1747,8 +1747,6 @@ crbug.com/761952 fast/text/international/complex-text-rectangle.html [ Timeout P
 crbug.com/751952 editing/selection/modify_extend/extend_by_character.html [ Pass Failure ]
 crbug.com/751952 external/wpt/service-workers/service-worker/link-element-register-security-error.https.html [ Pass Failure ]
 crbug.com/751952 fast/dom/Range/getClientRects.html [ Pass Failure ]
-crbug.com/751952 http/tests/devtools/console/console-format.html [ Pass Failure ]
-crbug.com/751952 virtual/mojo-loading/http/tests/devtools/console/console-format.html [ Pass Failure ]
 crbug.com/751952 http/tests/inspector-unit/datagrid-editable-longtext.js [ Pass Failure ]
 crbug.com/751952 virtual/mojo-blobs/external/wpt/service-workers/service-worker/link-element-register-security-error.https.html [ Pass Failure ]
 crbug.com/751952 http/tests/devtools/console/console-uncaught-promise.html [ Pass Failure ]

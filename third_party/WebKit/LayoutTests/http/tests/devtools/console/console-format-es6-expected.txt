@@ -1,9 +1,9 @@
 Tests that console properly displays information about ES6 features.
 
-console-format-es6.js:15 Promise {[[PromiseStatus]]: "rejected", [[PromiseValue]]: -0}
+console-format-es6.js:15 Promise {<rejected>: -0}
 console-format-es6.js:16 [Promise]
 globals[0]
-Promise {[[PromiseStatus]]: "rejected", [[PromiseValue]]: -0}
+Promise {<rejected>: -0}
 console-format-es6.js:15 Symbol()
 console-format-es6.js:16 [Symbol()]
 globals[1]
@@ -52,21 +52,21 @@ console-format-es6.js:15 Map(6) {" from str " => " to str ", undefined => undefi
 console-format-es6.js:16 [Map(6)]
 globals[12]
 Map(6) {" from str " => " to str ", undefined => undefined, null => null, 42 => 42, {…} => {…}, …}
-console-format-es6.js:15 genFunction {[[GeneratorStatus]]: "suspended"}
+console-format-es6.js:15 genFunction {<suspended>}
 console-format-es6.js:16 [genFunction]
 globals[13]
-genFunction {[[GeneratorStatus]]: "suspended"}
+genFunction {<suspended>}
 Expanded all messages
-console-format-es6.js:15 Promise {[[PromiseStatus]]: "rejected", [[PromiseValue]]: -0}
+console-format-es6.js:15 Promise {<rejected>: -0}
     __proto__: Promise
     [[PromiseStatus]]: "rejected"
     [[PromiseValue]]: -0
 console-format-es6.js:16 [Promise]
-    0: Promise {[[PromiseStatus]]: "rejected", [[PromiseValue]]: -0}
+    0: Promise {<rejected>: -0}
     length: 1
     __proto__: Array(0)
 globals[0]
-Promise {[[PromiseStatus]]: "rejected", [[PromiseValue]]: -0}
+Promise {<rejected>: -0}
     __proto__: Promise
     [[PromiseStatus]]: "rejected"
     [[PromiseValue]]: -0
@@ -260,7 +260,7 @@ Map(6) {" from str " => " to str ", undefined => undefined, null => null, 42 => 
         4: {Object => Object}
         5: {Array(1) => Array(1)}
         length: 6
-console-format-es6.js:15 genFunction {[[GeneratorStatus]]: "suspended"}
+console-format-es6.js:15 genFunction {<suspended>}
     __proto__: Generator
     [[GeneratorStatus]]: "suspended"
     [[GeneratorFunction]]: ƒ* ()
@@ -268,11 +268,11 @@ console-format-es6.js:15 genFunction {[[GeneratorStatus]]: "suspended"}
     [[GeneratorLocation]]: console-format-es6.js:59
     [[Scopes]]: Scopes[2]
 console-format-es6.js:16 [genFunction]
-    0: genFunction {[[GeneratorStatus]]: "suspended"}
+    0: genFunction {<suspended>}
     length: 1
     __proto__: Array(0)
 globals[13]
-genFunction {[[GeneratorStatus]]: "suspended"}
+genFunction {<suspended>}
     __proto__: Generator
     [[GeneratorStatus]]: "suspended"
     [[GeneratorFunction]]: ƒ* ()
