@@ -28,7 +28,6 @@ class Origin;
 namespace content {
 
 class BackgroundFetchDataManager;
-class BackgroundFetchDelegate;
 class BackgroundFetchDelegateProxy;
 class BackgroundFetchEventDispatcher;
 class BackgroundFetchJobController;
@@ -122,8 +121,6 @@ class CONTENT_EXPORT BackgroundFetchContext
 
   std::unique_ptr<BackgroundFetchDataManager> data_manager_;
   std::unique_ptr<BackgroundFetchEventDispatcher> event_dispatcher_;
-  std::unique_ptr<BackgroundFetchDelegate, BrowserThread::DeleteOnUIThread>
-      delegate_;
   std::unique_ptr<BackgroundFetchDelegateProxy> delegate_proxy_;
 
   // Map of the Background Fetch fetches that are currently in-progress.
