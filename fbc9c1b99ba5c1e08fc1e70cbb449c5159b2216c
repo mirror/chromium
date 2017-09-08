@@ -34,6 +34,29 @@
       "revId": "fbc9c1b99ba5c1e08fc1e70cbb449c5159b2216c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64468401_8591b6fd",
+        "filename": "chrome/common/extensions/chrome_utility_extensions_messages.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-08T21:37:52Z",
+      "side": 0,
+      "message": "Please also remove this constant from ipc/ipc_message_start.h",
+      "range": {
+        "startLine": 24,
+        "startChar": 26,
+        "endLine": 24,
+        "endChar": 57
+      },
+      "revId": "fbc9c1b99ba5c1e08fc1e70cbb449c5159b2216c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
