@@ -23,8 +23,8 @@ class Browser;
 class Profile;
 
 namespace content {
-class WebContents;
 struct OpenURLParams;
+class WebContents;
 }
 
 namespace chrome {
@@ -248,6 +248,9 @@ struct NavigateParams {
   // the SiteInstance that will be used for the resulting frame in the case of
   // an about:blank or a data url navigation.
   scoped_refptr<content::SiteInstance> source_site_instance;
+
+  // True if this navigation is gated by the popup blocker.
+  bool is_popup;
 
  private:
   NavigateParams();
