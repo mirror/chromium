@@ -6,6 +6,7 @@
 
 #include "chrome/browser/chromeos/login/signin/auth_sync_observer.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/signin/signin_error_controller_factory.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 
@@ -16,6 +17,7 @@ AuthSyncObserverFactory::AuthSyncObserverFactory()
         "AuthSyncObserver",
         BrowserContextDependencyManager::GetInstance()) {
   DependsOn(ProfileSyncServiceFactory::GetInstance());
+  DependsOn(SigninErrorControllerFactory::GetInstance());
 }
 
 AuthSyncObserverFactory::~AuthSyncObserverFactory() {

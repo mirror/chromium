@@ -7,21 +7,23 @@
 
 #include <string>
 
-#include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/sync/driver/sync_service_observer.h"
 
+class GoogleServiceAuthError;
 class Profile;
 
 namespace chromeos {
 
 // This class is responsible for detecting authentication problems reported
-// by sync service and
+// by sync service and SigninErrorController on a user profile.
 class AuthSyncObserver : public KeyedService,
-                         public syncer::SyncServiceObserver {
+                         public syncer::SyncServiceObserver,
+                         public SigninErrorController::Observer {
  public:
-  explicit AuthSyncObserver(Profile* user_profile);
+  explicit AuthSyncObserver(Profile* profile);
   ~AuthSyncObserver() override;
 
   void StartObserving();
@@ -35,10 +37,16 @@ class AuthSyncObserver : public KeyedService,
   // syncer::SyncServiceObserver implementation.
   void OnStateChanged(syncer::SyncService* sync) override;
 
+  // SigninErrorController::Observer implementation.
+  void OnErrorChanged() override;
+
+  // Handles an auth error.
+  void HandleAuthError(const GoogleServiceAuthError& auth_error);
+
   // Called on attempt to restore supervised user token.
   void OnSupervisedTokenLoaded(const std::string& token);
 
-  Profile* profile_;
+  Profile* const profile_;
 
   DISALLOW_COPY_AND_ASSIGN(AuthSyncObserver);
 };
