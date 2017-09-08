@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "0bd0e454_d95c2297",
+        "filename": "components/cryptauth/fake_remote_device_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-08T01:07:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24e4aea7_429345be",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "7aa65b377e00f35397a2f939707b131abb9af773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7cb37ba_2b1bdb98",
         "filename": "components/cryptauth/fake_remote_device_provider.h",
         "patchSetId": 4
@@ -68,6 +92,30 @@
       "revId": "7aa65b377e00f35397a2f939707b131abb9af773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af2a218_aab7ae2c",
+        "filename": "components/cryptauth/fake_remote_device_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-08T01:07:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7cb37ba_2b1bdb98",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 59
+      },
+      "revId": "7aa65b377e00f35397a2f939707b131abb9af773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "3eee4f4d_5589c625",
+        "filename": "components/cryptauth/fake_remote_device_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-08T01:07:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b659148_ae8b2108",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 80
+      },
+      "revId": "7aa65b377e00f35397a2f939707b131abb9af773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52f51856_a7417c1e",
         "filename": "components/cryptauth/fake_remote_device_provider.h",
         "patchSetId": 4
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "b0c6772e_41377ffc",
+        "filename": "components/cryptauth/fake_remote_device_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-08T01:07:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52f51856_a7417c1e",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 63
+      },
+      "revId": "7aa65b377e00f35397a2f939707b131abb9af773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8a4172f_abe34adc",
         "filename": "components/cryptauth/remote_device_provider_impl.h",
         "patchSetId": 4
@@ -137,6 +233,30 @@
       "revId": "7aa65b377e00f35397a2f939707b131abb9af773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28850ea_3167bfac",
+        "filename": "components/cryptauth/remote_device_provider_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-08T01:07:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8a4172f_abe34adc",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 80
+      },
+      "revId": "7aa65b377e00f35397a2f939707b131abb9af773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
