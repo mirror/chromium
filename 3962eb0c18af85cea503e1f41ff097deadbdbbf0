@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5ff9a6b_086e9f1c",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-09-08T21:00:45Z",
+      "side": 1,
+      "message": "Can you please add this special constraint here in the comment?",
+      "revId": "3962eb0c18af85cea503e1f41ff097deadbdbbf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12546a6c_44e57d89",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-09-08T21:00:45Z",
+      "side": 1,
+      "message": "This is a bit hard to parse.\n\nIt might be a good idea to create some bool\u0027s here to make it easier to understand what exactly is tested for.",
+      "range": {
+        "startLine": 606,
+        "startChar": 6,
+        "endLine": 610,
+        "endChar": 60
+      },
+      "revId": "3962eb0c18af85cea503e1f41ff097deadbdbbf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
