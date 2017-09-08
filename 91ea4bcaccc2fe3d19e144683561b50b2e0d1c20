@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4cfb9c_597b5a32",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-08T21:38:51Z",
+      "side": 1,
+      "message": "Do we still need to do this now that the icon width is passed in programatically?",
+      "range": {
+        "startLine": 246,
+        "startChar": 12,
+        "endLine": 249,
+        "endChar": 0
+      },
+      "revId": "91ea4bcaccc2fe3d19e144683561b50b2e0d1c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
