@@ -95,7 +95,6 @@ bool WaitpidWithTimeout(base::ProcessHandle handle,
 static bool WaitForSingleNonChildProcess(base::ProcessHandle handle,
                                          base::TimeDelta wait) {
   DCHECK_GT(handle, 0);
-  DCHECK_GT(wait, base::TimeDelta());
 
   base::ScopedFD kq(kqueue());
   if (!kq.is_valid()) {
@@ -129,7 +128,7 @@ static bool WaitForSingleNonChildProcess(base::ProcessHandle handle,
   result = -1;
   struct kevent event = {0};
 
-  while (wait_forever || remaining_delta > base::TimeDelta()) {
+  do {
     struct timespec remaining_timespec;
     struct timespec* remaining_timespec_ptr;
     if (wait_forever) {
@@ -149,7 +148,7 @@ static bool WaitForSingleNonChildProcess(base::ProcessHandle handle,
     } else {
       break;
     }
-  }
+  } while (wait_forever || remaining_delta > base::TimeDelta());
 
   if (result < 0) {
     DPLOG(ERROR) << "kevent (wait " << handle << ")";
@@ -185,7 +184,7 @@ bool WaitForExitWithTimeoutImpl(base::ProcessHandle handle,
   base::ProcessHandle parent_pid = base::GetParentProcessId(handle);
   base::ProcessHandle our_pid = base::GetCurrentProcessHandle();
 
-  if (parent_pid != our_pid) {
+  if (parent_pid != our_pid && handle != our_pid) {
 #if defined(OS_MACOSX)
     // On Mac we can wait on non child processes.
     return WaitForSingleNonChildProcess(handle, timeout);
