@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "6c219d3a_39297bc1",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-08T00:01:02Z",
+      "side": 1,
+      "message": "can you make on_click_ std::map\u003cviews::Button*, \u003e to avoid static cast here",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b7d42bb_a9c8e96e",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 8
@@ -166,6 +183,23 @@
       "writtenOn": "2017-09-07T23:54:37Z",
       "side": 1,
       "message": "Inline this method. It is only called once and it sounds/feels like one-time initialization code.",
+      "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed03886b_f0ffc4c7",
+        "filename": "ash/shelf/shelf.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-08T00:01:02Z",
+      "side": 1,
+      "message": "each of these will call updateUi on the login shelf. Could this be avoided? e.g. by initializing the lock screen note, session, and shutdown controller state at once?",
       "revId": "896dbea82b1bc4eb7b55f71fe242fd6927e37201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

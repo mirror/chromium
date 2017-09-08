@@ -436,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "1f43ea37_aac2fea7",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-08T00:01:02Z",
+      "side": 1,
+      "message": "I\u0027m not clear on what you mean by \"expose login_shelf_view outside\" :)\n\nI don\u0027t see a reason why ShelfWidget would observe these on behalf of LoginShelfView, given that ShelfWidget itself does not really care about these events. Am I missing something?",
+      "parentUuid": "0e210fc5_4af80ce9",
+      "range": {
+        "startLine": 311,
+        "startChar": 2,
+        "endLine": 311,
+        "endChar": 19
+      },
+      "revId": "545e0bd2f8ba69fec2bcfcd9b07478736e34a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98f818d5_1770c55f",
         "filename": "ash/tray_action/test_tray_action_client.h",
         "patchSetId": 7
