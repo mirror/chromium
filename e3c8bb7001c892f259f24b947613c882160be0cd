@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2421f1d1_403cdf91",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-08T20:00:35Z",
+      "side": 1,
+      "message": "Done.\n\nIt doesn\u0027t appear that they are ever equal, but added the check just in case.",
+      "parentUuid": "98b57d1a_6ea52a7b",
+      "range": {
+        "startLine": 111,
+        "startChar": 12,
+        "endLine": 112,
+        "endChar": 84
+      },
+      "revId": "e3c8bb7001c892f259f24b947613c882160be0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4af03ed3_ba645006",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "e3c8bb7001c892f259f24b947613c882160be0cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3767e3ef_2b4d2060",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-08T20:00:35Z",
+      "side": 1,
+      "message": "It\u0027s stored in an instance variable and only reset when the toolbar buttons are completely visible or completely hidden. If the user is dragging the sheet down, then starts dragging it up, the animation jumps if the interpolator changes.",
+      "parentUuid": "4af03ed3_ba645006",
+      "range": {
+        "startLine": 178,
+        "startChar": 25,
+        "endLine": 178,
+        "endChar": 59
+      },
+      "revId": "e3c8bb7001c892f259f24b947613c882160be0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
