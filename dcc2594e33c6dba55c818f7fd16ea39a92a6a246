@@ -840,6 +840,30 @@
     },
     {
       "key": {
+        "uuid": "ea6218aa_6aa78c21",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestDictionary.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-08T05:18:07Z",
+      "side": 1,
+      "message": "it\u0027s OK to reply only \u0027done\u0027. :)",
+      "parentUuid": "db5d0a5d_d6159329",
+      "range": {
+        "startLine": 46,
+        "startChar": 24,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "dcc2594e33c6dba55c818f7fd16ea39a92a6a246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bfbb2be_905bf1af",
         "filename": "tools/idl_parser/idl_parser.py",
         "patchSetId": 6
