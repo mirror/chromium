@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7218b16f_383325cd",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T21:16:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42137b57_35619bf1",
+      "revId": "f48b7494c0b9aae6413579dcea63bd02dda892f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83cda3a1_699df8a6",
         "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "155c818a_7a98fec8",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T21:16:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83cda3a1_699df8a6",
+      "revId": "f48b7494c0b9aae6413579dcea63bd02dda892f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23f5f6bc_30ad8e03",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-08T05:56:35Z",
       "side": 1,
       "message": "Are there dictionaries that the old code would reject that now will get resolved?",
+      "revId": "f48b7494c0b9aae6413579dcea63bd02dda892f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "092eab75_d2517770",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1291,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T21:16:22Z",
+      "side": 1,
+      "message": "No. See the relevant code here: https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/print_preview/printer_backend_proxy.cc?l\u003d34 for non CrOS and here: https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/print_preview/printer_backend_proxy_chromeos.cc?l\u003d114 for CrOS, where any error that doesn\u0027t result in just bailing out (on CrOS) returns nullptr. Then here on all platforms: https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/print_preview/printer_capabilities.cc?l\u003d84 - kPrinterCapabilities is always set, even if it comes back null. There is no way I can see for settings_info to be non-null but not have capabilities set (though it is certainly possible for the capabilities to be empty).",
+      "parentUuid": "23f5f6bc_30ad8e03",
       "revId": "f48b7494c0b9aae6413579dcea63bd02dda892f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "22d3ff91_1e00bf70",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T21:16:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb1ec33c_b2ef7c38",
+      "range": {
+        "startLine": 38,
+        "startChar": 65,
+        "endLine": 38,
+        "endChar": 73
+      },
+      "revId": "f48b7494c0b9aae6413579dcea63bd02dda892f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c9a7ea7_1bb34659",
         "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
         "patchSetId": 1
@@ -90,6 +168,24 @@
       "revId": "f48b7494c0b9aae6413579dcea63bd02dda892f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ebd8c69_ff1837a2",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T21:16:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c9a7ea7_1bb34659",
+      "revId": "f48b7494c0b9aae6413579dcea63bd02dda892f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
