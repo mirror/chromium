@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a54a96cc_52ce5dab",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_deferred_launcher_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-08T20:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee69119e_445962c5",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 47
+      },
+      "revId": "51b783d41b0527ad4d1a95ca5cb59153f2bb8cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec9b02bd_51ebc24c",
         "filename": "chrome/browser/ui/views/apps/app_info_dialog/arc_app_info_links_panel.cc",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c2fbf2f7_92267b18",
+        "filename": "chrome/browser/ui/views/apps/app_info_dialog/arc_app_info_links_panel.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-08T20:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec9b02bd_51ebc24c",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 22
+      },
+      "revId": "51b783d41b0527ad4d1a95ca5cb59153f2bb8cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f549d759_df5378a4",
         "filename": "chrome/browser/ui/webui/settings/chromeos/android_apps_handler.cc",
         "patchSetId": 11
@@ -68,6 +116,30 @@
       "revId": "51b783d41b0527ad4d1a95ca5cb59153f2bb8cbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2789923_292b14a0",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/android_apps_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-08T20:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f549d759_df5378a4",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 22
+      },
+      "revId": "51b783d41b0527ad4d1a95ca5cb59153f2bb8cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
