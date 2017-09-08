@@ -66,6 +66,11 @@ const char* ResourceTypeToString(ResourceType resource_type) {
   }
 }
 
+bool IsNavigationRequest(ResourceType resource_type) {
+  return resource_type == RESOURCE_TYPE_MAIN_FRAME ||
+         resource_type == RESOURCE_TYPE_SUB_FRAME;
+}
+
 void UnregisterNavigationRequestOnUI(
     base::WeakPtr<protocol::NetworkHandler> network_handler,
     std::string interception_id) {
@@ -84,15 +89,13 @@ void SendRequestInterceptedEventOnUiThread(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (!network_handler)
     return;
-  bool is_navigation_request = resource_type == RESOURCE_TYPE_MAIN_FRAME ||
-                               resource_type == RESOURCE_TYPE_SUB_FRAME;
-  if (is_navigation_request) {
+  if (IsNavigationRequest(resource_type)) {
     network_handler->InterceptedNavigationRequest(global_request_id,
                                                   interception_id);
   }
   network_handler->frontend()->RequestIntercepted(
       interception_id, std::move(network_request),
-      ResourceTypeToString(resource_type), is_navigation_request);
+      ResourceTypeToString(resource_type), IsNavigationRequest(resource_type));
 }
 
 void SendRedirectInterceptedEventOnUiThread(
@@ -106,11 +109,9 @@ void SendRedirectInterceptedEventOnUiThread(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (!network_handler)
     return;
-  bool is_navigation_request = resource_type == RESOURCE_TYPE_MAIN_FRAME ||
-                               resource_type == RESOURCE_TYPE_SUB_FRAME;
   network_handler->frontend()->RequestIntercepted(
       interception_id, std::move(network_request),
-      ResourceTypeToString(resource_type), is_navigation_request,
+      ResourceTypeToString(resource_type), IsNavigationRequest(resource_type),
       std::move(headers_object), http_status_code, redirect_url);
 }
 
@@ -123,11 +124,9 @@ void SendAuthRequiredEventOnUiThread(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (!network_handler)
     return;
-  bool is_navigation_request = resource_type == RESOURCE_TYPE_MAIN_FRAME ||
-                               resource_type == RESOURCE_TYPE_SUB_FRAME;
   network_handler->frontend()->RequestIntercepted(
       interception_id, std::move(network_request),
-      ResourceTypeToString(resource_type), is_navigation_request,
+      ResourceTypeToString(resource_type), IsNavigationRequest(resource_type),
       protocol::Maybe<protocol::Network::Headers>(), protocol::Maybe<int>(),
       protocol::Maybe<protocol::String>(), std::move(auth_challenge));
 }
@@ -222,9 +221,7 @@ DevToolsURLInterceptorRequestJob::DevToolsURLInterceptorRequestJob(
 
 DevToolsURLInterceptorRequestJob::~DevToolsURLInterceptorRequestJob() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  bool is_navigation_request = resource_type_ == RESOURCE_TYPE_MAIN_FRAME ||
-                               resource_type_ == RESOURCE_TYPE_SUB_FRAME;
-  if (is_navigation_request) {
+  if (IsNavigationRequest(resource_type_)) {
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                             base::BindOnce(UnregisterNavigationRequestOnUI,
                                            network_handler_, interception_id_));
@@ -597,8 +594,20 @@ void DevToolsURLInterceptorRequestJob::ProcessInterceptionRespose(
   waiting_for_user_response_ = WaitingForUserResponse::NOT_WAITING;
 
   if (modifications->error_reason) {
-    NotifyStartError(net::URLRequestStatus(net::URLRequestStatus::FAILED,
-                                           *modifications->error_reason));
+    ResourceRequestInfoImpl* resource_request_info =
+        ResourceRequestInfoImpl::ForRequest(request());
+    DCHECK(resource_request_info);
+    resource_request_info->set_canceled_by_devtools(true);
+    if (IsNavigationRequest(resource_type_)) {
+      // To successfully cancel navigation the request must succeed. We
+      // provide a simple mock response to avoid a pointless network fetch.
+      mock_response_details_.reset(new MockResponseDetails(
+          "HTTP/1.1 200 OK\r\n\r\n", base::TimeTicks::Now()));
+      NotifyHeadersComplete();
+    } else {
+      NotifyStartError(net::URLRequestStatus(net::URLRequestStatus::FAILED,
+                                             *modifications->error_reason));
+    }
     return;
   }
 
@@ -763,7 +772,7 @@ DevToolsURLInterceptorRequestJob::SubRequest::SubRequest(
         })");
   request_ = request_details.url_request_context->CreateRequest(
       request_details.url, request_details.priority,
-      devtools_interceptor_request_job_, traffic_annotation),
+      devtools_interceptor_request_job_, traffic_annotation);
   request_->set_method(request_details.method);
   request_->SetExtraRequestHeaders(request_details.extra_request_headers);
 

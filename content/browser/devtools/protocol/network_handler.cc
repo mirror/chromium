@@ -1040,10 +1040,6 @@ void NetworkHandler::ContinueInterceptedRequest(
       auto it = navigation_requests_.find(interception_id);
       if (it != navigation_requests_.end()) {
         canceled_navigation_requests_.insert(it->second);
-        // To successfully cancel navigation the request must succeed. We
-        // provide simple mock response to avoid pointless network fetch.
-        error.reset();
-        raw_response = std::string("HTTP/1.1 200 OK\r\n\r\n");
       }
     }
   }
