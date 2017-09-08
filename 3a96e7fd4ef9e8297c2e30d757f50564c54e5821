@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8701b1ad_8099e340",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T17:25:26Z",
+      "side": 1,
+      "message": "So if a call blocks for 10% of the time, MAY_BLOCK isn\u0027t necessary?\n\nThere are three boundaries to draw for the calls\n\n\u003d\u003d\u003d\u003d\u003d\n\nNon Blocking\n\n----- \u003c------- My sense is we want to draw the line here.\n               The definition above moves the arrow down a bit.\n\nIndeterminate Blocking\n\n-----\n\nBlocking\n\n\u003d\u003d\u003d\u003d\u003d",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 41
+      },
+      "revId": "3a96e7fd4ef9e8297c2e30d757f50564c54e5821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8dd1c47_106b7bda",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T17:25:26Z",
+      "side": 1,
+      "message": "Nit: This should be a form of the good case above. Create a separate on just for this that lacks the ScopedBlockingCall. Bad would just be moving the ScopedBlockingCall out of the scope and removing the scope.\n\nGood:\n  base::WaitableEvent waitable_event(...);\n  waitable_event.Wait();",
+      "range": {
+        "startLine": 58,
+        "startChar": 1,
+        "endLine": 61,
+        "endChar": 78
+      },
+      "revId": "3a96e7fd4ef9e8297c2e30d757f50564c54e5821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
