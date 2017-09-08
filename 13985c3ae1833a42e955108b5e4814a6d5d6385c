@@ -115,6 +115,30 @@
       "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f9a4df_48b2f01c",
+        "filename": "base/test/scoped_task_environment.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:20:03Z",
+      "side": 1,
+      "message": "This might be easier discussed in person.\n\nIs the issue that ML handles the Delayed tasks directly, going around the mock time behavior?\n\nIf so, we can set a custom task runner on the ML to intercept these delayed tasks and forward to the real ML task runner as necessary should the dev want mocked time behavior.",
+      "parentUuid": "f8f3c907_5b9d7170",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
