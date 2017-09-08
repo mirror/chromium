@@ -301,6 +301,40 @@
     },
     {
       "key": {
+        "uuid": "b79e6804_24bc6f39",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-08T09:57:15Z",
+      "side": 1,
+      "message": "these are sufficiently simple that i think they should be inlined in the .h. ScopedGeneric\u0027s doc comment even says that this one is assumed to be inline.",
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a14193f8_e8358713",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-08T09:57:15Z",
+      "side": 1,
+      "message": "what\u0027s your case for VLOG(1)? who will see these messages to diagnose them? if anything, how about:\n    DLOG(ERROR) \u003c\u003c \"WindowsCreateString failed \" \u003c\u003c std::hex \u003c\u003c hr;\nso that it\u0027s a debug-only message with useful data?",
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea3f591b_e59aa3c4",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 9
@@ -318,6 +352,47 @@
         "endLine": 94,
         "endChar": 1
       },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eec2228_6bf3c09c",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-08T09:57:15Z",
+      "side": 1,
+      "message": "ScopedGeneric is movable, so no need for unique_ptr:\n...Create(...) {\n  HSTRING hstr;\n  HRESULT hr \u003d ...;\n  if (SUCCEDED(hr))\n    return ScopedHString(hstr);\n  DLOG(ERROR) \u003c\u003c ...;\n  return ScopedHString();\n}",
+      "parentUuid": "ea3f591b_e59aa3c4",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 1
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14425284_12adab65",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-08T09:57:15Z",
+      "side": 1,
+      "message": "apologies if i missed the discussion, but why do this rather than delayload? if it\u0027s because you want to know whether or not the dll/methods exist, you can do a one-time check via __HrLoadAllImportsForDll; see device/bluetooth/bluetooth_init_win.cc for an example. i think you can remove a whole lot of code if you let the loader do the work for you.",
       "revId": "7c94678236651053359d829bbd360f4971b4c84a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -363,6 +438,52 @@
         "startChar": 11,
         "endLine": 126,
         "endChar": 14
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b110500f_429b4860",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-08T09:57:15Z",
+      "side": 1,
+      "message": "nit: traits types like this are generally defined via \"struct\" rather than \"class\" (see doc comments in scoped_generic.h for an example). then you can get rid of \"public:\" below.",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8d754ea_f73bd576",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-08T09:57:15Z",
+      "side": 1,
+      "message": "use \"base::StringPiece16 str\" here to avoid the strlen in cases where the caller already knows it.",
+      "range": {
+        "startLine": 28,
+        "startChar": 37,
+        "endLine": 28,
+        "endChar": 60
       },
       "revId": "7c94678236651053359d829bbd360f4971b4c84a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
