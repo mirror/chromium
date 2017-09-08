@@ -46,6 +46,30 @@
       "revId": "07e78608e30cd9044c70cbb95352d6fd38ff1da5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f156c710_9a8ebfc4",
+        "filename": "ppapi/proxy/pdf_resource.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-08T05:49:50Z",
+      "side": 1,
+      "message": "Yes, v8.h is implicitly included via gin/v8_initializer.h, and having a direct #include violates ppapi/proxy/DEPS. :(\nIf it\u0027s allowed, I\u0027d add a dependency on v8/. Or make a wrapping function in gin/.",
+      "parentUuid": "391a9910_32ac2d2f",
+      "range": {
+        "startLine": 169,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 25
+      },
+      "revId": "07e78608e30cd9044c70cbb95352d6fd38ff1da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
