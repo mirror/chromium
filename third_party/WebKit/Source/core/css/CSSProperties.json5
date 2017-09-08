@@ -51,7 +51,7 @@
     api_methods: {
       default: [],
       valid_type: "list",
-      valid_values: ["ParseSingleValue", "ParseShorthand"],
+      valid_values: ["ParseSingleValue", "ParseShorthand", "IsAffectedByAll"],
     },
 
     // - field_group
@@ -421,7 +421,8 @@
     },
     {
       name: "direction",
-      api_class: "CSSPropertyAPIInherited",
+      api_class: true,
+      api_methods: ["IsAffectedByAll"],
       custom_value: true,
       type_name: "TextDirection",
       inherited: true,
@@ -2872,6 +2873,8 @@
     },
     {
       name: "unicode-bidi",
+      api_class: true,
+      api_methods: ["IsAffectedByAll"],
       include_paths: ["platform/text/UnicodeBidi.h"],
       default_value: "normal",
       field_template: "keyword",
@@ -3765,6 +3768,8 @@
 
     {
       name: "all",
+      api_class: true,
+      api_methods: ["IsAffectedByAll"],
       builder_skip: true,
     },
     {
