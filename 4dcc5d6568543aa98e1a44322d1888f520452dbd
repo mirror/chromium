@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59e74d4d_db0ecdfa",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-09-08T19:31:08Z",
+      "side": 1,
+      "message": "Your assessment is right.",
+      "parentUuid": "fcc73bfc_3db521a4",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7bc260a_809a0b98",
         "filename": "tools/perf/perf_device_trigger.py",
         "patchSetId": 9
@@ -64,6 +82,41 @@
       "writtenOn": "2017-09-08T14:58:41Z",
       "side": 1,
       "message": "I am confused by this statement.  \n\nWhat do we care about from the \"results from each trigger call\"\n\nDon\u0027t we basically just trigger and then don\u0027t care.  I thought we care about the results from the collect (merge script) side?",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a938dfa7_03ac3049",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-09-08T19:31:08Z",
+      "side": 1,
+      "message": "It could be reworded to note that another script does the merging, and hint about what it does.",
+      "parentUuid": "1c3302d1_742be2ff",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174d99da_8883a3f2",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-09-08T19:31:08Z",
+      "side": 1,
+      "message": "style nit: I prefer consistently two empty lines between file level symbols.",
       "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
