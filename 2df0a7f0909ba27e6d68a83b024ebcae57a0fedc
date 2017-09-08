@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e2719f6_e3fc1c84",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-08T13:51:05Z",
+      "side": 1,
+      "message": "insert-text-remove-iframe-on-textInput-event.html crashes FrameSelection::GetDocument() at\nDCHECK(LifecycleContext());",
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

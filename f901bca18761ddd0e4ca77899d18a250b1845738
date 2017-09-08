@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "46c75943_8bacdb47",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/webkitBeforeTextInserted-disconnect-node.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-08T13:51:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "429cb60a_e68191db",
+      "revId": "f901bca18761ddd0e4ca77899d18a250b1845738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9dd1137_a03b0851",
         "filename": "third_party/WebKit/LayoutTests/editing/selection/webkitBeforeTextInserted-event-deleteframe.html",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-05T22:28:21Z",
       "side": 1,
       "message": "Could you make the test synchronous and easier to read by:\n1. Use selection_test(). See editing/assert_selection.html for sample usage.\n2. Follow the approach in editing/inserting/insert_linebreak_remove_frame.html to setup the subframe.\n\nNote: selection_test() is simply a wrapper of assert_selection(). Both have sample usage in editing/assert_selection.html.",
+      "revId": "f901bca18761ddd0e4ca77899d18a250b1845738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57be52f1_d44763ee",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/webkitBeforeTextInserted-event-deleteframe.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-08T13:51:05Z",
+      "side": 1,
+      "message": "I tried to make the test case as sync, but got few issues.\n1) If we try to add a iframe \u0027src\u0027 tag, then it will become async as we have to wait for onload for iframe.\n\n2) Without any \u0027src\u0027 tag (code commented), the event handling is not happening and iframe is not removed.\nI debugged a little and saw that EventTarget::FireEventListeners is not handling this event and hits continue from this condition in EventTarget::FireEventListeners\n   if (event-\u003eeventPhase() \u003d\u003d Event::kCapturingPhase \u0026\u0026\n        !registered_listener.Capture())\n      continue;\nIn BeforeTextInsertedEvent.cpp if we make\nEvent(EventTypeNames::webkitBeforeTextInserted, false, true) \u003d\u003e bubble(2nd parameter) to true,\nas Event(EventTypeNames::webkitBeforeTextInserted, true, true)\nthe event handling happens.\nBut i don\u0027t know about side effects if any.\nSo as of now i made this test case as async. Kindly guide me on this.",
+      "parentUuid": "c9dd1137_a03b0851",
       "revId": "f901bca18761ddd0e4ca77899d18a250b1845738",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
