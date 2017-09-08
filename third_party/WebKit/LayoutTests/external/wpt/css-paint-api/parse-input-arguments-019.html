@@ -19,11 +19,11 @@
 <script id="code" type="text/worklet">
 var testsPassed = false;
 try {
-    registerPaint('foo13', class {
+    registerPaint('foo', class {
         static get paintRenderingContext2DSettings() {
-            return {alpha: true};
+            return {alpha: 42};
         }
-        paint() { }
+        paint() {}
     });
     testsPassed = true;
 } catch(ex) {
