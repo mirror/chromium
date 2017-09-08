@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "21552e62_a2bb35e4",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-09-08T21:38:07Z",
+      "side": 1,
+      "message": "Ack\n\nWill look into this.",
+      "parentUuid": "1eecda60_69d0669f",
+      "revId": "7d55af3e28ff6b9b41dd95aef1123799b1f534ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5f7fe5e_82b3e0bd",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
         "patchSetId": 1
@@ -185,6 +203,30 @@
       "side": 1,
       "message": "behavior may differ if the GC can run in the same javascript execution after the characteristic.call is made -- as opposed to racing the async result of the call and the next JS turn that runs GC.",
       "parentUuid": "70cc1b17_834bb5d7",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "7d55af3e28ff6b9b41dd95aef1123799b1f534ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d96fbb16_5b242dfa",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-09-08T21:38:07Z",
+      "side": 1,
+      "message": "I was fairly convinced that a new turn is only triggered when a promise doesn\u0027t resolve synchronously, so there shouldn\u0027t be any race condition here.\n\nHere\u0027s an empirical test: https://jsfiddle.net/cy3Lctzp/3/",
+      "parentUuid": "fad8fe74_d5283bca",
       "range": {
         "startLine": 29,
         "startChar": 8,
