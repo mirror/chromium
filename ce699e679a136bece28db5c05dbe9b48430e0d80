@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3fd24aee_6650a273",
+        "filename": "content/browser/download/parallel_download_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-08T19:45:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eb5917e_6a991499",
+      "revId": "ce699e679a136bece28db5c05dbe9b48430e0d80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7f8a062_7f5e5cd3",
         "filename": "content/browser/download/parallel_download_job.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-07T23:04:48Z",
       "side": 1,
       "message": "I think only the 2nd condition matters? the first should always be true?",
+      "revId": "ce699e679a136bece28db5c05dbe9b48430e0d80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2193b604_38861d37",
+        "filename": "content/browser/download/parallel_download_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-08T19:45:38Z",
+      "side": 1,
+      "message": "Done, yeah, if the DCHECK above is true, this should be true.",
+      "parentUuid": "e7f8a062_7f5e5cd3",
       "revId": "ce699e679a136bece28db5c05dbe9b48430e0d80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
