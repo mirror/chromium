@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "585d3531_945828f9",
+        "filename": "components/cronet/interfaces/cronet.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-08T20:34:01Z",
+      "side": 1,
+      "message": "This is not how typically mojom interface would use, because there is no \"static\" methods. In order to create an interface instance, you need to use an existing instance.\n\nAnd also [Sync] methods are discouraged, only used when absolutely necessary.\n\n(But I understand that this is not actually mojo, so I will let you decide.)",
+      "revId": "6922509a268bcb4473ddedc2bde1e7a97ec114f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eedb6c9a_6b5f6ad7",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-08T20:34:01Z",
+      "side": 1,
+      "message": "It is not part of mojo or maintained by the mojo team. Please don\u0027t add it here.",
+      "revId": "6922509a268bcb4473ddedc2bde1e7a97ec114f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
