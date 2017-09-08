@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e171db70_f09e1681",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-08T17:21:35Z",
+      "side": 1,
+      "message": "nit: Capitalize first letter and optionally add a prefix, either \"arc:\" or \"cros:\"\n\ne.g.\n  cros: Fix oobe flow for voice interaction",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 1
+      },
+      "revId": "857d596e937853904525a81f9adf9888eddf1217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2022f2bc_4fc68bb4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-08T17:21:35Z",
+      "side": 1,
+      "message": "nit: Paraphrase to make it more readable\ne.g.\n\n- Correctly select voice interaction OOBE flow and runtime flow;\n- Update launcher button state after oobe flow;",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 16
+      },
+      "revId": "857d596e937853904525a81f9adf9888eddf1217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49897e42_69c9ab62",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 1
