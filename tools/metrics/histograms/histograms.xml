@@ -59891,6 +59891,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Popups.ClickThroughPosition" enum="PopupPosition">
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    The position of the popup that a user clicks through in the list of blocked
+    popups.
+  </summary>
+</histogram>
+
 <histogram name="Power.BacklightLevelOnAC" units="%">
   <owner>derat@chromium.org</owner>
   <summary>
