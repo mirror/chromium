@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5f30b4e_8cefce1d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-08T05:02:24Z",
+      "side": 1,
+      "message": "I think at least source should be case insensitive. Not sure about context or url. What do we do elsewhere - default to case sensitive or insensitive?",
+      "revId": "1b75a0e173e7ed30619cc2f7253fd532a69ef20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
