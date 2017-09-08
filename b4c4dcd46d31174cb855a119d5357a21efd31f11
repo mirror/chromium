@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1876664_2c0be63b",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-08T00:46:00Z",
+      "side": 1,
+      "message": "It\u0027s related to the change from \nwidth: 100%;\nto \nalign-self: stretch;\nwhich was changed in cr_link_row.html",
+      "parentUuid": "47c27de5_a1df9aed",
+      "revId": "b4c4dcd46d31174cb855a119d5357a21efd31f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3adf369_ee73d31b",
         "filename": "chrome/browser/resources/settings/settings_shared_css.html",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d6b16f81_3380d607",
+        "filename": "chrome/browser/resources/settings/settings_shared_css.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-08T00:46:00Z",
+      "side": 1,
+      "message": "It\u0027s related to the change from \nwidth: 100%;\nto \nalign-self: stretch;\nwhich was changed in cr_link_row.html",
+      "parentUuid": "a3adf369_ee73d31b",
+      "revId": "b4c4dcd46d31174cb855a119d5357a21efd31f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e108ce9f_608b130e",
         "filename": "ui/webui/resources/cr_elements/cr_link_row/cr_link_row.html",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-08T00:38:35Z",
       "side": 1,
       "message": "I\u0027m wondering if there are existing cases in which the label itself is two-line due to length of text, instead of due to having a subLabel?",
+      "revId": "b4c4dcd46d31174cb855a119d5357a21efd31f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ea0616_4b824d59",
+        "filename": "ui/webui/resources/cr_elements/cr_link_row/cr_link_row.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-08T00:46:00Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s a good idea. There\u0027s a todo here: https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/shared_vars_css.html?sq\u003dpackage:chromium\u0026dr\u0026l\u003d50",
+      "parentUuid": "e108ce9f_608b130e",
       "revId": "b4c4dcd46d31174cb855a119d5357a21efd31f11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
