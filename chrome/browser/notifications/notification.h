@@ -50,7 +50,7 @@ class Notification : public message_center::Notification {
   }
 
   // Id of the delegate embedded inside this instance.
-  std::string delegate_id() const { return delegate()->id(); }
+  std::string delegate_id() const { return id(); }
 
   NotificationDelegate* delegate() const { return delegate_.get(); }
 
