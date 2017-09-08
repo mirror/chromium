@@ -144,6 +144,8 @@ RenderProcessImpl::RenderProcessImpl(
                      "--harmony-sharedarraybuffer");
   SetV8FlagIfNotFeature(features::kSharedArrayBuffer,
                         "--no-harmony-sharedarraybuffer");
+  SetV8FlagIfFeature(features::kModuleScriptsDynamicImport,
+                     "--harmony-dynamic-import");
 
   SetV8FlagIfFeature(features::kWebAssemblyTrapHandler, "--wasm-trap-handler");
   SetV8FlagIfNotFeature(features::kWebAssemblyTrapHandler,
