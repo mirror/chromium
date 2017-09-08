@@ -1,0 +1,249 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "831e0f40_1b649017",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/menu.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T06:04:45Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary.",
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1abd6f0_1d224b8c",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/sub_chart.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T06:04:45Z",
+      "side": 1,
+      "message": "whatever",
+      "range": {
+        "startLine": 277,
+        "startChar": 64,
+        "endLine": 277,
+        "endChar": 73
+      },
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b73c07_617918f2",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/unit_label.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T06:04:45Z",
+      "side": 1,
+      "message": "labels",
+      "range": {
+        "startLine": 149,
+        "startChar": 16,
+        "endLine": 149,
+        "endChar": 22
+      },
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01311f44_2e2fae5f",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/unit_label.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T06:04:45Z",
+      "side": 1,
+      "message": "inline",
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314f2728_287b390c",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/unit_label.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T06:04:45Z",
+      "side": 1,
+      "message": "Math.max(0, this.precision_)",
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6aed59_82f5ba2f",
+        "filename": "chrome/test/data/webui/sys_internals/line_chart/data_series_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T06:04:45Z",
+      "side": 1,
+      "message": "Can you just inline the values for all these?",
+      "range": {
+        "startLine": 76,
+        "startChar": 6,
+        "endLine": 76,
+        "endChar": 16
+      },
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4824b4ba_63066456",
+        "filename": "chrome/test/data/webui/sys_internals/line_chart/data_series_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T06:04:45Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 98,
+        "startChar": 6,
+        "endLine": 98,
+        "endChar": 24
+      },
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa8c1395_0d9e5f16",
+        "filename": "chrome/test/data/webui/sys_internals/line_chart/line_chart_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T06:04:45Z",
+      "side": 1,
+      "message": "You should probably assert some things here. Like the actual scale values and scrollbar positions.",
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ae57dd_28bb7bb6",
+        "filename": "chrome/test/data/webui/sys_internals/line_chart/menu_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T06:04:45Z",
+      "side": 1,
+      "message": "Send a click event to a button and make sure it flips its visibility.",
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eea9c9a_8f4d9608",
+        "filename": "chrome/test/data/webui/sys_internals/line_chart/scrollbar_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T06:04:45Z",
+      "side": 1,
+      "message": "Can you also check the value of getPosition() here?",
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f150cea_34ef1c8d",
+        "filename": "chrome/test/data/webui/sys_internals/line_chart/unit_label_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T06:04:45Z",
+      "side": 1,
+      "message": "Inline these test values. Also, consider some usage of Math.pow() here",
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b89717c_94af94a1",
+        "filename": "chrome/test/data/webui/sys_internals/line_chart/unit_label_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T06:04:45Z",
+      "side": 1,
+      "message": "Inline all these results",
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d16369_e08b062f",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-08T06:04:45Z",
+      "side": 1,
+      "message": "Is this used right now?\n\nCan you put this in a setUp in SysInternalsBrowserTest?\n\nCheck MdHistoryBrowserTest for an example.",
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
