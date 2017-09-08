@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h"
 
+#include <string>
 #include <utility>
 
 #include "base/metrics/histogram_macros.h"
@@ -33,9 +34,20 @@ bool CanSkipSearchResult(content::BrowserContext* context,
   if (!result.package_name.has_value())
     return false;
 
-  return !extensions::util::GetEquivalentInstalledExtensions(
-              context, result.package_name.value())
-              .empty();
+  if (!extensions::util::GetEquivalentInstalledExtensions(
+           context, result.package_name.value())
+           .empty())
+    return true;
+
+  // TODO(crbug/763562): Remove this once we have a fix in Phonesky.
+  // Don't show installed Android apps.
+  ArcAppListPrefs* arc_prefs = ArcAppListPrefs::Get(context);
+  if (!arc_prefs)
+    return false;
+
+  const std::vector<std::string> packages = arc_prefs->GetPackagesFromPrefs();
+  return std::find(packages.begin(), packages.end(),
+                   result.package_name.value()) != packages.end();
 }
 }  // namespace
 
