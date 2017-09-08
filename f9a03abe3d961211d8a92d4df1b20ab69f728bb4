@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "320352ed_ed9c2c90",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-09-08T18:29:12Z",
+      "side": 1,
+      "message": "I\u0027m working on that patch locally right now -- I separated this out cause the patch for the mailbox path and adding tests for it was a big enough chunk that I wanted to land it first.",
+      "parentUuid": "022d6e13_87374b49",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 15
+      },
+      "revId": "f9a03abe3d961211d8a92d4df1b20ab69f728bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8670bd52_480725e1",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 7
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-08T08:31:22Z",
       "side": 1,
       "message": "Looks like this is unused now?",
+      "range": {
+        "startLine": 2930,
+        "startChar": 4,
+        "endLine": 2930,
+        "endChar": 50
+      },
+      "revId": "f9a03abe3d961211d8a92d4df1b20ab69f728bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9838f835_c6007252",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2930,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-09-08T18:29:12Z",
+      "side": 1,
+      "message": "True, I was contemplating deleting it, but it\u0027ll be used in the SkBitmap patch (either way that that goes), so I decided to leave it.",
+      "parentUuid": "8670bd52_480725e1",
       "range": {
         "startLine": 2930,
         "startChar": 4,
