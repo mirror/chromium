@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "178319cc_aaa7bca3",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-08T17:55:18Z",
+      "side": 1,
+      "message": "The expected status code was wrong. I verified both the API docs and real responses, and the success code is 200 instead of 201. However, the return value of update_pr was never actually used/checked, so the issue was never discovered.",
+      "revId": "94f27d6139bcce723c6d7fb911cba54ba6fa048a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "399f01d2_9ffe707c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-08T17:55:18Z",
+      "side": 1,
+      "message": "I also checked this status code. Unfortunately, the inconsistency between the doc and reality still exists.",
+      "revId": "94f27d6139bcce723c6d7fb911cba54ba6fa048a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
