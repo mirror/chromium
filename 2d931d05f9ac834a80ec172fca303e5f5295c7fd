@@ -16,6 +16,24 @@
       "revId": "2d931d05f9ac834a80ec172fca303e5f5295c7fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0e9faa_b39c8589",
+        "filename": "content/test/mock_platform_notification_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-08T18:54:51Z",
+      "side": 1,
+      "message": "|reply| can certainly be null at this point, it\u0027s just passing through whatever it got from the user (usually the test runner bindings).",
+      "parentUuid": "c04befaa_22ac5050",
+      "revId": "2d931d05f9ac834a80ec172fca303e5f5295c7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
