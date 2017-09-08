@@ -291,6 +291,30 @@
       "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd6f5aa6_0b716238",
+        "filename": "chrome/browser/ui/browser_navigator_params.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-08T14:49:46Z",
+      "side": 1,
+      "message": "Can\u0027t this be tracked separately? It seems you only set this in one place (browser.cc), which promptly calls off to create the WebContents. Can\u0027t this one place use a local variable and then create the Tracker?",
+      "parentUuid": "4bef446e_9b1e0820",
+      "range": {
+        "startLine": 253,
+        "startChar": 7,
+        "endLine": 253,
+        "endChar": 15
+      },
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
