@@ -92,9 +92,9 @@ void PaymentRequest::Init(mojom::PaymentRequestClientPtr client,
         std::vector<mojom::PaymentMethodDataPtr>(), this,
         delegate_->GetApplicationLocale());
     state_ = base::MakeUnique<PaymentRequestState>(
-        spec_.get(), this, delegate_->GetApplicationLocale(),
-        delegate_->GetPersonalDataManager(), delegate_.get(),
-        web_contents_->GetBrowserContext(), &journey_logger_);
+        web_contents_->GetBrowserContext(), spec_.get(), this,
+        delegate_->GetApplicationLocale(), delegate_->GetPersonalDataManager(),
+        delegate_.get(), &journey_logger_);
     return;
   }
 
@@ -115,9 +115,9 @@ void PaymentRequest::Init(mojom::PaymentRequestClientPtr client,
       std::move(options), std::move(details), std::move(method_data), this,
       delegate_->GetApplicationLocale());
   state_ = base::MakeUnique<PaymentRequestState>(
-      spec_.get(), this, delegate_->GetApplicationLocale(),
-      delegate_->GetPersonalDataManager(), delegate_.get(),
-      web_contents_->GetBrowserContext(), &journey_logger_);
+      web_contents_->GetBrowserContext(), spec_.get(), this,
+      delegate_->GetApplicationLocale(), delegate_->GetPersonalDataManager(),
+      delegate_.get(), &journey_logger_);
 
   journey_logger_.SetRequestedInformation(
       spec_->request_shipping(), spec_->request_payer_email(),

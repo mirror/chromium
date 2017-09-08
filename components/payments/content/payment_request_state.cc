@@ -27,12 +27,12 @@
 namespace payments {
 
 PaymentRequestState::PaymentRequestState(
+    content::BrowserContext* context,
     PaymentRequestSpec* spec,
     Delegate* delegate,
     const std::string& app_locale,
     autofill::PersonalDataManager* personal_data_manager,
     PaymentRequestDelegate* payment_request_delegate,
-    content::BrowserContext* context,
     JourneyLogger* journey_logger)
     : is_ready_to_pay_(false),
       get_all_instruments_finished_(true),
@@ -66,31 +66,27 @@ void PaymentRequestState::GetAllPaymentAppsCallback(
     content::PaymentAppProvider::PaymentApps apps) {
   std::vector<GURL> requested_method_urls =
       spec_->url_payment_method_identifiers();
-  if (apps.empty() || requested_method_urls.size() == 0) {
-    get_all_instruments_finished_ = true;
-    NotifyOnGetAllPaymentInstrumentsFinished();
-    return;
-  }
-
-  std::unordered_set<std::string> requested_method_strings;
-  for (auto url : requested_method_urls) {
-    requested_method_strings.insert(url.spec());
-  }
-  for (content::PaymentAppProvider::PaymentApps::iterator it = apps.begin();
-       it != apps.end(); it++) {
-    size_t i = 0;
-    for (; i < it->second->enabled_methods.size(); i++) {
-      if (requested_method_strings.find(it->second->enabled_methods[i]) !=
-          requested_method_strings.end()) {
-        break;
-      }
+  if (!apps.empty() && requested_method_urls.size() > 0) {
+    std::unordered_set<std::string> requested_method_strings;
+    for (auto url : requested_method_urls) {
+      requested_method_strings.insert(url.spec());
     }
-    if (i >= it->second->enabled_methods.size())
-      continue;
+    for (content::PaymentAppProvider::PaymentApps::iterator it = apps.begin();
+         it != apps.end(); it++) {
+      size_t i = 0;
+      for (; i < it->second->enabled_methods.size(); i++) {
+        if (requested_method_strings.find(it->second->enabled_methods[i]) !=
+            requested_method_strings.end()) {
+          break;
+        }
+      }
+      if (i >= it->second->enabled_methods.size())
+        continue;
 
-    auto instrument =
-        base::MakeUnique<ServiceWorkerPaymentInstrument>(std::move(it->second));
-    available_instruments_.push_back(std::move(instrument));
+      auto instrument = base::MakeUnique<ServiceWorkerPaymentInstrument>(
+          std::move(it->second));
+      available_instruments_.push_back(std::move(instrument));
+    }
   }
 
   SetDefaultProfileSelections();
@@ -370,15 +366,6 @@ void PaymentRequestState::PopulateProfileCache() {
       personal_data_manager_->GetCreditCardsToSuggest();
   for (autofill::CreditCard* card : cards)
     AddAutofillPaymentInstrument(/*selected=*/false, *card);
-
-  bool has_complete_instrument =
-      available_instruments().empty()
-          ? false
-          : available_instruments()[0]->IsCompleteForPayment();
-
-  journey_logger_->SetNumberOfSuggestionsShown(
-      JourneyLogger::Section::SECTION_PAYMENT_METHOD,
-      available_instruments().size(), has_complete_instrument);
 }
 
 void PaymentRequestState::SetDefaultProfileSelections() {
@@ -411,6 +398,15 @@ void PaymentRequestState::SetDefaultProfileSelections() {
                              ? nullptr
                              : first_complete_instrument->get();
   UpdateIsReadyToPayAndNotifyObservers();
+
+  bool has_complete_instrument =
+      available_instruments().empty()
+          ? false
+          : available_instruments()[0]->IsCompleteForPayment();
+
+  journey_logger_->SetNumberOfSuggestionsShown(
+      JourneyLogger::Section::SECTION_PAYMENT_METHOD,
+      available_instruments().size(), has_complete_instrument);
 }
 
 void PaymentRequestState::UpdateIsReadyToPayAndNotifyObservers() {

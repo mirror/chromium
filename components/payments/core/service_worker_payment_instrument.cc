@@ -7,8 +7,8 @@
 
 namespace payments {
 
-// Service worker payment app provides icon through bitmap, so 0 is setted as
-// invalid resource Id.
+// Service worker payment app provides icon through bitmap, so set 0 as invalid
+// resource Id.
 ServiceWorkerPaymentInstrument::ServiceWorkerPaymentInstrument(
     std::unique_ptr<content::StoredPaymentApp> stored_payment_app_info)
     : PaymentInstrument(0, PaymentInstrument::Type::SERVICE_WORKER_APP),

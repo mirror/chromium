@@ -74,12 +74,12 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
 
   using CanMakePaymentCallback = base::OnceCallback<void(bool)>;
 
-  PaymentRequestState(PaymentRequestSpec* spec,
+  PaymentRequestState(content::BrowserContext* context,
+                      PaymentRequestSpec* spec,
                       Delegate* delegate,
                       const std::string& app_locale,
                       autofill::PersonalDataManager* personal_data_manager,
                       PaymentRequestDelegate* payment_request_delegate,
-                      content::BrowserContext* context,
                       JourneyLogger* journey_logger);
   ~PaymentRequestState() override;
 
@@ -228,6 +228,7 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   // (contact info, shipping address).
   bool ArePaymentOptionsSatisfied();
 
+  // The PaymentAppProvider::GetAllPaymentAppsCallback.
   void GetAllPaymentAppsCallback(content::PaymentAppProvider::PaymentApps apps);
 
   // Checks whether the user has at least one instrument that satisfies the
