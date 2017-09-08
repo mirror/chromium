@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b014676_27117d2e",
+        "filename": "device/u2f/u2f_ble_frames.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1175054
+      },
+      "writtenOn": "2017-09-08T15:15:41Z",
+      "side": 1,
+      "message": "This looks like a duplicate of U2FMessage::Type. Can you pull both into a common enum class?",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 20
+      },
+      "revId": "64ad84cf097f18dda230325b3a50155bef69cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
