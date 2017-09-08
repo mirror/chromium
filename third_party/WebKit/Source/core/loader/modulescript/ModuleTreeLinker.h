@@ -6,16 +6,17 @@
 #define ModuleTreeLinker_h
 
 #include "core/CoreExport.h"
-#include "core/dom/AncestorList.h"
 #include "core/dom/Modulator.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"
+#include "platform/weborigin/KURL.h"
+#include "platform/weborigin/KURLHash.h"
+#include "platform/wtf/HashSet.h"
 
 namespace blink {
 
 class ModuleScriptFetchRequest;
 class ModuleTreeLinkerRegistry;
-class ModuleTreeReachedUrlSet;
 
 // A ModuleTreeLinker is responsible for running and keeping intermediate states
 // for "internal module script graph fetching procedure" for a module graph tree
@@ -24,10 +25,7 @@ class ModuleTreeReachedUrlSet;
 class CORE_EXPORT ModuleTreeLinker final : public SingleModuleClient {
  public:
   static ModuleTreeLinker* Fetch(const ModuleScriptFetchRequest&,
-                                 const AncestorList&,
-                                 ModuleGraphLevel,
                                  Modulator*,
-                                 ModuleTreeReachedUrlSet*,
                                  ModuleTreeLinkerRegistry*,
                                  ModuleTreeClient*);
   static ModuleTreeLinker* FetchDescendantsForInlineScript(
@@ -46,12 +44,7 @@ class CORE_EXPORT ModuleTreeLinker final : public SingleModuleClient {
   bool HasFinished() const { return state_ == State::kFinished; }
 
  private:
-  ModuleTreeLinker(const AncestorList& ancestor_list_with_url,
-                   ModuleGraphLevel,
-                   Modulator*,
-                   ModuleTreeReachedUrlSet*,
-                   ModuleTreeLinkerRegistry*,
-                   ModuleTreeClient*);
+  ModuleTreeLinker(Modulator*, ModuleTreeLinkerRegistry*, ModuleTreeClient*);
 
   enum class State {
     kInitial,
@@ -68,30 +61,30 @@ class CORE_EXPORT ModuleTreeLinker final : public SingleModuleClient {
 #endif
   void AdvanceState(State);
 
-  void FetchSelf(const ModuleScriptFetchRequest&);
+  void FetchRoot(const ModuleScriptFetchRequest&);
+  void FetchRootInline(ModuleScript*);
+
+  void FetchSingle(const ModuleScriptFetchRequest&, ModuleGraphLevel);
   // Implements SingleModuleClient
   void NotifyModuleLoadFinished(ModuleScript*) override;
-
-  void FetchDescendants();
-  void NotifyOneDescendantFinished();
+  void CompleteFetchDescendantsForOneModuleScript();
 
   void Instantiate();
-
-  class DependencyModuleClient;
-  friend class DependencyModuleClient;
+  bool PropagateError(HashSet<KURL>&, ModuleScript*);
 
   const Member<Modulator> modulator_;
-  const Member<ModuleTreeReachedUrlSet> reached_url_set_;
+  HashSet<KURL> reached_url_set_;
   const Member<ModuleTreeLinkerRegistry> registry_;
   const Member<ModuleTreeClient> client_;
-  const HashSet<KURL> ancestor_list_with_url_;
-  const ModuleGraphLevel level_;
   State state_ = State::kInitial;
+
   // Correspond to _result_ in
   // https://html.spec.whatwg.org/multipage/webappapis.html#internal-module-script-graph-fetching-procedure
-  TraceWrapperMember<ModuleScript> module_script_;
-  size_t num_incomplete_descendants_ = 0;
-  HeapHashSet<Member<DependencyModuleClient>> dependency_clients_;
+  TraceWrapperMember<ModuleScript> result_;
+
+  bool found_error_ = false;
+
+  size_t num_incomplete_fetches_ = 0;
 };
 
 }  // namespace blink
