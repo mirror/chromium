@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0df6e85_71d8acc7",
+        "filename": "base/win/com_base_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "Include windows.h in this file to cover GetProcAddress and LoadLibrary.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb922f5_ba290f6f",
+        "filename": "base/win/com_base_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "return !!*function_signature\n\nCan the return value not be the function signature or is it not nullable?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed7fe86_b49d4e6b",
+        "filename": "base/win/com_base_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "Can this be \u0027auto\u0027?",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 37
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a1eed6_119b37c9",
+        "filename": "base/win/com_base_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "E_ACCESSDENIED is used primarily for access checks. A regular E_FAIL will be good enough here.",
+      "range": {
+        "startLine": 71,
+        "startChar": 11,
+        "endLine": 71,
+        "endChar": 25
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14dbb8a7_fcbaf536",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "Lowercase these files. MSDN and VS have uppercase versions, which is incorrect.\n\n(And depending on the Preload* signature below, these can go away.)\n\nHRESULT can be grabbed from winnt.h",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b7a235_854538df",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "Nit: Unused headers.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12fc599a_a8305c7b",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "Do we expect callers to need the HMODULE?\nIf not, this should be sufficient in the anonymous namespace.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 45
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3b026b_a9f31c59",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "These should return bools. Callers should use the functions below directly.",
+      "range": {
+        "startLine": 26,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 47
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e2f165_500fd58d",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "#include \u003chstring.h\u003e",
+      "range": {
+        "startLine": 29,
+        "startChar": 43,
+        "endLine": 29,
+        "endChar": 50
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c446288a_d8ee8db6",
+        "filename": "base/win/com_base_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "Use ScopedComInitializer",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 56
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df4c357_f24a2349",
+        "filename": "base/win/com_base_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "I would be fine either removing these tests or turning these into sanity check tests (runs code to verify no crash occurs with no test expectations).\n\nWe shouldn\u0027t be calling the APIs or verifying the existence of APIs for various Windows platforms as it\u0027s not clear what the dev should do if those tests fail.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 22
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10b815e_eb6c2790",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "This sounds like something that could go in a util",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733babf3_fd410bdc",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "Have these directly load Combase here too instead of reaching into ComBaseUtil. Windows will just refcount the load.\n\nThis makes it easier to change the library in the future should MS want to change the locations (and has happened between Windows versions when some stuff from ole32.dll went to combase.dll). Now, Windows generally reprojects those APIs when they do something like that, so it\u0027s generally not an issue.",
+      "range": {
+        "startLine": 26,
+        "startChar": 24,
+        "endLine": 26,
+        "endChar": 73
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea3f591b_e59aa3c4",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "Since there is a potential for the API to fail, this should go into a factory method and the constructor should be made private.\n\nSomething like\n\nstd::unique_ptr\u003cScopedHString\u003e Create(const base::char16* str) {\n}\n\nshould do the trick.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 1
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8250594e_3e092bc4",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "Carry forward the COM comments here.",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 26
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b23f07a_c31e8e35",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "This should return nullptr on failure.",
+      "range": {
+        "startLine": 126,
+        "startChar": 11,
+        "endLine": 126,
+        "endChar": 14
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b54e214_f8f0dc39",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "With ScopedHString, should folks should not need to call these functions directly. ScopedHString should provide equivalent projections.",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 25
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e9ee28c_c6ee296c",
+        "filename": "base/win/scoped_hstring_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T01:01:05Z",
+      "side": 1,
+      "message": "Similarly, it\u0027s useful to have crash check tests, but verifying the APIs is beyond the scope of Chromium.",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
