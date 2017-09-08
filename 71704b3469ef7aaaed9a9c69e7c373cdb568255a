@@ -2,6 +2,193 @@
   "comments": [
     {
       "key": {
+        "uuid": "9e71b0e9_469d4a03",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T07:56:51Z",
+      "side": 1,
+      "message": "s/will //",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d68eedb7_85b66fb5",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T07:56:51Z",
+      "side": 1,
+      "message": "nit: Please revert this change.",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc7f5c3_2237d3eb",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T07:56:51Z",
+      "side": 1,
+      "message": "Please remove this declaration since \"SelectionTemplate.h\" has this declaration.",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2248b7e_3a201916",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T07:56:51Z",
+      "side": 1,
+      "message": "nit: Could you remove this comment? |visibleStart()| and |visibleEnd()|\nno longer cause layout.",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9db728_81a94abf",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T07:56:51Z",
+      "side": 1,
+      "message": "nit: s/FIXME/TODO(editing-dev)/",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5980735a_53439dc8",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T07:56:51Z",
+      "side": 1,
+      "message": "nit: s/PositionInFlatTree(pos)/pos/",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22a37eb_6a5a1199",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2029,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T07:56:51Z",
+      "side": 1,
+      "message": "Please move this function into SelectionTemplate.cpp.",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364bc528_1309592d",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2033,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T07:56:51Z",
+      "side": 1,
+      "message": "Since SetBaseAndExtent() doesn\u0027t work for null position.\nWe should check null selection and null position form\nToPositionInFlatTree().",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58196e05_652cb5c1",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T07:56:51Z",
+      "side": 1,
+      "message": "nit: Please remove #include \"SelectionTemplate.h\"\nVisibleUnits should not use |SelectionTemplate|.",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c6dcdc_da318a37",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T07:56:51Z",
+      "side": 1,
+      "message": "Please remove this one.\nWe should not have template function in \"VisibleUnits.h\"",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7f27fd_b28513b4",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T07:56:51Z",
+      "side": 1,
+      "message": "Please replace this declaration to VPinFT.\nSince nobody uses DOM tree version.",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23f60702_0048ddbe",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.h",
         "patchSetId": 12
@@ -13,6 +200,40 @@
       "writtenOn": "2017-09-08T06:17:27Z",
       "side": 1,
       "message": "Could you fix duplication to SelectionTemplate.h::ConvertToSelectionInFlatTree()?",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "799f1b37_65863666",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsLine.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T07:56:51Z",
+      "side": 1,
+      "message": "Since all usage of PreviousRootInlineBoxCandidatePosition() is flat tree\nversion, we don\u0027t need to templatize this function.",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad78ebe_5709c865",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsWord.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T07:56:51Z",
+      "side": 1,
+      "message": "Could you add TODO to remove this function once we change \n|AdjacentWordIfExists()| to flat tree version.",
       "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
