@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbe5b35b_2e3f25a0",
+        "filename": "sandbox/win/src/sid.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-08T20:47:19Z",
+      "side": 1,
+      "message": "nit: convention here would be to use IsValid() but I don\u0027t care too much.",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 12
+      },
+      "revId": "1b185f12505373c08876d367eed5703713ac4a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cbf9f28_ef78079f",
+        "filename": "sandbox/win/src/sid_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-08T20:47:19Z",
+      "side": 1,
+      "message": "nit: convention is to put function definitions closest to their use, not at the top of the code block...",
+      "range": {
+        "startLine": 97,
+        "startChar": 28,
+        "endLine": 97,
+        "endChar": 40
+      },
+      "revId": "1b185f12505373c08876d367eed5703713ac4a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672cdfbf_57edf9ab",
+        "filename": "sandbox/win/src/sid_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-08T20:47:19Z",
+      "side": 1,
+      "message": "would a c++ for loop work here?\n\nfor (auto capability : capabilities) { }",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 6
+      },
+      "revId": "1b185f12505373c08876d367eed5703713ac4a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
