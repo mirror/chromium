@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2562dac_3f9f44fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-08T20:57:13Z",
+      "side": 1,
+      "message": "instead of storing booleans for each of these, thoughts on adding something like mPendingNativeInitItemSelectionId where you\u0027d set it to itemId above.  then you\u0027d reduce the duplicate logic below as you could just call onItemSelected again.",
+      "range": {
+        "startLine": 206,
+        "startChar": 16,
+        "endLine": 206,
+        "endChar": 34
+      },
+      "revId": "bad5677a39fb129ba9269d8100668d5c72b4d56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c54e9ee_06ee5ab4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-08T20:57:13Z",
+      "side": 1,
+      "message": "(not for this CL and likely not you at all) I know that we can generate integer constants from c++, but I wonder if that works for strings.",
+      "range": {
+        "startLine": 34,
+        "startChar": 34,
+        "endLine": 34,
+        "endChar": 38
+      },
+      "revId": "bad5677a39fb129ba9269d8100668d5c72b4d56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13605155_e3b14fc4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-08T20:57:13Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we could create a helper function that takes the item ID and the callbackhelper and reduce the duplicated logic here.  It does add some indirection, but since these seem identical then it could be ok.",
+      "range": {
+        "startLine": 202,
+        "startChar": 16,
+        "endLine": 202,
+        "endChar": 46
+      },
+      "revId": "bad5677a39fb129ba9269d8100668d5c72b4d56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
