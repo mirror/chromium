@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1720aaf_df9c0089",
+        "filename": "build/android/findbugs_filter/findbugs_exclude.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-08T09:53:27Z",
+      "side": 1,
+      "message": "Nice!",
+      "range": {
+        "startLine": 49,
+        "startChar": 18,
+        "endLine": 49,
+        "endChar": 54
+      },
+      "revId": "12b79e22b89d644da8b339084aa81d7d44bcdcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83058026_12d00f00",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-08T09:53:27Z",
+      "side": 1,
+      "message": "I think this is not used",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "12b79e22b89d644da8b339084aa81d7d44bcdcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8549eab6_e9e2c5f3",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-08T09:53:27Z",
+      "side": 1,
+      "message": "nit: align the corners to the top or bottom of the image view? nested layouts create performance issues so it would be nice if there was an alternative. I don\u0027t think we can have content cards without thumbnails?",
+      "range": {
+        "startLine": 124,
+        "startChar": 37,
+        "endLine": 124,
+        "endChar": 50
+      },
+      "revId": "12b79e22b89d644da8b339084aa81d7d44bcdcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
