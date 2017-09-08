@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bda35f5f_50cb27ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-09-08T23:56:36Z",
+      "side": 1,
+      "message": "There are not single video as aspect ratio is different.\nhttps://youtu.be/iNJdPyoqt8U for reef\nhttps://youtu.be/DbNOcL0PxYc for eve",
+      "parentUuid": "8e247b19_68df29c3",
+      "revId": "45da76443ec62b3186f48b8e8b9f1f4a38592daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ba3a3dd_c175013f",
         "filename": "cc/output/overlay_strategy_fullscreen.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-08T17:39:06Z",
       "side": 1,
       "message": "This is assuming that we\u0027ll be able to scanout from this quad. But if scaling might be needed, this is a wrong assumption now.",
+      "revId": "45da76443ec62b3186f48b8e8b9f1f4a38592daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b188cbec_238333a3",
+        "filename": "cc/output/overlay_strategy_fullscreen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-09-08T23:56:36Z",
+      "side": 1,
+      "message": "removed this line, although ozone backend always overwrite this value.",
+      "parentUuid": "7ba3a3dd_c175013f",
       "revId": "45da76443ec62b3186f48b8e8b9f1f4a38592daf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

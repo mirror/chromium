@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae4469f0_77b496e3",
+        "filename": "components/viz/service/display_embedder/compositor_overlay_candidate_validator_ozone.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-09-08T23:56:36Z",
+      "side": 1,
+      "message": "This is moved from DrmOverlayManager::CheckOverlaySupport, because it\u0027s hack related to compositor and here is nearer from compositor than DrmOverlayManager.\n\nNow ozone_surface.plane_z_order candidate can have buffer_size because of OverlayStrategyFullscreen",
+      "revId": "ab738a634b8b8f1a9e976f063a6d73c5f3c423b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
