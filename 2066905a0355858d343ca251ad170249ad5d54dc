@@ -315,6 +315,30 @@
       "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecfa8c08_38d7d224",
+        "filename": "chrome/browser/ui/browser_navigator_params.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-08T15:12:12Z",
+      "side": 1,
+      "message": "Oh actually yeah I think that can work, because the target contents is available in scope. Done.\n\nThanks for the suggestion.",
+      "parentUuid": "dd6f5aa6_0b716238",
+      "range": {
+        "startLine": 253,
+        "startChar": 7,
+        "endLine": 253,
+        "endChar": 15
+      },
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
