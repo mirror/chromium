@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4215ad3e_da19aa0e",
+        "filename": "components/cryptauth/fake_remote_device_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-08T18:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5909eec6_404e69c6",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 17
+      },
+      "revId": "b6918a0f29e40eba50403aedff9b8ce4cf867207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0417128c_bbdaeda0",
         "filename": "components/cryptauth/remote_device_provider_impl.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "573c8bd7_ea5fa46c",
+        "filename": "components/cryptauth/remote_device_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-08T18:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0417128c_bbdaeda0",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 1
+      },
+      "revId": "b6918a0f29e40eba50403aedff9b8ce4cf867207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e951ea37_03c7cd7a",
         "filename": "components/cryptauth/remote_device_provider_impl.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "b6918a0f29e40eba50403aedff9b8ce4cf867207",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c726319_0f252999",
+        "filename": "components/cryptauth/remote_device_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-08T18:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e951ea37_03c7cd7a",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 1
+      },
+      "revId": "b6918a0f29e40eba50403aedff9b8ce4cf867207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
