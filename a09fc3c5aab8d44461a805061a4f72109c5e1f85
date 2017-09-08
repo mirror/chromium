@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75e55c15_2055ee3c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-09-08T20:26:57Z",
+      "side": 1,
+      "message": "s/Desktop/Chrome/ (clank and desktop do the same thing here :)",
+      "parentUuid": "373a470f_f0354b68",
+      "revId": "a09fc3c5aab8d44461a805061a4f72109c5e1f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "356268c4_48ec2d8e",
         "filename": "components/security_interstitials/core/base_safe_browsing_error_ui.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-08T17:58:35Z",
       "side": 1,
       "message": "The name of this variable is a little bit confusion.  How about \n\n// Indicates if the \u0027Back to safety\u0027 primary action button should always be shown.\n// Chrome and Chromium builds should always set this option to true, such that\n// \"Back to Safety\" button always presents in safe browsing interstitial. \n// Google Android WebView will set this option to false, such that this button is\n// shown only when there is a proper page to navigate back to.\nbool always_show_back_to_safety;",
+      "revId": "a09fc3c5aab8d44461a805061a4f72109c5e1f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c568fcba_fead0b52",
+        "filename": "components/security_interstitials/core/base_safe_browsing_error_ui.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-09-08T20:26:57Z",
+      "side": 1,
+      "message": "Jialiu\u0027s variable name suggestion SGTM, just remember to flip logic as appropriate and update CL description.\n\nI would recommend not mentioning WebView specifically here. The component should describe what the option does. Just because Chrome and WebView use different options right now doesn\u0027t mean that they always will, or that other embedders won\u0027t also come along to use it.",
+      "parentUuid": "356268c4_48ec2d8e",
       "revId": "a09fc3c5aab8d44461a805061a4f72109c5e1f85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
