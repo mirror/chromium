@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "718b6cfd_6427580f",
+        "filename": "ios/clean/chrome/browser/ui/actions/tab_grid_toolbar_actions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T11:18:54Z",
+      "side": 1,
+      "message": "\"Actions\" are a long-abandoned approach. View controllers can handle target/action internally in a way that makes sense, whether they just target their dispatcher directly, or go through an internal method.",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 31
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1b888a_5384fffb",
+        "filename": "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T11:18:54Z",
+      "side": 1,
+      "message": "Assuming we adopt the local dispatch approach for the tools menu, the share menu will just move to a different protocol.",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c964c43a_242f2d45",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T11:18:54Z",
+      "side": 1,
+      "message": "Comments for these properties, particularly to make it clear that the \u0027normal\u0027 tab grid is in contrast to the incognito one.",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c411ae6_1d8d650a",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T11:18:54Z",
+      "side": 1,
+      "message": "Regardless of how we handle local dispatch, this should just change to addChildCoordinator",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 49
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c615ae_19a9eaa7",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T11:18:54Z",
+      "side": 1,
+      "message": "this can become [self removeChildCoordinator:], since |self| will always be the parent.",
+      "range": {
+        "startLine": 126,
+        "startChar": 8,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ee64c3_f4926d72",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T11:18:54Z",
+      "side": 1,
+      "message": "Even one test is better than zero ...",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 6
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0238bde0_d3a38d28",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T11:18:54Z",
+      "side": 1,
+      "message": "I see that this is a condensed version of what was on lines 87-88, but I don\u0027t understand why it\u0027s necessary. This VC should exist independently of the toolbar, so it shouldn\u0027t need to adjust its insets for it, right?",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 24
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c181ca_a91b28b5",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/ui_button+cr_tab_grid.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T11:18:54Z",
+      "side": 1,
+      "message": "I think it\u0027s better to get rid of this, and have the VC add target/action instead of setting in the factory method here.",
+      "range": {
+        "startLine": 7,
+        "startChar": 45,
+        "endLine": 7,
+        "endChar": 69
+      },
+      "revId": "5682f892737f7f8a2c228cac332ea60c93a01619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
