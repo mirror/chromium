@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a227755d_3ff11cbd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-08T03:25:23Z",
+      "side": 1,
+      "message": "I am now using Context#getCacheDir() per nyquist@\u0027s suggestion which does not require temporarily disabling strict mode",
+      "parentUuid": "324a4739_30a431eb",
+      "range": {
+        "startLine": 215,
+        "startChar": 21,
+        "endLine": 215,
+        "endChar": 45
+      },
+      "revId": "280f1b3ded1894fdbe31cf39d27ea45170c39964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7450f75_ccd34ba6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDataStorage.java",
         "patchSetId": 4

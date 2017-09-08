@@ -157,6 +157,24 @@
     },
     {
       "key": {
+        "uuid": "62312694_1ad77cee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDataStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-08T03:25:23Z",
+      "side": 1,
+      "message": "The update files should be deleted as a result of WebappRegistry#unregisterOldWebapps() via WebappDataStorage#delete()",
+      "parentUuid": "d46a0272_b51f8586",
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8b40bbc_0d1cc4eb",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 8
@@ -226,6 +244,30 @@
     },
     {
       "key": {
+        "uuid": "e9ec5047_49f3ef47",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-08T03:25:23Z",
+      "side": 1,
+      "message": "As far as I can tell there is no difference in overhead",
+      "parentUuid": "36d86bc4_84f477fc",
+      "range": {
+        "startLine": 185,
+        "startChar": 31,
+        "endLine": 185,
+        "endChar": 47
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "338e93cd_1003d606",
         "filename": "chrome/browser/android/webapk/webapk_installer.cc",
         "patchSetId": 8
@@ -283,6 +325,30 @@
       "writtenOn": "2017-08-07T04:46:49Z",
       "side": 1,
       "message": "Doesn\u0027t Context.getDir() create the directory if needed?",
+      "range": {
+        "startLine": 217,
+        "startChar": 2,
+        "endLine": 217,
+        "endChar": 6
+      },
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee898b5b_c712f85d",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-08T03:25:23Z",
+      "side": 1,
+      "message": "Yes. But the path is to a subdirectory of Context.getDir()\n\nContext#getCachedDir() + \"/webapk/update\"",
+      "parentUuid": "873fe835_347e2fc8",
       "range": {
         "startLine": 217,
         "startChar": 2,
