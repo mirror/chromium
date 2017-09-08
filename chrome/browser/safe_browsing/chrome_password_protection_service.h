@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_SAFE_BROWSING_CHROME_PASSWORD_PROTECTION_SERVICE_H_
 #define CHROME_BROWSER_SAFE_BROWSING_CHROME_PASSWORD_PROTECTION_SERVICE_H_
 
+#include <map>
+
 #include "base/observer_list.h"
 #include "build/build_config.h"
 #include "components/safe_browsing/password_protection/password_protection_service.h"
@@ -12,6 +14,7 @@
 #include "ui/base/ui_features.h"
 
 class PrefService;
+class PrefChangeRegistrar;
 class Profile;
 
 namespace content {
@@ -74,6 +77,10 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   // Called during the destruction of the observer subclass.
   virtual void RemoveObserver(Observer* observer);
 
+  std::map<GURL, int64_t> unhandled_password_reuses() {
+    return unhandled_password_reuses_;
+  }
+
  protected:
   // PasswordProtectionService overrides.
   // Obtains referrer chain of |event_url| and |event_tab_id| and add this
@@ -111,6 +118,9 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   // when user clicks on the security chip.
   void UpdateSecurityState(SBThreatType threat_type,
                            content::WebContents* web_contents) override;
+
+  // Called when user's sync password changed.
+  void OnSyncPasswordChanged();
 
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
                            VerifyUserPopulationForPasswordOnFocusPing);
@@ -163,6 +173,11 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   scoped_refptr<SafeBrowsingNavigationObserverManager>
       navigation_observer_manager_;
   base::ObserverList<Observer> observer_list_;
+  std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_;
+  // The map of password reuse URLs (with empty path) to navigation ID. These
+  // are password reuses that user hasn't chosen to change password, or
+  // mark site as legitimate yet.
+  std::map<GURL, int64_t> unhandled_password_reuses_;
   DISALLOW_COPY_AND_ASSIGN(ChromePasswordProtectionService);
 };
 

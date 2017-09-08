@@ -55822,6 +55822,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram
+    name="PasswordProtection.SyncPasswordReusesBeforeSyncPasswordChanged"
+    units="count per session">
+  <owner>jialiul@chromium.org</owner>
+  <owner>nparker@chromium.org</owner>
+  <summary>
+    The number of Sync password reuse warning shown to user before user changes
+    Sync password. This count doesn't include the reuses that user marked as
+    legitimate. The password change might not be triggered by any of these
+    warnings.
+  </summary>
+</histogram>
+
 <histogram name="PasswordProtection.UnfamiliarLoginPageVerdict"
     enum="PasswordProtectionVerdict">
   <obsolete>
