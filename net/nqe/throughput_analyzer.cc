@@ -26,10 +26,6 @@ namespace {
 // degrade accuracy held in the memory.
 static const size_t kMaxRequestsSize = 300;
 
-// Tiny transfer sizes may give inaccurate throughput results.
-// Minimum size of the transfer over which the throughput is computed.
-static const int kMinTransferSizeInBits = 32 * 8 * 1000;
-
 }  // namespace
 
 namespace nqe {
@@ -203,8 +199,10 @@ bool ThroughputAnalyzer::MaybeGetThroughputObservation(
 
   // Ignore tiny/short transfers, which will not produce accurate rates. Skip
   // the checks if |use_small_responses_| is true.
-  if (!use_small_responses_for_tests_ && bits_received < kMinTransferSizeInBits)
+  if (!use_small_responses_for_tests_ &&
+      bits_received < params_->throughput_min_transfer_size_bits()) {
     return false;
+  }
 
   double downstream_kbps_double =
       (bits_received * 1.0f) / duration.InMillisecondsF();

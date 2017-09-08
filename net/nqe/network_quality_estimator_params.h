@@ -72,6 +72,13 @@ class NET_EXPORT NetworkQualityEstimatorParams {
     return throughput_min_requests_in_flight_;
   }
 
+  // Tiny transfer sizes may give inaccurate throughput results.
+  // Minimum size of the transfer over which the throughput is computed.
+  int64_t throughput_min_transfer_size_bits() const {
+    return static_cast<int64_t>(throughput_min_transfer_size_kilobytes_) * 8 *
+           1000;
+  }
+
   // Returns the weight multiplier per second, which represents the factor by
   // which the weight of an observation reduces every second.
   double weight_multiplier_per_second() const {
@@ -179,6 +186,7 @@ class NET_EXPORT NetworkQualityEstimatorParams {
   const std::map<std::string, std::string> params_;
 
   const size_t throughput_min_requests_in_flight_;
+  const int throughput_min_transfer_size_kilobytes_;
   const double weight_multiplier_per_second_;
   const double weight_multiplier_per_signal_strength_level_;
   const double correlation_uma_logging_probability_;
