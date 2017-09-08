@@ -22,6 +22,30 @@
       "revId": "18546c0aca8af536cdab9f787548b83c30c5ad14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745d6ab5_88b9d4a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetsBridge.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-08T16:55:47Z",
+      "side": 1,
+      "message": "Yeah, that was my little temporary hack to get some content into the carousel. Will remove this and submit :)",
+      "parentUuid": "41a39b3a_56e1833d",
+      "range": {
+        "startLine": 147,
+        "startChar": 11,
+        "endLine": 147,
+        "endChar": 43
+      },
+      "revId": "18546c0aca8af536cdab9f787548b83c30c5ad14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
