@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "220e4f2a_526a9a85",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1147615
+      },
+      "writtenOn": "2017-09-08T20:18:12Z",
+      "side": 1,
+      "message": "I am checking on these, just wanted you to check the changes you proposed first.",
+      "parentUuid": "dcbe1eac_ceb2f702",
+      "revId": "b047f4f014d7098b8c57047cec814067bd19b4aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12c090a7_bc5633e0",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
         "patchSetId": 1
