@@ -87,6 +87,24 @@
       "revId": "5fcc3319714a338287d9d173bb9a4b9a565c542a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcd0c4b2_1f2a0553",
+        "filename": "third_party/WebKit/public/platform/scheduler/single_thread_task_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T16:53:36Z",
+      "side": 1,
+      "message": "I think my suggestion was unclear. The lightweight wrapper would be wrapper for scoped_refptr\u003cSingleThreadTaskRunner\u003e--not SingleThreadTaskRunner.\n\nThe wrapper would act as a scoped_refptr in all but name; the idea is to prevent scoped_refptr from indirectly propagating around Blink. It would be convertible to/from scoped_refptr in non-Blink code as well, so I don\u0027t quite see the problem.",
+      "parentUuid": "98be9486_2b28f53f",
+      "revId": "5fcc3319714a338287d9d173bb9a4b9a565c542a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
