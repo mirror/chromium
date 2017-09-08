@@ -268,6 +268,7 @@ TEST_F(UiSceneManagerTest, WebVrAutopresentedInsecureOrigin) {
   // WebVR frame is not received.
   auto initial_elements = kBackgroundElements;
   initial_elements.insert(kSplashScreenText);
+  initial_elements.insert(kSplashScreenBackground);
   VerifyElementsVisible("Initial", initial_elements);
 
   manager_->OnWebVrFrameAvailable();
@@ -298,6 +299,7 @@ TEST_F(UiSceneManagerTest, WebVrAutopresented) {
   // Initially, we should only show the splash screen.
   auto initial_elements = kBackgroundElements;
   initial_elements.insert(kSplashScreenText);
+  initial_elements.insert(kSplashScreenBackground);
   VerifyElementsVisible("Initial", initial_elements);
   EXPECT_EQ(ColorScheme::GetColorScheme(ColorScheme::kModeNormal)
                 .splash_screen_background,
