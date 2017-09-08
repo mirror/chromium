@@ -166,14 +166,14 @@ TEST(MemoryAllocatorDumpTest, DumpIntoProcessMemoryDump) {
   pmd.AsValueInto(traced_value.get());
 }
 
-TEST(MemoryAllocatorDumpTest, GetSize) {
+TEST(MemoryAllocatorDumpTest, GetSizeInBytes) {
   MemoryDumpArgs dump_args = {MemoryDumpLevelOfDetail::DETAILED};
   ProcessMemoryDump pmd(new HeapProfilerSerializationState, dump_args);
   MemoryAllocatorDump* dump = pmd.CreateAllocatorDump("allocator_for_size");
   dump->AddScalar(MemoryAllocatorDump::kNameSize,
                   MemoryAllocatorDump::kUnitsBytes, 1);
   dump->AddScalar("foo", MemoryAllocatorDump::kUnitsBytes, 2);
-  EXPECT_EQ(1u, dump->GetSizeInternal());
+  EXPECT_EQ(1u, dump->GetSizeInBytes());
 }
 
 TEST(MemoryAllocatorDumpTest, ReadValues) {
@@ -217,7 +217,6 @@ TEST(MemoryAllocatorDumpTest, ForbidStringsInBackgroundModeDeathTest) {
   MemoryAllocatorDump* dump = pmd.CreateAllocatorDump("malloc");
   ASSERT_DEATH(dump->AddString("foo", "bar", "baz"), "");
 }
-
 #endif
 
 }  // namespace trace_event
