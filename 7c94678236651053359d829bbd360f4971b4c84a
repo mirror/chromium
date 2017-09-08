@@ -477,6 +477,24 @@
     },
     {
       "key": {
+        "uuid": "d84c71d7_4a3a6542",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-08T21:52:21Z",
+      "side": 1,
+      "message": "It\u0027s working well enough in the bluetooth code. In that case, the only sensible consumer of the dll is that one section of chromium code. If combase will have consumers sprinkled about (it\u0027s a grab-bag of APIs, no?), then maybe it\u0027s more difficult to take this pill. If a future build of Windows adds a new function, callers of that function will have to use the LoadLibrary approach, as relying on the delayload would cause this __HrLoadAllImportsForDll to start failing on systems where it previously worked. I can imagine this becoming a maintenance problem without regression tests running on the right OSes.",
+      "parentUuid": "8ca8f6d0_cdc044ee",
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8250594e_3e092bc4",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 9
