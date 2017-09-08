@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80e7d03d_b30ddec9",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T02:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64895b47_5c8eca38",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8cfac12_6362f51c",
         "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18200f4b_50b5976b",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T02:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8cfac12_6362f51c",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ba5dabea_5f40f56e",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T02:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7338457_cab153e3",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "859d947d_b654cb15",
         "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.h",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17658ef_fb201a45",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T02:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "859d947d_b654cb15",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "11108327_51e81569",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler_win_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T02:10:25Z",
+      "side": 1,
+      "message": "Yes, done",
+      "parentUuid": "9d0f77e4_4fd9b372",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6bdf335_927fa002",
         "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler_win_unittest.cc",
         "patchSetId": 7
@@ -98,6 +188,30 @@
       "writtenOn": "2017-09-07T23:24:37Z",
       "side": 1,
       "message": "Is StickySettings normal nullptr?",
+      "range": {
+        "startLine": 131,
+        "startChar": 70,
+        "endLine": 131,
+        "endChar": 77
+      },
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5965b4a5_aca32908",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler_win_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T02:10:25Z",
+      "side": 1,
+      "message": "No, but this isn\u0027t testing anything related to the sticky settings so just like in the original test SelectFile is overwritten to not access them.",
+      "parentUuid": "d6bdf335_927fa002",
       "range": {
         "startLine": 131,
         "startChar": 70,
@@ -145,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "4e7012c3_287ba324",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T02:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac2bcd0a_3debef6f",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3101800a_38b9f407",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
         "patchSetId": 7
@@ -159,6 +291,24 @@
       "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955ad64a_df4245ed",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T02:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3101800a_38b9f407",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "55260dba_058f5f85",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T02:10:25Z",
+      "side": 1,
+      "message": "Updated to maintain matching, but native_layer.js doesn\u0027t need this value (yet).",
+      "parentUuid": "cf273f54_a571bc5f",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4de9d934_1cc82935",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
         "patchSetId": 7
@@ -193,6 +361,24 @@
       "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd5e850_3deff4e5",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T02:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4de9d934_1cc82935",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +399,24 @@
     },
     {
       "key": {
+        "uuid": "e78af044_7f440d88",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T02:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b68c498_8597de57",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d25b12c2_c01d051b",
         "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
         "patchSetId": 7
@@ -230,6 +434,24 @@
     },
     {
       "key": {
+        "uuid": "58a36147_f9514c96",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T02:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d25b12c2_c01d051b",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9327b444_0315b46d",
         "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
         "patchSetId": 7
@@ -244,6 +466,24 @@
       "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02f1ff3_2991ad55",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T02:10:25Z",
+      "side": 1,
+      "message": "Done, see https://chromium-review.googlesource.com/c/chromium/src/+/656576",
+      "parentUuid": "9327b444_0315b46d",
+      "revId": "470f829abb9b95b88fcefb2bb92062b560add54a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -46,6 +46,30 @@
       "revId": "346003b7222982f72ce1079e3419bf797533622b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6598f32a_52764f70",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-08T02:10:25Z",
+      "side": 0,
+      "message": "Done, see https://chromium-review.googlesource.com/c/chromium/src/+/656561. See description there for explanation of why this was useful as of r100260, but is now pointless.",
+      "parentUuid": "3a19769b_b70078d1",
+      "range": {
+        "startLine": 758,
+        "startChar": 4,
+        "endLine": 758,
+        "endChar": 28
+      },
+      "revId": "346003b7222982f72ce1079e3419bf797533622b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
