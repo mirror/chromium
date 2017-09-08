@@ -194,11 +194,19 @@ void RecordPasswordChangeFlow(LoginPasswordChangeFlow flow) {
                             LOGIN_PASSWORD_CHANGE_FLOW_COUNT);
 }
 
+bool IsTestingMigrationUI() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      chromeos::switches::kTestEncryptionMigrationUI);
+}
+
 bool ShouldForceDircrypto(const AccountId& account_id) {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kDisableEncryptionMigration)) {
     return false;
   }
+  if (IsTestingMigrationUI())
+    return true;
+
   // If the device is not officially supported to run ARC, we don't need to
   // force Ext4 dircrypto.
   if (!arc::IsArcAvailable())
@@ -1032,7 +1040,11 @@ void ExistingUserController::OnPolicyFetchResult(
         policy_payload) {
   apu::EcryptfsMigrationAction action =
       apu::EcryptfsMigrationAction::kDisallowMigration;
-  if (result == PolicyFetchResult::NO_POLICY) {
+  if (IsTestingMigrationUI()) {
+    // When --test-encryption-migration-ui is enabled for debug, we always ask
+    // user to choose options in migration screen.
+    action = apu::EcryptfsMigrationAction::kAskUser;
+  } else if (result == PolicyFetchResult::NO_POLICY) {
     // There was no policy, the user is unmanaged. They get to choose themselves
     // if they'd like to migrate.
     VLOG(1) << "Policy pre-fetch result: No user policy present";
