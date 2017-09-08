@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8995d42_fc7a7e45",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-08T16:24:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a85f7ec_520ba9c6",
+      "revId": "2f04806687d818135f67e47db876be96f5d04137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "491e95cc_5ff5b8f8",
         "filename": "ash/login/ui/login_bubble.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-08T14:31:44Z",
       "side": 1,
       "message": "This is fine, but in future CLs it\u0027s also OK to just inline the string here, since it\u0027s only used once and giving the string a name doesn\u0027t really provide any more information. I often do that for GetClassName(), Widget::InitParams name, etc.",
+      "revId": "2f04806687d818135f67e47db876be96f5d04137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b503709_3f45c9ee",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-08T16:24:56Z",
+      "side": 1,
+      "message": "Thanks for the information.",
+      "parentUuid": "491e95cc_5ff5b8f8",
       "revId": "2f04806687d818135f67e47db876be96f5d04137",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "90ea13ce_291ad740",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-08T16:24:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "226a43bb_bf771342",
+      "revId": "2f04806687d818135f67e47db876be96f5d04137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fb11b60_8bbfaf06",
         "filename": "ash/login/ui/login_bubble_unittest.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "2f04806687d818135f67e47db876be96f5d04137",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fd7d324_bae67fcc",
+        "filename": "ash/login/ui/login_bubble_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-09-08T16:24:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fb11b60_8bbfaf06",
+      "revId": "2f04806687d818135f67e47db876be96f5d04137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
