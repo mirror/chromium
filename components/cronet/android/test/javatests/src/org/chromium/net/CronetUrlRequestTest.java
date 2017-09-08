@@ -2162,6 +2162,7 @@ public class CronetUrlRequestTest extends CronetTestBase {
 
     @SmallTest
     @Feature({"Cronet"})
+    @RequiresMinApi(8) // JavaUrlRequest fixed in API level 8: crrev.com/499303
     /** Do a HEAD request and get back a 404. */
     public void test404Head() throws Exception {
         TestUrlRequestCallback callback = new TestUrlRequestCallback();
