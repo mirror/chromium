@@ -13,6 +13,7 @@
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
 #include "ash/strings/grit/ash_strings.h"
+#include "ash/system/bluetooth/bluetooth_power_controller.h"
 #include "ash/system/network/network_icon.h"
 #include "ash/system/network/network_icon_animation.h"
 #include "ash/system/network/network_info.h"
@@ -33,6 +34,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/timer/timer.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/login/login_state.h"
 #include "chromeos/network/managed_network_configuration_handler.h"
@@ -217,8 +219,6 @@ class MobileHeaderRowView : public NetworkListView::SectionHeaderRowView,
  protected:
   enum class Status {
     IDLE,
-    FETCHING_BLUETOOTH_ADAPTER,
-    ENABLING_BLUETOOTH_ADAPTER,
     WAITING_FOR_DEVICE_LIST_CHANGE
   };
 
@@ -248,13 +248,12 @@ class MobileHeaderRowView : public NetworkListView::SectionHeaderRowView,
     if (network_state_handler_->IsTechnologyUninitialized(
             NetworkTypePattern::Tether())) {
       DCHECK(is_on);
+      // If Bluetooth is in the process of being enabled, continue
+      // waiting for this to occur.
+      if (status_ != Status::IDLE)
+        return;
 
-      if (bluetooth_adapter_ && status_ != Status::ENABLING_BLUETOOTH_ADAPTER) {
-        EnableBluetooth();
-      } else if (!bluetooth_adapter_ &&
-                 status_ != Status::FETCHING_BLUETOOTH_ADAPTER) {
-        FetchBluetoothAdapter();
-      }
+      EnableBluetooth();
       return;
     }
 
@@ -271,8 +270,6 @@ class MobileHeaderRowView : public NetworkListView::SectionHeaderRowView,
       status_ = Status::IDLE;
       SetIsOn(network_state_handler_->IsTechnologyEnabled(
           NetworkTypePattern::Cellular()));
-      // Cancel any pending Bluetooth adapter callbacks.
-      weak_ptr_factory_.InvalidateWeakPtrs();
       return;
     }
 
@@ -282,12 +279,10 @@ class MobileHeaderRowView : public NetworkListView::SectionHeaderRowView,
       // (e.g., the device could be in the process of being shut down).
       status_ = Status::IDLE;
       SetIsOn(false);
-      // Cancel any pending Bluetooth adapter callbacks.
-      weak_ptr_factory_.InvalidateWeakPtrs();
       return;
     }
 
-    if (status_ != Status::WAITING_FOR_DEVICE_LIST_CHANGE ||
+    if (status_ == Status::IDLE ||
         network_state_handler_->IsTechnologyUninitialized(
             NetworkTypePattern::Tether())) {
       // If the device list change was unrelated to Tether, keep waiting.
@@ -298,56 +293,27 @@ class MobileHeaderRowView : public NetworkListView::SectionHeaderRowView,
   }
 
  private:
-  void FetchBluetoothAdapter() {
-    status_ = Status::FETCHING_BLUETOOTH_ADAPTER;
-    device::BluetoothAdapterFactory::Get().GetAdapter(
-        base::Bind(&MobileHeaderRowView::OnAdapterFetched,
-                   weak_ptr_factory_.GetWeakPtr()));
-  }
-
-  void OnAdapterFetched(scoped_refptr<device::BluetoothAdapter> adapter) {
-    DCHECK(status_ == Status::FETCHING_BLUETOOTH_ADAPTER);
-    bluetooth_adapter_ = adapter;
-    status_ = Status::IDLE;
-    EnableBluetooth();
-  }
-
   void EnableBluetooth() {
-    DCHECK(status_ == Status::IDLE);
-    DCHECK(bluetooth_adapter_);
-    status_ = Status::ENABLING_BLUETOOTH_ADAPTER;
-    bluetooth_adapter_->SetPowered(
-        true /* powered */,
-        base::Bind(&MobileHeaderRowView::OnSetPoweredSuccess,
-                   weak_ptr_factory_.GetWeakPtr()),
-        base::Bind(&MobileHeaderRowView::OnSetPoweredError,
-                   weak_ptr_factory_.GetWeakPtr()));
-  }
-
-  void OnSetPoweredSuccess() {
-    DCHECK(status_ == Status::ENABLING_BLUETOOTH_ADAPTER);
-
+    BluetoothPowerController* bluetooth_power_controller =
+        Shell::Get()->bluetooth_power_controller();
+    bluetooth_power_controller->SetPrimaryUserBluetoothPowerSetting(
+        true /* enabled */);
     status_ = Status::WAITING_FOR_DEVICE_LIST_CHANGE;
-
-    if (!network_state_handler_->IsTechnologyUninitialized(
-            NetworkTypePattern::Tether())) {
-      // If Tether has already updated its TechnologyState and it is no longer
-      // UNINITIALIZED, the device list update has already occurred and has been
-      // missed, so enable Tether explicitly.
-      EnableTether();
-    }
+    timer_.Start(FROM_HERE, base::TimeDelta::FromSeconds(2) /* delay */,
+                 base::Bind(&MobileHeaderRowView::OnEnableBluetoothError,
+                            weak_ptr_factory_.GetWeakPtr()));
   }
 
-  void OnSetPoweredError() {
-    DCHECK(status_ == Status::ENABLING_BLUETOOTH_ADAPTER);
+  void OnEnableBluetoothError() {
     status_ = Status::IDLE;
-    SetIsOn(false);
-
     LOG(ERROR) << "Error enabling Bluetooth adapter. Cannot enable Mobile "
                << "data.";
   }
 
   void EnableTether() {
+    if (timer_.IsRunning())
+      timer_.Stop();
+
     status_ = Status::IDLE;
     network_state_handler_->SetTechnologyEnabled(
         NetworkTypePattern::Tether(), true /* enabled */,
@@ -355,9 +321,10 @@ class MobileHeaderRowView : public NetworkListView::SectionHeaderRowView,
   }
 
   NetworkStateHandler* network_state_handler_;
-  Status status_ = Status::IDLE;
-  scoped_refptr<device::BluetoothAdapter> bluetooth_adapter_;
   base::WeakPtrFactory<MobileHeaderRowView> weak_ptr_factory_;
+
+  Status status_ = Status::IDLE;
+  base::OneShotTimer timer_;
 
   DISALLOW_COPY_AND_ASSIGN(MobileHeaderRowView);
 };
