@@ -27,14 +27,14 @@ import zipfile
 # Do NOT CHANGE this if you don't know what you're doing -- see
 # https://chromium.googlesource.com/chromium/src/+/master/docs/updating_clang.md
 # Reverting problematic clang rolls is safe, though.
-CLANG_REVISION = '312679'
+CLANG_REVISION = '310694'
 
 use_head_revision = 'LLVM_FORCE_HEAD_REVISION' in os.environ
 if use_head_revision:
   CLANG_REVISION = 'HEAD'
 
 # This is incremented when pushing a new build of Clang at the same revision.
-CLANG_SUB_REVISION=1
+CLANG_SUB_REVISION=2
 
 PACKAGE_VERSION = "%s-%s" % (CLANG_REVISION, CLANG_SUB_REVISION)
 
@@ -439,8 +439,10 @@ def UpdateClang(args):
 
   Checkout('LLVM', LLVM_REPO_URL + '/llvm/trunk', LLVM_DIR)
 
-  # Back out previous local patches. This needs to be kept around a bit
-  # until all bots have cycled. See https://crbug.com/755777.
+  # Apply https://reviews.llvm.org/D36596 locally to see how it does.
+  # If you roll clang, you need to change this in some not yet clear way,
+  # see https://crbug.com/755777
+  assert use_head_revision or CLANG_REVISION == '310694'
   files = [
     'lib/Transforms/InstCombine/InstructionCombining.cpp',
     'test/DebugInfo/X86/formal_parameter.ll',
@@ -449,8 +451,15 @@ def UpdateClang(args):
     'test/Transforms/InstCombine/debuginfo.ll',
     'test/Transforms/Util/simplify-dbg-declare-load.ll',
   ]
-  for f in [os.path.join(LLVM_DIR, f) for f in files]:
-    RunCommand(['svn', 'revert', f])
+  if use_head_revision:
+    for f in [os.path.join(LLVM_DIR, f) for f in files[1:]]:
+      RunCommand(['svn', 'revert', f])
+  else:
+    for f in [os.path.join(LLVM_DIR, f) for f in files[1:]]:
+      if os.path.exists(f):
+        os.remove(f)
+    shutil.copy(os.path.join(THIS_DIR, 'InstructionCombining.cpp'),
+                os.path.join(LLVM_DIR, files[0]))
 
   Checkout('Clang', LLVM_REPO_URL + '/cfe/trunk', CLANG_DIR)
   if sys.platform != 'darwin':
