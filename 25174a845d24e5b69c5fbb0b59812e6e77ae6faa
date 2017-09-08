@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "175c2bcb_0e220c45",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-08T04:13:45Z",
+      "side": 1,
+      "message": "To clarify, are you saying you want:\n// a link b link toolbar (context last), or\n// toolbar a link b link (context first)?\n\nMaybe just change \"When we\u0027re not outputing context first.\"\nto \"assuming context first\" or \"assuming the preference is\nset to context first\", unless I\u0027m misunderstanding.",
+      "revId": "25174a845d24e5b69c5fbb0b59812e6e77ae6faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
