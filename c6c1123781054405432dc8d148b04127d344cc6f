@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b005829_498a62e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-08T08:56:45Z",
+      "side": 1,
+      "message": "IMHO, we should remove this comment. It\u0027s not necessary, given the method signature is fully self-documenting. :-)",
+      "parentUuid": "57b81578_a8dd8d5a",
+      "range": {
+        "startLine": 341,
+        "startChar": 15,
+        "endLine": 341,
+        "endChar": 22
+      },
+      "revId": "c6c1123781054405432dc8d148b04127d344cc6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d854e11c_46f29d1a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleCategoryPreferences.java",
         "patchSetId": 2
@@ -87,6 +111,53 @@
         "startChar": 30,
         "endLine": 262,
         "endChar": 48
+      },
+      "revId": "c6c1123781054405432dc8d148b04127d344cc6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b8c478a_048a770c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-08T08:56:45Z",
+      "side": 1,
+      "message": "+1. In fact, we have something of a major \"TODO colony\" growing here. That suggests there\u0027s a major design/feature gap that should be addressed. I\u0027d propose a feature-request crbug that collects all of these TODOs to track design+impl of the thing needed here.",
+      "parentUuid": "0339e5fa_429b92bf",
+      "range": {
+        "startLine": 262,
+        "startChar": 15,
+        "endLine": 262,
+        "endChar": 49
+      },
+      "revId": "c6c1123781054405432dc8d148b04127d344cc6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2708c85f_315277c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsCategory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-08T08:56:45Z",
+      "side": 1,
+      "message": "IMHO, none of these methods should have comments. (They are drastically lowering the signal-to-noise ratio of the code.) Not sure who the owner(s) of this file is, but you might contact them and suggest a clean-up CL. Or, put together a \"good citizen housekeeping\" CL yourself. :)",
+      "range": {
+        "startLine": 294,
+        "startChar": 0,
+        "endLine": 296,
+        "endChar": 7
       },
       "revId": "c6c1123781054405432dc8d148b04127d344cc6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
