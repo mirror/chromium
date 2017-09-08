@@ -76,6 +76,7 @@
 #include "components/certificate_transparency/ct_policy_manager.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/dom_distiller/core/distilled_page_prefs.h"
+#include "components/feature_engagement/features.h"
 #include "components/flags_ui/pref_service_flags_storage.h"
 #include "components/gcm_driver/gcm_channel_status_syncer.h"
 #include "components/language/core/browser/url_language_histogram.h"
@@ -264,7 +265,7 @@
 #include "chrome/browser/ui/desktop_ios_promotion/desktop_ios_promotion_util.h"
 #endif
 
-#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
+#if BUILDFLAG(ENABLE_DESKTOP_IPH)
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
 #endif
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
@@ -589,7 +590,7 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   default_apps::RegisterProfilePrefs(registry);
 #endif
 
-#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
+#if BUILDFLAG(ENABLE_DESKTOP_IPH)
   feature_engagement::SessionDurationUpdater::RegisterProfilePrefs(registry);
 #endif
 

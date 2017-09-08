@@ -6,12 +6,13 @@
 #define COMPONENTS_FEATURE_ENGAGEMENT_PUBLIC_EVENT_CONSTANTS_H_
 
 #include "build/build_config.h"
+#include "components/feature_engagement/features.h"
 
 namespace feature_engagement {
 
 namespace events {
 
-#if defined(OS_WIN) || (defined(OS_LINUX) && !defined(OS_CHROMEOS))
+#if BUILDFLAG(ENABLE_DESKTOP_IPH)
 // All the events declared below are the string names of deferred onboarding
 // events for the Bookmark feature.
 
@@ -38,7 +39,7 @@ extern const char kHistoryDeleted[];
 // The user has opened an incognito window.
 extern const char kIncognitoWindowOpened[];
 
-#endif  // defined(OS_WIN) || defined(OS_LINUX)
+#endif  // BUILDFLAG(ENABLE_DESKTOP_IPH)
 
 #if defined(OS_WIN) || defined(OS_LINUX) || defined(OS_IOS)
 // This event is included in the deferred onboarding events for the New Tab
