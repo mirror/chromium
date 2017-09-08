@@ -29,6 +29,10 @@ class UiSceneManagerTest : public testing::Test {
 
   void SetUp() override;
 
+  // Advances current_time_ by delta. This is done in frame increments and
+  // UiScene::OnBeginFrame is called at each increment.
+  void AnimateBy(base::TimeDelta delta);
+
  protected:
   enum InCct : bool {
     kNotInCct = false,
@@ -63,10 +67,6 @@ class UiSceneManagerTest : public testing::Test {
   // layout state. Other elements are ignored.
   bool VerifyRequiresLayout(const std::set<UiElementName>& names,
                             bool requires_layout) const;
-
-  // Advances current_time_ by delta. This is done in frame increments and
-  // UiScene::OnBeginFrame is called at each increment.
-  void AnimateBy(base::TimeDelta delta);
 
   // Returns true if the given properties are being animated by the element.
   bool IsAnimating(UiElement* element,

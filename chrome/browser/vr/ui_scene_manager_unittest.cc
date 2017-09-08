@@ -62,6 +62,9 @@ std::set<UiElementName> kHitTestableElements = {
     kLoadingIndicator,
     kCloseButton,
 };
+std::set<UiElementName> kSpecialOpacityElements = {
+    kScreenDimmer,
+};
 
 static constexpr float kTolerance = 1e-5;
 
@@ -80,6 +83,46 @@ void CheckHitTestableRecursive(UiElement* element) {
   for (const auto& child : element->children()) {
     CheckHitTestableRecursive(child.get());
   }
+}
+
+void VerifyElementRendererOpacity(UiElement* element) {
+  FakeUiElementRenderer renderer;
+  element->Render(&renderer, kProjMatrix);
+
+  // Skip opacity verification if |renderer| is not called in |Render|
+  // function (for example UiElement).
+  if (!renderer.called())
+    return;
+
+  // Skip opacity verification if the element has special opacity (for example
+  // ScreenDimmer).
+  if (kSpecialOpacityElements.find(element->name()) !=
+      kSpecialOpacityElements.end()) {
+    return;
+  }
+
+  EXPECT_FLOAT_EQ(renderer.opacity(), element->computed_opacity())
+      << "element name: " << element->name();
+}
+
+void CheckRendererOpacityRecursive(UiSceneManagerTest* test,
+                                   UiElement* element) {
+  UiElement* parent = element->parent();
+
+  if (parent) {
+    element->SetOpacity(0.8f);
+
+    parent->SetOpacity(1.0f);
+    test->AnimateBy(MsToDelta(0));
+    VerifyElementRendererOpacity(element);
+
+    parent->SetOpacity(0.5f);
+    test->AnimateBy(MsToDelta(10));
+    VerifyElementRendererOpacity(element);
+  }
+
+  for (auto& child : element->children())
+    CheckRendererOpacityRecursive(test, child.get());
 }
 
 }  // namespace
@@ -619,49 +662,15 @@ TEST_F(UiSceneManagerTest, DontPropagateContentBoundsOnNegligibleChange) {
   manager_->OnProjMatrixChanged(kProjMatrix);
 }
 
-TEST_F(UiSceneManagerTest, ApplyParentOpacity) {
+TEST_F(UiSceneManagerTest, RendererUsesCorrectOpacity) {
   MakeManager(kNotInCct, kNotInWebVr);
-  FakeUiElementRenderer renderer;
-  auto grid_element = base::MakeUnique<Grid>();
-  grid_element->set_draw_phase(kPhaseForeground);
-  Grid* grid = grid_element.get();
-  scene_->AddUiElement(k2dBrowsingContentGroup, std::move(grid_element));
-  auto rect_element = base::MakeUnique<Rect>();
-  rect_element->set_draw_phase(kPhaseForeground);
-  Rect* rect = rect_element.get();
-  scene_->AddUiElement(k2dBrowsingContentGroup, std::move(rect_element));
 
-  ContentElement* content_quad =
+  ContentElement* content_element =
       static_cast<ContentElement*>(scene_->GetUiElementByName(kContentQuad));
-  content_quad->set_texture_id(1);
-  TexturedElement* textured_element =
-      static_cast<TexturedElement*>(scene_->GetUiElementByName(kExitPrompt));
-  textured_element->SetVisible(true);
-  textured_element->SetInitializedForTesting();
+  content_element->set_texture_id(1);
+  TexturedElement::SetInitializedForTesting();
 
-  AnimateBy(MsToDelta(0));
-  content_quad->Render(&renderer, kProjMatrix);
-  EXPECT_FLOAT_EQ(renderer.texture_opacity(), content_quad->computed_opacity());
-  textured_element->Render(&renderer, kProjMatrix);
-  EXPECT_FLOAT_EQ(renderer.texture_opacity(),
-                  textured_element->computed_opacity());
-  grid->Render(&renderer, kProjMatrix);
-  EXPECT_FLOAT_EQ(renderer.grid_opacity(), grid->computed_opacity());
-  rect->Render(&renderer, kProjMatrix);
-  EXPECT_FLOAT_EQ(renderer.grid_opacity(), rect->computed_opacity());
-
-  // Change parent opacity.
-  scene_->GetUiElementByName(k2dBrowsingContentGroup)->SetOpacity(0.2);
-  AnimateBy(MsToDelta(0));
-  content_quad->Render(&renderer, kProjMatrix);
-  EXPECT_FLOAT_EQ(renderer.texture_opacity(), content_quad->computed_opacity());
-  textured_element->Render(&renderer, kProjMatrix);
-  EXPECT_FLOAT_EQ(renderer.texture_opacity(),
-                  textured_element->computed_opacity());
-  grid->Render(&renderer, kProjMatrix);
-  EXPECT_FLOAT_EQ(renderer.grid_opacity(), grid->computed_opacity());
-  rect->Render(&renderer, kProjMatrix);
-  EXPECT_FLOAT_EQ(renderer.grid_opacity(), rect->computed_opacity());
+  CheckRendererOpacityRecursive(this, &scene_->root_element());
 }
 
 }  // namespace vr
