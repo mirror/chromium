@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5c624ff_ab88cd60",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-08T01:07:10Z",
+      "side": 1,
+      "message": "You\u0027re right. Done, but see below.",
+      "parentUuid": "8fe6d8ab_3915bbce",
+      "range": {
+        "startLine": 81,
+        "startChar": 31,
+        "endLine": 81,
+        "endChar": 38
+      },
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67a57248_e7c1bce0",
         "filename": "third_party/zlib/BUILD.gn",
         "patchSetId": 9
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-07T21:59:04Z",
       "side": 1,
       "message": "The script logic is pretty straightforward:\nif (foo) { //bar} else { //foobie }\n\nThis comment is distracting, but if you feel the need to explain why/when a given file is used, just replace it all for:\n# Here we pick the best performance implementation matching the build target.",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a17212d_9b095596",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-08T01:07:10Z",
+      "side": 1,
+      "message": "I find my original comment clearer than your suggestion, but fine, done. Let\u0027s move on.",
+      "parentUuid": "67a57248_e7c1bce0",
       "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "86556916_d98b803e",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-08T01:07:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d39cf61b_fe3ea627",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53348e0b_8aebdff1",
         "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
         "patchSetId": 9
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-07T15:50:21Z",
       "side": 1,
       "message": "The assembly generated will change depending on:\na) Compiler brand (gcc x clang)\nb) Compiler Version\nc) Flags\n\nIt makes no sense to add it as a comment. \n\nIf there is something that you believe is worthy discussing, it is better to add a remark (e.g. \"Here we expect the compiler to load data in 64bits chunks using whatever register with whatever instruction\").",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362fd463_e79d5f80",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-08T01:07:10Z",
+      "side": 1,
+      "message": "\u003e The assembly generated will change depending on:\n\nYes, of course the assembly generated can change. That\u0027s why it says \"Example\".\n\n\n\u003e It makes no sense to add it as a comment. \n\nIt makes sense to add it as a comment to give an idea of *why* the different code paths have different performance characteristics.",
+      "parentUuid": "53348e0b_8aebdff1",
       "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -111,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "e42e056b_c974a050",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-08T01:07:10Z",
+      "side": 1,
+      "message": "In the original patch set:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/601694/1/third_party/zlib/inffast.c\nthe #ifdef\u0027s are explicitly written out in order to minimize the code diff in that patch, and to make it clear that there are no code changes if the #ifdef fails to hold.\n\nI was asked to move the changes to inffast.c to a file in the contrib directory, and I did so (even though there\u0027s now copy/pasted code that increases the risk of a bug fix in one copy not being applied to all copies). But my upstream patch at https://github.com/madler/zlib/pull/292/files#diff-0154ab5a071f7343d6958156cf761792 explicitly says:\n\nThe diff between this file and inffast.c can be seen at\nhttps://gist.github.com/nigeltao/2884d66f16fd3109184967a78cfea7a5\n\nin order to emphasize that, again, there is no effect on e.g. 32 bit architectures.\n\nThat structure (explicit #ifdef\u0027s instead of introducing a new macro) has carried over to the current patch set, mostly out of inertia. As I said above, keeping the upstream pull request in sync to your comments here isn\u0027t trivial.\n\nIf the two of you insist that this be pulled out as a macro, or as separate files, then I will do so. But the counterargument is that doing so makes less obvious that the upstream patch has no effect on e.g. 32 bit architectures.\n\nAgain, though, would upstream prefer a #define\u0027d macro or explicitly written #ifdef\u0027s? One file or two? We\u0027re still just guessing, aren\u0027t we?",
+      "parentUuid": "92637663_ecac24c4",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4f1b9a4_3a9a6350",
         "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
         "patchSetId": 9
@@ -125,6 +221,24 @@
       "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655327b4_ed28c2e4",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-08T01:07:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f4f1b9a4_3a9a6350",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "c2d1084c_9b380587",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-08T01:07:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a0b033e1_4b9af3b0",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a665da2_bffdae43",
         "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
         "patchSetId": 9
@@ -159,6 +291,24 @@
       "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1abda891_e83aa77e",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-08T01:07:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3a665da2_bffdae43",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "e4a256a7_d727f8ea",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-08T01:07:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "322c173f_2078db28",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe3a33ed_53c59aaa",
         "filename": "third_party/zlib/inffast.c",
         "patchSetId": 9
@@ -190,6 +358,24 @@
       "writtenOn": "2017-09-07T21:53:57Z",
       "side": 1,
       "message": "I know this was discussed earlier. But I think this should be #error \"This file shouldn\u0027t be included in your build. Instead, include contrib/inffast64/inffast64.c\"\n\nOr alternatively, this shouldn\u0027t exist at all. (That\u0027s probably the better option)\n\nI know the #ifdef ASMINF set a precedent. But it is a big ask to land changes outside of contrib/.",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b479636_58cb6763",
+        "filename": "third_party/zlib/inffast.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-08T01:07:10Z",
+      "side": 1,
+      "message": "The thing is that being not included in the build involves multiple changes. In Chromium, we need to change BUILD.gn. Upstream, we need to change both the configure/Makefile build system and the cmake system. This isn\u0027t so much a concern for this Chromium patch per se, but inside Google\u0027s repository there is yet another build system. Perhaps other organizations use different build systems again. All those build systems have to be kept in sync to switch off this file based on INFLATE_FAST64. Not all of those build systems are upstream. Not all of the people who maintain their own equivalent of third_party/zlib in their own code repository are aware of the INFLATE_FAST64 option.\n\nThe better fix, in my opinion, is to #elif here.",
+      "parentUuid": "fe3a33ed_53c59aaa",
       "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -219,6 +405,30 @@
     },
     {
       "key": {
+        "uuid": "53a420f5_c286410a",
+        "filename": "third_party/zlib/inffast.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-08T01:07:10Z",
+      "side": 1,
+      "message": "The change from magic numbers to macros could technically be a separate patch, but there is no context to that change without the contrib/inffast64/inffast64.c file. I think it is easier to understand as a monolithic patch (that admittedly affects both top level and contrib code) than as separate patches.\n\nThis is, of course, once again just guessing how upstream would like to receive this patch, if they want to receive it all.\n\nAs for the added assumption, yes, it has always been true but missing.",
+      "parentUuid": "38a3ecdd_9264a50c",
+      "range": {
+        "startLine": 32,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18611d28_b73fe4da",
         "filename": "third_party/zlib/inffast.h",
         "patchSetId": 9
@@ -230,6 +440,24 @@
       "writtenOn": "2017-09-07T22:03:40Z",
       "side": 1,
       "message": "Chrome is a product, not a research project. And zlib is used all over the place by Chrome.\n\nIf you really want to enable this for PPC, we need data proving the benefits. If getting this data is too complicated/hard, we ship this for the tested platform (i.e. Intel) and can later revisit the issue (i.e. enabling for PowerPC).",
+      "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f9417e_76a19f1a",
+        "filename": "third_party/zlib/inffast.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-08T01:07:10Z",
+      "side": 1,
+      "message": "Yes, I am completely aware that Chrome is not a research project.\n\nAt the top of https://bugs.chromium.org/p/chromium/issues/detail?id\u003d760853 and repeated at https://chromium-review.googlesource.com/c/chromium/src/+/601694#message-9aaef619035d3911dcf0f5840e58afd97842d967, I said:\n\n\"That patch also affects some other 64 bit architectures: AArch64 and PowerPC64. I don\u0027t have direct access to such hardware, but a colleague of mine ran the numbers on such hardware, and reported a smaller but still consistently positive speedup of around 1.2x on both.\"\n\nI find it frustrating to have to repeat myself.",
+      "parentUuid": "18611d28_b73fe4da",
       "revId": "c32b00777be892a034b0a5831eff88b61c8721f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
