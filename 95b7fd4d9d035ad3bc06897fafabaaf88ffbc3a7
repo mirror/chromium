@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02662244_4f087cde",
+        "filename": "cc/output/vulkan_renderer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-08T20:43:03Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be viz::TextureMailboxDeleter?",
+      "range": {
+        "startLine": 23,
+        "startChar": 17,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "95b7fd4d9d035ad3bc06897fafabaaf88ffbc3a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8461a4f_5ec7425f",
+        "filename": "components/viz/service/display/texture_mailbox_deleter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-08T20:43:03Z",
+      "side": 1,
+      "message": "Is this class copyable intentionally? If not, can you add a DISALLOW_COPY_AND_ASSIGN?",
+      "revId": "95b7fd4d9d035ad3bc06897fafabaaf88ffbc3a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
