@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "4ed9ce61_3c55a654",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-08T04:05:12Z",
+      "side": 1,
+      "message": "Then please add a TODO for that.",
+      "parentUuid": "33bb8897_6098d80a",
+      "range": {
+        "startLine": 264,
+        "startChar": 39,
+        "endLine": 264,
+        "endChar": 53
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abca8fc6_18cafbdc",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 2
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "f25a06f0_42f09e37",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-08T04:05:12Z",
+      "side": 1,
+      "message": "Then add a TODO, at least, please.  I think referrer policy is already a part of ResourceRequest, though?  Admittedly, it\u0027s using blink\u0027s enum, not net\u0027s, so you\u0027d need to convert backwards, something we don\u0027t currently do, I assume.",
+      "parentUuid": "d7ea746f_20bf3f0a",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 79
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "847c55ad_7a1ab5a9",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 2
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "Do they? In the typical case, a response to a POST redirects to get GET something else, the post body is not reused. In what cases is the body reused?",
       "parentUuid": "847c55ad_7a1ab5a9",
+      "range": {
+        "startLine": 267,
+        "startChar": 29,
+        "endLine": 267,
+        "endChar": 39
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1143a6_2ae38704",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-08T04:05:12Z",
+      "side": 1,
+      "message": "Yes, they do.  It depends on the status code.  See https://cs.chromium.org/chromium/src/net/url_request/url_request.cc?sq\u003dpackage:chromium\u0026l\u003d934. Note, in particular, if the new method is the same as the old one, the body is not removed.  Converting POSTs to GETs only happens with certain redirect codes.  There are like 6 codes - permanent/temporary and legacy/keep body+method/remove body+convert to get.  I\u0027m not sure that codes that remove the method and body are any more common than the codes that preserve it.",
+      "parentUuid": "4936f228_ed038421",
       "range": {
         "startLine": 267,
         "startChar": 29,
