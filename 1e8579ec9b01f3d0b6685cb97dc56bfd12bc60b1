@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da571bdb_a6a1f0cb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-08T12:24:06Z",
+      "side": 1,
+      "message": "This sounds very vague. \"A given file\"?",
+      "range": {
+        "startLine": 14,
+        "startChar": 16,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d22d06d3_b316dd55",
+        "filename": "tools/traffic_annotation/auditor/auditor_result.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-08T12:24:06Z",
+      "side": 1,
+      "message": "I think I asked already in a previous CL, but I don\u0027t remember the answer. Why do we say \"similar\" rather than \"equal\"?",
+      "range": {
+        "startLine": 24,
+        "startChar": 46,
+        "endLine": 24,
+        "endChar": 53
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "913389f3_bfe8bb7e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-08T12:24:06Z",
+      "side": 1,
+      "message": "Pls remove.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 34
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741504ff_c13bc90b",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-08T12:24:06Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 49,
+        "startChar": 41,
+        "endLine": 49,
+        "endChar": 42
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4fa33a_39c1858e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-08T12:24:06Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 63,
+        "startChar": 3,
+        "endLine": 63,
+        "endChar": 14
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffefd3ad_255578c6",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-08T12:24:06Z",
+      "side": 1,
+      "message": "Is this really an error? If we weren\u0027t testing, we sould simply update the file.",
+      "range": {
+        "startLine": 383,
+        "startChar": 14,
+        "endLine": 383,
+        "endChar": 20
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea78aa72_77ea4a68",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-08T12:24:06Z",
+      "side": 1,
+      "message": "style: // namespace, and an empty line above",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 1
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7265febd_931ce6c2",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-08T12:24:06Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 230,
+        "startChar": 22,
+        "endLine": 230,
+        "endChar": 23
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22be17aa_03a52caa",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-08T12:24:06Z",
+      "side": 1,
+      "message": "\"a deprecation date\"",
+      "range": {
+        "startLine": 234,
+        "startChar": 30,
+        "endLine": 234,
+        "endChar": 31
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "808d3b7f_35d2af77",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-08T12:24:06Z",
+      "side": 1,
+      "message": "nit: Period at the end of the sentence.",
+      "range": {
+        "startLine": 22,
+        "startChar": 68,
+        "endLine": 22,
+        "endChar": 69
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde5592b_fa2a257b",
+        "filename": "tools/traffic_annotation/scripts/annotations_xml_downstream_unittests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-08T12:24:06Z",
+      "side": 1,
+      "message": "We don\u0027t use (c) anymore.",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 15
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746b86c7_ce4af016",
+        "filename": "tools/traffic_annotation/scripts/annotations_xml_downstream_unittests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-08T12:24:06Z",
+      "side": 1,
+      "message": "This part is repeated between the two python files. Can we extract it?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 78
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0098ec09_09e0cde9",
+        "filename": "tools/traffic_annotation/scripts/annotations_xml_downstream_updater.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-09-08T12:24:06Z",
+      "side": 1,
+      "message": "Also here.",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 15
+      },
+      "revId": "1e8579ec9b01f3d0b6685cb97dc56bfd12bc60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
