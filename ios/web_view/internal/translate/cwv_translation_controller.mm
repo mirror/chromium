@@ -78,6 +78,9 @@ const NSInteger CWVTranslationErrorScriptLoadError =
   _translatePrefs = _translateClient->translate_manager()
                         ->translate_client()
                         ->GetTranslatePrefs();
+
+  base::string16 string1 = base::SysNSStringToUTF16(@"日本語");
+  base::string16 string2 = base::SysNSStringToUTF16(@"Afrikaans");
 }
 
 - (void)updateTranslateStep:(translate::TranslateStep)step
