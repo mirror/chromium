@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "5646c520_141f4904",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-08T21:01:41Z",
+      "side": 1,
+      "message": "Is is possible to add a views::View to a native view (NSView)?\n\nI\u0027m basically trying to add the indicator to the BrowserWindow or something... Mac doesn\u0027t seem to use BrowserView for BrowserWindow. It uses a BrowserWindowController that gives native view. The ExclusiveAccessBubble shows the exit instruction by adding a widget onto the native view and gets the parent bounds from ExclusiveAccessBubbleViewsContext::GetClientAreaBoundsInScreen(). I feel like that may be what we need to do...",
+      "parentUuid": "7a74aa92_98301446",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 55
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16e67a66_cd84b3cc",
         "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.h",
         "patchSetId": 15
