@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00017409_7e4c3619",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-08T21:59:51Z",
+      "side": 1,
+      "message": "One other approach to consider, you can use View::set_id and View::GetViewByID instead of storing the view reference directly. That should let you mostly eliminate the TestApi class.\n\nBut this probably only works assuming the child views are in the view hierarchy. You could write a custom GetViewByID function in that case, or instead of adding/removing the views make them invisible.",
+      "revId": "d4431c771475736a6dd4ee54ec63c280e3df8b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daebe35a_395c73f4",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-08T21:59:51Z",
+      "side": 1,
+      "message": "This is how to write and use ExpectShelfButtons:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api_unittest.cc?q\u003dExpectModes\u0026l\u003d383",
+      "revId": "d4431c771475736a6dd4ee54ec63c280e3df8b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ab957b_8235d306",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-08T21:59:51Z",
+      "side": 1,
+      "message": "Move to anonymous namespace",
+      "revId": "d4431c771475736a6dd4ee54ec63c280e3df8b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
