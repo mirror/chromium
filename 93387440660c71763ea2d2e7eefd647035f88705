@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f96e0a91_c657df86",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-08T10:07:40Z",
+      "side": 1,
+      "message": "-\u003e list_disabled_stories\n\nand style, should this actually be ListDisabledStories ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 17
+      },
+      "revId": "93387440660c71763ea2d2e7eefd647035f88705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6824ca8_0db1c749",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-08T10:07:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is the most natural format for the output.\n\nWhy not\n\n{\n  \u0027benchmark_1: {\n    \u0027story_1: [\n      {\u0027conditions\u0027: condition, \u0027reason\u0027: reason},\n      ...\n    ],\n    ...\n  },\n  ...\n}\n\ni.e. basically we just want a \"natural\" serialization of the StoryExpectations object as json.\n\nThis also suggests that instead of:\n\n  .GetExpectations().disabled_stories\n\nwhat you want is something like:\n\n  .GetExpectations().AsDict()",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "93387440660c71763ea2d2e7eefd647035f88705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
