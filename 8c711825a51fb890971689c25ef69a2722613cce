@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bca9e233_6cf1f8e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-08T10:55:38Z",
+      "side": 1,
+      "message": "follow the same pattern as the impression tracker and register it in on bind? Otherwise, if you unregistered the listener but we call refresh (which will set wasScrollStillShown to false), we can\u0027t trigger the listener anymore.\n\nThat also avoids making createViewHolder an instance method.",
+      "range": {
+        "startLine": 70,
+        "startChar": 29,
+        "endLine": 70,
+        "endChar": 48
+      },
+      "revId": "8c711825a51fb890971689c25ef69a2722613cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
