@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee69119e_445962c5",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_deferred_launcher_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-08T15:42:13Z",
+      "side": 1,
+      "message": "nit: const in both cases.",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 47
+      },
+      "revId": "51b783d41b0527ad4d1a95ca5cb59153f2bb8cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9b02bd_51ebc24c",
+        "filename": "chrome/browser/ui/views/apps/app_info_dialog/arc_app_info_links_panel.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-08T15:42:13Z",
+      "side": 1,
+      "message": "nit: const",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 22
+      },
+      "revId": "51b783d41b0527ad4d1a95ca5cb59153f2bb8cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f549d759_df5378a4",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/android_apps_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-08T15:42:13Z",
+      "side": 1,
+      "message": "nit: const\nIdeally we should have helper in some ui utility class, GetDisplayIdFromNativeView(). It used quite frequently. Not asking to do in this CL.",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 22
+      },
+      "revId": "51b783d41b0527ad4d1a95ca5cb59153f2bb8cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
