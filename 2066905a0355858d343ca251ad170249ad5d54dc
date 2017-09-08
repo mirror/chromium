@@ -118,6 +118,29 @@
       "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df7e91c_6ccdb7d9",
+        "filename": "chrome/browser/ui/browser_navigator_params.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-08T03:38:09Z",
+      "side": 1,
+      "message": "I do have one question, does this really need to be a member? It seems secondary to the navigation and not an intrinsic part of the navigation itself. For example, it wouldn\u0027t make sense to set this to true for some random navigation.",
+      "range": {
+        "startLine": 253,
+        "startChar": 7,
+        "endLine": 253,
+        "endChar": 15
+      },
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
