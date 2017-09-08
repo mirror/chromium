@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "4f2a961d_10ea03ca",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T21:58:51Z",
+      "side": 1,
+      "message": "Unfortunately no, because there could be multiple pagination containers between layer_ and\nroot. Incidentally, this is also why I had to call VisualOffsetFromAncestor in\nPaintPropertyTreeBuiler rather than just adjusting by PaginationOffset - there can be\nmultiple of them.",
+      "parentUuid": "f235c40c_86a4b3d5",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7031d2b6_843eb82d",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
         "patchSetId": 27
@@ -83,6 +101,24 @@
       "writtenOn": "2017-09-08T21:49:04Z",
       "side": 1,
       "message": "DCHECK(!fragment_data);",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e860cc_6efa1ac1",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T21:58:51Z",
+      "side": 1,
+      "message": "There might be a fragment_data. e.g. a hit test is done on a clean lifecycle, so there\nwill be a FirstFragment.",
+      "parentUuid": "7031d2b6_843eb82d",
       "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
