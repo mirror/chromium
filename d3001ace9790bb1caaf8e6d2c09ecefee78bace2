@@ -34,6 +34,24 @@
       "revId": "d3001ace9790bb1caaf8e6d2c09ecefee78bace2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13d050b6_a3c105d5",
+        "filename": "third_party/WebKit/LayoutTests/inspector/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-08T04:04:23Z",
+      "side": 0,
+      "message": "There was an effort to mark most of the code (including tests) with owner team with @chromium.org address. Let\u0027s keep that information in http/tests/devtools.",
+      "parentUuid": "534c095e_42887359",
+      "revId": "d3001ace9790bb1caaf8e6d2c09ecefee78bace2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
