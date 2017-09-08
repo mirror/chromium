@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc6cc413_ce00395c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-08T06:18:17Z",
+      "side": 1,
+      "message": "typo: reorder",
+      "revId": "fea6b7d97a803fffeed79074d36e926fa3438bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb5026d_21530cc9",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-08T06:18:17Z",
+      "side": 1,
+      "message": "Not sure if it will be easier to understand if saying this way:\nThere there are 3 nodes A, B, C.  There are 4 possible positions for inserting bookmark.\n(0) A (1) B (2) C (3)\nWhen moving A to after C, (3) is its new position.  Hence +1 is needed.\nWhen moving C to before B, (1) is its new position. no change of index is necessary.",
+      "revId": "fea6b7d97a803fffeed79074d36e926fa3438bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7664123_67154aaa",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-08T06:18:17Z",
+      "side": 1,
+      "message": "Do we need to check !folder as well?\nwithout that checking.  not sure if there will be problem when a bookmark is dragging while its position is updated by a remote device.",
+      "revId": "fea6b7d97a803fffeed79074d36e926fa3438bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da21ab03_5b334963",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-08T06:18:17Z",
+      "side": 1,
+      "message": "Do we need to check if (folder-\u003eHasAncestor(node)) or if (node-\u003eparent()\u003d\u003dfolder)\nbefore doing the move?",
+      "revId": "fea6b7d97a803fffeed79074d36e926fa3438bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
