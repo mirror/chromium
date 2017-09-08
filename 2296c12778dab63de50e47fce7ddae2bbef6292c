@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7d71195_37789025",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-08T19:23:55Z",
+      "side": 1,
+      "message": "Instead of initializing this here I would set it to !absolute in the constructor.",
+      "range": {
+        "startLine": 89,
+        "startChar": 6,
+        "endLine": 89,
+        "endChar": 69
+      },
+      "revId": "2296c12778dab63de50e47fce7ddae2bbef6292c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0028ebc4_4397676f",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-08T19:23:55Z",
+      "side": 1,
+      "message": "I would rename need_to_get_absolute_orientation_sensor_when_necessary_ to fall_back_to_absolute_orientation_sensor_ and rewrite this as:\n\nif (absolute_ || relative_orientation_sensor_.sensor ||\n    !fall_back_to_absolute_orientation_sensor_) {\n  DeviceSensorEventPump::DidStartIfPossible();\n} else if (fall_back_to_absolute_orientation_sensor_) {\n  // When relative orientation sensor is not available fall back to using\n  // the absolute orientation sensor but only on the first failure.\n  fall_back_to_absolute_orientation_sensor_ \u003d false;\n  GetSensor(\u0026absolute_orientation_sensor_);\n}",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 3
+      },
+      "revId": "2296c12778dab63de50e47fce7ddae2bbef6292c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
