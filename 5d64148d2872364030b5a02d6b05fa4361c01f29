@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bda31a57_72ad33fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-08T18:55:53Z",
+      "side": 1,
+      "message": "Write down here which strings should be sentence-case and which ones should be title-case on iOS.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 75
+      },
+      "revId": "5d64148d2872364030b5a02d6b05fa4361c01f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0e8190_79c4d83e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-08T18:55:53Z",
+      "side": 1,
+      "message": "The messages \"The card number is already used\", \"Field is required\", and \"Email required\" are full sentences, so they should be in sentence case and end on a period.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 1
+      },
+      "revId": "5d64148d2872364030b5a02d6b05fa4361c01f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9e2fe0_0f51f2a8",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-08T18:55:53Z",
+      "side": 1,
+      "message": "Write down for translators that this message is Sentence-cased. See example on line 9, for example. tmartino@ has some experience with this, so you can ping him.",
+      "range": {
+        "startLine": 247,
+        "startChar": 136,
+        "endLine": 247,
+        "endChar": 137
+      },
+      "revId": "5d64148d2872364030b5a02d6b05fa4361c01f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
