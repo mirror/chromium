@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46cca31b_a89acaf3",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStreamTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-08T01:33:29Z",
+      "side": 1,
+      "message": "You are getting rid of a test condition - maybe replace with HasLookAhead instead?",
+      "revId": "28e99d568212e1108ca628defe7df81f85f5ab7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
