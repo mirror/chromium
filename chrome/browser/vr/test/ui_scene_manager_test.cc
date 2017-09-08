@@ -6,6 +6,9 @@
 
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/vr/elements/rect.h"
+#include "chrome/browser/vr/test/animation_utils.h"
+#include "chrome/browser/vr/test/constants.h"
+#include "chrome/browser/vr/test/fake_ui_element_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/browser/vr/ui_scene_manager.h"
 #include "ui/gfx/geometry/vector3d_f.h"
@@ -97,6 +100,38 @@ bool UiSceneManagerTest::VerifyRequiresLayout(
     }
   }
   return true;
+}
+
+void UiSceneManagerTest::CheckRendererOpacityRecursive(
+    const std::set<UiElementName>& names,
+    UiElement* element) {
+  UiElement* parent = element->parent();
+  // Disable all opacity animation for testing.
+  element->SetTransitionedProperties({});
+  element->SetOpacity(0.9f);
+
+  if (parent) {
+    AnimateBy(MsToDelta(0));
+
+    FakeUiElementRenderer renderer;
+    element->Render(&renderer, kProjMatrix);
+
+    // We only do opacity verification when |renderer| is called and the element
+    // is not an element in |names| that we explicitly want to exclude.
+    // It is expected that some elements doesn't render anything (such as root
+    // elements). So skipping verify these elements should be fine.
+    // There are also elements that has special rules for opacity, such as
+    // ScreenDimmer which uses a constant opacity when rendering. We need to
+    // make exception for these elements too.
+    if (renderer.called() && names.find(element->name()) == names.end()) {
+      EXPECT_FLOAT_EQ(renderer.opacity(), element->computed_opacity())
+          << "element name: " << element->name();
+    }
+  }
+
+  for (auto& child : element->children()) {
+    CheckRendererOpacityRecursive(names, child.get());
+  }
 }
 
 void UiSceneManagerTest::AnimateBy(base::TimeDelta delta) {
