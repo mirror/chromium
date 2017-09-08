@@ -256,6 +256,16 @@ ResultExpr EvaluateSyscallImpl(int fs_denied_errno,
   }
 #endif
 
+  // Allow getrlimit()/setrlimit() so that breakpad can increase the hard limit
+  // for RLIMIT_NOFILE when reporting crashes. crbug.com/583730
+  if (sysno == __NR_getrlimit || sysno == __NR_setrlimit) {
+    return Allow();
+  }
+  if (sysno == __NR_prlimit64) {
+    const Arg<pid_t> pid(0);
+    return If(AnyOf(pid == 0, pid == current_pid), Allow()).Else(CrashSIGSYS());
+  }
+
   if (IsBaselinePolicyWatched(sysno)) {
     // Previously unseen syscalls. TODO(jln): some of these should
     // be denied gracefully right away.
