@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5d03055_3faa2d6f",
+        "filename": "components/arc/common/power.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-09-08T20:09:04Z",
+      "side": 1,
+      "message": "The distinction is actually one that the Android folks said they *should* have made but failed to in the past (and now it\u0027s a lot harder to migrate APIs). This is sort of corroborated by the fact that screen and partial wake locks are handled by different parts of the framework altogether once they get past the PowerManagerService.\n\nI think handling screen wake locks by adding properties to specific activities that would want them was their pathway for attempting to separate out the user-facing APIs as well.",
+      "parentUuid": "cc7bc934_052853cf",
+      "revId": "c1df52e6cd90bae439019f9f25ade06199a3b28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10be80cd_3270ceec",
         "filename": "components/arc/power/arc_power_bridge.cc",
         "patchSetId": 3
