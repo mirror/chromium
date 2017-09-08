@@ -1009,8 +1009,8 @@ crbug.com/492664 external/wpt/css/css-writing-modes-3/line-box-direction-vrl-009
 
 crbug.com/637255 [ Win10 ] media/video-transformed.html [ Pass Failure ]
 
-crbug.com/760367 http/tests/devtools/console/console-tainted-globals.html [ NeedsManualRebaseline Timeout ]
-crbug.com/760367 virtual/mojo-loading/http/tests/devtools/console/console-tainted-globals.html [ NeedsManualRebaseline Timeout ]
+crbug.com/760367 http/tests/devtools/console/console-tainted-globals.js [ NeedsManualRebaseline Timeout ]
+crbug.com/760367 virtual/mojo-loading/http/tests/devtools/console/console-tainted-globals.js [ NeedsManualRebaseline Timeout ]
 crbug.com/760367 inspector/runtime/runtime-callFunctionOn.html [ NeedsManualRebaseline Timeout ]
 
 # These tests pass but images do not match because tests are stricter than the spec.
@@ -1750,12 +1750,12 @@ crbug.com/761952 fast/text/international/complex-text-rectangle.html [ Timeout P
 crbug.com/751952 editing/selection/modify_extend/extend_by_character.html [ Pass Failure ]
 crbug.com/751952 external/wpt/service-workers/service-worker/link-element-register-security-error.https.html [ Pass Failure ]
 crbug.com/751952 fast/dom/Range/getClientRects.html [ Pass Failure ]
-crbug.com/751952 http/tests/devtools/console/console-format.html [ Pass Failure ]
-crbug.com/751952 virtual/mojo-loading/http/tests/devtools/console/console-format.html [ Pass Failure ]
+crbug.com/751952 http/tests/devtools/console/console-format.js [ Pass Failure ]
+crbug.com/751952 virtual/mojo-loading/http/tests/devtools/console/console-format.js [ Pass Failure ]
 crbug.com/751952 http/tests/inspector-unit/datagrid-editable-longtext.js [ Pass Failure ]
 crbug.com/751952 virtual/mojo-blobs/external/wpt/service-workers/service-worker/link-element-register-security-error.https.html [ Pass Failure ]
-crbug.com/751952 http/tests/devtools/console/console-uncaught-promise.html [ Pass Failure ]
-crbug.com/751952 virtual/mojo-loading/http/tests/devtools/console/console-uncaught-promise.html [ Pass Failure ]
+crbug.com/751952 http/tests/devtools/console/console-uncaught-promise.js [ Pass Failure ]
+crbug.com/751952 virtual/mojo-loading/http/tests/devtools/console/console-uncaught-promise.js [ Pass Failure ]
 crbug.com/751952 virtual/mojo-loading/http/tests/inspector-unit/datagrid-editable-longtext.js [ Pass Failure ]
 crbug.com/751952 virtual/origin-trials-runtimeflags-disabled/http/tests/origin_trials/webexposed/budget-api-origin-trial-interfaces.html [ Pass Failure ]
 crbug.com/751952 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/link-element-register-security-error.https.html [ Pass Failure ]
@@ -3674,7 +3674,7 @@ crbug.com/720047 external/wpt/paint-timing [ Skip ]
 crbug.com/762008 [ Android ] http/tests/appcache/abort-cache-onchecking-resource-404.html [ Pass Crash ]
 
 # Sheriff failure 2017-09-06
-crbug.com/762390 [ Android ] http/tests/devtools/console/only-one-deprecation-warning.html [ Pass Crash ]
+crbug.com/762390 [ Android ] http/tests/devtools/console/only-one-deprecation-warning.js [ Pass Crash ]
 crbug.com/762423 [ Android ] http/tests/dom/create-contextual-fragment-from-svg-document-range.html [ Pass Crash ]
 crbug.com/762399 [ Android ] http/tests/cache/zero-length-xhr.html [ Pass Crash ]
 crbug.com/762486 [ Win7 Debug ] virtual/mojo-loading/http/tests/security/xss-DENIED-iframe-src-alias.html [ Pass Failure ]

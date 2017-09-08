@@ -20,6 +20,8 @@ const RUN_TEST_REGEX = /\s*runTest\(\);?\n*/
 const DRY_RUN = process.env.DRY_RUN || false;
 const FRONT_END_PATH = path.resolve(__dirname, '..', '..', 'front_end');
 const LINE_BREAK = '$$SECRET_IDENTIFIER_FOR_LINE_BREAK$$();';
+const LAYOUT_TESTS_PATH = path.resolve(__dirname, '..', '..', '..', '..', 'LayoutTests');
+const FLAG_EXPECTATIONS_PATH = path.resolve(LAYOUT_TESTS_PATH, 'FlagExpectations');
 
 function main() {
   const files = process.argv.slice(2);
@@ -107,34 +109,12 @@ function migrateTest(inputPath, identifierMap) {
 
   console.log(outputCode);
   if (!DRY_RUN) {
-    const testsPath = path.resolve(__dirname, 'tests.txt');
-    const newToOldTests =
-        new Map(fs.readFileSync(testsPath, 'utf-8').split('\n').map(line => line.split(' ').reverse()));
-    const originalTestPath = path.resolve(
-        __dirname, '..', '..', '..', '..', 'LayoutTests',
-        newToOldTests.get(inputPath.slice(inputPath.indexOf('http/'))));
-
-    const srcResourcePaths = resourceScripts.map(s => path.resolve(path.dirname(originalTestPath), s));
-
-    fs.writeFileSync(inputPath, outputCode);
-    copyResourceScripts(srcResourcePaths, destResourcePaths, inputPath);
+    const jsInputPath = inputPath.replace('.html', '.js');
+    fs.writeFileSync(jsInputPath, outputCode);
     console.log('Migrated: ', inputPath);
+    fs.unlinkSync(inputPath);
+    updateTestExpectations(path.relative(LAYOUT_TESTS_PATH, inputPath), path.relative(LAYOUT_TESTS_PATH,jsInputPath));
   }
-}
-
-function copyResourceScripts(srcResourcePaths, destResourcePaths, inputPath) {
-  destResourcePaths.forEach((p, i) => {
-    mkdirp.sync(path.dirname(p));
-    if (!utils.isFile(p)) {
-      fs.writeFileSync(p, fs.readFileSync(srcResourcePaths[i]));
-    } else {
-      const originalResource = fs.readFileSync(srcResourcePaths[i]);
-      const newResource = fs.readFileSync(p);
-      if (originalResource !== newResource) {
-        console.log('Discrepancy with resource script', p, 'for file: ', inputPath);
-      }
-    }
-  });
 }
 
 function transformTestScript(
@@ -473,4 +453,28 @@ function convertToTwoSpaceIndent(code) {
 
 function createNewLineNode() {
   return createExpressionNode(LINE_BREAK);
+}
+
+function updateTestExpectations(oldRelativeTestPath, newRelativeTestPath) {
+  // Update additional test expectations
+  for (const filename
+           of ['TestExpectations', 'ASANExpectations', 'LeakExpectations', 'MSANExpectations', 'NeverFixTests',
+               'SlowTests', 'SmokeTests', 'StaleTestExpectations']) {
+    const filePath = path.resolve(LAYOUT_TESTS_PATH, filename);
+    updateExpectationsFile(filePath);
+  }
+
+  // Update FlagExpectations
+  for (const filename of fs.readdirSync(FLAG_EXPECTATIONS_PATH)) {
+    const filePath = path.resolve(FLAG_EXPECTATIONS_PATH, filename);
+    updateExpectationsFile(filePath);
+  }
+
+  function updateExpectationsFile(filePath) {
+    const expectations = fs.readFileSync(filePath, 'utf-8');
+    const updatedExpectations = expectations.split('\n').map(line => {
+      return line.replace(oldRelativeTestPath, newRelativeTestPath);
+    });
+    fs.writeFileSync(filePath, updatedExpectations.join('\n'));
+  }
 }
