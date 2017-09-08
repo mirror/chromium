@@ -375,7 +375,11 @@ NetworkQualityEstimatorParams::NetworkQualityEstimatorParams(
       throughput_min_requests_in_flight_(
           GetValueForVariationParam(params_,
                                     "throughput_min_requests_in_flight",
-                                    1)),
+                                    5)),
+      throughput_min_transfer_size_kilobytes_(
+          GetValueForVariationParam(params_,
+                                    "throughput_min_transfer_size_kilobytes",
+                                    64)),
       weight_multiplier_per_second_(GetWeightMultiplierPerSecond(params_)),
       weight_multiplier_per_signal_strength_level_(
           GetDoubleValueForVariationParamWithDefaultValue(
