@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e8914bf_13cf9fcf",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T02:21:40Z",
+      "side": 1,
+      "message": "This at least needs a comment, especially since it doesn\u0027t just do \"\u003d\u003d NEW_POPUP\".  Explain why things like NEW_FOREGROUND_TAB should be considered \"is popup\".  Better: give the function a clearer name, whose name explains the relationship between the supplied disposition and popups.",
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce40004_7451d521",
+        "filename": "chrome/browser/ui/blocked_content/popup_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T02:21:40Z",
+      "side": 1,
+      "message": "Nit: Trailing comment probably not necessary for this short case?",
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22801638_e5486b62",
+        "filename": "chrome/browser/ui/blocked_content/popup_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T02:21:40Z",
+      "side": 1,
+      "message": "Nit: Usually we put friend declarations above everything else in the section",
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "925e2300_78cf2b2e",
+        "filename": "chrome/browser/ui/blocked_content/popup_tracker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T02:21:40Z",
+      "side": 1,
+      "message": "Nit: Seems like just about every ASSERT in this test could be EXPECT",
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ebb65b_9309c7a7",
+        "filename": "chrome/browser/ui/blocked_content/popup_tracker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T02:21:40Z",
+      "side": 1,
+      "message": "Nit: Maybe indent these lines more?",
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70761a6_9b647cba",
+        "filename": "chrome/browser/ui/browser_navigator_params.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T02:21:40Z",
+      "side": 1,
+      "message": "Nit: Consider (in a separate CL?) switching as many members of this class as possible to use in-declaration initializers, to avoid having to repeat this initializer list several places (and maybe missing one someday)",
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae5797f_0d5fe735",
+        "filename": "chrome/browser/ui/browser_navigator_params.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T02:21:40Z",
+      "side": 1,
+      "message": "Why change the forward decl to an #include here?  Doesn\u0027t look like this file needs it.",
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
