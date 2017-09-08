@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a7ef3cb_3a713d94",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-08T19:48:26Z",
+      "side": 1,
+      "message": "Add comments for arguments.",
+      "range": {
+        "startLine": 170,
+        "startChar": 15,
+        "endLine": 170,
+        "endChar": 64
+      },
+      "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b605e022_c1028ce5",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-08T19:48:26Z",
+      "side": 1,
+      "message": "std::make_unique\ncrbug.com/755727",
+      "range": {
+        "startLine": 174,
+        "startChar": 49,
+        "endLine": 174,
+        "endChar": 59
+      },
+      "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448f6ae2_f0a57c44",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-08T19:48:26Z",
+      "side": 1,
+      "message": "The time taken to join the threads is taken into account but shouldn\u0027t. Could threads increment an atomic counter when they exit their while loop? The last thread to increment the counter would compute |task_posted_duration_| (no locks required since only one thread writes the value and it is only read after that thread has been joined).",
+      "range": {
+        "startLine": 198,
+        "startChar": 4,
+        "endLine": 199,
+        "endChar": 21
+      },
+      "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "259d75ed_bc121934",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-08T19:48:26Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 208,
+        "startChar": 35,
+        "endLine": 208,
+        "endChar": 36
+      },
+      "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb55c298_8af9710d",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-08T19:48:26Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 210,
+        "startChar": 24,
+        "endLine": 210,
+        "endChar": 25
+      },
+      "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3885b46b_f4177d65",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-08T19:48:26Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 212,
+        "startChar": 32,
+        "endLine": 212,
+        "endChar": 33
+      },
+      "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c56e863a_8f3ec844",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-08T19:48:26Z",
+      "side": 1,
+      "message": "s/constant after SetUp()/constant/\n\nSetUp() doesn\u0027t modify anything.",
+      "range": {
+        "startLine": 217,
+        "startChar": 50,
+        "endLine": 217,
+        "endChar": 72
+      },
+      "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
