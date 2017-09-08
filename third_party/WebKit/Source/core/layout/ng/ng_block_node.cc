@@ -295,6 +295,13 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
           PreviouslyUsedBlockSpace(constraint_space, physical_fragment);
     }
     block->LayoutPositionedObjects(true);
+    if (block->ChildrenInline()) {
+      // Propagate visual overflow from the fragment.
+      // |ComputeOverflow| computes overflow from |RootInlineBox| if children
+      // are inline, but there is no |RootInlineBox| if NG paint, or
+      // |RootInlineBox|  don't have overflow set otherwise.
+      block->AddContentsVisualOverflow(physical_fragment.VisualRect());
+    }
     block->ComputeOverflow(overflow_size - border_scrollbar_padding.block_end);
   }
 
