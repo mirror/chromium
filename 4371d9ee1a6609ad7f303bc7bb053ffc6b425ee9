@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cd0a80e1_f93c464a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-08T15:39:05Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t understand what you\u0027re asking for here.",
+      "parentUuid": "7512dfea_fd9f8f6f",
+      "range": {
+        "startLine": 44,
+        "startChar": 28,
+        "endLine": 44,
+        "endChar": 33
+      },
+      "revId": "4371d9ee1a6609ad7f303bc7bb053ffc6b425ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d30b16c1_2f3939fb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
         "patchSetId": 3
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-07T07:26:18Z",
       "side": 1,
       "message": "Nonnull",
+      "range": {
+        "startLine": 166,
+        "startChar": 61,
+        "endLine": 166,
+        "endChar": 64
+      },
+      "revId": "4371d9ee1a6609ad7f303bc7bb053ffc6b425ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77fe2f2_c84d2e12",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-08T15:39:05Z",
+      "side": 1,
+      "message": "Is there any reason for this specific parameter (and not the ones in other methods?). As it is, I\u0027d prefer to use @Nullable and assume the other parameters are @Nonnull by default (although I do need to be more disciplined with this).",
+      "parentUuid": "436024e8_02ad9aa7",
       "range": {
         "startLine": 166,
         "startChar": 61,
@@ -114,6 +162,30 @@
       "revId": "4371d9ee1a6609ad7f303bc7bb053ffc6b425ee9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378224cc_5ac570c9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/FullscreenActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-08T15:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edd1e3ff_17bfcbfa",
+      "range": {
+        "startLine": 143,
+        "startChar": 30,
+        "endLine": 143,
+        "endChar": 60
+      },
+      "revId": "4371d9ee1a6609ad7f303bc7bb053ffc6b425ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
