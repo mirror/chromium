@@ -742,6 +742,13 @@ void NavigationRequest::OnResponseStarted(
                  base::Unretained(this)));
 }
 
+void NavigationRequest::OnResponseCompleted() {
+  DCHECK(render_frame_host_);
+  render_frame_host_->ReleaseNavigationRequest(this);
+  // DO NOT ADD CODE after this. The previous call destroyed the
+  // NavigationRequest.
+}
+
 // TODO(crbug.com/751941): Pass certificate_error_info to navigation throttles.
 void NavigationRequest::OnRequestFailed(
     bool has_stale_copy_in_cache,
@@ -1019,7 +1026,10 @@ void NavigationRequest::CommitNavigation() {
       request_params_, is_view_source_,
       std::move(subresource_loader_factory_info_));
 
-  frame_tree_node_->ResetNavigationRequest(true, true);
+  // The RenderFrameHost stores the NavigationRequest until the response is
+  // completed.
+  render_frame_host_ = render_frame_host;
+  frame_tree_node_->TransferNavigationRequest(render_frame_host_);
 }
 
 NavigationRequest::ContentSecurityPolicyCheckResult

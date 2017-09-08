@@ -30,6 +30,12 @@ void TestNavigationURLLoaderDelegate::WaitForResponseStarted() {
   response_started_.reset();
 }
 
+void TestNavigationURLLoaderDelegate::WaitForResponseCompleted() {
+  response_completed_.reset(new base::RunLoop);
+  response_completed_->Run();
+  response_completed_.reset();
+}
+
 void TestNavigationURLLoaderDelegate::WaitForRequestFailed() {
   request_failed_.reset(new base::RunLoop);
   request_failed_->Run();
@@ -71,6 +77,11 @@ void TestNavigationURLLoaderDelegate::OnResponseStarted(
   handle_ = std::move(consumer_handle);
   if (response_started_)
     response_started_->Quit();
+}
+
+void TestNavigationURLLoaderDelegate::OnResponseCompleted() {
+  if (response_completed_)
+    response_completed_->Quit();
 }
 
 void TestNavigationURLLoaderDelegate::OnRequestFailed(
