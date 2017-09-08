@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "14ed1461_149e3adc",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-08T16:52:09Z",
+      "side": 1,
+      "message": "Resolving",
+      "parentUuid": "4953a11f_daab9a40",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "12b79e22b89d644da8b339084aa81d7d44bcdcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8549eab6_e9e2c5f3",
         "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
         "patchSetId": 14
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "I think the issue was that if the card contents are bigger than the thumbnail, we would want to apply the corners still to the card and not the thumbnail. Do you have more information on the performance issues? I would hope that nesting relative layouts is not much more expensive than using them in a flat structure.",
       "parentUuid": "8549eab6_e9e2c5f3",
+      "range": {
+        "startLine": 124,
+        "startChar": 37,
+        "endLine": 124,
+        "endChar": 50
+      },
+      "revId": "12b79e22b89d644da8b339084aa81d7d44bcdcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04d7251_45305d7a",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-08T16:52:09Z",
+      "side": 1,
+      "message": "Ah good point, with large fonts it\u0027s possible to get taller cards. Maybe mention that in a comment as the reason why we align to the whole layout?\n\nAbout the nested layouts issue, it\u0027s mentioned in https://developer.android.com/training/improving-layouts/optimizing-layout.html",
+      "parentUuid": "81f775fa_ab02cf8a",
       "range": {
         "startLine": 124,
         "startChar": 37,
