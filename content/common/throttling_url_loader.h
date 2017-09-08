@@ -199,6 +199,8 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient,
 
   const net::NetworkTrafficAnnotationTag traffic_annotation_;
 
+  const bool no_read_before_sb_;
+
   DISALLOW_COPY_AND_ASSIGN(ThrottlingURLLoader);
 };
 

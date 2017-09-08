@@ -40,6 +40,15 @@ interface URLLoader {
   // |intra_priority_value| is a lesser priority which is used to prioritize
   // requests within a given priority level.
   SetPriority(RequestPriority priority, int32 intra_priority_value);
+  
+  // If kURLLoaderOptionConfirmBeforeReadingBody is specified to create the
+  // loader, this method must be called to confirm that it is okay to read the
+  // response body. Before this call, the implementation guarantees that it
+  // won't use the response body for MIME sniffing or making calls to
+  // URLLoaderClient.OnStartLoadingRespnoseBody.
+  // This call could be made as soon as the caller is sure that it is okay to
+  // read the response body.
+  AllowReadingBody();
 };
 
 // Opaque handle passed from the browser process to a child process to manage
@@ -55,6 +64,7 @@ interface URLLoaderClient {
   // |downloaded_file| is non-null in the 'download_to_file' case.
   // |ssl_info| is non-null if kSendSSLInfo was specified to
   // CreateLoaderAndStart.
+  // NOTE: |head| doesn't contain the sniffed MIME type.
   OnReceiveResponse(URLResponseHead head,
                     SSLInfo? ssl_info,
                     DownloadedTempFile? downloaded_file);
@@ -92,7 +102,9 @@ interface URLLoaderClient {
 
   // Called when the loader starts loading response body. This is called after
   // OnReceiveResponse is called.
+  // TODO(yzshen): also send sniffed_mime_type.
   OnStartLoadingResponseBody(handle<data_pipe_consumer> body);
+  
 
   // Called when the loading completes. No notification will be dispatched for
   // this client after this message arrives.

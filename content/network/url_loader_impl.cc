@@ -176,6 +176,8 @@ URLLoaderImpl::URLLoaderImpl(
       peer_closed_handle_watcher_(FROM_HERE,
                                   mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       report_raw_headers_(report_raw_headers),
+      allow_reading_body_(
+          !(options & content::mojom::kURLLoadOptionConfirmBeforeReadingBody)),
       weak_ptr_factory_(this) {
   context_->RegisterURLLoader(this);
   binding_.set_connection_error_handler(base::BindOnce(
@@ -238,6 +240,19 @@ void URLLoaderImpl::SetPriority(net::RequestPriority priority,
   NOTIMPLEMENTED();
 }
 
+void URLLoaderImpl::AllowReadingBody() {
+  DLOG(ERROR) << "AllowReadingBody is called";
+
+  if (allow_reading_body_)
+    return;
+
+  allow_reading_body_ = true;
+  if (paused_reading_body_) {
+    paused_reading_body_ = false;
+    StartReadingBody();
+  }
+}
+
 void URLLoaderImpl::OnReceivedRedirect(net::URLRequest* url_request,
                                        const net::RedirectInfo& redirect_info,
                                        bool* defer_redirect) {
@@ -278,6 +293,23 @@ void URLLoaderImpl::OnResponseStarted(net::URLRequest* url_request,
     raw_response_headers_ = nullptr;
   }
 
+  SendResponseHeadersToClient();
+
+  sniffing_ = (options_ & mojom::kURLLoadOptionSniffMimeType) &&
+              ShouldSniffContent(url_request_.get(), response_.get());
+
+  if (!allow_reading_body_) {
+    paused_reading_body_ = true;
+    return;
+  }
+
+  StartReadingBody();
+}
+
+void URLLoaderImpl::StartReadingBody() {
+  DCHECK(!paused_reading_body_);
+  DCHECK(allow_reading_body_);
+
   mojo::DataPipe data_pipe(kDefaultAllocationSize);
   response_body_stream_ = std::move(data_pipe.producer_handle);
   consumer_handle_ = std::move(data_pipe.consumer_handle);
@@ -292,9 +324,8 @@ void URLLoaderImpl::OnResponseStarted(net::URLRequest* url_request,
       base::Bind(&URLLoaderImpl::OnResponseBodyStreamReady,
                  base::Unretained(this)));
 
-  if (!(options_ & mojom::kURLLoadOptionSniffMimeType) ||
-      !ShouldSniffContent(url_request_.get(), response_.get()))
-    SendResponseToClient();
+  if (!sniffing_)
+    SendResponseBodyToClient();
 
   // Start reading...
   ReadMore();
@@ -304,6 +335,8 @@ void URLLoaderImpl::ReadMore() {
   // Once the MIME type is sniffed, all data is sent as soon as it is read from
   // the network.
   DCHECK(consumer_handle_.is_valid() || !pending_write_);
+  DCHECK(!paused_reading_body_);
+
   if (!pending_write_.get()) {
     // TODO: we should use the abstractions in MojoAsyncResourceHandler.
     pending_write_buffer_offset_ = 0;
@@ -371,7 +404,7 @@ void URLLoaderImpl::DidRead(uint32_t num_bytes, bool completed_synchronously) {
     response_->head.mime_type.assign(new_type);
 
     if (made_final_decision) {
-      SendResponseToClient();
+      SendResponseBodyToClient();
     } else {
       complete_read = false;
     }
@@ -415,7 +448,7 @@ base::WeakPtr<URLLoaderImpl> URLLoaderImpl::GetWeakPtrForTests() {
 
 void URLLoaderImpl::NotifyCompleted(int error_code) {
   if (consumer_handle_.is_valid())
-    SendResponseToClient();
+    SendResponseBodyToClient();
 
   ResourceRequestCompletionStatus request_complete_data;
   request_complete_data.error_code = error_code;
@@ -444,6 +477,8 @@ void URLLoaderImpl::OnResponseBodyStreamClosed(MojoResult result) {
 }
 
 void URLLoaderImpl::OnResponseBodyStreamReady(MojoResult result) {
+  DCHECK(!paused_reading_body_);
+  DCHECK(allow_reading_body_);
   // TODO: Handle a bad |result| value.
   DCHECK_EQ(result, MOJO_RESULT_OK);
   ReadMore();
@@ -455,7 +490,7 @@ void URLLoaderImpl::DeleteIfNeeded() {
     delete this;
 }
 
-void URLLoaderImpl::SendResponseToClient() {
+void URLLoaderImpl::SendResponseHeadersToClient() {
   base::Optional<net::SSLInfo> ssl_info;
   if (options_ & mojom::kURLLoadOptionSendSSLInfo)
     ssl_info = url_request_->ssl_info();
@@ -471,7 +506,16 @@ void URLLoaderImpl::SendResponseToClient() {
     url_loader_client_->OnReceiveCachedMetadata(
         std::vector<uint8_t>(data, data + metadata->size()));
   }
+}
 
+void URLLoaderImpl::SendResponseBodyToClient() {
+  /*
+  TODO(yzshen): actually send the sniffed mime type.
+  base::Optional<std::string> sniffed_mime_type;
+  if (sniffing_) {
+    sniffing_ = false;
+    sniffing_mime_type = response_->head.mime_type;
+  }*/
   url_loader_client_->OnStartLoadingResponseBody(std::move(consumer_handle_));
   response_ = nullptr;
 }

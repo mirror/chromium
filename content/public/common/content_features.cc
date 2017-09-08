@@ -149,6 +149,8 @@ const base::Feature kMemoryCoordinator {
 // Enables the network service.
 const base::Feature kNetworkService{"NetworkService",
                                     base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kNoReadBeforeSB{"NoReadBeforeSB",
+                                    base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Kill switch for Web Notification content images.
 const base::Feature kNotificationContentImage{"NotificationContentImage",

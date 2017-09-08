@@ -4,8 +4,10 @@
 
 #include "content/common/throttling_url_loader.h"
 
+#include "base/feature_list.h"
 #include "base/single_thread_task_runner.h"
 #include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/common/content_features.h"
 
 namespace content {
 
@@ -118,7 +120,9 @@ ThrottlingURLLoader::ThrottlingURLLoader(
     const net::NetworkTrafficAnnotationTag& traffic_annotation)
     : forwarding_client_(client),
       client_binding_(this),
-      traffic_annotation_(traffic_annotation) {
+      traffic_annotation_(traffic_annotation),
+      no_read_before_sb_(
+          base::FeatureList::IsEnabled(features::kNoReadBeforeSB)) {
   if (throttles.size() > 0) {
     // TODO(yzshen): Implement a URLLoaderThrottle subclass which handles a list
     // of URLLoaderThrottles.
@@ -143,6 +147,9 @@ void ThrottlingURLLoader::Start(
     is_synchronous_ = true;
 
   if (throttle_) {
+    if (no_read_before_sb_)
+      options |= mojom::kURLLoadOptionConfirmBeforeReadingBody;
+
     bool deferred = false;
     throttle_->WillStartRequest(url_request, &deferred);
     if (loader_cancelled_)
@@ -217,6 +224,8 @@ void ThrottlingURLLoader::OnReceiveResponse(
     }
   }
 
+  if (no_read_before_sb_)
+    url_loader_->AllowReadingBody();
   forwarding_client_->OnReceiveResponse(response_head, ssl_info,
                                         std::move(downloaded_file));
 }
@@ -338,6 +347,7 @@ void ThrottlingURLLoader::Resume() {
         url_loader_->SetPriority(priority_info->priority,
                                  priority_info->intra_priority_value);
       }
+
       break;
     }
     case DEFERRED_REDIRECT: {
@@ -347,6 +357,8 @@ void ThrottlingURLLoader::Resume() {
       break;
     }
     case DEFERRED_RESPONSE: {
+      if (no_read_before_sb_)
+        url_loader_->AllowReadingBody();
       client_binding_.ResumeIncomingMethodCallProcessing();
       forwarding_client_->OnReceiveResponse(
           response_info_->response_head, response_info_->ssl_info,

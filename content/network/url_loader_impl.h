@@ -51,6 +51,7 @@ class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
   void FollowRedirect() override;
   void SetPriority(net::RequestPriority priority,
                    int32_t intra_priority_value) override;
+  void AllowReadingBody() override;
 
   // net::URLRequest::Delegate methods:
   void OnReceivedRedirect(net::URLRequest* url_request,
@@ -70,9 +71,11 @@ class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
   void OnResponseBodyStreamClosed(MojoResult result);
   void OnResponseBodyStreamReady(MojoResult result);
   void DeleteIfNeeded();
-  void SendResponseToClient();
+  void SendResponseHeadersToClient();
+  void SendResponseBodyToClient();
   void CompletePendingWrite();
   void SetRawResponseHeaders(scoped_refptr<const net::HttpResponseHeaders>);
+  void StartReadingBody();
 
   NetworkContext* context_;
   int32_t options_;
@@ -97,6 +100,10 @@ class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
   bool report_raw_headers_;
   net::HttpRawRequestHeaders raw_request_headers_;
   scoped_refptr<const net::HttpResponseHeaders> raw_response_headers_;
+
+  bool allow_reading_body_ = false;
+  bool paused_reading_body_ = false;
+  bool sniffing_ = false;
 
   base::WeakPtrFactory<URLLoaderImpl> weak_ptr_factory_;
 

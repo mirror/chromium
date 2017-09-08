@@ -14,6 +14,9 @@ const uint32 kURLLoadOptionSendSSLInfo = 1;
 const uint32 kURLLoadOptionSniffMimeType = 2;
 // Indicates that execution is blocking on the completion of the request.
 const uint32 kURLLoadOptionSynchronous = 4;
+// Indicates that the response body won't be read until a call to
+// URLLoader.AllowReadBody() is made.
+const uint32 kURLLoadOptionConfirmBeforeReadingBody = 8;
 
 interface URLLoaderFactory {
   // Creats a URLLoader and starts loading with the given |request|. |client|'s
