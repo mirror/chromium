@@ -302,7 +302,11 @@ class _BlinkPerfMeasurement(legacy_page_test.LegacyPageTest):
     trace_cpu_time_metrics = {}
     if tab.EvaluateJavaScript('testRunner.isWaitingForTracingStart'):
       trace_data = self._ContinueTestRunWithTracing(tab)
-      trace_value = trace.TraceValue(page, trace_data)
+      trace_value = trace.TraceValue(page, trace_data,
+          file_path=results.telemetry_info.trace_local_path,
+          remote_path=results.telemetry_info.trace_remote_path,
+          upload_bucket=results.telemetry_info.upload_bucket,
+          cloud_url=results.telemetry_info.trace_remote_url)
       results.AddValue(trace_value)
 
       trace_events_to_measure = tab.EvaluateJavaScript(
