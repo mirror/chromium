@@ -16,6 +16,24 @@
       "revId": "17ca5fa4d57c8eb29f1ea0100e042d8d26935ccf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b87f2d5_d17d7b2a",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-09-08T17:24:39Z",
+      "side": 1,
+      "message": "This does that, see line 308.\n\nThe question is whether we need to do L307 and L309.\n\nI\u0027ll add a comment that says that this should be the canonical way to dismiss the app list from within the view itself.",
+      "parentUuid": "e192ff6b_04852c34",
+      "revId": "17ca5fa4d57c8eb29f1ea0100e042d8d26935ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
