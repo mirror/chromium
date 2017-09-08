@@ -39,9 +39,6 @@ bool OverlayStrategyFullscreen::Attempt(
     return false;
 
   const DrawQuad* quad = *front;
-  if (quad->ShouldDrawWithBlending())
-    return false;
-
   OverlayCandidate candidate;
   if (!OverlayCandidate::FromDrawQuad(resource_provider, quad, &candidate)) {
     return false;
@@ -49,8 +46,7 @@ bool OverlayStrategyFullscreen::Attempt(
 
   if (!candidate.display_rect.origin().IsOrigin() ||
       gfx::ToRoundedSize(candidate.display_rect.size()) !=
-          render_pass->output_rect.size() ||
-      render_pass->output_rect.size() != candidate.resource_size_in_pixels) {
+          render_pass->output_rect.size()) {
     return false;
   }
 
