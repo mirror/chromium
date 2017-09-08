@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "67d794fb_bd8c3893",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T03:51:52Z",
+      "side": 1,
+      "message": "Ah didn\u0027t thnk about that. Don\u0027t we have the same problem with invalid_callback_ though, if multiple bad  messages come in? Or can we assume after ReportBadMessage(), we never get another request?\n\nI think we might want to revisit the decision to run the callback with nonsense params... feels there should be a solution that allows us to throw away callback immediately instead of having to either keep it around or run it with nonsense params...\n\nLet me post something on the chromium-mojo email thread.",
+      "parentUuid": "99d15d68_22d5503a",
+      "revId": "0cb29294c55056d589d176f418ffed81bf4a7440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9b854fa_a2384262",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 4
