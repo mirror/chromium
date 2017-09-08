@@ -46,6 +46,23 @@
       "revId": "65de3fc9d772aaa022e15cc6742ebebea85ddb0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25987a65_002667b1",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2211,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-08T19:18:52Z",
+      "side": 1,
+      "message": "Maybe you should just set the verified flag on |sync_token| before checking against it here, and then you don\u0027t need to add a matcher? Also that new matcher would go stale if new fields were added to the SyncToken..",
+      "revId": "65de3fc9d772aaa022e15cc6742ebebea85ddb0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
