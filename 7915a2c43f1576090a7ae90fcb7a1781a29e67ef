@@ -52,6 +52,24 @@
       "revId": "7915a2c43f1576090a7ae90fcb7a1781a29e67ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e73f90a_88e723ec",
+        "filename": "content/public/test/mock_service_worker_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T01:23:16Z",
+      "side": 1,
+      "message": "Done. Thanks for the explanation :)",
+      "parentUuid": "5e813e78_31ccd4f6",
+      "revId": "7915a2c43f1576090a7ae90fcb7a1781a29e67ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
