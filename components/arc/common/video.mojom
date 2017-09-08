@@ -4,7 +4,7 @@
 
 module arc.mojom;
 
-import "video_decode_accelerator.mojom";
+import "video_decode_accelerator_deprecated.mojom";
 import "video_encode_accelerator.mojom";
 
 // Next MinVersion: 5
@@ -29,7 +29,7 @@ interface VideoInstance {
 // Next MinVersion: 2
 // Next method ID: 3
 interface VideoAcceleratorFactory {
-  CreateDecodeAccelerator@0(VideoDecodeAccelerator& decoder);
+  CreateDecodeAcceleratorDeprecated@0(VideoDecodeAcceleratorDeprecated& video_decoder);
 
   [MinVersion=1]
   CreateEncodeAccelerator@1(VideoEncodeAccelerator& encoder);
