@@ -7,6 +7,7 @@
 
 #include "platform/bindings/ScriptWrappableVisitor.h"
 #include "platform/heap/HeapAllocator.h"
+#include "platform/heap/ThreadingTraits.h"
 
 namespace blink {
 
