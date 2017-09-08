@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "935fdd9a_15b0a8a8",
+        "filename": "chrome/test/data/webui/sys_internals/line_chart/line_chart_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-08T06:28:31Z",
+      "side": 1,
+      "message": "The actual scale values based on the device dpi. crbug.com/760425.\nI\u0027m afraid this will make the test unstable",
+      "parentUuid": "fa8c1395_0d9e5f16",
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25ae57dd_28bb7bb6",
         "filename": "chrome/test/data/webui/sys_internals/line_chart/menu_test.js",
         "patchSetId": 14
@@ -190,6 +208,24 @@
       "writtenOn": "2017-09-08T06:04:45Z",
       "side": 1,
       "message": "Can you also check the value of getPosition() here?",
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "169d24f2_c811f398",
+        "filename": "chrome/test/data/webui/sys_internals/line_chart/scrollbar_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-08T06:28:31Z",
+      "side": 1,
+      "message": "Same reason.",
+      "parentUuid": "7eea9c9a_8f4d9608",
       "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -241,6 +277,24 @@
       "writtenOn": "2017-09-08T06:04:45Z",
       "side": 1,
       "message": "Is this used right now?\n\nCan you put this in a setUp in SysInternalsBrowserTest?\n\nCheck MdHistoryBrowserTest for an example.",
+      "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c8674a_01a57536",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-08T06:28:31Z",
+      "side": 1,
+      "message": "I want to pass a value to the index.js before trigger the DOMContentLoaded.\nPut this in setUp doesn\u0027t work, sadly.\nOr maybe I have a better way to do this?",
+      "parentUuid": "91d16369_e08b062f",
       "revId": "89cdab0805ac8d1377b15c92d1ce9717f1dc60b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
