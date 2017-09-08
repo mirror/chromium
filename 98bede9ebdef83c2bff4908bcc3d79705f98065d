@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89debb80_cae46b12",
+        "filename": "device/geolocation/network_location_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-08T06:57:15Z",
+      "side": 1,
+      "message": "Response",
+      "range": {
+        "startLine": 363,
+        "startChar": 6,
+        "endLine": 363,
+        "endChar": 13
+      },
+      "revId": "98bede9ebdef83c2bff4908bcc3d79705f98065d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
