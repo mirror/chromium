@@ -16,6 +16,24 @@
       "revId": "ae8c7543daedde3aa7cc215374e27a2c46ff5c2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2347f2c0_9c99a8bf",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-08T19:00:43Z",
+      "side": 1,
+      "message": "I\u0027d say no - better to wait until we know where we\u0027re going.  It sounded to me like we\u0027ll need identical logic in other places as well.  Once we have that sorted out, we can add comments that cross-reference each other.",
+      "parentUuid": "088cc417_f79721b1",
+      "revId": "ae8c7543daedde3aa7cc215374e27a2c46ff5c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
