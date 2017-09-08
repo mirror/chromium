@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "cd98f876_f320cee1",
+        "filename": "third_party/leveldatabase/leveldb_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-08T21:44:54Z",
+      "side": 1,
+      "message": "1. I agree :P\n\n2. Oh, I was thinking we\u0027d keep exposing the methods on leveldb::chrome, and have inline implementations that get the singleton and call into corresponding Globals methods. Avoiding adding Globals to the header file SGTM.",
+      "parentUuid": "91810ed1_241bdd73",
+      "revId": "e058b09719839311a323a2ab5dbd3c64ae6ce713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "870d00b3_e73e5f84",
         "filename": "third_party/leveldatabase/leveldb_chromium.cc",
         "patchSetId": 1
