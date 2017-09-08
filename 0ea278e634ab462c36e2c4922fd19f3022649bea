@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87d177e7_a56853c1",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-08T20:47:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1498dcc_0674b10b",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "0ea278e634ab462c36e2c4922fd19f3022649bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00a082ac_333ded78",
         "filename": "build/android/diff_resource_sizes.py",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "0ea278e634ab462c36e2c4922fd19f3022649bea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0cb4f8_14604fab",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-08T20:47:30Z",
+      "side": 1,
+      "message": "Done, used build_utils.TempDir() so I can use \u0027with\u0027. Oddly, it\u0027s just yielding the result of tempfile.mkdtemp() but works fine without changing permissions, so I\u0027m not sure why I needed to do that when using mkdtemp directly.",
+      "parentUuid": "00a082ac_333ded78",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 12
+      },
+      "revId": "0ea278e634ab462c36e2c4922fd19f3022649bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
