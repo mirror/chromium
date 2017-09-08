@@ -16,6 +16,24 @@
       "revId": "64fcd6872a562cbfeaab6d4269a17a5c816dbbb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a037d96b_9d7a5d89",
+        "filename": "components/exo/test/run_all_unittests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-08T15:42:46Z",
+      "side": 0,
+      "message": "Not that I know. \"Serially\" might just be a copy-paste from the ash tests that this was based on. Let\u0027s try to change it.",
+      "parentUuid": "d0e94935_de4d1427",
+      "revId": "64fcd6872a562cbfeaab6d4269a17a5c816dbbb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
