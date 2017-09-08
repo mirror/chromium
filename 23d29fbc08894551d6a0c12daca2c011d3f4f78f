@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6d2fb8e_a73fd73f",
+        "filename": "chrome/browser/resources/ssl/ssl_error_assistant/ssl_error_assistant.asciipb",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-08T21:59:09Z",
+      "side": 1,
+      "message": "Could you run a check to make sure that ! and / are interpreted as desired?\n(i.e. this regex should match the literal string \"avast! Web/Mail Shield Root\")",
+      "revId": "23d29fbc08894551d6a0c12daca2c011d3f4f78f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
