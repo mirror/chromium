@@ -4,7 +4,10 @@
 
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator.h"
 
+#include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/ui/browser_list/browser.h"
+#include "ios/chrome/browser/ui/browser_list/browser_list.h"
+#import "ios/chrome/browser/ui/browser_list/browser_list_factory.h"
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
@@ -24,6 +27,8 @@
 
 // Tab grid handling the non-incognito tabs.
 @property(nonatomic, strong) TabGridCoordinator* normalTabGrid;
+// Tab grid handling the incognito tabs.
+@property(nonatomic, strong) TabGridCoordinator* incognitoTabGrid;
 
 // ViewController containing the toolbar and the currently presented TabGrid.
 @property(nonatomic, strong) TabGridContainerViewController* viewController;
@@ -31,14 +36,18 @@
 @property(nonatomic, weak) SettingsCoordinator* settingsCoordinator;
 @property(nonatomic, weak) ToolsCoordinator* toolsMenuCoordinator;
 
+@property(nonatomic, assign) BOOL incognito;
+
 @end
 
 @implementation TabGridContainerCoordinator
 
 @synthesize viewController = _viewController;
-@synthesize normalTabGrid = _normalTabGrid;
 @synthesize settingsCoordinator = _settingsCoordinator;
 @synthesize toolsMenuCoordinator = _toolsMenuCoordinator;
+@synthesize normalTabGrid = _normalTabGrid;
+@synthesize incognitoTabGrid = _incognitoTabGrid;
+@synthesize incognito = _incognito;
 
 - (void)start {
   if (self.started)
@@ -52,6 +61,7 @@
   self.normalTabGrid = [[TabGridCoordinator alloc] init];
   [self addChildCoordinator:self.normalTabGrid];
   [self.normalTabGrid start];
+  self.incognito = NO;
 
   [super start];
 }
@@ -63,7 +73,8 @@
 }
 
 - (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator {
-  if (childCoordinator == self.normalTabGrid) {
+  if (childCoordinator == self.normalTabGrid ||
+      childCoordinator == self.incognitoTabGrid) {
     self.viewController.tabGrid = childCoordinator.viewController;
   } else if (childCoordinator == self.toolsMenuCoordinator ||
              childCoordinator == self.settingsCoordinator) {
@@ -76,15 +87,22 @@
 }
 
 - (void)childCoordinatorWillStop:(BrowserCoordinator*)childCoordinator {
-  if (childCoordinator == self.toolsMenuCoordinator ||
-      childCoordinator == self.settingsCoordinator) {
+  if (childCoordinator == self.toolsMenuCoordinator) {
     [childCoordinator.viewController.presentingViewController
         dismissViewControllerAnimated:YES
                            completion:nil];
-  } else if (childCoordinator == self.normalTabGrid) {
+  } else if (childCoordinator == self.normalTabGrid ||
+             childCoordinator == self.incognitoTabGrid) {
   } else {
     NOTREACHED();
   }
+}
+
+#pragma mark - Property
+
+- (void)setIncognito:(BOOL)incognito {
+  _incognito = incognito;
+  self.viewController.incognito = incognito;
 }
 
 #pragma mark - URLOpening
@@ -119,7 +137,23 @@
 }
 
 - (void)toggleIncognito {
-  // TODO.
+  if (self.incognito) {
+    [self.incognitoTabGrid stop];
+    [self.normalTabGrid start];
+  } else {
+    if (!self.incognitoTabGrid) {
+      self.incognitoTabGrid = [[TabGridCoordinator alloc] init];
+      [self addChildCoordinator:self.incognitoTabGrid];
+      self.incognitoTabGrid.browser =
+          BrowserListFactory::GetForBrowserState(
+              self.browser->browser_state()
+                  ->GetOffTheRecordChromeBrowserState())
+              ->CreateNewBrowser();
+    }
+    [self.normalTabGrid stop];
+    [self.incognitoTabGrid start];
+  }
+  self.incognito = !self.incognito;
 }
 
 #pragma mark - SettingsCommands
