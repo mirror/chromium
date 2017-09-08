@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "888462a4_1be1831b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-08T01:21:16Z",
+      "side": 1,
+      "message": "maybe inline all of these?",
+      "revId": "e1164e3507784ee79d253d6a3e02c03a2c06c3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116339bb_db59f13b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-08T01:21:16Z",
+      "side": 1,
+      "message": "doctype these please.",
+      "revId": "e1164e3507784ee79d253d6a3e02c03a2c06c3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779300e2_5c2ba629",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-08T01:21:16Z",
+      "side": 1,
+      "message": "Lets use for-of here now since we don\u0027t need to know i.",
+      "revId": "e1164e3507784ee79d253d6a3e02c03a2c06c3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71559bf6_7e66de8d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-08T01:21:16Z",
+      "side": 1,
+      "message": "lets use:\nif (name \u003d\u003d\u003d promiseStatusName \u0026\u0026 preview.subtype \u003d\u003d\u003d \u0027promise\u0027)\n  promiseStatusProperty \u003d property;\nelse if(name \u003d\u003d\u003d promiseValueName \u0026\u0026 preview.subtype \u003d\u003d\u003d \u0027promise\u0027)\n  promiseValueProperty \u003d property;\nelse\n  elements.push(createPropertyElements.call(this, property));",
+      "revId": "e1164e3507784ee79d253d6a3e02c03a2c06c3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b69cd91_098ce769",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-08T01:21:16Z",
+      "side": 1,
+      "message": "lets remove unshift and append the item directly here",
+      "revId": "e1164e3507784ee79d253d6a3e02c03a2c06c3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3716ffb4_90d87133",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-08T01:21:16Z",
+      "side": 1,
+      "message": "lets make this:\nif (i \u003e 0 || promiseStatusProperty)",
+      "revId": "e1164e3507784ee79d253d6a3e02c03a2c06c3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
