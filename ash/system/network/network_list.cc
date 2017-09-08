@@ -10,6 +10,7 @@
 #include "ash/metrics/user_metrics_recorder.h"
 #include "ash/public/cpp/config.h"
 #include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -604,7 +605,9 @@ NetworkListView::UpdateNetworkListEntries() {
   // unless Tether is prohibited by policy.
   if (handler->IsTechnologyAvailable(NetworkTypePattern::Cellular()) ||
       (handler->IsTechnologyAvailable(NetworkTypePattern::Tether()) &&
-       !handler->IsTechnologyProhibited(NetworkTypePattern::Tether()))) {
+       !handler->IsTechnologyProhibited(NetworkTypePattern::Tether()) &&
+       (!handler->IsTechnologyUninitialized(NetworkTypePattern::Tether()) ||
+        Shell::Get()->session_controller()->IsUserPrimary()))) {
     bool cellular_enabled =
         handler->IsTechnologyEnabled(NetworkTypePattern::Cellular());
     bool tether_enabled =
