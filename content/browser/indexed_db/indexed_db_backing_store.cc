@@ -2779,10 +2779,39 @@ void IndexedDBBackingStore::ReportBlobUnused(int64_t database_id,
 // HasLastBackingStoreReference.  It's safe because if the backing store is
 // deleted, the timer will automatically be canceled on destruction.
 void IndexedDBBackingStore::StartJournalCleaningTimer() {
+  // We wait for a maximum of 5 seconds from the first call to the timer since
+  // the last clean.
+  constexpr static base::TimeDelta kMaxCleaningWaitTime =
+      base::TimeDelta::FromSeconds(5);
+  // We default to a 2 second timer delay before we clean up blobs.
+  constexpr static base::TimeDelta kInitialCleaningWaitTime =
+      base::TimeDelta::FromSeconds(2);
+  // If there are pending transactions, wait a minimum of this time until trying
+  // again to clean blobs.
+  constexpr static base::TimeDelta kMinWaitTimeWithPendingTransaction =
+      base::TimeDelta::FromSeconds(1);
+
+  base::TimeDelta min_wait_time = committing_transaction_count_ == 0
+                                      ? base::TimeDelta::FromSeconds(0)
+                                      : kMinWaitTimeWithPendingTransaction;
+
+  base::TimeTicks now = base::TimeTicks::Now();
+
+  // Store our start time on first call, or when we aren't running (not counting
+  // a restart if we have |committing_transaction_count_| > 0).
+  if (journal_cleaning_timer_start_ == base::TimeTicks() ||
+      (!journal_cleaning_timer_.IsRunning() &&
+       committing_transaction_count_ == 0)) {
+    journal_cleaning_timer_start_ = now;
+  }
+
+  base::TimeDelta time_till_max =
+      kMaxCleaningWaitTime - (now - journal_cleaning_timer_start_);
+  base::TimeDelta delay = std::max(
+      min_wait_time, std::min(kInitialCleaningWaitTime, time_till_max));
+
   journal_cleaning_timer_.Start(
-      FROM_HERE,
-      base::TimeDelta::FromSeconds(5),
-      this,
+      FROM_HERE, delay, this,
       &IndexedDBBackingStore::CleanPrimaryJournalIgnoreReturn);
 }
 
@@ -2939,7 +2968,9 @@ Status IndexedDBBackingStore::CleanUpBlobJournal(
   if (!s.ok())
     return s;
   ClearBlobJournal(journal_transaction.get(), level_db_key);
-  return journal_transaction->Commit();
+  s = journal_transaction->Commit();
+  indexed_db_factory_->BlobFilesCleaned(origin_);
+  return s;
 }
 
 Status IndexedDBBackingStore::Transaction::GetBlobInfoForRecord(
@@ -4034,6 +4065,16 @@ void IndexedDBBackingStore::StartPreCloseTasks() {
   DCHECK(pre_close_task_queue_);
   pre_close_task_queue_->Start(base::BindOnce(
       &IndexedDBBackingStore::GetCompleteMetadata, base::Unretained(this)));
+}
+
+bool IndexedDBBackingStore::IsBlobCleanupPending() {
+  return journal_cleaning_timer_.IsRunning();
+}
+
+void IndexedDBBackingStore::ForceRunBlobCleanup() {
+  base::Closure task = journal_cleaning_timer_.user_task();
+  journal_cleaning_timer_.AbandonAndStop();
+  task.Run();
 }
 
 IndexedDBBackingStore::Transaction::Transaction(
