@@ -23836,6 +23836,8 @@ from previous Chrome versions.
   <int value="460136092" label="MidiManagerAndroid:disabled"/>
   <int value="460475728" label="wake-on-wifi-packet"/>
   <int value="464226051" label="CrOSComponent:enabled"/>
+  <int value="464226052" label="CrOSContainer:enabled"/>
+  <int value="464226053" label="CrOSContainer:disabled"/>
   <int value="466248382" label="disable-push-api-background-mode"/>
   <int value="468959230"
       label="enable-non-validating-reload-on-refresh-content"/>
