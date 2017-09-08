@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af07b041_25217ff1",
+        "filename": "components/history/core/browser/top_sites_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1376,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-08T22:10:55Z",
+      "side": 1,
+      "message": "How about using the same value from topsitesimpl? Maybe move the constant into the header?",
+      "range": {
+        "startLine": 1376,
+        "startChar": 15,
+        "endLine": 1376,
+        "endChar": 37
+      },
+      "revId": "8c637145a3d8f7b324706d745ddc0ccaa949b4d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
