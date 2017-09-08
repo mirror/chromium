@@ -50,7 +50,7 @@ void StubNotificationDisplayService::RemoveNotification(
       notifications_.begin(), notifications_.end(),
       [notification_type, notification_id](const NotificationData& data) {
         return data.first == notification_type &&
-               data.second.delegate_id() == notification_id;
+               data.second.id() == notification_id;
       });
 
   if (iter == notifications_.end())
@@ -109,7 +109,7 @@ void StubNotificationDisplayService::Close(
           notifications_.begin(), notifications_.end(),
           [notification_type, notification_id](const NotificationData& data) {
             return data.first == notification_type &&
-                   data.second.delegate_id() == notification_id;
+                   data.second.id() == notification_id;
           }),
       notifications_.end());
 }
@@ -120,7 +120,7 @@ void StubNotificationDisplayService::GetDisplayed(
       base::MakeUnique<std::set<std::string>>();
 
   for (const auto& notification_data : notifications_)
-    notifications->insert(notification_data.second.delegate_id());
+    notifications->insert(notification_data.second.id());
 
   callback.Run(std::move(notifications), true /* supports_synchronization */);
 }
