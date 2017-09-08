@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1980f78_759f9f24",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-08T11:58:47Z",
+      "side": 1,
+      "message": "nit/optional: What about storing the result of GetCurrentFormat() in a local variable, and maybe replace frame_rate with an in line \"(current_format ? current_format-\u003eframe_rate : 0.0)\"? Its CapCamelCase-style suggest it might do more than \"return x;\" and there is an assumption here about it returning the same thing every time. That\u0027s fine though.",
+      "revId": "c4d9d97da7230eca54f8c501cede7ffdd642b896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
