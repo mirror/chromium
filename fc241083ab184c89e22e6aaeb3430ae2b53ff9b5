@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c96d09c_dd504406",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-08T19:56:03Z",
+      "side": 1,
+      "message": "So, on all platforms, this can cause blocking/re-entrancy (for macOS, there\u0027s intersection with the runloop and accessing other resources, as is for Win)\n\nSo I think the right answer is to remove the ifdef and have it true on all platforms. Would that be concerning?\n\n// CertVerifyProc\u0027s contract allows ::VerifyInternal() to wait on File I/O\n// (such as the Windows registry or smart cards on all platforms) or may\n// re-enter this code via extension hooks (such as smart card UI). To ensure\n// threads are not starved or deadlocked, ....",
+      "revId": "fc241083ab184c89e22e6aaeb3430ae2b53ff9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d85466_a43bbc9e",
+        "filename": "net/cert/multi_threaded_cert_verifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-08T19:56:03Z",
+      "side": 1,
+      "message": "Why did you make this change? Is it always guaranteed to post?\n\nIf it isn\u0027t, this will starve the IO thread. I\u0027d be good to understand why this concern.",
+      "revId": "fc241083ab184c89e22e6aaeb3430ae2b53ff9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
