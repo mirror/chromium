@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/views/elevation_icon_setter.h"
 
 #include "base/callback.h"
+#include "base/task_runner_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
 #include "ui/views/controls/button/label_button.h"
@@ -59,8 +60,15 @@ ElevationIconSetter::ElevationIconSetter(views::LabelButton* button,
                                          const base::Closure& callback)
     : button_(button),
       weak_factory_(this) {
+  const base::TaskTraits traits = {base::MayBlock(),
+                                   base::TaskPriority::USER_BLOCKING};
+#if defined(OS_WIN)
+  base::PostTaskAndReplyWithResult(
+      base::CreateCOMSTATaskRunnerWithTraits(traits).get(), FROM_HERE,
+#else
   base::PostTaskWithTraitsAndReplyWithResult(
-      FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_BLOCKING},
+      FROM_HERE, traits,
+#endif
       base::Bind(&GetElevationIcon),
       base::Bind(&ElevationIconSetter::SetButtonIcon,
                  weak_factory_.GetWeakPtr(), callback));
