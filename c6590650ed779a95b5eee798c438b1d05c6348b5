@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e524bd1_7e390eed",
+        "filename": "chrome/browser/ui/cocoa/download/download_shelf_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-09-08T15:37:29Z",
+      "side": 1,
+      "message": "y -\u003e x for the width",
+      "range": {
+        "startLine": 97,
+        "startChar": 73,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "c6590650ed779a95b5eee798c438b1d05c6348b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cafbac75_4c6c6996",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-09-08T15:37:29Z",
+      "side": 1,
+      "message": "Then why?",
+      "range": {
+        "startLine": 103,
+        "startChar": 66,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "c6590650ed779a95b5eee798c438b1d05c6348b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f9d675_3e26f4c4",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-09-08T15:37:29Z",
+      "side": 1,
+      "message": "Can this happen? If not, should this be a DCHECK instead? If so, do we still need to call super?",
+      "range": {
+        "startLine": 186,
+        "startChar": 21,
+        "endLine": 186,
+        "endChar": 0
+      },
+      "revId": "c6590650ed779a95b5eee798c438b1d05c6348b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
