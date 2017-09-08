@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "d013490c_43166f34",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-08T17:29:00Z",
+      "side": 1,
+      "message": "I meant have a variation of BlockResponseCustomNetErrorAndErrorHTML that doesn\u0027t include HTML. You had two variations for the request stage and only the HTML variation for the response stage. It will best to be consistent and cover them all.",
+      "parentUuid": "39b74fdd_c2492d5c",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "797a2d11_3eb54031",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 11
@@ -364,6 +382,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "9114b41c_c6613193",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15e8867b_74ed1237",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-08T17:29:00Z",
+      "side": 1,
+      "message": "Done? The switch statement is still around.",
+      "parentUuid": "fdb33052_2041ab8f",
       "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

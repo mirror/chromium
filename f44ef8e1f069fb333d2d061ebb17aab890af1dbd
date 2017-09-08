@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29ef4089_c67c304e",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-08T17:29:00Z",
+      "side": 1,
+      "message": "nit: no need for {} for single line if statements.",
+      "revId": "f44ef8e1f069fb333d2d061ebb17aab890af1dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57e1a9e_fcfd6b0a",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-08T17:29:00Z",
+      "side": 1,
+      "message": "I\u0027d suggest renaming this to error_page_content, as it is more generic and it can also include JS, not just HTML.",
+      "range": {
+        "startLine": 103,
+        "startChar": 52,
+        "endLine": 103,
+        "endChar": 67
+      },
+      "revId": "f44ef8e1f069fb333d2d061ebb17aab890af1dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
