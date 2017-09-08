@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "49679c58_cae1f46d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-08T15:35:29Z",
+      "side": 1,
+      "message": "Ahh.. new window works only on devices which support multiwindow? Cool.\n\nYeah, learn more doesn\u0027t seem appropriate - I removed it.",
+      "parentUuid": "9be38787_e1c138c1",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "bc0a84f2dc656009a9fa69c19986a7849178338f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba747e8a_bef92600",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2c3e13dc_ac6e5f27",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-08T15:35:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba747e8a_bef92600",
+      "range": {
+        "startLine": 109,
+        "startChar": 15,
+        "endLine": 109,
+        "endChar": 26
+      },
+      "revId": "bc0a84f2dc656009a9fa69c19986a7849178338f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfdd6ef8_4ffcf047",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "bc0a84f2dc656009a9fa69c19986a7849178338f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b149014_2e157474",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-08T15:35:29Z",
+      "side": 1,
+      "message": "As we don\u0027t have info for it, I excluded it from the context menu.",
+      "parentUuid": "dfdd6ef8_4ffcf047",
+      "range": {
+        "startLine": 118,
+        "startChar": 23,
+        "endLine": 118,
+        "endChar": 38
+      },
+      "revId": "bc0a84f2dc656009a9fa69c19986a7849178338f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
