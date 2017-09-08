@@ -1,5 +1,7 @@
 <?php
 parse_str($_SERVER["QUERY_STRING"]);
+header("Access-Control-Allow-Origin: http://localhost:8001");
+header("Access-Control-Allow-Credentials: true");
 
 function deleteCookie($value, $name)
 {
