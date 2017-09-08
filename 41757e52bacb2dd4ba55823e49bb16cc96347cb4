@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb619c23_98aa6a2b",
+        "filename": "third_party/libjpeg/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-08T01:16:49Z",
+      "side": 0,
+      "message": "This patch is not ready for review yet, but you might want to explain in the change description \"why\" we are making this change :) ...",
+      "revId": "41757e52bacb2dd4ba55823e49bb16cc96347cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
