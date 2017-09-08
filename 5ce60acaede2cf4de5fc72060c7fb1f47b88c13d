@@ -52,6 +52,24 @@
       "revId": "5ce60acaede2cf4de5fc72060c7fb1f47b88c13d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ed0eef_bd5c55d0",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 8
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-09-08T09:48:31Z",
+      "side": 1,
+      "message": "Speaking of this, if you have feedback on the new CSSPropertyAPI system or configuring the generated ComputedStyle code from this file, please send it to me, bugsnash@ and nainar@. We\u0027d be interested to hear how easy/hard it was to add a new property, and what we can improve on. Thanks!",
+      "parentUuid": "1a0f7a09_b4e800ce",
+      "revId": "5ce60acaede2cf4de5fc72060c7fb1f47b88c13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
