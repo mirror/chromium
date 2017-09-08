@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f789306f_15acb5c3",
+        "filename": "chrome/browser/resources/print_preview/settings/page_settings.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-08T19:08:23Z",
+      "side": 1,
+      "message": "nit: {?HTMLElement}\n\nMaybe do the same for other members in this file?\nSee: https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#nullable-type",
+      "revId": "2b8300b759b150d517567831fe220d2e6bf12482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab62938f_43f451bb",
+        "filename": "chrome/browser/resources/print_preview/settings/page_settings.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-08T19:08:23Z",
+      "side": 1,
+      "message": "So iiuc, when the label is clicked, we focus the input?\nIf so, nit: \n  please add a comment like // When the label is clicked, focus the input control.\nOr: \n  change the name of |onCustomRadioClick_| to explain what it does, e.g. focusCustomInput_.\n\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/settings/page_settings.js?type\u003dcs\u0026q\u003donCustomRadioClick\u0026sq\u003dpackage:chromium\u0026l\u003d186",
+      "revId": "2b8300b759b150d517567831fe220d2e6bf12482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
