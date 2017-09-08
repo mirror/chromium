@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b4eb95f_029f9fc9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-08T00:59:47Z",
+      "side": 1,
+      "message": "I suggest reordering them so you can avoid this part of the description. Also, you\u0027d need to add these BUGs to that CL.",
+      "revId": "9dd609e05afc07fcdfc0f5eadb5e03ab32afe877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1d0e12_abc9d02d",
+        "filename": "android_webview/browser/aw_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-08T00:59:47Z",
+      "side": 1,
+      "message": "nit: persisting",
+      "range": {
+        "startLine": 235,
+        "startChar": 27,
+        "endLine": 235,
+        "endChar": 37
+      },
+      "revId": "9dd609e05afc07fcdfc0f5eadb5e03ab32afe877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938520bb_c8c2d854",
+        "filename": "chromecast/browser/cast_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-08T00:59:47Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 267,
+        "startChar": 35,
+        "endLine": 267,
+        "endChar": 45
+      },
+      "revId": "9dd609e05afc07fcdfc0f5eadb5e03ab32afe877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
