@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de0e1497_55834969",
+        "filename": "chrome/installer/linux/rpm/calculate_package_deps.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-08T00:07:15Z",
+      "side": 1,
+      "message": "Need another blank line.",
+      "revId": "3883991b825dde508e83e27efa4be3659c4dc26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b0a85e_7b6d4bb9",
+        "filename": "chrome/installer/linux/rpm/calculate_package_deps.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-08T00:07:15Z",
+      "side": 1,
+      "message": "Do you think this will help improve the matching?\n\nreq \u003d requirement[:requirement.find(\u0027(\u0027)]\nif req in bundled_shlibs:",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 41
+      },
+      "revId": "3883991b825dde508e83e27efa4be3659c4dc26c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
