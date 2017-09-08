@@ -306,6 +306,11 @@ class CONTENT_EXPORT FrameTreeNode {
   // inform it that the navigation it requested was cancelled.
   void ResetNavigationRequest(bool keep_state, bool inform_renderer);
 
+  // PlzNavigate
+  // Transfers the ownership of the current navigation request to
+  // |render_frame_host|.
+  void TransferNavigationRequest(RenderFrameHostImpl* render_frame_host);
+
   // Returns true if this node is in a state where the loading progress is being
   // tracked.
   bool has_started_loading() const;

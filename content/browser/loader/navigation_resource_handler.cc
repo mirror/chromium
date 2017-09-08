@@ -93,9 +93,10 @@ void NavigationResourceHandler::FollowRedirect() {
 void NavigationResourceHandler::ProceedWithResponse() {
   DCHECK(response_);
   DCHECK(has_controller());
-  // Detach from the loader; at this point, the request is now owned by the
-  // StreamHandle sent in OnResponseStarted.
-  DetachFromCore();
+  // At this point, the request is now owned by the StreamHandle sent in
+  // OnResponseStarted. The loader will be fully detached when notified that the
+  // response is completed.
+  core_->set_resource_handler(nullptr);
   next_handler_->OnResponseStarted(response_.get(), ReleaseController());
   response_ = nullptr;
 }
@@ -162,15 +163,18 @@ void NavigationResourceHandler::OnResponseCompleted(
     std::unique_ptr<ResourceController> controller) {
   if (core_) {
     int net_error = status.error();
-    DCHECK_NE(net::OK, net_error);
+    if (net_error == net::OK) {
+      core_->NotifyResponseCompleted();
+    } else {
+      base::Optional<net::SSLInfo> ssl_info;
+      if (net::IsCertStatusError(request()->ssl_info().cert_status)) {
+        ssl_info = request()->ssl_info();
+      }
 
-    base::Optional<net::SSLInfo> ssl_info;
-    if (net::IsCertStatusError(request()->ssl_info().cert_status)) {
-      ssl_info = request()->ssl_info();
+      core_->NotifyRequestFailed(request()->response_info().was_cached,
+                                 net_error, ssl_info,
+                                 ShouldSSLErrorsBeFatal(request()));
     }
-
-    core_->NotifyRequestFailed(request()->response_info().was_cached, net_error,
-                               ssl_info, ShouldSSLErrorsBeFatal(request()));
     DetachFromCore();
   }
   next_handler_->OnResponseCompleted(status, std::move(controller));

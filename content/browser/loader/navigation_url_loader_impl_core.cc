@@ -136,6 +136,14 @@ void NavigationURLLoaderImplCore::NotifyResponseStarted(
                      is_stream));
 }
 
+void NavigationURLLoaderImplCore::NotifyResponseCompleted() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&NavigationURLLoaderImpl::NotifyResponseCompleted,
+                     loader_));
+}
+
 void NavigationURLLoaderImplCore::NotifyRequestFailed(
     bool in_cache,
     int net_error,
