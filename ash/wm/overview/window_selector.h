@@ -15,6 +15,7 @@
 #include "ash/ash_export.h"
 #include "ash/wm/overview/scoped_hide_overview_windows.h"
 #include "ash/wm/splitview/split_view_controller.h"
+#include "ash/wm/splitview/split_view_overview_overlay.h"
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "ui/aura/window_observer.h"
@@ -35,7 +36,6 @@ class Widget;
 
 namespace ash {
 class OverviewWindowDragController;
-class SplitViewOverviewOverlay;
 class WindowGrid;
 class WindowSelectorDelegate;
 class WindowSelectorItem;
@@ -94,8 +94,9 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   // Called to show or hide the split view overview overlay. This will do
   // nothing if split view is not enabled. |event_location| is used to reparent
   // |split_view_overview_overlays_|'s widget, if necessary.
-  void SetSplitViewOverviewOverlayVisible(bool visible,
-                                          const gfx::Point& event_location);
+  void SetSplitViewOverviewOverlayIndicatorType(
+      SplitViewOverviewOverlay::IndicatorType indicator_type,
+      const gfx::Point& event_location);
 
   // Removes the window selector item from the overview window grid.
   void RemoveWindowSelectorItem(WindowSelectorItem* item);
