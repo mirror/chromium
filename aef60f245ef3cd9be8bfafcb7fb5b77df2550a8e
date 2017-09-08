@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "505cadbd_5f563d9b",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-08T08:39:24Z",
+      "side": 1,
+      "message": "What about the following?\n\nEnable the V8 context snapshot that improves browsing context\u0027s creation time.",
+      "revId": "aef60f245ef3cd9be8bfafcb7fb5b77df2550a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
