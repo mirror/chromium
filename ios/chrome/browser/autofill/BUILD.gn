@@ -34,6 +34,7 @@ source_set("autofill") {
     "resources:autofill_card_generic",
     "resources:autofill_card_jcb",
     "resources:autofill_card_mastercard",
+    "resources:autofill_card_mir",
     "resources:autofill_card_unionpay",
     "resources:autofill_card_visa",
     "resources:autofill_close",

@@ -70,6 +70,17 @@ imageset("autofill_card_mastercard") {
   ]
 }
 
+imageset("autofill_card_mir") {
+  sources = [
+    "autofill_card_mir.imageset/Contents.json",
+    "autofill_card_mir.imageset/autofill_card_mir.png",
+    "autofill_card_mir.imageset/autofill_card_mir@2x.png",
+    "autofill_card_mir.imageset/autofill_card_mir@2x~ipad.png",
+    "autofill_card_mir.imageset/autofill_card_mir@3x.png",
+    "autofill_card_mir.imageset/autofill_card_mir~ipad.png",
+  ]
+}
+
 imageset("autofill_card_unionpay") {
   sources = [
     "autofill_card_unionpay.imageset/Contents.json",
