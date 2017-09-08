@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "317ecb2c_f7aecb05",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-08T21:18:14Z",
+      "side": 1,
+      "message": "Your unit test is failing. I think you need to add\n\n previous_url.host_piece() !\u003d kXXX \u0026\u0026\n\nto this line.",
+      "revId": "68803042870131f6d47e175c6d1095a87e86b05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209813bb_d00d2745",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-08T21:18:14Z",
+      "side": 1,
+      "message": "Can you name the string literal?\n\n namespace {\n\n constexpr char kXXX[] \u003d \"play.google.com\";",
+      "range": {
+        "startLine": 60,
+        "startChar": 39,
+        "endLine": 60,
+        "endChar": 56
+      },
+      "revId": "68803042870131f6d47e175c6d1095a87e86b05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d321dd4f_6b41711f",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-08T21:18:14Z",
+      "side": 1,
+      "message": "Can you also test a transition from www.non-google.com to play.google.com ?",
+      "revId": "68803042870131f6d47e175c6d1095a87e86b05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2241c381_ec47dca0",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-08T21:18:14Z",
+      "side": 1,
+      "message": "Although this test is failing, on your *browser*, navigation from play to play stays in the browser, right? Can you check why and report it here? I think we need to know why.",
+      "revId": "68803042870131f6d47e175c6d1095a87e86b05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
