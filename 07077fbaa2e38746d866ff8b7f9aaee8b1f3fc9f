@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb1ee4b2_1aaa122c",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T21:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a7ef3cb_3a713d94",
+      "range": {
+        "startLine": 170,
+        "startChar": 15,
+        "endLine": 170,
+        "endChar": 64
+      },
+      "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b605e022_c1028ce5",
         "filename": "base/message_loop/message_loop_perftest.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "471cef07_28215960",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T21:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b605e022_c1028ce5",
+      "range": {
+        "startLine": 174,
+        "startChar": 49,
+        "endLine": 174,
+        "endChar": 59
+      },
+      "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "448f6ae2_f0a57c44",
         "filename": "base/message_loop/message_loop_perftest.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-08T19:48:26Z",
       "side": 1,
       "message": "The time taken to join the threads is taken into account but shouldn\u0027t. Could threads increment an atomic counter when they exit their while loop? The last thread to increment the counter would compute |task_posted_duration_| (no locks required since only one thread writes the value and it is only read after that thread has been joined).",
+      "range": {
+        "startLine": 198,
+        "startChar": 4,
+        "endLine": 199,
+        "endChar": 21
+      },
+      "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ceef725_92f5f737",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T21:14:20Z",
+      "side": 1,
+      "message": "The absolute amount of time required to run this test is less important than the comparison of times between different implementations. I figured this, while not perfect, is good enough while keeping it somewhat simple for measuring the time. What do you think?",
+      "parentUuid": "448f6ae2_f0a57c44",
       "range": {
         "startLine": 198,
         "startChar": 4,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0106ff53_6dd1cb99",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T21:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "259d75ed_bc121934",
+      "range": {
+        "startLine": 208,
+        "startChar": 35,
+        "endLine": 208,
+        "endChar": 36
+      },
+      "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb55c298_8af9710d",
         "filename": "base/message_loop/message_loop_perftest.cc",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0ceeeb_0c5d182e",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T21:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb55c298_8af9710d",
+      "range": {
+        "startLine": 210,
+        "startChar": 24,
+        "endLine": 210,
+        "endChar": 25
+      },
+      "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "0d89c825_e2cd589f",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T21:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3885b46b_f4177d65",
+      "range": {
+        "startLine": 212,
+        "startChar": 32,
+        "endLine": 212,
+        "endChar": 33
+      },
+      "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c56e863a_8f3ec844",
         "filename": "base/message_loop/message_loop_perftest.cc",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b19cd245_99ceda3a",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T21:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c56e863a_8f3ec844",
+      "range": {
+        "startLine": 217,
+        "startChar": 50,
+        "endLine": 217,
+        "endChar": 72
+      },
+      "revId": "07077fbaa2e38746d866ff8b7f9aaee8b1f3fc9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
