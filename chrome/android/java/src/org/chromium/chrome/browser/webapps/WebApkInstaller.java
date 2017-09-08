@@ -107,8 +107,7 @@ public class WebApkInstaller {
      * @param token The token from WebAPK Server.
      */
     @CalledByNative
-    private void updateAsync(
-            String packageName, int version, String title, String token) {
+    private void updateAsync(String packageName, int version, String title, String token) {
         if (mInstallDelegate == null) {
             notify(WebApkInstallResult.FAILURE);
             return;
