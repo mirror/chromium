@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67207927_07d4caa3",
+        "filename": "ios/clean/chrome/browser/ui/sad_tab/sad_tab_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-08T13:30:41Z",
+      "side": 1,
+      "message": "This isn\u0027t a view controller.",
+      "range": {
+        "startLine": 24,
+        "startChar": 27,
+        "endLine": 24,
+        "endChar": 31
+      },
+      "revId": "57d7426b71ae05c18b2aa5df27d73881e936851c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
