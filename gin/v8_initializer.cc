@@ -367,6 +367,17 @@ void V8Initializer::GetV8ExternalSnapshotData(const char** natives_data_out,
 }
 
 // static
+v8::StartupData* V8Initializer::GetExistingStartupData() {
+  if (!g_mapped_snapshot)
+    return nullptr;
+
+  CR_DEFINE_STATIC_LOCAL(v8::StartupData, existing_blob, );
+  GetMappedFileData(g_mapped_snapshot, &existing_blob.data,
+                    &existing_blob.raw_size);
+  return &existing_blob;
+}
+
+// static
 void V8Initializer::LoadV8ContextSnapshot() {
   if (g_mapped_v8_context_snapshot)
     return;
