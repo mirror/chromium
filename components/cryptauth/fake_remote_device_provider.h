@@ -12,6 +12,19 @@ namespace cryptauth {
 // Test double for RemoteDeviceProvider.
 class FakeRemoteDeviceProvider : public RemoteDeviceProvider {
  public:
+  class Factory {
+   public:
+    static std::unique_ptr<RemoteDeviceProvider> NewInstance();
+
+    static void SetInstanceForTesting(Factory* factory);
+
+   protected:
+    virtual std::unique_ptr<RemoteDeviceProvider> BuildInstance();
+
+   private:
+    static Factory* factory_instance_;
+  };
+
   FakeRemoteDeviceProvider();
 
   ~FakeRemoteDeviceProvider() override;
