@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c78343e2_eff2f136",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T00:50:37Z",
+      "side": 1,
+      "message": "nit: Remove spaces at end of lines.",
+      "range": {
+        "startLine": 7,
+        "startChar": 55,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "7aa65b377e00f35397a2f939707b131abb9af773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e4aea7_429345be",
+        "filename": "components/cryptauth/fake_remote_device_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T00:50:37Z",
+      "side": 1,
+      "message": "Remove all 3 of these.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "7aa65b377e00f35397a2f939707b131abb9af773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7cb37ba_2b1bdb98",
+        "filename": "components/cryptauth/fake_remote_device_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T00:50:37Z",
+      "side": 1,
+      "message": "COMPONENTS_CRYPTAUTH_FAKE_REMOTE_DEVICE_PROVIDER_IMPL_H_\n\nSame elsewhere.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 59
+      },
+      "revId": "7aa65b377e00f35397a2f939707b131abb9af773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b659148_ae8b2108",
+        "filename": "components/cryptauth/fake_remote_device_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T00:50:37Z",
+      "side": 1,
+      "message": "Test double for RemoteDeviceProvider.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 80
+      },
+      "revId": "7aa65b377e00f35397a2f939707b131abb9af773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f51856_a7417c1e",
+        "filename": "components/cryptauth/fake_remote_device_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T00:50:37Z",
+      "side": 1,
+      "message": "Replace with // RemoteDeviceProvider:",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 63
+      },
+      "revId": "7aa65b377e00f35397a2f939707b131abb9af773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a4172f_abe34adc",
+        "filename": "components/cryptauth/remote_device_provider_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T00:50:37Z",
+      "side": 1,
+      "message": "Concrete RemoteDeviceProvider implementation.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 80
+      },
+      "revId": "7aa65b377e00f35397a2f939707b131abb9af773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
