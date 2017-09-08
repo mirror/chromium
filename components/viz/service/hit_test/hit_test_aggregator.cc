@@ -6,6 +6,7 @@
 
 #include "components/viz/common/hit_test/aggregated_hit_test_region.h"
 #include "components/viz/service/hit_test/hit_test_aggregator_delegate.h"
+#include "third_party/skia/include/core/SkMatrix44.h"
 
 namespace viz {
 
@@ -176,6 +177,8 @@ void HitTestAggregator::AppendRoot(const SurfaceId& surface_id) {
   regions[0].flags = hit_test_region_list->flags;
   regions[0].rect = hit_test_region_list->bounds;
   regions[0].transform = hit_test_region_list->transform;
+  // Explicitly calls getType() to compute the type-mask in SkMatrix44.
+  regions[0].transform.matrix().getType();
 
   size_t region_index = 1;
   for (const auto& region : hit_test_region_list->regions) {
@@ -230,6 +233,8 @@ size_t HitTestAggregator::AppendRegion(AggregatedHitTestRegion* regions,
         break;
     }
   }
+  // Explicitly calls getType() to compute the type-mask in SkMatrix44.
+  element->transform.matrix().getType();
   DCHECK_GE(region_index - parent_index - 1, 0u);
   element->child_count = region_index - parent_index - 1;
   return region_index;
