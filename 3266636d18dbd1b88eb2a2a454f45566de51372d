@@ -22,6 +22,30 @@
       "revId": "3266636d18dbd1b88eb2a2a454f45566de51372d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4ce7ba_38e4ffde",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-09-08T16:49:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1450a4d_31337bd2",
+      "range": {
+        "startLine": 564,
+        "startChar": 19,
+        "endLine": 564,
+        "endChar": 28
+      },
+      "revId": "3266636d18dbd1b88eb2a2a454f45566de51372d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
