@@ -176,6 +176,7 @@ bool ExtensionRegistry::RemoveTerminated(const std::string& id) {
 
 bool ExtensionRegistry::AddBlacklisted(
     const scoped_refptr<const Extension>& extension) {
+  DLOG(INFO) << "ADD";
   return blacklisted_extensions_.Insert(extension);
 }
 

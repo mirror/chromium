@@ -32,6 +32,11 @@ class ExtensionErrorController : public ExtensionErrorUI::Delegate {
   // Set the factory method for creating a new ExtensionErrorUI.
   static void SetUICreateMethodForTesting(UICreateMethod method);
 
+  // Alerts are automatically closed unless something invoked ExtensionPrefs
+  // ::SetAlertSystemFirstRun() before the Profile was created. Call this to
+  // prevent the automatic closure.
+  static void EnableAlertsForTesting();
+
  private:
   // ExtensionErrorUI::Delegate implementation:
   content::BrowserContext* GetContext() override;
