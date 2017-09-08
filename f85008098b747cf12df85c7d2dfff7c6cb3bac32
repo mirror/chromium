@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7475af13_22c86632",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-08T01:01:38Z",
+      "side": 1,
+      "message": "Done. Looks like it\u0027s not needed, the old loader is deleted when the return value of CreateLoaderAndStart is assigned to it.",
+      "parentUuid": "19a91377_6ef74678",
+      "range": {
+        "startLine": 201,
+        "startChar": 21,
+        "endLine": 201,
+        "endChar": 37
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5e49fb0_319616a5",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b5bb393f_335ec9c8",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-08T01:01:38Z",
+      "side": 1,
+      "message": "Done in the OnReceiveRedirect method",
+      "parentUuid": "f5e49fb0_319616a5",
+      "range": {
+        "startLine": 253,
+        "startChar": 25,
+        "endLine": 253,
+        "endChar": 0
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba5f8aad_174e7f5a",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-07T15:47:52Z",
       "side": 1,
       "message": "If this is a subframe, origin needs to be updated, too, I believe?  Or do we not care about that yet.",
+      "range": {
+        "startLine": 264,
+        "startChar": 39,
+        "endLine": 264,
+        "endChar": 53
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33bb8897_6098d80a",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-08T01:01:38Z",
+      "side": 1,
+      "message": "I replicated the logic in URLRequest::Redirect to the extent that I could.",
+      "parentUuid": "ba5f8aad_174e7f5a",
       "range": {
         "startLine": 264,
         "startChar": 39,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d7ea746f_20bf3f0a",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-08T01:01:38Z",
+      "side": 1,
+      "message": "i don\u0027t know what to do about these just yet?",
+      "parentUuid": "abca8fc6_18cafbdc",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 79
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "847c55ad_7a1ab5a9",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-07T15:47:52Z",
       "side": 1,
       "message": "Some redirects maintain the body.  Is this right?  No other handlers care about the body, or can change their mind and redirect us back to using the network service, which will once again care about the body?",
+      "range": {
+        "startLine": 267,
+        "startChar": 29,
+        "endLine": 267,
+        "endChar": 39
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4936f228_ed038421",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-08T01:01:38Z",
+      "side": 1,
+      "message": "Do they? In the typical case, a response to a POST redirects to get GET something else, the post body is not reused. In what cases is the body reused?",
+      "parentUuid": "847c55ad_7a1ab5a9",
       "range": {
         "startLine": 267,
         "startChar": 29,
@@ -137,6 +257,30 @@
       "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a87ba2_036aa49a",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-08T01:01:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae1c98f0_2b13bc21",
+      "range": {
+        "startLine": 389,
+        "startChar": 36,
+        "endLine": 389,
+        "endChar": 0
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
