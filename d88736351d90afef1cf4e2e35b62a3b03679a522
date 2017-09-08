@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c15cf50_7ce4f909",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T22:09:58Z",
+      "side": 1,
+      "message": "DCHECK(status_ \u003d\u003d IDLE);",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 1
+      },
+      "revId": "d88736351d90afef1cf4e2e35b62a3b03679a522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
