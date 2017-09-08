@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fe2ded1_6ba01c2c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-09-08T06:28:33Z",
+      "side": 1,
+      "message": "Minor nitpicks: loose -\u003e loosen, regrex -\u003e regex\n\nI also tend to link to at least one failed job in the commit message so that people don\u0027t necessarily need to go to the bug to see what was failing (see e.g. https://chromium-review.googlesource.com/645852).\n\nRelated to this, it\u0027d be good to explain why this is being done.",
+      "revId": "b0b9e29b618e9f08db0ea9b7073bc5122d965fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d160dc2e_fc6b0442",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-09-08T06:28:33Z",
+      "side": 1,
+      "message": "It\u0027d be good to expand the unit tests to check the new matches.",
+      "revId": "b0b9e29b618e9f08db0ea9b7073bc5122d965fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
