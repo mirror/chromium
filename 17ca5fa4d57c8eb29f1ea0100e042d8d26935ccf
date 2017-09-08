@@ -52,6 +52,24 @@
       "revId": "17ca5fa4d57c8eb29f1ea0100e042d8d26935ccf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bb2bed4_4021b0a9",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-08T20:37:02Z",
+      "side": 1,
+      "message": "Dismiss bit confusing, meaning destroying everything. You removed SetState(CLOSED). Can we call this SetStateClosed()? Or just Close?",
+      "parentUuid": "a55787ff_1592a91d",
+      "revId": "17ca5fa4d57c8eb29f1ea0100e042d8d26935ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
