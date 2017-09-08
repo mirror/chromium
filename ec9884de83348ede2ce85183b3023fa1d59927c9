@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9844d0a_d93f7f59",
+        "filename": "content/browser/net/reporting_service_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T02:17:23Z",
+      "side": 1,
+      "message": "Nit: use std::make_unique here and below.",
+      "range": {
+        "startLine": 40,
+        "startChar": 16,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "ec9884de83348ede2ce85183b3023fa1d59927c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
