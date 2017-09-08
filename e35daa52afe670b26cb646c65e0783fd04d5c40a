@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "209d9f4c_893d7ecd",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-09-08T08:27:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81ab1d71_423061aa",
+      "range": {
+        "startLine": 74,
+        "startChar": 23,
+        "endLine": 74,
+        "endChar": 36
+      },
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58d0525e_4f638270",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c19261_531cceed",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-09-08T08:27:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58d0525e_4f638270",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 13
+      },
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b7abf1ea_e437862a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-09-08T08:27:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e6bc19a_7a5756fa",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 40
+      },
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "961a78df_f56e41a8",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91feaf2_211ab606",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-09-08T08:27:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "961a78df_f56e41a8",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 24
+      },
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8502439b_3ce7559a",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-09-08T08:27:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcdc6b42_3dfbc574",
+      "range": {
+        "startLine": 112,
+        "startChar": 20,
+        "endLine": 112,
+        "endChar": 38
+      },
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f998f1d3_49fb06d3",
         "filename": "components/arc/common/video_decode_accelerator.typemap",
         "patchSetId": 6
@@ -128,6 +248,24 @@
       "writtenOn": "2017-09-08T02:26:40Z",
       "side": 1,
       "message": "It seems like ARC++ should probably just have one rect type. See https://cs.chromium.org/search/?q\u003dfile:components/arc+gfx::Rect+file:typemap\u0026sq\u003dpackage:chromium\u0026type\u003dcs.",
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c34d42_0a24a8e1",
+        "filename": "components/arc/common/video_decode_accelerator.typemap",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-09-08T08:27:01Z",
+      "side": 1,
+      "message": "If the name, CropRect, is changed, we need to change some codes in our CL.\nIt is also useful that we can use our original name of type.\nI considered then CropRect can be defined as the same type of them by something like \"using\" and \"typedef\" in typemap.\nBut, in this case, something will be wrong if their definition will be changed.\nIs there any guarantee that they will never be changed?",
+      "parentUuid": "f998f1d3_49fb06d3",
       "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +316,30 @@
       "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d34759_cb8f1e9c",
+        "filename": "components/arc/video_accelerator/video_decode_accelerator_struct_traits.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-09-08T08:27:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5064d508_dafddb8e",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 24
+      },
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
