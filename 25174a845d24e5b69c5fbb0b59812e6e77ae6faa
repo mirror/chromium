@@ -16,6 +16,24 @@
       "revId": "25174a845d24e5b69c5fbb0b59812e6e77ae6faa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b90a96_aa5e5b57",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-08T05:03:54Z",
+      "side": 1,
+      "message": "Sorry, meant the comment to help. I think with the test, which is the default behavior (not context first for list items), I can remove this comment.",
+      "parentUuid": "175c2bcb_0e220c45",
+      "revId": "25174a845d24e5b69c5fbb0b59812e6e77ae6faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
