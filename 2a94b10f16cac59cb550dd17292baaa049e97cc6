@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecd9499e_c3b3bd16",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-08T10:53:58Z",
+      "side": 1,
+      "message": "WebMediaPlayerMS, same below (s/PlayerMV/PlayerMS/g)",
+      "revId": "2a94b10f16cac59cb550dd17292baaa049e97cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
