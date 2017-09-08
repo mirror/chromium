@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "43ebb855_a1b9502d",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-08T22:28:44Z",
+      "side": 1,
+      "message": "I think using GetViewById and toggling visibility is a good idea.. but then do we need to define an enum again to use as IDs?",
+      "parentUuid": "00017409_7e4c3619",
+      "revId": "d4431c771475736a6dd4ee54ec63c280e3df8b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "daebe35a_395c73f4",
         "filename": "ash/shelf/login_shelf_view_unittest.cc",
         "patchSetId": 9
