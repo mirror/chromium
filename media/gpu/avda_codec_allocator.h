@@ -101,7 +101,8 @@ class AVDACodecAllocatorClient {
   // Called on the main thread when a new MediaCodec is configured.
   // |media_codec| will be null if configuration failed.
   virtual void OnCodecConfigured(
-      std::unique_ptr<MediaCodecBridge> media_codec) = 0;
+      std::unique_ptr<MediaCodecBridge> media_codec,
+      scoped_refptr<AVDASurfaceBundle> surface_bundle) = 0;
 
  protected:
   ~AVDACodecAllocatorClient() {}
@@ -136,11 +137,11 @@ class MEDIA_GPU_EXPORT AVDACodecAllocator {
   // other action on it (e.g., calling ReleaseSurfaceTexture if it has one),
   // since some other codec might be going to use it.  We just want to be sure
   // that it outlives |media_codec|.
-  // TODO(watk): Bundle the MediaCodec and surface together so you can't get
-  // this pairing wrong.
+  // Calls |released_cb| on the calling thread after the release completes.
   virtual void ReleaseMediaCodec(
       std::unique_ptr<MediaCodecBridge> media_codec,
-      scoped_refptr<AVDASurfaceBundle> surface_bundle);
+      scoped_refptr<AVDASurfaceBundle> surface_bundle,
+      base::Closure released_cb);
 
   // Return true if and only if there is any AVDA registered.
   bool IsAnyRegisteredAVDA();
@@ -210,7 +211,8 @@ class MEDIA_GPU_EXPORT AVDACodecAllocator {
 
   // Called on the gpu main thread when a codec is freed on a codec thread.
   // |surface_bundle| is the surface bundle that the codec was using.
-  void OnMediaCodecReleased(scoped_refptr<AVDASurfaceBundle> surface_bundle);
+  void OnMediaCodecReleased(scoped_refptr<AVDASurfaceBundle> surface_bundle,
+                            base::Closure released_cb);
 
   // Stop the thread indicated by |index|. This signals stop_event_for_testing_
   // after both threads are stopped.
