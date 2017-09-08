@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9debda0_af4bd024",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T03:47:35Z",
+      "side": 1,
+      "message": "Please denote this is quick fix and is not final one.",
+      "revId": "7464904ec3e3ee71d79806f5aadad1aa7454ee2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cbcb773_4127c074",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T03:47:35Z",
+      "side": 1,
+      "message": "Please explain this is quick fix instead of final one.\nLogic after L596 is as same as Position::IsValidFor(doc) in \nhttp://crrev.com/c/644575",
+      "revId": "7464904ec3e3ee71d79806f5aadad1aa7454ee2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b393ea4_eaa921be",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T03:47:35Z",
+      "side": 1,
+      "message": "nit: We can use FlatTreeTraversal::Contains(anchor-\u003eGetDocument(), *anchor)",
+      "revId": "7464904ec3e3ee71d79806f5aadad1aa7454ee2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
