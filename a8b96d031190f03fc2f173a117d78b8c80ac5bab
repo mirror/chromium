@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6ea2d22_9b415764",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-09-08T12:02:09Z",
+      "side": 1,
+      "message": "mention this CL also propagates by_user optional parameter",
+      "revId": "a8b96d031190f03fc2f173a117d78b8c80ac5bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ad6ef8_11a6e9d0",
+        "filename": "chrome/browser/extensions/api/notifications/extension_notification_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-09-08T12:02:09Z",
+      "side": 1,
+      "message": "include base/optional.h since this is a template type?",
+      "revId": "a8b96d031190f03fc2f173a117d78b8c80ac5bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599d2d39_d2085c91",
+        "filename": "chrome/browser/extensions/api/notifications/extension_notification_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-09-08T12:02:09Z",
+      "side": 1,
+      "message": "no longer needed?",
+      "revId": "a8b96d031190f03fc2f173a117d78b8c80ac5bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0acb2a7c_bae5fcb0",
+        "filename": "chrome/browser/extensions/api/notifications/extension_notification_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-09-08T12:02:09Z",
+      "side": 1,
+      "message": "include optional.h?",
+      "revId": "a8b96d031190f03fc2f173a117d78b8c80ac5bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c76960f_033600eb",
+        "filename": "chrome/browser/notifications/non_persistent_notification_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-09-08T12:02:09Z",
+      "side": 1,
+      "message": "include optional.h? and elsewhere..",
+      "revId": "a8b96d031190f03fc2f173a117d78b8c80ac5bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
