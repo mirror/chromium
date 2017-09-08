@@ -123,7 +123,7 @@ int CachedLogicallyOrderedLeafBoxes::BoxIndexInLeaves(
 }
 
 const InlineTextBox* LogicallyPreviousBox(
-    const VisiblePosition& visible_position,
+    const VisiblePositionInFlatTree& visible_position,
     const InlineTextBox* text_box,
     bool& previous_box_in_different_block,
     CachedLogicallyOrderedLeafBoxes& leaf_boxes) {
@@ -145,7 +145,7 @@ const InlineTextBox* LogicallyPreviousBox(
     if (!start_node)
       break;
 
-    Position position = PreviousRootInlineBoxCandidatePosition(
+    PositionInFlatTree position = PreviousRootInlineBoxCandidatePosition(
         start_node, visible_position, kContentIsEditable);
     if (position.IsNull())
       break;
@@ -169,7 +169,7 @@ const InlineTextBox* LogicallyPreviousBox(
 }
 
 const InlineTextBox* LogicallyNextBox(
-    const VisiblePosition& visible_position,
+    const VisiblePositionInFlatTree& visible_position,
     const InlineTextBox* text_box,
     bool& next_box_in_different_block,
     CachedLogicallyOrderedLeafBoxes& leaf_boxes) {
@@ -190,7 +190,7 @@ const InlineTextBox* LogicallyNextBox(
     if (!start_node)
       break;
 
-    Position position = NextRootInlineBoxCandidatePosition(
+    PositionInFlatTree position = NextRootInlineBoxCandidatePosition(
         start_node, visible_position, kContentIsEditable);
     if (position.IsNull())
       break;
@@ -214,7 +214,7 @@ const InlineTextBox* LogicallyNextBox(
 }
 
 TextBreakIterator* WordBreakIteratorForMinOffsetBoundary(
-    const VisiblePosition& visible_position,
+    const VisiblePositionInFlatTree& visible_position,
     const InlineTextBox* text_box,
     int& previous_box_length,
     bool& previous_box_in_different_block,
@@ -243,7 +243,7 @@ TextBreakIterator* WordBreakIteratorForMinOffsetBoundary(
 }
 
 TextBreakIterator* WordBreakIteratorForMaxOffsetBoundary(
-    const VisiblePosition& visible_position,
+    const VisiblePositionInFlatTree& visible_position,
     const InlineTextBox* text_box,
     bool& next_box_in_different_block,
     Vector<UChar, 1024>& string,
@@ -291,30 +291,31 @@ bool IslogicalEndOfWord(TextBreakIterator* iter,
 
 enum CursorMovementDirection { kMoveLeft, kMoveRight };
 
-VisiblePosition VisualWordPosition(const VisiblePosition& visible_position,
-                                   CursorMovementDirection direction,
-                                   bool skips_space_when_moving_right) {
+VisiblePositionInFlatTree VisualWordPosition(
+    const VisiblePositionInFlatTree& visible_position,
+    CursorMovementDirection direction,
+    bool skips_space_when_moving_right) {
   DCHECK(visible_position.IsValid()) << visible_position;
   if (visible_position.IsNull())
-    return VisiblePosition();
+    return VisiblePositionInFlatTree();
 
   TextDirection block_direction =
       DirectionOfEnclosingBlockOf(visible_position.DeepEquivalent());
   InlineBox* previously_visited_box = nullptr;
-  VisiblePosition current = visible_position;
+  VisiblePositionInFlatTree current = visible_position;
   TextBreakIterator* iter = nullptr;
 
   CachedLogicallyOrderedLeafBoxes leaf_boxes;
   Vector<UChar, 1024> string;
 
   for (;;) {
-    VisiblePosition adjacent_character_position = direction == kMoveRight
-                                                      ? RightPositionOf(current)
-                                                      : LeftPositionOf(current);
+    VisiblePositionInFlatTree adjacent_character_position =
+        direction == kMoveRight ? RightPositionOf(current)
+                                : LeftPositionOf(current);
     if (adjacent_character_position.DeepEquivalent() ==
             current.DeepEquivalent() ||
         adjacent_character_position.IsNull())
-      return VisiblePosition();
+      return VisiblePositionInFlatTree();
 
     InlineBoxPosition box_position = ComputeInlineBoxPosition(
         adjacent_character_position.DeepEquivalent(), TextAffinity::kUpstream);
@@ -385,16 +386,16 @@ VisiblePosition VisualWordPosition(const VisiblePosition& visible_position,
 
     current = adjacent_character_position;
   }
-  return VisiblePosition();
+  return VisiblePositionInFlatTree();
 }
 
 }  // namespace
 
-VisiblePosition SelectionModifier::LeftWordPosition(
-    const VisiblePosition& visible_position,
+VisiblePositionInFlatTree SelectionModifier::LeftWordPosition(
+    const VisiblePositionInFlatTree& visible_position,
     bool skips_space_when_moving_right) {
   DCHECK(visible_position.IsValid()) << visible_position;
-  const VisiblePosition& left_word_break = VisualWordPosition(
+  const VisiblePositionInFlatTree& left_word_break = VisualWordPosition(
       visible_position, kMoveLeft, skips_space_when_moving_right);
   if (left_word_break.IsNotNull())
     return left_word_break;
@@ -408,11 +409,11 @@ VisiblePosition SelectionModifier::LeftWordPosition(
              : EndOfEditableContent(visible_position);
 }
 
-VisiblePosition SelectionModifier::RightWordPosition(
-    const VisiblePosition& visible_position,
+VisiblePositionInFlatTree SelectionModifier::RightWordPosition(
+    const VisiblePositionInFlatTree& visible_position,
     bool skips_space_when_moving_right) {
   DCHECK(visible_position.IsValid()) << visible_position;
-  const VisiblePosition& right_word_break = VisualWordPosition(
+  const VisiblePositionInFlatTree& right_word_break = VisualWordPosition(
       visible_position, kMoveRight, skips_space_when_moving_right);
   if (right_word_break.IsNotNull())
     return right_word_break;
