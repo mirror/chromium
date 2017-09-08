@@ -287,6 +287,26 @@ TEST_F(ProcessTest, SetProcessBackgroundedSelf) {
   EXPECT_EQ(old_priority, new_priority);
 }
 
+TEST_F(ProcessTest, CurrentProcessIsRunning) {
+  EXPECT_TRUE(Process::Current().IsRunning());
+}
+
+// On Windows and Mac OSX, we can detect whether a non-child process is running.
+TEST_F(ProcessTest, PredefinedProcessIsRunning) {
+#if defined(OS_MACOSX)
+  EXPECT_TRUE(Process::Open(1).IsRunning());
+#elif defined(OS_WIN)
+  EXPECT_TRUE(Process::Open(4).IsRunning());
+#endif
+}
+
+TEST_F(ProcessTest, ChildProcessIsRunning) {
+  Process process(SpawnChild("SleepyChildProcess"));
+  EXPECT_TRUE(process.IsRunning());
+  process.Terminate(0, true);
+  EXPECT_FALSE(process.IsRunning());
+}
+
 #if defined(OS_CHROMEOS)
 
 // Tests that the function IsProcessBackgroundedCGroup() can parse the contents
