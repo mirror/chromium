@@ -22,6 +22,30 @@
       "revId": "d1798ee3711f928400ba9a5fa4ec40bf9ddc9d46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f4a498_0242af13",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 65391,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-08T20:16:21Z",
+      "side": 1,
+      "message": "What\u0027s the unit when we are counting items?",
+      "parentUuid": "7ce52c5a_81719a2b",
+      "range": {
+        "startLine": 65391,
+        "startChar": 57,
+        "endLine": 65391,
+        "endChar": 0
+      },
+      "revId": "d1798ee3711f928400ba9a5fa4ec40bf9ddc9d46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
