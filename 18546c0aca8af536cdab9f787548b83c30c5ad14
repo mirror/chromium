@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41a39b3a_56e1833d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetsBridge.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-08T16:47:35Z",
+      "side": 1,
+      "message": "nit: ???",
+      "range": {
+        "startLine": 147,
+        "startChar": 11,
+        "endLine": 147,
+        "endChar": 43
+      },
+      "revId": "18546c0aca8af536cdab9f787548b83c30c5ad14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
