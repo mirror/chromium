@@ -164,6 +164,30 @@
       "revId": "5dcab4ea861577a0bde4aa4fc34388564ddb02fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7acdc556_df72b76b",
+        "filename": "components/history/core/browser/top_sites_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-08T00:42:12Z",
+      "side": 1,
+      "message": "Done. I\u0027ve made changed accordingly in the new patch set.",
+      "parentUuid": "d8c002ca_d44b28a2",
+      "range": {
+        "startLine": 405,
+        "startChar": 7,
+        "endLine": 405,
+        "endChar": 48
+      },
+      "revId": "5dcab4ea861577a0bde4aa4fc34388564ddb02fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
