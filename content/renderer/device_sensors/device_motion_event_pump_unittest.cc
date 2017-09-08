@@ -245,11 +245,11 @@ TEST_F(DeviceMotionEventPumpTest, AllSensorsAreActive) {
   EXPECT_EQ(6, received_data.acceleration_z);
 
   EXPECT_TRUE(received_data.has_rotation_rate_alpha);
-  EXPECT_EQ(7, received_data.rotation_rate_alpha);
+  EXPECT_EQ(7 * kRadToDeg, received_data.rotation_rate_alpha);
   EXPECT_TRUE(received_data.has_rotation_rate_beta);
-  EXPECT_EQ(8, received_data.rotation_rate_beta);
+  EXPECT_EQ(8 * kRadToDeg, received_data.rotation_rate_beta);
   EXPECT_TRUE(received_data.has_rotation_rate_gamma);
-  EXPECT_EQ(9, received_data.rotation_rate_gamma);
+  EXPECT_EQ(9 * kRadToDeg, received_data.rotation_rate_gamma);
 }
 
 TEST_F(DeviceMotionEventPumpTest, TwoSensorsAreActive) {
@@ -276,11 +276,11 @@ TEST_F(DeviceMotionEventPumpTest, TwoSensorsAreActive) {
   EXPECT_FALSE(received_data.has_acceleration_z);
 
   EXPECT_TRUE(received_data.has_rotation_rate_alpha);
-  EXPECT_EQ(7, received_data.rotation_rate_alpha);
+  EXPECT_EQ(7 * kRadToDeg, received_data.rotation_rate_alpha);
   EXPECT_TRUE(received_data.has_rotation_rate_beta);
-  EXPECT_EQ(8, received_data.rotation_rate_beta);
+  EXPECT_EQ(8 * kRadToDeg, received_data.rotation_rate_beta);
   EXPECT_TRUE(received_data.has_rotation_rate_gamma);
-  EXPECT_EQ(9, received_data.rotation_rate_gamma);
+  EXPECT_EQ(9 * kRadToDeg, received_data.rotation_rate_gamma);
 }
 
 TEST_F(DeviceMotionEventPumpTest, NoActiveSensors) {

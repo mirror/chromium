@@ -15,6 +15,9 @@ class MotionData;
 
 namespace content {
 
+// Conversion ratio from radians to degrees.
+CONTENT_EXPORT extern const double kRadToDeg;
+
 class RenderThread;
 
 class CONTENT_EXPORT DeviceMotionEventPump
