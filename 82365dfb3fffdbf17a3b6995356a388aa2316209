@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bf56aa8_e0ba9b7b",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-08T10:35:33Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be kUnspecedLoading?\n\nkNetworking should be used for tasks that are speced to use the networking task source.",
+      "revId": "82365dfb3fffdbf17a3b6995356a388aa2316209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705cd8d9_5c34be3c",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-08T10:35:33Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "82365dfb3fffdbf17a3b6995356a388aa2316209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
