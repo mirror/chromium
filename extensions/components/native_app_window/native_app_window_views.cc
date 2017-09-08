@@ -17,6 +17,8 @@
 #include "ui/views/widget/widget.h"
 #include "ui/views/window/non_client_view.h"
 
+#include "ui/gfx/canvas.h"
+
 #if defined(USE_AURA)
 #include "ui/aura/window.h"
 #endif
@@ -336,6 +338,11 @@ gfx::Size NativeAppWindowViews::GetMaximumSize() const {
 
 void NativeAppWindowViews::OnFocus() {
   web_view_->RequestFocus();
+}
+
+void NativeAppWindowViews::OnPaint(gfx::Canvas* canvas) {
+  LOG(ERROR) << "OnPaint NAWV";
+  canvas->DrawColor(SK_ColorRED);
 }
 
 // NativeAppWindow implementation.

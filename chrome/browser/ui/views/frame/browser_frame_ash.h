@@ -32,6 +32,7 @@ class BrowserFrameAsh : public views::NativeWidgetAura,
  protected:
   // Overridden from views::NativeWidgetAura:
   void OnWindowTargetVisibilityChanged(bool visible) override;
+  void OnPaint(const ui::PaintContext& context) override;
 
   // Overridden from NativeBrowserFrame:
   views::Widget::InitParams GetWidgetParams() override;

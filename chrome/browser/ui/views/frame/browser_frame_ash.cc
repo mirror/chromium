@@ -18,7 +18,9 @@
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_observer.h"
+#include "ui/compositor/paint_recorder.h"
 #include "ui/views/view.h"
+#include "ui/views/paint_info.h"
 
 namespace {
 
@@ -88,6 +90,21 @@ void BrowserFrameAsh::OnWindowTargetVisibilityChanged(bool visible) {
     SetWindowAutoManaged();
   }
   views::NativeWidgetAura::OnWindowTargetVisibilityChanged(visible);
+}
+
+void BrowserFrameAsh::OnPaint(const ui::PaintContext& context) {
+  LOG(ERROR) << "OnPaint:" << context.is_pixel_canvas();
+  {
+    views::PaintInfo paint_info = views::PaintInfo::CreateRootPaintInfo(
+        context, GetWidget()->GetWindowBoundsInScreen().size());
+    ui::PaintRecorder recorder(context, paint_info.paint_recording_size(),
+                               paint_info.paint_recording_scale_x(),
+                               paint_info.paint_recording_scale_y(),
+                               nullptr);
+    gfx::Canvas* canvas = recorder.canvas();
+    canvas->DrawColor(SK_ColorRED);
+  }
+  views::NativeWidgetAura::OnPaint(context);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

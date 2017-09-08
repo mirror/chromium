@@ -121,6 +121,7 @@ class NativeAppWindowViews : public extensions::NativeAppWindow,
   gfx::Size GetMinimumSize() const override;
   gfx::Size GetMaximumSize() const override;
   void OnFocus() override;
+  void OnPaint(gfx::Canvas* canvas) override;
 
   // NativeAppWindow implementation.
   void SetFullscreen(int fullscreen_types) override;

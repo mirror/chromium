@@ -324,9 +324,9 @@ void AnimateShowWindow_Drop(aura::Window* window) {
   AnimateShowWindowCommon(window, GetScaleForWindow(window), gfx::Transform());
 }
 
-void AnimateHideWindow_Drop(aura::Window* window) {
-  AnimateHideWindowCommon(window, GetScaleForWindow(window));
-}
+//void AnimateHideWindow_Drop(aura::Window* window) {
+//  AnimateHideWindowCommon(window, GetScaleForWindow(window));
+//}
 
 // Show/Hide windows using a vertical Glenimation.
 void AnimateShowWindow_Vertical(aura::Window* window) {
@@ -540,12 +540,16 @@ bool AnimateHideWindow(aura::Window* window) {
 
   switch (GetWindowVisibilityAnimationType(window)) {
     case WINDOW_VISIBILITY_ANIMATION_TYPE_DROP:
-      AnimateHideWindow_Drop(window);
+      SetWindowVisibilityAnimationVerticalPosition(window,
+                                                   window->bounds().height());
+      AnimateHideWindow_Vertical(window);
+      LOG(ERROR) << "DROP";
       return true;
     case WINDOW_VISIBILITY_ANIMATION_TYPE_VERTICAL:
       AnimateHideWindow_Vertical(window);
       return true;
     case WINDOW_VISIBILITY_ANIMATION_TYPE_FADE:
+      LOG(ERROR) << "FADE";
       AnimateHideWindow_Fade(window);
       return true;
     case WINDOW_VISIBILITY_ANIMATION_TYPE_ROTATE:
