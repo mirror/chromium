@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "96fc6a5e_a8cd44cd",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-09-08T18:55:02Z",
+      "side": 1,
+      "message": "This doesn\u0027t do anything for wheel scrolling since when latching is disabled every GSU is wrapped between a GSB/GSE pair hence every update is the first update. \nI also tried touch scrolling and it already latches to the nested oopif after it hits its extent. I couldn\u0027t understand the impact of this change, could you please explain more?",
+      "range": {
+        "startLine": 457,
+        "startChar": 4,
+        "endLine": 458,
+        "endChar": 51
+      },
+      "revId": "836fa02dd579f77ab30975049fe59505d80f925b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24ba76a4_65110bfb",
         "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.h",
         "patchSetId": 1
