@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d1afa690_9a31f00d",
+        "filename": "media/audio/audio_system.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-08T16:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a220694_6042517f",
+      "revId": "557ab3d9f9d5175d4a30eb71b2c8b94d55dd6494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb7f4464_d6a6bc23",
         "filename": "media/audio/audio_system.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "557ab3d9f9d5175d4a30eb71b2c8b94d55dd6494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0adbdd06_6ba583e3",
+        "filename": "media/audio/audio_system.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-08T16:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb7f4464_d6a6bc23",
+      "revId": "557ab3d9f9d5175d4a30eb71b2c8b94d55dd6494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "09a71fed_10ab6655",
+        "filename": "media/audio/audio_system.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-08T16:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa567d09_66fa3ce8",
+      "revId": "557ab3d9f9d5175d4a30eb71b2c8b94d55dd6494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f1fd179_150f3b1a",
         "filename": "media/audio/audio_system.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-07T17:08:35Z",
       "side": 1,
       "message": "\"GetInstance\" makes me think it\u0027s a global instance. How about \"Create\"? Document that it needs the AudioManager to exist first.",
+      "revId": "557ab3d9f9d5175d4a30eb71b2c8b94d55dd6494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b36470_1bfeba21",
+        "filename": "media/audio/audio_system.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-08T16:30:51Z",
+      "side": 1,
+      "message": "I\u0027ll stick to CreateInstance(). Saw some of the cases like that for factory methods (like here https://cs.chromium.org/chromium/src/components/cryptauth/cryptauth_client.h?type\u003dcs\u0026l\u003d117 for example).\n\"Create\" in Chrome gives me an association with a global instance as well; and we are just getting rid of AudioSystemImpl::Create() in this CL, so it adds confusion.",
+      "parentUuid": "9f1fd179_150f3b1a",
       "revId": "557ab3d9f9d5175d4a30eb71b2c8b94d55dd6494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c22ad6ff_04506818",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-08T16:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81ecdd78_13403066",
+      "revId": "557ab3d9f9d5175d4a30eb71b2c8b94d55dd6494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8d6edeb_5a7f1efe",
         "filename": "media/audio/audio_system_impl.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "557ab3d9f9d5175d4a30eb71b2c8b94d55dd6494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94929f7f_f73d14b0",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-08T16:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8d6edeb_5a7f1efe",
+      "revId": "557ab3d9f9d5175d4a30eb71b2c8b94d55dd6494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b000db43_538ce01d",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-08T16:30:51Z",
+      "side": 1,
+      "message": "Mojo implementation does not need posting/asynchronous replies. It just needs a AM wrapper for business logic.",
+      "parentUuid": "46668a9a_ec5a8a6c",
+      "revId": "557ab3d9f9d5175d4a30eb71b2c8b94d55dd6494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f9f6618_8eebcd3c",
         "filename": "media/audio/audio_system_impl_unittest.cc",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "557ab3d9f9d5175d4a30eb71b2c8b94d55dd6494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9d7234_8b00dd02",
+        "filename": "media/audio/audio_system_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-08T16:30:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f9f6618_8eebcd3c",
+      "revId": "557ab3d9f9d5175d4a30eb71b2c8b94d55dd6494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
