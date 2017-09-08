@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d04fcf5b_1fa255a8",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-08T00:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ed9ac3a_d88394f9",
+      "revId": "c5965207dfeb811d8b08b71243ded4e1c4ead136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ef87313_2a559b9c",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-29T21:00:52Z",
       "side": 1,
       "message": "Unnecessary",
+      "revId": "c5965207dfeb811d8b08b71243ded4e1c4ead136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "190cd7fb_93970bdd",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-08T00:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ef87313_2a559b9c",
       "revId": "c5965207dfeb811d8b08b71243ded4e1c4ead136",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -64,6 +100,42 @@
       "writtenOn": "2017-08-29T21:00:52Z",
       "side": 1,
       "message": "This looks wrong - shouldn\u0027t this be directing to the shared backing thread?",
+      "revId": "c5965207dfeb811d8b08b71243ded4e1c4ead136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38df88ad_3256fc9b",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-08T00:16:39Z",
+      "side": 1,
+      "message": "No - this is what used in the test to create the backing thread.  Usually in testing we don\u0027t create extra threads.",
+      "parentUuid": "4aa96c19_1db40ce5",
+      "revId": "c5965207dfeb811d8b08b71243ded4e1c4ead136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d86294_303b847d",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-08T00:16:39Z",
+      "side": 1,
+      "message": "No - this is what used in the test to create the backing thread.  Usually in testing we don\u0027t create extra threads.",
+      "parentUuid": "4aa96c19_1db40ce5",
       "revId": "c5965207dfeb811d8b08b71243ded4e1c4ead136",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
