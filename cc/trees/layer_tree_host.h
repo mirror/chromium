@@ -473,8 +473,6 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   viz::SurfaceSequenceGenerator* GetSurfaceSequenceGenerator() override;
 
   // MutatorHostClient implementation.
-  bool IsElementInList(ElementId element_id,
-                       ElementListType list_type) const override;
   void SetMutatorsNeedCommit() override;
   void SetMutatorsNeedRebuildPropertyTrees() override;
   void SetElementFilterMutated(ElementId element_id,

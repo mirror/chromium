@@ -124,8 +124,6 @@ void AnimationTicker::RemoveFromTicking() {
 void AnimationTicker::UpdateState(bool start_ready_animations,
                                   AnimationEvents* events) {
   DCHECK(has_bound_element_animations());
-  if (!element_animations_->has_element_in_active_list())
-    return;
 
   // Animate hasn't been called, this happens if an element has been added
   // between the Commit and Draw phases.
@@ -949,6 +947,24 @@ void AnimationTicker::MarkFinishedAnimations(base::TimeTicks monotonic_time) {
   }
   if (animation_finished)
     element_animations_->UpdateClientAnimationState();
+}
+
+bool AnimationTicker::HasActiveAnimations() const {
+  for (const auto& animation : animations_) {
+    // if (!animation->is_finished() && animation->affects_active_elements())
+    if (animation->affects_active_elements())
+      return true;
+  }
+  return false;
+}
+
+bool AnimationTicker::HasPendingAnimations() const {
+  for (const auto& animation : animations_) {
+    // if (!animation->is_finished() && animation->affects_pending_elements())
+    if (animation->affects_pending_elements())
+      return true;
+  }
+  return false;
 }
 
 bool AnimationTicker::HasElementInActiveList() const {

@@ -93,9 +93,6 @@ class TestHostClient : public MutatorHostClient {
 
   void ClearMutatedProperties();
 
-  bool IsElementInList(ElementId element_id,
-                       ElementListType list_type) const override;
-
   void SetMutatorsNeedCommit() override;
   void SetMutatorsNeedRebuildPropertyTrees() override;
 
