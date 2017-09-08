@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0732f055_d4a32688",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-08T00:04:25Z",
+      "side": 1,
+      "message": "This isn\u0027t going to play nice with PartitionAllocMemoryDumpProvider::OnHeapProfilingEnabled.\n\nThat appears to be triggered off of \"--enable-heap-profiling\".\n\nIs there any way to at least add some warnings/dchecks to slightly more gracefully handle this case? Maybe in the implementation of base::PartitionAllocHooks::SetAllocationHook we can check that we don\u0027t switch from a non-null allocator to a non-null allocator?",
+      "revId": "bf08d62726d060f7cd5e26c06a8fdf4076a31b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
