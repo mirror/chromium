@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee86cf2a_652d6ba8",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-08T03:27:14Z",
+      "side": 1,
+      "message": "Can you add DCHECK(global-\u003eIsContextThread()); here?",
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7887383_5478ca91",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-08T03:27:14Z",
+      "side": 1,
+      "message": "ditto: when_done",
+      "range": {
+        "startLine": 80,
+        "startChar": 19,
+        "endLine": 80,
+        "endChar": 27
+      },
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f214eba4_c30287f4",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-08T03:27:14Z",
+      "side": 1,
+      "message": "when_done",
+      "range": {
+        "startLine": 41,
+        "startChar": 45,
+        "endLine": 41,
+        "endChar": 53
+      },
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354d04a0_52066cf8",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-08T03:27:14Z",
+      "side": 1,
+      "message": "Does this post a task to the current thread? If so, it looks like |is_done| is never signaled.",
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b50144c_9f434895",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-08T03:27:14Z",
+      "side": 1,
+      "message": "Can you move this to line 53?",
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7533b38_7243882a",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-08T03:27:14Z",
+      "side": 1,
+      "message": "auto*?",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 46
+      },
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d4a2b0_36e66aea",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-08T03:27:14Z",
+      "side": 1,
+      "message": "auto*?",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 46
+      },
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230b6753_6303ca19",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-08T03:27:14Z",
+      "side": 1,
+      "message": "If possible, it would be better to remove AbstractAnimationWorkletThread layer first by deprecating CompositorWorker (see https://crbug.com/746212) because this change implicitly overrides static functions.",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7282fe_f0198570",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-08T03:27:14Z",
+      "side": 1,
+      "message": "clear -\u003e Clear",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 43
+      },
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
