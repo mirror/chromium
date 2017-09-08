@@ -413,6 +413,29 @@
       "revId": "7c94678236651053359d829bbd360f4971b4c84a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a7e084_62b2f067",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-08T06:19:27Z",
+      "side": 1,
+      "message": "probably, calling GetLastError() here does not make sense any more because the actual error is now behind the library, and what we want to show may not be the last error. It\u0027s just fine to remove this VLOG completely.",
+      "range": {
+        "startLine": 863,
+        "startChar": 42,
+        "endLine": 863,
+        "endChar": 56
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
