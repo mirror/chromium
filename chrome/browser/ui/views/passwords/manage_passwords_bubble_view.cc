@@ -586,6 +586,16 @@ void ManagePasswordsBubbleView::PendingView::ToggleEditingState(
   if (editing_ && accept_changes) {
     parent_->model()->OnUsernameEdited(
         static_cast<views::Textfield*>(username_field_)->text());
+    if (password_view_button_) {
+      // We do not send updates for the default password
+      int selected_password =
+          static_cast<views::Combobox*>(password_field_)->selected_index() - 1;
+      if (selected_password >= 0) {
+        parent_->model()->OnPasswordSelected(
+            parent_->model()->pending_password().other_possible_passwords.at(
+                selected_password));
+      }
+    }
   }
   editing_ = !editing_;
   edit_button_->SetEnabled(!editing_);
