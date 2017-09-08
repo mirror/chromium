@@ -183,8 +183,6 @@ content::WebUIDataSource* CreatePrintPreviewUISource(Profile* profile) {
   source->AddLocalizedString("saveButton", IDS_PRINT_PREVIEW_SAVE_BUTTON);
   source->AddLocalizedString("printing", IDS_PRINT_PREVIEW_PRINTING);
   source->AddLocalizedString("saving", IDS_PRINT_PREVIEW_SAVING);
-  source->AddLocalizedString("printingToPDFInProgress",
-                             IDS_PRINT_PREVIEW_PRINTING_TO_PDF_IN_PROGRESS);
 #if defined(OS_MACOSX)
   source->AddLocalizedString("openingPDFInPreview",
                              IDS_PRINT_PREVIEW_OPENING_PDF_IN_PREVIEW);
@@ -671,7 +669,7 @@ void PrintPreviewUI::SetDelegateForTesting(TestingDelegate* delegate) {
 }
 
 void PrintPreviewUI::SetSelectedFileForTesting(const base::FilePath& path) {
-  handler_->FileSelected(path, 0, NULL);
+  handler_->FileSelectedForTesting(path, 0, NULL);
 }
 
 void PrintPreviewUI::SetPdfSavedClosureForTesting(
