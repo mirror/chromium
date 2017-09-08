@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8190ed4_1fa263f2",
+        "filename": "tools/clang/scripts/run_tool.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T04:15:48Z",
+      "side": 1,
+      "message": "Nit: to",
+      "range": {
+        "startLine": 267,
+        "startChar": 26,
+        "endLine": 267,
+        "endChar": 29
+      },
+      "revId": "992883d6bb689db6552399603cf7ac0d9bda776d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df2797f_2e958a1b",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T04:15:48Z",
+      "side": 1,
+      "message": "Nit: use std::make_unique",
+      "range": {
+        "startLine": 77,
+        "startChar": 15,
+        "endLine": 77,
+        "endChar": 31
+      },
+      "revId": "992883d6bb689db6552399603cf7ac0d9bda776d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
