@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "06459000_d355bafa",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-08T22:43:13Z",
+      "side": 1,
+      "message": "How about we save the active window when entering system modal state and then restore it when leaving this state?",
+      "parentUuid": "135c479c_880dd4c3",
+      "range": {
+        "startLine": 555,
+        "startChar": 4,
+        "endLine": 558,
+        "endChar": 5
+      },
+      "revId": "38f7b88c2c4fed0aab07c25dac30c9fa9dac22fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bc6b294_20b01729",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 2
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Yes, we can remove this \"if\" once we fix the 65460424. This is necessary because we\u0027re using the same shell_surface for all system/alert window, as they do not have task id.",
       "parentUuid": "ccd1532a_f5ed2811",
+      "range": {
+        "startLine": 790,
+        "startChar": 13,
+        "endLine": 792,
+        "endChar": 24
+      },
+      "revId": "38f7b88c2c4fed0aab07c25dac30c9fa9dac22fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96935ce5_48e5d2a7",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-08T22:43:13Z",
+      "side": 1,
+      "message": "I\u0027m not convinced that we should remove the \"if\" even after fixing that. I think a window becoming activatable should not result in it stealing focus unless it\u0027s system modal. I think you\u0027re improving the code here by adding this if-statement. Wdyt?",
+      "parentUuid": "641fb04b_a08ebddc",
       "range": {
         "startLine": 790,
         "startChar": 13,
