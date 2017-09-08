@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab1cc51f_3e227b65",
+        "filename": "chrome/browser/media/router/issue_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-08T21:23:58Z",
+      "side": 1,
+      "message": "Nit: can we use base::MakeRefCounted here?",
+      "range": {
+        "startLine": 35,
+        "startChar": 21,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "437bbb0f85e8609b9f219d4c0d86f73acfde1532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
