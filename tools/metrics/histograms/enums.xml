@@ -30732,6 +30732,15 @@ from previous Chrome versions.
   <int value="11" label="Bad Key Validation Signature"/>
 </enum>
 
+<enum name="PopupType">
+  <int value="0" label="Clicked through popup (whitelisted)"/>
+  <int value="1" label="OpenURL (untrusted event)"/>
+  <int value="2" label="OpenURL (trusted event)"/>
+  <int value="3" label="OpenURL (not from event)"/>
+  <int value="4" label="OpenURL (unknown event)"/>
+  <int value="5" label="New Window (unknown event)"/>
+</enum>
+
 <enum name="Ports">
   <int value="80" label="Port 80"/>
   <int value="443" label="Port 443"/>
