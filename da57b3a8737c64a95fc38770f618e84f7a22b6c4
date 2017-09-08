@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc79498_ab936a0c",
+        "filename": "ash/wm/overview/window_selector_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-08T17:41:30Z",
+      "side": 1,
+      "message": "optional: only pass in the event location?",
+      "revId": "da57b3a8737c64a95fc38770f618e84f7a22b6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
