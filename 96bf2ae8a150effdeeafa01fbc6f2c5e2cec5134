@@ -91,6 +91,29 @@
       "revId": "96bf2ae8a150effdeeafa01fbc6f2c5e2cec5134",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af5a87b_24fc0e1c",
+        "filename": "components/autofill/core/common/password_form.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-08T11:47:57Z",
+      "side": 1,
+      "message": "Once you added new field here, you should have also updated operator\u003d\u003d and PasswordFormToJSON. \n\nIrmak: please fix it.",
+      "range": {
+        "startLine": 189,
+        "startChar": 30,
+        "endLine": 189,
+        "endChar": 54
+      },
+      "revId": "96bf2ae8a150effdeeafa01fbc6f2c5e2cec5134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
