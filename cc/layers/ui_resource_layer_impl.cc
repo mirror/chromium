@@ -96,23 +96,23 @@ void UIResourceLayerImpl::AppendQuads(
     AppendQuadsData* append_quads_data) {
   viz::SharedQuadState* shared_quad_state =
       render_pass->CreateAndAppendSharedQuadState();
+  if (!ui_resource_id_ ||
+      layer_tree_impl()->ResourceIdForUIResource(ui_resource_id_)) {
+    PopulateSharedQuadState(shared_quad_state, false /* are_contents_opaque */);
+    AppendDebugBorderQuad(render_pass, bounds(), shared_quad_state,
+                          append_quads_data);
+    return;
+  }
+
   bool are_contents_opaque =
       layer_tree_impl()->IsUIResourceOpaque(ui_resource_id_) ||
       contents_opaque();
+  viz::ResourceId resource =
+      layer_tree_impl()->ResourceIdForUIResource(ui_resource_id_);
   PopulateSharedQuadState(shared_quad_state, are_contents_opaque);
 
   AppendDebugBorderQuad(render_pass, bounds(), shared_quad_state,
                         append_quads_data);
-
-  if (!ui_resource_id_)
-    return;
-
-  viz::ResourceId resource =
-      layer_tree_impl()->ResourceIdForUIResource(ui_resource_id_);
-
-  if (!resource)
-    return;
-
   static const bool flipped = false;
   static const bool nearest_neighbor = false;
   static const bool premultiplied_alpha = true;
