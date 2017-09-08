@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec51d329_a7b8ee75",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-08T11:00:37Z",
+      "side": 1,
+      "message": "The spec says \"[Networking] task source is used for features that trigger in response to network activity.\". I believe that this falls into the category.\n\nI also think that the spec around task sources is intentionally worded liberally in many places, so we have a great deal of flexibility when choosing task sources. I think that we should avoid using UnspecedLoading/UnspecedTimer task types wherever possible, even when spec does not explicitly mentions a task source for a particular task (but, of course, we should abide the spec when it explicitly tells us to use a specific task source). In other words, I propose to follow the spirit of the spec instead of the letter of it.",
+      "parentUuid": "2bf56aa8_e0ba9b7b",
+      "revId": "82365dfb3fffdbf17a3b6995356a388aa2316209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "705cd8d9_5c34be3c",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "82365dfb3fffdbf17a3b6995356a388aa2316209",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a74f0d_273eaca0",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-08T11:00:37Z",
+      "side": 1,
+      "message": "I believe that given that this is an appropriate task queue for the implementation of blink::WebMediaPlayer.\n\nkMediaElementEvent should handle all media-related tasks per \"the task source for all the tasks queued in this section and its subsections is the media element event task source of the media element in question\" definition.",
+      "parentUuid": "705cd8d9_5c34be3c",
+      "revId": "82365dfb3fffdbf17a3b6995356a388aa2316209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
