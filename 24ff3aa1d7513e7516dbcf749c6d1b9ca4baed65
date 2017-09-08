@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70e87f50_cc16eb44",
+        "filename": "device/hid/hid_connection_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f335e655_2f6cd483",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 46
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5426c7fe_49dee6a2",
         "filename": "device/hid/hid_connection_impl.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f062b9_2214454c",
+        "filename": "device/hid/hid_connection_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Oh, Sorry.\nDone.",
+      "parentUuid": "5426c7fe_49dee6a2",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 54
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "502418c8_8572eb93",
+        "filename": "extensions/browser/api/device_permissions_prompt.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "877e4f3e_124bd604",
+      "range": {
+        "startLine": 207,
+        "startChar": 4,
+        "endLine": 207,
+        "endChar": 5
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4167e1f_5da4d48d",
         "filename": "extensions/browser/api/device_permissions_prompt.cc",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "840635b7_469e7f03",
+        "filename": "extensions/browser/api/device_permissions_prompt.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4167e1f_5da4d48d",
+      "range": {
+        "startLine": 218,
+        "startChar": 4,
+        "endLine": 218,
+        "endChar": 8
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87a1e48b_4bc2317a",
         "filename": "extensions/browser/api/device_permissions_prompt.cc",
         "patchSetId": 7
@@ -108,6 +204,24 @@
       "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5207d728_d97f7128",
+        "filename": "extensions/browser/api/device_permissions_prompt.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87a1e48b_4bc2317a",
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "96899947_d74853cb",
+        "filename": "extensions/browser/api/device_permissions_prompt.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3b87b56_596ed0e3",
+      "range": {
+        "startLine": 289,
+        "startChar": 33,
+        "endLine": 289,
+        "endChar": 34
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3e78452_7c4e3feb",
         "filename": "extensions/browser/api/hid/hid_api.cc",
         "patchSetId": 7
@@ -154,6 +292,30 @@
       "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43fa31d4_64244e45",
+        "filename": "extensions/browser/api/hid/hid_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3e78452_7c4e3feb",
+      "range": {
+        "startLine": 289,
+        "startChar": 2,
+        "endLine": 289,
+        "endChar": 15
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "2fbf4784_963c6c6a",
+        "filename": "extensions/browser/api/hid/hid_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6f48a2a_4cfa0747",
+      "range": {
+        "startLine": 356,
+        "startChar": 2,
+        "endLine": 356,
+        "endChar": 15
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12b1d701_be79b5c0",
         "filename": "extensions/browser/api/hid/hid_apitest.cc",
         "patchSetId": 7
@@ -194,6 +380,24 @@
       "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef579a9d_6f68b79c",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12b1d701_be79b5c0",
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "2c4c5426_31bbab1b",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c405c4eb_4eb05a94",
+      "range": {
+        "startLine": 81,
+        "startChar": 20,
+        "endLine": 81,
+        "endChar": 36
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e19d737c_cf6008ee",
         "filename": "extensions/browser/api/hid/hid_apitest.cc",
         "patchSetId": 7
@@ -240,6 +468,30 @@
       "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fddde4fb_265b31ac",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e19d737c_cf6008ee",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "884545ba_5fcd5e6f",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8531df8_e2aa732a",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 24
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f546e811_a72378e8",
         "filename": "extensions/browser/api/hid/hid_apitest.cc",
         "patchSetId": 7
@@ -286,6 +562,30 @@
       "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f678fb30_21a8b919",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f546e811_a72378e8",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 5
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -312,6 +612,30 @@
     },
     {
       "key": {
+        "uuid": "fc86ab33_c8d8e3eb",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbebd10c_c8e8ce68",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 14
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3656c469_9c80d808",
         "filename": "extensions/browser/api/hid/hid_apitest.cc",
         "patchSetId": 7
@@ -323,6 +647,30 @@
       "writtenOn": "2017-09-07T18:57:12Z",
       "side": 1,
       "message": "No need to save the return value of this call.",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 18
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe0c683_1b2b4cb1",
+        "filename": "extensions/browser/api/hid/hid_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Done.  And same in HidManagerImpl.",
+      "parentUuid": "3656c469_9c80d808",
       "range": {
         "startLine": 183,
         "startChar": 4,
@@ -358,6 +706,30 @@
     },
     {
       "key": {
+        "uuid": "b48c8256_c85ba4a8",
+        "filename": "extensions/browser/api/hid/hid_device_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7b411a0_9f6caa82",
+      "range": {
+        "startLine": 280,
+        "startChar": 1,
+        "endLine": 280,
+        "endChar": 61
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95f82bf3_b09f2362",
         "filename": "extensions/browser/api/hid/hid_device_manager.cc",
         "patchSetId": 7
@@ -369,6 +741,30 @@
       "writtenOn": "2017-09-07T18:57:12Z",
       "side": 1,
       "message": "|hid_manager_| is initialized and safe to use whether or not the connection is successful.",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 285,
+        "endChar": 34
+      },
+      "revId": "24ff3aa1d7513e7516dbcf749c6d1b9ca4baed65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4eefe8_0590f3f4",
+        "filename": "extensions/browser/api/hid/hid_device_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-08T07:30:17Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "95f82bf3_b09f2362",
       "range": {
         "startLine": 283,
         "startChar": 0,
