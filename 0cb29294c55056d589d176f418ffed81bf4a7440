@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "81f4d25a_753d16c0",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T05:47:51Z",
+      "side": 1,
+      "message": "Cool... yeah and I also don\u0027t wish to block you on this... so I wouldn\u0027t mind landing the \"run with dummy params\" thing now and revise it later when we learn more.",
+      "parentUuid": "35f8b958_31eeaa6d",
+      "revId": "0cb29294c55056d589d176f418ffed81bf4a7440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9b854fa_a2384262",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 4
