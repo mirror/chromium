@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1d60a57_0fd7a7f5",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 6418,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-08T02:02:03Z",
+      "side": 1,
+      "message": "nit: |task| or |idle_task| match with its class name?",
+      "range": {
+        "startLine": 6418,
+        "startChar": 42,
+        "endLine": 6418,
+        "endChar": 50
+      },
+      "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad35571_617972f7",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-08T02:02:03Z",
+      "side": 1,
+      "message": "nit: put an empty line between #114 and #115.",
+      "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b8247c0_e1835dfc",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-08T02:02:03Z",
+      "side": 1,
+      "message": "IdleTask is enough",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 40
+      },
+      "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3512fb3b_a1fd4192",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-08T02:02:03Z",
+      "side": 1,
+      "message": "nit: rename to |task| to match its class name?",
+      "range": {
+        "startLine": 135,
+        "startChar": 42,
+        "endLine": 135,
+        "endChar": 50
+      },
+      "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52043df9_544bcb11",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-08T02:02:03Z",
+      "side": 1,
+      "message": "Rename to RegisterIdleTask?",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 22
+      },
+      "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e225737d_efcc5d89",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-08T02:02:03Z",
+      "side": 1,
+      "message": "idle_tasks_?",
+      "range": {
+        "startLine": 97,
+        "startChar": 56,
+        "endLine": 97,
+        "endChar": 66
+      },
+      "revId": "ece47a6cf0446694d6f35c789429c56495462c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
