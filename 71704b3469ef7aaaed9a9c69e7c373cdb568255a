@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23f60702_0048ddbe",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-08T06:17:27Z",
+      "side": 1,
+      "message": "Could you fix duplication to SelectionTemplate.h::ConvertToSelectionInFlatTree()?",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
