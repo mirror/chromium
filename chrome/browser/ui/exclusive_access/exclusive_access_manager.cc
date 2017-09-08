@@ -19,21 +19,11 @@
 
 using content::WebContents;
 
-namespace {
-
-// Time in milliseconds to hold the Esc key in order to exit full screen.
-// TODO(dominickn) refactor the way timings/input handling works so this
-// constant doesn't have to be in this file.
-const int kHoldEscapeTimeMs = 1500;
-
-}
-
 ExclusiveAccessManager::ExclusiveAccessManager(
     ExclusiveAccessContext* exclusive_access_context)
     : exclusive_access_context_(exclusive_access_context),
       fullscreen_controller_(this),
-      mouse_lock_controller_(this) {
-}
+      mouse_lock_controller_(this) {}
 
 ExclusiveAccessManager::~ExclusiveAccessManager() {
 }
@@ -134,21 +124,13 @@ bool ExclusiveAccessManager::HandleUserKeyPress(
     return false;
   }
 
-  if (IsExperimentalKeyboardLockUIEnabled()) {
-    if (event.GetType() == content::NativeWebKeyboardEvent::kKeyUp &&
-        hold_timer_.IsRunning()) {
-      // Seeing a key up event on Esc with the hold timer running cancels the
-      // timer and doesn't exit. This means the user pressed Esc, but not long
-      // enough to trigger an exit
-      hold_timer_.Stop();
+  if (IsExperimentalKeyboardLockUIEnabled() &&
+      fullscreen_controller_.IsTabFullscreen()) {
+    if (event.GetType() == content::NativeWebKeyboardEvent::kKeyUp) {
+      exclusive_access_context_->CancelTrackingPressAndHoldEsc();
     } else if (event.GetType() ==
-                   content::NativeWebKeyboardEvent::kRawKeyDown &&
-               !hold_timer_.IsRunning()) {
-      // Seeing a key down event on Esc when the hold timer is stopped starts
-      // the timer. When the timer reaches 0, the callback will trigger an exit
-      // from fullscreen/mouselock.
-      hold_timer_.Start(
-          FROM_HERE, base::TimeDelta::FromMilliseconds(kHoldEscapeTimeMs),
+               content::NativeWebKeyboardEvent::kRawKeyDown) {
+      exclusive_access_context_->StartTrackingPressAndHoldEsc(
           base::Bind(&ExclusiveAccessManager::HandleUserHeldEscape,
                      base::Unretained(this)));
     }
