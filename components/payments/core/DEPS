@@ -14,6 +14,7 @@ include_rules = [
   "+third_party/libaddressinput",
   "+third_party/libphonenumber",
   "+third_party/re2",
+  "+third_party/skia/include",
   "+ui/base",
 ]
 
