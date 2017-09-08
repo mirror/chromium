@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90708188_fc87fd9e",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T18:14:21Z",
+      "side": 1,
+      "message": "Mind tagging this with TODO(https://crbug.com/578349) to eventually remove this (and code that depends on it)?",
+      "revId": "f12ed0f4a1b62a69005db462dd9aeb121696fd34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
