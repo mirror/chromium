@@ -49,6 +49,9 @@ class SmartTokenizerTest(unittest.TestCase):
         tokenizer = SmartTokenizer('CanvasRenderingContext2D')
         self.assertEqual(tokenizer.tokenize(),
                          ['Canvas', 'Rendering', 'Context', '2D'])
+        tokenizer = SmartTokenizer('CanvasRenderingContext2DAPITest')
+        self.assertEqual(tokenizer.tokenize(),
+                         ['Canvas', 'Rendering', 'Context', '2D', 'API', 'Test'])
 
         tokenizer = SmartTokenizer('SVGSVGElement')
         self.assertEqual(tokenizer.tokenize(), ['SVG', 'SVG', 'Element'])
@@ -64,9 +67,10 @@ class SmartTokenizerTest(unittest.TestCase):
 
         tokenizer = SmartTokenizer('HTMLDListElement')
         self.assertEqual(tokenizer.tokenize(), ['HTML', 'DList', 'Element'])
-
         tokenizer = SmartTokenizer('HTMLIFrameElement')
         self.assertEqual(tokenizer.tokenize(), ['HTML', 'IFrame', 'Element'])
+        tokenizer = SmartTokenizer('HTMLPlugInElement')
+        self.assertEqual(tokenizer.tokenize(), ['HTML', 'PlugIn', 'Element'])
 
         # No special handling for OptGroup, FieldSet, and TextArea.
         tokenizer = SmartTokenizer('HTMLOptGroupElement')
@@ -119,6 +123,8 @@ class SmartTokenizerTest(unittest.TestCase):
         self.assertEqual(tokenizer.tokenize(), ['Shadow', 'DOM', 'V0', 'Test'])
         tokenizer = SmartTokenizer('ElementShadowV0')
         self.assertEqual(tokenizer.tokenize(), ['Element', 'Shadow', 'V0'])
+        tokenizer = SmartTokenizer('StubChromeClientForSPv2')
+        self.assertEqual(tokenizer.tokenize(), ['Stub', 'Chrome', 'Client', 'For', 'SPv2'])
 
         tokenizer = SmartTokenizer('XPathEvaluator')
         self.assertEqual(tokenizer.tokenize(), ['XPath', 'Evaluator'])
