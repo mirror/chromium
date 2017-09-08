@@ -16,6 +16,24 @@
       "revId": "f04e844f87c603a193bb66d551023614634cd21f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b201099_ee6f4af3",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1147615
+      },
+      "writtenOn": "2017-09-08T21:59:51Z",
+      "side": 1,
+      "message": "oops ignored this, uploading new version.",
+      "parentUuid": "f979ff73_7897f8d5",
+      "revId": "f04e844f87c603a193bb66d551023614634cd21f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
