@@ -19,6 +19,125 @@
     },
     {
       "key": {
+        "uuid": "61bd3cfa_8ac301e3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-08T01:04:51Z",
+      "side": 1,
+      "message": "Common.UIString()",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37df8db_59ab4cc5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-08T01:04:51Z",
+      "side": 1,
+      "message": "Why do we need CodeMirror there? Isn\u0027t just a text input good enough? Can we perhaps have this unified with the control below?",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0b1b50_6c3f7634",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-08T01:04:51Z",
+      "side": 1,
+      "message": "I wonder if the right way to do it would be to have a separate form with a dedicated submit button?",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de95ae40_044d6bf8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-08T01:04:51Z",
+      "side": 1,
+      "message": "The controls being added look absolutely the same, but behave differently. I think a \u003ctextarea\u003e is better in this respect as it has a resize corner.",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc56ec9_3e3c01d6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-08T01:04:51Z",
+      "side": 1,
+      "message": "It would be nice to have some feedback indicating that something is happening here.",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf328eaa_9b0cfb15",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-08T01:04:51Z",
+      "side": 1,
+      "message": "So if the input is empty we disable the button, but still do the sync upon enter?",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd069a35_e4083fa1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-08T01:04:51Z",
+      "side": 1,
+      "message": "Is it always the last chance? I.e. is anyone ever passing false?",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "680ac05f_176d5909",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/reportView.css",
         "patchSetId": 2
