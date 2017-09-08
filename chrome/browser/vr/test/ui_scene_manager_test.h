@@ -17,6 +17,7 @@
 
 namespace vr {
 
+class UiElement;
 class UiScene;
 class UiSceneManager;
 
@@ -61,6 +62,10 @@ class UiSceneManagerTest : public testing::Test {
   // layout state. Other elements are ignored.
   bool VerifyRequiresLayout(const std::set<UiElementName>& names,
                             bool requires_layout) const;
+
+  // Check if element using correct opacity in Renderer recursively.
+  void CheckRendererOpacityRecursive(const std::set<UiElementName>& names,
+                                     UiElement* element);
 
   // Advances current_time_ by delta. This is done in frame increments and
   // UiScene::OnBeginFrame is called at each increment.
