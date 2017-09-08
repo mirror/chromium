@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37f31544_3aeb0a9c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T00:03:19Z",
+      "side": 1,
+      "message": "nit: The term \"abstract\" is Java-specific. Just say you made it a pure-virtual base class.",
+      "range": {
+        "startLine": 7,
+        "startChar": 57,
+        "endLine": 7,
+        "endChar": 76
+      },
+      "revId": "08925c71f84c4d2e46cba82c51fdbc0e852c732b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538ca8ec_1cdf17c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T00:03:19Z",
+      "side": 1,
+      "message": "nit: Wrap columns to 72 characters max.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 120
+      },
+      "revId": "08925c71f84c4d2e46cba82c51fdbc0e852c732b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "293d3a81_92e62481",
+        "filename": "components/cryptauth/fake_remote_device_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T00:03:19Z",
+      "side": 1,
+      "message": "Remove OnSyncFinished() and OnRemoteDevicesLoaded().",
+      "range": {
+        "startLine": 17,
+        "startChar": 31,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "08925c71f84c4d2e46cba82c51fdbc0e852c732b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27d15eb_c7fb57d8",
+        "filename": "components/cryptauth/fake_remote_device_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T00:03:19Z",
+      "side": 1,
+      "message": "For trivial setters, please include them in the .h file instead. Also, they are named set_foo():\n\nvoid set_synced_remote_devices(const RemoteDeviceList\u0026 synced_remote_devices) {\n  synced_remote_devices_ \u003d synced_remote_devices;\n}",
+      "range": {
+        "startLine": 37,
+        "startChar": 31,
+        "endLine": 37,
+        "endChar": 50
+      },
+      "revId": "08925c71f84c4d2e46cba82c51fdbc0e852c732b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f0f800c_fa51b3b3",
+        "filename": "components/cryptauth/fake_remote_device_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T00:03:19Z",
+      "side": 1,
+      "message": "Remove - you don\u0027t need to observer anything for your fake class.",
+      "range": {
+        "startLine": 16,
+        "startChar": 33,
+        "endLine": 16,
+        "endChar": 72
+      },
+      "revId": "08925c71f84c4d2e46cba82c51fdbc0e852c732b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62dd35b8_759ed2f0",
+        "filename": "components/cryptauth/fake_remote_device_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T00:03:19Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 38
+      },
+      "revId": "08925c71f84c4d2e46cba82c51fdbc0e852c732b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc20913_ad946a6a",
+        "filename": "components/cryptauth/fake_remote_device_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T00:03:19Z",
+      "side": 1,
+      "message": "Remove all of these. All you need is |synced_remote_devices_|.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 76
+      },
+      "revId": "08925c71f84c4d2e46cba82c51fdbc0e852c732b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2909a38_82521f4b",
+        "filename": "components/cryptauth/remote_device_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T00:03:19Z",
+      "side": 1,
+      "message": "Revert. Observer is a nested class for the non-impl class.",
+      "range": {
+        "startLine": 84,
+        "startChar": 25,
+        "endLine": 84,
+        "endChar": 29
+      },
+      "revId": "08925c71f84c4d2e46cba82c51fdbc0e852c732b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba622c7_fc2b7556",
+        "filename": "components/cryptauth/remote_device_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T00:03:19Z",
+      "side": 1,
+      "message": "nit: Remove the Impl at the end.",
+      "range": {
+        "startLine": 186,
+        "startChar": 7,
+        "endLine": 186,
+        "endChar": 37
+      },
+      "revId": "08925c71f84c4d2e46cba82c51fdbc0e852c732b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
