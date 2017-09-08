@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "afab20a3_c092ec1d",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-08T06:19:16Z",
+      "side": 1,
+      "message": "Ah no problem I\u0027m not in hurry:) Now I can still continue preparing another CL replacing  content::ServiceWorkerRegistrationObjectInfo with mojom one based on this CL. I also very like current codes\u0027 simplicity, and the mojo method prototype is conforming with SW spec well. \nAnd even finally we decided to run callback with nonsense params for error cases, I\u0027m considering that we can still avoid the additional |error| and |error_msg| params, like bellowing:\nGetRegistrationForReady()\n     \u003d\u003e (ServiceWorkerRegistrationObjectInfo? registration,\n         ServiceWorkerVersionAttributes? attributes);\nWDYT?",
+      "parentUuid": "81f4d25a_753d16c0",
+      "revId": "0cb29294c55056d589d176f418ffed81bf4a7440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9b854fa_a2384262",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 4
