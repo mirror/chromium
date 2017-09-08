@@ -639,7 +639,6 @@ bool WebViewImpl::ScrollBy(const WebFloatSize& delta,
 
   WebGestureEvent synthetic_gesture_event = CreateGestureScrollEventFromFling(
       WebInputEvent::kGestureScrollUpdate, fling_source_device_);
-  synthetic_gesture_event.data.scroll_update.prevent_propagation = true;
   synthetic_gesture_event.data.scroll_update.delta_x = delta.width;
   synthetic_gesture_event.data.scroll_update.delta_y = delta.height;
   synthetic_gesture_event.data.scroll_update.velocity_x = velocity.width;
