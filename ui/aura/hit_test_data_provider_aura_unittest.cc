@@ -181,18 +181,20 @@ TEST_F(HitTestDataProviderAuraTest, CustomTargeter) {
   EXPECT_EQ(hit_test_data->flags, viz::mojom::kHitTestMine);
   EXPECT_EQ(hit_test_data->bounds, root()->bounds());
 
-  // Children of a container that has the custom targeter installed will get
-  // reported twice, once with hit-test bounds optimized for mouse events and
-  // another time with bounds expanded more for touch input.
-  Window* expected_windows[] = {window3(), window4(), window4(), window2()};
+  // Children of a window that has the custom targeter installed as well as that
+  // window will get reported twice, once with hit-test bounds optimized for
+  // mouse events and another time with bounds expanded more for touch input.
+  Window* expected_windows[] = {window3(), window3(), window4(), window4(),
+                                window2()};
   uint32_t expected_flags[] = {
-      viz::mojom::kHitTestMine | viz::mojom::kHitTestMouse |
-          viz::mojom::kHitTestTouch,
+      viz::mojom::kHitTestMine | viz::mojom::kHitTestMouse,
+      viz::mojom::kHitTestMine | viz::mojom::kHitTestTouch,
       viz::mojom::kHitTestMine | viz::mojom::kHitTestMouse,
       viz::mojom::kHitTestMine | viz::mojom::kHitTestTouch,
       viz::mojom::kHitTestMine | viz::mojom::kHitTestMouse |
           viz::mojom::kHitTestTouch};
-  int expected_insets[] = {0, kMouseInset, kTouchInset, 0};
+  int expected_insets[] = {kMouseInset, kTouchInset, kMouseInset, kTouchInset,
+                           0};
   ASSERT_EQ(hit_test_data->regions.size(), arraysize(expected_windows));
   ASSERT_EQ(hit_test_data->regions.size(), arraysize(expected_flags));
   ASSERT_EQ(hit_test_data->regions.size(), arraysize(expected_insets));
@@ -218,13 +220,18 @@ TEST_F(HitTestDataProviderAuraTest, HoleTargeter) {
   // Children of a container that has the custom targeter installed will get
   // reported 4 times for each of the hit test regions defined by the custom
   // targeter.
-  Window* expected_windows[] = {window3(), window4(), window4(),
+  Window* expected_windows[] = {window3(), window3(), window3(),
+                                window3(), window4(), window4(),
                                 window4(), window4(), window2()};
   uint32_t expected_flags = viz::mojom::kHitTestMine |
                             viz::mojom::kHitTestMouse |
                             viz::mojom::kHitTestTouch;
   std::vector<gfx::Rect> expected_bounds;
-  expected_bounds.push_back(window3()->bounds());
+  // original window3 is at gfx::Rect(50, 60, 100, 40).
+  expected_bounds.emplace_back(50, 60, 100, 13);
+  expected_bounds.emplace_back(50, 73, 33, 14);
+  expected_bounds.emplace_back(117, 73, 33, 14);
+  expected_bounds.emplace_back(50, 87, 100, 13);
 
   // original window4 is at gfx::Rect(20, 10, 60, 30).
   expected_bounds.emplace_back(20, 10, 60, 10);
