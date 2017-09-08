@@ -34,6 +34,24 @@
       "revId": "937f300af6fca5dff223ec354ca8409cca2e62ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea4ba414_1907d3f3",
+        "filename": "chrome/installer/linux/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-08T00:58:00Z",
+      "side": 1,
+      "message": "Has the deb CL landed yet? If not, add it there?",
+      "parentUuid": "fcea6b4d_81055ec4",
+      "revId": "937f300af6fca5dff223ec354ca8409cca2e62ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
