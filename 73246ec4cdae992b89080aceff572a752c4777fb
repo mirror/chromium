@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f63abb38_ff4722be",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-08T16:32:21Z",
+      "side": 1,
+      "message": "Please rephrase to indicate that they are not concurrently shown.",
+      "range": {
+        "startLine": 11,
+        "startChar": 31,
+        "endLine": 11,
+        "endChar": 63
+      },
+      "revId": "73246ec4cdae992b89080aceff572a752c4777fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5132c3df_f9dd6050",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-08T16:32:21Z",
+      "side": 1,
+      "message": "nit: please add comments here and elsewhere for properties.",
+      "revId": "73246ec4cdae992b89080aceff572a752c4777fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9f1945_1f18406d",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-08T16:32:21Z",
+      "side": 1,
+      "message": "nit: Our rule is attach a bug to any TODOs. I suggest either creating a bug, or simply removing this comment for now.",
+      "revId": "73246ec4cdae992b89080aceff572a752c4777fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42281ef_6d416d13",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-08T16:32:21Z",
+      "side": 1,
+      "message": "Should we add tests for the commands protocols? Perhaps testing that a settings child coordinator is added when showSettings is called.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 37
+      },
+      "revId": "73246ec4cdae992b89080aceff572a752c4777fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9892f627_084fdd8f",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_coordinator_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-08T16:32:21Z",
+      "side": 1,
+      "message": "Remove comment?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 32
+      },
+      "revId": "73246ec4cdae992b89080aceff572a752c4777fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c385e80_b553da80",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-08T16:32:21Z",
+      "side": 1,
+      "message": "Handle nil case, either with DCHECK or early return.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 20
+      },
+      "revId": "73246ec4cdae992b89080aceff572a752c4777fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f090796_684713f1",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_toolbar.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-08T16:32:21Z",
+      "side": 1,
+      "message": "Could you directly add the dispatcher as the target, and remove the toolbar actions above?",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 48
+      },
+      "revId": "73246ec4cdae992b89080aceff572a752c4777fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
