@@ -17,7 +17,6 @@
 #include "cc/base/math_util.h"
 #include "cc/output/overlay_strategy_single_on_top.h"
 #include "cc/output/overlay_strategy_underlay.h"
-#include "cc/output/texture_mailbox_deleter.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/resource_provider.h"
 #include "cc/test/fake_impl_task_runner_provider.h"
@@ -33,6 +32,7 @@
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/copy_output_result.h"
+#include "components/viz/service/display/texture_mailbox_deleter.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -375,7 +375,7 @@ class FakeRendererGL : public GLRenderer {
   FakeRendererGL(const RendererSettings* settings,
                  cc::OutputSurface* output_surface,
                  cc::DisplayResourceProvider* resource_provider,
-                 cc::TextureMailboxDeleter* texture_mailbox_deleter)
+                 TextureMailboxDeleter* texture_mailbox_deleter)
       : GLRenderer(settings,
                    output_surface,
                    resource_provider,
@@ -1926,8 +1926,8 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider =
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), shared_bitmap_manager.get());
-  std::unique_ptr<cc::TextureMailboxDeleter> mailbox_deleter(
-      new cc::TextureMailboxDeleter(base::ThreadTaskRunnerHandle::Get()));
+  std::unique_ptr<TextureMailboxDeleter> mailbox_deleter(
+      new TextureMailboxDeleter(base::ThreadTaskRunnerHandle::Get()));
 
   RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
@@ -2093,8 +2093,8 @@ TEST_F(GLRendererTest, OverlaySyncTokensAreProcessed) {
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider =
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), shared_bitmap_manager.get());
-  std::unique_ptr<cc::TextureMailboxDeleter> mailbox_deleter(
-      new cc::TextureMailboxDeleter(base::ThreadTaskRunnerHandle::Get()));
+  std::unique_ptr<TextureMailboxDeleter> mailbox_deleter(
+      new TextureMailboxDeleter(base::ThreadTaskRunnerHandle::Get()));
 
   RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),

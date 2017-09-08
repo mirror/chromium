@@ -9,9 +9,11 @@
 #include "cc/output/direct_renderer.h"
 #include "ui/latency/latency_info.h"
 
-namespace cc {
-
+namespace viz {
 class TextureMailboxDeleter;
+}
+
+namespace cc {
 
 class CC_EXPORT VulkanRenderer : public DirectRenderer {
  public:
