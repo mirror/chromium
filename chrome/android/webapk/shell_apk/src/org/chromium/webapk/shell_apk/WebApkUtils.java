@@ -130,32 +130,45 @@ public class WebApkUtils {
      * scheme and host name in this case, and append orginal intent url if |loggedIntentUrlParam| is
      * set.
      */
-    public static String rewriteIntentUrlIfNecessary(String startUrl, Bundle metadata) {
-        String returnUrl = startUrl;
+    public static String rewriteIntentUrlIfNecessary(String intentStartUrl, Bundle metadata) {
         String scopeUrl = metadata.getString(WebApkMetaDataKeys.SCOPE);
-        if (!TextUtils.isEmpty(scopeUrl)) {
-            Uri parsedStartUrl = Uri.parse(startUrl);
-            Uri parsedScope = Uri.parse(scopeUrl);
 
-            if (!parsedStartUrl.getScheme().equals(parsedScope.getScheme())
-                    || !parsedStartUrl.getEncodedAuthority().equals(
-                               parsedScope.getEncodedAuthority())) {
-                Uri.Builder returnUrlBuilder =
-                        parsedStartUrl.buildUpon()
-                                .scheme(parsedScope.getScheme())
-                                .encodedAuthority(parsedScope.getEncodedAuthority());
+        if (!isUrlInScope(intentStartUrl, scopeUrl)) {
+            String startUrl = metadata.getString(WebApkMetaDataKeys.START_URL);
+            Uri.Builder returnUrlBuilder = Uri.parse(startUrl).buildUpon();
 
-                String loggedIntentUrlParam =
-                        metadata.getString(WebApkMetaDataKeys.LOGGED_INTENT_URL_PARAM);
-                if (loggedIntentUrlParam != null && !TextUtils.isEmpty(loggedIntentUrlParam)) {
-                    String orginalUrl = Uri.encode(startUrl).toString();
-                    returnUrlBuilder.appendQueryParameter(loggedIntentUrlParam, orginalUrl);
-                }
-
-                returnUrl = returnUrlBuilder.build().toString();
+            String loggedIntentUrlParam =
+                    metadata.getString(WebApkMetaDataKeys.LOGGED_INTENT_URL_PARAM);
+            if (loggedIntentUrlParam != null && !TextUtils.isEmpty(loggedIntentUrlParam)) {
+                String orginalUrl = Uri.encode(intentStartUrl).toString();
+                returnUrlBuilder.appendQueryParameter(loggedIntentUrlParam, orginalUrl);
             }
+
+            return returnUrlBuilder.toString();
+        }
+
+        String returnUrl = intentStartUrl;
+        Uri parsedScope = Uri.parse(scopeUrl);
+        Uri parsedIntentStartUrl = Uri.parse(intentStartUrl);
+
+        if (!parsedIntentStartUrl.getScheme().equals(parsedScope.getScheme())
+                || !parsedIntentStartUrl.getEncodedAuthority().equals(
+                           parsedScope.getEncodedAuthority())) {
+            Uri.Builder returnUrlBuilder =
+                    parsedIntentStartUrl.buildUpon()
+                            .scheme(parsedScope.getScheme())
+                            .encodedAuthority(parsedScope.getEncodedAuthority());
+            returnUrl = returnUrlBuilder.build().toString();
         }
         return returnUrl;
+    }
+
+    private static boolean isUrlInScope(String url, String scopeUrl) {
+        if (TextUtils.isEmpty(scopeUrl)) return true;
+        Uri parsedUrl = Uri.parse(url);
+        Uri parsedScopeUrl = Uri.parse(scopeUrl);
+        return parsedUrl.getHost().equals(parsedScopeUrl.getHost())
+                && parsedUrl.getPath().startsWith(parsedScopeUrl.getPath());
     }
 
     /**
