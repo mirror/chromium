@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee95122d_60c06f48",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/SVGLength-px-with-context.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-08T12:14:34Z",
+      "side": 1,
+      "message": "This is not relevant for upstream/WPT (although other browsers could suffer from the same issue.) I guess we\u0027ll see how well the \u0027ex\u0027 approximation works... (I think X-height for Ahem should be reasonably simple though...)",
+      "range": {
+        "startLine": 24,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 93
+      },
+      "revId": "6a1208b9d4e9ed34d05fce521905df524c4c26e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf2f61c_383631d0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/SVGLength-px.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-08T12:14:34Z",
+      "side": 1,
+      "message": "Per current SVG2 [1], this should actually not throw, but rather convert using a \u0027size\u0027 of 100.\n\n[1] https://svgwg.org/svg2-draft/types.html#__svg__SVGLength__convertToSpecifiedUnits",
+      "range": {
+        "startLine": 25,
+        "startChar": 57,
+        "endLine": 25,
+        "endChar": 117
+      },
+      "revId": "6a1208b9d4e9ed34d05fce521905df524c4c26e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275ff4dc_7c02646e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/SVGLength-px.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-08T12:14:34Z",
+      "side": 1,
+      "message": "Ditto here.",
+      "range": {
+        "startLine": 36,
+        "startChar": 57,
+        "endLine": 36,
+        "endChar": 110
+      },
+      "revId": "6a1208b9d4e9ed34d05fce521905df524c4c26e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60cdadbd_485c7ea3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/SVGLength-px.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-08T12:14:34Z",
+      "side": 1,
+      "message": "...and here.",
+      "range": {
+        "startLine": 47,
+        "startChar": 57,
+        "endLine": 47,
+        "endChar": 110
+      },
+      "revId": "6a1208b9d4e9ed34d05fce521905df524c4c26e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
