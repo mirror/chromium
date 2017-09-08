@@ -32,6 +32,7 @@
 #include "url/url_canon.h"
 
 #if defined(USE_NSS_CERTS)
+#include "base/threading/scoped_blocking_call.h"
 #include "net/cert/cert_verify_proc_nss.h"
 #elif defined(OS_ANDROID)
 #include "net/cert/cert_verify_proc_android.h"
@@ -532,6 +533,16 @@ int CertVerifyProc::Verify(X509Certificate* cert,
                            CRLSet* crl_set,
                            const CertificateList& additional_trust_anchors,
                            CertVerifyResult* verify_result) {
+#if defined(USE_NSS_CERTS)
+  // NSS calls made in this method may reenter //net via extension hooks. If the
+  // reentered code needs to synchronously wait for a task to run but the thread
+  // pool in which that task must run doesn't have enough threads to schedule
+  // it, a deadlock occurs. To prevent that, the base::ScopedBlockingCall below
+  // increments the thread pool capacity when this method takes too much time to
+  // run.
+  base::ScopedBlockingCall scoped_blocking_call(base::BlockingType::MAY_BLOCK);
+#endif  // defined(USE_NSS_CERTS)
+
   verify_result->Reset();
   verify_result->verified_cert = cert;
 
