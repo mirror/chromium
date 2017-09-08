@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dab535e5_7b8952da",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-09-08T20:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03eab07d_9529a8b2",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 1
+      },
+      "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "332f6720_51677e70",
         "filename": "ash/system/network/network_list.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0d43b9aa_bbecf5b6",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-09-08T20:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "332f6720_51677e70",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 252,
+        "endChar": 35
+      },
+      "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36b61533_e36d67c3",
         "filename": "ash/system/network/network_list.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccdcd984_e6b4384b",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-09-08T20:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36b61533_e36d67c3",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 28
+      },
+      "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "09665dde_6f5b4cc2",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-09-08T20:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "256daca2_c1686dae",
+      "range": {
+        "startLine": 302,
+        "startChar": 57,
+        "endLine": 302,
+        "endChar": 58
+      },
+      "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4d5e7de_a26fc6db",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-09-08T20:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "731a06d4_5e23f068",
+      "range": {
+        "startLine": 302,
+        "startChar": 60,
+        "endLine": 302,
+        "endChar": 71
+      },
+      "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99c09bfb_64994a63",
         "filename": "ash/system/network/network_list.cc",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "a41339f5_27da1d1b",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-09-08T20:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99c09bfb_64994a63",
+      "range": {
+        "startLine": 307,
+        "startChar": 7,
+        "endLine": 307,
+        "endChar": 29
+      },
+      "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66fab34c_29aad0b4",
         "filename": "ash/system/network/network_list.cc",
         "patchSetId": 3
@@ -160,6 +304,30 @@
       "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4105af44_db81b959",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-09-08T20:56:09Z",
+      "side": 1,
+      "message": "Done\n\nIn theory, this could be called when the timer isn\u0027t running, if for some reason the Bluetooth adapter is successfully powered after the 2s timeout delay.\n\nShould we add error/warning logs?",
+      "parentUuid": "66fab34c_29aad0b4",
+      "range": {
+        "startLine": 314,
+        "startChar": 0,
+        "endLine": 314,
+        "endChar": 27
+      },
+      "revId": "89227fe36d0c54f72fc26fe01bc5d3ba89632044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
