@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6123c54d_f1ca7d53",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1198,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-08T03:08:32Z",
+      "side": 1,
+      "message": "Done for all places.",
+      "parentUuid": "fc36fc3a_6d99a15d",
+      "revId": "0cb29294c55056d589d176f418ffed81bf4a7440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28ce9a4a_7cd1033f",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-08T01:48:14Z",
       "side": 1,
       "message": "ahh... I didn\u0027t realize we\u0027d need this |invalid*| thing.\n\nsorry to go in a circle, but now I\u0027m feeling a struct would be useful here after all. Does something like this work:\n\nstruct RequestForReady {\n  enum class State { kInitial, kWaiting, kCompleted, kAborted };\n  base::OnceCallback\u003cGetRregistrationForReadyCallback\u003e callback_;\n  State state;\n};\n\nThis has some niceties:\n\nif (!get_ready_callback_ || get_ready_callback_-\u003eis_null())\n\u003d\u003e\nif (request_for_ready_.state !\u003d kWaiting) \n\n\nall the conditionals about null become conditions about an explicit state.\n\nWDYT?",
+      "revId": "0cb29294c55056d589d176f418ffed81bf4a7440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d15d68_22d5503a",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-08T03:08:32Z",
+      "side": 1,
+      "message": "Yeah this unified the null conditionals into a single place. But,, maybe I did not fully understand about this but seems we still need another invalid_get_ready_callback_? Considering such a scenario:\n - The 1st request comes with callback_1, |state_| is set to kWaiting, |callback_| is set to callback_1.\n - The 2nd request comes with callback_2, as this is an invalid request, we need to mojo::ReportBadMessage(), and also need to cache callback_2, but we can\u0027t put it into |callback_|, that will destroy callback_1 which will complain it has never been run before its destruction.",
+      "parentUuid": "28ce9a4a_7cd1033f",
       "revId": "0cb29294c55056d589d176f418ffed81bf4a7440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b75a76fa_80cd8b40",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-08T03:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9b854fa_a2384262",
+      "revId": "0cb29294c55056d589d176f418ffed81bf4a7440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f51fb48d_372a4b7d",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8da3c38e_248e8ee3",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-08T03:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f51fb48d_372a4b7d",
+      "revId": "0cb29294c55056d589d176f418ffed81bf4a7440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6767e82b_76460bf9",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "0cb29294c55056d589d176f418ffed81bf4a7440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6249c119_01779912",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-08T03:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6767e82b_76460bf9",
+      "revId": "0cb29294c55056d589d176f418ffed81bf4a7440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
