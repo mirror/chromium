@@ -37,6 +37,58 @@
     },
     {
       "key": {
+        "uuid": "4ce2e943_bc6ee4cb",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T21:49:04Z",
+      "side": 1,
+      "message": "I think we can avoid the distinction by restructuring the logic in PaintLayerClipper::CalculateRectsWithGeometryMapper(). See comments over there.",
+      "parentUuid": "1d974a92_8feea247",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f235c40c_86a4b3d5",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T21:49:04Z",
+      "side": 1,
+      "message": "Can we do this instead:\nif (offset_from_root)\n  offset \u003d *offset_from_root;\nelse\n  layer_.ConvertToLayerCoords(context.root_layer, offset);\nif (layer_.ShouldFragmentCompositedBounds(context.root_layer))\n  offset.MoveBy(fragment_data.PaginationOffset());",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7031d2b6_843eb82d",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T21:49:04Z",
+      "side": 1,
+      "message": "DCHECK(!fragment_data);",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a6d5a5c_125a5150",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 27
@@ -349,6 +401,24 @@
       "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd64fc4_c9b44ddb",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T21:49:04Z",
+      "side": 1,
+      "message": "Ah, that makes sense.",
+      "parentUuid": "cc6a1a95_3f844287",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
