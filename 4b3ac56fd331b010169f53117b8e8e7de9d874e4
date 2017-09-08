@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a7154fb_b70ba2fd",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-08T06:51:00Z",
+      "side": 1,
+      "message": "Can you add a comment for each class describing what it\u0027s for?",
+      "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39b76ca5_eecf2fbe",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-08T06:51:00Z",
+      "side": 1,
+      "message": "What about:\n\n  if (check_passed)\n    WriteMetricsAndResetCounts(\n        InstallabilityCheckStatus::IN_PROGRESS_PROGRESSIVE_WEB_APP,\n        AddToHomescreenTimeoutStatus::TIMEOUT_MANIFEST_FETCH_PROGRESSIVE_WEB_APP,\n        AddToHomescreenTimeoutStatus::TIMEOUT_INSTALLABILITY_CHECK_PROGRESSIVE_WEB_APP);\n  } else {\n    WriteMetricsAndResetCounts(\n        InstallabilityCheckStatus::IN_PROGRESS_NON_PROGRESSIVE_WEB_APP,\n        AddToHomescreenTimeoutStatus::TIMEOUT_MANIFEST_FETCH_NON_PROGRESSIVE_WEB_APP,\n        AddToHomescreenTimeoutStatus::TIMEOUT_INSTALLABILITY_CHECK_NON_PROGRESSIVE_WEB_APP);\n\n  }\n\npros:\n  * it\u0027s shorter.\n  * you can easily see which statuses are used together (i.e. it\u0027s all PROGRESSIVE or all NON_PROGRESSIVE).\n  * not so many variables to keep track of.\ncons:\n  * it\u0027s not as obvious that the same function is called in both cases (WriteMetricsAndResetCounts) (but since they are called close together, it\u0027s pretty easy to see by eyeballing it).",
+      "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34296752_4bc22669",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-08T06:51:00Z",
+      "side": 1,
+      "message": "Resolve and Flush do very similar things, so they should probably be given similar names (perhaps identical, i.e. overloading?).",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 14
+      },
+      "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
