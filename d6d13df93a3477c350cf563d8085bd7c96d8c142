@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a39b384_53fdff6d",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-08T13:34:20Z",
+      "side": 1,
+      "message": "Some of these, especially this one, are very hot (especially during page load). Have you done a quick check that this doesn\u0027t regress parsing benchmarks or page load performance significantly?",
+      "revId": "d6d13df93a3477c350cf563d8085bd7c96d8c142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91453daa_b5362fcc",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLDocumentParser.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-08T13:34:20Z",
+      "side": 1,
+      "message": "This one, too, seems likely to be very hot.",
+      "revId": "d6d13df93a3477c350cf563d8085bd7c96d8c142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
