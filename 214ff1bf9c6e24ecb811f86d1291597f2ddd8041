@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce603db1_e85b3a2d",
+        "filename": "cc/layers/painted_overlay_scrollbar_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-08T15:28:43Z",
+      "side": 1,
+      "message": "This all looks correct to me so I don\u0027t know where the problem is.\n\nMy advice for figuring this out is to try working on this part independent of the tickmark painting, UI Resources, and layer-\u003elayer_impl commit, just to get something on screen (e.g. a big red rectangle). Once you get some kind of output on screen, work backwards, try to get it to be painted from the Layer, then from the ScrollbarTheme.\n\nYou could try looking at SolidColorScrollbarLayerImpl::AppendQuads to try using that...a solid color quad should be super simple and not require painting or any kind of resources. Once you verify that you can fill the whole track rect with a color, you can try working backwards as above. Make sure the rects are all what you expect, my guess is maybe we\u0027re clipping to the thumb rect.",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 141,
+        "endChar": 42
+      },
+      "revId": "214ff1bf9c6e24ecb811f86d1291597f2ddd8041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
