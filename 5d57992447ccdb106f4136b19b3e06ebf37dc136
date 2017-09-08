@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c731308c_96fb9cfa",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:38:44Z",
+      "side": 1,
+      "message": "Generally we don\u0027t need to DCHECK(ptr) just before ptr-\u003ef(). Especially since the class is so small here and streaming_versino_ is never changed, I wouldn\u0027t bother with the DCHECK.",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a093bb3_c872a463",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:38:44Z",
+      "side": 1,
+      "message": "no need to set streaming_version_ \u003d nullptr, as the class is alrady dying right now",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8706ab1a_cd6b9af1",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:38:44Z",
+      "side": 1,
+      "message": "prefer adding comments to the CommitCompleted() calls that say \"// Destroys |this|.\" so people know that they shouldn\u0027t add any code after CommitCompleted().",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd36560_b8332c9e",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:38:44Z",
+      "side": 1,
+      "message": "By the way, I\u0027m curious how you chose ERR_CONNECTION_RESET? I am not super familiar with the error codes but ERR_ABORTED seems more natural here.",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9994a639_839824c6",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:38:44Z",
+      "side": 1,
+      "message": "no need for this, it happens automatically. ServiceWorkerURLLoaderJob\u0027s destructor automatically  calls |stream_waiter_|\u0027s destructor so we don\u0027t need manual cleanup.",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6107ba4f_ceb61c95",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:38:44Z",
+      "side": 1,
+      "message": "this can just be ResourceRequestCompletionStatus(net::ERR_ABORTED) now (this new constructor was added recently)",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d150ba7_25df6e13",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:38:44Z",
+      "side": 1,
+      "message": "modern Chromium style tries to avoid using \"new\". We can do this with:\n\nstream_waiter_ \u003d std::make_unique\u003cStreamWaiter\u003e(this, version, ...);",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727105eb_44b1d7dc",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:38:44Z",
+      "side": 1,
+      "message": "to make code reading easier, prefer a comment here like:\n// StreamWaiter will call CommitCompleted() when done.",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4feb855b_a36128f9",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:38:44Z",
+      "side": 1,
+      "message": "remove the \"const\u0026\". scoped_refptr should almost always be passed by value. Some of our older code uses scoped_refptr, but it\u0027s a bad pattern.",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d1868f_755d4d3f",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:38:44Z",
+      "side": 1,
+      "message": "This comment is now outdated, since client_ isn\u0027t yet complete when we return.",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ddb9ea_ec0941ec",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:38:44Z",
+      "side": 1,
+      "message": "Slightly prefer calling this StartRequest() now, since all this does is start a request, and the caller has to finish it be calling RunUntilComplete().",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5fdbc51_4fba1ddb",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:38:44Z",
+      "side": 1,
+      "message": "prefer adding an empty line after RunUntilComplete() here and below",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c757cc_851bceab",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:38:44Z",
+      "side": 1,
+      "message": "I think since we don\u0027t actually use these pointers, this could be a counter like: \"int streaming_job_count_;\"\n\nThen we don\u0027t need separate functions and sets for URLLoader and URLRequest.",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
