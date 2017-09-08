@@ -46,6 +46,30 @@
       "revId": "db55a8494efd4afdc0397966cfcc2ad87700dab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4bcc32_358378c6",
+        "filename": "components/metrics/profiler/tracking_synchronizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-08T21:33:39Z",
+      "side": 0,
+      "message": "Looks like it\u0027s in the google3 version. You can send a separate CL there to update analysis/uma/configs/chrome/histograms.xml.",
+      "parentUuid": "093fe6ee_31b1ff5b",
+      "range": {
+        "startLine": 136,
+        "startChar": 56,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "db55a8494efd4afdc0397966cfcc2ad87700dab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
