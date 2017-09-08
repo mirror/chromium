@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f3d3e18_4c46b3c4",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-08T14:39:21Z",
+      "side": 1,
+      "message": "FYI, this can wait forever if the user isn\u0027t signed in and doesn\u0027t sign in. Is that OK in this case?",
+      "range": {
+        "startLine": 173,
+        "startChar": 21,
+        "endLine": 173,
+        "endChar": 51
+      },
+      "revId": "7dfdb5d4dcc3c292bee6c2a92cb56bef7f604518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
