@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d6af374_c37e7364",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-08T16:27:35Z",
+      "side": 1,
+      "message": "There was one spot that could pass kNoMatch, but I added an early return there to avoid it. Changed this to a DCHECK per your suggestion.",
+      "parentUuid": "c5f7ae60_ca262a66",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69ecc08c_23fe7146",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-06T02:59:29Z",
       "side": 1,
       "message": "Nit: {}",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb26d474_504783fe",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-08T16:27:35Z",
+      "side": 1,
+      "message": "Ack. This if has been replaced by a DCHECK.",
+      "parentUuid": "69ecc08c_23fe7146",
       "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5dd61eba_bc8684e0",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-08T16:27:35Z",
+      "side": 1,
+      "message": "\u003e Nit: Can this return false at some time other than when |index| is kNoMatch?\n\nNo\n\n\u003e [...]in which case equality-checking for that (and reversing the conditional) might be clearer than HasMatchAt() (which implies the index can be out-of-range).\n\nGiven that HasMatchAt generally functions as \"!\u003d kNoMatch\", it doesn\u0027t imply that to me when I read it. To me it\u0027s simply a more readable way of saying this is a valid location of a match. Whereas I think I\u0027d have to think slightly to interpret \"index !\u003d kNoMatch\".\n\nI also prefer having the thing I\u0027m really trying to do first. Obviously if there was a big block of code we could avoid indenting, it\u0027d make sense to have an early return. But for a simple thing like this, it feel much more natural. You wouldn\u0027t say to someone, \"Go to the store and if they don\u0027t have wheat bread, buy rye bread. But if they do, buy wheat bread.\"\n\nI did remove the else clause, though, per your comment in the other file. Happy to discuss further if this doesn\u0027t look right to you.",
+      "parentUuid": "ccc693d5_69457661",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb771fbf_069cead4",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9a24ea2f_4ff14eea",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-08T16:27:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb771fbf_069cead4",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15da229a_e380a6a4",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.h",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-06T02:59:29Z",
       "side": 1,
       "message": "Nit: It\u0027s confusing that we have some virtual non-overrides, then virtual overrides, then a virtual non-override, then non-virtual non-overrides.\n\nSuggestion: All overrides either first or last, all virtual non-overrides next to them, all non-virtuals last or first",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302bfaef_b067d690",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-08T16:27:35Z",
+      "side": 1,
+      "message": "Agreed. I\u0027ll address this in a follow-up CL.",
+      "parentUuid": "15da229a_e380a6a4",
       "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "acb8d391_92225bbc",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-08T16:27:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f592fff_18ce1825",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be1772ce_fa0929cc",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
         "patchSetId": 4
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "94dc8553_4c06e925",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-08T16:27:35Z",
+      "side": 1,
+      "message": "Setting and checking some non-default index value tests that the test result view was selected in the model. Introduced a constant to hopefully make this seem less arbitrary or mysterious.",
+      "parentUuid": "be1772ce_fa0929cc",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30d78722_721eb555",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
         "patchSetId": 4
@@ -150,6 +276,24 @@
       "writtenOn": "2017-09-06T02:59:29Z",
       "side": 1,
       "message": "Nit: Is resetting all these scoped pointers manually necessary?",
+      "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7909e7_6c29c88f",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-08T16:27:35Z",
+      "side": 1,
+      "message": "Resetting widget_ is necessary or something goes wrong in its lifecycle (I forget what exactly) and the test crashes. So I added the other two for consistency, but I guess that muddies the waters a bit. Removed those so it\u0027s clearer that resetting widget_ is the point of this TearDown.",
+      "parentUuid": "30d78722_721eb555",
       "revId": "e5858bebf6e0b214477455e7940d4bf43193c115",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
