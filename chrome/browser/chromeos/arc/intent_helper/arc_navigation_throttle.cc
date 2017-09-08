@@ -49,6 +49,20 @@ bool ShouldOverrideUrlLoading(const GURL& previous_url,
     return false;
   }
 
+  // Special case so "https://play.google.com/app_name" links can trigger the
+  // intent picker even if the domain for both the |previous_url| and
+  // |current_url| is "google.com".
+  if (current_url.host_piece() == base::StringPiece("play.google.com") &&
+      net::registry_controlled_domains::GetDomainAndRegistry(
+          previous_url,
+          net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES) ==
+          base::StringPiece("google.com") &&
+      net::registry_controlled_domains::GetDomainAndRegistry(
+          current_url,
+          net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES) ==
+          base::StringPiece("google.com"))
+    return true;
+
   return !net::registry_controlled_domains::SameDomainOrHost(
       current_url, previous_url,
       net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES);
