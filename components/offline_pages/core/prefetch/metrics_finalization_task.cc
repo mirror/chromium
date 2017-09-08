@@ -93,6 +93,30 @@ bool MarkUrlAsZombie(sql::Connection* db,
   return statement.Run();
 }
 
+void LogStateCountMetrics(PrefetchItemState state, int count) {
+  // The histogram below is an expansion of the UMA_HISTOGRAM_ENUMERATION
+  // macro adapted to allow for setting a count.
+  // Note: The factory creates and owns the histogram.
+  base::HistogramBase* histogram = base::LinearHistogram::FactoryGet(
+      "OfflinePages.Prefetching.StateCounts", 1,
+      static_cast<int>(PrefetchItemState::MAX),
+      static_cast<int>(PrefetchItemState::MAX) + 1,
+      base::HistogramBase::kUmaTargetedHistogramFlag);
+  histogram->AddCount(static_cast<int>(state), count);
+}
+
+void CountEntriesInEachState(sql::Connection* db) {
+  static const char kSql[] =
+      "SELECT state, COUNT (*) FROM prefetch_items GROUP BY state";
+  sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
+  while (statement.Step()) {
+    PrefetchItemState state =
+        static_cast<PrefetchItemState>(statement.ColumnInt(0));
+    int count = statement.ColumnInt(1);
+    LogStateCountMetrics(state, count);
+  }
+}
+
 // These constants represent important indexes in the
 // OfflinePrefetchArchiveActualSizeVsExpected histogram enum.
 const int kEnumZeroArchiveBodyLength = 0;
@@ -185,6 +209,11 @@ bool ReportMetricsAndFinalizeSync(sql::Connection* db) {
   sql::Transaction transaction(db);
   if (!transaction.Begin())
     return false;
+
+  // Gather metrics about the current number of entries with each state.  Check
+  // before zombification so that we will be able to see entries in the finished
+  // state, otherwise we will only see zombies, never finished entries.
+  CountEntriesInEachState(db);
 
   const std::vector<PrefetchItemStats> urls = FetchUrlsSync(db);
 
