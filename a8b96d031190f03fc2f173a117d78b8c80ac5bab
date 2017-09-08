@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e2e141b_8c48f625",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-08T18:03:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6ea2d22_9b415764",
+      "revId": "a8b96d031190f03fc2f173a117d78b8c80ac5bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87ad6ef8_11a6e9d0",
         "filename": "chrome/browser/extensions/api/notifications/extension_notification_handler.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "a8b96d031190f03fc2f173a117d78b8c80ac5bab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ceecc63_654447f4",
+        "filename": "chrome/browser/extensions/api/notifications/extension_notification_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-08T18:03:27Z",
+      "side": 1,
+      "message": "This overrides an interface, which has them defined correctly.",
+      "parentUuid": "87ad6ef8_11a6e9d0",
+      "revId": "a8b96d031190f03fc2f173a117d78b8c80ac5bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "884db236_254f246e",
+        "filename": "chrome/browser/extensions/api/notifications/extension_notification_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-08T18:03:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "599d2d39_d2085c91",
+      "revId": "a8b96d031190f03fc2f173a117d78b8c80ac5bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0acb2a7c_bae5fcb0",
         "filename": "chrome/browser/extensions/api/notifications/extension_notification_handler_unittest.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "867996bc_008dce2e",
+        "filename": "chrome/browser/extensions/api/notifications/extension_notification_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-08T18:03:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0acb2a7c_bae5fcb0",
+      "revId": "a8b96d031190f03fc2f173a117d78b8c80ac5bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c76960f_033600eb",
         "filename": "chrome/browser/notifications/non_persistent_notification_handler.h",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "a8b96d031190f03fc2f173a117d78b8c80ac5bab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe76364_12ce9861",
+        "filename": "chrome/browser/notifications/non_persistent_notification_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-08T18:03:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2c76960f_033600eb",
+      "revId": "a8b96d031190f03fc2f173a117d78b8c80ac5bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
