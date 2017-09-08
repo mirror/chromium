@@ -31,7 +31,11 @@ constexpr SkColor kHighlightBackgroundAlpha = 0x80;
 constexpr SkColor kLabelBackgroundColor = SK_ColorWHITE;
 constexpr SkColor kLabelEnabledColor = SK_ColorBLACK;
 
-// Height of the label.
+// Width of the cannot snap label.
+constexpr int kCannotSnapLabelYLocationDp = 20;
+constexpr int kCannotSnapLabelWidthDp = 200;
+
+// Height of the labels.
 constexpr int kLabelHeightDp = 40;
 
 // Creates the widget responsible for displaying the indicators.
@@ -83,9 +87,10 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
     AddChildView(right_hightlight_view_);
 
     // Function for creating the two labels.
-    auto label_creator = []() {
+    auto label_creator = [](bool snap_label) {
       auto* label = new views::Label(
-          l10n_util::GetStringUTF16(IDS_ASH_SPLIT_VIEW_GUIDANCE),
+          snap_label ? l10n_util::GetStringUTF16(IDS_ASH_SPLIT_VIEW_CANNOT_SNAP)
+                     : l10n_util::GetStringUTF16(IDS_ASH_SPLIT_VIEW_GUIDANCE),
           views::style::CONTEXT_LABEL);
       label->SetEnabledColor(kLabelEnabledColor);
       label->SetBackgroundColor(kLabelBackgroundColor);
@@ -93,10 +98,13 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
       label->layer()->SetFillsBoundsOpaquely(false);
       return label;
     };
-    left_label_ = label_creator();
-    right_label_ = label_creator();
+    left_label_ = label_creator(false);
+    right_label_ = label_creator(false);
     left_hightlight_view_->AddChildView(left_label_);
     right_hightlight_view_->AddChildView(right_label_);
+
+    cannot_snap_label_ = label_creator(true);
+    AddChildView(cannot_snap_label_);
   }
 
   ~SplitViewOverviewOverlayView() override = default;
@@ -115,6 +123,32 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
         ComputeRotateAroundCenterTransform(label_bounds, false));
     right_label_->SetTransform(
         ComputeRotateAroundCenterTransform(label_bounds, true));
+
+    cannot_snap_label_->SetBounds(width() / 2 - kCannotSnapLabelWidthDp / 2,
+                                  kCannotSnapLabelYLocationDp,
+                                  kCannotSnapLabelWidthDp, kLabelHeightDp);
+  }
+
+  void SetVisibilityBasedOnIndicatorType(IndicatorType indicator_type) {
+    switch (indicator_type) {
+      case NONE:
+        left_hightlight_view_->SetVisible(false);
+        right_hightlight_view_->SetVisible(false);
+        cannot_snap_label_->SetVisible(false);
+        return;
+      case DRAG_AREA:
+        left_hightlight_view_->SetVisible(true);
+        right_hightlight_view_->SetVisible(true);
+        cannot_snap_label_->SetVisible(false);
+        return;
+      case CANNOT_SNAP:
+        left_hightlight_view_->SetVisible(false);
+        right_hightlight_view_->SetVisible(false);
+        cannot_snap_label_->SetVisible(true);
+        return;
+    }
+
+    NOTREACHED();
   }
 
  private:
@@ -122,6 +156,7 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
   views::View* right_hightlight_view_ = nullptr;
   views::Label* left_label_ = nullptr;
   views::Label* right_label_ = nullptr;
+  views::Label* cannot_snap_label_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(SplitViewOverviewOverlayView);
 };
@@ -134,12 +169,20 @@ SplitViewOverviewOverlay::SplitViewOverviewOverlay() {
 
 SplitViewOverviewOverlay::~SplitViewOverviewOverlay() {}
 
-void SplitViewOverviewOverlay::SetVisible(bool visible,
-                                          const gfx::Point& event_location) {
+void SplitViewOverviewOverlay::SetIndicatorType(
+    IndicatorType indicator_type,
+    const gfx::Point& event_location) {
+  if (indicator_type == current_indicator_type_)
+    return;
+
+  current_indicator_type_ = indicator_type;
   // Only show the overlay if nothing is snapped.
   if (Shell::Get()->split_view_controller()->state() !=
-          SplitViewController::NO_SNAP ||
-      !visible) {
+      SplitViewController::NO_SNAP) {
+    current_indicator_type_ = NONE;
+  }
+  const bool visible = current_indicator_type_ != NONE;
+  if (!visible) {
     widget_->Hide();
     return;
   }
@@ -155,10 +198,7 @@ void SplitViewOverviewOverlay::SetVisible(bool visible,
   }
   widget_->SetBounds(root_window->GetBoundsInScreen());
   widget_->Show();
-}
-
-bool SplitViewOverviewOverlay::visible() const {
-  return widget_->IsVisible();
+  overlay_view_->SetVisibilityBasedOnIndicatorType(current_indicator_type_);
 }
 
 }  // namespace ash
