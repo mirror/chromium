@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_CONTEXTUAL_SEARCH_BROWSER_CONTEXTUAL_SEARCH_JS_API_HANDLER_H_
-#define COMPONENTS_CONTEXTUAL_SEARCH_BROWSER_CONTEXTUAL_SEARCH_JS_API_HANDLER_H_
+#ifndef COMPONENTS_CONTEXTUAL_SEARCH_BROWSER_CONTEXTUAL_SEARCH_API_HANDLER_H_
+#define COMPONENTS_CONTEXTUAL_SEARCH_BROWSER_CONTEXTUAL_SEARCH_API_HANDLER_H_
 
 #include <string>
 
@@ -12,21 +12,24 @@
 namespace contextual_search {
 
 // Interface that the Contextual Search Renderer uses to call back to
-// the browser to handle its JavaScript API.
-class ContextualSearchJsApiHandler {
+// the browser to handle its mojo service API.
+class ContextualSearchApiHandler {
  public:
-  ContextualSearchJsApiHandler() {}
-  virtual ~ContextualSearchJsApiHandler() {}
+  ContextualSearchApiHandler() {}
+  virtual ~ContextualSearchApiHandler() {}
 
   // Set the caption in the Contextual Search Bar, and indicate whether
   // the caption provides an answer (such as an actual definition), rather than
   // just general notification of what kind of answer may be available.
   virtual void SetCaption(std::string caption, bool does_answer) = 0;
 
+  // TODO(donnd): add params !!!!!!!!!!!!!!!!!!!
+  virtual void ShowUnhandledTapUIIfNeeded() = 0;
+
  private:
-  DISALLOW_COPY_AND_ASSIGN(ContextualSearchJsApiHandler);
+  DISALLOW_COPY_AND_ASSIGN(ContextualSearchApiHandler);
 };
 
 }  // namespace contextual_search
 
-#endif  // COMPONENTS_CONTEXTUAL_SEARCH_BROWSER_CONTEXTUAL_SEARCH_JS_API_HANDLER_H_
+#endif  // COMPONENTS_CONTEXTUAL_SEARCH_BROWSER_CONTEXTUAL_SEARCH_API_HANDLER_H_

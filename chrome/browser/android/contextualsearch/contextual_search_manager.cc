@@ -17,6 +17,7 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "components/contextual_search/browser/contextual_search_js_api_service_impl.h"
+#include "components/contextual_search/browser/contextual_search_unhandled_tap_service_impl.h"
 #include "components/contextual_search/common/overlay_page_notifier_service.mojom.h"
 #include "components/navigation_interception/intercept_navigation_delegate.h"
 #include "components/variations/variations_associated_data.h"
@@ -28,6 +29,8 @@
 #include "net/url_request/url_fetcher_impl.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
+
+#include "third_party/WebKit/public/web/unhandled_tap_info.mojom.h"
 
 using base::android::JavaParamRef;
 using base::android::JavaRef;
@@ -42,16 +45,22 @@ class ContextualSearchObserver : public content::WebContentsObserver,
  public:
   ContextualSearchObserver(
       content::WebContents* contents,
-      contextual_search::ContextualSearchJsApiHandler* api_handler)
+      contextual_search::ContextualSearchApiHandler* api_handler)
       : content::WebContentsObserver(contents) {
+    DVLOG(0) << "ctxs native WebContentsOvserver binding js...";
     registry_.AddInterface(base::Bind(
         &contextual_search::CreateContextualSearchJsApiService, api_handler));
+    DVLOG(0) << "ctxs trying to bind tap.";
+    registry_.AddInterface(base::Bind(
+        &contextual_search::CreateContextualSearchUnhandledTapService,
+        api_handler));
+    DVLOG(0) << "ctxs binding complete.";
   }
   ~ContextualSearchObserver() override = default;
 
   static void EnsureForWebContents(
       content::WebContents* contents,
-      contextual_search::ContextualSearchJsApiHandler* api_handler) {
+      contextual_search::ContextualSearchApiHandler* api_handler) {
     // Clobber any prior registered observer.
     contents->SetUserData(
         kContextualSearchObserverKey,
@@ -64,6 +73,7 @@ class ContextualSearchObserver : public content::WebContentsObserver,
       content::RenderFrameHost* render_frame_host,
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle* interface_pipe) override {
+    DVLOG(0) << "ctxs OnInterfaceRequestFromFrame interface_name " << interface_name;
     registry_.TryBindInterface(interface_name, interface_pipe);
   }
 
@@ -91,6 +101,11 @@ ContextualSearchManager::ContextualSearchManager(JNIEnv* env,
                  base::Unretained(this)),
       base::Bind(&ContextualSearchManager::OnTextSurroundingSelectionAvailable,
                  base::Unretained(this))));
+
+  DVLOG(0) << "ctxs CSM startup...";
+//  unhandled_tap_service_.reset(new contextual_search::ContextualSearchUnhandledTapServiceImpl(this));
+
+//  service_manager::BinderRegistry registry;
 }
 
 ContextualSearchManager::~ContextualSearchManager() {
@@ -236,4 +251,8 @@ void ContextualSearchManager::SetCaption(std::string caption,
       base::android::ConvertUTF8ToJavaString(env, caption.c_str());
   Java_ContextualSearchManager_onSetCaption(env, java_manager_, j_caption,
                                             does_answer);
+}
+
+void ContextualSearchManager::ShowUnhandledTapUIIfNeeded() {
+  DVLOG(0) << "ctxs CSM native got ShowUnhandled!!!!!!!!!!!!!";
 }

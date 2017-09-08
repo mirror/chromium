@@ -99,7 +99,7 @@ components/browser_watcher/features.h
 components/browser_watcher/stability_paths.h
 components/cast_certificate/cast_crl_root_ca_cert_der-inc.h
 components/cdm/browser/cdm_message_filter_android.h
-components/contextual_search/browser/contextual_search_js_api_handler.h
+components/contextual_search/browser/contextual_search_api_handler.h
 components/cryptauth/connection_finder.h
 components/cryptauth/connection_observer.h
 components/data_reduction_proxy/core/browser/data_use_group.h

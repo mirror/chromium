@@ -60,6 +60,9 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 
+import org.chromium.services.service_manager.InterfaceFactory;
+// import org.chromium.blink.mojom.UnhandledTapNotifierService;
+
 /**
  * Manager for the Contextual Search feature. This class keeps track of the status of Contextual
  * Search and coordinates the control with the layout.
@@ -263,6 +266,10 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
         mInternalStateController.reset(StateChangeReason.UNKNOWN);
 
         listenForTabModelSelectorNotifications();
+
+        // TODO(donnd): mojo
+        //   registry.addInterface(UnhandledTapNotifierService.MANAGER, new
+        //   UnhandledTapNotifierServiceImpl.Factory());
     }
 
     /**
@@ -1206,10 +1213,27 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
 
     @Override
     public void showUnhandledTapUIIfNeeded(final int x, final int y) {
+        System.out.println("ctxs showUnhandledTapUIIfNeeded!!!!!!!!!");
         if (!isOverlayVideoMode()) {
             mSelectionController.handleShowUnhandledTapUIIfNeeded(x, y);
         }
     }
+
+    // TODO(donnd): move!!!!!!!!!!!!!????????
+
+    /**
+     * A factory class to register UnhandledTapNotifierService interface.
+     */
+    /*  TODO(donnd): mojo
+    public static class Factory implements InterfaceFactory<UnhandledTapNotifierService> {
+        public Factory() {}
+
+        @Override
+        public UnhandledTapNotifierService createImpl() {
+            return new UnhandledTapNotifierServiceImpl();
+        }
+    }
+    */
 
     @Override
     public void selectWordAroundCaretAck(boolean didSelect, int startAdjust, int endAdjust) {

@@ -11,6 +11,7 @@
 #include "core/dom/Document.h"
 #include "core/editing/suggestion/TextSuggestionBackendImpl.h"
 #include "core/exported/WebSharedWorkerImpl.h"
+#include "core/exported/WebUnhandledTapInfo.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
 #include "core/frame/WebLocalFrameImpl.h"
@@ -140,6 +141,8 @@ void ModulesInitializer::InitLocalFrame(LocalFrame& frame) const {
   if (frame.IsMainFrame()) {
     frame.GetInterfaceRegistry()->AddInterface(WTF::Bind(
         &CopylessPasteServer::BindMojoRequest, WrapWeakPersistent(&frame)));
+    frame.GetInterfaceRegistry()->AddInterface(WTF::Bind(
+        &WebUnhandledTapInfo::BindMojoRequest, WrapWeakPersistent(&frame)));
   }
   frame.GetInterfaceRegistry()->AddInterface(
       WTF::Bind(&InstallationServiceImpl::Create, WrapWeakPersistent(&frame)));
