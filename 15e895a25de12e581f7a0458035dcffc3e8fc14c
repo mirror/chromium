@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e67c3b79_20d99049",
+        "filename": "media/filters/decoder_stream_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-08T21:34:39Z",
+      "side": 1,
+      "message": "The size of this set should be capped. I\u0027m not sure exactly what scenarios it could become large it, but it certainly can accumulate dead entries when playback starts on non-keyframes.",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 15
+      },
+      "revId": "15e895a25de12e581f7a0458035dcffc3e8fc14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a149b69f_b8d0edfd",
+        "filename": "media/filters/decoder_stream_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-08T21:34:39Z",
+      "side": 1,
+      "message": "I think this would be more clear if the return value was treated more like \u0027success\u0027, that is, drop if the return value is false.",
+      "range": {
+        "startLine": 189,
+        "startChar": 11,
+        "endLine": 189,
+        "endChar": 15
+      },
+      "revId": "15e895a25de12e581f7a0458035dcffc3e8fc14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90ff0e5_c911c44d",
+        "filename": "media/filters/decoder_stream_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-08T21:34:39Z",
+      "side": 1,
+      "message": "Return value should be documented.",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "15e895a25de12e581f7a0458035dcffc3e8fc14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
