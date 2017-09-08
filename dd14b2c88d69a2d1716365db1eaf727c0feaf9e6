@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fba4c80c_8073507d",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-08T16:44:09Z",
+      "side": 1,
+      "message": "nit: |new_contents|",
+      "range": {
+        "startLine": 1554,
+        "startChar": 23,
+        "endLine": 1554,
+        "endChar": 36
+      },
+      "revId": "dd14b2c88d69a2d1716365db1eaf727c0feaf9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
