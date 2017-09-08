@@ -3500,6 +3500,11 @@ FragmentData& LayoutObject::MutableForPainting::EnsureFirstFragment() {
   return layout_object_.EnsureRarePaintData().EnsureFragment();
 }
 
+void LayoutObject::MutableForPainting::ClearFirstFragment() {
+  if (auto* paint_data = layout_object_.GetRarePaintData())
+    paint_data->ClearFragment();
+}
+
 void LayoutObject::InvalidatePaintForSelection() {
   // setSelectionState() propagates the state up the containing block chain to
   // tell if a block contains selected nodes or not. If this layout object is
