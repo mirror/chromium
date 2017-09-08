@@ -119,6 +119,15 @@ static SelectionMode ComputeSelectionMode(
   return SelectionMode::kBlockCursor;
 }
 
+// TODO(yoichio): Once we have Position::IsValidFor, use it.
+static bool IsPositionValidFor(const PositionInFlatTree& position,
+                               const Document& document) {
+  if (position.GetDocument() != document)
+    return false;
+
+  return FlatTreeTraversal::Contains(document, *position.AnchorNode());
+}
+
 static EphemeralRangeInFlatTree CalcSelectionInFlatTree(
     const FrameSelection& frame_selection) {
   const SelectionInDOMTree& selection_in_dom =
@@ -131,7 +140,11 @@ static EphemeralRangeInFlatTree CalcSelectionInFlatTree(
           ToPositionInFlatTree(selection_in_dom.Base());
       const PositionInFlatTree& extent =
           ToPositionInFlatTree(selection_in_dom.Extent());
-      if (base.IsNull() || extent.IsNull() || base == extent)
+      if (base.IsNull() ||
+          !IsPositionValidFor(base, frame_selection.GetDocument()) ||
+          extent.IsNull() ||
+          !IsPositionValidFor(extent, frame_selection.GetDocument()) ||
+          base == extent)
         return {};
       return base <= extent ? EphemeralRangeInFlatTree(base, extent)
                             : EphemeralRangeInFlatTree(extent, base);
