@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e2a3489_53acb059",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-08T10:15:32Z",
+      "side": 1,
+      "message": "Yeah, this is nifty, I took the idea from cppreference: http://en.cppreference.com/w/cpp/container/map/insert#Notes\n\nShould be irrelevant now though, I created a protected method that also returns pair\u003citerator, bool\u003e for the hinted versions.",
+      "parentUuid": "efc1e17f_0f310691",
+      "revId": "dbedd697d6d00bd70c38c730e8994b344c52252e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cb1bddc_17b31a29",
         "filename": "base/containers/flat_map.h",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "083d57e2_6b1df05f",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-08T10:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cb1bddc_17b31a29",
+      "revId": "dbedd697d6d00bd70c38c730e8994b344c52252e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a0e36ea_4f41bfe8",
         "filename": "base/containers/flat_map_unittest.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-07T23:44:50Z",
       "side": 1,
       "message": "How much do insert/emplace/insert_assign/try_emplace tests differ? Can we make them into a generic test? If you feel like this is more work than you willing to do, I\u0027m ok with that.",
+      "revId": "dbedd697d6d00bd70c38c730e8994b344c52252e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d848ec_ef38e3c9",
+        "filename": "base/containers/flat_map_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-08T10:15:32Z",
+      "side": 1,
+      "message": "Given that these tests are split across flat_map and flat_tree we would probably need to factor this out into a third file. I didn\u0027t check how much work this actually would be, but maybe we can leave this for a future CL?",
+      "parentUuid": "8a0e36ea_4f41bfe8",
       "revId": "dbedd697d6d00bd70c38c730e8994b344c52252e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

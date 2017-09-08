@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81bf4cc3_410b6d4e",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-08T10:15:32Z",
+      "side": 1,
+      "message": "SFINAE is necessary here, as otherwise m.try_emplace(m.end(), std::move(key), std::move(val)) would also call this version. I added it to the other try_emplace method for consistency, even though it probably is not strictly necessary there.",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 45
+      },
+      "revId": "cc4fe3365360bb59d90afc36b044b5040f69564b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19981978_37239c3a",
+        "filename": "base/containers/flat_tree.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-08T10:15:32Z",
+      "side": 1,
+      "message": "There are quite powerful and generic, most insertion methods now dispatch to them (except operator[]). I took the naming from libc++: https://github.com/llvm-mirror/libcxx/blob/11762b4acd1fc19fb8f6d0015b339ad6b9c8f2f5/include/__tree#L2122",
+      "range": {
+        "startLine": 342,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 0
+      },
+      "revId": "cc4fe3365360bb59d90afc36b044b5040f69564b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
