@@ -62,8 +62,7 @@ class NetworkLocationProvider : public LocationProvider {
   };
 
   NetworkLocationProvider(
-      const scoped_refptr<net::URLRequestContextGetter>& context,
-      const GURL& url);
+      const scoped_refptr<net::URLRequestContextGetter>& context);
   ~NetworkLocationProvider() override;
 
   // LocationProvider implementation
@@ -111,7 +110,7 @@ class NetworkLocationProvider : public LocationProvider {
 
   bool is_new_data_available_;
 
-  // The network location request object, and the url it uses.
+  // The network location request object.
   const std::unique_ptr<NetworkLocationRequest> request_;
 
   // The cache of positions.
@@ -127,8 +126,7 @@ class NetworkLocationProvider : public LocationProvider {
 // Factory functions for the various types of location provider to abstract
 // over the platform-dependent implementations.
 DEVICE_GEOLOCATION_EXPORT LocationProvider* NewNetworkLocationProvider(
-    const scoped_refptr<net::URLRequestContextGetter>& context,
-    const GURL& url);
+    const scoped_refptr<net::URLRequestContextGetter>& context);
 
 }  // namespace device
 
