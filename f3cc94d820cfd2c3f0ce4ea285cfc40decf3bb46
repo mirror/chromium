@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69edcfed_a1c35e0b",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1346,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-08T21:10:30Z",
+      "side": 1,
+      "message": "I don\u0027t like this function to be defined here. This is the behavior of \"normal\u0027 defined for each particular layout model. Actually, in the case of the Self Alignment properties, it\u0027s a virtual method override by the different classes.",
+      "revId": "f3cc94d820cfd2c3f0ce4ea285cfc40decf3bb46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39323c1_efc08a98",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1347,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-08T21:10:30Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "f3cc94d820cfd2c3f0ce4ea285cfc40decf3bb46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
