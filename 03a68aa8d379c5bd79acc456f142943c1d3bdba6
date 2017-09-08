@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e55d280_dfd8c3d9",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-08T22:38:21Z",
+      "side": 1,
+      "message": "You should update this comment",
+      "range": {
+        "startLine": 8,
+        "startChar": 39,
+        "endLine": 8,
+        "endChar": 46
+      },
+      "revId": "03a68aa8d379c5bd79acc456f142943c1d3bdba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
