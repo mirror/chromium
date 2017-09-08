@@ -30,7 +30,7 @@ uint32_t GetDumpsSumKb(const std::string& pattern,
   for (const auto& kv : pmd.allocator_dumps()) {
     auto name = base::StringPiece(kv.first);
     if (base::MatchPattern(name, pattern)) {
-      sum += kv.second->GetSizeInternal();
+      sum += kv.second->GetSizeInBytes();
     }
   }
   return sum / 1024;
