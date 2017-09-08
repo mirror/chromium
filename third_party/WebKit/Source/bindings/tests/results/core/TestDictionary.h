@@ -52,6 +52,14 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   ScriptValue anyMember() const;
   void setAnyMember(ScriptValue);
 
+  bool hasApplicableToTypeLongMember() const;
+  int32_t applicableToTypeLongMember() const;
+  void setApplicableToTypeLongMember(int32_t);
+
+  bool hasApplicableToTypeStringMember() const;
+  const String& applicableToTypeStringMember() const;
+  void setApplicableToTypeStringMember(const String&);
+
   bool hasBooleanMember() const;
   bool booleanMember() const;
   void setBooleanMember(bool);
@@ -207,6 +215,7 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
 
  private:
   bool has_any_in_record_member_ = false;
+  bool has_applicable_to_type_long_member_ = false;
   bool has_boolean_member_ = false;
   bool has_create_member_ = false;
   bool has_double_or_null_member_ = false;
@@ -228,6 +237,8 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
 
   Vector<std::pair<String, ScriptValue>> any_in_record_member_;
   ScriptValue any_member_;
+  int32_t applicable_to_type_long_member_;
+  String applicable_to_type_string_member_;
   bool boolean_member_;
   bool create_member_;
   Dictionary dictionary_member_;

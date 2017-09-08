@@ -59,6 +59,26 @@ ScriptValue TestDictionary::anyMember() const {
 void TestDictionary::setAnyMember(ScriptValue value) {
   any_member_ = value;
 }
+bool TestDictionary::hasApplicableToTypeLongMember() const {
+  return has_applicable_to_type_long_member_;
+}
+int32_t TestDictionary::applicableToTypeLongMember() const {
+  DCHECK(has_applicable_to_type_long_member_);
+  return applicable_to_type_long_member_;
+}
+void TestDictionary::setApplicableToTypeLongMember(int32_t value) {
+  applicable_to_type_long_member_ = value;
+  has_applicable_to_type_long_member_ = true;
+}
+bool TestDictionary::hasApplicableToTypeStringMember() const {
+  return !applicable_to_type_string_member_.IsNull();
+}
+const String& TestDictionary::applicableToTypeStringMember() const {
+  return applicable_to_type_string_member_;
+}
+void TestDictionary::setApplicableToTypeStringMember(const String& value) {
+  applicable_to_type_string_member_ = value;
+}
 bool TestDictionary::hasBooleanMember() const {
   return has_boolean_member_;
 }
