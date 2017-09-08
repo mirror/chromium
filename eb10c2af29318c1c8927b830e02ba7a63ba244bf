@@ -22,6 +22,30 @@
       "revId": "eb10c2af29318c1c8927b830e02ba7a63ba244bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f097495b_1be40abd",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-08T22:12:14Z",
+      "side": 1,
+      "message": "Can\u0027t do this because the SetArrowPaintType has to be after the bubble is created :/",
+      "parentUuid": "02c5d67e_134886c8",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 62
+      },
+      "revId": "eb10c2af29318c1c8927b830e02ba7a63ba244bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
