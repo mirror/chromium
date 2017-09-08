@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b6e5067_92bf7a05",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-08T04:32:53Z",
+      "side": 1,
+      "message": "This may be redundant as you are calling setContextBarState below.",
+      "range": {
+        "startLine": 939,
+        "startChar": 2,
+        "endLine": 947,
+        "endChar": 47
+      },
+      "revId": "5f819323fd45f40484708ac679c528bf3236884c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5afb44f_01995bfe",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-08T04:32:53Z",
+      "side": 1,
+      "message": "Can you verify that the context bar stays in default state after you click new folder? Here and at the end of the test?",
+      "range": {
+        "startLine": 1324,
+        "startChar": 0,
+        "endLine": 1324,
+        "endChar": 32
+      },
+      "revId": "5f819323fd45f40484708ac679c528bf3236884c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
