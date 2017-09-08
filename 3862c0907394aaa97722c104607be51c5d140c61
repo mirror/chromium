@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "66092b00_12bba782",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-08T21:04:05Z",
+      "side": 1,
+      "message": "I think non-googlers don\u0027t have access to screenshot.googleplex.com but makes sense to attach it to the bug instead.",
+      "parentUuid": "c94749a1_b1cff4ac",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 45
+      },
+      "revId": "3862c0907394aaa97722c104607be51c5d140c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c095a07_e2b4c4a7",
         "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "3862c0907394aaa97722c104607be51c5d140c61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7f32af_186c5b00",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-08T21:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c095a07_e2b4c4a7",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 3
+      },
+      "revId": "3862c0907394aaa97722c104607be51c5d140c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
