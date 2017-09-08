@@ -15,6 +15,10 @@
 #include "base/macros.h"
 #include "base/time/time.h"
 
+namespace ui {
+class GestureEvent;
+}  // namespace ui
+
 namespace ash {
 class WindowSelector;
 class WindowSelectorTest;
@@ -48,6 +52,11 @@ class ASH_EXPORT WindowSelectorController : public WindowSelectorDelegate {
   // Returns true if overview mode is restoring minimized windows so that they
   // are visible during overview mode.
   bool IsRestoringMinimizedWindows() const;
+
+  // Called when the overview button tray has been long pressed. Enters
+  // splitview mode if the active window is snappable. Also enters overview mode
+  // if device is not currently in overview mode.
+  void OnOverviewButtonTrayLongPressed(ui::GestureEvent* event);
 
   // Gets the windows list that are shown in the overview windows grids if the
   // overview mode is active for testing.
