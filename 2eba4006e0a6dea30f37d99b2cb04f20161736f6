@@ -202,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "bdfc7d35_8260b2d0",
+        "filename": "ios/web_view/public/cwv_ui_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-08T01:14:38Z",
+      "side": 1,
+      "message": "OK, I will make that change.\n\nDo you want me to make the similar change to WebStateDelegate too? (i.e., to introduce an equivalent of WKPreviewElementInfo in that layer too?) Or is it OK to directly pass GURL there?",
+      "parentUuid": "ff7a0498_7b13c2b6",
+      "range": {
+        "startLine": 68,
+        "startChar": 37,
+        "endLine": 68,
+        "endChar": 61
+      },
+      "revId": "2eba4006e0a6dea30f37d99b2cb04f20161736f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68464973_ca60f72b",
         "filename": "ios/web_view/public/cwv_ui_delegate.h",
         "patchSetId": 1
