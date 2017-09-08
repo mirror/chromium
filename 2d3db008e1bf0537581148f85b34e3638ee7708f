@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f253c4c_94f8337a",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 10002,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-08T14:27:04Z",
+      "side": 1,
+      "message": "nit: What is actually changed in this line? I\u0027m afraid you may be unintentionally rolling back the UTF-8 character fix that was made in http://crrev.com/9d21825f1529a2fbc9712701474831a7e33b2e71.",
+      "range": {
+        "startLine": 10002,
+        "startChar": 6,
+        "endLine": 10002,
+        "endChar": 144
+      },
+      "revId": "2d3db008e1bf0537581148f85b34e3638ee7708f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
