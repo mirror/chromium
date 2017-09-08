@@ -42,6 +42,7 @@ namespace {
 base::MemoryMappedFile* g_mapped_natives = nullptr;
 base::MemoryMappedFile* g_mapped_snapshot = nullptr;
 base::MemoryMappedFile* g_mapped_v8_context_snapshot = nullptr;
+v8::StartupData* g_existing_blob = nullptr;
 
 const char kV8ContextSnapshotFileName[] = "v8_context_snapshot.bin";
 
@@ -237,6 +238,11 @@ void V8Initializer::LoadV8Snapshot() {
   // start up (slower) without the snapshot.
   UMA_HISTOGRAM_ENUMERATION("V8.Initializer.LoadV8Snapshot.Result", result,
                             V8_LOAD_MAX_VALUE);
+  if (result == V8_LOAD_SUCCESS) {
+    g_existing_blob = new v8::StartupData{
+        reinterpret_cast<const char*>(g_mapped_snapshot->data()),
+        g_mapped_snapshot->length()};
+  }
 }
 
 void V8Initializer::LoadV8Natives() {
@@ -364,6 +370,11 @@ void V8Initializer::GetV8ExternalSnapshotData(const char** natives_data_out,
                                               int* snapshot_size_out) {
   GetMappedFileData(g_mapped_natives, natives_data_out, natives_size_out);
   GetMappedFileData(g_mapped_snapshot, snapshot_data_out, snapshot_size_out);
+}
+
+// static
+v8::StartupData* V8Initializer::GetExistingBlob() {
+  return g_existing_blob;
 }
 
 // static
