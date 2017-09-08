@@ -35,7 +35,7 @@ PaymentRequestState::PaymentRequestState(
     content::BrowserContext* context,
     JourneyLogger* journey_logger)
     : is_ready_to_pay_(false),
-      polling_instruments_finished_(true),
+      get_all_instruments_finished_(true),
       is_waiting_for_merchant_validation_(false),
       app_locale_(app_locale),
       spec_(spec),
@@ -51,7 +51,7 @@ PaymentRequestState::PaymentRequestState(
       weak_ptr_factory_(this) {
   PopulateProfileCache();
   if (base::FeatureList::IsEnabled(features::kServiceWorkerPaymentApps)) {
-    polling_instruments_finished_ = false;
+    get_all_instruments_finished_ = false;
     content::PaymentAppProvider::GetInstance()->GetAllPaymentApps(
         context, base::BindOnce(&PaymentRequestState::GetAllPaymentAppsCallback,
                                 weak_ptr_factory_.GetWeakPtr()));
@@ -67,8 +67,8 @@ void PaymentRequestState::GetAllPaymentAppsCallback(
   std::vector<GURL> requested_method_urls =
       spec_->url_payment_method_identifiers();
   if (apps.empty() || requested_method_urls.size() == 0) {
-    polling_instruments_finished_ = true;
-    NotifyOnPollPaymentInstrumentsFinished();
+    get_all_instruments_finished_ = true;
+    NotifyOnGetAllPaymentInstrumentsFinished();
     return;
   }
 
@@ -95,8 +95,8 @@ void PaymentRequestState::GetAllPaymentAppsCallback(
 
   SetDefaultProfileSelections();
 
-  polling_instruments_finished_ = true;
-  NotifyOnPollPaymentInstrumentsFinished();
+  get_all_instruments_finished_ = true;
+  NotifyOnGetAllPaymentInstrumentsFinished();
 
   if (can_make_payment_callback_)
     CheckCanMakePayment(std::move(can_make_payment_callback_));
@@ -133,7 +133,7 @@ void PaymentRequestState::OnSpecUpdated() {
 }
 
 void PaymentRequestState::CanMakePayment(CanMakePaymentCallback callback) {
-  if (!polling_instruments_finished_) {
+  if (!get_all_instruments_finished_) {
     can_make_payment_callback_ = std::move(callback);
     return;
   }
@@ -148,12 +148,6 @@ void PaymentRequestState::CheckCanMakePayment(CanMakePaymentCallback callback) {
   bool can_make_payment = false;
   for (const auto& instrument : available_instruments_) {
     if (instrument->IsValidForCanMakePayment()) {
-      // AddAutofillPaymentInstrument() filters out available instruments based
-      // on supported card networks (visa, amex) and types (credit, debit).
-      DCHECK(spec_->supported_card_networks_set().find(
-                 instrument->method_name()) !=
-                 spec_->supported_card_networks_set().end() ||
-             instrument->type() != PaymentInstrument::Type::AUTOFILL);
       can_make_payment = true;
       break;
     }
@@ -425,14 +419,14 @@ void PaymentRequestState::UpdateIsReadyToPayAndNotifyObservers() {
   NotifyOnSelectedInformationChanged();
 }
 
+void PaymentRequestState::NotifyOnGetAllPaymentInstrumentsFinished() {
+  for (auto& observer : observers_)
+    observer.OnGetAllPaymentInstrumentsFinished();
+}
+
 void PaymentRequestState::NotifyOnSelectedInformationChanged() {
   for (auto& observer : observers_)
     observer.OnSelectedInformationChanged();
-}
-
-void PaymentRequestState::NotifyOnPollPaymentInstrumentsFinished() {
-  for (auto& observer : observers_)
-    observer.OnPollPaymentInstrumentsFinished();
 }
 
 bool PaymentRequestState::ArePaymentDetailsSatisfied() {

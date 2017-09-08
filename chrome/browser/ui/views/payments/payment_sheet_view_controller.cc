@@ -383,12 +383,12 @@ void PaymentSheetViewController::OnSpecUpdated() {
   UpdateContentView();
 }
 
+void PaymentSheetViewController::OnGetAllPaymentInstrumentsFinished() {}
+
 void PaymentSheetViewController::OnSelectedInformationChanged() {
   UpdatePayButtonState(state()->is_ready_to_pay());
   UpdateContentView();
 }
-
-void PaymentSheetViewController::OnPollPaymentInstrumentsFinished() {}
 
 std::unique_ptr<views::Button>
 PaymentSheetViewController::CreatePrimaryButton() {

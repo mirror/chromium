@@ -110,8 +110,8 @@ class PaymentRequestDialogView : public views::DialogDelegateView,
   void OnSpecUpdated() override;
 
   // PaymentRequestState::Observer:
+  void OnGetAllPaymentInstrumentsFinished() override;
   void OnSelectedInformationChanged() override;
-  void OnPollPaymentInstrumentsFinished() override;
 
   void Pay();
   void GoBack();

@@ -77,7 +77,9 @@ PaymentRequestDialogView::PaymentRequestDialogView(
   AddChildView(view_stack_.get());
 
   SetupSpinnerOverlay();
-  if (!request->state()->is_polling_instruments_finished()) {
+  // Show spinner when getting all payment instruments. The spinner will be
+  // hided in OnGetAllPaymentInstrumentsFinished.
+  if (!request->state()->is_get_all_instruments_finished()) {
     ShowProcessingSpinner();
   }
 
@@ -170,11 +172,11 @@ void PaymentRequestDialogView::OnSpecUpdated() {
     observer_for_testing_->OnSpecDoneUpdating();
 }
 
-void PaymentRequestDialogView::OnSelectedInformationChanged() {}
-
-void PaymentRequestDialogView::OnPollPaymentInstrumentsFinished() {
+void PaymentRequestDialogView::OnGetAllPaymentInstrumentsFinished() {
   HideProcessingSpinner();
 }
+
+void PaymentRequestDialogView::OnSelectedInformationChanged() {}
 
 void PaymentRequestDialogView::Pay() {
   request_->Pay();

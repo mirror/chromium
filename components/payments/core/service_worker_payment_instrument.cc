@@ -6,9 +6,12 @@
 #include "base/strings/utf_string_conversions.h"
 
 namespace payments {
+
+// Service worker payment app provides icon through bitmap, so 0 is setted as
+// invalid resource Id.
 ServiceWorkerPaymentInstrument::ServiceWorkerPaymentInstrument(
     std::unique_ptr<content::StoredPaymentApp> stored_payment_app_info)
-    : PaymentInstrument("", 0, PaymentInstrument::Type::SERVICE_WORKER_APP),
+    : PaymentInstrument(0, PaymentInstrument::Type::SERVICE_WORKER_APP),
       stored_payment_app_info_(std::move(stored_payment_app_info)) {}
 
 ServiceWorkerPaymentInstrument::~ServiceWorkerPaymentInstrument() {}
@@ -32,7 +35,7 @@ base::string16 ServiceWorkerPaymentInstrument::GetMissingInfoLabel() const {
 }
 
 bool ServiceWorkerPaymentInstrument::IsValidForCanMakePayment() const {
-  // NOTIMPLEMENTED();
+  NOTIMPLEMENTED();
   return true;
 }
 

@@ -69,9 +69,13 @@ class AutofillPaymentInstrument
 
   autofill::CreditCard* credit_card() { return &credit_card_; }
 
+  const std::string& method_name() const { return method_name_; }
+
  private:
   // Generates the basic card response and sends it to the delegate.
   void GenerateBasicCardResponse();
+
+  const std::string method_name_;
 
   // A copy of the card is owned by this object.
   autofill::CreditCard credit_card_;

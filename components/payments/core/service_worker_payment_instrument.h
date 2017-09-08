@@ -10,6 +10,7 @@
 
 namespace payments {
 
+// Represents a service worker based payment app.
 class ServiceWorkerPaymentInstrument : public PaymentInstrument {
  public:
   ServiceWorkerPaymentInstrument(
@@ -37,6 +38,7 @@ class ServiceWorkerPaymentInstrument : public PaymentInstrument {
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerPaymentInstrument);
 };
+
 }  // namespace payments
 
 #endif  // COMPONENTS_PAYMENTS_CORE_SERVICE_WORKER_PAYMENT_INSTRUMENT_H_

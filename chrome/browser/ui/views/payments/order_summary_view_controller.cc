@@ -135,11 +135,11 @@ void OrderSummaryViewController::OnSpecUpdated() {
   UpdateContentView();
 }
 
+void OrderSummaryViewController::OnGetAllPaymentInstrumentsFinished() {}
+
 void OrderSummaryViewController::OnSelectedInformationChanged() {
   UpdatePayButtonState(state()->is_ready_to_pay());
 }
-
-void OrderSummaryViewController::OnPollPaymentInstrumentsFinished() {}
 
 std::unique_ptr<views::Button>
 OrderSummaryViewController::CreatePrimaryButton() {

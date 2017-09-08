@@ -44,11 +44,12 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   // notification about the state changing.
   class Observer {
    public:
+    // Called when finished getting all available payment instruments.
+    virtual void OnGetAllPaymentInstrumentsFinished() = 0;
+
     // Called when the information (payment method, address/contact info,
     // shipping option) changes.
     virtual void OnSelectedInformationChanged() = 0;
-
-    virtual void OnPollPaymentInstrumentsFinished() = 0;
 
    protected:
     virtual ~Observer() {}
@@ -95,8 +96,8 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   void OnStartUpdating(PaymentRequestSpec::UpdateReason reason) override {}
   void OnSpecUpdated() override;
 
-  // Returns whether the user has at least one instrument that satisfies the
-  // specified supported payment methods.
+  // Checks whether the user has at least one instrument that satisfies the
+  // specified supported payment methods asynchronously.
   void CanMakePayment(CanMakePaymentCallback callback);
 
   // Returns true if the payment methods that the merchant website have
@@ -178,8 +179,9 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
 
   bool is_ready_to_pay() { return is_ready_to_pay_; }
 
-  bool is_polling_instruments_finished() {
-    return polling_instruments_finished_;
+  // Checks whehter getting all available instruments is finished.
+  bool is_get_all_instruments_finished() {
+    return get_all_instruments_finished_;
   }
 
   const std::string& GetApplicationLocale();
@@ -213,10 +215,11 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   // required information is available. Will notify observers.
   void UpdateIsReadyToPayAndNotifyObservers();
 
+  // Notifies all observers that getting all payment instruments is finished.
+  void NotifyOnGetAllPaymentInstrumentsFinished();
+
   // Notifies all observers that selected information has changed.
   void NotifyOnSelectedInformationChanged();
-
-  void NotifyOnPollPaymentInstrumentsFinished();
 
   // Returns whether the selected data satisfies the PaymentDetails requirements
   // (payment methods).
@@ -227,11 +230,14 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
 
   void GetAllPaymentAppsCallback(content::PaymentAppProvider::PaymentApps apps);
 
+  // Checks whether the user has at least one instrument that satisfies the
+  // specified supported payment methods and call the |callback| to return the
+  // result.
   void CheckCanMakePayment(CanMakePaymentCallback callback);
 
   bool is_ready_to_pay_;
 
-  bool polling_instruments_finished_;
+  bool get_all_instruments_finished_;
 
   // Whether the data is currently being validated by the merchant.
   bool is_waiting_for_merchant_validation_;

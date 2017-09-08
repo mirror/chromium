@@ -67,17 +67,13 @@ class PaymentInstrument {
       const std::set<autofill::CreditCard::CardType>& supported_types,
       bool supported_types_specified) const = 0;
 
-  const std::string& method_name() const { return method_name_; }
   int icon_resource_id() const { return icon_resource_id_; }
   Type type() { return type_; }
 
  protected:
-  PaymentInstrument(const std::string& method_name,
-                    int icon_resource_id,
-                    Type type);
+  PaymentInstrument(int icon_resource_id, Type type);
 
  private:
-  const std::string method_name_;
   int icon_resource_id_;
   Type type_;
 
