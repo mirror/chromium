@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc828382_f2cc53a4",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation_struct_traits.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-08T21:12:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4daf5b85_bf7aa062",
+      "range": {
+        "startLine": 109,
+        "startChar": 9,
+        "endLine": 109,
+        "endChar": 20
+      },
+      "revId": "3f4c2e1f102186ae7763784a8c5e379670746105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "232d55bf_732bcc9c",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation_struct_traits.h",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "3f4c2e1f102186ae7763784a8c5e379670746105",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c35639c_d426b6b1",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation_struct_traits.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-08T21:12:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "232d55bf_732bcc9c",
+      "range": {
+        "startLine": 174,
+        "startChar": 36,
+        "endLine": 174,
+        "endChar": 37
+      },
+      "revId": "3f4c2e1f102186ae7763784a8c5e379670746105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
