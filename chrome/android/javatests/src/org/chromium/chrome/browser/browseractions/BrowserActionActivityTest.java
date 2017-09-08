@@ -62,6 +62,7 @@ public class BrowserActionActivityTest {
     private final CallbackHelper mOnBrowserActionsMenuShownCallback = new CallbackHelper();
     private final CallbackHelper mOnFinishNativeInitializationCallback = new CallbackHelper();
     private final CallbackHelper mOnOpenTabInBackgroundStartCallback = new CallbackHelper();
+    private final CallbackHelper mOnDownloadStartCallback = new CallbackHelper();
 
     private BrowserActionsContextMenuItemDelegate mMenuItemDelegate;
     private SparseArray<PendingIntent> mCustomActions;
@@ -103,6 +104,11 @@ public class BrowserActionActivityTest {
             mCustomActions = customActions;
             mItems = items;
             mProgressDialog = progressDialog;
+        }
+
+        @Override
+        public void onDownloadStart() {
+            mOnDownloadStartCallback.notifyCalled();
         }
     }
 
@@ -167,7 +173,7 @@ public class BrowserActionActivityTest {
 
     @Test
     @SmallTest
-    public void testOpenTabInBackgroundAfterInitialization() throws Exception {
+    public void testOpenTabInBackgroundWithInitialization() throws Exception {
         final BrowserActionActivity activity = startBrowserActionActivity(mTestPage);
         mOnBrowserActionsMenuShownCallback.waitForCallback(0);
         // Open a tab in background before initialization finishes.
@@ -179,14 +185,41 @@ public class BrowserActionActivityTest {
             }
         });
 
-        // A ProgressDialog should be displayed and tab opening should be pending until
-        // initialization finishes.
-        Assert.assertTrue(mProgressDialog.isShowing());
-        Assert.assertEquals(0, mOnOpenTabInBackgroundStartCallback.getCallCount());
-        mOnFinishNativeInitializationCallback.waitForCallback(0);
+        // If native initialization is not finished, A ProgressDialog should be displayed and tab
+        // opening should be pending until initialization is finished.
+        if (mOnFinishNativeInitializationCallback.getCallCount() == 0) {
+            Assert.assertTrue(mProgressDialog.isShowing());
+            mOnFinishNativeInitializationCallback.waitForCallback(0);
+        }
         mOnOpenTabInBackgroundStartCallback.waitForCallback(0);
+        Assert.assertEquals(1, mOnFinishNativeInitializationCallback.getCallCount());
         Assert.assertFalse(mProgressDialog.isShowing());
         Assert.assertEquals(1, mOnOpenTabInBackgroundStartCallback.getCallCount());
+    }
+
+    @Test
+    @SmallTest
+    public void testDownloadWithInitialization() throws Exception {
+        final BrowserActionActivity activity = startBrowserActionActivity(mTestPage);
+        mOnBrowserActionsMenuShownCallback.waitForCallback(0);
+        // Download an url before initialization finishes.
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                activity.getHelperForTesting().onItemSelected(R.id.browser_actions_save_link_as);
+            }
+        });
+
+        // If native initialization is not finished, A ProgressDialog should be displayed and
+        // download should be pending until initialization is finished.
+        if (mOnFinishNativeInitializationCallback.getCallCount() == 0) {
+            Assert.assertTrue(mProgressDialog.isShowing());
+            mOnFinishNativeInitializationCallback.waitForCallback(0);
+        }
+        mOnDownloadStartCallback.waitForCallback(0);
+        Assert.assertEquals(1, mOnFinishNativeInitializationCallback.getCallCount());
+        Assert.assertFalse(mProgressDialog.isShowing());
+        Assert.assertEquals(1, mOnDownloadStartCallback.getCallCount());
     }
 
     @Test
