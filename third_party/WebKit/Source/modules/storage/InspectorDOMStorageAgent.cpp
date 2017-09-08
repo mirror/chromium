@@ -224,16 +224,14 @@ Response InspectorDOMStorageAgent::FindStorageArea(
     return Response::Error("Frame not found for the given security origin");
 
   if (is_local_storage) {
-    storage_area = StorageNamespace::LocalStorageArea(
-        frame->GetDocument()->GetSecurityOrigin());
+    storage_area = StorageNamespace::LocalStorageArea(*frame);
     return Response::OK();
   }
   StorageNamespace* session_storage =
       StorageNamespaceController::From(page_)->SessionStorage();
   if (!session_storage)
     return Response::Error("SessionStorage is not supported");
-  storage_area = session_storage->GetStorageArea(
-      frame->GetDocument()->GetSecurityOrigin());
+  storage_area = session_storage->GetStorageArea(*frame);
   return Response::OK();
 }
 

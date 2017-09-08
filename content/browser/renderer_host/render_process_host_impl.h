@@ -36,7 +36,6 @@
 #include "content/common/media/renderer_audio_output_stream_factory.mojom.h"
 #include "content/common/renderer.mojom.h"
 #include "content/common/renderer_host.mojom.h"
-#include "content/common/storage_partition_service.mojom.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -311,15 +310,6 @@ class CONTENT_EXPORT RenderProcessHostImpl
   static void RegisterRendererMainThreadFactory(
       RendererMainThreadFactoryFunction create);
 
-  // Allows external code to supply a function which creates a
-  // StoragePartitionService. Used for supplying test versions of the
-  // service.
-  using CreateStoragePartitionServiceFunction =
-      void (*)(RenderProcessHostImpl* rph,
-               mojom::StoragePartitionServiceRequest request);
-  static void SetCreateStoragePartitionServiceFunction(
-      CreateStoragePartitionServiceFunction function);
-
   RenderFrameMessageFilter* render_frame_message_filter_for_testing() const {
     return render_frame_message_filter_.get();
   }
@@ -455,8 +445,6 @@ class CONTENT_EXPORT RenderProcessHostImpl
   void BindFrameSinkProvider(mojom::FrameSinkProviderRequest request);
   void BindSharedBitmapAllocationNotifier(
       viz::mojom::SharedBitmapAllocationNotifierRequest request);
-  void CreateStoragePartitionService(
-      mojom::StoragePartitionServiceRequest request);
   void CreateRendererHost(mojom::RendererHostRequest request);
   void CreateURLLoaderFactory(mojom::URLLoaderFactoryRequest request);
 

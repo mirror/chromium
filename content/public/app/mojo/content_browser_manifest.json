@@ -34,7 +34,6 @@
           "content::mojom::PushMessaging",
           "content::mojom::RendererHost",
           "content::mojom::ServiceWorkerDispatcherHost",
-          "content::mojom::StoragePartitionService",
           "content::mojom::URLLoaderFactory",
           "content::mojom::VideoCaptureHost",
           "content::mojom::WorkerURLLoaderFactoryProvider",

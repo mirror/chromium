@@ -30,10 +30,8 @@
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/common/content_export.h"
-#include "content/common/storage_partition_service.mojom.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/network_service.mojom.h"
-#include "mojo/public/cpp/bindings/binding_set.h"
 #include "net/cookies/cookie_store.h"
 #include "storage/browser/quota/special_storage_policy.h"
 
@@ -45,9 +43,7 @@ namespace content {
 class BlobRegistryWrapper;
 class BlobURLLoaderFactory;
 
-class CONTENT_EXPORT StoragePartitionImpl
-    : public StoragePartition,
-      public mojom::StoragePartitionService {
+class CONTENT_EXPORT StoragePartitionImpl : public StoragePartition {
  public:
   // It is guaranteed that storage partitions are destructed before the
   // browser context starts shutting down its corresponding IO thread residents
@@ -123,10 +119,11 @@ class CONTENT_EXPORT StoragePartitionImpl
   BlobURLLoaderFactory* GetBlobURLLoaderFactory();
   BlobRegistryWrapper* GetBlobRegistry();
 
-  // mojom::StoragePartitionService interface.
-  void OpenLocalStorage(
-      const url::Origin& origin,
-      mojo::InterfaceRequest<mojom::LevelDBWrapper> request) override;
+  // Binds |request| to the appropriate, |origin|-scoped implementation object.
+  // The caller needs to ensure that the other end of |request| can be granted
+  // data access to |origin|.
+  void OpenLocalStorage(const url::Origin& origin,
+                        mojo::InterfaceRequest<mojom::LevelDBWrapper> request);
 
   scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter() {
     return url_loader_factory_getter_;
@@ -134,14 +131,6 @@ class CONTENT_EXPORT StoragePartitionImpl
 
   // Can return nullptr while |this| is being destroyed.
   BrowserContext* browser_context() const;
-
-  // Called by each renderer process once. Returns the id of the created
-  // binding.
-  mojo::BindingId Bind(
-      int process_id,
-      mojo::InterfaceRequest<mojom::StoragePartitionService> request);
-
-  auto& bindings_for_testing() { return bindings_; }
 
   struct DataDeletionHelper;
   struct QuotaManagedDataDeletionHelper;
@@ -258,11 +247,6 @@ class CONTENT_EXPORT StoragePartitionImpl
   scoped_refptr<BluetoothAllowedDevicesMap> bluetooth_allowed_devices_map_;
   scoped_refptr<BlobURLLoaderFactory> blob_url_loader_factory_;
   scoped_refptr<BlobRegistryWrapper> blob_registry_;
-
-  // BindingSet for StoragePartitionService, using the process id as the
-  // binding context type. The process id can subsequently be used during
-  // interface method calls to enforce security checks.
-  mojo::BindingSet<mojom::StoragePartitionService, int> bindings_;
 
   // This is the NetworkContext used to
   // make requests for the StoragePartition. When the network service is

@@ -8,8 +8,6 @@
 #include "content/renderer/dom_storage/local_storage_cached_areas.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
-#include "url/gurl.h"
-#include "url/origin.h"
 
 using blink::WebStorageArea;
 using blink::WebStorageNamespace;
@@ -25,9 +23,9 @@ LocalStorageNamespace::~LocalStorageNamespace() {
 }
 
 WebStorageArea* LocalStorageNamespace::CreateStorageArea(
-    const blink::WebSecurityOrigin& origin) {
+    blink::WebLocalFrame& frame) {
   return new LocalStorageArea(
-      local_storage_cached_areas_->GetCachedArea(origin));
+      local_storage_cached_areas_->GetCachedArea(&frame));
 }
 
 bool LocalStorageNamespace::IsSameNamespace(

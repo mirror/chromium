@@ -4,6 +4,7 @@
 
 module content.mojom;
 
+import "content/common/leveldb_wrapper.mojom";
 import "content/public/common/window_container_type.mojom";
 import "services/service_manager/public/interfaces/interface_provider.mojom";
 import "third_party/WebKit/public/platform/referrer.mojom";
@@ -107,4 +108,7 @@ interface FrameHost {
 
   // Creates and returns a KeepAliveHandle.
   IssueKeepAliveHandle(KeepAliveHandle& keep_alive_handle);
+
+  // Opens local storage associated with the last committed origin of the frame.
+  OpenLocalStorage(LevelDBWrapper& database);
 };

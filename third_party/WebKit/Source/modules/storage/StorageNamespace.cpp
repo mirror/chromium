@@ -26,11 +26,11 @@
 #include "modules/storage/StorageNamespace.h"
 
 #include <memory>
+
+#include "core/frame/WebLocalFrameImpl.h"
 #include "modules/storage/StorageArea.h"
-#include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebStorageArea.h"
 #include "public/platform/WebStorageNamespace.h"
 
@@ -42,7 +42,7 @@ StorageNamespace::StorageNamespace(
 
 StorageNamespace::~StorageNamespace() {}
 
-StorageArea* StorageNamespace::LocalStorageArea(SecurityOrigin* origin) {
+StorageArea* StorageNamespace::LocalStorageArea(LocalFrame& frame) {
   DCHECK(IsMainThread());
   static std::unique_ptr<WebStorageNamespace> local_storage_namespace = nullptr;
   if (!local_storage_namespace)
@@ -50,14 +50,14 @@ StorageArea* StorageNamespace::LocalStorageArea(SecurityOrigin* origin) {
         Platform::Current()->CreateLocalStorageNamespace();
   return StorageArea::Create(
       WTF::WrapUnique(local_storage_namespace->CreateStorageArea(
-          WebSecurityOrigin(origin))),
+          *WebLocalFrameImpl::FromFrame(frame))),
       kLocalStorage);
 }
 
-StorageArea* StorageNamespace::GetStorageArea(SecurityOrigin* origin) {
+StorageArea* StorageNamespace::GetStorageArea(LocalFrame& frame) {
   return StorageArea::Create(
-      WTF::WrapUnique(
-          web_storage_namespace_->CreateStorageArea(WebSecurityOrigin(origin))),
+      WTF::WrapUnique(web_storage_namespace_->CreateStorageArea(
+          *WebLocalFrameImpl::FromFrame(frame))),
       kSessionStorage);
 }
 

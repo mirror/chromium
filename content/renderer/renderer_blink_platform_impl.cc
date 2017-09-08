@@ -514,8 +514,7 @@ RendererBlinkPlatformImpl::CreateLocalStorageNamespace() {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableMojoLocalStorage)) {
     if (!local_storage_cached_areas_) {
-      local_storage_cached_areas_.reset(new LocalStorageCachedAreas(
-          RenderThreadImpl::current()->GetStoragePartitionService()));
+      local_storage_cached_areas_.reset(new LocalStorageCachedAreas());
     }
     return base::MakeUnique<LocalStorageNamespace>(
         local_storage_cached_areas_.get());

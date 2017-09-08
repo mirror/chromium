@@ -32,9 +32,9 @@
 
 namespace blink {
 
-class WebStorageNamespace;
-class SecurityOrigin;
+class LocalFrame;
 class StorageArea;
+class WebStorageNamespace;
 
 class MODULES_EXPORT StorageNamespace {
   USING_FAST_MALLOC(StorageNamespace);
@@ -43,9 +43,9 @@ class MODULES_EXPORT StorageNamespace {
   explicit StorageNamespace(std::unique_ptr<WebStorageNamespace>);
   ~StorageNamespace();
 
-  static StorageArea* LocalStorageArea(SecurityOrigin*);
+  static StorageArea* LocalStorageArea(LocalFrame&);
 
-  StorageArea* GetStorageArea(SecurityOrigin*);
+  StorageArea* GetStorageArea(LocalFrame&);
   bool IsSameNamespace(const WebStorageNamespace& session_namespace) const;
 
  private:

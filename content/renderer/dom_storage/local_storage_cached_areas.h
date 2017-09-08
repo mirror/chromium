@@ -12,12 +12,12 @@
 #include "content/common/content_export.h"
 #include "url/origin.h"
 
+namespace blink {
+class WebLocalFrame;
+}
+
 namespace content {
 class LocalStorageCachedArea;
-
-namespace mojom {
-class StoragePartitionService;
-}
 
 // Keeps a map of all the LocalStorageCachedArea objects in a renderer. This is
 // needed because we can have n LocalStorageArea objects for the same origin but
@@ -25,20 +25,17 @@ class StoragePartitionService;
 // multiple caches of the same data in the same process).
 class CONTENT_EXPORT LocalStorageCachedAreas {
  public:
-  explicit LocalStorageCachedAreas(
-      mojom::StoragePartitionService* storage_partition_service);
+  LocalStorageCachedAreas();
   ~LocalStorageCachedAreas();
 
   // Returns, creating if necessary, a cached storage area for the given origin.
-  scoped_refptr<LocalStorageCachedArea>
-      GetCachedArea(const url::Origin& origin);
+  scoped_refptr<LocalStorageCachedArea> GetCachedArea(
+      blink::WebLocalFrame* frame);
 
   // Called by LocalStorageCachedArea on destruction.
   void CacheAreaClosed(LocalStorageCachedArea* cached_area);
 
  private:
-  mojom::StoragePartitionService* const storage_partition_service_;
-
   // Maps from an origin to its LocalStorageCachedArea object. The object owns
   // itself.
   std::map<url::Origin, LocalStorageCachedArea*> cached_areas_;

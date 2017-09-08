@@ -13,11 +13,15 @@
 #include "base/strings/string_split.h"
 #include "base/time/time.h"
 #include "content/common/dom_storage/dom_storage_map.h"
-#include "content/common/storage_partition_service.mojom.h"
+#include "content/common/frame.mojom.h"
 #include "content/renderer/dom_storage/local_storage_area.h"
 #include "content/renderer/dom_storage/local_storage_cached_areas.h"
+#include "content/renderer/render_frame_impl.h"
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
+#include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
+#include "third_party/WebKit/public/web/WebDocument.h"
+#include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebStorageEventDispatcher.h"
 
 namespace content {
@@ -67,13 +71,60 @@ void UnpackSource(const std::string& source,
 }
 
 LocalStorageCachedArea::LocalStorageCachedArea(
-    const url::Origin& origin,
-    mojom::StoragePartitionService* storage_partition_service,
+    blink::WebLocalFrame* web_frame,
     LocalStorageCachedAreas* cached_areas)
-    : origin_(origin), binding_(this),
-      cached_areas_(cached_areas), weak_factory_(this) {
-  storage_partition_service->OpenLocalStorage(origin_,
-                                              mojo::MakeRequest(&leveldb_));
+    : origin_(web_frame->GetDocument().GetSecurityOrigin()),
+      binding_(this),
+      cached_areas_(cached_areas),
+      weak_factory_(this) {
+  // TODO / FIXME / DO NOT SUBMIT: Handle the situation where browser-side
+  // FrameHost gets destroyed before the other end of the |leveldb_| pipe
+  // gets bound.
+  //
+  // In particular, imagine the following race
+  // (Frame1 and Frame2 are the same origin):
+  //
+  // Step1: Renderer1/Frame1: OpenLocalStorage
+  //   - requested via mojom::FrameHost::OpenLocalStorage
+  //   - returns mojom::LevelDBWrapper
+  //   - mojo queues all method calls to mojom::LevelDBWrapper until
+  //     browser-side implementation of OpenLocalStorage binds the other
+  //     end of the pipe
+  //
+  // Step2: Renderer1/Frame2: OpenLocalStorage
+  //   - because of previous step, this doesn't need to go through FrameHost,
+  //     but can reuse the caches mojom::LevelDBWrapper - see
+  //     LocalStorageCachedAreas::GetCachedArea
+  //
+  // Step3: Renderer1/Frame2: alert(localStorage.length)
+  //   - I *think* that localStorage.length would go to a [Sync]
+  //     LevelDBWrapper::GetAll(...)
+  //   - So - this will block until the browser binds or fails to bind
+  //     LevelDBWrapper
+  //   - So - upon failure (see step6) the localStorage.length would fail
+  //
+  //     Alternative step3: Renderer1/Frame2: localStorage["foo"] = 123
+  //     - I *think* that localStorage["foo"] = ... goes to an *async*
+  //       LevelDBWrapper::Put(key, value) => (bool success)
+  //     - So - this will block^H^H^Hqueue until the browser binds or fails to
+  //       bind LevelDBWrapper
+  //     - So - upon failure (see step6) the new localStorage value will be lost
+  //
+  // Step4: Renderer2/ParentOfFrame1: Delete Frame1
+  // Step5: Browser: Delete Frame1
+  //
+  // Step6: Browser: Handle and drop OpenLocalStorage from Frame1
+  //   - There is no RenderFrameHostImpl anymore (because of step5)
+  //     so the LevelDBWrapper's browser-side end of the mojo pipe
+  //     will be dropped, leading to binding failure in step3
+  //
+  // Step7: Frame2 lives for a long time
+  //   - Frame2 shouldn't be affected by Frame1's deletion
+  //   - Frame2 can continue to execute steps similar to step3 above
+  //     (through mojo::LevelDBWrapper that is now in a "binding-failed" state)
+  //
+  RenderFrameImpl::FromWebFrame(web_frame)->GetFrameHost()->OpenLocalStorage(
+      mojo::MakeRequest(&leveldb_));
   mojom::LevelDBObserverAssociatedPtrInfo ptr_info;
   binding_.Bind(mojo::MakeRequest(&ptr_info));
   leveldb_->AddObserver(std::move(ptr_info));
