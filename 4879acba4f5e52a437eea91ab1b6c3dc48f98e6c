@@ -16,6 +16,47 @@
       "revId": "4879acba4f5e52a437eea91ab1b6c3dc48f98e6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53675264_ef432e2b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-08T13:55:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2974447f_e019ef5e",
+      "revId": "4879acba4f5e52a437eea91ab1b6c3dc48f98e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2543944_cbf0bf45",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-08T13:55:25Z",
+      "side": 1,
+      "message": "Instead of talking to native code in testing, it\u0027s better to check sCanMakePaymentForTesting in canMakePayment() method on line 69 instead. If you talk to native, then the CanMakePayment event will be fired in the service worker, which will come back only after a 5 minute timeout, I believe. That would make the tests too slow.",
+      "range": {
+        "startLine": 207,
+        "startChar": 59,
+        "endLine": 207,
+        "endChar": 84
+      },
+      "revId": "4879acba4f5e52a437eea91ab1b6c3dc48f98e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
