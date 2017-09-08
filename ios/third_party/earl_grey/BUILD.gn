@@ -251,6 +251,7 @@ ios_framework_bundle("earl_grey") {
     "src/EarlGrey/Core/GREYElementFinder.h",
     "src/EarlGrey/Core/GREYElementInteraction.h",
     "src/EarlGrey/Core/GREYInteraction.h",
+    "src/EarlGrey/Event/GREYSyntheticEvents.h",
     "src/EarlGrey/Exception/GREYFailureHandler.h",
     "src/EarlGrey/Exception/GREYFrameworkException.h",
     "src/EarlGrey/Matcher/GREYAllOf.h",

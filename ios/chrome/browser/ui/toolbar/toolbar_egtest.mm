@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #import <EarlGrey/EarlGrey.h>
+#import <WebKit/WebKit.h>
 #import <XCTest/XCTest.h>
 
 #include "base/ios/ios_util.h"
@@ -24,6 +25,8 @@
 #import "ios/web/public/test/http_server/http_server.h"
 #include "ios/web/public/test/http_server/http_server_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
+
+#import "ios/chrome/test/earl_grey/chrome_actions.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -537,6 +540,37 @@ void SelectNewTabPagePanel(NewTabPage::PanelIdentifier panel_type) {
                                               [OmniboxPopupMaterialRow class]),
                                           nil)]
       assertWithMatcher:grey_sufficientlyVisible()];
+}
+
+- (void)testDraggingToOmnibox {
+  web::test::SetUpFileBasedHttpServer();
+
+  web::test::SetUpFileBasedHttpServer();
+  //  const GURL URL = web::test::HttpServer::MakeUrl(
+  //                                                  "http://ios/testing/data/http_server_files/destination.html");
+  const GURL URL = web::test::HttpServer::MakeUrl(
+      "http://ios/testing/data/http_server_files/link_to_pony.html");
+
+  [ChromeEarlGrey loadURL:URL];
+
+  //  [ChromeEarlGrey loadURL:URL];
+  //  [[EarlGrey selectElementWithMatcher:OmniboxText(URL.GetContent())]
+  //   assertWithMatcher:grey_notNil()];
+
+  //[ChromeEarlGrey waitForWebViewContainingText:"Link"];
+
+  UIWindow* keyWindow = [[[UIApplication sharedApplication] delegate] window];
+  UIView* toolbar =
+      chrome_test_util::FindSubviewOfClass(keyWindow, [ToolbarView class]);
+  UIView* webview =
+      chrome_test_util::FindSubviewOfClass(keyWindow, [WKWebView class]);
+
+  chrome_test_util::DragView(webview, toolbar);
+
+  // id<GREYAction> drag = DragViewAndDropTo(toolbar);
+
+  //  [[EarlGrey selectElementWithMatcher:dotComButtonMatcher]
+  //   performAction:grey_tap()];
 }
 
 @end

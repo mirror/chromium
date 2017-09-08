@@ -24,6 +24,11 @@ id<GREYAction> LongPressElementForContextMenu(const std::string& element_id,
 // state.
 id<GREYAction> TurnCollectionViewSwitchOn(BOOL on);
 
+UIView* FindSubviewOfClass(UIView* view, Class klass);
+void DragView(UIView* source, UIView* destination);
+
+id<GREYAction> DragViewAndDropTo(UIView* destination);
+
 }  // namespace chrome_test_util
 
 #endif  // IOS_CHROME_TEST_EARL_GREY_CHROME_ACTIONS_H_

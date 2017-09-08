@@ -9,6 +9,8 @@
 #import "ios/chrome/test/app/chrome_test_util.h"
 #import "ios/web/public/test/earl_grey/web_view_actions.h"
 
+#import <EarlGrey/GREYSyntheticEvents.h>
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
@@ -41,6 +43,72 @@ id<GREYAction> TurnCollectionViewSwitchOn(BOOL on) {
                 actionForLongPressWithDuration:kGREYLongPressDefaultDuration];
             return [longPressAction perform:switchView error:errorOrNil];
           }
+          return YES;
+        }];
+}
+
+UIView* FindSubviewOfClass(UIView* view, Class klass) {
+  if ([view class] == klass)
+    return view;
+  for (UIView* subview in view.subviews) {
+    UIView* viewFound = FindSubviewOfClass(subview, klass);
+    if (viewFound) {
+      return viewFound;
+    }
+  }
+  return nil;
+}
+
+void DragView(UIView* source, UIView* destination) {
+  DCHECK_EQ([source window], [destination window]);
+  UIWindow* window = [source window];  //[element window];
+
+  CGPoint p1 = source.center;
+  CGPoint p2 = destination.center;
+
+  CGFloat dx = p2.x - p1.x;
+  CGFloat dy = p2.y - p1.y;
+
+  NSMutableArray* points = [[NSMutableArray alloc] init];
+
+  CGFloat length = sqrt(dx * dx + dy * dy);
+  int iterations = (int)length;
+
+  for (int i = 0; i < 60; i++) {
+    [points addObject:[NSValue valueWithCGPoint:p1]];
+  }
+
+  for (int i = 0; i < iterations; i++) {
+    CGPoint p;
+    p.x = p1.x + (dx * i) / length;
+    p.y = p1.y + (dy * i) / length;
+    [points addObject:[NSValue valueWithCGPoint:p]];
+  }
+
+  //  [points addObject:[NSValue valueWithCGPoint:p1]];
+  //  [points addObject:[NSValue valueWithCGPoint:p1]];
+  //  [points addObject:[NSValue valueWithCGPoint:p2]];
+
+  //  for (int i = 0; i < 100; i++) {
+  //    [points addObject:[NSValue valueWithCGPoint:p2]];
+  //  }
+
+  @autoreleasepool {
+    [GREYSyntheticEvents touchAlongPath:points
+                       relativeToWindow:window
+                            forDuration:3
+                             expendable:YES];
+  }
+}
+
+id<GREYAction> DragViewAndDropTo(UIView* destination) {
+  NSString* actionName = @"Drag!!!";
+  return [GREYActionBlock
+      actionWithName:actionName
+         constraints:nil
+        performBlock:^BOOL(id view, __strong NSError** errorOrNil) {
+          UIView* source = base::mac::ObjCCastStrict<UIView>(view);
+          DragView(source, destination);
           return YES;
         }];
 }
