@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8478f8b8_e274b9fa",
+        "filename": "cc/output/overlay_strategy_fullscreen.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-08T04:00:27Z",
+      "side": 0,
+      "message": "This is needed. You can\u0027t use the buffer as primary plane if it needs to be blended.",
+      "revId": "9cdead6b0b2898674dd776f224cdd87b828135fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

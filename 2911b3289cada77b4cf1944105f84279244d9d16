@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6a46be7_db095e15",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-08T04:00:27Z",
+      "side": 1,
+      "message": "We actually introduced it pretty recently. It\u0027s used on all the platforms where we can use it.",
+      "revId": "2911b3289cada77b4cf1944105f84279244d9d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72245a76_d0c12190",
+        "filename": "components/viz/service/display_embedder/compositor_overlay_candidate_validator_ozone.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-08T04:00:27Z",
+      "side": 1,
+      "message": "This would likely break chromecast. We already pass single-fullscreen on every board where we use drm atomic.",
+      "revId": "2911b3289cada77b4cf1944105f84279244d9d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
