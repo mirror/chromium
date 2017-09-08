@@ -116,6 +116,7 @@ target("jumbo_" + modules_target_type, "modules") {
     "//third_party/WebKit/Source/modules/exported",
     "//third_party/WebKit/Source/modules/fetch",
     "//third_party/WebKit/Source/modules/filesystem",
+    "//third_party/WebKit/Source/modules/flags",
     "//third_party/WebKit/Source/modules/gamepad",
     "//third_party/WebKit/Source/modules/geolocation",
     "//third_party/WebKit/Source/modules/imagebitmap",

@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Window and Frame - shared mode
+PASS Window and Frame - exclusive mode
+PASS Frame and Frame - exclusive mode
+PASS Terminated Frame with held flag
+FAIL Terminated Frame with pending request assert_true: Removed frame did not release held flags expected true got false
+Harness: the test ran to completion.
+
