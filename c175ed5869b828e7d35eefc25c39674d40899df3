@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "621c94df_a3bf8cb9",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-09-08T18:44:33Z",
+      "side": 1,
+      "message": "Comment would help here just to say that we are returning without a flush because the connection is already open.",
+      "revId": "c175ed5869b828e7d35eefc25c39674d40899df3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
