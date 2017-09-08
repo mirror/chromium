@@ -22,6 +22,30 @@
       "revId": "ec9884de83348ede2ce85183b3023fa1d59927c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05070772_e0db39be",
+        "filename": "content/browser/net/reporting_service_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-09-08T18:50:52Z",
+      "side": 1,
+      "message": "TIL! Done.",
+      "parentUuid": "d9844d0a_d93f7f59",
+      "range": {
+        "startLine": 40,
+        "startChar": 16,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "ec9884de83348ede2ce85183b3023fa1d59927c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
