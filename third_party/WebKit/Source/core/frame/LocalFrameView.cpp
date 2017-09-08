@@ -3276,9 +3276,11 @@ void LocalFrameView::EnqueueScrollAnchoringAdjustment(
 }
 
 void LocalFrameView::PerformScrollAnchoringAdjustments() {
-  // TODO(bokan): Temporary to get more information about crash in
+  // TODO(bokan): Temporary early out to fix reentrancy crash in
   // crbug.com/745686.
-  CHECK(!in_perform_scroll_anchoring_adjustments_);
+  if (in_perform_scroll_anchoring_adjustments_)
+    return;
+
   in_perform_scroll_anchoring_adjustments_ = true;
 
   for (WeakMember<ScrollableArea>& scroller : anchoring_adjustment_queue_) {
