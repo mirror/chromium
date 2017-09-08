@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92372001_1d592c91",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-08T03:18:54Z",
+      "side": 1,
+      "message": "StrippedPlaceholder() should not be used for \u003ctextarea\u003e.",
+      "revId": "fa13081d99755ef134965b9dfc29f6fb01e5d5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a28dea_3a556c12",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-08T03:18:54Z",
+      "side": 1,
+      "message": "This code is a copy of TextFieldInputType::UpdatePlaceholderText() or HTMLTextAreaElement::UpdatePlaceholderText(). It\u0027s not good.\n\nIMO, we should add new function to TextControlElement, and the function returns non-empty suggested_value or FastGetAttribute(placeholderAttr), and TextFieldInputType::UpdatePlaceholderText() and HTMLTextAreaElement::UpdatePlaceholderText() should call the new function.",
+      "revId": "fa13081d99755ef134965b9dfc29f6fb01e5d5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
