@@ -22,6 +22,30 @@
       "revId": "8c637145a3d8f7b324706d745ddc0ccaa949b4d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe0cef7_3fcc3394",
+        "filename": "components/history/core/browser/top_sites_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1376,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-08T23:20:30Z",
+      "side": 1,
+      "message": "Done. I\u0027ve also made other similar updates.",
+      "parentUuid": "af07b041_25217ff1",
+      "range": {
+        "startLine": 1376,
+        "startChar": 15,
+        "endLine": 1376,
+        "endChar": 37
+      },
+      "revId": "8c637145a3d8f7b324706d745ddc0ccaa949b4d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
