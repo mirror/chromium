@@ -2181,28 +2181,30 @@ TEST_F(AXPlatformNodeWinTest, TestIAccessible2GetLocalizedExtendedRole) {
   EXPECT_STREQ(L"extended role", role);
 }
 
-TEST_F(AXPlatformNodeWinTest, TestIAccessibleTextGetCaretOffset) {
-  AXNodeData text_field_node;
-  text_field_node.id = 1;
-  text_field_node.role = AX_ROLE_TEXT_FIELD;
-  text_field_node.state = 1 << AX_STATE_EDITABLE;
-  text_field_node.state |= 1 << AX_STATE_SELECTED;
+TEST_F(AXPlatformNodeWinTest, TestIAccessibleTextGetNCharacters) {
+  AXNodeData root;
+  root.id = 0;
+  root.role = AX_ROLE_STATIC_TEXT;
+  root.child_ids.push_back(1);
 
-  text_field_node.SetValue("Hi");
+  AXNodeData node;
+  node.id = 1;
+  node.role = AX_ROLE_STATIC_TEXT;
+  node.AddStringAttribute(AX_ATTR_NAME, "Name");
 
-  Init(text_field_node);
-  ScopedComPtr<IAccessible2> ia2_text_field =
-      ToIAccessible2(GetRootIAccessible());
-  ScopedComPtr<IAccessibleText> text_field;
-  ia2_text_field.CopyTo(text_field.GetAddressOf());
-  ASSERT_NE(nullptr, text_field.Get());
+  Init(root, node);
 
-  EXPECT_HRESULT_SUCCEEDED(text_field->setSelection(0, 1, 0));
+  AXNode* child_node = GetRootNode()->children()[0];
+  ScopedComPtr<IAccessible> child_iaccessible(IAccessibleFromNode(child_node));
+  ASSERT_NE(nullptr, child_iaccessible.Get());
 
-  LONG offset;
-  EXPECT_HRESULT_SUCCEEDED(text_field->get_caretOffset(&offset));
-  ASSERT_EQ(1, offset);
+  ScopedComPtr<IAccessibleText> text;
+  child_iaccessible.CopyTo(text.GetAddressOf());
+  ASSERT_NE(nullptr, text.Get());
+
+  LONG count;
+  EXPECT_HRESULT_SUCCEEDED(text->get_nCharacters(&count));
+  ASSERT_EQ(4, count);
 }
-
 
 }  // namespace ui
