@@ -48,7 +48,8 @@ StylePropertySerializer::StylePropertySetForSerializer::
       property_set_->PropertyAt(all_index_);
   for (unsigned i = 0; i < property_set_->PropertyCount(); ++i) {
     StylePropertySet::PropertyReference property = property_set_->PropertyAt(i);
-    if (CSSProperty::IsAffectedByAllProperty(property.Id())) {
+    if (CSSPropertyAPI::Get(resolveCSSPropertyID(property.Id()))
+            .IsAffectedByAll()) {
       if (all_property.IsImportant() && !property.IsImportant())
         continue;
       if (static_cast<unsigned>(all_index_) >= i)
@@ -110,7 +111,8 @@ bool StylePropertySerializer::StylePropertySetForSerializer::
     StylePropertySet::PropertyReference property =
         property_set_->PropertyAt(index);
     if (property.Id() == CSSPropertyAll ||
-        !CSSProperty::IsAffectedByAllProperty(property.Id()))
+        !CSSPropertyAPI::Get(resolveCSSPropertyID(property.Id()))
+             .IsAffectedByAll())
       return true;
     if (!isCSSPropertyIDWithName(property.Id()))
       return false;
@@ -130,7 +132,7 @@ bool StylePropertySerializer::StylePropertySetForSerializer::
   // The all property is a shorthand that resets all CSS properties except
   // direction and unicode-bidi. It only accepts the CSS-wide keywords.
   // c.f. http://dev.w3.org/csswg/css-cascade/#all-shorthand
-  if (!CSSProperty::IsAffectedByAllProperty(property_id))
+  if (!CSSPropertyAPI::Get(resolveCSSPropertyID(property_id)).IsAffectedByAll())
     return longhand_property_used_.test(index);
 
   return true;
