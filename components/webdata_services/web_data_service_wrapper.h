@@ -23,11 +23,9 @@ class WebDatabaseService;
 class PasswordWebDataService;
 #endif
 
-#if defined(OS_ANDROID)
 namespace payments {
 class PaymentManifestWebDataService;
 }  // namespace payments
-#endif
 
 namespace autofill {
 class AutofillWebDataService;
@@ -85,10 +83,8 @@ class WebDataServiceWrapper : public KeyedService {
 #if defined(OS_WIN)
   virtual scoped_refptr<PasswordWebDataService> GetPasswordWebData();
 #endif
-#if defined(OS_ANDROID)
   virtual scoped_refptr<payments::PaymentManifestWebDataService>
   GetPaymentManifestWebData();
-#endif
 
  protected:
   // For testing.
@@ -105,10 +101,8 @@ class WebDataServiceWrapper : public KeyedService {
   scoped_refptr<PasswordWebDataService> password_web_data_;
 #endif
 
-#if defined(OS_ANDROID)
   scoped_refptr<payments::PaymentManifestWebDataService>
       payment_manifest_web_data_;
-#endif
 
   DISALLOW_COPY_AND_ASSIGN(WebDataServiceWrapper);
 };

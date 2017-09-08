@@ -20,6 +20,9 @@
 #include "components/autofill/core/browser/webdata/autofill_wallet_syncable_service.h"
 #include "components/autofill/core/browser/webdata/autofill_webdata_service.h"
 #include "components/password_manager/core/browser/webdata/logins_table.h"
+#include "components/payments/content/payment_manifest_web_data_service.h"
+#include "components/payments/content/payment_method_manifest_table.h"
+#include "components/payments/content/web_app_manifest_section_table.h"
 #include "components/search_engines/keyword_table.h"
 #include "components/search_engines/keyword_web_data_service.h"
 #include "components/signin/core/browser/webdata/token_service_table.h"
@@ -30,12 +33,6 @@
 
 #if defined(OS_WIN)
 #include "components/password_manager/core/browser/webdata/password_web_data_service_win.h"
-#endif
-
-#if defined(OS_ANDROID)
-#include "components/payments/android/payment_manifest_web_data_service.h"
-#include "components/payments/android/payment_method_manifest_table.h"
-#include "components/payments/android/web_app_manifest_section_table.h"
 #endif
 
 namespace {
@@ -71,15 +68,16 @@ void InitSyncableServicesOnDBSequence(
                                         autofill_backend, app_locale);
 
   autofill::AutofillProfileSyncableService::FromWebDataService(
-      autofill_web_data.get())->InjectStartSyncFlare(sync_flare);
+      autofill_web_data.get())
+      ->InjectStartSyncFlare(sync_flare);
   autofill::AutofillWalletSyncableService::FromWebDataService(
-      autofill_web_data.get())->InjectStartSyncFlare(sync_flare);
+      autofill_web_data.get())
+      ->InjectStartSyncFlare(sync_flare);
 }
 
 }  // namespace
 
-WebDataServiceWrapper::WebDataServiceWrapper() {
-}
+WebDataServiceWrapper::WebDataServiceWrapper() {}
 
 WebDataServiceWrapper::WebDataServiceWrapper(
     const base::FilePath& context_path,
@@ -105,12 +103,10 @@ WebDataServiceWrapper::WebDataServiceWrapper(
   // the old logins table. We can remove this after a while, e.g. in M22 or so.
   web_database_->AddTable(base::MakeUnique<LoginsTable>());
   web_database_->AddTable(base::MakeUnique<TokenServiceTable>());
-#if defined(OS_ANDROID)
   web_database_->AddTable(
       base::MakeUnique<payments::PaymentMethodManifestTable>());
   web_database_->AddTable(
       base::MakeUnique<payments::WebAppManifestSectionTable>());
-#endif
   web_database_->LoadDatabase();
 
   autofill_web_data_ = new autofill::AutofillWebDataService(
@@ -135,20 +131,17 @@ WebDataServiceWrapper::WebDataServiceWrapper(
   password_web_data_->Init();
 #endif
 
-#if defined(OS_ANDROID)
   payment_manifest_web_data_ = new payments::PaymentManifestWebDataService(
       web_database_,
       base::Bind(show_error_callback, ERROR_LOADING_PAYMENT_MANIFEST),
       ui_task_runner);
-#endif
 
   autofill_web_data_->GetAutofillBackend(
       base::Bind(&InitSyncableServicesOnDBSequence, db_task_runner, flare,
                  autofill_web_data_, context_path, application_locale));
 }
 
-WebDataServiceWrapper::~WebDataServiceWrapper() {
-}
+WebDataServiceWrapper::~WebDataServiceWrapper() {}
 
 void WebDataServiceWrapper::Shutdown() {
   autofill_web_data_->ShutdownOnUISequence();
@@ -159,9 +152,7 @@ void WebDataServiceWrapper::Shutdown() {
   password_web_data_->ShutdownOnUISequence();
 #endif
 
-#if defined(OS_ANDROID)
   payment_manifest_web_data_->ShutdownOnUISequence();
-#endif
 
   web_database_->ShutdownDatabase();
 }
@@ -187,9 +178,7 @@ WebDataServiceWrapper::GetPasswordWebData() {
 }
 #endif
 
-#if defined(OS_ANDROID)
 scoped_refptr<payments::PaymentManifestWebDataService>
 WebDataServiceWrapper::GetPaymentManifestWebData() {
   return payment_manifest_web_data_.get();
 }
-#endif
