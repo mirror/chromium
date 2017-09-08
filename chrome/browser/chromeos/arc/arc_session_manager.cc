@@ -182,6 +182,7 @@ void ArcSessionManager::RegisterProfilePrefs(
   // from a previous managed state to the unmanaged.
   registry->RegisterBooleanPref(prefs::kArcBackupRestoreEnabled, false);
   registry->RegisterBooleanPref(prefs::kArcLocationServiceEnabled, false);
+  registry->RegisterBooleanPref(prefs::kSmsConnectEnabled, true);
   // This is used to delete the Play user ID if ARC is disabled for an
   // Active Directory managed device.
   registry->RegisterStringPref(prefs::kArcActiveDirectoryPlayUserId,
