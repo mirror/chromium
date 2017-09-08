@@ -22,6 +22,29 @@
       "revId": "3d8468257f03d158583b1eff0c9cd353fdc5d7f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22817ae8_7e6cad43",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-08T23:11:02Z",
+      "side": 1,
+      "message": "This does not give you correct results in all cases.\nYou may use ::GetPackage(name) instead.\nAlso if result contains class name it is better to check against app id.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 66
+      },
+      "revId": "3d8468257f03d158583b1eff0c9cd353fdc5d7f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
