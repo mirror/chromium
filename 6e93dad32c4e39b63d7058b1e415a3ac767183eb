@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "56cce32f_f9c8fc38",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1226098
+      },
+      "writtenOn": "2017-09-08T06:46:21Z",
+      "side": 1,
+      "message": "Sure. Will remove this signed-off.",
+      "parentUuid": "75fe8101_8ba881ab",
+      "revId": "6e93dad32c4e39b63d7058b1e415a3ac767183eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a54e49af_46d42254",
         "filename": "DEPS",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-08T06:42:32Z",
       "side": 1,
       "message": "This change is unnecessary?",
+      "revId": "6e93dad32c4e39b63d7058b1e415a3ac767183eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255175ae_c68f7bb0",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1226098
+      },
+      "writtenOn": "2017-09-08T06:46:21Z",
+      "side": 1,
+      "message": "Actually, in my local work space I\u0027ve not modified this file. Am not sure how this file is getting added into the CL. Don\u0027t know how to avoid this. Can you please help me ?",
+      "parentUuid": "a54e49af_46d42254",
       "revId": "6e93dad32c4e39b63d7058b1e415a3ac767183eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
