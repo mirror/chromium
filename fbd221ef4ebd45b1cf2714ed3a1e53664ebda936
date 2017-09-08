@@ -193,6 +193,30 @@
     },
     {
       "key": {
+        "uuid": "094a2dd0_53db092a",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-08T00:54:30Z",
+      "side": 1,
+      "message": "I played around with ConstrainedWindowAlert and it looks like it\u0027s a tab modal dialog.\nI don\u0027t think we can disable navigation since it\u0027s supposed to be. Do you have a suggestion on what to use for window modal dialogs?",
+      "parentUuid": "964cdc62_f4263de0",
+      "range": {
+        "startLine": 75,
+        "startChar": 3,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "fbd221ef4ebd45b1cf2714ed3a1e53664ebda936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c2ff661_c7a88c6b",
         "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
         "patchSetId": 17
@@ -227,6 +251,30 @@
       "writtenOn": "2017-09-08T00:16:26Z",
       "side": 1,
       "message": "The mock shows the buttons with the default button on the left, but that is Windows ordering. On the Mac you need to put the default button on the right.",
+      "range": {
+        "startLine": 95,
+        "startChar": 9,
+        "endLine": 95,
+        "endChar": 50
+      },
+      "revId": "fbd221ef4ebd45b1cf2714ed3a1e53664ebda936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070bfbfc_060ceb21",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-08T00:54:30Z",
+      "side": 1,
+      "message": "Ah, thanks for pointing that out. I\u0027ll fix it",
+      "parentUuid": "367c56b1_0daa2b93",
       "range": {
         "startLine": 95,
         "startChar": 9,
