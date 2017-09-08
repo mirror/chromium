@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1c2d129_ba111b83",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-08T08:31:22Z",
+      "side": 1,
+      "message": "Seems some of this change description needs to be updated now that the SkBitmap part was removed.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "f9a03abe3d961211d8a92d4df1b20ab69f728bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022d6e13_87374b49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-08T08:31:22Z",
+      "side": 1,
+      "message": "BTW--The SkBitmap path will be very important to pursue in the near-term as well: It seems several of the platform implementations of RWHV::CopyFromSurface() make TEXTURE copy requests and then do their own readback (usually with hundreds of lines of GLHelper glue code). The funny thing is, the RWHV::CopyFromSurface() API can *only* return SkBitmap results, and so the CopyFromSurface() impls should have been making BITMAP copy requests in the first place. ;-)\n\nHowever, before we can make this rather massive code bloat reduction (http://crbug.com/759310), we\u0027ll want to make sure the SkBitmap-path plumbing for color space is in-place so we can switch things over.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 15
+      },
+      "revId": "f9a03abe3d961211d8a92d4df1b20ab69f728bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8670bd52_480725e1",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2930,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-08T08:31:22Z",
+      "side": 1,
+      "message": "Looks like this is unused now?",
+      "range": {
+        "startLine": 2930,
+        "startChar": 4,
+        "endLine": 2930,
+        "endChar": 50
+      },
+      "revId": "f9a03abe3d961211d8a92d4df1b20ab69f728bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
