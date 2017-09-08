@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2e9dac49_8bc8fd5c",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_transfer_controller.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-08T06:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "556c997a_7d774cca",
+      "revId": "6befdc98effb5c07c2ad4cf4f827ecf05c68c585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eda5f641_5ee18cc3",
         "filename": "ui/file_manager/file_manager/foreground/js/file_transfer_controller.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "6befdc98effb5c07c2ad4cf4f827ecf05c68c585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb23d63_3c069342",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_transfer_controller.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-08T06:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eda5f641_5ee18cc3",
+      "revId": "6befdc98effb5c07c2ad4cf4f827ecf05c68c585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0f7fee5a_b6a77ab5",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_transfer_controller.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-08T06:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67717d1c_4e7d736b",
+      "revId": "6befdc98effb5c07c2ad4cf4f827ecf05c68c585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f5b2e75_0c2a4db4",
         "filename": "ui/file_manager/file_manager/foreground/js/file_transfer_controller.js",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "6befdc98effb5c07c2ad4cf4f827ecf05c68c585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be181cd_dda27761",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_transfer_controller.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-08T06:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f5b2e75_0c2a4db4",
+      "revId": "6befdc98effb5c07c2ad4cf4f827ecf05c68c585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
