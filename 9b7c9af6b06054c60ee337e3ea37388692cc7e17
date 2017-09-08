@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76f293ea_d598ca02",
+        "filename": "chrome/browser/media_galleries/media_file_system_registry.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-08T00:28:20Z",
+      "side": 1,
+      "message": "This TODO can be deleted as well, since you are deleting ImportedMediaGalleryRegistry.",
+      "revId": "9b7c9af6b06054c60ee337e3ea37388692cc7e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47072fa2_cb9ab610",
+        "filename": "chrome/utility/extensions/extensions_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-08T00:28:20Z",
+      "side": 1,
+      "message": "You may want to rename this file in the future, with ExtensionsHandler gone.",
+      "revId": "9b7c9af6b06054c60ee337e3ea37388692cc7e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5d2e18a_d4e7f8f5",
+        "filename": "chrome/browser/media_galleries/media_galleries_histograms.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-08T00:28:20Z",
+      "side": 0,
+      "message": "Uh, I didn\u0027t review this file in the Picasa CL, but you shouldn\u0027t be deleting the entries here. Instead, prepend DELETE_, like above.",
+      "revId": "fbc9c1b99ba5c1e08fc1e70cbb449c5159b2216c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
