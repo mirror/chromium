@@ -16,6 +16,24 @@
       "revId": "caabcd74f118b4a2dc879c56df972453d65f2738",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ccf913_2115579a",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1958,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-09-08T08:18:16Z",
+      "side": 0,
+      "message": "You mean call CreateResource instead of CreateResourceFromTextureMailbox here?\nI think no matter CreateResource or CreateResourceFromTextureMailbox, we should avoid call it in DisplayResourceProvider. That’s why I transfer the Resource from LayerTree to Display.\n\nBelow is my understanding (If wrong, correction is welcomed):\nResource should be texture/shared bitmap which was shared between processes. It is possible that all resources are created by LayerTreeResourceProvider instead of DisplayResourceProvider.  For texture/shared bitmap which was only used by DisplayResourceProvider, create a Resource in DisplayResourceProvider for this scenario  is too heavy.\n\nCurrently, I found three places which may CreateResource in DisplayResourceProvider, none of them has the necessity to be shared between processes:\nGLRenderer::CopyRenderPassDrawQuadToOverlayResource\nGLRenderer::GetBackdropTexture\nDirectRenderer::UseRenderPass\n\nTake GLRenderer::GetBackdropTexture as an example, it is possible to implement it like GetFramebufferPixelsAsync, no need to use ScopedResource here.  \n\nI will keep investigating the possibility to remove all CreateResource*",
+      "parentUuid": "e05ef3ee_3e1d68bf",
+      "revId": "caabcd74f118b4a2dc879c56df972453d65f2738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
