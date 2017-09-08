@@ -188,6 +188,10 @@ TEST_F('BackgroundTest', 'CaretNavigation', function() {
         .expectSpeech('alpha', 'Link');
     mockFeedback.call(doCmd('nextWord'))
         .expectSpeech('beta', 'Link');
+    mockFeedback.call(doCmd('previousWord'))
+        .expectSpeech('alpha', 'Link');
+    mockFeedback.call(doCmd('nextWord'))
+        .expectSpeech('beta', 'Link');
     mockFeedback.call(doCmd('nextWord'))
         .expectSpeech('charlie', 'Heading 1');
     mockFeedback.call(doCmd('nextLine'))
