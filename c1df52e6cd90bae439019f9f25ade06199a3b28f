@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc7bc934_052853cf",
+        "filename": "components/arc/common/power.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-08T20:02:04Z",
+      "side": 1,
+      "message": "would it be cleaner to try to just migrate to OnAcquireWakeLock and OnReleaseWakeLock methods that can be used for either display or full wake locks, with an enum that covers all types? the current distinction feels a bit arbitrary.",
+      "revId": "c1df52e6cd90bae439019f9f25ade06199a3b28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10be80cd_3270ceec",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-08T20:02:04Z",
+      "side": 1,
+      "message": "combine the previous line and this one",
+      "revId": "c1df52e6cd90bae439019f9f25ade06199a3b28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "342b4ae0_bcebfe9b",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-08T20:02:04Z",
+      "side": 1,
+      "message": "nit: you\u0027re missing the type here",
+      "revId": "c1df52e6cd90bae439019f9f25ade06199a3b28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d34a238e_cb25656f",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-08T20:02:04Z",
+      "side": 1,
+      "message": "can we keep a count of wake locks per type in this class, so we only create at most one lock of each type in PowerPolicyController? i think that we have the potential to send a bunch of unnecessary d-bus traffic to powerd otherwise.\n\n(this is something that i should also optimize on the PowerPolicyController side.)",
+      "revId": "c1df52e6cd90bae439019f9f25ade06199a3b28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
