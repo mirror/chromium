@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a35ad6aa_ce189090",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-08T20:59:52Z",
+      "side": 1,
+      "message": "Does this belong on top with all the other prefs registered with ArcSessionManager? I\u0027m not sure what the distinction between profile prefs and local state prefs is.",
+      "revId": "2c4b920f992af79a7c4bf5c6518dad997748ae97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
