@@ -10,6 +10,7 @@
 #include "base/test/scoped_task_environment.h"
 #include "ios/web/public/test/test_web_thread.h"
 #include "ios/web/web_thread_impl.h"
+#include "net/disk_cache/simple/simple_backend_impl.h"
 
 namespace web {
 
@@ -22,11 +23,11 @@ TestWebThreadBundle::TestWebThreadBundle(int options) {
 }
 
 TestWebThreadBundle::~TestWebThreadBundle() {
-  // To avoid memory leaks, ensure that any tasks posted to the blocking pool
-  // via PostTaskAndReply are able to reply back to the originating thread, by
-  // flushing the blocking pool while the browser threads still exist.
+  // To avoid memory leaks, ensure that any tasks posted to the cache pool via
+  // PostTaskAndReply are able to reply back to the originating thread, by
+  // flushing the cache pool while the browser threads still exist.
   base::RunLoop().RunUntilIdle();
-  WebThreadImpl::FlushThreadPoolHelperForTesting();
+  disk_cache::SimpleBackendImpl::FlushWorkerPoolForTesting();
 
   // To ensure a clean teardown, each thread's message loop must be flushed
   // just before the thread is destroyed. But destroying a fake thread does not
