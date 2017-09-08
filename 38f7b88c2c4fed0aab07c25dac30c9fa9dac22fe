@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "135c479c_880dd4c3",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-08T21:44:17Z",
+      "side": 1,
+      "message": "This is necessary to support the following scenario.\n1) You have FB chat head, which isn\u0027t focused.\n2) You got ANR\n3) You close ANR. A user expect the focus back to the original window, but\n  not chat head.\n\nThis isn\u0027t perfect because opposite happen when you get ANR while using ChatHead, but I think this is better because former scenario is a lot more common than latter.",
+      "parentUuid": "fd6542dd_a0aa3512",
+      "range": {
+        "startLine": 555,
+        "startChar": 4,
+        "endLine": 558,
+        "endChar": 5
+      },
+      "revId": "38f7b88c2c4fed0aab07c25dac30c9fa9dac22fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bc6b294_20b01729",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "987727d2_971298a0",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-08T21:44:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bc6b294_20b01729",
+      "range": {
+        "startLine": 788,
+        "startChar": 13,
+        "endLine": 789,
+        "endChar": 25
+      },
+      "revId": "38f7b88c2c4fed0aab07c25dac30c9fa9dac22fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccd1532a_f5ed2811",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-08T15:57:08Z",
       "side": 1,
       "message": "nit: this doesn\u0027t seem like the right place to track this issue as this CL makes sense independent of future work related to task IDs. remove this TODO from here or are you expecting this code to change as a result of that?",
+      "range": {
+        "startLine": 790,
+        "startChar": 13,
+        "endLine": 792,
+        "endChar": 24
+      },
+      "revId": "38f7b88c2c4fed0aab07c25dac30c9fa9dac22fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641fb04b_a08ebddc",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-08T21:44:17Z",
+      "side": 1,
+      "message": "Yes, we can remove this \"if\" once we fix the 65460424. This is necessary because we\u0027re using the same shell_surface for all system/alert window, as they do not have task id.",
+      "parentUuid": "ccd1532a_f5ed2811",
       "range": {
         "startLine": 790,
         "startChar": 13,
