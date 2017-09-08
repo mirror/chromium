@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7b091fc_4c12e62f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-08T14:56:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f88c68a3_ca2f7ba8",
+      "range": {
+        "startLine": 520,
+        "startChar": 5,
+        "endLine": 520,
+        "endChar": 49
+      },
+      "revId": "47006201efeef53d3583b479dd3637bd0efe4e1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3981d328_279d7ee1",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "47006201efeef53d3583b479dd3637bd0efe4e1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b62dcc89_e8c194ef",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-08T14:56:16Z",
+      "side": 1,
+      "message": "Done. BlockingScopeExited() will now DCHECK if BlockingScopeEntered() hasn\u0027t been called first.",
+      "parentUuid": "3981d328_279d7ee1",
+      "range": {
+        "startLine": 537,
+        "startChar": 2,
+        "endLine": 538,
+        "endChar": 11
+      },
+      "revId": "47006201efeef53d3583b479dd3637bd0efe4e1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
