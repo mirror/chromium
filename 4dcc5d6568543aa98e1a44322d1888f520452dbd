@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e3dd56c8_16f4c181",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-08T23:36:55Z",
+      "side": 1,
+      "message": "You mean lines 5-15? \n\nThis script is going to be used that way. It\u0027s job though is just to trigger a set number of jobs with different bot dimensions. I don\u0027t want to put a lot of that description in here, as that\u0027s how we\u0027re going to use this. If that makes any sense?",
+      "parentUuid": "59e74d4d_db0ecdfa",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7bc260a_809a0b98",
         "filename": "tools/perf/perf_device_trigger.py",
         "patchSetId": 9
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "000a2cf7_dff3a48b",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-08T23:36:55Z",
+      "side": 1,
+      "message": "Why is it important to say that this is for perf? The name of the file itself might be bad; I think maybe we should name it something like \"device_affinity_trigger.py\" instead; there\u0027s nothing super inherently special about this script that means only perf can use it. If anyone else wants to do device affinity, they can use this script.",
+      "parentUuid": "f7bc260a_809a0b98",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d5130ff_9284efbc",
         "filename": "tools/perf/perf_device_trigger.py",
         "patchSetId": 9
@@ -65,6 +101,24 @@
       "writtenOn": "2017-09-08T14:58:41Z",
       "side": 1,
       "message": "nit: can we focus on the scope of this script as it stands?  ie leave out references to device affinity and benchmark sharding for now?  \n\nI think the actual code is easier to consume if we focus on exactly what it does and leave the thoughts of projects down the road (ie device affinity, sharding, etc) to design docs",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f9999d_4a196977",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-08T23:36:55Z",
+      "side": 1,
+      "message": "We need device affinity in here in order to make the script even work at all. And it does preserve device affinity as is.\n\nThis won\u0027t really have to deal with sharding at all, and that\u0027s not in here.",
+      "parentUuid": "2d5130ff_9284efbc",
       "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -106,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "6a0d4892_eed401e5",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-08T23:36:55Z",
+      "side": 1,
+      "message": "We need to return some data from this script to the recipe code. This is clarified more in modify_args.",
+      "parentUuid": "a938dfa7_03ac3049",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "174d99da_8883a3f2",
         "filename": "tools/perf/perf_device_trigger.py",
         "patchSetId": 9
@@ -120,6 +192,24 @@
       "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902b334a_f7a9c6e0",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-08T23:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "174d99da_8883a3f2",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
