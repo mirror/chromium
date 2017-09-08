@@ -240,10 +240,30 @@ class PolicyJson(skeleton_gatherer.SkeletonGatherer):
 
     self._AddNontranslateableChunk('{\n')
     self._AddNontranslateableChunk("  'policy_definitions': [\n")
+    self.data['policy_definitions'] =\
+        self._ExpandGroups(self.data['group_definitions'],\
+                           self.data['policy_definitions'])
+    self.data['group_definitions'] = []
     self._AddItems(self.data['policy_definitions'], 'policy', None, 2)
     self._AddNontranslateableChunk("  ],\n")
+
     self._AddMessages()
+
     self._AddNontranslateableChunk('\n}')
+
+  def _ExpandGroups(self, groups, policies):
+    for group in groups:
+      group['type'] = 'group';
+      policy_names = group['policies']
+      group['policies'] = [];
+      for policy in policy_names:
+        real_policy = filter(lambda pol: pol['name'] == policy, policies)
+        policies = filter(lambda pol: pol['name'] != policy, policies)
+        if (len(real_policy) != 1):
+          raise Exception("No policy")
+        group['policies'].extend(real_policy)
+      policies.append(group)
+    return policies
 
   def Escape(self, text):
     # \ -> \\
