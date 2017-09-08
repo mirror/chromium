@@ -288,8 +288,6 @@ void AnimationPlayer::Tick(base::TimeTicks monotonic_time) {
 void AnimationPlayer::UpdateState(bool start_ready_animations,
                                   AnimationEvents* events) {
   DCHECK(element_animations_);
-  if (!element_animations_->has_element_in_active_list())
-    return;
 
   // Animate hasn't been called, this happens if an element has been added
   // between the Commit and Draw phases.
@@ -1152,6 +1150,24 @@ std::string AnimationPlayer::ToString() const {
   return base::StringPrintf(
       "AnimationPlayer{id=%d, element_id=%s, animations=[%s]}", id_,
       element_id_.ToString().c_str(), AnimationsToString().c_str());
+}
+
+bool AnimationPlayer::HasActiveAnimations() const {
+  for (const auto& animation : animations_) {
+    // if (!animation->is_finished() && animation->affects_active_elements())
+    if (animation->affects_active_elements())
+      return true;
+  }
+  return false;
+}
+
+bool AnimationPlayer::HasPendingAnimations() const {
+  for (const auto& animation : animations_) {
+    // if (!animation->is_finished() && animation->affects_pending_elements())
+    if (animation->affects_pending_elements())
+      return true;
+  }
+  return false;
 }
 
 std::string AnimationPlayer::AnimationsToString() const {

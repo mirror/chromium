@@ -172,6 +172,9 @@ class CC_ANIMATION_EXPORT AnimationPlayer
 
   std::string ToString() const;
 
+  bool HasActiveAnimations() const;
+  bool HasPendingAnimations() const;
+
  private:
   friend class base::RefCounted<AnimationPlayer>;
 

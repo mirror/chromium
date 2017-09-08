@@ -30,8 +30,6 @@ scoped_refptr<ElementAnimations> ElementAnimations::Create() {
 ElementAnimations::ElementAnimations()
     : animation_host_(),
       element_id_(),
-      has_element_in_active_list_(false),
-      has_element_in_pending_list_(false),
       needs_push_properties_(false),
       needs_update_impl_client_state_(false) {}
 
@@ -50,16 +48,22 @@ void ElementAnimations::InitAffectedElementTypes() {
   DCHECK(animation_host_);
 
   UpdatePlayersTickingState(UpdateTickingType::FORCE);
+}
 
-  DCHECK(animation_host_->mutator_host_client());
-  if (animation_host_->mutator_host_client()->IsElementInList(
-          element_id_, ElementListType::ACTIVE)) {
-    set_has_element_in_active_list(true);
+bool ElementAnimations::has_element_in_active_list() const {
+  for (const auto& player : players_list_) {
+    if (player.HasActiveAnimations())
+      return true;
   }
-  if (animation_host_->mutator_host_client()->IsElementInList(
-          element_id_, ElementListType::PENDING)) {
-    set_has_element_in_pending_list(true);
+  return false;
+}
+
+bool ElementAnimations::has_element_in_pending_list() const {
+  for (const auto& player : players_list_) {
+    if (player.HasPendingAnimations())
+      return true;
   }
+  return false;
 }
 
 TargetProperties ElementAnimations::GetPropertiesMaskForAnimationState() {
@@ -83,14 +87,12 @@ void ElementAnimations::ClearAffectedElementTypes() {
         element_id(), ElementListType::ACTIVE, disabled_state_mask,
         disabled_state);
   }
-  set_has_element_in_active_list(false);
 
   if (has_element_in_pending_list()) {
     animation_host()->mutator_host_client()->ElementIsAnimatingChanged(
         element_id(), ElementListType::PENDING, disabled_state_mask,
         disabled_state);
   }
-  set_has_element_in_pending_list(false);
 
   RemovePlayersFromTicking();
 }
@@ -101,21 +103,11 @@ void ElementAnimations::ElementRegistered(ElementId element_id,
 
   if (!has_element_in_any_list())
     UpdatePlayersTickingState(UpdateTickingType::FORCE);
-
-  if (list_type == ElementListType::ACTIVE)
-    set_has_element_in_active_list(true);
-  else
-    set_has_element_in_pending_list(true);
 }
 
 void ElementAnimations::ElementUnregistered(ElementId element_id,
                                             ElementListType list_type) {
   DCHECK_EQ(this->element_id(), element_id);
-  if (list_type == ElementListType::ACTIVE)
-    set_has_element_in_active_list(false);
-  else
-    set_has_element_in_pending_list(false);
-
   if (!has_element_in_any_list())
     RemovePlayersFromTicking();
 }

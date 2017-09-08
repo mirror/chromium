@@ -97,21 +97,10 @@ class CC_ANIMATION_EXPORT ElementAnimations
   void NotifyAnimationPropertyUpdate(const AnimationEvent& event);
   void NotifyAnimationTakeover(const AnimationEvent& event);
 
-  bool has_element_in_active_list() const {
-    return has_element_in_active_list_;
-  }
-  bool has_element_in_pending_list() const {
-    return has_element_in_pending_list_;
-  }
+  bool has_element_in_active_list() const;
+  bool has_element_in_pending_list() const;
   bool has_element_in_any_list() const {
-    return has_element_in_active_list_ || has_element_in_pending_list_;
-  }
-
-  void set_has_element_in_active_list(bool has_element_in_active_list) {
-    has_element_in_active_list_ = has_element_in_active_list;
-  }
-  void set_has_element_in_pending_list(bool has_element_in_pending_list) {
-    has_element_in_pending_list_ = has_element_in_pending_list;
+    return has_element_in_active_list() || has_element_in_pending_list();
   }
 
   bool TransformAnimationBoundsForBox(const gfx::BoxF& box,
@@ -181,15 +170,16 @@ class CC_ANIMATION_EXPORT ElementAnimations
   AnimationHost* animation_host_;
   ElementId element_id_;
 
-  bool has_element_in_active_list_;
-  bool has_element_in_pending_list_;
-
   mutable bool needs_push_properties_;
 
   PropertyAnimationState active_state_;
   PropertyAnimationState pending_state_;
 
   mutable bool needs_update_impl_client_state_;
+
+ private:
+  bool HasActiveAnimations() const;
+  bool HasPendingAnimations() const;
 
   DISALLOW_COPY_AND_ASSIGN(ElementAnimations);
 };
