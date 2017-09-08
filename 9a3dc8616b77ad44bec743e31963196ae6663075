@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d152e1b4_7bb88240",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-09-08T20:04:47Z",
+      "side": 1,
+      "message": "Should we do this behind a RuntimeEnabled flag?\n\nAre there any tests to add?",
+      "range": {
+        "startLine": 323,
+        "startChar": 27,
+        "endLine": 323,
+        "endChar": 40
+      },
+      "revId": "9a3dc8616b77ad44bec743e31963196ae6663075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
