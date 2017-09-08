@@ -522,23 +522,39 @@ FileTable.prototype.setListThumbnailLoader = function(listThumbnailLoader) {
 };
 
 /**
+ * Returns the parent DOM element of the one containing the thumbnail.
+ * @param {number} index Index of the item in question.
+ */
+FileTable.prototype.getThumbnailParentElement = function(index) {
+  var listItem = this.getListItemByIndex(index);
+  if (!listItem) {
+    return null;
+  }
+  return listItem.querySelector('.detail-thumbnail');
+};
+
+/**
+ * Returns the element containing the thumbnail as background image.
+ * @param {!HTMLElement} box The parent of the thumbnail to be fetched.
+ */
+FileTable.prototype.getThumbnails = function(box) {
+  return box.querySelectorAll('.thumbnail');
+};
+
+/**
  * Handles thumbnail loaded event.
  * @param {!Event} event An event.
  * @private
  */
 FileTable.prototype.onThumbnailLoaded_ = function(event) {
-  var listItem = this.getListItemByIndex(event.index);
-  if (listItem) {
-    var box = listItem.querySelector('.detail-thumbnail');
-    if (box) {
-      if (event.dataUrl) {
-        this.setThumbnailImage_(
-            assertInstanceof(box, HTMLDivElement), event.dataUrl,
-            true /* with animation */);
-      } else {
-        this.clearThumbnailImage_(
-            assertInstanceof(box, HTMLDivElement));
-      }
+  var box = this.getThumbnailParentElement(event.index);
+  if (box) {
+    if (event.dataUrl) {
+      this.setThumbnailImage_(
+          assertInstanceof(box, HTMLDivElement), event.dataUrl,
+          true /* with animation */);
+    } else {
+      this.clearThumbnailImage_(assertInstanceof(box, HTMLDivElement));
     }
   }
 };
@@ -956,7 +972,7 @@ FileTable.prototype.renderThumbnail_ = function(entry) {
  * @private
  */
 FileTable.prototype.setThumbnailImage_ = function(box, dataUrl, shouldAnimate) {
-  var oldThumbnails = box.querySelectorAll('.thumbnail');
+  var oldThumbnails = this.getThumbnails(box);
 
   var thumbnail = box.ownerDocument.createElement('div');
   thumbnail.classList.add('thumbnail');
@@ -984,7 +1000,7 @@ FileTable.prototype.setThumbnailImage_ = function(box, dataUrl, shouldAnimate) {
  * @private
  */
 FileTable.prototype.clearThumbnailImage_ = function(box) {
-  var oldThumbnails = box.querySelectorAll('.thumbnail');
+  var oldThumbnails = this.getThumbnails(box);
 
   for (var i = 0; i < oldThumbnails.length; i++) {
     box.removeChild(oldThumbnails[i]);
