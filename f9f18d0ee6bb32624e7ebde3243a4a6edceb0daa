@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "461cee98_ce24a84d",
+        "filename": "ash/accelerators/accelerator_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-08T16:10:00Z",
+      "side": 1,
+      "message": "nit: blank line above might make this more clear",
+      "revId": "f9f18d0ee6bb32624e7ebde3243a4a6edceb0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7804fafd_0f1ecfcf",
+        "filename": "ash/accelerators/accelerator_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-08T16:10:00Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f9f18d0ee6bb32624e7ebde3243a4a6edceb0daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
