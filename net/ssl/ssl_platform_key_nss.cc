@@ -14,6 +14,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/threading/scoped_blocking_call.h"
 #include "crypto/nss_crypto_module_delegate.h"
 #include "crypto/scoped_nss_types.h"
 #include "net/cert/x509_certificate.h"
@@ -157,6 +158,14 @@ scoped_refptr<SSLPrivateKey> FetchClientCertPrivateKey(
     const X509Certificate* certificate,
     CERTCertificate* cert_certificate,
     crypto::CryptoModuleBlockingPasswordDelegate* password_delegate) {
+  // NSS calls made in this method may reenter //net via extension hooks. If the
+  // reentered code needs to synchronously wait for a task to run but the thread
+  // pool in which that task must run doesn't have enough threads to schedule
+  // it, a deadlock occurs. To prevent that, the base::ScopedBlockingCall below
+  // increments the thread pool capacity when this method takes too much time to
+  // run.
+  base::ScopedBlockingCall scoped_blocking_call(base::BlockingType::MAY_BLOCK);
+
   void* wincx = password_delegate ? password_delegate->wincx() : nullptr;
   crypto::ScopedSECKEYPrivateKey key(
       PK11_FindKeyByAnyCert(cert_certificate, wincx));
