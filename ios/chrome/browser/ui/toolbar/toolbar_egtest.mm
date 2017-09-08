@@ -25,6 +25,9 @@
 #include "ios/web/public/test/http_server/http_server_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 
+
+#import "ios/chrome/test/earl_grey/chrome_actions.h"
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
@@ -538,5 +541,44 @@ void SelectNewTabPagePanel(NewTabPage::PanelIdentifier panel_type) {
                                           nil)]
       assertWithMatcher:grey_sufficientlyVisible()];
 }
+
+-(void)testDraggingToOmnibox {
+
+
+
+  web::test::SetUpFileBasedHttpServer();
+  const GURL URL = web::test::HttpServer::MakeUrl("http://ios/testing/data/http_server_files/link_to_pony.html");
+  [ChromeEarlGrey loadURL:URL];
+//  [[EarlGrey selectElementWithMatcher:OmniboxText(URL.GetContent())]
+//   assertWithMatcher:grey_notNil()];
+
+
+
+
+
+  //[ChromeEarlGrey waitForWebViewContainingText:"Link"];
+
+UIWindow *keyWindow = [[[UIApplication sharedApplication] delegate] window];
+  UIView* v = chrome_test_util::FindSubviewOfClass(keyWindow, [OmniboxPopupMaterialRow class]);
+  DCHECK(v);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @end

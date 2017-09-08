@@ -77,6 +77,7 @@ bundle_data("http_server_bundle_data") {
     "data/http_server_files/history.js",
     "data/http_server_files/history_go.html",
     "data/http_server_files/history_go.js",
+    "data/http_server_files/link_to_pony.html",
     "data/http_server_files/memory_usage.html",
     "data/http_server_files/multi_field_form.html",
     "data/http_server_files/pony.html",
