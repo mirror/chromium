@@ -22,6 +22,30 @@
       "revId": "7dfdb5d4dcc3c292bee6c2a92cb56bef7f604518",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514425e9_d73e439e",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T16:50:52Z",
+      "side": 1,
+      "message": "Yep, that\u0027s fine in this case.",
+      "parentUuid": "6f3d3e18_4c46b3c4",
+      "range": {
+        "startLine": 173,
+        "startChar": 21,
+        "endLine": 173,
+        "endChar": 51
+      },
+      "revId": "7dfdb5d4dcc3c292bee6c2a92cb56bef7f604518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
