@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6579c12f_57faea1e",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-09-08T16:43:24Z",
+      "side": 1,
+      "message": "Nit: This can be directly return (GetDuration...",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 4
+      },
+      "revId": "29a019287eda71a7fe1c56fc33c9fd936f40733b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbc0216_6bbf0ced",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-09-08T16:43:24Z",
+      "side": 1,
+      "message": "Could you provide more details in the comment for this function, why the name is \"maybe\" changed? I guess it might still remain unchanged when the policy update happens?",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 43
+      },
+      "revId": "29a019287eda71a7fe1c56fc33c9fd936f40733b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
