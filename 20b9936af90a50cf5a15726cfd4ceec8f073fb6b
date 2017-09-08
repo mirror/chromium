@@ -142,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "73595629_d68d53e3",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-08T14:42:21Z",
+      "side": 1,
+      "message": "Whether you get the behavior you want really depends upon the NativeWidget type that is picked up. I suspect on mac you get a top level NativeWidget implementation, hence the bounds changing immediately. I also suspect that on windows you\u0027ll get a top level NativeWidget, which means the bounds are set immediately.\n\nEvan, I don\u0027t think animating the layer will work well as the if the layer goes outside the bounds of the nativewidget it\u0027ll be clipped.",
+      "parentUuid": "beda7b18_dc74eb6a",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 51
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8937cadf_46caaca0",
         "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
         "patchSetId": 15
