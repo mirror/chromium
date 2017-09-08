@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "51f3cee5_6d5aba7c",
+        "filename": "base/i18n/break_iterator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T20:44:48Z",
+      "side": 1,
+      "message": "That would be against the style guide, which says data members must be private except in rare cases: http://google.github.io/styleguide/cppguide.html#Access_Control",
+      "parentUuid": "6f514485_e8a461f8",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 24
+      },
+      "revId": "8f2844e2f4e3303968cde90c7a17312ffc870767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fc98c82_57057336",
         "filename": "base/i18n/break_iterator.h",
         "patchSetId": 4
