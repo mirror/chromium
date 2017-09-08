@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43436241_22e6a009",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-08T20:56:38Z",
+      "side": 1,
+      "message": "nit: Offline",
+      "range": {
+        "startLine": 122,
+        "startChar": 3,
+        "endLine": 122,
+        "endChar": 9
+      },
+      "revId": "b659729d179b298c28731ceabe48ec8988fa9768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
