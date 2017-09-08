@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "2c1573e9_436698af",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-08T00:09:58Z",
+      "side": 1,
+      "message": "Maybe there\u0027s some platform-specific behavior here. I\u0027m not a Mac expert. But I\u0027m pretty sure on other desktop platforms if user switches tab or navigate away via address bar, tab-modal dialog goes away. And yes, you\u0027re right, motivated user can still switch window, though we feel that window-modal adds slightly higher friction for user to dismiss it.",
+      "parentUuid": "964cdc62_f4263de0",
+      "range": {
+        "startLine": 75,
+        "startChar": 3,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "fbd221ef4ebd45b1cf2714ed3a1e53664ebda936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c2ff661_c7a88c6b",
         "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
         "patchSetId": 17
