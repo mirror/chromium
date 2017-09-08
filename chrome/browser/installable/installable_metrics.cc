@@ -74,11 +74,18 @@ class AccumulatingRecorder : public InstallableMetrics::Recorder {
     WriteMetricsAndResetCounts(status, manifest_status, installability_status);
   }
 
-  void Flush() override {
-    WriteMetricsAndResetCounts(
+  void Flush(bool has_paused) override {
+    InstallabilityCheckStatus status =
         started_ ? InstallabilityCheckStatus::NOT_COMPLETED
-                 : InstallabilityCheckStatus::NOT_STARTED,
-        AddToHomescreenTimeoutStatus::TIMEOUT_MANIFEST_FETCH_UNKNOWN,
+                 : InstallabilityCheckStatus::NOT_STARTED;
+
+    // If we have paused tasks, we are waiting for a service worker so it is
+    // likely that this is not a PWA.
+    if (has_paused)
+      status = InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP;
+
+    WriteMetricsAndResetCounts(
+        status, AddToHomescreenTimeoutStatus::TIMEOUT_MANIFEST_FETCH_UNKNOWN,
         AddToHomescreenTimeoutStatus::TIMEOUT_INSTALLABILITY_CHECK_UNKNOWN);
   }
 
@@ -149,7 +156,7 @@ class DirectRecorder : public InstallableMetrics::Recorder {
   ~DirectRecorder() override {}
 
   void Resolve(bool check_passed) override {}
-  void Flush() override {}
+  void Flush(bool has_paused) override {}
   void Start() override {}
   void RecordMenuOpen() override { WriteMenuOpenHistogram(status_, 1); }
 
@@ -261,7 +268,7 @@ void InstallableMetrics::Start() {
   recorder_->Start();
 }
 
-void InstallableMetrics::Flush() {
-  recorder_->Flush();
+void InstallableMetrics::Flush(bool has_paused) {
+  recorder_->Flush(has_paused);
   recorder_ = base::MakeUnique<AccumulatingRecorder>();
 }

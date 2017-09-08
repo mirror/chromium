@@ -282,9 +282,9 @@ void InstallableManager::ResolveMetrics(const InstallableParams& params,
 void InstallableManager::Reset() {
   // Prevent any outstanding callbacks to or from this object from being called.
   weak_factory_.InvalidateWeakPtrs();
-  task_queue_.Reset();
   icons_.clear();
-  metrics_.Flush();
+  metrics_.Flush(task_queue_.HasPaused());
+  task_queue_.Reset();
 
   manifest_ = base::MakeUnique<ManifestProperty>();
   valid_manifest_ = base::MakeUnique<ValidManifestProperty>();
