@@ -4,8 +4,6 @@ The first ServiceWorker is activated.
 ==== ServiceWorkersView ====
 http://127.0.0.1:8000/inspector/service-workers/resources/service-worker-redundant-scope/
 Update
-Push
-Sync
 Unregister
 Source
 changing-worker.php
@@ -18,13 +16,26 @@ Errors
 0
 details
 clear
+Push
+ 
+Test
+ 
+push
+ 
+message
+ 
+from
+ 
+DevTools
+.
+Push
+Sync
+Sync
 ============================
 The second Serviceworker is installed.
 ==== ServiceWorkersView ====
 http://127.0.0.1:8000/inspector/service-workers/resources/service-worker-redundant-scope/
 Update
-Push
-Sync
 Unregister
 Source
 changing-worker.php
@@ -42,13 +53,26 @@ Errors
 0
 details
 clear
+Push
+ 
+Test
+ 
+push
+ 
+message
+ 
+from
+ 
+DevTools
+.
+Push
+Sync
+Sync
 ============================
 The first ServiceWorker worker became redundant and stopped.
 ==== ServiceWorkersView ====
 http://127.0.0.1:8000/inspector/service-workers/resources/service-worker-redundant-scope/
 Update
-Push
-Sync
 Unregister
 Source
 changing-worker.php
@@ -61,13 +85,26 @@ Errors
 0
 details
 clear
+Push
+ 
+Test
+ 
+push
+ 
+message
+ 
+from
+ 
+DevTools
+.
+Push
+Sync
+Sync
 ============================
 DevTools frontend is reopened.
 ==== ServiceWorkersView ====
 http://127.0.0.1:8000/inspector/service-workers/resources/service-worker-redundant-scope/
 Update
-Push
-Sync
 Unregister
 Source
 changing-worker.php
@@ -80,5 +117,19 @@ Errors
 0
 details
 clear
+Push
+Test
+ 
+push
+ 
+message
+ 
+from
+ 
+DevTools
+.
+Push
+Sync
+Sync
 ============================
 
