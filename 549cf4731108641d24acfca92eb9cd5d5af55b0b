@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b82d677_40f9fc20",
+        "filename": "third_party/WebKit/Source/core/css/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-08T05:46:43Z",
+      "side": 1,
+      "message": "please also add the generated header to core/BUILD.gn",
+      "revId": "549cf4731108641d24acfca92eb9cd5d5af55b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
