@@ -33,13 +33,8 @@ NGFragmentBuilder::NGFragmentBuilder(LayoutObject* layout_object,
 
 NGFragmentBuilder::~NGFragmentBuilder() {}
 
-NGFragmentBuilder& NGFragmentBuilder::SetSize(const NGLogicalSize& size) {
-  size_ = size;
-  return *this;
-}
-
-NGFragmentBuilder& NGFragmentBuilder::SetBlockSize(LayoutUnit size) {
-  size_.block_size = size;
+NGFragmentBuilder& NGFragmentBuilder::SetBlockSize(LayoutUnit block_size) {
+  block_size_ = block_size;
   return *this;
 }
 
@@ -54,20 +49,60 @@ NGFragmentBuilder& NGFragmentBuilder::SetBlockOverflow(LayoutUnit size) {
   return *this;
 }
 
-NGFragmentBuilder& NGFragmentBuilder::AddChild(
-    RefPtr<NGLayoutResult> child,
+NGFragmentBuilder& NGFragmentBuilder::AddOutOfFlowChildCandidate(
+    NGBlockNode child,
     const NGLogicalOffset& child_offset) {
-  // Collect child's out of flow descendants.
-  for (const NGOutOfFlowPositionedDescendant& descendant :
-       child->OutOfFlowPositionedDescendants()) {
-    oof_positioned_candidates_.push_back(
-        NGOutOfFlowPositionedCandidate{descendant, child_offset});
-  }
+  DCHECK(child);
 
-  return AddChild(child->PhysicalFragment(), child_offset);
+  oof_positioned_candidates_.push_back(NGOutOfFlowPositionedCandidate{
+      NGOutOfFlowPositionedDescendant{
+          child, NGStaticPosition::Create(WritingMode(), Direction(),
+                                          NGPhysicalOffset())},
+      child_offset});
+
+  child.SaveStaticOffsetForLegacy(child_offset);
+  return *this;
 }
 
-NGFragmentBuilder& NGFragmentBuilder::AddChild(
+void NGFragmentBuilder::GetAndClearOutOfFlowDescendantCandidates(
+    Vector<NGOutOfFlowPositionedDescendant>* descendant_candidates) {
+  DCHECK(descendant_candidates->IsEmpty());
+
+  descendant_candidates->ReserveCapacity(oof_positioned_candidates_.size());
+
+  DCHECK_GE(inline_size_, LayoutUnit());
+  DCHECK_GE(block_size_, LayoutUnit());
+  NGPhysicalSize builder_physical_size{Size().ConvertToPhysical(WritingMode())};
+
+  for (NGOutOfFlowPositionedCandidate& candidate : oof_positioned_candidates_) {
+    NGPhysicalOffset child_offset = candidate.child_offset.ConvertToPhysical(
+        WritingMode(), Direction(), builder_physical_size, NGPhysicalSize());
+
+    NGStaticPosition builder_relative_position;
+    builder_relative_position.type = candidate.descendant.static_position.type;
+    builder_relative_position.offset =
+        child_offset + candidate.descendant.static_position.offset;
+
+    descendant_candidates->push_back(NGOutOfFlowPositionedDescendant{
+        candidate.descendant.node, builder_relative_position});
+  }
+
+  // Clear our current canidate list. This may get modified again if the
+  // current fragment is a containing block, and AddChild is called with a
+  // descendant from this list.
+  //
+  // The descendant may be a "position: absolute" which contains a "position:
+  // fixed" for example. (This fragment isn't the containing block for the
+  // fixed descendant).
+  oof_positioned_candidates_.clear();
+}
+
+NGBaseFragmentBuilder& NGFragmentBuilder::AddChild(RefPtr<NGLayoutResult> result, const NGLogicalOffset& child_offset) {
+  NGBaseFragmentBuilder::AddChild(std::move(result), child_offset);
+  return *this;
+}
+
+NGBaseFragmentBuilder& NGFragmentBuilder::AddChild(
     RefPtr<NGPhysicalFragment> child,
     const NGLogicalOffset& child_offset) {
   switch (child->Type()) {
@@ -94,74 +129,8 @@ NGFragmentBuilder& NGFragmentBuilder::AddChild(
       break;
   }
 
-  children_.push_back(std::move(child));
-  offsets_.push_back(child_offset);
+  NGBaseFragmentBuilder::AddChild(std::move(child), child_offset);
 
-  return *this;
-}
-
-NGFragmentBuilder& NGFragmentBuilder::SetBfcOffset(const NGBfcOffset& offset) {
-  bfc_offset_ = offset;
-  return *this;
-}
-
-NGFragmentBuilder& NGFragmentBuilder::AddOutOfFlowChildCandidate(
-    NGBlockNode child,
-    const NGLogicalOffset& child_offset) {
-  DCHECK(child);
-
-  oof_positioned_candidates_.push_back(NGOutOfFlowPositionedCandidate{
-      NGOutOfFlowPositionedDescendant{
-          child, NGStaticPosition::Create(WritingMode(), Direction(),
-                                          NGPhysicalOffset())},
-      child_offset});
-
-  child.SaveStaticOffsetForLegacy(child_offset);
-  return *this;
-}
-
-void NGFragmentBuilder::GetAndClearOutOfFlowDescendantCandidates(
-    Vector<NGOutOfFlowPositionedDescendant>* descendant_candidates) {
-  DCHECK(descendant_candidates->IsEmpty());
-
-  descendant_candidates->ReserveCapacity(oof_positioned_candidates_.size());
-
-  DCHECK_GE(size_.inline_size, LayoutUnit());
-  DCHECK_GE(size_.block_size, LayoutUnit());
-  NGPhysicalSize builder_physical_size{size_.ConvertToPhysical(WritingMode())};
-
-  for (NGOutOfFlowPositionedCandidate& candidate : oof_positioned_candidates_) {
-    NGPhysicalOffset child_offset = candidate.child_offset.ConvertToPhysical(
-        WritingMode(), Direction(), builder_physical_size, NGPhysicalSize());
-
-    NGStaticPosition builder_relative_position;
-    builder_relative_position.type = candidate.descendant.static_position.type;
-    builder_relative_position.offset =
-        child_offset + candidate.descendant.static_position.offset;
-
-    descendant_candidates->push_back(NGOutOfFlowPositionedDescendant{
-        candidate.descendant.node, builder_relative_position});
-  }
-
-  // Clear our current canidate list. This may get modified again if the
-  // current fragment is a containing block, and AddChild is called with a
-  // descendant from this list.
-  //
-  // The descendant may be a "position: absolute" which contains a "position:
-  // fixed" for example. (This fragment isn't the containing block for the
-  // fixed descendant).
-  oof_positioned_candidates_.clear();
-}
-
-NGFragmentBuilder& NGFragmentBuilder::AddOutOfFlowDescendant(
-    NGOutOfFlowPositionedDescendant descendant) {
-  oof_positioned_descendants_.push_back(descendant);
-  return *this;
-}
-
-NGFragmentBuilder& NGFragmentBuilder::SetExclusionSpace(
-    std::unique_ptr<const NGExclusionSpace> exclusion_space) {
-  exclusion_space_ = std::move(exclusion_space);
   return *this;
 }
 
@@ -177,7 +146,7 @@ void NGFragmentBuilder::AddBaseline(NGBaselineRequest request,
 RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
   DCHECK_EQ(offsets_.size(), children_.size());
 
-  NGPhysicalSize physical_size = size_.ConvertToPhysical(WritingMode());
+  NGPhysicalSize physical_size = Size().ConvertToPhysical(WritingMode());
 
   for (size_t i = 0; i < children_.size(); ++i) {
     NGPhysicalFragment* child = children_[i].Get();
@@ -209,13 +178,6 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
       std::move(fragment), oof_positioned_descendants_, unpositioned_floats_,
       std::move(exclusion_space_), bfc_offset_, end_margin_strut_,
       NGLayoutResult::kSuccess));
-}
-
-RefPtr<NGLayoutResult> NGFragmentBuilder::Abort(
-    NGLayoutResult::NGLayoutResultStatus status) {
-  return AdoptRef(new NGLayoutResult(
-      nullptr, Vector<NGOutOfFlowPositionedDescendant>(), unpositioned_floats_,
-      nullptr, bfc_offset_, end_margin_strut_, status));
 }
 
 }  // namespace blink

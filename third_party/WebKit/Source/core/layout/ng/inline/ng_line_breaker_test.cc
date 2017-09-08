@@ -44,7 +44,7 @@ class NGLineBreakerTest : public NGBaseLayoutAlgorithmTest {
 
     Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats;
     NGLineBreaker line_breaker(node, *space, &container_builder,
-                               &unpositioned_floats);
+                               &unpositioned_floats, WTF::nullopt); // TODO FIXME
 
     Vector<NGInlineItemResults> lines;
     NGExclusionSpace exclusion_space;

@@ -236,6 +236,12 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
   const NGPhysicalBoxFragment& physical_fragment =
       ToNGPhysicalBoxFragment(*layout_result.PhysicalFragment());
 
+  NGLayoutInputNode first_child = FirstChild();
+  if (first_child && first_child.IsInline()) {
+    
+    ToNGInlineNode(first_child).CopyFragmentDataToLayoutBox(constraint_space, layout_result);
+  }
+
   if (box_->Style()->SpecifiesColumns()) {
     UpdateLegacyMultiColumnFlowThread(box_, constraint_space,
                                       physical_fragment);
@@ -336,6 +342,9 @@ void NGBlockNode::PlaceChildrenInLayoutBox(
     auto* child_object = child_fragment->GetLayoutObject();
     DCHECK(child_fragment->IsPlaced());
 
+    if (!child_fragment->IsBox())
+      continue;
+
     // At the moment "anonymous" fragments for inline layout will have the same
     // layout object as ourselves, we need to copy its floats across.
     if (child_object == box_) {
@@ -353,6 +362,7 @@ void NGBlockNode::PlaceChildrenInLayoutBox(
       }
       continue;
     }
+
     const auto& box_fragment = *ToNGPhysicalBoxFragment(child_fragment.Get());
     if (IsFirstFragment(constraint_space, box_fragment))
       CopyChildFragmentPosition(box_fragment, offset_from_start);

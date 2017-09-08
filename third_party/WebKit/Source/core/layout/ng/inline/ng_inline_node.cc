@@ -36,6 +36,7 @@
 #include "platform/fonts/shaping/HarfBuzzShaper.h"
 #include "platform/fonts/shaping/ShapeResultSpacing.h"
 #include "platform/wtf/text/CharacterNames.h"
+#include <iostream>
 
 namespace blink {
 
@@ -100,6 +101,10 @@ void CreateBidiRuns(BidiRunList<BidiRun>* bidi_runs,
 
       NGFragment fragment(constraint_space.WritingMode(), physical_fragment);
       NGLogicalOffset child_offset = fragment.Offset() + parent_offset;
+
+      if (physical_fragment.GetLayoutObject()->IsFloating())
+        continue;
+
       if (physical_fragment.Children().size()) {
         CreateBidiRuns(bidi_runs, physical_fragment.Children(),
                        constraint_space, child_offset, items, text_offsets,
@@ -359,6 +364,12 @@ NGInlineNode::NGInlineNode(LayoutNGBlockFlow* block)
     block->ResetNGInlineNodeData();
 }
 
+bool NGInlineNode::IsEmptyInline() {
+  InvalidatePrepareLayout();
+  PrepareLayout();
+  return Data().is_empty_inline_;
+}
+
 const Vector<NGInlineItem>& NGInlineNode::Items(bool is_first_line) const {
   const NGInlineNodeData& data = Data();
   if (!is_first_line || !data.first_line_items_)
@@ -542,11 +553,11 @@ RefPtr<NGLayoutResult> NGInlineNode::Layout(
                                     ToNGInlineBreakToken(break_token));
   RefPtr<NGLayoutResult> result = algorithm.Layout();
 
-  if (result->Status() == NGLayoutResult::kSuccess &&
+  /*if (result->Status() == NGLayoutResult::kSuccess &&
       result->UnpositionedFloats().IsEmpty() &&
       !RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
     CopyFragmentDataToLayoutBox(constraint_space, result.Get());
-  }
+  }*/
 
   return result;
 }
@@ -567,10 +578,12 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
   NGFragmentBuilder container_builder(node, &node.Style(), space->WritingMode(),
                                       TextDirection::kLtr);
   container_builder.SetBfcOffset(NGBfcOffset{LayoutUnit(), LayoutUnit()});
+  NGLayoutOpportunity opportunity(NGBfcOffset{LayoutUnit(), LayoutUnit()},
+      NGLogicalSize{available_inline_size, NGSizeIndefinite});
 
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats;
   NGLineBreaker line_breaker(node, *space, &container_builder,
-                             &unpositioned_floats);
+                             &unpositioned_floats, opportunity);
 
   NGLineInfo line_info;
   NGExclusionSpace empty_exclusion_space;
@@ -622,7 +635,7 @@ NGLayoutInputNode NGInlineNode::NextSibling() {
 
 void NGInlineNode::CopyFragmentDataToLayoutBox(
     const NGConstraintSpace& constraint_space,
-    NGLayoutResult* layout_result) {
+    const NGLayoutResult& layout_result) {
   LayoutNGBlockFlow* block_flow = GetLayoutBlockFlow();
   block_flow->DeleteLineBoxTree();
 
@@ -643,7 +656,9 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
   BidiRunList<BidiRun> bidi_runs;
   LineInfo line_info;
   NGPhysicalBoxFragment* box_fragment =
-      ToNGPhysicalBoxFragment(layout_result->PhysicalFragment().Get());
+      ToNGPhysicalBoxFragment(layout_result.PhysicalFragment().Get());
+
+  box_fragment->ShowFragmentTree();
   for (const auto& container_child : box_fragment->Children()) {
     // Skip any float children we might have, these are handled by the wrapping
     // parent NGBlockNode.
@@ -658,41 +673,44 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
     CreateBidiRuns(&bidi_runs, physical_line_box.Children(), constraint_space,
                    line_box.Offset(), items, text_offsets,
                    &positions_for_bidi_runs, &positions);
-    // TODO(kojii): bidi needs to find the logical last run.
-    bidi_runs.SetLogicallyLastRun(bidi_runs.LastRun());
 
-    // Add border and padding to all positions.
-    // Line box fragments are relative to this anonymous wrapper box fragment,
-    // and the parent NGBlockLayoutAlgorithm offsets this wrapper by border and
-    // padding, but inline boxes should be placed relative to the
-    // LayoutBlockFlow.
-    for (auto& position : positions_for_bidi_runs)
-      position += border_padding;
-    for (auto& position : positions.Values())
-      position += border_padding;
+    if (bidi_runs.FirstRun()) {
+      // TODO(kojii): bidi needs to find the logical last run.
+      bidi_runs.SetLogicallyLastRun(bidi_runs.LastRun());
 
-    // Create a RootInlineBox from BidiRunList. InlineBoxes created for the
-    // RootInlineBox are set to Bidirun::m_box.
-    line_info.SetEmpty(false);
-    // TODO(kojii): Implement setFirstLine, LastLine, etc.
-    RootInlineBox* root_line_box =
-        block_flow->ConstructLine(bidi_runs, line_info);
+      // Add border and padding to all positions.
+      // Line box fragments are relative to this anonymous wrapper box fragment,
+      // and the parent NGBlockLayoutAlgorithm offsets this wrapper by border and
+      // padding, but inline boxes should be placed relative to the
+      // LayoutBlockFlow.
+      for (auto& position : positions_for_bidi_runs)
+        position += border_padding;
+      for (auto& position : positions.Values())
+        position += border_padding;
 
-    // Copy fragments data to InlineBoxes.
-    PlaceInlineBoxChildren(root_line_box, positions_for_bidi_runs, positions);
+      // Create a RootInlineBox from BidiRunList. InlineBoxes created for the
+      // RootInlineBox are set to Bidirun::m_box.
+      line_info.SetEmpty(false);
+      // TODO(kojii): Implement setFirstLine, LastLine, etc.
+      RootInlineBox* root_line_box =
+          block_flow->ConstructLine(bidi_runs, line_info);
 
-    // Copy to RootInlineBox.
-    root_line_box->SetLogicalLeft(line_box.InlineOffset() +
-                                  border_padding.inline_start);
-    root_line_box->SetLogicalWidth(line_box.InlineSize());
-    LayoutUnit line_top = line_box.BlockOffset() + border_padding.block_start;
-    NGLineHeightMetrics line_metrics(Style(), baseline_type);
-    const NGLineHeightMetrics& max_with_leading = physical_line_box.Metrics();
-    LayoutUnit baseline = line_top + max_with_leading.ascent;
-    root_line_box->SetLogicalTop(baseline - line_metrics.ascent);
-    root_line_box->SetLineTopBottomPositions(
-        baseline - line_metrics.ascent, baseline + line_metrics.descent,
-        line_top, baseline + max_with_leading.descent);
+      // Copy fragments data to InlineBoxes.
+      PlaceInlineBoxChildren(root_line_box, positions_for_bidi_runs, positions);
+
+      // Copy to RootInlineBox.
+      root_line_box->SetLogicalLeft(line_box.InlineOffset() +
+                                    border_padding.inline_start);
+      root_line_box->SetLogicalWidth(line_box.InlineSize());
+      LayoutUnit line_top = line_box.BlockOffset() + border_padding.block_start;
+      NGLineHeightMetrics line_metrics(Style(), baseline_type);
+      const NGLineHeightMetrics& max_with_leading = physical_line_box.Metrics();
+      LayoutUnit baseline = line_top + max_with_leading.ascent;
+      root_line_box->SetLogicalTop(baseline - line_metrics.ascent);
+      root_line_box->SetLineTopBottomPositions(
+          baseline - line_metrics.ascent, baseline + line_metrics.descent,
+          line_top, baseline + max_with_leading.descent);
+    }
 
     line_info.SetFirstLine(false);
     bidi_runs.DeleteRuns();

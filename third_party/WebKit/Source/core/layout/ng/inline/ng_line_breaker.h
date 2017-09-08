@@ -19,7 +19,8 @@ namespace blink {
 class Hyphenation;
 class NGInlineBreakToken;
 class NGInlineItem;
-class NGFragmentBuilder;
+class NGBaseFragmentBuilder;
+class NGInlineLayoutStateStack;
 
 // Represents a line breaker.
 //
@@ -31,8 +32,9 @@ class CORE_EXPORT NGLineBreaker {
  public:
   NGLineBreaker(NGInlineNode,
                 const NGConstraintSpace&,
-                NGFragmentBuilder*,
+                NGBaseFragmentBuilder*,
                 Vector<RefPtr<NGUnpositionedFloat>>*,
+                WTF::Optional<NGLayoutOpportunity>,
                 const NGInlineBreakToken* = nullptr);
   ~NGLineBreaker() {}
 
@@ -43,7 +45,7 @@ class CORE_EXPORT NGLineBreaker {
                 NGLineInfo*);
 
   // Create an NGInlineBreakToken for the last line returned by NextLine().
-  RefPtr<NGInlineBreakToken> CreateBreakToken() const;
+  RefPtr<NGInlineBreakToken> CreateBreakToken(std::unique_ptr<const NGInlineLayoutStateStack>) const;
 
   NGExclusionSpace* ExclusionSpace() { return line_.exclusion_space.get(); }
 
@@ -58,6 +60,7 @@ class CORE_EXPORT NGLineBreaker {
 
     // The current opportunity.
     WTF::Optional<NGLayoutOpportunity> opportunity;
+    LayoutUnit available_width;
 
     std::unique_ptr<NGExclusionSpace> exclusion_space;
 
@@ -73,7 +76,7 @@ class CORE_EXPORT NGLineBreaker {
     bool is_after_forced_break = false;
 
     bool HasAvailableWidth() const { return opportunity.has_value(); }
-    LayoutUnit AvailableWidth() const { return opportunity->InlineSize(); }
+    LayoutUnit AvailableWidth() const { return available_width; }
     bool CanFit() const { return position <= AvailableWidth(); }
     bool CanFit(LayoutUnit extra) const {
       return position + extra <= AvailableWidth();
@@ -134,8 +137,9 @@ class CORE_EXPORT NGLineBreaker {
   LineData line_;
   NGInlineNode node_;
   const NGConstraintSpace& constraint_space_;
-  NGFragmentBuilder* container_builder_;
+  NGBaseFragmentBuilder* container_builder_;
   Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats_;
+  WTF::Optional<NGLayoutOpportunity> opportunity_;
   unsigned item_index_ = 0;
   unsigned offset_ = 0;
   NGLogicalOffset content_offset_;

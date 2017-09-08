@@ -8,8 +8,11 @@
 #include "core/CoreExport.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/ng_break_token.h"
+#include "core/layout/ng/inline/ng_inline_box_state.h"
 
 namespace blink {
+
+class NGInlineLayoutStateStack;
 
 // Represents a break token for an inline node.
 class CORE_EXPORT NGInlineBreakToken : public NGBreakToken {
@@ -18,8 +21,9 @@ class CORE_EXPORT NGInlineBreakToken : public NGBreakToken {
   // produce more fragments.
   static RefPtr<NGInlineBreakToken> Create(NGInlineNode node,
                                            unsigned item_index,
-                                           unsigned text_offset) {
-    return AdoptRef(new NGInlineBreakToken(node, item_index, text_offset));
+                                           unsigned text_offset,
+                                           std::unique_ptr<const NGInlineLayoutStateStack> state_stack) {
+    return AdoptRef(new NGInlineBreakToken(node, item_index, text_offset, std::move(state_stack)));
   }
 
   // Creates a break token for a node which cannot produce any more fragments.
@@ -27,18 +31,32 @@ class CORE_EXPORT NGInlineBreakToken : public NGBreakToken {
     return AdoptRef(new NGInlineBreakToken(node));
   }
 
-  unsigned ItemIndex() const { return item_index_; }
-  unsigned TextOffset() const { return text_offset_; }
+  ~NGInlineBreakToken() override;
 
+  unsigned ItemIndex() const {
+    DCHECK(!IsFinished());
+    return item_index_;
+  }
+  unsigned TextOffset() const {
+    DCHECK(!IsFinished());
+    return text_offset_;
+  }
+
+  const NGInlineLayoutStateStack& StateStack() const {
+    DCHECK(!IsFinished());
+    return *state_stack_;
+  }
  private:
   NGInlineBreakToken(NGInlineNode node,
                      unsigned item_index,
-                     unsigned text_offset);
+                     unsigned text_offset,
+                     std::unique_ptr<const NGInlineLayoutStateStack>);
 
   explicit NGInlineBreakToken(NGLayoutInputNode node);
 
   unsigned item_index_;
   unsigned text_offset_;
+  std::unique_ptr<const NGInlineLayoutStateStack> state_stack_;
 };
 
 DEFINE_TYPE_CASTS(NGInlineBreakToken,
