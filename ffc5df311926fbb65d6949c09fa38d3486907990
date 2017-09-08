@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0fbf1cb4_7afa96a0",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-08T20:32:33Z",
+      "side": 1,
+      "message": "See reply below.",
+      "parentUuid": "7360d1c1_d3f758e6",
+      "revId": "ffc5df311926fbb65d6949c09fa38d3486907990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b1a33cc_56681e46",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-08T15:37:42Z",
       "side": 1,
       "message": "This is changing the parent opacity, but not actually verifying that the computed opacity changes.  Do you want something like:\n\nelement-\u003eSetOpacity(0.5);\nparent-\u003eSetOpacity(1.0);\nVerifyElementRenderedOpacity(element, 0.5);\n\nelement-\u003eSetOpacity(0.5);\nparent-\u003eSetOpacity(0.5);\nVerifyElementRenderedOpacity(element, 0.25);\n\nAnd in VerifyElement..(), then check that both computed opacity and rendered opacity match the input value?  Otherwise, what is the point of changing the parent opacity?",
+      "revId": "ffc5df311926fbb65d6949c09fa38d3486907990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d7ca8b_ad0aaf1e",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-08T20:32:33Z",
+      "side": 1,
+      "message": "Talked offline: checking opacity inheritance is covered by TEST(UiScene, Opacity), so we probably don\u0027t need to repeat here.\n\nThe confusing part is setting parent opacity to 1. It is safe to remove it. The key thing to avoid here is when opacity \u003d\u003d computed_opacity. Setting parent to a value that is less than 1 can make sure opacity !\u003d computed_opacity.",
+      "parentUuid": "4b1a33cc_56681e46",
       "revId": "ffc5df311926fbb65d6949c09fa38d3486907990",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
