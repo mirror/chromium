@@ -96,6 +96,24 @@
     },
     {
       "key": {
+        "uuid": "1b130522_c7d46d22",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-08T00:29:39Z",
+      "side": 1,
+      "message": "Re table-relate classes: but won\u0027t this result in inefficient visual rects for boxes that\nare invisible, leading to unnecessary raster?",
+      "parentUuid": "c92e8596_3f2b33f8",
+      "revId": "12d45ce134aa6c0559de01d9ccc43dbced235daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cc0eb71_7150f1b9",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCol.cpp",
         "patchSetId": 2
