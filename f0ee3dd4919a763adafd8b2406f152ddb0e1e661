@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "7774f8fd_b873d0e7",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T22:32:35Z",
+      "side": 1,
+      "message": "Can we add a comment why offset_from_root cannot be used with fragmentation? I would do something like this:\n\n// The inherited offset_from_root may include ancestor pagination offset in case of nested\n// pagination. It is fine if the current layer doesn\u0027t need fragmentation, but it would\n// interfere pagination computation of the current layer.\nbool offset_from_root_can_be_used \u003d !ShouldFragmentCompositedBounds(root_layer);\nfor (auto* fragment_data \u003d GetLayoutObject().FirstFragment(); fragment_data;\n       fragment_data \u003d fragment_data-\u003eNextFragment()) {\n    Clipper(geometry_mapper_option)\n        .CalculateRects(clip_rects_context, fragment_data, dirty_rect,\n                        fragment.layer_bounds, fragment.background_rect,\n                        fragment.foreground_rect, \n                        offset_from_root_can_be_used ? offset_from_root : nullptr);\n    fragment.pagination_offset \u003d fragment_data-\u003ePaginationOffset();\n    fragments.push_back(fragment);\n}",
+      "parentUuid": "1c9b832c_2514f1c6",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f235c40c_86a4b3d5",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
         "patchSetId": 27
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "f95db163_cbb100ee",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T22:32:35Z",
+      "side": 1,
+      "message": "I see. Basically in the case of nested pagination, the paint offset in PaintLayerPainter already included outer pagination offset. We would have to undo it if we want to just add the inner pagination offset. This is unfortunate. :(",
+      "parentUuid": "4f2a961d_10ea03ca",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7031d2b6_843eb82d",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
         "patchSetId": 27
@@ -137,6 +173,24 @@
       "side": 1,
       "message": "There might be a fragment_data. e.g. a hit test is done on a clean lifecycle, so there\nwill be a FirstFragment.",
       "parentUuid": "7031d2b6_843eb82d",
+      "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50dd5318_5885c2c5",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T22:32:35Z",
+      "side": 1,
+      "message": "Does that implies the hit-testing code already tested again fragment clip and converted the visual coordination to logical coordination of the flow thread? It looks weird that fragment_data was passed but unused.",
+      "parentUuid": "18e860cc_6efa1ac1",
       "revId": "f0ee3dd4919a763adafd8b2406f152ddb0e1e661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59993e8c_23fed82b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T22:32:35Z",
+      "side": 1,
+      "message": "Ah, this looks right. By the way the LayoutRect cast seems extraneous.",
+      "revId": "3251aa8ebf70fc61d0a9ba26f591b23ed048ee35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e9c5a2_eb4a721e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-08T22:32:35Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "3251aa8ebf70fc61d0a9ba26f591b23ed048ee35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
