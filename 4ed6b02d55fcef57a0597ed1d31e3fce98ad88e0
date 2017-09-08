@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "258aba95_240e34bf",
+        "filename": "tools/metrics/histograms/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-09-08T20:06:37Z",
+      "side": 1,
+      "message": "while you\u0027re here - I\u0027m not seeing a reason for one not to be included. I would just say the COUNT value should ...",
+      "range": {
+        "startLine": 65,
+        "startChar": 40,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "4ed6b02d55fcef57a0597ed1d31e3fce98ad88e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
