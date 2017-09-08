@@ -4156,6 +4156,7 @@ void RenderFrameImpl::DidBlockFramebust(const WebURL& url) {
 }
 
 void RenderFrameImpl::AbortClientNavigation() {
+  browser_side_navigation_pending_ = false;
   Send(new FrameHostMsg_AbortNavigation(routing_id_));
 }
 
@@ -5224,6 +5225,8 @@ void RenderFrameImpl::OnCommitNavigation(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params) {
   CHECK(IsBrowserSideNavigationEnabled());
+  if (!browser_side_navigation_pending_ && request_params.nav_entry_id == 0)
+    return;
 
   // This will override the url requested by the WebURLLoader, as well as
   // provide it with the response to the request.
