@@ -16,6 +16,24 @@
       "revId": "af5ce6d100d0bb9bbb7d9a146452bf5ffa421d4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e4d7fe4_5046a7c3",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-09-08T15:28:50Z",
+      "side": 1,
+      "message": "Right, it applies the device scale only to compositor, but not blink. I updated it and tested the changed one. The website looks the same with the use-zoom-for-dsf disabled one for both top and bottom controls.",
+      "parentUuid": "489d3de2_e2187048",
+      "revId": "af5ce6d100d0bb9bbb7d9a146452bf5ffa421d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
