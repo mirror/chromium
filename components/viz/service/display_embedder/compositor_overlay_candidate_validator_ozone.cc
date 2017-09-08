@@ -42,7 +42,7 @@ CompositorOverlayCandidateValidatorOzone::
     : overlay_candidates_(std::move(overlay_candidates)),
       software_mirror_active_(false) {
   if (!strategies_string.length())
-    strategies_string = "single-on-top,underlay";
+    strategies_string = "single-fullscreen,single-on-top,underlay";
 
   for (const auto& strategy_name :
        base::SplitStringPiece(strategies_string, ",", base::TRIM_WHITESPACE,
