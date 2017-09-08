@@ -148,6 +148,9 @@ class MetricsService : public base::HistogramFlattener {
   bool reporting_active() const;
   bool has_unsent_logs() const;
 
+  // Returns the elapsed time between |now| and the |last_update_time_|.
+  base::TimeDelta GetIncrementalUptime(const base::TimeTicks& now) const;
+
   // Redundant test to ensure that we are notified of a clean exit.
   // This value should be true when process has completed shutdown.
   static bool UmaMetricsProperlyShutdown();

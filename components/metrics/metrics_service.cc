@@ -357,6 +357,12 @@ bool MetricsService::has_unsent_logs() const {
   return reporting_service_.metrics_log_store()->has_unsent_logs();
 }
 
+base::TimeDelta MetricsService::GetIncrementalUptime(
+    const base::TimeTicks& now) const {
+  return last_updated_time_.is_null() ? base::TimeDelta()
+                                      : now - last_updated_time_;
+}
+
 void MetricsService::RecordDelta(const base::HistogramBase& histogram,
                                  const base::HistogramSamples& snapshot) {
   histogram.ValidateHistogramContents(true, -1);
@@ -580,7 +586,7 @@ void MetricsService::GetUptimes(PrefService* pref,
     first_updated_time_ = now;
     last_updated_time_ = now;
   }
-  *incremental_uptime = now - last_updated_time_;
+  *incremental_uptime = GetIncrementalUptime(now);
   *uptime = now - first_updated_time_;
   last_updated_time_ = now;
 
