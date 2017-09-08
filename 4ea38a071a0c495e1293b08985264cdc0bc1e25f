@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "54e71768_1cd0ccff",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-08T15:37:42Z",
+      "side": 1,
+      "message": "The test class can offer tools whether they\u0027re used for one or many tests.  I just figure, if you need to access test class data, this might as well be a method on the class.  Up to you.",
+      "parentUuid": "fd9a6026_6b0d179b",
+      "revId": "4ea38a071a0c495e1293b08985264cdc0bc1e25f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fff566c2_35ef9b0e",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 2
