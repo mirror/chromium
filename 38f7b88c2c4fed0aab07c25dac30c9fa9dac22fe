@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd6542dd_a0aa3512",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-08T15:57:08Z",
+      "side": 1,
+      "message": "do we need this part? it doesn\u0027t seem correct that we\u0027d move focus away from the active window just because it\u0027s no longer system modal. shouldn\u0027t it require a user action or the window to become non-activatable for the focus to move away?",
+      "range": {
+        "startLine": 555,
+        "startChar": 4,
+        "endLine": 558,
+        "endChar": 5
+      },
+      "revId": "38f7b88c2c4fed0aab07c25dac30c9fa9dac22fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc6b294_20b01729",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-08T15:57:08Z",
+      "side": 1,
+      "message": "nit: this just seems to reference the bug you\u0027re fixing. I don\u0027t think we need this here as the change makes sense on its own.",
+      "range": {
+        "startLine": 788,
+        "startChar": 13,
+        "endLine": 789,
+        "endChar": 25
+      },
+      "revId": "38f7b88c2c4fed0aab07c25dac30c9fa9dac22fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd1532a_f5ed2811",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-08T15:57:08Z",
+      "side": 1,
+      "message": "nit: this doesn\u0027t seem like the right place to track this issue as this CL makes sense independent of future work related to task IDs. remove this TODO from here or are you expecting this code to change as a result of that?",
+      "range": {
+        "startLine": 790,
+        "startChar": 13,
+        "endLine": 792,
+        "endChar": 24
+      },
+      "revId": "38f7b88c2c4fed0aab07c25dac30c9fa9dac22fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
