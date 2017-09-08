@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aee7e15_0f4a0fba",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1115004
+      },
+      "writtenOn": "2017-09-08T00:45:48Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this. I think we should just tie this to AllowStoppingTimersWhenProcessBackgrounded (and perhaps rename that to not be about timers).\n\nYou\u0027ll want a finch control, but it doesn\u0027t need to be based off Android or not. It would do something for any cases where AllowStoppingTimersWhenProcessBackgrounded returned true.",
+      "revId": "740eced1f8e77600e5a0e806c7156f5541b01b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
