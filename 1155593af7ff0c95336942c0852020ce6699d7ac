@@ -70,6 +70,24 @@
       "revId": "1155593af7ff0c95336942c0852020ce6699d7ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd27c60_a96c12d9",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-09-08T05:48:34Z",
+      "side": 1,
+      "message": "I think we should keep the setting of multi-texture-mask only in Layer::SetMaskLayer. We want to keep the picture layer tiles while filter is animated.",
+      "parentUuid": "27457238_0384f7d8",
+      "revId": "1155593af7ff0c95336942c0852020ce6699d7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
