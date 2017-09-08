@@ -88,6 +88,24 @@
       "revId": "c1b9e014ec8d0bb04a13795dd8eb66aa399a2819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe48ace_862bb71a",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-08T03:00:46Z",
+      "side": 1,
+      "message": "There\u0027s a comment on ComputeContainerNode() that says \"null for a before/after position anchored to a node with no parent\":\nhttps://chromium.googlesource.com/chromium/src/+/8e20442d9cfecf6a2fd56ef4ae777971c45cc021/third_party/WebKit/Source/core/editing/Position.h#99\n\nAre you sure I don\u0027t need to check for null?",
+      "parentUuid": "3e0bdee1_55acc41d",
+      "revId": "c1b9e014ec8d0bb04a13795dd8eb66aa399a2819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
