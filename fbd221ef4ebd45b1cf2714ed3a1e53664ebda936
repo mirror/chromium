@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "4f8cf394_c520d915",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-08T00:13:29Z",
+      "side": 1,
+      "message": "If the user switches tabs, tab-modal dialogs do not go away. A variation of tab-modal dialogs called \"auto-dismissing dialogs\", used by JavaScript dialogs, does go away on switch, but the standard tab-modal dialogs do not.\n\nNavigation away indeed does dismiss tab-modal dialogs. I haven\u0027t done research to see if this can be disabled.",
+      "parentUuid": "2c1573e9_436698af",
+      "range": {
+        "startLine": 75,
+        "startChar": 3,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "fbd221ef4ebd45b1cf2714ed3a1e53664ebda936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c2ff661_c7a88c6b",
         "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_controller.mm",
         "patchSetId": 17
