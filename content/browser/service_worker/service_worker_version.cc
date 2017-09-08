@@ -1111,6 +1111,10 @@ bool ServiceWorkerVersion::IsInstalled(ServiceWorkerVersion::Status status) {
   return false;
 }
 
+base::WeakPtr<ServiceWorkerVersion> ServiceWorkerVersion::AsWeakPtr() {
+  return weak_factory_.GetWeakPtr();
+}
+
 void ServiceWorkerVersion::OnOpenNewTab(int request_id, const GURL& url) {
   OnOpenWindow(request_id, url, WindowOpenDisposition::NEW_FOREGROUND_TAB);
 }

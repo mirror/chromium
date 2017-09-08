@@ -31,7 +31,7 @@ class ServiceWorkerScriptURLLoader : public mojom::URLLoader,
       uint32_t options,
       const ResourceRequest& resource_request,
       mojom::URLLoaderClientPtr client,
-      scoped_refptr<ServiceWorkerVersion> version,
+      base::WeakPtr<ServiceWorkerVersion> version,
       scoped_refptr<URLLoaderFactoryGetter> loader_factory_getter,
       const net::MutableNetworkTrafficAnnotationTag& traffic_annotation);
   ~ServiceWorkerScriptURLLoader() override;
@@ -61,7 +61,7 @@ class ServiceWorkerScriptURLLoader : public mojom::URLLoader,
   mojom::URLLoaderPtr network_loader_;
   mojo::Binding<mojom::URLLoaderClient> network_client_binding_;
   mojom::URLLoaderClientPtr forwarding_client_;
-  scoped_refptr<ServiceWorkerVersion> version_;
+  base::WeakPtr<ServiceWorkerVersion> version_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerScriptURLLoader);
 };
