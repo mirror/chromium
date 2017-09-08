@@ -269,6 +269,10 @@ bool WallpaperPrivateSetWallpaperIfExistsFunction::RunAsync() {
   const user_manager::User* user = GetUserFromBrowserContext(browser_context());
   account_id_ = user->GetAccountId();
 
+  // Do not change wallpaper if policy is in effect.
+  if (chromeos::WallpaperManager::Get()->IsPolicyControlled(account_id_))
+    return false;
+
   base::FilePath wallpaper_path;
   base::FilePath fallback_path;
   chromeos::WallpaperManager::WallpaperResolution resolution =
@@ -372,6 +376,10 @@ bool WallpaperPrivateSetWallpaperFunction::RunAsync() {
   const user_manager::User* user = GetUserFromBrowserContext(browser_context());
   account_id_ = user->GetAccountId();
 
+  // Do not change wallpaper if policy is in effect.
+  if (chromeos::WallpaperManager::Get()->IsPolicyControlled(account_id_))
+    return false;
+
   StartDecode(params->wallpaper);
 
   return true;
@@ -462,6 +470,11 @@ WallpaperPrivateResetWallpaperFunction::
 bool WallpaperPrivateResetWallpaperFunction::RunAsync() {
   const AccountId& account_id =
       user_manager::UserManager::Get()->GetActiveUser()->GetAccountId();
+
+  // Do not change wallpaper if policy is in effect.
+  if (chromeos::WallpaperManager::Get()->IsPolicyControlled(account_id_))
+    return false;
+
   chromeos::WallpaperManager::Get()->SetDefaultWallpaper(account_id, true);
 
   Profile* profile = Profile::FromBrowserContext(browser_context());
