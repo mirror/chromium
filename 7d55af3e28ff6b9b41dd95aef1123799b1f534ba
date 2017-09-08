@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5f7fe5e_82b3e0bd",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-08T01:13:01Z",
+      "side": 1,
+      "message": "Use the \u0027GATT_INVALID_HANDLE\u0027 constant from top of bluetooth-helpers.js",
+      "range": {
+        "startLine": 10,
+        "startChar": 74,
+        "endLine": 10,
+        "endChar": 75
+      },
+      "revId": "7d55af3e28ff6b9b41dd95aef1123799b1f534ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "660ec183_495c5fcb",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-08T01:13:01Z",
+      "side": 1,
+      "message": "I wonder if ortuno@ had a reason to runGarbageCollection in a .then instead of in the same code block that made the failing function call.  As written currently javascript will yield before GC is run.  (another recent CL also did this)",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "7d55af3e28ff6b9b41dd95aef1123799b1f534ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
