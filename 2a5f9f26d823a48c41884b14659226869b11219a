@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2909c85_7948935b",
+        "filename": "base/trace_event/memory_allocator_dump.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-08T19:16:36Z",
+      "side": 1,
+      "message": "hmm I\u0027d prefer to keep the if...has_value in the if, because that makes clearer that this is an  optional. Otherwise it looks like we always do this if the size \u003d\u003d 0, which is not true.\n\nOk instad of * instead of .value()",
+      "parentUuid": "4712988b_1330507e",
+      "revId": "2a5f9f26d823a48c41884b14659226869b11219a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "494fa8ce_ff826184",
         "filename": "base/trace_event/memory_allocator_dump.h",
         "patchSetId": 10
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "a02919b1_05e11b47",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-08T19:16:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "494fa8ce_ff826184",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 35
+      },
+      "revId": "2a5f9f26d823a48c41884b14659226869b11219a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aed30f4f_2d10799e",
         "filename": "base/trace_event/memory_allocator_dump.h",
         "patchSetId": 10
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-08T16:44:47Z",
       "side": 1,
       "message": "I think this isn\u0027t needed anymore? Maybe I\u0027m missing something.\n\n(We return a const ref now?)",
+      "revId": "2a5f9f26d823a48c41884b14659226869b11219a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c9f1d7_ac16ea45",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-08T19:16:36Z",
+      "side": 1,
+      "message": "the serialization is fine (can do with the const ref), but the de-serialization (See the .cc file) needs to ReadEntries(mutable_for_serialization())",
+      "parentUuid": "aed30f4f_2d10799e",
       "revId": "2a5f9f26d823a48c41884b14659226869b11219a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "4c3fd4b1_fb017540",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-08T19:16:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5154f5e_652f85a3",
+      "revId": "2a5f9f26d823a48c41884b14659226869b11219a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55444b21_e4512fd6",
         "filename": "base/trace_event/process_memory_dump.cc",
         "patchSetId": 10
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "1bf7941a_b2004571",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-08T19:16:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55444b21_e4512fd6",
+      "revId": "2a5f9f26d823a48c41884b14659226869b11219a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5681d3fc_b227eaf4",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation_struct_traits.h",
         "patchSetId": 10
@@ -104,6 +200,30 @@
       "writtenOn": "2017-09-08T16:44:47Z",
       "side": 1,
       "message": "Nit: still not a guid ;-)",
+      "range": {
+        "startLine": 121,
+        "startChar": 16,
+        "endLine": 121,
+        "endChar": 20
+      },
+      "revId": "2a5f9f26d823a48c41884b14659226869b11219a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8643e51_b448deee",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation_struct_traits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-08T19:16:36Z",
+      "side": 1,
+      "message": "yeah I know. I tried to be nice and call all the new things in the mojo just \"id\". but changing this one in base is more refactoring and we are already behind, sorry. :/\nWill get there once this thing works",
+      "parentUuid": "5681d3fc_b227eaf4",
       "range": {
         "startLine": 121,
         "startChar": 16,
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "b48c5be0_e50f61f8",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation_struct_traits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-08T19:16:36Z",
+      "side": 1,
+      "message": "Added a todo + bug for myself. I can look at it, there seem to be some examlpe in  ui/gfx/mojo/transform_struct_traits.h .\n, but next week.",
+      "parentUuid": "a8cdab72_fb1d5be8",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 17
+      },
+      "revId": "2a5f9f26d823a48c41884b14659226869b11219a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d9ab0fe_b1934bec",
         "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
         "patchSetId": 10
@@ -150,6 +294,24 @@
       "writtenOn": "2017-09-08T16:44:47Z",
       "side": 1,
       "message": "Could we represent this as a union?",
+      "revId": "2a5f9f26d823a48c41884b14659226869b11219a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96632a26_f4cdfa47",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-08T19:16:36Z",
+      "side": 1,
+      "message": "It was extremely painful but at the end seems to have worked.",
+      "parentUuid": "2d9ab0fe_b1934bec",
       "revId": "2a5f9f26d823a48c41884b14659226869b11219a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
