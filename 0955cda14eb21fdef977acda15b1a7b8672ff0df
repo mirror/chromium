@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e987a0d_1bb25959",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1444,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-08T14:22:34Z",
+      "side": 1,
+      "message": "nit: Name it \"ip_config_client\", for consistency with two previous variables?",
+      "revId": "0955cda14eb21fdef977acda15b1a7b8672ff0df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6c86f3_ce1f43bc",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-08T14:22:34Z",
+      "side": 1,
+      "message": "nit: While you\u0027re here, maybe replace it with a range-based for?",
+      "range": {
+        "startLine": 1452,
+        "startChar": 4,
+        "endLine": 1452,
+        "endChar": 56
+      },
+      "revId": "0955cda14eb21fdef977acda15b1a7b8672ff0df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08fc39e4_7e24d1d3",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-08T14:22:34Z",
+      "side": 1,
+      "message": "nit: Maybe define both constants as file-level consts?",
+      "range": {
+        "startLine": 1474,
+        "startChar": 21,
+        "endLine": 1474,
+        "endChar": 47
+      },
+      "revId": "0955cda14eb21fdef977acda15b1a7b8672ff0df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7ccdab_fd07bc69",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-08T14:22:34Z",
+      "side": 1,
+      "message": "nit: Put the comma after the comment?",
+      "range": {
+        "startLine": 1481,
+        "startChar": 50,
+        "endLine": 1481,
+        "endChar": 51
+      },
+      "revId": "0955cda14eb21fdef977acda15b1a7b8672ff0df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
