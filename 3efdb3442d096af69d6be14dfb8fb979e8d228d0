@@ -373,6 +373,24 @@
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49b433c_147b677f",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-08T14:42:04Z",
+      "side": 1,
+      "message": "Sounds like we need a more explicit mode in Chrome/Exo where clients gets a say in state changes. XDG-shell has things like \"can_resize\" etc. but I guess we need something more advanced like \"ask_for_resize\". aura-shell protocol would be a good place to introduce this.\n\nMy general concern is that special cases for ARC++ keeps piling up. Some are small hacks and some a significant WM design changes. It\u0027s hard to evaluate what the maintenance burden of these will be in the long run and it\u0027s not easy to understand them as it\u0027s mostly implicit based on the current arc++ needs.\n\nStandard upstream wayland protocol has been thoroughly reviewed by WM experts, is well documented and well tested. That makes me very comfortable to implement and support it as I know we\u0027re not digging ourselves into a hole where we need to maintain APIs with race conditions and hard to diagnose bugs.\n\nThe more of upstream we can use the better. Not just because protocol is reviewed by experts and tested but also because it will benefit our support for non-arc++ clients. This is the reason I always recommend using upstream protocol first.\n\nThat said, I\u0027m not set on any specific protocol for Arc++. I\u0027m open too all suggestions here. Client controlled state changes, absolute positioning etc. might all be fine but it\u0027s hard to evaluate without a proper design review. aura-shell protocol is supposed to fix this as we can add explicit interfaces for arc++\u0027s needs and they will both be documented and reviewed properly as part of being added to the protocol.",
+      "parentUuid": "b823e777_d10db18b",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
