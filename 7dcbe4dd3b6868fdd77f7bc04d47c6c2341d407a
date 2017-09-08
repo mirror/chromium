@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dcd6f97f_b0f94dbb",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-08T05:46:07Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c3dab4cb_ddeec0fe",
+      "revId": "7dcbe4dd3b6868fdd77f7bc04d47c6c2341d407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7cf1d04_61207b6e",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "7dcbe4dd3b6868fdd77f7bc04d47c6c2341d407a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ff1d8f_e21886ca",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-08T05:46:07Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "e7cf1d04_61207b6e",
+      "revId": "7dcbe4dd3b6868fdd77f7bc04d47c6c2341d407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
