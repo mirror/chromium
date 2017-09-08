@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9b4bd97f_0d7e5f66",
+        "filename": "tools/clang/scripts/run_tool.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T04:16:29Z",
+      "side": 1,
+      "message": "Err, \"for the tool\" \u003d\u003e \"to the tool directory\"",
+      "parentUuid": "f8190ed4_1fa263f2",
+      "range": {
+        "startLine": 267,
+        "startChar": 26,
+        "endLine": 267,
+        "endChar": 29
+      },
+      "revId": "992883d6bb689db6552399603cf7ac0d9bda776d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4df2797f_2e958a1b",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
         "patchSetId": 5
