@@ -31,6 +31,8 @@ class GIN_EXPORT V8Initializer {
                                         const char** snapshot_data_out,
                                         int* snapshot_size_out);
 
+  static v8::StartupData* GetExistingBlob();
+
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
 
   // Load V8 snapshot from user provided platform file descriptors.
