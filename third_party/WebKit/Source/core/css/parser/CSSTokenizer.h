@@ -18,7 +18,6 @@
 namespace blink {
 
 class CSSTokenizerInputStream;
-class CSSParserObserverWrapper;
 class CSSParserTokenRange;
 
 class CORE_EXPORT CSSTokenizer {
@@ -27,13 +26,16 @@ class CORE_EXPORT CSSTokenizer {
 
  public:
   CSSTokenizer(const String&, size_t offset = 0);
-  CSSTokenizer(const String&, CSSParserObserverWrapper&);  // For the inspector
 
   CSSParserTokenRange TokenRange();
   unsigned TokenCount();
 
+  size_t Offset() const { return input_.Offset(); }
+  size_t PreviousOffset() const { return prev_offset_; }
+
  private:
   CSSParserToken TokenizeSingle();
+  CSSParserToken TokenizeSingleWithComments();
   void EnsureTokenizedToEOF();
   unsigned CurrentSize() const;
 
@@ -110,6 +112,8 @@ class CORE_EXPORT CSSTokenizer {
   Vector<String> string_pool_;
 
   friend class CSSParserTokenStream;
+
+  size_t prev_offset_ = 0;
 };
 
 }  // namespace blink
