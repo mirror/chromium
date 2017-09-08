@@ -22,6 +22,30 @@
       "revId": "02ac2b4d24f6af173b8070b18c3aff6b165a5e9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91be2bbe_915bc955",
+        "filename": "build/util/lib/common/chrome_test_server_spawner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-08T21:02:02Z",
+      "side": 1,
+      "message": "Actually we don\u0027t need wss in this list (RemoteTestServer sets type to \"ws\" for WSS server). Removed it now. TLS is enabled with --https for HTTP, and --cert-and-key-file for WebSocket. Both flags are passed from BaseTestServer class.",
+      "parentUuid": "d5f66ca3_118ef3c5",
+      "range": {
+        "startLine": 41,
+        "startChar": 15,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "02ac2b4d24f6af173b8070b18c3aff6b165a5e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
