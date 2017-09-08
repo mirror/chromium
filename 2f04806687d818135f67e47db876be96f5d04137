@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a85f7ec_520ba9c6",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-08T14:31:44Z",
+      "side": 1,
+      "message": "nit: usually const char kFoo[] \u003d \"bar\"; or just inline strings below",
+      "revId": "2f04806687d818135f67e47db876be96f5d04137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491e95cc_5ff5b8f8",
+        "filename": "ash/login/ui/login_bubble.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-08T14:31:44Z",
+      "side": 1,
+      "message": "This is fine, but in future CLs it\u0027s also OK to just inline the string here, since it\u0027s only used once and giving the string a name doesn\u0027t really provide any more information. I often do that for GetClassName(), Widget::InitParams name, etc.",
+      "revId": "2f04806687d818135f67e47db876be96f5d04137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "226a43bb_bf771342",
+        "filename": "ash/login/ui/login_bubble.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-08T14:31:44Z",
+      "side": 1,
+      "message": "nit: We usually put for_test() methods lower, just before the private: label.",
+      "revId": "2f04806687d818135f67e47db876be96f5d04137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb11b60_8bbfaf06",
+        "filename": "ash/login/ui/login_bubble_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-08T14:31:44Z",
+      "side": 1,
+      "message": "nit: Just LoginBubbleTest",
+      "revId": "2f04806687d818135f67e47db876be96f5d04137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4ef478_1bf4b86b",
+        "filename": "ash/login/ui/login_bubble_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-08T14:31:44Z",
+      "side": 1,
+      "message": "Thanks for commenting on ownership of raw pointers.",
+      "revId": "2f04806687d818135f67e47db876be96f5d04137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
