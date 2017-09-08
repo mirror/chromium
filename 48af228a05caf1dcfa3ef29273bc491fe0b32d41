@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a1039cc_246b0bbb",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-08T17:49:08Z",
+      "side": 1,
+      "message": "It\u0027s important that we leak the allocations so that they show up in the heap dump.",
+      "revId": "48af228a05caf1dcfa3ef29273bc491fe0b32d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0c1ea8_b2c1446a",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-08T17:49:08Z",
+      "side": 1,
+      "message": "base::Process takes ownership of the handle on windows, but not macOS. This causes non-deterministic failures on Windows.",
+      "revId": "48af228a05caf1dcfa3ef29273bc491fe0b32d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a080edb7_8b30d438",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-08T17:49:08Z",
+      "side": 1,
+      "message": "We can\u0027t ValidateDump fo renderers, since we can\u0027t guarantee flushes, and all small allocations get pruned.",
+      "revId": "48af228a05caf1dcfa3ef29273bc491fe0b32d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
