@@ -22,6 +22,30 @@
       "revId": "e484494aa3b54f5fd7477f0c6cf17eeb87751a63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17797695_73b055d0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-08T09:52:13Z",
+      "side": 0,
+      "message": "Yeah, agreed.",
+      "parentUuid": "0de5a053_fd9c16f8",
+      "range": {
+        "startLine": 340,
+        "startChar": 4,
+        "endLine": 340,
+        "endChar": 35
+      },
+      "revId": "e484494aa3b54f5fd7477f0c6cf17eeb87751a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
