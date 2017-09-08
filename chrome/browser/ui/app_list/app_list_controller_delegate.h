@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_UI_APP_LIST_APP_LIST_CONTROLLER_DELEGATE_H_
 #define CHROME_BROWSER_UI_APP_LIST_APP_LIST_CONTROLLER_DELEGATE_H_
 
+#include <cstdint>
 #include <string>
 
 #include "chrome/common/extensions/extension_constants.h"
@@ -55,6 +56,9 @@ class AppListControllerDelegate {
 
   // Gets app list window.
   virtual gfx::NativeWindow GetAppListWindow() = 0;
+
+  // Gets display ID of app list window.
+  int64_t GetAppListDisplayId();
 
   // Gets the content bounds of the app info dialog of the app list in the
   // screen coordinates. On platforms that do not use views, this returns a 0x0
