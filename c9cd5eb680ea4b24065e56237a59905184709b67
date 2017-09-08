@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2425ec89_4d1a1fb6",
+        "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-08T22:05:33Z",
+      "side": 1,
+      "message": "This comment should be:\n\n  // !defined(ARCH_CPU_ARM64) \u0026\u0026 !defined(ARCH_CPU_MIPS64EL)",
+      "revId": "c9cd5eb680ea4b24065e56237a59905184709b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5abb976_2b4411c3",
+        "filename": "sandbox/linux/bpf_dsl/seccomp_macros.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-08T22:05:33Z",
+      "side": 1,
+      "message": "This comment should read:\n\n  // On MIPS, when an indirect syscall is being made (syscall(__NR_foo)),\n  // the real identifier (__NR_foo) is not in v0, but in a0.",
+      "revId": "c9cd5eb680ea4b24065e56237a59905184709b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0021ba_88bfc7cc",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-08T22:05:33Z",
+      "side": 1,
+      "message": "Nit:: Should this be |__mips32__| (with the trailing underscores) for consistency with the other architecture symbols?",
+      "revId": "c9cd5eb680ea4b24065e56237a59905184709b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b0f627_1cfaac83",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/syscall_sets.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-08T22:05:33Z",
+      "side": 1,
+      "message": "Nit: Similarly, should this be |__mips64__|?",
+      "revId": "c9cd5eb680ea4b24065e56237a59905184709b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
