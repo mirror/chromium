@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "fc129458_088d7c8b",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-08T19:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ff2a310_861e492e",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f04f5be6_a2f05f27",
         "filename": "cc/input/scroll_customization.h",
         "patchSetId": 9
@@ -126,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "d63b6427_3992f517",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-08T19:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf9d4ad7_c44a56fb",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fff17b2_03f1c797",
         "filename": "cc/input/scroll_customization.h",
         "patchSetId": 9
@@ -170,6 +206,30 @@
       "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f16228_c257b090",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-08T19:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f61ea9ae_77845ea0",
+      "range": {
+        "startLine": 53,
+        "startChar": 24,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +292,30 @@
       "side": 1,
       "message": "Its type is ScrollCustomization but it is used as a mask to filter only applicable\nvalues from element scroll customization value. I am fine with either using ScrollCustomizationDirection or ScrollCustomizationMask but I think \nthe name change helps to avoid confusion with Element.GetScrollCustomization.\n\n\n\n\u003e Adding the inline modifier will make sure that we get different definitions of inline in different translation units. Without inline there will be link errors due to multiple definitions of the cc::GetScrollCustomizationFromScrollStateData.\n\nI don\u0027t think you get a link error due to duplicate definition but rather you may be\ngetting one because the cc definition is not exported. Try exporting it and see if\ninline is no longer needed.",
       "parentUuid": "548486fb_65dfa7e6",
+      "range": {
+        "startLine": 94,
+        "startChar": 27,
+        "endLine": 94,
+        "endChar": 68
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d724f7c4_4146a71f",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-08T19:13:17Z",
+      "side": 1,
+      "message": "\u003e Its type is ScrollCustomization but it is used as a mask to filter only applicable\n\u003e values from element scroll customization value. I am fine with either using ScrollCustomizationDirection or ScrollCustomizationMask but I think \n\u003e the name change helps to avoid confusion with Element.GetScrollCustomization.\n\nI think something like GetScrollCustomizationFromDirection() might make more sense. This means a corresponding ScrollCustomization setting which allows the direction. FWIW this is gotten from input and (I think) the actual mask here would be Element.GetScrollCustomization().\n\n\u003e \n\u003e \u003e Adding the inline modifier will make sure that we get different definitions of inline in different translation units. Without inline there will be link errors due to multiple definitions of the cc::GetScrollCustomizationFromScrollStateData.\n\u003e\n\u003e I don\u0027t think you get a link error due to duplicate definition but rather you may be\n\u003e getting one because the cc definition is not exported. Try exporting it and see if\n\u003e inline is no longer needed.\n\nThanks. You actually do get a link error due to multiple definition which has to do with the many places the include (V8* files) ScrollCustomization.h Naturally, \"in-lining\" fixes the issue but not the idea fix.\n\nThe alternate way I tried and failed was to move the implementation to a separate CC file. However the failure reason for that was the lack of CC_EXPORT.",
+      "parentUuid": "5e1e41cd_96a35f23",
       "range": {
         "startLine": 94,
         "startChar": 27,
@@ -312,6 +396,30 @@
       "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68be1f0d_c823d997",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-08T19:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b32ab301_eb8698ab",
+      "range": {
+        "startLine": 98,
+        "startChar": 9,
+        "endLine": 98,
+        "endChar": 16
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

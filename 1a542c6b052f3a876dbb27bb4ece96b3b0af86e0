@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a8635fc1_786014fb",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-08T19:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80337052_5fa69fbe",
+      "range": {
+        "startLine": 16,
+        "startChar": 27,
+        "endLine": 16,
+        "endChar": 35
+      },
+      "revId": "1a542c6b052f3a876dbb27bb4ece96b3b0af86e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b402fd7a_e80b020f",
         "filename": "cc/input/scroll_customization.h",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e0e4d16f_36750c0b",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-08T19:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b402fd7a_e80b020f",
+      "range": {
+        "startLine": 97,
+        "startChar": 15,
+        "endLine": 97,
+        "endChar": 22
+      },
+      "revId": "1a542c6b052f3a876dbb27bb4ece96b3b0af86e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bdab6cc_275bc0fe",
         "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
         "patchSetId": 12
@@ -59,6 +107,24 @@
       "writtenOn": "2017-09-01T19:41:50Z",
       "side": 1,
       "message": "This function does not seem to be testing pan-left, pan-right ...\n\nAs a meta comment, I think the test much better now but the new patch is \ntaking the test parametrization too far and making the test too complex.\n\nNow to actually understand the test one has to fully understand getScrollCustomizationFromValidGestureSet\nand how this machinery relies on getPowerSet, validGestureSet and ALL_GESTURE\ntoo generate all possible inputs. This makes the test less readable and any \nbug in input generation can lead to test not being effective. In general making \nthe test too complex is not a good idea.\n\nI think the test should be parametrized but please use constant static input\nvalues as opposed to trying to generate them. In this case the number of\npermutations is not that many so there is not actually much that the input generation\nis saving.\n\nA simple table of ||scroll-customization value | gestures to be tests| callbacks expected||\nshould work. e.g.\n\nconst test_table \u003d [\n [\"none\",     [GESTURE_RIGHT, GESTURE_LEFT, GESTURE_TOP, GESTURE_DOWN] , false]\n [\"pan-left\", [GESTURE_RIGHT, GESTURE_TOP, GESTURE_DOWN]               , false]\n [\"pan-left\", [GESTURE_LEFT] ,                                         , true]\n [\"pan-x\",    [GESTURE_TOP, GESTURE_DOWN]                              , false]\n [\"pan-x\",    [GESTURE_LEFT, GESTURE_RIGHT] ,                          , true]\n  ....\n];\n\n\n\u003e Note quite sure if I understand bonus #2 though.\nIt was suggesting that for example in above table item 3 can be automatically generated\nbased on item 2. But I think not doing that is actually better for readability of\nthe test in light of above discussion.",
+      "revId": "1a542c6b052f3a876dbb27bb4ece96b3b0af86e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de7a258_fc9901c0",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-08T19:13:17Z",
+      "side": 1,
+      "message": "\u003e This function does not seem to be testing pan-left, pan-right ...\nWouldn\u0027t \"scroll-customization: pan-left pan-right\" just mean \"scroll-customization: pan-x\". That being said, if either one of \"pan-left\" and \"pan-right\" is in |gestureSet| it will be in |summarized| per line 124. I still don\u0027t understand why it would not work (I believe it does work).\n\n\u003e As a meta comment, I think the test much better now but the new patch is \n\u003e taking the test parametrization too far and making the test too complex.\n\u003e \nThe reason I opted for \"input generation\" was that we are testing all possible compositions of valid gestures against all possible gestures which is of size 16 x 4 \u003d 64.\n\n\u003e Now to actually understand the test one has to fully understand getScrollCustomizationFromValidGestureSet\n\u003e and how this machinery relies on getPowerSet, validGestureSet and ALL_GESTURE\n\u003e too generate all possible inputs. This makes the test less readable and any \n\u003e bug in input generation can lead to test not being effective. In general making \n\u003e the test too complex is not a good idea.\n\nI agree the test should be simple. A few notes:\n  * getPowerSet approach is simply listing all possible configurations which is more efficient than listing the 64 cases. When the input is all input I do not see a lot of sense if listing them explicitly. Perhaps renaming the method to \"getAllScrollCustomizationSettings\" would alleviate the problem more.\n\n  * getScrollCustomizationFromValidGestureSet: This is the helper class which I agree might make the inspection of the test harder.\n\nSo in conclusion and based on out offline chat I will try to use a table like the one you suggested.\n\u003e I think the test should be parametrized but please use constant static input\n\u003e values as opposed to trying to generate them.\nI consider the 4 gestures and constant static. If we are to test a subset of current tests I totally understand and agree with you that defining constants and tables is a more readable approach and what I have here is an overkill. If we want to test all cases I do not find writing a table that appealing. All in all, I defer the decision to you given that you are wat more experienced with blink/ and layout testing. \n\u003e In this case the number of\n\u003e permutations is not that many so there is not actually much that the input generation\n\u003e is saving.\n\u003e \n\u003e A simple table of ||scroll-customization value | gestures to be tests| callbacks expected||\n\u003e should work. e.g.\n\u003e \n\u003e const test_table \u003d [\n\u003e  [\"none\",     [GESTURE_RIGHT, GESTURE_LEFT, GESTURE_TOP, GESTURE_DOWN] , false]\n\u003e  [\"pan-left\", [GESTURE_RIGHT, GESTURE_TOP, GESTURE_DOWN]               , false]\n\u003e  [\"pan-left\", [GESTURE_LEFT] ,                                         , true]\n\u003e  [\"pan-x\",    [GESTURE_TOP, GESTURE_DOWN]                              , false]\n\u003e  [\"pan-x\",    [GESTURE_LEFT, GESTURE_RIGHT] ,                          , true]\n\u003e   ....\n\u003e ];\n\nI will add a similar table.",
+      "parentUuid": "3bdab6cc_275bc0fe",
       "revId": "1a542c6b052f3a876dbb27bb4ece96b3b0af86e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +159,24 @@
       "writtenOn": "2017-09-01T19:41:50Z",
       "side": 1,
       "message": "nit: can be forEach(testGestureSet)",
+      "revId": "1a542c6b052f3a876dbb27bb4ece96b3b0af86e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca53741_59881ddb",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-08T19:13:17Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "191d608e_92aad659",
       "revId": "1a542c6b052f3a876dbb27bb4ece96b3b0af86e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
