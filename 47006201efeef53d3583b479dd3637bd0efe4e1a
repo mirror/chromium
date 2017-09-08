@@ -93,6 +93,30 @@
       "revId": "47006201efeef53d3583b479dd3637bd0efe4e1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ef3ad8e_fe0ffff2",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T17:40:45Z",
+      "side": 1,
+      "message": "Ah, what i meant here is if we\u0027re not running a task and we call BlockingScopeExited(), this will just immediately return and not DCHECK.",
+      "parentUuid": "b62dcc89_e8c194ef",
+      "range": {
+        "startLine": 537,
+        "startChar": 2,
+        "endLine": 538,
+        "endChar": 11
+      },
+      "revId": "47006201efeef53d3583b479dd3637bd0efe4e1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
