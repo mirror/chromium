@@ -16,6 +16,24 @@
       "revId": "fbc9c1b99ba5c1e08fc1e70cbb449c5159b2216c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b85a59_151feb0f",
+        "filename": "chrome/browser/media_galleries/media_galleries_histograms.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-08T00:37:43Z",
+      "side": 0,
+      "message": "Done, also brought back the picasa one.",
+      "parentUuid": "d5d2e18a_d4e7f8f5",
+      "revId": "fbc9c1b99ba5c1e08fc1e70cbb449c5159b2216c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
