@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "218d01d3_7a70aed1",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1375,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-08T22:32:04Z",
+      "side": 1,
+      "message": "update this text",
+      "range": {
+        "startLine": 1375,
+        "startChar": 37,
+        "endLine": 1375,
+        "endChar": 47
+      },
+      "revId": "00e3a62ba4c10ba62984a4f632db2470b91082ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
