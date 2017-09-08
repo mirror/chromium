@@ -734,15 +734,25 @@ void RenderWidgetHostInputEventRouter::SendGestureScrollBegin(
 void RenderWidgetHostInputEventRouter::SendGestureScrollEnd(
     RenderWidgetHostViewBase* view,
     const blink::WebGestureEvent& event) {
-  DCHECK(event.GetType() == blink::WebInputEvent::kGestureScrollUpdate ||
+  DCHECK((view->wheel_scroll_latching_enabled() &&
+          event.GetType() == blink::WebInputEvent::kGestureScrollBegin) ||
+         event.GetType() == blink::WebInputEvent::kGestureScrollUpdate ||
          event.GetType() == blink::WebInputEvent::kGesturePinchEnd);
   blink::WebGestureEvent scroll_end(event);
   scroll_end.SetType(blink::WebInputEvent::kGestureScrollEnd);
   scroll_end.SetTimeStampSeconds(
       (base::TimeTicks::Now() - base::TimeTicks()).InSecondsF());
-  scroll_end.data.scroll_end.inertial_phase =
-      event.data.scroll_update.inertial_phase;
-  scroll_end.data.scroll_end.delta_units = event.data.scroll_update.delta_units;
+  if (event.GetType() == blink::WebInputEvent::kGestureScrollBegin) {
+    scroll_end.data.scroll_end.inertial_phase =
+        event.data.scroll_begin.inertial_phase;
+    scroll_end.data.scroll_end.delta_units =
+        event.data.scroll_begin.delta_units;
+  } else {
+    scroll_end.data.scroll_end.inertial_phase =
+        event.data.scroll_update.inertial_phase;
+    scroll_end.data.scroll_end.delta_units =
+        event.data.scroll_update.delta_units;
+  }
   view->ProcessGestureEvent(
       scroll_end,
       ui::WebInputEventTraits::CreateLatencyInfoForWebGestureEvent(event));
