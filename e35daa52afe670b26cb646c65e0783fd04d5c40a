@@ -117,6 +117,23 @@
     },
     {
       "key": {
+        "uuid": "f998f1d3_49fb06d3",
+        "filename": "components/arc/common/video_decode_accelerator.typemap",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T02:26:40Z",
+      "side": 1,
+      "message": "It seems like ARC++ should probably just have one rect type. See https://cs.chromium.org/search/?q\u003dfile:components/arc+gfx::Rect+file:typemap\u0026sq\u003dpackage:chromium\u0026type\u003dcs.",
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a79995c_ce908920",
         "filename": "components/arc/video_accelerator/video_decode_accelerator_struct_traits.cc",
         "patchSetId": 6
@@ -128,6 +145,30 @@
       "writtenOn": "2017-09-07T16:24:15Z",
       "side": 1,
       "message": "Should you return false if any of the data is invalid? You do perform some DCHECKs on the other way.",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 24
+      },
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5064d508_dafddb8e",
+        "filename": "components/arc/video_accelerator/video_decode_accelerator_struct_traits.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-08T02:26:40Z",
+      "side": 1,
+      "message": "Yes, this should return false if width or height is negative.",
+      "parentUuid": "0a79995c_ce908920",
       "range": {
         "startLine": 12,
         "startChar": 13,
