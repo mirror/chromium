@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4496cb9_2150904c",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-09-08T20:27:16Z",
+      "side": 1,
+      "message": "Please remove this #if OS(ANDROID), it\u0027s easier to reason about when code runs on all platforms unless there\u0027s a strong reason not to.",
+      "revId": "ac2043e8b6402b36a09b132271b803ab53090774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7e9c46_5bba1f64",
+        "filename": "content/browser/renderer_host/render_widget_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2593,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-09-08T20:27:16Z",
+      "side": 1,
+      "message": "Could you remove this #if OS(ANDROID) if the test passes on other platforms?  It\u0027s better for tests to run on all platforms even if Android-specific to make it easier for non-Android developers to debug the problem if they break the test.",
+      "revId": "ac2043e8b6402b36a09b132271b803ab53090774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
