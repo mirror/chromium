@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b04b3295_f6a5527e",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5886,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-08T16:10:11Z",
+      "side": 1,
+      "message": "This will be true both for 1) main frame of a mhtml and 2) subframes inside a mhtml, right?  (I think so, but wanted to double check;  I think that the main frame will be covered by ResourceFetcher::CreateArchive case and the subframes will be covered by ResourceFetcher::ResourceFetcher constructor).",
+      "range": {
+        "startLine": 5886,
+        "startChar": 6,
+        "endLine": 5886,
+        "endChar": 25
+      },
+      "revId": "25400730392602d7e3deb45665b385a6cb2ca657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "355bfff8_7f618bc4",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5886,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-08T16:10:11Z",
+      "side": 1,
+      "message": "I don\u0027t understand how |fetcher_| from the old document gets propagated into the new document created via XSLTProcessor::CreateDocumentFromSource.  OTOH, this apparently somehow works, because 1) subresources in the repro steps in https://crbug.com/762930 worked fine and 2) tests from your CL cover this.",
+      "range": {
+        "startLine": 5886,
+        "startChar": 6,
+        "endLine": 5886,
+        "endChar": 14
+      },
+      "revId": "25400730392602d7e3deb45665b385a6cb2ca657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe59e276_8562abc0",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5894,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-08T16:10:11Z",
+      "side": 1,
+      "message": "Are there cases where we might want to also include kSandboxPopups or kSandboxPropagatesToAuxiliaryBrowsingContexts flags for mhtml documents?  What if initializer.GetSandboxFlags() includes one of these 2 flags?\n\nBTW - I wondered whether these 2 flags might be irrelevant if the mhtml cannot execute javascript, but I think auxiliary browsing context can be created without javascript (e.g. if an anchor element specified something like target\u003d\"_blank\").",
+      "range": {
+        "startLine": 5894,
+        "startChar": 10,
+        "endLine": 5894,
+        "endChar": 72
+      },
+      "revId": "25400730392602d7e3deb45665b385a6cb2ca657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
