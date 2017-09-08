@@ -69,6 +69,24 @@
       "revId": "82365dfb3fffdbf17a3b6995356a388aa2316209",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d355c667_4f3a5c18",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-08T11:26:41Z",
+      "side": 1,
+      "message": "The spec is saying \"the task source for all the tasks queued in this section...\". Is the task posted by WebMediaPlayer described in the spec? (I think the answer would be no.)\n\nMaybe shall we ask mlamouri@? He should have expertise on the spec side.\n\nIn general, I want to figure out a general guideline for how to handle unspeced tasks; i.e., whether it\u0027s okay to use speced task sources or we should stick to using UnspecedXXX task sources. I\u0027m leaning toward the latter approach.",
+      "parentUuid": "c1a74f0d_273eaca0",
+      "revId": "82365dfb3fffdbf17a3b6995356a388aa2316209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
