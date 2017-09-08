@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "486f88ae_5d4478ea",
+        "filename": "media/audio/alsa/alsa_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-08T06:48:52Z",
+      "side": 1,
+      "message": "Looks like it can also return a negative error code. Should we log it? And maybe use zero as a delay? Otherwise we\u0027ll move a timestamp into future.",
+      "revId": "1ad9d769cb7e6e6efc4921ca750ab8e6d2d13aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
