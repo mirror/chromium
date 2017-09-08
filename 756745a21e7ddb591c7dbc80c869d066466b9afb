@@ -158,6 +158,24 @@
       "revId": "756745a21e7ddb591c7dbc80c869d066466b9afb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf65289a_50a44c1c",
+        "filename": "third_party/zlib/contrib/inffast64/inffast64.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-08T02:08:57Z",
+      "side": 1,
+      "message": "I think you\u0027re right.\n\nI had it in my head that *all* Chromium builds were 32-bit.\nAll Android builds are, but those are covered by the ARM patch anyway.\nSo adding 32-bit would be a small gain for a small population.\n\nI think you are right that we don\u0027t need it.",
+      "parentUuid": "471c304c_52bc1cbb",
+      "revId": "756745a21e7ddb591c7dbc80c869d066466b9afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
