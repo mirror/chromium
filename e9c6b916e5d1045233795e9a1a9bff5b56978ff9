@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed3660ae_fac004ab",
+        "filename": "components/omnibox/browser/omnibox_edit_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T17:34:36Z",
+      "side": 1,
+      "message": "Nit: Add comment about what this is testing.\n\nDid you verify this actually fails without the logic fix you made?",
+      "revId": "e9c6b916e5d1045233795e9a1a9bff5b56978ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a74311e_08725b08",
+        "filename": "components/omnibox/browser/omnibox_edit_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T17:34:36Z",
+      "side": 1,
+      "message": "Nit: Maybe\n\n  auto* result \u003d \u0026model()-\u003eautocomplete_controller()-\u003eresult_;\n  result-\u003eAppendMatches(AutocompleteInput(), matches);\n  result-\u003eSortAndCull(AutocompleteInput(), 0);",
+      "revId": "e9c6b916e5d1045233795e9a1a9bff5b56978ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
