@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcdcbd4f_3e83dc21",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-08T17:57:05Z",
+      "side": 1,
+      "message": "Initializes the components for {@link BrowserActionsTabModelSelector}. Should not be called more than once.\n\n\nAnd then if we really don\u0027t want it to be called more than once throw an IllegalStateException below instead of assert.\n\nOr we might just early return and do nothing if we want to gracefully handle that case.",
+      "range": {
+        "startLine": 105,
+        "startChar": 23,
+        "endLine": 105,
+        "endChar": 32
+      },
+      "revId": "29fdafbb90236bf54656e6880e25cad3c0d599b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6edee46c_ce21032f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-08T17:57:05Z",
+      "side": 1,
+      "message": "how does this relate to the 0 above? We should probably have a constant for this and some explanation around where this folder is and how it related to ChromeTabbedActivity folder.",
+      "range": {
+        "startLine": 41,
+        "startChar": 34,
+        "endLine": 41,
+        "endChar": 50
+      },
+      "revId": "29fdafbb90236bf54656e6880e25cad3c0d599b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd03eb75_6d2577f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelSelectorBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-08T17:57:05Z",
+      "side": 1,
+      "message": "javadoc missing.\n\nAnd do we call this for anywhere but tests?",
+      "range": {
+        "startLine": 247,
+        "startChar": 5,
+        "endLine": 247,
+        "endChar": 22
+      },
+      "revId": "29fdafbb90236bf54656e6880e25cad3c0d599b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd02436_533559f8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-08T17:57:05Z",
+      "side": 1,
+      "message": "if we need to do this, we probably don\u0027t need the other StrictMode try-finally blocks?\n\nBut I still think we might get away with caching these resources early on.",
+      "range": {
+        "startLine": 138,
+        "startChar": 40,
+        "endLine": 138,
+        "endChar": 61
+      },
+      "revId": "29fdafbb90236bf54656e6880e25cad3c0d599b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ecb552_2b6d23dd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-08T17:57:05Z",
+      "side": 1,
+      "message": "lets cache this id value and avoid all these StrictMode logic duplicated.",
+      "range": {
+        "startLine": 442,
+        "startChar": 33,
+        "endLine": 442,
+        "endChar": 67
+      },
+      "revId": "29fdafbb90236bf54656e6880e25cad3c0d599b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
