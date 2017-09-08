@@ -286,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "99e71ec5_c730a8e8",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-08T20:54:55Z",
+      "side": 1,
+      "message": "There is a NetReferrerPolicyToBlinkReferrerPolicy() function inside of web_url_loader_impl.cc, we could move that function to a /content/common location.",
+      "parentUuid": "32c0f674_607f687f",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 79
+      },
+      "revId": "f85008098b747cf12df85c7d2dfff7c6cb3bac32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "847c55ad_7a1ab5a9",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 2
