@@ -37,6 +37,42 @@
     },
     {
       "key": {
+        "uuid": "6fd03a4f_cc8f7bbe",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-08T15:21:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a83b24ff_487a108c",
+      "revId": "4ea38a071a0c495e1293b08985264cdc0bc1e25f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c20555b_a71f1f8f",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-08T15:21:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1404314_c7358a28",
+      "revId": "4ea38a071a0c495e1293b08985264cdc0bc1e25f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cfd8792_7f85e1c5",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 2
@@ -48,6 +84,24 @@
       "writtenOn": "2017-09-08T14:07:58Z",
       "side": 1,
       "message": "Why not make this a class member, if you need the test pointer?",
+      "revId": "4ea38a071a0c495e1293b08985264cdc0bc1e25f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9a6026_6b0d179b",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-08T15:21:00Z",
+      "side": 1,
+      "message": "Most functions in the class member are used by multiple test. This one is very specific to this test. So I didn\u0027t make it a class member. I can certainly do that if you insist.",
+      "parentUuid": "1cfd8792_7f85e1c5",
       "revId": "4ea38a071a0c495e1293b08985264cdc0bc1e25f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -74,6 +128,30 @@
       "revId": "4ea38a071a0c495e1293b08985264cdc0bc1e25f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083ebc1c_eeed8cec",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-08T15:21:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fff566c2_35ef9b0e",
+      "range": {
+        "startLine": 672,
+        "startChar": 2,
+        "endLine": 672,
+        "endChar": 36
+      },
+      "revId": "4ea38a071a0c495e1293b08985264cdc0bc1e25f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
