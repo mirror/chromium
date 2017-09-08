@@ -93,7 +93,8 @@ void PaymentRequest::Init(mojom::PaymentRequestClientPtr client,
         delegate_->GetApplicationLocale());
     state_ = base::MakeUnique<PaymentRequestState>(
         spec_.get(), this, delegate_->GetApplicationLocale(),
-        delegate_->GetPersonalDataManager(), delegate_.get(), &journey_logger_);
+        delegate_->GetPersonalDataManager(), delegate_.get(),
+        web_contents_->GetBrowserContext(), &journey_logger_);
     return;
   }
 
@@ -115,7 +116,8 @@ void PaymentRequest::Init(mojom::PaymentRequestClientPtr client,
       delegate_->GetApplicationLocale());
   state_ = base::MakeUnique<PaymentRequestState>(
       spec_.get(), this, delegate_->GetApplicationLocale(),
-      delegate_->GetPersonalDataManager(), delegate_.get(), &journey_logger_);
+      delegate_->GetPersonalDataManager(), delegate_.get(),
+      web_contents_->GetBrowserContext(), &journey_logger_);
 
   journey_logger_.SetRequestedInformation(
       spec_->request_shipping(), spec_->request_payer_email(),
@@ -233,7 +235,11 @@ void PaymentRequest::Complete(mojom::PaymentComplete result) {
 }
 
 void PaymentRequest::CanMakePayment() {
-  bool can_make_payment = state()->CanMakePayment();
+  state()->CanMakePayment(base::BindOnce(
+      &PaymentRequest::CanMakePaymentCallback, weak_ptr_factory_.GetWeakPtr()));
+}
+
+void PaymentRequest::CanMakePaymentCallback(bool can_make_payment) {
   if (delegate_->IsIncognito()) {
     client_->OnCanMakePayment(
         mojom::CanMakePaymentQueryResult::CAN_MAKE_PAYMENT);
