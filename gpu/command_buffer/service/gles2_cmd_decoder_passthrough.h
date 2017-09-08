@@ -323,6 +323,18 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
 
   void VerifyServiceTextureObjectsExist();
 
+  void ResizeRenderbuffer(GLuint renderbuffer,
+                          const gfx::Size& size,
+                          GLsizei samples,
+                          GLenum internal_format);
+  void Resize2DTexture(TexturePassthrough* texture,
+                       const gfx::Size& size,
+                       GLenum internal_format,
+                       GLenum format,
+                       GLenum type);
+
+  bool IsEmulatedFramebufferBound(GLenum target) const;
+
   GLES2DecoderClient* client_;
 
   int commands_to_process_;
@@ -436,6 +448,52 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
   std::unordered_map<GLenum, ActiveQuery> active_queries_;
 
   std::set<GLenum> errors_;
+
+  // Default framebuffer emulation
+  struct EmulatedBackBuffer {
+    EmulatedBackBuffer();
+    ~EmulatedBackBuffer();
+    EmulatedBackBuffer(const EmulatedBackBuffer&);
+    EmulatedBackBuffer(EmulatedBackBuffer&&);
+    EmulatedBackBuffer& operator=(const EmulatedBackBuffer&);
+    EmulatedBackBuffer& operator=(EmulatedBackBuffer&&);
+
+    // Service ID of the framebuffer
+    GLuint framebuffer_service_id = 0;
+
+    // Service ID of the color renderbuffer (if multisampled)
+    GLuint color_buffer_service_id = 0;
+
+    // Color buffer texture (if not multisampled)
+    scoped_refptr<TexturePassthrough> color_texture = nullptr;
+
+    GLenum color_internal_format = GL_NONE;
+    GLenum color_format = GL_NONE;
+    GLenum color_type = GL_NONE;
+
+    // Service ID of the depth stencil renderbuffer
+    GLuint depth_stencil_buffer_service_id = 0;
+    GLenum depth_stencil_internal_format = GL_NONE;
+
+    // Service ID of the depth renderbuffer
+    GLuint depth_buffer_service_id = 0;
+    GLenum depth_internal_format = GL_NONE;
+
+    // Service ID of the stencil renderbuffer (
+    GLuint stencil_buffer_service_id = 0;
+    GLenum stencil_internal_format = GL_NONE;
+
+    gfx::Size size;
+    GLint samples = 0;
+  };
+  std::unique_ptr<EmulatedBackBuffer> emulated_default_framebuffer_;
+
+  // Maximum 2D texture size for limiting offscreen framebuffer sizes
+  GLint max_2d_texture_size_;
+
+  // State tracking of currently bound draw and read framebuffers (client IDs)
+  GLuint bound_draw_framebuffer_;
+  GLuint bound_read_framebuffer_;
 
   // Tracing
   std::unique_ptr<GPUTracer> gpu_tracer_;

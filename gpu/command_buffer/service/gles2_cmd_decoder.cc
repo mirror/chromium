@@ -3399,7 +3399,7 @@ bool GLES2DecoderImpl::Initialize(
     offscreen_single_buffer_ = attrib_helper.single_buffer;
 
     if (gl_version_info().is_es) {
-      const bool rgb8_supported = context_->HasExtension("GL_OES_rgb8_rgba8");
+      const bool rgb8_supported = features().oes_rgb8_rgba8;
       // The only available default render buffer formats in GLES2 have very
       // little precision.  Don't enable multisampling unless 8-bit render
       // buffer formats are available--instead fall back to 8-bit textures.
@@ -5279,15 +5279,16 @@ error::Error GLES2DecoderImpl::HandleResizeCHROMIUM(
       surface_color_space = gl::GLSurface::ColorSpace::DISPLAY_P3;
       break;
     default:
-      LOG(ERROR) << "GLES2DecoderImpl: Context lost because specified color"
+      LOG(ERROR) << "GLES2DecoderImpl: Context lost "
+                    "becausResizeOffscreenFramebuffere specified color"
                  << "space was invalid.";
       return error::kLostContext;
   }
   bool is_offscreen = !!offscreen_target_frame_buffer_.get();
   if (is_offscreen) {
     if (!ResizeOffscreenFramebuffer(gfx::Size(width, height))) {
-      LOG(ERROR) << "GLES2DecoderImpl: Context lost because "
-                 << "ResizeOffscreenFramebuffer failed.";
+      LOG(ERROR) << "GLES2DecoderImpl: Context lost because specified color"
+                 << "space was invalid.";
       return error::kLostContext;
     }
   } else {
