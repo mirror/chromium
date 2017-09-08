@@ -43,7 +43,6 @@ import org.chromium.chrome.browser.widget.TintedImageButton;
 import org.chromium.chrome.browser.widget.ToolbarProgressBar;
 import org.chromium.chrome.browser.widget.animation.CancelAwareAnimatorListener;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
-import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetMetrics;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetObserver;
 import org.chromium.chrome.browser.widget.bottomsheet.EmptyBottomSheetObserver;
 import org.chromium.ui.UiUtils;
@@ -498,14 +497,8 @@ public class BottomToolbarPhone extends ToolbarPhone {
 
         if (mBottomSheet == null || !hasFocus) return;
 
-        boolean wasSheetOpen = mBottomSheet.isSheetOpen();
         mBottomSheet.setSheetState(
                 BottomSheet.SHEET_STATE_FULL, true, BottomSheet.STATE_CHANGE_REASON_OMNIBOX);
-
-        if (!wasSheetOpen) {
-            mBottomSheet.getBottomSheetMetrics().recordSheetOpenReason(
-                    BottomSheetMetrics.OPENED_BY_OMNIBOX_FOCUS);
-        }
     }
 
     @Override

@@ -157,9 +157,7 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
                 ? BottomSheet.SHEET_STATE_FULL
                 : BottomSheet.SHEET_STATE_HALF;
         if (mBottomSheet.getSheetState() != sheetState) {
-            mBottomSheet.setSheetState(sheetState, true);
-            mBottomSheet.getBottomSheetMetrics().recordSheetOpenReason(
-                    BottomSheetMetrics.OPENED_BY_NEW_TAB_CREATION);
+            mBottomSheet.setSheetState(sheetState, true, BottomSheet.STATE_CHANGE_REASON_NEW_TAB);
         }
 
         for (Observer observer : mObservers) observer.onNewTabShown();

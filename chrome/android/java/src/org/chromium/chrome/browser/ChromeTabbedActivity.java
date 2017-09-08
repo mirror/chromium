@@ -932,9 +932,8 @@ public class ChromeTabbedActivity
     private boolean maybeSetBottomSheetStateToHalfOnStartup(BottomSheet bottomSheet) {
         if (getTimeSinceLastBackgroundedMs()
                 >= TIME_SINCE_BACKGROUNDED_TO_SHOW_BOTTOM_SHEET_HALF_MS) {
-            bottomSheet.getBottomSheetMetrics().recordSheetOpenReason(
-                    BottomSheetMetrics.OPENED_BY_STARTUP);
-            bottomSheet.setSheetState(BottomSheet.SHEET_STATE_HALF, true);
+            bottomSheet.setSheetState(
+                    BottomSheet.SHEET_STATE_HALF, true, BottomSheet.STATE_CHANGE_REASON_STARTUP);
             return true;
         }
         return false;

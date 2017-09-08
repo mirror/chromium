@@ -102,11 +102,21 @@ public class BottomSheet
     public static final int SHEET_STATE_SCROLLING = 3;
 
     /** The different reasons that the sheet's state can change. */
-    @IntDef({STATE_CHANGE_REASON_NONE, STATE_CHANGE_REASON_OMNIBOX})
+    @IntDef({STATE_CHANGE_REASON_NONE, STATE_CHANGE_REASON_OMNIBOX, STATE_CHANGE_REASON_SWIPE,
+            STATE_CHANGE_REASON_NEW_TAB, STATE_CHANGE_REASON_EXPAND_BUTTON,
+            STATE_CHANGE_REASON_STARTUP, STATE_CHANGE_REASON_BACK_PRESS,
+            STATE_CHANGE_REASON_TAP_SCRIM, STATE_CHANGE_REASON_NAVIGATION})
     @Retention(RetentionPolicy.SOURCE)
     public @interface StateChangeReason {}
     public static final int STATE_CHANGE_REASON_NONE = 0;
     public static final int STATE_CHANGE_REASON_OMNIBOX = 1;
+    public static final int STATE_CHANGE_REASON_SWIPE = 2;
+    public static final int STATE_CHANGE_REASON_NEW_TAB = 3;
+    public static final int STATE_CHANGE_REASON_EXPAND_BUTTON = 4;
+    public static final int STATE_CHANGE_REASON_STARTUP = 5;
+    public static final int STATE_CHANGE_REASON_BACK_PRESS = 6;
+    public static final int STATE_CHANGE_REASON_TAP_SCRIM = 7;
+    public static final int STATE_CHANGE_REASON_NAVIGATION = 8;
 
     /**
      * The base duration of the settling animation of the sheet. 218 ms is a spec for material
@@ -380,13 +390,8 @@ public class BottomSheet
             if (currentShownRatio <= getPeekRatio() && distanceY < 0) return false;
 
             float newOffset = getSheetOffsetFromBottom() + distanceY;
-            boolean wasOpenBeforeSwipe = mIsSheetOpen;
             setSheetOffsetFromBottom(MathUtils.clamp(newOffset, getMinOffset(), getMaxOffset()));
-            setInternalCurrentState(SHEET_STATE_SCROLLING, STATE_CHANGE_REASON_NONE);
-
-            if (!wasOpenBeforeSwipe && mIsSheetOpen) {
-                mMetrics.recordSheetOpenReason(BottomSheetMetrics.OPENED_BY_SWIPE);
-            }
+            setInternalCurrentState(SHEET_STATE_SCROLLING, STATE_CHANGE_REASON_SWIPE);
 
             mIsScrolling = true;
             return true;
@@ -397,7 +402,6 @@ public class BottomSheet
             if (!isTouchInSwipableXRange(e2) || !mIsScrolling) return false;
 
             cancelAnimation();
-            boolean wasOpenBeforeSwipe = mIsSheetOpen;
 
             // Figure out the projected state of the sheet and animate there. Note that a swipe up
             // will have a negative velocity, swipe down will have a positive velocity. Negate this
@@ -410,10 +414,6 @@ public class BottomSheet
             }
             setSheetState(targetState, true);
             mIsScrolling = false;
-
-            if (!wasOpenBeforeSwipe && mIsSheetOpen) {
-                mMetrics.recordSheetOpenReason(BottomSheetMetrics.OPENED_BY_SWIPE);
-            }
 
             return true;
         }
@@ -566,8 +566,7 @@ public class BottomSheet
      * A notification that the "expand" button for the bottom sheet has been pressed.
      */
     public void onExpandButtonPressed() {
-        mMetrics.recordSheetOpenReason(BottomSheetMetrics.OPENED_BY_EXPAND_BUTTON);
-        setSheetState(BottomSheet.SHEET_STATE_HALF, true);
+        setSheetState(BottomSheet.SHEET_STATE_HALF, true, STATE_CHANGE_REASON_EXPAND_BUTTON);
     }
 
     /** Immediately end all animations and null the animators. */
