@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b95ac675_28637389",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-08T18:09:59Z",
+      "side": 1,
+      "message": "nit: You can just put the AddString() call in here. This just adds extra line.",
+      "range": {
+        "startLine": 1260,
+        "startChar": 7,
+        "endLine": 1260,
+        "endChar": 15
+      },
+      "revId": "a164118e016ffb2ec48f4f8cfe2f6dc3d09cc08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cc17302_d625d44c",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-08T18:09:59Z",
+      "side": 1,
+      "message": "not a big deal, we do not explicitly remove sub-allocations in background just in case we want in future we can just change the process_memory_dump.cc to enable suballocations.",
+      "range": {
+        "startLine": 1306,
+        "startChar": 0,
+        "endLine": 1310,
+        "endChar": 3
+      },
+      "revId": "a164118e016ffb2ec48f4f8cfe2f6dc3d09cc08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
