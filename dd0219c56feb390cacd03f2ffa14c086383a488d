@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b078d7dc_ae40f9d4",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-08T03:15:52Z",
+      "side": 1,
+      "message": "The whitespace is off a bit. Please run `git cl format`.",
+      "range": {
+        "startLine": 1084,
+        "startChar": 7,
+        "endLine": 1084,
+        "endChar": 0
+      },
+      "revId": "dd0219c56feb390cacd03f2ffa14c086383a488d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "808d2668_71bce1f4",
+        "filename": "ui/accessibility/platform/ax_platform_node_win_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-09-08T03:15:52Z",
+      "side": 1,
+      "message": "OOC, why are we changing from assigning state to OR\u0027ing the state?",
+      "revId": "dd0219c56feb390cacd03f2ffa14c086383a488d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
