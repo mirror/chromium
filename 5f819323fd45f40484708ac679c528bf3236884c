@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eda3e427_fdb0704f",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-08T05:49:31Z",
+      "side": 1,
+      "message": "Done. thanks.",
+      "parentUuid": "4b6e5067_92bf7a05",
+      "range": {
+        "startLine": 939,
+        "startChar": 2,
+        "endLine": 947,
+        "endChar": 47
+      },
+      "revId": "5f819323fd45f40484708ac679c528bf3236884c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5afb44f_01995bfe",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "5f819323fd45f40484708ac679c528bf3236884c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8f12fe_b2911275",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-08T05:49:31Z",
+      "side": 1,
+      "message": "Thanks!\nBy now, unable to check here because keyboard is blocking the visibility to the context bar.  Added a TODO here to see what we can do later.\nAdded the check at the end.",
+      "parentUuid": "c5afb44f_01995bfe",
+      "range": {
+        "startLine": 1324,
+        "startChar": 0,
+        "endLine": 1324,
+        "endChar": 32
+      },
+      "revId": "5f819323fd45f40484708ac679c528bf3236884c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
