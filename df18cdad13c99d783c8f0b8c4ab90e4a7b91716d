@@ -22,6 +22,30 @@
       "revId": "df18cdad13c99d783c8f0b8c4ab90e4a7b91716d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee4a404_63e1daf3",
+        "filename": "services/ui/public/interfaces/window_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-09-08T22:15:32Z",
+      "side": 1,
+      "message": "This no longer sits on the window manager interface. It (and a previous testing interface per sadrul@) now sit in remote_event_dispatcher.mojom and is controlled by the manifests so only tests and the window manager can access it. (In the future, the browser may need to access it in --mash mode, but we can cross that ship when we come to it.)\n\nAs for further filtering, I\u0027m not sure. We now need to accommodate the previous test usages, along with full mouse and keyboard events.",
+      "parentUuid": "6ce44789_5095183e",
+      "range": {
+        "startLine": 375,
+        "startChar": 2,
+        "endLine": 375,
+        "endChar": 21
+      },
+      "revId": "df18cdad13c99d783c8f0b8c4ab90e4a7b91716d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
