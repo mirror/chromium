@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42137b57_35619bf1",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-08T05:56:35Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003cbase::DictionaryValue\u003e dict \u003d base::DictionaryValue::From(\n    std::make_unique\u003cbase::Value\u003e(capability.Clone()));",
+      "revId": "f48b7494c0b9aae6413579dcea63bd02dda892f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83cda3a1_699df8a6",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-08T05:56:35Z",
+      "side": 1,
+      "message": "*capability_out \u003d std::move(capability) ?",
+      "revId": "f48b7494c0b9aae6413579dcea63bd02dda892f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f5f6bc_30ad8e03",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1291,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-08T05:56:35Z",
+      "side": 1,
+      "message": "Are there dictionaries that the old code would reject that now will get resolved?",
+      "revId": "f48b7494c0b9aae6413579dcea63bd02dda892f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1ec33c_b2ef7c38",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-08T05:56:35Z",
+      "side": 1,
+      "message": "GetCapabilityCallback doesn\u0027t take a capability?",
+      "range": {
+        "startLine": 38,
+        "startChar": 65,
+        "endLine": 38,
+        "endChar": 73
+      },
+      "revId": "f48b7494c0b9aae6413579dcea63bd02dda892f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9a7ea7_1bb34659",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-08T05:56:35Z",
+      "side": 1,
+      "message": "Just when you get used to base::MakeUnique is when they switch to std::make_unique.",
+      "revId": "f48b7494c0b9aae6413579dcea63bd02dda892f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
