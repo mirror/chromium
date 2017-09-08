@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e247b19_68df29c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-08T17:39:06Z",
+      "side": 1,
+      "message": "Which youtube videos did you use that happen to match perfectly the aspect ration of those two chromebooks?",
+      "revId": "45da76443ec62b3186f48b8e8b9f1f4a38592daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba3a3dd_c175013f",
+        "filename": "cc/output/overlay_strategy_fullscreen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-08T17:39:06Z",
+      "side": 1,
+      "message": "This is assuming that we\u0027ll be able to scanout from this quad. But if scaling might be needed, this is a wrong assumption now.",
+      "revId": "45da76443ec62b3186f48b8e8b9f1f4a38592daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
