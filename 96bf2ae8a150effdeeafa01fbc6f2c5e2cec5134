@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04cb7c9d_2a9ae88e",
+        "filename": "components/autofill/content/renderer/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-08T08:27:04Z",
+      "side": 1,
+      "message": "I\u0027ll remove it since the flag will be not needed in GetPasswordForm anymore.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 4
+      },
+      "revId": "96bf2ae8a150effdeeafa01fbc6f2c5e2cec5134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db69bee2_59b6c7d4",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-08T08:27:04Z",
+      "side": 1,
+      "message": "It is good idea. But to me, it is independent to the password selection feature. LocateSpecificPasswords will return the first password even if values are confusing. I will move this idea to LocateSpecificPasswords.",
+      "range": {
+        "startLine": 538,
+        "startChar": 4,
+        "endLine": 538,
+        "endChar": 79
+      },
+      "revId": "96bf2ae8a150effdeeafa01fbc6f2c5e2cec5134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5b142c_9ecc4da3",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-08T08:27:04Z",
+      "side": 1,
+      "message": "FYI, password.Value() may be Javascript value. We should use |FieldValueAndPropertiesMaskMap| which contains values typed by user or autofilled by Chrome.",
+      "range": {
+        "startLine": 543,
+        "startChar": 38,
+        "endLine": 543,
+        "endChar": 62
+      },
+      "revId": "96bf2ae8a150effdeeafa01fbc6f2c5e2cec5134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a86f7a5_861e9dbe",
+        "filename": "components/autofill/core/common/password_form.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-08T08:27:04Z",
+      "side": 1,
+      "message": "What is our contract about |other_possible_passwords|, |password_value| and |new_password_value|? Do we exclude |*password_value| from |other_possible_passwords|?\n\nCan we store ALL values typed by user in a form? (even if some of these values are duplicated in |password_value| or |new_password_value|)",
+      "range": {
+        "startLine": 186,
+        "startChar": 2,
+        "endLine": 187,
+        "endChar": 21
+      },
+      "revId": "96bf2ae8a150effdeeafa01fbc6f2c5e2cec5134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
