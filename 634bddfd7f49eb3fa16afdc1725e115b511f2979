@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad70b70_d461b7c0",
+        "filename": "chromecast/app/android/crash_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-08T18:22:56Z",
+      "side": 1,
+      "message": "space?",
+      "range": {
+        "startLine": 94,
+        "startChar": 65,
+        "endLine": 94,
+        "endChar": 67
+      },
+      "revId": "634bddfd7f49eb3fa16afdc1725e115b511f2979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89d5ce8_0167fd42",
+        "filename": "chromecast/app/android/crash_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-08T18:22:56Z",
+      "side": 1,
+      "message": "nit, space?",
+      "range": {
+        "startLine": 103,
+        "startChar": 65,
+        "endLine": 103,
+        "endChar": 67
+      },
+      "revId": "634bddfd7f49eb3fa16afdc1725e115b511f2979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4efccf94_4d3818ca",
+        "filename": "chromecast/app/android/crash_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-08T18:22:56Z",
+      "side": 1,
+      "message": "nit: const ref",
+      "range": {
+        "startLine": 29,
+        "startChar": 64,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "634bddfd7f49eb3fa16afdc1725e115b511f2979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ce784c_ece59db4",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastCrashHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-08T18:22:56Z",
+      "side": 1,
+      "message": "nit, spacing is inconsistent here.",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 16
+      },
+      "revId": "634bddfd7f49eb3fa16afdc1725e115b511f2979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918cd234_1d564d4b",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastCrashHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-08T18:22:56Z",
+      "side": 1,
+      "message": "and here.",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "634bddfd7f49eb3fa16afdc1725e115b511f2979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f882fc_f3f383db",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastCrashUploader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-08T18:22:56Z",
+      "side": 1,
+      "message": "space?",
+      "range": {
+        "startLine": 71,
+        "startChar": 27,
+        "endLine": 71,
+        "endChar": 29
+      },
+      "revId": "634bddfd7f49eb3fa16afdc1725e115b511f2979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
