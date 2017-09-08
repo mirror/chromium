@@ -39,6 +39,48 @@
       "revId": "2d1d2666d93d7bfe4feab00d40b2c64287f768b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597fd73a_5932302c",
+        "filename": "components/metrics/proto/system_profile.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-08T22:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13100003_f37c295a",
+      "revId": "2d1d2666d93d7bfe4feab00d40b2c64287f768b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46e0cf7f_4826001d",
+        "filename": "components/metrics/proto/system_profile.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-08T22:20:00Z",
+      "side": 1,
+      "message": "Done.  \"Loaded\" was taken from the ProfileManager; I\u0027ve similarly snagged the terminology on that method\u0027s declaration.",
+      "parentUuid": "63bc1351_19270a76",
+      "range": {
+        "startLine": 949,
+        "startChar": 25,
+        "endLine": 949,
+        "endChar": 31
+      },
+      "revId": "2d1d2666d93d7bfe4feab00d40b2c64287f768b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
