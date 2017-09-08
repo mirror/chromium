@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ba048d9_efff0970",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-08T12:12:25Z",
+      "side": 1,
+      "message": "I renamed the method to ShouldConsiderForPopupBlocking and explained that the popup blocker targets all new windows and tabs. Let me know if you think it could use another round of sprucing though.",
+      "parentUuid": "9e8914bf_13cf9fcf",
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fce40004_7451d521",
         "filename": "chrome/browser/ui/blocked_content/popup_tracker.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e4be28_96a5d0e4",
+        "filename": "chrome/browser/ui/blocked_content/popup_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-08T12:12:25Z",
+      "side": 1,
+      "message": "Done. Just a habit since this is the preferred style in a part of code I\u0027m touching a lot these days :)",
+      "parentUuid": "fce40004_7451d521",
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "245c9b9f_0bce78e7",
+        "filename": "chrome/browser/ui/blocked_content/popup_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-08T12:12:25Z",
+      "side": 1,
+      "message": "Done. I did it this way because WCUD\u0027s documentation does it.",
+      "parentUuid": "22801638_e5486b62",
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "925e2300_78cf2b2e",
         "filename": "chrome/browser/ui/blocked_content/popup_tracker_browsertest.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "288d27bc_1380ba31",
+        "filename": "chrome/browser/ui/blocked_content/popup_tracker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-08T12:12:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "925e2300_78cf2b2e",
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9a828018_13b234dc",
+        "filename": "chrome/browser/ui/blocked_content/popup_tracker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-08T12:12:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3ebb65b_9309c7a7",
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a70761a6_9b647cba",
         "filename": "chrome/browser/ui/browser_navigator_params.cc",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997f0078_a2e17ac8",
+        "filename": "chrome/browser/ui/browser_navigator_params.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-08T12:12:25Z",
+      "side": 1,
+      "message": "Sure, I\u0027ll do it in a followup.",
+      "parentUuid": "a70761a6_9b647cba",
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ad0de1d6_f5f0a613",
+        "filename": "chrome/browser/ui/browser_navigator_params.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-08T12:12:25Z",
+      "side": 1,
+      "message": "Oops, vestigial change from earlier when we were using WebContents::CreateParams. Removed.",
+      "parentUuid": "4ae5797f_0d5fe735",
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0df7e91c_6ccdb7d9",
         "filename": "chrome/browser/ui/browser_navigator_params.h",
         "patchSetId": 7
@@ -132,6 +258,30 @@
       "writtenOn": "2017-09-08T03:38:09Z",
       "side": 1,
       "message": "I do have one question, does this really need to be a member? It seems secondary to the navigation and not an intrinsic part of the navigation itself. For example, it wouldn\u0027t make sense to set this to true for some random navigation.",
+      "range": {
+        "startLine": 253,
+        "startChar": 7,
+        "endLine": 253,
+        "endChar": 15
+      },
+      "revId": "2066905a0355858d343ca251ad170249ad5d54dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bef446e_9b1e0820",
+        "filename": "chrome/browser/ui/browser_navigator_params.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-08T12:12:25Z",
+      "side": 1,
+      "message": "This is a valid point, but I\u0027m not sure if there\u0027s a better way to do it. Fundamentally we just want to get a bit of data from OpenURLFromTab to CreateTargetContents and this was the most straightforward way.\n\nOne thing we could do is introduce chrome::Navigate(nav_params, bool is_popup) which is called in OpenURLFromTab, and just define chrome::Navigate(nav_params) to bve chrome::Navigate(nav_params, false). Let me know what you think (or if you have a better idea).\n\nI\u0027ll also note that we may need to stash more info here in the near future, e.g. the navigations \"triggering event info\" (blink::WebTriggeringEventInfo). This information indicates whether a navigation was initiated by a \"trusted\" event (non-simulated) in javascript like shift-click. It may be pertinent to filter out these navigations for metrics collection.",
+      "parentUuid": "0df7e91c_6ccdb7d9",
       "range": {
         "startLine": 253,
         "startChar": 7,
