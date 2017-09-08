@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f62caec7_d6265fdf",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-08T18:29:10Z",
+      "side": 1,
+      "message": "Can this be in an anonymous namespace, instead of static?",
+      "range": {
+        "startLine": 75,
+        "startChar": 11,
+        "endLine": 75,
+        "endChar": 12
+      },
+      "revId": "6119b55fa2cacf5812cd3edee15f5fe36bfe8176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
