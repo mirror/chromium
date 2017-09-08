@@ -91,6 +91,30 @@
       "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f3c907_5b9d7170",
+        "filename": "base/test/scoped_task_environment.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-08T00:01:27Z",
+      "side": 1,
+      "message": "I\u0027ve been thinking about this comment a lot and going back and forth on my opinion.\n\nThe first thing that made me hesitate if that re-enter implementing support in ScopedTaskEnvironment is sad.\n\nBut then I thought it made sense and should be the main mode of mocking time (I don\u0027t think it works for *all* usages of TestMockTimeTaskRunner::kBoundToThread but don\u0027t want to diverge).\n\nBut then... I came back to this CL to implement it and realized one thing I\u0027d forgotten: \n  an important part of the TestMockTimeTaskRunner kBoundToThread API I think is that I decided (and implemented) that RunLoop::Run() should advance time when there are only delayed tasks left and QuitWhenIdle wasn\u0027t invoked). This is crucial I think to having mock time by default at scale as it will allow things that wait for short timeouts inside a RunLoop::Run(), e.g. animation tests could be much faster).\n\nThe only way to support this I think *and* UI/IO loops is to have TestMockTimeTaskRunner take an optional MessageLoop param (or probably better adding TestMockTimeTaskRunner::Types for UI/IO and having an ML member under the hood as an impl detail).\n\nBut then the registered RunLoop::Delegate/TTRH needs to be the TestMockTimeTaskRunner not the ML. So ML needs to be runnable without being BoundToThread.\nOh and TestMockTimeTaskRunner would need a way to Run() ML without using RunLoop.. (really don\u0027t think we want nested RunLoop::Delegates...)\n\nSo... In all this I think the most important is that RunLoop::Run() keeps advancing time when needed and I\u0027m not convinced support for mock+UI/IO is as critical. And even if we wanted to get there I think it requires multiple changes as labeled above so I\u0027m now falling back on this being the right change at this time.\n\nWDYT?!",
+      "parentUuid": "ee9ebe5b_683d4965",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
