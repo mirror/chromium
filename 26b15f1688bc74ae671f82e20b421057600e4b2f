@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc27578d_5bf9b853",
+        "filename": "ui/views/controls/table/table_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T21:22:54Z",
+      "side": 1,
+      "message": "Nit: Prefer \u003dMakeUnique to reset(new",
+      "revId": "26b15f1688bc74ae671f82e20b421057600e4b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0632063e_85bf25da",
+        "filename": "ui/views/controls/table/table_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T21:22:54Z",
+      "side": 1,
+      "message": "Nit: Functions above data members",
+      "revId": "26b15f1688bc74ae671f82e20b421057600e4b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6412715_97043ba0",
+        "filename": "ui/views/controls/table/table_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T21:22:54Z",
+      "side": 1,
+      "message": "Nit: Use 1u and no static_cast (2 places)",
+      "revId": "26b15f1688bc74ae671f82e20b421057600e4b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a1d0b1_92b0600d",
+        "filename": "ui/views/controls/table/table_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-08T21:22:54Z",
+      "side": 1,
+      "message": "Nit: Can this be EXPECT_EQ()?  (2 places)",
+      "revId": "26b15f1688bc74ae671f82e20b421057600e4b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
