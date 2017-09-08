@@ -20,6 +20,7 @@
 
 // Verifies Internet connectivity by navigating to browsingtest.appspot.com.
 - (void)testNetworkConnection {
+  EARL_GREY_TEST_DISABLED(@"Test disabled due to Wifi issue.");
   [ChromeEarlGrey loadURL:GURL("http://browsingtest.appspot.com")];
   [ChromeEarlGrey waitForWebViewContainingText:"Window1"];
 }
