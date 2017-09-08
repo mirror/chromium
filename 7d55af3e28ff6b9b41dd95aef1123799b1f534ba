@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1eecda60_69d0669f",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-08T19:24:46Z",
+      "side": 1,
+      "message": "Adding checks that all responses have been used would really help improve tests. We did this at the device/bluetooth layer and caught many tests that looked correct but weren\u0027t actually running as expected. I imagine we could add a JS Bluetooth Test API such as \"assert(responsesWereConsumed())\" or something that checks all \u0027SetNext...Response\u0027 variables have been used.\n\nIn that case, I\u0027d then suggest we use \"Write a hack to trick the current templating system ... CALLS in a string\" unless we find there are many test locations that need help and then we can improve the templating system.  I don\u0027t think a switch(FUNCTION_NAME) is too ugly.",
+      "parentUuid": "66110705_6e110662",
+      "revId": "7d55af3e28ff6b9b41dd95aef1123799b1f534ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5f7fe5e_82b3e0bd",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
         "patchSetId": 1
@@ -143,6 +161,30 @@
       "side": 1,
       "message": "It crashes either way (doing garbage collection inside or outside the function) when I make that change.  I wouldn\u0027t expect the behavior to differ since the function doesn\u0027t return a promise.",
       "parentUuid": "4c4dd513_15c76731",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "7d55af3e28ff6b9b41dd95aef1123799b1f534ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad8fe74_d5283bca",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-08T19:24:46Z",
+      "side": 1,
+      "message": "behavior may differ if the GC can run in the same javascript execution after the characteristic.call is made -- as opposed to racing the async result of the call and the next JS turn that runs GC.",
+      "parentUuid": "70cc1b17_834bb5d7",
       "range": {
         "startLine": 29,
         "startChar": 8,
