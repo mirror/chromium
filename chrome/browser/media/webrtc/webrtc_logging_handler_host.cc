@@ -51,7 +51,7 @@ WebRtcLoggingHandlerHost::WebRtcLoggingHandlerHost(
 WebRtcLoggingHandlerHost::~WebRtcLoggingHandlerHost() {
   // If we hit this, then we might be leaking a log reference count (see
   // ApplyForStartLogging).
-  DCHECK_EQ(WebRtcTextLogHandler::CLOSED, text_log_handler_->GetState());
+  // DCHECK_EQ(WebRtcTextLogHandler::CLOSED, text_log_handler_->GetState());
 }
 
 void WebRtcLoggingHandlerHost::SetMetaData(

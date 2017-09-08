@@ -477,11 +477,14 @@ bool AUHALStream::ConfigureAUHAL() {
   OSStatus result = AudioUnitSetProperty(
       local_audio_unit->audio_unit(), kAudioOutputUnitProperty_EnableIO,
       kAudioUnitScope_Output, AUElement::OUTPUT, &enable_io, sizeof(enable_io));
-  if (result != noErr)
+  if (result != noErr && result != kAudioUnitErr_PropertyNotWritable) {
+    OSSTATUS_DLOG(ERROR, result) << "kAudioOutputUnitProperty_EnableIO.";
     return false;
+  }
 
   if (!SetStreamFormat(params_.channels(), params_.sample_rate(),
                        local_audio_unit->audio_unit(), &output_format_)) {
+    LOG(ERROR) << "SetStreamFormat";
     return false;
   }
 
@@ -490,6 +493,7 @@ bool AUHALStream::ConfigureAUHAL() {
   if (!manager_->MaybeChangeBufferSize(device_, local_audio_unit->audio_unit(),
                                        0, number_of_frames_, &size_was_changed,
                                        &io_buffer_frame_size)) {
+    LOG(ERROR) << "MaybeChangeBufferSize";
     return false;
   }
 
@@ -500,8 +504,10 @@ bool AUHALStream::ConfigureAUHAL() {
   result = AudioUnitSetProperty(
       local_audio_unit->audio_unit(), kAudioUnitProperty_SetRenderCallback,
       kAudioUnitScope_Input, AUElement::OUTPUT, &callback, sizeof(callback));
-  if (result != noErr)
+  if (result != noErr) {
+    LOG(ERROR) << "kAudioUnitProperty_SetRenderCallback";
     return false;
+  }
 
   SetAudioChannelLayout(params_.channels(), params_.channel_layout(),
                         local_audio_unit->audio_unit());

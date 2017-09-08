@@ -204,11 +204,15 @@ TEST_F(AudioInputTest, MAYBE_OpenStopAndClose) {
 // Very simple test which starts capturing during half a second and verifies
 // that recording starts.
 TEST_F(AudioInputTest, MAYBE_Record) {
-  ABORT_AUDIO_TEST_IF_NOT(InputDevicesAvailable());
+  // ABORT_AUDIO_TEST_IF_NOT(InputDevicesAvailable());
   MakeAudioInputStreamOnAudioThread();
+
+  LOG(ERROR) << "after MakeAudioInputStreamOnAudioThread";
 
   TestInputCallback test_callback;
   OpenAndStartAudioInputStreamOnAudioThread(&test_callback);
+
+  LOG(ERROR) << "after OpenAndStartAudioInputStreamOnAudioThread";
 
   base::RunLoop run_loop;
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(

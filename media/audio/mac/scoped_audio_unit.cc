@@ -8,9 +8,15 @@
 
 namespace media {
 
+#if 0
 constexpr AudioComponentDescription desc = {kAudioUnitType_Output,
                                             kAudioUnitSubType_HALOutput,
                                             kAudioUnitManufacturer_Apple, 0, 0};
+#else
+constexpr AudioComponentDescription desc = {kAudioUnitType_Output,
+                                            kAudioUnitSubType_VoiceProcessingIO,
+                                            kAudioUnitManufacturer_Apple, 0, 0};
+#endif
 
 static void DestroyAudioUnit(AudioUnit audio_unit) {
   OSStatus result = AudioUnitUninitialize(audio_unit);
@@ -36,7 +42,7 @@ ScopedAudioUnit::ScopedAudioUnit(AudioDeviceID device, AUElement element) {
   result = AudioUnitSetProperty(
       audio_unit, kAudioOutputUnitProperty_CurrentDevice,
       kAudioUnitScope_Global, element, &device, sizeof(AudioDeviceID));
-  if (result == noErr) {
+  if (result == noErr) {  // || result == kAudioUnitErr_InvalidPropertyValue) {
     audio_unit_ = audio_unit;
     return;
   }
