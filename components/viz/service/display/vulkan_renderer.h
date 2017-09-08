@@ -1,0 +1,56 @@
+// Copyright (c) 2016 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef COMPONENTS_VIZ_SERVICE_DISPLAY_VULKAN_RENDERER_H_
+#define COMPONENTS_VIZ_SERVICE_DISPLAY_VULKAN_RENDERER_H_
+
+#include "cc/output/direct_renderer.h"
+#include "components/viz/service/viz_service_export.h"
+#include "ui/latency/latency_info.h"
+
+namespace cc {
+class TextureMailboxDeleter;
+}
+
+namespace viz {
+
+class VIZ_SERVICE_EXPORT VulkanRenderer : public cc::DirectRenderer {
+ public:
+  VulkanRenderer(const RendererSettings* settings,
+                 cc::OutputSurface* output_surface,
+                 cc::DisplayResourceProvider* resource_provider,
+                 cc::TextureMailboxDeleter* texture_mailbox_deleter,
+                 int highp_threshold_min);
+  ~VulkanRenderer() override;
+
+  // Implementation of public DirectRenderer functions.
+  void SwapBuffers(std::vector<ui::LatencyInfo> latency_info) override;
+
+ protected:
+  // Implementations of protected Renderer functions.
+  void DidChangeVisibility() override;
+
+  // Implementations of protected DirectRenderer functions.
+  void BindFramebufferToOutputSurface() override;
+  bool BindFramebufferToTexture(const cc::ScopedResource* resource) override;
+  void SetScissorTestRect(const gfx::Rect& scissor_rect) override;
+  void PrepareSurfaceForPass(SurfaceInitializationMode initialization_mode,
+                             const gfx::Rect& render_pass_scissor) override;
+  void DoDrawQuad(const DrawQuad* quad, const gfx::QuadF* clip_region) override;
+  void BeginDrawingFrame() override;
+  void FinishDrawingFrame() override;
+  void FinishDrawingQuadList() override;
+  bool FlippedFramebuffer() const override;
+  void EnsureScissorTestEnabled() override;
+  void EnsureScissorTestDisabled() override;
+  void CopyDrawnRenderPass(std::unique_ptr<CopyOutputRequest> request) override;
+  bool CanPartialSwap() override;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(VulkanRenderer);
+};
+
+}  // namespace viz
+
+#endif  // COMPONENTS_VIZ_SERVICE_DISPLAY_VULKAN_RENDERER_H_
