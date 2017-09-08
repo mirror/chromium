@@ -193,6 +193,7 @@ class MODULES_EXPORT RTCPeerConnection final
   void DidAddRemoteStream(
       const WebMediaStream&,
       WebVector<std::unique_ptr<WebRTCRtpReceiver>>*) override;
+  void DidAddRemoteTrack(std::unique_ptr<WebRTCRtpReceiver>) override;
   void DidRemoveRemoteStream(const WebMediaStream&) override;
   void DidAddRemoteDataChannel(WebRTCDataChannelHandler*) override;
   void ReleasePeerConnectionHandler() override;

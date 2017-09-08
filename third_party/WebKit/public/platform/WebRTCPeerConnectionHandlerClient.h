@@ -89,6 +89,7 @@ class BLINK_PLATFORM_EXPORT WebRTCPeerConnectionHandlerClient {
   virtual void DidAddRemoteStream(
       const WebMediaStream&,
       WebVector<std::unique_ptr<WebRTCRtpReceiver>>*) = 0;
+  virtual void DidAddRemoteTrack(std::unique_ptr<WebRTCRtpReceiver>) {}
   virtual void DidRemoveRemoteStream(const WebMediaStream&) = 0;
   virtual void DidAddRemoteDataChannel(WebRTCDataChannelHandler*) = 0;
   virtual void ReleasePeerConnectionHandler() = 0;
