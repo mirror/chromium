@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db7bf8d7_3a647a10",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-08T07:54:58Z",
+      "side": 1,
+      "message": "Could we add more elaborate comments here about who exactly owns this class? Is it ServiceWOrkerProvdierHost?",
+      "revId": "e1115144e6778b00a574d6ba3868e9d3563e53d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
