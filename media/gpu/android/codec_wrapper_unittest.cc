@@ -31,6 +31,7 @@ class CodecWrapperTest : public testing::Test {
     auto codec = base::MakeUnique<NiceMock<MockMediaCodecBridge>>();
     codec_ = codec.get();
     wrapper_ = base::MakeUnique<CodecWrapper>(std::move(codec),
+                                              new AVDASurfaceBundle(),
                                               output_buffer_release_cb_.Get());
     ON_CALL(*codec_, DequeueOutputBuffer(_, _, _, _, _, _, _))
         .WillByDefault(Return(MEDIA_CODEC_OK));

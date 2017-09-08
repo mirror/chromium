@@ -8,6 +8,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "media/gpu/avda_codec_allocator.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -61,9 +62,12 @@ void FakeCodecAllocator::CreateMediaCodecAsync(
 
 void FakeCodecAllocator::ReleaseMediaCodec(
     std::unique_ptr<MediaCodecBridge> media_codec,
-    scoped_refptr<AVDASurfaceBundle> surface_bundle) {
+    scoped_refptr<AVDASurfaceBundle> surface_bundle,
+    base::Closure released_cb) {
   MockReleaseMediaCodec(media_codec.get(), surface_bundle->overlay.get(),
                         surface_bundle->surface_texture.get());
+  if (released_cb)
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, released_cb);
 }
 
 MockMediaCodecBridge* FakeCodecAllocator::ProvideMockCodecAsync() {
@@ -77,8 +81,8 @@ MockMediaCodecBridge* FakeCodecAllocator::ProvideMockCodecAsync() {
   auto* raw_codec = codec.get();
   most_recent_codec = raw_codec;
   most_recent_codec_destruction_observer = codec->CreateDestructionObserver();
-  pending_surface_bundle_ = nullptr;
-  client_->OnCodecConfigured(std::move(codec));
+  client_->OnCodecConfigured(std::move(codec),
+                             std::move(pending_surface_bundle_));
   return raw_codec;
 }
 
@@ -87,7 +91,7 @@ void FakeCodecAllocator::ProvideNullCodecAsync() {
   codec_creation_pending_ = false;
   most_recent_codec = nullptr;
   if (client_)
-    client_->OnCodecConfigured(nullptr);
+    client_->OnCodecConfigured(nullptr, std::move(pending_surface_bundle_));
 }
 
 }  // namespace media
