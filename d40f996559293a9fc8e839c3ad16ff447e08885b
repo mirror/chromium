@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "65e175cb_fb8c2077",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-08T02:20:49Z",
+      "side": 1,
+      "message": "BluetoothPowerController",
+      "range": {
+        "startLine": 7,
+        "startChar": 36,
+        "endLine": 7,
+        "endChar": 57
+      },
+      "revId": "d40f996559293a9fc8e839c3ad16ff447e08885b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf5802f6_2057e19a",
         "filename": "ash/system/network/network_list.cc",
         "patchSetId": 1
