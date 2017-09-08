@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "664c2f30_56c139f0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-09-08T00:11:17Z",
+      "side": 1,
+      "message": "Simply adding a class introduces some layout issues (i.e. some child widgets fail to update their sizes). Switching to a widget API fixes them.",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680ac05f_176d5909",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/reportView.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-09-08T00:11:17Z",
+      "side": 1,
+      "message": "Allows for taller children (e.g. text fields)",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd48a419_aa16ef97",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/reportView.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-09-08T00:11:17Z",
+      "side": 1,
+      "message": "I checked all report view clients visually - did not find any regressions.",
+      "revId": "6f0f619d000803442eade8539a5f0faa6412a74b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
