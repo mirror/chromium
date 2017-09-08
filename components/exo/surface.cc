@@ -778,12 +778,33 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
     if (!state_.crop.IsEmpty()) {
       gfx::SizeF scaled_buffer_size(
           gfx::ScaleSize(transformed_buffer_size, 1.0f / state_.buffer_scale));
-      uv_top_left = state_.crop.origin();
-      uv_top_left.Scale(1.f / scaled_buffer_size.width(),
-                        1.f / scaled_buffer_size.height());
-      uv_bottom_right = state_.crop.bottom_right();
-      uv_bottom_right.Scale(1.f / scaled_buffer_size.width(),
-                            1.f / scaled_buffer_size.height());
+      gfx::RectF normalized_crop = gfx::RectF(state_.crop);
+      normalized_crop.Scale(1.0f / scaled_buffer_size.width(),
+                            1.0f / scaled_buffer_size.height());
+
+      // Set up the transform that is applied to the UV coordinates.
+      SkMatrix uv_matrix;
+      switch (state_.buffer_transform) {
+        case Transform::NORMAL:
+          uv_matrix.setIdentity();
+          break;
+        case Transform::ROTATE_90:
+          uv_matrix.setSinCos(-1, 0, 0.5, 0.5);
+          break;
+        case Transform::ROTATE_180:
+          uv_matrix.setSinCos(0, -1, 0.5, 0.5);
+          break;
+        case Transform::ROTATE_270:
+          uv_matrix.setSinCos(1, 0, 0.5, 0.5);
+          break;
+      }
+
+      // The crop rectangle is a post-rotation rectangle. It needs to be
+      // inverse-transformed to compute the UV coordinates.
+      gfx::Transform uv_transform{gfx::Transform(uv_matrix)};
+      uv_transform.TransformRectReverse(&normalized_crop);
+      uv_top_left = normalized_crop.origin();
+      uv_bottom_right = normalized_crop.bottom_right();
     }
     // Texture quad is only needed if buffer is not fully transparent.
     if (state_.alpha) {
