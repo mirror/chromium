@@ -46,7 +46,8 @@ void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
   options->fds_to_remap = files_to_register.GetMappingWithIDAdjustment(
       base::GlobalDescriptors::kBaseDescriptor);
 
-  if (GetProcessType() == switches::kRendererProcess) {
+  if (GetProcessType() == switches::kRendererProcess ||
+      GetProcessType() == switches::kGpuProcess) {
     const int sandbox_fd =
         SandboxHostLinux::GetInstance()->GetSandboxedSocket();
     options->fds_to_remap.push_back(std::make_pair(sandbox_fd, GetSandboxFD()));

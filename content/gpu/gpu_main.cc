@@ -73,8 +73,11 @@
 #endif
 
 #if defined(OS_LINUX)
+#include "content/common/font_config_ipc_linux.h"
 #include "content/common/sandbox_linux/sandbox_linux.h"
 #include "content/public/common/sandbox_init.h"
+#include "third_party/skia/include/core/SkGraphics.h"
+#include "third_party/skia/include/ports/SkFontConfigInterface.h"
 #endif
 
 #if defined(OS_MACOSX)
@@ -298,6 +301,12 @@ int GpuMain(const MainFunctionParams& parameters) {
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
       tracing::GraphicsMemoryDumpProvider::GetInstance(), "AndroidGraphics",
       nullptr);
+#endif
+
+#if defined(OS_LINUX)
+  // TODO(vmpstr): Should we do this in all cases with OOP raster?
+  SkGraphics::Init();
+  SkFontConfigInterface::SetGlobal(new FontConfigIPC(GetSandboxFD()))->unref();
 #endif
 
   base::HighResolutionTimerManager hi_res_timer_manager;
