@@ -7,15 +7,15 @@
 #include <vector>
 
 #include "base/memory/weak_ptr.h"
-#include "content/browser/background_fetch/background_fetch_delegate.h"
 #include "content/browser/background_fetch/background_fetch_test_base.h"
+#include "content/public/browser/background_fetch_delegate.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
 
 class FakeBackgroundFetchDelegate : public BackgroundFetchDelegate {
  public:
-  FakeBackgroundFetchDelegate() : weak_ptr_factory_(this) {}
+  FakeBackgroundFetchDelegate() {}
 
   void DownloadUrl(const std::string& guid,
                    const std::string& method,
@@ -44,14 +44,8 @@ class FakeBackgroundFetchDelegate : public BackgroundFetchDelegate {
     complete_downloads_ = complete_downloads;
   }
 
-  base::WeakPtr<BackgroundFetchDelegate> GetWeakPtr() {
-    return weak_ptr_factory_.GetWeakPtr();
-  }
-
  private:
   bool complete_downloads_ = true;
-
-  base::WeakPtrFactory<FakeBackgroundFetchDelegate> weak_ptr_factory_;
 };
 
 class FakeController : public BackgroundFetchDelegateProxy::Controller {
@@ -76,8 +70,7 @@ class FakeController : public BackgroundFetchDelegateProxy::Controller {
 
 class BackgroundFetchDelegateProxyTest : public BackgroundFetchTestBase {
  public:
-  BackgroundFetchDelegateProxyTest()
-      : delegate_proxy_(delegate_.GetWeakPtr()) {}
+  BackgroundFetchDelegateProxyTest() : delegate_proxy_(&delegate_) {}
 
  protected:
   FakeBackgroundFetchDelegate delegate_;
