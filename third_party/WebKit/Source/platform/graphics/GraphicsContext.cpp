@@ -1328,11 +1328,11 @@ sk_sp<SkColorFilter> GraphicsContext::WebCoreColorFilterToSkiaColorFilter(
   return nullptr;
 }
 
-bool GraphicsContext::ShouldApplyHighContrastFilterToImage(
-    const Image& image) const {
+bool GraphicsContext::ShouldApplyHighContrastFilterToImage(Image& image) {
   if (!high_contrast_filter_)
     return false;
 
+  high_contrast_image_classifier_.ShouldApplyHighContrastFilterToImage(image);
   return high_contrast_settings_.image_policy ==
          HighContrastImagePolicy::kFilterAll;
 }
