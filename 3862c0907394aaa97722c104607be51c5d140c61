@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c94749a1_b1cff4ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T20:41:11Z",
+      "side": 1,
+      "message": "Can this be attached to the bug instead? Non-googlers will not be able to access this link.\nYou can commit this change and then attach the screenshot to the bug afterwards.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 45
+      },
+      "revId": "3862c0907394aaa97722c104607be51c5d140c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c095a07_e2b4c4a7",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-08T20:41:11Z",
+      "side": 1,
+      "message": "if (!anchor_view)\n  SetArrowPaintType(...)\n\nWe avoid comparing against nullptr when the ! works fine.\n\nThe no-brace single line statement + single line conditional rule is a consistency based rule for Chromium (it\u0027s not in the style guide, but folks here prefer no-braces in these cases).\n\nThe this-\u003e is implied for method calls.",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 3
+      },
+      "revId": "3862c0907394aaa97722c104607be51c5d140c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
