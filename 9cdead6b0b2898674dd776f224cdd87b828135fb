@@ -16,6 +16,24 @@
       "revId": "9cdead6b0b2898674dd776f224cdd87b828135fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf136a2_d986c39e",
+        "filename": "cc/output/overlay_strategy_fullscreen.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-09-08T17:10:43Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "8478f8b8_e274b9fa",
+      "revId": "9cdead6b0b2898674dd776f224cdd87b828135fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
