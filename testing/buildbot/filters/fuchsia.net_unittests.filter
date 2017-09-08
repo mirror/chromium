@@ -12,7 +12,6 @@
 -UnixDomain*Socket*
 -URLRequest*FTP*
 -URLRequestQuic*
--URLRequestTestHTTP.HeadersCallbacks
 -WebSocket*
 
 # Following tests pass locally, but flake on bots.
