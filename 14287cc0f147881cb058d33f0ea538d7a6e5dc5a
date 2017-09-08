@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9701cff4_2d424706",
+        "filename": "chromeos/components/tether/network_connection_handler_tether_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-08T20:44:55Z",
+      "side": 1,
+      "message": "Add documentation explaining that these need to be stored in case they need to be executed at shutdown.",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 20
+      },
+      "revId": "14287cc0f147881cb058d33f0ea538d7a6e5dc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
