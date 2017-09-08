@@ -143,7 +143,8 @@ public class SnippetsBridge implements SuggestionsSource {
     @Override
     public void fetchContextualSuggestions(String url, Callback<List<SnippetArticle>> callback) {
         assert mNativeSnippetsBridge != 0;
-        nativeFetchContextualSuggestions(mNativeSnippetsBridge, url, callback);
+        callback.onResult(getSuggestionsForCategory(KnownCategories.ARTICLES));
+        // nativeFetchContextualSuggestions(mNativeSnippetsBridge, url, callback);
     }
 
     @Override
