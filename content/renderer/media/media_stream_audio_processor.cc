@@ -522,6 +522,8 @@ bool MediaStreamAudioProcessor::WouldModifyAudio(
   // Note: This method should by kept in-sync with any changes to the logic in
   // MediaStreamAudioProcessor::InitializeAudioProcessingModule().
 
+  return false;
+#if 0
   if (properties.goog_audio_mirroring)
     return true;
 
@@ -546,6 +548,7 @@ bool MediaStreamAudioProcessor::WouldModifyAudio(
   }
 
   return false;
+#endif
 }
 
 void MediaStreamAudioProcessor::OnPlayoutData(media::AudioBus* audio_bus,

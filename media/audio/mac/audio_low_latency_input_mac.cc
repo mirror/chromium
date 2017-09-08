@@ -142,6 +142,20 @@ enum AudioDevicePropertyResult {
   PROPERTY_MAX = PROPERTY_SUB_MUTE
 };
 
+static OSStatus OnGetPlayoutData(void* in_ref_con,
+                                 AudioUnitRenderActionFlags* flags,
+                                 const AudioTimeStamp* time_stamp,
+                                 UInt32 bus_number,
+                                 UInt32 num_frames,
+                                 AudioBufferList* io_data) {
+  AudioBuffer* audio_buffer = &io_data->mBuffers[0];
+  // DCHECK_EQ(1u, audio_buffer->mNumberChannels);
+  *flags |= kAudioUnitRenderAction_OutputIsSilence;
+  memset(audio_buffer->mData, 0, audio_buffer->mDataByteSize);
+
+  return noErr;
+}
+
 // Add the provided value in |result| to a UMA histogram.
 static void LogDevicePropertyChange(bool startup_failed,
                                     AudioDevicePropertyResult result) {
@@ -270,6 +284,8 @@ AUAudioInputStream::AUAudioInputStream(
   DVLOG(1) << "channels : " << input_params.channels();
   DVLOG(1) << "desired output format: " << format_;
 
+  LOG(ERROR) << "desired output format: " << format_;
+
   // Derive size (in bytes) of the buffers that we will render to.
   UInt32 data_byte_size = number_of_frames_ * format_.mBytesPerFrame;
   DVLOG(1) << "size of data buffer in bytes : " << data_byte_size;
@@ -322,9 +338,15 @@ bool AUAudioInputStream::Open() {
   // The user specifies which audio device to track. The audio unit can do
   // input from the device as well as output to the device. Bus 0 is used for
   // the output side, bus 1 is used to get audio input from the device.
+#if 1
+  AudioComponentDescription desc = {kAudioUnitType_Output,
+                                    kAudioUnitSubType_VoiceProcessingIO,
+                                    kAudioUnitManufacturer_Apple, 0, 0};
+#else
   AudioComponentDescription desc = {kAudioUnitType_Output,
                                     kAudioUnitSubType_HALOutput,
                                     kAudioUnitManufacturer_Apple, 0, 0};
+#endif
 
   // Find a component that meets the description in |desc|.
   AudioComponent comp = AudioComponentFindNext(nullptr, &desc);
@@ -337,6 +359,7 @@ bool AUAudioInputStream::Open() {
   // Get access to the service provided by the specified Audio Unit.
   OSStatus result = AudioComponentInstanceNew(comp, &audio_unit_);
   if (result) {
+    LOG(ERROR) << "AudioComponentInstanceNew";
     HandleError(result);
     return false;
   }
@@ -348,11 +371,14 @@ bool AUAudioInputStream::Open() {
   // *before* anything is done to it".
   // TODO(henrika): remove this extra call if we are unable to see any positive
   // effects of it in our UMA stats.
+#if 0
   result = AudioUnitInitialize(audio_unit_);
   if (result != noErr) {
+    LOG(ERROR) << "AudioUnitInitialize";
     HandleError(result);
     return false;
   }
+#endif
 
   // Enable IO on the input scope of the Audio Unit.
   // Note that, these changes must be done *before* setting the AUHAL's
@@ -366,48 +392,115 @@ bool AUAudioInputStream::Open() {
 
   UInt32 enableIO = 1;
 
-  // Enable input on the AUHAL.
-  result = AudioUnitSetProperty(audio_unit_, kAudioOutputUnitProperty_EnableIO,
-                                kAudioUnitScope_Input,
-                                1,          // input element 1
-                                &enableIO,  // enable
-                                sizeof(enableIO));
-  if (result != noErr) {
-    HandleError(result);
-    return false;
+  {
+    UInt32 property_size = sizeof(enableIO);
+    result = AudioUnitGetProperty(
+        audio_unit_, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Input,
+        1, &enableIO, &property_size);
+    if (result == noErr) {
+      LOG(ERROR) << "kAudioOutputUnitProperty_EnableIO(input) enabled? "
+                 << enableIO;
+    } else {
+      enableIO = 0;
+    }
   }
 
-  // Disable output on the AUHAL.
-  enableIO = 0;
-  result = AudioUnitSetProperty(audio_unit_, kAudioOutputUnitProperty_EnableIO,
-                                kAudioUnitScope_Output,
-                                0,          // output element 0
-                                &enableIO,  // disable
-                                sizeof(enableIO));
-  if (result != noErr) {
-    HandleError(result);
-    return false;
+  if (!enableIO) {
+    // Enable input on the AUHAL.
+    enableIO = 1;
+    result = AudioUnitSetProperty(
+        audio_unit_, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Input,
+        1,          // input element 1
+        &enableIO,  // enable
+        sizeof(enableIO));
+    if (result != noErr) {
+      // kAudioUnitErr_PropertyNotWritable == -10865
+      LOG(ERROR) << "kAudioOutputUnitProperty_EnableIO input " << result;
+      // HandleError(result);
+      // return false;
+    }
+  }
+
+  {
+    UInt32 property_size = sizeof(enableIO);
+    result = AudioUnitGetProperty(
+        audio_unit_, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Output,
+        0, &enableIO, &property_size);
+    if (result == noErr) {
+      LOG(ERROR) << "kAudioOutputUnitProperty_EnableIO(output) enabled? "
+                 << enableIO;
+    } else {
+      enableIO = 0;
+    }
+  }
+
+  if (!enableIO) {
+#if 1
+    // Disable output on the AUHAL.
+    enableIO = 0;
+#else
+    enableIO = 1;
+#endif
+    result = AudioUnitSetProperty(
+        audio_unit_, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Output,
+        0,          // output element 0
+        &enableIO,  // disable
+        sizeof(enableIO));
+    if (result != noErr) {
+      LOG(ERROR) << "kAudioOutputUnitProperty_EnableIO output " << result;
+      // HandleError(result);
+      // return false;
+    }
   }
 
   // Next, set the audio device to be the Audio Unit's current device.
   // Note that, devices can only be set to the AUHAL after enabling IO.
+
+#if 0
   result = AudioUnitSetProperty(
       audio_unit_, kAudioOutputUnitProperty_CurrentDevice,
       kAudioUnitScope_Global, 0, &input_device_id_, sizeof(input_device_id_));
   if (result != noErr) {
+    LOG(ERROR) << "kAudioOutputUnitProperty_CurrentDevice(0) " << result;
     HandleError(result);
     return false;
   }
+#else
+  result = AudioUnitSetProperty(
+      audio_unit_, kAudioOutputUnitProperty_CurrentDevice,
+      kAudioUnitScope_Global, 1, &input_device_id_, sizeof(input_device_id_));
+  if (result != noErr) {
+    LOG(ERROR) << "kAudioOutputUnitProperty_CurrentDevice(1)" << result;
+    HandleError(result);
+    return false;
+  }
+#endif
 
   // Register the input procedure for the AUHAL. This procedure will be called
   // when the AUHAL has received new data from the input device.
   AURenderCallbackStruct callback;
   callback.inputProc = &DataIsAvailable;
   callback.inputProcRefCon = this;
+  // result = AudioUnitSetProperty(
+  //    audio_unit_, kAudioOutputUnitProperty_SetInputCallback,
+  //    kAudioUnitScope_Global, 0, &callback, sizeof(callback));
   result = AudioUnitSetProperty(
       audio_unit_, kAudioOutputUnitProperty_SetInputCallback,
-      kAudioUnitScope_Global, 0, &callback, sizeof(callback));
+      kAudioUnitScope_Global, 1, &callback, sizeof(callback));
   if (result != noErr) {
+    // kAudioUnitErr_InvalidElement == -10877
+    LOG(ERROR) << "kAudioOutputUnitProperty_SetInputCallback: " << result;
+    HandleError(result);
+    return false;
+  }
+
+  callback.inputProc = OnGetPlayoutData;
+  callback.inputProcRefCon = this;
+  result = AudioUnitSetProperty(
+      audio_unit_, kAudioUnitProperty_SetRenderCallback, kAudioUnitScope_Input,
+      0, &callback, sizeof(callback));
+  if (result != noErr) {
+    LOG(ERROR) << "kAudioUnitProperty_SetRenderCallback: " << result;
     HandleError(result);
     return false;
   }
@@ -462,7 +555,9 @@ bool AUAudioInputStream::Open() {
   // TODO(henrika): perhaps add to UMA stat to track if this can happen.
   DLOG_IF(WARNING,
           input_device_format.mChannelsPerFrame != format_.mChannelsPerFrame)
-      << "AUHAL's audio converter must do channel conversion";
+      << "AUHAL's audio converter must do channel conversion "
+      << input_device_format.mChannelsPerFrame << " vs "
+      << format_.mChannelsPerFrame;
 
   // Set up the the desired (output) format.
   // For obtaining input from a device, the device format is always expressed
@@ -471,6 +566,16 @@ bool AUAudioInputStream::Open() {
                                 kAudioUnitScope_Output, 1, &format_,
                                 sizeof(format_));
   if (result != noErr) {
+    LOG(ERROR) << "kAudioUnitProperty_StreamFormat (1) " << result;
+    HandleError(result);
+    return false;
+  }
+
+  result =
+      AudioUnitSetProperty(audio_unit_, kAudioUnitProperty_StreamFormat,
+                           kAudioUnitScope_Input, 0, &format_, sizeof(format_));
+  if (result != noErr) {
+    LOG(ERROR) << "kAudioUnitProperty_StreamFormat (0)" << result;
     HandleError(result);
     return false;
   }
@@ -480,6 +585,8 @@ bool AUAudioInputStream::Open() {
   // it can produce in response to a single render call.
   result = AudioUnitInitialize(audio_unit_);
   if (result != noErr) {
+    // kAudioUnitErr_FailedInitialization == -10875
+    LOG(ERROR) << "AudioUnitInitialize: " << result;
     HandleError(result);
     return false;
   }
