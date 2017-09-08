@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4d54e233_3c945166",
+        "filename": "chrome/browser/extensions/unpacked_installer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-08T04:48:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38f81327_38f740ea",
+      "range": {
+        "startLine": 314,
+        "startChar": 0,
+        "endLine": 314,
+        "endChar": 46
+      },
+      "revId": "af10b4f05d1cf4d7f46f664df84285cc5fe342ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae29bf42_7a495d70",
         "filename": "extensions/common/file_util.h",
         "patchSetId": 19
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e1e28a9f_32d2b9b7",
+        "filename": "extensions/common/file_util.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-08T04:48:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae29bf42_7a495d70",
+      "range": {
+        "startLine": 159,
+        "startChar": 7,
+        "endLine": 159,
+        "endChar": 23
+      },
+      "revId": "af10b4f05d1cf4d7f46f664df84285cc5fe342ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52e0547d_56a6bd36",
         "filename": "extensions/common/file_util.h",
         "patchSetId": 19
@@ -68,6 +116,30 @@
       "revId": "af10b4f05d1cf4d7f46f664df84285cc5fe342ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc8bdb2_850cbfe8",
+        "filename": "extensions/common/file_util.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-08T04:48:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52e0547d_56a6bd36",
+      "range": {
+        "startLine": 160,
+        "startChar": 28,
+        "endLine": 160,
+        "endChar": 55
+      },
+      "revId": "af10b4f05d1cf4d7f46f664df84285cc5fe342ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
