@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35d0f204_a3245867",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T01:26:16Z",
+      "side": 1,
+      "message": "return node \u003d\u003d document) ||\n  FlatTreeTraversal::IsDescendant(*node, document);\n\nis simpler.",
+      "revId": "c1b9e014ec8d0bb04a13795dd8eb66aa399a2819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
