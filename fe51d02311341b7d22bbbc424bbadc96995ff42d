@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fa3fdb4_46782711",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-08T13:27:49Z",
+      "side": 1,
+      "message": "Should we use LocalFrame::IsMainFrame for this?",
+      "range": {
+        "startLine": 763,
+        "startChar": 22,
+        "endLine": 763,
+        "endChar": 36
+      },
+      "revId": "fe51d02311341b7d22bbbc424bbadc96995ff42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15bc249_8f383d23",
+        "filename": "third_party/WebKit/Source/platform/WebFrameScheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-08T13:27:49Z",
+      "side": 1,
+      "message": "nit: IsMainFrame for consistency with LocalFrame::IsMainFrame, same for the field name.",
+      "range": {
+        "startLine": 78,
+        "startChar": 15,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "fe51d02311341b7d22bbbc424bbadc96995ff42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
