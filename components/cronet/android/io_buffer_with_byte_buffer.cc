@@ -24,4 +24,15 @@ IOBufferWithByteBuffer::IOBufferWithByteBuffer(
 
 IOBufferWithByteBuffer::~IOBufferWithByteBuffer() {}
 
+ByteBufferWithIOBuffer::ByteBufferWithIOBuffer(JNIEnv* env,
+                                               net::IOBuffer* io_buffer,
+                                               int io_buffer_len)
+    : io_buffer_(io_buffer), io_buffer_len_(io_buffer_len) {
+  base::android::ScopedJavaLocalRef<jobject> java_buffer(
+      env, env->NewDirectByteBuffer(io_buffer_->data(), io_buffer_len_));
+  byte_buffer_.Reset(env, java_buffer.obj());
+}
+
+ByteBufferWithIOBuffer::~ByteBufferWithIOBuffer() {}
+
 }  // namespace cronet
