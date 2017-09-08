@@ -45,6 +45,30 @@
       "revId": "8524ee75de7ffca83aac7ca596bdb43e3068c574",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4ae2ad_245b6900",
+        "filename": "components/history/core/browser/top_sites_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-08T17:34:22Z",
+      "side": 1,
+      "message": "Sure thing. I\u0027ve changed this to a class and added state getters.",
+      "parentUuid": "d54552da_76124257",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 27
+      },
+      "revId": "8524ee75de7ffca83aac7ca596bdb43e3068c574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
