@@ -15,16 +15,13 @@ static_library("webdata_services") {
     "//components/autofill/core/browser",
     "//components/keyed_service/core",
     "//components/password_manager/core/browser",
+    "//components/payments/content:utils",
     "//components/search_engines",
     "//components/signin/core/browser",
     "//components/sync",
     "//components/webdata/common",
     "//sql",
   ]
-
-  if (is_android) {
-    deps += [ "//components/payments/android" ]
-  }
 }
 
 static_library("test_support") {
