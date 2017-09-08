@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aa939acf_5509c32e",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_selection.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-08T06:31:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c221c2ac_2a467755",
+      "revId": "27f3d964ddfd75d313a7a658beeeb7434fee8480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fed8fa0_379bd5dd",
         "filename": "ui/file_manager/file_manager/foreground/js/file_selection.js",
         "patchSetId": 9
