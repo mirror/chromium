@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66110705_6e110662",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-09-08T18:20:05Z",
+      "side": 1,
+      "message": "We could:\n- Improve the templating system to allow conditional setups\n- Write a hack to trick the current templating system into only setting up the appropriate error response (for example, capture CALLS in a string and then have some logic that examines that value)\n- Split this into three distinct tests\n\nWhat do you think would be best?",
+      "parentUuid": "bbf094f2_3e7d67d1",
+      "revId": "7d55af3e28ff6b9b41dd95aef1123799b1f534ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5f7fe5e_82b3e0bd",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "7d55af3e28ff6b9b41dd95aef1123799b1f534ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2407a19c_392a9f71",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-09-08T18:20:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5f7fe5e_82b3e0bd",
+      "range": {
+        "startLine": 10,
+        "startChar": 74,
+        "endLine": 10,
+        "endChar": 75
+      },
+      "revId": "7d55af3e28ff6b9b41dd95aef1123799b1f534ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -86,6 +128,30 @@
       "revId": "7d55af3e28ff6b9b41dd95aef1123799b1f534ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70cc1b17_834bb5d7",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/gatt-op-garbage-collection-ran-during-error.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-09-08T18:20:05Z",
+      "side": 1,
+      "message": "It crashes either way (doing garbage collection inside or outside the function) when I make that change.  I wouldn\u0027t expect the behavior to differ since the function doesn\u0027t return a promise.",
+      "parentUuid": "4c4dd513_15c76731",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "7d55af3e28ff6b9b41dd95aef1123799b1f534ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
