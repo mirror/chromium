@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "861b5185_f4e67d48",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-08T08:13:10Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of the shared, mutable, CodeConfig so in this CL it\u0027s no longer shared.",
+      "range": {
+        "startLine": 293,
+        "startChar": 42,
+        "endLine": 293,
+        "endChar": 53
+      },
+      "revId": "e921071b92f4a018808899f01e845a9193998b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b11ef3_34b23a00",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-08T08:13:10Z",
+      "side": 1,
+      "message": "Having a codec_ is the only thing we really care about. The terminal states now imply that codec_ is null and stays null. kInitializing is before we create a codec.",
+      "range": {
+        "startLine": 403,
+        "startChar": 7,
+        "endLine": 403,
+        "endChar": 13
+      },
+      "revId": "e921071b92f4a018808899f01e845a9193998b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28a338b_2543f28a",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-08T08:13:10Z",
+      "side": 1,
+      "message": "I should add a DCHECK that if codec_ is null, then released_cb is also null.",
+      "range": {
+        "startLine": 613,
+        "startChar": 62,
+        "endLine": 613,
+        "endChar": 73
+      },
+      "revId": "e921071b92f4a018808899f01e845a9193998b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "893f0d17_f69a7b01",
+        "filename": "media/gpu/android/media_codec_video_decoder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-08T08:13:10Z",
+      "side": 1,
+      "message": "Threading the surface_bundle all the way through lets us check whether the target surface has changed since we called CreateCodec.",
+      "range": {
+        "startLine": 132,
+        "startChar": 39,
+        "endLine": 132,
+        "endChar": 53
+      },
+      "revId": "e921071b92f4a018808899f01e845a9193998b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
