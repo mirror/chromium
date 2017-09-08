@@ -17,7 +17,7 @@ ServiceWorkerScriptURLLoader::ServiceWorkerScriptURLLoader(
     uint32_t options,
     const ResourceRequest& resource_request,
     mojom::URLLoaderClientPtr client,
-    scoped_refptr<ServiceWorkerVersion> version,
+    base::WeakPtr<ServiceWorkerVersion> version,
     scoped_refptr<URLLoaderFactoryGetter> loader_factory_getter,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation)
     : network_client_binding_(this),
@@ -45,7 +45,7 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
     const ResourceResponseHead& response_head,
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
-  if (!version_->context() || version_->is_redundant()) {
+  if (!version_ || !version_->context() || version_->is_redundant()) {
     OnComplete(ResourceRequestCompletionStatus(net::ERR_FAILED));
     return;
   }

@@ -412,6 +412,8 @@ class CONTENT_EXPORT ServiceWorkerVersion
 
   static bool IsInstalled(ServiceWorkerVersion::Status status);
 
+  base::WeakPtr<ServiceWorkerVersion> AsWeakPtr();
+
  private:
   friend class base::RefCounted<ServiceWorkerVersion>;
   friend class ServiceWorkerReadFromCacheJobTest;
