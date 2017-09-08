@@ -16,6 +16,24 @@
       "revId": "c140122fb39c4dd81d7858f025ea29a81e73ffc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de4e055_9327ac84",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-08T01:14:07Z",
+      "side": 1,
+      "message": "Why can\u0027t we just use part of the buffer_to_target matrix from above instead? I was thinking that this would allow use to reduce all the code in the !state_.crop.IsEmpty() case to one or two lines.",
+      "parentUuid": "fe0ad7fc_f966a85f",
+      "revId": "c140122fb39c4dd81d7858f025ea29a81e73ffc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
