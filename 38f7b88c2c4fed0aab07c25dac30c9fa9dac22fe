@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "b75393c9_3edc02e5",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-08T23:41:08Z",
+      "side": 1,
+      "message": "so can we limit the Deactivate() call to when the widget was not active when entering system modal mode? An active window losing focus when entering+leaving system modal state seems like a bad regression..",
+      "parentUuid": "5510f50b_77245491",
+      "range": {
+        "startLine": 555,
+        "startChar": 4,
+        "endLine": 558,
+        "endChar": 5
+      },
+      "revId": "38f7b88c2c4fed0aab07c25dac30c9fa9dac22fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bc6b294_20b01729",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 2
@@ -227,6 +251,30 @@
       "side": 1,
       "message": "What I\u0027m going to do is to separate modal dialog window and no modal system window. Non modal system window should be added to other container (probably overlay/popup/always on top), and act like normal window except that it\u0027s above normal windows. This is necessary to run multiple apps that uses system window and activate them separately.",
       "parentUuid": "96935ce5_48e5d2a7",
+      "range": {
+        "startLine": 790,
+        "startChar": 13,
+        "endLine": 792,
+        "endChar": 24
+      },
+      "revId": "38f7b88c2c4fed0aab07c25dac30c9fa9dac22fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800957e8_16c1edff",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-08T23:41:08Z",
+      "side": 1,
+      "message": "Two different top-level shell surface for this sgtm. Getting rid of the dynamic system modal handling would be really nice.",
+      "parentUuid": "8b0b4eea_0d71be0f",
       "range": {
         "startLine": 790,
         "startChar": 13,
