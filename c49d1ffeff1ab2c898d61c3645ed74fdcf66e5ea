@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2205d5c_57488337",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-08T09:11:49Z",
+      "side": 1,
+      "message": "TBH, this \"if\" if pretty hard to understand for someone who\u0027s not into the new signin promos. If you want to keep the condition here, please rename onPromoDestroyed to something narrower. I would prefer adding a flag to SigninPromoController and checking it in onPromoDestroyed, though.",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 61
+      },
+      "revId": "c49d1ffeff1ab2c898d61c3645ed74fdcf66e5ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
