@@ -97,8 +97,12 @@ class FrameTreeNode::OpenerDestroyedObserver : public FrameTreeNode::Observer {
   // FrameTreeNode::Observer
   void OnFrameTreeNodeDestroyed(FrameTreeNode* node) override {
     if (observing_original_opener_) {
+      // The "original owner" is special. It's used for attribution, and clients
+      // walk down the original owner chain. Therefore, if a link in the chain
+      // is being destroyed, reconnect the observation to the parent of the link
+      // being destroyed.
       CHECK_EQ(owner_->original_opener(), node);
-      owner_->SetOriginalOpener(nullptr);
+      owner_->SetOriginalOpener(node->original_opener());
     } else {
       CHECK_EQ(owner_->opener(), node);
       owner_->SetOpener(nullptr);
