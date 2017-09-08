@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9e91a34_024058c3",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T03:44:24Z",
+      "side": 1,
+      "message": "Same as comment of L354.",
+      "revId": "13d889cc07dcb8f3c6dd8124aec36e7e87492f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcdfc275_0087842a",
+        "filename": "third_party/WebKit/Source/core/editing/Position.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-08T03:44:24Z",
+      "side": 1,
+      "message": "Sorry, my brain is broken...\n\nLet\u0027s use position.anchorNode() instead of ComputeContainerNode().\nSee also http://crrev.com/c/644518\n\nWhen anchorNode()-\u003eIsConnected() \u003d\u003d true\nanchorNode()-\u003eparenNode().IsConnected() \u003d\u003d true\nNote: COmputeContanerNode() is anchorNode or anchorNode-\u003eparentNode()\n\nWhen anchorNode()-\u003eIsConnected() \u003d\u003d false\nanchorNode()-\u003eparentNode()-\u003eIsConnected() \u003d\u003d false\nor\nanchorNode()-\u003eparentNode() \u003d\u003d nullptr\n\nWhen position.IsNull() \u003d\u003d false, anchorNode() !\u003d nullptr.",
+      "revId": "13d889cc07dcb8f3c6dd8124aec36e7e87492f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
