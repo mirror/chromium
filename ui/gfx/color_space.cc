@@ -660,11 +660,9 @@ bool ColorSpace::GetTransferFunction(SkColorSpaceTransferFn* fn) const {
     case ColorSpace::TransferID::SMPTE170M:
     case ColorSpace::TransferID::BT2020_10:
     case ColorSpace::TransferID::BT2020_12:
-      fn->fA = 0.909672431050f;
-      fn->fB = 0.090327568950f;
-      fn->fC = 0.222222222222f;
-      fn->fD = 0.081242862158f;
-      fn->fG = 2.222222222222f;
+      // A gamma of 1.961 matches ffmpeg and macOS.
+      // https://crbug.com/763260
+      fn->fG = 1.961f;
       return true;
     case ColorSpace::TransferID::SMPTE240M:
       fn->fA = 0.899626676224f;

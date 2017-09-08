@@ -113,13 +113,14 @@ TEST(SimpleColorSpace, TransferFnCancel) {
   ColorSpace gamma24(primary, ColorSpace::TransferID::GAMMA24, matrix, range);
 
   // BT709 source is common for video and sRGB destination is common for
-  // monitors. The two transfer functions are very close, and should cancel
-  // out (so the transfer between them should be the identity). This particular
-  // case is important for power reasons.
+  // monitors. While some sources suggest to optimize this case by making the
+  // transfer functions the same, this results in dark shades appearing brighter
+  // than they do in other browsers and video renderers.
+  // https://crbug.com/763260
   std::unique_ptr<ColorTransform> bt709_to_srgb(
       ColorTransform::NewColorTransform(
           bt709, srgb, ColorTransform::Intent::INTENT_PERCEPTUAL));
-  EXPECT_EQ(bt709_to_srgb->NumberOfStepsForTesting(), 0u);
+  EXPECT_EQ(bt709_to_srgb->NumberOfStepsForTesting(), 2u);
 
   // Gamma 2.8 isn't even close to BT709 and won't cancel out (so we will have
   // two steps in the transform -- to-linear and from-linear).
@@ -448,9 +449,7 @@ TEST(SimpleColorSpace, MAYBE_SampleShaderSource) {
           ->GetShaderSource();
   std::string expected =
       "float TransferFn1(float v) {\n"
-      "  if (v < 8.12428594e-02)\n"
-      "    return 2.22222224e-01 * v;\n"
-      "  return pow(9.09672439e-01 * v + 9.03275684e-02, 2.22222233e+00);\n"
+      "  return pow(v, 1.96099997e+00);\n"
       "}\n"
       "float TransferFn3(float v) {\n"
       "  return pow(v, 3.57142866e-01);\n"
