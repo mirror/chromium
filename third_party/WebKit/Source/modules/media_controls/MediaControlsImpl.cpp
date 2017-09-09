@@ -586,6 +586,7 @@ void MediaControlsImpl::MaybeShow() {
 void MediaControlsImpl::Hide() {
   panel_->SetIsWanted(false);
   panel_->SetIsDisplayed(false);
+  ShowCursor();
   if (overlay_play_button_)
     overlay_play_button_->SetIsWanted(false);
   if (download_iph_manager_)
@@ -597,10 +598,14 @@ bool MediaControlsImpl::IsVisible() const {
 }
 
 void MediaControlsImpl::MakeOpaque() {
+  ShowCursor();
   panel_->MakeOpaque();
 }
 
 void MediaControlsImpl::MakeTransparent() {
+  // Only hide the cursor if the controls are enabled.
+  if (panel_->IsWanted())
+    HideCursor();
   panel_->MakeTransparent();
 }
 
@@ -905,6 +910,14 @@ void MediaControlsImpl::ResetHideMediaControlsTimer() {
   StopHideMediaControlsTimer();
   if (!MediaElement().paused())
     StartHideMediaControlsTimer();
+}
+
+void MediaControlsImpl::HideCursor() {
+  SetInlineStyleProperty(CSSPropertyCursor, "none", false);
+}
+
+void MediaControlsImpl::ShowCursor() {
+  RemoveInlineStyleProperty(CSSPropertyCursor);
 }
 
 bool MediaControlsImpl::ContainsRelatedTarget(Event* event) {

@@ -959,6 +959,13 @@ class MediaControlsImplTestWithMockScheduler : public MediaControlsImplTest {
     MediaControlsImplTest::SetUp();
   }
 
+  bool IsCursorHidden() {
+    const StylePropertySet* style = MediaControls().InlineStyle();
+    if (!style)
+      return false;
+    return style->GetPropertyValue(CSSPropertyCursor) == "none";
+  }
+
   ScopedTestingPlatformSupport<TestingPlatformSupportWithMockScheduler>
       platform_;
 };
@@ -998,6 +1005,32 @@ TEST_F(MediaControlsImplTestWithMockScheduler,
   // Once user interaction stops, controls can hide.
   platform_->RunForPeriodSeconds(2);
   EXPECT_FALSE(IsElementVisible(*panel));
+}
+
+TEST_F(MediaControlsImplTestWithMockScheduler, CursorHidesWhenControlsHide) {
+  EnsureSizing();
+
+  MediaControls().MediaElement().SetBooleanAttribute(HTMLNames::controlsAttr,
+                                                     true);
+  MediaControls().MediaElement().SetSrc("http://example.com");
+  MediaControls().MediaElement().Play();
+
+  // Show the controls, so the cursor is not hidden.
+  MediaControls().DispatchEvent(Event::Create("focusin"));
+  EXPECT_FALSE(IsCursorHidden());
+
+  // Once the controls hide, the cursor is hidden.
+  platform_->RunForPeriodSeconds(4);
+  EXPECT_TRUE(IsCursorHidden());
+
+  // If the mouse moves, the controls are shown and the cursor is no longer
+  // hidden.
+  MediaControls().DispatchEvent(Event::Create("pointermove"));
+  EXPECT_FALSE(IsCursorHidden());
+
+  // Once the controls hide again, the cursor is hidden again.
+  platform_->RunForPeriodSeconds(4);
+  EXPECT_TRUE(IsCursorHidden());
 }
 
 TEST_F(MediaControlsImplTest,
