@@ -598,7 +598,8 @@ cr.define('print_preview', function() {
         assert(
             destination.id ==
             print_preview.Destination.GooglePromotedId.SAVE_AS_PDF);
-        // Save as PDF resolves when file selection is completed or cancelled.
+        // Save as PDF resolves when PDF is saved or file selection is
+        // cancelled.
         whenPrintDone.then(
             this.close_.bind(this, false),
             this.onFileSelectionCancel_.bind(this));
