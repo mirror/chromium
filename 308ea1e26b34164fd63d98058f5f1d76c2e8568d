@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81a27fea_1f9d8ce8",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-09T00:20:47Z",
+      "side": 1,
+      "message": "nit: drop the ()s",
+      "revId": "308ea1e26b34164fd63d98058f5f1d76c2e8568d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4716cbd6_10bd0d96",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-09T00:20:47Z",
+      "side": 1,
+      "message": "Why is this here?",
+      "revId": "308ea1e26b34164fd63d98058f5f1d76c2e8568d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ef9371_ac755c12",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-09T00:20:47Z",
+      "side": 1,
+      "message": "I\u0027m guessing since this script exists, that the two APKs were built with separate GN args, or at different times. In this case the output directory passed to resource_sizes.py will be invalid for one of the two apks. \n\nIt would probably be better to run resource_sizes.py immediately after building each of them, and then pass the chartjson files to this script.\n\nIf you really want to pass it apks, then you could also consider creating a --no-chromium-output-directory flag for resource_sizes, and have it skip any steps that rely on an output directory when present (most things don\u0027t need an output directory).",
+      "revId": "308ea1e26b34164fd63d98058f5f1d76c2e8568d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8abc05_06fb5d8e",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-09T00:20:47Z",
+      "side": 1,
+      "message": "nit: these lines are a bit hard to read. you should build them up with multiple statements",
+      "revId": "308ea1e26b34164fd63d98058f5f1d76c2e8568d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0bd738_f88170c1",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-09T00:20:47Z",
+      "side": 1,
+      "message": "Why not use ExtractSettingsFromJson() here?",
+      "revId": "308ea1e26b34164fd63d98058f5f1d76c2e8568d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
