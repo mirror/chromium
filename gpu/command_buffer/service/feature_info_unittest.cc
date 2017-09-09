@@ -1647,5 +1647,10 @@ TEST_P(FeatureInfoTest, InitializeCHROMIUM_ycbcr_422_imageTrue) {
   EXPECT_TRUE(info_->feature_flags().chromium_image_ycbcr_422);
 }
 
+TEST_P(FeatureInfoTest, Initialize_texture_npotTrue) {
+  SetupInitExpectations("GL_OES_texture_npot");
+  EXPECT_TRUE(info_->feature_flags().texture_npot);
+}
+
 }  // namespace gles2
 }  // namespace gpu

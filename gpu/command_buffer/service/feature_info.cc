@@ -1616,6 +1616,11 @@ void FeatureInfo::InitializeFloatAndHalfFloatFeatures(
           GL_LUMINANCE_ALPHA16F_EXT);
     }
   }
+
+  if (gl_version_info_->is_es3 || gl_version_info_->is_desktop_core_profile ||
+      gl::HasExtension(extensions, "GL_OES_texture_npot")) {
+    feature_flags_.texture_npot = true;
+  }
 }
 
 bool FeatureInfo::IsES3Capable() const {
