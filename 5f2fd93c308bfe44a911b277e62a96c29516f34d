@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88db13d6_dd476443",
+        "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-09T00:56:27Z",
+      "side": 1,
+      "message": "LMK if theres any point when this or same on l.25 are expected to be null.",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 18
+      },
+      "revId": "5f2fd93c308bfe44a911b277e62a96c29516f34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
