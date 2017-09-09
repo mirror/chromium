@@ -14,11 +14,11 @@
 #include "chrome/browser/vr/elements/exclusive_screen_toast.h"
 #include "chrome/browser/vr/elements/exit_prompt.h"
 #include "chrome/browser/vr/elements/exit_prompt_backplane.h"
+#include "chrome/browser/vr/elements/full_screen_rect.h"
 #include "chrome/browser/vr/elements/grid.h"
 #include "chrome/browser/vr/elements/linear_layout.h"
 #include "chrome/browser/vr/elements/loading_indicator.h"
 #include "chrome/browser/vr/elements/rect.h"
-#include "chrome/browser/vr/elements/screen_dimmer.h"
 #include "chrome/browser/vr/elements/system_indicator.h"
 #include "chrome/browser/vr/elements/text.h"
 #include "chrome/browser/vr/elements/ui_element.h"
@@ -158,53 +158,9 @@ static constexpr float kUnderDevelopmentNoticeRotationRad = -0.19;
 // adjusted.
 static constexpr float kContentBoundsPropagationThreshold = 0.2f;
 
-}  // namespace
+static constexpr float kScreenDimmerOpacity = 0.9f;
 
-// The scene manager creates and maintains UiElements that form the following
-// hierarchy.
-//
-// kRoot
-//   k2dBrowsingRoot
-//     k2dBrowsingBackground
-//       kBackgroundLeft
-//       kBackgroundRight
-//       kBackgroundTop
-//       kBackgroundBottom
-//       kBackgroundFront
-//       kBackgroundBack
-//       kFloor
-//       kCeiling
-//     k2dBrowsingForeground
-//       kContentQuad
-//         kBackplane
-//         kIndicatorLayout
-//           kAudioCaptureIndicator
-//           kVideoCaptureIndicator
-//           kScreenCaptureIndicator
-//           kLocationAccessIndicator
-//           kBluetoothConnectedIndicator
-//           kLoadingIndicator
-//         kExitPrompt
-//           kExitPromptBackplane
-//       kCloseButton
-//       kUrlBar
-//         kLoadingIndicator
-//         kExitButton
-//     kFullscreenToast
-//     kScreenDimmer
-//     k2dBrowsingViewportAwareRoot
-//       kExitWarning
-//   kWebVrRoot
-//     kWebVrContent
-//     kWebVrViewportAwareRoot
-//       kSplashScreenText
-//       kWebVrPresentationToast
-//       kWebVrPermanentHttpSecurityWarning
-//       kWebVrTransientHttpSecurityWarning
-//       kWebVrUrlToast
-//
-// TODO(vollick): The above hierarchy is complex, brittle, and would be easier
-// to manage if it were specified in a declarative format.
+}  // namespace
 
 UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
                                UiScene* scene,
@@ -283,13 +239,15 @@ void UiSceneManager::CreateWebVrRoot() {
 }
 
 void UiSceneManager::CreateScreenDimmer() {
-  std::unique_ptr<UiElement> element;
-  element = base::MakeUnique<ScreenDimmer>();
+  auto element = base::MakeUnique<FullScreenRect>();
   element->set_name(kScreenDimmer);
   element->set_draw_phase(kPhaseForeground);
   element->SetVisible(false);
   element->set_hit_testable(false);
   element->set_is_overlay(true);
+  element->SetOpacity(kScreenDimmerOpacity);
+  element->SetCenterColor(color_scheme().dimmer_inner);
+  element->SetEdgeColor(color_scheme().dimmer_outer);
   screen_dimmer_ = element.get();
   scene_->AddUiElement(k2dBrowsingRoot, std::move(element));
 }
@@ -430,8 +388,18 @@ void UiSceneManager::CreateSplashScreen() {
   text->SetSize(kSplashScreenTextWidthM, kSplashScreenTextHeightM);
   text->SetTranslate(0, kSplashScreenTextVerticalOffset,
                      -kSplashScreenTextDistance);
+  text->set_is_overlay(true);
   splash_screen_text_ = text.get();
   scene_->AddUiElement(kWebVrViewportAwareRoot, std::move(text));
+
+  auto bg = base::MakeUnique<FullScreenRect>();
+  bg->set_name(kSplashScreenBackground);
+  bg->set_draw_phase(kPhaseForeground);
+  bg->SetVisible(true);
+  bg->set_hit_testable(false);
+  bg->SetCenterColor(color_scheme().splash_screen_background);
+  bg->SetEdgeColor(color_scheme().splash_screen_background);
+  scene_->AddUiElement(kSplashScreenText, std::move(bg));
 }
 
 void UiSceneManager::CreateUnderDevelopmentNotice() {
@@ -823,13 +791,8 @@ void UiSceneManager::ConfigureBackgroundColor() {
   // TODO(vollick): it would be nice if ceiling, floor and the grid were
   // UiElement subclasses and could respond to the OnSetMode signal.
   for (Rect* panel : background_panels_) {
-    if (showing_web_vr_splash_screen_) {
-      panel->SetCenterColor(color_scheme().splash_screen_background);
-      panel->SetEdgeColor(color_scheme().splash_screen_background);
-    } else {
-      panel->SetCenterColor(color_scheme().world_background);
-      panel->SetEdgeColor(color_scheme().world_background);
-    }
+    panel->SetCenterColor(color_scheme().world_background);
+    panel->SetEdgeColor(color_scheme().world_background);
   }
   ceiling_->SetCenterColor(color_scheme().ceiling);
   ceiling_->SetEdgeColor(color_scheme().world_background);

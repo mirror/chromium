@@ -31,6 +31,7 @@ class UiScene;
 class UrlBar;
 class ExitPrompt;
 
+// The scene manager creates and maintains a UiElement hierarchy.
 class UiSceneManager {
  public:
   UiSceneManager(UiBrowserInterface* browser,
