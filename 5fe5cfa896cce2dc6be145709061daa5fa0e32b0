@@ -22,6 +22,30 @@
       "revId": "5fe5cfa896cce2dc6be145709061daa5fa0e32b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ba4720_631bd081",
+        "filename": "ios/chrome/browser/web/repost_form_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-09T17:13:05Z",
+      "side": 1,
+      "message": "In this case |repostFormTabHelperDismissRepostFormDialog:| will be called even if the dialog was not requested, which seems like a logical error to me. I think it is better when model requests something (like presenting UI) only when it\u0027s actually needed.",
+      "parentUuid": "cd6f88b1_c75d71c8",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 27
+      },
+      "revId": "5fe5cfa896cce2dc6be145709061daa5fa0e32b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
