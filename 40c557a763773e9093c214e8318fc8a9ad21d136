@@ -16,6 +16,24 @@
       "revId": "40c557a763773e9093c214e8318fc8a9ad21d136",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46779092_d9d43a92",
+        "filename": "components/nacl/loader/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1171009
+      },
+      "writtenOn": "2017-09-09T17:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b41d4ed_28fbab56",
+      "revId": "40c557a763773e9093c214e8318fc8a9ad21d136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
