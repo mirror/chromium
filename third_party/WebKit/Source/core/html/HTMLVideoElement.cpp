@@ -516,12 +516,22 @@ void HTMLVideoElement::MediaRemotingStarted(
 }
 
 void HTMLVideoElement::MediaRemotingStopped() {
-  DCHECK(media_remoting_status_ == MediaRemotingStatus::kDisabled ||
-         media_remoting_status_ == MediaRemotingStatus::kStarted);
-  if (media_remoting_status_ != MediaRemotingStatus::kDisabled)
+  if (media_remoting_status_ == MediaRemotingStatus::kNotStarted)
+    return;
+  // The |kDisabled| status indicates that media remoting was already ended and
+  // therefore there is no need to hide the interstitial again.
+  if (media_remoting_status_ != MediaRemotingStatus::kDisabled) {
+    DCHECK(remoting_interstitial_);
+    remoting_interstitial_->Hide();
+  }
+
+  // Updates the status. When status is |kDisabled|, this can only be called by
+  // WMPI destructor. In this case, resets the status to |kNotStarted| to allow
+  // media remoting for the new source.
+  if (media_remoting_status_ == MediaRemotingStatus::kDisabling)
+    media_remoting_status_ = MediaRemotingStatus::kDisabled;
+  else
     media_remoting_status_ = MediaRemotingStatus::kNotStarted;
-  DCHECK(remoting_interstitial_);
-  remoting_interstitial_->Hide();
 }
 
 WebMediaPlayer::DisplayType HTMLVideoElement::DisplayType() const {
@@ -531,7 +541,7 @@ WebMediaPlayer::DisplayType HTMLVideoElement::DisplayType() const {
 }
 
 void HTMLVideoElement::DisableMediaRemoting() {
-  media_remoting_status_ = MediaRemotingStatus::kDisabled;
+  media_remoting_status_ = MediaRemotingStatus::kDisabling;
   if (GetWebMediaPlayer())
     GetWebMediaPlayer()->RequestRemotePlaybackDisabled(true);
 }

@@ -343,6 +343,9 @@ WebMediaPlayerImpl::~WebMediaPlayerImpl() {
   // Destruct compositor resources in the proper order.
   client_->SetWebLayer(nullptr);
 
+  // Clears the remoting UI and updates the remoting status.
+  client_->MediaRemotingStopped();
+
   if (!surface_layer_for_video_enabled_ && video_weblayer_) {
     static_cast<cc::VideoLayer*>(video_weblayer_->layer())->StopUsingProvider();
   }

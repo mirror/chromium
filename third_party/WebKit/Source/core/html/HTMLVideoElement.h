@@ -55,7 +55,12 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
 
   bool HasPendingActivity() const final;
 
-  enum class MediaRemotingStatus { kNotStarted, kStarted, kDisabled };
+  enum class MediaRemotingStatus {
+    kNotStarted,  // Not in media remoting.
+    kStarted,     // Media remoting is ongoing.
+    kDisabling,  // Media remoting is disabled while ongoing and will stop soon.
+    kDisabled    // Not in media remoting and media remoting is disabled.
+  };
 
   // Node override.
   Node::InsertionNotificationRequest InsertedInto(ContainerNode*) override;
