@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25ffbf2c_0c63a294",
+        "filename": "third_party/WebKit/Source/core/dom/events/MediaElementEventQueue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-09T00:42:51Z",
+      "side": 1,
+      "message": "Drop explicit.",
+      "revId": "a742a74eed2ab01921e90dcd22007cb2c60ce020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
