@@ -1421,6 +1421,7 @@ interface DetectedFace
 interface DetectedText
     attribute @@toStringTag
     getter boundingBox
+    getter cornerPoints
     getter rawValue
     method constructor
 interface DeviceMotionEvent : Event
