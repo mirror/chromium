@@ -54,11 +54,24 @@ class ArcPowerBridge : public KeyedService,
   // mojom::PowerHost overrides.
   void OnAcquireDisplayWakeLock(mojom::DisplayWakeLockType type) override;
   void OnReleaseDisplayWakeLock(mojom::DisplayWakeLockType type) override;
+  void OnAcquirePartialWakeLock() override;
+  void OnReleasePartialWakeLock() override;
   void IsDisplayOn(const IsDisplayOnCallback& callback) override;
   void OnScreenBrightnessUpdateRequest(double percent) override;
 
  private:
-  void ReleaseAllDisplayWakeLocks();
+  enum class WakeLockType : int32_t {
+    FULL_WAKE_LOCK_BRIGHT,
+    FULL_WAKE_LOCK_DIM,
+    PARTIAL_WAKE_LOCK,
+  };
+  struct WakeLockInfo {
+    int wake_lock_id;
+    uint32_t wake_lock_count;
+  };
+  void AcquireWakeLockInternal(WakeLockType type);
+  void ReleaseWakeLockInternal(WakeLockType type);
+  void ReleaseAllWakeLocks();
   void UpdateAndroidScreenBrightness(double percent);
 
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
@@ -66,7 +79,7 @@ class ArcPowerBridge : public KeyedService,
 
   // Stores a mapping of type -> wake lock ID for all wake locks
   // held by ARC.
-  std::multimap<mojom::DisplayWakeLockType, int> wake_locks_;
+  std::multimap<WakeLockType, WakeLockInfo> wake_locks_;
 
   // Last time that the power manager notified about a brightness change.
   base::TimeTicks last_brightness_changed_time_;
