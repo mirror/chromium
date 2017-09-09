@@ -228,17 +228,17 @@ StyleRuleBase* CSSParserImpl::ParseRule(const String& string,
   CSSTokenizer tokenizer(string);
   CSSParserTokenStream stream(tokenizer);
   stream.ConsumeWhitespace();
-  if (stream.AtEnd())
+  if (stream.UncheckedAtEnd())
     return nullptr;  // Parse error, empty rule
   StyleRuleBase* rule;
-  if (stream.Peek().GetType() == kAtKeywordToken)
+  if (stream.UncheckedPeek().GetType() == kAtKeywordToken)
     rule = parser.ConsumeAtRule(stream, allowed_rules);
   else
     rule = parser.ConsumeQualifiedRule(stream, allowed_rules);
   if (!rule)
     return nullptr;  // Parse error, failed to consume rule
   stream.ConsumeWhitespace();
-  if (!rule || !stream.AtEnd())
+  if (!rule || !stream.UncheckedAtEnd())
     return nullptr;  // Parse error, trailing garbage
   return rule;
 }
@@ -521,7 +521,7 @@ StyleRuleBase* CSSParserImpl::ConsumeAtRule(CSSParserTokenStream& stream,
   stream.EnsureLookAhead();
   const auto prelude_start = stream.Position();
   const size_t prelude_offset_start = stream.LookAheadOffset();
-  while (!stream.AtEnd() &&
+  while (!stream.UncheckedAtEnd() &&
          stream.UncheckedPeek().GetType() != kLeftBraceToken &&
          stream.UncheckedPeek().GetType() != kSemicolonToken)
     stream.UncheckedConsumeComponentValue();
@@ -533,8 +533,8 @@ StyleRuleBase* CSSParserImpl::ConsumeAtRule(CSSParserTokenStream& stream,
   if (id != kCSSAtRuleInvalid && context_->IsUseCounterRecordingEnabled())
     CountAtRule(context_, id);
 
-  if (stream.AtEnd() || stream.Peek().GetType() == kSemicolonToken) {
-    stream.Consume();
+  if (stream.AtEnd() || stream.UncheckedPeek().GetType() == kSemicolonToken) {
+    stream.UncheckedConsume();
     if (allowed_rules == kAllowCharsetRules && id == kCSSAtRuleCharset)
       return ConsumeCharsetRule(prelude);
     if (allowed_rules <= kAllowImportRules && id == kCSSAtRuleImport) {
@@ -592,19 +592,19 @@ StyleRuleBase* CSSParserImpl::ConsumeQualifiedRule(
     // needs them in ObserveSelectors. We can get rid of this by making
     // ConsumeStyleRule parse the prelude in a streaming fashion.
     observer_wrapper_->StartConstruction();
-    while (!stream.AtEnd() &&
+    while (!stream.UncheckedAtEnd() &&
            stream.UncheckedPeek().GetType() != kLeftBraceToken)
       stream.UncheckedConsumeComponentValueWithOffsets(*observer_wrapper_);
     // We want the offset of the kLeftBraceToken, which is peeked but not
     // consumed.
     observer_wrapper_->AddToken(stream.LookAheadOffset());
   } else {
-    while (!stream.AtEnd() &&
+    while (!stream.UncheckedAtEnd() &&
            stream.UncheckedPeek().GetType() != kLeftBraceToken)
       stream.UncheckedConsumeComponentValue();
   }
 
-  if (stream.AtEnd())
+  if (stream.UncheckedAtEnd())
     return nullptr;  // Parse error, EOF instead of qualified rule block
 
   CSSParserTokenRange prelude =
@@ -965,7 +965,7 @@ void CSSParserImpl::ConsumeDeclarationList(CSSParserTokenStream& stream,
       case kIdentToken: {
         const size_t decl_offset_start = stream.Offset();
         const auto declaration_start = stream.Position();
-        while (!stream.AtEnd() &&
+        while (!stream.UncheckedAtEnd() &&
                stream.UncheckedPeek().GetType() != kSemicolonToken) {
           stream.UncheckedConsumeComponentValue();
         }
@@ -996,12 +996,12 @@ void CSSParserImpl::ConsumeDeclarationList(CSSParserTokenStream& stream,
         break;
       }
       default:
-        while (!stream.AtEnd() &&
+        while (!stream.UncheckedAtEnd() &&
                stream.UncheckedPeek().GetType() != kSemicolonToken) {
           stream.UncheckedConsumeComponentValue();
         }
 
-        if (!stream.AtEnd())
+        if (!stream.UncheckedAtEnd())
           stream.UncheckedConsume();  // kSemicolonToken
 
         break;

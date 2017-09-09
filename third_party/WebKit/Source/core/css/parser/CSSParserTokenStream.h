@@ -58,44 +58,45 @@ class CORE_EXPORT CSSParserTokenStream {
 
   CSSParserTokenStream(CSSParserTokenStream&&) = default;
 
-  void EnsureLookAhead() {
-    if (!HasLookAhead()) {
+  inline void EnsureLookAhead() {
+    if (!has_look_ahead_) {
       has_look_ahead_ = true;
       next_ = tokenizer_.TokenizeSingle();
     }
   }
 
-  bool HasLookAhead() const { return has_look_ahead_; }
+  inline bool HasLookAhead() const { return has_look_ahead_; }
 
-  const CSSParserToken& Peek() {
-    const CSSParserToken& token = PeekInternal();
-    if (token.GetBlockType() == CSSParserToken::kBlockEnd)
-      return g_static_eof_token;
-    return token;
+  inline const CSSParserToken& Peek() {
+    EnsureLookAhead();
+    return next_;
   }
 
-  const CSSParserToken& UncheckedPeek() {
-    const CSSParserToken& token = UncheckedPeekInternal();
-    if (token.GetBlockType() == CSSParserToken::kBlockEnd)
-      return g_static_eof_token;
-    return token;
+  inline const CSSParserToken& UncheckedPeek() { return next_; }
+
+  inline const CSSParserToken& Consume() {
+    EnsureLookAhead();
+    has_look_ahead_ = false;
+    next_index_++;
+    offset_ = tokenizer_.Offset();
+    return next_;
   }
 
-  const CSSParserToken& Consume() {
-    const CSSParserToken& token = ConsumeInternal();
-    DCHECK_NE(token.GetBlockType(), CSSParserToken::kBlockStart);
-    DCHECK(!HasLookAhead());
-    return token;
+  inline const CSSParserToken& UncheckedConsume() {
+    has_look_ahead_ = false;
+    next_index_++;
+    offset_ = tokenizer_.Offset();
+    return next_;
   }
 
-  const CSSParserToken& UncheckedConsume() {
-    const CSSParserToken& token = UncheckedConsumeInternal();
-    DCHECK_NE(token.GetBlockType(), CSSParserToken::kBlockStart);
-    DCHECK(!HasLookAhead());
-    return token;
+  inline bool AtEnd() {
+    EnsureLookAhead();
+    return next_.IsEOF() || next_.GetBlockType() == CSSParserToken::kBlockEnd;
   }
 
-  bool AtEnd() { return Peek().IsEOF(); }
+  inline bool UncheckedAtEnd() {
+    return next_.IsEOF() || next_.GetBlockType() == CSSParserToken::kBlockEnd;
+  }
 
   // Range represents all tokens that were consumed between begin and end.
   CSSParserTokenRange MakeSubRange(Iterator begin, Iterator end) {

@@ -44,7 +44,7 @@ void CSSParserTokenStream::UncheckedConsumeComponentValue(
       nesting_level++;
     else if (token.GetBlockType() == CSSParserToken::kBlockEnd)
       nesting_level--;
-  } while (nesting_level && !PeekInternal().IsEOF());
+  } while (!PeekInternal().IsEOF() && nesting_level);
 }
 
 void CSSParserTokenStream::UncheckedConsumeComponentValueWithOffsets(
@@ -61,7 +61,7 @@ void CSSParserTokenStream::UncheckedConsumeComponentValueWithOffsets(
       nesting_level++;
     else if (token.GetBlockType() == CSSParserToken::kBlockEnd)
       nesting_level--;
-  } while (nesting_level && !PeekInternal().IsEOF());
+  } while (!PeekInternal().IsEOF() && nesting_level);
 }
 
 }  // namespace blink
