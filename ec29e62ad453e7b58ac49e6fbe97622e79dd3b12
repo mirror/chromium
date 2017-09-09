@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "355c1b12_52c545c1",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-09T01:10:45Z",
+      "side": 1,
+      "message": "document",
+      "revId": "ec29e62ad453e7b58ac49e6fbe97622e79dd3b12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
