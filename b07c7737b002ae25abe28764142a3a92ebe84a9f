@@ -16,6 +16,24 @@
       "revId": "b07c7737b002ae25abe28764142a3a92ebe84a9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316be035_c6bf25c7",
+        "filename": "ios/chrome/test/earl_grey/device_check_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-09-09T00:35:56Z",
+      "side": 1,
+      "message": "You are right! Added TODO in patch #4.",
+      "parentUuid": "6b48bb31_868df7ed",
+      "revId": "b07c7737b002ae25abe28764142a3a92ebe84a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
