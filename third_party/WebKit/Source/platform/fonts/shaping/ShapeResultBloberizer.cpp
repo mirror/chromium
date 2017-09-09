@@ -11,13 +11,16 @@
 #include "platform/fonts/shaping/ShapeResultInlineHeaders.h"
 #include "platform/text/TextBreakIterator.h"
 #include "platform/text/TextRun.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/text/UTF8.h"
 
 namespace blink {
 
 ShapeResultBloberizer::ShapeResultBloberizer(const Font& font,
                                              float device_scale_factor,
+                                             unsigned flags,
                                              Type type)
-    : font_(font), device_scale_factor_(device_scale_factor), type_(type) {}
+    : font_(font), device_scale_factor_(device_scale_factor), flags_(flags), type_(type) {}
 
 bool ShapeResultBloberizer::HasPendingVerticalOffsets() const {
   // We exclusively store either horizontal/x-only ofssets -- in which case
@@ -26,6 +29,12 @@ bool ShapeResultBloberizer::HasPendingVerticalOffsets() const {
   DCHECK(pending_glyphs_.size() == pending_offsets_.size() ||
          pending_glyphs_.size() * 2 == pending_offsets_.size());
   return pending_glyphs_.size() != pending_offsets_.size();
+}
+
+bool ShapeResultBloberizer::HasPendingUtf8Text() const {
+  // UTF8 conversion might have failed, resulting in offsets mismatch.
+  return flags_ & kIncludeUTF8Text
+    && pending_glyphs_.size() == pending_character_offsets_.size();
 }
 
 void ShapeResultBloberizer::CommitPendingRun() {
@@ -46,12 +55,26 @@ void ShapeResultBloberizer::CommitPendingRun() {
                                                 device_scale_factor_, &font_);
 
   const auto run_size = pending_glyphs_.size();
+  const auto text_size = HasPendingUtf8Text() ? pending_utf8_text_.size() : 0ul;
+  SkString lang; // currently unused
+
   const auto& buffer = HasPendingVerticalOffsets()
-                           ? builder_.allocRunPos(run_paint, run_size)
-                           : builder_.allocRunPosH(run_paint, run_size, 0);
+      ? builder_.allocRunTextPos(run_paint, run_size, text_size, std::move(lang))
+      : builder_.allocRunTextPosH(run_paint, run_size, 0, text_size, std::move(lang));
 
   std::copy(pending_glyphs_.begin(), pending_glyphs_.end(), buffer.glyphs);
   std::copy(pending_offsets_.begin(), pending_offsets_.end(), buffer.pos);
+
+  if (text_size) {
+    std::copy(pending_character_offsets_.begin(),
+              pending_character_offsets_.end(),
+              buffer.clusters);
+    std::copy(pending_utf8_text_.begin(),
+              pending_utf8_text_.end(),
+              buffer.utf8text);
+    pending_character_offsets_.Shrink(0);
+    pending_utf8_text_.Shrink(0);
+  }
 
   builder_run_count_ += 1;
   pending_glyphs_.Shrink(0);
@@ -185,23 +208,6 @@ inline bool IsSkipInkException(const ShapeResultBloberizer& bloberizer,
          Character::IsCJKIdeographOrSymbol(text.CodepointAt(character_index));
 }
 
-template <typename TextContainerType>
-inline void AddGlyphToBloberizer(ShapeResultBloberizer& bloberizer,
-                                 float advance,
-                                 hb_direction_t direction,
-                                 const SimpleFontData* font_data,
-                                 const HarfBuzzRunGlyphData& glyph_data,
-                                 const TextContainerType& text,
-                                 unsigned character_index) {
-  FloatPoint start_offset = HB_DIRECTION_IS_HORIZONTAL(direction)
-                                ? FloatPoint(advance, 0)
-                                : FloatPoint(0, advance);
-  if (!IsSkipInkException(bloberizer, text, character_index)) {
-    bloberizer.Add(glyph_data.glyph, font_data,
-                   start_offset + glyph_data.offset);
-  }
-}
-
 inline void AddEmphasisMark(ShapeResultBloberizer& bloberizer,
                             const GlyphData& emphasis_data,
                             FloatPoint glyph_center,
@@ -249,6 +255,94 @@ inline unsigned CountGraphemesInCluster(const UChar* str,
 }  // namespace
 
 template <typename TextContainerType>
+void ShapeResultBloberizer::AddUtf8TextAndIndices(
+    const TextContainerType& text,
+    const Vector<uint16_t>& indices,
+    unsigned from,
+    unsigned to) {
+
+  const auto begin = std::min(from, to);
+  const auto end = std::max(from, to);
+
+  printf("*** AddUtf8TextAndIndices - begin: %d, end: %d\n", begin, end);
+
+  HashMap<unsigned, unsigned> index_map; // utf16 -> utf8 index map
+  Vector<char> utf8(text.length() * 4);
+
+  char* output_begin = utf8.begin();
+  char* output_end = utf8.end();
+  char* output = output_begin;
+
+  if (text.Is8Bit()) {
+    const LChar* input_begin = text.Characters8() + begin;
+    const LChar* input_end = text.Characters8() + end;
+    const LChar* input = input_begin;
+
+    while (input < input_end) {
+      const unsigned index16 = input - input_begin;
+      const unsigned index8 = output - output_begin;
+
+      const auto result = WTF::Unicode::ConvertLatin1ToUTF8(&input,
+                                                            input + 1,
+                                                            &output,
+                                                            output_end);
+      // Bail if the conversion fails for any reason.
+      if (result != WTF::Unicode::kConversionOK)
+        return;
+
+      printf("** mapping l1 index %d -> %d\n", index16, index8);
+      index_map.Set(index16 + 1, index8);
+    }
+  } else {
+    const UChar* input_begin = text.Characters16() + begin;
+    const UChar* input_end = text.Characters16() + end;
+    const UChar* input = input_begin;
+
+    while (input < input_end) {
+      const unsigned index16 = input - input_begin;
+      const unsigned index8 = output - output_begin;
+
+      auto result = WTF::Unicode::ConvertUTF16ToUTF8(&input,
+                                                     input + 1,
+                                                     &output,
+                                                     output_end);
+      if (result == WTF::Unicode::kSourceExhausted) {
+        result = WTF::Unicode::ConvertUTF16ToUTF8(&input,
+                                                  input + 2,
+                                                  &output,
+                                                  output_end);
+      }
+
+      // Bail if the conversion fails for any reason.
+      if (result != WTF::Unicode::kConversionOK) {
+        printf("!! conversion failed: %d\n", result);
+        return;
+      }
+
+      printf("** mapping utf16 index %d -> %d\n", index16, index8);
+      index_map.Set(index16 + 1, index8);
+    }
+  }
+
+  printf("** utf8: >%s< size: %lu\n", utf8.data(), output - output_begin);
+
+  for (const auto& index : indices) {
+    const auto iter = index_map.find(index + 1);
+    if (iter == index_map.end()) {
+      printf("!! index %d not found!!\n", index);
+      return;
+    }
+
+    DCHECK_LT(iter->value, utf8.size());
+    const uint32_t adjusted_offset = pending_utf8_text_.size() + iter->value;
+    pending_character_offsets_.push_back(adjusted_offset);
+  }
+
+  pending_utf8_text_.Append(utf8.begin(), output - output_begin);
+  DCHECK_EQ(pending_character_offsets_.size(), pending_glyphs_.size());
+}
+
+template <typename TextContainerType>
 float ShapeResultBloberizer::FillGlyphsForResult(const ShapeResult* result,
                                                  const TextContainerType& text,
                                                  unsigned from,
@@ -258,16 +352,29 @@ float ShapeResultBloberizer::FillGlyphsForResult(const ShapeResult* result,
   auto total_advance = initial_advance;
 
   for (const auto& run : result->runs_) {
+    Vector<uint16_t> character_indices;
+
     total_advance = run->ForEachGlyphInRange(
         total_advance, from, to, run_offset,
         [&](const HarfBuzzRunGlyphData& glyph_data, float total_advance,
             uint16_t character_index) -> bool {
 
-          AddGlyphToBloberizer(*this, total_advance, run->direction_,
-                               run->font_data_.Get(), glyph_data, text,
-                               character_index);
+          if (!IsSkipInkException(*this, text, character_index)) {
+            FloatPoint start_offset = HB_DIRECTION_IS_HORIZONTAL(run->direction_)
+                                            ? FloatPoint(total_advance, 0)
+                                            : FloatPoint(0, total_advance);
+            Add(glyph_data.glyph,
+                run->font_data_.Get(),
+                start_offset + glyph_data.offset);
+
+            if (UNLIKELY(flags_ & kIncludeUTF8Text))
+              character_indices.push_back(character_index);
+          }
           return true;
         });
+
+    if (flags_ & kIncludeUTF8Text)
+      AddUtf8TextAndIndices(text, character_indices, from, to);
   }
 
   return total_advance;
@@ -278,7 +385,8 @@ bool ShapeResultBloberizer::CanUseFastPath(unsigned from,
                                            unsigned length,
                                            bool has_vertical_offsets) {
   return !from && to == length && !has_vertical_offsets &&
-         GetType() != ShapeResultBloberizer::Type::kTextIntercepts;
+         GetType() != ShapeResultBloberizer::Type::kTextIntercepts &&
+         !(flags_ & kIncludeUTF8Text);
 }
 
 float ShapeResultBloberizer::FillFastHorizontalGlyphs(

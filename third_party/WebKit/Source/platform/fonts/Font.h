@@ -85,12 +85,14 @@ class PLATFORM_EXPORT Font {
                 const TextRunPaintInfo&,
                 const FloatPoint&,
                 float device_scale_factor,
-                const PaintFlags&) const;
+                const PaintFlags&,
+                bool printing = false) const;
   bool DrawText(PaintCanvas*,
                 const NGTextFragmentPaintInfo&,
                 const FloatPoint&,
                 float device_scale_factor,
-                const PaintFlags&) const;
+                const PaintFlags&,
+                bool printing = false) const;
   bool DrawBidiText(PaintCanvas*,
                     const TextRunPaintInfo&,
                     const FloatPoint&,
