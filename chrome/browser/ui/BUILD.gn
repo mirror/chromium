@@ -1043,6 +1043,8 @@ split_static_library("ui") {
       "webui/settings/font_handler.h",
       "webui/settings/languages_handler.cc",
       "webui/settings/languages_handler.h",
+      "webui/settings/local_data_handler.cc",
+      "webui/settings/local_data_handler.h",
       "webui/settings/md_settings_localized_strings_provider.cc",
       "webui/settings/md_settings_localized_strings_provider.h",
       "webui/settings/md_settings_ui.cc",
