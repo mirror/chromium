@@ -26,6 +26,7 @@
 #include "ui/display/manager/display_manager_export.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/display/types/display_constants.h"
+#include "ui/display/unified_desktop_utils.h"
 
 #if defined(OS_CHROMEOS)
 #include "ui/display/manager/chromeos/display_configurator.h"
@@ -142,6 +143,24 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // Sets the layout for the current display pair. The |layout| specifies the
   // locaion of the displays relative to their parents.
   void SetLayoutForCurrentDisplays(std::unique_ptr<DisplayLayout> layout);
+
+  // Sets the Unified Desktop layout using the given |matrix|.
+  void SetUnifiedDesktopMatrix(const UnifiedDesktopLayoutMatrix& matrix);
+
+  // In Unified Desktop mode, we consider the first mirroring display to be the
+  // primary. It's also the top-left display in the layout matrix, and it's
+  // where the shelf is placed.
+  // This returns nullptr if we're not in unified desktop mode.
+  const Display* GetPrimaryMirroringDisplayForUnifiedDesktop() const;
+
+  int GetMirroringDisplayRowIndexInUnifiedMatrix(int64_t display_id) const;
+
+  int GetRowMaxHeight(int row_index) const;
+
+  // Returns the dimensions of the current Unified Desktop layout matrix. For
+  // example it it's a 3 x 4 matrix, it returns Size(4, 3) i.e. Height is for
+  // the number of rows, Width is for columns.
+  gfx::Size GetUnifiedDesktopMatrixDimensions() const;
 
   // Returns display for given |display_id|.
   const Display& GetDisplayForId(int64_t display_id) const;
@@ -396,6 +415,9 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // mirror the content is removed from the |display_info_list|.
   void CreateSoftwareMirroringDisplayInfo(DisplayInfoList* display_info_list);
 
+  // Same as above but for Unified Desktop.
+  void CreateUnifiedDesktopDisplayInfo(DisplayInfoList* display_info_list);
+
   Display* FindDisplayForId(int64_t id);
 
   // Add the mirror display's display info if the software based mirroring is in
@@ -450,6 +472,13 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   std::unique_ptr<DisplayLayoutStore> layout_store_;
 
   std::unique_ptr<DisplayLayout> current_resolved_layout_;
+
+  // The matrix that's used to layout the displays in Unified Desktop mode.
+  UnifiedDesktopLayoutMatrix current_matrix_;
+
+  std::map<int64_t, int> mirroring_display_id_to_unified_matrix_row_;
+
+  std::vector<int> unified_display_rows_heights_;
 
   int64_t first_display_id_ = kInvalidDisplayId;
 

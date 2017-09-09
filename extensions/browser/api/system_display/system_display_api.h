@@ -65,6 +65,8 @@ class SystemDisplaySetDisplayLayoutFunction : public SystemDisplayFunction {
  protected:
   ~SystemDisplaySetDisplayLayoutFunction() override {}
   ResponseAction Run() override;
+
+  bool ShouldRestrictToKioskAndWebUI() override;
 };
 
 class SystemDisplayEnableUnifiedDesktopFunction : public SystemDisplayFunction {

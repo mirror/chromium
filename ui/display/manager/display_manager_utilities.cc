@@ -129,19 +129,27 @@ ManagedDisplayInfo::ManagedDisplayModeList CreateInternalManagedDisplayModeList(
   return display_mode_list;
 }
 
+UnifiedDisplayModeParam::UnifiedDisplayModeParam(float dsf,
+                                                 float scale,
+                                                 bool is_default)
+    : device_scale_factor(dsf),
+      display_bounds_scale(scale),
+      is_default_mode(is_default) {}
+
 ManagedDisplayInfo::ManagedDisplayModeList CreateUnifiedManagedDisplayModeList(
     const scoped_refptr<ManagedDisplayMode>& native_mode,
-    const std::set<std::pair<float, float>>& dsf_scale_list) {
+    const std::vector<UnifiedDisplayModeParam>& modes_param_list) {
   ManagedDisplayInfo::ManagedDisplayModeList display_mode_list;
+  display_mode_list.reserve(modes_param_list.size());
 
-  for (auto& pair : dsf_scale_list) {
+  for (auto& param : modes_param_list) {
     gfx::SizeF scaled_size(native_mode->size());
-    scaled_size.Scale(pair.second);
-    scoped_refptr<ManagedDisplayMode> mode(new ManagedDisplayMode(
+    scaled_size.Scale(param.display_bounds_scale);
+    display_mode_list.emplace_back(base::MakeRefCounted<ManagedDisplayMode>(
         gfx::ToFlooredSize(scaled_size), native_mode->refresh_rate(),
-        native_mode->is_interlaced(), false /* native */,
-        native_mode->ui_scale(), pair.first /* device_scale_factor */));
-    display_mode_list.push_back(mode);
+        native_mode->is_interlaced(),
+        param.is_default_mode ? true : false /* native */,
+        native_mode->ui_scale(), param.device_scale_factor));
   }
   // Sort the mode by the size in DIP.
   std::sort(display_mode_list.begin(), display_mode_list.end(),
@@ -227,8 +235,13 @@ bool ComputeBoundary(const Display& a_display,
   int rb = std::min(a_bounds.bottom(), b_bounds.bottom());
 
   DisplayPlacement::Position position;
-  if ((rb - ry) == 0) {
+  if (rb == ry) {
     // top bottom
+    if (rr <= rx) {
+      // Top and bottom align, but no edges are shared.
+      return false;
+    }
+
     if (a_bounds.bottom() == b_bounds.y()) {
       position = DisplayPlacement::BOTTOM;
     } else if (a_bounds.y() == b_bounds.bottom()) {
@@ -236,8 +249,13 @@ bool ComputeBoundary(const Display& a_display,
     } else {
       return false;
     }
-  } else {
+  } else if (rr == rx) {
     // left right
+    if (rb <= ry) {
+      // Left and right align, but no edges are shared.
+      return false;
+    }
+
     if (a_bounds.right() == b_bounds.x()) {
       position = DisplayPlacement::RIGHT;
     } else if (a_bounds.x() == b_bounds.right()) {
@@ -246,6 +264,8 @@ bool ComputeBoundary(const Display& a_display,
       DCHECK_NE(rr, rx);
       return false;
     }
+  } else {
+    return false;
   }
 
   switch (position) {
