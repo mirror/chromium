@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc4bb66f_0ee9d46c",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-09T02:35:36Z",
+      "side": 1,
+      "message": "I am fairly sure this is a semaphore [1]. How about using that name? \n\nFWIW, codesearching didn\u0027t find a semaphore in //base, but did fine one in V8. Their semaphore only has blocking acquire, so it doesn\u0027t seem applicable here.\n\n[1] https://en.wikipedia.org/wiki/Semaphore_(programming)",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb2b5ca_87e92557",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-09T02:35:36Z",
+      "side": 1,
+      "message": "nit: The pattern I\u0027ve seen before for this kind of method suggests \"TryAquire\".",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d436789_5454f42d",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-09T02:35:36Z",
+      "side": 1,
+      "message": "You could build a non-blocking implementation on top of atomics. \n\n1) Atomically decrement available_ and store result\n2) If the result is \u003e\u003d 0, return true\n3) Atomically increment available_ and return false\n\nOTOH if this isn\u0027t used often, a mutex is fine. I\u0027m happy to discuss the atomics implementation more, if you think it\u0027s worthwhile.",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638b1e34_4a9aa5bb",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-09T02:35:36Z",
+      "side": 1,
+      "message": "nit: Would it make sense to DCHECK v is non-negative?",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6607a9f_359f3c70",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-09T02:35:36Z",
+      "side": 1,
+      "message": "nit: Can we call this mutex_?\n\n(If mu_ is a convention, please let me know, I\u0027d be happy to learn \u0026 adjust.)",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173f4845_12b93603",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-09T02:35:36Z",
+      "side": 1,
+      "message": "nit: I think this is typically called available_.",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a080c61c_c1aabce6",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-09T02:35:36Z",
+      "side": 1,
+      "message": "nit: I think uses_temporary_file_ / using_temporary_file_ would make the rest of the code easier to read. \"temporary_file_\" makes me think this\u0027d be a base::File.",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d577b9a_8be78e53",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-09T02:35:36Z",
+      "side": 1,
+      "message": "Will this method always be called from the same thread? If not, this might be a bit unsafe.\n\nIf we don\u0027t know future plans, I\u0027d suggest having MaxOpenFiles() be \"static int result \u003d ComputeMaxOpenFiles(); return result;\", and moving the here in a ComputeMaxOpenFiles() that always does the syscall.\n\nAlternatively, if MaxOpenFiles() isn\u0027t called often (right now it seems like it\u0027d be exactly once?), we could just forego the caching.",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe248ec_0595ddc5",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-09T02:35:36Z",
+      "side": 1,
+      "message": "nit: Do you think it\u0027s worth making the Fuchsia folks aware of this CL?\n\nIf so, scottmg@ and kmarshall@ might be interested.",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d45ccfd_1d8a1cef",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-09T02:35:36Z",
+      "side": 1,
+      "message": "I think that \"the sum of the two limits\" does not apply here. Copy-paste typo from env_posix_test.cc?",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
