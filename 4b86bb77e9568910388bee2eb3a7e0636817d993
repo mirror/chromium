@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e3c005a_4a7ec24a",
+        "filename": "components/multidevice/service/fake_device_sync.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-09T01:42:08Z",
+      "side": 1,
+      "message": "nit: Remove.",
+      "range": {
+        "startLine": 18,
+        "startChar": 30,
+        "endLine": 19,
+        "endChar": 53
+      },
+      "revId": "4b86bb77e9568910388bee2eb3a7e0636817d993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

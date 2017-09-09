@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ed7d3df_be8fc216",
+        "filename": "components/multidevice/service/multidevice_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-09T01:42:08Z",
+      "side": 0,
+      "message": "Please keep this. Only include device_sync_impl.h in the .cc file.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 79
+      },
+      "revId": "2385249c97edb9e910fab75a101a71997937f425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
