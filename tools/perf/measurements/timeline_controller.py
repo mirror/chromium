@@ -37,6 +37,8 @@ class TimelineController(object):
     config = tracing_config.TracingConfig()
     config.chrome_trace_config.category_filter.AddFilterString(
         self.trace_categories)
+    config.chrome_trace_config.category_filter.AddFilterString('benchmark')
+    config.chrome_trace_config.category_filter.AddFilterString('rail')
     config.enable_chrome_trace = True
     tab.browser.platform.tracing_controller.StartTracing(config)
 
