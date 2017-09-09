@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfd14c50_c5fd3c26",
+        "filename": "ios/chrome/browser/ui/external_file_remover.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-09T18:01:23Z",
+      "side": 1,
+      "message": "nit: GetReferencedExternalFiles ?",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3183b9a_bf9ae4ac",
+        "filename": "ios/chrome/browser/ui/external_file_remover.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-09T18:01:23Z",
+      "side": 1,
+      "message": "nit: s/NULL/nullptr",
+      "range": {
+        "startLine": 55,
+        "startChar": 54,
+        "endLine": 55,
+        "endChar": 58
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c6c360_f3f9ffa9",
+        "filename": "ios/chrome/browser/ui/external_file_remover.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-09T18:01:23Z",
+      "side": 1,
+      "message": "browser_state_ \u003d nullptr;",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 25
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
