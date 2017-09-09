@@ -26,10 +26,10 @@
 #include "components/google/core/browser/google_util.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/navigation_handle.h"
-#include "content/public/browser/web_contents.h"
-#include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
+#include "content/public/browser/weberror_page_contents.h"
+#include "content/public/browser/weberror_page_contents_observer.h"
 #include "extensions/common/extension_urls.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -45,8 +45,9 @@ namespace {
 
 class ExtensionWebUiTimer : public content::WebContentsObserver {
  public:
-  explicit ExtensionWebUiTimer(content::WebContents* web_contents, bool is_md)
-      : content::WebContentsObserver(web_contents), is_md_(is_md) {}
+  explicit ExtensionWebUiTimer(content::WebContents* weberror_page_contents,
+                               bool is_md)
+      : content::WebContentsObserver(weberror_page_contents), is_md_(is_md) {}
   ~ExtensionWebUiTimer() override {}
 
   void DidStartNavigation(
