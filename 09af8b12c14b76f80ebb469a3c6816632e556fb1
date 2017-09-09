@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "2d595258_faa8592b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsSheetVisibilityChangeObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-09T21:39:51Z",
+      "side": 1,
+      "message": "nit: @StateChangeReason",
+      "range": {
+        "startLine": 78,
+        "startChar": 30,
+        "endLine": 78,
+        "endChar": 33
+      },
+      "revId": "09af8b12c14b76f80ebb469a3c6816632e556fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0057811a_b9649f53",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-09T21:39:51Z",
+      "side": 1,
+      "message": "nit: @StateChangeReason",
+      "range": {
+        "startLine": 62,
+        "startChar": 34,
+        "endLine": 62,
+        "endChar": 37
+      },
+      "revId": "09af8b12c14b76f80ebb469a3c6816632e556fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf5dbc6_0d2ca58c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-09T21:39:51Z",
+      "side": 1,
+      "message": "nit: declare the constants as member of the annotation? \n\npublic @interface StateChangeReason {\n    int NONE \u003d 0;\n    int OMNIBOX \u003d 1;\n}\n\n\nStateChangeReason.NONE seems more java-y and is a style we started to use more, e.g. https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java?l\u003d52",
+      "range": {
+        "startLine": 107,
+        "startChar": 22,
+        "endLine": 107,
+        "endChar": 39
+      },
+      "revId": "09af8b12c14b76f80ebb469a3c6816632e556fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b99fc33_f35dfb2d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetObserver.java",
         "patchSetId": 2
