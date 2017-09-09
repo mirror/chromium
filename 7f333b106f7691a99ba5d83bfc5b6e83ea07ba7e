@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adcbb4fe_c65a723b",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-09T14:13:34Z",
+      "side": 1,
+      "message": "I noticed the spec says that vendor prefixed properties should be removed and a warning given to the developer. We should have a TODO and bug for this.",
+      "revId": "7f333b106f7691a99ba5d83bfc5b6e83ea07ba7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd397a4c_41ba2116",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-09T14:13:34Z",
+      "side": 1,
+      "message": "Does this allow for null or undefined contextOptions like we do with inputProperties? I assume you shouldn\u0027t have to specify context options.",
+      "revId": "7f333b106f7691a99ba5d83bfc5b6e83ea07ba7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
