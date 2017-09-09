@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3adefaf9_6d2bcd58",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-09T01:49:23Z",
+      "side": 1,
+      "message": "Done. This seems because `git cl upload` did a comment reflowing.",
+      "parentUuid": "c03d416b_6df41f40",
+      "range": {
+        "startLine": 273,
+        "startChar": 12,
+        "endLine": 273,
+        "endChar": 13
+      },
+      "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6f93a12_263a7e0d",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "11018401_37ff3c38",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-09T01:49:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6f93a12_263a7e0d",
+      "range": {
+        "startLine": 279,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 11
+      },
+      "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca4e6b07_2021241e",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 6
@@ -62,6 +110,24 @@
       "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a8a668_bf9611df",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-09T01:49:23Z",
+      "side": 1,
+      "message": "I renamed the method to FindFirstParseError() based on the spec\nhttps://github.com/whatwg/html/pull/2991.\n\nI kept |module_script| as is because the variable name in the spec is also |module script|.",
+      "parentUuid": "ca4e6b07_2021241e",
+      "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "370bc50a_5b491f7b",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-09T01:49:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "346eccc2_01f9e05a",
+      "range": {
+        "startLine": 404,
+        "startChar": 34,
+        "endLine": 404,
+        "endChar": 43
+      },
+      "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f6a92e6_7b791bbb",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 6
@@ -99,6 +189,24 @@
       "writtenOn": "2017-08-08T05:51:13Z",
       "side": 1,
       "message": "I feel like found_error_ check part (or the state check part) should be done in CompleteFetchDescendantsForOneModuleScript()\n\nHow about:\nMTL::PropagateError() {\n\nAdvanceState(State::kPropagatingError);\n\nbool result_can_accept_error \u003d result_ \u0026\u0026 !result_-\u003eIsErrored();\nif (!result_can_accept_error) {\n  AdvanceState(State::kFinished);\n  return;\n}\n\nHashSet\u003cKURL\u003e reached_url_set \u003d {result_-\u003eBaseURL()};\nModuleScript* current_node \u003d result_;\nPropagateErrorRecursively(reached_url_set, current_node);\n\nAdvanceState(State::kFinished);\n}",
+      "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783d87a6_52a41fe7",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-09T01:49:23Z",
+      "side": 1,
+      "message": "\u003e I feel like found_error_ check part (or the state check part) should be done in CompleteFetchDescendantsForOneModuleScript()\nWhat is the rationale behind this?\n\nAnyway I updated the code based on the spec PR https://github.com/whatwg/html/pull/2991. WDYT about the latest patch set?\nBasically I prefer keeping these things in Instantiate(), because Instantiate() is the centralized place where the latter part of [FDaI] (i.e. [FDaI] excluding [FD] call) is implemented.",
+      "parentUuid": "8f6a92e6_7b791bbb",
       "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -151,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "d85c6810_b25a89b2",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-09T01:49:23Z",
+      "side": 1,
+      "message": "Actually this comment was wronge:\nThe module script is instantiated here because we call MTL::Fetch() that now corresponds to a top-level fetch that instantiates the module script, while the module script was not instantiated previously because this test called MTL::Fetch() with kDependentModuleFetch, i.e. that corresonded to a NON-top-level fetch that did NOT instantiate.\n(I removed the ModuleGraphLevel argument from Fetch() because now no one needs it, except for the tests here)\n\nAnyway, the behavior change seems reasonable and I removed the comments.",
+      "parentUuid": "1d2a5025_8dbf02a4",
+      "range": {
+        "startLine": 440,
+        "startChar": 29,
+        "endLine": 440,
+        "endChar": 30
+      },
+      "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f42d6dd_0a28e1b3",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
         "patchSetId": 6
@@ -171,6 +303,30 @@
       "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d0bef4_5cf6486d",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-09T01:49:23Z",
+      "side": 1,
+      "message": "ditto.",
+      "parentUuid": "8f42d6dd_0a28e1b3",
+      "range": {
+        "startLine": 463,
+        "startChar": 20,
+        "endLine": 463,
+        "endChar": 29
+      },
+      "revId": "2db3ea729a840dd4f29cd745bf3e35b7e22928b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

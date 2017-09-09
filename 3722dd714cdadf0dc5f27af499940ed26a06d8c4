@@ -210,6 +210,24 @@
       "revId": "3722dd714cdadf0dc5f27af499940ed26a06d8c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9893b235_907d3037",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-09T01:49:23Z",
+      "side": 1,
+      "message": "Now this is going to a part of spec and I updated the code according to the spec PR.",
+      "parentUuid": "e75fd92a_36aed877",
+      "revId": "3722dd714cdadf0dc5f27af499940ed26a06d8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
