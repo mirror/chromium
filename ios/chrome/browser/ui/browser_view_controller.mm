@@ -102,6 +102,7 @@
 #import "ios/chrome/browser/ui/activity_services/requirements/activity_service_presentation.h"
 #import "ios/chrome/browser/ui/activity_services/requirements/activity_service_snackbar.h"
 #import "ios/chrome/browser/ui/alert_coordinator/alert_coordinator.h"
+#import "ios/chrome/browser/ui/alert_coordinator/repost_form_coordinator.h"
 #import "ios/chrome/browser/ui/authentication/re_signin_infobar_delegate.h"
 #import "ios/chrome/browser/ui/background_generator.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.h"
@@ -172,6 +173,7 @@
 #import "ios/chrome/browser/web/error_page_content.h"
 #import "ios/chrome/browser/web/passkit_dialog_provider.h"
 #import "ios/chrome/browser/web/repost_form_tab_helper.h"
+#import "ios/chrome/browser/web/repost_form_tab_helper_delegate.h"
 #import "ios/chrome/browser/web/sad_tab_tab_helper.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/chrome/browser/web_state_list/web_state_opener.h"
@@ -364,6 +366,7 @@ bool IsURLAllowedInIncognito(const GURL& url) {
                                     PassKitDialogProvider,
                                     PreloadControllerDelegate,
                                     QRScannerPresenting,
+                                    RepostFormTabHelperDelegate,
                                     SKStoreProductViewControllerDelegate,
                                     SnapshotOverlayProvider,
                                     StoreKitLauncher,
@@ -534,10 +537,13 @@ bool IsURLAllowedInIncognito(const GURL& url) {
   QRScannerLegacyCoordinator* _qrScannerCoordinator;
 
   // Coordinator for Tab History Popup.
-  LegacyTabHistoryCoordinator* _tabHistoryCoordinator;
+  TabHistoryCoordinator* _tabHistoryCoordinator;
 
   // Coordinator for displaying Sad Tab.
   SadTabLegacyCoordinator* _sadTabCoordinator;
+
+  // Coordinator for displaying Repost Form dialog.
+  RepostFormCoordinator* _repostFormCoordinator;
 
   // Coordinator for Page Info UI.
   PageInfoLegacyCoordinator* _pageInfoCoordinator;
@@ -2344,6 +2350,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (void)installDelegatesForTab:(Tab*)tab {
   // Unregistration happens when the Tab is removed from the TabModel.
+  tab.repostFormTabHelperDelegate = self;
   tab.iOSCaptivePortalBlockingPageDelegate = self;
   tab.dispatcher = self.dispatcher;
   tab.dialogDelegate = self;
@@ -2370,6 +2377,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (void)uninstallDelegatesForTab:(Tab*)tab {
+  tab.repostFormTabHelperDelegate = nil;
   tab.iOSCaptivePortalBlockingPageDelegate = nil;
   tab.dispatcher = nil;
   tab.dialogDelegate = nil;
@@ -5094,6 +5102,24 @@ bubblePresenterForFeature:(const base::Feature&)feature
       initWithBaseViewController:self
                       landingURL:landingURL];
   [_captivePortalLoginCoordinator start];
+}
+
+#pragma mark - RepostFormTabHelperDelegate
+
+- (void)repostFormTabHelper:(RepostFormTabHelper*)helper
+    presentRepostFromDialogAtPoint:(CGPoint)location
+                 completionHandler:(void (^)(BOOL))completion {
+  _repostFormCoordinator = [[RepostFormCoordinator alloc]
+      initWithBaseViewController:self
+                  dialogLocation:location
+                        webState:helper->web_state()
+               completionHandler:completion];
+  [_repostFormCoordinator start];
+}
+
+- (void)repostFormTabHelperDismissRepostFormDialog:
+    (RepostFormTabHelper*)helper {
+  _repostFormCoordinator = nil;
 }
 
 #pragma mark - PageInfoPresentation
