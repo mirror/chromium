@@ -12,6 +12,8 @@ source_set("ntp") {
     "ntp_home_header_coordinator.mm",
     "ntp_mediator.h",
     "ntp_mediator.mm",
+    "ntp_metrics_recorder.h",
+    "ntp_metrics_recorder.mm",
   ]
 
   configs += [ "//build/config/compiler:enable_arc" ]
@@ -40,6 +42,7 @@ source_set("ntp") {
     "//ios/chrome/browser/ui/content_suggestions:content_suggestions_util",
     "//ios/chrome/browser/ui/content_suggestions/cells",
     "//ios/chrome/browser/ui/coordinators",
+    "//ios/chrome/browser/ui/metrics",
     "//ios/chrome/browser/ui/ntp",
     "//ios/chrome/browser/ui/ntp:ntp_controller",
     "//ios/chrome/browser/ui/ntp:ntp_internal",
@@ -95,6 +98,7 @@ source_set("unit_tests") {
     "ntp_home_header_coordinator_unittest.mm",
     "ntp_home_header_view_controller_unittest.mm",
     "ntp_mediator_unittest.mm",
+    "ntp_metrics_recorder_unittest.mm",
     "ntp_view_controller_unittest.mm",
   ]
 
