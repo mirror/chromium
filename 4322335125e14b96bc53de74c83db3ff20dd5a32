@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27f2d894_94b357c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-09T00:14:03Z",
+      "side": 1,
+      "message": "I believe the code name is private, so I wouldn\u0027t use it in public.",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "4322335125e14b96bc53de74c83db3ff20dd5a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
