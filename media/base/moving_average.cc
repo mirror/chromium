@@ -4,53 +4,49 @@
 
 #include "media/base/moving_average.h"
 
-#include <algorithm>
+#include <cmath>
 
 namespace media {
 
-MovingAverage::MovingAverage(size_t depth) : depth_(depth), samples_(depth_) {}
+MovingAverage::MovingAverage(size_t depth) : depth_(depth) {}
 
 MovingAverage::~MovingAverage() {}
 
 void MovingAverage::AddSample(base::TimeDelta sample) {
-  // |samples_| is zero-initialized, so |oldest| is also zero before |count_|
-  // exceeds |depth_|.
-  base::TimeDelta& oldest = samples_[count_++ % depth_];
-  total_ += sample - oldest;
-  square_sum_us_ += sample.InMicroseconds() * sample.InMicroseconds() -
-                    oldest.InMicroseconds() * oldest.InMicroseconds();
-  oldest = sample;
+  if (samples_.size() >= depth_)
+    samples_.pop_front();
+  samples_.push_back(sample);
   if (sample > max_)
     max_ = sample;
 }
 
 base::TimeDelta MovingAverage::Average() const {
-  DCHECK_GT(count_, 0u);
-
-  // TODO(dalecurtis): Consider limiting |depth| to powers of two so that we can
-  // replace the integer divide with a bit shift operation.
-
-  return total_ / std::min(static_cast<uint64_t>(depth_), count_);
+  DCHECK(!samples_.empty());
+  base::TimeDelta total;
+  for (auto s : samples_)
+    total += s;
+  return total / samples_.size();
 }
 
 base::TimeDelta MovingAverage::Deviation() const {
-  DCHECK_GT(count_, 0u);
+  DCHECK(!samples_.empty());
+  const base::TimeDelta average = Average();
 
-  const double size = std::min(static_cast<uint64_t>(depth_), count_);
-  const double average_us = total_.InMicroseconds() / size;
-  double sqr_deviation_us = square_sum_us_ / size - average_us * average_us;
-  if (sqr_deviation_us < 0)
-    sqr_deviation_us = 0;
+  // Perform the calculation in floating point since squaring the delta can
+  // exceed the bounds of a uint64_t value given two int64_t inputs.
+  double deviation_secs = 0;
+  for (auto s : samples_) {
+    const double x = (s - average).InSecondsF();
+    deviation_secs += x * x;
+  }
 
-  return base::TimeDelta::FromMicroseconds(sqrt(sqr_deviation_us));
+  deviation_secs /= samples_.size();
+  return base::TimeDelta::FromSecondsD(std::sqrt(deviation_secs));
 }
 
 void MovingAverage::Reset() {
-  count_ = 0;
-  total_ = base::TimeDelta();
   max_ = kNoTimestamp;
-  square_sum_us_ = 0;
-  std::fill(samples_.begin(), samples_.end(), base::TimeDelta());
+  samples_.clear();
 }
 
 }  // namespace media
