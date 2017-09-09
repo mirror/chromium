@@ -81,6 +81,24 @@
       "revId": "bf825f12834c789c48932bfd890d89a4a46190e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "487b1290_754b6c58",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-09T20:02:58Z",
+      "side": 1,
+      "message": "I actually liked seeing the hierarchy to find out where exactly an element is, though I agree that its really easy for it to get out-of-date. Don\u0027t know of a good solution though :)",
+      "parentUuid": "31c60e89_f2e18e0b",
+      "revId": "bf825f12834c789c48932bfd890d89a4a46190e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
