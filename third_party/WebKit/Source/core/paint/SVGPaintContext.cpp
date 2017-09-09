@@ -116,7 +116,7 @@ bool SVGPaintContext::ApplyClipMaskAndFilterIfNecessary() {
 }
 
 void SVGPaintContext::ApplyPaintPropertyState() {
-  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
     return;
 
   // SVGRoot works like normal CSS replaced element and its effects are
@@ -163,7 +163,7 @@ void SVGPaintContext::ApplyClipIfNecessary() {
   ClipPathOperation* clip_path_operation = object_.StyleRef().ClipPath();
   if (!clip_path_operation)
     return;
-  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
     clip_path_clipper_.emplace(GetPaintInfo().context, *clip_path_operation,
                                object_, object_.ObjectBoundingBox(),
                                FloatPoint());
@@ -221,8 +221,7 @@ bool SVGPaintContext::IsIsolationInstalled() const {
     return true;
   if (masker_ || filter_)
     return true;
-  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() && clip_path_clipper_ &&
-      clip_path_clipper_->UsingMask())
+  if (clip_path_clipper_ && clip_path_clipper_->UsingMask())
     return true;
   return false;
 }
