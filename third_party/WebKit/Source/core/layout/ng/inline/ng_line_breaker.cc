@@ -61,7 +61,6 @@ void NGLineBreaker::PrepareNextLine(const NGExclusionSpace& exclusion_space,
                                     NGLineInfo* line_info) {
   NGInlineItemResults* item_results = &line_info->Results();
   item_results->clear();
-  line_info->SetStartOffset(offset_);
   line_info->SetLineStyle(node_, constraint_space_, IsFirstFormattedLine(),
                           line_.is_after_forced_break);
   SetCurrentStyle(line_info->LineStyle());
@@ -104,8 +103,6 @@ bool NGLineBreaker::NextLine(const NGLogicalOffset& content_offset,
   // line boxes. These cases need to be reviewed.
   if (line_.should_create_line_box)
     ComputeLineLocation(line_info);
-
-  line_info->SetEndOffset(offset_);
 
   return true;
 }

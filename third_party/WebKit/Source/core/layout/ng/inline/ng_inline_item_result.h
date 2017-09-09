@@ -134,10 +134,8 @@ class CORE_EXPORT NGLineInfo {
   void SetLineOffset(NGLogicalOffset line_offset, LayoutUnit available_width);
 
   // Start/end text offset of this line.
-  unsigned StartOffset() const { return start_offset_; }
-  unsigned EndOffset() const { return end_offset_; }
-  void SetStartOffset(unsigned offset) { start_offset_ = offset; }
-  void SetEndOffset(unsigned offset) { end_offset_ = offset; }
+  unsigned StartOffset() const { return results_.front().start_offset; }
+  unsigned EndOffset() const { return results_.back().end_offset; }
 
  private:
   const ComputedStyle* line_style_ = nullptr;
