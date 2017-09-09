@@ -18,7 +18,9 @@
 #import "ios/chrome/browser/web/mailto_handler.h"
 #import "ios/chrome/browser/web/mailto_url_rewriter.h"
 #import "ios/chrome/browser/web/nullable_mailto_url_rewriter.h"
+#import "ios/chrome/browser/web/open_mail_handler_view_controller.h"
 #include "ios/chrome/grit/ios_strings.h"
+#include "ios/third_party/material_components_ios/src/components/BottomSheet/src/MDCBottomSheetController.h"
 #import "net/base/mac/url_conversions.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "url/gurl.h"
@@ -161,6 +163,21 @@ void LaunchMailClientApp(const GURL& URL, MailtoURLRewriter* rewriter) {
                  completion:nil];
 }
 
+- (void)mdcPromptForMailClientWithURL:(const GURL)URL
+                          URLRewriter:(MailtoURLRewriter*)rewriter {
+  UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
+  UIViewController* viewController = [[OpenMailHandlerViewController alloc]
+      initWithRewriter:rewriter
+                layout:layout
+                 style:CollectionViewControllerStyleDefault];
+  MDCBottomSheetController* bottomSheet = [[MDCBottomSheetController alloc]
+      initWithContentViewController:viewController];
+  [[[[UIApplication sharedApplication] keyWindow] rootViewController]
+      presentViewController:bottomSheet
+                   animated:YES
+                 completion:nil];
+}
+
 - (void)openExternalAppWithURL:(NSURL*)URL
                         prompt:(NSString*)prompt
                      openLabel:(NSString*)openLabel {
@@ -239,7 +256,7 @@ void LaunchMailClientApp(const GURL& URL, MailtoURLRewriter* rewriter) {
             ? [NullableMailtoURLRewriter mailtoURLRewriterWithStandardHandlers]
             : [LegacyMailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
     if (![rewriter defaultHandlerID]) {
-      [self promptForMailClientWithURL:gURL URLRewriter:rewriter];
+      [self mdcPromptForMailClientWithURL:gURL URLRewriter:rewriter];
       return YES;
     }
     LaunchMailClientApp(gURL, rewriter);
