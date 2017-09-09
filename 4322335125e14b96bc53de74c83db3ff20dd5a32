@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb0cc29b_17ea0935",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-09-09T00:22:55Z",
+      "side": 1,
+      "message": "Thanks for mentioning this! I would change the name to [iOS] instead.",
+      "parentUuid": "27f2d894_94b357c1",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "4322335125e14b96bc53de74c83db3ff20dd5a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71ee4270_f301dfee",
         "filename": "ios/chrome/test/earl_grey/device_check_egtest.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-09T00:15:48Z",
       "side": 1,
       "message": "Can you add a TODO?",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 25
+      },
+      "revId": "4322335125e14b96bc53de74c83db3ff20dd5a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a14caea_2bf681db",
+        "filename": "ios/chrome/test/earl_grey/device_check_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-09-09T00:22:55Z",
+      "side": 1,
+      "message": "Sure, will do it in Patch 4.",
+      "parentUuid": "71ee4270_f301dfee",
       "range": {
         "startLine": 23,
         "startChar": 2,
