@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "72e918b4_7df7def9",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-09T00:09:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7372573_2833cde3",
+      "revId": "dfd7bdedebdef670da00176349f1c7aa53568873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bf9e8a7_3ee7f438",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
@@ -91,6 +109,24 @@
       "revId": "dfd7bdedebdef670da00176349f1c7aa53568873",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b7a4759_c4ae1e5f",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-09T00:09:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b92c64c3_cc0387ca",
+      "revId": "dfd7bdedebdef670da00176349f1c7aa53568873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
