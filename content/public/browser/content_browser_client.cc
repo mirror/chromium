@@ -187,6 +187,11 @@ bool ContentBrowserClient::IsDataSaverEnabled(BrowserContext* context) {
   return false;
 }
 
+void ContentBrowserClient::ShouldAttachClientHint(
+    BrowserContext* context,
+    const GURL& url,
+    net::HttpRequestHeaders* additional_headers) {}
+
 bool ContentBrowserClient::AllowGetCookie(const GURL& url,
                                           const GURL& first_party,
                                           const net::CookieList& cookie_list,
