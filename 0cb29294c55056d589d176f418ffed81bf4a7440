@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "a4c81c78_f3840647",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-09T11:27:17Z",
+      "side": 1,
+      "message": "Hi, Matt, I\u0027m afraid we need to wait more time to figure out the best practice handling mojo bad messages, and yeah I want to land this CL for now, thus I can proceed other work based on this. PTAnL at ps#6, Thanks.",
+      "parentUuid": "dce010d9_a6e74ea8",
+      "revId": "0cb29294c55056d589d176f418ffed81bf4a7440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9b854fa_a2384262",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 4
