@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d296df86_0b6db119",
+        "filename": "chrome/browser/vr/elements/full_screen_rect.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-09T02:10:23Z",
+      "side": 1,
+      "message": "Ooh nice. Done.",
+      "parentUuid": "02b581a5_272d010d",
+      "range": {
+        "startLine": 21,
+        "startChar": 29,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "bf825f12834c789c48932bfd890d89a4a46190e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b127263_211f8abe",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-08T23:24:08Z",
       "side": 1,
       "message": "You removed the hierarchy compeletely. Is this intentional? If so, the TODO probably should also be removed.",
+      "revId": "bf825f12834c789c48932bfd890d89a4a46190e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c60e89_f2e18e0b",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-09T02:10:23Z",
+      "side": 1,
+      "message": "SG. In fact, this seems more like a class-level comment so I\u0027ve moved it to the header.",
+      "parentUuid": "5b127263_211f8abe",
       "revId": "bf825f12834c789c48932bfd890d89a4a46190e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
