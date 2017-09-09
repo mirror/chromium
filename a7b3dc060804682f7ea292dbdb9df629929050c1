@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b5281931_cc68bf34",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-09T04:37:12Z",
+      "side": 1,
+      "message": "Right.  Removed.",
+      "parentUuid": "0c48a0e8_20cdf4a1",
+      "revId": "a7b3dc060804682f7ea292dbdb9df629929050c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cf26e33_093a6ff1",
         "filename": "third_party/blink/tools/move_blink_source.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-08T15:21:43Z",
       "side": 1,
       "message": "It\u0027s more idiomatic to write:\n\nif \u0027third_party\u0027 not in path:\n    ...",
+      "revId": "a7b3dc060804682f7ea292dbdb9df629929050c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d5aeaa_a3a4ba7c",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-09T04:37:12Z",
+      "side": 1,
+      "message": "Done.  Updated all of find() usages.",
+      "parentUuid": "4cf26e33_093a6ff1",
       "revId": "a7b3dc060804682f7ea292dbdb9df629929050c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "54a4c564_45c9e47c",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-09T04:37:12Z",
+      "side": 1,
+      "message": "I started this script with multiple normal functions, and switched to the class because the functions need some common data and making them data members of a class makes development easier.",
+      "parentUuid": "be76705b_93aff509",
+      "revId": "a7b3dc060804682f7ea292dbdb9df629929050c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b10a7ae8_cd63b9cb",
         "filename": "third_party/blink/tools/move_blink_source.py",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "a7b3dc060804682f7ea292dbdb9df629929050c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88301c66_f712cfda",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-09T04:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b10a7ae8_cd63b9cb",
+      "revId": "a7b3dc060804682f7ea292dbdb9df629929050c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "a7b3dc060804682f7ea292dbdb9df629929050c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116e40f0_700f639e",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-09T04:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6097017_711d477e",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 267,
+        "endChar": 36
+      },
+      "revId": "a7b3dc060804682f7ea292dbdb9df629929050c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
