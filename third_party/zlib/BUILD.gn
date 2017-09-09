@@ -75,6 +75,7 @@ static_library("zlib") {
     "zutil.h",
   ]
 
+  # Here we pick the best performance implementation matching the build target.
   if (current_cpu == "arm" || current_cpu == "arm64") {
     if (arm_use_neon) {
       sources -= [
@@ -87,6 +88,19 @@ static_library("zlib") {
         "contrib/arm/inflate.c",
       ]
     }
+  } else if (current_cpu == "x64") {
+    sources -= [
+      "infback.c",
+      "inffast.c",
+      "inffast.h",
+      "inflate.c",
+    ]
+    sources += [
+      "contrib/inffast64/infback.c",
+      "contrib/inffast64/inffast.c",
+      "contrib/inffast64/inffast.h",
+      "contrib/inffast64/inflate.c",
+    ]
   }
 
   if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
