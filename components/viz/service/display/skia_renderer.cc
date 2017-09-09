@@ -643,6 +643,10 @@ void SkiaRenderer::FinishDrawingQuadList() {
   current_canvas_->flush();
 }
 
+void SkiaRenderer::GenerateMipmap() {
+  NOTIMPLEMENTED();
+}
+
 bool SkiaRenderer::ShouldApplyBackgroundFilters(
     const cc::RenderPassDrawQuad* quad,
     const cc::FilterOperations* background_filters) const {
