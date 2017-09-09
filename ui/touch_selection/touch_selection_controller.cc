@@ -122,7 +122,10 @@ void TouchSelectionController::OnSelectionBoundsChanged(
       end_orientation_ = end_selection_handle_->orientation();
   }
 
-  if (GetStartPosition() != GetEndPosition() ||
+  if ((start_orientation_ == TouchHandleOrientation::LEFT &&
+       end_orientation_ == TouchHandleOrientation::RIGHT) ||
+      (start_orientation_ == TouchHandleOrientation::RIGHT &&
+       end_orientation_ == TouchHandleOrientation::LEFT) ||
       (is_selection_dragging &&
        start_orientation_ != TouchHandleOrientation::UNDEFINED &&
        end_orientation_ != TouchHandleOrientation::UNDEFINED)) {
