@@ -89,6 +89,7 @@ class WebLayer {
 
   virtual void SetOpacity(float) = 0;
   virtual float Opacity() const = 0;
+  virtual void SetContentsOpaqueIsFixed(bool) = 0;
 
   virtual void SetBlendMode(WebBlendMode) = 0;
   virtual WebBlendMode BlendMode() const = 0;
