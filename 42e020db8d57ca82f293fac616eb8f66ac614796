@@ -16,6 +16,24 @@
       "revId": "42e020db8d57ca82f293fac616eb8f66ac614796",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5626287d_f835e2da",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-09T17:13:29Z",
+      "side": 1,
+      "message": "I\u0027m a little confused. Where do you see this? Both WillDestroyCurrentMessageLoop() and PostPendingTask() only hold one lock at a time.",
+      "parentUuid": "e2001a8d_3b1bb325",
+      "revId": "42e020db8d57ca82f293fac616eb8f66ac614796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
