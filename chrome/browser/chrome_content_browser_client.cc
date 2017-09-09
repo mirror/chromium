@@ -198,6 +198,7 @@
 #include "content/public/common/content_descriptors.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/origin_util.h"
 #include "content/public/common/sandbox_type.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
@@ -225,6 +226,7 @@
 #include "services/preferences/public/cpp/in_process_service_factory.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "storage/browser/fileapi/external_mount_points.h"
+#include "third_party/WebKit/public/platform/WebMemoryCoordinator.h"
 #include "third_party/WebKit/public/platform/modules/installedapp/installed_app_provider.mojom.h"
 #include "third_party/WebKit/public/platform/modules/webshare/webshare.mojom.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -1835,6 +1837,67 @@ bool ChromeContentBrowserClient::IsDataSaverEnabled(
     return false;
   PrefService* prefs = profile->GetPrefs();
   return prefs && prefs->GetBoolean(prefs::kDataSaverEnabled);
+}
+
+void ChromeContentBrowserClient::ShouldAttachClientHint(
+    content::BrowserContext* context,
+    const GURL& url,
+    net::HttpRequestHeaders* additional_headers) {
+  // todo: check if accept ch is enabled,
+
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  Profile* profile = Profile::FromBrowserContext(context);
+  if (!profile)
+    return;
+
+  ContentSettingsForOneType client_hints_host_settings;
+
+  HostContentSettingsMapFactory::GetForProfile(profile)->GetSettingsForOneType(
+      CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      &client_hints_host_settings);
+
+  if (!content::IsOriginSecure(url))
+    return;
+
+  const GURL origin = GURL(url).GetOrigin();
+
+  for (const auto& rule : client_hints_host_settings) {
+    // Look for an exact match since persisted client hints are disabled by
+    // default, and enabled only on per-host basis.
+    if (rule.primary_pattern == ContentSettingsPattern::Wildcard() ||
+        !rule.primary_pattern.Matches(origin)) {
+      continue;
+    }
+
+    // Found an exact match.
+    DCHECK(ContentSettingsPattern::Wildcard() == rule.secondary_pattern);
+    DCHECK(rule.setting_value->is_dict());
+    const base::Value* expiration_time =
+        rule.setting_value->FindPath({"expiration_time"});
+    DCHECK(expiration_time->is_double());
+
+    if (base::Time::Now().ToDoubleT() > expiration_time->GetDouble()) {
+      // The client hint is expired.
+      return;
+    }
+
+    const base::Value* list_value =
+        rule.setting_value->FindPath({"client_hints"});
+    DCHECK(list_value->is_list());
+    const base::Value::ListStorage& client_hints_list = list_value->GetList();
+    for (const auto& client_hint : client_hints_list) {
+      DCHECK(client_hint.is_int());
+      if (client_hint.GetInt() ==
+          static_cast<int>(blink::mojom::WebClientHintsType::kDeviceMemory)) {
+        additional_headers->SetHeader(
+            "device-memory",
+            base::IntToString(
+                blink::WebMemoryCoordinator::GetApproximatedDeviceMemory()));
+      }
+    }
+    // Match found for |url| and client hints have been set.
+    return;
+  }
 }
 
 bool ChromeContentBrowserClient::AllowAppCache(

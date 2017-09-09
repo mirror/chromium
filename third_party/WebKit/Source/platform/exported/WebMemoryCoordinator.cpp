@@ -21,4 +21,13 @@ void WebMemoryCoordinator::OnPurgeMemory() {
   MemoryCoordinator::Instance().OnPurgeMemory();
 }
 
+float WebMemoryCoordinator::GetApproximatedDeviceMemory() {
+  return MemoryCoordinator::GetApproximatedDeviceMemory();
+}
+
+void WebMemoryCoordinator::SetPhysicalMemoryMBForTesting(
+    int64_t physical_memory_mb) {
+  MemoryCoordinator::SetPhysicalMemoryMBForTesting(physical_memory_mb);
+}
+
 }  // namespace blink
