@@ -283,13 +283,6 @@ crbug.com/642912 virtual/mojo-loading/http/tests/wasm/ [ WontFix ]
 webaudio/codec-tests/mp3 [ WontFix ]
 webaudio/codec-tests/aac [ WontFix ]
 
-# WPT subdirectories without owners.
-external/wpt/accelerometer [ WontFix ]
-external/wpt/assumptions [ WontFix ]
-external/wpt/gyroscope [ WontFix ]
-external/wpt/magnetometer [ WontFix ]
-external/wpt/upgrade-insecure-requests [ WontFix ]
-
 # Temporary disabling of most encrypted-media WPT tests while enabling
 # https only. Once the switch is complete (and the WPT tests renamed so they
 # run using https), they can be re-enabled.
