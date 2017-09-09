@@ -35,6 +35,7 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "storage/browser/fileapi/file_system_context.h"
 #include "storage/browser/quota/quota_manager.h"
+#include "third_party/WebKit/public/platform/WebClientHintsType.h"
 #include "third_party/WebKit/public/platform/WebPageVisibilityState.h"
 #include "third_party/WebKit/public/web/window_features.mojom.h"
 #include "ui/base/page_transition_types.h"
@@ -362,6 +363,11 @@ class CONTENT_EXPORT ContentBrowserClient {
       const base::Callback<WebContents*(void)>& wc_getter);
 
   virtual bool IsDataSaverEnabled(BrowserContext* context);
+
+  virtual void ShouldAttachClientHint(
+      BrowserContext* context,
+      const GURL& url,
+      net::HttpRequestHeaders* additional_headers);
 
   // Allow the embedder to control if the given cookie can be read.
   // This is called on the IO thread.
