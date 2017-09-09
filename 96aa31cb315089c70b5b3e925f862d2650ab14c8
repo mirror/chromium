@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed77415d_48232440",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-09T23:45:04Z",
+      "side": 1,
+      "message": "This feels ok to me for the time being.",
+      "revId": "96aa31cb315089c70b5b3e925f862d2650ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1eff5fc_eb4f2175",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-09T23:45:04Z",
+      "side": 1,
+      "message": "I realized this pattern has been used multiple places, but this comment feels a bit inaccurate to me... this has a ref to |context_|, but it\u0027s ref-counted and its ServiceWorkerContainerHostAssociatedPtr is reset when ServiceWorkerNetworkProvider is destroyed, and I don\u0027t feel there\u0027s a guarantee that WebServiceWorkerProviderImpl is kept alive until that. I might be missing something?",
+      "revId": "96aa31cb315089c70b5b3e925f862d2650ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
