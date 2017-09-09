@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9997ccaa_02045fb3",
+        "filename": "ash/public/interfaces/tray_action.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-09T01:07:12Z",
+      "side": 1,
+      "message": "nit: remove whitespace while you\u0027re here",
+      "revId": "701e3c57210033952a98aecc7a1521b9efb95d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8951bd0f_e680e85e",
+        "filename": "ash/tray_action/test_tray_action_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-09T01:07:12Z",
+      "side": 1,
+      "message": "include mojo/public/cpp/bindings/interface_request.h",
+      "revId": "701e3c57210033952a98aecc7a1521b9efb95d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04d48abb_7748c63f",
+        "filename": "ash/tray_action/test_tray_action_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-09T01:07:12Z",
+      "side": 1,
+      "message": "include mojo/public/cpp/bindings/interface_request.h",
+      "revId": "701e3c57210033952a98aecc7a1521b9efb95d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c107658_294bda78",
+        "filename": "ash/tray_action/test_tray_action_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-09T01:07:12Z",
+      "side": 1,
+      "message": "nit: just binding.h",
+      "revId": "701e3c57210033952a98aecc7a1521b9efb95d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025cd566_4ffa0db2",
+        "filename": "ash/tray_action/test_tray_action_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-09T01:07:12Z",
+      "side": 1,
+      "message": "nit: include base/macros.h",
+      "revId": "701e3c57210033952a98aecc7a1521b9efb95d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc41287a_4364256e",
+        "filename": "ash/tray_action/test_tray_action_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-09T01:07:12Z",
+      "side": 1,
+      "message": "nit: ash:: not needed",
+      "revId": "701e3c57210033952a98aecc7a1521b9efb95d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15156bb9_15ab468c",
+        "filename": "ash/tray_action/test_tray_action_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-09T01:07:12Z",
+      "side": 1,
+      "message": "Thanks for extracting this class!",
+      "revId": "701e3c57210033952a98aecc7a1521b9efb95d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae1245e_7b49db94",
+        "filename": "ash/tray_action/tray_action_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-09T01:07:12Z",
+      "side": 1,
+      "message": "nit: Add a TrayAction::FlushMojoForTesting() method similar to ImeController::FlushMojoForTesting() and use it instead of these RunUntilIdle() calls. That makes it clear that these are waits for mojo messages.\n\nNo need to change the rest of the file unless you want to.",
+      "revId": "701e3c57210033952a98aecc7a1521b9efb95d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cdfae51_c24816af",
+        "filename": "ash/tray_action/tray_action_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-09T01:07:12Z",
+      "side": 1,
+      "message": "Given that the method under test just calls a mojo interface method, I don\u0027t think you need to test every TrayActionState. Maybe just test one?\n\nYou can always add back more test cases if the underlying function gets more complex.",
+      "revId": "701e3c57210033952a98aecc7a1521b9efb95d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a676311_6bd2c665",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-09T01:07:12Z",
+      "side": 1,
+      "message": "I don\u0027t understand this. The mojom says it closes the note, but this call looks like it just hides it.\n\nAlso, MoveToBackground() uses a kUnlockButtonPressed -- is that the right reason for this case?\n\nMaybe this should call ResetNoteTakingWindowAndMoveToNextState() directly and/or have a comment about what \"close\" means.",
+      "revId": "701e3c57210033952a98aecc7a1521b9efb95d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfcdb1a1_cfe80bf8",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-09T01:07:12Z",
+      "side": 1,
+      "message": "nit: comment why you have to spin the loop",
+      "revId": "701e3c57210033952a98aecc7a1521b9efb95d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdbffde7_06ebb739",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1397,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-09T01:07:12Z",
+      "side": 1,
+      "message": "nit: String isn\u0027t capitalized the same way as the one above, is that important?",
+      "revId": "701e3c57210033952a98aecc7a1521b9efb95d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
