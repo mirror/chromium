@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e26e28e2_69a35ec3",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImplTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-09T01:18:18Z",
+      "side": 1,
+      "message": "Check the initial state , such that we expect that the Cursor is not Hidden before we focus in, and when we focus out, does the cursor come back? What about if we do so with keyboard controls?",
+      "range": {
+        "startLine": 1010,
+        "startChar": 47,
+        "endLine": 1010,
+        "endChar": 74
+      },
+      "revId": "85eb19518a55806df1fb36f32cf2f3d34f620126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
