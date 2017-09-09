@@ -82,9 +82,6 @@ struct HomogeneousCoordinate {
 
 class CC_BASE_EXPORT MathUtil {
  public:
-  static const double kPiDouble;
-  static const float kPiFloat;
-
   static double Deg2Rad(double deg) { return deg * kPiDouble / 180.0; }
   static double Rad2Deg(double rad) { return rad * 180.0 / kPiDouble; }
 
