@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "8bb79651_a12e30c9",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-09T01:23:04Z",
+      "side": 1,
+      "message": "yeah, this currently works as expected, even though it doesn\u0027t seem so :)\n\nUX changed their mind about background state last minute - Unlock button used to move the state to background, and now it closes the app (the code has not yet been updated to minimize change merged to 61; though, it\u0027s probably missing a comment).\n\nI\u0027ll make a pass within next week or two to nuke MoveToBackground, but good point about calling  ResetNoteTakingWindowAndMoveToNextState directly - that would make sense.",
+      "parentUuid": "9a676311_6bd2c665",
+      "revId": "701e3c57210033952a98aecc7a1521b9efb95d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfcdb1a1_cfe80bf8",
         "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
         "patchSetId": 5
