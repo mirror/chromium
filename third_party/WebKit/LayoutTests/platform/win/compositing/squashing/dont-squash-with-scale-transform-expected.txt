@@ -1,0 +1,13 @@
+CONSOLE ERROR: line 2579: Uncaught Error: assert_true: expected true got false
+Summary
+
+Harness status: OK
+
+Found 1 tests
+
+1 Fail
+Details
+
+Result	Test Name	Message
+Fail	Untitled	Uncaught Error: assert_true: expected true got false
+    at onload (file:///E:/b/s/w/ir/third_party/WebKit/LayoutTests/compositing/squashing/dont-squash-with-scale-transform.html:22:9)
