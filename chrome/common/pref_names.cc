@@ -2005,6 +2005,11 @@ const char kEnableMediaRouter[] = "media_router.enable_media_router";
 const char kShowCastIconInToolbar[] = "media_router.show_cast_icon_in_toolbar";
 #endif  // !defined(OS_ANDROID)
 
+#if defined(OS_CHROMEOS)
+// Whether the SMS connect multidevice feature is enabled.
+const char kSmsConnectEnabled[] = "multidevice.sms_connect_enabled";
+#endif
+
 // *************** SERVICE PREFS ***************
 // These are attached to the service process.
 

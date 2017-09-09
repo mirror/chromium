@@ -35,6 +35,7 @@
 #include "chrome/browser/ui/app_list/arc/arc_pai_starter.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chrome/browser/ui/browser_commands.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/cryptohome/cryptohome_parameters.h"
@@ -188,6 +189,11 @@ void ArcSessionManager::RegisterProfilePrefs(
                                std::string());
   // This is used to decide whether migration from ecryptfs to ext4 is allowed.
   registry->RegisterIntegerPref(prefs::kEcryptfsMigrationStrategy, 0);
+
+  // Enable SMS Connect by default if the Multidevice feature is enabled.
+  bool multidevice_enabled =
+      base::FeatureList::IsEnabled(features::kMultidevice);
+  registry->RegisterBooleanPref(prefs::kSmsConnectEnabled, multidevice_enabled);
 }
 
 // static
