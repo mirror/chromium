@@ -13,7 +13,7 @@ cookies:
 setcookies: 
 priority: High
 cache-control: 
-connection: 
+connection: Keep-Alive
 content-encoding: 
 content-length: 0
 vary: 
