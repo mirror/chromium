@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ef44d98_414bf928",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-09T12:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fe2ded1_6ba01c2c",
+      "revId": "b0b9e29b618e9f08db0ea9b7073bc5122d965fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d160dc2e_fc6b0442",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "b0b9e29b618e9f08db0ea9b7073bc5122d965fc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "090144d9_d78cbdd2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-09T12:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d160dc2e_fc6b0442",
+      "revId": "b0b9e29b618e9f08db0ea9b7073bc5122d965fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
