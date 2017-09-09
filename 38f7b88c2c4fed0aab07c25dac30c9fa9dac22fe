@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "5e6cb6f2_4e75a682",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-09T01:27:14Z",
+      "side": 1,
+      "message": "Sounds reasonable. Done.",
+      "parentUuid": "b75393c9_3edc02e5",
+      "range": {
+        "startLine": 555,
+        "startChar": 4,
+        "endLine": 558,
+        "endChar": 5
+      },
+      "revId": "38f7b88c2c4fed0aab07c25dac30c9fa9dac22fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bc6b294_20b01729",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 2
@@ -275,6 +299,30 @@
       "side": 1,
       "message": "Two different top-level shell surface for this sgtm. Getting rid of the dynamic system modal handling would be really nice.",
       "parentUuid": "8b0b4eea_0d71be0f",
+      "range": {
+        "startLine": 790,
+        "startChar": 13,
+        "endLine": 792,
+        "endChar": 24
+      },
+      "revId": "38f7b88c2c4fed0aab07c25dac30c9fa9dac22fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f0459f_7c2b1147",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-09T01:27:14Z",
+      "side": 1,
+      "message": "yep",
+      "parentUuid": "800957e8_16c1edff",
       "range": {
         "startLine": 790,
         "startChar": 13,
