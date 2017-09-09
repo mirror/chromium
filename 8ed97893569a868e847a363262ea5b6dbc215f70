@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9692c202_a89faeec",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-09T00:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa67462c_8f414d9e",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02e37766_950dc94e",
         "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.h",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "48e825eb_7a81d30a",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-09T00:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02e37766_950dc94e",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b43cd5b_53530832",
         "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.h",
         "patchSetId": 4
@@ -47,6 +83,30 @@
       "writtenOn": "2017-09-07T19:56:53Z",
       "side": 1,
       "message": "Why original_presentation_id?",
+      "range": {
+        "startLine": 33,
+        "startChar": 38,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "449ad244_5279d8c4",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-09T00:55:54Z",
+      "side": 1,
+      "message": "The parameter names are based on the MRP mojo interface. The comment on the interface says the ID may be overridden by the MRP (and I\u0027m assuming that\u0027s why it\u0027s an \"original\"), but I\u0027m not familiar with how that works.\n\nhttps://cs.chromium.org/chromium/src/chrome/common/media_router/mojo/media_router.mojom?q\u003dmedia_router.mojom\u0026sq\u003dpackage:chromium\u0026l\u003d243",
+      "parentUuid": "6b43cd5b_53530832",
       "range": {
         "startLine": 33,
         "startChar": 38,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "4505c291_ee63c019",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-09T00:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a2f8cec_be8986d2",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aa4bfe9_4ea7cd50",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 4
@@ -90,6 +168,24 @@
       "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118ffd3c_247c2df5",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-09T00:55:54Z",
+      "side": 1,
+      "message": "Actually, we\u0027ll need it for CreateMediaRouteController() callbacks below.",
+      "parentUuid": "4aa4bfe9_4ea7cd50",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "461c7449_d299eb41",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-09T00:55:54Z",
+      "side": 1,
+      "message": "Yeah, it\u0027d make sense to record the outcome here as well. Done.",
+      "parentUuid": "5d82b2ba_2b03e82f",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88bb789b_9b9b69f6",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.h",
         "patchSetId": 4
@@ -124,6 +238,24 @@
       "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28fd0598_1abcf728",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-09T00:55:54Z",
+      "side": 1,
+      "message": "Right. Added a TODO.",
+      "parentUuid": "88bb789b_9b9b69f6",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "1f01e596_b9815253",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-09T00:55:54Z",
+      "side": 1,
+      "message": "Added TODOs in .h to move |dial_media_sink_service_proxy_| and |cast_media_sink_service_|.",
+      "parentUuid": "43f83543_16ffdb11",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1230845_c7298a74",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
         "patchSetId": 4
@@ -158,6 +308,24 @@
       "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bed8620_5c2c1371",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-09T00:55:54Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "d1230845_c7298a74",
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
