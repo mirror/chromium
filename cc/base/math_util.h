@@ -147,10 +147,6 @@ class CC_BASE_EXPORT MathUtil {
     return RoundDownInternal(n, mul);
   }
 
-  template <typename T> static T ClampToRange(T value, T min, T max) {
-    return std::min(std::max(value, min), max);
-  }
-
   template <typename T>
   static bool ApproximatelyEqual(T lhs, T rhs, T tolerance) {
     DCHECK_LE(0, tolerance);
