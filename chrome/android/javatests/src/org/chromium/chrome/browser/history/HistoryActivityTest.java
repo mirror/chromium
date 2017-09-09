@@ -169,7 +169,7 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
 
         if (mAdapter.arePrivacyDisclaimersVisible()) {
             int changedCallCount = mTestObserver.onChangedCallback.getCallCount();
-            setHasOtherFormsOfBrowsingData(false, false);
+            setHasOtherFormsOfBrowsingData(false);
             mTestObserver.onChangedCallback.waitForCallback(changedCallCount);
         }
 
@@ -227,7 +227,7 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
     public void testPrivacyDisclaimers_SignedOut() {
         ChromeSigninController signinController = ChromeSigninController.get();
         signinController.setSignedInAccountName(null);
-        assertTrue(mAdapter.getPrivacyDisclaimerTextForTests().isEmpty());
+        assertEquals(1, mAdapter.getFirstGroupForTests().size());
     }
 
     @SmallTest
@@ -235,10 +235,9 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         ChromeSigninController signinController = ChromeSigninController.get();
         signinController.setSignedInAccountName("test@gmail.com");
 
-        setHasOtherFormsOfBrowsingData(false, false);
+        setHasOtherFormsOfBrowsingData(false);
 
-        assertEquals(mAdapter.getSignedInNotSyncedTextForTests(),
-                mAdapter.getPrivacyDisclaimerTextForTests());
+        assertEquals(1, mAdapter.getFirstGroupForTests().size());
 
         signinController.setSignedInAccountName(null);
     }
@@ -248,10 +247,9 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         ChromeSigninController signinController = ChromeSigninController.get();
         signinController.setSignedInAccountName("test@gmail.com");
 
-        setHasOtherFormsOfBrowsingData(false, true);
+        setHasOtherFormsOfBrowsingData(false);
 
-        assertEquals(mAdapter.getSignedInSyncedTextForTests(),
-                mAdapter.getPrivacyDisclaimerTextForTests());
+        assertEquals(1, mAdapter.getFirstGroupForTests().size());
 
         signinController.setSignedInAccountName(null);
     }
@@ -262,11 +260,9 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         ChromeSigninController signinController = ChromeSigninController.get();
         signinController.setSignedInAccountName("test@gmail.com");
 
-        setHasOtherFormsOfBrowsingData(true, true);
+        setHasOtherFormsOfBrowsingData(true);
 
-        String expected = String.format("%1$s %2$s", mAdapter.getSignedInSyncedTextForTests(),
-                mAdapter.getOtherFormsOfBrowsingHistoryTextForTests());
-        assertEquals(expected, mAdapter.getPrivacyDisclaimerTextForTests());
+        assertEquals(2, mAdapter.getFirstGroupForTests().size());
 
         signinController.setSignedInAccountName(null);
     }
@@ -466,20 +462,20 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         assertTrue(mAdapter.hasListHeader());
         assertEquals(1, headerGroup.size());
 
-        // Signed in but not synced and history has items
+        // Signed in but not synced and history has items. The info button should be hidden.
         signinController.setSignedInAccountName("test@gmail.com");
-        setHasOtherFormsOfBrowsingData(false, false);
+        setHasOtherFormsOfBrowsingData(false);
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
                 toolbar.onSignInStateChange();
             }
         });
-        assertTrue(infoMenuItem.isVisible());
+        assertFalse(infoMenuItem.isVisible());
 
         // Signed in, synced, has other forms and has items
         // Privacy disclaimers should be shown by default
-        setHasOtherFormsOfBrowsingData(true, true);
+        setHasOtherFormsOfBrowsingData(true);
         assertTrue(infoMenuItem.isVisible());
         headerGroup = mAdapter.getFirstGroupForTests();
         assertTrue(mAdapter.hasListHeader());
@@ -515,10 +511,11 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         final HistoryManagerToolbar toolbar = mHistoryManager.getToolbarForTests();
         final MenuItem infoMenuItem = toolbar.getItemById(R.id.info_menu_id);
 
-        // Sign in
+        // Sign in and has other forms of browsing data
         int callCount = mTestObserver.onSelectionCallback.getCallCount();
         ChromeSigninController signinController = ChromeSigninController.get();
         signinController.setSignedInAccountName("test@gmail.com");
+        setHasOtherFormsOfBrowsingData(true);
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
@@ -636,12 +633,11 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         return ((SelectableItemViewHolder<HistoryItem>) mostRecentHolder).getItemView();
     }
 
-    private void setHasOtherFormsOfBrowsingData(final boolean hasOtherForms,
-            final boolean hasSyncedResults)  {
+    private void setHasOtherFormsOfBrowsingData(final boolean hasOtherForms) {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                mAdapter.hasOtherFormsOfBrowsingData(hasOtherForms, hasSyncedResults);
+                mAdapter.hasOtherFormsOfBrowsingData(hasOtherForms);
             }
         });
     }
