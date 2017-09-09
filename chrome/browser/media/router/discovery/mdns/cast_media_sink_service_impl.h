@@ -34,11 +34,6 @@ class CastMediaSinkServiceImpl
  public:
   // Default Cast control port to open Cast Socket from DIAL sink.
   static constexpr int kCastControlPort = 8009;
-  // TODO(zhaobin): Remove this when we switch to use max delay instead of max
-  // number of retry attempts to decide when to stop retry.
-  static constexpr int kMaxAttempts = 3;
-  // Initial delay (in seconds) used by backoff policy.
-  static constexpr int kDelayInSeconds = 15;
 
   CastMediaSinkServiceImpl(const OnSinksDiscoveredCallback& callback,
                            cast_channel::CastSocketService* cast_socket_service,
@@ -99,6 +94,10 @@ class CastMediaSinkServiceImpl
                            CacheDialDiscoveredSinks);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest,
                            DualDiscoveryDoesntDuplicateCacheItems);
+  FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest,
+                           TestInitRetryParameters);
+  FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest,
+                           TestInitRetryParametersWithDefaultValue);
 
   // CastSocket::Observer implementation.
   void OnError(const cast_channel::CastSocket& socket,
@@ -158,6 +157,13 @@ class CastMediaSinkServiceImpl
   // RecordDeviceCounts().
   std::set<net::IPEndPoint> known_ip_endpoints_;
 
+  // Initialize |backoff_policy| and |max_retry_attempts| according to feature
+  // parameters. Sets |max_retry_attempts| to 0 if cast channel retry feature is
+  // not enabled; Sets |backoff_policy| and |max_retry_attempts| to default
+  // value if parsing parameter fails.
+  static void InitRetryParameters(net::BackoffEntry::Policy* backoff_policy,
+                                  int* max_retry_attempts);
+
   using MediaSinkInternalMap = std::map<net::IPAddress, MediaSinkInternal>;
 
   // Map of sinks with opened cast channels keyed by IP address.
@@ -179,10 +185,20 @@ class CastMediaSinkServiceImpl
   CastDeviceCountMetrics metrics_;
 
   // Default backoff policy to reopen Cast Socket when channel error occurs.
-  static const net::BackoffEntry::Policy kBackoffPolicy;
+  static const net::BackoffEntry::Policy kDefaultBackoffPolicy;
 
-  // Does not take ownership of |backoff_policy_|.
-  const net::BackoffEntry::Policy* backoff_policy_;
+  // TODO(zhaobin): Remove this when we switch to use max delay instead of max
+  // number of retry attempts to decide when to stop retry.
+  static constexpr int kDefaultMaxRetryAttempts = 3;
+
+  // Parameter name const for kEnableCastChannelRetry feature.
+  static constexpr char kParamNameInitialDelayMS[] = "initial_delay_ms";
+  static constexpr char kParamNameMaxRetryAttempts[] = "max_retry_attempts";
+  static constexpr char kParamNameExponential[] = "exponential";
+
+  net::BackoffEntry::Policy backoff_policy_;
+
+  int max_retry_attempts_;
 
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
