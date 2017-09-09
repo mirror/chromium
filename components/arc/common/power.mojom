@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Next min version: 4
+// Next min version: 5
 
 module arc.mojom;
 
@@ -19,11 +19,15 @@ enum DisplayWakeLockType {
   DIM = 1
 };
 
-// Next method ID: 4
+// Next method ID: 6
 interface PowerHost {
   // Acquire and release wake locks on the host side.
   OnAcquireDisplayWakeLock@0(DisplayWakeLockType type);
   OnReleaseDisplayWakeLock@1(DisplayWakeLockType type);
+
+  // Acquire and release partial wake locks on the host side.
+  [MinVersion=4]OnAcquirePartialWakeLock@4();
+  [MinVersion=4]OnReleasePartialWakeLock@5();
 
   // Checks if there is a display on.
   [MinVersion=1] IsDisplayOn@2() => (bool is_on);
