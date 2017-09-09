@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db2897d4_3f8e68bc",
+        "filename": "chrome/browser/chromeos/extensions/info_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-09T05:38:20Z",
+      "side": 1,
+      "message": "base::MakeUnique\u003cbase::Value\u003e(timezone-\u003eGetValue()-\u003eClone());\n\nor maybe even\n\nbase::MakeUnique\u003cbase::Value\u003e(\n    Profile::FromBrowserContext(context_)-\u003eGetPrefs()-\u003eGetString(\n        prefs::kUserTimezone));",
+      "revId": "22c920d73c7c880741cc22c040f57496cfc48b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
