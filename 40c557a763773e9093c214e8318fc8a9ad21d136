@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b41d4ed_28fbab56",
+        "filename": "components/nacl/loader/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000768
+      },
+      "writtenOn": "2017-09-09T17:25:33Z",
+      "side": 1,
+      "message": "could you add a comment referencing the bug ?",
+      "revId": "40c557a763773e9093c214e8318fc8a9ad21d136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
