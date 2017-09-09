@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "ea8327ec_c2707eb5",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-09T00:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d013490c_43166f34",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "797a2d11_3eb54031",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 11
@@ -400,6 +418,24 @@
       "side": 1,
       "message": "Done? The switch statement is still around.",
       "parentUuid": "fdb33052_2041ab8f",
+      "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f7e3692_bc2e8a72",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-09T00:58:57Z",
+      "side": 1,
+      "message": "Looks like I forgot to take it out of the patch I uploaded. 😔\n\nIt was already non-functional, but I\u0027ve gone and and ripped out the code itself.",
+      "parentUuid": "15e8867b_74ed1237",
       "revId": "1534cbb5dcbd73782afeeb2122805f9df59ded07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

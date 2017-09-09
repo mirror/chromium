@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd0dd5f1_b7cfc3ae",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-09T00:58:57Z",
+      "side": 1,
+      "message": "*shakes fist at style guide for not picking a stance, but removes braces*",
+      "parentUuid": "29ef4089_c67c304e",
+      "revId": "f44ef8e1f069fb333d2d061ebb17aab890af1dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d57e1a9e_fcfd6b0a",
         "filename": "content/public/browser/navigation_throttle.h",
         "patchSetId": 18
@@ -39,6 +57,30 @@
       "revId": "f44ef8e1f069fb333d2d061ebb17aab890af1dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ea26ea_bc4536dc",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-09T00:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d57e1a9e_fcfd6b0a",
+      "range": {
+        "startLine": 103,
+        "startChar": 52,
+        "endLine": 103,
+        "endChar": 67
+      },
+      "revId": "f44ef8e1f069fb333d2d061ebb17aab890af1dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
