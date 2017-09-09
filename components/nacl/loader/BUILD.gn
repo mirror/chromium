@@ -134,6 +134,10 @@ if (is_linux) {
 
     ldflags = [ "-pie" ]
 
+    if (is_chromeos) {
+      ldflags += [ "-rtlib=libgcc" ]
+    }
+
     data_deps = [
       "//native_client/src/trusted/service_runtime/linux:bootstrap",
     ]
