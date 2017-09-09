@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a12f2e2b_51e0396e",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-09T03:05:25Z",
+      "side": 1,
+      "message": "I also prefer |timestamp|, will also change it in a later patch. Thanks!",
+      "parentUuid": "fa971bd4_bc96dfc8",
+      "range": {
+        "startLine": 169,
+        "startChar": 29,
+        "endLine": 169,
+        "endChar": 40
+      },
+      "revId": "dfd7bdedebdef670da00176349f1c7aa53568873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7372573_2833cde3",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2
