@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa971bd4_bc96dfc8",
+        "filename": "ash/system/power/tablet_power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-09T00:36:13Z",
+      "side": 1,
+      "message": "i\u0027m not sure that it really matters, although i have a slight preference for using |timestamp| when it\u0027s available. timestamp is the time at which powerd received the event (not the timestamp from the event itself). d-bus signals are fast, so timestamp and tick_clocks_-\u003eNowTicks() are probably generally very close.",
+      "parentUuid": "d3a4bccb_77ffcfbd",
+      "range": {
+        "startLine": 169,
+        "startChar": 29,
+        "endLine": 169,
+        "endChar": 40
+      },
+      "revId": "dfd7bdedebdef670da00176349f1c7aa53568873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7372573_2833cde3",
         "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
         "patchSetId": 2

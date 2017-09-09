@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0ca7082_17f8d0fd",
+        "filename": "ash/system/power/tablet_power_button_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-09T00:36:13Z",
+      "side": 1,
+      "message": "nit: we should probably change these constants to base::TimeDelta in a later change",
+      "revId": "78341f67f13ec536a187cd8115f55dc413335e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
