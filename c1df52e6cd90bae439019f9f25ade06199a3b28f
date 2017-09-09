@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "cc5d98d4_3acef129",
+        "filename": "components/arc/common/power.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-09T17:19:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c312dc2_d6d415a7",
+      "revId": "c1df52e6cd90bae439019f9f25ade06199a3b28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10be80cd_3270ceec",
         "filename": "components/arc/power/arc_power_bridge.cc",
         "patchSetId": 3
@@ -69,6 +87,24 @@
       "revId": "c1df52e6cd90bae439019f9f25ade06199a3b28f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069b01cf_16380bef",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-09T17:19:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10be80cd_3270ceec",
+      "revId": "c1df52e6cd90bae439019f9f25ade06199a3b28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "7edf4bca_5b71be7d",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-09T17:19:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "342b4ae0_bcebfe9b",
+      "revId": "c1df52e6cd90bae439019f9f25ade06199a3b28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d34a238e_cb25656f",
         "filename": "components/arc/power/arc_power_bridge.h",
         "patchSetId": 3
@@ -103,6 +157,24 @@
       "revId": "c1df52e6cd90bae439019f9f25ade06199a3b28f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd56831_0481e205",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-09T17:19:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d34a238e_cb25656f",
+      "revId": "c1df52e6cd90bae439019f9f25ade06199a3b28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
