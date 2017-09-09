@@ -8,8 +8,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <vector>
-
+#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "media/base/media_export.h"
@@ -31,26 +30,22 @@ class MEDIA_EXPORT MovingAverage {
   // Returns the current average of all held samples.
   base::TimeDelta Average() const;
 
-  // Returns the standard deviation of all held samples.
+  // Returns the population standard deviation of all held samples.
   base::TimeDelta Deviation() const;
 
   // Resets the state of the class to its initial post-construction state.
   void Reset();
 
-  size_t count() const { return count_; }
+  // TODO(dalecurtis): Rename this to empty(), no one is actually using the true
+  // count value anywhere.
+  bool count() const { return samples_.size(); }
 
   base::TimeDelta max() const { return max_; }
 
  private:
   // Maximum number of elements allowed in the average.
   const size_t depth_;
-  std::vector<base::TimeDelta> samples_;
-
-  // Number of elements seen thus far.
-  uint64_t count_ = 0;
-
-  base::TimeDelta total_;
-  uint64_t square_sum_us_ = 0;
+  base::circular_deque<base::TimeDelta> samples_;
 
   // Maximum value ever seen.
   base::TimeDelta max_ = kNoTimestamp;
