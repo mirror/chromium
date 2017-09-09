@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10e823e9_5e13c512",
+        "filename": "ash/tray_action/test_tray_action_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-09T23:23:06Z",
+      "side": 1,
+      "message": "nit: blank line above",
+      "revId": "258728415b513363b8041c80d8fb6ac20af97b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d0788e_4e22f88d",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-09T23:23:06Z",
+      "side": 1,
+      "message": "nit: Can you add a comment, either here or at the kUnlockButtonPressed enum, explaining what that means? (Is it the physical power button, or a fingerprint unlock, or a clickable UI button?)\n\nEven with the explanation it\u0027s still not totally clear to me that an arbitrary mojo method named CloseLockScreenNote() is always called due to a press on a particular button. Either the mojo method needs to be renamed (OnUnlocked? OnUnlockButtonPressed?), or CloseLockScreenNote() needs to take a reason, or this needs more documentation.",
+      "revId": "258728415b513363b8041c80d8fb6ac20af97b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
