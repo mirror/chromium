@@ -82,6 +82,12 @@ class WebServiceWorkerProviderImpl : public blink::WebServiceWorkerProvider {
           infos,
       const base::Optional<std::vector<ServiceWorkerVersionAttributes>>& attrs);
 
+  void OnDidGetRegistrationForReady(
+      std::unique_ptr<WebServiceWorkerGetRegistrationForReadyCallbacks>
+          callbacks,
+      const base::Optional<ServiceWorkerRegistrationObjectInfo>& registration,
+      const base::Optional<ServiceWorkerVersionAttributes>& attributes);
+
   scoped_refptr<ThreadSafeSender> thread_safe_sender_;
   scoped_refptr<ServiceWorkerProviderContext> context_;
 

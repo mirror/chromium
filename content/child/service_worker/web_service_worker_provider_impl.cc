@@ -173,8 +173,15 @@ void WebServiceWorkerProviderImpl::GetRegistrations(
 void WebServiceWorkerProviderImpl::GetRegistrationForReady(
     std::unique_ptr<WebServiceWorkerGetRegistrationForReadyCallbacks>
         callbacks) {
-  GetDispatcher()->GetRegistrationForReady(context_->provider_id(),
-                                           std::move(callbacks));
+  TRACE_EVENT_ASYNC_BEGIN0(
+      "ServiceWorker", "WebServiceWorkerProviderImpl::GetRegistrationForReady",
+      this);
+  // As |this| owns |context_| which owns the
+  // mojom::ServiceWorkerContainerHostAssociatedPtr, using Unretained() here
+  // should be guaranteed safe.
+  context_->container_host()->GetRegistrationForReady(base::BindOnce(
+      &WebServiceWorkerProviderImpl::OnDidGetRegistrationForReady,
+      base::Unretained(this), std::move(callbacks)));
 }
 
 bool WebServiceWorkerProviderImpl::ValidateScopeAndScriptURL(
@@ -297,6 +304,20 @@ void WebServiceWorkerProviderImpl::OnDidGetRegistrations(
         GetDispatcher()->GetOrAdoptRegistration((*infos)[i], (*attrs)[i]));
   }
   callbacks->OnSuccess(std::move(registrations));
+}
+
+void WebServiceWorkerProviderImpl::OnDidGetRegistrationForReady(
+    std::unique_ptr<WebServiceWorkerGetRegistrationForReadyCallbacks> callbacks,
+    const base::Optional<ServiceWorkerRegistrationObjectInfo>& registration,
+    const base::Optional<ServiceWorkerVersionAttributes>& attributes) {
+  TRACE_EVENT_ASYNC_END0(
+      "ServiceWorker", "WebServiceWorkerProviderImpl::GetRegistrationForReady",
+      this);
+  DCHECK(registration);
+  DCHECK(attributes);
+  DCHECK_NE(kInvalidServiceWorkerRegistrationHandleId, registration->handle_id);
+  callbacks->OnSuccess(WebServiceWorkerRegistrationImpl::CreateHandle(
+      GetDispatcher()->GetOrAdoptRegistration(*registration, *attributes)));
 }
 
 }  // namespace content
