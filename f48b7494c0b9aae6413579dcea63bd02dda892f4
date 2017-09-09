@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "873b5e27_804e67e6",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1291,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-09T00:37:46Z",
+      "side": 1,
+      "message": "Looks like the local destination case would cause a console error, privet/extension would fail an assert. Added DCHECK.",
+      "parentUuid": "1222069b_9b60da73",
+      "revId": "f48b7494c0b9aae6413579dcea63bd02dda892f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb1ec33c_b2ef7c38",
         "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
         "patchSetId": 1
