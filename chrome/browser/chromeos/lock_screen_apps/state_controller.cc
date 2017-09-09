@@ -280,6 +280,11 @@ void StateController::RequestNewLockScreenNote() {
   HandleNewNoteRequest(NewNoteRequestType::kTrayAction);
 }
 
+void StateController::CloseLockScreenNote() {
+  ResetNoteTakingWindowAndMoveToNextState(
+      true /*close_window*/, NoteTakingExitReason::kUnlockButtonPressed);
+}
+
 void StateController::OnSessionStateChanged() {
   if (!session_manager::SessionManager::Get()->IsScreenLocked()) {
     lock_screen_data_->SetSessionLocked(false);
