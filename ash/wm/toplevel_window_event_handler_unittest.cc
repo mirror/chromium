@@ -1028,6 +1028,59 @@ TEST_F(ToplevelWindowEventHandlerTest, DragSnappedWindowToExternalDisplay) {
       w1->GetBoundsInScreen()));
 }
 
+// Tests mouse drag on a window has to traveled beyond a threshold to trigger
+// window resize.
+TEST_F(ToplevelWindowEventHandlerTest, DragWindowThreshold) {
+  std::unique_ptr<aura::Window> window(
+      CreateTestWindowInShellWithDelegateAndType(
+          new TestWindowDelegate(HTCAPTION), aura::client::WINDOW_TYPE_NORMAL,
+          0, gfx::Rect(gfx::Size(100, 100))));
+  const gfx::Point initial_window_center(window->bounds().CenterPoint());
+
+  // Drag the window not beyond the threshold. Expect the window center is not
+  // changed.
+  ui::test::EventGenerator generator(Shell::GetPrimaryRootWindow(),
+                                     window.get());
+  generator.DragMouseBy(0, 19);
+  EXPECT_EQ(initial_window_center.ToString(),
+            window->bounds().CenterPoint().ToString());
+
+  // Drag the window beyond the threshold. Expect the window center is changed
+  // by dragging distance.
+  const gfx::Point expected_window_center =
+      initial_window_center + gfx::Vector2d(0, 20);
+  generator.DragMouseBy(0, 20);
+  EXPECT_EQ(expected_window_center.ToString(),
+            window->bounds().CenterPoint().ToString());
+}
+
+// Tests mouse drag on a snapped window has to traveled beyond a threshold to
+// trigger window to unsnap.
+TEST_F(ToplevelWindowEventHandlerTest, DragSnappedWindowThreshold) {
+  std::unique_ptr<aura::Window> window(
+      CreateTestWindowInShellWithDelegateAndType(
+          new TestWindowDelegate(HTCAPTION), aura::client::WINDOW_TYPE_NORMAL,
+          0, gfx::Rect(gfx::Size(100, 100))));
+
+  // Snap the window to the right.
+  wm::WindowState* window_state = wm::GetWindowState(window.get());
+  ASSERT_TRUE(window_state->CanSnap());
+  const wm::WMEvent event(wm::WM_EVENT_CYCLE_SNAP_RIGHT);
+  window_state->OnWMEvent(&event);
+  ASSERT_TRUE(window_state->IsSnapped());
+
+  // Drag the window not beyond the threshold. Expect the window is still
+  // snapped.
+  ui::test::EventGenerator generator(Shell::GetPrimaryRootWindow(),
+                                     window.get());
+  generator.DragMouseBy(0, 19);
+  EXPECT_TRUE(window_state->IsSnapped());
+
+  // Drag the window beyond the threshold. Expect the window is unsnapped.
+  generator.DragMouseBy(0, 20);
+  EXPECT_FALSE(window_state->IsSnapped());
+}
+
 // Showing the resize shadows when the mouse is over the window edges is
 // tested in resize_shadow_and_cursor_test.cc
 
