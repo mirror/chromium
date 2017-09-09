@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "e34539bc_dff35d61",
+        "filename": "components/offline_pages/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-09T02:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2177afc4_5c691b2a",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 10
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9b7d746_b465bd65",
+        "filename": "components/offline_pages/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-09T02:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2177afc4_5c691b2a",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 10
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "642b9bb2_7241730c",
         "filename": "components/offline_pages/core/offline_page_types.h",
         "patchSetId": 2
@@ -62,6 +110,24 @@
       "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e529250_fd74872f",
+        "filename": "components/offline_pages/core/offline_page_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-09T02:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "642b9bb2_7241730c",
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "4991eb6b_67791316",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-09T02:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "944b1a31_bf327f0e",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb92a34a_b36d7c6b",
         "filename": "components/offline_pages/core/tasks/delete_page_task.cc",
         "patchSetId": 2
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "94ef6052_348d1575",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-09T02:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb92a34a_b36d7c6b",
+      "range": {
+        "startLine": 81,
+        "startChar": 23,
+        "endLine": 81,
+        "endChar": 29
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80f44b1a_53ad761f",
         "filename": "components/offline_pages/core/tasks/delete_page_task.cc",
         "patchSetId": 2
@@ -125,6 +239,24 @@
       "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c958d278_d29d2869",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-09T02:27:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "80f44b1a_53ad761f",
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "c137c316_6ef23210",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-09T02:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c6abb20_b2fe3761",
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5643a25a_05e7793d",
         "filename": "components/offline_pages/core/tasks/delete_page_task.cc",
         "patchSetId": 2
@@ -156,6 +306,30 @@
       "writtenOn": "2017-09-07T20:50:13Z",
       "side": 1,
       "message": "apply my comment from add task.",
+      "range": {
+        "startLine": 291,
+        "startChar": 21,
+        "endLine": 291,
+        "endChar": 45
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c494e3c_f508b3e6",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-09T02:27:51Z",
+      "side": 1,
+      "message": "I\u0027m not sure what was the action item.. And i\u0027ve made a reply to your comment in add task. Will address both of them later.",
+      "parentUuid": "5643a25a_05e7793d",
       "range": {
         "startLine": 291,
         "startChar": 21,
@@ -185,6 +359,24 @@
     },
     {
       "key": {
+        "uuid": "014a1542_a8c383b6",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-09T02:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a14a749_81d73b68",
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbbc947b_b54c5995",
         "filename": "components/offline_pages/core/tasks/delete_page_task.h",
         "patchSetId": 2
@@ -205,6 +397,30 @@
       "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80848b40_9f7e1592",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-09T02:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbbc947b_b54c5995",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "deaff120_a1f5b1af",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-09T02:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f51f2e74_c85dad7e",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1610cdc_2598c1c7",
         "filename": "components/offline_pages/core/tasks/delete_page_task.h",
         "patchSetId": 2
@@ -254,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "61ff7f74_3989b9de",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-09T02:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1610cdc_2598c1c7",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 26
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7977c79_ad0e49e2",
         "filename": "components/offline_pages/core/tasks/delete_page_task.h",
         "patchSetId": 2
@@ -268,6 +532,24 @@
       "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62db50c_df7a23d9",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-09T02:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7977c79_ad0e49e2",
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +573,30 @@
       "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e320144_339b92c9",
+        "filename": "components/offline_pages/core/tasks/delete_page_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-09T02:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66ab3a50_b90600f8",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 23
+      },
+      "revId": "afabba4bf32d6ac42c8ceaa3da33a0b3fb4e1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
