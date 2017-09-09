@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd29d52d_cd3f8034",
+        "filename": "third_party/WebKit/Source/core/paint/SVGPaintContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-09T03:02:48Z",
+      "side": 0,
+      "message": "Why can this be removed?",
+      "revId": "5eb4725e6a62aeef1f5695024a4f19f7d1d21d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "746dcbad_8b0230b5",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3380,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-09T03:02:48Z",
+      "side": 1,
+      "message": "This method will never be called in V2 mode.",
+      "revId": "39e82536aec3b1d226cdf057e7416302473d4bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bcee2c0_a5473398",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3383,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-09T03:02:48Z",
+      "side": 1,
+      "message": "How about doing it during PaintPropertyTreeBuilder? It can query compositing state and \nthe graphics layer hierarchy.",
+      "revId": "39e82536aec3b1d226cdf057e7416302473d4bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde3a1f8_a2208ddb",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3387,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-09T03:02:48Z",
+      "side": 1,
+      "message": "Isn\u0027t this all encoded in the Position of the graphics layer?",
+      "revId": "39e82536aec3b1d226cdf057e7416302473d4bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce80f4c_ba708cd3",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-09T03:02:48Z",
+      "side": 1,
+      "message": "Explain what this does (in a comment).",
+      "revId": "39e82536aec3b1d226cdf057e7416302473d4bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34891e2_452c9842",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-09T03:02:48Z",
+      "side": 1,
+      "message": "Maybe add some more DCHECK(!REF::SP175Enaled()) in other methods\nin this class like raster helpers or otherwise that are SPv2 specific?",
+      "revId": "39e82536aec3b1d226cdf057e7416302473d4bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
