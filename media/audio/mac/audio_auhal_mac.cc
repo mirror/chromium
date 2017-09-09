@@ -145,7 +145,7 @@ static void SetAudioChannelLayout(int channels,
 
   OSStatus result = AudioUnitSetProperty(
       audio_unit, kAudioUnitProperty_AudioChannelLayout, kAudioUnitScope_Input,
-      0, coreaudio_layout, layout_size);
+      AUElement::OUTPUT, coreaudio_layout, layout_size);
   if (result != noErr) {
     OSSTATUS_DLOG(ERROR, result)
         << "Failed to set audio channel layout. Using default layout.";
@@ -324,7 +324,12 @@ OSStatus AUHALStream::Render(AudioUnitRenderActionFlags* flags,
 }
 
 void AUHALStream::ProvideInput(int frame_delay, AudioBus* dest) {
-  DCHECK(source_);
+  // DCHECK(source_);
+
+  if (!source_) {
+    LOG(ERROR) << "No source! stopped=" << stopped_;
+    return;
+  }
 
   const base::TimeTicks playout_time =
       current_playout_time_ +
@@ -477,11 +482,14 @@ bool AUHALStream::ConfigureAUHAL() {
   OSStatus result = AudioUnitSetProperty(
       local_audio_unit->audio_unit(), kAudioOutputUnitProperty_EnableIO,
       kAudioUnitScope_Output, AUElement::OUTPUT, &enable_io, sizeof(enable_io));
-  if (result != noErr)
+  if (result != noErr && result != kAudioUnitErr_PropertyNotWritable) {
+    OSSTATUS_DLOG(ERROR, result) << "kAudioOutputUnitProperty_EnableIO.";
     return false;
+  }
 
   if (!SetStreamFormat(params_.channels(), params_.sample_rate(),
                        local_audio_unit->audio_unit(), &output_format_)) {
+    LOG(ERROR) << "SetStreamFormat";
     return false;
   }
 
@@ -490,6 +498,7 @@ bool AUHALStream::ConfigureAUHAL() {
   if (!manager_->MaybeChangeBufferSize(device_, local_audio_unit->audio_unit(),
                                        0, number_of_frames_, &size_was_changed,
                                        &io_buffer_frame_size)) {
+    LOG(ERROR) << "MaybeChangeBufferSize";
     return false;
   }
 
@@ -500,8 +509,10 @@ bool AUHALStream::ConfigureAUHAL() {
   result = AudioUnitSetProperty(
       local_audio_unit->audio_unit(), kAudioUnitProperty_SetRenderCallback,
       kAudioUnitScope_Input, AUElement::OUTPUT, &callback, sizeof(callback));
-  if (result != noErr)
+  if (result != noErr) {
+    LOG(ERROR) << "kAudioUnitProperty_SetRenderCallback";
     return false;
+  }
 
   SetAudioChannelLayout(params_.channels(), params_.channel_layout(),
                         local_audio_unit->audio_unit());

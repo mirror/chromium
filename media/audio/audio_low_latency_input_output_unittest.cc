@@ -282,10 +282,9 @@ class StreamWrapper {
   typedef typename StreamTraits::StreamType StreamType;
 
   explicit StreamWrapper(AudioManager* audio_manager)
-      :
-        audio_manager_(audio_manager),
+      : audio_manager_(audio_manager),
         format_(AudioParameters::AUDIO_PCM_LOW_LATENCY),
-#if defined(OS_ANDROID)
+#if defined(OS_ANDROID) || 1
         channel_layout_(CHANNEL_LAYOUT_MONO),
 #else
         channel_layout_(CHANNEL_LAYOUT_STEREO),
@@ -298,7 +297,7 @@ class StreamWrapper {
 
     // Use the preferred buffer size. Note that the input side uses the same
     // size as the output side in this implementation.
-    samples_per_packet_ = params.frames_per_buffer();
+    samples_per_packet_ = 256;  // params.frames_per_buffer();
   }
 
   virtual ~StreamWrapper() {}
@@ -362,6 +361,14 @@ TEST_F(AudioLowLatencyInputOutputTest, DISABLED_FullDuplexDelayMeasurement) {
   AudioOutputStream* aos = aosw.Create();
   EXPECT_TRUE(aos);
 
+  LOG(ERROR) << " sample_rate : " << aisw.sample_rate() << " vs "
+             << aosw.sample_rate();
+  LOG(ERROR) << " samples_per_packet : " << aisw.samples_per_packet() << " vs "
+             << aosw.samples_per_packet();
+  LOG(ERROR) << " channels : " << aisw.channels() << " vs " << aosw.channels();
+  LOG(ERROR) << " bits_per_sample : " << aisw.bits_per_sample() << " vs "
+             << aosw.bits_per_sample();
+
   // This test only supports identical parameters in both directions.
   // TODO(henrika): it is possible to cut delay here by using different
   // buffer sizes for input and output.
@@ -377,8 +384,18 @@ TEST_F(AudioLowLatencyInputOutputTest, DISABLED_FullDuplexDelayMeasurement) {
     return;
   }
 
-  EXPECT_TRUE(ais->Open());
-  EXPECT_TRUE(aos->Open());
+  bool opened;
+  EXPECT_TRUE(opened = ais->Open());
+  if (!opened) {
+    ais->Close();
+    return;
+  }
+  EXPECT_TRUE(opened = aos->Open());
+  if (!opened) {
+    ais->Close();
+    aos->Close();
+    return;
+  }
 
   FullDuplexAudioSinkSource full_duplex(
       aisw.sample_rate(), aisw.samples_per_packet(), aisw.channels());

@@ -14,6 +14,7 @@
 
 #include "base/command_line.h"
 #include "base/feature_list.h"
+#include "base/mac/mac_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/optional.h"
@@ -525,16 +526,22 @@ bool MediaStreamAudioProcessor::WouldModifyAudio(
   if (properties.goog_audio_mirroring)
     return true;
 
+#if defined(OS_MACOSX)
+  const bool hw_aec_supported = base::mac::IsAtLeastOS10_12();
+#else
+  const bool hw_aec_supported = false;
+#endif
+
 #if !defined(OS_IOS)
-  if (properties.enable_sw_echo_cancellation ||
-      properties.goog_auto_gain_control) {
+  if (!hw_aec_supported && (properties.enable_sw_echo_cancellation ||
+                            properties.goog_auto_gain_control)) {
     return true;
   }
 #endif
 
 #if !defined(OS_IOS) && !defined(OS_ANDROID)
-  if (properties.goog_experimental_echo_cancellation ||
-      properties.goog_typing_noise_detection) {
+  if (!hw_aec_supported && (properties.goog_experimental_echo_cancellation ||
+                            properties.goog_typing_noise_detection)) {
     return true;
   }
 #endif

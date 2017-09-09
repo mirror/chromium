@@ -11,6 +11,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/mac/mac_logging.h"
+#include "base/mac/mac_util.h"
 #include "base/mac/scoped_cftyperef.h"
 #include "base/macros.h"
 #include "base/memory/free_deleter.h"
@@ -210,6 +211,8 @@ static void GetAudioDeviceInfo(bool is_input,
     // Prepend the default device to the list since we always want it to be
     // on the top of the list for all platforms. There is no duplicate
     // counting here since the default device has been abstracted out before.
+    if (base::mac::IsAtLeastOS10_12())
+      device_names->push_front(media::AudioDeviceName::CreateCommunications());
     device_names->push_front(media::AudioDeviceName::CreateDefault());
   }
 }
@@ -226,7 +229,8 @@ static AudioDeviceID GetAudioDeviceIdByUId(bool is_input,
   UInt32 device_size = sizeof(audio_device_id);
   OSStatus result = -1;
 
-  if (AudioDeviceDescription::IsDefaultDevice(device_id)) {
+  if (AudioDeviceDescription::IsDefaultDevice(device_id) ||
+      device_id == AudioDeviceDescription::kCommunicationsDeviceId) {
     // Default Device.
     property_address.mSelector = is_input ?
         kAudioHardwarePropertyDefaultInputDevice :
@@ -340,6 +344,11 @@ static bool GetDeviceChannels(AudioDeviceID device,
   DCHECK(AudioManager::Get()->GetTaskRunner()->BelongsToCurrentThread());
   CHECK(channels);
 
+  if (true) {
+    *channels = 1;
+    return true;
+  }
+
   // If the device has more channels than possible for layouts to express, use
   // the total count of channels on the device; as of this writing, macOS will
   // only return up to 8 channels in any layout. To allow WebAudio to work with
@@ -357,22 +366,34 @@ static bool GetDeviceChannels(AudioDeviceID device,
   }
 
   ScopedAudioUnit au(device, element);
-  if (!au.is_valid())
+  if (!au.is_valid()) {
+    LOG(ERROR) << "!au.is_valid()";
     return false;
+  }
 
   // Attempt to retrieve the channel layout from the AudioUnit.
   //
   // Note: We don't use kAudioDevicePropertyPreferredChannelLayout on the device
   // because it is not available on all devices.
+  bool use_preferred = false;
   UInt32 size;
   Boolean writable;
   OSStatus result = AudioUnitGetPropertyInfo(
       au.audio_unit(), kAudioUnitProperty_AudioChannelLayout,
       kAudioUnitScope_Output, element, &size, &writable);
   if (result != noErr) {
-    OSSTATUS_DLOG(ERROR, result)
+    OSSTATUS_DLOG(WARNING, result)
         << "Failed to get property info for AudioUnit channel layout.";
-    return false;
+    result = AudioUnitGetPropertyInfo(
+        au.audio_unit(), kAudioDevicePropertyPreferredChannelLayout,
+        kAudioUnitScope_Output, element, &size, &writable);
+    if (result != noErr) {
+      OSSTATUS_DLOG(ERROR, result) << "Failed to get preferred property info "
+                                      "for AudioUnit channel layout.";
+      return false;
+    }
+
+    use_preferred = true;
   }
 
   std::unique_ptr<uint8_t[]> layout_storage(new uint8_t[size]);
@@ -380,7 +401,9 @@ static bool GetDeviceChannels(AudioDeviceID device,
       reinterpret_cast<AudioChannelLayout*>(layout_storage.get());
 
   result = AudioUnitGetProperty(au.audio_unit(),
-                                kAudioUnitProperty_AudioChannelLayout,
+                                use_preferred
+                                    ? kAudioDevicePropertyPreferredChannelLayout
+                                    : kAudioUnitProperty_AudioChannelLayout,
                                 kAudioUnitScope_Output, element, layout, &size);
   if (result != noErr) {
     OSSTATUS_LOG(ERROR, result) << "Failed to get AudioUnit channel layout.";
@@ -621,9 +644,15 @@ AudioParameters AudioManagerMac::GetInputStreamParameters(
   }
 
   int channels = 0;
+  int effects = AudioParameters::NO_EFFECTS;
   ChannelLayout channel_layout = CHANNEL_LAYOUT_STEREO;
   if (GetDeviceChannels(device, AUElement::INPUT, &channels) && channels <= 2) {
-    channel_layout = GuessChannelLayout(channels);
+    if (device_id == AudioDeviceDescription::kCommunicationsDeviceId) {
+      channel_layout = CHANNEL_LAYOUT_MONO;
+      effects = AudioParameters::ECHO_CANCELLER | AudioParameters::DUCKING;
+    } else {
+      channel_layout = GuessChannelLayout(channels);
+    }
   } else {
     DLOG(ERROR) << "Failed to get the device channels, use stereo as default "
                 << "for device " << device_id;
@@ -639,14 +668,19 @@ AudioParameters AudioManagerMac::GetInputStreamParameters(
   const int buffer_size = ChooseBufferSize(true, sample_rate);
 
   // TODO(xians): query the native channel layout for the specific device.
-  return AudioParameters(
-      AudioParameters::AUDIO_PCM_LOW_LATENCY, channel_layout,
-      sample_rate, 16, buffer_size);
+  auto params = AudioParameters(AudioParameters::AUDIO_PCM_LOW_LATENCY,
+                                channel_layout, sample_rate, 16, buffer_size);
+  params.set_effects(effects);
+  return params;
 }
 
 std::string AudioManagerMac::GetAssociatedOutputDeviceID(
     const std::string& input_device_id) {
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
+
+  if (input_device_id == AudioDeviceDescription::kCommunicationsDeviceId)
+    return AudioDeviceDescription::kCommunicationsDeviceId;
+
   AudioDeviceID device = GetAudioDeviceIdByUId(true, input_device_id);
   if (device == kAudioObjectUnknown)
     return std::string();
@@ -671,7 +705,7 @@ std::string AudioManagerMac::GetAssociatedOutputDeviceID(
 
   std::vector<std::string> associated_devices;
   for (int i = 0; i < device_count; ++i) {
-    // Get the number of  output channels of the device.
+    // Get the number of output channels of the device.
     pa.mSelector = kAudioDevicePropertyStreams;
     size = 0;
     result = AudioObjectGetPropertyDataSize(devices.get()[i],
@@ -762,12 +796,20 @@ AudioOutputStream* AudioManagerMac::MakeLowLatencyOutputStream(
     return NULL;
   }
 
+#if 1
+  if (device_id == AudioDeviceDescription::kCommunicationsDeviceId) {
+    DCHECK(params.channel_layout() == CHANNEL_LAYOUT_MONO);
+  }
+#endif
+
   // Only set the device and sample rate if we just initialized the device
   // listener.
   if (device_listener_first_init) {
     // Only set the current output device for the default device.
-    if (AudioDeviceDescription::IsDefaultDevice(device_id))
+    if (AudioDeviceDescription::IsDefaultDevice(device_id) ||
+        device_id == AudioDeviceDescription::kCommunicationsDeviceId) {
       current_output_device_ = device;
+    }
     // Just use the current sample rate since we don't allow non-native sample
     // rates on OSX.
     current_sample_rate_ = params.sample_rate();
@@ -823,11 +865,21 @@ AudioInputStream* AudioManagerMac::MakeLowLatencyInputStream(
     const LogCallback& log_callback) {
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
   DCHECK_EQ(AudioParameters::AUDIO_PCM_LOW_LATENCY, params.format());
+#if 1
+  if (device_id == AudioDeviceDescription::kCommunicationsDeviceId) {
+    DCHECK(params.channel_layout() == CHANNEL_LAYOUT_MONO);
+  }
+#endif
   // Gets the AudioDeviceID that refers to the AudioInputDevice with the device
   // unique id. This AudioDeviceID is used to set the device for Audio Unit.
   AudioDeviceID audio_device_id = GetAudioDeviceIdByUId(true, device_id);
   AUAudioInputStream* stream = NULL;
   if (audio_device_id != kAudioObjectUnknown) {
+#if 1
+    if (device_id == AudioDeviceDescription::kCommunicationsDeviceId) {
+      DCHECK((params.effects() | AudioParameters::ECHO_CANCELLER) != 0);
+    }
+#endif
     stream =
         new AUAudioInputStream(this, params, audio_device_id, log_callback);
     low_latency_input_streams_.push_back(stream);
@@ -868,13 +920,25 @@ AudioParameters AudioManagerMac::GetPreferredOutputStreamParameters(
   }
 
   int hardware_channels;
-  if (!GetDeviceChannels(device, AUElement::OUTPUT, &hardware_channels))
+  int effects = AudioParameters::NO_EFFECTS;
+  if (output_device_id == AudioDeviceDescription::kCommunicationsDeviceId) {
+    hardware_channels = 1;
+    effects = AudioParameters::ECHO_CANCELLER | AudioParameters::DUCKING;
+  } else if (!GetDeviceChannels(device, AUElement::OUTPUT,
+                                &hardware_channels)) {
     hardware_channels = 2;
+  }
 
   // Use the input channel count and channel layout if possible.  Let OSX take
   // care of remapping the channels; this lets user specified channel layouts
   // work correctly.
   int output_channels = input_params.channels();
+#if 1
+  if (output_device_id == AudioDeviceDescription::kCommunicationsDeviceId) {
+    DCHECK(!has_valid_input_params ||
+           input_params.channel_layout() == CHANNEL_LAYOUT_MONO);
+  }
+#endif
   ChannelLayout channel_layout = input_params.channel_layout();
   if (!has_valid_input_params || output_channels > hardware_channels) {
     output_channels = hardware_channels;
@@ -886,6 +950,7 @@ AudioParameters AudioManagerMac::GetPreferredOutputStreamParameters(
   AudioParameters params(AudioParameters::AUDIO_PCM_LOW_LATENCY, channel_layout,
                          hardware_sample_rate, 16, buffer_size);
   params.set_channels_for_discrete(output_channels);
+  params.set_effects(effects);
   return params;
 }
 
@@ -935,6 +1000,8 @@ bool AudioManagerMac::IsSuspending() const {
 
 bool AudioManagerMac::ShouldDeferStreamStart() const {
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
+  if (!power_observer_)
+    return false;
   return power_observer_->ShouldDeferStreamStart();
 }
 

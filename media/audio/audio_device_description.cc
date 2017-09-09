@@ -2,8 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/logging.h"
 #include "media/audio/audio_device_description.h"
+#include "base/logging.h"
+#include "build/build_config.h"
 #include "media/base/localized_strings.h"
 
 namespace media {
@@ -44,7 +45,7 @@ std::string AudioDeviceDescription::GetDefaultDeviceName() {
 
 // static
 std::string AudioDeviceDescription::GetCommunicationsDeviceName() {
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_MACOSX)
   return GetLocalizedStringUTF8(COMMUNICATIONS_AUDIO_DEVICE_NAME);
 #else
   NOTREACHED();
