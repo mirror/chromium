@@ -14,9 +14,8 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/test/scoped_task_environment.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_byte_range.h"
 #include "net/http/http_response_headers.h"
@@ -166,7 +165,6 @@ class TestStreamReaderJob : public AndroidStreamReaderURLRequestJob {
                                          network_delegate,
                                          std::move(delegate)),
         stream_reader_(std::move(stream_reader)) {
-    task_runner_ = base::ThreadTaskRunnerHandle::Get();
   }
 
   ~TestStreamReaderJob() override {}
@@ -177,12 +175,8 @@ class TestStreamReaderJob : public AndroidStreamReaderURLRequestJob {
   }
 
  protected:
-  base::TaskRunner* GetWorkerThreadRunner() override {
-    return task_runner_.get();
-  }
-
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   std::unique_ptr<InputStreamReader> stream_reader_;
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 };
 
 }  // namespace
