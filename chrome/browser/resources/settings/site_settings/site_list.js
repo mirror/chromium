@@ -153,8 +153,7 @@ Polymer({
     // The observer for All Sites fires before the attached/ready event, so
     // initialize this here.
     if (this.browserProxy_ === undefined) {
-      this.browserProxy_ =
-          settings.SiteSettingsPrefsBrowserProxyImpl.getInstance();
+      this.browserProxy_ = settings.LocalDataBrowserProxyImpl.getInstance();
     }
 
     this.setUpActionMenu_();
