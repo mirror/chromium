@@ -9,16 +9,6 @@
 -URLRequest*FTP*
 -URLRequestQuic*
 
-# Following tests pass locally, but flake on bots.
--DiskCacheEntryTest*AsyncIO*
--DiskCacheTest.BlockFiles_Grow
--DiskCacheBackendTest.SimpleCacheDeleteQuickly
--URLRequestTestHTTP.GetTest_ManyCookies
-
-# https://crbug.com/755552
--HttpCache.RangeGET_ParallelValidationDifferentRanges
--HttpCache.RangeGET_ParallelValidationOverlappingRanges
-
 # base::MakeFileUnreadable() doesn't work. https://crbug.com/759853
 -HttpNetworkTransactionTest.UploadUnreadableFile
 -SpdyNetworkTransactionTest.UnreadableFilePost
