@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c36567e0_859fcf4a",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-09T02:00:37Z",
+      "side": 1,
+      "message": "nit: s/modal_system/system_modal/",
+      "range": {
+        "startLine": 551,
+        "startChar": 11,
+        "endLine": 551,
+        "endChar": 23
+      },
+      "revId": "5947c7fb568b66b857a951e6d9c373aaad622eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e47a694_7f941253",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-09T02:00:37Z",
+      "side": 1,
+      "message": "nit: s/modal_system/system_modal/",
+      "range": {
+        "startLine": 412,
+        "startChar": 11,
+        "endLine": 412,
+        "endChar": 23
+      },
+      "revId": "5947c7fb568b66b857a951e6d9c373aaad622eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
