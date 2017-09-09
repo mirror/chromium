@@ -22,6 +22,30 @@
       "revId": "5e4e63402ce9532397dcf0bff29f3cb88e222683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "343fe9f0_a39acfdc",
+        "filename": "components/arc/video_accelerator/video_decode_accelerator_struct_traits.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-09-09T07:07:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba753432_2fd37962",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 18
+      },
+      "revId": "5e4e63402ce9532397dcf0bff29f3cb88e222683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
