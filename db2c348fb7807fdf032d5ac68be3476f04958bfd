@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8599a0cf_786987b4",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-09T01:26:02Z",
+      "side": 1,
+      "message": "\u003d 0; directly in member list should initialize this unracily",
+      "revId": "db2c348fb7807fdf032d5ac68be3476f04958bfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35d0a87_11251de2",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-09T01:26:02Z",
+      "side": 1,
+      "message": "Why special case 1? Add comment?",
+      "revId": "db2c348fb7807fdf032d5ac68be3476f04958bfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d7c742_d3e42f29",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-09T01:26:02Z",
+      "side": 1,
+      "message": "simplify?",
+      "range": {
+        "startLine": 177,
+        "startChar": 30,
+        "endLine": 177,
+        "endChar": 36
+      },
+      "revId": "db2c348fb7807fdf032d5ac68be3476f04958bfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493da188_c6311e83",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-09T01:26:02Z",
+      "side": 1,
+      "message": "posting includes running?",
+      "revId": "db2c348fb7807fdf032d5ac68be3476f04958bfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd75883d_ecc6dd5b",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-09T01:26:02Z",
+      "side": 1,
+      "message": "What parses those?",
+      "revId": "db2c348fb7807fdf032d5ac68be3476f04958bfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
