@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b48bb31_868df7ed",
+        "filename": "ios/chrome/test/earl_grey/device_check_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-09-09T00:23:39Z",
+      "side": 1,
+      "message": "If there are no plans to re-enable it, or wifi tests won\u0027t ever be needed again consider just removing the test case. Otherwise add a TODO with a crbug.",
+      "revId": "b07c7737b002ae25abe28764142a3a92ebe84a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
