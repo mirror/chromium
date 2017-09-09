@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e92d40b5_79e11e5b",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-09T18:29:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a797de6a_fbe6de38",
+      "revId": "c90a44a46d617981ba927b971b57431fea6eb3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aed50387_0b40dfd8",
         "filename": "cc/resources/resource_provider.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-21T20:56:23Z",
       "side": 1,
       "message": "If we want mipmaps and we fall into this path (which is preferred), we\u0027ll have to correctly specify the number of levels here.",
+      "revId": "c90a44a46d617981ba927b971b57431fea6eb3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6648f891_a4dac227",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-09T18:29:45Z",
+      "side": 1,
+      "message": "Done. I added a ResourceProvider::TEXTURE_HINT_MIPMAP to latest patch for this purpose.",
+      "parentUuid": "aed50387_0b40dfd8",
       "revId": "c90a44a46d617981ba927b971b57431fea6eb3b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e5567b13_50d96f6a",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-09T18:29:45Z",
+      "side": 1,
+      "message": "I simplified the latest patch based on current usage. If texture has mipmap then we\u0027ll simply use GL_LINEAR_MIPMAP_LINEAR when GL_LINEAR is requested. There\u0027s no need for using GL_LINEAR when GL_LINEAR_MIPMAP_LINEAR is supported today.\n\nAdded a texture_npot capability to handle the unextended GLES 2.0 case.",
+      "parentUuid": "9c652c61_6ca721de",
+      "revId": "c90a44a46d617981ba927b971b57431fea6eb3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fce53a64_ffbb85b1",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-21T20:56:23Z",
       "side": 1,
       "message": "I want to double-check, but I believe there is a path on Mac where we allocate GMB-backed RenderSurfaces so that we can send them to Core Animation. In that path, we would use GL_TEXTURE_RECTANGLE_ARB (meaning this would be incorrect), which doesn\u0027t support mip-mapping at all anyway. We\u0027d probably need a full GL fallback in that case.\n\nEither way we probably need logic in the overlay processing for CA/DC to either fail overlay promotion if trilinear is selected, or implement it (if at all possible) at the CA/DC level.",
+      "revId": "c90a44a46d617981ba927b971b57431fea6eb3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2f8096_3c388dba",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2585,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-09T18:29:45Z",
+      "side": 1,
+      "message": "We\u0027re not planing to enable this on non-CrOS and latest patch should simply result in no trilinear filtering if using GMBs but I also added DCHECKs so it\u0027s clear that this is not currently supported.",
+      "parentUuid": "fce53a64_ffbb85b1",
       "revId": "c90a44a46d617981ba927b971b57431fea6eb3b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
