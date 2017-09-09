@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff2c7fb9_a9a874a1",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-09-09T01:09:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0a8a930_bf01241e",
+      "revId": "5000e7203f2aa50626f01f9c1550e7d11541dd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a227b9bc_a5a11b6a",
         "filename": "ash/system/network/network_list.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-08T23:08:43Z",
       "side": 1,
       "message": "optional, but since you\u0027re editing this file: This class could use a comment that either describes which row this is/does, or has a little picture of what it usually looks like.",
+      "revId": "5000e7203f2aa50626f01f9c1550e7d11541dd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e808dd4e_c19b8014",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-09-09T01:09:35Z",
+      "side": 1,
+      "message": "The comment above SectionHeaderRowView includes a pretty accurate description of what the header rows do and look like. Please let me know if you don\u0027t think this is sufficient, and I\u0027ll write one that\u0027s specific to the Mobile Data section.",
+      "parentUuid": "a227b9bc_a5a11b6a",
       "revId": "5000e7203f2aa50626f01f9c1550e7d11541dd67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a5e39a87_7c316141",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-09-09T01:09:35Z",
+      "side": 1,
+      "message": "Done\n\nI also changed the name of EnableTether to OnEnableBluetoothSuccess, since that seems more accurate. It does more than just enable Tether, and should only called when EnableBluetooth is successful.",
+      "parentUuid": "18216db1_76532d73",
+      "revId": "5000e7203f2aa50626f01f9c1550e7d11541dd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73a2ebd7_66c1f7d4",
         "filename": "ash/system/network/network_list.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "5000e7203f2aa50626f01f9c1550e7d11541dd67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ea44e0_f5c58457",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-09-09T01:09:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73a2ebd7_66c1f7d4",
+      "revId": "5000e7203f2aa50626f01f9c1550e7d11541dd67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
