@@ -92,6 +92,23 @@ class WinPort(base.Port):
         return flags
 
     def check_httpd(self):
+        # Print
+        for var in sorted(self.host.environ):
+            _log.info('%s: %s', var, self.host.environ[var])
+        try:
+            windir = self.host.environ.get('windir', 'C:\\WINDOWS')
+            system32_contents = self._filesystem.listdir(self._filesystem.join(windir, 'System32'))
+            _log.info('System32 contents:')
+            for filename in sorted(system32_contents):
+                _log.info(filename)
+            _log.info('depot_tools/win_toolchain contents:')
+            win_toolchain_contents = self._filesystem.listdir(
+                self._path_finder.path_from_depot_tools_base('win_toolchain'))
+            for filename in sorted(win_toolchain_contents):
+                _log.info(filename)
+        except OSError as err:
+            _log.error('OSError %s', err)
+
         res = super(WinPort, self).check_httpd()
         if self.uses_apache():
             # In order to run CGI scripts on Win32 that use unix shebang lines, we need to
@@ -156,12 +173,14 @@ class WinPort(base.Port):
 
     def setup_environ_for_server(self):
         # A few extra environment variables are required for Apache on Windows.
+        """
         env = super(WinPort, self).setup_environ_for_server()
         apache_envvars = ['SYSTEMDRIVE', 'SYSTEMROOT', 'TEMP', 'TMP']
         for key, value in self.host.environ.copy().items():
             if key not in env and key in apache_envvars:
                 env[key] = value
-        return env
+        """
+        return self.host.environ.copy()
 
     def check_build(self, needs_http, printer):
         result = super(WinPort, self).check_build(needs_http, printer)
