@@ -249,7 +249,7 @@ PassRefPtr<ShapeResult> ShapingLineBreaker::ShapeLine(
     // and thus unable to compute. Return the result up to range_end.
     DCHECK_EQ(candidate_break, range_end);
     result_out->break_offset = range_end;
-    return ShapeToEnd(start, start_position, range_end);
+    return ShapeToEnd(start, start_position, range_start, range_end);
   }
 
   // candidate_break should be >= start, but rounding errors can chime in when
@@ -264,7 +264,7 @@ PassRefPtr<ShapeResult> ShapingLineBreaker::ShapeLine(
     break_opportunity = break_iterator_->NextBreakOpportunity(candidate_break);
     if (break_opportunity >= range_end) {
       result_out->break_offset = range_end;
-      return ShapeToEnd(start, start_position, range_end);
+      return ShapeToEnd(start, start_position, range_start, range_end);
     }
   } else {
     break_opportunity = PreviousBreakOpportunity(candidate_break, start,
@@ -277,7 +277,7 @@ PassRefPtr<ShapeResult> ShapingLineBreaker::ShapeLine(
       // measure beyond it.
       if (break_opportunity >= range_end) {
         result_out->break_offset = range_end;
-        return ShapeToEnd(start, start_position, range_end);
+        return ShapeToEnd(start, start_position, range_start, range_end);
       }
     }
   }
@@ -377,7 +377,12 @@ PassRefPtr<ShapeResult> ShapingLineBreaker::ShapeLine(
 PassRefPtr<ShapeResult> ShapingLineBreaker::ShapeToEnd(
     unsigned start,
     LayoutUnit start_position,
+    unsigned range_start,
     unsigned range_end) {
+  // When there are no break opportunities, return the original.
+  if (start == range_start)
+    return AdoptRef(const_cast<ShapeResult*>(result_));
+
   unsigned first_safe = result_->NextSafeToBreakOffset(start);
   DCHECK_GE(first_safe, start);
 

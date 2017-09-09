@@ -93,6 +93,7 @@ class PLATFORM_EXPORT ShapingLineBreaker final {
   PassRefPtr<ShapeResult> Shape(TextDirection, unsigned start, unsigned end);
   PassRefPtr<ShapeResult> ShapeToEnd(unsigned start,
                                      LayoutUnit start_position,
+                                     unsigned range_start,
                                      unsigned range_end);
 
   const HarfBuzzShaper* shaper_;
