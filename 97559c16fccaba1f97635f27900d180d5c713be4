@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "499d4390_d90c1681",
+        "filename": "extensions/renderer/dispatcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-09T01:27:37Z",
+      "side": 1,
+      "message": "Would we ever reset() this? If not then keeping unique_ptr seems unnecessary.",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 293,
+        "endChar": 65
+      },
+      "revId": "97559c16fccaba1f97635f27900d180d5c713be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1885ce_7a7d0b6a",
+        "filename": "extensions/renderer/js_renderer_messaging_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-09T01:27:37Z",
+      "side": 1,
+      "message": "I\u0027m going to assume all of these are moving code as you say and not look closer ;)",
+      "revId": "97559c16fccaba1f97635f27900d180d5c713be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
