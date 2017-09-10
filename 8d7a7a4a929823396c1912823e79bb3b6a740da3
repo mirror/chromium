@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40152698_b4be9dc7",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-09-10T10:55:50Z",
+      "side": 1,
+      "message": "does it make sense to follow the same format as we have for kBlacklistedCameraNames since we\u0027re adding a new blacklist? (even though it only has one entry atm)",
+      "range": {
+        "startLine": 66,
+        "startChar": 28,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "8d7a7a4a929823396c1912823e79bb3b6a740da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
