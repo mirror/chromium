@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cd096ee2_ebd6aa02",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1333,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-10T18:23:11Z",
+      "side": 1,
+      "message": "FYI, I\u0027m working on enabling paint invalidation fast path of filters for SPv1. It\u0027s currently blocked by a skia change pending review: https://skia-review.googlesource.com/c/skia/+/38921. After that, we can remove this condition here.",
+      "revId": "39e82536aec3b1d226cdf057e7416302473d4bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "746dcbad_8b0230b5",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
         "patchSetId": 5
@@ -81,6 +98,23 @@
       "writtenOn": "2017-09-09T03:02:48Z",
       "side": 1,
       "message": "Maybe add some more DCHECK(!REF::SP175Enaled()) in other methods\nin this class like raster helpers or otherwise that are SPv2 specific?",
+      "revId": "39e82536aec3b1d226cdf057e7416302473d4bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14929532_3607025f",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-10T18:23:11Z",
+      "side": 1,
+      "message": "I\u0027m thinking of and would like to working on enabling raster invalidation in SP175 after this CL (with the above change for now). It\u0027s natural that we invalidate raster based on paint chunks, and we can excersice raster invalidation in product code eariler.",
       "revId": "39e82536aec3b1d226cdf057e7416302473d4bd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
