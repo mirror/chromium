@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6fb3cb5_c6f11357",
+        "filename": "content/browser/service_worker/browser_side_controller_service_worker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-10T14:02:37Z",
+      "side": 1,
+      "message": "This is almost unchanged from BrowserSideServiceWorkerEventDispatcher, except that it\nnow implements ControllerServiceWorker and all the Dispatch*Event overrides except for DispatchFetchEvent are removed.",
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74111f2e_6d722462",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-10T14:02:37Z",
+      "side": 1,
+      "message": "Slightly reworded as we want to use container_host_ also for SharedWorker controllees regardless of whether we implement navigator.serviceWorker there or not.",
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
