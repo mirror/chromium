@@ -6,8 +6,8 @@
 #define NET_QUIC_CORE_QUIC_UNACKED_PACKET_MAP_H_
 
 #include <cstddef>
-#include <deque>
 
+#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "net/quic/core/quic_packets.h"
 #include "net/quic/core/quic_transmission_info.h"
@@ -99,10 +99,10 @@ class QUIC_EXPORT_PRIVATE QuicUnackedPacketMap {
   // been acked by the peer.  If there are no unacked packets, returns 0.
   QuicPacketNumber GetLeastUnacked() const;
 
-  typedef std::deque<QuicTransmissionInfo> UnackedPacketMap;
+  using UnackedPacketMap = base::circular_deque<QuicTransmissionInfo>;
 
-  typedef UnackedPacketMap::const_iterator const_iterator;
-  typedef UnackedPacketMap::iterator iterator;
+  using const_iterator = UnackedPacketMap::const_iterator;
+  using iterator = UnackedPacketMap::iterator;
 
   const_iterator begin() const { return unacked_packets_.begin(); }
   const_iterator end() const { return unacked_packets_.end(); }
