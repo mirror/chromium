@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6521d7f1_e254070f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-10T18:35:52Z",
+      "side": 1,
+      "message": "This basically reverts this method to before crrev.com/c/515606 except that:\n1. Now the overflows of start and end collapsed border are cached; before crrev.com/c/515606 they were calculated during this function.\n2. The new line 906 was AddContentsVisualOverflow() before crrev.com/c/515606; Now collapsed border overflow should be treated as self visual overflow of the table because sometimes the table paints all collapsed borders (see LayoutTable::should_paint_all_collapsed_borders_).",
+      "revId": "5a4fed2482bef129f84725dcdc565461fbb2feec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
