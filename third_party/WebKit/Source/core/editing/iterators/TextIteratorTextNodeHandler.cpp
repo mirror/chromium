@@ -98,36 +98,37 @@ void TextIteratorTextNodeHandler::HandleTextNodeWithLayoutNG() {
   }
 
   while (offset_ < end_offset_ && !text_state_.PositionNode()) {
-    // TODO(xiaochengh): Try fetch the next offset mapping unit instead of doing
-    // another binary search.
+    // We may go through multiple inline nodes, which happens when there is
+    // ::first-letter and blockifying style.
     Optional<NGInlineNode> inline_node =
         GetNGInlineNodeFor(*text_node_, offset_);
-    const NGOffsetMappingUnit* unit =
-        inline_node
-            ? inline_node->GetMappingUnitForDOMOffset(*text_node_, offset_)
-            : nullptr;
-
-    // No more text on this node to emit.
-    if (!unit || offset_ == unit->DOMEnd()) {
+    if (!inline_node) {
       offset_ = end_offset_;
       return;
     }
 
-    const unsigned run_end = std::min(end_offset_, unit->DOMEnd());
-    if (unit->TextContentStart() == unit->TextContentEnd()) {
-      offset_ = run_end;
-      continue;
-    }
+    for (const NGOffsetMappingUnit& unit :
+         inline_node->GetMappingUnitsForDOMOffsetRange(*text_node_, offset_,
+                                                       end_offset_)) {
+      const unsigned run_start = std::max(offset_, unit.DOMStart());
+      const unsigned run_end = std::min(end_offset_, unit.DOMEnd());
+      if (run_start >= run_end ||
+          unit.ConvertDOMOffsetToTextContent(run_start) ==
+              unit.ConvertDOMOffsetToTextContent(run_end)) {
+        offset_ = run_end;
+        continue;
+      }
 
-    auto string_and_offsets = ComputeTextAndOffsetsForEmission(
-        *inline_node, *unit, offset_, run_end, behavior_);
-    const String& string = string_and_offsets.first;
-    const unsigned text_content_start = string_and_offsets.second.first;
-    const unsigned text_content_end = string_and_offsets.second.second;
-    text_state_.EmitText(text_node_, offset_, run_end, string,
-                         text_content_start, text_content_end);
-    offset_ = run_end;
-    return;
+      auto string_and_offsets = ComputeTextAndOffsetsForEmission(
+          *inline_node, unit, run_start, run_end, behavior_);
+      const String& string = string_and_offsets.first;
+      const unsigned text_content_start = string_and_offsets.second.first;
+      const unsigned text_content_end = string_and_offsets.second.second;
+      text_state_.EmitText(text_node_, run_start, run_end, string,
+                           text_content_start, text_content_end);
+      offset_ = run_end;
+      return;
+    }
   }
 }
 
