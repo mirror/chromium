@@ -112,7 +112,7 @@ void FoundReadyRegistrationForStartActiveWorker(
         ServiceWorkerMetrics::EventType::EXTERNAL_REQUEST,
         base::BindOnce(&DidStartWorker, active_version,
                        std::move(info_callback)),
-        base::Bind(&DidFailStartWorker, base::Passed(&failure_callback)));
+        base::BindOnce(&DidFailStartWorker, std::move(failure_callback)));
   } else {
     std::move(failure_callback).Run();
   }

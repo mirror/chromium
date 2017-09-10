@@ -30,6 +30,7 @@ class ServiceWorkerInternalsUI
       public base::SupportsWeakPtr<ServiceWorkerInternalsUI> {
  public:
   typedef base::Callback<void(ServiceWorkerStatusCode)> StatusCallback;
+  typedef base::OnceCallback<void(ServiceWorkerStatusCode)> StatusOnceCallback;
   typedef void (ServiceWorkerVersion::*ServiceWorkerVersionMethod)(
       const StatusCallback& callback);
 
