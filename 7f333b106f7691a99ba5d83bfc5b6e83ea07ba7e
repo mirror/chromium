@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e511249b_c2cd5af4",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-10T00:49:35Z",
+      "side": 1,
+      "message": "Could you provide the link to the spec? I cannot find the exact statement.",
+      "parentUuid": "adcbb4fe_c65a723b",
+      "revId": "7f333b106f7691a99ba5d83bfc5b6e83ea07ba7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd397a4c_41ba2116",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
         "patchSetId": 17
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-09T14:13:34Z",
       "side": 1,
       "message": "Does this allow for null or undefined contextOptions like we do with inputProperties? I assume you shouldn\u0027t have to specify context options.",
+      "revId": "7f333b106f7691a99ba5d83bfc5b6e83ea07ba7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5124fb19_0786bf5b",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-10T00:49:35Z",
+      "side": 1,
+      "message": "Yes, and the behavior to fall back to default value, which sets alpha \u003d true.\nWe do have \"parse-input-argument-020.html\" for undefined, and \"022.html\" for null options.",
+      "parentUuid": "bd397a4c_41ba2116",
       "revId": "7f333b106f7691a99ba5d83bfc5b6e83ea07ba7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
