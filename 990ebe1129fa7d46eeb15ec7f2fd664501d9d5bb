@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bad07b8_848affb5",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-10T19:23:18Z",
+      "side": 1,
+      "message": "Putting this in a declare_args() block feels wrong to me, I think this should be somewhere in build/config/compiler/compiler.gni instead.\n\nI like the overall approach (set enable_frame_pointers), but out of interest, have you played with passing -fno-asynchronous-unwind-tables too?",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 25
+      },
+      "revId": "990ebe1129fa7d46eeb15ec7f2fd664501d9d5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
