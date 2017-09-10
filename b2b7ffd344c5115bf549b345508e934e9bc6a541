@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e89db391_4c96db77",
+        "filename": "third_party/WebKit/Source/build/scripts/make_runtime_features.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-10T23:31:43Z",
+      "side": 1,
+      "message": "Looks a wrong usage of class_member_name().  It takes a lis of words as the argument. Maybe:\n\n... \u003d class_member_name(split_name(feature[\u0027name\u0027]))",
+      "revId": "b2b7ffd344c5115bf549b345508e934e9bc6a541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a94497c_ae55e28e",
+        "filename": "third_party/WebKit/Source/build/scripts/make_runtime_features.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-10T23:31:43Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "b2b7ffd344c5115bf549b345508e934e9bc6a541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161362e1_7724aae4",
+        "filename": "third_party/WebKit/Source/build/scripts/make_runtime_features.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-10T23:31:43Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "b2b7ffd344c5115bf549b345508e934e9bc6a541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
