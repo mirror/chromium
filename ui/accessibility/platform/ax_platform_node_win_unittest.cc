@@ -2181,4 +2181,46 @@ TEST_F(AXPlatformNodeWinTest, TestIAccessible2GetLocalizedExtendedRole) {
   EXPECT_STREQ(L"extended role", role);
 }
 
+TEST_F(AXPlatformNodeWinTest, TestIAccessibleTextGetNSelectionsZero) {
+  AXNodeData text_field_node;
+  text_field_node.id = 1;
+  text_field_node.role = AX_ROLE_TEXT_FIELD;
+  text_field_node.state = 1 << AX_STATE_EDITABLE;
+  text_field_node.state |= 1 << AX_STATE_SELECTED;
+  text_field_node.SetValue("Hi");
+
+  Init(text_field_node);
+  ScopedComPtr<IAccessible2> ia2_text_field =
+      ToIAccessible2(GetRootIAccessible());
+  ScopedComPtr<IAccessibleText> text_field;
+  ia2_text_field.CopyTo(text_field.GetAddressOf());
+  ASSERT_NE(nullptr, text_field.Get());
+
+  LONG selections;
+  EXPECT_HRESULT_SUCCEEDED(text_field->get_nSelections(&selections));
+  ASSERT_EQ(0, selections);
+}
+
+TEST_F(AXPlatformNodeWinTest, TestIAccessibleTextGetNSelections) {
+  AXNodeData text_field_node;
+  text_field_node.id = 1;
+  text_field_node.role = AX_ROLE_TEXT_FIELD;
+  text_field_node.state = 1 << AX_STATE_EDITABLE;
+  text_field_node.state |= 1 << AX_STATE_SELECTED;
+  text_field_node.AddIntAttribute(ui::AX_ATTR_TEXT_SEL_START, 1);
+  text_field_node.AddIntAttribute(ui::AX_ATTR_TEXT_SEL_END, 2);
+  text_field_node.SetValue("Hi");
+
+  Init(text_field_node);
+  ScopedComPtr<IAccessible2> ia2_text_field =
+      ToIAccessible2(GetRootIAccessible());
+  ScopedComPtr<IAccessibleText> text_field;
+  ia2_text_field.CopyTo(text_field.GetAddressOf());
+  ASSERT_NE(nullptr, text_field.Get());
+
+  LONG selections;
+  EXPECT_HRESULT_SUCCEEDED(text_field->get_nSelections(&selections));
+  ASSERT_EQ(1, selections);
+}
+
 }  // namespace ui
