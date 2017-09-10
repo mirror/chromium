@@ -2756,6 +2756,9 @@
     <message name="IDS_SETTINGS_CHANGE_PICTURE_FLIP_PHOTO" desc="The text on the button to flip the camera image horizontally.">
       Flip camera image horizontally
     </message>
+    <message name="IDS_SETTINGS_CHANGE_PICTURE_SWITCH_MODE" desc="The text on the button to switch the mode of the camera between photo and video.">
+    Switch camera mode
+    </message>
     <message name="IDS_SETTINGS_PHOTO_FLIP_ACCESSIBLE_TEXT" desc="The accessible message to speak to announce horizontal flip of camera image.">
       Photo flipped
     </message>
