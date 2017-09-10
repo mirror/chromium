@@ -9,7 +9,6 @@
 
 #include <stdint.h>
 
-#include <deque>
 #include <list>
 #include <memory>
 #include <set>
@@ -17,6 +16,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "net/quic/core/quic_crypto_server_stream.h"
 #include "net/quic/core/quic_packets.h"
@@ -144,7 +144,7 @@ class QuicSimpleServerSession : public QuicServerSessionBase {
   // the queue also increases by 2 from previous one's. The front element's
   // stream_id is always next_outgoing_stream_id_, and the last one is always
   // highest_promised_stream_id_.
-  std::deque<PromisedStreamInfo> promised_streams_;
+  base::circular_deque<PromisedStreamInfo> promised_streams_;
 
   QuicHttpResponseCache* response_cache_;  // Not owned.
 
