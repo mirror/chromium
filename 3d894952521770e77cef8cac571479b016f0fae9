@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd7755f1_64303ae4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/parse-input-arguments-020.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-10T19:35:04Z",
+      "side": 1,
+      "message": "Can we omit contextOptions?",
+      "revId": "3d894952521770e77cef8cac571479b016f0fae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

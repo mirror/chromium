@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "aff90c0b_714a6d9a",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-10T19:35:04Z",
+      "side": 1,
+      "message": "Actually it looks like it\u0027s just in TR:\nhttps://www.w3.org/TR/css-paint-api-1/#registering-custom-paint\n\"5.2. If item is a vendor prefixed property, item must be removed from inputProperties and the user agent should provide a warning to the author.\"\n\nBut this doesn\u0027t seem to be in ED.",
+      "parentUuid": "e511249b_c2cd5af4",
+      "revId": "7f333b106f7691a99ba5d83bfc5b6e83ea07ba7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd397a4c_41ba2116",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
         "patchSetId": 17
