@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/service_worker/browser_side_service_worker_event_dispatcher.h"
+#include "content/browser/service_worker/browser_side_controller_service_worker.h"
 
 #include "base/callback.h"
 #include "content/browser/service_worker/service_worker_version.h"
@@ -11,7 +11,7 @@
 
 namespace content {
 
-// BrowserSideServiceWorkerEventDispatcher::ResponseCallback ----------------
+// BrowserSideControllerServiceWorker::ResponseCallback ----------------
 
 // ResponseCallback is owned by the callback that is passed to
 // ServiceWorkerVersion::StartRequest*(), and held in pending_requests_
@@ -21,12 +21,12 @@ namespace content {
 // (|forwarding_callback|, implemented by ServiceWorkerSubresourceLoader),
 // which is the original initiator of the FetchEvent for subresource fetch:
 //
-// SubresourceLoader <-> BrowserSideEventDispatcher <-> EventDispatcher
-//   (controllee)            [browser-process]            (controller)
+// SubresourceLoader <-> ControllerServiceWorker <-> EventDispatcher
+//   (controllee)         [browser-process]           (controller)
 //
 // (Eventually SubresourceLoader should directly dispatch events to
-// the controller's EventDispatcher)
-class BrowserSideServiceWorkerEventDispatcher::ResponseCallback
+// the controller's ControllerServiceWorker)
+class BrowserSideControllerServiceWorker::ResponseCallback
     : public mojom::ServiceWorkerFetchResponseCallback {
  public:
   // |forwarding_callback| is implemented by the controllee's SubresourceLoader.
@@ -102,71 +102,23 @@ class BrowserSideServiceWorkerEventDispatcher::ResponseCallback
   DISALLOW_COPY_AND_ASSIGN(ResponseCallback);
 };
 
-// BrowserSideServiceWorkerEventDispatcher ----------------------------------
+// BrowserSideControllerServiceWorker ----------------------------------
 
-BrowserSideServiceWorkerEventDispatcher::
-    BrowserSideServiceWorkerEventDispatcher(
-        ServiceWorkerVersion* receiver_version)
+BrowserSideControllerServiceWorker::BrowserSideControllerServiceWorker(
+    ServiceWorkerVersion* receiver_version)
     : receiver_version_(receiver_version), weak_factory_(this) {
   DCHECK(receiver_version_);
 }
 
-BrowserSideServiceWorkerEventDispatcher::
-    ~BrowserSideServiceWorkerEventDispatcher() = default;
+BrowserSideControllerServiceWorker::~BrowserSideControllerServiceWorker() =
+    default;
 
-mojom::ServiceWorkerEventDispatcherPtrInfo
-BrowserSideServiceWorkerEventDispatcher::CreateEventDispatcherPtrInfo() {
-  mojom::ServiceWorkerEventDispatcherPtrInfo dispatcher_ptr_info;
-  incoming_event_bindings_.AddBinding(this,
-                                      mojo::MakeRequest(&dispatcher_ptr_info));
-  return dispatcher_ptr_info;
+void BrowserSideControllerServiceWorker::AddBinding(
+    mojo::ControllerServiceWorkerRequest request) {
+  binding_.AddBinding(this, std::move(request));
 }
 
-void BrowserSideServiceWorkerEventDispatcher::DispatchInstallEvent(
-    mojom::ServiceWorkerInstallEventMethodsAssociatedPtrInfo client,
-    DispatchInstallEventCallback callback) {
-  NOTREACHED();
-}
-
-void BrowserSideServiceWorkerEventDispatcher::DispatchActivateEvent(
-    DispatchActivateEventCallback callback) {
-  NOTREACHED();
-}
-
-void BrowserSideServiceWorkerEventDispatcher::DispatchBackgroundFetchAbortEvent(
-    const std::string& tag,
-    DispatchBackgroundFetchAbortEventCallback callback) {
-  NOTREACHED();
-}
-
-void BrowserSideServiceWorkerEventDispatcher::DispatchBackgroundFetchClickEvent(
-    const std::string& tag,
-    mojom::BackgroundFetchState state,
-    DispatchBackgroundFetchClickEventCallback callback) {
-  NOTREACHED();
-}
-
-void BrowserSideServiceWorkerEventDispatcher::DispatchBackgroundFetchFailEvent(
-    const std::string& tag,
-    const std::vector<BackgroundFetchSettledFetch>& fetches,
-    DispatchBackgroundFetchFailEventCallback callback) {
-  NOTREACHED();
-}
-
-void BrowserSideServiceWorkerEventDispatcher::DispatchBackgroundFetchedEvent(
-    const std::string& tag,
-    const std::vector<BackgroundFetchSettledFetch>& fetches,
-    DispatchBackgroundFetchedEventCallback callback) {
-  NOTREACHED();
-}
-
-void BrowserSideServiceWorkerEventDispatcher::DispatchExtendableMessageEvent(
-    mojom::ExtendableMessageEventPtr event,
-    DispatchExtendableMessageEventCallback callback) {
-  NOTIMPLEMENTED();
-}
-
-void BrowserSideServiceWorkerEventDispatcher::DispatchFetchEvent(
+void BrowserSideControllerServiceWorker::DispatchFetchEvent(
     int incoming_fetch_event_id,
     const ServiceWorkerFetchRequest& request,
     mojom::FetchEventPreloadHandlePtr preload_handle,
@@ -194,18 +146,18 @@ void BrowserSideServiceWorkerEventDispatcher::DispatchFetchEvent(
   receiver_version_->RunAfterStartWorker(
       ServiceWorkerMetrics::EventType::FETCH_SUB_RESOURCE,
       base::BindOnce(
-          &BrowserSideServiceWorkerEventDispatcher::DispatchFetchEventInternal,
+          &BrowserSideControllerServiceWorker::DispatchFetchEventInternal,
           weak_factory_.GetWeakPtr(), incoming_fetch_event_id, request,
           base::Passed(&preload_handle), base::Passed(&response_callback)),
       base::Bind(
-          &BrowserSideServiceWorkerEventDispatcher::DidFailToStartWorker,
+          &BrowserSideControllerServiceWorker::DidFailToStartWorker,
           weak_factory_.GetWeakPtr(),
           base::Bind(
-              &BrowserSideServiceWorkerEventDispatcher::DidFailToDispatchFetch,
+              &BrowserSideControllerServiceWorker::DidFailToDispatchFetch,
               weak_factory_.GetWeakPtr(), incoming_fetch_event_id, nullptr)));
 }
 
-void BrowserSideServiceWorkerEventDispatcher::DispatchFetchEventInternal(
+void BrowserSideControllerServiceWorker::DispatchFetchEventInternal(
     int incoming_fetch_event_id,
     const ServiceWorkerFetchRequest& request,
     mojom::FetchEventPreloadHandlePtr preload_handle,
@@ -219,10 +171,9 @@ void BrowserSideServiceWorkerEventDispatcher::DispatchFetchEventInternal(
   // TODO(kinuko): No timeout support for now; support timeout.
   int fetch_event_id = receiver_version_->StartRequest(
       ServiceWorkerMetrics::EventType::FETCH_SUB_RESOURCE,
-      base::Bind(
-          &BrowserSideServiceWorkerEventDispatcher::DidFailToDispatchFetch,
-          weak_factory_.GetWeakPtr(), incoming_fetch_event_id,
-          base::Passed(&response_callback)));
+      base::Bind(&BrowserSideControllerServiceWorker::DidFailToDispatchFetch,
+                 weak_factory_.GetWeakPtr(), incoming_fetch_event_id,
+                 base::Passed(&response_callback)));
   int event_finish_id = receiver_version_->StartRequest(
       ServiceWorkerMetrics::EventType::FETCH_WAITUNTIL,
       // NoOp as the same error callback should be handled by the other
@@ -234,69 +185,12 @@ void BrowserSideServiceWorkerEventDispatcher::DispatchFetchEventInternal(
   receiver_version_->event_dispatcher()->DispatchFetchEvent(
       fetch_event_id, request, std::move(preload_handle),
       std::move(mojo_response_callback_ptr),
-      base::BindOnce(
-          &BrowserSideServiceWorkerEventDispatcher::DidDispatchFetchEvent,
-          weak_factory_.GetWeakPtr(), incoming_fetch_event_id,
-          event_finish_id));
+      base::BindOnce(&BrowserSideControllerServiceWorker::DidDispatchFetchEvent,
+                     weak_factory_.GetWeakPtr(), incoming_fetch_event_id,
+                     event_finish_id));
 }
 
-void BrowserSideServiceWorkerEventDispatcher::DispatchNotificationClickEvent(
-    const std::string& notification_id,
-    const PlatformNotificationData& notification_data,
-    int action_index,
-    const base::Optional<base::string16>& reply,
-    DispatchNotificationClickEventCallback callback) {
-  NOTREACHED();
-}
-
-void BrowserSideServiceWorkerEventDispatcher::DispatchNotificationCloseEvent(
-    const std::string& notification_id,
-    const PlatformNotificationData& notification_data,
-    DispatchNotificationCloseEventCallback callback) {
-  NOTREACHED();
-}
-
-void BrowserSideServiceWorkerEventDispatcher::DispatchPushEvent(
-    const PushEventPayload& payload,
-    DispatchPushEventCallback callback) {
-  NOTREACHED();
-}
-
-void BrowserSideServiceWorkerEventDispatcher::DispatchSyncEvent(
-    const std::string& tag,
-    blink::mojom::BackgroundSyncEventLastChance last_chance,
-    DispatchSyncEventCallback callback) {
-  NOTREACHED();
-}
-
-void BrowserSideServiceWorkerEventDispatcher::DispatchAbortPaymentEvent(
-    int payment_request_id,
-    payments::mojom::PaymentHandlerResponseCallbackPtr response_callback,
-    DispatchAbortPaymentEventCallback callback) {
-  NOTREACHED();
-}
-
-void BrowserSideServiceWorkerEventDispatcher::DispatchCanMakePaymentEvent(
-    int payment_request_id,
-    payments::mojom::CanMakePaymentEventDataPtr event_data,
-    payments::mojom::PaymentHandlerResponseCallbackPtr response_callback,
-    DispatchCanMakePaymentEventCallback callback) {
-  NOTREACHED();
-}
-
-void BrowserSideServiceWorkerEventDispatcher::DispatchPaymentRequestEvent(
-    int payment_request_id,
-    payments::mojom::PaymentRequestEventDataPtr event_data,
-    payments::mojom::PaymentHandlerResponseCallbackPtr response_callback,
-    DispatchPaymentRequestEventCallback callback) {
-  NOTREACHED();
-}
-
-void BrowserSideServiceWorkerEventDispatcher::Ping(PingCallback callback) {
-  NOTREACHED();
-}
-
-void BrowserSideServiceWorkerEventDispatcher::DidFailToStartWorker(
+void BrowserSideControllerServiceWorker::DidFailToStartWorker(
     const StatusCallback& callback,
     ServiceWorkerStatusCode status) {
   // TODO(kinuko): Should log the failures.
@@ -304,7 +198,7 @@ void BrowserSideServiceWorkerEventDispatcher::DidFailToStartWorker(
   std::move(callback).Run(status);
 }
 
-void BrowserSideServiceWorkerEventDispatcher::DidFailToDispatchFetch(
+void BrowserSideControllerServiceWorker::DidFailToDispatchFetch(
     int incoming_fetch_event_id,
     std::unique_ptr<ResponseCallback> response_callback,
     ServiceWorkerStatusCode status) {
@@ -313,7 +207,7 @@ void BrowserSideServiceWorkerEventDispatcher::DidFailToDispatchFetch(
   CompleteDispatchFetchEvent(incoming_fetch_event_id, status, base::Time());
 }
 
-void BrowserSideServiceWorkerEventDispatcher::DidDispatchFetchEvent(
+void BrowserSideControllerServiceWorker::DidDispatchFetchEvent(
     int incoming_fetch_event_id,
     int event_finish_id,
     ServiceWorkerStatusCode status,
@@ -325,7 +219,7 @@ void BrowserSideServiceWorkerEventDispatcher::DidDispatchFetchEvent(
                              dispatch_event_time);
 }
 
-void BrowserSideServiceWorkerEventDispatcher::CompleteDispatchFetchEvent(
+void BrowserSideControllerServiceWorker::CompleteDispatchFetchEvent(
     int incoming_fetch_event_id,
     ServiceWorkerStatusCode status,
     base::Time dispatch_event_time) {
