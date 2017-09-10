@@ -76,6 +76,7 @@ struct CONTENT_EXPORT SSLStatus {
   bool initialized;
   scoped_refptr<net::X509Certificate> certificate;
   net::CertStatus cert_status;
+  net::HashValueVector public_key_hashes;
   int security_bits;
   uint16_t key_exchange_group;
   int connection_status;

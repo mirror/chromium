@@ -12,7 +12,6 @@
 #include "build/build_config.h"
 #include "crypto/openssl_util.h"
 #include "crypto/rsa_private_key.h"
-#include "net/base/hash_value.h"
 #include "net/cert/internal/cert_errors.h"
 #include "net/cert/internal/name_constraints.h"
 #include "net/cert/internal/parse_certificate.h"
@@ -34,6 +33,21 @@ namespace net {
 namespace x509_util {
 
 namespace {
+
+// LessThan comparator for use with std::binary_search() in determining
+// whether a SHA-256 HashValue appears within a sorted array of
+// SHA256HashValues.
+struct SHA256ToHashValueComparator {
+  bool operator()(const SHA256HashValue& lhs, const HashValue& rhs) const {
+    DCHECK_EQ(HASH_VALUE_SHA256, rhs.tag);
+    return memcmp(lhs.data, rhs.data(), rhs.size()) < 0;
+  }
+
+  bool operator()(const HashValue& lhs, const SHA256HashValue& rhs) const {
+    DCHECK_EQ(HASH_VALUE_SHA256, lhs.tag);
+    return memcmp(lhs.data(), rhs.data, lhs.size()) < 0;
+  }
+};
 
 bool AddRSASignatureAlgorithm(CBB* cbb, DigestAlgorithm algorithm) {
   // See RFC 3279.
@@ -433,6 +447,33 @@ ParseCertificateOptions DefaultParseCertificateOptions() {
   ParseCertificateOptions options;
   options.allow_invalid_serial_numbers = true;
   return options;
+}
+
+bool IsAnyCertificateInRootList(const HashValueVector& cert_hashes,
+                                const SHA256HashValue* roots,
+                                size_t roots_length) {
+  for (const auto& hash : cert_hashes) {
+    if (hash.tag != HASH_VALUE_SHA256)
+      continue;
+
+    // Determine if |hash| is in the set of roots.
+    if (std::binary_search(roots, roots + roots_length, hash,
+                           SHA256ToHashValueComparator())) {
+      return true;
+    }
+  }
+  return false;
+}
+
+namespace {
+#include "net/cert/symantec_roots.inc"
+}  // namespace
+
+bool IsLegacySymantecCert(const HashValueVector& cert_hashes) {
+  return IsAnyCertificateInRootList(cert_hashes, kSymantecRoots,
+                                    kSymantecRootsLength) &&
+         !IsAnyCertificateInRootList(cert_hashes, kSymantecExceptions,
+                                     kSymantecExceptionsLength);
 }
 
 }  // namespace x509_util
