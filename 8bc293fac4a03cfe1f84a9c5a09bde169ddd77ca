@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "663b738c_231e1887",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_types.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-10T23:44:19Z",
+      "side": 1,
+      "message": "nit: add comma at the end of this line.",
+      "range": {
+        "startLine": 160,
+        "startChar": 59,
+        "endLine": 160,
+        "endChar": 0
+      },
+      "revId": "8bc293fac4a03cfe1f84a9c5a09bde169ddd77ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
