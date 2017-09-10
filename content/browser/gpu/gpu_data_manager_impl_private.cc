@@ -813,7 +813,6 @@ void GpuDataManagerImplPrivate::UpdateRendererWebPrefs(
   DCHECK(prefs);
 
   if (!IsWebGLEnabled()) {
-    prefs->experimental_webgl_enabled = false;
     prefs->pepper_3d_enabled = false;
   }
   if (IsFeatureBlacklisted(gpu::GPU_FEATURE_TYPE_FLASH3D))

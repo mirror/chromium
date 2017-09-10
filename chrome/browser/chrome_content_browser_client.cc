@@ -2420,9 +2420,6 @@ void ChromeContentBrowserClient::OverrideWebkitPrefs(
       prefs->GetBoolean(prefs::kWebKitDomPasteEnabled);
   web_prefs->tabs_to_links = prefs->GetBoolean(prefs::kWebkitTabsToLinks);
 
-  if (!prefs->GetBoolean(prefs::kWebKitJavascriptEnabled))
-    web_prefs->javascript_enabled = false;
-
   // Only allow disabling web security via the command-line flag if the user
   // has specified a distinct profile directory. This still enables tests to
   // disable web security by setting the pref directly.
@@ -2443,9 +2440,6 @@ void ChromeContentBrowserClient::OverrideWebkitPrefs(
       prefs->GetBoolean(prefs::kWebKitEncryptedMediaEnabled);
   web_prefs->loads_images_automatically =
       prefs->GetBoolean(prefs::kWebKitLoadsImagesAutomatically);
-
-  if (prefs->GetBoolean(prefs::kDisable3DAPIs))
-    web_prefs->experimental_webgl_enabled = false;
 
   web_prefs->allow_running_insecure_content =
       prefs->GetBoolean(prefs::kWebKitAllowRunningInsecureContent);
