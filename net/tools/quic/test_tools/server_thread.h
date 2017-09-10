@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/simple_thread.h"
@@ -77,7 +78,7 @@ class ServerThread : public base::SimpleThread {
   bool initialized_;
 
   QuicMutex scheduled_actions_lock_;
-  std::deque<std::function<void()>> scheduled_actions_
+  base::circular_deque<std::function<void()>> scheduled_actions_
       GUARDED_BY(scheduled_actions_lock_);
 
   DISALLOW_COPY_AND_ASSIGN(ServerThread);

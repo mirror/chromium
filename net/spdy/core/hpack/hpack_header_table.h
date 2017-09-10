@@ -6,12 +6,12 @@
 #define NET_SPDY_CORE_HPACK_HPACK_HEADER_TABLE_H_
 
 #include <cstddef>
-#include <deque>
 #include <memory>
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
 
+#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "net/spdy/core/hpack/hpack_entry.h"
 #include "net/spdy/platform/api/spdy_export.h"
@@ -57,7 +57,7 @@ class SPDY_EXPORT_PRIVATE HpackHeaderTable {
   // If this changes (eg we start to drop entries from the middle of the table),
   // this needs to be a std::list, in which case |*_index_| can be trivially
   // extended to map to list iterators.
-  typedef std::deque<HpackEntry> EntryTable;
+  using EntryTable = base::circular_deque<HpackEntry>;
 
   struct SPDY_EXPORT_PRIVATE EntryHasher {
     size_t operator()(const HpackEntry* entry) const;
