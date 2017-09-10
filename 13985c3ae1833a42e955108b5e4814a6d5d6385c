@@ -139,6 +139,30 @@
       "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac16bc8_e65ed4b3",
+        "filename": "base/test/scoped_task_environment.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-10T16:47:06Z",
+      "side": 1,
+      "message": "I think this is actually one of those things that\u0027s easier to discuss in writing because it requires so much thought at every step.\n\n\u003e Is the issue that ML handles the Delayed tasks directly, going around the mock time behavior?\n\nNot really, the issue is that RunLoop::Run() on MessageLoop doesn\u0027t advance time when it\u0027s out of undelayed tasks and that is the crucial bit IMO to having scalable mock-time-by-default in tests.\n\nHaving a custom task runner doesn\u0027t solve that as we\u0027d also need a custom RunLoop::Delegate. And it would need to support the FastForward*() APIs too -- essentially implementing TestMockTimeTaskRunner in MessageLoop (or solution outlined in OP). Or we could allow nesting TTRH and RL:Delegate for testing (we already have TTRH nesting for testing).\n\nAll solutions appear complex though and I don\u0027t think should block introducing MOCK_TIME mode for non UI/IO loops.",
+      "parentUuid": "22f9a4df_48b2f01c",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
