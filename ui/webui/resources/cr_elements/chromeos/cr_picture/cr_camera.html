@@ -31,12 +31,28 @@
 
       #userImageStreamCrop::after {
         -webkit-mask-image: radial-gradient(transparent 140px, black 140px);
-        background-color: rgba(214, 214, 214, 0.34);
+        background-color: rgb(214, 214, 214);
         content: '';
         display: block;
         height: 100%;
+        opacity: 0.34;
         transform: translateZ(0);
         width: 100%;
+      }
+
+      @-webkit-keyframes pulse {
+        0% { opacity: 0; }
+        50% { opacity: 1; }
+        100% { opacity: 0; }
+      }
+
+      #userImageStreamCrop.capture::after {
+        -webkit-mask-image: none;
+        animation: pulse linear 100ms normal forwards;
+      }
+
+      #userImageStreamCrop.capture.video-mode::after {
+        animation: pulse linear 50ms 20;
       }
 
       paper-spinner {
@@ -68,8 +84,8 @@
       }
 
       #cameraControls > div {
-        margin: 0 4px;
-        width: 32px;
+        margin: 0 8px;
+        width: 24px;
       }
 
       #cameraControls > button {
@@ -84,11 +100,23 @@
         background-image: url(camera_flip_icon.svg);
       }
 
-      :host-context([dir=rtl]) #flipPhoto {
-        float: left;
+      #flipPhoto.flip-x {
+        transform: rotateY(180deg);
       }
 
       #takePhoto {
+        background-image: url(camera_shutter_icon.svg);
+      }
+
+      #takePhoto.video-mode {
+        background-image: url(videocam_shutter_icon.svg);
+      }
+
+      #switchMode {
+        background-image: url(videocam_icon.svg);
+      }
+
+      #switchMode.video-mode {
         background-image: url(camera_alt_icon.svg);
       }
     </style>
@@ -100,7 +128,10 @@
     </div>
     <div id="cameraControls">
       <div>
-        <!-- Empty div for even 'space-between' justification -->
+        <button is="paper-icon-button-light" id="switchMode" tabindex="3"
+            title="[[switchModeLabel]]" on-tap="onTapSwitchMode_"
+            disabled="[[!cameraOnline_]]">
+        </button>
       </div>
       <div>
         <button is="paper-icon-button-light" id="takePhoto" tabindex="1"
