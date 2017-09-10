@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de86a9d5_794afe8c",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-10T17:20:53Z",
+      "side": 1,
+      "message": "s/a thread/the observed thread/\n\nhere and below?",
+      "range": {
+        "startLine": 61,
+        "startChar": 58,
+        "endLine": 61,
+        "endChar": 66
+      },
+      "revId": "4911f9bd3e97de5f735dceae794adde73ef7f751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a69b01b_661b9b7e",
+        "filename": "base/threading/scoped_blocking_call_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-10T17:20:53Z",
+      "side": 1,
+      "message": "It\u0027s weird to have an expectation after an EXPECT_DCHECK_DEATH. This isn\u0027t what this test is testing and nothing should be expected after a death scenario IMO.",
+      "revId": "4911f9bd3e97de5f735dceae794adde73ef7f751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
