@@ -69,6 +69,12 @@ bool NGInlineLayoutAlgorithm::CreateLine(
     NGLineInfo* line_info,
     NGExclusionSpace* exclusion_space,
     RefPtr<NGInlineBreakToken> break_token) {
+  DCHECK(!line_info->Results().IsEmpty());
+
+  // Save line stat/end text offset before Bidi reorder changes |line_info|.
+  line_start_text_offset_ = line_info->StartTextOffset();
+  line_end_text_offset_ = line_info->EndTextOffset();
+
   if (Node().IsBidiEnabled())
     BidiReorder(&line_info->Results());
 
@@ -336,7 +342,7 @@ bool NGInlineLayoutAlgorithm::ApplyJustify(NGLineInfo* line_info) {
     return false;  // no expansion is needed.
 
   const String line_text =
-      Node().Text(line_info->StartOffset(), line_info->EndOffset()).ToString();
+      Node().Text(line_start_text_offset_, line_end_text_offset_).ToString();
   ShapeResultSpacing<String> spacing(line_text);
   spacing.SetExpansion(expansion, Node().BaseDirection(),
                        line_info->LineStyle().GetTextJustify());
@@ -349,12 +355,12 @@ bool NGInlineLayoutAlgorithm::ApplyJustify(NGLineInfo* line_info) {
       // copy.
       RefPtr<ShapeResult> shape_result =
           item_result.shape_result->MutableUnique();
-      DCHECK_GE(item_result.start_offset, line_info->StartOffset());
+      DCHECK_GE(item_result.start_offset, line_start_text_offset_);
       DCHECK_EQ(shape_result->NumCharacters(),
                 item_result.end_offset - item_result.start_offset);
       LayoutUnit size_before_justify = item_result.inline_size;
       shape_result->ApplySpacing(
-          spacing, item_result.start_offset - line_info->StartOffset() -
+          spacing, item_result.start_offset - line_start_text_offset_ -
                        shape_result->StartIndexForResult());
       item_result.inline_size = shape_result->SnappedWidth();
       item_result.expansion =
