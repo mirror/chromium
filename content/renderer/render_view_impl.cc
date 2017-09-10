@@ -803,10 +803,6 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
   settings->SetAllowFileAccessFromFileURLs(
       prefs.allow_file_access_from_file_urls);
 
-  // Enable experimental WebGL support if requested on command line
-  // and support is compiled in.
-  settings->SetExperimentalWebGLEnabled(prefs.experimental_webgl_enabled);
-
   // Enable WebGL errors to the JS console if requested.
   settings->SetWebGLErrorsToConsoleEnabled(
       prefs.webgl_errors_to_console_enabled);

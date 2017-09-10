@@ -192,7 +192,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void DispatchWillStartUsingPeerConnectionHandler(
       WebRTCPeerConnectionHandler*) override;
 
-  bool AllowWebGL(bool enabled_per_settings) override;
+  bool AllowWebGL() override;
 
   void DispatchWillInsertBody() override;
 
