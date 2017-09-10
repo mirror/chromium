@@ -54,6 +54,14 @@ AudioOutputController::AudioOutputController(
   DCHECK(sync_reader_);
   DCHECK(message_loop_.get());
   weak_this_for_errors_ = weak_factory_for_errors_.GetWeakPtr();
+
+  if (output_device_id_ == "communications") {
+    const_cast<AudioParameters&>(params_).set_effects(
+        AudioParameters::ECHO_CANCELLER);
+  }
+
+  DCHECK(params.effects() == 0 || output_device_id_ == "communications")
+      << output_device_id_;
 }
 
 AudioOutputController::~AudioOutputController() {
