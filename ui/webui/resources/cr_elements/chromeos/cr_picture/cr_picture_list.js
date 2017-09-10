@@ -29,6 +29,7 @@ Polymer({
     oldImageLabel: String,
     profileImageLabel: String,
     takePhotoLabel: String,
+    switchModeLabel: String,
 
     /**
      * The currently selected item. This property is bound to the iron-selector
