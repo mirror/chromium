@@ -521,6 +521,7 @@ void ShapeResult::CopyRange(unsigned start_offset,
                             unsigned end_offset,
                             ShapeResult* target) const {
   unsigned index = target->num_characters_;
+  unsigned target_run_size_before = target->runs_.size();
   float total_width = 0;
   for (const auto& run : runs_) {
     unsigned run_start = (*run).start_index_;
@@ -537,6 +538,31 @@ void ShapeResult::CopyRange(unsigned start_offset,
       index += sub_run->num_characters_;
       target->runs_.push_back(std::move(sub_run));
     }
+  }
+
+  DCHECK_EQ(Rtl(), target->Rtl());
+  if (target->Rtl()) {
+    // Runs in RTL result are in visual order, and that new runs should be
+    // prepended. Create a new list in the correct order and swap it.
+    Vector<std::unique_ptr<RunInfo>> new_runs;
+    new_runs.ReserveInitialCapacity(target->runs_.size());
+    for (unsigned i = target_run_size_before; i < target->runs_.size(); i++)
+      new_runs.push_back(std::move(target->runs_[i]));
+
+    // |start_index_| should be in decreasing order. Recompute them.
+    if (new_runs.size() > 1) {
+      unsigned index = target->num_characters_;
+      for (auto it = new_runs.rbegin(); it != new_runs.rend(); it++) {
+        auto& run = *it;
+        run->start_index_ = index;
+        index += run->num_characters_;
+      }
+    }
+
+    // Then append existing runs.
+    for (unsigned i = 0; i < target_run_size_before; i++)
+      new_runs.push_back(std::move(target->runs_[i]));
+    target->runs_.swap(new_runs);
   }
 
   // Compute new glyph bounding box.
