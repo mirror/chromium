@@ -6,11 +6,11 @@
 #define NET_QUIC_CORE_QUIC_HEADER_LIST_H_
 
 #include <algorithm>
-#include <deque>
 #include <functional>
 #include <string>
 #include <utility>
 
+#include "base/containers/circular_deque.h"
 #include "net/quic/platform/api/quic_bug_tracker.h"
 #include "net/quic/platform/api/quic_export.h"
 #include "net/quic/platform/api/quic_string_piece.h"
@@ -22,7 +22,7 @@ namespace net {
 // A simple class that accumulates header pairs
 class QUIC_EXPORT_PRIVATE QuicHeaderList : public SpdyHeadersHandlerInterface {
  public:
-  typedef std::deque<std::pair<std::string, std::string>> ListType;
+  typedef base::circular_deque<std::pair<std::string, std::string>> ListType;
   typedef ListType::const_iterator const_iterator;
 
   QuicHeaderList();
@@ -58,7 +58,7 @@ class QUIC_EXPORT_PRIVATE QuicHeaderList : public SpdyHeadersHandlerInterface {
   std::string DebugString() const;
 
  private:
-  std::deque<std::pair<std::string, std::string>> header_list_;
+  base::circular_deque<std::pair<std::string, std::string>> header_list_;
 
   // The limit on the size of the header list (defined by spec as name + value +
   // overhead for each header field). Headers over this limit will not be
