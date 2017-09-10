@@ -22,6 +22,30 @@
       "revId": "98bede9ebdef83c2bff4908bcc3d79705f98065d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b63d0c9e_0e8bb45e",
+        "filename": "device/geolocation/network_location_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-10T23:04:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89debb80_cae46b12",
+      "range": {
+        "startLine": 363,
+        "startChar": 6,
+        "endLine": 363,
+        "endChar": 13
+      },
+      "revId": "98bede9ebdef83c2bff4908bcc3d79705f98065d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
