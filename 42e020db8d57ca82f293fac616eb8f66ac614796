@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a3c2d4e_db4d843d",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-10T17:01:22Z",
+      "side": 1,
+      "message": "How about instead of |accept_new_tasks_| we have an AtomicInt32.\n\nThe contract is that you must increment it at the top of this method. It being negative after the AtomicIncrement is equivalent to |accept_new_tasks_ \u003d\u003d false|. And you AtomicDecrement when done (in a ScopedClosure to which we pass a pre-bound RepeatingClosure (to avoid a Bind() call every PostTask()).\n\nIn the destructor you loop CAS 0 to std::numerics_limits\u003cAtomic32\u003e::min() before destroying |message_loop_|.\n\nThat seems simple and makes this CL a proper no-op? (can even get rid of |message_loop_lock_| I think?)",
+      "revId": "42e020db8d57ca82f293fac616eb8f66ac614796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2001a8d_3b1bb325",
         "filename": "base/message_loop/incoming_task_queue.cc",
         "patchSetId": 6
@@ -34,6 +51,24 @@
       "revId": "42e020db8d57ca82f293fac616eb8f66ac614796",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0efd85e4_ca4b400e",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-10T17:01:22Z",
+      "side": 1,
+      "message": "Wait nvm, I got confused in re-reading this CL (I remembered ScheduleWork call was at end of a method and somehow thought it was this one...).",
+      "parentUuid": "5626287d_f835e2da",
+      "revId": "42e020db8d57ca82f293fac616eb8f66ac614796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
