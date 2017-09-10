@@ -33,6 +33,24 @@
       "revId": "96aa31cb315089c70b5b3e925f862d2650ab14c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54dca6a7_191a9130",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-10T02:51:06Z",
+      "side": 1,
+      "message": "Ooops! I think you are right, somehow I misunderstood about that ref-count. Let me think out a proper way to solve this problem. Thanks!",
+      "parentUuid": "f1eff5fc_eb4f2175",
+      "revId": "96aa31cb315089c70b5b3e925f862d2650ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
