@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "88986a13_cca0f9dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1227574
+      },
+      "writtenOn": "2017-09-10T17:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feffb7d9_93504b11",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "c4f90e51dd1776ad7e6e6991413af8c5994dacf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9f927e7_3c282960",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcherTest.cpp",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "c4f90e51dd1776ad7e6e6991413af8c5994dacf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38b0cd9_afd9dde2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcherTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1227574
+      },
+      "writtenOn": "2017-09-10T17:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9f927e7_3c282960",
+      "range": {
+        "startLine": 403,
+        "startChar": 4,
+        "endLine": 403,
+        "endChar": 23
+      },
+      "revId": "c4f90e51dd1776ad7e6e6991413af8c5994dacf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
