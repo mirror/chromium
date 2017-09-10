@@ -26,7 +26,6 @@
 #include <stdint.h>
 
 #include <cstddef>
-#include <deque>
 #include <list>
 #include <map>
 #include <memory>
@@ -35,6 +34,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
