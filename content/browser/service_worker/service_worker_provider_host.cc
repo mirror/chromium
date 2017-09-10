@@ -13,7 +13,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "content/browser/bad_message.h"
-#include "content/browser/service_worker/browser_side_service_worker_event_dispatcher.h"
+#include "content/browser/service_worker/browser_side_controller_service_worker.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_context_request_handler.h"
@@ -325,12 +325,12 @@ void ServiceWorkerProviderHost::SetControllerVersionAttribute(
   controller_ = version;
 
   // This will drop the message pipes to the client pages as well.
-  controller_event_dispatcher_.reset();
+  controller_service_worker_.reset();
 
   if (version) {
     version->AddControllee(this);
-    controller_event_dispatcher_ =
-        base::MakeUnique<BrowserSideServiceWorkerEventDispatcher>(version);
+    controller_service_worker_ =
+        base::MakeUnique<BrowserSideControllerServiceWorker>(version);
   }
   if (previous_version.get())
     previous_version->RemoveControllee(this);
@@ -890,15 +890,8 @@ void ServiceWorkerProviderHost::SendSetControllerServiceWorker(
   params.provider_id = provider_id();
   params.object_info = GetOrCreateServiceWorkerHandle(version);
   params.should_notify_controllerchange = notify_controllerchange;
-  if (version) {
+  if (version)
     params.used_features = version->used_features();
-    if (ServiceWorkerUtils::IsServicificationEnabled()) {
-      params.controller_event_dispatcher =
-          controller_event_dispatcher_->CreateEventDispatcherPtrInfo()
-              .PassHandle()
-              .release();
-    }
-  }
   Send(new ServiceWorkerMsg_SetControllerServiceWorker(params));
 }
 
@@ -1191,6 +1184,20 @@ void ServiceWorkerProviderHost::GetRegistrationsComplete(
 
   std::move(callback).Run(blink::mojom::ServiceWorkerErrorType::kNone,
                           base::nullopt, object_infos, version_attrs);
+}
+
+void ServiceWorkerProviderHost::GetControllerServiceWorker(
+    mojom::ControllerServiceWorkerRequest controller_request) {
+  // TODO(kinuko): Log the reasons we drop the request.
+  if (!dispatcher_host_ || !IsContextAlive() || !controller_service_worker_)
+    return;
+
+  // TODO(kinuko): Call version_->StartWorker() here and pass the
+  // controller_request to the ServiceWorker.
+  // (Note that this could get called multiple times before the service
+  // worker is started)
+  DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
+  controller_service_worker_->AddBinding(std::move(controller_request));
 }
 
 bool ServiceWorkerProviderHost::IsValidRegisterMessage(
