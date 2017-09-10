@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2c69e83b_3f21c3a1",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-10T22:24:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf9c51a3_9f2a3b7b",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 76
+      },
+      "revId": "3d265870d47406c806a9b8deed774ef695f6c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da11c847_05bbe28c",
         "filename": "chrome/browser/apps/app_window_interactive_uitest.cc",
         "patchSetId": 5
@@ -63,6 +87,24 @@
       "revId": "3d265870d47406c806a9b8deed774ef695f6c779",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1d5abc_e032adb1",
+        "filename": "chrome/browser/apps/app_window_interactive_uitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-10T22:24:01Z",
+      "side": 1,
+      "message": "Thanks for this suggestion, moved it to chrome_native_app_window_views_aura_ash_interactive_uitest, it works now.",
+      "parentUuid": "da11c847_05bbe28c",
+      "revId": "3d265870d47406c806a9b8deed774ef695f6c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "7ada3341_b10939bf",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-10T22:24:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "886f0862_d97387d4",
+      "revId": "3d265870d47406c806a9b8deed774ef695f6c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aab7ffa_64a210cc",
         "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.h",
         "patchSetId": 5
@@ -94,6 +154,24 @@
       "writtenOn": "2017-09-08T01:20:17Z",
       "side": 1,
       "message": "This doesn\u0027t look right. The method is protected in the base class - probably because it\u0027s not meant to be called directly from things that are not implementing it.\n\nHow is it normally called?\n\nI had a peek -- looks like possible paths that call Show() are the ExclusiveAccessBubbleViews() constructor or chrome::NOTIFICATION_FULLSCREEN_CHANGED being broadcast -- they both call UpdateMouseWatcher, and ExclusiveAccessBubble::StartWatchingMouse() invokes `ShowAndStartTimers()`",
+      "revId": "3d265870d47406c806a9b8deed774ef695f6c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f0ec56_8f85f823",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-10T22:24:01Z",
+      "side": 1,
+      "message": "True. Tho UpdateMouseWatcher checks IsVisible (false since we don\u0027t show anything yet), and CanMouseTriggerSlideIn (which is !IsImmersiveModeEnabled, which is false in my case) before doing anything else - so it doesn\u0027t do anything in my case.\n\nRepurposing Show() seemed like a decent idea, I\u0027m not sure how to fix it in a different way. I\u0027ll do some more thinking tomorrow.",
+      "parentUuid": "4aab7ffa_64a210cc",
       "revId": "3d265870d47406c806a9b8deed774ef695f6c779",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
