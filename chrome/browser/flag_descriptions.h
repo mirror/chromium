@@ -10,6 +10,7 @@
 #include "build/build_config.h"
 #include "build/buildflag.h"
 #include "chrome/common/features.h"
+#include "components/nacl/common/features.h"
 #include "device/vr/features/features.h"
 #include "media/media_features.h"
 
@@ -1594,7 +1595,7 @@ extern const char kWebvrExperimentalRenderingDescription[];
 
 #endif  // ENABLE_VR
 
-#if !defined(DISABLE_NACL)
+#if BUILDFLAG(ENABLE_NACL)
 
 extern const char kNaclDebugMaskName[];
 extern const char kNaclDebugMaskDescription[];
@@ -1611,7 +1612,7 @@ extern const char kNaclDescription[];
 extern const char kPnaclSubzeroName[];
 extern const char kPnaclSubzeroDescription[];
 
-#endif  // !defined(DISABLE_NACL)
+#endif  // BUILDFLAG(ENABLE_NACL)
 
 #if BUILDFLAG(ENABLE_WEBRTC)
 
