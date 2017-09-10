@@ -338,7 +338,18 @@ cursors.Cursor.prototype = {
               if (goog.isDef(start) && goog.isDef(end))
                 newIndex = dir == Dir.FORWARD ? end : start;
             } else {
-              // TODO(dtseng): Figure out what to do in this case.
+              newNode = AutomationUtil.findNextNode(
+                  newNode, dir, AutomationPredicate.leaf);
+              if (newNode) {
+                newIndex = 0;
+                if (dir == Dir.BACKWARD &&
+                    newNode.role == RoleType.INLINE_TEXT_BOX) {
+                  var starts = newNode.wordStarts;
+                  newIndex = starts[starts.length - 1] || 0;
+                } else {
+                  // TODO(dtseng): Figure out what to do for general nodes.
+                }
+              }
             }
             break;
           case Movement.DIRECTIONAL:
@@ -360,14 +371,21 @@ cursors.Cursor.prototype = {
                 if (dir == Dir.BACKWARD && newIndex != 0) {
                   newIndex = 0;
                 } else {
-                  newNode = AutomationUtil.findNextNode(
-                      newNode, dir, AutomationPredicate.leaf);
-                  if (newNode) {
+                  while (true) {
+                    newNode = AutomationUtil.findNextNode(
+                        newNode, dir, AutomationPredicate.leaf);
+                    if (!newNode) {
+                      break;
+                    }
                     newIndex = 0;
-                    if (dir == Dir.BACKWARD &&
-                        newNode.role == RoleType.INLINE_TEXT_BOX) {
+                    if (newNode.role == RoleType.INLINE_TEXT_BOX) {
                       var starts = newNode.wordStarts;
-                      newIndex = starts[starts.length - 1] || 0;
+                      if (starts.length) {
+                        newIndex = dir == Dir.BACKWARD ?
+                            starts[starts.length - 1] :
+                            starts[0];
+                        break;
+                      }
                     } else {
                       // TODO(dtseng): Figure out what to do for general nodes.
                     }
