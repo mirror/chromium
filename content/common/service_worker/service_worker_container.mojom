@@ -4,6 +4,7 @@
 
 module content.mojom;
 
+import "content/common/service_worker/controller_service_worker.mojom";
 import "content/common/service_worker/service_worker_types.mojom";
 import "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom";
 import "url/mojo/url.mojom";
@@ -43,9 +44,19 @@ interface ServiceWorkerContainerHost {
         array<ServiceWorkerRegistrationObjectInfo>? infos,
         array<ServiceWorkerVersionAttributes>? attrs);
 
+  // Gets a Mojo end point to the controller ServiceWorker. This may starts a
+  // ServiceWorker instance in a renderer process if the corresponding
+  // instance is not alive.
+  // This method must be called only by the controllees.
+  // If the browser fails to start the ServiceWorker it is propagated as a
+  // connection error of the returned pipe. The detailed error reasons are not
+  // reported to the controllees, but they should be properly handled and
+  // recorded in the browser process.
+  // Currently this interface is used only for S13nServiceWorker.
+  GetControllerServiceWorker(ControllerServiceWorker& controller);
+
   // TODO(leonhsl): implement this interface.
   // GetRegistrationForReady();
-  // GetControllerServiceWorker();
 };
 
 // mojom::ServiceWorkerContainer is a renderer-side interface.
