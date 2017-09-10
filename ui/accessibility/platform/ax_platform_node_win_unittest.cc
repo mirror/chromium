@@ -2205,6 +2205,59 @@ TEST_F(AXPlatformNodeWinTest, TestIAccessibleTextGetNCharacters) {
   LONG count;
   EXPECT_HRESULT_SUCCEEDED(text->get_nCharacters(&count));
   EXPECT_EQ(4, count);
+
+  TEST_F(AXPlatformNodeWinTest, TestIAccessibleTextGetSelected) {
+    AXNodeData text_field_node;
+    text_field_node.id = 1;
+    text_field_node.role = AX_ROLE_TEXT_FIELD;
+    text_field_node.state = 1 << AX_STATE_EDITABLE;
+    text_field_node.state |= 1 << AX_STATE_SELECTED;
+    text_field_node.AddIntAttribute(ui::AX_ATTR_TEXT_SEL_START, 1);
+    text_field_node.AddIntAttribute(ui::AX_ATTR_TEXT_SEL_END, 2);
+    text_field_node.SetValue("Hi");
+
+    Init(text_field_node);
+    ScopedComPtr<IAccessible2> ia2_text_field =
+        ToIAccessible2(GetRootIAccessible());
+    ScopedComPtr<IAccessibleText> text_field;
+    ia2_text_field.CopyTo(text_field.GetAddressOf());
+    ASSERT_NE(nullptr, text_field.Get());
+
+    LONG start_offset, end_offset;
+
+    // We only care about selection_index of zero, so passing anything but 0 as
+    // the first parameter should fail.
+    EXPECT_EQ(E_INVALIDARG,
+              text_field->get_selection(1, &start_offset, &end_offset));
+
+    EXPECT_HRESULT_SUCCEEDED(
+        text_field->get_selection(0, &start_offset, &end_offset));
+    ASSERT_EQ(1, start_offset);
+    ASSERT_EQ(2, end_offset);
+  }
+
+  TEST_F(AXPlatformNodeWinTest, TestIAccessibleTextGetSelectedBackward) {
+    AXNodeData text_field_node;
+    text_field_node.id = 1;
+    text_field_node.role = AX_ROLE_TEXT_FIELD;
+    text_field_node.state = 1 << AX_STATE_EDITABLE;
+    text_field_node.state |= 1 << AX_STATE_SELECTED;
+    text_field_node.AddIntAttribute(ui::AX_ATTR_TEXT_SEL_START, 2);
+    text_field_node.AddIntAttribute(ui::AX_ATTR_TEXT_SEL_END, 1);
+    text_field_node.SetValue("Hi");
+
+    Init(text_field_node);
+    ScopedComPtr<IAccessible2> ia2_text_field =
+        ToIAccessible2(GetRootIAccessible());
+    ScopedComPtr<IAccessibleText> text_field;
+    ia2_text_field.CopyTo(text_field.GetAddressOf());
+    ASSERT_NE(nullptr, text_field.Get());
+
+    LONG start_offset, end_offset;
+    EXPECT_HRESULT_SUCCEEDED(
+        text_field->get_selection(0, &start_offset, &end_offset));
+    ASSERT_EQ(1, start_offset);
+    ASSERT_EQ(2, end_offset);
 }
 
 }  // namespace ui
