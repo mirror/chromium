@@ -76,6 +76,8 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
   NGInlineLayoutStateStack box_states_;
   LayoutUnit content_size_;
   LayoutUnit max_inline_size_;
+  unsigned line_start_text_offset_ = 0;
+  unsigned line_end_text_offset_ = 0;
   FontBaseline baseline_type_ = FontBaseline::kAlphabeticBaseline;
 
   unsigned is_horizontal_writing_mode_ : 1;
