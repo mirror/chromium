@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98408638_c6ef91b4",
+        "filename": "chrome/browser/apps/app_window_interactive_uitest.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-10T23:51:36Z",
+      "side": 1,
+      "message": "forward declare this?",
+      "revId": "c32864091ffa7ab82228c9cdd5e3844e35efd263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c6b186_7385640f",
+        "filename": "chrome/browser/apps/app_window_interactive_uitest.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-10T23:51:36Z",
+      "side": 1,
+      "message": "nit: it\u0027s uncommon to have using declarations in headers (in Chrome anyway - blink code does it a ton and it\u0027s frustrating ;). This should be removed.",
+      "revId": "c32864091ffa7ab82228c9cdd5e3844e35efd263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f2f292_eef3467f",
+        "filename": "chrome/browser/apps/app_window_interactive_uitest.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-10T23:51:36Z",
+      "side": 1,
+      "message": "comment",
+      "revId": "c32864091ffa7ab82228c9cdd5e3844e35efd263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346f6722_c142e428",
+        "filename": "chrome/browser/apps/app_window_interactive_uitest.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-10T23:51:36Z",
+      "side": 1,
+      "message": "private: DISALLOW_..",
+      "revId": "c32864091ffa7ab82228c9cdd5e3844e35efd263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f11def_0a582bb2",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash_interactive_uitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-10T23:51:36Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c32864091ffa7ab82228c9cdd5e3844e35efd263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e9d989_a3be2ba5",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash_interactive_uitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-10T23:51:36Z",
+      "side": 1,
+      "message": "this should be the first include, with a blank line after",
+      "revId": "c32864091ffa7ab82228c9cdd5e3844e35efd263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d50241_2c194246",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash_interactive_uitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-10T23:51:36Z",
+      "side": 1,
+      "message": "Since this has \"ash\" in the name, we can assume it will only be compiled on ChromeOS for now. We can assume the #if MACOSX stuff is also dead code, and delete it.",
+      "revId": "c32864091ffa7ab82228c9cdd5e3844e35efd263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f624b93d_31586c89",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash_interactive_uitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-10T23:51:36Z",
+      "side": 1,
+      "message": "private: DISALLOW_.. (you\u0027ll need a default constructor)",
+      "revId": "c32864091ffa7ab82228c9cdd5e3844e35efd263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d42cd4_f30a79db",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-10T23:51:36Z",
+      "side": 1,
+      "message": "this should go in a is_chromeos block, to match where chrome_native_app_window_views_aura_ash.{h,cc} appears in chrome/browser/ui/BUILD.gn",
+      "revId": "c32864091ffa7ab82228c9cdd5e3844e35efd263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

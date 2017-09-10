@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "e4290b4a_3190438b",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-10T23:51:36Z",
+      "side": 1,
+      "message": "See how fullscreen does it. Perhaps you just need to use GetWidget()-\u003eShow(), to trigger  ExclusiveAccessBubbleViews::OnWidgetVisibilityChanged() (which also calls UpdateMouseWatcher())",
+      "parentUuid": "a8f0ec56_8f85f823",
+      "revId": "3d265870d47406c806a9b8deed774ef695f6c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc8f37a7_b30a7c99",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 5
