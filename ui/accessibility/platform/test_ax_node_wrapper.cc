@@ -177,10 +177,39 @@ TestAXNodeWrapper::GetTargetForNativeAccessibilityEvent() {
 
 bool TestAXNodeWrapper::AccessibilityPerformAction(
     const ui::AXActionData& data) {
-  if (data.action == ui::AX_ACTION_SCROLL_TO_POINT)
+  if (data.action == ui::AX_ACTION_SCROLL_TO_POINT) {
     g_offset = gfx::Vector2d(data.target_point.x(), data.target_point.x());
-  else if (data.action == ui::AX_ACTION_SCROLL_TO_MAKE_VISIBLE)
+    return true;
+  }
+
+  if (data.action == ui::AX_ACTION_SCROLL_TO_MAKE_VISIBLE) {
     g_offset = gfx::Vector2d(data.target_rect.x(), data.target_rect.x());
+    return true;
+  }
+
+  if (data.action == ui::AX_ACTION_SET_SELECTION) {
+    AXPlatformNode* node = GetFromNodeID(data.anchor_node_id);
+    const AXNodeData& node_data = node->GetDelegate()->GetData();
+    auto& attributes = const_cast<AXNodeData&>(node_data).int_attributes;
+
+    // This is a hack for testing that forces selection to match what ever
+    // was sent via SetTextSelection().
+
+    auto deleted =
+        std::remove_if(attributes.begin(), attributes.end(), [](auto& pair) {
+          // return true if either selection start or end has been set.
+          return pair.first == AX_ATTR_TEXT_SEL_START ||
+                 pair.first == AX_ATTR_TEXT_SEL_END;
+        });
+    attributes.erase(deleted, attributes.end());
+
+    const_cast<AXNodeData&>(node_data).AddIntAttribute(
+        ui::AX_ATTR_TEXT_SEL_START, data.anchor_offset);
+    const_cast<AXNodeData&>(node_data).AddIntAttribute(ui::AX_ATTR_TEXT_SEL_END,
+                                                       data.focus_offset);
+    return true;
+  }
+
   return true;
 }
 
