@@ -5,9 +5,9 @@
 #include "net/websockets/websocket_inflater.h"
 
 #include <algorithm>
-#include <deque>
 #include <vector>
 
+#include "base/containers/circular_deque.h"
 #include "base/logging.h"
 #include "net/base/io_buffer.h"
 #include "third_party/zlib/zlib.h"

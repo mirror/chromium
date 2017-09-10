@@ -8,12 +8,12 @@
 #include <stdint.h>
 
 #include <memory>
-#include <queue>
 #include <string>
 #include <vector>
 
 #include "base/callback.h"
 #include "base/compiler_specific.h"  // for WARN_UNUSED_RESULT
+#include "base/containers/queue.h"
 #include "base/i18n/streaming_utf8_validator.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -155,7 +155,7 @@ class NET_EXPORT WebSocketChannel {
  private:
   class HandshakeNotificationSender;
 
-  // The Windows implementation of std::queue requires that this declaration be
+  // The implementation of std::queue requires that this declaration be
   // visible in the header.
   class PendingReceivedFrame {
    public:
@@ -178,7 +178,7 @@ class NET_EXPORT WebSocketChannel {
     void DidConsume(uint64_t bytes);
 
     // This object needs to be copyable and assignable, since it will be placed
-    // in a std::queue. The compiler-generated copy constructor and assignment
+    // in a base::queue. The compiler-generated copy constructor and assignment
     // operator will do the right thing.
 
    private:
@@ -390,7 +390,7 @@ class NET_EXPORT WebSocketChannel {
 
   // Frames that have been read but not yet forwarded to the renderer due to
   // lack of quota.
-  std::queue<PendingReceivedFrame> pending_received_frames_;
+  base::queue<PendingReceivedFrame> pending_received_frames_;
 
   // Handle to an in-progress WebSocketStream creation request. Only non-NULL
   // during the connection process.

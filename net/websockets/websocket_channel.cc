@@ -8,12 +8,12 @@
 #include <stddef.h>
 
 #include <algorithm>
-#include <deque>
 #include <utility>
 #include <vector>
 
 #include "base/big_endian.h"
 #include "base/bind.h"
+#include "base/containers/circular_deque.h"
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"

@@ -9,12 +9,12 @@
 #include <stdint.h>
 
 #include <cstring>
-#include <deque>
 #include <memory>
 #include <string>
 #include <vector>
 
 #include "base/callback.h"
+#include "base/containers/circular_deque.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
