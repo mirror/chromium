@@ -134,6 +134,7 @@
 #include "content/renderer/service_worker/service_worker_context_client.h"
 #include "content/renderer/service_worker/service_worker_context_message_filter.h"
 #include "content/renderer/shared_worker/embedded_shared_worker_stub.h"
+#include "content/renderer/shared_worker/shared_worker_factory_impl.h"
 #include "device/gamepad/public/cpp/gamepads.h"
 #include "gin/public/debug.h"
 #include "gpu/GLES2/gl2extchromium.h"
@@ -753,26 +754,40 @@ void RenderThreadImpl::Init(
 
   AddFilter((new ServiceWorkerContextMessageFilter())->GetFilter());
 
+// Register exported services:
+
 #if defined(USE_AURA)
   if (IsRunningInMash()) {
     CreateRenderWidgetWindowTreeClientFactory(GetServiceManagerConnection());
   }
 #endif
 
-  auto registry = base::MakeUnique<service_manager::BinderRegistry>();
-  registry->AddInterface(base::Bind(&WebDatabaseImpl::Create),
-                         GetIOTaskRunner());
-  GetServiceManagerConnection()->AddConnectionFilter(
-      base::MakeUnique<SimpleConnectionFilter>(std::move(registry)));
+  {
+    auto registry = std::make_unique<service_manager::BinderRegistry>();
+    registry->AddInterface(base::Bind(&WebDatabaseImpl::Create),
+                           GetIOTaskRunner());
+    GetServiceManagerConnection()->AddConnectionFilter(
+        std::make_unique<SimpleConnectionFilter>(std::move(registry)));
+  }
 
-  auto registry_with_source_info =
-      base::MakeUnique<service_manager::BinderRegistryWithArgs<
-          const service_manager::BindSourceInfo&>>();
-  registry_with_source_info->AddInterface(base::Bind(&CreateFrameFactory),
-                                          base::ThreadTaskRunnerHandle::Get());
-  GetServiceManagerConnection()->AddConnectionFilter(
-      base::MakeUnique<SimpleConnectionFilterWithSourceInfo>(
-          std::move(registry_with_source_info)));
+  {
+    auto registry = std::make_unique<service_manager::BinderRegistry>();
+    registry->AddInterface(base::Bind(&SharedWorkerFactoryImpl::Create),
+                           base::ThreadTaskRunnerHandle::Get());
+    GetServiceManagerConnection()->AddConnectionFilter(
+        std::make_unique<SimpleConnectionFilter>(std::move(registry)));
+  }
+
+  {
+    auto registry_with_source_info =
+        base::MakeUnique<service_manager::BinderRegistryWithArgs<
+            const service_manager::BindSourceInfo&>>();
+    registry_with_source_info->AddInterface(
+        base::Bind(&CreateFrameFactory), base::ThreadTaskRunnerHandle::Get());
+    GetServiceManagerConnection()->AddConnectionFilter(
+        base::MakeUnique<SimpleConnectionFilterWithSourceInfo>(
+            std::move(registry_with_source_info)));
+  }
 
   GetContentClient()->renderer()->RenderThreadStarted();
 
@@ -2294,12 +2309,14 @@ void RenderThreadImpl::PurgePluginListCache(bool reload_pages) {
 
 void RenderThreadImpl::OnCreateNewSharedWorker(
     const WorkerProcessMsg_CreateWorker_Params& params) {
+#if 0
   // EmbeddedSharedWorkerStub will self-destruct.
   new EmbeddedSharedWorkerStub(
       params.url, params.name, params.content_security_policy,
       params.security_policy_type, params.creation_address_space,
       params.pause_on_start, params.route_id, params.data_saver_enabled,
       mojo::ScopedMessagePipeHandle(params.content_settings_handle));
+#endif
 }
 
 void RenderThreadImpl::OnMemoryPressure(

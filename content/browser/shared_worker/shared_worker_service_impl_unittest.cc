@@ -73,8 +73,8 @@ class SharedWorkerServiceImplTest : public testing::Test {
         ->ChangeUpdateWorkerDependencyFuncForTesting(
             &SharedWorkerServiceImplTest::MockUpdateWorkerDependency);
     SharedWorkerServiceImpl::GetInstance()
-        ->ChangeTryIncrementWorkerRefCountFuncForTesting(
-            &SharedWorkerServiceImplTest::MockTryIncrementWorkerRefCount);
+        ->ChangeTryReserveWorkerFuncForTesting(
+            &SharedWorkerServiceImplTest::MockTryReserveWorker);
   }
 
   void SetUp() override {}
@@ -91,8 +91,11 @@ class SharedWorkerServiceImplTest : public testing::Test {
     s_worker_dependency_added_ids_ = added_ids;
     s_worker_dependency_removed_ids_ = removed_ids;
   }
-  static bool MockTryIncrementWorkerRefCount(int worker_process_id) {
+  static bool MockTryReserveWorker(
+      int worker_process_id,
+      mojom::SharedWorkerFactoryPtrInfo* factory_info) {
     base::AutoLock lock(s_lock_);
+    // XXX need to instantiate factory_info
     return s_running_process_id_set_.find(worker_process_id) !=
            s_running_process_id_set_.end();
   }

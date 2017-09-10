@@ -49,33 +49,7 @@ void SharedWorkerMessageFilter::OnChannelClosing() {
 }
 
 bool SharedWorkerMessageFilter::OnMessageReceived(const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP_WITH_PARAM(SharedWorkerMessageFilter, message, this)
-    // Sent from SharedWorker in renderer.
-    IPC_MESSAGE_FORWARD(WorkerHostMsg_CountFeature,
-                        SharedWorkerServiceImpl::GetInstance(),
-                        SharedWorkerServiceImpl::CountFeature)
-    IPC_MESSAGE_FORWARD(WorkerHostMsg_WorkerContextClosed,
-                        SharedWorkerServiceImpl::GetInstance(),
-                        SharedWorkerServiceImpl::WorkerContextClosed)
-    IPC_MESSAGE_FORWARD(WorkerHostMsg_WorkerContextDestroyed,
-                        SharedWorkerServiceImpl::GetInstance(),
-                        SharedWorkerServiceImpl::WorkerContextDestroyed)
-    IPC_MESSAGE_FORWARD(WorkerHostMsg_WorkerReadyForInspection,
-                        SharedWorkerServiceImpl::GetInstance(),
-                        SharedWorkerServiceImpl::WorkerReadyForInspection)
-    IPC_MESSAGE_FORWARD(WorkerHostMsg_WorkerScriptLoaded,
-                        SharedWorkerServiceImpl::GetInstance(),
-                        SharedWorkerServiceImpl::WorkerScriptLoaded)
-    IPC_MESSAGE_FORWARD(WorkerHostMsg_WorkerScriptLoadFailed,
-                        SharedWorkerServiceImpl::GetInstance(),
-                        SharedWorkerServiceImpl::WorkerScriptLoadFailed)
-    IPC_MESSAGE_FORWARD(WorkerHostMsg_WorkerConnected,
-                        SharedWorkerServiceImpl::GetInstance(),
-                        SharedWorkerServiceImpl::WorkerConnected)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-  return handled;
+  return false;
 }
 
 }  // namespace content

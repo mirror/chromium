@@ -55,8 +55,6 @@ IPC_MESSAGE_ROUTED2(WorkerMsg_Connect,
                     int /* connection_request_id */,
                     content::MessagePort /* sent_message_port */)
 
-IPC_MESSAGE_ROUTED0(WorkerMsg_WorkerObjectDestroyed)
-
 
 //-----------------------------------------------------------------------------
 // WorkerHost messages
