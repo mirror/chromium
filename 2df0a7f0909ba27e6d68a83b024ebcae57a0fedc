@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "248dc205_5395a55a",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-nodes-disconnect-on-textinput-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-11T13:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5175e068_f3cf5af7",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 12,
+        "endChar": 60
+      },
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecdf7673_bef6a0da",
         "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-nodes-disconnect-on-textinput-event.html",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74356351_5f6eafea",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-nodes-disconnect-on-textinput-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-11T13:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecdf7673_bef6a0da",
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3f7dcd59_1c59a0ff",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-nodes-disconnect-on-textinput-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-11T13:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea3b680f_a618e066",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 83
+      },
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afab3f14_ef0e0013",
         "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-nodes-disconnect-on-webkitBeforeTextInserted-event.html",
         "patchSetId": 6
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "d3c51399_f3a8fd5e",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-nodes-disconnect-on-webkitBeforeTextInserted-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-11T13:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afab3f14_ef0e0013",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 44
+      },
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "929486ce_6ccd5aa4",
         "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-nodes-disconnect-on-webkitBeforeTextInserted-event.html",
         "patchSetId": 6
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "28a9544e_3d8ae2c4",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-nodes-disconnect-on-webkitBeforeTextInserted-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-11T13:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "929486ce_6ccd5aa4",
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d76388c8_10c96138",
         "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-remove-iframe-on-textInput-event.html",
         "patchSetId": 6
@@ -119,6 +227,24 @@
       "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2f08ed_a3ce3d82",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-remove-iframe-on-textInput-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-11T13:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d76388c8_10c96138",
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "f1973184_54077572",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-remove-iframe-on-textInput-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-11T13:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0616728d_edada9ba",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 72
+      },
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01b9b80f_b33f9162",
         "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-remove-iframe-on-webkitBeforeTextInserted-event.html",
         "patchSetId": 6
@@ -165,6 +315,30 @@
       "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2418d4_bd3ad1ee",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/insert-text-remove-iframe-on-webkitBeforeTextInserted-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-11T13:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01b9b80f_b33f9162",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 47
+      },
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +377,24 @@
     },
     {
       "key": {
+        "uuid": "c9e21c1d_ec359b91",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-11T13:03:48Z",
+      "side": 1,
+      "message": "Even after the changes this crash is happening,\nAs this function is executed after InsertText().",
+      "parentUuid": "d25d511b_f240959d",
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e35d4617_ec58bf72",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 6
@@ -214,6 +406,30 @@
       "writtenOn": "2017-09-08T19:29:30Z",
       "side": 1,
       "message": "Should be:\n\n// Event handlers may have invalidated the selection.\nif (!selection_for_insertion.IsValidFor(document))\n  return;\n\n// Do nothing if no need to delete and insert.\nif (selection_for_insertion.IsCaret() \u0026\u0026 new_text.IsEmpty())\n  return;",
+      "range": {
+        "startLine": 340,
+        "startChar": 6,
+        "endLine": 340,
+        "endChar": 50
+      },
+      "revId": "2df0a7f0909ba27e6d68a83b024ebcae57a0fedc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89c74b3_ae4a9833",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-11T13:03:48Z",
+      "side": 1,
+      "message": "oh. sorry for this silly mistake.\nThanks!!! done",
+      "parentUuid": "e35d4617_ec58bf72",
       "range": {
         "startLine": 340,
         "startChar": 6,
