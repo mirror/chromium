@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcea7cc0_80248439",
+        "filename": "media/cdm/platform_verification.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-11T20:46:11Z",
+      "side": 1,
+      "message": "requested? As we\u0027ll not always return the |version| in the callback...",
+      "range": {
+        "startLine": 50,
+        "startChar": 65,
+        "endLine": 50,
+        "endChar": 73
+      },
+      "revId": "70db3a45f9460e6b18c8271efda6499162399c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b95ea3_80371b56",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-11T20:46:11Z",
+      "side": 1,
+      "message": "To avoid magic numbers, can we use a constant, e.g. kCurrentStorageIdVersion. In the future, we may also add kPreviousStorageIdVersion. This will also make the comment above and below simpler.",
+      "range": {
+        "startLine": 1210,
+        "startChar": 44,
+        "endLine": 1210,
+        "endChar": 45
+      },
+      "revId": "70db3a45f9460e6b18c8271efda6499162399c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
