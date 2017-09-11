@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7dcf9762_5f9c0249",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-11T19:02:19Z",
+      "side": 1,
+      "message": "Yeah, I had thought of that.  I think that\u0027s okay, overall.  It makes it more clear (since we just use the template builder instead of resorting to GetWrapper()-\u003eSet()), and gives us a bit more certainty about what we\u0027re dispatching, etc.  If extensions are setting this, I\u0027d be inclined to say I\u0027m okay with the breakage (but if it turns out everyone was relying on this behavior, we can always switch).",
+      "parentUuid": "509b1020_05a35811",
+      "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6e67512_a96f4e39",
         "filename": "extensions/renderer/gin_port.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae859f09_8c248fdd",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-11T19:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6e67512_a96f4e39",
+      "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4f584a8b_e543c218",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-11T19:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32f91fe1_60e03e37",
+      "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daf944b2_af9c3507",
         "filename": "extensions/renderer/gin_port.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-11T02:50:29Z",
       "side": 1,
       "message": "I suspect this was a mistake/oversight. It\u0027s immediately upcast before it reaches the actual JSON serializer implementation.\n\nFor context, the internal type used is v8::internal::Object, which corresponds to the public v8::Value. Instead, the public API exposes v8::Object, which corresponds to v8::internal::JSReceiver.\n\nIt should be easy to change this on the V8 side; the only question would be whether it\u0027s okay to just change the type in the signature (literally no code aside from the signature should need changing), or whether they\u0027d rather add a new method name. I\u0027ll see what V8 folk say.",
+      "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0be1f1_e422150d",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-11T19:02:19Z",
+      "side": 1,
+      "message": "Thanks for fixing this, Jeremy!  I\u0027ll leave the comment in until Chromium picks up the patch and we can rebase, but this should be resolved.",
+      "parentUuid": "daf944b2_af9c3507",
       "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6bbafedb_79e781ce",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-11T19:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57a8c63f_314cb669",
+      "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bac1522_40b63c86",
         "filename": "extensions/renderer/gin_port.cc",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-11T02:50:29Z",
       "side": 1,
       "message": "Up to you, but if V8_ENABLE_CHECKS, then the As\u003cv8::Object\u003e also does such a check, so this might be redundant.",
+      "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3f3a69_94caa388",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-11T19:02:19Z",
+      "side": 1,
+      "message": "I kind of like the DCHECK for the documentation it provides, but if you prefer I can remove it.",
+      "parentUuid": "9bac1522_40b63c86",
       "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
