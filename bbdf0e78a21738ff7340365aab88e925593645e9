@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fc9972f_004c3f18",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-11T16:10:46Z",
+      "side": 1,
+      "message": "nit: s/include/import",
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ab04a9_9175e1d3",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-11T16:10:46Z",
+      "side": 1,
+      "message": "No need to DCHECK. The next line will crash anyway.",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 18
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96591836_4fde09a3",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-11T16:10:46Z",
+      "side": 1,
+      "message": "Is there a guarantee that CredentialManager outlives WebState? Would it make sense to make CredentialManager a WebStateObserver and watch for OnWebStateDestroyed?",
+      "range": {
+        "startLine": 45,
+        "startChar": 14,
+        "endLine": 45,
+        "endChar": 41
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93c4fd9_f062a3c8",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-11T16:10:46Z",
+      "side": 1,
+      "message": "Do you need this?",
+      "range": {
+        "startLine": 74,
+        "startChar": 3,
+        "endLine": 74,
+        "endChar": 28
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2d3952_e385b8af",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-11T16:10:46Z",
+      "side": 1,
+      "message": "No need for this. No one will try to copy test fixture.",
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5b2f2a_742d80fc",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-11T16:10:46Z",
+      "side": 1,
+      "message": "ASSERT_FALSE\n\nOtherwise |local_forms[0]| will crash",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 14
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ec509ae_a7ed5262",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-11T16:10:46Z",
+      "side": 1,
+      "message": "[ExecuteJavaScript(@\"test_promise_rejected_\") isEqual:@YES]\n\nLoadHtmlAndInject can return nil which will make |isEqual:| to throw an exception.\n\nSame comment for other places.",
+      "range": {
+        "startLine": 690,
+        "startChar": 14,
+        "endLine": 690,
+        "endChar": 39
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97919c58_2214e50f",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-11T16:10:46Z",
+      "side": 1,
+      "message": "ASSERT_EQ",
+      "range": {
+        "startLine": 700,
+        "startChar": 2,
+        "endLine": 700,
+        "endChar": 11
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e0f125_e643136b",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-11T16:10:46Z",
+      "side": 1,
+      "message": "ASSERT_EQ",
+      "range": {
+        "startLine": 737,
+        "startChar": 16,
+        "endLine": 737,
+        "endChar": 21
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "190b7903_e43c1331",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-11T16:10:46Z",
+      "side": 1,
+      "message": "nit: No need to put tests into anonymous namespace. Name collisions are not expected for test fixtures. It\u0027s still a good idea to leave constants and helper functions/classes in anonymous namespace.",
+      "range": {
+        "startLine": 804,
+        "startChar": 6,
+        "endLine": 804,
+        "endChar": 15
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
