@@ -21,6 +21,10 @@ class WebMemoryCoordinator {
   BLINK_PLATFORM_EXPORT static void OnMemoryStateChange(MemoryState);
 
   BLINK_PLATFORM_EXPORT static void OnPurgeMemory();
+
+  BLINK_PLATFORM_EXPORT static float GetApproximatedDeviceMemory();
+
+  // BLINK_PLATFORM_EXPORT static void SetPhysicalMemoryMBForTesting(int64_t);
 };
 
 }  // namespace blink

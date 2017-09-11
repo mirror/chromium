@@ -19,6 +19,7 @@
 #include "content/public/test/test_utils.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
+#include "third_party/WebKit/public/platform/WebMemoryCoordinator.h"
 
 class ClientHintsBrowserTest : public InProcessBrowserTest {
  public:
@@ -92,19 +93,18 @@ class ClientHintsBrowserTest : public InProcessBrowserTest {
  private:
   // Called by |https_server_|.
   void MonitorResourceRequest(const net::test_server::HttpRequest& request) {
-    if (!content::IsBrowserSideNavigationEnabled() ||
-        request.GetURL() != without_accept_ch_without_lifetime_url()) {
-      // When browser side navigation is enabled, client hints are currently not
-      // attached to the main frame request.
+    if (request.GetURL() != without_accept_ch_without_lifetime_url()) {
+      // When browser side navigation is enabled, only device memory client
+      // hints is currently attached to the main frame request.
       EXPECT_EQ(expect_client_hints_,
                 request.headers.find("dpr") != request.headers.end());
-      EXPECT_EQ(expect_client_hints_, request.headers.find("viewport-width") !=
-                                          request.headers.end());
+      EXPECT_EQ(expect_client_hints_,
+                request.headers.find("device-memory") != request.headers.end());
     }
     if (request.headers.find("dpr") != request.headers.end())
       count_client_hints_headers_seen_++;
 
-    if (request.headers.find("viewport-width") != request.headers.end())
+    if (request.headers.find("device-memory") != request.headers.end())
       count_client_hints_headers_seen_++;
   }
 
@@ -155,6 +155,7 @@ IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest, NoClientHintsHttps) {
 
 IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest,
                        ClientHintsLifetimeFollowedByNoClientHint) {
+  // blink::WebMemoryCoordinator::SetPhysicalMemoryMBForTesting(1000);
   base::HistogramTester histogram_tester;
   ContentSettingsForOneType host_settings;
 
@@ -189,15 +190,8 @@ IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest,
   SetClientHintExpectations(true);
   ui_test_utils::NavigateToURL(browser(),
                                without_accept_ch_without_lifetime_url());
-  if (content::IsBrowserSideNavigationEnabled()) {
-    // When browser side navigation is enabled, two client hints are attached to
-    // the image request.
-    EXPECT_EQ(2u, count_client_hints_headers_seen());
-  } else {
-    // When browser side navigation is not enabled, two client hints are
-    // attached to both the HTML and the image requests.
-    EXPECT_EQ(4u, count_client_hints_headers_seen());
-  }
+  EXPECT_EQ(content::IsBrowserSideNavigationEnabled() ? 3u : 4u,
+            count_client_hints_headers_seen());
 }
 
 IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest,
