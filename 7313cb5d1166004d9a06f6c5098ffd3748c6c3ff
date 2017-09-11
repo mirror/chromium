@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78ec63f4_a475646a",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-09-11T12:56:21Z",
+      "side": 1,
+      "message": "\"0U \u003c\u003d row\" can\u0027t happen because row is a NSUInteger.\nSurprised the compiler isn\u0027t complaining about it.",
+      "range": {
+        "startLine": 148,
+        "startChar": 13,
+        "endLine": 148,
+        "endChar": 22
+      },
+      "revId": "7313cb5d1166004d9a06f6c5098ffd3748c6c3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
