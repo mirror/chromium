@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d271d07_bf78644c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleCategoryPreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-11T17:44:28Z",
+      "side": 1,
+      "message": "Why do we want to have an exception for block? Do the mock allow to have \"blocked\" by default?",
+      "revId": "02b71c2d30d5cd15f1e3f7dfa4a6822c3d8142a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2474c5e_59c4ea72",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-11T17:44:28Z",
+      "side": 1,
+      "message": "This will allow to change the default setting. I do not see that in the mock. Would your implementation allow to set \"disabled\" by default?",
+      "revId": "02b71c2d30d5cd15f1e3f7dfa4a6822c3d8142a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
