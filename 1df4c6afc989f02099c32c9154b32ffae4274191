@@ -16,6 +16,24 @@
       "revId": "1df4c6afc989f02099c32c9154b32ffae4274191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a61c8c7_0086c7a8",
+        "filename": "ash/wm/overview/scoped_overview_animation_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-11T20:55:19Z",
+      "side": 1,
+      "message": "This change will not work for trilinear filtering because this cache will be reset when the animation finished.\nI can figure out a place to add the cache does what you expected and put out another cl: \"from animation start to the animation that leaves overview mode ends.\"\n\nThere are two animations, entering and exiting:\nFor entering, it is true there is no opacity animation. But there is transform animation which does not require raster at the UI thread. We should get performance increase if the creation of RS is less than re-drawing the RS? In this case, KEVIN I do not see too much improvement (almost the same), but at link, gnawty and linux build, there is improvement.\n\nFor the existing, there is an opacity animation [1], therefore, I always observe improvement in this case.\n[1] https://cs.chromium.org/chromium/src/ash/wm/overview/scoped_transform_overview_window.cc?l\u003d197\u0026rcl\u003d36465f338a331f439c7cfb8fe94fd0c7d3f95346",
+      "parentUuid": "682b2418_3c003446",
+      "revId": "1df4c6afc989f02099c32c9154b32ffae4274191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
