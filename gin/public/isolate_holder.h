@@ -65,7 +65,7 @@ class GIN_EXPORT IsolateHolder {
 
   // This constructor is to create V8 snapshot for Blink.
   // Note this constructor calls isolate->Enter() internally.
-  IsolateHolder(intptr_t* reference_table, v8::StartupData* existing_blob);
+  explicit IsolateHolder(intptr_t* reference_table);
 
   ~IsolateHolder();
 
