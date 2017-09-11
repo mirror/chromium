@@ -188,25 +188,29 @@ void ToJavaOfflinePageDownloadItemList(
     const JavaRef<jobject>& j_result_obj,
     const std::vector<const DownloadUIItem*>& items) {
   for (const auto* item : items) {
+    bool is_suggested = isPrefetchingOfflinePagesEnabled &&
+                        (item->name_space == kSuggestedArticlesNamespace);
     Java_OfflinePageDownloadBridge_createDownloadItemAndAddToList(
         env, j_result_obj, ConvertUTF8ToJavaString(env, item->guid),
         ConvertUTF8ToJavaString(env, item->url.spec()), item->download_state,
         item->download_progress_bytes,
         ConvertUTF16ToJavaString(env, item->title),
         ConvertUTF8ToJavaString(env, item->target_path.value()),
-        item->start_time.ToJavaTime(), item->total_bytes);
+        item->start_time.ToJavaTime(), item->total_bytes, is_suggested);
   }
 }
 
 ScopedJavaLocalRef<jobject> ToJavaOfflinePageDownloadItem(
     JNIEnv* env,
     const DownloadUIItem& item) {
+  bool is_suggested = isPrefetchingOfflinePagesEnabled &&
+                      (item->name_space == kSuggestedArticlesNamespace);
   return Java_OfflinePageDownloadBridge_createDownloadItem(
       env, ConvertUTF8ToJavaString(env, item.guid),
       ConvertUTF8ToJavaString(env, item.url.spec()), item.download_state,
       item.download_progress_bytes, ConvertUTF16ToJavaString(env, item.title),
       ConvertUTF8ToJavaString(env, item.target_path.value()),
-      item.start_time.ToJavaTime(), item.total_bytes);
+      item.start_time.ToJavaTime(), item.total_bytes, is_suggested);
 }
 
 std::vector<int64_t> FilterRequestsByGuid(

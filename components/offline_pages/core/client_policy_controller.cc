@@ -65,6 +65,7 @@ ClientPolicyController::ClientPolicyController() {
                                      kUnlimitedPages)
           .SetIsRemovedOnCacheReset(true)
           .SetIsDisabledWhenPrefetchDisabled(true)
+          .SetIsSupportedByDownload(true)
           .SetExpirePeriod(base::TimeDelta::FromDays(30))
           .Build()));
 
