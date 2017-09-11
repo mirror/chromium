@@ -511,7 +511,6 @@ void ThreadHeap::ResetHeapCounters() {
   ProcessHeap::DecreaseTotalMarkedObjectSize(stats_.MarkedObjectSize());
 
   stats_.Reset();
-  thread_state_->ResetHeapCounters();
 }
 
 ThreadHeap* ThreadHeap::main_thread_heap_ = nullptr;
