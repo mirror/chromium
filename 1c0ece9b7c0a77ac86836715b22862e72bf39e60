@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ee893bf_69f8dc76",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1562,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-11T07:19:58Z",
+      "side": 1,
+      "message": "Okay, done. You\u0027re right, this behavior should hold true for all platforms.",
+      "parentUuid": "536ffdef_3e199ab1",
+      "revId": "1c0ece9b7c0a77ac86836715b22862e72bf39e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87de6d49_87febfac",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-11T06:05:56Z",
       "side": 1,
       "message": "Should this come first? The comment suggests it includes things like the file manager and the ChromeOS settings-in-a-window Window (which shouldn\u0027t show a title still?).\n\nAlso it\u0027s not obvious why we can\u0027t just fall through -- shouldn\u0027t hosted app browser windows still support FEATURE_TITLEBAR? (seems it\u0027s just !tabbed)  Are we setting is_trusted_source for hosted/bookmark apps? (that seems wrong).",
+      "revId": "1c0ece9b7c0a77ac86836715b22862e72bf39e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d36f60_facca24b",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1650,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-11T07:19:58Z",
+      "side": 1,
+      "message": "Yeah, bookmark apps are trusted sources. I think this is WAI. Bookmark apps are \u0027trusted\u0027 by the system in the sense that they\u0027re launched by the user. I think this is as opposed to popup windows?\n\nTrusted windows get restored, and get packaged app style headers when they\u0027re not apps. I really don\u0027t understand what things are and aren\u0027t trusted sources beyond popups \u003d no, apps/devtools \u003d yes.",
+      "parentUuid": "87de6d49_87febfac",
       "revId": "1c0ece9b7c0a77ac86836715b22862e72bf39e60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
