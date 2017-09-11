@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba88ce22_1f911b6a",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-11T16:38:22Z",
+      "side": 1,
+      "message": "Why do you check for the root here?",
+      "revId": "726c6e69084b287602d6bd57f971624c96886db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
