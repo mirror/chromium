@@ -6,6 +6,12 @@ static_library("renderer") {
   sources = [
     "autofill_agent.cc",
     "autofill_agent.h",
+    "autofill_client.cc",
+    "autofill_client.h",
+    "autofill_element.cc",
+    "autofill_element.h",
+    "autofill_webagent.cc",
+    "autofill_webagent.h",
     "form_autofill_util.cc",
     "form_autofill_util.h",
     "form_cache.cc",
@@ -50,6 +56,7 @@ static_library("renderer") {
     "//services/service_manager/public/cpp",
     "//skia",
     "//third_party/WebKit/public:blink",
+    "//third_party/WebKit/webagents",
     "//third_party/re2",
     "//ui/base",
   ]

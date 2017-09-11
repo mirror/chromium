@@ -2,20 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/dom/DocumentStatisticsCollector.h"
+#include "components/dom_distiller/content/renderer/document_statistics_collector.h"
 
-#include <memory>
-#include "core/dom/Document.h"
-#include "core/frame/LocalFrameView.h"
-#include "core/html/HTMLHeadElement.h"
-#include "core/html/HTMLLinkElement.h"
-#include "core/testing/DummyPageHolder.h"
-#include "platform/wtf/text/StringBuilder.h"
-#include "public/platform/WebDistillability.h"
-#include "testing/gmock/include/gmock/gmock.h"
+#include <math.h>
+#include "base/message_loop/message_loop.h"
+#include "components/dom_distiller/content/renderer/web_distillability.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/platform/WebString.h"
+#include "third_party/WebKit/webagents/element.h"
+#include "third_party/WebKit/webagents/test_frame.h"
 
-namespace blink {
+namespace dom_distiller {
+
+using namespace webagents;
 
 // Saturate the length of a paragraph to save time.
 const unsigned kTextContentLengthSaturation = 1000;
@@ -24,27 +23,27 @@ const unsigned kTextContentLengthSaturation = 1000;
 // sentences.
 const unsigned kParagraphLengthThreshold = 140;
 
-class DocumentStatisticsCollectorTest : public ::testing::Test {
+class DocumentStatisticsCollectorTest : public testing::Test {
  protected:
   void SetUp() override;
 
-  void TearDown() override { ThreadState::Current()->CollectAllGarbage(); }
+  Document GetDocument() const { return frame_->GetDocument(); }
 
-  Document& GetDocument() const { return dummy_page_holder_->GetDocument(); }
-
-  void SetHtmlInnerHTML(const String&);
+  void SetHtmlInnerHTML(const std::string);
 
  private:
-  std::unique_ptr<DummyPageHolder> dummy_page_holder_;
+  std::unique_ptr<Frame> frame_;
+  base::MessageLoop message_loop_;
 };
 
 void DocumentStatisticsCollectorTest::SetUp() {
-  dummy_page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
+  frame_ = TestFrame::FrameForTesting(800, 600);
 }
 
 void DocumentStatisticsCollectorTest::SetHtmlInnerHTML(
-    const String& html_content) {
-  GetDocument().documentElement()->setInnerHTML((html_content));
+    const std::string html_content) {
+  GetDocument().documentElement()->setInnerHTML(
+      blink::WebString::FromASCII(html_content));
 }
 
 // This test checks open graph articles can be recognized.
@@ -134,15 +133,15 @@ TEST_F(DocumentStatisticsCollectorTest, CountScore) {
 
 // This test checks saturation of score calculations is correct.
 TEST_F(DocumentStatisticsCollectorTest, CountScoreSaturation) {
-  StringBuilder html;
+  std::string html;
   for (int i = 0; i < 10; i++) {
-    html.Append("<p>");
+    html += "<p>";
     for (int j = 0; j < 1000; j++) {
-      html.Append("0123456789");
+      html += "0123456789";
     }
-    html.Append("</p>");
+    html += "</p>";
   }
-  SetHtmlInnerHTML(html.ToString());
+  SetHtmlInnerHTML(html);
   WebDistillabilityFeatures features =
       DocumentStatisticsCollector::CollectStatistics(GetDocument());
 
@@ -157,4 +156,4 @@ TEST_F(DocumentStatisticsCollectorTest, CountScoreSaturation) {
               error);
 }
 
-}  // namespace blink
+}  // namespace dom_distiller

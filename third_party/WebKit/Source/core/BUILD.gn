@@ -1344,7 +1344,6 @@ jumbo_source_set("unit_tests") {
     "css/threaded/TextRendererThreadedTest.cpp",
     "dom/AttrTest.cpp",
     "dom/DOMImplementationTest.cpp",
-    "dom/DocumentStatisticsCollectorTest.cpp",
     "dom/DocumentTest.cpp",
     "dom/ElementTest.cpp",
     "dom/ElementVisibilityObserverTest.cpp",

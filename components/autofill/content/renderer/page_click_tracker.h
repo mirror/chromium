@@ -15,9 +15,15 @@ namespace content {
 class RenderFrame;
 }
 
+namespace webagents {
+class Agent;
+class Node;
+}  // namespace webagents
+
 namespace autofill {
 
 class PageClickListener;
+class PageClickListenerWebagent;
 
 // This class is responsible notifying the associated listener when a node is
 // clicked or tapped. It also tracks whether a node was focused before the event
@@ -31,15 +37,21 @@ class PageClickTracker {
  public:
   // The |listener| will be notified when an element is clicked.  It must
   // outlive this class.
+  // TODO: remove RenderFrame, just keep webagents::Frame
   PageClickTracker(content::RenderFrame* render_frame,
                    PageClickListener* listener);
+  PageClickTracker(webagents::Agent* agent,
+                   PageClickListenerWebagent* listener);
   ~PageClickTracker();
 
   void FocusedNodeChanged(const blink::WebNode& node);
   void DidCompleteFocusChangeInFrame();
   void DidReceiveLeftMouseDownOrGestureTapInNode(const blink::WebNode& node);
+  void DidReceiveLeftMouseDownOrGestureTapInNodeWebagents(
+      const webagents::Node& node);
 
   content::RenderFrame* render_frame() const { return render_frame_; }
+  webagents::Agent* GetAgent() const { return agent_; }
 
  private:
   void DoFocusChangeComplete();
@@ -54,8 +66,10 @@ class PageClickTracker {
 
   // The listener getting the actual notifications.
   PageClickListener* listener_;
+  PageClickListenerWebagent* listener_webagent_;
 
   content::RenderFrame* const render_frame_;
+  webagents::Agent* const agent_;
 
   DISALLOW_COPY_AND_ASSIGN(PageClickTracker);
 };
