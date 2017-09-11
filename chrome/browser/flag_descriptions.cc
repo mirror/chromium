@@ -1250,6 +1250,10 @@ const char kTabAudioMutingDescription[] =
     "mute controls. This also adds commands in the tab context menu for "
     "quickly muting multiple selected tabs.";
 
+const char kTabsInCbdName[] = "Enable tabs for the Clear Browsing Data dialog.";
+const char kTabsInCbdDescription[] =
+    "Enables a basic and an advanced tab for the Clear Browsing Data dialog.";
+
 const char kTcpFastOpenName[] = "TCP Fast Open";
 const char kTcpFastOpenDescription[] =
     "Enable the option to send extra authentication information in the initial "
@@ -1932,10 +1936,6 @@ const char kSpannableInlineAutocompleteName[] = "Spannable inline autocomplete";
 const char kSpannableInlineAutocompleteDescription[] =
     "A new type of inline autocomplete for the omnibox that works with "
     "keyboards that compose text.";
-
-const char kTabsInCbdName[] = "Enable tabs for the Clear Browsing Data dialog.";
-const char kTabsInCbdDescription[] =
-    "Enables a basic and an advanced tab for the Clear Browsing Data dialog.";
 
 const char kTranslateCompactUIName[] = "New Translate Infobar";
 const char kTranslateCompactUIDescription[] =
