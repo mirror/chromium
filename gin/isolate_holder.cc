@@ -73,10 +73,11 @@ IsolateHolder::IsolateHolder(
   SetUp(std::move(task_runner));
 }
 
-IsolateHolder::IsolateHolder(const intptr_t* reference_table,
-                             v8::StartupData* existing_blob)
-    : snapshot_creator_(
-          new v8::SnapshotCreator(reference_table, existing_blob)),
+IsolateHolder::IsolateHolder(const intptr_t* reference_table)
+    : v8_startup_data_(new v8::StartupData),
+      snapshot_creator_(new v8::SnapshotCreator(
+          reference_table,
+          V8Initializer::GetExistingStartupData(v8_startup_data_.get()))),
       isolate_(snapshot_creator_->GetIsolate()),
       access_mode_(AccessMode::kSingleThread) {
   SetUp(nullptr);
