@@ -17,6 +17,7 @@
 #include "core/loader/DocumentLoader.h"
 #include "core/probe/CoreProbes.h"
 #include "platform/Histogram.h"
+#include "platform/instrumentation/resource_coordinator/FrameResourceCoordinator.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/Time.h"
 #include "public/platform/Platform.h"
@@ -26,6 +27,8 @@ namespace blink {
 namespace {
 static const double kLongTaskSubTaskThresholdInSeconds = 0.012;
 static const double kNetworkQuietWindowSeconds = 0.5;
+static const double kLongTaskThresholdSeconds = 0.05;
+static const double kLongTaskIdlenessWindowSeconds = 0.5;
 }  // namespace
 
 // static
@@ -329,6 +332,8 @@ void PerformanceMonitor::DomContentLoadedEventFired(LocalFrame* frame) {
   // connections.
   network_2_quiet_ = 0;
   network_0_quiet_ = 0;
+  // Start to observe long task idleness.
+  long_task_idle_ = 0;
   DidLoadResource();
 }
 
@@ -374,11 +379,33 @@ void PerformanceMonitor::WillProcessTask(double start_time) {
 }
 
 void PerformanceMonitor::DidProcessTask(double start_time, double end_time) {
+  double task_time = end_time - start_time;
+
   // Shift idle timestamps with the duration of the task, we were not idle.
   if (network_2_quiet_ > 0)
-    network_2_quiet_ += end_time - start_time;
+    network_2_quiet_ += task_time;
   if (network_0_quiet_ > 0)
-    network_0_quiet_ += end_time - start_time;
+    network_0_quiet_ += task_time;
+
+  // If the timer hasn't been started, start the timer;
+  // Or if the timer has already been started and it's a long task, then reset
+  // the timer; Or if the timer has already been started and there's no long
+  // task during kLongTaskIdlenessWindowSeconds, emit long task idle signal.
+  if (long_task_idle_ == 0) {
+    long_task_idle_ =
+        task_time > kLongTaskThresholdSeconds ? end_time : start_time;
+  } else if (long_task_idle_ > 0) {
+    if (task_time > kLongTaskThresholdSeconds) {
+      long_task_idle_ = end_time;
+    } else if (end_time - long_task_idle_ >= kLongTaskIdlenessWindowSeconds) {
+      if (auto* frame_resource_coordinator =
+              local_root_->GetFrameResourceCoordinator()) {
+        frame_resource_coordinator->SetProperty(
+            resource_coordinator::mojom::PropertyType::kLongTaskIdle, true);
+      }
+      long_task_idle_ = -1;
+    }
+  }
 
   if (!enabled_)
     return;
@@ -392,7 +419,6 @@ void PerformanceMonitor::DidProcessTask(double start_time, double end_time) {
     }
   }
 
-  double task_time = end_time - start_time;
   if (thresholds_[kLongTask] && task_time > thresholds_[kLongTask]) {
     ClientThresholds* client_thresholds = subscriptions_.at(kLongTask);
     for (const auto& it : *client_thresholds) {

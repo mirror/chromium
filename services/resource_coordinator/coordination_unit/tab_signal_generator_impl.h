@@ -44,6 +44,8 @@ class TabSignalGeneratorImpl : public CoordinationUnitGraphObserver,
       resource_coordinator::mojom::TabSignalGeneratorRequest request);
 
  private:
+  bool IsDoneLoading(const FrameCoordinationUnitImpl* frame_cu);
+
   mojo::BindingSet<mojom::TabSignalGenerator> bindings_;
   mojo::InterfacePtrSet<mojom::TabSignalObserver> observers_;
 
