@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d2d8178_1bafd275",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-11T13:57:15Z",
+      "side": 1,
+      "message": "nit: Indicates whether the editor should have an email field.",
+      "range": {
+        "startLine": 64,
+        "startChar": 28,
+        "endLine": 64,
+        "endChar": 76
+      },
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
