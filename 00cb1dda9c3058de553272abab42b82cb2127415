@@ -46,6 +46,30 @@
       "revId": "00cb1dda9c3058de553272abab42b82cb2127415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cdae1eb_16322c5c",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-11T19:50:35Z",
+      "side": 1,
+      "message": "You already had that! Ah, nice!",
+      "parentUuid": "9a7de67a_3d68d1f8",
+      "range": {
+        "startLine": 515,
+        "startChar": 8,
+        "endLine": 515,
+        "endChar": 27
+      },
+      "revId": "00cb1dda9c3058de553272abab42b82cb2127415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
