@@ -63,9 +63,28 @@ Resource* PreloadRequest::Start(Document* document) {
                                        kCrossOriginAttributeAnonymous);
   }
 
-  if (cross_origin_ != kCrossOriginAttributeNotSet) {
+  if (resource_type_ == Resource::kScript &&
+      script_type_ == ScriptType::kModule) {
+    WebURLRequest::FetchCredentialsMode credentials_mode =
+        WebURLRequest::kFetchCredentialsModeOmit;
+    switch (cross_origin_) {
+      case kCrossOriginAttributeNotSet:
+        credentials_mode = WebURLRequest::kFetchCredentialsModeOmit;
+        break;
+      case kCrossOriginAttributeAnonymous:
+        credentials_mode = WebURLRequest::kFetchCredentialsModeSameOrigin;
+        break;
+      case kCrossOriginAttributeUseCredentials:
+        credentials_mode = WebURLRequest::kFetchCredentialsModeInclude;
+        break;
+    }
     params.SetCrossOriginAccessControl(document->GetSecurityOrigin(),
-                                       cross_origin_);
+                                       credentials_mode);
+  } else {
+    if (cross_origin_ != kCrossOriginAttributeNotSet) {
+      params.SetCrossOriginAccessControl(document->GetSecurityOrigin(),
+                                         cross_origin_);
+    }
   }
 
   params.SetDefer(defer_);
@@ -78,9 +97,13 @@ Resource* PreloadRequest::Start(Document* document) {
   if (request_type_ == kRequestTypeLinkRelPreload)
     params.SetLinkPreload(true);
 
-  if (resource_type_ == Resource::kScript ||
-      resource_type_ == Resource::kCSSStyleSheet ||
-      resource_type_ == Resource::kImportResource) {
+  if (resource_type_ == Resource::kScript &&
+      script_type_ == ScriptType::kModule) {
+    params.SetDecoderOptions(
+        TextResourceDecoderOptions::CreateAlwaysUseUTF8ForText());
+  } else if (resource_type_ == Resource::kScript ||
+             resource_type_ == Resource::kCSSStyleSheet ||
+             resource_type_ == Resource::kImportResource) {
     params.SetCharset(charset_.IsEmpty() ? document->Encoding()
                                          : WTF::TextEncoding(charset_));
   }
