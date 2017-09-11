@@ -66,6 +66,13 @@ void FirstRunBubble::Init() {
   views::GridLayout* layout = views::GridLayout::CreateAndInstall(this);
 
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
+  if (provider->UseExtraDialogPadding()) {
+    constexpr int kTopInset = 1;
+    constexpr int kHorizontalInset = 2;
+    constexpr int kBottomInset = 7;
+    SetBorder(views::CreateEmptyBorder(kTopInset, kHorizontalInset,
+                                       kBottomInset, kHorizontalInset));
+  }
 
   views::ColumnSet* columns = layout->AddColumnSet(0);
   columns->AddColumn(views::GridLayout::LEADING, views::GridLayout::LEADING, 0,
@@ -91,11 +98,8 @@ FirstRunBubble::FirstRunBubble(Browser* browser,
     : views::BubbleDialogDelegateView(nullptr, views::BubbleBorder::TOP_LEFT),
       browser_(browser),
       bubble_closer_(this, parent_window) {
-  constexpr int kTopInset = 1;
-  constexpr int kHorizontalInset = 2;
-  constexpr int kBottomInset = 7;
   set_margins(
-      gfx::Insets(kTopInset, kHorizontalInset, kBottomInset, kHorizontalInset));
+      ChromeLayoutProvider::Get()->GetInsetsMetric(views::INSETS_DIALOG));
   if (anchor_view) {
     // Compensate for built-in vertical padding in the anchor view's image.
     set_anchor_view_insets(gfx::Insets(
