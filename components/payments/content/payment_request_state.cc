@@ -49,13 +49,13 @@ PaymentRequestState::PaymentRequestState(
       payment_request_delegate_(payment_request_delegate),
       profile_comparator_(app_locale, *spec),
       weak_ptr_factory_(this) {
-  PopulateProfileCache();
   if (base::FeatureList::IsEnabled(features::kServiceWorkerPaymentApps)) {
     get_all_instruments_finished_ = false;
     content::PaymentAppProvider::GetInstance()->GetAllPaymentApps(
         context, base::BindOnce(&PaymentRequestState::GetAllPaymentAppsCallback,
                                 weak_ptr_factory_.GetWeakPtr()));
   } else {
+    PopulateProfileCache();
     SetDefaultProfileSelections();
   }
   spec_->AddObserver(this);
@@ -70,6 +70,7 @@ void PaymentRequestState::GetAllPaymentAppsCallback(
     CreateServiceWorkerPaymentApps(apps, requested_method_urls);
   }
 
+  PopulateProfileCache();
   SetDefaultProfileSelections();
 
   get_all_instruments_finished_ = true;
