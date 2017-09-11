@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22691c93_e5b6c847",
+        "filename": "third_party/WebKit/Source/bindings/scripts/aggregate_generated_bindings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-11T06:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51a4b8ed_18a5c2dd",
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25936367_c1ab5c16",
         "filename": "third_party/WebKit/Source/bindings/scripts/code_generator_v8.py",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "781b47f3_ed74f18d",
+        "filename": "third_party/WebKit/Source/bindings/scripts/code_generator_v8.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-11T06:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25936367_c1ab5c16",
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4277907_a0a873c6",
         "filename": "third_party/WebKit/Source/bindings/scripts/code_generator_web_agent_api.py",
         "patchSetId": 3
@@ -47,6 +83,30 @@
       "writtenOn": "2017-09-11T05:43:59Z",
       "side": 1,
       "message": "Probably better to have default value in CodeGeneratorBase.",
+      "range": {
+        "startLine": 242,
+        "startChar": 61,
+        "endLine": 242,
+        "endChar": 62
+      },
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68d1cf9_69f403e5",
+        "filename": "third_party/WebKit/Source/bindings/scripts/code_generator_web_agent_api.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-11T06:54:31Z",
+      "side": 1,
+      "message": "I don\u0027t catch this comment.\nDo you mean we should move snake_case_generated_files field from CodeGeneratorV8Basae to CodeGeneratorBase?",
+      "parentUuid": "f4277907_a0a873c6",
       "range": {
         "startLine": 242,
         "startChar": 61,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "97eb4049_18a783dc",
+        "filename": "third_party/WebKit/Source/bindings/scripts/compute_interfaces_info_individual.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-11T06:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe543f10_59c2bfdf",
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1472df8_354001ce",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_callback_interface.py",
         "patchSetId": 3
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "b56d0c99_ca02f5e8",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_callback_interface.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-11T06:54:31Z",
+      "side": 1,
+      "message": "This was necessary because CodeGeneratorV8.generate_interface_code() assume that callback_interface_context / legacy_callback_interface_context / dictionary_context / interface_context have identical function signatures.\nNew Patch Set doesn\u0027t need header_basename arguments of dictionary_context and interface_context, and we can drop these unused arguments.",
+      "parentUuid": "c1472df8_354001ce",
+      "range": {
+        "startLine": 81,
+        "startChar": 54,
+        "endLine": 81,
+        "endChar": 64
+      },
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2093efb_9b87d32b",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_dictionary.py",
         "patchSetId": 3
@@ -113,6 +215,24 @@
       "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad88f256_71b0b4ed",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_dictionary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-11T06:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2093efb_9b87d32b",
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "7689ef53_77326fb1",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_dictionary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-11T06:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8762b284_daa91a62",
+      "range": {
+        "startLine": 160,
+        "startChar": 57,
+        "endLine": 160,
+        "endChar": 72
+      },
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "718dab15_e4b6306e",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
         "patchSetId": 3
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "cf3aeb8e_8af17ff2",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-11T06:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "718dab15_e4b6306e",
+      "range": {
+        "startLine": 188,
+        "startChar": 45,
+        "endLine": 188,
+        "endChar": 60
+      },
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7774d18f_192afb19",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/bindings/bindings_tests.py",
         "patchSetId": 3
@@ -182,6 +350,30 @@
       "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d57e90_1dc9f078",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/bindings/bindings_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-11T06:54:31Z",
+      "side": 1,
+      "message": "Removed the default value.",
+      "parentUuid": "7774d18f_192afb19",
+      "range": {
+        "startLine": 187,
+        "startChar": 61,
+        "endLine": 187,
+        "endChar": 67
+      },
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
