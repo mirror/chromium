@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "9b06bb35_28fb7899",
+        "filename": "components/offline_pages/core/tasks/add_page_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-11T19:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274ab2fa_bd59f3b9",
+      "range": {
+        "startLine": 95,
+        "startChar": 18,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "f2601128e8716565d93918b768a19e0c98fcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e35d1f92_cd0d4edd",
         "filename": "components/offline_pages/core/tasks/add_page_task.h",
         "patchSetId": 5
