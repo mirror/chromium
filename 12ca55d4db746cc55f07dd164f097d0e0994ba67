@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dd297f8_6c8b87ad",
+        "filename": "cc/base/math_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-11T15:23:40Z",
+      "side": 1,
+      "message": "Double check if you can remove this?",
+      "revId": "12ca55d4db746cc55f07dd164f097d0e0994ba67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
