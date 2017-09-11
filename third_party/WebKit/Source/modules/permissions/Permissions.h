@@ -40,7 +40,7 @@ class Permissions final : public GarbageCollectedFinalized<Permissions>,
                          Vector<int>,
                          const Vector<mojom::blink::PermissionStatus>&);
 
-  mojom::blink::PermissionServicePtr service_;
+  mojom::blink::PermissionServiceAssociatedPtr service_;
 };
 
 }  // namespace blink

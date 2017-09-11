@@ -33,7 +33,7 @@ class StorageManager final : public GarbageCollectedFinalized<StorageManager>,
   void PermissionRequestComplete(ScriptPromiseResolver*,
                                  mojom::blink::PermissionStatus);
 
-  mojom::blink::PermissionServicePtr permission_service_;
+  mojom::blink::PermissionServiceAssociatedPtr permission_service_;
 };
 
 }  // namespace blink

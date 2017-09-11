@@ -71,7 +71,7 @@ PermissionServiceContext::~PermissionServiceContext() {
 }
 
 void PermissionServiceContext::CreateService(
-    blink::mojom::PermissionServiceRequest request) {
+    blink::mojom::PermissionServiceAssociatedRequest request) {
   services_.AddBinding(base::MakeUnique<PermissionServiceImpl>(this),
                        std::move(request));
 }
@@ -151,8 +151,14 @@ GURL PermissionServiceContext::GetEmbeddingOrigin() const {
                         : GURL();
 }
 
+const url::Origin& PermissionServiceContext::GetRequestingOrigin() const {
+  // TODO / DO NOT SUBMIT: Can we DCHECK(render_frame_host()); ?
+  // If not, then what should we return when rfh is null?
+  return render_frame_host()->GetLastCommittedOrigin();
+}
+
 RenderFrameHost* PermissionServiceContext::render_frame_host() const {
   return render_frame_host_;
 }
 
-} // namespace content
+}  // namespace content

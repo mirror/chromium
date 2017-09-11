@@ -4,6 +4,8 @@
 
 #include "modules/webmidi/MIDIAccessInitializer.h"
 
+#include <utility>
+
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/dom/DOMException.h"
@@ -43,7 +45,6 @@ ScriptPromise MIDIAccessInitializer::Start() {
                              mojo::MakeRequest(&permission_service_));
   permission_service_->RequestPermission(
       CreateMidiPermissionDescriptor(options_.hasSysex() && options_.sysex()),
-      GetExecutionContext()->GetSecurityOrigin(),
       UserGestureIndicator::ProcessingUserGesture(),
       ConvertToBaseCallback(WTF::Bind(
           &MIDIAccessInitializer::OnPermissionsUpdated, WrapPersistent(this))));

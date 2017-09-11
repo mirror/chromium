@@ -81,7 +81,6 @@ ScriptPromise NotificationManager::RequestPermission(
 
   permission_service_->RequestPermission(
       CreatePermissionDescriptor(mojom::blink::PermissionName::NOTIFICATIONS),
-      context->GetSecurityOrigin(),
       UserGestureIndicator::ProcessingUserGesture(),
       ConvertToBaseCallback(
           WTF::Bind(&NotificationManager::OnPermissionRequestComplete,

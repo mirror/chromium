@@ -231,7 +231,10 @@ class CORE_EXPORT LocalFrame final : public Frame,
   // navigation at a later time.
   bool CanNavigate(const Frame&, const KURL& destination_url = KURL());
 
+  // TODO(lukasza): DO NOT SUBMIT: This would have to become
+  // content::AssociatedInterfaceProvider (I think).
   service_manager::InterfaceProvider& GetInterfaceProvider();
+
   InterfaceRegistry* GetInterfaceRegistry() { return interface_registry_; }
 
   LocalFrameClient* Client() const;

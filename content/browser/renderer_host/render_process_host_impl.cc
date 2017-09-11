@@ -1803,10 +1803,12 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       base::Bind(&ForwardShapeDetectionRequest<
                  shape_detection::mojom::TextDetectionRequest>));
 
-  AddUIThreadInterface(
-      registry.get(),
-      base::Bind(&PermissionServiceContext::CreateService,
-                 base::Unretained(permission_service_context_.get())));
+  // TODO(lukasza): DO NOT SUBMIT: Use WorkerHost instead.
+  // (requires first introducing WorkerHost mojo interface...)
+  // AddUIThreadInterface(
+  //    registry.get(),
+  //    base::Bind(&PermissionServiceContext::CreateService,
+  //               base::Unretained(permission_service_context_.get())));
 
   AddUIThreadInterface(
       registry.get(),

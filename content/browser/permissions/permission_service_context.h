@@ -5,11 +5,14 @@
 #ifndef CONTENT_BROWSER_PERMISSIONS_PERMISSION_SERVICE_CONTEXT_H_
 #define CONTENT_BROWSER_PERMISSIONS_PERMISSION_SERVICE_CONTEXT_H_
 
+#include <memory>
+#include <unordered_map>
+
 #include "base/macros.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/permission_type.h"
 #include "content/public/browser/web_contents_observer.h"
-#include "mojo/public/cpp/bindings/strong_binding_set.h"
+#include "mojo/public/cpp/bindings/strong_associated_binding_set.h"
 #include "third_party/WebKit/public/platform/modules/permissions/permission.mojom.h"
 
 namespace url {
@@ -29,10 +32,13 @@ class RenderProcessHost;
 class CONTENT_EXPORT PermissionServiceContext : public WebContentsObserver {
  public:
   explicit PermissionServiceContext(RenderFrameHost* render_frame_host);
+
+  // TODO(lukasza): DO NOT SUBMIT: s/RenderProcessHost/WorkerHost/g
   explicit PermissionServiceContext(RenderProcessHost* render_process_host);
+
   ~PermissionServiceContext() override;
 
-  void CreateService(blink::mojom::PermissionServiceRequest request);
+  void CreateService(blink::mojom::PermissionServiceAssociatedRequest request);
 
   void CreateSubscription(PermissionType permission_type,
                           const url::Origin& origin,
@@ -44,7 +50,11 @@ class CONTENT_EXPORT PermissionServiceContext : public WebContentsObserver {
   // May return nullptr during teardown, or when showing an interstitial.
   BrowserContext* GetBrowserContext() const;
 
+  // Gets the origin of the main frame.
   GURL GetEmbeddingOrigin() const;
+
+  // Gets the origin of the frame making a permission request.
+  const url::Origin& GetRequestingOrigin() const;
 
   RenderFrameHost* render_frame_host() const;
 
@@ -61,7 +71,7 @@ class CONTENT_EXPORT PermissionServiceContext : public WebContentsObserver {
 
   RenderFrameHost* render_frame_host_;
   RenderProcessHost* render_process_host_;
-  mojo::StrongBindingSet<blink::mojom::PermissionService> services_;
+  mojo::StrongAssociatedBindingSet<blink::mojom::PermissionService> services_;
   std::unordered_map<int, std::unique_ptr<PermissionSubscription>>
       subscriptions_;
 
