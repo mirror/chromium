@@ -19,6 +19,7 @@
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "components/autofill/core/browser/address_i18n.h"
@@ -113,6 +114,12 @@ class IsEmptyFunctor {
  private:
   const std::string app_locale_;
 };
+
+bool IsSyncEnabledFor(const syncer::SyncService* sync_service,
+                      syncer::ModelType model_type) {
+  return sync_service != nullptr && sync_service->CanSyncStart() &&
+         sync_service->GetPreferredDataTypes().Has(model_type);
+}
 
 // Returns true if minimum requirements for import of a given |profile| have
 // been met.  An address submitted via a form must have at least the fields
@@ -323,28 +330,30 @@ PersonalDataManager::~PersonalDataManager() {
 
 void PersonalDataManager::OnSyncServiceInitialized(
     syncer::SyncService* sync_service) {
-  // We want to know when, if at all, we need to run autofill profile de-
-  // duplication: now or after waiting until sync has started.
-  if (!is_autofill_profile_cleanup_pending_) {
-    // De-duplication isn't enabled.
-    return;
+  // If the sync service is not enabled for autofill address profiles then run
+  // address cleanup/startup code here. Otherwise, defer until after sync has
+  // started.
+  if (!IsSyncEnabledFor(sync_service, syncer::AUTOFILL_PROFILE)) {
+    // This runs as a one-time fix, tracked in syncable prefs. If it has
+    // already run, it is a NOP, other than checking the pref.
+    ApplyProfileUseDatesFix();
+
+    // This runs at most once per major version, tracked in syncable prefs.
+    // If it has already run for this version, it is a NOP, other than
+    // checking the pref.
+    ApplyDedupingRoutine();
+
+    // If the creation of test addresses is enabled, create them now.
+    CreateTestAddresses();
   }
 
-  // If the sync service is configured to start and to sync autofill profiles,
-  // then we can just let the notification that sync has started trigger the
-  // de-duplication.
-  if (sync_service && sync_service->CanSyncStart() &&
-      sync_service->GetPreferredDataTypes().Has(syncer::AUTOFILL_PROFILE)) {
-    return;
+  // Similarly, if the sync service is not enabled for autofill credit cards
+  // then run credit card address cleanup/startup code here. Otherwise, defer
+  // until after sync has started.
+  if (!IsSyncEnabledFor(sync_service, syncer::AUTOFILL_WALLET_DATA)) {
+    // If the creation of test credit cards is enabled, create them now.
+    CreateTestCreditCards();
   }
-
-  // This runs as a one-time fix, tracked in syncable prefs. If it has already
-  // run, it is a NOP (other than checking the pref).
-  ApplyProfileUseDatesFix();
-
-  // This runs at most once per major version, tracked in syncable prefs. If it
-  // has already run for this version, it's a NOP, other than checking the pref.
-  ApplyDedupingRoutine();
 }
 
 void PersonalDataManager::OnWebDataServiceRequestDone(
@@ -413,16 +422,18 @@ void PersonalDataManager::AutofillMultipleChanged() {
 }
 
 void PersonalDataManager::SyncStarted(syncer::ModelType model_type) {
-  if (model_type == syncer::AUTOFILL_PROFILE &&
-      is_autofill_profile_cleanup_pending_) {
-    // This runs as a one-time fix, tracked in syncable prefs. If it has already
-    // run, it is a NOP (other than checking the pref).
-    ApplyProfileUseDatesFix();
+  // Run deferred autofill address profile startup code.
+  // See: OnSyncServiceInitialized
+  if (model_type == syncer::AUTOFILL_PROFILE) {
+    ApplyProfileUseDatesFix();  // One-time fix, otherwise NOP.
+    ApplyDedupingRoutine();     // Once per major version, otherwise NOP.
+    CreateTestAddresses();      // Once per user profile startup.
+  }
 
-    // This runs at most once per major version, tracked in syncable prefs. If
-    // it has already run for this version, it's a NOP, other than checking the
-    // pref.
-    ApplyDedupingRoutine();
+  // Run deferred credit card startup code.
+  // See: OnSyncServiceInitialized
+  if (model_type == syncer::AUTOFILL_WALLET_DATA) {
+    CreateTestCreditCards();  // Once per user profile startup.
   }
 }
 
@@ -2130,6 +2141,65 @@ std::string PersonalDataManager::MergeServerAddressesIntoProfiles(
   }
 
   return guid;
+}
+
+void PersonalDataManager::CreateTestAddresses() {
+  if (has_created_test_addresses_)
+    return;
+
+  has_created_test_addresses_ = true;
+  if (!base::FeatureList::IsEnabled(kAutofillCreateDataForTest))
+    return;
+
+  const base::Time k185DaysAgo =
+      AutofillClock::Now() - base::TimeDelta::FromDays(185);
+  AutofillProfile profile;
+  profile.SetInfo(NAME_FULL, base::UTF8ToUTF16("Disused Address"), app_locale_);
+  profile.SetInfo(COMPANY_NAME,
+                  base::UTF8ToUTF16(base::StringPrintf("%ld Test Inc.",
+                                                       k185DaysAgo.ToTimeT())),
+                  app_locale_);
+  profile.SetInfo(EMAIL_ADDRESS,
+                  base::UTF8ToUTF16("tester.mctester@fake.chromium.org"),
+                  app_locale_);
+  profile.SetInfo(ADDRESS_HOME_LINE1, base::UTF8ToUTF16("123 Invented Street"),
+                  app_locale_);
+  profile.SetInfo(ADDRESS_HOME_LINE2, base::UTF8ToUTF16("Suite A"),
+                  app_locale_);
+  profile.SetInfo(ADDRESS_HOME_CITY, base::UTF8ToUTF16("Mountain View"),
+                  app_locale_);
+  profile.SetInfo(ADDRESS_HOME_STATE, base::UTF8ToUTF16("California"),
+                  app_locale_);
+  profile.SetInfo(ADDRESS_HOME_ZIP, base::UTF8ToUTF16("94043"), app_locale_);
+  profile.SetInfo(ADDRESS_HOME_COUNTRY, base::UTF8ToUTF16("US"), app_locale_);
+  profile.SetInfo(PHONE_HOME_WHOLE_NUMBER, base::UTF8ToUTF16("844-555-0173"),
+                  app_locale_);
+  profile.set_use_date(k185DaysAgo);
+  AddProfile(profile);
+}
+
+void PersonalDataManager::CreateTestCreditCards() {
+  if (has_created_test_credit_cards_)
+    return;
+
+  has_created_test_credit_cards_ = true;
+  if (!base::FeatureList::IsEnabled(kAutofillCreateDataForTest))
+    return;
+
+  const base::Time k185DaysAgo =
+      AutofillClock::Now() - base::TimeDelta::FromDays(185);
+  base::Time::Exploded exploded_date;
+  k185DaysAgo.LocalExplode(&exploded_date);
+
+  CreditCard credit_card;
+  credit_card.SetInfo(CREDIT_CARD_NAME_FULL,
+                      base::UTF8ToUTF16("Disused CreditCard"), app_locale_);
+  credit_card.SetInfo(CREDIT_CARD_NUMBER, base::UTF8ToUTF16("4111111111111111"),
+                      app_locale_);
+  credit_card.SetExpirationMonth(exploded_date.month);
+  credit_card.SetExpirationYear(exploded_date.year);
+  credit_card.set_use_date(k185DaysAgo);
+  AddCreditCard(credit_card);
 }
 
 }  // namespace autofill
