@@ -22,6 +22,30 @@
       "revId": "990ebe1129fa7d46eeb15ec7f2fd664501d9d5bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3d9d13_df03bfb0",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-11T11:35:33Z",
+      "side": 1,
+      "message": "Cronet needs unwind tables as we don\u0027t yet use Crashpad (crbug.com/479283).",
+      "parentUuid": "6bad07b8_848affb5",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 25
+      },
+      "revId": "990ebe1129fa7d46eeb15ec7f2fd664501d9d5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
