@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c214bec2_80e4079f",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-11T05:52:28Z",
+      "side": 1,
+      "message": "I couldn\u0027t think of a less coupled or more elegant solution, which is why this ugliness is here.\n\nConstraints:\n\n1. InstallableManager is the only source of truth as to whether or not a site is or isn\u0027t a PWA\n2. this object and its owner only live as long as the add to homescreen dialog is on screen, i.e. InstallableManager can figure out a site is/isn\u0027t a PWA after this object has been destroyed\n3. this class doesn\u0027t know if the page is going to trigger the full installability check at any other time (i.e. trigger the banner). The most common case is that it won\u0027t be triggered again.",
+      "parentUuid": "4f2b63e6_2efad88c",
+      "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b7554af_d172fe1f",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-11T04:16:18Z",
       "side": 1,
       "message": "Do you need to call metrics_.Start() here (or somewhere, at least)?",
+      "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77280346_df5dc02c",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-11T05:52:28Z",
+      "side": 1,
+      "message": "Hmm, looks like that got lost in the refactoring. Good catch.",
+      "parentUuid": "2b7554af_d172fe1f",
       "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "31d6fa8c_1bd94f49",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-11T05:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a7154fb_b70ba2fd",
+      "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39b76ca5_eecf2fbe",
         "filename": "chrome/browser/installable/installable_metrics.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6ef3570b_9a051952",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-11T05:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39b76ca5_eecf2fbe",
+      "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "643161d2_62f8d43f",
         "filename": "chrome/browser/installable/installable_metrics.cc",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-11T04:16:18Z",
       "side": 1,
       "message": "Is it possible that Start() might be called after some of the accumulators (e.g. menu_open_count) have been  incremented?  Might that attribute those counts to the NOT_COMPLETED bucket when they should be attributed to the NOT_STARTED bucket?\n\nAlso, it\u0027s a bit weird that counts would be attributed to IN_PROGRESS_PROGRESSIVE_WEB_APP or IN_PROGRESS_NOT_PROGRESSIVE_WEB_APP if a check completes (Resolve is called), but NOT_COMPLETED if no check completes. Is it accurate to say that NOT_COMPLETED could be named IN_PROGRESS_UNKNOWN?  If so, is it possible to rename that (or add a comment explaining the name)?",
+      "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda94a51_719f33d9",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-11T05:52:28Z",
+      "side": 1,
+      "message": "q1: hmm yes. Added more internal state in AccumulatingRecorder to address this, because adding a third Recorder subclass is pretty ugly (mainly because we would have to do an explicit type check in GetData to determine if we need to go NotStartedRecorder -\u003e AccumulatingRecorder or do nothing because we\u0027ve already completed the check and should stick with the DirectRecorder).\n\nThis has the downside of blurring the lines between the two recorder classes. Now the started_ variable basically does the same thing in AccumulatingRecorder as status_ used to in the InstallableMetrics implementation before... \n\nq2: NOT_COMPLETED is exactly IN_PROGRESS_UNKNOWN. I don\u0027t really find the name that unclear or weird, but I changed it anyway",
+      "parentUuid": "643161d2_62f8d43f",
       "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f8063346_b99aae97",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-11T05:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b1df1af_5b9deb50",
+      "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34296752_4bc22669",
         "filename": "chrome/browser/installable/installable_metrics.h",
         "patchSetId": 6
@@ -115,6 +223,30 @@
       "writtenOn": "2017-09-08T06:51:00Z",
       "side": 1,
       "message": "Resolve and Flush do very similar things, so they should probably be given similar names (perhaps identical, i.e. overloading?).",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 14
+      },
+      "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4dde5ce_737ce939",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-11T05:52:28Z",
+      "side": 1,
+      "message": "They do very different things for the AccumulatingRecorder (Flush records UNKNOWN status), so I think they need to stay separate. The follow up introduces different semantics to Flush() as well for when we still have a queued SW task.",
+      "parentUuid": "34296752_4bc22669",
       "range": {
         "startLine": 72,
         "startChar": 7,
