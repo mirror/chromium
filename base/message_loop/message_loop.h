@@ -287,6 +287,15 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
   // Add/RemoveTaskObserver() on this MessageLoop will crash.
   void DisallowTaskObservers() { allow_task_observers_ = false; }
 
+  // Causes task_runner()'s PostTask() to hang during execution.
+  void PausePostPendingTaskForTesting();
+
+  // Resumes any task_runner()'s PostTask() hang.
+  void ResumePostPendingTaskForTesting();
+
+  // True if any task_runner()'s PostTask() calls are in flight.
+  bool IsPostPendingTaskInFlightForTesting();
+
   //----------------------------------------------------------------------------
  protected:
   std::unique_ptr<MessagePump> pump_;

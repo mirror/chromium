@@ -99,6 +99,7 @@ class JavaHandlerThread;
 }
 
 namespace internal {
+class IncomingTaskQueue;
 class TaskTracker;
 }
 
@@ -202,6 +203,7 @@ class BASE_EXPORT ThreadRestrictions {
   friend class content::SynchronousCompositorBrowserFilter;
   friend class content::SynchronousCompositorHost;
   friend class ::HistogramSynchronizer;
+  friend class internal::IncomingTaskQueue;
   friend class internal::TaskTracker;
   friend class cc::CompletionEvent;
   friend class cc::SingleThreadTaskGraphRunner;

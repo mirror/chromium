@@ -5,6 +5,7 @@
 #ifndef BASE_MESSAGE_LOOP_INCOMING_TASK_QUEUE_H_
 #define BASE_MESSAGE_LOOP_INCOMING_TASK_QUEUE_H_
 
+#include "base/atomicops.h"
 #include "base/base_export.h"
 #include "base/callback.h"
 #include "base/debug/task_annotator.h"
@@ -13,7 +14,7 @@
 #include "base/pending_task.h"
 #include "base/sequence_checker.h"
 #include "base/synchronization/lock.h"
-#include "base/synchronization/read_write_lock.h"
+#include "base/synchronization/waitable_event.h"
 #include "base/time/time.h"
 
 namespace base {
@@ -60,8 +61,66 @@ class BASE_EXPORT IncomingTaskQueue
   // Runs |pending_task|.
   void RunTask(PendingTask* pending_task);
 
+  // Pauses all calls between PostPendingTaskLockRequired() and ScheduleWork()
+  // in PostPendingTask().
+  void PausePostPendingTaskForTesting();
+
+  // Resumes all calls between PostPendingTaskLockRequired() and ScheduleWork()
+  // in PostPendingTask().
+  void ResumePostPendingTaskForTesting();
+
+  // Returns true if a call to PostPendingTask is in flight.
+  bool IsPostPendingTaskInFlightForTesting();
+
  private:
   friend class RefCountedThreadSafe<IncomingTaskQueue>;
+
+  class PostPendingTaskTracker {
+   public:
+    class ScopedCall {
+     public:
+      ScopedCall(PostPendingTaskTracker* post_pending_task_tracker);
+      ~ScopedCall();
+
+      // Returns true if this PostPendingTask() can continue.
+      bool should_continue() const { return should_continue_; }
+
+     private:
+      PostPendingTaskTracker* const post_pending_task_tracker_;
+      const bool should_continue_;
+
+      DISALLOW_COPY_AND_ASSIGN(ScopedCall);
+    };
+
+    PostPendingTaskTracker();
+    ~PostPendingTaskTracker();
+
+    // Returns when no PostPendingTask() calls are in flight and all future
+    // calls to IncrementPostPendingTasksInFlight() will return false.
+    void StopAcceptingPostTaskCalls();
+
+    // Returns true if the increment succeeded and the PostPendingTask() should
+    // proceed.
+    bool IncrementPostPendingTasksInFlight();
+
+    // Decrements the number of PostPendingTasks() in flight.
+    void DecrementPostPendingTasksInFlight();
+
+    // Returns true if a PostPendingTask() is in flight.
+    bool IsPostPendingTaskInFlightForTesting() const;
+
+   private:
+    static constexpr subtle::Atomic32 kShutdownStartedMask = 1;
+    static constexpr subtle::Atomic32 kNumPostTasksInFlightBitOffset = 1;
+    static constexpr subtle::Atomic32 kNumPostTasksInFlightIncrement =
+        1 << kNumPostTasksInFlightBitOffset;
+
+    subtle::Atomic32 state_ = 0;
+    std::unique_ptr<WaitableEvent> shutdown_event_;
+
+    DISALLOW_COPY_AND_ASSIGN(PostPendingTaskTracker);
+  };
+
   virtual ~IncomingTaskQueue();
 
   // Adds a task to |incoming_queue_|. The caller retains ownership of
@@ -70,10 +129,18 @@ class BASE_EXPORT IncomingTaskQueue
   // does not retain |pending_task->task| beyond this function call.
   bool PostPendingTask(PendingTask* pending_task);
 
+  // Does the real work of posting a pending task. Returns true if the caller
+  // should call ScheduleWork() on the message loop.
+  bool PostPendingTaskLockRequired(PendingTask* pending_task);
+
   // Wakes up the message loop and schedules work.
   void ScheduleWork();
 
   debug::TaskAnnotator task_annotator_;
+
+  // Manages PostPendingTask() concurrency and coordinates unsetting
+  // |message_loop_| for WillDestroyCurrentMessageLoop().
+  PostPendingTaskTracker post_pending_task_tracker_;
 
   // Number of tasks that require high resolution timing. This value is kept
   // so that ReloadWorkQueue() completes in constant time.
@@ -82,10 +149,6 @@ class BASE_EXPORT IncomingTaskQueue
   // The lock that protects access to the members of this class, except
   // |message_loop_|.
   base::Lock incoming_queue_lock_;
-
-  // Lock that protects |message_loop_| to prevent it from being deleted while a
-  // task is being posted.
-  base::subtle::ReadWriteLock message_loop_lock_;
 
   // An incoming queue of tasks that are acquired under a mutex for processing
   // on this instance's thread. These tasks have not yet been been pushed to
@@ -111,6 +174,10 @@ class BASE_EXPORT IncomingTaskQueue
 
   // Checks calls made only on the MessageLoop thread.
   SEQUENCE_CHECKER(sequence_checker_);
+
+#if DCHECK_IS_ON()
+  WaitableEvent post_pending_task_event_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(IncomingTaskQueue);
 };
