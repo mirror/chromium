@@ -970,13 +970,12 @@ void MediaControlsImpl::OnPlay() {
   UpdatePlayState();
   timeline_->SetPosition(MediaElement().currentTime());
   UpdateCurrentTimeDisplay();
-
-  if (download_iph_manager_)
-    download_iph_manager_->SetIsPlaying(true);
 }
 
 void MediaControlsImpl::OnPlaying() {
   timeline_->OnPlaying();
+  if (download_iph_manager_)
+    download_iph_manager_->SetIsPlaying(true);
 
   StartHideMediaControlsTimer();
 }
