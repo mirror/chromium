@@ -30,10 +30,8 @@ import org.junit.runner.RunWith;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.MinAndroidSdkLevel;
-import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.engagement.SiteEngagementService;
@@ -144,11 +142,9 @@ public class NotificationPlatformBridgeTest {
      * Verifies that notifcations cannot be shown without permission, and that dismissing or denying
      * the infobar works correctly.
      */
-    //@LargeTest
-    //@Feature({"Browser", "Notifications"})
-    // crbug.com/707528
+    @LargeTest
+    @Feature({"Browser", "Notifications"})
     @Test
-    @DisabledTest
     public void testPermissionDenied() throws Exception {
         // Notifications permission should initially be prompt, and showing should fail.
         Assert.assertEquals("\"default\"",
@@ -206,11 +202,9 @@ public class NotificationPlatformBridgeTest {
     /**
      * Verifies granting permission via the infobar.
      */
-    //@MediumTest
-    //@Feature({"Browser", "Notifications"})
-    // crbug.com/707528
+    @MediumTest
+    @Feature({"Browser", "Notifications"})
     @Test
-    @DisabledTest
     public void testPermissionGranted() throws Exception {
         // Notifications permission should initially be prompt, and showing should fail.
         Assert.assertEquals("\"default\"",
@@ -245,7 +239,6 @@ public class NotificationPlatformBridgeTest {
     @Test
     @MediumTest
     @Feature({"Browser", "Notifications"})
-    @RetryOnFailure
     public void testDefaultNotificationProperties() throws Exception {
         mNotificationTestRule.setNotificationContentSettingForCurrentOrigin(ContentSetting.ALLOW);
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -515,7 +508,6 @@ public class NotificationPlatformBridgeTest {
     @Test
     @MediumTest
     @Feature({"Browser", "Notifications"})
-    @RetryOnFailure
     public void testNotificationVibratePreferenceDisabledDefault() throws Exception {
         verifyVibrationNotRequestedWhenDisabledInPrefs("{}");
     }
@@ -527,7 +519,6 @@ public class NotificationPlatformBridgeTest {
     @Test
     @MediumTest
     @Feature({"Browser", "Notifications"})
-    @RetryOnFailure
     public void testNotificationVibratePreferenceDisabledCustomPattern() throws Exception {
         verifyVibrationNotRequestedWhenDisabledInPrefs("{ vibrate: 42 }");
     }
@@ -624,7 +615,6 @@ public class NotificationPlatformBridgeTest {
     @Test
     @MediumTest
     @Feature({"Browser", "Notifications"})
-    @RetryOnFailure
     public void testShowNotificationWithIcon() throws Exception {
         mNotificationTestRule.setNotificationContentSettingForCurrentOrigin(ContentSetting.ALLOW);
 
@@ -647,7 +637,6 @@ public class NotificationPlatformBridgeTest {
     @Test
     @MediumTest
     @Feature({"Browser", "Notifications"})
-    @RetryOnFailure
     public void testShowNotificationWithoutIcon() throws Exception {
         mNotificationTestRule.setNotificationContentSettingForCurrentOrigin(ContentSetting.ALLOW);
 
@@ -683,7 +672,6 @@ public class NotificationPlatformBridgeTest {
     @Test
     @LargeTest
     @Feature({"Browser", "Notifications"})
-    @RetryOnFailure
     public void testNotificationContentIntentClosesNotification() throws Exception {
         mNotificationTestRule.setNotificationContentSettingForCurrentOrigin(ContentSetting.ALLOW);
         // +5 engagement from notification permission and +0.5 from navigating to the test page.
@@ -712,7 +700,6 @@ public class NotificationPlatformBridgeTest {
     @Test
     @LargeTest
     @Feature({"Browser", "Notifications"})
-    @RetryOnFailure
     public void testNotificationContentIntentCreatesTab() throws Exception {
         mNotificationTestRule.setNotificationContentSettingForCurrentOrigin(ContentSetting.ALLOW);
 

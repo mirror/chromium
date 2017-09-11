@@ -27,7 +27,6 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeSwitches;
@@ -69,7 +68,6 @@ public class PushMessagingTest implements PushMessagingServiceObserver.Listener 
             "/chrome/test/data/push_messaging/push_messaging_test_android.html";
     private static final String ABOUT_BLANK = "about:blank";
     private static final int TITLE_UPDATE_TIMEOUT_SECONDS = (int) scaleTimeout(5);
-    private static final String PRIVATE_DATA_DIRECTORY_SUFFIX = "chrome";
 
     private final CallbackHelper mMessageHandledHelper;
     private String mPushTestPage;
@@ -134,11 +132,10 @@ public class PushMessagingTest implements PushMessagingServiceObserver.Listener 
     /**
      * Verifies that PushManager.subscribe() fails if permission is dismissed or blocked.
      */
-    //@MediumTest
-    //@Feature({"Browser", "PushMessaging"})
-    //@CommandLineFlags.Add("disable-features=ModalPermissionPrompts")
+    @MediumTest
+    @Feature({"Browser", "PushMessaging"})
+    @CommandLineFlags.Add("disable-features=ModalPermissionPrompts")
     @Test
-    @DisabledTest
     public void testPushPermissionDenied() throws InterruptedException, TimeoutException {
         // Notifications permission should initially be prompt.
         Assert.assertEquals("\"default\"", runScriptBlocking("Notification.permission"));
