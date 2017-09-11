@@ -15,17 +15,24 @@ namespace net {
 namespace internal {
 
 void TestCompletionCallbackBaseInternal::DidSetResult() {
+  LOG(ERROR) << "DidSetResult " << have_result_;
   have_result_ = true;
-  if (run_loop_)
+  if (run_loop_) {
+    LOG(ERROR) << "QUIT";
     run_loop_->Quit();
+  }
+    LOG(ERROR) << "no_QUIT";
 }
 
 void TestCompletionCallbackBaseInternal::WaitForResult() {
   DCHECK(!run_loop_);
   if (!have_result_) {
+    LOG(ERROR) << "RunLoop";
     run_loop_.reset(new base::RunLoop());
+    LOG(ERROR) << "RunLoop.Run";
     run_loop_->Run();
     run_loop_.reset();
+    LOG(ERROR) << "have_result? " << have_result_;
     DCHECK(have_result_);
   }
   have_result_ = false;  // Auto-reset for next callback.
