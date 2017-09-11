@@ -16,6 +16,24 @@
       "revId": "cd60ed475706627d714bdb0612022f78f6481c79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb160e3d_ea30b324",
+        "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-11T17:49:45Z",
+      "side": 1,
+      "message": "See the if statement right above this, checking IsAshSystemNotifier() -- it\u0027s impossible to reach this point if the notification is a system notification, the method will already have returned true.",
+      "parentUuid": "6fac9453_1a8c8911",
+      "revId": "cd60ed475706627d714bdb0612022f78f6481c79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
