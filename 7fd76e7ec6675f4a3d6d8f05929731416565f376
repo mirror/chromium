@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5c31950_2933cfa8",
+        "filename": "dbus/message.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-11T09:11:03Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we use make_unique here?\n  auto method_call(std::make_unique\u003cMethodCall\u003e())\n\nThe same goes for others.",
+      "revId": "7fd76e7ec6675f4a3d6d8f05929731416565f376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882f591b_dce086f1",
+        "filename": "dbus/message.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-11T09:11:03Z",
+      "side": 1,
+      "message": "Can\u0027t we use DCHECK_NE?",
+      "revId": "7fd76e7ec6675f4a3d6d8f05929731416565f376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40fb8f71_fa037af1",
+        "filename": "dbus/message.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-11T09:11:03Z",
+      "side": 1,
+      "message": "This is now obvious and should be deleted.",
+      "range": {
+        "startLine": 161,
+        "startChar": 41,
+        "endLine": 162,
+        "endChar": 21
+      },
+      "revId": "7fd76e7ec6675f4a3d6d8f05929731416565f376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ac988f_b5dd2042",
+        "filename": "dbus/message.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-11T09:11:03Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 190,
+        "startChar": 31,
+        "endLine": 191,
+        "endChar": 12
+      },
+      "revId": "7fd76e7ec6675f4a3d6d8f05929731416565f376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
