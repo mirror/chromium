@@ -16,6 +16,24 @@
       "revId": "958cdec1b2d7cb2da2be2947aea57d480073992b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b53858_d6c118e7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-sandboxed-iframe-allow-origin-null.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-11T09:21:37Z",
+      "side": 1,
+      "message": "Yeah, you\u0027re right! I\u0027ll  try doing that, and maybe apply the changes to tickets related to this one, as well.",
+      "parentUuid": "128f0177_b876f5bd",
+      "revId": "958cdec1b2d7cb2da2be2947aea57d480073992b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

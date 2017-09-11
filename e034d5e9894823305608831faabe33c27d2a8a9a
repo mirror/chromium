@@ -16,6 +16,24 @@
       "revId": "e034d5e9894823305608831faabe33c27d2a8a9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c1058dd_25b102cc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-sandboxed-iframe-allow-origin-null.htm",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-11T09:21:37Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "2563b50e_f052a4a1",
+      "revId": "e034d5e9894823305608831faabe33c27d2a8a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
