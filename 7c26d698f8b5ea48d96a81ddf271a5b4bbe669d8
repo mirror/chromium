@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b6182d8_147a6ce8",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Delay/dezipper.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T16:38:10Z",
+      "side": 1,
+      "message": "Please rename this test. Sounds like it\u0027s testing the \"dezippering\".",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "7c26d698f8b5ea48d96a81ddf271a5b4bbe669d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d27d57c_f504be37",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Delay/dezipper.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T16:38:10Z",
+      "side": 1,
+      "message": "Not sure how these numbers were determined.",
+      "range": {
+        "startLine": 125,
+        "startChar": 8,
+        "endLine": 126,
+        "endChar": 31
+      },
+      "revId": "7c26d698f8b5ea48d96a81ddf271a5b4bbe669d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae454dcc_0250e968",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Delay/dezipper.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T16:38:10Z",
+      "side": 1,
+      "message": "This seems redundant.",
+      "range": {
+        "startLine": 170,
+        "startChar": 10,
+        "endLine": 173,
+        "endChar": 24
+      },
+      "revId": "7c26d698f8b5ea48d96a81ddf271a5b4bbe669d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
