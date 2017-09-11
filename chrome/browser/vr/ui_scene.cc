@@ -127,7 +127,7 @@ std::vector<const UiElement*> UiScene::GetViewportAwareElements() const {
   std::vector<const UiElement*> elements;
   ForAllElements(root_element_.get(), [&elements](UiElement* element) {
     if (element->IsVisible() && element->viewport_aware() &&
-        element->parent()) {
+        element->parent() && element->parent()->viewport_aware()) {
       elements.push_back(element);
     }
   });
