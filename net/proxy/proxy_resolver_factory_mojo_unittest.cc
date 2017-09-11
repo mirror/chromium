@@ -26,7 +26,6 @@
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_with_source.h"
 #include "net/log/test_net_log.h"
-#include "net/proxy/mojo_proxy_resolver_factory.h"
 #include "net/proxy/proxy_info.h"
 #include "net/proxy/proxy_resolver.h"
 #include "net/proxy/proxy_resolver_error_observer.h"
@@ -345,12 +344,19 @@ class MockMojoProxyResolverFactory : public interfaces::ProxyResolverFactory {
 
   void ClearBlockedClients();
 
+  // Wait until OnResolverDestroyed has been called the expected number of
+  // times. Can be used at most once per factory. If
+  // |expected_destroyed_resolvers| is 0, runs pending messages and then makes
+  // sure no OnResolverDestroyed() calls were made.
+  void WaitForResolverDestruction(size_t expected_destroyed_resolvers);
+
  private:
   // Overridden from interfaces::ProxyResolver:
   void CreateResolver(
       const std::string& pac_url,
       mojo::InterfaceRequest<interfaces::ProxyResolver> request,
       interfaces::ProxyResolverFactoryRequestClientPtr client) override;
+  void OnResolverDestroyed() override;
 
   void WakeWaiter();
 
@@ -358,6 +364,14 @@ class MockMojoProxyResolverFactory : public interfaces::ProxyResolverFactory {
   std::queue<CreateProxyResolverAction> create_resolver_actions_;
 
   base::Closure quit_closure_;
+
+  // RunLoop to wait for OnResolverDestroyed notifications.
+  std::unique_ptr<base::RunLoop> resolver_destruction_run_loop_;
+  // Number of times OnResolverDestroyed has been called.
+  size_t destroyed_resolvers_ = 0;
+  // Number of total times OnResolverDestroyed should be called before quitting
+  // |resolver_destruction_run_loop_|.
+  size_t waiting_for_destroyed_resolvers_ = 0;
 
   std::vector<std::unique_ptr<interfaces::ProxyResolverFactoryRequestClientPtr>>
       blocked_clients_;
@@ -396,6 +410,24 @@ void MockMojoProxyResolverFactory::WakeWaiter() {
 
 void MockMojoProxyResolverFactory::ClearBlockedClients() {
   blocked_clients_.clear();
+}
+
+void MockMojoProxyResolverFactory::WaitForResolverDestruction(
+    size_t expected_destroyed_resolvers) {
+  DCHECK_EQ(0u, waiting_for_destroyed_resolvers_);
+  if (destroyed_resolvers_ < expected_destroyed_resolvers) {
+    waiting_for_destroyed_resolvers_ = expected_destroyed_resolvers;
+    resolver_destruction_run_loop_ = std::make_unique<base::RunLoop>();
+    resolver_destruction_run_loop_->Run();
+    resolver_destruction_run_loop_.reset();
+    waiting_for_destroyed_resolvers_ = 0;
+  } else {
+    // If the expected number of destruction notificaitons were already seen,
+    // run all pending tasks before checking the number of observed deletions,
+    // to make sure no unexpected notifications were pending.
+    base::RunLoop().RunUntilIdle();
+  }
+  EXPECT_EQ(expected_destroyed_resolvers, destroyed_resolvers_);
 }
 
 void MockMojoProxyResolverFactory::CreateResolver(
@@ -458,6 +490,16 @@ void MockMojoProxyResolverFactory::CreateResolver(
   WakeWaiter();
 }
 
+void MockMojoProxyResolverFactory::OnResolverDestroyed() {
+  ++destroyed_resolvers_;
+
+  // Use QuitWhenIdle() so if there are any extra calls to this method in the
+  // pipeline, they're executed, resulting in a failure in
+  // WaitForResolverDestruction().
+  if (waiting_for_destroyed_resolvers_ == destroyed_resolvers_)
+    resolver_destruction_run_loop_->QuitWhenIdle();
+}
+
 void DeleteResolverFactoryRequestCallback(
     std::unique_ptr<ProxyResolverFactory::Request>* request,
     const CompletionCallback& callback,
@@ -518,29 +560,20 @@ void CheckCapturedNetLogEntries(const std::string& expected_string,
 
 }  // namespace
 
-class ProxyResolverFactoryMojoTest : public testing::Test,
-                                     public MojoProxyResolverFactory {
+class ProxyResolverFactoryMojoTest : public testing::Test {
  public:
   void SetUp() override {
+    interfaces::ProxyResolverFactoryPtr factory_ptr;
     mock_proxy_resolver_factory_.reset(new MockMojoProxyResolverFactory(
-        &mock_proxy_resolver_, mojo::MakeRequest(&factory_ptr_)));
+        &mock_proxy_resolver_, mojo::MakeRequest(&factory_ptr)));
     proxy_resolver_factory_mojo_.reset(new ProxyResolverFactoryMojo(
-        this, &host_resolver_,
+        std::move(factory_ptr), &host_resolver_,
         base::Callback<std::unique_ptr<ProxyResolverErrorObserver>()>(),
         &net_log_));
   }
 
   std::unique_ptr<Request> MakeRequest(const GURL& url) {
     return std::make_unique<Request>(proxy_resolver_mojo_.get(), url);
-  }
-
-  std::unique_ptr<base::ScopedClosureRunner> CreateResolver(
-      const std::string& pac_script,
-      mojo::InterfaceRequest<interfaces::ProxyResolver> req,
-      interfaces::ProxyResolverFactoryRequestClientPtr client) override {
-    factory_ptr_->CreateResolver(pac_script, std::move(req), std::move(client));
-    return std::make_unique<base::ScopedClosureRunner>(
-        on_delete_callback_.closure());
   }
 
   ProxyInfo ProxyServersFromPacString(const std::string& pac_string) {
@@ -573,11 +606,9 @@ class ProxyResolverFactoryMojoTest : public testing::Test,
   MockHostResolver host_resolver_;
   TestNetLog net_log_;
   std::unique_ptr<MockMojoProxyResolverFactory> mock_proxy_resolver_factory_;
-  interfaces::ProxyResolverFactoryPtr factory_ptr_;
   std::unique_ptr<ProxyResolverFactory> proxy_resolver_factory_mojo_;
 
   MockMojoProxyResolver mock_proxy_resolver_;
-  TestClosure on_delete_callback_;
   std::unique_ptr<ProxyResolver> proxy_resolver_mojo_;
 };
 
@@ -626,10 +657,18 @@ TEST_F(ProxyResolverFactoryMojoTest, CreateProxyResolver_Failed) {
       callback.GetResult(proxy_resolver_factory_mojo_->CreateProxyResolver(
           pac_script, &proxy_resolver_mojo_, callback.callback(), &request)));
   EXPECT_TRUE(request);
-  on_delete_callback_.WaitForResult();
 
   // A second attempt succeeds.
   CreateProxyResolver();
+
+  // Should get a destruction notificaiton for the resolver where creation
+  // failed.
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(1);
+
+  // Destroying the successfully created resolver should result in another
+  // destruction notification.
+  proxy_resolver_mojo_.reset();
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(2);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest, CreateProxyResolver_BothDisconnected) {
@@ -645,6 +684,7 @@ TEST_F(ProxyResolverFactoryMojoTest, CreateProxyResolver_BothDisconnected) {
       callback.GetResult(proxy_resolver_factory_mojo_->CreateProxyResolver(
           pac_script, &proxy_resolver_mojo_, callback.callback(), &request)));
   EXPECT_TRUE(request);
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(1);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest, CreateProxyResolver_ClientDisconnected) {
@@ -660,6 +700,7 @@ TEST_F(ProxyResolverFactoryMojoTest, CreateProxyResolver_ClientDisconnected) {
       callback.GetResult(proxy_resolver_factory_mojo_->CreateProxyResolver(
           pac_script, &proxy_resolver_mojo_, callback.callback(), &request)));
   EXPECT_TRUE(request);
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(1);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest, CreateProxyResolver_ResolverDisconnected) {
@@ -675,7 +716,7 @@ TEST_F(ProxyResolverFactoryMojoTest, CreateProxyResolver_ResolverDisconnected) {
       callback.GetResult(proxy_resolver_factory_mojo_->CreateProxyResolver(
           pac_script, &proxy_resolver_mojo_, callback.callback(), &request)));
   EXPECT_TRUE(request);
-  on_delete_callback_.WaitForResult();
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(1);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest,
@@ -694,7 +735,7 @@ TEST_F(ProxyResolverFactoryMojoTest,
           base::Bind(&DeleteResolverFactoryRequestCallback, &request,
                      callback.callback()),
           &request)));
-  on_delete_callback_.WaitForResult();
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(1);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest, CreateProxyResolver_Cancel) {
@@ -713,7 +754,7 @@ TEST_F(ProxyResolverFactoryMojoTest, CreateProxyResolver_Cancel) {
 
   // The Mojo request is still made.
   mock_proxy_resolver_factory_->WaitForNextRequest();
-  on_delete_callback_.WaitForResult();
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(1);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest, CreateProxyResolver_DnsRequest) {
@@ -731,6 +772,7 @@ TEST_F(ProxyResolverFactoryMojoTest, CreateProxyResolver_DnsRequest) {
   host_resolver_.waiter().WaitForEvent(MockHostResolver::DNS_REQUEST);
   mock_proxy_resolver_factory_->ClearBlockedClients();
   callback.WaitForResult();
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(0);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL) {
@@ -752,6 +794,7 @@ TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL) {
   entries.clear();
   request->net_log().GetEntries(&entries);
   CheckCapturedNetLogEntries(url.spec(), entries);
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(0);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_MultipleResults) {
@@ -767,6 +810,7 @@ TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_MultipleResults) {
   EXPECT_THAT(request->WaitForResult(), IsOk());
 
   EXPECT_EQ(kPacString, request->results().ToPacString());
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(0);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_Error) {
@@ -779,6 +823,7 @@ TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_Error) {
   EXPECT_THAT(request->WaitForResult(), IsError(ERR_UNEXPECTED));
 
   EXPECT_TRUE(request->results().is_empty());
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(0);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_Cancel) {
@@ -793,6 +838,7 @@ TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_Cancel) {
 
   // The Mojo request is still made.
   mock_proxy_resolver_.WaitForNextRequest();
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(0);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_MultipleRequests) {
@@ -814,6 +860,7 @@ TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_MultipleRequests) {
 
   EXPECT_EQ("DIRECT", request1->results().ToPacString());
   EXPECT_EQ("HTTPS foo:443", request2->results().ToPacString());
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(0);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_Disconnect) {
@@ -835,6 +882,8 @@ TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_Disconnect) {
     std::unique_ptr<Request> request(MakeRequest(GURL(kExampleUrl)));
     EXPECT_THAT(request->Resolve(), IsError(ERR_PAC_SCRIPT_TERMINATED));
   }
+
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(0);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_ClientClosed) {
@@ -846,6 +895,7 @@ TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_ClientClosed) {
   EXPECT_THAT(request1->Resolve(), IsError(ERR_IO_PENDING));
 
   EXPECT_THAT(request1->WaitForResult(), IsError(ERR_PAC_SCRIPT_TERMINATED));
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(0);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_DeleteInCallback) {
@@ -864,7 +914,7 @@ TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_DeleteInCallback) {
           base::Bind(&ProxyResolverFactoryMojoTest::DeleteProxyResolverCallback,
                      base::Unretained(this), callback.callback()),
           &request, net_log)));
-  on_delete_callback_.WaitForResult();
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(1);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest,
@@ -884,7 +934,7 @@ TEST_F(ProxyResolverFactoryMojoTest,
           base::Bind(&ProxyResolverFactoryMojoTest::DeleteProxyResolverCallback,
                      base::Unretained(this), callback.callback()),
           &request, net_log)));
-  on_delete_callback_.WaitForResult();
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(1);
 }
 
 TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_DnsRequest) {
@@ -900,11 +950,7 @@ TEST_F(ProxyResolverFactoryMojoTest, GetProxyForURL_DnsRequest) {
   EXPECT_EQ(LOAD_STATE_RESOLVING_HOST_IN_PROXY_SCRIPT, request->load_state());
   mock_proxy_resolver_.ClearBlockedClients();
   request->WaitForResult();
+  mock_proxy_resolver_factory_->WaitForResolverDestruction(0);
 }
 
-TEST_F(ProxyResolverFactoryMojoTest, DeleteResolver) {
-  CreateProxyResolver();
-  proxy_resolver_mojo_.reset();
-  on_delete_callback_.WaitForResult();
-}
 }  // namespace net
