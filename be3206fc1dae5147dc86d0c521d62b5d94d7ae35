@@ -16,6 +16,24 @@
       "revId": "be3206fc1dae5147dc86d0c521d62b5d94d7ae35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8f0c68_16a59c5a",
+        "filename": "media/midi/midi_manager_usb_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-11T09:44:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d13fb0b_73f911ff",
+      "revId": "be3206fc1dae5147dc86d0c521d62b5d94d7ae35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
