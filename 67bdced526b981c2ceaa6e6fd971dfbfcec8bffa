@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db929b4a_b50eba23",
+        "filename": "chrome/test/data/webui/extensions/extension_detail_view_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-11T21:55:37Z",
+      "side": 1,
+      "message": "changed to testIcons.",
+      "parentUuid": "cc1188dc_5baec5c1",
+      "revId": "67bdced526b981c2ceaa6e6fd971dfbfcec8bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed2dd1da_60c114b4",
         "filename": "chrome/test/data/webui/extensions/extension_test_util.js",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3bd08919_574957e2",
+        "filename": "chrome/test/data/webui/extensions/extension_test_util.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-11T21:55:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed2dd1da_60c114b4",
+      "revId": "67bdced526b981c2ceaa6e6fd971dfbfcec8bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e344622_dce050f8",
         "filename": "chrome/test/data/webui/extensions/extension_test_util.js",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "67bdced526b981c2ceaa6e6fd971dfbfcec8bffa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9b6581_f0628b38",
+        "filename": "chrome/test/data/webui/extensions/extension_test_util.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-11T21:55:37Z",
+      "side": 1,
+      "message": "the formatter does not change this code, since I think a single blank line between logical breaks are allowed.",
+      "parentUuid": "2e344622_dce050f8",
+      "revId": "67bdced526b981c2ceaa6e6fd971dfbfcec8bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
