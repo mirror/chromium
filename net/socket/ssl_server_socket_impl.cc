@@ -18,6 +18,7 @@
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_with_source.h"
 #include "net/socket/socket_bio_adapter.h"
+#include "net/socket/stream_socket.h"
 #include "net/ssl/openssl_ssl_util.h"
 #include "net/ssl/ssl_connection_status_flags.h"
 #include "net/ssl/ssl_info.h"
@@ -64,8 +65,8 @@ class SSLServerContextImpl::SocketImpl : public SSLServerSocket,
   int GetPeerAddress(IPEndPoint* address) const override;
   int GetLocalAddress(IPEndPoint* address) const override;
   const NetLogWithSource& NetLog() const override;
-  void SetSubresourceSpeculation() override;
-  void SetOmniboxSpeculation() override;
+  void SetSocketUseCallback(const SocketUseCallback& callback) override;
+  void SetWasUsedToServiceRequest() override;
   bool WasEverUsed() const override;
   bool WasAlpnNegotiated() const override;
   NextProto GetNegotiatedProtocol() const override;
@@ -301,13 +302,12 @@ const NetLogWithSource& SSLServerContextImpl::SocketImpl::NetLog() const {
   return net_log_;
 }
 
-void SSLServerContextImpl::SocketImpl::SetSubresourceSpeculation() {
-  transport_socket_->SetSubresourceSpeculation();
+void SSLServerContextImpl::SocketImpl::SetSocketUseCallback(
+    const SocketUseCallback& callback) {
+  NOTREACHED();
 }
 
-void SSLServerContextImpl::SocketImpl::SetOmniboxSpeculation() {
-  transport_socket_->SetOmniboxSpeculation();
-}
+void SSLServerContextImpl::SocketImpl::SetWasUsedToServiceRequest() {}
 
 bool SSLServerContextImpl::SocketImpl::WasEverUsed() const {
   return transport_socket_->WasEverUsed();

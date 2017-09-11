@@ -47,8 +47,8 @@ class NET_EXPORT_PRIVATE SOCKSClientSocket : public StreamSocket {
   bool IsConnected() const override;
   bool IsConnectedAndIdle() const override;
   const NetLogWithSource& NetLog() const override;
-  void SetSubresourceSpeculation() override;
-  void SetOmniboxSpeculation() override;
+  void SetSocketUseCallback(const SocketUseCallback& callback) override;
+  void SetWasUsedToServiceRequest() override;
   bool WasEverUsed() const override;
   bool WasAlpnNegotiated() const override;
   NextProto GetNegotiatedProtocol() const override;

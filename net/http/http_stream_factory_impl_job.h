@@ -28,6 +28,7 @@
 #include "net/socket/client_socket_pool_manager.h"
 #include "net/socket/next_proto.h"
 #include "net/socket/ssl_client_socket.h"
+#include "net/socket/stream_socket.h"
 #include "net/spdy/chromium/spdy_session_key.h"
 #include "net/ssl/ssl_config_service.h"
 
@@ -201,8 +202,11 @@ class HttpStreamFactoryImpl::Job {
   void Start(HttpStreamRequest::StreamType stream_type);
 
   // Preconnect will attempt to request |num_streams| sockets from the
-  // appropriate ClientSocketPool.
-  int Preconnect(int num_streams);
+  // appropriate ClientSocketPool. It will thread a callback for metrics
+  // recording to the call to PreconnectSocketsForHttpRequest.
+  int Preconnect(
+      int num_streams,
+      const StreamSocket::SocketUseCallback& preconnect_use_callback);
 
   int RestartTunnelWithProxyAuth();
   LoadState GetLoadState() const;
@@ -345,9 +349,6 @@ class HttpStreamFactoryImpl::Job {
   // Returns to STATE_INIT_CONNECTION and resets some state.
   void ReturnToStateInitConnection(bool close_connection);
 
-  // Set the motivation for this request onto the underlying socket.
-  void SetSocketMotivation();
-
   // Sets several fields of |ssl_config| based on the proxy info and other
   // factors.
   void InitSSLConfig(SSLConfig* ssl_config, bool is_proxy) const;
@@ -485,6 +486,8 @@ class HttpStreamFactoryImpl::Job {
   // 0 if we're not preconnecting. Otherwise, the number of streams to
   // preconnect.
   int num_streams_;
+
+  StreamSocket::SocketUseCallback preconnect_use_callback_;
 
   // Initialized when we create a new SpdySession.
   base::WeakPtr<SpdySession> new_spdy_session_;

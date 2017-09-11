@@ -23,6 +23,7 @@
 #include "net/http/proxy_client_socket.h"
 #include "net/log/net_log_with_source.h"
 #include "net/socket/ssl_client_socket.h"
+#include "net/socket/stream_socket.h"
 
 namespace net {
 
@@ -66,8 +67,8 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocket : public ProxyClientSocket {
   bool IsConnected() const override;
   bool IsConnectedAndIdle() const override;
   const NetLogWithSource& NetLog() const override;
-  void SetSubresourceSpeculation() override;
-  void SetOmniboxSpeculation() override;
+  void SetSocketUseCallback(const SocketUseCallback& callback) override;
+  void SetWasUsedToServiceRequest() override;
   bool WasEverUsed() const override;
   bool WasAlpnNegotiated() const override;
   NextProto GetNegotiatedProtocol() const override;

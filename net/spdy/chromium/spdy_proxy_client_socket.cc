@@ -156,13 +156,12 @@ const NetLogWithSource& SpdyProxyClientSocket::NetLog() const {
   return net_log_;
 }
 
-void SpdyProxyClientSocket::SetSubresourceSpeculation() {
-  // TODO(rch): what should this implementation be?
+void SpdyProxyClientSocket::SetSocketUseCallback(
+    const SocketUseCallback& callback) {
+  NOTREACHED();
 }
 
-void SpdyProxyClientSocket::SetOmniboxSpeculation() {
-  // TODO(rch): what should this implementation be?
-}
+void SpdyProxyClientSocket::SetWasUsedToServiceRequest() {}
 
 bool SpdyProxyClientSocket::WasEverUsed() const {
   return was_ever_used_ || (spdy_stream_.get() && spdy_stream_->WasEverUsed());

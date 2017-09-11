@@ -45,12 +45,13 @@ void OnResolveComplete(std::unique_ptr<RequestHolder> request_holder,
 
 }  // namespace
 
-void PreconnectUrl(net::URLRequestContextGetter* getter,
-                   const GURL& url,
-                   const GURL& site_for_cookies,
-                   int count,
-                   bool allow_credentials,
-                   net::HttpRequestInfo::RequestMotivation motivation) {
+void PreconnectUrl(
+    net::URLRequestContextGetter* getter,
+    const GURL& url,
+    const GURL& site_for_cookies,
+    int count,
+    bool allow_credentials,
+    const net::StreamSocket::SocketUseCallback& preconnect_use_callback) {
   DCHECK(ResourceDispatcherHostImpl::Get()
              ->io_thread_task_runner()
              ->BelongsToCurrentThread());
@@ -72,7 +73,6 @@ void PreconnectUrl(net::URLRequestContextGetter* getter,
   request_info.method = "GET";
   request_info.extra_headers.SetHeader(net::HttpRequestHeaders::kUserAgent,
                                        user_agent);
-  request_info.motivation = motivation;
 
   net::NetworkDelegate* delegate = request_context->network_delegate();
   if (delegate->CanEnablePrivacyMode(url, site_for_cookies))
@@ -89,7 +89,8 @@ void PreconnectUrl(net::URLRequestContextGetter* getter,
   }
 
   net::HttpStreamFactory* http_stream_factory = session->http_stream_factory();
-  http_stream_factory->PreconnectStreams(count, request_info);
+  http_stream_factory->PreconnectStreams(count, request_info,
+                                         preconnect_use_callback);
 }
 
 int PreresolveUrl(net::URLRequestContextGetter* getter,

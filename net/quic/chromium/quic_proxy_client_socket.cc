@@ -126,13 +126,12 @@ const NetLogWithSource& QuicProxyClientSocket::NetLog() const {
   return net_log_;
 }
 
-void QuicProxyClientSocket::SetSubresourceSpeculation() {
-  // TODO(rch): what should this implementation be?
+void QuicProxyClientSocket::SetSocketUseCallback(
+    const SocketUseCallback& callback) {
+  NOTREACHED();
 }
 
-void QuicProxyClientSocket::SetOmniboxSpeculation() {
-  // TODO(rch): what should this implementation be?
-}
+void QuicProxyClientSocket::SetWasUsedToServiceRequest() {}
 
 bool QuicProxyClientSocket::WasEverUsed() const {
   return session_->WasEverUsed();

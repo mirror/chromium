@@ -813,6 +813,10 @@ const NetLogWithSource& MockClientSocket::NetLog() const {
   return net_log_;
 }
 
+void MockClientSocket::SetSocketUseCallback(const SocketUseCallback& callback) {
+  NOTREACHED();
+}
+
 bool MockClientSocket::WasAlpnNegotiated() const {
   return false;
 }

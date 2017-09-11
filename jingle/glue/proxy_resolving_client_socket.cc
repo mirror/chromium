@@ -388,19 +388,12 @@ const net::NetLogWithSource& ProxyResolvingClientSocket::NetLog() const {
   return net_log_;
 }
 
-void ProxyResolvingClientSocket::SetSubresourceSpeculation() {
-  if (transport_.get() && transport_->socket())
-    transport_->socket()->SetSubresourceSpeculation();
-  else
-    NOTREACHED();
+void ProxyResolvingClientSocket::SetSocketUseCallback(
+    const net::StreamSocket::SocketUseCallback& callback) {
+  NOTREACHED();
 }
 
-void ProxyResolvingClientSocket::SetOmniboxSpeculation() {
-  if (transport_.get() && transport_->socket())
-    transport_->socket()->SetOmniboxSpeculation();
-  else
-    NOTREACHED();
-}
+void ProxyResolvingClientSocket::SetWasUsedToServiceRequest() {}
 
 bool ProxyResolvingClientSocket::WasEverUsed() const {
   if (transport_.get() && transport_->socket())

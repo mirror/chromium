@@ -8,6 +8,7 @@
 #include "content/common/content_export.h"
 #include "net/base/completion_callback.h"
 #include "net/http/http_request_info.h"
+#include "net/socket/stream_socket.h"
 #include "url/gurl.h"
 
 class GURL;
@@ -33,7 +34,7 @@ CONTENT_EXPORT void PreconnectUrl(
     const GURL& site_for_cookies,
     int count,
     bool allow_credentials,
-    net::HttpRequestInfo::RequestMotivation motivation);
+    const net::StreamSocket::SocketUseCallback& callback);
 
 // Issues a DNS request to |url|. Note that these requests are sent to the host
 // resolver with priority net::IDLE.

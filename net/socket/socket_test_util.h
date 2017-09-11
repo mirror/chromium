@@ -37,6 +37,7 @@
 #include "net/socket/socks_client_socket_pool.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/socket/ssl_client_socket_pool.h"
+#include "net/socket/stream_socket.h"
 #include "net/socket/transport_client_socket_pool.h"
 #include "net/ssl/ssl_config_service.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -65,7 +66,6 @@ class AsyncSocket;
 class ChannelIDService;
 class MockClientSocket;
 class SSLClientSocket;
-class StreamSocket;
 
 enum IoMode {
   ASYNC,
@@ -581,8 +581,8 @@ class MockClientSocket : public SSLClientSocket {
   int GetPeerAddress(IPEndPoint* address) const override;
   int GetLocalAddress(IPEndPoint* address) const override;
   const NetLogWithSource& NetLog() const override;
-  void SetSubresourceSpeculation() override {}
-  void SetOmniboxSpeculation() override {}
+  void SetSocketUseCallback(const SocketUseCallback& callback) override;
+  void SetWasUsedToServiceRequest() override {}
   bool WasAlpnNegotiated() const override;
   NextProto GetNegotiatedProtocol() const override;
   void GetConnectionAttempts(ConnectionAttempts* out) const override;

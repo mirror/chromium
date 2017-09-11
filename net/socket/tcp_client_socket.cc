@@ -32,7 +32,8 @@ TCPClientSocket::TCPClientSocket(
       current_address_index_(-1),
       next_connect_state_(CONNECT_STATE_NONE),
       previously_disconnected_(false),
-      total_received_bytes_(0) {}
+      total_received_bytes_(0),
+      socket_use_(SocketUse::SOCKET_NEVER_CONNECTED) {}
 
 TCPClientSocket::TCPClientSocket(std::unique_ptr<TCPSocket> connected_socket,
                                  const IPEndPoint& peer_address)
@@ -42,14 +43,15 @@ TCPClientSocket::TCPClientSocket(std::unique_ptr<TCPSocket> connected_socket,
       current_address_index_(0),
       next_connect_state_(CONNECT_STATE_NONE),
       previously_disconnected_(false),
-      total_received_bytes_(0) {
+      total_received_bytes_(0),
+      socket_use_(SocketUse::SOCKET_CONNECTED_NEVER_USED) {
   DCHECK(socket_);
 
   socket_->SetDefaultOptionsForClient();
-  use_history_.set_was_ever_connected();
 }
 
 TCPClientSocket::~TCPClientSocket() {
+  RunSocketUseCallback();
   Disconnect();
 }
 
@@ -112,11 +114,19 @@ int TCPClientSocket::ReadCommon(IOBuffer* buf,
   int result = read_if_ready ? socket_->ReadIfReady(buf, buf_len, read_callback)
                              : socket_->Read(buf, buf_len, read_callback);
   if (result > 0) {
-    use_history_.set_was_used_to_convey_data();
+    if (socket_use_ < SocketUse::SOCKET_DID_IO)
+      socket_use_ = SocketUse::SOCKET_DID_IO;
     total_received_bytes_ += result;
   }
 
   return result;
+}
+
+void TCPClientSocket::RunSocketUseCallback() {
+  if (!use_callback_.is_null())
+    use_callback_.Run(socket_use_);
+  use_callback_.Reset();
+  socket_use_ = SocketUse::SOCKET_NEVER_CONNECTED;
 }
 
 int TCPClientSocket::DoConnectLoop(int result) {
@@ -151,7 +161,7 @@ int TCPClientSocket::DoConnect() {
   const IPEndPoint& endpoint = addresses_[current_address_index_];
 
   if (previously_disconnected_) {
-    use_history_.Reset();
+    RunSocketUseCallback();
     connection_attempts_.clear();
     previously_disconnected_ = false;
   }
@@ -188,7 +198,7 @@ int TCPClientSocket::DoConnect() {
 
 int TCPClientSocket::DoConnectComplete(int result) {
   if (result == OK) {
-    use_history_.set_was_ever_connected();
+    socket_use_ = SocketUse::SOCKET_CONNECTED_NEVER_USED;
     return OK;  // Done!
   }
 
@@ -254,16 +264,16 @@ const NetLogWithSource& TCPClientSocket::NetLog() const {
   return socket_->net_log();
 }
 
-void TCPClientSocket::SetSubresourceSpeculation() {
-  use_history_.set_subresource_speculation();
+void TCPClientSocket::SetSocketUseCallback(const SocketUseCallback& callback) {
+  use_callback_ = callback;
 }
 
-void TCPClientSocket::SetOmniboxSpeculation() {
-  use_history_.set_omnibox_speculation();
+void TCPClientSocket::SetWasUsedToServiceRequest() {
+  socket_use_ = SocketUse::SOCKET_USED;
 }
 
 bool TCPClientSocket::WasEverUsed() const {
-  return use_history_.was_used_to_convey_data();
+  return socket_use_ >= SocketUse::SOCKET_DID_IO;
 }
 
 void TCPClientSocket::EnableTCPFastOpenIfSupported() {
@@ -304,8 +314,8 @@ int TCPClientSocket::Write(IOBuffer* buf,
   CompletionCallback write_callback = base::Bind(
       &TCPClientSocket::DidCompleteWrite, base::Unretained(this), callback);
   int result = socket_->Write(buf, buf_len, write_callback);
-  if (result > 0)
-    use_history_.set_was_used_to_convey_data();
+  if (result > 0 && socket_use_ < SocketUse::SOCKET_DID_IO)
+    socket_use_ = SocketUse::SOCKET_DID_IO;
 
   return result;
 }
@@ -371,8 +381,9 @@ void TCPClientSocket::DidCompleteWrite(const CompletionCallback& callback,
 
 void TCPClientSocket::DidCompleteReadWrite(const CompletionCallback& callback,
                                            int result) {
-  if (result > 0)
-    use_history_.set_was_used_to_convey_data();
+  if (result > 0 && socket_use_ < SocketUse::SOCKET_DID_IO)
+    socket_use_ = SocketUse::SOCKET_DID_IO;
+
   callback.Run(result);
 }
 

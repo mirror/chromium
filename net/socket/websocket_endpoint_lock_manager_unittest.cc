@@ -49,8 +49,11 @@ class FakeStreamSocket : public StreamSocket {
 
   const NetLogWithSource& NetLog() const override { return net_log_; }
 
-  void SetSubresourceSpeculation() override { return; }
-  void SetOmniboxSpeculation() override { return; }
+  void SetSocketUseCallback(const SocketUseCallback& callback) override {
+    NOTREACHED();
+  }
+
+  void SetWasUsedToServiceRequest() override {}
 
   bool WasEverUsed() const override { return false; }
 

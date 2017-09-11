@@ -1633,7 +1633,7 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
   AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
   SetAlternativeService(request_info, alternative_service);
 
-  job_controller_->Preconnect(1);
+  job_controller_->Preconnect(1, StreamSocket::SocketUseCallback());
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_EQ(HttpStreamFactoryImpl::PRECONNECT,
             job_controller_->main_job()->job_type());
@@ -1659,7 +1659,8 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
   url::SchemeHostPort server(request_info.url);
   session_->http_server_properties()->SetSupportsSpdy(server, true);
 
-  job_controller_->Preconnect(/*num_streams=*/5);
+  job_controller_->Preconnect(/*num_streams=*/5,
+                              StreamSocket::SocketUseCallback());
   // Only one job is started.
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_FALSE(job_controller_->alternative_job());
@@ -1909,7 +1910,7 @@ TEST_F(JobControllerLimitMultipleH2Requests, MultiplePreconnects) {
             request_info, is_preconnect_, enable_ip_based_pooling_,
             enable_alternative_services_, SSLConfig(), SSLConfig());
     HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller);
-    job_controller->Preconnect(1);
+    job_controller->Preconnect(1, StreamSocket::SocketUseCallback());
     EXPECT_TRUE(job_controller->main_job());
     EXPECT_FALSE(job_controller->alternative_job());
   }
@@ -2113,7 +2114,7 @@ class HttpStreamFactoryImplJobControllerPreconnectTest
 
  protected:
   void Preconnect(int num_streams) {
-    job_controller_->Preconnect(num_streams);
+    job_controller_->Preconnect(num_streams, StreamSocket::SocketUseCallback());
     // Only one job is started.
     EXPECT_TRUE(job_controller_->main_job());
     EXPECT_FALSE(job_controller_->alternative_job());

@@ -226,6 +226,7 @@ int SpdyHttpStream::SendRequest(const HttpRequestHeaders& request_headers,
   CHECK(stream_);
 
   stream_->SetRequestTime(request_time);
+  spdy_session_->NotifySocketWasUsedToServiceRequest();
   // This should only get called in the case of a request occurring
   // during server push that has already begun but hasn't finished,
   // so we set the response's request time to be the actual one

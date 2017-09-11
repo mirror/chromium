@@ -21,6 +21,7 @@
 #include "net/log/net_log_with_source.h"
 #include "net/socket/next_proto.h"
 #include "net/socket/ssl_client_socket.h"
+#include "net/socket/stream_socket.h"
 #include "net/socket/tcp_client_socket.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
@@ -54,8 +55,9 @@ class MockSSLClientSocket : public net::SSLClientSocket {
   MOCK_CONST_METHOD1(GetPeerAddress, int(net::IPEndPoint*));
   MOCK_CONST_METHOD1(GetLocalAddress, int(net::IPEndPoint*));
   MOCK_CONST_METHOD0(NetLog, const net::NetLogWithSource&());
-  MOCK_METHOD0(SetSubresourceSpeculation, void());
-  MOCK_METHOD0(SetOmniboxSpeculation, void());
+  MOCK_METHOD1(SetSocketUseCallback,
+               void(const net::StreamSocket::SocketUseCallback&));
+  MOCK_METHOD0(SetWasUsedToServiceRequest, void());
   MOCK_CONST_METHOD0(WasEverUsed, bool());
   MOCK_CONST_METHOD0(UsingTCPFastOpen, bool());
   MOCK_CONST_METHOD0(WasAlpnNegotiated, bool());

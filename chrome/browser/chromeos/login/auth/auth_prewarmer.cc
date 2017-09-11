@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include "base/metrics/histogram_macros.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/login/helper.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
@@ -17,9 +18,20 @@
 #include "content/public/browser/notification_source.h"
 #include "content/public/browser/resource_hints.h"
 #include "google_apis/gaia/gaia_urls.h"
+#include "net/socket/stream_socket.h"
 #include "url/gurl.h"
 
 namespace chromeos {
+
+namespace {
+
+void OnPrewarmSocketComplete(net::StreamSocket::SocketUse socket_use) {
+  UMA_HISTOGRAM_ENUMERATION("Net.Preconnect.Use.ChromeOSAuthPrewarmer",
+                            socket_use,
+                            net::StreamSocket::SocketUse::SOCKET_LAST_VALUE);
+}
+
+}  // namespace
 
 AuthPrewarmer::AuthPrewarmer()
     : doing_prewarm_(false) {
@@ -91,10 +103,9 @@ void AuthPrewarmer::DoPrewarm() {
   const GURL& url = GaiaUrls::GetInstance()->service_login_url();
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&content::PreconnectUrl,
-                     base::RetainedRef(GetRequestContext()), url, url,
-                     kConnectionsNeeded, true,
-                     net::HttpRequestInfo::EARLY_LOAD_MOTIVATED));
+      base::BindOnce(
+          &content::PreconnectUrl, base::RetainedRef(GetRequestContext()), url,
+          url, kConnectionsNeeded, true, base::Bind(&OnPrewarmSocketComplete)));
   if (!completion_callback_.is_null()) {
     content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
                                      completion_callback_);

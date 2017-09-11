@@ -69,8 +69,11 @@ class MockConnectClientSocket : public StreamSocket {
   }
   const NetLogWithSource& NetLog() const override { return net_log_; }
 
-  void SetSubresourceSpeculation() override {}
-  void SetOmniboxSpeculation() override {}
+  void SetSocketUseCallback(
+      const StreamSocket::SocketUseCallback& callback) override {
+    NOTREACHED();
+  }
+  void SetWasUsedToServiceRequest() override {}
   bool WasEverUsed() const override { return false; }
   void EnableTCPFastOpenIfSupported() override {}
   bool WasAlpnNegotiated() const override { return false; }
@@ -131,8 +134,11 @@ class MockFailingClientSocket : public StreamSocket {
   }
   const NetLogWithSource& NetLog() const override { return net_log_; }
 
-  void SetSubresourceSpeculation() override {}
-  void SetOmniboxSpeculation() override {}
+  void SetSocketUseCallback(
+      const StreamSocket::SocketUseCallback& callback) override {
+    NOTREACHED();
+  }
+  void SetWasUsedToServiceRequest() override {}
   bool WasEverUsed() const override { return false; }
   void EnableTCPFastOpenIfSupported() override {}
   bool WasAlpnNegotiated() const override { return false; }
@@ -257,8 +263,11 @@ class MockTriggerableClientSocket : public StreamSocket {
   }
   const NetLogWithSource& NetLog() const override { return net_log_; }
 
-  void SetSubresourceSpeculation() override {}
-  void SetOmniboxSpeculation() override {}
+  void SetSocketUseCallback(
+      const StreamSocket::SocketUseCallback& callback) override {
+    NOTREACHED();
+  }
+  void SetWasUsedToServiceRequest() override {}
   bool WasEverUsed() const override { return false; }
   void EnableTCPFastOpenIfSupported() override {}
   bool WasAlpnNegotiated() const override { return false; }

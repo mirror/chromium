@@ -37,6 +37,7 @@
 #include "net/proxy/proxy_server.h"
 #include "net/socket/client_socket_pool_base.h"
 #include "net/socket/next_proto.h"
+#include "net/socket/stream_socket.h"
 #include "net/spdy/chromium/buffered_spdy_framer.h"
 #include "net/spdy/chromium/spdy_http_stream.h"
 #include "net/spdy/chromium/spdy_http_utils.h"
@@ -911,7 +912,8 @@ TEST_F(SpdyNetworkTransactionTest, TwoGetsLateBindingFromPreconnect) {
   HttpStreamFactory* http_stream_factory =
       helper.session()->http_stream_factory();
 
-  http_stream_factory->PreconnectStreams(1, httpreq);
+  http_stream_factory->PreconnectStreams(1, httpreq,
+                                         StreamSocket::SocketUseCallback());
 
   out.rv = trans1.Start(&httpreq, callback1.callback(), log);
   ASSERT_THAT(out.rv, IsError(ERR_IO_PENDING));

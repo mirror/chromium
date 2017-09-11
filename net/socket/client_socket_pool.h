@@ -17,6 +17,7 @@
 #include "net/base/net_export.h"
 #include "net/base/request_priority.h"
 #include "net/dns/host_resolver.h"
+#include "net/socket/stream_socket.h"
 
 namespace base {
 class DictionaryValue;
@@ -26,7 +27,6 @@ namespace net {
 
 class ClientSocketHandle;
 class NetLogWithSource;
-class StreamSocket;
 
 // ClientSocketPools are layered. This defines an interface for lower level
 // socket pools to communicate with higher layer pools.
@@ -118,11 +118,15 @@ class NET_EXPORT ClientSocketPool : public LowerLayeredPool {
   // ClientSocketPool will assign a priority to the new connections, if any.
   // This priority will probably be lower than all others, since this method
   // is intended to make sure ahead of time that |num_sockets| sockets are
-  // available to talk to a host.
-  virtual void RequestSockets(const std::string& group_name,
-                              const void* params,
-                              int num_sockets,
-                              const NetLogWithSource& net_log) = 0;
+  // available to talk to a host. The use callback is threaded through connect
+  // jobs and passed down to StreamSocket implementations. Note that it is not
+  // passed into already created or idle sockets.
+  virtual void RequestSockets(
+      const std::string& group_name,
+      const void* params,
+      int num_sockets,
+      const NetLogWithSource& net_log,
+      const StreamSocket::SocketUseCallback& use_callback) = 0;
 
   // Called to change the priority of a RequestSocket call that returned
   // ERR_IO_PENDING and has not yet asynchronously completed.  The same handle
@@ -211,8 +215,9 @@ void RequestSocketsForPool(
     const std::string& group_name,
     const scoped_refptr<typename PoolType::SocketParams>& params,
     int num_sockets,
-    const NetLogWithSource& net_log) {
-  pool->RequestSockets(group_name, &params, num_sockets, net_log);
+    const NetLogWithSource& net_log,
+    const StreamSocket::SocketUseCallback& use_callback) {
+  pool->RequestSockets(group_name, &params, num_sockets, net_log, use_callback);
 }
 
 }  // namespace net

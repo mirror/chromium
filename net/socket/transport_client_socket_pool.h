@@ -210,14 +210,15 @@ class NET_EXPORT_PRIVATE TransportClientSocketPool : public ClientSocketPool {
                     ClientSocketHandle* handle,
                     const CompletionCallback& callback,
                     const NetLogWithSource& net_log) override;
-  void RequestSockets(const std::string& group_name,
-                      const void* params,
-                      int num_sockets,
-                      const NetLogWithSource& net_log) override;
+  void RequestSockets(
+      const std::string& group_name,
+      const void* params,
+      int num_sockets,
+      const NetLogWithSource& net_log,
+      const StreamSocket::SocketUseCallback& use_callback) override;
   void SetPriority(const std::string& group_name,
                    ClientSocketHandle* handle,
                    RequestPriority priority) override;
-
   void CancelRequest(const std::string& group_name,
                      ClientSocketHandle* handle) override;
   void ReleaseSocket(const std::string& group_name,

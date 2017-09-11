@@ -30853,6 +30853,12 @@ from previous Chrome versions.
   <int value="10" label="SELF_REFERAL_MOTIVATED"/>
 </enum>
 
+<enum name="PreconnectSocketUse">
+  <int value="0" label="Never connected"/>
+  <int value="1" label="Connected, never used"/>
+  <int value="2" label="Connected and used"/>
+</enum>
+
 <enum name="PreconnectSubresourceEval">
   <int value="0" label="PRECONNECTION"/>
   <int value="1" label="PRERESOLUTION"/>

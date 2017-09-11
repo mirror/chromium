@@ -39,6 +39,7 @@
 #include "net/log/net_log_source.h"
 #include "net/log/net_log_with_source.h"
 #include "net/server/http_server_request_info.h"
+#include "net/socket/stream_socket.h"
 #include "net/socket/tcp_client_socket.h"
 #include "net/socket/tcp_server_socket.h"
 #include "net/test/gtest_util.h"
@@ -564,8 +565,10 @@ class MockStreamSocket : public StreamSocket {
     return ERR_NOT_IMPLEMENTED;
   }
   const NetLogWithSource& NetLog() const override { return net_log_; }
-  void SetSubresourceSpeculation() override {}
-  void SetOmniboxSpeculation() override {}
+  void SetSocketUseCallback(const SocketUseCallback& callback) override {
+    NOTREACHED();
+  }
+  void SetWasUsedToServiceRequest() override {}
   bool WasEverUsed() const override { return true; }
   bool WasAlpnNegotiated() const override { return false; }
   NextProto GetNegotiatedProtocol() const override { return kProtoUnknown; }
