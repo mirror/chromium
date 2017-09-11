@@ -22,6 +22,40 @@
       "revId": "619d3ec6781f35b5b7012bd4913710496da699af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749a6765_a8ecdf6e",
+        "filename": "content/browser/sandbox_host_linux.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-11T17:46:56Z",
+      "side": 1,
+      "message": "nit: GetChildSocket maybe?",
+      "revId": "619d3ec6781f35b5b7012bd4913710496da699af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2aa8211_fe6b51de",
+        "filename": "content/browser/sandbox_ipc_linux.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-11T17:46:56Z",
+      "side": 1,
+      "message": "nit: ditto, HandleRequestFromChild?",
+      "revId": "619d3ec6781f35b5b7012bd4913710496da699af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
