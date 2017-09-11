@@ -105,15 +105,15 @@ void ConvertBinaryListElementsToBase64(base::ListValue* args) {
   size_t index = 0;
   for (base::ListValue::iterator iter = args->begin(); iter != args->end();
        ++iter, ++index) {
-    if (iter->IsType(base::Value::Type::BINARY)) {
+    if (iter->is_blob()) {
       base::Value* binary = NULL;
       if (args->GetBinary(index, &binary))
         args->Set(index, ConvertBinaryToBase64(binary));
-    } else if (iter->IsType(base::Value::Type::LIST)) {
+    } else if (iter->is_list()) {
       base::ListValue* list;
       iter->GetAsList(&list);
       ConvertBinaryListElementsToBase64(list);
-    } else if (iter->IsType(base::Value::Type::DICTIONARY)) {
+    } else if (iter->is_dict()) {
       base::DictionaryValue* dict;
       iter->GetAsDictionary(&dict);
       ConvertBinaryDictionaryValuesToBase64(dict);
@@ -127,15 +127,15 @@ void ConvertBinaryListElementsToBase64(base::ListValue* args) {
 void ConvertBinaryDictionaryValuesToBase64(base::DictionaryValue* dict) {
   for (base::DictionaryValue::Iterator iter(*dict); !iter.IsAtEnd();
        iter.Advance()) {
-    if (iter.value().IsType(base::Value::Type::BINARY)) {
+    if (iter.value().is_blob()) {
       base::Value* binary = NULL;
       if (dict->GetBinary(iter.key(), &binary))
         dict->Set(iter.key(), ConvertBinaryToBase64(binary));
-    } else if (iter.value().IsType(base::Value::Type::LIST)) {
+    } else if (iter.value().is_list()) {
       const base::ListValue* list;
       iter.value().GetAsList(&list);
       ConvertBinaryListElementsToBase64(const_cast<base::ListValue*>(list));
-    } else if (iter.value().IsType(base::Value::Type::DICTIONARY)) {
+    } else if (iter.value().is_dict()) {
       const base::DictionaryValue* dict;
       iter.value().GetAsDictionary(&dict);
       ConvertBinaryDictionaryValuesToBase64(

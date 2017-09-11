@@ -55,23 +55,23 @@ std::unique_ptr<base::Value> ValueResultFromScriptResult(id wk_result,
   CFTypeID result_type = CFGetTypeID(reinterpret_cast<CFTypeRef>(wk_result));
   if (result_type == CFStringGetTypeID()) {
     result.reset(new base::Value(base::SysNSStringToUTF16(wk_result)));
-    DCHECK(result->IsType(base::Value::Type::STRING));
+    DCHECK(result->is_string());
   } else if (result_type == CFNumberGetTypeID()) {
     // Different implementation is here.
     if ([wk_result intValue] != [wk_result doubleValue]) {
       result.reset(new base::Value([wk_result doubleValue]));
-      DCHECK(result->IsType(base::Value::Type::DOUBLE));
+      DCHECK(result->is_double());
     } else {
       result.reset(new base::Value([wk_result intValue]));
-      DCHECK(result->IsType(base::Value::Type::INTEGER));
+      DCHECK(result->is_int());
     }
     // End of different implementation.
   } else if (result_type == CFBooleanGetTypeID()) {
     result.reset(new base::Value(static_cast<bool>([wk_result boolValue])));
-    DCHECK(result->IsType(base::Value::Type::BOOLEAN));
+    DCHECK(result->is_bool());
   } else if (result_type == CFNullGetTypeID()) {
     result = base::MakeUnique<base::Value>();
-    DCHECK(result->IsType(base::Value::Type::NONE));
+    DCHECK(result->is_none());
   } else if (result_type == CFDictionaryGetTypeID()) {
     std::unique_ptr<base::DictionaryValue> dictionary =
         base::MakeUnique<base::DictionaryValue>();
