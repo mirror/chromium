@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eea4972_46e14f02",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-text-nodes-disconnect-on-webkitBeforeTextInserted-event.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-11T18:45:00Z",
+      "side": 1,
+      "message": "I ran this test locally. It doesn\u0027t reach L341 of TypingCommand.cpp in your patch.\n\nPlease check and correct it.",
+      "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd0c7ca_b2ed47f0",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-text-remove-iframe-on-webkitBeforeTextInserted-event.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-11T18:45:00Z",
+      "side": 1,
+      "message": "nit: Please add a note about why async_test is needed, in case someone \"simplifies\" the test to a sync one.",
+      "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5154fac_5570b20a",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-11T18:45:00Z",
+      "side": 1,
+      "message": "This change shouldn\u0027t be needed.\n\nIn fact, the impl of IMC::IsAvailable is wrong. I\u0027ve fixed it in crrev.com/c/661162",
+      "range": {
+        "startLine": 467,
+        "startChar": 7,
+        "endLine": 467,
+        "endChar": 49
+      },
+      "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa0b01a_1e0f4604",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-11T18:45:00Z",
+      "side": 1,
+      "message": "nit: Please add a comment of the tests reaching here.",
+      "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef13974c_5da92322",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-11T18:45:00Z",
+      "side": 1,
+      "message": "nit: ditto.",
+      "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2678b6_4fc68de8",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-11T18:45:00Z",
+      "side": 1,
+      "message": "nit: ditto.",
+      "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
