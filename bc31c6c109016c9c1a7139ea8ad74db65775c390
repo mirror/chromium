@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3bacdbcf_e7317015",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-11T17:37:49Z",
+      "side": 1,
+      "message": "can you comment why this is needed?",
+      "revId": "bc31c6c109016c9c1a7139ea8ad74db65775c390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3bfa15e_292cf1fa",
         "filename": "chrome/browser/ui/webui/chromeos/network_element_localized_strings_provider.cc",
         "patchSetId": 2
