@@ -16,6 +16,24 @@
       "revId": "2d9c3e56b8d6bb09cc9ab456874edecfa0f4fb9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa1d67e_302ed717",
+        "filename": "tools/perf/benchmarks/loading.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-11T23:49:33Z",
+      "side": 1,
+      "message": "For this one in particular, i\u0027m more worried about adding a ref build back. Loading.mobile is a very long benchmark and just flipping it back on might close do double the runtime of that shard.",
+      "parentUuid": "47d01896_e187853d",
+      "revId": "2d9c3e56b8d6bb09cc9ab456874edecfa0f4fb9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
