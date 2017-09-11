@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6afe8198_8ba5791c",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-11T21:25:44Z",
+      "side": 1,
+      "message": "Previously we missed under-invalidation checking for a subsequence becoming empty.",
+      "revId": "3c12fba12910b24e9938174e399ece526398d5b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286159d5_022f1743",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-11T21:25:44Z",
+      "side": 1,
+      "message": "This isn\u0027t related to any known bug, but the new code seems clearer and safer.",
+      "revId": "3c12fba12910b24e9938174e399ece526398d5b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
