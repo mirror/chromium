@@ -22,6 +22,30 @@
       "revId": "63ccf3f300ab0d6ad29d4531812a95cb0e29fa08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c6eb12_215f0cc3",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 3711,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-09-11T06:55:39Z",
+      "side": 1,
+      "message": "No, this feature is implemented using a wrapper of FieldTrial API, in /src/extensions/common/feature_switch.cc.",
+      "parentUuid": "65f8b58d_c4fcea5e",
+      "range": {
+        "startLine": 3711,
+        "startChar": 37,
+        "endLine": 3711,
+        "endChar": 0
+      },
+      "revId": "63ccf3f300ab0d6ad29d4531812a95cb0e29fa08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
