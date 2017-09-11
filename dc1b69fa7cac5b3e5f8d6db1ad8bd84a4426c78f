@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89904211_0c1df179",
+        "filename": "tools/perf/page_sets/system_health/native_ui_stories.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-11T18:10:12Z",
+      "side": 1,
+      "message": "inspector websocket are Teelemetry\u0027s private API. Users should never access it (or even know about it) when writing Telemetry benchmark user stories.",
+      "range": {
+        "startLine": 15,
+        "startChar": 51,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "dc1b69fa7cac5b3e5f8d6db1ad8bd84a4426c78f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
