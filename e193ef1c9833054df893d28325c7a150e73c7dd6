@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4015b7bb_97d3d72b",
+        "filename": "chrome/browser/ui/app_list/app_list_controller_delegate.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-11T16:42:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e33381a_3516a9f5",
+      "revId": "e193ef1c9833054df893d28325c7a150e73c7dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c75a3cf_636cd705",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.h",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "e193ef1c9833054df893d28325c7a150e73c7dd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ab213d_954be76a",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-11T16:42:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c75a3cf_636cd705",
+      "revId": "e193ef1c9833054df893d28325c7a150e73c7dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "4d69fe26_43569d33",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-11T16:42:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cce7ff0_af309071",
+      "range": {
+        "startLine": 27,
+        "startChar": 36,
+        "endLine": 27,
+        "endChar": 64
+      },
+      "revId": "e193ef1c9833054df893d28325c7a150e73c7dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b3485f2_7106f665",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.h",
         "patchSetId": 13
@@ -73,6 +133,24 @@
       "revId": "e193ef1c9833054df893d28325c7a150e73c7dd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435d9673_bee51146",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-11T16:42:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b3485f2_7106f665",
+      "revId": "e193ef1c9833054df893d28325c7a150e73c7dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "93eff005_4c94e03b",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_deferred_launcher_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-11T16:42:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27026bb3_14bceed1",
+      "revId": "e193ef1c9833054df893d28325c7a150e73c7dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f48a0399_da78d915",
         "filename": "chrome/browser/ui/ash/launcher/arc_app_deferred_launcher_item_controller.h",
         "patchSetId": 13
@@ -107,6 +203,24 @@
       "revId": "e193ef1c9833054df893d28325c7a150e73c7dd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6335ab_806e541f",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_deferred_launcher_item_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-11T16:42:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f48a0399_da78d915",
+      "revId": "e193ef1c9833054df893d28325c7a150e73c7dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
