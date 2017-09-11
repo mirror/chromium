@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7a1e628_2826606b",
+        "filename": "base/task/cancelable_task_tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-11T18:08:27Z",
+      "side": 1,
+      "message": "Nit: remove (in a followup or now, whichever is easier)",
+      "range": {
+        "startLine": 76,
+        "startChar": 32,
+        "endLine": 76,
+        "endChar": 38
+      },
+      "revId": "757de36624746cbfe7f99127c50c799d1bb259a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
