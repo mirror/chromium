@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f09e86b5_1a6b5504",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-11T21:27:06Z",
+      "side": 1,
+      "message": "This should be in the member initializer list.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 54
+      },
+      "revId": "4a8b4775f07be4b8f46e83ef23963b8a73e14527",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e84f6b_019128ce",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-11T21:27:06Z",
+      "side": 1,
+      "message": "Don\u0027t you need to call this only once? I would be inclined to move it to ExecitFullScreenIndicator::Show().",
+      "range": {
+        "startLine": 85,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 17
+      },
+      "revId": "4a8b4775f07be4b8f46e83ef23963b8a73e14527",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
