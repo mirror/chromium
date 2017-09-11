@@ -41,7 +41,6 @@ class TestSafeBrowsingDatabaseManager
   bool MatchDownloadWhitelistString(const std::string& str) override;
   bool MatchDownloadWhitelistUrl(const GURL& url) override;
   bool MatchMalwareIP(const std::string& ip_address) override;
-  bool MatchModuleWhitelistString(const std::string& str) override;
   safe_browsing::ThreatSource GetThreatSource() const override;
   bool IsCsdWhitelistKillSwitchOn() override;
   bool IsDownloadProtectionEnabled() const override;
