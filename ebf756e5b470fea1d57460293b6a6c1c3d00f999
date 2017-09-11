@@ -16,6 +16,24 @@
       "revId": "ebf756e5b470fea1d57460293b6a6c1c3d00f999",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024b6c40_370cd870",
+        "filename": "third_party/WebKit/LayoutTests/W3CImportExpectations",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-11T16:20:13Z",
+      "side": 1,
+      "message": "Makes sense. So, in general:\n\n - We want to import all directories that somebody in Chromium will be working on.\n - We still want to have OWNERS for directories we import.\n - It\u0027s OK to have tests skipped in NeverFixTests in order to make it easier to initially import them, but there is an expectation that they\u0027ll be unskipped.",
+      "parentUuid": "936f9eb2_37d06501",
+      "revId": "ebf756e5b470fea1d57460293b6a6c1c3d00f999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
