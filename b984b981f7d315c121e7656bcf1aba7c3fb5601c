@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0d08256e_f464b1dc",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-11T03:45:08Z",
+      "side": 1,
+      "message": "Ah, then no need to add it (and no need to remove from current patch set)",
+      "parentUuid": "db637b14_4fdd43e4",
+      "revId": "b984b981f7d315c121e7656bcf1aba7c3fb5601c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0fab1e7_619ac0bd",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
         "patchSetId": 13
