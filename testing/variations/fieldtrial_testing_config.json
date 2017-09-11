@@ -3205,6 +3205,12 @@
             ],
             "experiments": [
                 {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "TranslateCompactUI"
+                    ]
+                },
+                {
                     "name": "NeverThresholdEquals7",
                     "params": {
                         "translate_auto_never_threshold": "7"
