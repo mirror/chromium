@@ -289,12 +289,7 @@ crbug.com/763610 external/wpt/css/CSS2/cascade-import [ WontFix ]
 crbug.com/763610 external/wpt/css/css-cascade-3 [ WontFix ]
 crbug.com/763610 external/wpt/css/css-cascade-4 [ WontFix ]
 
-# WPT subdirectories without owners.
-external/wpt/accelerometer [ WontFix ]
-external/wpt/assumptions [ WontFix ]
-external/wpt/gyroscope [ WontFix ]
-external/wpt/magnetometer [ WontFix ]
-external/wpt/upgrade-insecure-requests [ WontFix ]
+# WPT for CSS Conditional Rules and Namespaces. https://crbug.com/763636
 external/wpt/css/css-conditional-3 [ WontFix ]
 external/wpt/css/css-namespaces-3 [ WontFix ]
 
