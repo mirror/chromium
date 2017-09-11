@@ -11,6 +11,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -44,6 +45,11 @@ import android.widget.ImageView;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 
+import com.google.android.libraries.hats20.HatsClient;
+import com.google.android.libraries.hats20.HatsDownloadRequest;
+import com.google.android.libraries.hats20.HatsShowRequest;
+import com.google.android.libraries.hats20.storage.HatsDataStore;
+
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
@@ -53,6 +59,8 @@ import org.chromium.chrome.browser.compositor.layouts.LayoutUpdateHost;
 import org.chromium.chrome.browser.device.DeviceClassManager;
 import org.chromium.chrome.browser.fullscreen.BrowserStateBrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.fullscreen.FullscreenManager;
+import org.chromium.chrome.browser.infobar.InfoBarIdentifier;
+import org.chromium.chrome.browser.infobar.SimpleConfirmInfoBarBuilder;
 import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.omnibox.LocationBar;
 import org.chromium.chrome.browser.omnibox.LocationBarPhone;
@@ -96,6 +104,8 @@ public class ToolbarPhone extends ToolbarLayout
     private static final int TAB_SWITCHER_MODE_POST_EXIT_ANIMATION_DURATION_MS = 100;
 
     private static final float UNINITIALIZED_PERCENT = -1f;
+
+    private static final String SURVEY_ID = "7ukwh6npnmfm4ifb7ebubwyipe";
 
     /** States that the toolbar can be in regarding the tab switcher. */
     protected static final int STATIC_TAB = 0;
@@ -193,6 +203,9 @@ public class ToolbarPhone extends ToolbarLayout
     protected int mUnfocusedLocationBarLayoutRight;
     protected boolean mHasVisibleViewPriorToUrlBar;
     private boolean mUnfocusedLocationBarUsesTransparentBg;
+
+    private HatsShowRequest mRequest;
+    private HatsDataStore mDataStore;
 
     private int mLocationBarBackgroundAlpha = 255;
     private float mNtpSearchBoxScrollPercent = UNINITIALIZED_PERCENT;
@@ -337,6 +350,15 @@ public class ToolbarPhone extends ToolbarLayout
         mToolbarBackground = new ColorDrawable(getToolbarColorForVisualState(VisualState.NORMAL));
         mTabSwitcherAnimationBgOverlay =
                 new ColorDrawable(getToolbarColorForVisualState(VisualState.NORMAL));
+
+        //        if (FeatureUtilities.isChromeHomeEnabled()) {
+        mRequest = HatsShowRequest.builder((Activity) getContext()).forSiteId(SURVEY_ID).build();
+        mDataStore = HatsDataStore.buildFromContext(getContext());
+        HatsClient.downloadSurvey(HatsDownloadRequest.builder(getContext())
+                                          .forSiteId(SURVEY_ID)
+                                          .withAdvertisingId("")
+                                          .build());
+        //        }
 
         initLocationBarBackground();
 
@@ -505,6 +527,9 @@ public class ToolbarPhone extends ToolbarLayout
                 RecordUserAction.record("MobileToolbarStackViewNewTab");
                 RecordUserAction.record("MobileNewTabOpened");
                 // TODO(kkimlabs): Record UMA action for homepage button.
+                if (mRequest != null && mDataStore.validSurveyExists(SURVEY_ID)) {
+                    createHatsInfoBar();
+                }
             }
         } else if (mHomeButton == v) {
             openHomepage();
@@ -2445,6 +2470,26 @@ public class ToolbarPhone extends ToolbarLayout
                     mControlsVisibilityDelegate.showControlsPersistentAndClearOldToken(
                             mFullscreenCalloutToken);
         }
+    }
+
+    private void createHatsInfoBar() {
+        SimpleConfirmInfoBarBuilder.Listener listener = new SimpleConfirmInfoBarBuilder.Listener() {
+            @Override
+            public void onInfoBarDismissed() {}
+
+            @Override
+            public boolean onInfoBarButtonClicked(boolean isPrimary) {
+                if (isPrimary) {
+                    HatsClient.showSurveyIfAvailable(mRequest);
+                }
+                return false;
+            }
+        };
+        SimpleConfirmInfoBarBuilder.create(getToolbarDataProvider().getTab(), listener,
+                InfoBarIdentifier.GENERATED_PASSWORD_SAVED_INFOBAR_DELEGATE_ANDROID,
+                R.drawable.google_logo,
+                "Would you like to help improve the new Chrome by taking a quick survey?", "Yes",
+                "No", false);
     }
 }
 
