@@ -90,6 +90,7 @@ test("device_unittests") {
     "//device/sensors",
     "//device/sensors/public/cpp:full",
     "//device/sensors/public/interfaces",
+    "//device/u2f:unit_tests",
     "//mojo/common",
     "//mojo/edk/system",
     "//mojo/public/cpp/bindings",
