@@ -15,12 +15,15 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/test/test_suite.h"
+#include "base/trace_event/process_memory_dump.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/leveldatabase/env_chromium.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 
 #define FPL FILE_PATH_LITERAL
 
+using base::trace_event::ProcessMemoryDump;
 using leveldb::DB;
 using leveldb::Env;
 using leveldb::ReadOptions;
@@ -32,6 +35,9 @@ using leveldb_env::ChromiumEnv;
 using leveldb_env::DBTracker;
 using leveldb_env::MethodID;
 using leveldb_env::Options;
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::Return;
 
 TEST(ErrorEncoding, OnlyAMethod) {
   const MethodID in_method = leveldb_env::kSequentialFileRead;
@@ -252,6 +258,30 @@ class ChromiumEnvDBTrackerTest : public ::testing::Test {
  private:
   base::ScopedTempDir scoped_temp_dir_;
 };
+
+TEST_F(ChromiumEnvDBTrackerTest, GetOrCreateAllocatorDump) {
+  Options options;
+  options.create_if_missing = true;
+  std::string name = temp_path().AsUTF8Unsafe();
+  DBTracker::TrackedDB* tracked_db;
+  Status status =
+      DBTracker::GetInstance()->OpenDatabase(options, name, &tracked_db);
+  ASSERT_TRUE(status.ok()) << status.ToString();
+
+  std::unique_ptr<ProcessMemoryDump> pmd(
+      new base::trace_event::ProcessMemoryDump);
+  auto* mad =
+      DBTracker::GetInstance()->GetOrCreateAllocatorDump(pmd.get(), tracked_db);
+  delete tracked_db;
+
+  // Check that the size was added.
+  auto& entries = mad->entries_for_testing();
+  ASSERT_EQ(1ul, entries.size());
+  ASSERT_EQ(base::trace_event::MemoryAllocatorDump::kNameSize, entries[0].name);
+  ASSERT_EQ(base::trace_event::MemoryAllocatorDump::kUnitsBytes,
+            entries[0].units);
+  ASSERT_GE(entries[0].value_uint64, 0ul);
+}
 
 TEST_F(ChromiumEnvDBTrackerTest, OpenDatabase) {
   struct KeyValue {
