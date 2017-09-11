@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe0e9bfb_bb470cf9",
+        "filename": "media/cdm/platform_verification.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-11T23:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcea7cc0_80248439",
+      "range": {
+        "startLine": 50,
+        "startChar": 65,
+        "endLine": 50,
+        "endChar": 73
+      },
+      "revId": "70db3a45f9460e6b18c8271efda6499162399c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2b95ea3_80371b56",
         "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "70db3a45f9460e6b18c8271efda6499162399c13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce071b4_0b63b218",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-11T23:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2b95ea3_80371b56",
+      "range": {
+        "startLine": 1210,
+        "startChar": 44,
+        "endLine": 1210,
+        "endChar": 45
+      },
+      "revId": "70db3a45f9460e6b18c8271efda6499162399c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
