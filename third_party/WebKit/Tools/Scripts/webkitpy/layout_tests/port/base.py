@@ -199,7 +199,7 @@ class Port(object):
             #   base64
             #
             fingerprint = 'Nxvaj3+bY3oVrTc+Jp7m3E3sB1n3lXtnMDCyBsqEXiY='
-            flags += [
+            flags = flags + [
                 '--run-layout-test',
                 '--ignore-certificate-errors-spki-list=' + fingerprint]
         return flags
