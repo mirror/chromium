@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "b1beaa95_309b1719",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-11T16:15:52Z",
+      "side": 1,
+      "message": "Yes. reveman@ mentioned that we do not want to defer accelerated animations. Such as opacity, transforms and other properties that can be accelerated by the compositor unlike things that require raster.",
+      "parentUuid": "f2076ca5_18ee036d",
+      "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bec118a2_0b65f12f",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 4
@@ -177,6 +195,24 @@
       "writtenOn": "2017-09-06T18:12:58Z",
       "side": 1,
       "message": "I feel like this shouldn\u0027t go down the tree. Maybe something like this?\n\n  void Layer::SetPaintDeferred(bool deferred) {\n    if (paint_deferred_ \u003d\u003d deferred)\n      return;\n    paint_deferred_ \u003d deferred;\n    if (!paint_deferred_ \u0026\u0026 !damaged_region_.IsEmpty()) {\n      ScheduleDraw();\n      if (layer_mask_) layer_mask_-\u003eScheduleDraw();\n    }\n  }",
+      "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f32151_41f631f0",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-11T16:15:52Z",
+      "side": 1,
+      "message": "I am not sure which one is the best? Should we keep this API the same as the SuppressPaint() to go down with children. There might be some inconsistent status if both parent layer and child layer defer or suppress paint in current implementation.\n\nBut SuppressPaint currently only used in close windows or similar cases, we will not use the layer any more. So it will be important for Defer Paint API to make less surprise.\nsadrul@\u0027s suggestion can make sure that child layer status will not be overridden. But may not work if we want all children layers to defer paint in animation?\nreveman@, WDYT? The implementation in this patch should work assuming children layers should keep the same paint_deferred value by the time we set it from parent layer.",
+      "parentUuid": "5850483b_553026e1",
       "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
