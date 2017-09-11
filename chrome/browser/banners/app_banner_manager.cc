@@ -174,6 +174,12 @@ void AppBannerManager::SendBannerAccepted() {
 void AppBannerManager::SendBannerDismissed() {
   if (event_.is_bound())
     event_->BannerDismissed();
+
+  // if (IsExperimentalAppBannersEnabled()) {
+  ResetBindings();
+  UpdateState(State::INACTIVE);
+  SendBannerPromptRequest();
+  //}
 }
 
 base::WeakPtr<AppBannerManager> AppBannerManager::GetWeakPtr() {
