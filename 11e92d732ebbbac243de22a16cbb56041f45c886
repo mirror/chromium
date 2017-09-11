@@ -16,6 +16,24 @@
       "revId": "11e92d732ebbbac243de22a16cbb56041f45c886",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e809ce6a_fcd17940",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1153876
+      },
+      "writtenOn": "2017-09-11T23:13:15Z",
+      "side": 1,
+      "message": "I don\u0027t believe that behavior is possible. When dragging at least one character is always selected - you can\u0027t drag a handle perfectly on top of the other.",
+      "parentUuid": "389fd1da_31f3fe6d",
+      "revId": "11e92d732ebbbac243de22a16cbb56041f45c886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
