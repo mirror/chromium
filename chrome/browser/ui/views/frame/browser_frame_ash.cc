@@ -70,12 +70,11 @@ BrowserFrameAsh::BrowserFrameAsh(BrowserFrame* browser_frame,
   // This way the requested bounds are honored.
   if (!browser->bounds_overridden() && !browser->is_session_restore())
     SetWindowAutoManaged();
-#if defined(OS_CHROMEOS)
+
   // For legacy reasons v1 apps (like Secure Shell) are allowed to consume keys
   // like brightness, volume, etc. Otherwise these keys are handled by the
   // Ash window manager.
   window_state->set_can_consume_system_keys(browser->is_app());
-#endif  // defined(OS_CHROMEOS)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -132,13 +131,7 @@ bool BrowserFrameAsh::HandleKeyboardEvent(
 views::Widget::InitParams BrowserFrameAsh::GetWidgetParams() {
   views::Widget::InitParams params;
   params.native_widget = this;
-
   params.context = ash::Shell::GetPrimaryRootWindow();
-#if defined(OS_WIN)
-  // If this window is under ASH on Windows, we need it to be translucent.
-  params.opacity = views::Widget::InitParams::TRANSLUCENT_WINDOW;
-#endif
-
   return params;
 }
 

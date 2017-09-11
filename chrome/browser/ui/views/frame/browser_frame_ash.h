@@ -14,12 +14,7 @@
 class BrowserFrame;
 class BrowserView;
 
-////////////////////////////////////////////////////////////////////////////////
-//  BrowserFrameAsh
-//
-//  BrowserFrameAsh is a NativeWidgetAura subclass that provides the window
-//  frame for the Chrome browser window.
-//
+// BrowserFrameAsh provides the window frame for the Chrome browser window.
 class BrowserFrameAsh : public views::NativeWidgetAura,
                         public NativeBrowserFrame {
  public:
