@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4767e502_d57bf20a",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-11T15:44:24Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a good idea.\n\nCan you instead introduce a virtual LayerOwner::OnLayerCreated(), which gets called from LayerOwner::RecreateLayer() instead? It is possible to install a different LayerOwnerDelegate from outside, and even when that happens, we would want to re-allocate the local-surface-id as appropriate. So doing this through the delegate interface can break and go undetected. Doing this through LayerOwner api is safer.",
+      "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
