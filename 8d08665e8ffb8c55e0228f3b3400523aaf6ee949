@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17ebdc09_ac2e0922",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-11T10:31:10Z",
+      "side": 0,
+      "message": "I think we can get rid of this \"normal_behavior_value_id\" as it\u0027s not used now that the runtime flag is gone.",
+      "revId": "8d08665e8ffb8c55e0228f3b3400523aaf6ee949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab872628_155f39b1",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-11T10:31:10Z",
+      "side": 0,
+      "message": "Why are you removing the use counter?\nOne thing is that the runtime flag is removed, a different one is that we don\u0027t want metrics for CSS Grid Layout.\nFelxbox has a counter for example, and I believe it\u0027s useful to keep Grid Layout counter to check how people are using grid.",
+      "revId": "8d08665e8ffb8c55e0228f3b3400523aaf6ee949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

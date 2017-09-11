@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6cae780_21c4f25b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutFlexibleBox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-11T10:31:10Z",
+      "side": 1,
+      "message": "I guess we should update this comment, as Grid Layout feature cannot be enabled/disabled anymore.",
+      "revId": "813445c7ce0321b1ed46dc452e8beb6dfb5e6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
