@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff59054e_5026a459",
+        "filename": "content/browser/payments/payment_app_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-11T15:31:30Z",
+      "side": 1,
+      "message": "All icons size is empty, so the last one will be chosen in ManifestIconSelector::FindBestMatchingIcon but not the largest, is this intend?",
+      "range": {
+        "startLine": 202,
+        "startChar": 35,
+        "endLine": 202,
+        "endChar": 39
+      },
+      "revId": "107d00fba88836630b30fd8894375463413cfd88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a43ea5da_ef8d1186",
+        "filename": "content/browser/payments/payment_instrument_icon_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-11T15:31:30Z",
+      "side": 1,
+      "message": "simply base::Passed(callback)? https://cs.chromium.org/chromium/src/base/bind_helpers.h?rcl\u003d3587c2b9079dc90c2a9ab35375fedea42531f502\u0026l\u003d436",
+      "range": {
+        "startLine": 74,
+        "startChar": 35,
+        "endLine": 74,
+        "endChar": 67
+      },
+      "revId": "107d00fba88836630b30fd8894375463413cfd88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117d506e_97789d47",
+        "filename": "content/browser/payments/payment_instrument_icon_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-11T15:31:30Z",
+      "side": 1,
+      "message": "Have you tested when can_download_icon \u003d false?",
+      "range": {
+        "startLine": 81,
+        "startChar": 51,
+        "endLine": 81,
+        "endChar": 59
+      },
+      "revId": "107d00fba88836630b30fd8894375463413cfd88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d61107_1b8dfff0",
+        "filename": "content/browser/payments/payment_instrument_icon_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-11T15:31:30Z",
+      "side": 1,
+      "message": "One of the reason I did not use \u0027ManifestIconDownloader::Download\u0027 is that I do not want to fail the registration because failed to fetch and/or decode one specific icon. There might have many other icons in the manifest, for example one of the icon codec is not supported by Chrome.",
+      "range": {
+        "startLine": 93,
+        "startChar": 40,
+        "endLine": 93,
+        "endChar": 60
+      },
+      "revId": "107d00fba88836630b30fd8894375463413cfd88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
