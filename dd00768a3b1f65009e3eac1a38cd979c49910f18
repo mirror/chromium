@@ -16,6 +16,24 @@
       "revId": "dd00768a3b1f65009e3eac1a38cd979c49910f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec526e07_ec86c834",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-11T06:08:46Z",
+      "side": 1,
+      "message": "Our code logic needs to differentiate the following 2 cases, so we need a std::unique_ptr\u003c\u003e here.\n  1. There is not any |get_ready_callback_| ever set at all.\nor\n  2. The |get_ready_callback_| has been set but has already run.\n\nDiscussion about this is at: https://chromium-review.googlesource.com/c/chromium/src/+/652166/3/content/browser/service_worker/service_worker_provider_host.h#344",
+      "parentUuid": "2ac6f594_5d235642",
+      "revId": "dd00768a3b1f65009e3eac1a38cd979c49910f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
