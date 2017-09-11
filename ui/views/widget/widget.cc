@@ -1144,7 +1144,7 @@ void Widget::OnNativeWidgetPaint(const ui::PaintContext& context) {
   // SetInitialBounds call.
   if (!native_widget_initialized_)
     return;
-  GetRootView()->PaintFromPaintRoot(context);
+  GetRootView()->PaintFromPaintRoot(context, false);
 }
 
 int Widget::GetNonClientComponent(const gfx::Point& point) {

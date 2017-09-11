@@ -1344,7 +1344,7 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // only on the root of a widget/layer.  PaintDebugRects() is invoked as a
   // separate pass, instead of being rolled into Paint(), so that siblings will
   // not obscure debug rects.
-  void PaintFromPaintRoot(const ui::PaintContext& parent_context);
+  void PaintFromPaintRoot(const ui::PaintContext& parent_context, bool layer);
 
   // Draws a semitransparent rect to indicate the bounds of this view.
   // Recursively does the same for all children.  Invoked only with

@@ -1712,7 +1712,7 @@ void View::UpdateChildLayerBounds(const gfx::Vector2d& offset) {
 }
 
 void View::OnPaintLayer(const ui::PaintContext& context) {
-  PaintFromPaintRoot(context);
+  PaintFromPaintRoot(context, true /* layer */);
 }
 
 void View::OnDelegatedFrameDamage(
@@ -2032,9 +2032,9 @@ void View::RecursivePaintHelper(void (View::*func)(const PaintInfo&),
   }
 }
 
-void View::PaintFromPaintRoot(const ui::PaintContext& parent_context) {
+void View::PaintFromPaintRoot(const ui::PaintContext& parent_context, bool layer_) {
   PaintInfo paint_info = PaintInfo::CreateRootPaintInfo(
-      parent_context, layer() ? layer()->size() : size());
+      parent_context, (layer() ? layer()->size() : size()), layer_);
   Paint(paint_info);
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDrawViewBoundsRects))

@@ -8,8 +8,9 @@ namespace views {
 
 // static
 PaintInfo PaintInfo::CreateRootPaintInfo(const ui::PaintContext& root_context,
-                                         const gfx::Size& size) {
-  return PaintInfo(root_context, size);
+                                         const gfx::Size& size,
+                                         bool layer) {
+  return PaintInfo(root_context, size, layer);
 }
 
 //  static
@@ -50,13 +51,17 @@ PaintInfo::PaintInfo(const PaintInfo& other)
       root_context_(nullptr) {}
 
 PaintInfo::PaintInfo(const ui::PaintContext& root_context,
-                     const gfx::Size& size)
+                     const gfx::Size& size,
+                     bool layer)
     : paint_recording_scale_x_(root_context.is_pixel_canvas()
                                    ? root_context.device_scale_factor()
                                    : 1.f),
       paint_recording_scale_y_(paint_recording_scale_x_),
       paint_recording_bounds_(
-          gfx::ScaleToRoundedRect(gfx::Rect(size), paint_recording_scale_x_)),
+          (layer ?
+           gfx::ScaleToRoundedRect(gfx::Rect(size), paint_recording_scale_x_) :
+           gfx::ScaleToEnclosingRect(gfx::Rect(size), paint_recording_scale_x_))
+                              ),
       context_(root_context, gfx::Vector2d()),
       root_context_(&root_context) {}
 
@@ -112,7 +117,7 @@ gfx::Rect PaintInfo::GetSnappedRecordingBounds(
   if (right == parent_size.width())
     new_right = paint_recording_bounds_.width();
   else
-    new_right = std::round(right * context().device_scale_factor());
+    new_right = std::ceil(right * context().device_scale_factor());
 
   if (bottom == parent_size.height())
     new_bottom = paint_recording_bounds_.height();

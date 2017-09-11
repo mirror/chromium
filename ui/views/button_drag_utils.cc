@@ -88,7 +88,8 @@ void SetDragImage(const GURL& url,
       ui::CanvasPainter(&bitmap, size, raster_scale, color,
                         widget.GetCompositor()->is_pixel_canvas())
           .context(),
-      size));
+      size,
+      true));
   gfx::ImageSkia image(gfx::ImageSkiaRep(bitmap, raster_scale));
   data->provider().SetDragImage(image, press_point);
 }

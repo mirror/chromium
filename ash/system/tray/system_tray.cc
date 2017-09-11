@@ -359,6 +359,10 @@ void SystemTray::HideDetailedView(SystemTrayItem* item, bool animate) {
   DestroySystemBubble();
 }
 
+const char* SystemTray::GetClassName() const {
+  return "SystemTray";
+}
+
 void SystemTray::UpdateAfterLoginStatusChange(LoginStatus login_status) {
   DestroySystemBubble();
 
