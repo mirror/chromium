@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5af5921b_7d83103c",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-09-11T21:53:32Z",
+      "side": 1,
+      "message": "As discussed offline, we need to add a comment or TODO on resetting properties when frame is reused for a new navigation.",
+      "revId": "f8c70031bbe4cd7004272d46db79394e7a2881ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b64255_ec14f1d2",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-09-11T21:53:32Z",
+      "side": 1,
+      "message": "nit: Maybe move this to the beginning of this function so network quiet can also use it. And store it as const.",
+      "revId": "f8c70031bbe4cd7004272d46db79394e7a2881ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bdc3529_a67ac2ba",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-09-11T21:53:32Z",
+      "side": 1,
+      "message": "should this be end_time? I think end_time and this is very close to each other. Using end_time has less overhead.",
+      "range": {
+        "startLine": 395,
+        "startChar": 24,
+        "endLine": 395,
+        "endChar": 51
+      },
+      "revId": "f8c70031bbe4cd7004272d46db79394e7a2881ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb6d648_b872fba4",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-09-11T21:53:32Z",
+      "side": 1,
+      "message": "Your algorithm above works. But I personally think it is easier to understand if the if-else is on long_task_idle_, which tracks the conditions on whether we have the long task timer started or not. Doing that will make the algorithm more like a state machine. For example:\n\nif (long_task_idle_ \u003d\u003d 0) {\n  long_task_idle_ \u003d (task_time \u003e kLongTaskThresholdSeconds) ? end_time : start_time;\n} else if (long_task_idle_ \u003e 0) {\n  if (task_time \u003e kLongTaskThresholdSeconds) {\n    long_task_idle_ \u003d end_time;\n  } else if (end_time - long_task_idle_ \u003e\u003d kLongTaskIdlenessWindowSeconds) {\n    [Send signal to GRC]\n    long_task_idle_ \u003d -1;\n  }\n}",
+      "revId": "f8c70031bbe4cd7004272d46db79394e7a2881ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48911dc_406ca90c",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-09-11T21:53:32Z",
+      "side": 1,
+      "message": "Remove this?",
+      "revId": "f8c70031bbe4cd7004272d46db79394e7a2881ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
