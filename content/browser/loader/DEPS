@@ -59,6 +59,7 @@ specific_include_rules = {
     "+content/browser/loader/async_resource_handler.h",
     "+content/browser/loader/downloaded_temp_file_impl.h",
     "+content/browser/loader/mojo_async_resource_handler.h",
+    "+content/browser/loader/mojo_pipe_writer.h",
     "+content/browser/loader/netlog_observer.h",
     "+content/browser/loader/resource_controller.h",
     "+content/browser/loader/resource_dispatcher_host_impl.h",
@@ -97,6 +98,11 @@ specific_include_rules = {
     "+content/public/test/test_browser_context.h",
     "+content/public/test/test_browser_thread_bundle.h",
     "+content/public/test/test_url_loader_client.h",
+  ],
+  "mojo_pipe_writer\.(cc|h)": [
+    "-content",
+    "+content/browser/loader/mojo_pipe_writer.h",
+    "+content/common/content_export.h",
   ],
   "netlog_observer\.(cc|h)": [
     "-content",
@@ -321,6 +327,7 @@ specific_include_rules = {
     "-content",
     "+content/browser/child_process_security_policy_impl.h",
     "+content/browser/loader/mojo_async_resource_handler.h",
+    "+content/browser/loader/mojo_pipe_writer.h",
     "+content/browser/loader/resource_dispatcher_host_impl.h",
     "+content/browser/loader/resource_message_filter.h",
     "+content/browser/loader/resource_request_info_impl.h",

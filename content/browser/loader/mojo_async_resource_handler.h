@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "content/browser/loader/mojo_pipe_writer.h"
 #include "content/browser/loader/resource_handler.h"
 #include "content/browser/loader/upload_progress_tracker.h"
 #include "content/common/content_export.h"
@@ -49,6 +50,7 @@ struct ResourceResponse;
 //
 // This class can be inherited only for tests.
 class CONTENT_EXPORT MojoAsyncResourceHandler : public ResourceHandler,
+                                                public MojoPipeWriter::Delegate,
                                                 public mojom::URLLoader {
  public:
   MojoAsyncResourceHandler(net::URLRequest* request,
@@ -78,34 +80,31 @@ class CONTENT_EXPORT MojoAsyncResourceHandler : public ResourceHandler,
       std::unique_ptr<ResourceController> controller) override;
   void OnDataDownloaded(int bytes_downloaded) override;
 
+  // MojoPipeWriter::Delegate implementation:
+  void OnPipeWriterOperationComplete(net::Error result) override;
+
   // mojom::URLLoader implementation:
   void FollowRedirect() override;
   void SetPriority(net::RequestPriority priority,
                    int32_t intra_priority_value) override;
 
   void OnWritableForTesting();
-  static void SetAllocationSizeForTesting(size_t size);
-  static constexpr size_t kDefaultAllocationSize = 512 * 1024;
 
  protected:
-  // These functions can be overriden only for tests.
-  virtual MojoResult BeginWrite(void** data, uint32_t* available);
-  virtual MojoResult EndWrite(uint32_t written);
+  // These functions can be overridden only for tests.
   virtual net::IOBufferWithSize* GetResponseMetadata(net::URLRequest* request);
+  virtual MojoPipeWriter* PipeWriterForTesting() const;
+
+  void set_pipe_writer_for_testing(
+      std::unique_ptr<MojoPipeWriter> pipe_writer) {
+    pipe_writer_ = std::move(pipe_writer);
+  }
+  mojo::ScopedDataPipeConsumerHandle*
+  response_body_consumer_handle_for_testing() {
+    return &response_body_consumer_handle_;
+  }
 
  private:
-  class SharedWriter;
-  class WriterIOBuffer;
-
-  // This funcion copies data stored in |buffer_| to |shared_writer_| and
-  // resets |buffer_| to a WriterIOBuffer when all bytes are copied. Returns
-  // true when done successfully.
-  bool CopyReadDataToDataPipe(bool* defer);
-  // Allocates a WriterIOBuffer and set it to |*buf|. Returns true when done
-  // successfully.
-  bool AllocateWriterIOBuffer(scoped_refptr<net::IOBufferWithSize>* buf,
-                              bool* defer);
-
   bool CheckForSufficientResource();
   void OnWritable(MojoResult result);
   void Cancel();
@@ -114,7 +113,7 @@ class CONTENT_EXPORT MojoAsyncResourceHandler : public ResourceHandler,
   // |reported_total_received_bytes_|.
   int64_t CalculateRecentlyReceivedBytes();
 
-  // These functions can be overriden only for tests.
+  // These functions can be overridden only for tests.
   virtual void ReportBadMessage(const std::string& error);
   virtual std::unique_ptr<UploadProgressTracker> CreateUploadProgressTracker(
       const tracked_objects::Location& from_here,
@@ -130,29 +129,15 @@ class CONTENT_EXPORT MojoAsyncResourceHandler : public ResourceHandler,
 
   bool has_checked_for_sufficient_resources_ = false;
   bool sent_received_response_message_ = false;
-  bool is_using_io_buffer_not_from_writer_ = false;
-  // True if OnWillRead was deferred, in order to wait to be able to allocate a
-  // buffer.
-  bool did_defer_on_will_read_ = false;
-  bool did_defer_on_writing_ = false;
   bool did_defer_on_redirect_ = false;
   base::TimeTicks response_started_ticks_;
   int64_t reported_total_received_bytes_ = 0;
-  int64_t total_written_bytes_ = 0;
 
-  // Pointer to parent's information about the read buffer. Only non-null while
-  // OnWillRead is deferred.
-  scoped_refptr<net::IOBuffer>* parent_buffer_ = nullptr;
-  int* parent_buffer_size_ = nullptr;
-
-  mojo::SimpleWatcher handle_watcher_;
   std::unique_ptr<mojom::URLLoader> url_loader_;
   mojom::URLLoaderClientPtr url_loader_client_;
-  scoped_refptr<net::IOBufferWithSize> buffer_;
-  size_t buffer_offset_ = 0;
-  size_t buffer_bytes_read_ = 0;
-  scoped_refptr<SharedWriter> shared_writer_;
   mojo::ScopedDataPipeConsumerHandle response_body_consumer_handle_;
+
+  std::unique_ptr<MojoPipeWriter> pipe_writer_;
 
   std::unique_ptr<UploadProgressTracker> upload_progress_tracker_;
 
