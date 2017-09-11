@@ -180,6 +180,9 @@ class BLINK_EXPORT WebFrame {
   // Stops any pending loads on the frame and its children.
   virtual void StopLoading() = 0;
 
+  // Stops provisional loader.
+  virtual void StopProvisionalLoader() = 0;
+
   // Will return true if between didStartLoading and didStopLoading
   // notifications.
   virtual bool IsLoading() const;

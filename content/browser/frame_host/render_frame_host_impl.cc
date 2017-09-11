@@ -3386,7 +3386,7 @@ void RenderFrameHostImpl::FailedNavigation(
   is_loading_ = true;
   if (navigation_handle_)
     DCHECK_NE(net::OK, navigation_handle_->GetNetErrorCode());
-  frame_tree_node_->ResetNavigationRequest(true, true);
+  frame_tree_node_->ResetNavigationRequest(true, false);
 }
 
 void RenderFrameHostImpl::SetUpMojoIfNeeded() {
