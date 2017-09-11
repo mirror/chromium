@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73e31f31_fc61319a",
+        "filename": "content/common/sandbox_init_mac.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-11T20:02:38Z",
+      "side": 1,
+      "message": "Should this default to SANDBOX_TYPE_INVALID?",
+      "revId": "f5e56d285a855dd3184d7b7766f2829f6da74ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
