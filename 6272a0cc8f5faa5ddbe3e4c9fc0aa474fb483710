@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de7ac068_a9f6d539",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-11T17:11:13Z",
+      "side": 1,
+      "message": "better to pass in a string16 variable, i.e., (base::string16 label_string)?",
+      "revId": "6272a0cc8f5faa5ddbe3e4c9fc0aa474fb483710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d487db4a_e13e14f6",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-11T17:11:13Z",
+      "side": 1,
+      "message": "Could you check |cannot_snap_label_| doesn\u0027t overlap |text_filter_widget_| in WindowSelector? (you have to type some words to make it visible)",
+      "revId": "6272a0cc8f5faa5ddbe3e4c9fc0aa474fb483710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
