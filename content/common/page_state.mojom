@@ -79,6 +79,11 @@ struct FrameState {
   WebReferrerPolicy referrer_policy;
   HttpBody http_body;
   array<FrameState> children;
+
+  // Serialized scroll anchor fields
+  mojo.common.mojom.String16 scroll_anchor_selector;
+  PointF scroll_anchor_offset;
+  uint64 scroll_anchor_simhash = 0;
 };
 
 struct PageState {

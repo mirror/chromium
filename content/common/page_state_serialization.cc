@@ -11,6 +11,7 @@
 
 #include "base/pickle.h"
 #include "base/strings/nullable_string16.h"
+#include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -202,7 +203,6 @@ struct SerializeObject {
 // 24: Add did save scroll or scale state.
 // 25: Limit the length of unique names: https://crbug.com/626202
 // 26: Switch to mojo-based serialization.
-//
 // NOTE: If the version is -1, then the pickle contains only a URL string.
 // See ReadPageState.
 //
@@ -802,6 +802,7 @@ void WriteFrameState(const ExplodedFrameState& state,
 
   frame->scroll_offset = mojom::Point::New();
   frame->visual_viewport_scroll_offset = mojom::PointF::New();
+  frame->scroll_anchor_offset = mojom::PointF::New();
   if (state.did_save_scroll_or_scale_state) {
     frame->scroll_offset->x = state.scroll_offset.x();
     frame->scroll_offset->y = state.scroll_offset.y();
@@ -810,6 +811,11 @@ void WriteFrameState(const ExplodedFrameState& state,
         state.visual_viewport_scroll_offset.x();
     frame->visual_viewport_scroll_offset->y =
         state.visual_viewport_scroll_offset.y();
+
+    frame->scroll_anchor_selector = state.scroll_anchor_selector.string();
+    frame->scroll_anchor_offset->x = state.scroll_anchor_offset.x();
+    frame->scroll_anchor_offset->y = state.scroll_anchor_offset.y();
+    frame->scroll_anchor_simhash = state.scroll_anchor_simhash;
   }
 
   frame->scroll_restoration_type =
@@ -866,6 +872,11 @@ void ReadFrameState(mojom::FrameState* frame, ExplodedFrameState* state) {
   state->visual_viewport_scroll_offset =
       gfx::PointF(frame->visual_viewport_scroll_offset->x,
                   frame->visual_viewport_scroll_offset->y);
+
+  state->scroll_anchor_selector = NS16(frame->scroll_anchor_selector);
+  state->scroll_anchor_offset = gfx::PointF(frame->scroll_anchor_offset->x,
+                                            frame->scroll_anchor_offset->y);
+  state->scroll_anchor_simhash = frame->scroll_anchor_simhash;
 
   state->item_sequence_number = frame->item_sequence_number;
   state->document_sequence_number = frame->document_sequence_number;
@@ -976,6 +987,7 @@ ExplodedHttpBody::~ExplodedHttpBody() {
 ExplodedFrameState::ExplodedFrameState()
     : scroll_restoration_type(blink::kWebHistoryScrollRestorationAuto),
       did_save_scroll_or_scale_state(true),
+      scroll_anchor_simhash(0),
       item_sequence_number(0),
       document_sequence_number(0),
       page_scale_factor(0.0),
@@ -1008,6 +1020,9 @@ void ExplodedFrameState::assign(const ExplodedFrameState& other) {
   page_scale_factor = other.page_scale_factor;
   referrer_policy = other.referrer_policy;
   http_body = other.http_body;
+  scroll_anchor_selector = other.scroll_anchor_selector;
+  scroll_anchor_offset = other.scroll_anchor_offset;
+  scroll_anchor_simhash = other.scroll_anchor_simhash;
   children = other.children;
 }
 

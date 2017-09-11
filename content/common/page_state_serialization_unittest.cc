@@ -91,6 +91,9 @@ void ExpectEquality(const ExplodedFrameState& expected,
   EXPECT_EQ(expected.item_sequence_number, actual.item_sequence_number);
   EXPECT_EQ(expected.document_sequence_number, actual.document_sequence_number);
   EXPECT_EQ(expected.page_scale_factor, actual.page_scale_factor);
+  EXPECT_EQ(expected.scroll_anchor_selector, actual.scroll_anchor_selector);
+  EXPECT_EQ(expected.scroll_anchor_offset, actual.scroll_anchor_offset);
+  EXPECT_EQ(expected.scroll_anchor_simhash, actual.scroll_anchor_simhash);
   ExpectEquality(expected.http_body, actual.http_body);
   ExpectEquality(expected.children, actual.children);
 }
@@ -123,6 +126,9 @@ class PageStateSerializationTest : public testing::Test {
     frame_state->item_sequence_number = 1;
     frame_state->document_sequence_number = 2;
     frame_state->page_scale_factor = 2.0;
+    frame_state->scroll_anchor_selector = NS16("#selector");
+    frame_state->scroll_anchor_offset = gfx::PointF(2.5, 3.5);
+    frame_state->scroll_anchor_simhash = 12345;
   }
 
   void PopulateHttpBody(ExplodedHttpBody* http_body,
