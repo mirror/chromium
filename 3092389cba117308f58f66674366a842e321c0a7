@@ -880,6 +880,24 @@
       "revId": "3092389cba117308f58f66674366a842e321c0a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4af092a5_05f32677",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-11T12:10:40Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right, of course. Will fix in later CL.",
+      "parentUuid": "5e7e6b31_d9571393",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
