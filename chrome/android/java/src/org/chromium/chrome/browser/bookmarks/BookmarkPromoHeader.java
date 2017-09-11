@@ -97,8 +97,7 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver, SignInStateObs
             mProfileDataCache =
                     new ProfileDataCache(mContext, Profile.getLastUsedProfile(), imageSize);
             mProfileDataCache.addObserver(this);
-            mSigninPromoController = new SigninPromoController(
-                    mProfileDataCache, SigninAccessPoint.BOOKMARK_MANAGER);
+            mSigninPromoController = new SigninPromoController(SigninAccessPoint.BOOKMARK_MANAGER);
             AccountManagerFacade.get().addObserver(this);
         }
 
@@ -180,7 +179,7 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver, SignInStateObs
             mProfileDataCache.update(Collections.singletonList(defaultAccountName));
         }
 
-        mSigninPromoController.setAccountName(defaultAccountName);
+        mSigninPromoController.setProfileData(mProfileDataCache.getProfileData(defaultAccountName));
         if (!mIsNewPromoShowing) {
             mIsNewPromoShowing = true;
             mSigninPromoController.recordSigninPromoImpression();

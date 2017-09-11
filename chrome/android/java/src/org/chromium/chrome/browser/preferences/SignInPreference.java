@@ -152,11 +152,10 @@ public class SignInPreference
         }
 
         if (mSigninPromoController == null) {
-            mSigninPromoController =
-                    new SigninPromoController(mProfileDataCache, SigninAccessPoint.SETTINGS);
+            mSigninPromoController = new SigninPromoController(SigninAccessPoint.SETTINGS);
         }
 
-        mSigninPromoController.setAccountName(defaultAccountName);
+        mSigninPromoController.setProfileData(mProfileDataCache.getProfileData(defaultAccountName));
         if (!mShowingPromo) {
             mSigninPromoController.recordSigninPromoImpression();
         }

@@ -116,8 +116,8 @@ public class SignInPromo extends OptionalLeaf implements ImpressionTracker.Liste
             int imageSize = context.getResources().getDimensionPixelSize(R.dimen.user_picture_size);
             mProfileDataCache =
                     new ProfileDataCache(context, Profile.getLastUsedProfile(), imageSize);
-            mSigninPromoController = new SigninPromoController(
-                    mProfileDataCache, SigninAccessPoint.NTP_CONTENT_SUGGESTIONS);
+            mSigninPromoController =
+                    new SigninPromoController(SigninAccessPoint.NTP_CONTENT_SUGGESTIONS);
             mGenericPromoData = null;
         } else {
             mProfileDataCache = null;
@@ -365,7 +365,8 @@ public class SignInPromo extends OptionalLeaf implements ImpressionTracker.Liste
                 mProfileDataCache.update(Collections.singletonList(defaultAccountName));
             }
 
-            mSigninPromoController.setAccountName(defaultAccountName);
+            mSigninPromoController.setProfileData(
+                    mProfileDataCache.getProfileData(defaultAccountName));
 
             SigninPromoView view = (SigninPromoView) itemView;
             mSigninPromoController.setupSigninPromoView(view.getContext(), view, null);
