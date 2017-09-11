@@ -884,6 +884,9 @@ void MediaControlsImpl::HideMediaControlsTimerFired(TimerBase*) {
   if (MediaElement().paused())
     return;
 
+  if (download_iph_manager_)
+    download_iph_manager_->SetIsPlaying(true);
+
   if (!ShouldHideMediaControls(behavior_flags))
     return;
 
@@ -970,9 +973,6 @@ void MediaControlsImpl::OnPlay() {
   UpdatePlayState();
   timeline_->SetPosition(MediaElement().currentTime());
   UpdateCurrentTimeDisplay();
-
-  if (download_iph_manager_)
-    download_iph_manager_->SetIsPlaying(true);
 }
 
 void MediaControlsImpl::OnPlaying() {

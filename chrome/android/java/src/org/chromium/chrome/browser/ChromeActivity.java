@@ -1678,6 +1678,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     @Override
     public void onOrientationChange(int orientation) {
         if (mToolbarManager != null) mToolbarManager.onOrientationChange();
+        Tab tab = getActivityTab();
+        if (tab != null) tab.onOrientationChange();
     }
 
     /**
