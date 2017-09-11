@@ -46,6 +46,30 @@
       "revId": "33df43acdd56b03cae5f2ea800ed0e7943a4bf33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "326fb164_9de83c75",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-11T14:27:48Z",
+      "side": 1,
+      "message": "In that case, you should either set your delegate to all gesture recognizer, or add Do nothing gesture recognizer to the navigationBar.\nThe current code will only disable long press and does not handle (for example) scrolling.",
+      "parentUuid": "629915a2_e880231b",
+      "range": {
+        "startLine": 372,
+        "startChar": 55,
+        "endLine": 372,
+        "endChar": 68
+      },
+      "revId": "33df43acdd56b03cae5f2ea800ed0e7943a4bf33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
