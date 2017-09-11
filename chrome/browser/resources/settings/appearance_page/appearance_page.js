@@ -32,6 +32,8 @@ Polymer({
       notify: true,
     },
 
+    isHidden: {type: Boolean, value: true},
+
     /** @private */
     defaultZoom_: Number,
 
@@ -135,6 +137,9 @@ Polymer({
     this.browserProxy_.getDefaultZoom().then(zoom => {
       this.defaultZoom_ = zoom;
     });
+    this.browserProxy_.openWallpaperManager().then(canOpen => {
+      this.isHidden = canOpen;
+    });
   },
 
   /**
@@ -198,7 +203,9 @@ Polymer({
    * @private
    */
   openWallpaperManager_: function() {
-    this.browserProxy_.openWallpaperManager();
+    this.browserProxy_.openWallpaperManager().then(canOpen => {
+      this.isHidden = canOpen;
+    });
   },
   // </if>
 
