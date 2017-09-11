@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7820f952_54b24305",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-11T20:37:21Z",
+      "side": 1,
+      "message": "I don\u0027t think that \"and timer actually ends\" belongs in the summary. It doesn\u0027t have enough information for readers to understand what it means. I think that the 2nd bullet point in the detailed description below is the right place to explain.\n\nIt wouldn\u0027t hurt to add a sentence describing what the blob timer is and what role it played in the bug, but that\u0027s not a requirement. Details are always \"nice to have\".",
+      "revId": "369c802a0cb5f3de78dafee201b777609c3a6da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3f3ca1_e6602517",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2782,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-11T20:37:21Z",
+      "side": 1,
+      "message": "Nit: \"We\" is redundant here and below.",
+      "revId": "369c802a0cb5f3de78dafee201b777609c3a6da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b104ef_2ef841e7",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2783,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-11T20:37:21Z",
+      "side": 1,
+      "message": "Nit: last cleanup? Don\u0027t think \"clean\" is a noun.",
+      "revId": "369c802a0cb5f3de78dafee201b777609c3a6da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
