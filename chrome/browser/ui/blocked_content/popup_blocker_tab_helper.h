@@ -38,6 +38,23 @@ class PopupBlockerTabHelper
   // Mapping from popup IDs to blocked popup requests.
   typedef std::map<int32_t, GURL> PopupIdMap;
 
+  // This enum is backed by a histogram. Make sure enums.xml is updated if this
+  // is updated.
+  enum class Action : int {
+    // A popup was initiated and was sent to the popup blocker for
+    // consideration.
+    kInitiated,
+
+    // A popup was blocked by the popup blocker.
+    kBlocked,
+
+    // A previously blocked popup was clicked through.
+    kClickedThrough,
+
+    // Add new elements before this value.
+    kLast
+  };
+
   class Observer {
    public:
     virtual void BlockedPopupAdded(int32_t id, const GURL& url) {}
@@ -95,6 +112,8 @@ class PopupBlockerTabHelper
 
   // Called when the blocked popup notification is shown or hidden.
   void PopupNotificationVisibilityChanged(bool visible);
+
+  static void LogAction(Action action);
 
   base::IDMap<std::unique_ptr<BlockedRequest>> blocked_popups_;
 

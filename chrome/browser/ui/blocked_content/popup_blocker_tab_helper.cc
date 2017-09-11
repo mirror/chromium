@@ -8,6 +8,7 @@
 
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/profiles/profile.h"
@@ -109,6 +110,8 @@ bool PopupBlockerTabHelper::MaybeBlockPopup(
   DCHECK(!open_url_params ||
          open_url_params->user_gesture == params.user_gesture);
 
+  LogAction(Action::kInitiated);
+
   const bool user_gesture = params.user_gesture;
   if (!web_contents)
     return false;
@@ -159,6 +162,7 @@ bool PopupBlockerTabHelper::MaybeBlockPopup(
 void PopupBlockerTabHelper::AddBlockedPopup(
     const chrome::NavigateParams& params,
     const blink::mojom::WindowFeatures& window_features) {
+  LogAction(Action::kBlocked);
   if (blocked_popups_.size() >= kMaximumNumberOfPopups)
     return;
 
@@ -200,6 +204,7 @@ void PopupBlockerTabHelper::ShowBlockedPopup(
   blocked_popups_.Remove(id);
   if (blocked_popups_.IsEmpty())
     PopupNotificationVisibilityChanged(false);
+  LogAction(Action::kClickedThrough);
 }
 
 size_t PopupBlockerTabHelper::GetBlockedPopupsCount() const {
@@ -215,4 +220,10 @@ PopupBlockerTabHelper::PopupIdMap
     result[iter.GetCurrentKey()] = iter.GetCurrentValue()->params.url;
   }
   return result;
+}
+
+// static
+void PopupBlockerTabHelper::LogAction(Action action) {
+  UMA_HISTOGRAM_ENUMERATION("ContentSettings.Popups.BlockerActions", action,
+                            Action::kLast);
 }
