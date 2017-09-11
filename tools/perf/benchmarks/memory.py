@@ -29,7 +29,7 @@ def CreateCoreTimelineBasedMemoryMeasurementOptions():
   # Enable only memory-infra, to get memory dumps, and blink.console, to get
   # the timeline markers used for mapping threads to tabs.
   trace_memory = chrome_trace_category_filter.ChromeTraceCategoryFilter(
-      filter_string='-*,blink.console,disabled-by-default-memory-infra')
+      filter_string='-*,blink.console,disabled-by-default-memory-infra,cc')
   tbm_options = timeline_based_measurement.Options(
       overhead_level=trace_memory)
   tbm_options.config.enable_android_graphics_memtrack = True

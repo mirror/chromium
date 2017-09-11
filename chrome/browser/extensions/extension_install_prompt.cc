@@ -682,6 +682,8 @@ void ExtensionInstallPrompt::ShowDialog(
   custom_permissions_ = std::move(custom_permissions);
   show_dialog_callback_ = show_dialog_callback;
 
+  DLOG(INFO) << "ShowDialog";
+
   // We special-case themes to not show any confirm UI. Instead they are
   // immediately installed, and then we show an infobar (see OnInstallSuccess)
   // to allow the user to revert if they don't like it.
@@ -726,6 +728,7 @@ void ExtensionInstallPrompt::OnImageLoaded(const gfx::Image& image) {
 }
 
 void ExtensionInstallPrompt::LoadImageIfNeeded() {
+  DLOG(INFO) << "LoadImageIfNeeded";
   // Don't override an icon that was passed in. Also, |profile_| can be null in
   // unit tests.
   if (!icon_.empty() || !profile_) {
@@ -747,6 +750,7 @@ void ExtensionInstallPrompt::LoadImageIfNeeded() {
       extensions::ImageLoader::ImageRepresentation::NEVER_RESIZE,
       gfx::Size(),
       ui::SCALE_FACTOR_100P));
+  DLOG(INFO) << "LoadImagesAsync";
   loader->LoadImagesAsync(
       extension_,
       images_list,
@@ -755,6 +759,7 @@ void ExtensionInstallPrompt::LoadImageIfNeeded() {
 }
 
 void ExtensionInstallPrompt::ShowConfirmation() {
+  DLOG(INFO) << "ShowConfirmation";
   std::unique_ptr<const PermissionSet> permissions_wrapper;
   const PermissionSet* permissions_to_display = nullptr;
   if (custom_permissions_.get()) {
