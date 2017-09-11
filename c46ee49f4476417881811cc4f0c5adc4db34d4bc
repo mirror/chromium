@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d765af64_d80f7b7c",
+        "filename": "tools/gn/xcode_object_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-11T07:55:56Z",
+      "side": 1,
+      "message": "\"\" → std::string()",
+      "range": {
+        "startLine": 348,
+        "startChar": 31,
+        "endLine": 348,
+        "endChar": 33
+      },
+      "revId": "c46ee49f4476417881811cc4f0c5adc4db34d4bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c68208_65ca4fd0",
+        "filename": "tools/gn/xcode_object_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-11T07:55:56Z",
+      "side": 1,
+      "message": "\"\" → std::string()",
+      "range": {
+        "startLine": 351,
+        "startChar": 39,
+        "endLine": 351,
+        "endChar": 41
+      },
+      "revId": "c46ee49f4476417881811cc4f0c5adc4db34d4bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98aa5f9_78690756",
+        "filename": "tools/gn/xcode_object_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-11T07:55:56Z",
+      "side": 1,
+      "message": "\"\" → std::string()",
+      "range": {
+        "startLine": 354,
+        "startChar": 27,
+        "endLine": 354,
+        "endChar": 33
+      },
+      "revId": "c46ee49f4476417881811cc4f0c5adc4db34d4bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
