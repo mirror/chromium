@@ -5,10 +5,10 @@
 #ifndef NET_QUIC_CORE_FRAMES_QUIC_ACK_FRAME_H_
 #define NET_QUIC_CORE_FRAMES_QUIC_ACK_FRAME_H_
 
-#include <deque>
 #include <ostream>
 #include <string>
 
+#include "base/containers/circular_deque.h"
 #include "net/quic/core/quic_types.h"
 #include "net/quic/platform/api/quic_containers.h"
 #include "net/quic/platform/api/quic_export.h"
@@ -38,8 +38,8 @@ class QUIC_EXPORT_PRIVATE PacketNumberQueue {
     explicit const_iterator(
         typename QuicIntervalSet<QuicPacketNumber>::const_iterator it);
 
-    explicit const_iterator(
-        typename std::deque<Interval<QuicPacketNumber>>::const_iterator it);
+    explicit const_iterator(typename base::circular_deque<
+                            Interval<QuicPacketNumber>>::const_iterator it);
 
     typedef std::input_iterator_tag iterator_category;
     typedef Interval<QuicPacketNumber> value_type;
@@ -101,7 +101,8 @@ class QUIC_EXPORT_PRIVATE PacketNumberQueue {
 
    private:
     typename QuicIntervalSet<QuicPacketNumber>::const_iterator vector_it_;
-    typename std::deque<Interval<QuicPacketNumber>>::const_iterator deque_it_;
+    typename base::circular_deque<Interval<QuicPacketNumber>>::const_iterator
+        deque_it_;
     const bool use_deque_it_;
   };
 
@@ -116,7 +117,7 @@ class QUIC_EXPORT_PRIVATE PacketNumberQueue {
             QuicPacketNumber>::const_reverse_iterator& it);
 
     explicit const_reverse_iterator(
-        const typename std::deque<
+        const typename base::circular_deque<
             Interval<QuicPacketNumber>>::const_reverse_iterator& it);
 
     typedef std::input_iterator_tag iterator_category;
@@ -188,8 +189,8 @@ class QUIC_EXPORT_PRIVATE PacketNumberQueue {
    private:
     typename QuicIntervalSet<QuicPacketNumber>::const_reverse_iterator
         vector_it_;
-    typename std::deque<Interval<QuicPacketNumber>>::const_reverse_iterator
-        deque_it_;
+    typename base::circular_deque<
+        Interval<QuicPacketNumber>>::const_reverse_iterator deque_it_;
     const bool use_deque_it_;
   };
 
@@ -246,7 +247,7 @@ class QUIC_EXPORT_PRIVATE PacketNumberQueue {
   // TODO(lilika): Remove QuicIntervalSet<QuicPacketNumber>
   // once FLAGS_quic_reloadable_flag_quic_frames_deque2 is removed
   QuicIntervalSet<QuicPacketNumber> packet_number_intervals_;
-  std::deque<Interval<QuicPacketNumber>> packet_number_deque_;
+  base::circular_deque<Interval<QuicPacketNumber>> packet_number_deque_;
   bool use_deque_;
 };
 
