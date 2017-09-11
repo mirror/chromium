@@ -242,6 +242,27 @@ HistogramBase* Histogram::Factory::Build() {
     // on dereference, but extension/Pepper APIs will guard against NULL and not
     // crash.
     DLOG(ERROR) << "Histogram " << name_ << " has bad construction arguments";
+
+    // Temporary instrumentation for crbug.com/762452.
+    switch (histogram->GetHistogramType()) {
+      case HISTOGRAM:
+      case LINEAR_HISTOGRAM:
+      case BOOLEAN_HISTOGRAM:
+      case CUSTOM_HISTOGRAM: {
+        // Objects of these types derive from Histogram.
+        Histogram* bad_histogram = static_cast<Histogram*>(histogram);
+        DCHECK(false) << "Histogram " << name_ << " has bad args:"
+                      << " min: " << minimum_ << " vs. "
+                      << bad_histogram->declared_min() << " max: " << maximum_
+                      << " vs. " << bad_histogram->declared_max()
+                      << " buckets: " << bucket_count_ << " vs. "
+                      << bad_histogram->bucket_count();
+      } break;
+
+      case SPARSE_HISTOGRAM:
+        // No need to handle this, since the affected histograms are not sparse.
+        break;
+    }
     return nullptr;
   }
   return histogram;

@@ -63,7 +63,8 @@ TEST_F(SingleSampleMetricsTest, DefaultSingleSampleMetricNoValue) {
   tester.ExpectTotalCount(kMetricName, 0);
 }
 
-TEST_F(SingleSampleMetricsTest, DefaultSingleSampleMetricWithValue) {
+// Temporarily disabled while adding DCHECK for crbug.com/762452.
+TEST_F(SingleSampleMetricsTest, DISABLED_DefaultSingleSampleMetricWithValue) {
   SingleSampleMetricsFactory* factory = SingleSampleMetricsFactory::Get();
 
   HistogramTester tester;
