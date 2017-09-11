@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5cbe37a3_a056e7d4",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-11T21:00:14Z",
+      "side": 1,
+      "message": "Sorry, I got confused between a fwd decl and a normal namespace closing.",
+      "parentUuid": "537de633_12de353a",
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb836026_b6b1475f",
         "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.h",
         "patchSetId": 6
@@ -183,6 +201,24 @@
       "side": 1,
       "message": "Done. My reasoning is that showing the ad blocking UI for the new tab page indicates a bug.",
       "parentUuid": "f6f10640_0e960c33",
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6fc26d_5801eade",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-11T21:00:14Z",
+      "side": 1,
+      "message": "Using GetDefaultSearchProviderTemplateURL here (https://cs.chromium.org/chromium/src/chrome/browser/search/search.cc?rcl\u003d201d99c7be9463c8be0f45f69a57bf572c584961\u0026l\u003d187) suggests that it could be any search provider\u0027s url. What if that URL is rightly part of the activation list?",
+      "parentUuid": "4e2220c6_0257b5ae",
       "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
