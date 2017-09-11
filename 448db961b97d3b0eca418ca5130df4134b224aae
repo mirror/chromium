@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "de150864_878c88be",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-11T14:14:37Z",
+      "side": 0,
+      "message": "\u003e So when we receive OnSurfaceDestroyed(overlay1) we won\u0027t do anything. \n\noh, yeah, you\u0027re right.  probably worth a comment, since it\u0027s not obvious that we might be called with |overlay| \u003d\u003d some old overlay, in any case.\n\n\u003e MCVDs CodecImages don\u0027t hold a ref to the overlay.\n\nAVDACodecImage \u003d\u003e shared state \u003d\u003e current surfacebundle.  they use it to position the overlay in SOP, and to keep a ref to it.\n\nin response to onSurfaceDestroyed, i think we would still need to clear them from images, though.  while there\u0027s no deadlock issues anymore, we still want to release the overlay so that the overlay thread in the browser isn\u0027t blocked indefinitely waiting for us to finish up.  plus, i\u0027m not sure that android will wait forever if the OSD was caused by low resources on the device.\n\nmaybe i should add an explicit \u0027destroy\u0027 call to AndroidOverlay that MCVD could call after setSurface() in OSD, so that cleanup is still fast.  then the images can retain the overlay mojo client object if they like.  crbug.com/763930 .\n\nwe\u0027ll also need the timeout in the browser\u0027s actually-from-android OSD for the \"no setSurface\" case, since that sends the bundle through the allocator thread during teardown,  there\u0027s no guarantee that it\u0027ll complete.  hrm, AVDA probably needs that in M62.  crbug.com/763929 .",
+      "parentUuid": "a70505ab_9b9ae870",
+      "revId": "448db961b97d3b0eca418ca5130df4134b224aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ef83b94_e992add1",
         "filename": "media/gpu/avda_codec_allocator.cc",
         "patchSetId": 2
