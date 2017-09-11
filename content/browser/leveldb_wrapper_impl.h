@@ -94,7 +94,13 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
            const std::vector<uint8_t>& value,
            const std::string& source,
            PutCallback callback) override;
+  void Change(const std::vector<uint8_t>& key,
+              const std::vector<uint8_t>& value,
+              const std::vector<uint8_t>& client_old_value,
+              const std::string& source,
+              ChangeCallback callback) override;
   void Delete(const std::vector<uint8_t>& key,
+              const std::vector<uint8_t>& client_old_value,
               const std::string& source,
               DeleteCallback callback) override;
   void DeleteAll(const std::string& source,
@@ -128,13 +134,28 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
     base::TimeDelta time_quantum_;
   };
 
+  struct NullableValue {
+    bool deleted;
+    std::vector<uint8_t> value;
+    NullableValue();
+    NullableValue(const std::vector<uint8_t>& value);
+    NullableValue(const NullableValue& other);
+    ~NullableValue();
+    NullableValue& operator=(NullableValue&& other);
+  };
   struct CommitBatch {
     bool clear_all_first;
-    std::set<std::vector<uint8_t>> changed_keys;
+    std::map<std::vector<uint8_t>, NullableValue> changed_values;
 
     CommitBatch();
     ~CommitBatch();
   };
+
+  void PutInternal(const std::vector<uint8_t>& key,
+                   const std::vector<uint8_t>& value,
+                   const NullableValue& client_old_value,
+                   const std::string& source,
+                   PutCallback callback);
 
   void OnConnectionError();
   void LoadMap(const base::Closure& completion_callback);

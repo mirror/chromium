@@ -110,15 +110,24 @@ bool LocalStorageCachedArea::SetItem(const base::string16& key,
     return false;
 
   EnsureLoaded();
+  base::NullableString16 old_value;
   if (!map_->SetItem(key, value, nullptr))
     return false;
 
   // Ignore mutations to |key| until OnSetItemComplete.
   ignore_key_mutations_[key]++;
-  leveldb_->Put(String16ToUint8Vector(key), String16ToUint8Vector(value),
-                PackSource(page_url, storage_area_id),
-                base::Bind(&LocalStorageCachedArea::OnSetItemComplete,
-                           weak_factory_.GetWeakPtr(), key));
+  if (!old_value.is_null()) {
+    leveldb_->Change(String16ToUint8Vector(key), String16ToUint8Vector(value),
+                     String16ToUint8Vector(old_value.string()),
+                     PackSource(page_url, storage_area_id),
+                     base::Bind(&LocalStorageCachedArea::OnSetItemComplete,
+                                weak_factory_.GetWeakPtr(), key));
+  } else {
+    leveldb_->Put(String16ToUint8Vector(key), String16ToUint8Vector(value),
+                  PackSource(page_url, storage_area_id),
+                  base::Bind(&LocalStorageCachedArea::OnSetItemComplete,
+                             weak_factory_.GetWeakPtr(), key));
+  }
   return true;
 }
 
@@ -126,12 +135,13 @@ void LocalStorageCachedArea::RemoveItem(const base::string16& key,
                                         const GURL& page_url,
                                         const std::string& storage_area_id) {
   EnsureLoaded();
+  base::string16 old_value;
   if (!map_->RemoveItem(key, nullptr))
     return;
 
   // Ignore mutations to |key| until OnRemoveItemComplete.
   ignore_key_mutations_[key]++;
-  leveldb_->Delete(String16ToUint8Vector(key),
+  leveldb_->Delete(String16ToUint8Vector(key), String16ToUint8Vector(old_value),
                    PackSource(page_url, storage_area_id),
                    base::Bind(&LocalStorageCachedArea::OnRemoveItemComplete,
                               weak_factory_.GetWeakPtr(), key));
