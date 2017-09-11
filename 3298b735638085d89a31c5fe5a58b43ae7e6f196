@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5160455f_103190e8",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-11T21:23:03Z",
+      "side": 1,
+      "message": "Generally namespaces are based on path and/or filename. I would not have expected leveldb::chrome given the path.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "3298b735638085d89a31c5fe5a58b43ae7e6f196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
