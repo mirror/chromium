@@ -164,7 +164,6 @@ IN_PROC_BROWSER_TEST_F(LoginStateNotificationBlockerChromeOSBrowserTest,
   message_center::NotifierId notifier_id(
       message_center::NotifierId::SYSTEM_COMPONENT,
       ash::system_notifier::kNotifierDisplay);
-  notifier_id.profile_id = kTestUsers[0];
 
   // Logged in as a normal user.
   LoginUser(kTestUsers[0]);
