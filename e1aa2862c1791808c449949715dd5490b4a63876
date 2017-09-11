@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87853a93_84059516",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-11T18:29:01Z",
+      "side": 1,
+      "message": "nit: Use the same format as the one for logging profiles disuse: LogCreditCardDisusedCount.\n\nAlso can you put it right under that one, since they are very similar (line 748).\n\nThanks!",
+      "range": {
+        "startLine": 767,
+        "startChar": 14,
+        "endLine": 767,
+        "endChar": 55
+      },
+      "revId": "e1aa2862c1791808c449949715dd5490b4a63876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b5913a_5c090ecf",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-11T18:29:01Z",
+      "side": 1,
+      "message": "Nit: RemoveExpiredCreditCardsNotUsedSinceTimestamp",
+      "range": {
+        "startLine": 241,
+        "startChar": 14,
+        "endLine": 241,
+        "endChar": 62
+      },
+      "revId": "e1aa2862c1791808c449949715dd5490b4a63876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef6ee7c_10f048cf",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3729,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-11T18:29:01Z",
+      "side": 1,
+      "message": "Can you add a simple test, or event just a test case that we don\u0027t remove an expired card used a long time ago if the feature is not enabled?",
+      "range": {
+        "startLine": 3729,
+        "startChar": 7,
+        "endLine": 3729,
+        "endChar": 70
+      },
+      "revId": "e1aa2862c1791808c449949715dd5490b4a63876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
