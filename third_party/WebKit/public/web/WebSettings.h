@@ -179,7 +179,6 @@ class WebSettings {
   virtual void SetEnableTouchAdjustment(bool) = 0;
   virtual bool MultiTargetTapNotificationEnabled() = 0;
   virtual void SetMultiTargetTapNotificationEnabled(bool) = 0;
-  virtual void SetExperimentalWebGLEnabled(bool) = 0;
   virtual void SetFantasyFontFamily(const WebString&,
                                     UScriptCode = USCRIPT_COMMON) = 0;
   virtual void SetFixedFontFamily(const WebString&,

@@ -178,12 +178,6 @@
       invalidate: "AcceleratedCompositing",
     },
 
-    // 3D canvas (WebGL) support.
-    {
-      name: "webGLEnabled",
-      initial: false,
-    },
-
     {
       name: "webGLErrorsToConsoleEnabled",
       initial: true,

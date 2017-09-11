@@ -692,7 +692,7 @@ WebGLRenderingContextBase::CreateWebGraphicsContext3DProvider(
   if (!host->IsWebGLAllowed()) {
     host->HostDispatchEvent(WebGLContextEvent::Create(
         EventTypeNames::webglcontextcreationerror, false, true,
-        "Web page was not allowed to create a WebGL context."));
+        "Web page caused context lost and was blocked"));
     return nullptr;
   }
 
@@ -7470,9 +7470,7 @@ void WebGLRenderingContextBase::MaybeRestoreContext(TimerBase*) {
     if (!frame)
       return;
 
-    Settings* settings = frame->GetSettings();
-
-    if (!frame->Client()->AllowWebGL(settings && settings->GetWebGLEnabled()))
+    if (!frame->Client()->AllowWebGL())
       return;
   }
 
