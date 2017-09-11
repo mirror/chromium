@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0288526_f03d7d8f",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-09-11T19:19:10Z",
+      "side": 1,
+      "message": "Maybe \"PrintDisabledStories()\" would be a more idiomatic name? It seems to suggest more strongly that they\u0027re not just being thrown into a list or something",
+      "revId": "96966e350a6840b79847f32e6a3032b09ecb3022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39721d4f_a0ec7d5b",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-09-11T19:19:10Z",
+      "side": 1,
+      "message": "I think I\u0027d prefer to nix this option and just have people do:\n\ntools/perf/core/story_expectation_validator.py --list \u003e /tmp/list.json\n\ninstead for simplicity\u0027s sake, but don\u0027t have a strong opinion",
+      "revId": "96966e350a6840b79847f32e6a3032b09ecb3022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
