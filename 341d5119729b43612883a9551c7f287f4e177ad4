@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a663a208_973d5117",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-11T20:44:53Z",
+      "side": 1,
+      "message": "Nit: Remember to expand this to the new name before you commit.",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "341d5119729b43612883a9551c7f287f4e177ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af5b67c_a5968348",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-11T20:44:53Z",
+      "side": 1,
+      "message": "Nit: Could you change the format of this a little bit? How about just having a short one-liner at the top telling the reader what\u0027s going on, i.e.\n\"Add buildflag for when in-product help is enabled for desktop platforms.\"\n\nThen you could go on to explain the reasoning behind the CL by having a paragraph for each of the answers to these questions:\n- What is happening now?\n- Why is that bad?\n- How is this CL making it better?\n\nThe answers to those questions in addition to the short one-liner at the top will make it easy to reason about the CL by only reading the description going forward.",
+      "revId": "341d5119729b43612883a9551c7f287f4e177ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
