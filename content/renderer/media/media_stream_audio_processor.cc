@@ -14,6 +14,7 @@
 
 #include "base/command_line.h"
 #include "base/feature_list.h"
+#include "base/mac/mac_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/optional.h"
@@ -676,6 +677,7 @@ void MediaStreamAudioProcessor::InitializeAudioProcessingModule(
   }
 
   if (properties.enable_sw_echo_cancellation) {
+    LOG(ERROR) << "Enabling echo cancellation.";
     EnableEchoCancellation(audio_processing_.get());
 
     apm_config.echo_canceller3.enabled = override_aec3_.value_or(
@@ -691,6 +693,7 @@ void MediaStreamAudioProcessor::InitializeAudioProcessingModule(
       echo_information_.reset();
     }
   } else {
+    LOG(ERROR) << "NOT Enabling echo cancellation.";
     apm_config.echo_canceller3.enabled = false;
   }
 

@@ -23,7 +23,9 @@ class ScopedAudioUnit {
   // Creates a new AudioUnit and sets its device for |element| to |device|. If
   // the operation fails, is_valid() will return false and audio_unit() will
   // return nullptr.
-  ScopedAudioUnit(AudioDeviceID device, AUElement element);
+  ScopedAudioUnit(AudioDeviceID device,
+                  AUElement element,
+                  bool apply_voice_processing);
   ~ScopedAudioUnit();
 
   bool is_valid() const { return audio_unit_ != nullptr; }
@@ -31,6 +33,8 @@ class ScopedAudioUnit {
 
  private:
   AudioUnit audio_unit_ = nullptr;
+  const AUElement element_;
+  bool reenable_io_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedAudioUnit);
 };

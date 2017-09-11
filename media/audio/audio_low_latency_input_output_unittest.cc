@@ -27,6 +27,7 @@
 #include "media/audio/audio_manager.h"
 #include "media/audio/audio_unittest_util.h"
 #include "media/audio/test_audio_thread.h"
+#include "media/base/limits.h"
 #include "media/base/seekable_buffer.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -249,11 +250,24 @@ class AudioInputStreamTraits {
         .GetInputStreamParameters(AudioDeviceDescription::kDefaultDeviceId);
   }
 
+#if defined(OS_WIN) || defined(OS_MACOSX)
+  static AudioParameters GetCommunicationsAudioStreamParameters(
+      AudioManager* audio_manager) {
+    return AudioDeviceInfoAccessorForTests(audio_manager)
+        .GetInputStreamParameters(
+            AudioDeviceDescription::kCommunicationsDeviceId);
+  }
+#endif
+
   static StreamType* CreateStream(AudioManager* audio_manager,
       const AudioParameters& params) {
-    return audio_manager->MakeAudioInputStream(
-        params, AudioDeviceDescription::kDefaultDeviceId,
-        base::Bind(&OnLogMessage));
+#if defined(OS_WIN) || defined(OS_MACOSX)
+    const char* device_id = AudioDeviceDescription::kCommunicationsDeviceId;
+#else
+    const char* device_id = AudioDeviceDescription::kDefaultDeviceId;
+#endif
+    return audio_manager->MakeAudioInputStream(params, device_id,
+                                               base::Bind(&OnLogMessage));
   }
 };
 
@@ -264,8 +278,17 @@ class AudioOutputStreamTraits {
   static AudioParameters GetDefaultAudioStreamParameters(
       AudioManager* audio_manager) {
     return AudioDeviceInfoAccessorForTests(audio_manager)
-        .GetDefaultOutputStreamParameters();
+        .GetOutputStreamParameters(AudioDeviceDescription::kDefaultDeviceId);
   }
+
+#if defined(OS_WIN) || defined(OS_MACOSX)
+  static AudioParameters GetCommunicationsAudioStreamParameters(
+      AudioManager* audio_manager) {
+    return AudioDeviceInfoAccessorForTests(audio_manager)
+        .GetOutputStreamParameters(
+            AudioDeviceDescription::kCommunicationsDeviceId);
+  }
+#endif
 
   static StreamType* CreateStream(AudioManager* audio_manager,
       const AudioParameters& params) {
@@ -282,8 +305,7 @@ class StreamWrapper {
   typedef typename StreamTraits::StreamType StreamType;
 
   explicit StreamWrapper(AudioManager* audio_manager)
-      :
-        audio_manager_(audio_manager),
+      : audio_manager_(audio_manager),
         format_(AudioParameters::AUDIO_PCM_LOW_LATENCY),
 #if defined(OS_ANDROID)
         channel_layout_(CHANNEL_LAYOUT_MONO),
@@ -292,13 +314,26 @@ class StreamWrapper {
 #endif
         bits_per_sample_(16) {
     // Use the preferred sample rate.
-    const AudioParameters& params =
+#if defined(OS_WIN) || defined(OS_MACOSX)
+    const AudioParameters params =
+        StreamTraits::GetCommunicationsAudioStreamParameters(audio_manager_);
+    channel_layout_ = params.channel_layout();
+#else
+    const AudioParameters params =
         StreamTraits::GetDefaultAudioStreamParameters(audio_manager_);
+#endif
     sample_rate_ = params.sample_rate();
 
     // Use the preferred buffer size. Note that the input side uses the same
     // size as the output side in this implementation.
     samples_per_packet_ = params.frames_per_buffer();
+
+#if defined(OS_MACOSX)
+    // Workaround to make sure we use the same buffer size for input and output
+    // in our tests. See AudioManagerMac::ChooseBufferSize for more details.
+    if (samples_per_packet_ < (2 * limits::kMinAudioBufferSize))
+      samples_per_packet_ = 2 * limits::kMinAudioBufferSize;
+#endif
   }
 
   virtual ~StreamWrapper() {}
@@ -351,16 +386,24 @@ typedef StreamWrapper<AudioOutputStreamTraits> AudioOutputStreamWrapper;
 //   title('Full-duplex audio delay measurement');
 TEST_F(AudioLowLatencyInputOutputTest, DISABLED_FullDuplexDelayMeasurement) {
   AudioDeviceInfoAccessorForTests device_info_accessor(audio_manager());
-  ABORT_AUDIO_TEST_IF_NOT(device_info_accessor.HasAudioInputDevices() &&
-                          device_info_accessor.HasAudioOutputDevices());
+  // ABORT_AUDIO_TEST_IF_NOT(device_info_accessor.HasAudioInputDevices() &&
+  //                        device_info_accessor.HasAudioOutputDevices());
 
   AudioInputStreamWrapper aisw(audio_manager());
   AudioInputStream* ais = aisw.Create();
-  EXPECT_TRUE(ais);
+  ASSERT_TRUE(ais);
 
   AudioOutputStreamWrapper aosw(audio_manager());
   AudioOutputStream* aos = aosw.Create();
-  EXPECT_TRUE(aos);
+  ASSERT_TRUE(aos);
+
+  LOG(ERROR) << " sample_rate : " << aisw.sample_rate() << " vs "
+             << aosw.sample_rate();
+  LOG(ERROR) << " samples_per_packet : " << aisw.samples_per_packet() << " vs "
+             << aosw.samples_per_packet();
+  LOG(ERROR) << " channels : " << aisw.channels() << " vs " << aosw.channels();
+  LOG(ERROR) << " bits_per_sample : " << aisw.bits_per_sample() << " vs "
+             << aosw.bits_per_sample();
 
   // This test only supports identical parameters in both directions.
   // TODO(henrika): it is possible to cut delay here by using different
@@ -377,8 +420,18 @@ TEST_F(AudioLowLatencyInputOutputTest, DISABLED_FullDuplexDelayMeasurement) {
     return;
   }
 
-  EXPECT_TRUE(ais->Open());
-  EXPECT_TRUE(aos->Open());
+  bool opened;
+  EXPECT_TRUE(opened = ais->Open());
+  if (!opened) {
+    ais->Close();
+    return;
+  }
+  EXPECT_TRUE(opened = aos->Open());
+  if (!opened) {
+    ais->Close();
+    aos->Close();
+    return;
+  }
 
   FullDuplexAudioSinkSource full_duplex(
       aisw.sample_rate(), aisw.samples_per_packet(), aisw.channels());
@@ -396,7 +449,8 @@ TEST_F(AudioLowLatencyInputOutputTest, DISABLED_FullDuplexDelayMeasurement) {
   // performed and stored in the output text file.
   message_loop()->task_runner()->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
-      TestTimeouts::action_timeout());
+      /* TestTimeouts::action_timeout()*/
+      base::TimeDelta::FromMilliseconds(5000));
   base::RunLoop().Run();
 
   aos->Stop();
