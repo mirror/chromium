@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9dc98ff_ef12b342",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-11T16:14:08Z",
+      "side": 1,
+      "message": "style question (because I\u0027m not familiar with it), what do the parens do here?  Couldn\u0027t you just have *backoff_policy without the parens and it works fine?  Does this have something to do with type checking perhaps?",
+      "revId": "93d199da048eda321ced91f78ec6097accb7c5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0af3baec_ff1e1c2d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-11T16:14:08Z",
+      "side": 1,
+      "message": "nit: Parsed here implies you are doing the parsing, I think you could remove the first word here and it makes more sense.",
+      "range": {
+        "startLine": 385,
+        "startChar": 15,
+        "endLine": 385,
+        "endChar": 21
+      },
+      "revId": "93d199da048eda321ced91f78ec6097accb7c5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a559e2_78520363",
+        "filename": "chrome/browser/media/router/media_router_feature.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-11T16:14:08Z",
+      "side": 1,
+      "message": "what\u0027s the rollout plan for this?\n\nAre we going to use a finch experiment to turn it on, or just switch this to on by default and use a finch experiment to modify the params if needed?",
+      "range": {
+        "startLine": 37,
+        "startChar": 50,
+        "endLine": 37,
+        "endChar": 77
+      },
+      "revId": "93d199da048eda321ced91f78ec6097accb7c5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
