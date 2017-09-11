@@ -1433,9 +1433,8 @@ TEST_F(TopSitesImplTest, SetForcedTopSites) {
   AppendForcedMostVisitedURL(&old_url_list, GURL("http://oldforced/4"), 11000);
   AppendForcedMostVisitedURL(&old_url_list, GURL("http://oldforced/5"), 12000);
   AppendForcedMostVisitedURL(&old_url_list, GURL("http://oldforced/6"), 13000);
-  AppendForcedMostVisitedURL(&old_url_list, GURL("http://oldforced/7"), 18000);
-  AppendForcedMostVisitedURL(&old_url_list, GURL("http://oldforced/8"), 21000);
-  const size_t kNumOldForcedURLs = 9;
+
+  const size_t kNumOldForcedURLs = old_url_list.size();
 
   // Create forced elements in new URL list.
   MostVisitedURLList new_url_list;
@@ -1448,14 +1447,9 @@ TEST_F(TopSitesImplTest, SetForcedTopSites) {
   AppendForcedMostVisitedURL(&new_url_list, GURL("http://newforced/6"), 14000);
   AppendForcedMostVisitedURL(&new_url_list, GURL("http://newforced/7"), 15000);
   AppendForcedMostVisitedURL(&new_url_list, GURL("http://newforced/8"), 16000);
-  AppendForcedMostVisitedURL(&new_url_list, GURL("http://newforced/9"), 17000);
-  AppendForcedMostVisitedURL(&new_url_list, GURL("http://newforced/10"), 19000);
-  AppendForcedMostVisitedURL(&new_url_list, GURL("http://newforced/11"), 20000);
-  AppendForcedMostVisitedURL(&new_url_list, GURL("http://newforced/12"), 22000);
 
   // Setup a number non-forced URLs in both old and new list.
-  const size_t kNumNonForcedURLs = 20;  // Maximum number of non-forced URLs.
-  for (size_t i = 0; i < kNumNonForcedURLs; ++i) {
+  for (size_t i = 0; i < history::TopSitesImpl::kNonForcedTopSitesNumber; ++i) {
     std::ostringstream url;
     url << "http://oldnonforced/" << i;
     AppendMostVisitedURL(&old_url_list, GURL(url.str()));
@@ -1466,19 +1460,22 @@ TEST_F(TopSitesImplTest, SetForcedTopSites) {
 
   // Set the initial list of URLs.
   SetTopSites(old_url_list);
-  EXPECT_EQ(kNumOldForcedURLs + kNumNonForcedURLs, last_num_urls_changed());
+  EXPECT_EQ(kNumOldForcedURLs + history::TopSitesImpl::kNonForcedTopSitesNumber,
+            last_num_urls_changed());
 
   TopSitesQuerier querier;
   // Query only non-forced URLs first.
   querier.QueryTopSites(top_sites(), false);
-  ASSERT_EQ(kNumNonForcedURLs, querier.urls().size());
+  ASSERT_EQ(history::TopSitesImpl::kNonForcedTopSitesNumber,
+            querier.urls().size());
 
   // Check first URL.
   EXPECT_EQ("http://oldnonforced/0", querier.urls()[0].url.spec());
 
   // Query all URLs.
   querier.QueryAllTopSites(top_sites(), false, true);
-  EXPECT_EQ(kNumOldForcedURLs + kNumNonForcedURLs, querier.urls().size());
+  EXPECT_EQ(kNumOldForcedURLs + history::TopSitesImpl::kNonForcedTopSitesNumber,
+            querier.urls().size());
 
   // Check first URLs.
   EXPECT_EQ("http://oldforced/0", querier.urls()[0].url.spec());
@@ -1491,57 +1488,45 @@ TEST_F(TopSitesImplTest, SetForcedTopSites) {
   // Query all URLs.
   querier.QueryAllTopSites(top_sites(), false, true);
 
-  // We should have reached the maximum of 20 forced URLs.
-  ASSERT_EQ(20 + kNumNonForcedURLs, querier.urls().size());
+  // We should have reached the maximum of |kForcedTopSitesNumber| forced URLs.
+  ASSERT_EQ(history::TopSitesImpl::kForcedTopSitesNumber +
+                history::TopSitesImpl::kNonForcedTopSitesNumber,
+            querier.urls().size());
 
   // Check forced URLs. They follow the order of timestamps above, smaller
   // timestamps since they were evicted.
-  EXPECT_EQ("http://newforced/1", querier.urls()[0].url.spec());
-  EXPECT_EQ(3000, querier.urls()[0].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://oldforced/1", querier.urls()[1].url.spec());
-  EXPECT_EQ(4000, querier.urls()[1].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://newforced/2", querier.urls()[2].url.spec());
-  EXPECT_EQ(5000, querier.urls()[2].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://newforced/3", querier.urls()[3].url.spec());
-  EXPECT_EQ(6000, querier.urls()[3].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://oldforced/2", querier.urls()[4].url.spec());
-  EXPECT_EQ(7000, querier.urls()[4].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://newforced/4", querier.urls()[5].url.spec());
-  EXPECT_EQ(8000, querier.urls()[5].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://newforced/5", querier.urls()[6].url.spec());
-  EXPECT_EQ(9000, querier.urls()[6].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://oldforced/3", querier.urls()[7].url.spec());
-  EXPECT_EQ(10000, querier.urls()[7].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://oldforced/4", querier.urls()[8].url.spec());
-  EXPECT_EQ(11000, querier.urls()[8].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://oldforced/5", querier.urls()[9].url.spec());
-  EXPECT_EQ(12000, querier.urls()[9].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://oldforced/6", querier.urls()[10].url.spec());
-  EXPECT_EQ(13000, querier.urls()[10].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://newforced/6", querier.urls()[11].url.spec());
-  EXPECT_EQ(14000, querier.urls()[11].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://newforced/7", querier.urls()[12].url.spec());
-  EXPECT_EQ(15000, querier.urls()[12].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://newforced/8", querier.urls()[13].url.spec());
-  EXPECT_EQ(16000, querier.urls()[13].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://newforced/9", querier.urls()[14].url.spec());
-  EXPECT_EQ(17000, querier.urls()[14].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://oldforced/7", querier.urls()[15].url.spec());
-  EXPECT_EQ(18000, querier.urls()[15].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://newforced/10", querier.urls()[16].url.spec());
-  EXPECT_EQ(19000, querier.urls()[16].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://newforced/11", querier.urls()[17].url.spec());
-  EXPECT_EQ(20000, querier.urls()[17].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://oldforced/8", querier.urls()[18].url.spec());
-  EXPECT_EQ(21000, querier.urls()[18].last_forced_time.ToJsTime());
-  EXPECT_EQ("http://newforced/12", querier.urls()[19].url.spec());
-  EXPECT_EQ(22000, querier.urls()[19].last_forced_time.ToJsTime());
+  EXPECT_EQ("http://oldforced/2", querier.urls()[0].url.spec());
+  EXPECT_EQ(7000, querier.urls()[0].last_forced_time.ToJsTime());
+  EXPECT_EQ("http://newforced/4", querier.urls()[1].url.spec());
+  EXPECT_EQ(8000, querier.urls()[1].last_forced_time.ToJsTime());
+  EXPECT_EQ("http://newforced/5", querier.urls()[2].url.spec());
+  EXPECT_EQ(9000, querier.urls()[2].last_forced_time.ToJsTime());
+  EXPECT_EQ("http://oldforced/3", querier.urls()[3].url.spec());
+  EXPECT_EQ(10000, querier.urls()[3].last_forced_time.ToJsTime());
+  EXPECT_EQ("http://oldforced/4", querier.urls()[4].url.spec());
+  EXPECT_EQ(11000, querier.urls()[4].last_forced_time.ToJsTime());
+  EXPECT_EQ("http://oldforced/5", querier.urls()[5].url.spec());
+  EXPECT_EQ(12000, querier.urls()[5].last_forced_time.ToJsTime());
+  EXPECT_EQ("http://oldforced/6", querier.urls()[6].url.spec());
+  EXPECT_EQ(13000, querier.urls()[6].last_forced_time.ToJsTime());
+  EXPECT_EQ("http://newforced/6", querier.urls()[7].url.spec());
+  EXPECT_EQ(14000, querier.urls()[7].last_forced_time.ToJsTime());
+  EXPECT_EQ("http://newforced/7", querier.urls()[8].url.spec());
+  EXPECT_EQ(15000, querier.urls()[8].last_forced_time.ToJsTime());
+  EXPECT_EQ("http://newforced/8", querier.urls()[9].url.spec());
+  EXPECT_EQ(16000, querier.urls()[9].last_forced_time.ToJsTime());
 
   // Check first and last non-forced URLs.
-  EXPECT_EQ("http://newnonforced/0", querier.urls()[20].url.spec());
-  EXPECT_TRUE(querier.urls()[20].last_forced_time.is_null());
-  EXPECT_EQ("http://newnonforced/19", querier.urls()[39].url.spec());
-  EXPECT_TRUE(querier.urls()[39].last_forced_time.is_null());
+  EXPECT_EQ(
+      "http://newnonforced/0",
+      querier.urls()[history::TopSitesImpl::kForcedTopSitesNumber].url.spec());
+  EXPECT_TRUE(querier.urls()[history::TopSitesImpl::kForcedTopSitesNumber]
+                  .last_forced_time.is_null());
+
+  size_t non_forced_end_index = querier.urls().size() - 1;
+  EXPECT_EQ("http://newnonforced/9",
+            querier.urls()[non_forced_end_index].url.spec());
+  EXPECT_TRUE(querier.urls()[non_forced_end_index].last_forced_time.is_null());
 }
 
 TEST_F(TopSitesImplTest, SetForcedTopSitesWithCollisions) {
