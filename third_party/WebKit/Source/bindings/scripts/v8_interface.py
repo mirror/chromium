@@ -184,7 +184,8 @@ def runtime_call_stats_context(interface):
         'named_property_setter_counter': counter_prefix + 'NamedPropertySetter',
     }
 
-def interface_context(interface, interfaces):
+
+def interface_context(interface, interfaces, header_basename):
     """Creates a Jinja template context for an interface.
 
     Args:
@@ -306,6 +307,7 @@ def interface_context(interface, interfaces):
         'pass_cpp_type': cpp_name(interface) + '*',
         'runtime_call_stats': runtime_call_stats_context(interface),
         'runtime_enabled_feature_name': runtime_enabled_feature_name(interface),  # [RuntimeEnabled]
+        'this_include_header_name': header_basename,
         'v8_class': v8_class_name,
         'v8_class_or_partial': v8_class_name_or_partial,
         'wrapper_class_id': wrapper_class_id,
