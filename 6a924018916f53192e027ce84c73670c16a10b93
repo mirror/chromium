@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08e40440_7ed59f77",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/CronetUploadDataStream.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-09-11T14:49:18Z",
+      "side": 1,
+      "message": "If we reuse bytebuffer, then it is possible that app has previously modified its limit and/or position. Should we reset those here? \nI see that position is reset to 0 in \u0027onReadSucceeded\u0027, but what about the limit?",
+      "range": {
+        "startLine": 53,
+        "startChar": 20,
+        "endLine": 53,
+        "endChar": 31
+      },
+      "revId": "6a924018916f53192e027ce84c73670c16a10b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
