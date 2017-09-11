@@ -39,6 +39,7 @@
 #include "platform/geometry/LayoutRect.h"
 #include "platform/geometry/Region.h"
 #include "platform/heap/Handle.h"
+#include "platform/scroll/ScrollbarTheme.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/Noncopyable.h"
@@ -301,6 +302,9 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   void WillBeDestroyed();
 
   void RegisterPluginsChangedObserver(PluginsChangedObserver*);
+
+  // Get Scrollbar theme from Root Frame Page Settings.
+  ScrollbarTheme& GetScrollbarTheme() const;
 
  private:
   friend class ScopedPageSuspender;
