@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de3da57f_4a8d84ce",
+        "filename": "chrome/browser/ui/toolbar/app_menu_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-11T03:18:57Z",
+      "side": 1,
+      "message": "this needs to be a helper method, something like\n\nint GetCreateHostedAppMenuItemId() {\n#if defined(OS_MACOSX)\n  return IDS_ADD_TO_APPLICATIONS;\n#elif defined(USE_ASH)\n  return IDS_ADD_TO_SHELF;\n#else\n  return IDS_ADD_TO_DESKTOP;\n#endif\n}\n\n\nAlternatively, change `IDS_ADD_TO_DESKTOP` to IDS_CREATE_HOSTED_APP/IDS_SOMETHING_MORE_DESCRIPTIVE and just guard it in the .grd file. Not sure why this wasn\u0027t done in the first place..",
+      "revId": "f0142dd2cc96fa567dda5ba29242047ef4cb9910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
