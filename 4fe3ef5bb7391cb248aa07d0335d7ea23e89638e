@@ -16,6 +16,24 @@
       "revId": "4fe3ef5bb7391cb248aa07d0335d7ea23e89638e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f9eb5d_8ac8e77c",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/LogcatExtractor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2017-09-11T19:47:33Z",
+      "side": 1,
+      "message": "No, the WEB_UR pattern doesn\u0027t match with the .cc file tag. See the diff in the internal bug.",
+      "parentUuid": "44ae65c4_b4012971",
+      "revId": "4fe3ef5bb7391cb248aa07d0335d7ea23e89638e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
