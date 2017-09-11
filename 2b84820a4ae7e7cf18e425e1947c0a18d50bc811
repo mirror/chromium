@@ -530,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "8c06cdc1_c6f5b1af",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-11T04:54:25Z",
+      "side": 1,
+      "message": "If the IPC succeeds, but the other side sends an invalid file, it\u0027d be result in assigning a default-constructed base::File to file, which should be equivalent to the default-constructed file we start with. Either should be correct.",
+      "parentUuid": "c5146a2a_d6d36139",
+      "range": {
+        "startLine": 657,
+        "startChar": 2,
+        "endLine": 657,
+        "endChar": 6
+      },
+      "revId": "2b84820a4ae7e7cf18e425e1947c0a18d50bc811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d021c21c_496d4178",
         "filename": "content/renderer/renderer_blink_platform_impl.h",
         "patchSetId": 8
