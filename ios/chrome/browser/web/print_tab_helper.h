@@ -2,34 +2,43 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_CHROME_BROWSER_WEB_PRINT_OBSERVER_H_
-#define IOS_CHROME_BROWSER_WEB_PRINT_OBSERVER_H_
+#ifndef IOS_CHROME_BROWSER_WEB_PRINT_TAB_HELPER_H_
+#define IOS_CHROME_BROWSER_WEB_PRINT_TAB_HELPER_H_
 
 #include "ios/web/public/web_state/web_state_observer.h"
+#include "ios/web/public/web_state/web_state_user_data.h"
 
 @protocol BrowserCommands;
+class GURL;
+
 namespace base {
 class DictionaryValue;
 }  // namespace base
 
-class GURL;
-
 // Handles print requests from JavaScript window.print.
-class PrintObserver : public web::WebStateObserver {
+class PrintTabHelper : public web::WebStateObserver,
+                       public web::WebStateUserData<PrintTabHelper> {
  public:
-  PrintObserver(web::WebState* web_state, id<BrowserCommands> dispatcher);
-  ~PrintObserver() override;
+  ~PrintTabHelper() override;
+
+  // Sets the dispatcher.
+  void SetDispatcher(id<BrowserCommands> dispatcher);
 
  private:
+  friend class web::WebStateUserData<PrintTabHelper>;
+
+  explicit PrintTabHelper(web::WebState* web_state);
+
   // web::WebStateObserver overrides:
   void WebStateDestroyed() override;
 
   // Called when print message is sent by the web page.
   bool OnPrintCommand(const base::DictionaryValue&, const GURL&, bool);
+
   // Stops handling print requests from the web page.
   void Detach();
 
   __weak id<BrowserCommands> dispatcher_;
 };
 
-#endif  // IOS_CHROME_BROWSER_WEB_PRINT_OBSERVER_H_
+#endif  // IOS_CHROME_BROWSER_WEB_PRINT_TAB_HELPER_H_
