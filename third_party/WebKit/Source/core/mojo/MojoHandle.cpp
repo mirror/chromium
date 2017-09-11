@@ -5,7 +5,6 @@
 #include "core/mojo/MojoHandle.h"
 
 #include "bindings/core/v8/array_buffer_or_array_buffer_view.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/mojo/MojoCreateSharedBufferResult.h"
 #include "core/mojo/MojoDiscardDataOptions.h"
 #include "core/mojo/MojoDuplicateBufferHandleOptions.h"
@@ -17,6 +16,7 @@
 #include "core/mojo/MojoWatcher.h"
 #include "core/mojo/MojoWriteDataOptions.h"
 #include "core/mojo/MojoWriteDataResult.h"
+#include "core/script/ExecutionContext.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "core/typed_arrays/DOMArrayBufferView.h"
 #include "mojo/public/cpp/system/message_pipe.h"

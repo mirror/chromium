@@ -8,10 +8,10 @@
 #include "bindings/core/v8/V8Window.h"
 #include "core/dom/ContextFeatures.h"
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/page/PagePopupController.h"
 #include "core/page/PagePopupSupplement.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 
 namespace blink {

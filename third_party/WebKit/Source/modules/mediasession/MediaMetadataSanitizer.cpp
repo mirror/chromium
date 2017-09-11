@@ -4,8 +4,8 @@
 
 #include "modules/mediasession/MediaMetadataSanitizer.h"
 
-#include "core/dom/ExecutionContext.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/mediasession/MediaImage.h"
 #include "modules/mediasession/MediaMetadata.h"
 #include "platform/wtf/text/StringOperators.h"

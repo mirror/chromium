@@ -34,7 +34,6 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/DOMException.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/fileapi/Blob.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/UseCounter.h"
@@ -45,6 +44,7 @@
 #include "core/imagebitmap/ImageBitmap.h"
 #include "core/imagebitmap/ImageBitmapOptions.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
+#include "core/script/ExecutionContext.h"
 #include "core/svg/SVGImageElement.h"
 #include "core/svg/graphics/SVGImage.h"
 #include "core/workers/WorkerGlobalScope.h"

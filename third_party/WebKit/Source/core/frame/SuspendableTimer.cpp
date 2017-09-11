@@ -26,7 +26,7 @@
 
 #include "core/frame/SuspendableTimer.h"
 
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/TaskRunnerHelper.h"
 
 namespace blink {
 

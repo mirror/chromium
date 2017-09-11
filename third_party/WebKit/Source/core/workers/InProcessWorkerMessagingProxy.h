@@ -29,8 +29,8 @@
 
 #include <memory>
 #include "core/CoreExport.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/dom/MessagePort.h"
+#include "core/script/ExecutionContext.h"
 #include "core/workers/ThreadedMessagingProxyBase.h"
 #include "core/workers/WorkerBackingThreadStartupData.h"
 #include "platform/heap/Handle.h"

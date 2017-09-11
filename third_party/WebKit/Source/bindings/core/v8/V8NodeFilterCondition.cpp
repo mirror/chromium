@@ -32,10 +32,10 @@
 
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8Node.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/dom/Node.h"
 #include "core/dom/NodeFilter.h"
 #include "core/frame/UseCounter.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8PrivateProperty.h"
 

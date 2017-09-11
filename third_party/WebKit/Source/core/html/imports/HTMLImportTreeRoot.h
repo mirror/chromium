@@ -5,8 +5,8 @@
 #ifndef HTMLImportTreeRoot_h
 #define HTMLImportTreeRoot_h
 
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/html/imports/HTMLImport.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/Timer.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"

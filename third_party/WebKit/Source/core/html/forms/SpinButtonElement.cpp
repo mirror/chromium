@@ -28,7 +28,6 @@
 
 #include "build/build_config.h"
 #include "core/HTMLNames.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/events/MouseEvent.h"
 #include "core/events/WheelEvent.h"
 #include "core/frame/LocalFrame.h"
@@ -37,6 +36,7 @@
 #include "core/layout/LayoutBox.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/scroll/ScrollbarTheme.h"
 
 namespace blink {

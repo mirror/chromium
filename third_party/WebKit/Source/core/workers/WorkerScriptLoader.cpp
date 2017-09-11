@@ -28,12 +28,12 @@
 #include "core/workers/WorkerScriptLoader.h"
 
 #include <memory>
-#include "core/dom/ExecutionContext.h"
 #include "core/html/parser/TextResourceDecoder.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/WorkerThreadableLoader.h"
 #include "core/loader/resource/ScriptResource.h"
 #include "core/origin_trials/OriginTrialContext.h"
+#include "core/script/ExecutionContext.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/HTTPNames.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"

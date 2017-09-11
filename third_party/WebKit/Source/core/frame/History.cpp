@@ -27,7 +27,6 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/loader/DocumentLoader.h"
@@ -35,6 +34,7 @@
 #include "core/loader/HistoryItem.h"
 #include "core/loader/NavigationScheduler.h"
 #include "core/page/Page.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"

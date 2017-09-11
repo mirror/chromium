@@ -18,7 +18,7 @@
 #include "bindings/core/v8/V8DOMConfiguration.h"
 #include "bindings/core/v8/V8Iterator.h"
 #include "bindings/core/v8/V8TestInterfaceEmpty.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/bindings/RuntimeCallStats.h"

@@ -4,7 +4,7 @@
 
 #include "modules/netinfo/WorkerNavigatorNetworkInformation.h"
 
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "core/workers/WorkerNavigator.h"
 #include "modules/netinfo/NetworkInformation.h"
 #include "platform/bindings/ScriptState.h"

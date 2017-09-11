@@ -3,8 +3,8 @@
 // found in the LICENSE file.
 
 #include "bindings/core/v8/V8BindingForCore.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/UseCounter.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/testing/DummyPageHolder.h"
 #include "core/workers/MainThreadWorkletGlobalScope.h"
 #include "core/workers/MainThreadWorkletReportingProxy.h"

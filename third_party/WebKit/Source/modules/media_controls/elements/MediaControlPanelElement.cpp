@@ -4,9 +4,9 @@
 
 #include "modules/media_controls/elements/MediaControlPanelElement.h"
 
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/dom/events/Event.h"
 #include "core/html/HTMLMediaElement.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "modules/media_controls/MediaControlsImpl.h"
 #include "modules/media_controls/elements/MediaControlElementsHelper.h"
 

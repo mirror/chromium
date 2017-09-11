@@ -1,4 +1,4 @@
-# Copyright 2014 The Chromium Authors. All rights reserved.
+# Copyright 2017 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
@@ -202,6 +202,7 @@ component("core") {
     "//third_party/WebKit/Source/core/plugins",
     "//third_party/WebKit/Source/core/probe",
     "//third_party/WebKit/Source/core/resize_observer",
+    "//third_party/WebKit/Source/core/script",
     "//third_party/WebKit/Source/core/streams",
     "//third_party/WebKit/Source/core/style:rendering",
     "//third_party/WebKit/Source/core/style:svg_style",
@@ -1350,17 +1351,10 @@ jumbo_source_set("unit_tests") {
     "dom/FlatTreeTraversalTest.cpp",
     "dom/IdleDeadlineTest.cpp",
     "dom/LayoutTreeBuilderTraversalTest.cpp",
-    "dom/MockScriptElementBase.h",
-    "dom/ModulatorTest.cpp",
-    "dom/ModuleMapTest.cpp",
     "dom/MutationObserverTest.cpp",
     "dom/NodeTest.cpp",
     "dom/NthIndexCacheTest.cpp",
     "dom/RangeTest.cpp",
-    "dom/ScriptModuleResolverImplTest.cpp",
-    "dom/ScriptRunnerTest.cpp",
-    "dom/ScriptedAnimationControllerTest.cpp",
-    "dom/ScriptedIdleTaskControllerTest.cpp",
     "dom/ShadowDOMV0Test.cpp",
     "dom/SpaceSplitStringTest.cpp",
     "dom/StaticRangeTest.cpp",
@@ -1629,6 +1623,13 @@ jumbo_source_set("unit_tests") {
     "scheduler/FrameThrottlingTest.cpp",
     "scheduler/ThrottlingTest.cpp",
     "scheduler/VirtualTimeTest.cpp",
+    "script/MockScriptElementBase.h",
+    "script/ModulatorTest.cpp",
+    "script/ModuleMapTest.cpp",
+    "script/ScriptModuleResolverImplTest.cpp",
+    "script/ScriptRunnerTest.cpp",
+    "script/ScriptedAnimationControllerTest.cpp",
+    "script/ScriptedIdleTaskControllerTest.cpp",
     "streams/ReadableStreamOperationsTest.cpp",
     "style/BorderValueTest.cpp",
     "style/ComputedStyleTest.cpp",

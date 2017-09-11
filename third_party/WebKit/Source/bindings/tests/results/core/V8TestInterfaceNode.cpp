@@ -19,7 +19,7 @@
 #include "bindings/core/v8/V8EventListenerHelper.h"
 #include "bindings/core/v8/V8TestInterfaceEmpty.h"
 #include "core/HTMLNames.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "core/html/custom/V0CustomElementProcessingStack.h"
 #include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/V8ObjectConstructor.h"

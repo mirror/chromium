@@ -4,10 +4,10 @@
 
 #include "core/loader/SubresourceIntegrityHelper.h"
 
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/UseCounter.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/ConsoleTypes.h"
+#include "core/script/ExecutionContext.h"
 
 namespace blink {
 

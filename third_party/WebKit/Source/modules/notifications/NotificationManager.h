@@ -5,7 +5,7 @@
 #ifndef NotificationManager_h
 #define NotificationManager_h
 
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/modules/notifications/notification_service.mojom-blink.h"

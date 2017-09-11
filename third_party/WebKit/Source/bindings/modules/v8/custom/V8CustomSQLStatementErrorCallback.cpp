@@ -33,7 +33,7 @@
 #include "bindings/modules/v8/V8SQLError.h"
 #include "bindings/modules/v8/V8SQLStatementErrorCallback.h"
 #include "bindings/modules/v8/V8SQLTransaction.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/wtf/Assertions.h"
 
 namespace blink {

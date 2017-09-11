@@ -6,8 +6,8 @@
 
 #include <utility>
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/page/Page.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/bindings/ScriptState.h"
 
 namespace blink {

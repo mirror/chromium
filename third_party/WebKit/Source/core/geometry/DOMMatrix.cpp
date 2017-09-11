@@ -4,7 +4,7 @@
 
 #include "core/geometry/DOMMatrix.h"
 
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 
 namespace blink {
 

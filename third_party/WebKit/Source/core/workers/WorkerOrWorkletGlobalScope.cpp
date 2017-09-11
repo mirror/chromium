@@ -5,11 +5,11 @@
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
 
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/Deprecation.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/WorkerFetchContext.h"
 #include "core/probe/CoreProbes.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkerThread.h"
 #include "platform/CrossThreadFunctional.h"

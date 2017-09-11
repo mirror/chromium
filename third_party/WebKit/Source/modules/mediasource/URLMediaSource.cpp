@@ -30,8 +30,8 @@
 
 #include "modules/mediasource/URLMediaSource.h"
 
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/UseCounter.h"
+#include "core/script/ExecutionContext.h"
 #include "core/url/DOMURL.h"
 #include "modules/mediasource/MediaSource.h"
 #include "platform/bindings/ScriptState.h"

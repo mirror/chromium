@@ -7,12 +7,12 @@
 #include <memory>
 #include <utility>
 #include "core/dom/Document.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/dom/events/Event.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "modules/screen_orientation/ScreenOrientation.h"
 #include "modules/screen_orientation/ScreenOrientationDispatcher.h"
 #include "platform/LayoutTestSupport.h"

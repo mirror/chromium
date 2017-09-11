@@ -26,12 +26,12 @@
 #include "core/page/ValidationMessageClientImpl.h"
 
 #include "core/dom/Element.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/exported/WebViewImpl.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/ValidationMessageOverlayDelegate.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/LayoutTestSupport.h"
 #include "platform/PlatformChromeClient.h"
 #include "platform/wtf/CurrentTime.h"

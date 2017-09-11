@@ -6,7 +6,7 @@
 #define ModuleTreeReachedUrlSet_h
 
 #include "core/CoreExport.h"
-#include "core/dom/AncestorList.h"
+#include "core/script/AncestorList.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/KURLHash.h"

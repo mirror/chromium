@@ -33,7 +33,7 @@
 
 #include "bindings/core/v8/WindowProxyManager.h"
 #include "core/CoreExport.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/bindings/SharedPersistent.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/AccessControlStatus.h"

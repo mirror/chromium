@@ -4,8 +4,8 @@
 
 #include "core/loader/modulescript/DocumentModuleScriptFetcher.h"
 
-#include "core/dom/ExecutionContext.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 

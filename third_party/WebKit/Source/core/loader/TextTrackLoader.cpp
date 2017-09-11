@@ -26,8 +26,8 @@
 #include "core/loader/TextTrackLoader.h"
 
 #include "core/dom/Document.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/SharedBuffer.h"
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/FetchParameters.h"

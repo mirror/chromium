@@ -32,12 +32,12 @@
 
 #include <memory>
 #include <utility>
-#include "core/dom/ExecutionContext.h"
 #include "core/dom/events/Event.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/probe/CoreProbes.h"
+#include "core/script/ExecutionContext.h"
 #include "core/workers/SharedWorker.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/wtf/PtrUtil.h"

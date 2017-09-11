@@ -4,9 +4,9 @@
 
 #include "modules/sensor/SensorProxy.h"
 
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrame.h"
 #include "core/page/FocusController.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "modules/sensor/SensorProviderProxy.h"
 #include "platform/mojo/MojoHelper.h"
 #include "public/platform/Platform.h"

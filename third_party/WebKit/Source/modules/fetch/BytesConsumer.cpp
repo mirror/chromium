@@ -6,8 +6,8 @@
 
 #include <string.h>
 #include <algorithm>
-#include "core/dom/ExecutionContext.h"
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/ExecutionContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "modules/fetch/BlobBytesConsumer.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/blob/BlobData.h"

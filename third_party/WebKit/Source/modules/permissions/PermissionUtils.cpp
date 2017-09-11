@@ -5,8 +5,8 @@
 #include "modules/permissions/PermissionUtils.h"
 
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalFrame.h"
+#include "core/script/ExecutionContext.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerThread.h"
 #include "services/service_manager/public/cpp/interface_provider.h"

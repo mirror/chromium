@@ -20,9 +20,9 @@
 
 #include "core/layout/LayoutProgress.h"
 
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/html/HTMLProgressElement.h"
 #include "core/layout/LayoutTheme.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/RefPtr.h"
 

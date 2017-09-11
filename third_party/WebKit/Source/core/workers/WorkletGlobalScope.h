@@ -7,9 +7,9 @@
 
 #include <memory>
 #include "core/CoreExport.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/dom/SecurityContext.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/script/ExecutionContext.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
 #include "core/workers/WorkletModuleResponsesMapProxy.h"
 #include "platform/WebTaskRunner.h"

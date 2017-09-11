@@ -5,7 +5,7 @@
 #ifndef ScopedWindowFocusAllowedIndicator_h
 #define ScopedWindowFocusAllowedIndicator_h
 
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/wtf/Noncopyable.h"
 
 namespace blink {

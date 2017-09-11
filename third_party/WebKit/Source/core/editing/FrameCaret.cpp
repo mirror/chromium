@@ -25,7 +25,6 @@
 
 #include "core/editing/FrameCaret.h"
 
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/editing/CaretDisplayItemClient.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/FrameSelection.h"
@@ -38,6 +37,7 @@
 #include "core/layout/LayoutTheme.h"
 #include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/page/Page.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "public/platform/WebTraceLocation.h"
 
 namespace blink {

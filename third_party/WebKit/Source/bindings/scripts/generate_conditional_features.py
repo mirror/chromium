@@ -150,9 +150,9 @@ def conditional_features_context(generator_name, feature_info):
     # Add includes needed for cpp code and normalize.
     includes.update([
         "core/context_features/ContextFeatureSettings.h",
-        "core/dom/ExecutionContext.h",
         "core/frame/Frame.h",
         "core/origin_trials/OriginTrials.h",
+        "core/script/ExecutionContext.h",
         "platform/bindings/ConditionalFeatures.h",
         "platform/bindings/ScriptState.h",
         # TODO(iclelland): Remove the need to explicitly include this; it is

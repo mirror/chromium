@@ -22,7 +22,7 @@
 #define SVGScriptElement_h
 
 #include "core/SVGNames.h"
-#include "core/dom/ScriptElementBase.h"
+#include "core/script/ScriptElementBase.h"
 #include "core/svg/SVGElement.h"
 #include "core/svg/SVGURIReference.h"
 #include "platform/heap/Handle.h"

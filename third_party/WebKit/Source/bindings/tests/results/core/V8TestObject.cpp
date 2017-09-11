@@ -54,7 +54,7 @@
 #include "bindings/core/v8/serialization/Transferables.h"
 #include "core/HTMLNames.h"
 #include "core/dom/ClassCollection.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "core/dom/TagCollection.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/UseCounter.h"

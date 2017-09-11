@@ -6,8 +6,8 @@
 #define ModuleTreeLinker_h
 
 #include "core/CoreExport.h"
-#include "core/dom/AncestorList.h"
-#include "core/dom/Modulator.h"
+#include "core/script/AncestorList.h"
+#include "core/script/Modulator.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"
 

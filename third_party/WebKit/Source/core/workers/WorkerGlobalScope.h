@@ -30,12 +30,12 @@
 #include <memory>
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "core/CoreExport.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/dom/events/EventListener.h"
 #include "core/dom/events/EventTarget.h"
 #include "core/frame/DOMTimerCoordinator.h"
 #include "core/frame/DOMWindowBase64.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
+#include "core/script/ExecutionContext.h"
 #include "core/workers/WorkerEventQueue.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
 #include "core/workers/WorkerSettings.h"

@@ -6,12 +6,12 @@
 
 #include "bindings/core/v8/SourceLocation.h"
 #include "core/dom/Document.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/ThreadableLoadingContext.h"
 #include "core/loader/WorkerFetchContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "platform/RuntimeEnabledFeatures.h"

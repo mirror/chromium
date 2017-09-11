@@ -5,8 +5,8 @@
 #include "modules/serviceworkers/FetchEvent.h"
 
 #include "bindings/core/v8/ToV8ForCore.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/UseCounter.h"
+#include "core/script/ExecutionContext.h"
 #include "core/timing/WorkerGlobalScopePerformance.h"
 #include "modules/fetch/BytesConsumerForDataConsumerHandle.h"
 #include "modules/fetch/Request.h"

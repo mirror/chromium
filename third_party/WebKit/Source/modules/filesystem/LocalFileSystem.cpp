@@ -32,10 +32,10 @@
 
 #include <memory>
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/fileapi/FileError.h"
 #include "core/frame/LocalFrame.h"
+#include "core/script/ExecutionContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "modules/filesystem/FileSystemClient.h"
 #include "platform/AsyncFileSystemCallbacks.h"

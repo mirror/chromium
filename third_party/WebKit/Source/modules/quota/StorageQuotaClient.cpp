@@ -31,10 +31,10 @@
 #include "StorageQuotaClient.h"
 
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/page/Page.h"
+#include "core/script/ExecutionContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "modules/quota/DeprecatedStorageQuotaCallbacksImpl.h"
 #include "modules/quota/StorageErrorCallback.h"

@@ -30,9 +30,9 @@
 #include <utility>
 #include "bindings/core/v8/SourceLocation.h"
 #include "core/CoreExport.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/dom/SecurityContext.h"
 #include "core/inspector/ConsoleTypes.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/Resource.h"
