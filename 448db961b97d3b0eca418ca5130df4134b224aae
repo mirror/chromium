@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "40eab8c0_7e32ca9e",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-11T15:02:15Z",
+      "side": 0,
+      "message": "\u003e e\u0027ll also need the timeout in the browser\u0027s actually-from-android OSD\n\u003e for the \"no setSurface\" case\n\nwait -- why did i just explain your own code to you?  :)\n\nsorry!  i\u0027ll go add the CodecAllocator timeout to AndroidOverlay now.",
+      "parentUuid": "de150864_878c88be",
+      "revId": "448db961b97d3b0eca418ca5130df4134b224aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ef83b94_e992add1",
         "filename": "media/gpu/avda_codec_allocator.cc",
         "patchSetId": 2
