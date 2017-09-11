@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65f8b58d_c4fcea5e",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 3711,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-11T06:28:37Z",
+      "side": 1,
+      "message": "Is there a base::Feature that should be enabled here as well, via enable_features?",
+      "range": {
+        "startLine": 3711,
+        "startChar": 37,
+        "endLine": 3711,
+        "endChar": 0
+      },
+      "revId": "63ccf3f300ab0d6ad29d4531812a95cb0e29fa08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
