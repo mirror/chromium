@@ -47,9 +47,6 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   ~MediaRouterMojoImpl() override;
 
   // MediaRouter implementation.
-  // Execution of calls to MediaRouteProvider is delegated to the Do* methods,
-  // which can be overridden in subclasses for additional logic such as request
-  // queueing. Methods with Do* methods are marked final.
   void CreateRoute(const MediaSource::Id& source_id,
                    const MediaSink::Id& sink_id,
                    const url::Origin& origin,
@@ -95,8 +92,28 @@ class MediaRouterMojoImpl : public MediaRouterBase,
       mojom::MediaRouteProviderPtr media_route_provider_ptr,
       mojom::MediaRouter::RegisterMediaRouteProviderCallback callback) override;
 
+  // These methods return true if there has not been a state change that makes
+  // a request to start or stop observing for the given MediaSource no longer
+  // necessary. When true, the caller of these methods need to actually start or
+  // stop observing.
+  bool ShouldStartObservingSinks(const MediaSource::Id& media_source);
+  bool ShouldStopObservingMediaSinks(const MediaSource::Id& media_source);
+  bool ShouldStartObservingMediaRoutes(const MediaSource::Id& media_source);
+  bool ShouldStopObservingMediaRoutes(const MediaSource::Id& media_source);
+
+  // Issues 0+ calls to |media_route_provider_| to ensure its state is in sync
+  // with MediaRouter on a best-effort basis.
+  virtual void SyncStateToMediaRouteProvider();
+
+  const std::string& instance_id() const { return instance_id_; }
+
   void set_instance_id_for_test(const std::string& instance_id) {
     instance_id_ = instance_id;
+  }
+
+  void set_media_route_provider_for_test(
+      mojom::MediaRouteProviderPtr media_route_provider) {
+    media_route_provider_ = std::move(media_route_provider);
   }
 
  protected:
@@ -104,65 +121,20 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // MediaRouterMojoImplFactory::GetApiForBrowserContext.
   explicit MediaRouterMojoImpl(content::BrowserContext* context);
 
-  // These calls invoke methods in the MediaRouteProvider via Mojo.
-  virtual void DoCreateRoute(const MediaSource::Id& source_id,
-                             const MediaSink::Id& sink_id,
-                             const url::Origin& origin,
-                             int tab_id,
-                             std::vector<MediaRouteResponseCallback> callbacks,
-                             base::TimeDelta timeout,
-                             bool incognito);
-  virtual void DoJoinRoute(const MediaSource::Id& source_id,
-                           const std::string& presentation_id,
-                           const url::Origin& origin,
-                           int tab_id,
-                           std::vector<MediaRouteResponseCallback> callbacks,
-                           base::TimeDelta timeout,
-                           bool incognito);
-  virtual void DoConnectRouteByRouteId(
-      const MediaSource::Id& source_id,
-      const MediaRoute::Id& route_id,
-      const url::Origin& origin,
-      int tab_id,
-      std::vector<MediaRouteResponseCallback> callbacks,
-      base::TimeDelta timeout,
-      bool incognito);
-  virtual void DoTerminateRoute(const MediaRoute::Id& route_id);
-  virtual void DoDetachRoute(const MediaRoute::Id& route_id);
-  virtual void DoSendRouteMessage(const MediaRoute::Id& route_id,
-                                  const std::string& message,
-                                  SendRouteMessageCallback callback);
-  virtual void DoSendRouteBinaryMessage(
-      const MediaRoute::Id& route_id,
-      std::unique_ptr<std::vector<uint8_t>> data,
-      SendRouteMessageCallback callback);
-  virtual void DoStartListeningForRouteMessages(const MediaRoute::Id& route_id);
-  virtual void DoStopListeningForRouteMessages(const MediaRoute::Id& route_id);
-  virtual void DoStartObservingMediaSinks(const MediaSource::Id& source_id);
-  virtual void DoStopObservingMediaSinks(const MediaSource::Id& source_id);
-  virtual void DoStartObservingMediaRoutes(const MediaSource::Id& source_id);
-  virtual void DoStopObservingMediaRoutes(const MediaSource::Id& source_id);
-  virtual void DoSearchSinks(const MediaSink::Id& sink_id,
-                             const MediaSource::Id& source_id,
-                             const std::string& search_input,
-                             const std::string& domain,
-                             MediaSinkSearchResponseCallback sink_callback);
-  virtual void DoCreateMediaRouteController(MediaRouteController* controller);
-  virtual void DoProvideSinks(const std::string& provider_name,
-                              std::vector<MediaSinkInternal> sinks);
-  virtual void DoUpdateMediaSinks(const MediaSource::Id& source_id);
-
   // Error handler callback for |media_route_provider_|.
   virtual void OnConnectionError();
-
-  // Issues 0+ calls to |media_route_provider_| to ensure its state is in sync
-  // with MediaRouter on a best-effort basis.
-  virtual void SyncStateToMediaRouteProvider();
 
   // Requests MRPM to update media sinks.  This allows MRPs that only do
   // discovery on sink queries an opportunity to update discovery results
   // even if the MRP SinkAvailability is marked UNAVAILABLE.
   void UpdateMediaSinks(const MediaSource::Id& source_id);
+
+  // Callback called by MRP's CreateMediaRouteController().
+  void OnMediaControllerCreated(const MediaRoute::Id& route_id, bool success);
+
+  void BindToMojoRequest(mojo::InterfaceRequest<mojom::MediaRouter> request);
+
+  content::BrowserContext* context() const { return context_; }
 
   // Mojo proxy object for the Media Route Provider Manager.
   // Set to null initially, and later set to the Provider Manager proxy object
@@ -177,6 +149,7 @@ class MediaRouterMojoImpl : public MediaRouterBase,
  private:
   friend class MediaRouterFactory;
   friend class MediaRouterMojoImplTest;
+  friend class ExtensionMediaRouteProviderProxyTest;
   friend class MediaRouterMojoTest;
   FRIEND_TEST_ALL_PREFIXES(MediaRouterMojoImplTest, JoinRoute);
   FRIEND_TEST_ALL_PREFIXES(MediaRouterMojoImplTest, JoinRouteTimedOutFails);
@@ -215,6 +188,8 @@ class MediaRouterMojoImpl : public MediaRouterBase,
                            PresentationConnectionStateChangedCallbackRemoved);
   FRIEND_TEST_ALL_PREFIXES(MediaRouterDesktopTest,
                            SyncStateToMediaRouteProvider);
+  FRIEND_TEST_ALL_PREFIXES(ExtensionMediaRouteProviderProxyTest,
+                           StartAndStopObservingMediaSinks);
 
   // Represents a query to the MRPM for media sinks and holds observers for the
   // query.
@@ -311,15 +286,9 @@ class MediaRouterMojoImpl : public MediaRouterBase,
                              const base::Optional<std::string>& error_text,
                              RouteRequestResult::ResultCode result_code);
 
-  // Start browser side sink discovery.
-  void StartDiscovery();
-
   // Invalidates and removes controllers from |route_controllers_| whose media
   // routes do not appear in |routes|.
   void RemoveInvalidRouteControllers(const std::vector<MediaRoute>& routes);
-
-  // Callback called by MRP's CreateMediaRouteController().
-  void OnMediaControllerCreated(const MediaRoute::Id& route_id, bool success);
 
   std::unordered_map<MediaSource::Id, std::unique_ptr<MediaSinksQuery>>
       sinks_queries_;
@@ -341,11 +310,8 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // The last reported sink availability from the media route provider manager.
   mojom::MediaRouter::SinkAvailability availability_;
 
-  // Media sink service for DIAL devices.
-  scoped_refptr<DialMediaSinkServiceProxy> dial_media_sink_service_proxy_;
-
-  // Media sink service for CAST devices.
-  scoped_refptr<CastMediaSinkService> cast_media_sink_service_;
+  // Binds |this| to a Mojo connection stub for mojom::MediaRouter.
+  mojo::Binding<mojom::MediaRouter> binding_;
 
   content::BrowserContext* const context_;
 

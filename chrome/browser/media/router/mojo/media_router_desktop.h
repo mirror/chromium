@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_MEDIA_ROUTER_MOJO_MEDIA_ROUTER_DESKTOP_H_
 
 #include "build/build_config.h"
+#include "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_impl.h"
 
 namespace content {
@@ -43,71 +44,7 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   void OnUserGesture() override;
 
  protected:
-  // These methods override MediaRouterMojoImpl methods. They call the base
-  // methods if the connection to the MediaRouteProvider is valid. Otherwise,
-  // they queue themselves to be called again later by |request_manager_| when
-  // the connection is valid.
-  void DoCreateRoute(const MediaSource::Id& source_id,
-                     const MediaSink::Id& sink_id,
-                     const url::Origin& origin,
-                     int tab_id,
-                     std::vector<MediaRouteResponseCallback> callbacks,
-                     base::TimeDelta timeout,
-                     bool incognito) override;
-  void DoJoinRoute(const MediaSource::Id& source_id,
-                   const std::string& presentation_id,
-                   const url::Origin& origin,
-                   int tab_id,
-                   std::vector<MediaRouteResponseCallback> callbacks,
-                   base::TimeDelta timeout,
-                   bool incognito) override;
-  void DoConnectRouteByRouteId(
-      const MediaSource::Id& source_id,
-      const MediaRoute::Id& route_id,
-      const url::Origin& origin,
-      int tab_id,
-      std::vector<MediaRouteResponseCallback> callbacks,
-      base::TimeDelta timeout,
-      bool incognito) override;
-  void DoTerminateRoute(const MediaRoute::Id& route_id) override;
-  void DoDetachRoute(const MediaRoute::Id& route_id) override;
-  void DoSendRouteMessage(const MediaRoute::Id& route_id,
-                          const std::string& message,
-                          SendRouteMessageCallback callback) override;
-  void DoSendRouteBinaryMessage(const MediaRoute::Id& route_id,
-                                std::unique_ptr<std::vector<uint8_t>> data,
-                                SendRouteMessageCallback callback) override;
-  void DoStartListeningForRouteMessages(
-      const MediaRoute::Id& route_id) override;
-  void DoStopListeningForRouteMessages(const MediaRoute::Id& route_id) override;
-  void DoStartObservingMediaSinks(const MediaSource::Id& source_id) override;
-  void DoStopObservingMediaSinks(const MediaSource::Id& source_id) override;
-  void DoStartObservingMediaRoutes(const MediaSource::Id& source_id) override;
-  void DoStopObservingMediaRoutes(const MediaSource::Id& source_id) override;
-  void DoSearchSinks(const MediaSink::Id& sink_id,
-                     const MediaSource::Id& source_id,
-                     const std::string& search_input,
-                     const std::string& domain,
-                     MediaSinkSearchResponseCallback sink_callback) override;
-  void DoCreateMediaRouteController(MediaRouteController* controller) override;
-  void DoProvideSinks(const std::string& provider_name,
-                      std::vector<MediaSinkInternal> sinks) override;
-  void DoUpdateMediaSinks(const MediaSource::Id& source_id) override;
-#if defined(OS_WIN)
-  void DoEnsureMdnsDiscoveryEnabled();
-#endif
-
-  // This is the version that gets queued (instead of
-  // DoCreateMediaRouteController) if CreateMediaRouteController is deferred.
-  // This is because the MediaRouteController may be deleted by the time the
-  // callback is executed, so we need to perform a check that the controller
-  // exists. Note that it is possible that the original controller has been
-  // deleted and replaced with another instance. The base class
-  // DoCreateMediaRouteController should be handling this case correctly
-  // already.
-  void CreateMediaRouteControllerDeferred(const MediaRoute::Id& route_id);
-
-  // Error handler callback for |binding_| and |media_route_provider_|.
+  // Error handler callback for |binding_|.
   void OnConnectionError() override;
 
   // Issues 0+ calls to |media_route_provider_| to ensure its state is in sync
@@ -149,6 +86,9 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   void BindToMojoRequest(mojo::InterfaceRequest<mojom::MediaRouter> request,
                          const extensions::Extension& extension);
 
+  // Start browser side sink discovery.
+  void StartDiscovery();
+
 #if defined(OS_WIN)
   // Ensures that mDNS discovery is enabled in the MRPM extension. This can be
   // called many times but the MRPM will only be called once per registration
@@ -165,8 +105,15 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   // the requests to it.
   EventPageRequestManager* const request_manager_;
 
-  // Binds |this| to a Mojo connection stub for mojom::MediaRouter.
-  mojo::Binding<mojom::MediaRouter> binding_;
+  // MediaRouteProvider proxy that forwards calls to the MRPM in the component
+  // extension.
+  ExtensionMediaRouteProviderProxy extension_provider_;
+
+  // Media sink service for DIAL devices.
+  scoped_refptr<DialMediaSinkServiceProxy> dial_media_sink_service_proxy_;
+
+  // Media sink service for CAST devices.
+  scoped_refptr<CastMediaSinkService> cast_media_sink_service_;
 
   // A flag to ensure that we record the provider version once, during the
   // initial event page wakeup attempt.
