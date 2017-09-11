@@ -5,6 +5,7 @@
 #ifndef UI_COMPOSITOR_COMPOSITOR_SWITCHES_H_
 #define UI_COMPOSITOR_COMPOSITOR_SWITCHES_H_
 
+#include "base/feature_list.h"
 #include "ui/compositor/compositor_export.h"
 
 namespace switches {
@@ -17,9 +18,17 @@ COMPOSITOR_EXPORT extern const char kUIEnableZeroCopy[];
 COMPOSITOR_EXPORT extern const char kUIDisableZeroCopy[];
 COMPOSITOR_EXPORT extern const char kUIShowPaintRects[];
 COMPOSITOR_EXPORT extern const char kUISlowAnimations[];
-COMPOSITOR_EXPORT extern const char kEnablePixelCanvasRecording[];
 
 }  // namespace switches
+
+namespace features {
+
+// If enabled, all draw commands recorded on canvas are done in pixel aligned
+// measurements. This also enables scaling of all elements in views and layers
+// to be done via corner points. See https://goo.gl/Dqig5s
+COMPOSITOR_EXPORT extern const base::Feature kEnablePixelCanvasRecording;
+
+}  // namespace features
 
 namespace ui {
 
