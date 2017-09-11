@@ -70,6 +70,30 @@
       "revId": "1e2780c7bde5f2ef07cedec6d0f9bd46e02da1ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2def091d_ad54378b",
+        "filename": "mojo/public/cpp/bindings/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-11T17:05:15Z",
+      "side": 1,
+      "message": "\"Adding the dependency it to the top-level was the simplest / most immediate fix.\"\nAlthough that works, it is a pattern that we shouldn\u0027t encourage, and also it makes people assume incorrectly that this target is special that it has to be deps of a top-level target.\n\n\"I think it really helps when the instructions given in a tutorial work as-is, without hidden expectations\"\nYes. Agreed that instructions should work as-is. That being said, it is not too high a bar to expect that people reading this doc has some basic knowledge of GN. A vast majority of chrome devs, if not all, should already have that knowledge.\n\n\nYour updated patch LGTM. Thanks!",
+      "parentUuid": "b9d7f3ac_9f79a9c4",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 42
+      },
+      "revId": "1e2780c7bde5f2ef07cedec6d0f9bd46e02da1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
