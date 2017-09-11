@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21b157bf_85975a4c",
+        "filename": "chrome/browser/chromeos/resource_reporter/resource_reporter_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-11T18:51:22Z",
+      "side": 1,
+      "message": "afahkry: FYI",
+      "revId": "c2a90eefd05aafd4c55358502743f84782200cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
