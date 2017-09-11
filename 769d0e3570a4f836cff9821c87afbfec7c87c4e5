@@ -16,6 +16,24 @@
       "revId": "769d0e3570a4f836cff9821c87afbfec7c87c4e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a957a1_77176a72",
+        "filename": "chrome/browser/chromeos/hats/hats_notification_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-11T17:32:46Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "836cf901_517f00a4",
+      "revId": "769d0e3570a4f836cff9821c87afbfec7c87c4e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb6a1559_6b310a3b",
+        "filename": "chrome/browser/background/background_contents_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-11T17:32:46Z",
+      "side": 1,
+      "message": "Is that still preferred? I think I\u0027ve heard mixed reports but I\u0027ve been unable to dig up the threads I\u0027m thinking of.",
+      "parentUuid": "8e696e36_31bcf127",
+      "revId": "e5bd6846a306178d67b3ab65a3faf60b6e068421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e48d3506_99e07f88",
         "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-11T17:20:12Z",
       "side": 1,
       "message": "HandleNotificationButtonClickDelegate only cares about ButtonClick, HandleNotificationClickedDelegate only cares about Click. This one uses both...",
+      "revId": "e5bd6846a306178d67b3ab65a3faf60b6e068421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e33ed673_579016e6",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-11T17:32:46Z",
+      "side": 1,
+      "message": "yes, but should it? This probably should override HasClickedListener() if it really wants to override Click(), but it doesn\u0027t make sense to me that clicking the notification and clicking the button do the same thing. And if that\u0027s a standard pattern we should have a generic HandleAllTheClicksDelegate.",
+      "parentUuid": "e48d3506_99e07f88",
       "revId": "e5bd6846a306178d67b3ab65a3faf60b6e068421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
