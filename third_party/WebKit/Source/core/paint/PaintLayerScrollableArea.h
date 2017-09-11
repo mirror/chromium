@@ -496,6 +496,8 @@ class CORE_EXPORT PaintLayerScrollableArea final
 
   uint64_t Id() const;
 
+  ScrollbarTheme& GetPageScrollbarTheme() const override;
+
   DECLARE_VIRTUAL_TRACE();
 
  private:

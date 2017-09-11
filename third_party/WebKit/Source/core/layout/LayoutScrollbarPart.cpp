@@ -119,10 +119,11 @@ void LayoutScrollbarPart::LayoutVerticalPart() {
 
 static int CalcScrollbarThicknessUsing(SizeType size_type,
                                        const Length& length,
-                                       int containing_length) {
+                                       int containing_length,
+                                       ScrollableArea& scrollable_area) {
   if (!length.IsIntrinsicOrAuto() || (size_type == kMinSize && length.IsAuto()))
     return MinimumValueForLength(length, LayoutUnit(containing_length)).ToInt();
-  return ScrollbarTheme::GetTheme().ScrollbarThickness();
+  return scrollable_area.GetPageScrollbarTheme().ScrollbarThickness();
 }
 
 void LayoutScrollbarPart::ComputeScrollbarWidth() {
@@ -136,13 +137,14 @@ void LayoutScrollbarPart::ComputeScrollbarWidth() {
                      scrollbar_->StyleSource()->Style()->BorderLeftWidth() -
                      scrollbar_->StyleSource()->Style()->BorderRightWidth();
   int w = CalcScrollbarThicknessUsing(kMainOrPreferredSize, Style()->Width(),
-                                      visible_size);
-  int min_width =
-      CalcScrollbarThicknessUsing(kMinSize, Style()->MinWidth(), visible_size);
-  int max_width = Style()->MaxWidth().IsMaxSizeNone()
-                      ? w
-                      : CalcScrollbarThicknessUsing(
-                            kMaxSize, Style()->MaxWidth(), visible_size);
+                                      visible_size, *scrollable_area_);
+  int min_width = CalcScrollbarThicknessUsing(kMinSize, Style()->MinWidth(),
+                                              visible_size, *scrollable_area_);
+  int max_width =
+      Style()->MaxWidth().IsMaxSizeNone()
+          ? w
+          : CalcScrollbarThicknessUsing(kMaxSize, Style()->MaxWidth(),
+                                        visible_size, *scrollable_area_);
   SetWidth(LayoutUnit(std::max(min_width, std::min(max_width, w))));
 
   // Buttons and track pieces can all have margins along the axis of the
@@ -164,13 +166,14 @@ void LayoutScrollbarPart::ComputeScrollbarHeight() {
                      scrollbar_->StyleSource()->Style()->BorderTopWidth() -
                      scrollbar_->StyleSource()->Style()->BorderBottomWidth();
   int h = CalcScrollbarThicknessUsing(kMainOrPreferredSize, Style()->Height(),
-                                      visible_size);
-  int min_height =
-      CalcScrollbarThicknessUsing(kMinSize, Style()->MinHeight(), visible_size);
-  int max_height = Style()->MaxHeight().IsMaxSizeNone()
-                       ? h
-                       : CalcScrollbarThicknessUsing(
-                             kMaxSize, Style()->MaxHeight(), visible_size);
+                                      visible_size, *scrollable_area_);
+  int min_height = CalcScrollbarThicknessUsing(kMinSize, Style()->MinHeight(),
+                                               visible_size, *scrollable_area_);
+  int max_height =
+      Style()->MaxHeight().IsMaxSizeNone()
+          ? h
+          : CalcScrollbarThicknessUsing(kMaxSize, Style()->MaxHeight(),
+                                        visible_size, *scrollable_area_);
   SetHeight(LayoutUnit(std::max(min_height, std::min(max_height, h))));
 
   // Buttons and track pieces can all have margins along the axis of the
