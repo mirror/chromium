@@ -15,9 +15,17 @@ namespace ui {
 // static
 const int ListSelectionModel::kUnselectedIndex = -1;
 
-static void IncrementFromImpl(int index, int* value) {
-  if (*value >= index)
-    (*value)++;
+// Transforms an index according to the semantics of std::rotate(new_start,
+// old_start, end). This assumes that old_start < new_start < end.
+static void RotateIndices(int new_start, int old_start, int end, int* value) {
+  DCHECK(new_start < old_start);
+  if (*value >= new_start && *value < end && new_start != old_start &&
+      old_start != end) {
+    if (*value < old_start)
+      *value += (end - old_start);
+    else
+      *value -= (old_start - new_start);
+  }
 }
 
 static bool DecrementFromImpl(int index, int* value) {
@@ -39,13 +47,7 @@ ListSelectionModel::~ListSelectionModel() {
 }
 
 void ListSelectionModel::IncrementFrom(int index) {
-  // Shift the selection to account for the newly inserted tab.
-  for (SelectedIndices::iterator i = selected_indices_.begin();
-       i != selected_indices_.end(); ++i) {
-    IncrementFromImpl(index, &(*i));
-  }
-  IncrementFromImpl(index, &anchor_);
-  IncrementFromImpl(index, &active_);
+  Move(std::numeric_limits<int>::max() - 1, index, 1);
 }
 
 void ListSelectionModel::DecrementFrom(int index) {
@@ -112,24 +114,36 @@ void ListSelectionModel::AddSelectionFromAnchorTo(int index) {
   }
 }
 
-void ListSelectionModel::Move(int from, int to) {
-  DCHECK_NE(to, from);
-  bool was_anchor = from == anchor_;
-  bool was_active = from == active_;
-  bool was_selected = IsSelected(from);
-  if (to < from) {
-    IncrementFrom(to);
-    DecrementFrom(from + 1);
-  } else {
-    DecrementFrom(from);
-    IncrementFrom(to);
+void ListSelectionModel::Move(int from, int to, int length) {
+  DCHECK(length > 0);
+  if (to == from)
+    return;
+
+  // Remap move-to-right operations to the equivalent move-left operation. As an
+  // example, the permutation "ABCDEFG" -> "CDEFABG" can be thought of either as
+  // shifting 'AB' right by 4, or by shifting 'CDEF' left by 2.
+  if (to > from) {
+    Move(from + length, from, to - from);
+    return;
   }
-  if (was_active)
-    active_ = to;
-  if (was_anchor)
-    anchor_ = to;
-  if (was_selected)
-    AddIndexToSelection(to);
+
+  auto low =
+      std::lower_bound(selected_indices_.begin(), selected_indices_.end(), to);
+  auto high = std::lower_bound(low, selected_indices_.end(), from + length);
+  auto middle = std::lower_bound(low, high, from);
+
+  for (auto it = low; it != high; ++it)
+    RotateIndices(to, from, from + length, &(*it));
+
+  // Reorder the ranges [low, middle), and [middle, high). Each range is sorted
+  // piecewise, and every elements in [low, middle) is less than every element
+  // in [middle, high), so swapping the ranges restores the sort order.
+  std::rotate(low, middle, high);
+  DCHECK(std::is_sorted(selected_indices_.begin(), selected_indices_.end()));
+
+  // Apply this same transformation to |anchor_| and |active_|.
+  RotateIndices(to, from, from + length, &anchor_);
+  RotateIndices(to, from, from + length, &active_);
 }
 
 void ListSelectionModel::Clear() {
