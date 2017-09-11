@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d060ff79_064c653b",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1956,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-09-11T22:50:29Z",
+      "side": 1,
+      "message": "need_update_gpu_rasterization_status_ seems to never be reset to false, which means ::UpdateGpuRasterizationStatus() is called every frame.  That\u0027s going to be bad since it takes a lock on the worker context provider.\n\nIf you can check need_update_gpu_rasterization_status_ is reset, then it should be good.",
+      "revId": "4547d0adf15b984b898cc1c638372c96a78c8b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
