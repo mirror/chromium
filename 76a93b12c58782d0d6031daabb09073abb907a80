@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b094488_06bbab93",
+        "filename": "net/ssl/ssl_platform_key_nss.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-11T17:37:59Z",
+      "side": 1,
+      "message": "Just worth noting that if https://cs.chromium.org/chromium/src/net/ssl/threaded_ssl_private_key.cc?rcl\u003d1f0ea42106a4de6263a67939bf2d6a9843135ab4\u0026l\u003d63 changes, then this would also need to be a scoped blocking call. Hopefully the plan is not to change that, however :)",
+      "revId": "76a93b12c58782d0d6031daabb09073abb907a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

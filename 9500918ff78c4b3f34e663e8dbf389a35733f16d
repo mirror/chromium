@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f3d1ee2_40ee19c4",
+        "filename": "net/ssl/client_cert_store_nss.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-11T17:37:59Z",
+      "side": 0,
+      "message": "This is another case where the weaker API contract of the TaskScheduler creates the opportunity for starved tasks. That is, previously, |callback| was guaranteed to be run (unless, of course, the TaskRunner for callback itself was shutting down). Now it seems less deterministic here - if the TaskScheduler chooses not to run a task, |callback| will be permanently starved.\n\nThis is a common pattern in //net",
+      "revId": "9500918ff78c4b3f34e663e8dbf389a35733f16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
