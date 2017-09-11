@@ -16,6 +16,24 @@
       "revId": "b79fde0ded0bb5fda360e781011bac4864f38325",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c9fdbf_c84e5ceb",
+        "filename": "chrome/browser/extensions/updater/chrome_update_client_config.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-11T18:18:00Z",
+      "side": 1,
+      "message": "The access should be safe because it follows the same line of logic that the current extension updater is using. The lifetime of a user profile should always exceed the lifetime of an update client object.",
+      "parentUuid": "e997732e_746a5ac6",
+      "revId": "b79fde0ded0bb5fda360e781011bac4864f38325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
