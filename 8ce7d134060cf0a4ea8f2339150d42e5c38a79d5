@@ -16,6 +16,24 @@
       "revId": "8ce7d134060cf0a4ea8f2339150d42e5c38a79d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed436264_ade6bfe4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-sandboxed-iframe-denied.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-11T07:03:16Z",
+      "side": 1,
+      "message": "Thanks for the input! I\u0027ll change it!",
+      "parentUuid": "bb4f46fc_53ac01c4",
+      "revId": "8ce7d134060cf0a4ea8f2339150d42e5c38a79d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
