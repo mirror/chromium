@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bba16c5c_2babe3c5",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-11T21:45:45Z",
+      "side": 1,
+      "message": "nit: click_handler -\u003e on_click",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2857da19_ff5ab7e9",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-11T21:45:45Z",
+      "side": 1,
+      "message": "Instead of hiding all children and then making them selectively visible, just move the if (...) SetVisible(true) to SetVisible(...), ie,\n\n  GetViewByID(kShutdown)-\u003eSetVisible(show_reboot_ \u0026\u0026 !is_lock_screen_note_in_foreground);",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9f5170_518aca49",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-11T21:45:45Z",
+      "side": 1,
+      "message": "FYI: you probably need to call Layout() before returning. But this bug should be addressed by the comment above.",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d71a71_edefd8e3",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-11T21:45:45Z",
+      "side": 1,
+      "message": "nit: id_list -\u003e ids\n\nCan |id_list| be a const\u0026?",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd1bb92_5a9eb492",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-11T21:45:45Z",
+      "side": 1,
+      "message": "Eliminate the buttons variable.\n\n  using ButtonIds \u003d std::vector\u003cLoginShelfView::ButtonId\u003e;\n  EXPECT_TRUE(ShowsShelfButtons(ButtonIds{LoginShelfView::kShutdown}));\n\nIMO this is more readable as\n\n  ExpectShelfButtons(...)\n\ninstead of the\n\n  EXPECT_TRUE(ShowsShelfButtons(...))\n\nbut either works.",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee8542a_f48c570e",
+        "filename": "ash/shelf/shelf.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-11T21:45:45Z",
+      "side": 1,
+      "message": "This is a little but funky, and I think it might be easy to forget to add some additional state here.\n\nIs there a way to make LoginShelfView aware of the initial changes without republishing them?\n\nAlso, are most of these are no-ops? because the observer state will already be set to that value and you added the if (current_state_ \u003d\u003d new_state) return; checks?",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d7bcec_78f5deaa",
+        "filename": "ash/shelf/shelf.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-11T21:45:45Z",
+      "side": 1,
+      "message": "nit: newline after?",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
