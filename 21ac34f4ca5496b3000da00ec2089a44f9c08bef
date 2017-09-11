@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6bb674a4_9e7ea7d8",
+        "filename": "ios/chrome/browser/ui/external_file_remover.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-11T08:57:38Z",
+      "side": 1,
+      "message": "browserState → browser_state",
+      "range": {
+        "startLine": 30,
+        "startChar": 56,
+        "endLine": 30,
+        "endChar": 68
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfd14c50_c5fd3c26",
         "filename": "ios/chrome/browser/ui/external_file_remover.h",
         "patchSetId": 7
@@ -18,6 +41,29 @@
         "startChar": 9,
         "endLine": 50,
         "endChar": 32
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1bf15f_9a54a610",
+        "filename": "ios/chrome/browser/ui/external_file_remover.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-11T08:57:38Z",
+      "side": 1,
+      "message": "The BookmarkModel* is only used in a single method, there is no need to cache it, just fetch it from the factory in that method.",
+      "range": {
+        "startLine": 52,
+        "startChar": 28,
+        "endLine": 52,
+        "endChar": 43
       },
       "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -63,6 +109,75 @@
         "startLine": 58,
         "startChar": 7,
         "endLine": 58,
+        "endChar": 25
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f281e3d2_840a8f56",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-11T08:57:38Z",
+      "side": 1,
+      "message": "My comment from patchset #1 still applies.\n\nCurrently, in Chrome, there is no notion of \"current TabModel\". A TabModel can be hidden but still have a non-nil \"currentTab\". So this comment is invalid as it does not correspond to what the code does.\n\nI see several ways to fix this:\n\n1. add an \"active\" property to TabModel, that store the value passed to \"-setActive:\" method (i.e. store the value passed and change this method to a real property), then check this property in the loop,\n\n2. change the comment to say \"pick an arbitrary TabModel with a non-nil currentTab\" (i.e. have the comment say exactly what the code does, but I think this is incorrect),\n\n3. collect all -currentlyReferencedExternalFiles from all TabModels, i.e. change the code to the following:\n\n  NSMutableSet* all_files \u003d [NSMutableSet set];\n  for (TabModel* tab_model in GetTabModelsForChromeBrowserState(browser_state_)) {\n    NSSet* tab_model_files \u003d [tab_model currentlyReferencedExternalFiles];\n    if (tab_model_files)\n      [all_files unionSet:tab_model_files];\n  }\n\n4. currently, there is at most one TabModel for each ChromeBrowserState (and the original code made the same assumption), so add a DCHECK to encode this assumption (so that we know where to fix the code if the assumption change):\n\n  NSMutableSet* all_files \u003d [NSMutableSet set];\n  NSArray\u003cTabModel*\u003e* tab_models \u003d\n      GetTabModelsForChromeBrowserState(browser_state_);\n  DCHECK_LE([tab_models count], 1u);\n  if ([tab_models count] !\u003d 0) {\n    NSSet* tab_model_files \u003d [tab_model currentlyReferencedExternalFiles];\n    if (tab_model_files)\n      [all_files unionSet:tab_model_files];\n  }\n\nI think that both 3. and 4. are better than either 1. or 2. (my personal preferences goes to option 3. as there won\u0027t be any need to change this if we ever have more than one TabModel associated with a ChromeBrowserState).\n\nThe problem with 1. is that if user ask to remove browsing data while an incognito tab is selected, then the files from the main ChromeBrowserState would not be removed (because the TabModel associated with the main ChromeBrowserState will have \"active\" set to NO).\n\nThe problem with 2. is that it does not make sense to just get an arbitrary TabModel.",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 37
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a535e25e_f4f70197",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-11T08:57:38Z",
+      "side": 1,
+      "message": "tabModels → tab_models",
+      "range": {
+        "startLine": 118,
+        "startChar": 22,
+        "endLine": 118,
+        "endChar": 31
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894b525e_ef71fc4b",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-11T08:57:38Z",
+      "side": 1,
+      "message": "tabModel → tab_model",
+      "range": {
+        "startLine": 120,
+        "startChar": 17,
+        "endLine": 120,
         "endChar": 25
       },
       "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
