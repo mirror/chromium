@@ -13,6 +13,7 @@
 #import "base/mac/bind_objc_block.h"
 #import "ios/third_party/material_components_ios/src/components/Dialogs/src/MaterialDialogs.h"
 #import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
+#import "remoting/ios/audio/audio_player_ios.h"
 #import "remoting/ios/display/gl_display_handler.h"
 #import "remoting/ios/domain/client_session_details.h"
 #import "remoting/ios/domain/host_info.h"
@@ -50,6 +51,7 @@ NSString* const kHostSessionPin = @"kHostSessionPin";
   std::unique_ptr<remoting::RendererProxy> _renderer;
   std::unique_ptr<remoting::GestureInterpreter> _gestureInterpreter;
   std::unique_ptr<remoting::KeyboardInterpreter> _keyboardInterpreter;
+  std::unique_ptr<remoting::AudioPlayerIos> _audioPlayer;
 }
 @end
 
@@ -141,15 +143,17 @@ NSString* const kHostSessionPin = @"kHostSessionPin";
                         }];
       });
 
-  // TODO(nicholss): Add audio support to iOS.
-  base::WeakPtr<remoting::protocol::AudioStub> audioPlayer = nullptr;
+  _audioPlayer = remoting::AudioPlayerIos::CreateAudioPlayer(
+      _runtime->network_task_runner(), _runtime->audio_task_runner());
+  base::WeakPtr<remoting::protocol::AudioStub> audioConsumer =
+      _audioPlayer->GetAudioStreamConsumer();
 
   _displayHandler = [[GlDisplayHandler alloc] init];
   _displayHandler.delegate = self;
 
   _session.reset(new remoting::ChromotingSession(
       _sessonDelegate->GetWeakPtr(), [_displayHandler CreateCursorShapeStub],
-      [_displayHandler CreateVideoRenderer], audioPlayer, info,
+      [_displayHandler CreateVideoRenderer], audioConsumer, info,
       client_auth_config));
   _renderer = [_displayHandler CreateRendererProxy];
   _gestureInterpreter.reset(
@@ -157,6 +161,7 @@ NSString* const kHostSessionPin = @"kHostSessionPin";
   _keyboardInterpreter.reset(new remoting::KeyboardInterpreter(_session.get()));
 
   _session->Connect();
+  _audioPlayer->Start();
 }
 
 - (void)disconnectFromHost {
@@ -165,6 +170,7 @@ NSString* const kHostSessionPin = @"kHostSessionPin";
     _runtime->network_task_runner()->DeleteSoon(FROM_HERE, _session.release());
   }
   _displayHandler = nil;
+//  _audioPlayer->Stop();
 
   // This needs to be deleted on the display thread since GlDisplayHandler binds
   // its WeakPtrFactory to the display thread.
