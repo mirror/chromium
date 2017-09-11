@@ -101,7 +101,7 @@ struct NET_EXPORT SSLConfig {
   uint16_t version_min;
   uint16_t version_max;
 
-  // The TLS 1.3 variant that is enabled. This only takes affect if TLS 1.3 is
+  // The TLS 1.3 variant that is enabled. This only takes effect if TLS 1.3 is
   // also enabled via version_min and version_max.
   TLS13Variant tls13_variant;
 

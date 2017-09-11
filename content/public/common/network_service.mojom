@@ -7,6 +7,7 @@ module content.mojom;
 import "cookie_manager.mojom";
 import "mojo/common/file_path.mojom";
 import "url_loader.mojom";
+import "ssl_config.mojom";
 import "url_loader_factory.mojom";
 import "url/mojo/url.mojom";
 
@@ -43,6 +44,11 @@ struct NetworkContextParams {
 
   // Enables HTTP/0.9 on ports other than 80 for HTTP and 443 for HTTPS.
   bool http_09_on_non_default_ports_enabled = false;
+
+  // Initial SSL configuration. Leave empty to use default values.
+  SSLConfig? initial_ssl_config;
+  // Pipe to pass updated SSLConfigs in to the service.
+  SSLConfigClient&? ssl_config_client;
 };
 
 // Represents a distinct context for making network requests, with its own
