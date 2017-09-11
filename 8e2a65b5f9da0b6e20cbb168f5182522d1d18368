@@ -48,6 +48,47 @@
     },
     {
       "key": {
+        "uuid": "aa5a3d99_3a97a063",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-11T21:26:15Z",
+      "side": 1,
+      "message": "Agree, specially since the backgroundView this is needed for should eventually go away. The less code/imports we add for this right now the better.",
+      "parentUuid": "4c17c809_b6fac0d1",
+      "range": {
+        "startLine": 172,
+        "startChar": 22,
+        "endLine": 172,
+        "endChar": 42
+      },
+      "revId": "8e2a65b5f9da0b6e20cbb168f5182522d1d18368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5e3700_59b4cb24",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-11T21:26:15Z",
+      "side": 1,
+      "message": "I think we can keep just one factory class and one configuration class. Just init them with a certain flag/value, and according to that it will build either an Incognito or non Incognito configuration. (You are already subclassing both the factory and the configuration, so we don\u0027t have the category constraints on adding extra instance methods.)\n\nYou can then pass this configuration into the factory as an init parameter, so it creates the factory you need. You can take a look at toolbar_resource_macros and its use on web_toolbar_controller for some extra inspiration.\n\nThis way we won\u0027t have so much duplicate code especially for the factory, I think this can easily get out of hand specially once we start some Toolbar experiments.",
+      "revId": "8e2a65b5f9da0b6e20cbb168f5182522d1d18368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ff4daf8_4241dc4d",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
         "patchSetId": 3
@@ -65,6 +106,23 @@
         "endLine": 80,
         "endChar": 45
       },
+      "revId": "8e2a65b5f9da0b6e20cbb168f5182522d1d18368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b11936f_cd363456",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-11T21:26:15Z",
+      "side": 1,
+      "message": "If the configuration object exposes which kind of configuration is dealing with, you can create the factory using that information instead of plumbing it down from the Coordinator. Or as Mark was suggesting the factory can be part of the configuration, though I have no strong opinionr regarding that. \n\nPlease leave this as a DESIGNATED_INITIALIZER, that was needed :)",
       "revId": "8e2a65b5f9da0b6e20cbb168f5182522d1d18368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
