@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab022540_f69d124d",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-09-11T18:40:23Z",
+      "side": 1,
+      "message": "I would use base::TimeDelta::Max() instead to indicate that there is *no* timeout. It\u0027s a bit confusing to use zero (implying that the step immediately times out).",
+      "range": {
+        "startLine": 100,
+        "startChar": 13,
+        "endLine": 100,
+        "endChar": 30
+      },
+      "revId": "99658f8420f763b85b362e66333e8abcb20d8d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
