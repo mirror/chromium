@@ -54,6 +54,9 @@ struct DownloadUIItem {
 
   // The size of the offline copy.
   int64_t total_bytes;
+
+  // The namespace of the captured page.
+  std::string name_space;
 };
 
 }  // namespace offline_pages

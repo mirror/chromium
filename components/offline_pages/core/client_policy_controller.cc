@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
+#include "components/offline_pages/core/offline_page_feature.h"
 
 using LifetimeType = offline_pages::LifetimePolicy::LifetimeType;
 
@@ -58,15 +59,18 @@ ClientPolicyController::ClientPolicyController() {
           .SetIsSupportedByDownload(true)
           .SetIsRemovedOnCacheReset(false)
           .Build()));
-  policies_.insert(std::make_pair(
-      kSuggestedArticlesNamespace,
-      OfflinePageClientPolicyBuilder(kSuggestedArticlesNamespace,
-                                     LifetimeType::TEMPORARY, kUnlimitedPages,
-                                     kUnlimitedPages)
-          .SetIsRemovedOnCacheReset(true)
-          .SetIsDisabledWhenPrefetchDisabled(true)
-          .SetExpirePeriod(base::TimeDelta::FromDays(30))
-          .Build()));
+
+  OfflinePageClientPolicyBuilder suggestedArticlePolicy(
+      kSuggestedArticlesNamespace, LifetimeType::TEMPORARY, kUnlimitedPages,
+      kUnlimitedPages);
+  suggestedArticlePolicy.SetIsRemovedOnCacheReset(true)
+      .SetIsDisabledWhenPrefetchDisabled(true)
+      .SetExpirePeriod(base::TimeDelta::FromDays(3));
+  if (IsOfflinePagesPrefetchingUIEnabled())
+    suggestedArticlePolicy.SetIsSupportedByDownload(true);
+
+  policies_.insert(std::make_pair(kSuggestedArticlesNamespace,
+                                  suggestedArticlePolicy.Build()));
 
   // Fallback policy.
   policies_.insert(std::make_pair(

@@ -19,14 +19,16 @@ DownloadUIItem::DownloadUIItem(const OfflinePageItem& page)
       title(page.title),
       target_path(page.file_path),
       start_time(page.creation_time),
-      total_bytes(page.file_size) {}
+      total_bytes(page.file_size),
+      name_space(page.client_id.name_space) {}
 
 DownloadUIItem::DownloadUIItem(const SavePageRequest& request)
     : guid(request.client_id().id),
       url(request.url()),
       download_progress_bytes(0),  // TODO(dimich) Get this from Request.
       start_time(request.creation_time()),
-      total_bytes(-1L) {
+      total_bytes(-1L),
+      name_space(request.client_id().name_space) {
   switch (request.request_state()) {
     case SavePageRequest::RequestState::AVAILABLE:
       download_state = DownloadState::PENDING;
