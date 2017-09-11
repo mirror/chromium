@@ -40,6 +40,8 @@ class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
   // both.
   MinMaxSize ComputeMinMaxSize();
 
+  NGBoxStrut GetScrollbarSizes() const;
+
   NGLayoutInputNode FirstChild();
 
   // Runs layout on the underlying LayoutObject and creates a fragment for the

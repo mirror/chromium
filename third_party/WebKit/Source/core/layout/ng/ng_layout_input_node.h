@@ -18,6 +18,7 @@ class NGBreakToken;
 class NGConstraintSpace;
 class NGLayoutResult;
 struct MinMaxSize;
+struct NGBoxStrut;
 struct NGLogicalSize;
 
 // Represents the input to a layout algorithm for a given node. The layout
@@ -52,6 +53,8 @@ class CORE_EXPORT NGLayoutInputNode {
   RefPtr<NGLayoutResult> Layout(const NGConstraintSpace&, NGBreakToken*);
 
   MinMaxSize ComputeMinMaxSize();
+
+  NGBoxStrut GetScrollbarSizes() const;
 
   // Returns intrinsic sizing information for replaced elements.
   // ComputeReplacedSize can use it to compute actual replaced size.

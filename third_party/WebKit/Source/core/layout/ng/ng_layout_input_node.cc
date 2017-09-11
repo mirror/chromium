@@ -97,6 +97,10 @@ MinMaxSize NGLayoutInputNode::ComputeMinMaxSize() {
                     : ToNGBlockNode(*this).ComputeMinMaxSize();
 }
 
+NGBoxStrut NGLayoutInputNode::GetScrollbarSizes() const {
+  return IsInline() ? NGBoxStrut() : ToNGBlockNode(*this).GetScrollbarSizes();
+}
+
 void NGLayoutInputNode::IntrinsicSize(
     NGLogicalSize* default_intrinsic_size,
     Optional<LayoutUnit>* computed_inline_size,
