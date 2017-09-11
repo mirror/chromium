@@ -726,8 +726,10 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
   // need scale it beased on the |device_scale_factor|.
   gfx::Rect damage_rect = gfx::SkIRectToRect(damage_.getBounds());
   damage_rect.Offset(origin.x(), origin.y());
-  render_pass->damage_rect.Union(
-      gfx::ConvertRectToPixel(device_scale_factor, damage_rect));
+  damage_rect = gfx::ConvertRectToPixel(device_scale_factor, damage_rect);
+  render_pass->damage_rect.Union(damage_rect);
+  render_pass->output_rect.Union(
+      gfx::ConvertRectToPixel(device_scale_factor, output_rect));
 
   // Create a transformation matrix that maps buffer coordinates to target by
   // inverting the transform and scale of buffer.
