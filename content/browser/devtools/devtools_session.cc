@@ -77,7 +77,7 @@ protocol::Response::Status DevToolsSession::Dispatch(
 
   DevToolsManagerDelegate* delegate =
       DevToolsManager::GetInstance()->delegate();
-  if (value && value->IsType(base::Value::Type::DICTIONARY) && delegate) {
+  if (value && value->is_dict() && delegate) {
     base::DictionaryValue* dict_value =
         static_cast<base::DictionaryValue*>(value.get());
     std::unique_ptr<base::DictionaryValue> response(

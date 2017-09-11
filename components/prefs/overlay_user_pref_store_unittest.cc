@@ -137,19 +137,19 @@ TEST_F(OverlayUserPrefStoreTest, ModifyDictionaries) {
   Value* modify = NULL;
   EXPECT_TRUE(overlay_->GetMutableValue(overlay_key, &modify));
   ASSERT_TRUE(modify);
-  ASSERT_TRUE(modify->IsType(Value::Type::DICTIONARY));
+  ASSERT_TRUE(modify->is_dict());
   static_cast<DictionaryValue*>(modify)->SetInteger(overlay_key, 42);
 
   Value* original_in_underlay = NULL;
   EXPECT_TRUE(underlay_->GetMutableValue(overlay_key, &original_in_underlay));
   ASSERT_TRUE(original_in_underlay);
-  ASSERT_TRUE(original_in_underlay->IsType(Value::Type::DICTIONARY));
+  ASSERT_TRUE(original_in_underlay->is_dict());
   EXPECT_TRUE(static_cast<DictionaryValue*>(original_in_underlay)->empty());
 
   Value* modified = NULL;
   EXPECT_TRUE(overlay_->GetMutableValue(overlay_key, &modified));
   ASSERT_TRUE(modified);
-  ASSERT_TRUE(modified->IsType(Value::Type::DICTIONARY));
+  ASSERT_TRUE(modified->is_dict());
   EXPECT_EQ(*modify, *modified);
 }
 
