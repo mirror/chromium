@@ -701,16 +701,12 @@ void ServiceWorkerVersion::RemoveControllee(
   }
 }
 
-void ServiceWorkerVersion::AddStreamingURLRequestJob(
-    const ServiceWorkerURLRequestJob* request_job) {
-  DCHECK(streaming_url_request_jobs_.find(request_job) ==
-         streaming_url_request_jobs_.end());
-  streaming_url_request_jobs_.insert(request_job);
+void ServiceWorkerVersion::AddStreamingJob() {
+  streaming_job_count_++;
 }
 
-void ServiceWorkerVersion::RemoveStreamingURLRequestJob(
-    const ServiceWorkerURLRequestJob* request_job) {
-  streaming_url_request_jobs_.erase(request_job);
+void ServiceWorkerVersion::RemoveStreamingJob() {
+  streaming_job_count_--;
   if (!HasWork()) {
     for (auto& observer : listeners_)
       observer.OnNoWork(this);
@@ -1719,7 +1715,7 @@ void ServiceWorkerVersion::StopWorkerIfIdle() {
 }
 
 bool ServiceWorkerVersion::HasWork() const {
-  return !pending_requests_.IsEmpty() || !streaming_url_request_jobs_.empty() ||
+  return !pending_requests_.IsEmpty() || streaming_job_count_ ||
          !start_callbacks_.empty();
 }
 
@@ -1919,7 +1915,7 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
   installed_scripts_sender_.reset();
 
   // TODO(falken): Call SWURLRequestJob::ClearStream here?
-  streaming_url_request_jobs_.clear();
+  streaming_job_count_ = 0;
 
   for (auto& observer : listeners_)
     observer.OnRunningStateChanged(this);
