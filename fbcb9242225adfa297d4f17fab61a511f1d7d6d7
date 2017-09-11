@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b05eeea_789c7038",
+        "filename": "extensions/browser/extension_web_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-11T23:59:19Z",
+      "side": 1,
+      "message": "This isn\u0027t really part of this fix, but while debugging this, I noticed that I changed the ordering here in https://chromium-review.googlesource.com/c/chromium/src/+/641818, as InitializeRenderFrame used to happen after ActivateExtensionInProcess.  So I restored the order just to be safe (it looks like InitializeRenderFrame sends some IPCs to the RFH, though I don\u0027t know if those might break if we don\u0027t activate the extension first), though if you think it doesn\u0027t matter I can undo it.",
+      "revId": "fbcb9242225adfa297d4f17fab61a511f1d7d6d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c545bf3b_9191b4b8",
+        "filename": "extensions/browser/extension_web_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-11T23:59:19Z",
+      "side": 1,
+      "message": "Changing this affects two call sites: ReloadIfTerminated, which we know needs this implementation, and ChromeExtensionWebContentsObserver::OnDetailedConsoleMessageAdded.  I don\u0027t really know how the latter works, but I *think* it\u0027s ok to use this new implementation for it also - if it\u0027s logging extension errors, it\u0027s probably better to log errors for a terminated extension as well.  Definitely let me know if that\u0027s not the case though. :)",
+      "revId": "fbcb9242225adfa297d4f17fab61a511f1d7d6d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
