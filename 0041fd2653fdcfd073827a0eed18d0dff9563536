@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "327a41f3_cbdb85a8",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-11T14:31:10Z",
+      "side": 1,
+      "message": "I don\u0027t think the Mac/non-Mac split is required. The metrics dashboard can filter by platform anyway.",
+      "range": {
+        "startLine": 656,
+        "startChar": 69,
+        "endLine": 656,
+        "endChar": 0
+      },
+      "revId": "0041fd2653fdcfd073827a0eed18d0dff9563536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a87295f5_85c16dea",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-11T14:31:10Z",
+      "side": 1,
+      "message": "Avoid \"default:\". Reason: Then, if a new enum entry is added, the compiler will complain that this switch doesn\u0027t handle it.",
+      "range": {
+        "startLine": 166,
+        "startChar": 12,
+        "endLine": 166,
+        "endChar": 0
+      },
+      "revId": "0041fd2653fdcfd073827a0eed18d0dff9563536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "386496a5_058fc5d1",
+        "filename": "chrome/browser/ui/search/search_ipc_router.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-11T14:31:10Z",
+      "side": 1,
+      "message": "Does this do anything different from the existing OnLogEvent method? Looks like it doesn\u0027t, in which case it\u0027d be easier to merge the two enums and pipe everything through the same IPC. But maybe I\u0027m missing something?",
+      "range": {
+        "startLine": 61,
+        "startChar": 59,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "0041fd2653fdcfd073827a0eed18d0dff9563536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03540d69_d2c14f4c",
+        "filename": "chrome/common/search/ntp_logging_events.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-11T14:31:10Z",
+      "side": 1,
+      "message": "s/most_visited_single/voice/ :)",
+      "range": {
+        "startLine": 43,
+        "startChar": 77,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "0041fd2653fdcfd073827a0eed18d0dff9563536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
