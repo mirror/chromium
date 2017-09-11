@@ -47,7 +47,6 @@ class NetworkDelegate;
 class NetworkErrorLoggingDelegate;
 class NetworkQualityEstimator;
 class ReportingService;
-class SdchManager;
 class ProxyService;
 class URLRequest;
 class URLRequestBackoffManager;
@@ -217,12 +216,6 @@ class NET_EXPORT URLRequestContext
     backoff_manager_ = backoff_manager;
   }
 
-  // May return nullptr.
-  SdchManager* sdch_manager() const { return sdch_manager_; }
-  void set_sdch_manager(SdchManager* sdch_manager) {
-    sdch_manager_ = sdch_manager;
-  }
-
   // Gets the URLRequest objects that hold a reference to this
   // URLRequestContext.
   const std::set<const URLRequest*>& url_requests() const {
@@ -325,7 +318,6 @@ class NET_EXPORT URLRequestContext
   const URLRequestJobFactory* job_factory_;
   URLRequestThrottlerManager* throttler_manager_;
   URLRequestBackoffManager* backoff_manager_;
-  SdchManager* sdch_manager_;
   NetworkQualityEstimator* network_quality_estimator_;
   ReportingService* reporting_service_;
   NetworkErrorLoggingDelegate* network_error_logging_delegate_;
