@@ -784,6 +784,7 @@ void NGLineBreaker::SetCurrentStyle(const ComputedStyle& style) {
         break;
     }
     break_iterator_.SetBreakAfterSpace(style.BreakOnlyAfterWhiteSpace());
+    break_iterator_.SetBreakAfterSpace(true);
 
     enable_soft_hyphen_ = style.GetHyphens() != Hyphens::kNone;
     hyphenation_ = style.GetHyphenation();
