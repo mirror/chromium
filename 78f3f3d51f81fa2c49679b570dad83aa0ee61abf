@@ -46,6 +46,53 @@
       "revId": "78f3f3d51f81fa2c49679b570dad83aa0ee61abf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c18f73d_d40465e6",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-11T15:55:11Z",
+      "side": 1,
+      "message": "I think it would be much cleaner to have status set to \u0027ERROR\u0027 than an empty string.",
+      "parentUuid": "658a81d4_8e66f752",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "78f3f3d51f81fa2c49679b570dad83aa0ee61abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a82ec1ec_eea39193",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-11T15:55:11Z",
+      "side": 1,
+      "message": "this seems out of place here\nI\u0027d suggest adding service error as an argument to DiagnosticesCallback (and pottentially renaming it to something like RequestStatus)",
+      "range": {
+        "startLine": 181,
+        "startChar": 4,
+        "endLine": 181,
+        "endChar": 16
+      },
+      "revId": "78f3f3d51f81fa2c49679b570dad83aa0ee61abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
