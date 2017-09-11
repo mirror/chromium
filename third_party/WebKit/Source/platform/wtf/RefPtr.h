@@ -43,6 +43,7 @@ RefPtr<T> AdoptRef(T*);
 
 inline void Adopted(const void*) {}
 
+// Deprecated: please use scoped_refptr from base in new code.
 template <typename T>
 class RefPtr {
   USING_FAST_MALLOC(RefPtr);
