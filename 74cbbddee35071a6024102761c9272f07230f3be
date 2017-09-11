@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcd810d3_fef9086c",
+        "filename": "cc/layers/ui_resource_layer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-11T15:08:14Z",
+      "side": 1,
+      "message": "It\u0027s a nit, but I\u0027d probably not call this if ui_resouce_id_ is 0, then use |resource| !\u003d 0 as a replacement for |is_resource|. But thanks for consolidating the two calls, the logic LGTM",
+      "revId": "74cbbddee35071a6024102761c9272f07230f3be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
