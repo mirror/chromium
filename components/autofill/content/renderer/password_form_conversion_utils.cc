@@ -541,7 +541,6 @@ bool GetPasswordForm(
         other_possible_passwords.size() > 0) {
       password = passwords[0];
       password_form->password_value = password.Value().Utf16();
-      other_possible_passwords.erase(password_form->password_value);
       std::vector<base::string16>().swap(
           password_form->other_possible_passwords);
       std::move(other_possible_passwords.begin(),
