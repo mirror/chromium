@@ -1893,6 +1893,52 @@ TEST_F(SourceBufferStreamTest, Overlap_OneByOne_TrackBuffer6) {
   CheckNoNextBuffer();
 }
 
+TEST_F(SourceBufferStreamTest, Multiple_Overlap_TrackBuffer) {
+  // BIG TODO is audio stream necessary here?
+  SetAudioStream();
+  Seek(0);
+
+  NewCodedFrameGroupAppend("10D10K");
+
+  // Note: fuzzer did a config change to new ID 1
+
+  // Note: no internal audio splicing done here because FP doesn't signal new
+  // frame group between the two frames. BIG TODO: Even so, would we splice if
+  // we appended these two buffers 1 by 1?
+  NewCodedFrameGroupAppend("9D10K 10D10K");
+
+  // Note fuzzer did a config change back to ID 0 here.
+  // **NO** new coded frame group signalled even in new config in this fuzzer
+  // case.
+
+  AppendBuffers("10D10K");
+
+  DVLOG(1) << "MDW TB should have one buffer (a 10D10K) currently...";
+
+  // This is where it gets weird (note the interval overlap, but distinct
+  // ranges):
+  // CheckExpectedRangesByTimestamp("{ [9,19) [10,20) }");
+  // But test log shows coalescing:
+  // Append AUDIO: done. ranges_=[0.009;0.009(0.019)] [0.01;0.01(0.02)]
+  // ../../media/filters/source_buffer_stream_unittest.cc:263: Failure
+  //       Expected: expected
+  //             Which is: "{ [9,19) [10,20) }"
+  //             To be equal to: ss.str()
+  //                   Which is: "{ [9,20) }"
+  CheckExpectedRangesByTimestamp(
+      "{ [9,20) }");  // What the current impl reports...
+
+  // Mark EOS reached.
+  stream_->MarkEndOfStream();
+
+  // And hits DCHECK in bug 763518 (second buffer's read here indicates the
+  // timestamp due to current broken/DCHECK-hitting implementation...).
+  // Release mode version of this test passes. Debug hits the DCHECK in
+  // https://crbug.com/763518
+  CheckExpectedBuffers("10K 9K");
+  CheckNoNextBuffer();
+}
+
 TEST_F(SourceBufferStreamTest, Seek_Keyframe) {
   // Append 6 buffers at positions 0 through 5.
   NewCodedFrameGroupAppend(0, 6);
