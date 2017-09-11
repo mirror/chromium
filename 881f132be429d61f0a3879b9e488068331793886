@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "58b094e3_94b697f9",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-11T03:48:26Z",
+      "side": 1,
+      "message": "Great!",
+      "parentUuid": "84fd6fd0_a9937d43",
+      "range": {
+        "startLine": 417,
+        "startChar": 132,
+        "endLine": 417,
+        "endChar": 147
+      },
+      "revId": "881f132be429d61f0a3879b9e488068331793886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59daf179_9ff2931d",
         "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
         "patchSetId": 6
