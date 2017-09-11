@@ -17,6 +17,8 @@
 #include "ui/compositor/compositor.h"
 #include "ui/display/manager/chromeos/display_configurator.h"
 
+#include "ash/media_controller.h"
+
 namespace ash {
 
 namespace {
@@ -77,6 +79,7 @@ void PowerEventObserver::BrightnessChanged(int level, bool user_initiated) {
 }
 
 void PowerEventObserver::SuspendImminent() {
+  LOG(ERROR) << "suspend imminent";
   SessionController* controller = Shell::Get()->session_controller();
 
   // This class is responsible for disabling all rendering requests at suspend
@@ -132,6 +135,7 @@ void PowerEventObserver::SuspendImminent() {
 }
 
 void PowerEventObserver::SuspendDone(const base::TimeDelta& sleep_duration) {
+  LOG(ERROR) << "suspend done";
   // TODO(derat): After mus exposes a method for resuming displays, call it
   // here: http://crbug.com/692193
   if (Shell::GetAshConfig() != Config::MASH)
@@ -154,7 +158,8 @@ void PowerEventObserver::ScreenIsLocked() {
   // The screen is now locked but the pending suspend, if any, will be blocked
   // until all the animations have completed.
   if (!screen_lock_callback_.is_null()) {
-    VLOG(1) << "Screen locked due to suspend";
+    LOG(ERROR) << "Screen locked due to suspend";
+    Shell::Get()->media_controller()->SuspendMediaSessions();
   } else {
     VLOG(1) << "Screen locked without suspend";
   }
