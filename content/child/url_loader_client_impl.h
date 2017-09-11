@@ -62,6 +62,8 @@ class CONTENT_EXPORT URLLoaderClientImpl final : public mojom::URLLoaderClient {
       mojo::ScopedDataPipeConsumerHandle body) override;
   void OnComplete(const ResourceRequestCompletionStatus& status) override;
 
+  mojom::DownloadedTempFilePtr TakeDownloadedTempFile();
+
  private:
   bool NeedsStoringMessage() const;
   void StoreAndDispatch(const IPC::Message& message);

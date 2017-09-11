@@ -118,6 +118,8 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
       mojo::ScopedDataPipeConsumerHandle consumer_handle);
 
+  mojom::DownloadedTempFilePtr TakeDownloadedTempFile(int request_id);
+
   // Removes a request from the |pending_requests_| list, returning true if the
   // request was found and removed.
   bool RemovePendingRequest(int request_id);

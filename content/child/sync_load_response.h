@@ -8,6 +8,7 @@
 #include <string>
 
 #include "content/public/common/resource_response_info.h"
+#include "content/public/common/url_loader.mojom.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -27,6 +28,9 @@ struct CONTENT_EXPORT SyncLoadResponse : ResourceResponseInfo {
 
   // The response data.
   std::string data;
+
+  int64_t downloaded_file_length = 0;
+  mojom::DownloadedTempFilePtr downloaded_tmp_file;
 };
 
 }  // namespace content

@@ -85,9 +85,7 @@ void SyncLoadContext::OnReceivedResponse(const ResourceResponseInfo& info) {
 }
 
 void SyncLoadContext::OnDownloadedData(int len, int encoded_data_length) {
-  // This method is only called when RequestInfo::download_to_file is true which
-  // is not allowed when processing a synchronous request.
-  NOTREACHED();
+  downloaded_file_length_ += len;
 }
 
 void SyncLoadContext::OnReceivedData(std::unique_ptr<ReceivedData> data) {
@@ -105,6 +103,11 @@ void SyncLoadContext::OnCompletedRequest(int error_code,
   response_->error_code = error_code;
   response_->encoded_data_length = total_transfer_size;
   response_->encoded_body_length = encoded_body_size;
+  response_->downloaded_file_length = downloaded_file_length_;
+  // Need to pass |downloaded_tmp_file| to the caller thread. Otherwise the blob
+  // creation in ResourceResponse::SetDownloadedFilePath() fails.
+  response_->downloaded_tmp_file =
+      resource_dispatcher_->TakeDownloadedTempFile(request_id_);
   event_->Signal();
 
   // This will indirectly cause this object to be deleted.

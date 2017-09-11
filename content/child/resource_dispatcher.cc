@@ -380,6 +380,17 @@ void ResourceDispatcher::OnRequestComplete(
                            request_complete_data.decoded_body_length);
 }
 
+mojom::DownloadedTempFilePtr ResourceDispatcher::TakeDownloadedTempFile(
+    int request_id) {
+  PendingRequestMap::iterator it = pending_requests_.find(request_id);
+  if (it == pending_requests_.end())
+    return nullptr;
+  PendingRequestInfo* request_info = it->second.get();
+  if (!request_info->url_loader_client)
+    return nullptr;
+  return request_info->url_loader_client->TakeDownloadedTempFile();
+}
+
 bool ResourceDispatcher::RemovePendingRequest(int request_id) {
   PendingRequestMap::iterator it = pending_requests_.find(request_id);
   if (it == pending_requests_.end())

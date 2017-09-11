@@ -74,6 +74,8 @@ class SyncLoadContext : public RequestPeer {
 
   int request_id_;
 
+  int64_t downloaded_file_length_ = 0;
+
   DISALLOW_COPY_AND_ASSIGN(SyncLoadContext);
 };
 

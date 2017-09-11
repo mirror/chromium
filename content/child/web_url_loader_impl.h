@@ -75,7 +75,8 @@ class CONTENT_EXPORT WebURLLoaderImpl : public blink::WebURLLoader {
                          blink::WebURLError& error,
                          blink::WebData& data,
                          int64_t& encoded_data_length,
-                         int64_t& encoded_body_length) override;
+                         int64_t& encoded_body_length,
+                         int64_t& downloaded_file_length) override;
   void LoadAsynchronously(const blink::WebURLRequest& request,
                           blink::WebURLLoaderClient* client) override;
   void Cancel() override;

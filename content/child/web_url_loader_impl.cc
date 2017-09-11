@@ -1239,7 +1239,8 @@ void WebURLLoaderImpl::LoadSynchronously(const WebURLRequest& request,
                                          WebURLError& error,
                                          WebData& data,
                                          int64_t& encoded_data_length,
-                                         int64_t& encoded_body_length) {
+                                         int64_t& encoded_body_length,
+                                         int64_t& downloaded_file_length) {
   TRACE_EVENT0("loading", "WebURLLoaderImpl::loadSynchronously");
   SyncLoadResponse sync_load_response;
   context_->Start(request, &sync_load_response);
@@ -1263,6 +1264,7 @@ void WebURLLoaderImpl::LoadSynchronously(const WebURLRequest& request,
                       request.ReportRawHeaders());
   encoded_data_length = sync_load_response.encoded_data_length;
   encoded_body_length = sync_load_response.encoded_body_length;
+  downloaded_file_length = sync_load_response.downloaded_file_length;
 
   data.Assign(sync_load_response.data.data(), sync_load_response.data.size());
 }
