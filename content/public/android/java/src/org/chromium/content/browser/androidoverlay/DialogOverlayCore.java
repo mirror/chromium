@@ -140,7 +140,7 @@ class DialogOverlayCore {
         public void surfaceDestroyed(SurfaceHolder holder) {
             if (mDialog == null || mHost == null) return;
 
-            // Notify the host that we've been destroyed, and wait for it to clean up.
+            // Notify the host that we've been destroyed, and wait for it to clean up or time out.
             mHost.onOverlayDestroyed();
             mHost.waitForCleanup();
             mHost = null;
