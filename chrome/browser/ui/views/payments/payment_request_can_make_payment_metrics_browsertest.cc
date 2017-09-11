@@ -280,8 +280,9 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestCanMakePaymentMetricsTest,
   // Don't add a card on file, so CanMakePayment returns false.
   // Start the Payment Request and expect CanMakePayment to be called before the
   // Payment Request is shown.
-  ResetEventObserverForSequence(
-      {DialogEvent::CAN_MAKE_PAYMENT_CALLED, DialogEvent::DIALOG_OPENED});
+  ResetEventObserverForSequence({DialogEvent::CAN_MAKE_PAYMENT_CALLED,
+                                 DialogEvent::CAN_MAKE_PAYMENT_RETURNED,
+                                 DialogEvent::DIALOG_OPENED});
   ASSERT_TRUE(content::ExecuteScript(GetActiveWebContents(), "queryShow();"));
   WaitForObservedEvent();
 

@@ -237,6 +237,9 @@ void PaymentRequest::Complete(mojom::PaymentComplete result) {
 void PaymentRequest::CanMakePayment() {
   state()->CanMakePayment(base::BindOnce(
       &PaymentRequest::CanMakePaymentCallback, weak_ptr_factory_.GetWeakPtr()));
+
+  if (observer_for_testing_)
+    observer_for_testing_->OnCanMakePaymentCalled();
 }
 
 void PaymentRequest::CanMakePaymentCallback(bool can_make_payment) {
@@ -263,9 +266,6 @@ void PaymentRequest::CanMakePaymentCallback(bool can_make_payment) {
     client_->OnCanMakePayment(
         mojom::CanMakePaymentQueryResult::QUERY_QUOTA_EXCEEDED);
   }
-
-  if (observer_for_testing_)
-    observer_for_testing_->OnCanMakePaymentCalled();
 }
 
 void PaymentRequest::OnPaymentResponseAvailable(
