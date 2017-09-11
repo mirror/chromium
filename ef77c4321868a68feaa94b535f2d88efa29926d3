@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e101285_13b85069",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-11T15:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbe9448b_8a2be496",
+      "range": {
+        "startLine": 413,
+        "startChar": 20,
+        "endLine": 413,
+        "endChar": 44
+      },
+      "revId": "ef77c4321868a68feaa94b535f2d88efa29926d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f1b3fd9_80bd7d39",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "ef77c4321868a68feaa94b535f2d88efa29926d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b804d49d_2d816cbb",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-11T15:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f1b3fd9_80bd7d39",
+      "range": {
+        "startLine": 592,
+        "startChar": 74,
+        "endLine": 592,
+        "endChar": 78
+      },
+      "revId": "ef77c4321868a68feaa94b535f2d88efa29926d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
