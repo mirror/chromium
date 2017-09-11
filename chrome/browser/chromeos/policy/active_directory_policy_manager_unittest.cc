@@ -15,8 +15,8 @@
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
-#include "chromeos/dbus/auth_policy_client.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/mock_auth_policy_client.h"
 #include "components/policy/core/common/cloud/mock_cloud_policy_store.h"
 #include "components/policy/core/common/schema_registry.h"
 #include "components/signin/core/account_id/account_id.h"
@@ -24,52 +24,13 @@
 
 namespace {
 
-// TODO(rsorokin): Replace with MockAuthPolicyClient (see
-// https://crbug.com/753355).
-class TestAuthPolicyClient : public chromeos::AuthPolicyClient {
+class TestAuthPolicyClient : public chromeos::MockAuthPolicyClient {
  public:
-  void Init(dbus::Bus* bus) override { NOTIMPLEMENTED(); }
-
-  void JoinAdDomain(const std::string& machine_name,
-                    const std::string& user_principal_name,
-                    int password_fd,
-                    JoinCallback callback) override {
-    NOTIMPLEMENTED();
-  }
-
-  void AuthenticateUser(const std::string& user_principal_name,
-                        const std::string& object_guid,
-                        int password_fd,
-                        AuthCallback callback) override {
-    NOTIMPLEMENTED();
-  }
-
-  void GetUserStatus(const std::string& object_guid,
-                     GetUserStatusCallback callback) override {
-    NOTIMPLEMENTED();
-  }
-
-  void GetUserKerberosFiles(const std::string& object_guid,
-                            GetUserKerberosFilesCallback callback) override {
-    NOTIMPLEMENTED();
-  }
-
-  void RefreshDevicePolicy(RefreshPolicyCallback callback) override {
-    NOTIMPLEMENTED();
-  }
-
   void RefreshUserPolicy(const AccountId& account_id,
                          RefreshPolicyCallback callback) override {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback),
                                   refresh_user_policy_callback_success_));
-  }
-
-  void ConnectToSignal(
-      const std::string& signal_name,
-      dbus::ObjectProxy::SignalCallback signal_callback,
-      dbus::ObjectProxy::OnConnectedCallback on_connected_callback) override {
-    NOTIMPLEMENTED();
   }
 
   void SetRefreshUserPolicyCallbackSuccess(bool success) {
@@ -92,6 +53,8 @@ class ActiveDirectoryPolicyManagerTest : public testing::Test {
   ActiveDirectoryPolicyManagerTest() {
     auto mock_client_unique_ptr = base::MakeUnique<TestAuthPolicyClient>();
     mock_client_ = mock_client_unique_ptr.get();
+    // Called from active_directory_policy_manager.cc
+    EXPECT_CALL(*mock_store_, Load()).Times(2);
     chromeos::DBusThreadManager::GetSetterForTesting()->SetAuthPolicyClient(
         std::move(mock_client_unique_ptr));
   }
