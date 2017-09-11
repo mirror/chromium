@@ -464,7 +464,7 @@ bool InputMethodController::ReplaceComposition(const String& text) {
       GetFrame(), text, 0,
       TypingCommand::TextCompositionType::kTextCompositionConfirm);
   // Event handler might destroy document.
-  if (!IsAvailable())
+  if (!IsAvailable() || !GetDocument().IsActive())
     return false;
 
   // No DOM update after 'compositionend'.
