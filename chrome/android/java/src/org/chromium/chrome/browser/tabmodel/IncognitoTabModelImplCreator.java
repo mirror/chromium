@@ -11,7 +11,7 @@ import org.chromium.chrome.browser.tabmodel.TabCreatorManager.TabCreator;
 /**
  * Stores all the variables needed to create an Incognito TabModelImpl when it is needed.
  */
-class IncognitoTabModelImplCreator implements IncognitoTabModelDelegate {
+public class IncognitoTabModelImplCreator implements IncognitoTabModelDelegate {
     private final TabCreator mRegularTabCreator;
     private final TabCreator mIncognitoTabCreator;
     private final TabModelSelectorUma mUma;
