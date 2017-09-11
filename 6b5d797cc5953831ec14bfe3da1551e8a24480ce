@@ -93,6 +93,30 @@
       "revId": "6b5d797cc5953831ec14bfe3da1551e8a24480ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2eda486_79d42cf6",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-11T11:35:51Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "7002c1e0_6203ad20",
+      "range": {
+        "startLine": 287,
+        "startChar": 31,
+        "endLine": 287,
+        "endChar": 0
+      },
+      "revId": "6b5d797cc5953831ec14bfe3da1551e8a24480ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
