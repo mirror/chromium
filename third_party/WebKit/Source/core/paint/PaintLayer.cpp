@@ -1642,8 +1642,10 @@ bool PaintLayer::ShouldFragmentCompositedBounds(
     return true;
   if (PaintsWithTransform(kGlobalPaintNormalPhase))
     return true;
-  if (!compositing_layer)
-    return true;
+  if (!compositing_layer) {
+    compositing_layer =
+        EnclosingLayerForPaintInvalidationCrossingFrameBoundaries();
+  }
   // Composited layers may not be fragmented.
   return !compositing_layer->EnclosingPaginationLayer();
 }
