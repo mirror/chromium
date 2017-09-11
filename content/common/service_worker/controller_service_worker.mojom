@@ -1,0 +1,38 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+import "mojo/common/time.mojom";
+import "content/common/service_worker/service_worker_fetch_response_callback.mojom";
+import "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom";
+import "third_party/WebKit/public/platform/modules/serviceworker/service_worker_event_status.mojom";
+
+// S13nServiceWorker:
+// An interface for dispatching events from a controllee to a controller
+// ServiceWorker. Its one of Mojo end points is passed to the controllee
+// in the renderer process.  Its the other Mojo end point is currently
+// implemented by BrowserSideControllerServiceWorker in the browser-process,
+// but eventually this should be implemented directly by the controller
+// service worker in the renderer-process.
+// This basically implements a small subset of ServiceWorkerEventDispatcher
+// for the event that are dispatched from controllees.
+interface ControllerServiceWorker {
+  // Dispatches Fetch event for sub-resources. (Fetch for main resource is
+  // handled by ServiceWorkerEventDispatcher, as the fetch is initiated
+  // in the browser-process during the navigation)
+  // The callback is called once the event finishes, which means the event
+  // handler ran and all outstanding respondWith() and waitUntil() promises have
+  // settled. |response_callback| is called once the promise to respondWith()
+  // settles, or when the event handler ran without calling respondWith().
+  // |fetch_event_id| is used internally when sending the response with a blob
+  // body back to the browser process. In that case, |response_callback| won't
+  // be called.
+  DispatchFetchEvent(int32 fetch_event_id, blink.mojom.FetchAPIRequest request,
+                     ServiceWorkerFetchResponseCallback response_callback)
+      => (blink.mojom.ServiceWorkerEventStatus status,
+          mojo.common.mojom.Time dispatch_event_time);
+
+  // TODO(kinuko): Add DispatchExtendableMessageEvent() as well.
+};
