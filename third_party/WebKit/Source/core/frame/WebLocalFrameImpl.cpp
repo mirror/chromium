@@ -108,6 +108,7 @@
 #include "core/dom/Node.h"
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/ShadowRoot.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
@@ -2434,24 +2435,8 @@ WebFrameScheduler* WebLocalFrameImpl::Scheduler() const {
   return GetFrame()->FrameScheduler();
 }
 
-SingleThreadTaskRunner* WebLocalFrameImpl::TimerTaskRunner() {
-  return GetFrame()
-      ->FrameScheduler()
-      ->ThrottleableTaskRunner()
-      ->ToSingleThreadTaskRunner();
-}
-
-SingleThreadTaskRunner* WebLocalFrameImpl::LoadingTaskRunner() {
-  return GetFrame()
-      ->FrameScheduler()
-      ->LoadingTaskRunner()
-      ->ToSingleThreadTaskRunner();
-}
-
-SingleThreadTaskRunner* WebLocalFrameImpl::UnthrottledTaskRunner() {
-  return GetFrame()
-      ->FrameScheduler()
-      ->PausableTaskRunner()
+SingleThreadTaskRunner* WebLocalFrameImpl::GetTaskRunner(TaskType task_type) {
+  return TaskRunnerHelper::Get(task_type, GetFrame())
       ->ToSingleThreadTaskRunner();
 }
 
