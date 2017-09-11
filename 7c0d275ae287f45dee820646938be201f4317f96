@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82163c2b_a3e23af4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1515,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-11T10:40:58Z",
+      "side": 1,
+      "message": "s/queue_//",
+      "range": {
+        "startLine": 1515,
+        "startChar": 21,
+        "endLine": 1515,
+        "endChar": 52
+      },
+      "revId": "7c0d275ae287f45dee820646938be201f4317f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b413354a_e97e931a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-11T10:40:58Z",
+      "side": 1,
+      "message": "I think this flag (and by extension the one above) is named in a slightly misleading way since we are stopping more than one queue. I\u0027d just call this stopped_when_backgrounded (and stopping_when_backgrounded_enabled) and the policy can define exactly what stopping when backgrounded means.",
+      "range": {
+        "startLine": 574,
+        "startChar": 9,
+        "endLine": 574,
+        "endChar": 40
+      },
+      "revId": "7c0d275ae287f45dee820646938be201f4317f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff2f313_751f01c6",
+        "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-11T10:40:58Z",
+      "side": 1,
+      "message": "s/Queue// (here and elsewhere)",
+      "range": {
+        "startLine": 182,
+        "startChar": 15,
+        "endLine": 182,
+        "endChar": 54
+      },
+      "revId": "7c0d275ae287f45dee820646938be201f4317f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
