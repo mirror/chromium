@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c16736ab_bb32b13d",
+        "filename": "ios/chrome/browser/ui/side_swipe/side_swipe_navigation_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-11T14:25:18Z",
+      "side": 1,
+      "message": "CGFloat is a float on 32bit systems and a double on 64bit systems.  It looks like we will now use the float version of the constant everywhere.  I doubt the loss of precision will cause issues, but I wanted to bring it up.",
+      "revId": "a48685381c8210f275a4dbf5437866cb154e171c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
