@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "af0b3b21_592c35bb",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-11T16:48:51Z",
+      "side": 1,
+      "message": "Yes, CredentialManager is owned by PasswordController (see https://chromium-review.googlesource.com/c/chromium/src/+/652227). PasswordController resets everything in webStateDestroyed().",
+      "parentUuid": "96591836_4fde09a3",
+      "range": {
+        "startLine": 45,
+        "startChar": 14,
+        "endLine": 45,
+        "endChar": 41
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d93c4fd9_f062a3c8",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 12
@@ -99,6 +123,24 @@
       "writtenOn": "2017-09-11T16:10:46Z",
       "side": 1,
       "message": "No need for this. No one will try to copy test fixture.",
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f774637_b986ec67",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-11T16:48:51Z",
+      "side": 1,
+      "message": "It\u0027s not a test fixture but a client.",
+      "parentUuid": "5b2d3952_e385b8af",
       "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
