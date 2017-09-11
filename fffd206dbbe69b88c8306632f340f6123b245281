@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65dda2bc_3ea0d9fa",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_ash.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-11T18:43:19Z",
+      "side": 1,
+      "message": "optional nit: remove if not needed",
+      "revId": "fffd206dbbe69b88c8306632f340f6123b245281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4edaa5a6_f6bbe054",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_ash.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-11T18:43:19Z",
+      "side": 1,
+      "message": "optional nit: remove, fwd declared in via native_browser_frame.h",
+      "revId": "fffd206dbbe69b88c8306632f340f6123b245281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cab7358_e5990d52",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_ash.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-11T18:43:19Z",
+      "side": 1,
+      "message": "maybe: \"BrowserFrameAsh provides the frame for Chrome browser windows on Chrome OS.\"",
+      "revId": "fffd206dbbe69b88c8306632f340f6123b245281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a3cbee_fc215474",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_ash.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-11T18:43:19Z",
+      "side": 1,
+      "message": "optional nit: move to cc file.",
+      "revId": "fffd206dbbe69b88c8306632f340f6123b245281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6b0eeb_96eb631b",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_ash.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-11T18:43:19Z",
+      "side": 1,
+      "message": "optional nit: remove if unused",
+      "revId": "fffd206dbbe69b88c8306632f340f6123b245281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff91aaa_3b98a49c",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_ash.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-11T18:43:19Z",
+      "side": 1,
+      "message": "optional nit: belongs at the top of the \u0027protected:\u0027 section",
+      "revId": "fffd206dbbe69b88c8306632f340f6123b245281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d49862d_3355d070",
+        "filename": "chrome/browser/ui/views/frame/browser_frame_ash.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-11T18:43:19Z",
+      "side": 1,
+      "message": "nit: remove (no other references exist)",
+      "revId": "fffd206dbbe69b88c8306632f340f6123b245281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
