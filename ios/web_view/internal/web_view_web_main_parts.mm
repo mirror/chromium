@@ -8,6 +8,7 @@
 #include "base/path_service.h"
 #include "ios/web_view/internal/app/application_context.h"
 #include "ios/web_view/internal/translate/web_view_translate_service.h"
+#include "ios/web_view/internal/web_view_sync_initializer.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "ui/base/resource/resource_bundle.h"
 
@@ -43,6 +44,8 @@ void WebViewWebMainParts::PreCreateThreads() {
 
 void WebViewWebMainParts::PreMainMessageLoopRun() {
   WebViewTranslateService::GetInstance()->Initialize();
+
+  WebViewSyncInitializer::InitializePreMain();
 }
 
 void WebViewWebMainParts::PostMainMessageLoopRun() {
