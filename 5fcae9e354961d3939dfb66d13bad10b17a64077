@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6d222a9_79b4a46f",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-11T06:49:14Z",
+      "side": 1,
+      "message": "I am struggling if merging the 2 dismissal functions below..\nWhat do you think? thx.",
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a373a52_812d2a2a",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-11T06:49:14Z",
+      "side": 1,
+      "message": "Not sure if I need to dispatch_async for opening the following urls.\nWhat do you think?  Do we need to ask the French team for advice?",
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490d6269_0a34f864",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-11T06:49:14Z",
+      "side": 1,
+      "message": "The _editNodesOrdered thing is copied from bookmark_home_view_controller.\nRequire that for \"open all\" using user\u0027s selection order.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 44
+      },
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbb71879_a29ca7ad",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-11T06:49:14Z",
+      "side": 1,
+      "message": "The change in this file is almost same as the change in bookmark_interaction_controller.mm.\nThe change in this file isn\u0027t tested yet because I am still figuring out the way to open \"clean\" chrome.",
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
