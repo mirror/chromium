@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "05a84f44_28ffe000",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-11T17:50:41Z",
+      "side": 1,
+      "message": "With the complete removal of all Insert methods you currently are not able to modify a Map CBORValue once you have created it. This means the only way to build a Map is to create a flat_map\u003cstd::string, CBORValue\u003e before, and then use the appropriate constructor (e.g. like you do in the unit tests). This again may or may not be what you want. In case you want to be able to modify Arrays and Maps once created, you should add the corresponding non-const getters, i.e. in addition to\n\n const std::vector\u003cCBORValue\u003e\u0026 GetArray() const;\n const base::flat_map\u003cstd::string, CBORValue\u003e\u0026 GetMap() const;\n\nyou also have\n\n std::vector\u003cCBORValue\u003e\u0026 GetArray();\n base::flat_map\u003cstd::string, CBORValue\u003e\u0026 GetMap();\n\nUp to you :)",
+      "parentUuid": "364eb247_b07535e3",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 75
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af5795af_71f34d51",
         "filename": "content/browser/webauth/cbor/cbor_values.cc",
         "patchSetId": 16
@@ -219,6 +243,30 @@
       "side": 1,
       "message": "Kk. In the interest of time, I\u0027m making a note to look into this in a follow-up CL.",
       "parentUuid": "7d27a717_2e604e9f",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89dbf8d4_25a6e915",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-11T17:50:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b2b7e91d_9e5518fe",
       "range": {
         "startLine": 50,
         "startChar": 21,
@@ -678,6 +726,30 @@
     },
     {
       "key": {
+        "uuid": "3b337d32_5d035f4c",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-11T17:50:41Z",
+      "side": 1,
+      "message": "It looks like you added it in the wrong line, having a return in line 31 on the right seems more appropriate.",
+      "parentUuid": "6c6cada2_6d114d7a",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 5
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd90e34c_f450b390",
         "filename": "content/browser/webauth/cbor/cbor_writer.cc",
         "patchSetId": 16
@@ -713,6 +785,30 @@
       "side": 1,
       "message": "StartItem will take care of that for unsigned integers. The second param to StartItem is the actual value, but it gets set in CBOR exactly like how a size parameter would be set.",
       "parentUuid": "bd90e34c_f450b390",
+      "range": {
+        "startLine": 35,
+        "startChar": 42,
+        "endLine": 35,
+        "endChar": 47
+      },
+      "revId": "cdf60476a68183c6d312e3279bfbc3b953f18c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d1c1983_1d7f49d4",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-11T17:50:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "64e9c615_d56c2a6f",
       "range": {
         "startLine": 35,
         "startChar": 42,

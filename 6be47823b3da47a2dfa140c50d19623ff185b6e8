@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "044e973c_48ce398c",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-11T17:50:41Z",
+      "side": 1,
+      "message": "Here emplace_hint with map_value_.end() actually makes sense, since you are guaranteed to iterate over the keys of |in_map| in sorted order.\n\nJust in general this was not true.",
+      "range": {
+        "startLine": 93,
+        "startChar": 16,
+        "endLine": 93,
+        "endChar": 23
+      },
+      "revId": "6be47823b3da47a2dfa140c50d19623ff185b6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10926651_49e8aed2",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-11T17:50:41Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 18
+      },
+      "revId": "6be47823b3da47a2dfa140c50d19623ff185b6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53bfc70c_e487314a",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-11T17:50:41Z",
+      "side": 1,
+      "message": "Given that you don\u0027t have a constructor from bool you shouldn\u0027t need the explicit const char* constructor. In addition, since you also have a StringPiece constructor, the const std::string\u0026 constructor is not necessary either (just today I removed the const std::string\u0026 constructor from base::Value for the same reason). This means both of these constructors can be removed. \n\nThe constructor from std::string\u0026\u0026 is still needed for performance benefits, though.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 51
+      },
+      "revId": "6be47823b3da47a2dfa140c50d19623ff185b6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a9f095_325bd2bf",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-11T17:50:41Z",
+      "side": 1,
+      "message": "Since this type is rather long and you repeat it in multiple places you could consider adding a typedef for these. This is what we do for base::Value, but of course it\u0027s not strictly necessary, more nice to have. Same applies to the Binarystring and Array containers.",
+      "range": {
+        "startLine": 63,
+        "startChar": 21,
+        "endLine": 63,
+        "endChar": 58
+      },
+      "revId": "6be47823b3da47a2dfa140c50d19623ff185b6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
