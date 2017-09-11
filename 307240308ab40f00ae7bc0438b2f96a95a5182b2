@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6706ae03_5f863cde",
+        "filename": "base/allocator/partition_allocator/event_lock.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-09-11T20:38:14Z",
+      "side": 1,
+      "message": "Maybe mention that UnlockSlow is responsible for making this an event?",
+      "revId": "307240308ab40f00ae7bc0438b2f96a95a5182b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05295a2b_c3ee3bfd",
+        "filename": "base/allocator/partition_allocator/event_lock.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-09-11T20:38:14Z",
+      "side": 1,
+      "message": "This looks wrong. The store has to be an interlocked-compare-exchange type store because somebody else may have acquired the lock in-between. Yes?",
+      "revId": "307240308ab40f00ae7bc0438b2f96a95a5182b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fd9d910_d171368a",
+        "filename": "base/allocator/partition_allocator/event_lock.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-09-11T20:38:14Z",
+      "side": 1,
+      "message": "If I understand correctly this stores either UNLOCKED, LOCKED, CONTENDED, or an event object pointer. That seems expensive because the event object needs to be created on demand, and the waiter has to spin until the object has been created. Don\u0027t we need a way to keep the event object around after it is first created? That could be done by assuming an four-byte aligned pointer to the event object and storing the state in the bottom couple of bits.\n\nThe basic design you\u0027re creating is exactly the same as the Windows Critical Section except that they optimized it a while ago to use a keyed event so that the same event is shared by all critical sections, or something like that. So, a critical section should be just as fast...",
+      "revId": "307240308ab40f00ae7bc0438b2f96a95a5182b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
