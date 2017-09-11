@@ -4328,6 +4328,36 @@ TEST_F(DiskCacheEntryTest, SimpleCacheCreateRecoverFromRmdir) {
   entry->Close();
 }
 
+TEST_F(DiskCacheEntryTest, SimpleCacheCreateCollision) {
+  // These two keys collide; this test is that we properly handled creation
+  // of both.
+  const char kCollKey1[] =
+      "\xfb\x4e\x9c\x1d\x66\x71\xf7\x54\xa3\x11\xa0\x7e\x16\xa5\x68\xf6";
+  const char kCollKey2[] =
+      "\xbc\x60\x64\x92\xbc\xa0\x5c\x15\x17\x93\x29\x2d\xe4\x21\xbd\x03";
+
+  const int kSize = 256;
+  scoped_refptr<net::IOBuffer> buffer(new net::IOBuffer(kSize));
+  CacheTestFillBuffer(buffer->data(), kSize, false);
+
+  SetSimpleCacheMode();
+  InitCache();
+
+  disk_cache::Entry* entry1;
+  ASSERT_THAT(CreateEntry(kCollKey1, &entry1), IsOk());
+
+  disk_cache::Entry* entry2;
+  ASSERT_THAT(CreateEntry(kCollKey2, &entry2), IsOk());
+
+  // Make sure that entry was actually created and we didn't just succeed
+  // optimistically. (Oddly I can't seem to hit the sequence of events required
+  // for the bug that used to be here if I just set this to APP_CACHE).
+  EXPECT_EQ(kSize, WriteData(entry2, 0, 0, buffer.get(), kSize, false));
+
+  entry1->Close();
+  entry2->Close();
+}
+
 class DiskCacheSimplePrefetchTest : public DiskCacheEntryTest {
  public:
   DiskCacheSimplePrefetchTest()
