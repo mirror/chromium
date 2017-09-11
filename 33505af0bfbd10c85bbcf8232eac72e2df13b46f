@@ -22,6 +22,30 @@
       "revId": "33505af0bfbd10c85bbcf8232eac72e2df13b46f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99012ee1_7e07925c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivityBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-11T19:10:21Z",
+      "side": 1,
+      "message": "I\u0027d rather keep it as is. If I make this a lambda expression, the pendingIntent parameter conflicts with the pendingIntent parameter defined in the top level function",
+      "parentUuid": "83f826d4_b916c218",
+      "range": {
+        "startLine": 88,
+        "startChar": 28,
+        "endLine": 88,
+        "endChar": 42
+      },
+      "revId": "33505af0bfbd10c85bbcf8232eac72e2df13b46f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
