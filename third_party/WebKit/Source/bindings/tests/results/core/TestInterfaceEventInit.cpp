@@ -1,3 +1,4 @@
+
 // Copyright 2014 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -21,10 +22,6 @@ TestInterfaceEventInit::~TestInterfaceEventInit() {}
 TestInterfaceEventInit::TestInterfaceEventInit(const TestInterfaceEventInit&) = default;
 
 TestInterfaceEventInit& TestInterfaceEventInit::operator=(const TestInterfaceEventInit&) = default;
-
-void TestInterfaceEventInit::setStringMember(const String& value) {
-  string_member_ = value;
-}
 
 DEFINE_TRACE(TestInterfaceEventInit) {
   EventInit::Trace(visitor);

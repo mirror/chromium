@@ -1,3 +1,4 @@
+
 // Copyright 2014 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -21,11 +22,6 @@ TestPermissiveDictionary::~TestPermissiveDictionary() {}
 TestPermissiveDictionary::TestPermissiveDictionary(const TestPermissiveDictionary&) = default;
 
 TestPermissiveDictionary& TestPermissiveDictionary::operator=(const TestPermissiveDictionary&) = default;
-
-void TestPermissiveDictionary::setBooleanMember(bool value) {
-  boolean_member_ = value;
-  has_boolean_member_ = true;
-}
 
 DEFINE_TRACE(TestPermissiveDictionary) {
   IDLDictionaryBase::Trace(visitor);
