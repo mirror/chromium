@@ -42,6 +42,7 @@ test.speech.TEST_STRINGS = {
   networkError: 'Network error',
   noTranslation: 'No translation',
   noVoice: 'No voice',
+  otherError: 'Unknown error',
   permissionError: 'Permission error',
   ready: 'Ready',
   tryAgain: 'Try again',
@@ -181,7 +182,7 @@ test.speech.testSpeechRecognitionInitSettings = function() {
   test.speech.initSpeech();
   assertFalse(speech.recognition_.continuous);
   assertEquals('en-ZA', speech.recognition_.lang);
-  assertEquals(4, speech.recognition_.maxAlternatives);
+  assertEquals(1, speech.recognition_.maxAlternatives);
   assert(!!speech.recognition_);
   test.speech.validateInactive();
 };
@@ -230,7 +231,7 @@ test.speech.testFakeboxClickStartsSpeechWithWorkingView = function() {
  */
 test.speech.testOmniboxFocusWithWorkingView = function() {
   test.speech.initSpeech();
-  speech.start_();
+  speech.start();
 
   assertEquals(speech.State_.STARTED, speech.currentState_);
   assertEquals(1, test.speech.recognitionActiveCount);
@@ -254,7 +255,7 @@ test.speech.testClickHandlingWithUnitializedSpeechRecognition = function() {
   speech.recognition_ = undefined;
   assertEquals(speech.State_.READY, speech.currentState_);
   assert(!speech.recognition_);
-  speech.toggleStartStop();
+  speech.start();
 
   assertEquals(1, test.speech.recognitionActiveCount);
   assertEquals(1, test.speech.viewActiveCount);
@@ -268,7 +269,7 @@ test.speech.testClickHandlingWithUnitializedSpeechRecognition = function() {
  */
 test.speech.testHandleAudioStart = function() {
   test.speech.initSpeech();
-  speech.toggleStartStop();
+  speech.start();
   speech.recognition_.onaudiostart(null);
 
   assertTrue('ready' in test.speech.viewState);
@@ -284,7 +285,7 @@ test.speech.testHandleAudioStart = function() {
  */
 test.speech.testHandleSpeechStart = function() {
   test.speech.initSpeech();
-  speech.toggleStartStop();
+  speech.start();
   speech.recognition_.onaudiostart(null);
   speech.recognition_.onspeechstart(null);
 
@@ -307,7 +308,7 @@ test.speech.testHandleInterimSpeechResponse = function() {
   const responseEvent =
       test.speech.createInterimResponse(lowConfidenceText, highConfidenceText);
 
-  speech.toggleStartStop();
+  speech.start();
   speech.recognition_.onaudiostart(null);
   speech.recognition_.onspeechstart(null);
   speech.recognition_.onresult(responseEvent);
@@ -331,7 +332,7 @@ test.speech.testHandleFinalSpeechResponse = function() {
   const responseEvent =
       test.speech.createFinalResponse(lowConfidenceText, highConfidenceText);
 
-  speech.toggleStartStop();
+  speech.start();
   speech.recognition_.onaudiostart(null);
   speech.recognition_.onspeechstart(null);
   // Handle a final transcript from the recognition API.
@@ -363,13 +364,13 @@ test.speech.testInterruptSpeechInputAfterInterimResult = function() {
   const responseEvent =
       test.speech.createInterimResponse(lowConfidenceText, highConfidenceText);
 
-  speech.start_();
+  speech.start();
   speech.recognition_.onaudiostart(null);
   speech.recognition_.onspeechstart(null);
   // Handle an interim trancript from the recognition API.
   speech.recognition_.onresult(responseEvent);
   // The user interrupts speech.
-  speech.stop_();
+  speech.stop();
 
   assertFalse(speech.isRecognizing_());
   assertEquals('', speech.interimResult_);
@@ -393,10 +394,10 @@ test.speech.testInterruptSpeechInputAfterInterimResult = function() {
  */
 test.speech.testInterruptSpeechInputBeforeResult = function() {
   test.speech.initSpeech();
-  speech.start_();
+  speech.start();
   speech.recognition_.onaudiostart(null);
   speech.recognition_.onspeechstart(null);
-  speech.stop_();
+  speech.stop();
 
   test.speech.validateInactive();
 };
@@ -408,7 +409,7 @@ test.speech.testInterruptSpeechInputBeforeResult = function() {
  */
 test.speech.testSpeechRecognitionErrorTimeout = function() {
   test.speech.initSpeech();
-  speech.toggleStartStop();
+  speech.start();
   speech.recognition_.onerror({error: 'some-error'});
 
   assertFalse(speech.isRecognizing_());
@@ -431,7 +432,7 @@ test.speech.testSpeechRecognitionErrorTimeout = function() {
  */
 test.speech.testNoSpeechInput = function() {
   test.speech.initSpeech();
-  speech.toggleStartStop();
+  speech.start();
   speech.recognition_.onaudiostart(null);
   speech.recognition_.onend(null);
 
@@ -480,7 +481,7 @@ test.speech.testRecognitionHandlersStayInitialized = function() {
   test.speech.initSpeech();
   assertRecognitionHandlers(true);
 
-  speech.start_();
+  speech.start();
   assertRecognitionHandlers(true);
 
   speech.recognition_.onaudiostart(null);
@@ -497,7 +498,7 @@ test.speech.testRecognitionHandlersStayInitialized = function() {
   test.speech.validateInactive();
   assertRecognitionHandlers(true);
 
-  speech.start_();
+  speech.start();
   assertRecognitionHandlers(true);
 };
 
@@ -505,7 +506,7 @@ test.speech.testRecognitionHandlersStayInitialized = function() {
 /**
  * Tests starting and stopping the Speech Recognition API quickly
  * in succession.
- * Motivation: If |speech.start_()| is called too soon after |speech.stop_()|,
+ * Motivation: If |speech.start()| is called too soon after |speech.stop()|,
  * then the recognition interface hasn't yet reset and an error occurs.
  * In this case we need to hard-reset it and reissue the |recognition_.start()|
  * command.
@@ -514,7 +515,7 @@ test.speech.testStopStartErrorHandling = function() {
   test.speech.recognitionStubs.reset();
 
   test.speech.initSpeech();
-  speech.start_();
+  speech.start();
   assertEquals(speech.State_.STARTED, speech.currentState_);
   assertTrue(speech.isRecognizing_());
 
@@ -522,15 +523,15 @@ test.speech.testStopStartErrorHandling = function() {
   assertEquals(speech.State_.AUDIO_RECEIVED, speech.currentState_);
   assertTrue(speech.isRecognizing_());
 
-  speech.stop_();
+  speech.stop();
   assertEquals(speech.State_.READY, speech.currentState_);
   test.speech.validateInactive();
 
-  speech.start_();
+  speech.start();
   assertEquals(speech.State_.STARTED, speech.currentState_);
   assertTrue(speech.isRecognizing_());
 
-  speech.stop_();
+  speech.stop();
   assertEquals(speech.State_.READY, speech.currentState_);
   test.speech.validateInactive();
 };
@@ -572,7 +573,7 @@ test.speech.testStopStartKeyboardShortcutErrorHandling = function() {
  */
 test.speech.testEnterToSubmit = function() {
   test.speech.initSpeech();
-  speech.toggleStartStop();
+  speech.start();
   speech.recognition_.onaudiostart(null);
   speech.recognition_.onspeechstart(null);
   speech.finalResult_ = 'test query';
@@ -596,7 +597,7 @@ test.speech.testEnterToSubmit = function() {
  */
 test.speech.testClickToSubmit = function() {
   test.speech.initSpeech();
-  speech.toggleStartStop();
+  speech.start();
   speech.recognition_.onaudiostart(null);
   speech.recognition_.onspeechstart(null);
   speech.finalResult_ = 'test query';
@@ -680,7 +681,7 @@ test.speech.testKeyboardStartWithCmd = function() {
  */
 test.speech.testClickToAbort = function() {
   test.speech.initSpeech();
-  speech.toggleStartStop();
+  speech.start();
   speech.recognition_.onaudiostart(null);
   speech.recognition_.onspeechstart(null);
   speech.onClick_(
@@ -695,7 +696,7 @@ test.speech.testClickToAbort = function() {
  */
 test.speech.testClickToRetryWhenStopped = function() {
   test.speech.initSpeech();
-  speech.toggleStartStop();
+  speech.start();
   speech.recognition_.onaudiostart(null);
   speech.recognition_.onspeechstart(null);
   // An onend event after onpeechstart forces an error and stops recognition.
@@ -715,7 +716,7 @@ test.speech.testClickToRetryWhenStopped = function() {
  */
 test.speech.testClickToRetryWhenNotStopped = function() {
   test.speech.initSpeech();
-  speech.toggleStartStop();
+  speech.start();
   speech.recognition_.onaudiostart(null);
   speech.recognition_.onspeechstart(null);
   speech.onClick_(
@@ -731,7 +732,7 @@ test.speech.testClickToRetryWhenNotStopped = function() {
  */
 test.speech.testNoSpeechInputMatched = function() {
   test.speech.initSpeech();
-  speech.toggleStartStop();
+  speech.start();
   speech.recognition_.onaudiostart(null);
   speech.recognition_.onspeechstart(null);
   speech.recognition_.onnomatch(null);
@@ -762,7 +763,7 @@ test.speech.testIdleTimeoutWithConfidentSpeechResults = function() {
       test.speech.createInterimResponse(lowConfidenceText, highConfidenceText);
   speech.reset_();
 
-  speech.toggleStartStop();
+  speech.start();
   speech.recognition_.onaudiostart(null);
   speech.recognition_.onspeechstart(null);
   speech.recognition_.onresult(responseEvent);
@@ -800,7 +801,7 @@ test.speech.testIdleTimeoutWithNonConfidentSpeechResults = function() {
       test.speech.createInterimResponse(lowConfidenceText, highConfidenceText);
   speech.reset_();
 
-  speech.toggleStartStop();
+  speech.start();
   speech.recognition_.onaudiostart(null);
   speech.recognition_.onspeechstart(null);
   speech.recognition_.onresult(responseEvent);
@@ -823,7 +824,7 @@ test.speech.testIdleTimeoutWithNonConfidentSpeechResults = function() {
  */
 test.speech.testQueryEncoding = function() {
   test.speech.initSpeech();
-  speech.toggleStartStop();
+  speech.start();
   speech.recognition_.onaudiostart(null);
   speech.recognition_.onspeechstart(null);
   speech.finalResult_ = '🔍t&qôr 文字+weird*chär%?s?';
