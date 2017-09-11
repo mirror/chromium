@@ -41,6 +41,7 @@
 #include "core/animation/animatable/AnimatableTransform.h"
 #include "core/dom/Document.h"
 #include "core/layout/LayoutObject.h"
+#include "core/layout/LayoutTestHelper.h"
 #include "core/paint/ObjectPaintProperties.h"
 #include "core/style/FilterOperations.h"
 #include "core/testing/DummyPageHolder.h"
@@ -50,6 +51,7 @@
 #include "platform/geometry/FloatBox.h"
 #include "platform/geometry/IntSize.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/testing/UnitTestHelpers.h"
 #include "platform/transforms/TransformOperations.h"
 #include "platform/transforms/TranslateTransformOperation.h"
 #include "platform/wtf/HashFunctions.h"
@@ -59,7 +61,7 @@
 
 namespace blink {
 
-class AnimationCompositorAnimationsTest : public ::testing::Test {
+class AnimationCompositorAnimationsTest : public RenderingTest {
  protected:
   RefPtr<TimingFunction> linear_timing_function_;
   RefPtr<TimingFunction> cubic_ease_timing_function_;
@@ -80,6 +82,8 @@ class AnimationCompositorAnimationsTest : public ::testing::Test {
   std::unique_ptr<DummyPageHolder> page_holder_;
 
   void SetUp() override {
+    RenderingTest::SetUp();
+    EnableCompositing();
     linear_timing_function_ = LinearTimingFunction::Shared();
     cubic_ease_timing_function_ = CubicBezierTimingFunction::Preset(
         CubicBezierTimingFunction::EaseType::EASE);
@@ -111,6 +115,7 @@ class AnimationCompositorAnimationsTest : public ::testing::Test {
     timeline_->ResetForTesting();
     element_ = document_->createElement("test");
   }
+  void TearDown() override { RenderingTest::TearDown(); }
 
  public:
   bool ConvertTimingForCompositor(const Timing& t,
@@ -298,6 +303,14 @@ class AnimationCompositorAnimationsTest : public ::testing::Test {
     const auto& cubic_timing_function =
         ToCubicBezierTimingFunction(*keyframe_timing_function);
     EXPECT_EQ(cubic_timing_function.GetEaseType(), ease_type);
+  }
+
+  void LoadTestData(const char* file_name) {
+    String full_path = testing::BlinkRootDir();
+    full_path.append("/Source/core/paint/test_data/");
+    full_path.append(file_name);
+    const Vector<char> input_buffer = testing::ReadFromFile(full_path)->Copy();
+    SetBodyInnerHTML(String(input_buffer.data(), input_buffer.size()));
   }
 };
 
@@ -1331,6 +1344,32 @@ TEST_F(AnimationCompositorAnimationsTest,
 
   element->SetLayoutObject(nullptr);
   LayoutObjectProxy::Dispose(layout_object);
+}
+
+TEST_F(AnimationCompositorAnimationsTest, canStartElementOnCompositorEffect) {
+  LoadTestData("transform-animation.html");
+  Element* target = GetDocument().getElementById("target");
+  const ObjectPaintProperties* properties =
+      target->GetLayoutObject()->FirstFragment()->PaintProperties();
+  EXPECT_TRUE(properties->Transform()->HasDirectCompositingReasons());
+  CompositorAnimations::FailureCode code =
+      CompositorAnimations::CheckCanStartElementOnCompositor(*target);
+  EXPECT_EQ(code, CompositorAnimations::FailureCode::None());
+}
+
+TEST_F(AnimationCompositorAnimationsTest,
+       cannotStartElementOnCompositorEffectWithRuntimeFeature) {
+  ScopedTurnOff2DAndOpacityCompositorAnimationForTest
+      turn_off_2d_and_opacity_compositor_animation(true);
+  LoadTestData("transform-animation.html");
+  Element* target = GetDocument().getElementById("target");
+  const ObjectPaintProperties* properties =
+      target->GetLayoutObject()->FirstFragment()->PaintProperties();
+  EXPECT_TRUE(properties->Transform()->HasDirectCompositingReasons());
+  CompositorAnimations::FailureCode code =
+      CompositorAnimations::CheckCanStartElementOnCompositor(*target);
+  EXPECT_EQ(code, CompositorAnimations::FailureCode::NotPaintIntoOwnBacking(
+                      "Element does not paint into own backing"));
 }
 
 }  // namespace blink
