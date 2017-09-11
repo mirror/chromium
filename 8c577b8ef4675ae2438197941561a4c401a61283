@@ -22,6 +22,30 @@
       "revId": "8c577b8ef4675ae2438197941561a4c401a61283",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76ad14e1_e1165c51",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/StereoPanner/stereopannernode-no-glitch.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-11T16:39:35Z",
+      "side": 0,
+      "message": "Correct.  Recall that we added this test because we found out we need update the pan position in a loop when dezippering.  I think originally this wasn\u0027t done and it caused a glitch as we dezippered across a pan position of 0.",
+      "parentUuid": "efca51d9_486362a8",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "8c577b8ef4675ae2438197941561a4c401a61283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
