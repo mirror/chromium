@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8dd12d8_d5851955",
+        "filename": "components/offline_pages/core/model/create_archive_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T20:11:43Z",
+      "side": 1,
+      "message": "You man not needed it now that generate is in utils.",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "48ad9fcbacda87cd3113cf7328e15bf1113203ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b786201c_c847b40a",
+        "filename": "components/offline_pages/core/model/create_archive_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T20:11:43Z",
+      "side": 1,
+      "message": "I see you are half way there. (this comment coming after the next)",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 33
+      },
+      "revId": "48ad9fcbacda87cd3113cf7328e15bf1113203ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5a162b_03683695",
+        "filename": "components/offline_pages/core/model/create_archive_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T20:11:43Z",
+      "side": 1,
+      "message": "let\u0027s have a base::Clock as a field in the task and use that. It will be easier to test stuff that way.",
+      "range": {
+        "startLine": 62,
+        "startChar": 32,
+        "endLine": 62,
+        "endChar": 49
+      },
+      "revId": "48ad9fcbacda87cd3113cf7328e15bf1113203ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd35b46_53013948",
+        "filename": "components/offline_pages/core/model/create_archive_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T20:11:43Z",
+      "side": 1,
+      "message": "this line must feel very lonely here.\n\nPlease put it under 62.",
+      "revId": "48ad9fcbacda87cd3113cf7328e15bf1113203ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd31083_352a1924",
+        "filename": "components/offline_pages/core/model/create_archive_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T20:11:43Z",
+      "side": 1,
+      "message": "archivers",
+      "revId": "48ad9fcbacda87cd3113cf7328e15bf1113203ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b44a0c_7f45d215",
+        "filename": "components/offline_pages/core/model/create_archive_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T20:11:43Z",
+      "side": 1,
+      "message": "rephrase please:\nVerify that this task is actually needed, e.g. if we don\u0027t access the database, as task for this action might be too much.",
+      "revId": "48ad9fcbacda87cd3113cf7328e15bf1113203ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77e78d8_6bc1dcc0",
+        "filename": "components/offline_pages/core/model/create_archive_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T20:11:43Z",
+      "side": 1,
+      "message": "I wonder if we really need this and next 4 if we are already have OfflinePageItem.\n\nThis might be a good TODO, since I presume this might be required now by archiver itself.",
+      "revId": "48ad9fcbacda87cd3113cf7328e15bf1113203ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960d2346_13d60954",
+        "filename": "components/offline_pages/core/model/create_archive_task_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T20:11:43Z",
+      "side": 1,
+      "message": "https://www.grammarly.com/blog/canceled-vs-cancelled/",
+      "range": {
+        "startLine": 288,
+        "startChar": 30,
+        "endLine": 288,
+        "endChar": 64
+      },
+      "revId": "48ad9fcbacda87cd3113cf7328e15bf1113203ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a09163d_47b0319f",
+        "filename": "components/offline_pages/core/model/create_archive_task_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T20:11:43Z",
+      "side": 1,
+      "message": "In",
+      "range": {
+        "startLine": 394,
+        "startChar": 30,
+        "endLine": 394,
+        "endChar": 55
+      },
+      "revId": "48ad9fcbacda87cd3113cf7328e15bf1113203ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
