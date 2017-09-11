@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cda6e22_8745b887",
+        "filename": "content/browser/payments/payment_instrument_icon_fetcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-11T11:39:52Z",
+      "side": 1,
+      "message": "Need a crbug.com link. The bug must be specific to this particular issue.",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 7
+      },
+      "revId": "6700edd7b8d672207fcc7bd631ca54c7ae3318fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad84bd52_ae3f3b65",
+        "filename": "content/browser/payments/payment_instrument_icon_fetcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-11T11:39:52Z",
+      "side": 1,
+      "message": "// static",
+      "revId": "6700edd7b8d672207fcc7bd631ca54c7ae3318fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e11a71e2_52201f0d",
+        "filename": "content/browser/payments/payment_instrument_icon_fetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-11T11:39:52Z",
+      "side": 1,
+      "message": "#include \"base/callback_forward.h\"",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "6700edd7b8d672207fcc7bd631ca54c7ae3318fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9fc9510_51c6b435",
+        "filename": "content/browser/payments/payment_instrument_icon_fetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-11T11:39:52Z",
+      "side": 1,
+      "message": "// Should be called on IO thread.",
+      "revId": "6700edd7b8d672207fcc7bd631ca54c7ae3318fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04793cc7_157d50da",
+        "filename": "content/browser/payments/payment_instrument_icon_fetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-11T11:39:52Z",
+      "side": 1,
+      "message": "#include \"base/memory/ref_counted.h\"",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 19
+      },
+      "revId": "6700edd7b8d672207fcc7bd631ca54c7ae3318fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdad856f_9501ea27",
+        "filename": "content/browser/payments/payment_instrument_icon_fetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-11T11:39:52Z",
+      "side": 1,
+      "message": "This needs to be in private section.",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "6700edd7b8d672207fcc7bd631ca54c7ae3318fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
