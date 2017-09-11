@@ -29,6 +29,8 @@ source_set("clients") {
     "mojo_cdm.h",
     "mojo_cdm_factory.cc",
     "mojo_cdm_factory.h",
+    "mojo_cdm_file_io_impl.cc",
+    "mojo_cdm_file_io_impl.h",
     "mojo_decoder_factory.cc",
     "mojo_decoder_factory.h",
     "mojo_decryptor.cc",
@@ -65,6 +67,7 @@ source_set("clients") {
   ]
 
   deps = [
+    "//media/cdm:cdm_api",
     "//media/gpu",
     "//media/mojo/common",
     "//media/mojo/common:mojo_shared_buffer_video_frame",
