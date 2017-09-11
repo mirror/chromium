@@ -673,10 +673,7 @@ ValueForContentPositionAndDistributionWithOverflowAlignment(
     case kContentPositionNormal:
       // Handle 'normal' value, not valid as content-distribution fallback.
       if (data.Distribution() == kContentDistributionDefault) {
-        result->Append(*CSSIdentifierValue::Create(
-            RuntimeEnabledFeatures::CSSGridLayoutEnabled()
-                ? CSSValueNormal
-                : normal_behavior_value_id));
+        result->Append(*CSSIdentifierValue::Create(CSSValueNormal));
       }
       break;
     case kContentPositionLastBaseline:
