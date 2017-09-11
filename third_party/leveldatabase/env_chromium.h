@@ -15,6 +15,7 @@
 #include "base/containers/linked_list.h"
 #include "base/files/file.h"
 #include "base/files/file_path.h"
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/metrics/histogram.h"
 #include "leveldb/db.h"
@@ -293,16 +294,20 @@ class DBTracker {
  private:
   class TrackedDBImpl;
   class MemoryDumpProvider;
+  FRIEND_TEST_ALL_PREFIXES(ChromiumEnvDBTrackerTest, IsTrackedDB);
 
   DBTracker();
   ~DBTracker();
+
+  // Checks if |db| is tracked.
+  bool IsTrackedDB(const leveldb::DB* db) const;
 
   void DatabaseOpened(TrackedDBImpl* database);
   void DatabaseDestroyed(TrackedDBImpl* database);
 
   std::unique_ptr<MemoryDumpProvider> mdp_;
 
-  base::Lock databases_lock_;
+  mutable base::Lock databases_lock_;
   base::LinkedList<TrackedDBImpl> databases_;
 
   DISALLOW_COPY_AND_ASSIGN(DBTracker);
