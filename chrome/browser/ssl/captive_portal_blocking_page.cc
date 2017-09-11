@@ -37,6 +37,14 @@
 #include "net/ssl/ssl_info.h"
 #include "ui/base/l10n/l10n_util.h"
 
+#if defined(OS_ANDROID)
+#include "base/android/jni_android.h"
+#include "chrome/browser/ssl/captive_portal_helper_android.h"
+#include "content/public/common/referrer.h"
+#include "net/android/network_library.h"
+#include "ui/base/window_open_disposition.h"
+#endif
+
 namespace {
 
 const char kMetricsName[] = "captive_portal";
@@ -75,8 +83,6 @@ CaptivePortalBlockingPage::CaptivePortalBlockingPage(
       login_url_(login_url),
       ssl_info_(ssl_info),
       callback_(callback) {
-  DCHECK(login_url_.is_valid());
-
   if (ssl_cert_reporter) {
     cert_report_helper_.reset(new CertReportHelper(
         std::move(ssl_cert_reporter), web_contents, request_url, ssl_info,
@@ -118,6 +124,8 @@ std::string CaptivePortalBlockingPage::GetWiFiSSID() const {
     return std::string();
 #elif defined(OS_LINUX)
   ssid = net::GetWifiSSID();
+#elif defined(OS_ANDROID)
+  ssid = net::android::GetWifiSSID();
 #endif
   // TODO(meacer): Handle non UTF8 SSIDs.
   if (!base::IsStringUTF8(ssid))
@@ -155,9 +163,12 @@ void CaptivePortalBlockingPage::PopulateInterstitialStrings(
   load_time_data->SetString("heading", tab_title);
 
   base::string16 paragraph;
-  if (login_url_.spec() == captive_portal::CaptivePortalDetector::kDefaultURL) {
-    // Captive portal may intercept requests without HTTP redirects, in which
+  if (login_url_.is_empty()) {
+    // login_url_ can be empty when:
+    // - The captive portal intercepts requests without HTTP redirects, in which
     // case the login url would be the same as the captive portal detection url.
+    // - The captive portal was detected via Captive portal certificate list.
+    // - The captive portal was reported by the OS.
     // Don't show the login url in that case.
     if (wifi_ssid.empty()) {
       paragraph = l10n_util::GetStringUTF16(
@@ -216,7 +227,21 @@ void CaptivePortalBlockingPage::CommandReceived(const std::string& command) {
     case security_interstitials::CMD_OPEN_LOGIN:
       captive_portal::CaptivePortalMetrics::LogCaptivePortalBlockingPageEvent(
           captive_portal::CaptivePortalMetrics::OPEN_LOGIN_PAGE);
+#if defined(OS_ANDROID)
+      {
+        // CaptivePortalTabHelper is not available on Android. Simply open the
+        // login URL in a new tab. login_url_ is empty on Android as well, use
+        // the platform's portal detection URL.
+        const std::string url = chrome::android::GetCaptivePortalServerUrl(
+            base::android::AttachCurrentThread());
+        content::OpenURLParams params(GURL(url), content::Referrer(),
+                                      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+                                      ui::PAGE_TRANSITION_LINK, false);
+        web_contents()->OpenURL(params);
+      }
+#else
       CaptivePortalTabHelper::OpenLoginTabForWebContents(web_contents(), true);
+#endif
       break;
     case security_interstitials::CMD_DO_REPORT:
       controller()->SetReportingPreference(true);
