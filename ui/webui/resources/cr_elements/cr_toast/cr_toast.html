@@ -1,0 +1,35 @@
+<link rel="import" href="chrome://resources/html/polymer.html">
+<link rel="import" href="chrome://resources/html/timer_proxy.html">
+
+<dom-module id="cr-toast">
+  <template>
+    <style>
+      :host {
+        align-items: center;
+        background-color: #323232;
+        border-radius: 4px;
+        bottom: 0;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.28);
+        box-sizing: border-box;
+        display: flex;
+        margin: 24px;
+        max-width: 568px;
+        min-height: 52px;
+        min-width: 288px;
+        opacity: 0;
+        padding: 0 24px;
+        position: fixed;
+        transform: translateY(100px);
+        transition: transform 300ms, opacity 300ms;
+        white-space: nowrap;
+      }
+
+      :host([aria-hidden=false]) {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <slot></slot>
+  </template>
+  <script src="cr_toast.js"></script>
+</dom-module>

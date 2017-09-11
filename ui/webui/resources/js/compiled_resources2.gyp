@@ -79,6 +79,10 @@
       'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
+      'target_name': 'timer_proxy',
+      'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
       'target_name': 'util',
       'dependencies': [
         '<(EXTERNS_GYP):chrome_send',
