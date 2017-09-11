@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd681119_40225fca",
+        "filename": "dbus/message.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-11T15:06:24Z",
+      "side": 1,
+      "message": "Unfortunately, we cannot use, because default ctor for those classes are non public, so those are inaccessible from std::make_unique.",
+      "parentUuid": "a5c31950_2933cfa8",
+      "revId": "7fd76e7ec6675f4a3d6d8f05929731416565f376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "882f591b_dce086f1",
         "filename": "dbus/message.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-11T09:11:03Z",
       "side": 1,
       "message": "Can\u0027t we use DCHECK_NE?",
+      "revId": "7fd76e7ec6675f4a3d6d8f05929731416565f376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf5903a_c7409625",
+        "filename": "dbus/message.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-11T15:06:24Z",
+      "side": 1,
+      "message": "Then, rather, let\u0027s use implicit bool check.",
+      "parentUuid": "882f591b_dce086f1",
       "revId": "7fd76e7ec6675f4a3d6d8f05929731416565f376",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "fe980951_a64d9d63",
+        "filename": "dbus/message.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-11T15:06:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40fb8f71_fa037af1",
+      "range": {
+        "startLine": 161,
+        "startChar": 41,
+        "endLine": 162,
+        "endChar": 21
+      },
+      "revId": "7fd76e7ec6675f4a3d6d8f05929731416565f376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08ac988f_b5dd2042",
         "filename": "dbus/message.h",
         "patchSetId": 1
@@ -79,6 +139,30 @@
       "revId": "7fd76e7ec6675f4a3d6d8f05929731416565f376",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c5010c_1f8671eb",
+        "filename": "dbus/message.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-11T15:06:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08ac988f_b5dd2042",
+      "range": {
+        "startLine": 190,
+        "startChar": 31,
+        "endLine": 191,
+        "endChar": 12
+      },
+      "revId": "7fd76e7ec6675f4a3d6d8f05929731416565f376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
