@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "2f6ffc86_cf767762",
+        "filename": "sandbox/win/src/sid.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-11T17:19:54Z",
+      "side": 1,
+      "message": "I\u0027m just curious if you made a conscious decision to use a DWORD for count_ and for indexing into this array?  In practice it doesn\u0027t really matter here - it\u0027s never going to be a very big array... I just always tend to use size_t for indexing arrays.\n\nIf you feel that the code is just cleaner not having to convert between size_t/DWORD, or just made this decision for a reason, feel free to ignore this comment.",
+      "range": {
+        "startLine": 26,
+        "startChar": 26,
+        "endLine": 26,
+        "endChar": 31
+      },
+      "revId": "1b185f12505373c08876d367eed5703713ac4a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91a833c_5d251616",
+        "filename": "sandbox/win/src/sid.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-11T17:19:54Z",
+      "side": 1,
+      "message": "Nice clean up.  Way fewer casts.",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 7
+      },
+      "revId": "1b185f12505373c08876d367eed5703713ac4a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbe5b35b_2e3f25a0",
         "filename": "sandbox/win/src/sid.h",
         "patchSetId": 2
