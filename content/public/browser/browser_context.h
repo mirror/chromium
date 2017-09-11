@@ -97,11 +97,15 @@ class CONTENT_EXPORT BrowserContext : public base::SupportsUserData {
   // for this |context|.
   static BrowsingDataRemover* GetBrowsingDataRemover(BrowserContext* context);
 
+  // Returns a StoragePartition for the given SiteInstance. If it does not
+  // already exist, this will return nullptr if |can_create| is true.
   static StoragePartition* GetStoragePartition(BrowserContext* browser_context,
-                                               SiteInstance* site_instance);
+                                               SiteInstance* site_instance,
+                                               bool can_create = true);
   static StoragePartition* GetStoragePartitionForSite(
       BrowserContext* browser_context,
-      const GURL& site);
+      const GURL& site,
+      bool can_create = true);
   using StoragePartitionCallback = base::Callback<void(StoragePartition*)>;
   static void ForEachStoragePartition(
       BrowserContext* browser_context,
