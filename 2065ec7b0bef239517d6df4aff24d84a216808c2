@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4373db28_cbf9518b",
+        "filename": "components/offline_pages/core/model/get_pages_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-11T20:05:36Z",
+      "side": 1,
+      "message": "I don\u0027t love the CreateTaskFor prefix, since it\u0027s not clear what \"for\" really means.  Can you call it GetPagesTaskMatchingClientIds or something similar (For -\u003e Matching)?",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34fbe303_c9ff00e2",
+        "filename": "components/offline_pages/core/test_task_runner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-11T20:05:36Z",
+      "side": 1,
+      "message": "The word \"task\" is somewhat redundant and it\u0027s very confusing in this particular spot.\n\nTestingTaskQueueTaskRunner?\nTestingTaskQueue?",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
