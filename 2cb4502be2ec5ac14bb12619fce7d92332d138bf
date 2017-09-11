@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c9ff1038_e77ccf5c",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-09-11T15:07:02Z",
+      "side": 1,
+      "message": "LogcatMonitor is file-based and more suitable for monitoring for specific regex or pids that never change.\n\nWe want all of Chrome\u0027s pids which change frequently and we don\u0027t want to just process existing logcat, but rather continuously monitor and display logcat based on changing requirements without reading and re-reading files, which LogcatMonitor is not designed to do.",
+      "parentUuid": "df15ee13_d3b58158",
+      "revId": "2cb4502be2ec5ac14bb12619fce7d92332d138bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48faf0d6_d1509c2e",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
