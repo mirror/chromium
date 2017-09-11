@@ -90,16 +90,50 @@ public class ProfileDataCache implements ProfileDownloader.Observer, ProfileData
         }
     }
 
-    private static class CacheEntry {
-        public CacheEntry(Drawable picture, String fullName, String givenName) {
-            this.picture = picture;
-            this.fullName = fullName;
-            this.givenName = givenName;
+    /**
+     * Immutable holder for cached profile data.
+     */
+    public static class CacheEntry {
+        private final @Nullable String mAccountName;
+        private final @Nullable Drawable mPicture;
+        private final @Nullable String mFullName;
+        private final @Nullable String mGivenName;
+
+        public CacheEntry(@Nullable String accountName, @Nullable Drawable picture,
+                @Nullable String fullName, @Nullable String givenName) {
+            mAccountName = accountName;
+            mPicture = picture;
+            mFullName = fullName;
+            mGivenName = givenName;
         }
 
-        public Drawable picture;
-        public String fullName;
-        public String givenName;
+        /**
+         * @return The account name (i.e. the e-mail address).
+         */
+        public @Nullable String getAccountName() {
+            return mAccountName;
+        }
+
+        /**
+         * @return The picture of the account.
+         */
+        public @Nullable Drawable getPicture() {
+            return mPicture;
+        }
+
+        /**
+         * @return The full name of the user (e.g., John Doe).
+         */
+        public @Nullable String getFullName() {
+            return mFullName;
+        }
+
+        /**
+         * @return The given name of the user (e.g., "John" from "John Doe").
+         */
+        public @Nullable String getGivenName() {
+            return mGivenName;
+        }
     }
 
     private final Context mContext;
@@ -151,6 +185,19 @@ public class ProfileDataCache implements ProfileDownloader.Observer, ProfileData
     }
 
     /**
+     * Gets the {@link CacheEntry} containing the cached profile data corresponding to an account,
+     * providing placeholders for missing image or missing full name.
+     */
+    public CacheEntry getProfileData(String accountId) {
+        String fullName = getFullName(accountId);
+        if (fullName == null) {
+            fullName = accountId;
+        }
+
+        return new CacheEntry(accountId, getImage(accountId), fullName, getGivenName(accountId));
+    }
+
+    /**
      * @param accountId Google account ID for the image that is requested.
      * @return Returns the profile image for a given Google account ID if it's in
      *         the cache, otherwise returns a placeholder image.
@@ -158,7 +205,7 @@ public class ProfileDataCache implements ProfileDownloader.Observer, ProfileData
     public Drawable getImage(String accountId) {
         CacheEntry cacheEntry = mCacheEntries.get(accountId);
         if (cacheEntry == null) return mPlaceholderImage;
-        return cacheEntry.picture;
+        return cacheEntry.getPicture();
     }
 
     /**
@@ -166,10 +213,10 @@ public class ProfileDataCache implements ProfileDownloader.Observer, ProfileData
      * @return Returns the full name for a given Google account ID if it is
      *         the cache, otherwise returns null.
      */
-    public String getFullName(String accountId) {
+    public @Nullable String getFullName(String accountId) {
         CacheEntry cacheEntry = mCacheEntries.get(accountId);
         if (cacheEntry == null) return null;
-        return cacheEntry.fullName;
+        return cacheEntry.getFullName();
     }
 
     /**
@@ -177,10 +224,10 @@ public class ProfileDataCache implements ProfileDownloader.Observer, ProfileData
      * @return Returns the given name for a given Google account ID if it is in the cache, otherwise
      * returns null.
      */
-    public String getGivenName(String accountId) {
+    public @Nullable String getGivenName(String accountId) {
         CacheEntry cacheEntry = mCacheEntries.get(accountId);
         if (cacheEntry == null) return null;
-        return cacheEntry.givenName;
+        return cacheEntry.getGivenName();
     }
 
     /**
@@ -217,20 +264,17 @@ public class ProfileDataCache implements ProfileDownloader.Observer, ProfileData
     private void populateCacheFromProfileDataSource() {
         for (Map.Entry<String, ProfileDataSource.ProfileData> entry :
                 mProfileDataSource.getProfileDataMap().entrySet()) {
-            mCacheEntries.put(entry.getKey(), createCacheEntryFromProfileData(entry.getValue()));
+            mCacheEntries.put(entry.getKey(),
+                    createCacheEntryFromProfileData(entry.getKey(), entry.getValue()));
         }
-    }
-
-    private CacheEntry createCacheEntryFromProfileData(ProfileDataSource.ProfileData profileData) {
-        return new CacheEntry(prepareAvatar(profileData.getAvatar()), profileData.getFullName(),
-                profileData.getGivenName());
     }
 
     @Override
     public void onProfileDownloaded(String accountId, String fullName, String givenName,
             Bitmap bitmap) {
         ThreadUtils.assertOnUiThread();
-        mCacheEntries.put(accountId, new CacheEntry(prepareAvatar(bitmap), fullName, givenName));
+        mCacheEntries.put(
+                accountId, new CacheEntry(accountId, prepareAvatar(bitmap), fullName, givenName));
         for (Observer observer : mObservers) {
             observer.onProfileDataUpdated(accountId);
         }
@@ -244,12 +288,18 @@ public class ProfileDataCache implements ProfileDownloader.Observer, ProfileData
         if (profileData == null) {
             mCacheEntries.remove(accountId);
         } else {
-            mCacheEntries.put(accountId, createCacheEntryFromProfileData(profileData));
+            mCacheEntries.put(accountId, createCacheEntryFromProfileData(accountId, profileData));
         }
 
         for (Observer observer : mObservers) {
             observer.onProfileDataUpdated(accountId);
         }
+    }
+
+    private CacheEntry createCacheEntryFromProfileData(
+            String accountId, ProfileDataSource.ProfileData profileData) {
+        return new CacheEntry(accountId, prepareAvatar(profileData.getAvatar()),
+                profileData.getFullName(), profileData.getGivenName());
     }
 
     /**

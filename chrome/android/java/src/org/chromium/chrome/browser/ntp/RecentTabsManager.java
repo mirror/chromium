@@ -108,8 +108,7 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
         if (ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_SIGNIN_PROMOS)) {
             int imageSize = context.getResources().getDimensionPixelSize(R.dimen.user_picture_size);
             mProfileDataCache = new ProfileDataCache(mContext, profile, imageSize);
-            mSigninPromoController =
-                    new SigninPromoController(mProfileDataCache, SigninAccessPoint.RECENT_TABS);
+            mSigninPromoController = new SigninPromoController(SigninAccessPoint.RECENT_TABS);
         }
 
         mRecentlyClosedTabManager.setTabsUpdatedRunnable(new Runnable() {
@@ -409,8 +408,7 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
             mProfileDataCache.update(Collections.singletonList(defaultAccountName));
         }
 
-        mSigninPromoController.setAccountName(defaultAccountName);
-
+        mSigninPromoController.setProfileData(mProfileDataCache.getProfileData(defaultAccountName));
         if (!mIsNewPromoShowing) {
             mIsNewPromoShowing = true;
             mSigninPromoController.recordSigninPromoImpression();
