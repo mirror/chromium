@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c8b390b_2c76341c",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-11T20:45:15Z",
+      "side": 1,
+      "message": "nit: \"Namespace names are all lower-case.\" (https://google.github.io/styleguide/cppguide.html#Namespace_Names)",
+      "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eca017f_b25e3b9a",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-11T20:45:15Z",
+      "side": 1,
+      "message": "you can get rid of the UNKNOWN case and the comparison on line 56 and make this threadsafe(!) by using a lambda. something like:\n  static const bool load_succeeded \u003d []() {\n    HRESULT hr \u003d E_FAIL;\n    __try {\n      ...\n    }\n    return SUCCEEDED(hr);\n  }();\n  return load_succeeded;\n\nalso, consider ThreadRestrictions::AssertIOAllowed() at the top of the function since it\u0027s expected to go to disk to load the DLL.",
+      "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2786a78d_c03c63e9",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-11T20:45:15Z",
+      "side": 1,
+      "message": "this should capture the length and use it below in the 3-arg WideToUTF8.",
+      "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b42e299_ae56a7d0",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-11T20:45:15Z",
+      "side": 1,
+      "message": "i don\u0027t believe you need BASE_EXPORT on individual members of a class that is BASE_EXPORT.",
+      "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0cf2ee_3173cc0f",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-11T20:45:15Z",
+      "side": 1,
+      "message": "consider a getter that returns a base::StringPiece16 to the raw string. seems useful.",
+      "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9066a04c_260ed326",
+        "filename": "base/win/scoped_hstring_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-11T20:45:15Z",
+      "side": 1,
+      "message": "this shouldn\u0027t be here, should it?\n(same comment below)",
+      "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826be5cb_c19b12f6",
+        "filename": "base/win/scoped_hstring_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-11T20:45:15Z",
+      "side": 1,
+      "message": "it\u0027s supported in win8.1, no?",
+      "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
