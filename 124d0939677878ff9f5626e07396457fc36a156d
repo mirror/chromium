@@ -22,6 +22,30 @@
       "revId": "124d0939677878ff9f5626e07396457fc36a156d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "351417dd_2716226f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-11T08:33:24Z",
+      "side": 0,
+      "message": "lol; that happens when I prepare a quick cl in a meeting...",
+      "parentUuid": "02984ef5_6aa5afd8",
+      "range": {
+        "startLine": 767,
+        "startChar": 12,
+        "endLine": 767,
+        "endChar": 14
+      },
+      "revId": "124d0939677878ff9f5626e07396457fc36a156d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
