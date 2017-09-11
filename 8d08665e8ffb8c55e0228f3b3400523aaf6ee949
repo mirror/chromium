@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cfc8ff1d_e1b320a6",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-09-11T11:29:49Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "17ebdc09_ac2e0922",
+      "revId": "8d08665e8ffb8c55e0228f3b3400523aaf6ee949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab872628_155f39b1",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-11T10:31:10Z",
       "side": 0,
       "message": "Why are you removing the use counter?\nOne thing is that the runtime flag is removed, a different one is that we don\u0027t want metrics for CSS Grid Layout.\nFelxbox has a counter for example, and I believe it\u0027s useful to keep Grid Layout counter to check how people are using grid.",
+      "revId": "8d08665e8ffb8c55e0228f3b3400523aaf6ee949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26adfe56_b5fb838d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-09-11T11:29:49Z",
+      "side": 0,
+      "message": "Fixed. I mistakenly thought this was tied to the flag.",
+      "parentUuid": "ab872628_155f39b1",
       "revId": "8d08665e8ffb8c55e0228f3b3400523aaf6ee949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
