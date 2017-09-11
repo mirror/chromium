@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "701f9310_5a3fa6e7",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2782,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-11T21:57:15Z",
+      "side": 1,
+      "message": "Maybe explain *why* we\u0027re doing this (i.e. so we don\u0027t end up deferring indefinitely in a read/modify/write loop)",
+      "range": {
+        "startLine": 2782,
+        "startChar": 8,
+        "endLine": 2782,
+        "endChar": 12
+      },
+      "revId": "369c802a0cb5f3de78dafee201b777609c3a6da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7b104ef_2ef841e7",
         "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
         "patchSetId": 4
@@ -47,6 +70,121 @@
       "writtenOn": "2017-09-11T20:37:21Z",
       "side": 1,
       "message": "Nit: last cleanup? Don\u0027t think \"clean\" is a noun.",
+      "revId": "369c802a0cb5f3de78dafee201b777609c3a6da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afee0eab_2de5fb63",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2794,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-11T21:57:15Z",
+      "side": 1,
+      "message": "Maybe define a local `bool defer \u003d committing_transaction_count_ \u003d\u003d 0;` which can be used here and below, to self-document a bit?",
+      "range": {
+        "startLine": 2794,
+        "startChar": 34,
+        "endLine": 2794,
+        "endChar": 68
+      },
+      "revId": "369c802a0cb5f3de78dafee201b777609c3a6da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf40348_aaaac02e",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2972,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-11T21:57:15Z",
+      "side": 1,
+      "message": "Even if the commit failed?\n\n(probably yes, since we probably did delete some cruft on disk even if the commit failed, but add a comment explaining that?)",
+      "range": {
+        "startLine": 2972,
+        "startChar": 2,
+        "endLine": 2972,
+        "endChar": 49
+      },
+      "revId": "369c802a0cb5f3de78dafee201b777609c3a6da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3501c428_c955638c",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 4075,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-11T21:57:15Z",
+      "side": 1,
+      "message": "Can you make this explicitly Once or Repeating, as appropriate?",
+      "range": {
+        "startLine": 4075,
+        "startChar": 8,
+        "endLine": 4075,
+        "endChar": 15
+      },
+      "revId": "369c802a0cb5f3de78dafee201b777609c3a6da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6092d4f9_df48ce92",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-11T21:57:15Z",
+      "side": 1,
+      "message": "nit: its",
+      "range": {
+        "startLine": 605,
+        "startChar": 48,
+        "endLine": 605,
+        "endChar": 52
+      },
+      "revId": "369c802a0cb5f3de78dafee201b777609c3a6da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8baa2ba5_405edad0",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-11T21:57:15Z",
+      "side": 1,
+      "message": "Remove this",
+      "range": {
+        "startLine": 180,
+        "startChar": 3,
+        "endLine": 180,
+        "endChar": 29
+      },
       "revId": "369c802a0cb5f3de78dafee201b777609c3a6da0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
