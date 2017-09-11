@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e9e4f48_74356856",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-11T21:07:25Z",
+      "side": 1,
+      "message": "This will not work as expected since it will remove the trilinear filtering before the exiting animation starts. So that no trilinear filtering in the exiting animation.",
+      "revId": "8fecf8933ff4947cdf66ac792e7cc2db970ee960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
