@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e997732e_746a5ac6",
+        "filename": "chrome/browser/extensions/updater/chrome_update_client_config.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-11T18:14:21Z",
+      "side": 1,
+      "message": "It\u0027s actually a profile keyed service, so it\u0027s indirectly owned by the profile.  Do we know that this access is always safe?",
+      "revId": "b79fde0ded0bb5fda360e781011bac4864f38325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
