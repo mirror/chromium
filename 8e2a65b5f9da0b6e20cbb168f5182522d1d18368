@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b7540de_bb020d49",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-11T14:47:01Z",
+      "side": 1,
+      "message": "I don\u0027t like that the tab container has to specifically know about the toolbar configuration.\n\nBut the only better idea I have at the moment is to have the toolbar broadcast something, which isn\u0027t much better, since it would really just be broadcasting what it _wants_ the status bar color to be, which isn\u0027t how the broadcaster should be used.",
+      "range": {
+        "startLine": 134,
+        "startChar": 7,
+        "endLine": 134,
+        "endChar": 30
+      },
+      "revId": "8e2a65b5f9da0b6e20cbb168f5182522d1d18368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c17c809_b6fac0d1",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-11T14:47:01Z",
+      "side": 1,
+      "message": "How about we just have a -statusBarBackgroundColor property instead of passing in the whole toolbar config?",
+      "range": {
+        "startLine": 172,
+        "startChar": 22,
+        "endLine": 172,
+        "endChar": 42
+      },
+      "revId": "8e2a65b5f9da0b6e20cbb168f5182522d1d18368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff4daf8_4241dc4d",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-11T14:47:01Z",
+      "side": 1,
+      "message": "Why not have the button factory be a property of the configuration? Or just combine the two into one class or protocol.",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 45
+      },
+      "revId": "8e2a65b5f9da0b6e20cbb168f5182522d1d18368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
