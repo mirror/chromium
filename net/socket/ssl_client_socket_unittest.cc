@@ -116,10 +116,10 @@ class WrappedStreamSocket : public StreamSocket {
   const NetLogWithSource& NetLog() const override {
     return transport_->NetLog();
   }
-  void SetSubresourceSpeculation() override {
-    transport_->SetSubresourceSpeculation();
+  void SetSocketUseCallback(const SocketUseCallback& callback) override {
+    NOTREACHED();
   }
-  void SetOmniboxSpeculation() override { transport_->SetOmniboxSpeculation(); }
+  void SetWasUsedToServiceRequest() override {}
   bool WasEverUsed() const override { return transport_->WasEverUsed(); }
   bool WasAlpnNegotiated() const override {
     return transport_->WasAlpnNegotiated();

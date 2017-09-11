@@ -122,11 +122,12 @@ const NetLogWithSource& UnixDomainClientSocket::NetLog() const {
   return net_log_;
 }
 
-void UnixDomainClientSocket::SetSubresourceSpeculation() {
+void UnixDomainClientSocket::SetSocketUseCallback(
+    const SocketUseCallback& callback) {
+  NOTREACHED();
 }
 
-void UnixDomainClientSocket::SetOmniboxSpeculation() {
-}
+void UnixDomainClientSocket::SetWasUsedToServiceRequest() {}
 
 bool UnixDomainClientSocket::WasEverUsed() const {
   return true;  // We don't care.

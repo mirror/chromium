@@ -32,6 +32,7 @@
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/socket/ssl_server_socket.h"
+#include "net/socket/stream_socket.h"
 #include "net/ssl/ssl_config_service.h"
 #include "net/ssl/ssl_server_config.h"
 #include "remoting/base/rsa_key_pair.h"
@@ -125,8 +126,11 @@ class NetStreamSocketAdapter : public net::StreamSocket {
     return net::ERR_FAILED;
   }
   const net::NetLogWithSource& NetLog() const override { return net_log_; }
-  void SetSubresourceSpeculation() override { NOTREACHED(); }
-  void SetOmniboxSpeculation() override { NOTREACHED(); }
+  void SetSocketUseCallback(
+      const net::StreamSocket::SocketUseCallback& callback) override {
+    NOTREACHED();
+  }
+  void SetWasUsedToServiceRequest() override {}
   bool WasEverUsed() const override {
     NOTREACHED();
     return true;

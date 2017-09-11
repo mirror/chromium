@@ -40678,6 +40678,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Net.Preconnect.Use" enum="PreconnectSocketUse">
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    Whether a given preconnect socket (TCP/SSL) was actually used.
+  </summary>
+</histogram>
+
 <histogram name="Net.PreconnectedLinkNavigations" enum="PreconnectedNavigation">
   <obsolete>
     No longer tracked.
@@ -40794,6 +40801,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Net.PreconnectUtilization2" enum="NetPreconnectUtilization">
+  <obsolete>
+    No longer tracked.
+  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     Indicate final utilization for each attempted socket connection.
@@ -100387,6 +100397,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       label="covers fetches when connected to cellular networks"/>
   <affected-histogram name="Precache.DownloadedNonPrecache"/>
   <affected-histogram name="Precache.Saved"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="PreconnectClient" separator=".">
+  <suffix name="Predictor.Omnibox" label="Omnibox prediction"/>
+  <suffix name="Predictor.EarlyLoad" label="Early load prediction"/>
+  <suffix name="Predictor.Self" label="Self referral prediction"/>
+  <suffix name="Predictor.Learned" label="Learned referral prediction"/>
+  <suffix name="ChromeOSAuthPrewarmer" label="ChromeOS auth prewarmer"/>
+  <affected-histogram name="Net.Preconnect.Use"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="PreferenceFileNames" separator=".">

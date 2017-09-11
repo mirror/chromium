@@ -81,6 +81,10 @@ class NET_EXPORT_PRIVATE HttpStreamParser {
 
   void SetConnectionReused();
 
+  // Called when a request is being made in HttpBasicStream. This notifies the
+  // underlying socket that it was used for a real request.
+  void NotifySocketWasUsedToServiceRequest();
+
   // Returns true if the underlying connection can be reused.
   // The connection can be reused if:
   // * It's still connected.

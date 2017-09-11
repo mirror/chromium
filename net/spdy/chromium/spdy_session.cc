@@ -1272,6 +1272,11 @@ std::unique_ptr<base::Value> SpdySession::GetInfoAsValue() const {
   return std::move(dict);
 }
 
+void SpdySession::NotifySocketWasUsedToServiceRequest() {
+  DCHECK(connection_);
+  connection_->socket()->SetWasUsedToServiceRequest();
+}
+
 bool SpdySession::IsReused() const {
   return buffered_spdy_framer_->frames_received() > 0 ||
          connection_->reuse_type() == ClientSocketHandle::UNUSED_IDLE;

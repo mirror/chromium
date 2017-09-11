@@ -18,6 +18,7 @@
 #include "net/base/request_priority.h"
 #include "net/http/http_server_properties.h"
 #include "net/socket/connection_attempts.h"
+#include "net/socket/stream_socket.h"
 // This file can be included from net/http even though
 // it is in net/websockets because it doesn't
 // introduce any link dependency to net/websockets.
@@ -241,8 +242,10 @@ class NET_EXPORT HttpStreamFactory {
       const NetLogWithSource& net_log) = 0;
 
   // Requests that enough connections for |num_streams| be opened.
-  virtual void PreconnectStreams(int num_streams,
-                                 const HttpRequestInfo& info) = 0;
+  virtual void PreconnectStreams(
+      int num_streams,
+      const HttpRequestInfo& info,
+      const StreamSocket::SocketUseCallback& preconnect_use_callback) = 0;
 
   virtual const HostMappingRules* GetHostMappingRules() const = 0;
 

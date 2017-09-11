@@ -49,6 +49,7 @@
 #include "net/log/net_log_with_source.h"
 #include "net/proxy/proxy_info.h"
 #include "net/proxy/proxy_service.h"
+#include "net/socket/stream_socket.h"
 #include "net/ssl/ssl_config_service.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -68,6 +69,36 @@ constexpr bool kInitialDnsPrefetchListEnabled = false;
 #else
 constexpr bool kInitialDnsPrefetchListEnabled = true;
 #endif  // defined(OS_ANDROID)
+
+void OnPreconnectedSocketComplete(UrlInfo::ResolutionMotivation motivation,
+                                  net::StreamSocket::SocketUse socket_use) {
+  switch (motivation) {
+    case UrlInfo::OMNIBOX_MOTIVATED:
+      UMA_HISTOGRAM_ENUMERATION(
+          "Net.Preconnect.Use.Predictor.Omnibox", socket_use,
+          net::StreamSocket::SocketUse::SOCKET_LAST_VALUE);
+      break;
+    case UrlInfo::LEARNED_REFERAL_MOTIVATED:
+      UMA_HISTOGRAM_ENUMERATION(
+          "Net.Preconnect.Use.Predictor.Learned", socket_use,
+          net::StreamSocket::SocketUse::SOCKET_LAST_VALUE);
+      break;
+    case UrlInfo::SELF_REFERAL_MOTIVATED:
+      UMA_HISTOGRAM_ENUMERATION(
+          "Net.Preconnect.Use.Predictor.Self", socket_use,
+          net::StreamSocket::SocketUse::SOCKET_LAST_VALUE);
+      break;
+    case UrlInfo::EARLY_LOAD_MOTIVATED:
+      UMA_HISTOGRAM_ENUMERATION(
+          "Net.Preconnect.Use.Predictor.EarlyLoad", socket_use,
+          net::StreamSocket::SocketUse::SOCKET_LAST_VALUE);
+      break;
+    default:
+      // Other motivations should never happen here.
+      NOTREACHED();
+      break;
+  }
+}
 
 }  // namespace
 
@@ -809,31 +840,13 @@ void Predictor::PreconnectUrlOnIOThread(
   if (!getter)
     return;
 
-  // Translate the motivation from UrlRequest motivations to HttpRequest
-  // motivations.
-  net::HttpRequestInfo::RequestMotivation request_motivation =
-      net::HttpRequestInfo::NORMAL_MOTIVATION;
-  switch (motivation) {
-    case UrlInfo::OMNIBOX_MOTIVATED:
-      request_motivation = net::HttpRequestInfo::OMNIBOX_MOTIVATED;
-      break;
-    case UrlInfo::LEARNED_REFERAL_MOTIVATED:
-      request_motivation = net::HttpRequestInfo::PRECONNECT_MOTIVATED;
-      break;
-    case UrlInfo::MOUSE_OVER_MOTIVATED:
-    case UrlInfo::SELF_REFERAL_MOTIVATED:
-    case UrlInfo::EARLY_LOAD_MOTIVATED:
-      request_motivation = net::HttpRequestInfo::EARLY_LOAD_MOTIVATED;
-      break;
-    default:
-      // Other motivations should never happen here.
-      NOTREACHED();
-      break;
-  }
+  // TODO(csharrison): Deprecate this metric if the preconnect UMA is
+  // sufficient. This one also covers sockets that are already connected.
   UMA_HISTOGRAM_ENUMERATION("Net.PreconnectMotivation", motivation,
                             UrlInfo::MAX_MOTIVATED);
   content::PreconnectUrl(getter, url, site_for_cookies, count,
-                         allow_credentials, request_motivation);
+                         allow_credentials,
+                         base::Bind(&OnPreconnectedSocketComplete, motivation));
 }
 
 void Predictor::PredictFrameSubresources(const GURL& url,

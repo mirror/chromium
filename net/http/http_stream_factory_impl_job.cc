@@ -266,8 +266,11 @@ void HttpStreamFactoryImpl::Job::Start(
   StartInternal();
 }
 
-int HttpStreamFactoryImpl::Job::Preconnect(int num_streams) {
+int HttpStreamFactoryImpl::Job::Preconnect(
+    int num_streams,
+    const StreamSocket::SocketUseCallback& preconnect_use_callback) {
   DCHECK_GT(num_streams, 0);
+  preconnect_use_callback_ = preconnect_use_callback;
   HttpServerProperties* http_server_properties =
       session_->http_server_properties();
   DCHECK(http_server_properties);
@@ -951,11 +954,16 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
 
   if (job_type_ == PRECONNECT) {
     DCHECK(!delegate_->for_websockets());
+    // Disable the callback for proxies for now, as the callback is not
+    // implemented for them.
+    if (!proxy_info_.is_direct_only())
+      preconnect_use_callback_ = StreamSocket::SocketUseCallback();
     return PreconnectSocketsForHttpRequest(
         GetSocketGroup(), destination_, request_info_.extra_headers,
         request_info_.load_flags, priority_, session_, proxy_info_,
         expect_spdy_, server_ssl_config_, proxy_ssl_config_,
-        request_info_.privacy_mode, net_log_, num_streams_);
+        request_info_.privacy_mode, net_log_, num_streams_,
+        preconnect_use_callback_);
   }
 
   // If we can't use a SPDY session, don't bother checking for one after
@@ -1163,12 +1171,6 @@ int HttpStreamFactoryImpl::Job::DoCreateStream() {
                             destination_.HostForURL());
   }
 
-  // We only set the socket motivation if we're the first to use
-  // this socket.  Is there a race for two SPDY requests?  We really
-  // need to plumb this through to the connect level.
-  if (connection_->socket() && !connection_->is_reused())
-    SetSocketMotivation();
-
   if (!using_spdy_) {
     DCHECK(!expect_spdy_);
     // We may get ftp scheme when fetching ftp resources through proxy.
@@ -1289,14 +1291,6 @@ void HttpStreamFactoryImpl::Job::ReturnToStateInitConnection(
     delegate_->RemoveRequestFromSpdySessionRequestMapForJob(this);
 
   next_state_ = STATE_INIT_CONNECTION;
-}
-
-void HttpStreamFactoryImpl::Job::SetSocketMotivation() {
-  if (request_info_.motivation == HttpRequestInfo::PRECONNECT_MOTIVATED)
-    connection_->socket()->SetSubresourceSpeculation();
-  else if (request_info_.motivation == HttpRequestInfo::OMNIBOX_MOTIVATED)
-    connection_->socket()->SetOmniboxSpeculation();
-  // TODO(mbelshe): Add other motivations (like EARLY_LOAD_MOTIVATED).
 }
 
 void HttpStreamFactoryImpl::Job::InitSSLConfig(SSLConfig* ssl_config,

@@ -54,8 +54,8 @@ class NET_EXPORT TCPClientSocket : public StreamSocket {
   int GetPeerAddress(IPEndPoint* address) const override;
   int GetLocalAddress(IPEndPoint* address) const override;
   const NetLogWithSource& NetLog() const override;
-  void SetSubresourceSpeculation() override;
-  void SetOmniboxSpeculation() override;
+  void SetSocketUseCallback(const SocketUseCallback& callback) override;
+  void SetWasUsedToServiceRequest() override;
   bool WasEverUsed() const override;
   void EnableTCPFastOpenIfSupported() override;
   bool WasAlpnNegotiated() const override;
@@ -99,6 +99,8 @@ class NET_EXPORT TCPClientSocket : public StreamSocket {
                  int buf_len,
                  const CompletionCallback& callback,
                  bool read_if_ready);
+
+  void RunSocketUseCallback();
 
   // State machine used by Connect().
   int DoConnectLoop(int result);
@@ -145,18 +147,21 @@ class NET_EXPORT TCPClientSocket : public StreamSocket {
   // The next state for the Connect() state machine.
   ConnectState next_connect_state_;
 
+  // Callback for recording metrics for this socket.
+  SocketUseCallback use_callback_;
+
   // This socket was previously disconnected and has not been re-connected.
   bool previously_disconnected_;
-
-  // Record of connectivity and transmissions, for use in speculative connection
-  // histograms.
-  UseHistory use_history_;
 
   // Failed connection attempts made while trying to connect this socket.
   ConnectionAttempts connection_attempts_;
 
   // Total number of bytes received by the socket.
   int64_t total_received_bytes_;
+
+  // Record of connectivity and transmissions, for use in speculative connection
+  // histograms.
+  SocketUse socket_use_;
 
   DISALLOW_COPY_AND_ASSIGN(TCPClientSocket);
 };

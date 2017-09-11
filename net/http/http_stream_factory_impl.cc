@@ -125,7 +125,8 @@ std::unique_ptr<HttpStreamRequest> HttpStreamFactoryImpl::RequestStreamInternal(
 
 void HttpStreamFactoryImpl::PreconnectStreams(
     int num_streams,
-    const HttpRequestInfo& request_info) {
+    const HttpRequestInfo& request_info,
+    const StreamSocket::SocketUseCallback& preconnect_use_callback) {
   DCHECK(request_info.url.is_valid());
 
   AddJobControllerCountToHistograms();
@@ -147,7 +148,7 @@ void HttpStreamFactoryImpl::PreconnectStreams(
       proxy_ssl_config);
   JobController* job_controller_raw_ptr = job_controller.get();
   job_controller_set_.insert(std::move(job_controller));
-  job_controller_raw_ptr->Preconnect(num_streams);
+  job_controller_raw_ptr->Preconnect(num_streams, preconnect_use_callback);
 }
 
 const HostMappingRules* HttpStreamFactoryImpl::GetHostMappingRules() const {

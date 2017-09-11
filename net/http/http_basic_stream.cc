@@ -42,6 +42,7 @@ int HttpBasicStream::SendRequest(const HttpRequestHeaders& headers,
       raw_headers.Add(it.name(), it.value());
     request_headers_callback_.Run(std::move(raw_headers));
   }
+  parser()->NotifySocketWasUsedToServiceRequest();
   return parser()->SendRequest(state_.GenerateRequestLine(), headers, response,
                                callback);
 }

@@ -148,13 +148,12 @@ const net::NetLogWithSource& FakeSocket::NetLog() const {
   return net_log_;
 }
 
-void FakeSocket::SetSubresourceSpeculation() {
+void FakeSocket::SetSocketUseCallback(
+    const net::StreamSocket::SocketUseCallback& callback) {
   NOTREACHED();
 }
 
-void FakeSocket::SetOmniboxSpeculation() {
-  NOTREACHED();
-}
+void FakeSocket::SetWasUsedToServiceRequest() {}
 
 bool FakeSocket::WasEverUsed() const {
   return true;

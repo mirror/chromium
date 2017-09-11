@@ -15,6 +15,7 @@
 #include "net/base/net_export.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_network_session.h"
+#include "net/socket/stream_socket.h"
 
 namespace base {
 class Value;
@@ -193,7 +194,8 @@ int PreconnectSocketsForHttpRequest(
     const SSLConfig& ssl_config_for_proxy,
     PrivacyMode privacy_mode,
     const NetLogWithSource& net_log,
-    int num_preconnect_streams);
+    int num_preconnect_streams,
+    const StreamSocket::SocketUseCallback& preconnect_use_callback);
 
 }  // namespace net
 

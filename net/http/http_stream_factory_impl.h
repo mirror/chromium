@@ -74,7 +74,10 @@ class NET_EXPORT_PRIVATE HttpStreamFactoryImpl : public HttpStreamFactory {
       bool enable_alternative_services,
       const NetLogWithSource& net_log) override;
 
-  void PreconnectStreams(int num_streams, const HttpRequestInfo& info) override;
+  void PreconnectStreams(
+      int num_streams,
+      const HttpRequestInfo& info,
+      const StreamSocket::SocketUseCallback& preconnect_use_callback) override;
   const HostMappingRules* GetHostMappingRules() const override;
   void DumpMemoryStats(base::trace_event::ProcessMemoryDump* pmd,
                        const std::string& parent_absolute_name) const override;

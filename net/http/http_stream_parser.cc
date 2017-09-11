@@ -1087,6 +1087,10 @@ void HttpStreamParser::SetConnectionReused() {
   connection_->set_reuse_type(ClientSocketHandle::REUSED_IDLE);
 }
 
+void HttpStreamParser::NotifySocketWasUsedToServiceRequest() {
+  connection_->socket()->SetWasUsedToServiceRequest();
+}
+
 bool HttpStreamParser::CanReuseConnection() const {
   if (!CanFindEndOfResponse())
     return false;

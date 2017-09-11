@@ -478,6 +478,10 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
     return connection_->socket()->WasEverUsed();
   }
 
+  // Called when a request is being made in SpdyHttpStream. This notifies the
+  // underlying socket that it was used for a real request (not just metadata).
+  void NotifySocketWasUsedToServiceRequest();
+
   // Returns the load timing information from the perspective of the given
   // stream.  If it's not the first stream, the connection is considered reused
   // for that stream.

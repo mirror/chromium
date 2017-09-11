@@ -147,13 +147,16 @@ HttpStreamFactoryImpl::JobController::Start(
   return request;
 }
 
-void HttpStreamFactoryImpl::JobController::Preconnect(int num_streams) {
+void HttpStreamFactoryImpl::JobController::Preconnect(
+    int num_streams,
+    const StreamSocket::SocketUseCallback& preconnect_use_callback) {
   DCHECK(!main_job_);
   DCHECK(!alternative_job_);
   DCHECK(is_preconnect_);
 
   stream_type_ = HttpStreamRequest::HTTP_STREAM;
   num_streams_ = num_streams;
+  use_callback_ = preconnect_use_callback;
 
   RunLoop(OK);
 }
@@ -830,7 +833,7 @@ int HttpStreamFactoryImpl::JobController::DoCreateJobs() {
           server_ssl_config_, proxy_ssl_config_, destination, origin_url,
           enable_ip_based_pooling_, session_->net_log());
     }
-    main_job_->Preconnect(num_streams_);
+    main_job_->Preconnect(num_streams_, use_callback_);
     return OK;
   }
   main_job_ = job_factory_->CreateMainJob(

@@ -205,13 +205,12 @@ const net::NetLogWithSource& AndroidUsbSocket::NetLog() const {
   return net_log_;
 }
 
-void AndroidUsbSocket::SetSubresourceSpeculation() {
-  NOTIMPLEMENTED();
+void AndroidUsbSocket::SetSocketUseCallback(
+    const net::StreamSocket::SocketUseCallback& callback) {
+  NOTREACHED();
 }
 
-void AndroidUsbSocket::SetOmniboxSpeculation() {
-  NOTIMPLEMENTED();
-}
+void AndroidUsbSocket::SetWasUsedToServiceRequest() {}
 
 bool AndroidUsbSocket::WasEverUsed() const {
   NOTIMPLEMENTED();

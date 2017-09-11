@@ -83,6 +83,7 @@
 #include "net/socket/next_proto.h"
 #include "net/socket/socket_test_util.h"
 #include "net/socket/ssl_client_socket.h"
+#include "net/socket/stream_socket.h"
 #include "net/spdy/chromium/spdy_session.h"
 #include "net/spdy/chromium/spdy_session_pool.h"
 #include "net/spdy/chromium/spdy_test_util_common.h"
@@ -1641,7 +1642,8 @@ void HttpNetworkTransactionTest::PreconnectErrorResendRequestTest(
   session_deps_.socket_factory->AddSocketDataProvider(&data2);
 
   // Preconnect a socket.
-  session->http_stream_factory()->PreconnectStreams(1, request);
+  session->http_stream_factory()->PreconnectStreams(
+      1, request, StreamSocket::SocketUseCallback());
   // Wait for the preconnect to complete.
   // TODO(davidben): Some way to wait for an idle socket count might be handy.
   base::RunLoop().RunUntilIdle();
@@ -13381,8 +13383,6 @@ TEST_F(HttpNetworkTransactionTest, PreconnectWithExistingSpdySession) {
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
 
-  // This is the important line that marks this as a preconnect.
-  request.motivation = HttpRequestInfo::PRECONNECT_MOTIVATED;
 
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
 
@@ -15552,8 +15552,10 @@ class FakeStreamFactory : public HttpStreamFactory {
     return std::move(fake_request);
   }
 
-  void PreconnectStreams(int num_streams,
-                         const HttpRequestInfo& info) override {
+  void PreconnectStreams(
+      int num_streams,
+      const HttpRequestInfo& info,
+      const StreamSocket::SocketUseCallback& use_callback) override {
     ADD_FAILURE();
   }
 
@@ -15961,7 +15963,8 @@ TEST_F(HttpNetworkTransactionTest, CloseSSLSocketOnIdleForHttpRequest2) {
   // Preconnect an SSL socket.  A preconnect is needed because connect jobs are
   // cancelled when a normal transaction is cancelled.
   HttpStreamFactory* http_stream_factory = session->http_stream_factory();
-  http_stream_factory->PreconnectStreams(1, ssl_request);
+  http_stream_factory->PreconnectStreams(1, ssl_request,
+                                         StreamSocket::SocketUseCallback());
   EXPECT_EQ(0, GetIdleSocketCountInSSLSocketPool(session.get()));
 
   // Start the HTTP request.  Pool should stall.
