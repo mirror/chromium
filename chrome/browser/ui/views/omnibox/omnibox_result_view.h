@@ -65,6 +65,14 @@ class OmniboxResultView : public views::View,
   // Invoked when this result view has been selected.
   void OnSelected();
 
+  ResultViewState GetState() const;
+
+  // Notification that the match icon has changed and schedules a repaint.
+  void OnMatchIconUpdated();
+
+  // Stores the image in a local data member and schedules a repaint.
+  void SetAnswerImage(const gfx::ImageSkia& image);
+
   // views::View:
   gfx::Size CalculatePreferredSize() const override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
@@ -75,25 +83,16 @@ class OmniboxResultView : public views::View,
   void OnMouseExited(const ui::MouseEvent& event) override;
   void OnNativeThemeChanged(const ui::NativeTheme* theme) override;
 
-  ResultViewState GetState() const;
-
-  // Returns the height of the text portion of the result view. In the base
-  // class, this is the height of one line of text.
-  virtual int GetTextHeight() const;
-
-  // Notification that the match icon has changed and schedules a repaint.
-  void OnMatchIconUpdated();
-
-  // Stores the image in a local data member and schedules a repaint.
-  void SetAnswerImage(const gfx::ImageSkia& image);
-
- protected:
+ private:
   enum RenderTextType {
     CONTENTS = 0,
     SEPARATOR,
     DESCRIPTION,
     NUM_TYPES
   };
+
+  // Returns the height of the text portion of the result view.
+  virtual int GetTextHeight() const;
 
   // Paints the given |match| using the RenderText instances |contents| and
   // |description| at offset |x| in the bounds of this view.
@@ -130,10 +129,6 @@ class OmniboxResultView : public views::View,
 
   const gfx::Rect& text_bounds() const { return text_bounds_; }
 
- private:
-  // views::View:
-  const char* GetClassName() const override;
-
   gfx::Image GetIcon() const;
 
   SkColor GetVectorIconColor() const;
@@ -145,14 +140,6 @@ class OmniboxResultView : public views::View,
 
   // Initializes |contents_rendertext_| if it is NULL.
   void InitContentsRenderTextIfNecessary() const;
-
-  // views::View:
-  void Layout() override;
-  void OnBoundsChanged(const gfx::Rect& previous_bounds) override;
-  void OnPaint(gfx::Canvas* canvas) override;
-
-  // gfx::AnimationDelegate:
-  void AnimationProgressed(const gfx::Animation* animation) override;
 
   // Returns the font to use for the description section of answer suggestions.
   const gfx::FontList& GetAnswerFont() const;
@@ -185,6 +172,15 @@ class OmniboxResultView : public views::View,
 
   // Sets the hovered state of this result.
   void SetHovered(bool hovered);
+
+  // views::View:
+  const char* GetClassName() const override;
+  void Layout() override;
+  void OnBoundsChanged(const gfx::Rect& previous_bounds) override;
+  void OnPaint(gfx::Canvas* canvas) override;
+
+  // gfx::AnimationDelegate:
+  void AnimationProgressed(const gfx::Animation* animation) override;
 
   // This row's model and model index.
   OmniboxPopupContentsView* model_;
