@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bab46df_4b8ebd1e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 50748,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-11T16:48:17Z",
+      "side": 1,
+      "message": "\"They stole it from us! Sneaky little Hobbitses!\"\n\njk, no need to change anything. ;)",
+      "range": {
+        "startLine": 50748,
+        "startChar": 9,
+        "endLine": 50748,
+        "endChar": 16
+      },
+      "revId": "b71ef621dc203db706a14225b6de0085e81a4031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
