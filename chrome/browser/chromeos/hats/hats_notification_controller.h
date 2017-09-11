@@ -9,9 +9,9 @@
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "chrome/browser/notifications/notification.h"
-#include "chrome/browser/notifications/notification_delegate.h"
 #include "chromeos/network/portal_detector/network_portal_detector.h"
 #include "ui/gfx/image/image_skia.h"
+#include "ui/message_center/notification_delegate.h"
 
 class Profile;
 class NetworkState;
@@ -20,10 +20,9 @@ namespace chromeos {
 
 // Happiness tracking survey (HaTS) notification controller is responsible for
 // managing the HaTS notification that is displayed to the user.
-class HatsNotificationController : public NotificationDelegate,
+class HatsNotificationController : public message_center::NotificationDelegate,
                                    public NetworkPortalDetector::Observer {
  public:
-  static const char kDelegateId[];
   static const char kNotificationId[];
 
   explicit HatsNotificationController(Profile* profile);
@@ -51,7 +50,6 @@ class HatsNotificationController : public NotificationDelegate,
   void ButtonClick(int button_index) override;
   void Close(bool by_user) override;
   void Click() override;
-  std::string id() const override;
 
   // NetworkPortalDetector::Observer override:
   void OnPortalDetectionCompleted(
