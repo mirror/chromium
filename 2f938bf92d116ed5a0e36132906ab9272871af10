@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b462e8a2_8cb6ef92",
+        "filename": "remoting/host/input_injector_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-11T00:20:27Z",
+      "side": 1,
+      "message": "Would it be possible to always call this and have it redirect to OzonePlatform as appropriate? That way the complexity is contained in ozone, not clients using it.",
+      "range": {
+        "startLine": 149,
+        "startChar": 14,
+        "endLine": 149,
+        "endChar": 45
+      },
+      "revId": "2f938bf92d116ed5a0e36132906ab9272871af10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bad0517_cfa8f76f",
+        "filename": "ui/aura/mus/system_input_injector_mus.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-11T00:20:27Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 24
+      },
+      "revId": "2f938bf92d116ed5a0e36132906ab9272871af10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
