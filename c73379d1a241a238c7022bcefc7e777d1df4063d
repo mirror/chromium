@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea490826_0e41b65b",
+        "filename": "media/audio/alsa/alsa_input.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-11T12:31:51Z",
+      "side": 1,
+      "message": "Actually, now I\u0027m thinking this line together with l.164 looks confusing.\nWould it be enough to get frames ones at l.164 and to adjust the value here basing on how many frames we\u0027ve read in the \u0027while\u0027 loop so far?",
+      "revId": "c73379d1a241a238c7022bcefc7e777d1df4063d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
