@@ -69,6 +69,24 @@
       "revId": "96aa31cb315089c70b5b3e925f862d2650ab14c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1dec41_4eb4258d",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-11T02:19:38Z",
+      "side": 1,
+      "message": "Yeah some handling like line 154 is missing here, my bad..\nFor the callback problem, I tried to understand this possibility:\n|this| is a blink::WebServiceWorkerProvider which is owned by blink::ServiceWorkerContainerClient which is a blink::Supplement\u003c\u003e of Document or WorkerClients, is it guaranteed that the lifetime of blink::Supplement\u003c\u003e is always longer than ServiceWorkerNetworkProvider? If so, it means |this| lives longer than container_host(), then we can still use base::Unretained() here with some helpful comments. I have not made it clear,, do you have any idea about this?",
+      "parentUuid": "c4f134d4_0889ad0b",
+      "revId": "96aa31cb315089c70b5b3e925f862d2650ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
