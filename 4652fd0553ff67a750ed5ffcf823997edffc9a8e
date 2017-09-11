@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "738d57cf_83152ea4",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-11T21:38:45Z",
+      "side": 1,
+      "message": "if (!NeedsFragmentationClip(object) || !context.fragment_clip_context) {\n  bool local_clip_added_or_removed \u003d properties.ClearFragmentClip();\n  force_subtree_update |\u003d local_clip_added_or_removed;\n  clip_changed |\u003d local_clip_changed || local_clip_added_or_removed;\n  return;\n}",
+      "revId": "4652fd0553ff67a750ed5ffcf823997edffc9a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0486c175_76cf91be",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-11T21:38:45Z",
+      "side": 1,
+      "message": "This is never reached because of early exit at the top.",
+      "revId": "4652fd0553ff67a750ed5ffcf823997edffc9a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
