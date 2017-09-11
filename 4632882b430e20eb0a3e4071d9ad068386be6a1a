@@ -22,6 +22,30 @@
       "revId": "4632882b430e20eb0a3e4071d9ad068386be6a1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550b2e69_c5504dbc",
+        "filename": "services/device/generic_sensor/generic_sensor_consts.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-11T18:43:27Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "78e07ff8_1131b45c",
+      "range": {
+        "startLine": 17,
+        "startChar": 17,
+        "endLine": 17,
+        "endChar": 34
+      },
+      "revId": "4632882b430e20eb0a3e4071d9ad068386be6a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
