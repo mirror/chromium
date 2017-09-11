@@ -34,6 +34,24 @@
       "revId": "95e858f0b709048f72a009d499a5c6d30d2c9a04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47beb3c_80157d91",
+        "filename": "headless/lib/browser/headless_web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-11T17:57:38Z",
+      "side": 1,
+      "message": "agent_host_ only knows clients of the current target: true\nwe currently have a single client per target: false\n\nnot all the sessions have the emulation / frame control enabled, hence not all of them should be receiving the notifications you are sending.\n\nTo resolve this, someone needs to add session_id into DevToolsManagerDelegate::HandleCommand and also add DevToolsManagerDelegate::SessionCreated(session_id) DevToolsManagerDelegate::SessionDeleted(session_id) and you would need to book keep :(",
+      "parentUuid": "61c67233_e422d416",
+      "revId": "95e858f0b709048f72a009d499a5c6d30d2c9a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
