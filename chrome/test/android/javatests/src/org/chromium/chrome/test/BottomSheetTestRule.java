@@ -20,6 +20,7 @@ import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetContent;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.StateChangeReason;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController;
 import org.chromium.chrome.browser.widget.bottomsheet.EmptyBottomSheetObserver;
 import org.chromium.chrome.test.util.browser.RecyclerViewTestUtils;
@@ -66,12 +67,12 @@ public class BottomSheetTestRule extends ChromeTabbedActivityTestRule {
         }
 
         @Override
-        public void onSheetOpened() {
+        public void onSheetOpened(@StateChangeReason int reason) {
             mOpenedCallbackHelper.notifyCalled();
         }
 
         @Override
-        public void onSheetClosed() {
+        public void onSheetClosed(@StateChangeReason int reason) {
             mClosedCallbackHelper.notifyCalled();
         }
 
