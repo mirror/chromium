@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2c7af1c_d9c8a82e",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-11T22:17:45Z",
+      "side": 1,
+      "message": "Will this result in a much more inefficient output?",
+      "revId": "4fe3195df082d0d0acd8b65282acf367c72d23bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
