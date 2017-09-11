@@ -22,6 +22,30 @@
       "revId": "9db8d1038516830c26ff82e48e9a3609c08da2a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3badab0d_5bcf4334",
+        "filename": "chrome/browser/resources/chromeos/login/encryption_migration.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-11T05:57:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74768e30_8b8e29f4",
+      "range": {
+        "startLine": 55,
+        "startChar": 29,
+        "endLine": 55,
+        "endChar": 44
+      },
+      "revId": "9db8d1038516830c26ff82e48e9a3609c08da2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
