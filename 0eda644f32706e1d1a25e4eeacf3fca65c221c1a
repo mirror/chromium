@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90714d46_03d9d997",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/WebIDL/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-11T17:25:10Z",
+      "side": 1,
+      "message": "I should probably change this to peria@, yukishiino@, bashi@, haraken@",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 6
+      },
+      "revId": "0eda644f32706e1d1a25e4eeacf3fca65c221c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6d753a_df9ac564",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-11T17:25:10Z",
+      "side": 1,
+      "message": "Maybe I should hand this off to panicker@ - I just ended up as OWNER since I imported these so we could delete our manually-imported copy. But no harm to leave as-is.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 6
+      },
+      "revId": "0eda644f32706e1d1a25e4eeacf3fca65c221c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904d42d7_bae90eee",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/notifications/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-11T17:25:10Z",
+      "side": 1,
+      "message": "Surprising we don\u0027t have a component for this one. Looks like issues get a mix of UI\u003eNotifications (mixed with non-web-based ones) and Blink\u003ePushAPI (which is usually used to trigger web notifications, but not always)",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "0eda644f32706e1d1a25e4eeacf3fca65c221c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca7cd50_f1855d08",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/storage/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-11T17:25:10Z",
+      "side": 1,
+      "message": "Blink\u003eStorage\u003eQuota would be more accurate",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "0eda644f32706e1d1a25e4eeacf3fca65c221c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500ea64a_d7f6e6b3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/user-timing/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-11T17:25:10Z",
+      "side": 1,
+      "message": "same re: possibly changing owner. But also fine to keep as-is.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 6
+      },
+      "revId": "0eda644f32706e1d1a25e4eeacf3fca65c221c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
