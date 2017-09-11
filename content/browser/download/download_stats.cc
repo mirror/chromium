@@ -567,14 +567,18 @@ enum DownloadContent {
   DOWNLOAD_CONTENT_VIDEO = 4,
   DOWNLOAD_CONTENT_OCTET_STREAM = 5,
   DOWNLOAD_CONTENT_PDF = 6,
-  DOWNLOAD_CONTENT_DOC = 7,
-  DOWNLOAD_CONTENT_XLS = 8,
-  DOWNLOAD_CONTENT_PPT = 9,
+  DOWNLOAD_CONTENT_DOCUMENT = 7,
+  DOWNLOAD_CONTENT_SPREADSHEET = 8,
+  DOWNLOAD_CONTENT_PRESENTATION = 9,
   DOWNLOAD_CONTENT_ARCHIVE = 10,
   DOWNLOAD_CONTENT_EXE = 11,
   DOWNLOAD_CONTENT_DMG = 12,
   DOWNLOAD_CONTENT_CRX = 13,
-  DOWNLOAD_CONTENT_MAX = 14,
+  DOWNLOAD_CONTENT_WEB = 14,
+  DOWNLOAD_CONTENT_EBOOK = 15,
+  DOWNLOAD_CONTENT_FONT = 16,
+  DOWNLOAD_CONTENT_APK = 17,
+  DOWNLOAD_CONTENT_MAX = 18,
 };
 
 struct MimeTypeToDownloadContent {
@@ -583,20 +587,51 @@ struct MimeTypeToDownloadContent {
 };
 
 static MimeTypeToDownloadContent kMapMimeTypeToDownloadContent[] = {
-  {"application/octet-stream", DOWNLOAD_CONTENT_OCTET_STREAM},
-  {"binary/octet-stream", DOWNLOAD_CONTENT_OCTET_STREAM},
-  {"application/pdf", DOWNLOAD_CONTENT_PDF},
-  {"application/msword", DOWNLOAD_CONTENT_DOC},
-  {"application/vnd.ms-excel", DOWNLOAD_CONTENT_XLS},
-  {"application/vns.ms-powerpoint", DOWNLOAD_CONTENT_PPT},
-  {"application/zip", DOWNLOAD_CONTENT_ARCHIVE},
-  {"application/x-gzip", DOWNLOAD_CONTENT_ARCHIVE},
-  {"application/x-rar-compressed", DOWNLOAD_CONTENT_ARCHIVE},
-  {"application/x-tar", DOWNLOAD_CONTENT_ARCHIVE},
-  {"application/x-bzip", DOWNLOAD_CONTENT_ARCHIVE},
-  {"application/x-exe", DOWNLOAD_CONTENT_EXE},
-  {"application/x-apple-diskimage", DOWNLOAD_CONTENT_DMG},
-  {"application/x-chrome-extension", DOWNLOAD_CONTENT_CRX},
+    {"application/octet-stream", DOWNLOAD_CONTENT_OCTET_STREAM},
+    {"binary/octet-stream", DOWNLOAD_CONTENT_OCTET_STREAM},
+    {"application/pdf", DOWNLOAD_CONTENT_PDF},
+    {"application/msword", DOWNLOAD_CONTENT_DOCUMENT},
+    {"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+     DOWNLOAD_CONTENT_DOCUMENT},
+    {"application/rtf", DOWNLOAD_CONTENT_DOCUMENT},
+    {"application/vnd.oasis.opendocument.text", DOWNLOAD_CONTENT_DOCUMENT},
+    {"application/vnd.google-apps.document", DOWNLOAD_CONTENT_DOCUMENT},
+    {"application/vnd.ms-excel", DOWNLOAD_CONTENT_SPREADSHEET},
+    {"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+     DOWNLOAD_CONTENT_SPREADSHEET},
+    {"application/vnd.oasis.opendocument.spreadsheet",
+     DOWNLOAD_CONTENT_SPREADSHEET},
+    {"application/vnd.google-apps.spreadsheet", DOWNLOAD_CONTENT_SPREADSHEET},
+    {"application/vns.ms-powerpoint", DOWNLOAD_CONTENT_PRESENTATION},
+    {"application/"
+     "vnd.openxmlformats-officedocument.presentationml.presentation",
+     DOWNLOAD_CONTENT_PRESENTATION},
+    {"application/vnd.oasis.opendocument.presentation",
+     DOWNLOAD_CONTENT_PRESENTATION},
+    {"application/vnd.google-apps.presentation", DOWNLOAD_CONTENT_PRESENTATION},
+    {"application/zip", DOWNLOAD_CONTENT_ARCHIVE},
+    {"application/x-gzip", DOWNLOAD_CONTENT_ARCHIVE},
+    {"application/x-rar-compressed", DOWNLOAD_CONTENT_ARCHIVE},
+    {"application/x-tar", DOWNLOAD_CONTENT_ARCHIVE},
+    {"application/x-bzip", DOWNLOAD_CONTENT_ARCHIVE},
+    {"application/x-bzip2", DOWNLOAD_CONTENT_ARCHIVE},
+    {"application/x-7z-compressed", DOWNLOAD_CONTENT_ARCHIVE},
+    {"application/x-exe", DOWNLOAD_CONTENT_EXECUTABLE},
+    {"application/java-archive", DOWNLOAD_CONTENT_EXECUTABLE},
+    {"application/vnd.apple.installer+xml", DOWNLOAD_CONTENT_EXECUTABLE},
+    {"application/x-csh", DOWNLOAD_CONTENT_EXECUTABLE},
+    {"application/x-sh", DOWNLOAD_CONTENT_EXECUTABLE},
+    {"application/x-apple-diskimage", DOWNLOAD_CONTENT_DMG},
+    {"application/x-chrome-extension", DOWNLOAD_CONTENT_CRX},
+    {"application/xhtml+xml", DOWNLOAD_CONTENT_WEB},
+    {"application/xml", DOWNLOAD_CONTENT_WEB},
+    {"application/javascript", DOWNLOAD_CONTENT_WEB},
+    {"application/json", DOWNLOAD_CONTENT_WEB},
+    {"application/typescript", DOWNLOAD_CONTENT_WEB},
+    {"application/vnd.mozilla.xul+xml", DOWNLOAD_CONTENT_WEB},
+    {"application/vnd.amazon.ebook", DOWNLOAD_CONTENT_EBOOK},
+    {"application/epub+zip", DOWNLOAD_CONTENT_EBOOK},
+    {"application/vnd.android.package-archive", DOWNLOAD_CONTENT_APK},
 };
 
 enum DownloadImage {
@@ -616,12 +651,15 @@ struct MimeTypeToDownloadImage {
 };
 
 static MimeTypeToDownloadImage kMapMimeTypeToDownloadImage[] = {
-  {"image/gif", DOWNLOAD_IMAGE_GIF},
-  {"image/jpeg", DOWNLOAD_IMAGE_JPEG},
-  {"image/png", DOWNLOAD_IMAGE_PNG},
-  {"image/tiff", DOWNLOAD_IMAGE_TIFF},
-  {"image/vnd.microsoft.icon", DOWNLOAD_IMAGE_ICON},
-  {"image/webp", DOWNLOAD_IMAGE_WEBP},
+    {"image/gif", DOWNLOAD_IMAGE_GIF},
+    {"image/jpeg", DOWNLOAD_IMAGE_JPEG},
+    {"image/png", DOWNLOAD_IMAGE_PNG},
+    {"image/tiff", DOWNLOAD_IMAGE_TIFF},
+    {"image/vnd.microsoft.icon", DOWNLOAD_IMAGE_ICON},
+    {"image/x-icon", DOWNLOAD_IMAGE_ICON},
+    {"image/webp", DOWNLOAD_IMAGE_WEBP},
+    {"image/vnd.adobe.photoshop", DOWNLOAD_IMAGE_PSD},
+    {"image/svg+xml", DOWNLOAD_IMAGE_SVG},
 };
 
 void RecordDownloadImageType(const std::string& mime_type_string) {
@@ -638,6 +676,130 @@ void RecordDownloadImageType(const std::string& mime_type_string) {
 
   UMA_HISTOGRAM_ENUMERATION("Download.ContentImageType", download_image,
                             DOWNLOAD_IMAGE_MAX);
+}
+
+/** Text categories **/
+
+enum DownloadText {
+  DOWNLOAD_TEXT_UNRECOGNIZED = 0,
+  DOWNLOAD_TEXT_PLAIN = 1,
+  DOWNLOAD_TEXT_CSS = 2,
+  DOWNLOAD_TEXT_CSV = 3,
+  DOWNLOAD_TEXT_HTML = 4,
+  DOWNLOAD_TEXT_CALENDAR = 5,
+  DOWNLOAD_TEXT_MAX = 6,
+}
+
+struct MimeTypeToDownloadText {
+  const char* mime_type;
+  DownloadText download_text;
+}
+
+static MimeTypeToDownloadText kMapMimeTypeToDownloadText[] = {
+  {"text/plain", DOWNLOAD_TEXT_PLAIN},
+  {"text/css", DOWNLOAD_TEXT_CSS},
+  {"text/csv", DOWNLOAD_TEXT_CSV},
+  {"text/html", DOWNLOAD_TEXT_HTML},
+  {"text/calendar", DOWNLOAD_TEXT_CALENDAR},
+}
+
+void RecordDownloadTextType(const std::string& mime_type_string) {
+  DownloadText download_text = DOWNLOAD_TEXT_UNRECOGNIZED;
+
+  for (size_t i = 0; i < arraysize(kMapMimeTypeToDownloadText); ++i) {
+    const MimeTypeToDownloadText& entry = kMapMimeTypeToDownloadText[i];
+    if (mime_type_string == entry.mime_type) {
+      download_text = entry.download_text;
+      break;
+    }
+  }
+
+  UMA_HISTOGRAM_ENUMERATION("Download.ContentTextType", downlad_text,
+                            DOWNLOAD_TEXT_MAX);
+}
+
+/* Audio categories */
+
+enum DownloadAudio {
+  DOWNLOAD_AUDIO_UNRECOGNIZED = 0,
+  DOWNLOAD_AUDIO_AAC = 1,
+  DOWNLOAD_AUDIO_MIDI = 2,
+  DOWNLOAD_AUDIO_OGA = 3,
+  DOWNLOAD_AUDIO_WAV = 4,
+  DOWNLOAD_AUDIO_WEBA = 5,
+  DOWNLOAD_AUDIO_3GP = 6,
+  DOWNLOAD_AUDIO_3G2 = 7,
+  DOWNLOAD_AUDIO_MAX = 8,
+};
+
+struct MimeTypeToDownloadAudio {
+  const char* mime_type;
+  DownloadAudio download_audio;
+};
+
+static MimeTypeToDownloadAudio kMapMimeTypeToDownloadAudio[] = {
+    {"audio/aac", DOWNLOAD_AUDIO_AAC},   {"audio/midi", DOWNLOAD_AUDIO_MIDI},
+    {"audio/ogg", DOWNLOAD_AUDIO_OGA},   {"audio/x-wav", DOWNLOAD_AUDIO_WAV},
+    {"audio/webm", DOWNLOAD_AUDIO_WEBA}, {"audio/3gpp", DOWNLOAD_AUDIO_3GP},
+    {"audio/3gpp2", DOWNLOAD_AUDIO_3G2},
+};
+
+void RecordDownloadAudioType(const std::string& mime_type_string) {
+  DownloadAudio download_audio = DOWNLOAD_AUDIO_UNRECOGNIZED;
+
+  // Look up exact matches.
+  for (size_t i = 0; i < arraysize(kMapMimeTypeToDownloadAudio); ++i) {
+    const MimeTypeToDownloadAudio& entry = kMapMimeTypeToDownloadAudio[i];
+    if (mime_type_string == entry.mime_type) {
+      download_audio = entry.download_audio;
+      break;
+    }
+  }
+
+  UMA_HISTOGRAM_ENUMERATION("Download.ContentAudioType", download_audio,
+                            DOWNLOAD_AUDIO_MAX);
+}
+
+/* Video categories */
+
+enum DownloadVideo {
+  DOWNLOAD_VIDEO_UNRECOGNIZED = 0,
+  DOWNLOAD_VIDEO_AVI = 1,
+  DOWNLOAD_VIDEO_MPEG = 2,
+  DOWNLOAD_VIDEO_OGV = 3,
+  DOWNLOAD_VIDEO_WEBM = 4,
+  DOWNLOAD_VIDEO_3GP = 5,
+  DOWNLOAD_VIDEO_3G2 = 6,
+  DOWNLOAD_VIDEO_MAX = 7,
+};
+
+struct MimeTypeToDownloadVideo {
+  const char* mime_type;
+  DownloadVideo download_video;
+};
+
+static MimeTypeToDownloadVideo kMapMimeTypeToDownloadVideo[] = {
+    {"video/x-msvideo", DOWNLOAD_VIDEO_AVI},
+    {"video/mpeg", DOWNLOAD_VIDEO_MPEG},
+    {"video/ogg", DOWNLOAD_VIDEO_OGV},
+    {"video/webm", DOWNLOAD_VIDEO_WEBM},
+    {"video/3gpp", DOWNLOAD_VIDEO_3GP},
+    {"video/3ggp2", DOWNLOAD_VIDEO_3G2}};
+
+void RecordDownloadVideoType(const std::string& mime_type_string) {
+  DownloadVideo download_video = DOWNLOAD_VIDEO_UNRECOGNIZED;
+
+  // Look up exact matches.
+  for (size_t i = 0; i < arraysize(kMapMimeTypeToDownloadVideo); ++i) {
+    const MimeTypeToDownloadVideo& entry = kMapMimeTypeToDownloadVideo[i];
+    if (mime_type_string == entry.mime_type) {
+      download_video = entry.download_video;
+      break;
+    }
+  }
+
+  UMA_HISTOGRAM_ENUMERATION("Download.ContentVideoType", download_video,
+                            DOWNLOAD_VIDEO_MAX);
 }
 
 DownloadContent DownloadContentFromMimeType(const std::string& mime_type_string,
