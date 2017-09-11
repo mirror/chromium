@@ -92,6 +92,27 @@ ShadowRoot* EditingTestBase::SetShadowContent(const char* shadow_content,
   return shadow_root;
 }
 
+ShadowRoot* EditingTestBase::SetShadowContent(
+    const char* shadow_content,
+    const char* host,
+    const ShadowRootType shadow_root_type = ShadowRootType::V0) {
+  if (shadow_root_type == ShadowRootType::V0) {
+    TreeScope& scope = GetDocument();
+    ShadowRoot* shadow_root =
+        scope.getElementById(AtomicString::FromUTF8(host))
+            ->CreateShadowRootInternal(ShadowRootType::kOpen,
+                                       ASSERT_NO_EXCEPTION);
+    shadow_root->setInnerHTML(String::FromUTF8(shadow_content),
+                              ASSERT_NO_EXCEPTION);
+    scope.GetDocument().View()->UpdateAllLifecyclePhases();
+    return shadow_root;
+  }
+
+  ShadowRoot* shadow_root = CreateShadowRootForElementWithIDAndSetInnerHTML(
+      GetDocument(), host, shadow_content);
+  return shadow_root;
+}
+
 void EditingTestBase::UpdateAllLifecyclePhases() {
   GetDocument().View()->UpdateAllLifecyclePhases();
 }

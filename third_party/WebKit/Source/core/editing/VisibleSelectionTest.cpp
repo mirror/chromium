@@ -647,4 +647,95 @@ TEST_F(VisibleSelectionTest, updateIfNeededWithShadowHost) {
   EXPECT_EQ(Position(sample->firstChild(), 0), selection.Start());
 }
 
+TEST_F(VisibleSelectionTest, FirstEphemeralRangeOfInFlatTree) {
+  SetBodyContent(
+      "<div id=host>"
+      "<span slot=first id=first>a</span>"
+      "<span slot=second id=second>b</span>"
+      "<span slot=third id=third>c</span>"
+      "</div>");
+  SetShadowContent(
+      "<slot name=third></slot>"
+      "foo"
+      "<slot name=first></slot>",
+      "host", ShadowRootType::kOpen);
+  UpdateAllLifecyclePhases();
+  Element* body = GetDocument().body();
+  Element* host = body->QuerySelector("#host");
+  Element* first = body->QuerySelector("#first");
+  Element* third = body->QuerySelector("#third");
+  VisibleSelectionInFlatTree selection =
+      CreateVisibleSelection(SelectionInFlatTree::Builder()
+                                 .Collapse(PositionInFlatTree(host, 0))
+                                 .Extend(PositionInFlatTree(host, 3))
+                                 .Build());
+  const EphemeralRangeInFlatTree& range = FirstEphemeralRangeOf(selection);
+  EXPECT_EQ(PositionInFlatTree(third->firstChild(), 0), range.StartPosition());
+  EXPECT_EQ(PositionInFlatTree(first->firstChild(), 1), range.EndPosition());
+}
+
+TEST_F(VisibleSelectionTest, FirstEphemeralRangeOfInFlatTreeCrossing) {
+  SetBodyContent(
+      "<div id=host1>"
+        "<span slot=one id=one>a</span>"
+        "<span>b</span>"
+        "<span slot=two id=two>c</span>"
+      "</div>"
+      "<div id=host2>"
+        "<span slot=three id=three>d</span>"
+        "<span>e</span>"
+        "<span slot=four id=four>f</span>"
+      "</div>");
+  SetShadowContent(
+      "<slot name=two></slot>"
+      "foo"
+      "<slot name=one></slot>",
+      "host1", ShadowRootType::kOpen);
+  SetShadowContent(
+      "<slot name=four></slot>"
+      "bar"
+      "<slot name=three></slot>",
+      "host2", ShadowRootType::kOpen);
+
+  UpdateAllLifecyclePhases();
+  Element* body = GetDocument().body();
+  Element* one = body->QuerySelector("#one");
+  Element* two = body->QuerySelector("#two");
+  Element* three = body->QuerySelector("#three");
+  Element* four = body->QuerySelector("#four");
+
+  VisibleSelectionInFlatTree selection = CreateVisibleSelection(
+      SelectionInFlatTree::Builder()
+          .Collapse(PositionInFlatTree::FirstPositionInNode(*two))
+          .Extend(PositionInFlatTree::LastPositionInNode(*three))
+          .Build());
+  const EphemeralRangeInFlatTree& range = FirstEphemeralRangeOf(selection);
+  EXPECT_EQ(PositionInFlatTree(two->firstChild(), 0), range.StartPosition());
+  EXPECT_EQ(PositionInFlatTree(three->firstChild(), 1), range.EndPosition());
+
+  VisibleSelectionInFlatTree selectionInSameDOM =
+      CreateVisibleSelection(SelectionInFlatTree::Builder()
+                                 .Collapse(PositionInFlatTree(two, 0))
+                                 .Extend(PositionInFlatTree(one, 1))
+                                 .Build());
+  const EphemeralRangeInFlatTree& rangeInSameDOM =
+      FirstEphemeralRangeOf(selectionInSameDOM);
+  EXPECT_EQ(PositionInFlatTree(two->firstChild(), 0),
+            rangeInSameDOM.StartPosition());
+  EXPECT_EQ(PositionInFlatTree(one->firstChild(), 1),
+            rangeInSameDOM.EndPosition());
+
+  VisibleSelectionInFlatTree selectionOverMultipleDOM =
+      CreateVisibleSelection(SelectionInFlatTree::Builder()
+                                 .Collapse(PositionInFlatTree(one, 0))
+                                 .Extend(PositionInFlatTree(four, 1))
+                                 .Build());
+  const EphemeralRangeInFlatTree& rangeOverMultipleDOM =
+      FirstEphemeralRangeOf(selectionOverMultipleDOM);
+  EXPECT_EQ(PositionInFlatTree(one->firstChild(), 0),
+            rangeOverMultipleDOM.StartPosition());
+  EXPECT_EQ(PositionInFlatTree(four->firstChild(), 1),
+            rangeOverMultipleDOM.EndPosition());
+}
+
 }  // namespace blink
