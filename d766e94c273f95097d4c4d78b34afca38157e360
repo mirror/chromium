@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88bb7188_db3c6568",
+        "filename": "third_party/WebKit/Source/core/html/HTMLElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115004
+      },
+      "writtenOn": "2017-09-11T18:40:49Z",
+      "side": 1,
+      "message": "With a little more plumbing, you can fix the !important case that I mentioned over email. For the pooruserexperience case, you\u0027d pass a bool to this method, which in turn, passed it to SetProperty https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/StylePropertySet.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d243",
+      "revId": "d766e94c273f95097d4c4d78b34afca38157e360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
