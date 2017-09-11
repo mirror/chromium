@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "133143c9_c09907bd",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-11T09:17:50Z",
+      "side": 1,
+      "message": "Can\u0027t you change those method to the following:\n\n  - (void)bookmarkHomeViewControllerWantsDismissal:\n              (BookmarkHomeViewController*)controller\n                                   navigationToUrl:(const GURL\u0026)url {\n    std::vector\u003cGURL\u003e urls \u003d { url };\n    [self bookmarkHomeViewControllerWantsDismissal:controller\n                                  navigationToUrls:urls];\n  }\n\n  - (void)bookmarkHomeViewControllerWantsDismissal:\n              (BookmarkHomeViewController*)controller\n                                  navigationToUrls:(const std::vector\u003cGURL\u003e\u0026)urls {\n    [self dismissBookmarkBrowserAnimated:YES];\n\n    if (urls.empty())\n      return;\n\n    BOOL openInCurrentTab \u003d YES;\n    for (const GURL\u0026 url : urls) {\n      if (url \u003d\u003d GURL())\n        continue;\n\n      if (openInCurrentTab) {\n         // Open all following URLs in new tabs.\n         openInCurrentTab \u003d NO;\n\n         new_tab_page_uma::RecordAction(_browserState,\n                                        new_tab_page_uma::ACTION_OPENED_BOOKMARK);\n         base::RecordAction(\n             base::UserMetricsAction(\"MobileBookmarkManagerEntryOpened\"));\n\n         if (url.SchemeIs(url::kJavaScriptScheme)) {  // bookmarklet\n           NSString* jsToEval \u003d [base::SysUTF8ToNSString(url.GetContent())\n               stringByRemovingPercentEncoding];\n\n           [_loader loadJavaScriptFromLocationBar:jsToEval];\n         } else {\n           [_loader loadURL:url\n                   referrer:web::Referrer()\n                 transition:ui::PAGE_TRANSITION_AUTO_BOOKMARK\n          rendererInitiated:NO];\n         }\n        }\n      } else {\n        [_loader webPageOrderedOpen:url\n                           referrer:web::Referrer()\n                       inBackground:YES\n                           appendTo:kLastTab];\n      }\n    }\n  }\n\nIf you need to have different metrics, you can just add an helper method that takes a block used to record the metrics (or a base::Closure).",
+      "parentUuid": "b6d222a9_79b4a46f",
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ca8e79_8f172b2d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-11T09:17:50Z",
+      "side": 1,
+      "message": "I find this test strange. Shouldn\u0027t this check that the url is valid instead of checking whether it is empty? AFAICT, bookmark does not let you invalid URLs, which includes empty URLs, so I think this should be:\n\n  if (!url.is_invalid()) {",
+      "range": {
+        "startLine": 254,
+        "startChar": 6,
+        "endLine": 254,
+        "endChar": 19
+      },
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a373a52_812d2a2a",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
         "patchSetId": 1
