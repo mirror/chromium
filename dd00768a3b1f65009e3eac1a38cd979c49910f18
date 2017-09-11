@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f3392ad8_29870a03",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:33:48Z",
+      "side": 1,
+      "message": "remove braces for cnosistency.. or better yet combine with line 837",
+      "revId": "dd00768a3b1f65009e3eac1a38cd979c49910f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ac6f594_5d235642",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 9
@@ -31,6 +48,58 @@
       "side": 1,
       "message": "Our code logic needs to differentiate the following 2 cases, so we need a std::unique_ptr\u003c\u003e here.\n  1. There is not any |get_ready_callback_| ever set at all.\nor\n  2. The |get_ready_callback_| has been set but has already run.\n\nDiscussion about this is at: https://chromium-review.googlesource.com/c/chromium/src/+/652166/3/content/browser/service_worker/service_worker_provider_host.h#344",
       "parentUuid": "2ac6f594_5d235642",
+      "revId": "dd00768a3b1f65009e3eac1a38cd979c49910f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddda8ea8_cb0db540",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:33:48Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment to aid understanding:\n// The ready() promise is only allowed to be created once. |get_ready_for_callback_| has three states:\n// 1. |get_ready_for_callback_| is null when ready() has not yet been called. \n// 2. |*get_ready_for_callback_| is a valid OnceCallback after ready() has been called and the callback has not yet been run.\n// 3. |*get_ready_for_callback_| is a null OnceCallback after the callback has been run.",
+      "parentUuid": "ec526e07_ec86c834",
+      "revId": "dd00768a3b1f65009e3eac1a38cd979c49910f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58086caf_60ce1b75",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:33:48Z",
+      "side": 1,
+      "message": "slightly prefer:\nDCHECK(context_-\u003econtainer_host() || context_-\u003eprovider_type() !\u003d SERVICE_WORKER_PROVIDER_FOR_WINDOW)\n\nso we don\u0027t run code only needed for a DCHECK in production builds",
+      "revId": "dd00768a3b1f65009e3eac1a38cd979c49910f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d537c65a_ef181df8",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:33:48Z",
+      "side": 1,
+      "message": "Can we add a TODO for why we\u0027re using base::optional and change the DCHECK to CHECK?",
       "revId": "dd00768a3b1f65009e3eac1a38cd979c49910f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

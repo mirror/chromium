@@ -208,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "e7eebc6e_d85f57c9",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:33:48Z",
+      "side": 1,
+      "message": "I think the non-mojofied path handles this by SWDispatcherHost() being destroyed, which destroys all the SWHandles? In which case, the mojo-path also handles this, since dispatcher host still owns our Handles?",
+      "parentUuid": "5f831079_8e5e0fdb",
+      "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce84b8ba_a3533140",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 1
