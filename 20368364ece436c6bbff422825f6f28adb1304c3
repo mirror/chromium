@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19121f78_2aa9d8a0",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3449,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-11T20:39:08Z",
+      "side": 1,
+      "message": "Why only Android or Linux?",
+      "range": {
+        "startLine": 3449,
+        "startChar": 4,
+        "endLine": 3449,
+        "endChar": 44
+      },
+      "revId": "20368364ece436c6bbff422825f6f28adb1304c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
