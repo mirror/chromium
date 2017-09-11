@@ -113,7 +113,7 @@ void ServerThread::MaybeNotifyOfHandshakeConfirmation() {
 }
 
 void ServerThread::ExecuteScheduledActions() {
-  std::deque<std::function<void()>> actions;
+  base::circular_deque<std::function<void()>> actions;
   {
     QuicWriterMutexLock lock(&scheduled_actions_lock_);
     actions.swap(scheduled_actions_);

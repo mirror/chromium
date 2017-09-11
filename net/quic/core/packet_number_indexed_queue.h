@@ -5,8 +5,7 @@
 #ifndef NET_QUIC_CORE_PACKET_NUMBER_INDEXED_QUEUE_H_
 #define NET_QUIC_CORE_PACKET_NUMBER_INDEXED_QUEUE_H_
 
-#include <deque>
-
+#include "base/containers/circular_deque.h"
 #include "base/logging.h"
 #include "net/quic/core/quic_types.h"
 
@@ -101,7 +100,7 @@ class PacketNumberIndexedQueue {
     return const_cast<EntryWrapper*>(const_this->GetEntryWrapper(offset));
   }
 
-  std::deque<EntryWrapper> entries_;
+  base::circular_deque<EntryWrapper> entries_;
   size_t number_of_present_entries_;
   QuicPacketNumber first_packet_;
 };
