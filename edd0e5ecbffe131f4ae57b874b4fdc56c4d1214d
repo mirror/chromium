@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98878482_9c2ffe4c",
+        "filename": "cc/blink/web_layer_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-11T14:29:43Z",
+      "side": 1,
+      "message": "typically, this comment would go in the base class instead.",
+      "revId": "edd0e5ecbffe131f4ae57b874b4fdc56c4d1214d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
