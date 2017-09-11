@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d2b1d141_b3f9dd75",
+        "filename": "ios/chrome/browser/web/print_tab_helper.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-11T14:54:33Z",
+      "side": 1,
+      "message": "This should not happen. Removed Detach() method and inlined it in WebStateDestroyed().",
+      "parentUuid": "b88e31aa_a1814d8c",
+      "revId": "9d32b58f7b66f8d0b13fa5157f7ec90aedba65e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f35a6bad_c1634b54",
         "filename": "ios/chrome/browser/web/print_tab_helper.mm",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "9d32b58f7b66f8d0b13fa5157f7ec90aedba65e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3010570_5fe5cccc",
+        "filename": "ios/chrome/browser/web/print_tab_helper.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-11T14:54:33Z",
+      "side": 1,
+      "message": "I\u0027ve introduced a separate protocol WebStatePrinter that is implemented by BVC currently and moved the creation of the tab helper to BVC -installDelegatesForTab: instead of Tab -setDispatcher:.",
+      "parentUuid": "f35a6bad_c1634b54",
+      "revId": "9d32b58f7b66f8d0b13fa5157f7ec90aedba65e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
