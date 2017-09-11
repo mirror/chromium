@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "682b2418_3c003446",
+        "filename": "ash/wm/overview/scoped_overview_animation_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-11T20:45:10Z",
+      "side": 1,
+      "message": "When does this animation end? For trilinear filtering we want this to be enabled from animation start until animation that leaves overview mode ends. Why is render surface caching providing an improvement here today? I\u0027m not seeing opacity change so I\u0027m surprised that render surface is needed..",
+      "revId": "1df4c6afc989f02099c32c9154b32ffae4274191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
