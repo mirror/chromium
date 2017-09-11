@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95e35e2a_7982bfce",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-11T19:24:42Z",
+      "side": 1,
+      "message": "s/result?/scroll customization handler was called/",
+      "range": {
+        "startLine": 54,
+        "startChar": 57,
+        "endLine": 54,
+        "endChar": 64
+      },
+      "revId": "6ad2fe2a8de80e1c4361454ce8303ddff4107d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cca32c2f_782f95a4",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-11T19:24:42Z",
+      "side": 1,
+      "message": "nit: Is this still needed? The state is reset at the begging of each test case.",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 12
+      },
+      "revId": "6ad2fe2a8de80e1c4361454ce8303ddff4107d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24757c61_9ac98346",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-11T19:24:42Z",
+      "side": 1,
+      "message": "nit: s/scrollCustomizationHandlersCalled/didCallScrollCustomizationHandlers/g",
+      "range": {
+        "startLine": 139,
+        "startChar": 11,
+        "endLine": 139,
+        "endChar": 44
+      },
+      "revId": "6ad2fe2a8de80e1c4361454ce8303ddff4107d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50df7244_4d42e7b8",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-11T19:24:42Z",
+      "side": 1,
+      "message": "nit: It think it will be nice if you move this into and small utility function in source file\nand also use it below.\n\nbool HasScrollCustomizationForGesture(const Layoutbox\u0026,  const ScrollState\u0026)",
+      "revId": "6ad2fe2a8de80e1c4361454ce8303ddff4107d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dcc3d61_359d932b",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-11T19:24:42Z",
+      "side": 1,
+      "message": "nit: unnecessary blank line.",
+      "revId": "6ad2fe2a8de80e1c4361454ce8303ddff4107d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e10d11c_fccbcec7",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollState.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-11T19:24:42Z",
+      "side": 1,
+      "message": "nit: s/and deltaX() otherwise/otherwise deltaX()/\n\nWithout this change it reads a bit odd to me.",
+      "range": {
+        "startLine": 71,
+        "startChar": 48,
+        "endLine": 71,
+        "endChar": 70
+      },
+      "revId": "6ad2fe2a8de80e1c4361454ce8303ddff4107d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1887d564_7919290d",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollState.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-11T19:24:42Z",
+      "side": 1,
+      "message": "nit: should we use data_-\u003eis_beginning here? the function call seems unnecessary and \ninefficient. Same for daltaX and deltaXHint() etc.",
+      "range": {
+        "startLine": 73,
+        "startChar": 11,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "6ad2fe2a8de80e1c4361454ce8303ddff4107d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec39ca0_7beb960a",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollState.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-11T19:24:42Z",
+      "side": 1,
+      "message": "nit: ditto.",
+      "range": {
+        "startLine": 76,
+        "startChar": 48,
+        "endLine": 76,
+        "endChar": 70
+      },
+      "revId": "6ad2fe2a8de80e1c4361454ce8303ddff4107d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a1af9c_2ae4d5e4",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollState.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-11T19:24:42Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "range": {
+        "startLine": 78,
+        "startChar": 11,
+        "endLine": 78,
+        "endChar": 22
+      },
+      "revId": "6ad2fe2a8de80e1c4361454ce8303ddff4107d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
