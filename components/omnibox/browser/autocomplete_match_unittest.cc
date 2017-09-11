@@ -208,6 +208,82 @@ TEST(AutocompleteMatchTest, InlineTailPrefix) {
   }
 }
 
+TEST(AutocompleteMatchTest, GetMatchComponents) {
+  struct MatchComponentsTestData {
+    const std::string url;
+    std::vector<AutocompleteMatch::MatchPosition> matches;
+    bool expected_match_in_scheme;
+    bool expected_match_in_subdomain;
+    bool expected_match_after_host;
+  };
+
+  MatchComponentsTestData test_cases[] = {
+      // Match in scheme.
+      {"http://www.google.com", {{0, 2}}, true, false, false},
+      // Match within the scheme, but not starting at the beginning, i.e. "ttp".
+      {"http://www.google.com", {{1, 2}}, false, false, false},
+      // Sanity check that HTTPS still works.
+      {"https://www.google.com", {{0, 2}}, true, false, false},
+
+      // Match within the subdomain.
+      {"http://www.google.com", {{7, 10}}, false, true, false},
+      // Don't consider matches on the '.' delimiter as a match_in_subdomain.
+      {"http://www.google.com", {{10, 11}}, false, false, false},
+      // Matches within the domain.
+      {"http://www.google.com", {{11, 14}}, false, false, false},
+      // Verify that in private registries, we detect matches in subdomains.
+      {"http://www.appspot.com", {{7, 10}}, false, true, false},
+
+      // Matches spanning the scheme, subdomain, and domain.
+      {"http://www.google.com", {{0, 14}}, true, true, false},
+      {"http://www.google.com", {{0, 2}, {7, 10}}, true, true, false},
+      // But we should not flag match_in_subdomain if there is no subdomain.
+      {"http://google.com", {{0, 14}}, true, false, false},
+
+      // Matches in the path, query, and ref.
+      {"http://google.com/abc?def=ghi#jkl", {{18, 21}}, false, false, true},
+      {"http://google.com/abc?def=ghi#jkl", {{22, 25}}, false, false, true},
+      {"http://google.com/abc?def=ghi#jkl", {{26, 29}}, false, false, true},
+      // Match spanning an arbitrary portion of the URL after the host.
+      {"http://google.com/abc?def=ghi#jkl", {{19, 26}}, false, false, true},
+      // Don't consider the '/' delimiter as a match_in_path.
+      {"http://google.com/abc?def=ghi#jkl", {{17, 18}}, false, false, false},
+
+      // Matches spanning the subdomain and path.
+      {"http://www.google.com/abc", {{7, 25}}, false, true, true},
+      {"http://www.google.com/abc", {{7, 10}, {22, 25}}, false, true, true},
+
+      // Matches spanning the scheme, subdomain, and path.
+      {"http://www.google.com/abc", {{0, 25}}, true, true, true},
+      {"http://www.google.com/abc",
+       {{0, 2}, {7, 10}, {22, 25}},
+       true,
+       true,
+       true},
+  };
+  for (auto& test_case : test_cases) {
+    SCOPED_TRACE(testing::Message()
+                 << " url=" << test_case.url
+                 << " first match start=" << test_case.matches[0].first
+                 << " first match end=" << test_case.matches[0].second
+                 << " expected_match_in_scheme="
+                 << test_case.expected_match_in_scheme
+                 << " expected_match_in_subdomain="
+                 << test_case.expected_match_in_subdomain
+                 << " expected_match_after_host="
+                 << test_case.expected_match_after_host);
+    bool match_in_scheme = false;
+    bool match_in_subdomain = false;
+    bool match_after_host = false;
+    AutocompleteMatch::GetMatchComponents(
+        GURL(test_case.url), test_case.matches, &match_in_scheme,
+        &match_in_subdomain, &match_after_host);
+    EXPECT_EQ(test_case.expected_match_in_scheme, match_in_scheme);
+    EXPECT_EQ(test_case.expected_match_in_subdomain, match_in_subdomain);
+    EXPECT_EQ(test_case.expected_match_after_host, match_after_host);
+  }
+}
+
 TEST(AutocompleteMatchTest, FormatUrlForSuggestionDisplay) {
   // This test does not need to verify url_formatter's functionality in-depth,
   // since url_formatter has its own unit tests. This test is to validate that
