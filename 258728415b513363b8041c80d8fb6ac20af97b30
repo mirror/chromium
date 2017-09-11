@@ -51,6 +51,24 @@
       "revId": "258728415b513363b8041c80d8fb6ac20af97b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd40f3b0_6748a15e",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-11T15:50:13Z",
+      "side": 1,
+      "message": "for one, I do plan to add a reason arg to both CloseLockScreenNote and RequestNewLockScreenNote.\n\nfor comment:\n\"Currently, |CloseLockScreenNote| is only called as a result of pressing unlock button, so pass that as the note reset reason.\"",
+      "parentUuid": "08261fca_9235e359",
+      "revId": "258728415b513363b8041c80d8fb6ac20af97b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
