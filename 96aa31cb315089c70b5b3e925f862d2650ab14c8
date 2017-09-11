@@ -87,6 +87,24 @@
       "revId": "96aa31cb315089c70b5b3e925f862d2650ab14c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d10a113_48b22f61",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T02:33:31Z",
+      "side": 1,
+      "message": "I think historically we\u0027ve not assumed a guaranteed lifetime ordering between SWNetworkProvider and blink::Supplement\u003c\u003e, which is why they both have refptrs to the ProviderContext. (FWIW the place they were invented is here: https://codereview.chromium.org/261533003)",
+      "parentUuid": "6a1dec41_4eb4258d",
+      "revId": "96aa31cb315089c70b5b3e925f862d2650ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
