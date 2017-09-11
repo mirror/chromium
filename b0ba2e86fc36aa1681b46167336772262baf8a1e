@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd89b9d8_0985638c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-09-11T17:06:18Z",
+      "side": 1,
+      "message": "Ooops, I meant to remove the ChromeFeatureList.isInitialized() because HistoryAdapterTest is no longer calling this method. Thanks for catching.",
+      "parentUuid": "445e11ac_ca068856",
+      "range": {
+        "startLine": 318,
+        "startChar": 30,
+        "endLine": 318,
+        "endChar": 62
+      },
+      "revId": "b0ba2e86fc36aa1681b46167336772262baf8a1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65b26e15_bc6af926",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "b0ba2e86fc36aa1681b46167336772262baf8a1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f501c2_a188a78a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-09-11T17:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65b26e15_bc6af926",
+      "range": {
+        "startLine": 514,
+        "startChar": 23,
+        "endLine": 514,
+        "endChar": 26
+      },
+      "revId": "b0ba2e86fc36aa1681b46167336772262baf8a1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
