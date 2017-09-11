@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "b56be7a9_c8329fe2",
+        "filename": "ui/ozone/platform/wayland/wayland_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-09-11T15:06:10Z",
+      "side": 1,
+      "message": "I need to be educated at some point about the process model for ozone/wayland. Let\u0027s make sure to find some time to talk about this in 3 weeks.",
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae4b23a_5215228f",
+        "filename": "ui/ozone/platform/wayland/wayland_cursor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-09-11T15:06:10Z",
+      "side": 1,
+      "message": "per my suggestion in the other file, this would (for example) be less lines of code if you had a gfx::Size?",
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d7902fe_cda72ff4",
         "filename": "ui/ozone/platform/wayland/wayland_cursor.cc",
         "patchSetId": 2
@@ -48,6 +82,23 @@
     },
     {
       "key": {
+        "uuid": "156d0d42_279b84fc",
+        "filename": "ui/ozone/platform/wayland/wayland_cursor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-09-11T15:06:10Z",
+      "side": 1,
+      "message": "conceivably ignorable suggestion: instead of width, height, gfx::Size?",
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "059ce76e_b9d15383",
         "filename": "ui/ozone/platform/wayland/wayland_cursor.h",
         "patchSetId": 2
@@ -65,6 +116,40 @@
         "endLine": 50,
         "endChar": 48
       },
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a850af5d_4d3c69f9",
+        "filename": "ui/ozone/platform/wayland/wayland_pointer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-09-11T15:06:10Z",
+      "side": 1,
+      "message": "What\u0027s the difference between a WaylandPointer and a WaylandCursor? That ought to have a comment?",
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58446579_f32ed6a0",
+        "filename": "ui/ozone/platform/wayland/wayland_window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-09-11T15:06:10Z",
+      "side": 1,
+      "message": "can you add a sufficiency of const to enforce that it\u0027s immutable? Or is that too tedious?",
       "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
