@@ -1020,7 +1020,8 @@ void MediaStreamManager::SetupRequest(const std::string& label) {
     return;
   }
 
-  const bool is_screen_capture = video_type == MEDIA_DESKTOP_VIDEO_CAPTURE;
+  const bool is_screen_capture = video_type == MEDIA_DESKTOP_VIDEO_CAPTURE ||
+                                 audio_type == MEDIA_DESKTOP_AUDIO_CAPTURE;
   if (is_screen_capture && !SetupScreenCaptureRequest(request)) {
     FinalizeRequestFailed(label,
                           request,
@@ -1118,12 +1119,16 @@ bool MediaStreamManager::SetupScreenCaptureRequest(DeviceRequest* request) {
   DCHECK(request->audio_type() == MEDIA_DESKTOP_AUDIO_CAPTURE ||
          request->video_type() == MEDIA_DESKTOP_VIDEO_CAPTURE);
 
-  // For screen capture we only support two valid combinations:
+  // For screen capture we support three valid combinations:
   // (1) screen video capture only, or
-  // (2) screen video capture with loopback audio capture.
-  if (request->video_type() != MEDIA_DESKTOP_VIDEO_CAPTURE ||
-      (request->audio_type() != MEDIA_NO_SERVICE &&
-       request->audio_type() != MEDIA_DESKTOP_AUDIO_CAPTURE)) {
+  // (2) loopback audio capture only, or
+  // (3) screen video capture with loopback audio capture.
+  if (!((request->video_type() == MEDIA_DESKTOP_VIDEO_CAPTURE &&
+         request->audio_type() == MEDIA_NO_SERVICE) ||
+        (request->video_type() == MEDIA_NO_SERVICE &&
+         request->audio_type() == MEDIA_DESKTOP_AUDIO_CAPTURE) ||
+        (request->video_type() == MEDIA_DESKTOP_VIDEO_CAPTURE &&
+         request->audio_type() == MEDIA_DESKTOP_AUDIO_CAPTURE))) {
     LOG(ERROR) << "Invalid screen capture request.";
     return false;
   }
@@ -1139,9 +1144,19 @@ bool MediaStreamManager::SetupScreenCaptureRequest(DeviceRequest* request) {
     }
   }
 
-  const std::string audio_device_id =
-      request->audio_type() == MEDIA_DESKTOP_AUDIO_CAPTURE ? video_device_id
-                                                           : "";
+  std::string audio_device_id;
+  if (request->audio_type() == MEDIA_DESKTOP_AUDIO_CAPTURE) {
+    const std::string& audio_stream_source =
+        request->controls.audio.stream_source;
+
+    if (audio_stream_source == kMediaStreamSourceSystem &&
+        !request->controls.audio.device_id.empty()) {
+      audio_device_id = request->controls.audio.device_id;
+    }
+
+    if (audio_device_id.empty())
+      audio_device_id = video_device_id;
+  }
 
   request->CreateUIRequest(audio_device_id, video_device_id);
   return true;
