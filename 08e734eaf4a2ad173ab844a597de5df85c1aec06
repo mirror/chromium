@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf923beb_f5ed8c47",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2367,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-11T19:09:25Z",
+      "side": 1,
+      "message": "Thanks for simplifying this!",
+      "revId": "08e734eaf4a2ad173ab844a597de5df85c1aec06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

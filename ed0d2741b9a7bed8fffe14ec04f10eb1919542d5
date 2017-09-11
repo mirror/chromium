@@ -193,6 +193,30 @@
       "revId": "ed0d2741b9a7bed8fffe14ec04f10eb1919542d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6608aeb2_3184af75",
+        "filename": "net/dns/host_resolver_proc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-11T19:09:25Z",
+      "side": 1,
+      "message": "Cool, thanks, that makes a lot more sense.",
+      "parentUuid": "68f473cc_ac87a81a",
+      "range": {
+        "startLine": 204,
+        "startChar": 28,
+        "endLine": 204,
+        "endChar": 38
+      },
+      "revId": "ed0d2741b9a7bed8fffe14ec04f10eb1919542d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
