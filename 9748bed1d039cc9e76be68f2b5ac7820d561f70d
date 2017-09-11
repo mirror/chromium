@@ -34,6 +34,24 @@
       "revId": "9748bed1d039cc9e76be68f2b5ac7820d561f70d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3118cd00_21f3dee4",
+        "filename": "chrome/browser/chromeos/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-11T22:16:53Z",
+      "side": 1,
+      "message": "thanks, sounds okay to me, then.",
+      "parentUuid": "b25ce239_c4699f09",
+      "revId": "9748bed1d039cc9e76be68f2b5ac7820d561f70d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
