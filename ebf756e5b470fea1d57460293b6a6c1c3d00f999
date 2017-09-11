@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "936f9eb2_37d06501",
+        "filename": "third_party/WebKit/LayoutTests/W3CImportExpectations",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-11T16:08:56Z",
+      "side": 1,
+      "message": "I put this comment back in a modified form. The way I\u0027m now thinking about this is that we should import those directories of web-platform-tests that test something useful, and we should find OWNERS for those. Last week I went sent out a lot of CLs for improving OWNERS coverage, listed in https://groups.google.com/a/chromium.org/d/msg/ecosystem-infra/z68D7t9Oq98/65tlf1TCDQAJ\n\nAt one point I thought we could get to importing everything verbatim and move to a DEPS-like model, but that\u0027s not really compatible with how we\u0027re doing export, so I\u0027ve abandoned that hope. That means that there\u0027s also no benefit in importing but skipping tests that nobody is working on, so for the foreseeable future I think W3CImportExpectations will remain.",
+      "revId": "ebf756e5b470fea1d57460293b6a6c1c3d00f999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
