@@ -329,7 +329,9 @@ template <class K, class M>
 auto flat_map<Key, Mapped, Compare>::insert_or_assign(K&& key, M&& obj)
     -> std::pair<iterator, bool> {
   auto result =
-      tree::emplace_key_args(key, std::forward<K>(key), std::forward<M>(obj));
+      tree::emplace_key_args(key, std::piecewise_construct,
+                             std::forward_as_tuple(std::forward<K>(key)),
+                             std::forward_as_tuple(std::forward<M>(obj)));
   if (!result.second)
     result.first->second = std::forward<M>(obj);
   return result;
@@ -340,8 +342,10 @@ template <class K, class M>
 auto flat_map<Key, Mapped, Compare>::insert_or_assign(const_iterator hint,
                                                       K&& key,
                                                       M&& obj) -> iterator {
-  auto result = tree::emplace_hint_key_args(hint, key, std::forward<K>(key),
-                                            std::forward<M>(obj));
+  auto result =
+      tree::emplace_hint_key_args(hint, key, std::piecewise_construct,
+                                  std::forward_as_tuple(std::forward<K>(key)),
+                                  std::forward_as_tuple(std::forward<M>(obj)));
   if (!result.second)
     result.first->second = std::forward<M>(obj);
   return result.first;
