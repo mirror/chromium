@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51a4b8ed_18a5c2dd",
+        "filename": "third_party/WebKit/Source/bindings/scripts/aggregate_generated_bindings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-11T05:43:59Z",
+      "side": 1,
+      "message": "IIUC this is a tentative option and should be removed after the move. Can we have a TODO comment to remove this option later?",
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25936367_c1ab5c16",
+        "filename": "third_party/WebKit/Source/bindings/scripts/code_generator_v8.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-11T05:43:59Z",
+      "side": 1,
+      "message": "Can we have a helper method to generate output file names and use the method in subclasses? For example,\n\ndef get_output_basename(self, definition_name):\n  if self.snake_case_generated_files:\n    ...",
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4277907_a0a873c6",
+        "filename": "third_party/WebKit/Source/bindings/scripts/code_generator_web_agent_api.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-11T05:43:59Z",
+      "side": 1,
+      "message": "Probably better to have default value in CodeGeneratorBase.",
+      "range": {
+        "startLine": 242,
+        "startChar": 61,
+        "endLine": 242,
+        "endChar": 62
+      },
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe543f10_59c2bfdf",
+        "filename": "third_party/WebKit/Source/bindings/scripts/compute_interfaces_info_individual.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-11T05:43:59Z",
+      "side": 1,
+      "message": "Can we have a TODO comment to remove this tentative option later?",
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1472df8_354001ce",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_callback_interface.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-11T05:43:59Z",
+      "side": 1,
+      "message": "why do we need this?",
+      "range": {
+        "startLine": 81,
+        "startChar": 54,
+        "endLine": 81,
+        "endChar": 64
+      },
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2093efb_9b87d32b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_dictionary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-11T05:43:59Z",
+      "side": 1,
+      "message": "I\u0027d prefer to set \u0027this_include_header_name\u0027 in generate_dictionary_code() rather than passing it to this function.",
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8762b284_daa91a62",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_dictionary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-11T05:43:59Z",
+      "side": 1,
+      "message": "Ditto. I\u0027d prefer to set \u0027this_include_header_name\u0027 in generate_dictionary_code().",
+      "range": {
+        "startLine": 160,
+        "startChar": 57,
+        "endLine": 160,
+        "endChar": 72
+      },
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "718dab15_e4b6306e",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-11T05:43:59Z",
+      "side": 1,
+      "message": "Ditto. I\u0027d prefer to set \u0027this_include_header_name\u0027 in generate_interface_code().",
+      "range": {
+        "startLine": 188,
+        "startChar": 45,
+        "endLine": 188,
+        "endChar": 60
+      },
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7774d18f_192afb19",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/bindings/bindings_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-11T05:43:59Z",
+      "side": 1,
+      "message": "It looks consistent not to have default value.",
+      "range": {
+        "startLine": 187,
+        "startChar": 61,
+        "endLine": 187,
+        "endChar": 67
+      },
+      "revId": "8c2540454bc44909724019d2290b9ca7d2499c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
