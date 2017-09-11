@@ -255,7 +255,8 @@ LayoutUnit GridTrackSizingAlgorithmStrategy::LogicalHeightForChild(
 
   child.LayoutIfNeeded();
 
-  if (auto baseline_extent = ExtentForBaselineAlignment(child))
+  if (auto baseline_extent =
+          algorithm_.GetBaselineAlignment().ExtentForBaselineAlignment(child))
     return baseline_extent.value();
 
   return child.LogicalHeight() + child.MarginLogicalHeight();
@@ -287,7 +288,8 @@ LayoutUnit GridTrackSizingAlgorithmStrategy::MinContentForChild(
 
   if (Direction() == kForColumns && !AvailableSpace()) {
     DCHECK(GridLayoutUtils::IsOrthogonalChild(*GetLayoutGrid(), child));
-    if (auto baseline_extent = ExtentForBaselineAlignment(child))
+    if (auto baseline_extent =
+            algorithm_.GetBaselineAlignment().ExtentForBaselineAlignment(child))
       return baseline_extent.value();
   }
 
@@ -374,21 +376,6 @@ void GridTrackSizingAlgorithmStrategy::DistributeSpaceToTracks(
     LayoutUnit& available_logical_space) const {
   algorithm_.DistributeSpaceToTracks<kMaximizeTracks>(tracks, nullptr,
                                                       available_logical_space);
-}
-
-Optional<LayoutUnit>
-GridTrackSizingAlgorithmStrategy::ExtentForBaselineAlignment(
-    LayoutBox& child) const {
-  auto grid = algorithm_.layout_grid_;
-  GridAxis baseline_axis = GridLayoutUtils::IsOrthogonalChild(*grid, child)
-                               ? kGridRowAxis
-                               : kGridColumnAxis;
-  if (!grid->IsBaselineAlignmentForChild(child, baseline_axis) ||
-      !grid->IsBaselineContextComputed(baseline_axis))
-    return WTF::nullopt;
-
-  auto& group = grid->GetBaselineGroupForChild(child, baseline_axis);
-  return group.MaxAscent() + group.MaxDescent();
 }
 
 LayoutUnit DefiniteSizeStrategy::MinLogicalWidthForChild(

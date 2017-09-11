@@ -4,6 +4,7 @@
 
 #include "core/layout/GridLayoutUtils.h"
 
+#include "core/layout/LayoutGrid.h"
 #include "platform/LengthFunctions.h"
 
 namespace blink {
@@ -34,6 +35,20 @@ static LayoutUnit ComputeMarginLogicalSizeForChild(
   return margin_start + margin_end;
 }
 
+LayoutUnit GridLayoutUtils::MarginOverForChild(const LayoutGrid& grid,
+                                               const LayoutBox& child,
+                                               GridAxis axis) {
+  return IsHorizontalGridAxis(grid, axis) ? child.MarginRight()
+                                          : child.MarginTop();
+}
+
+LayoutUnit GridLayoutUtils::MarginUnderForChild(const LayoutGrid& grid,
+                                                const LayoutBox& child,
+                                                GridAxis axis) {
+  return IsHorizontalGridAxis(grid, axis) ? child.MarginLeft()
+                                          : child.MarginBottom();
+}
+
 LayoutUnit GridLayoutUtils::MarginLogicalWidthForChild(const LayoutGrid& grid,
                                                        const LayoutBox& child) {
   return child.NeedsLayout()
@@ -49,6 +64,12 @@ LayoutUnit GridLayoutUtils::MarginLogicalHeightForChild(
              : child.MarginLogicalHeight();
 }
 
+bool GridLayoutUtils::IsHorizontalGridAxis(const LayoutGrid& grid,
+                                           GridAxis axis) {
+  return axis == kGridRowAxis ? grid.IsHorizontalWritingMode()
+                              : !grid.IsHorizontalWritingMode();
+}
+
 bool GridLayoutUtils::IsOrthogonalChild(const LayoutGrid& grid,
                                         const LayoutBox& child) {
   return child.IsHorizontalWritingMode() != grid.IsHorizontalWritingMode();
@@ -61,6 +82,13 @@ GridTrackSizingDirection GridLayoutUtils::FlowAwareDirectionForChild(
   return !IsOrthogonalChild(grid, child)
              ? direction
              : (direction == kForColumns ? kForRows : kForColumns);
+}
+
+bool GridLayoutUtils::IsParallelToBlockAxisForChild(const LayoutGrid& grid,
+                                                    const LayoutBox& child,
+                                                    GridAxis axis) {
+  return axis == kGridColumnAxis ? !IsOrthogonalChild(grid, child)
+                                 : IsOrthogonalChild(grid, child);
 }
 
 }  // namespace blink
