@@ -7,7 +7,7 @@
 #include <cmath>
 
 #include "base/logging.h"
-#include "services/device/generic_sensor/orientation_util.h"
+#include "services/device/generic_sensor/generic_sensor_consts.h"
 #include "services/device/generic_sensor/platform_sensor_fusion.h"
 
 namespace device {

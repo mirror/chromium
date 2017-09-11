@@ -2,13 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#define _USE_MATH_DEFINES  // For VC++ to get M_PI. This has to be first.
-
 #include "services/device/generic_sensor/orientation_util.h"
 
 #include <cmath>
 
 #include "base/logging.h"
+#include "services/device/generic_sensor/generic_sensor_consts.h"
 
 namespace {
 
@@ -93,10 +92,6 @@ void ComputeOrientationEulerAnglesInRadiansFromRotationMatrix(
 }  // namespace
 
 namespace device {
-
-const double kRadToDeg = 180.0 / M_PI;
-
-const double kDegToRad = M_PI / 180.0;
 
 void ComputeOrientationEulerAnglesFromRotationMatrix(
     const std::vector<double>& r,

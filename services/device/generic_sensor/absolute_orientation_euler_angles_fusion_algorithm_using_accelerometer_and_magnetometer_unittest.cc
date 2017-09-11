@@ -9,7 +9,7 @@
 #include "services/device/device_service_test_base.h"
 #include "services/device/generic_sensor/absolute_orientation_euler_angles_fusion_algorithm_using_accelerometer_and_magnetometer.h"
 #include "services/device/generic_sensor/fake_platform_sensor_fusion.h"
-#include "services/device/generic_sensor/orientation_util.h"
+#include "services/device/generic_sensor/generic_sensor_consts.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace device {
