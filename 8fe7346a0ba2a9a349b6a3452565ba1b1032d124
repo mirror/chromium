@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbe1b9bd_a0b1c797",
+        "filename": "base/numerics/math_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-11T15:18:29Z",
+      "side": 1,
+      "message": "Is this enough digits? It\u0027ll be the same as what used MathUtil, but changes M_PI?\n\nI see it claimed to be #define M_PI   3.14159265358979323846264338327950288 in https://stackoverflow.com/a/15231836",
+      "revId": "8fe7346a0ba2a9a349b6a3452565ba1b1032d124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
