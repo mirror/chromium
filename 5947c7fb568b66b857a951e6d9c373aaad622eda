@@ -45,6 +45,30 @@
       "revId": "5947c7fb568b66b857a951e6d9c373aaad622eda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f0aea08_50fe6216",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-11T05:10:01Z",
+      "side": 1,
+      "message": "This actually was intentional (I meant \"a system window that is not modal\")\n, but i\u0027m fine with either way, so done.",
+      "parentUuid": "2e47a694_7f941253",
+      "range": {
+        "startLine": 412,
+        "startChar": 11,
+        "endLine": 412,
+        "endChar": 23
+      },
+      "revId": "5947c7fb568b66b857a951e6d9c373aaad622eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
