@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9a972ef_17997616",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webstorage/storage_enumerate.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-11T17:36:09Z",
+      "side": 1,
+      "message": "Did you test this in the other browsers?\n\n(If so, it\u0027d be great to mention it in the CL description.)",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 8
+      },
+      "revId": "fe6848ab7f9eca64feaaf1a65806572d12b40421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e183a9c_dbf64f3a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webstorage/storage_enumerate.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-11T17:36:09Z",
+      "side": 1,
+      "message": "Do you mean Object.prototype.hasOwnProperty.call here?",
+      "range": {
+        "startLine": 48,
+        "startChar": 17,
+        "endLine": 48,
+        "endChar": 38
+      },
+      "revId": "fe6848ab7f9eca64feaaf1a65806572d12b40421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
