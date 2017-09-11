@@ -365,8 +365,20 @@ metrics::OmniboxInputType AutocompleteInput::Parse(
   if (parts->scheme.is_nonempty())
     return metrics::OmniboxInputType::URL;
 
-  // Trailing slashes force the input to be treated as a URL.
-  if (parts->path.is_nonempty()) {
+  // Check to see if the username is set and, if so, whether it contains a
+  // space.  Usernames usually do not contain a space.  If a username contains
+  // a space, that's likely an indication of incorrectly parsing of the input.
+  // The heuristics below avoid returning URL type for these inputs.
+  const bool username_has_space =
+      parts->username.is_nonempty() &&
+      (text.substr(parts->username.begin, parts->username.len)
+           .find_first_of(base::kWhitespaceUTF16) != base::string16::npos);
+
+  // Generally, trailing slashes force the input to be treated as a URL.  Don't
+  // do this for usernames that contain a space though.  This helps make inputs
+  // such as "dep missing: @test/file" is parsed as UNKNOWN, not a URL (with
+  // the username "dep missing: "!).
+  if (parts->path.is_nonempty() && !username_has_space) {
     base::char16 c = text[parts->path.end() - 1];
     if ((c == '\\') || (c == '/'))
       return metrics::OmniboxInputType::URL;
@@ -381,8 +393,10 @@ metrics::OmniboxInputType AutocompleteInput::Parse(
 
   // If there is more than one recognized non-host component, this is likely to
   // be a URL, even if the TLD is unknown (in which case this is likely an
-  // intranet URL).
-  if (NumNonHostComponents(*parts) > 1)
+  // intranet URL).  Again, don't do this for usernames with a space.  This
+  // again help prevent inputs such as "dep missing: @test/file" from returning
+  // URL.
+  if ((NumNonHostComponents(*parts) > 1) && !username_has_space)
     return metrics::OmniboxInputType::URL;
 
   // If we reach here with a username, our input looks something like
