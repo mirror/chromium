@@ -83,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "88822f34_2ae24686",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T07:42:19Z",
+      "side": 1,
+      "message": "Yes the ctor sets it for you:\nhttps://cs.chromium.org/chromium/src/content/public/common/resource_request_completion_status.cc?l\u003d15\u0026rcl\u003dc2e790daf14793ef0c8a63f3a1e2481c5a07d62e",
+      "parentUuid": "9e78fcc3_23f95b6a",
+      "range": {
+        "startLine": 170,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 13
+      },
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47b8bc3c_abb61076",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
         "patchSetId": 3
