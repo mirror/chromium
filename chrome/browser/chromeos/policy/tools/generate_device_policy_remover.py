@@ -22,6 +22,11 @@ def main():
   sys.path.insert(0, descriptor_pool_path)
   sys.path.append(symbol_database_path)
   sys.path.append(chrome_device_policy_pb2_path)
+  # Make reload google library
+  # which already load by Google App Engine
+  import google.protobuf
+  reload(google)
+  reload(google.protobuf)
   from chrome_device_policy_pb2 import ChromeDeviceSettingsProto
   with open(off_hours_cleaner_path, 'wt') as file:
     file.write('//\n'
