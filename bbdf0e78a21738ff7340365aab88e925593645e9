@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "01846eaa_2afe09ef",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-11T18:58:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fc9972f_004c3f18",
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6ab04a9_9175e1d3",
         "filename": "ios/chrome/browser/passwords/credential_manager.mm",
         "patchSetId": 12
@@ -39,6 +57,30 @@
       "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c86dc86_846e21ef",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-11T18:58:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6ab04a9_9175e1d3",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 18
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "be1d2ed9_25ef4d06",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-11T18:58:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d93c4fd9_f062a3c8",
+      "range": {
+        "startLine": 74,
+        "startChar": 3,
+        "endLine": 74,
+        "endChar": 28
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b2d3952_e385b8af",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 12
@@ -170,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "c00e309d_89430f61",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-11T18:58:04Z",
+      "side": 1,
+      "message": "Changing it to ASSERT_FALSE causes the following error:\n\n\u003e ../../ios/chrome/browser/passwords/credential_manager_unittest.mm:141:3: error: cannot initialize return object of type \u0027bool\u0027 with an rvalue of type \u0027void\u0027\n  ASSERT_FALSE(local_forms.empty());\n  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n../../third_party/googletest/src/googletest/include/gtest/gtest.h:1870:23: note: expanded from macro \u0027ASSERT_FALSE\u0027\n                      GTEST_FATAL_FAILURE_)\n                      ^~~~~~~~~~~~~~~~~~~~~\n../../third_party/googletest/src/googletest/include/gtest/internal/gtest-internal.h:1218:5: note: expanded from macro \u0027GTEST_TEST_BOOLEAN_\u0027\n    fail(::testing::internal::GetBoolAssertionFailureMessage(\\\n    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n../../third_party/googletest/src/googletest/include/gtest/internal/gtest-internal.h:1136:10: note: expanded from macro \u0027GTEST_FATAL_FAILURE_\u0027\n  return GTEST_MESSAGE_(message, ::testing::TestPartResult::kFatalFailure)\n         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n../../third_party/googletest/src/googletest/include/gtest/internal/gtest-internal.h:1133:3: note: expanded from macro \u0027GTEST_MESSAGE_\u0027\n  GTEST_MESSAGE_AT_(__FILE__, __LINE__, message, result_type)\n  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n../../third_party/googletest/src/googletest/include/gtest/internal/gtest-internal.h:1129:3: note: expanded from macro \u0027GTEST_MESSAGE_AT_\u0027\n  ::testing::internal::AssertHelper(result_type, file, line, message) \\\n  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n1 error generated.\n\nI don\u0027t see why, do you know how to fix it?",
+      "parentUuid": "3d5b2f2a_742d80fc",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 14
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ec509ae_a7ed5262",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 12
@@ -190,6 +280,30 @@
       "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d416d3f9_f863dce8",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-11T18:58:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ec509ae_a7ed5262",
+      "range": {
+        "startLine": 690,
+        "startChar": 14,
+        "endLine": 690,
+        "endChar": 39
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -216,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "0bc81aeb_4f76cf64",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-11T18:58:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97919c58_2214e50f",
+      "range": {
+        "startLine": 700,
+        "startChar": 2,
+        "endLine": 700,
+        "endChar": 11
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08e0f125_e643136b",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 12
@@ -239,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "cbfac585_e466954b",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-11T18:58:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08e0f125_e643136b",
+      "range": {
+        "startLine": 737,
+        "startChar": 16,
+        "endLine": 737,
+        "endChar": 21
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "190b7903_e43c1331",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 12
@@ -259,6 +421,30 @@
       "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55681b9c_125d0ba5",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-11T18:58:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "190b7903_e43c1331",
+      "range": {
+        "startLine": 804,
+        "startChar": 6,
+        "endLine": 804,
+        "endChar": 15
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
