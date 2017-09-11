@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed8e8961_b952d614",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-11T21:03:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "170ae3fa_c6ba239b",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "79aa2ae81d2bb3e0a94f8a73b6d8d9d592c64758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38035b2b_dd6287c7",
         "filename": "chrome/browser/ui/views/elevation_icon_setter.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "79aa2ae81d2bb3e0a94f8a73b6d8d9d592c64758",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e390364_7ded704e",
+        "filename": "chrome/browser/ui/views/elevation_icon_setter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-11T21:03:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38035b2b_dd6287c7",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 20
+      },
+      "revId": "79aa2ae81d2bb3e0a94f8a73b6d8d9d592c64758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
