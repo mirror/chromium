@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f252a3d7_a7ac4ce9",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-11T16:11:41Z",
+      "side": 1,
+      "message": "Why not a UIScrollViewDelegate?",
+      "range": {
+        "startLine": 593,
+        "startChar": 15,
+        "endLine": 593,
+        "endChar": 36
+      },
+      "revId": "335e46998058e6032de321e7ba5ee89fc0793112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b9401f_3000250a",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-11T16:11:41Z",
+      "side": 1,
+      "message": "Displacement seems to be a delta between positions. Here it is a position.\nIs this the newYOffset?",
+      "range": {
+        "startLine": 601,
+        "startChar": 12,
+        "endLine": 601,
+        "endChar": 24
+      },
+      "revId": "335e46998058e6032de321e7ba5ee89fc0793112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
