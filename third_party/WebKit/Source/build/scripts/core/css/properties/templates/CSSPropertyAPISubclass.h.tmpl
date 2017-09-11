@@ -9,23 +9,29 @@
 #ifndef {{api_classname}}_h
 #define {{api_classname}}_h
 
-// TODO(jiameng): every property API header file needs to include a subset of
-// headers below. Ideally each property header should include required headers
-// only. Once all properties have their StyleBuilderFunctions moved to APIs,
-// we will need to revisit this issue.
-#include "core/CSSPropertyNames.h"
-#include "core/css/CSSIdentifierValue.h"
-#include "core/css/CSSPrimitiveValue.h"
-#include "core/css/CSSPrimitiveValueMappings.h"
 #include "core/css/properties/CSSPropertyAPI.h"
-#include "core/css/resolver/StyleBuilderConverter.h"
+#include "core/css/CSSPrimitiveValueMappings.h"
 #include "core/css/resolver/StyleResolverState.h"
+{# conditional includes - only used in some APIs #}
+{% if property.converter == "CSSPrimitiveValue" %}
+#include "core/css/CSSPrimitiveValue.h"
+{% elif property.converter == "CSSIdentifierValue" %}
+#include "core/css/CSSIdentifierValue.h"
+{% elif property.converter %}
+#include "core/css/resolver/StyleBuilderConverter.h"
+{% endif %}
+{% if property.font %}
+#include "core/css/resolver/FontBuilder.h"
+{% endif %}
+{% if not property.font %}
 #include "core/style/ComputedStyle.h"
+{% endif %}
+{% if property.svg %}
 #include "core/style/SVGComputedStyle.h"
+{% endif %}
 {% if property.runtime_flag %}
 #include "platform/RuntimeEnabledFeatures.h"
 {% endif %}
-#include "platform/heap/HeapAllocator.h"
 
 namespace blink {
 
@@ -53,6 +59,19 @@ class {{api_classname}} : public CSSPropertyAPI {
   {% endif %}
   {% if property.is_descriptor %}
   bool IsDescriptor() const override { return true; }
+  {% endif %}
+  {% if 'Percent' in property.typedom_types %}
+  bool SupportsPercentage() const override { return true; }
+  {% endif %}
+  {% if not property.is_property %}
+  bool IsProperty() const override { return false; }
+  {% endif %}
+  {% if property.is_internal %}
+  bool IsEnabled() const override { return false; }
+  {% elif property.runtime_flag %}
+  bool IsEnabled() const override {
+    return RuntimeEnabledFeatures::{{property.runtime_flag}}Enabled();
+  }
   {% endif %}
 
   {% if property.should_declare_application_functions %}
@@ -97,19 +116,6 @@ class {{api_classname}} : public CSSPropertyAPI {
   }
     {% endif %}
     {# TODO(meade): else emit function declaration only #}
-  {% endif %}
-  {% if 'Percent' in property.typedom_types %}
-  bool SupportsPercentage() const override { return true; }
-  {% endif %}
-  {% if not property.is_property %}
-  bool IsProperty() const override { return false; }
-  {% endif %}
-  {% if property.is_internal %}
-  bool IsEnabled() const override { return false; }
-  {% elif property.runtime_flag %}
-  bool IsEnabled() const override {
-    return RuntimeEnabledFeatures::{{property.runtime_flag}}Enabled();
-  }
   {% endif %}
 };
 
