@@ -200,6 +200,10 @@ class CORE_EXPORT PointerEventManager
                               EventTarget** pointer_capture_target,
                               EventTarget** pending_pointer_capture_target);
 
+  // Adjusts coordinates so it can be used to find the best clickable target.
+  // The coordinates should be based on root frame.
+  void AdjustPointForTouchStart(WebTouchPoint*);
+
   // NOTE: If adding a new field to this class please ensure that it is
   // cleared in |PointerEventManager::clear()|.
 

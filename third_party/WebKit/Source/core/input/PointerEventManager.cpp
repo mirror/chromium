@@ -66,6 +66,14 @@ Vector<std::pair<WebTouchPoint, TimeTicks>> GetCoalescedPoints(
   return related_points;
 }
 
+bool ShouldAdjustTouchEvent(const WebTouchEvent& event) {
+  return RuntimeEnabledFeatures::UnifiedTouchAdjustmentEnabled() &&
+         event.GetType() == WebInputEvent::kTouchStart &&
+         event.touches_length &&
+         event.TouchPointInRootFrame(0).pointer_type ==
+             WebPointerProperties::PointerType::kTouch;
+}
+
 }  // namespace
 
 PointerEventManager::PointerEventManager(LocalFrame& frame,
@@ -319,8 +327,14 @@ WebInputEventResult PointerEventManager::HandleTouchEvents(
   // Do the first point target calculation to create the user gesture.
   EventHandlingUtil::PointerEventTarget first_pointer_event_target;
   if (event.touches_length) {
-    first_pointer_event_target =
-        ComputePointerEventTarget(event.TouchPointInRootFrame(0));
+    if (ShouldAdjustTouchEvent(event)) {
+      WebTouchPoint first_touch_point = event.TouchPointInRootFrame(0);
+      AdjustPointForTouchStart(&first_touch_point);
+      first_pointer_event_target = ComputePointerEventTarget(first_touch_point);
+    } else {
+      first_pointer_event_target =
+          ComputePointerEventTarget(event.TouchPointInRootFrame(0));
+    }
   }
 
   // Any finger lifting is a user gesture only when it wasn't associated with a
@@ -367,6 +381,33 @@ WebInputEventResult PointerEventManager::HandleTouchEvents(
   // class. It will be called before rAF and also whenever we run in low latency
   // mode as mentioned in crbug.com/728250.
   return touch_event_manager_->FlushEvents();
+}
+
+void PointerEventManager::AdjustPointForTouchStart(WebTouchPoint* touch_point) {
+  DCHECK(touch_point);
+  LayoutSize padding =
+      LayoutSize(WebFloatSize(touch_point->radius_x, touch_point->radius_y));
+  if (padding.IsEmpty())
+    return;
+
+  HitTestRequest::HitTestRequestType hit_type = HitTestRequest::kReadOnly |
+                                                HitTestRequest::kActive |
+                                                HitTestRequest::kListBased;
+  IntPoint hit_test_point = frame_->View()->RootFrameToContents(
+      FlooredIntPoint(touch_point->PositionInWidget()));
+  HitTestResult hit_test_result =
+      frame_->GetEventHandler().HitTestResultAtPoint(hit_test_point, hit_type,
+                                                     padding);
+
+  Node* adjusted_node = nullptr;
+  IntPoint adjusted_point;
+  bool adjusted = frame_->GetEventHandler().BestClickableNodeForHitTestResult(
+      hit_test_result, adjusted_point, adjusted_node);
+
+  if (!adjusted)
+    return;
+
+  touch_point->SetPositionInWidget(adjusted_point.X(), adjusted_point.Y());
 }
 
 EventHandlingUtil::PointerEventTarget
