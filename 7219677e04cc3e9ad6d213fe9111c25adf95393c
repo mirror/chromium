@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e0b0021_00c74401",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T08:09:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dd7fec2_9c3e715c",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2027b099_060c7fbc",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
         "patchSetId": 3
@@ -107,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "2014be9f_0c290795",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T08:09:59Z",
+      "side": 1,
+      "message": "I see. Thank you!",
+      "parentUuid": "88822f34_2ae24686",
+      "range": {
+        "startLine": 170,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 13
+      },
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47b8bc3c_abb61076",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
         "patchSetId": 3
@@ -121,6 +163,24 @@
       "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7bcc2c_10e27db3",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T08:09:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47b8bc3c_abb61076",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "fdb1962d_d2784f95",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T08:09:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e9f3cab_9abbfdeb",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb22fe0f_d6f3ebce",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
         "patchSetId": 3
@@ -155,6 +233,24 @@
       "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da238360_5a344f14",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T08:09:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb22fe0f_d6f3ebce",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +271,24 @@
     },
     {
       "key": {
+        "uuid": "4994dbf2_ba6b008b",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T08:09:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9130a3e_cc1d0892",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c673b6c_1e728323",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 3
@@ -189,6 +303,24 @@
       "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749327b6_01dce111",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T08:09:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c673b6c_1e728323",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +341,24 @@
     },
     {
       "key": {
+        "uuid": "94482f7e_6d4999f2",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T08:09:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3af281ab_c1a5d647",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c7b98d4_f227269f",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 3
@@ -223,6 +373,24 @@
       "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee4d3cd_9875f6a4",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T08:09:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c7b98d4_f227269f",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "481684ad_7dec371a",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T08:09:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5c4e97d_05aa527e",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82f20fb4_97a36dbc",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 3
@@ -257,6 +443,24 @@
       "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23eb76b1_630cd37c",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T08:09:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "82f20fb4_97a36dbc",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -277,6 +481,24 @@
     },
     {
       "key": {
+        "uuid": "4a022f7d_5c931fe6",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T08:09:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "42fba9e4_1d633fcd",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74bf8eb3_0f262426",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 3
@@ -294,6 +516,24 @@
     },
     {
       "key": {
+        "uuid": "0a685f24_db2dca38",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1718,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T08:09:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "74bf8eb3_0f262426",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cde67b25_7bada3b6",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 3
@@ -305,6 +545,24 @@
       "writtenOn": "2017-09-11T06:12:54Z",
       "side": 1,
       "message": "Hmm I think the original code was wrong here. We clear the jobs here but SWDataPipeReader calls Remove*Job() when its done, and the DCHECK there would fail I think.\n\nI think the streaming job people shouuld be responsible for cleaning themselves up. When SW stops, we expect the streaming jobs Mojo binding to break, and they\u0027ll call OnStreamingResposneFinished().\n\nBut I\u0027m not sure if any code depends on the jobs being cleared in OnStopped(). So to keep the patch delta small, let\u0027s go back to the original idea of adding new Add/RemoveStreaming* functions. Then in a follow-up patch let\u0027s try unifying them and removing this part from OnStopped().",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1456f73b_904513b6",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1918,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T08:09:59Z",
+      "side": 1,
+      "message": "next patch, I return to the previous one. And next next patch, I will try to use counter.",
+      "parentUuid": "cde67b25_7bada3b6",
       "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
