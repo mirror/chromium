@@ -7,30 +7,30 @@
 
 #import <UIKit/UIKit.h>
 
-#import "ios/clean/chrome/browser/ui/toolbar/toolbar_button.h"
+@class ToolbarButton;
 
-// ToolbarButton Factory class that creates ToolbarButton objects with certain
-// style and configuration.
-@interface ToolbarButton (Factory)
+// ToolbarButton Factory protocol to create ToolbarButton objects with certain
+// style and configuration, depending of the implementation.
+@protocol ToolbarButtonFactory
 
 // Back ToolbarButton.
-+ (instancetype)backToolbarButton;
+- (ToolbarButton*)backToolbarButton;
 // Forward ToolbarButton.
-+ (instancetype)forwardToolbarButton;
+- (ToolbarButton*)forwardToolbarButton;
 // Tab Switcher Strip ToolbarButton.
-+ (instancetype)tabSwitcherStripToolbarButton;
+- (ToolbarButton*)tabSwitcherStripToolbarButton;
 // Tab Switcher Grid ToolbarButton.
-+ (instancetype)tabSwitcherGridToolbarButton;
+- (ToolbarButton*)tabSwitcherGridToolbarButton;
 // Tools Menu ToolbarButton.
-+ (instancetype)toolsMenuToolbarButton;
+- (ToolbarButton*)toolsMenuToolbarButton;
 // Share ToolbarButton.
-+ (instancetype)shareToolbarButton;
+- (ToolbarButton*)shareToolbarButton;
 // Reload ToolbarButton.
-+ (instancetype)reloadToolbarButton;
+- (ToolbarButton*)reloadToolbarButton;
 // Stop ToolbarButton.
-+ (instancetype)stopToolbarButton;
+- (ToolbarButton*)stopToolbarButton;
 // Star ToolbarButton.
-+ (instancetype)starToolbarButton;
+- (ToolbarButton*)starToolbarButton;
 
 @end
 
