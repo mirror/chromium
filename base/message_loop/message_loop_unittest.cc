@@ -9,6 +9,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -19,10 +20,12 @@
 #include "base/posix/eintr_wrapper.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "base/synchronization/atomic_flag.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/test/test_simple_task_runner.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/sequence_local_storage_slot.h"
+#include "base/threading/simple_thread.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -250,6 +253,101 @@ void PostNTasks(int posts_remaining) {
     ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, BindOnce(&PostNTasks, posts_remaining - 1));
   }
+}
+
+TEST(MessageLoopTest, DestroyMessageLoopBeforePostTask) {
+  scoped_refptr<SingleThreadTaskRunner> task_runner;
+  {
+    MessageLoop message_loop;
+    task_runner = message_loop.task_runner();
+  }
+  EXPECT_FALSE(task_runner->PostTask(FROM_HERE, BindOnce([]() {})));
+}
+
+class RunTaskOnDifferentThread : public SimpleThread {
+ public:
+  RunTaskOnDifferentThread(const std::string& name_prefix,
+                           OnceClosure task_to_run)
+      : SimpleThread(name_prefix), task_to_run_(std::move(task_to_run)) {}
+
+  void Run() override { std::move(task_to_run_).Run(); }
+
+ private:
+  OnceClosure task_to_run_;
+
+  DISALLOW_COPY_AND_ASSIGN(RunTaskOnDifferentThread);
+};
+
+class FlagPostTaskFailure : public SimpleThread {
+ public:
+  FlagPostTaskFailure(scoped_refptr<SingleThreadTaskRunner> task_runner)
+      : SimpleThread("FlagPostTaskFailure"), task_runner_(task_runner) {}
+
+  void Run() override {
+    if (!task_runner_->PostTask(FROM_HERE, BindOnce(&DoNothing)))
+      post_task_failed_.Set();
+  }
+
+  bool PostTaskFailed() { return post_task_failed_.IsSet(); }
+
+ private:
+  const scoped_refptr<SingleThreadTaskRunner> task_runner_;
+  AtomicFlag post_task_failed_;
+
+  DISALLOW_COPY_AND_ASSIGN(FlagPostTaskFailure);
+};
+
+TEST(MessageLoopTest, DestroyMessageLoopDuringPostTask) {
+  // This test destroys the message loop during a PostTask call and expects that
+  // no crashes occur. A subsequent call to PostTask is also made during the
+  // destructor to verify it will fail.
+  std::unique_ptr<MessageLoop> message_loop = std::make_unique<MessageLoop>();
+  scoped_refptr<SingleThreadTaskRunner> task_runner =
+      message_loop->task_runner();
+  message_loop->PausePostPendingTaskForTesting();
+
+  std::unique_ptr<RunTaskOnDifferentThread> post_task_thread =
+      std::make_unique<RunTaskOnDifferentThread>(
+          "PostTask",
+          BindOnce(
+              [](scoped_refptr<SingleThreadTaskRunner> task_runner) {
+                task_runner->PostTask(FROM_HERE, BindOnce(&DoNothing));
+              },
+              task_runner));
+  post_task_thread->Start();
+
+  while (!message_loop->IsPostPendingTaskInFlightForTesting())
+    PlatformThread::YieldCurrentThread();
+
+  std::unique_ptr<RunTaskOnDifferentThread> resume_post_task =
+      std::make_unique<RunTaskOnDifferentThread>(
+          "ReleasePostTask",
+          BindOnce(
+              [](MessageLoop* message_loop,
+                 scoped_refptr<SingleThreadTaskRunner> task_runner) {
+                // Attempt to post task on different threads until one fails.
+                std::vector<std::unique_ptr<FlagPostTaskFailure>>
+                    flag_post_task_failure_threads;
+                do {
+                  flag_post_task_failure_threads.emplace_back(
+                      std::make_unique<FlagPostTaskFailure>(task_runner));
+                  flag_post_task_failure_threads.back()->Start();
+                  PlatformThread::Sleep(TimeDelta::FromMilliseconds(100));
+                } while (
+                    !flag_post_task_failure_threads.back()->PostTaskFailed());
+
+                message_loop->ResumePostPendingTaskForTesting();
+
+                for (auto& thread : flag_post_task_failure_threads)
+                  thread->Join();
+              },
+
+              message_loop.get(), task_runner));
+  resume_post_task->Start();
+  message_loop.reset();
+
+  post_task_thread->Join();
+  resume_post_task->Join();
 }
 
 #if defined(OS_ANDROID)
