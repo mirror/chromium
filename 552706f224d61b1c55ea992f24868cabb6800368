@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e5569019_d2371913",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-11T20:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1de2a940_021f625c",
+      "range": {
+        "startLine": 11,
+        "startChar": 34,
+        "endLine": 11,
+        "endChar": 41
+      },
+      "revId": "552706f224d61b1c55ea992f24868cabb6800368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32592b2a_fa4cbd1b",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "50755016_d641da4f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-11T20:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32592b2a_fa4cbd1b",
+      "range": {
+        "startLine": 12,
+        "startChar": 32,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "552706f224d61b1c55ea992f24868cabb6800368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e0058e1_1d858283",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -59,6 +107,24 @@
       "writtenOn": "2017-09-11T19:50:27Z",
       "side": 1,
       "message": "Is there a bug number for this change?",
+      "revId": "552706f224d61b1c55ea992f24868cabb6800368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726d9fe9_2ef3fc58",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-11T20:07:49Z",
+      "side": 1,
+      "message": "There is no bug. It\u0027s a fix for TODO in the unittest last week (when I discovered that behavior is not consistent), see https://chromium-review.googlesource.com/c/chromium/src/+/653817",
+      "parentUuid": "2e0058e1_1d858283",
       "revId": "552706f224d61b1c55ea992f24868cabb6800368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "75f67eea_1116e508",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-11T20:07:49Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think we need to use c-style declarations here, do we?\n\nWe don\u0027t, but I think the code is more readable this way. Also other code in this file uses c-style declarations. \n\n\u003e Variables names here are seem to violate the Google style guide, as they\u0027re uncommon abbreviations.\n\nI agree that these names suck. But they are consistent with he API that\u0027s being used, so I think the code is more readable this way (i.e. calling it io_vector instead of iov wouldn\u0027t make this code easier to understand IMO, and I\u0027m not even sure that \"iov\" means \"IO vector\" or something else). Also it\u0027s consistent with how POSIX APIs are used in this file (e.g. see \u0027addr\u0027 in InternalSendTo()) and how recvmsg() is used in other places in chromium (e.g. see base/posix/unix_domain_socket.cc)",
+      "parentUuid": "89c1981b_6c8f0fdd",
+      "range": {
+        "startLine": 740,
+        "startChar": 24,
+        "endLine": 740,
+        "endChar": 0
+      },
+      "revId": "552706f224d61b1c55ea992f24868cabb6800368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6aa651c1_59a29257",
         "filename": "net/socket/udp_socket_posix.cc",
         "patchSetId": 2
@@ -99,6 +189,24 @@
       "writtenOn": "2017-09-11T19:50:27Z",
       "side": 1,
       "message": "Could the same thing be accomplished using recvfrom() and passing MSG_TRUNC / checking the returned byte count?\n\nI am not familiar with any tradeoffs between the approaches, but I expect @jri knows more and may have more useful feedback to give.",
+      "revId": "552706f224d61b1c55ea992f24868cabb6800368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb9e71e_6c41dfbe",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-11T20:07:49Z",
+      "side": 1,
+      "message": "\u003e Could the same thing be accomplished using recvfrom() and passing MSG_TRUNC / checking the returned byte count?\n\u003e \n\u003e I am not familiar with any tradeoffs between the approaches, but I expect @jri knows more and may have more useful feedback to give.\n\nAFAICT it\u0027s a non-standard extension on Linux which may not work on other systems. Particularly not on MacOS (and probably not other BSD systems).",
+      "parentUuid": "6aa651c1_59a29257",
       "revId": "552706f224d61b1c55ea992f24868cabb6800368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
