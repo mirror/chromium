@@ -375,12 +375,15 @@ TEST_F(NavigationURLLoaderTest, LoaderDetached) {
   EXPECT_EQ("text/html", delegate.response()->head.mime_type);
   EXPECT_EQ(200, delegate.response()->head.headers->response_code());
 
+  // Wait for the response to complete.
+  EXPECT_TRUE(net::URLRequestTestJob::ProcessOnePendingMessage());
+  delegate.WaitForResponseCompleted();
+
   // Destroy the loader.
   loader.reset();
   base::RunLoop().RunUntilIdle();
 
   // Check the body can still be fetched through the StreamHandle.
-  EXPECT_TRUE(net::URLRequestTestJob::ProcessOnePendingMessage());
   EXPECT_EQ(net::URLRequestTestJob::test_data_2(),
             FetchURL(delegate.body()->GetURL()));
 }

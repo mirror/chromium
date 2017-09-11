@@ -38,6 +38,7 @@ class NavigationResourceHandler : public LayeredResourceHandler {
   ~NavigationResourceHandler() override;
 
   // Called by the loader the cancel the request.
+  // It is illegal to call |Cancel| after |ProceedWithResponse|.
   void Cancel();
 
   // Called to the loader to resume a paused redirect.
@@ -75,6 +76,7 @@ class NavigationResourceHandler : public LayeredResourceHandler {
   std::unique_ptr<StreamHandle> stream_handle_;
   ResourceDispatcherHostDelegate* resource_dispatcher_host_delegate_;
 
+  bool proceed_with_response_called_ = false;
   DISALLOW_COPY_AND_ASSIGN(NavigationResourceHandler);
 };
 
