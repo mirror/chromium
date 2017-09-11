@@ -22,6 +22,29 @@
       "revId": "a2704e3bb1a3d9e4d4af7f73727eb65c1134ecc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d46ca29_f8a13e70",
+        "filename": "tools/idl_parser/test_parser/interface_web.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-11T06:06:05Z",
+      "side": 1,
+      "message": "nit: Iface",
+      "range": {
+        "startLine": 429,
+        "startChar": 12,
+        "endLine": 429,
+        "endChar": 17
+      },
+      "revId": "a2704e3bb1a3d9e4d4af7f73727eb65c1134ecc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
