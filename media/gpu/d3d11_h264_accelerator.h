@@ -90,7 +90,7 @@ class D3D11H264Accelerator : public H264Decoder::H264Accelerator {
                    const uint8_t* data,
                    size_t size) override;
   bool SubmitDecode(const scoped_refptr<H264Picture>& pic) override;
-  void Reset() override {}
+  void Reset() override;
   bool OutputPicture(const scoped_refptr<H264Picture>& pic) override;
 
  private:
@@ -115,8 +115,8 @@ class D3D11H264Accelerator : public H264Decoder::H264Accelerator {
   // Information that's accumulated during slices and submitted at the end
   std::vector<DXVA_Slice_H264_Short> slice_info_;
   size_t current_offset_ = 0;
-  size_t bitstream_buffer_size_;
-  uint8_t* bitstream_buffer_bytes_;
+  size_t bitstream_buffer_size_ = 0;
+  uint8_t* bitstream_buffer_bytes_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(D3D11H264Accelerator);
 };

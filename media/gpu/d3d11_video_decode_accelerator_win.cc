@@ -80,13 +80,14 @@ bool D3D11VideoDecodeAccelerator::Initialize(const Config& config,
         break;
       }
     }
-    CHECK(found);
+    if (!found)
+      return false;
   }
 
   D3D11_VIDEO_DECODER_DESC desc = {};
   desc.Guid = decoder_guid;
-  desc.SampleWidth = 1920;
-  desc.SampleHeight = 1088;
+  desc.SampleWidth = config.initial_expected_coded_size.width();
+  desc.SampleHeight = config.initial_expected_coded_size.height();
   desc.OutputFormat = DXGI_FORMAT_NV12;
   UINT config_count = 0;
   hr = video_device_->GetVideoDecoderConfigCount(&desc, &config_count);
@@ -97,7 +98,7 @@ bool D3D11VideoDecodeAccelerator::Initialize(const Config& config,
   for (UINT i = 0; i < config_count; i++) {
     hr = video_device_->GetVideoDecoderConfig(&desc, i, &dec_config);
     if (FAILED(hr))
-      CHECK(false);
+      return false;
     if (dec_config.ConfigBitstreamRaw == 2)
       break;
   }
@@ -227,13 +228,21 @@ D3D11PictureBuffer* D3D11VideoDecodeAccelerator::GetPicture() {
 }
 
 void D3D11VideoDecodeAccelerator::Flush() {
+  bool flush_result = decoder_->Flush();
+  CHECK(flush_result);
   client_->NotifyFlushDone();
 }
 
 void D3D11VideoDecodeAccelerator::Reset() {
+  input_buffer_queue_.clear();
+  input_buffer_id_ = 0;
+  bitstream_buffer_ = nullptr;
+  bitstream_buffer_size_ = 0;
+  decoder_->Reset();
   client_->NotifyResetDone();
 }
-void D3D11VideoDecodeAccelerator::Destroy() {}
+void D3D11VideoDecodeAccelerator::Destroy() {
+}
 
 bool D3D11VideoDecodeAccelerator::TryToSetupDecodeOnSeparateThread(
     const base::WeakPtr<Client>& decode_client,

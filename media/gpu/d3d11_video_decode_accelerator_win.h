@@ -65,6 +65,7 @@ class MEDIA_GPU_EXPORT D3D11VideoDecodeAccelerator
 
   GUID decoder_guid_;
 
+  // States that must be reset on Reset().
   std::list<BitstreamBuffer> input_buffer_queue_;
   uint32_t input_buffer_id_;
   std::unique_ptr<base::SharedMemory> bitstream_buffer_;
