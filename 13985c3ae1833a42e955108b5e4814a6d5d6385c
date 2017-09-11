@@ -187,6 +187,30 @@
       "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd6d222_cffb7ac2",
+        "filename": "base/test/scoped_task_environment.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-11T17:16:47Z",
+      "side": 1,
+      "message": "\u003e We\u0027d also need a custom RunLoop::Delegate.\n\nWhat makes the RunLoop::Delegate required here?\n\n\u003e I think this is actually one of those things that\u0027s easier to discuss in writing because it requires so much thought at every step.\n\nI don\u0027t get the sense that we\u0027re on the same page here with regards to the mechanics of the proposal, so I\u0027d like to get that before discussing further in writing. Once we\u0027re all on the same page, then discussing in writing makes sense.",
+      "parentUuid": "6e5943e2_b8a0e5a6",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
