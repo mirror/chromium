@@ -307,28 +307,6 @@ void OmniboxResultView::OnSelected() {
     NotifyAccessibilityEvent(ui::AX_EVENT_SELECTION, true);
 }
 
-gfx::Size OmniboxResultView::CalculatePreferredSize() const {
-  int height = GetTextHeight() + (2 * GetVerticalMargin());
-  if (match_.answer)
-    height += GetAnswerHeight();
-  else if (base::FeatureList::IsEnabled(omnibox::kUIExperimentVerticalLayout))
-    height += GetTextHeight();
-  return gfx::Size(0, height);
-}
-
-void OmniboxResultView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->SetName(match_.answer
-                         ? l10n_util::GetStringFUTF16(
-                               IDS_OMNIBOX_ACCESSIBLE_ANSWER, match_.contents,
-                               match_.answer->second_line().AccessibleText())
-                         : match_.contents);
-}
-
-void OmniboxResultView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
-  Invalidate();
-  SchedulePaint();
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // OmniboxResultView, protected:
 
@@ -684,6 +662,28 @@ int OmniboxResultView::GetAnswerHeight() const {
   return (GetAnswerFont().GetHeight() *
           description_rendertext_->GetNumLines()) +
          kVerticalPadding;
+}
+
+gfx::Size OmniboxResultView::CalculatePreferredSize() const {
+  int height = GetTextHeight() + (2 * GetVerticalMargin());
+  if (match_.answer)
+    height += GetAnswerHeight();
+  else if (base::FeatureList::IsEnabled(omnibox::kUIExperimentVerticalLayout))
+    height += GetTextHeight();
+  return gfx::Size(0, height);
+}
+
+void OmniboxResultView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  node_data->SetName(match_.answer
+                         ? l10n_util::GetStringFUTF16(
+                               IDS_OMNIBOX_ACCESSIBLE_ANSWER, match_.contents,
+                               match_.answer->second_line().AccessibleText())
+                         : match_.contents);
+}
+
+void OmniboxResultView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
+  Invalidate();
+  SchedulePaint();
 }
 
 bool OmniboxResultView::OnMousePressed(const ui::MouseEvent& event) {
