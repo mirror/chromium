@@ -105,6 +105,24 @@
       "revId": "f98e371750daeec10e954eb4076e7eba25b149de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "868caf7d_8d74a185",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-11T20:37:45Z",
+      "side": 1,
+      "message": "ok. just waiting for Muyuan\u0027s review.",
+      "parentUuid": "275bbf7e_73d83554",
+      "revId": "f98e371750daeec10e954eb4076e7eba25b149de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
