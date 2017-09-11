@@ -68,6 +68,8 @@ ui::ImeTextSpan::Type ConvertWebTypeToUiType(blink::WebImeTextSpan::Type type) {
       return ui::ImeTextSpan::Type::kComposition;
     case blink::WebImeTextSpan::Type::kSuggestion:
       return ui::ImeTextSpan::Type::kSuggestion;
+    case blink::WebImeTextSpan::Type::kMisspellingSuggestion:
+      return ui::ImeTextSpan::Type::kMisspellingSuggestion;
   }
 
   NOTREACHED();
