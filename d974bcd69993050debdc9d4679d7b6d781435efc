@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "2e9330f3_d53005e5",
+        "filename": "chrome/browser/resources/sys_internals/compiled_resources2.gyp",
+        "patchSetId": 20
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-11T10:06:31Z",
+      "side": 1,
+      "message": "shall be changed to \u0027sys_internals\u0027, so third_party/closure_compiler/run_compiler sys_internals would build this target.",
+      "range": {
+        "startLine": 7,
+        "startChar": 22,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "d974bcd69993050debdc9d4679d7b6d781435efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997fa8fb_da8035a2",
+        "filename": "chrome/browser/resources/sys_internals/index.css",
+        "patchSetId": 20
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-11T10:06:31Z",
+      "side": 1,
+      "message": "seems not necessary as resources/css/roboto.css didn\u0027t apply to chromeos and android.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 47
+      },
+      "revId": "d974bcd69993050debdc9d4679d7b6d781435efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6c7244e_b83d04f2",
         "filename": "chrome/browser/resources/sys_internals/index.html",
         "patchSetId": 20
@@ -233,6 +279,29 @@
       "revId": "d974bcd69993050debdc9d4679d7b6d781435efc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc54eefc_2fe317ae",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-11T10:06:31Z",
+      "side": 1,
+      "message": "Is it necessary to mod here?",
+      "range": {
+        "startLine": 374,
+        "startChar": 4,
+        "endLine": 374,
+        "endChar": 42
+      },
+      "revId": "d974bcd69993050debdc9d4679d7b6d781435efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
