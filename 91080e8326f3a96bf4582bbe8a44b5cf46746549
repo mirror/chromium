@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb83fafe_e46ce829",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-11T20:27:33Z",
+      "side": 1,
+      "message": "this check is duplicated 4 times, maybe can just put that into the templated method instead",
+      "range": {
+        "startLine": 439,
+        "startChar": 29,
+        "endLine": 439,
+        "endChar": 37
+      },
+      "revId": "91080e8326f3a96bf4582bbe8a44b5cf46746549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
