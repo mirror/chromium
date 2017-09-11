@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce8bfc45_21190d90",
+        "filename": "content/browser/payments/payment_app_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-09-11T12:23:02Z",
+      "side": 0,
+      "message": "Regarding Windows error, I doubt this line and 203 line are the causes.\nWhile passing this instrument-\u003eicons to Start() function, std::move(instrument) happens due to different calling convention (I guess).\nSo, convert the value to vector of Manifest::Icon, and then pass it to Start() instead.",
+      "revId": "bbcd0c20714b7722bc283cb0d3e62151b993e62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
