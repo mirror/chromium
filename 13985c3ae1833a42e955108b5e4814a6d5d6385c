@@ -211,6 +211,30 @@
       "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39b48e1d_106da458",
+        "filename": "base/test/scoped_task_environment.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-11T23:40:42Z",
+      "side": 1,
+      "message": "\u003e Could this be a separate option so that it can be used at the same time as the MainThreadType option in the future?\n\nGood idea, the one thing I\u0027m not a fan of is having to specify all params when you want to specify the last one with others as default... Would it be easy to have TaskTraits-like bag semantics here?\n\nFor now though since this is really a property of the main thread and isn\u0027t compatible with UI/IO it makes sense to keep it in MainThreadType? It\u0027d be an easy search-and-replace if we split it off MainThreadType eventually?\n\n\u003e \u003e We\u0027d also need a custom RunLoop::Delegate.\n\u003e \n\u003e What makes the RunLoop::Delegate required here?\n\nOtherwise we can\u0027t RunLoop::Run() in a mock time environment (or rather we can but it would run the underlying MessageLoop and wouldn\u0027t advance time when done with undelayed tasks which is very important IMO as mentioned above and the whole premise of this discussion).",
+      "parentUuid": "4dd6d222_cffb7ac2",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
