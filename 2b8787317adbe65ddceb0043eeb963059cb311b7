@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8566fa01_0677cd61",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T18:45:55Z",
+      "side": 1,
+      "message": "Include information about Offline store utils, please.",
+      "revId": "2b8787317adbe65ddceb0043eeb963059cb311b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fcaf7e4_8472383c",
+        "filename": "components/offline_pages/core/model/add_page_task_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T18:45:55Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to worry about that for scoped temp directory, I think that is the point of scoped temp directory.\n\nAlso it will be beneficial to take dependency on the infra from GetPagesTask... a lot of the setup/tear down code will go away.",
+      "revId": "2b8787317adbe65ddceb0043eeb963059cb311b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
