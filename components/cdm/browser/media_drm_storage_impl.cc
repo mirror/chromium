@@ -14,6 +14,11 @@
 #include "components/prefs/scoped_user_pref_update.h"
 #include "content/public/browser/navigation_handle.h"
 
+#ifdef DVLOG
+#undef DVLOG
+#endif
+#define DVLOG(n) LOG(ERROR)
+
 // The storage will be managed by PrefService. All data will be stored in a
 // dictionary under the key "media.media_drm_storage". The dictionary is
 // structured as follows:
