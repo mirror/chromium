@@ -55,6 +55,7 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_status.h"
 #include "net/url_request/url_request_test_util.h"
+#include "storage/browser/blob/blob_storage_context.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/page_transition_types.h"
 
@@ -209,12 +210,14 @@ class MojoAsyncResourceHandlerWithStubOperations
       net::URLRequest* request,
       ResourceDispatcherHostImpl* rdh,
       mojom::URLLoaderRequest mojo_request,
-      mojom::URLLoaderClientPtr url_loader_client)
+      mojom::URLLoaderClientPtr url_loader_client,
+      base::WeakPtr<storage::BlobStorageContext> blob_context)
       : MojoAsyncResourceHandler(request,
                                  rdh,
                                  std::move(mojo_request),
                                  std::move(url_loader_client),
-                                 RESOURCE_TYPE_MAIN_FRAME),
+                                 RESOURCE_TYPE_MAIN_FRAME,
+                                 std::move(blob_context)),
         task_runner_(new base::TestSimpleTaskRunner) {}
   ~MojoAsyncResourceHandlerWithStubOperations() override {}
 
@@ -367,7 +370,7 @@ class MojoAsyncResourceHandlerTestBase {
 
     handler_.reset(new MojoAsyncResourceHandlerWithStubOperations(
         request_.get(), &rdh_, factory_impl->PassLoaderRequest(),
-        factory_impl->PassClientPtr()));
+        factory_impl->PassClientPtr(), blob_storage_context_.AsWeakPtr()));
     mock_loader_.reset(new MockResourceLoader(handler_.get()));
   }
 
@@ -424,6 +427,8 @@ class MojoAsyncResourceHandlerTestBase {
   std::unique_ptr<net::URLRequest> request_;
   std::unique_ptr<MojoAsyncResourceHandlerWithStubOperations> handler_;
   std::unique_ptr<MockResourceLoader> mock_loader_;
+
+  storage::BlobStorageContext blob_storage_context_;
 
   static constexpr int kChildId = 25;
   static constexpr int kRouteId = 12;

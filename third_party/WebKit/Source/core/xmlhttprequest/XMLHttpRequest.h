@@ -323,8 +323,8 @@ class XMLHttpRequest final : public XMLHttpRequestEventTarget,
 
   RefPtr<SharedBuffer> binary_response_builder_;
   size_t binary_response_builder_last_reported_size_ = 0;
-  long long length_downloaded_to_file_;
-  long long length_downloaded_to_file_last_reported_ = 0;
+  long long length_downloaded_to_blob_;
+  long long length_downloaded_to_blob_last_reported_ = 0;
 
   TraceWrapperMember<DOMArrayBuffer> response_array_buffer_;
 
@@ -368,9 +368,9 @@ class XMLHttpRequest final : public XMLHttpRequestEventTarget,
   bool upload_events_allowed_;
   bool upload_complete_;
   bool same_origin_request_;
-  // True iff the ongoing resource loading is using the downloadToFile
+  // True iff the ongoing resource loading is using the downloadToBlob
   // option.
-  bool downloading_to_file_;
+  bool downloading_to_blob_;
   bool response_text_overflow_;
   bool send_flag_;
   bool response_array_buffer_failure_;

@@ -294,6 +294,14 @@ void WebURLRequest::SetDownloadToFile(bool download_to_file) {
   resource_request_->SetDownloadToFile(download_to_file);
 }
 
+bool WebURLRequest::DownloadToBlob() const {
+  return resource_request_->DownloadToBlob();
+}
+
+void WebURLRequest::SetDownloadToBlob(bool download_to_blob) {
+  resource_request_->SetDownloadToBlob(download_to_blob);
+}
+
 bool WebURLRequest::UseStreamOnResponse() const {
   return resource_request_->UseStreamOnResponse();
 }

@@ -35,6 +35,10 @@ class IOBufferWithSize;
 class URLRequest;
 }
 
+namespace storage {
+class BlobStorageContext;
+}
+
 namespace content {
 class ResourceController;
 class ResourceDispatcherHostImpl;
@@ -51,11 +55,13 @@ struct ResourceResponse;
 class CONTENT_EXPORT MojoAsyncResourceHandler : public ResourceHandler,
                                                 public mojom::URLLoader {
  public:
-  MojoAsyncResourceHandler(net::URLRequest* request,
-                           ResourceDispatcherHostImpl* rdh,
-                           mojom::URLLoaderRequest mojo_request,
-                           mojom::URLLoaderClientPtr url_loader_client,
-                           ResourceType resource_type);
+  MojoAsyncResourceHandler(
+      net::URLRequest* request,
+      ResourceDispatcherHostImpl* rdh,
+      mojom::URLLoaderRequest mojo_request,
+      mojom::URLLoaderClientPtr url_loader_client,
+      ResourceType resource_type,
+      base::WeakPtr<storage::BlobStorageContext> blob_context);
   ~MojoAsyncResourceHandler() override;
 
   // ResourceHandler implementation:
@@ -153,6 +159,8 @@ class CONTENT_EXPORT MojoAsyncResourceHandler : public ResourceHandler,
   size_t buffer_bytes_read_ = 0;
   scoped_refptr<SharedWriter> shared_writer_;
   mojo::ScopedDataPipeConsumerHandle response_body_consumer_handle_;
+
+  base::WeakPtr<storage::BlobStorageContext> blob_storage_context_;
 
   std::unique_ptr<UploadProgressTracker> upload_progress_tracker_;
 

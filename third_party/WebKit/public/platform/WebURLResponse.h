@@ -265,6 +265,11 @@ class WebURLResponse {
   BLINK_PLATFORM_EXPORT WebString DownloadFilePath() const;
   BLINK_PLATFORM_EXPORT void SetDownloadFilePath(const WebString&);
 
+  // This indicates the blob containing the response if a WebURLRequest had the
+  // download_to_blob_ flag set to true.
+  BLINK_PLATFORM_EXPORT WebString BlobUUID() const;
+  BLINK_PLATFORM_EXPORT void SetBlobUUID(const WebString&);
+
   // Remote IP address of the socket which fetched this resource.
   BLINK_PLATFORM_EXPORT WebString RemoteIPAddress() const;
   BLINK_PLATFORM_EXPORT void SetRemoteIPAddress(const WebString&);

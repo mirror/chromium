@@ -32,6 +32,7 @@ class BlobDispatcherHost;
 class BlobDispatcherHostTest;
 class BlobStorageBrowserTest;
 class ChromeBlobStorageContext;
+class RedirectToBlobResourceHandler;
 }
 
 namespace storage {
@@ -144,6 +145,7 @@ class STORAGE_EXPORT BlobStorageContext {
   friend class content::BlobDispatcherHostTest;
   friend class content::BlobStorageBrowserTest;
   friend class content::ChromeBlobStorageContext;
+  friend class content::RedirectToBlobResourceHandler;
   friend class BlobTransportHost;
   friend class BlobTransportHostTest;
   friend class BlobDataHandle;

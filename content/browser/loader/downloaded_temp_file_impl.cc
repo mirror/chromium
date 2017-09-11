@@ -11,20 +11,41 @@
 namespace content {
 
 // static
-mojom::DownloadedTempFilePtr DownloadedTempFileImpl::Create(int child_id,
-                                                            int request_id) {
+mojom::DownloadedTempFilePtr DownloadedTempFileImpl::CreateForFile(
+    int child_id,
+    int request_id) {
   mojo::InterfacePtr<mojom::DownloadedTempFile> ptr;
-  mojo::MakeStrongBinding(
-      base::MakeUnique<DownloadedTempFileImpl>(child_id, request_id),
-      mojo::MakeRequest(&ptr));
+  mojo::MakeStrongBinding(base::MakeUnique<DownloadedTempFileImpl>(
+                              child_id, request_id, Type::FILE),
+                          mojo::MakeRequest(&ptr));
+  return ptr;
+}
+
+// static
+mojom::DownloadedTempFilePtr DownloadedTempFileImpl::CreateForBlob(
+    int child_id,
+    int request_id) {
+  mojo::InterfacePtr<mojom::DownloadedTempFile> ptr;
+  mojo::MakeStrongBinding(base::MakeUnique<DownloadedTempFileImpl>(
+                              child_id, request_id, Type::BLOB),
+                          mojo::MakeRequest(&ptr));
   return ptr;
 }
 
 DownloadedTempFileImpl::~DownloadedTempFileImpl() {
-  ResourceDispatcherHostImpl::Get()->UnregisterDownloadedTempFile(child_id_,
-                                                                  request_id_);
+  switch (type_) {
+    case Type::FILE:
+      ResourceDispatcherHostImpl::Get()->UnregisterDownloadedTempFile(
+          child_id_, request_id_);
+    case Type::BLOB:
+      ResourceDispatcherHostImpl::Get()->UnregisterDownloadedTempBlob(
+          child_id_, request_id_);
+  }
 }
-DownloadedTempFileImpl::DownloadedTempFileImpl(int child_id, int request_id)
-    : child_id_(child_id), request_id_(request_id) {}
+DownloadedTempFileImpl::DownloadedTempFileImpl(
+    int child_id,
+    int request_id,
+    DownloadedTempFileImpl::Type type)
+    : child_id_(child_id), request_id_(request_id), type_(type) {}
 
 }  // namespace content

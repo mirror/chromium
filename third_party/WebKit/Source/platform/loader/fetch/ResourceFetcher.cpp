@@ -897,7 +897,8 @@ void ResourceFetcher::RecordResourceTimingOnRedirect(
 static bool IsDownloadOrStreamRequest(const ResourceRequest& request) {
   // Never use cache entries for DownloadToFile / UseStreamOnResponse requests.
   // The data will be delivered through other paths.
-  return request.DownloadToFile() || request.UseStreamOnResponse();
+  return request.DownloadToFile() || request.DownloadToBlob() ||
+         request.UseStreamOnResponse();
 }
 
 Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,

@@ -392,8 +392,10 @@ BlobStorageContext::~BlobStorageContext() {}
 std::unique_ptr<BlobDataHandle> BlobStorageContext::GetBlobDataFromUUID(
     const std::string& uuid) {
   BlobEntry* entry = registry_.GetEntry(uuid);
-  if (!entry)
+  if (!entry) {
+    VLOG(1) << "Blob does not exist: " << uuid;
     return nullptr;
+  }
   return CreateHandle(uuid, entry);
 }
 
@@ -401,8 +403,10 @@ std::unique_ptr<BlobDataHandle> BlobStorageContext::GetBlobDataFromPublicURL(
     const GURL& url) {
   std::string uuid;
   BlobEntry* entry = registry_.GetEntryFromURL(url, &uuid);
-  if (!entry)
+  if (!entry) {
+    VLOG(1) << "Blob url '" << url.spec() << "' does not exist.";
     return nullptr;
+  }
   return CreateHandle(uuid, entry);
 }
 
@@ -423,6 +427,7 @@ std::unique_ptr<BlobDataHandle> BlobStorageContext::AddBrokenBlob(
     const std::string& content_type,
     const std::string& content_disposition,
     BlobStatus reason) {
+  VLOG(1) << "Creating broken blob " << uuid;
   DCHECK(!registry_.HasEntry(uuid));
   DCHECK(BlobStatusIsError(reason));
   BlobEntry* entry =
@@ -434,8 +439,11 @@ std::unique_ptr<BlobDataHandle> BlobStorageContext::AddBrokenBlob(
 
 bool BlobStorageContext::RegisterPublicBlobURL(const GURL& blob_url,
                                                const std::string& uuid) {
-  if (!registry_.CreateUrlMapping(blob_url, uuid))
+  if (!registry_.CreateUrlMapping(blob_url, uuid)) {
+    VLOG(1) << "Cannot create url '" << blob_url.spec()
+            << "' for blob that does not exist: " << uuid;
     return false;
+  }
   IncrementBlobRefCount(uuid);
   return true;
 }
@@ -452,6 +460,7 @@ std::unique_ptr<BlobDataHandle> BlobStorageContext::AddFutureBlob(
     const std::string& content_type,
     const std::string& content_disposition) {
   DCHECK(!registry_.HasEntry(uuid));
+  VLOG(1) << "Creating 'Future' blob " << uuid;
 
   BlobEntry* entry =
       registry_.CreateEntry(uuid, content_type, content_disposition);
@@ -488,6 +497,7 @@ std::unique_ptr<BlobDataHandle> BlobStorageContext::BuildBlobInternal(
     BlobEntry* entry,
     const BlobDataBuilder& content,
     const TransportAllowedCallback& transport_allowed_callback) {
+  VLOG(1) << "Starting to build blob " << content.uuid();
   // This flattens all blob references in the transportion content out and
   // stores the complete item representation in the internal data.
   BlobFlattener flattener(content, entry, &registry_);
@@ -819,6 +829,8 @@ void BlobStorageContext::FinishBuilding(BlobEntry* entry) {
               shareable_item->item()->type());
     DCHECK(shareable_item->IsPopulated()) << shareable_item->state();
   }
+  VLOG(1) << "Finished building blob " << entry << " with size "
+          << entry->total_size();
 }
 
 void BlobStorageContext::RequestTransport(

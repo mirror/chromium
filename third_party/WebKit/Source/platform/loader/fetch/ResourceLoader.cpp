@@ -202,6 +202,7 @@ bool ResourceLoader::WillFollowRedirect(
   ResourceRequest new_request(new_url);
   new_request.SetSiteForCookies(new_site_for_cookies);
   new_request.SetDownloadToFile(last_request.DownloadToFile());
+  new_request.SetDownloadToBlob(last_request.DownloadToBlob());
   new_request.SetUseStreamOnResponse(last_request.UseStreamOnResponse());
   new_request.SetRequestContext(last_request.GetRequestContext());
   new_request.SetFrameType(last_request.GetFrameType());
@@ -637,8 +638,10 @@ void ResourceLoader::HandleError(const ResourceError& error) {
 }
 
 void ResourceLoader::RequestSynchronously(const ResourceRequest& request) {
-  // downloadToFile is not supported for synchronous requests.
+  // DownloadToFile and DownloadToBlob is not supported for synchronous
+  // requests.
   DCHECK(!request.DownloadToFile());
+  DCHECK(!request.DownloadToBlob());
   DCHECK(loader_);
   DCHECK_EQ(request.Priority(), kResourceLoadPriorityHighest);
 
