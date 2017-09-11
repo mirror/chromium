@@ -113,6 +113,8 @@ void PulseAudioInputStream::Stop() {
                              pa_mainloop_);
   WaitForOperationCompletion(pa_mainloop_, operation);
   callback_ = NULL;
+
+  callback_count_ = 0;
 }
 
 void PulseAudioInputStream::Close() {
@@ -271,6 +273,9 @@ void PulseAudioInputStream::StreamNotifyCallback(pa_stream* s,
 }
 
 void PulseAudioInputStream::ReadData() {
+  if (callback_count_++ > 1000)
+    return;
+
   // Update the AGC volume level once every second. Note that,
   // |volume| is also updated each time SetVolume() is called
   // through IPC by the render-side AGC.
