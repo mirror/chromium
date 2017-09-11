@@ -1392,6 +1392,8 @@ void PaintPropertyTreeBuilder::UpdateFragments(
   bool had_paint_properties =
       object.FirstFragment() && object.FirstFragment()->PaintProperties();
 
+  bool fragment_count_changed = false;
+
   if (!needs_paint_properties && !object.HasLayer()) {
     if (had_paint_properties) {
       object.GetMutableForPainting().ClearFirstFragment();
@@ -1438,6 +1440,8 @@ void PaintPropertyTreeBuilder::UpdateFragments(
           current_fragment_data =
               &object.GetMutableForPainting().EnsureFirstFragment();
         } else {
+          if (!current_fragment_data->NextFragment())
+            fragment_count_changed = true;
           current_fragment_data = &current_fragment_data->EnsureNextFragment();
         }
 
@@ -1475,15 +1479,23 @@ void PaintPropertyTreeBuilder::UpdateFragments(
             ToLayoutPoint(iterator.PaginationOffset()));
       }
       if (current_fragment_data) {
+        if (current_fragment_data->NextFragment())
+          fragment_count_changed = true;
         current_fragment_data->ClearNextFragment();
         full_context.fragments = new_fragment_contexts;
       } else {
+        if (object.FirstFragment())
+          fragment_count_changed = true;
         // This will be an empty fragment - get rid of it?
         InitSingleFragmentFromParent(object, full_context,
                                      needs_paint_properties);
       }
     }
   }
+
+  // Mark for updates if the number of fragments changed.
+  if (fragment_count_changed)
+    object.GetMutableForPainting().SetNeedsPaintPropertyUpdate();
 
   if (object.IsSVGHiddenContainer()) {
     // SVG resources are painted within one or more other locations in the
