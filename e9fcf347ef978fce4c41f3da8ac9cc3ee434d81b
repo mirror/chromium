@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b5ab7047_19248b18",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-11T20:03:12Z",
+      "side": 1,
+      "message": "Yes, this should only be used for main frames, let me specify in the header.",
+      "parentUuid": "6599de48_160f6a92",
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2581f90_d564cc26",
         "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-05T19:51:25Z",
       "side": 1,
       "message": "newline before namespace closing }",
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "537de633_12de353a",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-11T20:03:12Z",
+      "side": 1,
+      "message": "That\u0027s not normally how we do fwd decls, can you explain why you\u0027d like this change?",
+      "parentUuid": "d2581f90_d564cc26",
       "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef12daab_eddaa5fc",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-11T20:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb836026_b6b1475f",
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "01754eaa_15426126",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-11T20:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad2bd528_77badf38",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6f10640_0e960c33",
         "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.h",
         "patchSetId": 6
@@ -87,6 +165,24 @@
       "writtenOn": "2017-09-05T19:51:25Z",
       "side": 1,
       "message": "Suggestion: kIsInstantNTP\nWhy do we have this as a separate status: do we not consider a new tab page for subresource filtering?",
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e2220c6_0257b5ae",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-11T20:03:12Z",
+      "side": 1,
+      "message": "Done. My reasoning is that showing the ad blocking UI for the new tab page indicates a bug.",
+      "parentUuid": "f6f10640_0e960c33",
       "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "0a9e3b4b_cd1637f9",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_failsafe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-11T20:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59eeeb87_8037ec7d",
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef0524ec_be994b6d",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 6
@@ -124,6 +238,24 @@
       "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14fa8e86_3ddd804b",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 36662,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-11T20:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef0524ec_be994b6d",
+      "revId": "e9fcf347ef978fce4c41f3da8ac9cc3ee434d81b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
