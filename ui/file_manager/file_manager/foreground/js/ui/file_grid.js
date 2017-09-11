@@ -136,6 +136,26 @@ FileGrid.prototype.setListThumbnailLoader = function(listThumbnailLoader) {
 };
 
 /**
+ * Returns the parent DOM element of the one containing the thumbnail.
+ * @param {number} index Index of the item in question.
+ */
+FileGrid.prototype.getThumbnailParentElement = function(index) {
+  var listItem = this.getListItemByIndex(index);
+  if (!listItem) {
+    return null;
+  }
+  return listItem.querySelector('.img-container');
+};
+
+/**
+ * Returns the element containing the thumbnail as background image.
+ * @param {!HTMLElement} box The parent of the thumbnail to be fetched.
+ */
+FileGrid.prototype.getThumbnails = function(box) {
+  return box.querySelectorAll('.thumbnail');
+};
+
+/**
  * Handles thumbnail loaded event.
  * @param {!Event} event An event.
  * @private
@@ -143,29 +163,22 @@ FileGrid.prototype.setListThumbnailLoader = function(listThumbnailLoader) {
 FileGrid.prototype.onThumbnailLoaded_ = function(event) {
   var listItem = this.getListItemByIndex(event.index);
   var entry = listItem && this.dataModel.item(listItem.listIndex);
-  if (entry) {
-    var box = listItem.querySelector('.img-container');
-    if (box) {
-      var mimeType = this.metadataModel_.getCache(
-          [entry], ['contentMimeType'])[0].contentMimeType;
-      if (!event.dataUrl) {
-        FileGrid.clearThumbnailImage_(
-            assertInstanceof(box, HTMLDivElement));
-        FileGrid.setGenericThumbnail_(
-            assertInstanceof(box, HTMLDivElement), entry);
-      } else {
-        FileGrid.setThumbnailImage_(
-            assertInstanceof(box, HTMLDivElement),
-            entry,
-            assert(event.dataUrl),
-            assert(event.width),
-            assert(event.height),
-            /* should animate */ true,
-            mimeType);
-      }
+  var box = this.getThumbnailParentElement(event.index);
+  if (box && entry) {
+    var mimeType = this.metadataModel_.getCache([entry], ['contentMimeType'])[0]
+                       .contentMimeType;
+    if (!event.dataUrl) {
+      FileGrid.clearThumbnailImage_(assertInstanceof(box, HTMLDivElement));
+      FileGrid.setGenericThumbnail_(
+          assertInstanceof(box, HTMLDivElement), entry);
+    } else {
+      FileGrid.setThumbnailImage_(
+          assertInstanceof(box, HTMLDivElement), entry, assert(event.dataUrl),
+          assert(event.width), assert(event.height),
+          /* should animate */ true, mimeType);
     }
-    listItem.classList.toggle('thumbnail-loaded', !!event.dataUrl);
   }
+  listItem.classList.toggle('thumbnail-loaded', !!event.dataUrl);
 };
 
 /**
@@ -668,7 +681,7 @@ FileGrid.prototype.onSplice_ = function() {
  */
 FileGrid.setThumbnailImage_ = function(
     box, entry, dataUrl, width, height, shouldAnimate, opt_mimeType) {
-  var oldThumbnails = box.querySelectorAll('.thumbnail');
+  var oldThumbnails = this.getThumbnails(box);
 
   var thumbnail = box.ownerDocument.createElement('div');
   thumbnail.classList.add('thumbnail');
@@ -702,7 +715,7 @@ FileGrid.setThumbnailImage_ = function(
  * @private
  */
 FileGrid.clearThumbnailImage_ = function(box) {
-  var oldThumbnails = box.querySelectorAll('.thumbnail');
+  var oldThumbnails = this.getThumbnails(box);
   for (var i = 0; i < oldThumbnails.length; i++) {
     box.removeChild(oldThumbnails[i]);
   }
