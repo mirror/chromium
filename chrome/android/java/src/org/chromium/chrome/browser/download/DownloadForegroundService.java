@@ -12,6 +12,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import org.chromium.base.ObserverList;
 import org.chromium.chrome.browser.AppHooks;
 
 /**
@@ -19,6 +20,24 @@ import org.chromium.chrome.browser.AppHooks;
  */
 public class DownloadForegroundService extends Service {
     private final IBinder mBinder = new LocalBinder();
+    private final ObserverList<Observer> mObservers = new ObserverList<>();
+
+    /**
+     * An Observer interfaces that allows other classes to know when this service is shutting down.
+     */
+    public interface Observer {
+        void onForegroundServiceRestarted();
+        void onForegroundServiceTaskRemoved();
+        void onForegroundServiceDestroyed();
+    }
+
+    public void addObserver(Observer observer) {
+        mObservers.addObserver(observer);
+    }
+
+    public void removeObserver(Observer observer) {
+        mObservers.removeObserver(observer);
+    }
 
     /**
      * Start the foreground service with this given context.
@@ -46,8 +65,27 @@ public class DownloadForegroundService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        // In the case the service was restarted when the intent is null.
+        if (intent == null) {
+            // TODO(jming): make this more generalized eventually (probably don't need observer?)
+            DownloadNotificationService2.getInstance().onForegroundServiceRestarted();
+            for (Observer observer : mObservers) observer.onForegroundServiceRestarted();
+        }
+
         // This should restart service after Chrome gets killed (except for Android 4.4.2).
         return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        for (Observer observer : mObservers) observer.onForegroundServiceDestroyed();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        for (Observer observer : mObservers) observer.onForegroundServiceTaskRemoved();
+        super.onTaskRemoved(rootIntent);
     }
 
     @Nullable
