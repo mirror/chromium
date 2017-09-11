@@ -226,6 +226,24 @@
     },
     {
       "key": {
+        "uuid": "a16b8a6c_d1e54820",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-11T07:30:59Z",
+      "side": 1,
+      "message": "Ah, I checked around and yeah I think it is.",
+      "parentUuid": "e7eebc6e_d85f57c9",
+      "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce84b8ba_a3533140",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 1

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a92d77a_529e5635",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-11T07:30:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3392ad8_29870a03",
+      "revId": "dd00768a3b1f65009e3eac1a38cd979c49910f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ac6f594_5d235642",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 9
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "e76cd01f_ea216a92",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-11T07:30:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddda8ea8_cb0db540",
+      "revId": "dd00768a3b1f65009e3eac1a38cd979c49910f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58086caf_60ce1b75",
         "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
         "patchSetId": 9
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "2b0c7d43_2d7085fe",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-11T07:30:59Z",
+      "side": 1,
+      "message": "Done. Got it, and changed to \nDCHECK(context_-\u003eprovider_type() !\u003d SERVICE_WORKER_PROVIDER_FOR_WINDOW || context_-\u003econtainer_host())\nbecause inside context_-\u003econtainer_host() there is a DCHECK that provider type must be SERVICE_WORKER_PROVIDER_FOR_WINDOW.",
+      "parentUuid": "58086caf_60ce1b75",
+      "revId": "dd00768a3b1f65009e3eac1a38cd979c49910f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d537c65a_ef181df8",
         "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
         "patchSetId": 9
@@ -103,6 +157,24 @@
       "revId": "dd00768a3b1f65009e3eac1a38cd979c49910f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8dcb07_623e1d70",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-11T07:30:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d537c65a_ef181df8",
+      "revId": "dd00768a3b1f65009e3eac1a38cd979c49910f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
