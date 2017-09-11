@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ab7bd6c_499ea371",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1647,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-11T21:02:32Z",
+      "side": 1,
+      "message": "This is never reached due to duplicated condition line #1645.",
+      "revId": "166fea22f8c8a9e412bb0693d800a5b807dda418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
