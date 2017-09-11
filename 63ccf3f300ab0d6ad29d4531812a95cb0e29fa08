@@ -46,6 +46,30 @@
       "revId": "63ccf3f300ab0d6ad29d4531812a95cb0e29fa08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e680977_2ac1490f",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 3711,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-11T18:21:00Z",
+      "side": 1,
+      "message": "Okay, LGTM in that case.  But, I\u0027d encourage you to use the base::Feature API for future experimentation -- it\u0027s the current best practice.",
+      "parentUuid": "79c6eb12_215f0cc3",
+      "range": {
+        "startLine": 3711,
+        "startChar": 37,
+        "endLine": 3711,
+        "endChar": 0
+      },
+      "revId": "63ccf3f300ab0d6ad29d4531812a95cb0e29fa08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
