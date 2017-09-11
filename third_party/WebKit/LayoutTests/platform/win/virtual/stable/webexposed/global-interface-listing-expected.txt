@@ -4094,6 +4094,13 @@ interface PerformanceResourceTiming : PerformanceEntry
     getter transferSize
     getter workerStart
     method constructor
+interface PerformanceServerTiming
+    attribute @@toStringTag
+    getter description
+    getter duration
+    getter name
+    method constructor
+    method toJSON
 interface PerformanceTiming
     attribute @@toStringTag
     getter connectEnd
