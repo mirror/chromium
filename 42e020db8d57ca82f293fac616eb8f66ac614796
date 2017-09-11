@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "033dbf49_78c6f953",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-11T16:52:31Z",
+      "side": 1,
+      "message": "I think this is unnecessary complexity for IncomingTaskQueue. If any issue were to arise, the complexity of making ScheduleWork fast should reside in MessagePump. That way any platform that has this issue only pays for it when it is an issue.",
+      "parentUuid": "1a3c2d4e_db4d843d",
+      "revId": "42e020db8d57ca82f293fac616eb8f66ac614796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2001a8d_3b1bb325",
         "filename": "base/message_loop/incoming_task_queue.cc",
         "patchSetId": 6
