@@ -175,6 +175,24 @@
     },
     {
       "key": {
+        "uuid": "818e6ac9_cd82527f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDataStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-11T01:13:43Z",
+      "side": 1,
+      "message": "delete() is only called when a WebAPK is uninstalled and some time has passed. I\u0027m talking about updates for installed WebAPKs that get interrupted and leave the serialised data on disk. If the update keeps failing for whatever reason the file is just going to hang around on disk. We might want to consider logic for cleaning up in-progress updates so that we don\u0027t have these files lying around.",
+      "parentUuid": "62312694_1ad77cee",
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8b40bbc_0d1cc4eb",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 8
