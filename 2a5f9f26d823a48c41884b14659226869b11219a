@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "8c67ba27_679a625c",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-11T09:15:51Z",
+      "side": 1,
+      "message": "Turns out MSVC doens\u0027t like that. If I make it noexcept than I cannot  \u003ddefault with MSVC:\n\n operator\u003d ... noexcept\u0027: is not a special member function which can be defaulted\n\u003e note: exception specification does not match the implicitly declared specification.\n\n\nWhich I guess explains why only 15 out of 300 in our codebase have noexcept (the ones for which we provide an actual implementation)\n\nhttps://cs.chromium.org/search/?q\u003doperator%3D%5C(.*%26%26.*%5C);\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "a02919b1_05e11b47",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 35
+      },
+      "revId": "2a5f9f26d823a48c41884b14659226869b11219a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aed30f4f_2d10799e",
         "filename": "base/trace_event/memory_allocator_dump.h",
         "patchSetId": 10
