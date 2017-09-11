@@ -41,6 +41,7 @@ class HttpTest : public CronetTestBase {
     [Cronet registerHttpProtocolHandler];
     NSURLSessionConfiguration* config =
         [NSURLSessionConfiguration ephemeralSessionConfiguration];
+    config.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
     [Cronet installIntoSessionConfiguration:config];
     session_ = [NSURLSession sessionWithConfiguration:config
                                              delegate:delegate_
@@ -416,6 +417,45 @@ TEST_F(HttpTest, BrotliHandleDecoding) {
   EXPECT_EQ(nil, [delegate_ error]);
   EXPECT_STREQ(base::SysNSStringToUTF8([delegate_ responseBody]).c_str(),
                "The quick brown fox jumps over the lazy dog");
+}
+
+TEST_F(HttpTest, PostRequest) {
+  // Create an arbitrary array of bytes and calculate its hash.
+  const int post_length = 100;
+  NSMutableData* post_data = [[NSMutableData alloc] initWithLength:post_length];
+  char* bytes = static_cast<char*>(post_data.mutableBytes);
+  for (int i = 0; i < post_length; i++) {
+    bytes[i] = static_cast<char>((i + 33) % 256);
+  }
+  long expected_hash =
+      cronet::TestServer::CalculateArrayHash(bytes, post_length);
+
+  // Prepare the request.
+  NSURL* url = net::NSURLWithGURL(GURL(TestServer::GetRequestHashURL()));
+  NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url];
+  request.HTTPMethod = @"POST";
+  request.HTTPBody = post_data;
+
+  // Set the request filter to check that the request was handled by the Cronet
+  // stack.
+  __block BOOL block_used = NO;
+  [Cronet setRequestFilterBlock:^(NSURLRequest* req) {
+    block_used = YES;
+    EXPECT_EQ([req URL], url);
+    return YES;
+  }];
+
+  // Send the request and wait for the response.
+  NSURLSessionDataTask* data_task = [session_ dataTaskWithRequest:request];
+  StartDataTaskAndWaitForCompletion(data_task);
+
+  // Verify the response from the server, in particular, that the expected hash
+  // of the byte array matches the one received from the server.
+  NSString* response_body = [delegate_ responseBody];
+  long received_hash = static_cast<long>([response_body longLongValue]);
+  ASSERT_EQ(nil, [delegate_ error]);
+  ASSERT_EQ(expected_hash, received_hash);
+  ASSERT_TRUE(block_used);
 }
 
 }  // namespace cronet

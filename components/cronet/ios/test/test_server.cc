@@ -13,6 +13,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "net/http/http_status_code.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
 #include "net/test/embedded_test_server/http_response.h"
@@ -23,6 +24,7 @@ const char kEchoHeaderPath[] = "/EchoHeader?";
 const char kSetCookiePath[] = "/SetCookie?";
 const char kBigDataPath[] = "/BigData?";
 const char kUseEncodingPath[] = "/UseEncoding?";
+const char kRequestHashPath[] = "/RequestHash";
 
 std::unique_ptr<net::EmbeddedTestServer> g_test_server;
 base::LazyInstance<std::string>::Leaky g_big_data_body =
@@ -67,6 +69,21 @@ std::unique_ptr<net::test_server::HttpResponse> UseEncodingInResponse(
   return std::move(http_response);
 }
 
+std::unique_ptr<net::test_server::HttpResponse> ReturnRequestHash(
+    const net::test_server::HttpRequest& request) {
+  DCHECK(base::StartsWith(request.relative_url, kRequestHashPath,
+                          base::CompareCase::INSENSITIVE_ASCII));
+  // Read the request body and calculate its hash.
+  std::string request_content = request.content;
+  long content_hash = cronet::TestServer::CalculateArrayHash(
+      request_content.data(), request_content.length());
+  // Create the response with the hash value.
+  auto http_response = base::MakeUnique<net::test_server::BasicHttpResponse>();
+  http_response->set_code(net::HTTP_OK);
+  http_response->set_content(std::to_string(content_hash));
+  return http_response;
+}
+
 std::unique_ptr<net::test_server::HttpResponse> ReturnBigDataInResponse(
     const net::test_server::HttpRequest& request) {
   DCHECK(base::StartsWith(request.relative_url, kBigDataPath,
@@ -109,6 +126,10 @@ std::unique_ptr<net::test_server::HttpResponse> CronetTestRequestHandler(
                        base::CompareCase::INSENSITIVE_ASCII)) {
     return UseEncodingInResponse(request);
   }
+  if (base::StartsWith(request.relative_url, kRequestHashPath,
+                       base::CompareCase::INSENSITIVE_ASCII)) {
+    return ReturnRequestHash(request);
+  }
   return base::MakeUnique<net::test_server::BasicHttpResponse>();
 }
 
@@ -146,6 +167,11 @@ std::string TestServer::GetSetCookieURL(const std::string& cookie_line) {
   return g_test_server->GetURL(kSetCookiePath + cookie_line).spec();
 }
 
+std::string TestServer::GetRequestHashURL() {
+  DCHECK(g_test_server);
+  return g_test_server->GetURL(kRequestHashPath).spec();
+}
+
 std::string TestServer::PrepareBigDataURL(long data_size) {
   DCHECK(g_test_server);
   DCHECK(g_big_data_body.Get().empty());
@@ -165,6 +191,16 @@ std::string TestServer::PrepareBigDataURL(long data_size) {
 void TestServer::ReleaseBigDataURL() {
   DCHECK(!g_big_data_body.Get().empty());
   g_big_data_body.Get() = std::string();
+}
+
+long TestServer::CalculateArrayHash(const char* array, long length) {
+  long hash = 0;
+  for (int i = 0; i < length; i++) {
+    hash += array[i];
+    hash <<= 8;
+    hash /= 7;
+  }
+  return hash;
 }
 
 }  // namespace cronet
