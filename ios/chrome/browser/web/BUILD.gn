@@ -35,6 +35,7 @@ source_set("web") {
     "sad_tab_tab_helper.mm",
     "tab_id_tab_helper.h",
     "tab_id_tab_helper.mm",
+    "web_state_printer.h",
   ]
   deps = [
     ":features",
@@ -51,6 +52,7 @@ source_set("web") {
     "//ui/base",
     "//url",
   ]
+  libs = [ "Foundation.framework" ]
 }
 
 source_set("features") {
@@ -147,8 +149,8 @@ source_set("web_internal") {
     "external_app_launcher.h",
     "external_app_launcher.mm",
     "passkit_dialog_provider.h",
-    "print_observer.h",
-    "print_observer.mm",
+    "print_tab_helper.h",
+    "print_tab_helper.mm",
   ]
   deps = [
     ":chrome_bundle",
