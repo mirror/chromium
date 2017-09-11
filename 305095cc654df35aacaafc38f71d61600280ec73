@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "138df4c7_83c99e84",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-11T22:54:32Z",
+      "side": 1,
+      "message": "Should we change the arg from \"-f/--filter\" to \"-p/--path\"? or \"-d/--directory\" ?",
+      "revId": "305095cc654df35aacaafc38f71d61600280ec73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae6910d_cfea66e0",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-11T22:54:32Z",
+      "side": 1,
+      "message": "Since it\u0027s no longer an optional filter, but a required directory, should we phrase the comment like that?\n\n\"Directory to get code coverage for.\"",
+      "revId": "305095cc654df35aacaafc38f71d61600280ec73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
