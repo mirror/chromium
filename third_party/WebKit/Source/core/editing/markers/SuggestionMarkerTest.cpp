@@ -12,14 +12,16 @@ class SuggestionMarkerTest : public ::testing::Test {};
 
 TEST_F(SuggestionMarkerTest, MarkerType) {
   DocumentMarker* marker = new SuggestionMarker(
-      0, 1, Vector<String>(), Color::kTransparent, Color::kTransparent,
+      0, 1, Vector<String>(), SuggestionMarker::SuggestionType::kNotMisspelling,
+      Color::kTransparent, Color::kTransparent,
       StyleableMarker::Thickness::kThin, Color::kTransparent);
   EXPECT_EQ(DocumentMarker::kSuggestion, marker->GetType());
 }
 
 TEST_F(SuggestionMarkerTest, IsStyleableMarker) {
   DocumentMarker* marker = new SuggestionMarker(
-      0, 1, Vector<String>(), Color::kTransparent, Color::kTransparent,
+      0, 1, Vector<String>(), SuggestionMarker::SuggestionType::kNotMisspelling,
+      Color::kTransparent, Color::kTransparent,
       StyleableMarker::Thickness::kThin, Color::kTransparent);
   EXPECT_TRUE(IsStyleableMarker(*marker));
 }
@@ -27,26 +29,31 @@ TEST_F(SuggestionMarkerTest, IsStyleableMarker) {
 TEST_F(SuggestionMarkerTest, ConstructorAndGetters) {
   Vector<String> suggestions = {"this", "that"};
   SuggestionMarker* marker = new SuggestionMarker(
-      0, 1, suggestions, Color::kTransparent, Color::kDarkGray,
-      StyleableMarker::Thickness::kThin, Color::kGray);
+      0, 1, suggestions, SuggestionMarker::SuggestionType::kNotMisspelling,
+      Color::kTransparent, Color::kDarkGray, StyleableMarker::Thickness::kThin,
+      Color::kGray);
   EXPECT_EQ(suggestions, marker->Suggestions());
+  EXPECT_FALSE(marker->IsMisspelling());
   EXPECT_EQ(Color::kTransparent, marker->SuggestionHighlightColor());
   EXPECT_EQ(Color::kDarkGray, marker->UnderlineColor());
   EXPECT_FALSE(marker->IsThick());
   EXPECT_EQ(Color::kGray, marker->BackgroundColor());
 
   SuggestionMarker* marker2 = new SuggestionMarker(
-      0, 1, Vector<String>(), Color::kBlack, Color::kDarkGray,
-      StyleableMarker::Thickness::kThick, Color::kGray);
+      0, 1, Vector<String>(), SuggestionMarker::SuggestionType::kMisspelling,
+      Color::kBlack, Color::kDarkGray, StyleableMarker::Thickness::kThick,
+      Color::kGray);
   EXPECT_TRUE(marker2->IsThick());
+  EXPECT_TRUE(marker2->IsMisspelling());
   EXPECT_EQ(marker2->SuggestionHighlightColor(), Color::kBlack);
 }
 
 TEST_F(SuggestionMarkerTest, SetSuggestion) {
   Vector<String> suggestions = {"this", "that"};
   SuggestionMarker* marker = new SuggestionMarker(
-      0, 1, suggestions, Color::kTransparent, Color::kDarkGray,
-      StyleableMarker::Thickness::kThin, Color::kGray);
+      0, 1, suggestions, SuggestionMarker::SuggestionType::kNotMisspelling,
+      Color::kTransparent, Color::kDarkGray, StyleableMarker::Thickness::kThin,
+      Color::kGray);
 
   marker->SetSuggestion(1, "these");
 

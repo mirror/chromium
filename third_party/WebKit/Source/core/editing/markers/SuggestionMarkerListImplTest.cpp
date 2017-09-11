@@ -17,10 +17,11 @@ class SuggestionMarkerListImplTest : public ::testing::Test {
       : marker_list_(new SuggestionMarkerListImpl()) {}
 
   SuggestionMarker* CreateMarker(unsigned start_offset, unsigned end_offset) {
-    return new SuggestionMarker(start_offset, end_offset, Vector<String>(),
-                                Color::kTransparent, Color::kTransparent,
-                                StyleableMarker::Thickness::kThin,
-                                Color::kTransparent);
+    return new SuggestionMarker(
+        start_offset, end_offset, Vector<String>(),
+        SuggestionMarker::SuggestionType::kNotMisspelling, Color::kTransparent,
+        Color::kTransparent, StyleableMarker::Thickness::kThin,
+        Color::kTransparent);
   }
 
   Persistent<SuggestionMarkerListImpl> marker_list_;

@@ -505,6 +505,7 @@ void InputMethodController::AddImeTextSpans(
     } else if (ime_text_span.GetType() == ImeTextSpan::Type::kSuggestion) {
       GetDocument().Markers().AddSuggestionMarker(
           ephemeral_line_range, ime_text_span.Suggestions(),
+          SuggestionMarker::SuggestionType::kNotMisspelling,
           ime_text_span.SuggestionHighlightColor(),
           ime_text_span.UnderlineColor(),
           ime_text_span.Thick() ? StyleableMarker::Thickness::kThick

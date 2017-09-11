@@ -71,6 +71,7 @@ class CORE_EXPORT DocumentMarkerController final
                                  Color background_color);
   void AddSuggestionMarker(const EphemeralRange&,
                            const Vector<String>& suggestions,
+                           SuggestionMarker::SuggestionType,
                            Color suggestion_highlight_color,
                            Color underline_color,
                            StyleableMarker::Thickness,

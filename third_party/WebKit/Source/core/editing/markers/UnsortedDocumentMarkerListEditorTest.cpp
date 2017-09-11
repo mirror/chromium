@@ -13,10 +13,11 @@ namespace blink {
 class UnsortedDocumentMarkerListEditorTest : public ::testing::Test {
  protected:
   DocumentMarker* CreateMarker(unsigned start_offset, unsigned end_offset) {
-    return new SuggestionMarker(start_offset, end_offset, Vector<String>(),
-                                Color::kTransparent, Color::kTransparent,
-                                StyleableMarker::Thickness::kThin,
-                                Color::kTransparent);
+    return new SuggestionMarker(
+        start_offset, end_offset, Vector<String>(),
+        SuggestionMarker::SuggestionType::kNotMisspelling, Color::kTransparent,
+        Color::kTransparent, StyleableMarker::Thickness::kThin,
+        Color::kTransparent);
   }
 
   PersistentHeapVector<Member<DocumentMarker>> marker_list_;

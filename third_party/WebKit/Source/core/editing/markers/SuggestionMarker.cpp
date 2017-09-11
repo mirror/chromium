@@ -11,6 +11,7 @@ int32_t SuggestionMarker::current_tag_ = 0;
 SuggestionMarker::SuggestionMarker(unsigned start_offset,
                                    unsigned end_offset,
                                    const Vector<String>& suggestions,
+                                   SuggestionType suggestion_type,
                                    Color suggestion_highlight_color,
                                    Color underline_color,
                                    Thickness thickness,
@@ -22,6 +23,7 @@ SuggestionMarker::SuggestionMarker(unsigned start_offset,
                       background_color),
       tag_(NextTag()),
       suggestions_(suggestions),
+      suggestion_type_(suggestion_type),
       suggestion_highlight_color_(suggestion_highlight_color) {
   DCHECK_GT(tag_, 0);
 }
@@ -36,6 +38,10 @@ DocumentMarker::MarkerType SuggestionMarker::GetType() const {
 
 const Vector<String>& SuggestionMarker::Suggestions() const {
   return suggestions_;
+}
+
+bool SuggestionMarker::IsMisspelling() const {
+  return suggestion_type_ == SuggestionType::kMisspelling;
 }
 
 Color SuggestionMarker::SuggestionHighlightColor() const {

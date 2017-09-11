@@ -319,8 +319,8 @@ TEST_F(DocumentMarkerControllerTest, RemoveSuggestionMarkerByTag) {
 
   MarkerController().AddSuggestionMarker(
       EphemeralRange(Position(text, 0), Position(text, 1)), Vector<String>(),
-      Color::kBlack, Color::kBlack, StyleableMarker::Thickness::kThick,
-      Color::kBlack);
+      SuggestionMarker::SuggestionType::kNotMisspelling, Color::kBlack,
+      Color::kBlack, StyleableMarker::Thickness::kThick, Color::kBlack);
 
   ASSERT_EQ(1u, MarkerController().Markers().size());
   const SuggestionMarker& marker =
@@ -464,12 +464,12 @@ TEST_F(DocumentMarkerControllerTest, SuggestionMarkersHaveUniqueTags) {
 
   MarkerController().AddSuggestionMarker(
       EphemeralRange(Position(text, 0), Position(text, 1)), Vector<String>(),
-      Color::kBlack, Color::kBlack, StyleableMarker::Thickness::kThick,
-      Color::kBlack);
+      SuggestionMarker::SuggestionType::kNotMisspelling, Color::kBlack,
+      Color::kBlack, StyleableMarker::Thickness::kThick, Color::kBlack);
   MarkerController().AddSuggestionMarker(
       EphemeralRange(Position(text, 0), Position(text, 1)), Vector<String>(),
-      Color::kBlack, Color::kBlack, StyleableMarker::Thickness::kThick,
-      Color::kBlack);
+      SuggestionMarker::SuggestionType::kNotMisspelling, Color::kBlack,
+      Color::kBlack, StyleableMarker::Thickness::kThick, Color::kBlack);
 
   EXPECT_EQ(2u, MarkerController().Markers().size());
   EXPECT_NE(ToSuggestionMarker(MarkerController().Markers()[0])->Tag(),

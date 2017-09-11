@@ -1190,8 +1190,10 @@ void Internals::addSuggestionMarker(
           const EphemeralRange& range, Color underline_color,
           StyleableMarker::Thickness thickness, Color background_color) {
         document_marker_controller.AddSuggestionMarker(
-            range, suggestions, suggestion_highlight_color, underline_color,
-            thickness, background_color);
+            range, suggestions,
+            SuggestionMarker::SuggestionType::kNotMisspelling,
+            suggestion_highlight_color, underline_color, thickness,
+            background_color);
       });
 }
 
