@@ -33,8 +33,6 @@ bool U2fBleFrame::IsValid() const {
     default:
       return false;
   }
-  NOTREACHED();
-  return false;
 }
 
 U2fBleFrame::KeepaliveCode U2fBleFrame::GetKeepaliveCode() const {
