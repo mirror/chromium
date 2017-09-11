@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ade49be9_5751d2c9",
+        "filename": "components/cronet/android/io_buffer_with_byte_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-11T13:37:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8b42f20_3890c226",
+      "range": {
+        "startLine": 31,
+        "startChar": 17,
+        "endLine": 31,
+        "endChar": 35
+      },
+      "revId": "4d4a01396b151edf6774d30ba440f116470d4ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7aec4d7_d866ef18",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
         "patchSetId": 3
@@ -72,6 +96,24 @@
       "side": 1,
       "message": "Hmm, I digged more into this on why this message would show up, turns out it\u0027s because how we changed to list our tests through java runner and init error happens in this process when test is not properly written. I will make a change to provide the actually failure message.",
       "parentUuid": "4a70a53f_0831e243",
+      "revId": "4d4a01396b151edf6774d30ba440f116470d4ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "186b613e_7f959f1c",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-11T13:37:09Z",
+      "side": 1,
+      "message": "SGTM. Thanks a lot, Yoland!",
+      "parentUuid": "cef1a5e6_d3ac6bcb",
       "revId": "4d4a01396b151edf6774d30ba440f116470d4ac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
