@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1246e7ea_5424c3a0",
+        "filename": "chrome/browser/ui/views/payments/payment_method_view_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-11T18:52:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5571dc92_a815e9fc",
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a09f38c_4612c155",
         "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "63aaa77b_389ba2dd",
+        "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-11T18:52:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a09f38c_4612c155",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 10
+      },
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95bd4ae9_b1d600e0",
         "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-08T20:04:51Z",
       "side": 1,
       "message": "Should we only do if the service worker payment apps feature is enabled?",
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b98abad6_76d8e849",
+        "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-11T18:52:22Z",
+      "side": 1,
+      "message": "I preferred not put feature check at multiple places. In addition, we will enable this code by default finally.",
+      "parentUuid": "95bd4ae9_b1d600e0",
       "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "56ae282b_ad85aa6a",
+        "filename": "chrome/browser/ui/views/payments/payment_request_dialog_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-11T18:52:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a18f49f6_72d1c308",
+      "range": {
+        "startLine": 179,
+        "startChar": 62,
+        "endLine": 179,
+        "endChar": 64
+      },
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af515160_746cf7fe",
         "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
         "patchSetId": 5
@@ -102,6 +186,30 @@
       "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c34b763d_6df071a9",
+        "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-11T18:52:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af515160_746cf7fe",
+      "range": {
+        "startLine": 386,
+        "startChar": 69,
+        "endLine": 386,
+        "endChar": 72
+      },
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "7db97e44_58a128be",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-11T18:52:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbe63ae6_4654ec97",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 33
+      },
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "792c6580_8865626d",
         "filename": "components/payments/content/payment_request_state.cc",
         "patchSetId": 5
@@ -148,6 +280,30 @@
       "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1e7db0_731f2685",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-11T18:52:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "792c6580_8865626d",
+      "range": {
+        "startLine": 97,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 33
+      },
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "feacf1e2_7400cc8b",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-11T18:52:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f11bc484_be33a1a6",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 23
+      },
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d39bc4a4_562d1e8d",
         "filename": "components/payments/content/payment_request_state.cc",
         "patchSetId": 5
@@ -185,6 +365,30 @@
       "writtenOn": "2017-09-08T20:04:51Z",
       "side": 1,
       "message": "are we favoring credit cards first because they are added first to the vector? If so we should make a note",
+      "range": {
+        "startLine": 405,
+        "startChar": 12,
+        "endLine": 405,
+        "endChar": 62
+      },
+      "revId": "d42033c2c1464723a598ff58d7f540b1d123030e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f150a97_7ba51167",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-11T18:52:22Z",
+      "side": 1,
+      "message": "No, we are not, there is no implementation to sort between credit cards and payment apps, so I would like to leave it for future. There is a TODO above (we could do it together):\n  // TODO(crbug.com/702063): Change this code to prioritize instruments by use\n  // count and other means, and implement a way to modify this function\u0027s return\n  // value.\n\nmeanwhile, moved the code a little bit to list credit cards below service worker payment apps.",
+      "parentUuid": "d39bc4a4_562d1e8d",
       "range": {
         "startLine": 405,
         "startChar": 12,
