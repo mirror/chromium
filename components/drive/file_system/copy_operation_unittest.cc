@@ -416,12 +416,28 @@ TEST_F(CopyOperationTest, PreserveLastModified) {
   base::FilePath src_path(FILE_PATH_LITERAL("drive/root/File 1.txt"));
   base::FilePath dest_path(FILE_PATH_LITERAL("drive/root/File 2.txt"));
 
+  base::Time last_modified = base::Time() + base::TimeDelta::FromSeconds(2000);
+  base::Time last_modified_by_me =
+      base::Time() + base::TimeDelta::FromSeconds(1000);
+
   ResourceEntry entry;
   ASSERT_EQ(FILE_ERROR_OK, GetLocalResourceEntry(src_path, &entry));
+
+  entry.mutable_file_info()->set_last_modified(last_modified.ToInternalValue());
+  entry.set_last_modified_by_me(last_modified_by_me.ToInternalValue());
+
+  FileError error = FILE_ERROR_OK;
+  base::PostTaskAndReplyWithResult(
+      blocking_task_runner(), FROM_HERE,
+      base::Bind(&internal::ResourceMetadata::RefreshEntry,
+                 base::Unretained(metadata()), entry),
+      google_apis::test_util::CreateCopyResultCallback(&error));
+  content::RunAllBlockingPoolTasksUntilIdle();
+  EXPECT_EQ(FILE_ERROR_OK, error);
+
   ASSERT_EQ(FILE_ERROR_OK,
             GetLocalResourceEntry(dest_path.DirName(), &entry));
 
-  FileError error = FILE_ERROR_OK;
   operation_->Copy(src_path,
                    dest_path,
                    true,  // Preserve last modified.
@@ -432,8 +448,11 @@ TEST_F(CopyOperationTest, PreserveLastModified) {
   ResourceEntry entry2;
   EXPECT_EQ(FILE_ERROR_OK, GetLocalResourceEntry(src_path, &entry));
   EXPECT_EQ(FILE_ERROR_OK, GetLocalResourceEntry(dest_path, &entry2));
-  EXPECT_EQ(entry.file_info().last_modified(),
+  EXPECT_EQ(last_modified.ToInternalValue(),
             entry2.file_info().last_modified());
+  // Even with preserve_last_modified enabled, last_modified_by_me is forced to
+  // the same value as last_modified.
+  EXPECT_EQ(last_modified.ToInternalValue(), entry2.last_modified_by_me());
 }
 
 TEST_F(CopyOperationTest, WaitForSyncComplete) {

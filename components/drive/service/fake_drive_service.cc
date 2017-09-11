@@ -929,8 +929,10 @@ CancelCallback FakeDriveService::CopyResource(
   parents.push_back(parent);
   *new_file->mutable_parents() = parents;
 
-  if (!last_modified.is_null())
+  if (!last_modified.is_null()) {
     new_file->set_modified_date(last_modified);
+    new_file->set_modified_by_me_date(last_modified);
+  }
 
   AddNewChangestamp(new_change);
   UpdateETag(new_file);
@@ -998,8 +1000,10 @@ CancelCallback FakeDriveService::UpdateResource(
     *file->mutable_parents() = parents;
   }
 
-  if (!last_modified.is_null())
+  if (!last_modified.is_null()) {
     file->set_modified_date(last_modified);
+    file->set_modified_by_me_date(last_modified);
+  }
 
   if (!last_viewed_by_me.is_null())
     file->set_last_viewed_by_me_date(last_viewed_by_me);
@@ -1564,6 +1568,7 @@ void FakeDriveService::SetLastModifiedTime(
   ChangeResource* change = &entry->change_resource;
   FileResource* file = change->mutable_file();
   file->set_modified_date(last_modified_time);
+  file->set_modified_by_me_date(last_modified_time);
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,

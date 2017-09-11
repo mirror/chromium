@@ -82,6 +82,11 @@ TEST_F(EntryUpdatePerformerTest, UpdateEntry) {
   src_entry.set_title("Moved" + src_entry.title());
   src_entry.mutable_file_info()->set_last_modified(
       new_last_modified.ToInternalValue());
+  // We set the same value as last_modified to last_modified_by_me here because
+  // Drive API does not provide a way to set different timestamps for them.
+  // Anyway, when we update last_modified_by_me locally, it is always set to the
+  // same value as last_modified.
+  src_entry.set_last_modified_by_me(new_last_modified.ToInternalValue());
   src_entry.mutable_file_info()->set_last_accessed(
       new_last_accessed.ToInternalValue());
   src_entry.set_metadata_edit_state(ResourceEntry::DIRTY);
@@ -119,6 +124,7 @@ TEST_F(EntryUpdatePerformerTest, UpdateEntry) {
 
   EXPECT_EQ(src_entry.title(), gdata_entry->title());
   EXPECT_EQ(new_last_modified, gdata_entry->modified_date());
+  EXPECT_EQ(new_last_modified, gdata_entry->modified_by_me_date());
   EXPECT_EQ(new_last_accessed, gdata_entry->last_viewed_by_me_date());
 
   ASSERT_FALSE(gdata_entry->parents().empty());
