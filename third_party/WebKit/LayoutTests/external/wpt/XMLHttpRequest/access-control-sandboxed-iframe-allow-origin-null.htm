@@ -11,10 +11,16 @@
 async_test((test) => {
   window.addEventListener("message", test.step_func((evt) => {
     if (evt.data == "ready") {
-      document.getElementById("frame").contentWindow.postMessage(get_host_info().HTTP_REMOTE_ORIGIN +
-          "/XMLHttpRequest/resources/access-control-sandboxed-iframe-allow.py", "*");
+      document.getElementById("frame").contentWindow.postMessage(
+          get_host_info().HTTP_REMOTE_ORIGIN +
+          "/XMLHttpRequest/resources/pass.txt?pipe=" +
+          "header(Cache-Control,no-store)|" +
+          "header(Content-Type,text/plain)|" +
+          "header(Access-Control-Allow-Credentials,true)|" +
+          "header(Access-Control-Allow-External,true)|" +
+          "header(Access-Control-Allow-Origin,null)", "*");
     } else {
-      assert_equals(evt.data, "PASS: Sandboxed iframe XHR access allowed.");
+      assert_equals(evt.data, "PASS\n");
       test.done();
     }
   }), false);
