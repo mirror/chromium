@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "674c5af9_5102c894",
+        "filename": "chrome/browser/local_discovery/service_discovery_client_mdns.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-11T18:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "236a91f3_2cf4fec8",
+      "revId": "033fb06780a1817f76b5a8e2df6c5ca87c9f75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70899be7_288d4e73",
         "filename": "chrome/browser/local_discovery/service_discovery_client_mdns.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "033fb06780a1817f76b5a8e2df6c5ca87c9f75c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8d6f61_b52355c9",
+        "filename": "chrome/browser/local_discovery/service_discovery_client_mdns.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-11T18:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70899be7_288d4e73",
+      "revId": "033fb06780a1817f76b5a8e2df6c5ca87c9f75c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
