@@ -606,24 +606,25 @@ void MaybeScanAndPrompt(const SwReporterInvocation& reporter_invocation) {
   PrefService* prefs = profile->GetPrefs();
   DCHECK(prefs);
 
-  // Don't show the prompt again if it's been shown before for this profile and
-  // for the current variations seed.
-  const std::string incoming_seed = GetIncomingSRTSeed();
-  const std::string old_seed = prefs->GetString(prefs::kSwReporterPromptSeed);
-  if (!incoming_seed.empty() && incoming_seed == old_seed) {
-    RecordReporterStepHistogram(SW_REPORTER_ALREADY_PROMPTED);
-    RecordPromptNotShownWithReasonHistogram(NO_PROMPT_REASON_ALREADY_PROMPTED);
-    return;
-  }
+  /*  // Don't show the prompt again if it's been shown before for this profile
+    and
+    // for the current variations seed.
+    const std::string incoming_seed = GetIncomingSRTSeed();
+    const std::string old_seed = prefs->GetString(prefs::kSwReporterPromptSeed);
+    if (!incoming_seed.empty() && incoming_seed == old_seed) {
+      RecordReporterStepHistogram(SW_REPORTER_ALREADY_PROMPTED);
+      RecordPromptNotShownWithReasonHistogram(NO_PROMPT_REASON_ALREADY_PROMPTED);
+      return;
+    }
 
-  if (!incoming_seed.empty() && incoming_seed != old_seed)
-    prefs->SetString(prefs::kSwReporterPromptSeed, incoming_seed);
+    if (!incoming_seed.empty() && incoming_seed != old_seed)
+      prefs->SetString(prefs::kSwReporterPromptSeed, incoming_seed);
 
-  if (g_testing_delegate_) {
-    g_testing_delegate_->TriggerPrompt();
-    return;
-  }
-
+    if (g_testing_delegate_) {
+      g_testing_delegate_->TriggerPrompt();
+      return;
+    }
+  */
   cleaner_controller->Scan(reporter_invocation);
   DCHECK_EQ(ChromeCleanerController::State::kScanning,
             cleaner_controller->state());

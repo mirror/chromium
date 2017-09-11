@@ -536,10 +536,10 @@ void RegisterComponentsForUpdate() {
   }
 
 #if defined(OS_WIN)
-#if defined(GOOGLE_CHROME_BUILD)
+  // #if defined(GOOGLE_CHROME_BUILD)
   RegisterSwReporterComponent(cus);
   RegisterThirdPartyModuleListComponent(cus);
-#endif  // defined(GOOGLE_CHROME_BUILD)
+// #endif  // defined(GOOGLE_CHROME_BUILD)
 #endif  // defined(OS_WIN)
 }
 
