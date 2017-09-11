@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "014496ff_61395b05",
+        "filename": "content/browser/background_fetch/background_fetch_test_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-11T07:32:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a6f6c6f1_baae22c1",
+      "range": {
+        "startLine": 249,
+        "startChar": 8,
+        "endLine": 249,
+        "endChar": 54
+      },
+      "revId": "32e03088e1e8e3624f7f89850369fcd5c3536fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d7b2ab7_541e524d",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_types.mojom",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-11T06:53:08Z",
       "side": 1,
       "message": "I have a preference for calling this service_worker_registration_options.mojom for now, as it\u0027s the only type.\n\nIt makes it easier to find the file when you see type in the code.",
+      "revId": "32e03088e1e8e3624f7f89850369fcd5c3536fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6163ce_90ad7773",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_types.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-11T07:32:05Z",
+      "side": 1,
+      "message": "Yeah it has only one type for now but I\u0027ll move ServiceWorkerRegistrationObjectInfo into this file soon, and eventually we may move all contents of content/common/service_worker/service_worker_types.mojom here, so I chose such a name.",
+      "parentUuid": "6d7b2ab7_541e524d",
       "revId": "32e03088e1e8e3624f7f89850369fcd5c3536fcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
