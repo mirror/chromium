@@ -33,6 +33,41 @@
       "revId": "24217b29db01cac749aeadeb01209890318cf4ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aed1eff_aed50001",
+        "filename": "chrome/browser/resources/md_bookmarks/folder_node.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-11T05:24:14Z",
+      "side": 1,
+      "message": "How about adding instructions to the folder tree?",
+      "parentUuid": "13368d08_a1b64e23",
+      "revId": "24217b29db01cac749aeadeb01209890318cf4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b155067_5ac1f087",
+        "filename": "chrome/browser/resources/md_bookmarks/folder_node.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-11T05:24:14Z",
+      "side": 1,
+      "message": "This line does the focusability on search lol. selectedFolder_ is the hidden folder\u0027s value, so it keeps that folder tabindex\u003d0 \u003dD",
+      "revId": "24217b29db01cac749aeadeb01209890318cf4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
