@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS 'fetch()' should not generate a preflight for simple requests from internal to internal
+Harness: the test ran to completion.
+

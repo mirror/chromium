@@ -1,0 +1,8 @@
+CONSOLE ERROR: Failed to load http://localhost:8080/security/cors-rfc1918/resources/preflight.php?preflight=fail-with-500&out=json: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://127.0.0.1:8000' is therefore not allowed access. The response had HTTP status code 500. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Failed to load http://localhost:8080/security/cors-rfc1918/resources/preflight.php?preflight=fail-without-allow&out=json: No 'Access-Control-Allow-External' header was present in the preflight response for this external request (This is an experimental header which is defined in 'https://wicg.github.io/cors-rfc1918/').
+This is a testharness.js-based test.
+PASS 'fetch()' should fail on failed preflight: 500 status
+PASS 'fetch()' should fail on failed preflight: no allow-external
+PASS 'fetch()' should pass on successful preflight
+Harness: the test ran to completion.
+
