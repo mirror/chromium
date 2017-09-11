@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f969416d_ec0d4da1",
+        "filename": "tools/grit/grit/format/data_pack.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-11T20:38:33Z",
+      "side": 1,
+      "message": "Will the caller ever do anything interesting with the raw data? If not, maybe format it to string here instead of in the caller?",
+      "revId": "8b3fe3fa16c7928cbffd17508f93e73dace559bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468a553f_18ee79e4",
+        "filename": "tools/grit/grit/format/data_pack.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-11T20:38:33Z",
+      "side": 1,
+      "message": "All the other formatters just return a string, so it is not great that the caller has to know this formatter behaves differently. One alternative I can think of is to stash |info| into |root|. WDYT?",
+      "revId": "8b3fe3fa16c7928cbffd17508f93e73dace559bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93b8549_ca225c69",
+        "filename": "tools/grit/grit_rule.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-11T20:38:33Z",
+      "side": 1,
+      "message": "Isn\u0027t |en_pak_grit_outputs| going to be always empty?",
+      "revId": "8b3fe3fa16c7928cbffd17508f93e73dace559bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
