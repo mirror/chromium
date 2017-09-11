@@ -22,6 +22,30 @@
       "revId": "33df43acdd56b03cae5f2ea800ed0e7943a4bf33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629915a2_e880231b",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-11T14:17:03Z",
+      "side": 1,
+      "message": "You mean doing:\nself.appBar.navigationBar.userInteractionEnabled \u003d YES;\nThe long press recognizer would still be triggered.",
+      "parentUuid": "b06f8034_fa2aee15",
+      "range": {
+        "startLine": 372,
+        "startChar": 55,
+        "endLine": 372,
+        "endChar": 68
+      },
+      "revId": "33df43acdd56b03cae5f2ea800ed0e7943a4bf33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
