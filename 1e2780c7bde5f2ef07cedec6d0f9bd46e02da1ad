@@ -46,6 +46,30 @@
       "revId": "1e2780c7bde5f2ef07cedec6d0f9bd46e02da1ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d7f3ac_9f79a9c4",
+        "filename": "mojo/public/cpp/bindings/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-09-11T08:38:12Z",
+      "side": 1,
+      "message": "Thanks, I\u0027m trying to fix the document. Adding the dependency it to the top-level was the simplest / most immediate fix. However, it is true that a more general statement would be more appropriate. I\u0027ve uploaded a new version with better text.\n\nI think it really helps when the instructions given in a tutorial work as-is, without hidden expectations. Maybe a better solution would be to not mention the build instructions on line 62 at all, or move them to their own section with a real example?",
+      "parentUuid": "11f5b502_7cca3978",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 42
+      },
+      "revId": "1e2780c7bde5f2ef07cedec6d0f9bd46e02da1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
