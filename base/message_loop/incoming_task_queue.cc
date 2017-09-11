@@ -8,8 +8,9 @@
 #include <utility>
 
 #include "base/location.h"
+#include "base/logging.h"
 #include "base/message_loop/message_loop.h"
-#include "base/synchronization/waitable_event.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 
@@ -55,7 +56,13 @@ IncomingTaskQueue::IncomingTaskQueue(MessageLoop* message_loop)
       next_sequence_num_(0),
       message_loop_scheduled_(false),
       always_schedule_work_(AlwaysNotifyPump(message_loop_->type())),
-      is_ready_for_scheduling_(false) {
+      is_ready_for_scheduling_(false)
+#if DCHECK_IS_ON()
+      ,
+      post_pending_task_event_(WaitableEvent::ResetPolicy::MANUAL,
+                               WaitableEvent::InitialState::SIGNALED)
+#endif
+{
 }
 
 bool IncomingTaskQueue::AddToIncomingQueue(
@@ -112,8 +119,8 @@ int IncomingTaskQueue::ReloadWorkQueue(TaskQueue* work_queue) {
 }
 
 void IncomingTaskQueue::WillDestroyCurrentMessageLoop() {
-  base::subtle::AutoWriteLock lock(message_loop_lock_);
-  message_loop_ = NULL;
+  post_pending_task_tracker_.StopAcceptingPostTaskCalls();
+  message_loop_ = nullptr;
 }
 
 void IncomingTaskQueue::StartScheduling() {
@@ -133,6 +140,86 @@ void IncomingTaskQueue::StartScheduling() {
   }
 }
 
+IncomingTaskQueue::PostPendingTaskTracker::ScopedCall::ScopedCall(
+    PostPendingTaskTracker* post_pending_task_tracker)
+    : post_pending_task_tracker_(post_pending_task_tracker),
+      should_continue_(
+          post_pending_task_tracker_->IncrementPostPendingTasksInFlight()) {
+  DCHECK(post_pending_task_tracker_);
+}
+
+IncomingTaskQueue::PostPendingTaskTracker::ScopedCall::~ScopedCall() {
+  if (should_continue_)
+    post_pending_task_tracker_->DecrementPostPendingTasksInFlight();
+}
+
+IncomingTaskQueue::PostPendingTaskTracker::PostPendingTaskTracker() = default;
+IncomingTaskQueue::PostPendingTaskTracker::~PostPendingTaskTracker() = default;
+
+void IncomingTaskQueue::PostPendingTaskTracker::StopAcceptingPostTaskCalls() {
+  DCHECK(!shutdown_event_);
+  shutdown_event_ = std::make_unique<WaitableEvent>(
+      WaitableEvent::ResetPolicy::MANUAL,
+      WaitableEvent::InitialState::NOT_SIGNALED);
+  const auto new_bits =
+      subtle::Barrier_AtomicIncrement(&state_, kShutdownStartedMask);
+  DCHECK(new_bits & kShutdownStartedMask);
+
+  const auto num_tasks_blocking_shutdown =
+      new_bits >> kNumPostTasksInFlightBitOffset;
+  if (num_tasks_blocking_shutdown == 0)
+    shutdown_event_->Signal();
+
+  {
+    base::ThreadRestrictions::ScopedAllowWait allow_wait;
+    shutdown_event_->Wait();
+  }
+}
+
+bool IncomingTaskQueue::PostPendingTaskTracker::
+    IncrementPostPendingTasksInFlight() {
+#if DCHECK_IS_ON()
+  const auto num_post_tasks_in_flight =
+      subtle::NoBarrier_Load(&state_) >> kNumPostTasksInFlightBitOffset;
+  DCHECK_LT(num_post_tasks_in_flight,
+            std::numeric_limits<subtle::Atomic32>::max() -
+                kNumPostTasksInFlightIncrement);
+#endif
+  const auto new_bits = subtle::NoBarrier_AtomicIncrement(
+      &state_, kNumPostTasksInFlightIncrement);
+  bool shutdown_started = new_bits & kShutdownStartedMask;
+  if (shutdown_started) {
+    subtle::NoBarrier_AtomicIncrement(&state_, -kNumPostTasksInFlightIncrement);
+    return false;
+  }
+  return true;
+}
+
+void IncomingTaskQueue::PostPendingTaskTracker::
+    DecrementPostPendingTasksInFlight() {
+  const auto new_bits = subtle::NoBarrier_AtomicIncrement(
+      &state_, -kNumPostTasksInFlightIncrement);
+  if (new_bits & kShutdownStartedMask) {
+    const auto num_tasks_blocking_shutdown =
+        new_bits >> kNumPostTasksInFlightBitOffset;
+    if (num_tasks_blocking_shutdown == 0) {
+      // Need to make sure this thread has access to |shutdown_event_| created
+      // on a different thread.
+      subtle::MemoryBarrier();
+      DCHECK(shutdown_event_);
+      DCHECK(!shutdown_event_->IsSignaled());
+      shutdown_event_->Signal();
+    }
+  }
+}
+
+bool IncomingTaskQueue::PostPendingTaskTracker::
+    IsPostPendingTaskInFlightForTesting() const {
+  const auto num_post_tasks_in_flight =
+      subtle::NoBarrier_Load(&state_) >> kNumPostTasksInFlightBitOffset;
+  return num_post_tasks_in_flight > 0;
+}
+
 IncomingTaskQueue::~IncomingTaskQueue() {
   // Verify that WillDestroyCurrentMessageLoop() has been called.
   DCHECK(!message_loop_);
@@ -143,59 +230,91 @@ void IncomingTaskQueue::RunTask(PendingTask* pending_task) {
   task_annotator_.RunTask("MessageLoop::PostTask", pending_task);
 }
 
+void IncomingTaskQueue::PausePostPendingTaskForTesting() {
+#if DCHECK_IS_ON()
+  post_pending_task_event_.Reset();
+#endif
+}
+
+void IncomingTaskQueue::ResumePostPendingTaskForTesting() {
+#if DCHECK_IS_ON()
+  post_pending_task_event_.Signal();
+#endif
+}
+
+bool IncomingTaskQueue::IsPostPendingTaskInFlightForTesting() {
+  return post_pending_task_tracker_.IsPostPendingTaskInFlightForTesting();
+}
+
 bool IncomingTaskQueue::PostPendingTask(PendingTask* pending_task) {
   // Warning: Don't try to short-circuit, and handle this thread's tasks more
   // directly, as it could starve handling of foreign threads.  Put every task
   // into this queue.
-
-  // Ensures |message_loop_| isn't destroyed while running.
-  base::subtle::AutoReadLock hold_message_loop(message_loop_lock_);
-
-  if (!message_loop_) {
+  PostPendingTaskTracker::ScopedCall scoped_post_task_call(
+      &post_pending_task_tracker_);
+  if (!scoped_post_task_call.should_continue()) {
+    // Clear the pending task outside of |incoming_queue_lock_| to prevent any
+    // chance of self-deadlock if destroying a task also posts a task to this
+    // queue.
     pending_task->task.Reset();
     return false;
   }
 
   bool schedule_work = false;
   {
-    AutoLock hold(incoming_queue_lock_);
-
-#if defined(OS_WIN)
-    if (pending_task->is_high_res)
-      ++high_res_task_count_;
-#endif
-
-    // Initialize the sequence number. The sequence number is used for delayed
-    // tasks (to facilitate FIFO sorting when two tasks have the same
-    // delayed_run_time value) and for identifying the task in about:tracing.
-    pending_task->sequence_num = next_sequence_num_++;
-
-    task_annotator_.DidQueueTask("MessageLoop::PostTask", *pending_task);
-
-    bool was_empty = incoming_queue_.empty();
-    incoming_queue_.push(std::move(*pending_task));
-
-    if (is_ready_for_scheduling_ &&
-        (always_schedule_work_ || (!message_loop_scheduled_ && was_empty))) {
-      schedule_work = true;
-      // After we've scheduled the message loop, we do not need to do so again
-      // until we know it has processed all of the work in our queue and is
-      // waiting for more work again. The message loop will always attempt to
-      // reload from the incoming queue before waiting again so we clear this
-      // flag in ReloadWorkQueue().
-      message_loop_scheduled_ = true;
-    }
+    AutoLock auto_lock(incoming_queue_lock_);
+    schedule_work = PostPendingTaskLockRequired(pending_task);
   }
+
+#if DCHECK_IS_ON()
+  {
+    base::ThreadRestrictions::ScopedAllowWait allow_wait;
+    post_pending_task_event_.Wait();
+  }
+#endif
 
   // Wake up the message loop and schedule work. This is done outside
   // |incoming_queue_lock_| because signaling the message loop may cause this
   // thread to be switched. If |incoming_queue_lock_| is held, any other thread
   // that wants to post a task will be blocked until this thread switches back
   // in and releases |incoming_queue_lock_|.
-  if (schedule_work)
+  if (schedule_work) {
+    DCHECK(message_loop_);
     message_loop_->ScheduleWork();
+  }
 
   return true;
+}
+
+bool IncomingTaskQueue::PostPendingTaskLockRequired(PendingTask* pending_task) {
+  incoming_queue_lock_.AssertAcquired();
+
+#if defined(OS_WIN)
+  if (pending_task->is_high_res)
+    ++high_res_task_count_;
+#endif
+
+  // Initialize the sequence number. The sequence number is used for delayed
+  // tasks (to facilitate FIFO sorting when two tasks have the same
+  // delayed_run_time value) and for identifying the task in about:tracing.
+  pending_task->sequence_num = next_sequence_num_++;
+
+  task_annotator_.DidQueueTask("MessageLoop::PostTask", *pending_task);
+
+  bool was_empty = incoming_queue_.empty();
+  incoming_queue_.push(std::move(*pending_task));
+
+  if (is_ready_for_scheduling_ &&
+      (always_schedule_work_ || (!message_loop_scheduled_ && was_empty))) {
+    // After we've scheduled the message loop, we do not need to do so again
+    // until we know it has processed all of the work in our queue and is
+    // waiting for more work again. The message loop will always attempt to
+    // reload from the incoming queue before waiting again so we clear this
+    // flag in ReloadWorkQueue().
+    message_loop_scheduled_ = true;
+    return true;
+  }
+  return false;
 }
 
 }  // namespace internal

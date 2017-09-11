@@ -412,6 +412,18 @@ void MessageLoop::RunTask(PendingTask* pending_task) {
   current_pending_task_ = nullptr;
 }
 
+void MessageLoop::PausePostPendingTaskForTesting() {
+  incoming_task_queue_->PausePostPendingTaskForTesting();
+}
+
+void MessageLoop::ResumePostPendingTaskForTesting() {
+  incoming_task_queue_->ResumePostPendingTaskForTesting();
+}
+
+bool MessageLoop::IsPostPendingTaskInFlightForTesting() {
+  return incoming_task_queue_->IsPostPendingTaskInFlightForTesting();
+}
+
 bool MessageLoop::DeferOrRunPendingTask(PendingTask pending_task) {
   if (pending_task.nestable || !run_loop_client_->IsNested()) {
     RunTask(&pending_task);
