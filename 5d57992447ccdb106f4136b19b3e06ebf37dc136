@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "6abc4b28_e16f0aa8",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-11T03:51:22Z",
+      "side": 1,
+      "message": "I also inherited from the previous code (SWStreamReader which is replaced by SWDataPipeReader). Originally it seems to be introduced at https://crrev.com/759203002, but I couldn\u0027t find the reason why it\u0027s ERR_CONNECTION_RESET.\nWhen I implemented SWDataPipeReader, actually I had the same question and concluded ERR_CONNECTION_RESET is better because CONNECTION_ABORTED means \"A connection timed out as a result of not receiving an ACK for data sent\" and in this case the Mojo connection is suddenly disconnected rather than timed out. \nhttps://cs.chromium.org/chromium/src/net/base/net_error_list.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d134\n\nWDYT?",
+      "parentUuid": "fadcce63_6370a33d",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9994a639_839824c6",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
         "patchSetId": 2
@@ -151,6 +169,24 @@
       "writtenOn": "2017-09-08T07:38:44Z",
       "side": 1,
       "message": "modern Chromium style tries to avoid using \"new\". We can do this with:\n\nstream_waiter_ \u003d std::make_unique\u003cStreamWaiter\u003e(this, version, ...);",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f70bfad6_e7af00bf",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-11T03:51:22Z",
+      "side": 1,
+      "message": "std::make_unique is actually in C++14 and it\u0027s not available yet in my understanding.\nYou can use base::MakeUnique\u003cStreamWaiter\u003e(...) instead.",
+      "parentUuid": "4d150ba7_25df6e13",
       "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
