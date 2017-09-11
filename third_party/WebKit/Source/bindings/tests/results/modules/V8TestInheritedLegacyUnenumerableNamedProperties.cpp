@@ -112,6 +112,29 @@ static void namedPropertyEnumerator(const v8::PropertyCallbackInfo<v8::Array>& i
   V8SetReturnValue(info, ToV8(names, info.Holder(), info.GetIsolate()).As<v8::Array>());
 }
 
+static void indexedPropertyDescriptor(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>& info) {
+  // https://heycam.github.io/webidl/#LegacyPlatformObjectGetOwnProperty
+  // Steps 1.1 to 1.2.4 are covered here: we rely on indexedPropertyGetter() to
+  // call the getter function and check that |index| is a valid property index,
+  // in which case it will have set info.GetReturnValue() to something other
+  // than undefined.
+  V8TestInheritedLegacyUnenumerableNamedProperties::indexedPropertyGetterCallback(index, info);
+  v8::Local<v8::Value> getterValue = info.GetReturnValue().Get();
+  if (!getterValue->IsUndefined()) {
+    // 1.2.5. Let |desc| be a newly created Property Descriptor with no fields.
+    // 1.2.6. Set desc.[[Value]] to the result of converting value to an
+    //        ECMAScript value.
+    // 1.2.7. If O implements an interface with an indexed property setter,
+    //        then set desc.[[Writable]] to true, otherwise set it to false.
+    v8::PropertyDescriptor desc(getterValue, false);
+    // 1.2.8. Set desc.[[Enumerable]] and desc.[[Configurable]] to true.
+    desc.set_enumerable(true);
+    desc.set_configurable(true);
+    // 1.2.9. Return |desc|.
+    V8SetReturnValue(info, desc);
+  }
+}
+
 } // namespace TestInheritedLegacyUnenumerableNamedPropertiesV8Internal
 
 void V8TestInheritedLegacyUnenumerableNamedProperties::longAttributeAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -152,6 +175,10 @@ void V8TestInheritedLegacyUnenumerableNamedProperties::indexedPropertyGetterCall
   TestInheritedLegacyUnenumerableNamedPropertiesV8Internal::namedPropertyGetter(propertyName, info);
 }
 
+void V8TestInheritedLegacyUnenumerableNamedProperties::indexedPropertyDescriptorCallback(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>& info) {
+  TestInheritedLegacyUnenumerableNamedPropertiesV8Internal::indexedPropertyDescriptor(index, info);
+}
+
 static const V8DOMConfiguration::AccessorConfiguration V8TestInheritedLegacyUnenumerableNamedPropertiesAccessors[] = {
     { "longAttribute", V8TestInheritedLegacyUnenumerableNamedProperties::longAttributeAttributeGetterCallback, nullptr, V8PrivateProperty::kNoCachedAccessor, static_cast<v8::PropertyAttribute>(v8::ReadOnly), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds },
 };
@@ -179,7 +206,7 @@ static void installV8TestInheritedLegacyUnenumerableNamedPropertiesTemplate(
   v8::IndexedPropertyHandlerConfiguration indexedPropertyHandlerConfig(
       V8TestInheritedLegacyUnenumerableNamedProperties::indexedPropertyGetterCallback,
       nullptr,
-      nullptr,
+      V8TestInheritedLegacyUnenumerableNamedProperties::indexedPropertyDescriptorCallback,
       nullptr,
       nullptr,
       nullptr,
