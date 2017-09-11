@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7abf1696_090807e8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/PresentationConsoleMessageHelper.js",
+        "patchSetId": 25
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-11T22:15:27Z",
+      "side": 1,
+      "message": "This and next method are unused now. Please remove.",
+      "revId": "38b89ff164368202f8a94c3f6a11a934bd8c8602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a9fa7aa_c51c2720",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/PresentationConsoleMessageHelper.js",
+        "patchSetId": 25
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-11T22:15:27Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "38b89ff164368202f8a94c3f6a11a934bd8c8602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75bc2aaf_161587c4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 25
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-11T22:15:27Z",
+      "side": 1,
+      "message": "This is unused now. Please remove.",
+      "revId": "38b89ff164368202f8a94c3f6a11a934bd8c8602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
