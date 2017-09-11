@@ -1120,6 +1120,12 @@ void PaintPropertyTreeBuilder::UpdateScrollAndScrollTranslation(
   }
 }
 
+static inline bool ClipsDiffer(
+    const PaintPropertyTreeBuilderFragmentContext::ContainingBlockContext& a,
+    const PaintPropertyTreeBuilderFragmentContext::ContainingBlockContext& b) {
+  return a.clip != b.clip;
+}
+
 void PaintPropertyTreeBuilder::UpdateOutOfFlowContext(
     const LayoutObject& object,
     PaintPropertyTreeBuilderFragmentContext& context,
@@ -1172,6 +1178,14 @@ void PaintPropertyTreeBuilder::UpdateOutOfFlowContext(
       if (paint_properties->CssClipFixedPosition())
         context.fixed_position.clip = paint_properties->CssClipFixedPosition();
       return;
+    }
+  }
+
+  if (NeedsFilter(object)) {
+    if (ClipsDiffer(context.current, context.absolute_position) ||
+        ClipsDiffer(context.current, context.fixed_position)) {
+      UseCounter::Count(object.GetDocument(),
+                        WebFeature::kFilterAsContainingBlockMayChangeOutput);
     }
   }
 
