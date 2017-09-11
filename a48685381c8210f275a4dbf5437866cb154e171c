@@ -84,6 +84,24 @@
       "revId": "a48685381c8210f275a4dbf5437866cb154e171c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "485adf00_05efa0b2",
+        "filename": "ios/chrome/browser/ui/side_swipe/side_swipe_navigation_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-11T15:30:42Z",
+      "side": 1,
+      "message": "On second thought, can we switch to \"CGFloat(base::kPiDouble)\" everywhere in this file?  That will give us the higher precision on arm64 and downcast to float as needed on armv7.",
+      "parentUuid": "c16736ab_bb32b13d",
+      "revId": "a48685381c8210f275a4dbf5437866cb154e171c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
