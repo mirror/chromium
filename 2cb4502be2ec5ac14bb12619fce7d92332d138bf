@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "883aadfa_9dc468c1",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-11T15:47:37Z",
+      "side": 1,
+      "message": "We sure can! https://github.com/catapult-project/catapult/blob/master/devil/OWNERS :)",
+      "parentUuid": "f6f6abb7_7b7306cd",
+      "revId": "2cb4502be2ec5ac14bb12619fce7d92332d138bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48faf0d6_d1509c2e",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
