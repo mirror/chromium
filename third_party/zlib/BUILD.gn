@@ -75,6 +75,19 @@ static_library("zlib") {
     "zutil.h",
   ]
 
+  defines = [ ]
+
+  if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
+    sources += [ "x86.c" ]
+
+    defines += [ "ADLER32_SIMD" ]
+    if (is_win && !is_clang) {
+      defines += [ "__SSSE3__" ]
+    } else if (is_clang) {
+      cflags = [ "-mssse3" ]
+    }
+  }
+
   if (current_cpu == "arm" || current_cpu == "arm64") {
     if (arm_use_neon) {
       sources -= [
@@ -87,10 +100,6 @@ static_library("zlib") {
         "contrib/arm/inflate.c",
       ]
     }
-  }
-
-  if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
-    sources += [ "x86.c" ]
   }
 
   configs -= [ "//build/config/compiler:chromium_code" ]
