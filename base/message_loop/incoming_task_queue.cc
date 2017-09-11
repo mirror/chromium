@@ -51,18 +51,15 @@ TimeTicks CalculateDelayedRuntime(TimeDelta delay) {
 }  // namespace
 
 IncomingTaskQueue::IncomingTaskQueue(MessageLoop* message_loop)
-    : high_res_task_count_(0),
-      message_loop_(message_loop),
-      next_sequence_num_(0),
-      message_loop_scheduled_(false),
-      always_schedule_work_(AlwaysNotifyPump(message_loop_->type())),
-      is_ready_for_scheduling_(false)
+    : always_schedule_work_(AlwaysNotifyPump(message_loop->type())),
+      message_loop_(message_loop)
 #if DCHECK_IS_ON()
       ,
       post_pending_task_event_(WaitableEvent::ResetPolicy::MANUAL,
                                WaitableEvent::InitialState::SIGNALED)
 #endif
 {
+  DCHECK(message_loop_);
 }
 
 bool IncomingTaskQueue::AddToIncomingQueue(

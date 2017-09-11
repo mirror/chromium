@@ -136,44 +136,43 @@ class BASE_EXPORT IncomingTaskQueue
   // Wakes up the message loop and schedules work.
   void ScheduleWork();
 
+  // Checks calls made only on the MessageLoop thread.
+  SEQUENCE_CHECKER(sequence_checker_);
+
   debug::TaskAnnotator task_annotator_;
+
+  // True if we always need to call ScheduleWork when receiving a new task, even
+  // if the incoming queue was not empty.
+  const bool always_schedule_work_;
 
   // Manages PostPendingTask() concurrency and coordinates unsetting
   // |message_loop_| for WillDestroyCurrentMessageLoop().
   PostPendingTaskTracker post_pending_task_tracker_;
 
+  // Points to the message loop that owns |this|.
+  MessageLoop* message_loop_;
+
+  // Synchronizes access to all members below this line.
+  base::Lock incoming_queue_lock_;
+
   // Number of tasks that require high resolution timing. This value is kept
   // so that ReloadWorkQueue() completes in constant time.
-  int high_res_task_count_;
-
-  // The lock that protects access to the members of this class, except
-  // |message_loop_|.
-  base::Lock incoming_queue_lock_;
+  int high_res_task_count_ = 0;
 
   // An incoming queue of tasks that are acquired under a mutex for processing
   // on this instance's thread. These tasks have not yet been been pushed to
   // |message_loop_|.
   TaskQueue incoming_queue_;
 
-  // Points to the message loop that owns |this|.
-  MessageLoop* message_loop_;
-
   // The next sequence number to use for delayed tasks.
-  int next_sequence_num_;
+  int next_sequence_num_ = 0;
 
   // True if our message loop has already been scheduled and does not need to be
   // scheduled again until an empty reload occurs.
-  bool message_loop_scheduled_;
-
-  // True if we always need to call ScheduleWork when receiving a new task, even
-  // if the incoming queue was not empty.
-  const bool always_schedule_work_;
+  bool message_loop_scheduled_ = false;
 
   // False until StartScheduling() is called.
-  bool is_ready_for_scheduling_;
-
-  // Checks calls made only on the MessageLoop thread.
-  SEQUENCE_CHECKER(sequence_checker_);
+  bool is_ready_for_scheduling_ = false;
 
 #if DCHECK_IS_ON()
   WaitableEvent post_pending_task_event_;
