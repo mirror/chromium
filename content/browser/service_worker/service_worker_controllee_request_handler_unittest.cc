@@ -125,7 +125,7 @@ class ServiceWorkerControlleeRequestHandlerTest : public testing::Test {
     provider_host_ = host->AsWeakPtr();
     context()->AddProviderHost(std::move(host));
 
-    context()->storage()->LazyInitialize(base::Bind(&base::DoNothing));
+    context()->storage()->LazyInitializeForTest(base::Bind(&base::DoNothing));
     base::RunLoop().RunUntilIdle();
   }
 

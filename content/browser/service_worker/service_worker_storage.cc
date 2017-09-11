@@ -942,6 +942,11 @@ void ServiceWorkerStorage::PurgeResources(const ResourceList& resources) {
   StartPurgingResources(resources);
 }
 
+bool ServiceWorkerStorage::LazyInitializeForTest(
+    const base::Closure& callback) {
+  return LazyInitialize(callback);
+}
+
 ServiceWorkerStorage::ServiceWorkerStorage(
     const base::FilePath& path,
     base::WeakPtr<ServiceWorkerContextCore> context,

@@ -250,38 +250,14 @@ class CONTENT_EXPORT ServiceWorkerStorage
   // |resources| must already be on the purgeable list.
   void PurgeResources(const ResourceList& resources);
 
+  bool LazyInitializeForTest(const base::Closure& callback);
+
  private:
-  friend class ForeignFetchRequestHandlerTest;
-  friend class ServiceWorkerDispatcherHostTest;
-  friend class ServiceWorkerHandleTest;
   friend class ServiceWorkerStorageTest;
-  friend class ServiceWorkerStorageOriginTrialsTest;
-  friend class ServiceWorkerRegistrationTest;
   friend class ServiceWorkerResourceStorageTest;
-  friend class ServiceWorkerControlleeRequestHandlerTest;
-  friend class ServiceWorkerContextRequestHandlerTest;
-  friend class ServiceWorkerReadFromCacheJobTest;
-  friend class ServiceWorkerRequestHandlerTest;
-  friend class ServiceWorkerInstalledScriptsSenderTest;
-  friend class ServiceWorkerURLLoaderJobTest;
-  friend class ServiceWorkerURLRequestJobTest;
-  friend class ServiceWorkerVersionBrowserTest;
-  friend class ServiceWorkerVersionTest;
   friend class ServiceWorkerWriteToCacheJobTest;
-  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerDispatcherHostTest,
-                           CleanupOnRendererCrash);
-  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerResourceStorageTest,
-                           DeleteRegistration_NoLiveVersion);
-  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerResourceStorageTest,
-                           DeleteRegistration_WaitingVersion);
-  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerResourceStorageTest,
-                           DeleteRegistration_ActiveVersion);
-  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerResourceStorageTest,
-                           UpdateRegistration);
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerResourceStorageDiskTest,
                            CleanupOnRestart);
-  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerResourceStorageDiskTest,
-                           ClearOnExit);
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerResourceStorageDiskTest,
                            DeleteAndStartOver);
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerResourceStorageDiskTest,
@@ -364,8 +340,7 @@ class CONTENT_EXPORT ServiceWorkerStorage
   base::FilePath GetDatabasePath();
   base::FilePath GetDiskCachePath();
 
-  bool LazyInitialize(
-      const base::Closure& callback);
+  bool LazyInitialize(const base::Closure& callback);
   void DidReadInitialData(std::unique_ptr<InitialData> data,
                           ServiceWorkerDatabase::Status status);
   void DidFindRegistrationForDocument(
