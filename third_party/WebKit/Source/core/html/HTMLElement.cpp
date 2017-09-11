@@ -233,6 +233,8 @@ bool HTMLElement::IsPresentationAttribute(const QualifiedName& name) const {
       name == langAttr || name.Matches(XMLNames::langAttr) ||
       name == draggableAttr || name == dirAttr)
     return true;
+  if (name == "pooruserexperience")
+    return true;
   return Element::IsPresentationAttribute(name);
 }
 
@@ -279,7 +281,7 @@ void HTMLElement::CollectStyleForPresentationAttribute(
       AddPropertyToPresentationAttributeStyle(
           style, CSSPropertyWebkitUserModify, CSSValueReadOnly);
     }
-  } else if (name == hiddenAttr) {
+  } else if (name == hiddenAttr || name == "pooruserexperience") {
     AddPropertyToPresentationAttributeStyle(style, CSSPropertyDisplay,
                                             CSSValueNone);
   } else if (name == draggableAttr) {
