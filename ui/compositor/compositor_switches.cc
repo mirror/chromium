@@ -5,6 +5,7 @@
 #include "ui/compositor/compositor_switches.h"
 
 #include "base/command_line.h"
+#include "base/feature_list.h"
 #include "build/build_config.h"
 
 namespace switches {
@@ -31,12 +32,20 @@ const char kUIShowPaintRects[] = "ui-show-paint-rects";
 
 const char kUISlowAnimations[] = "ui-slow-animations";
 
-// If enabled, all draw commands recorded on canvas are done in pixel aligned
-// measurements. This also enables scaling of all elements in views and layers
-// to be done via corner points. See https://goo.gl/Dqig5s
-const char kEnablePixelCanvasRecording[] = "enable-pixel-canvas-recording";
-
 }  // namespace switches
+
+namespace features {
+
+const base::Feature kEnablePixelCanvasRecording {
+  "enable-pixel-canvas-recording",
+#if defined(OS_CHROMEOS)
+      base::FEATURE_ENABLED_BY_DEFAULT
+#else
+      base::FEATURE_DISABLED_BY_DEFAULT
+#endif
+};
+
+}  // namespace features
 
 namespace ui {
 
@@ -52,8 +61,7 @@ bool IsUIZeroCopyEnabled() {
 }
 
 bool IsPixelCanvasRecordingEnabled() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kEnablePixelCanvasRecording);
+  return base::FeatureList::IsEnabled(features::kEnablePixelCanvasRecording);
 }
 
 }  // namespace ui
