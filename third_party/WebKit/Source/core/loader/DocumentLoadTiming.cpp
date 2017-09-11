@@ -26,6 +26,7 @@
 #include "core/loader/DocumentLoadTiming.h"
 
 #include "core/loader/DocumentLoader.h"
+#include "platform/Histogram.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/RefPtr.h"
@@ -161,19 +162,17 @@ void DocumentLoadTiming::SetRedirectEnd(double redirect_end) {
   NotifyDocumentTimingChanged();
 }
 
-void DocumentLoadTiming::MarkUnloadEventStart() {
-  unload_event_start_ = MonotonicallyIncreasingTime();
-  TRACE_EVENT_MARK_WITH_TIMESTAMP1(
-      "blink.user_timing", "unloadEventStart",
-      TraceEvent::ToTraceTimestamp(unload_event_start_), "frame", GetFrame());
+void DocumentLoadTiming::MarkUnloadEventStart(double start_time) {
+  TRACE_EVENT_MARK_WITH_TIMESTAMP1("blink.user_timing", "unloadEventStart",
+                                   TraceEvent::ToTraceTimestamp(start_time),
+                                   "frame", GetFrame());
   NotifyDocumentTimingChanged();
 }
 
-void DocumentLoadTiming::MarkUnloadEventEnd() {
-  unload_event_end_ = MonotonicallyIncreasingTime();
-  TRACE_EVENT_MARK_WITH_TIMESTAMP1(
-      "blink.user_timing", "unloadEventEnd",
-      TraceEvent::ToTraceTimestamp(unload_event_end_), "frame", GetFrame());
+void DocumentLoadTiming::MarkUnloadEventEnd(double end_time) {
+  TRACE_EVENT_MARK_WITH_TIMESTAMP1("blink.user_timing", "unloadEventEnd",
+                                   TraceEvent::ToTraceTimestamp(end_time),
+                                   "frame", GetFrame());
   NotifyDocumentTimingChanged();
 }
 
