@@ -174,16 +174,26 @@ VisiblePositionInFlatTree EndOfWord(const VisiblePositionInFlatTree& position,
                                VP_UPSTREAM_IF_POSSIBLE);
 }
 
-VisiblePosition NextWordPosition(const VisiblePosition& c) {
+VisiblePositionInFlatTree NextWordPosition(const VisiblePositionInFlatTree& c) {
   DCHECK(c.IsValid()) << c;
-  VisiblePosition next = CreateVisiblePosition(
+  VisiblePositionInFlatTree next = CreateVisiblePosition(
       NextBoundary(c, NextWordPositionBoundary), VP_UPSTREAM_IF_POSSIBLE);
   return HonorEditingBoundaryAtOrAfter(next, c.DeepEquivalent());
 }
 
+// TODO(editing-dev): We should remove |PreviousWordPosition()| once we change
+// |AdjacentWordIfExists()| to flat tree version.
 VisiblePosition PreviousWordPosition(const VisiblePosition& c) {
   DCHECK(c.IsValid()) << c;
   VisiblePosition prev =
+      CreateVisiblePosition(PreviousBoundary(c, PreviousWordPositionBoundary));
+  return HonorEditingBoundaryAtOrBefore(prev, c.DeepEquivalent());
+}
+
+VisiblePositionInFlatTree PreviousWordPosition(
+    const VisiblePositionInFlatTree& c) {
+  DCHECK(c.IsValid()) << c;
+  VisiblePositionInFlatTree prev =
       CreateVisiblePosition(PreviousBoundary(c, PreviousWordPositionBoundary));
   return HonorEditingBoundaryAtOrBefore(prev, c.DeepEquivalent());
 }

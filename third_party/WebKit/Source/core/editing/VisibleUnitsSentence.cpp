@@ -138,16 +138,18 @@ EphemeralRange ExpandRangeToSentenceBoundary(const EphemeralRange& range) {
       range.EndPosition()));
 }
 
-VisiblePosition NextSentencePosition(const VisiblePosition& c) {
+VisiblePositionInFlatTree NextSentencePosition(
+    const VisiblePositionInFlatTree& c) {
   DCHECK(c.IsValid()) << c;
-  VisiblePosition next = CreateVisiblePosition(
+  VisiblePositionInFlatTree next = CreateVisiblePosition(
       NextBoundary(c, NextSentencePositionBoundary), VP_UPSTREAM_IF_POSSIBLE);
   return HonorEditingBoundaryAtOrAfter(next, c.DeepEquivalent());
 }
 
-VisiblePosition PreviousSentencePosition(const VisiblePosition& c) {
+VisiblePositionInFlatTree PreviousSentencePosition(
+    const VisiblePositionInFlatTree& c) {
   DCHECK(c.IsValid()) << c;
-  VisiblePosition prev = CreateVisiblePosition(
+  VisiblePositionInFlatTree prev = CreateVisiblePosition(
       PreviousBoundary(c, PreviousSentencePositionBoundary));
   return HonorEditingBoundaryAtOrBefore(prev, c.DeepEquivalent());
 }

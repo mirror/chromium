@@ -181,7 +181,9 @@ EndOfWordPosition(const VisiblePositionInFlatTree&,
 CORE_EXPORT VisiblePositionInFlatTree
 EndOfWord(const VisiblePositionInFlatTree&, EWordSide = kRightWordIfOnBoundary);
 VisiblePosition PreviousWordPosition(const VisiblePosition&);
-VisiblePosition NextWordPosition(const VisiblePosition&);
+VisiblePositionInFlatTree PreviousWordPosition(
+    const VisiblePositionInFlatTree&);
+VisiblePositionInFlatTree NextWordPosition(const VisiblePositionInFlatTree&);
 
 // sentences
 CORE_EXPORT VisiblePosition StartOfSentence(const VisiblePosition&);
@@ -190,8 +192,10 @@ StartOfSentence(const VisiblePositionInFlatTree&);
 CORE_EXPORT VisiblePosition EndOfSentence(const VisiblePosition&);
 CORE_EXPORT VisiblePositionInFlatTree
 EndOfSentence(const VisiblePositionInFlatTree&);
-VisiblePosition PreviousSentencePosition(const VisiblePosition&);
-VisiblePosition NextSentencePosition(const VisiblePosition&);
+VisiblePositionInFlatTree PreviousSentencePosition(
+    const VisiblePositionInFlatTree&);
+VisiblePositionInFlatTree NextSentencePosition(
+    const VisiblePositionInFlatTree&);
 EphemeralRange ExpandEndToSentenceBoundary(const EphemeralRange&);
 EphemeralRange ExpandRangeToSentenceBoundary(const EphemeralRange&);
 
@@ -211,9 +215,17 @@ CORE_EXPORT VisiblePosition
 PreviousLinePosition(const VisiblePosition&,
                      LayoutUnit line_direction_point,
                      EditableType = kContentIsEditable);
+CORE_EXPORT VisiblePositionInFlatTree
+PreviousLinePosition(const VisiblePositionInFlatTree&,
+                     LayoutUnit line_direction_point,
+                     EditableType = kContentIsEditable);
 CORE_EXPORT VisiblePosition NextLinePosition(const VisiblePosition&,
                                              LayoutUnit line_direction_point,
                                              EditableType = kContentIsEditable);
+CORE_EXPORT VisiblePositionInFlatTree
+NextLinePosition(const VisiblePositionInFlatTree&,
+                 LayoutUnit line_direction_point,
+                 EditableType = kContentIsEditable);
 CORE_EXPORT bool InSameLine(const VisiblePosition&, const VisiblePosition&);
 CORE_EXPORT bool InSameLine(const VisiblePositionInFlatTree&,
                             const VisiblePositionInFlatTree&);
@@ -257,8 +269,12 @@ CORE_EXPORT VisiblePositionInFlatTree
 EndOfParagraph(const VisiblePositionInFlatTree&,
                EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
 VisiblePosition StartOfNextParagraph(const VisiblePosition&);
-VisiblePosition PreviousParagraphPosition(const VisiblePosition&, LayoutUnit x);
-VisiblePosition NextParagraphPosition(const VisiblePosition&, LayoutUnit x);
+VisiblePositionInFlatTree PreviousParagraphPosition(
+    const VisiblePositionInFlatTree&,
+    LayoutUnit x);
+VisiblePositionInFlatTree NextParagraphPosition(
+    const VisiblePositionInFlatTree&,
+    LayoutUnit x);
 CORE_EXPORT bool IsStartOfParagraph(
     const VisiblePosition&,
     EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
@@ -274,6 +290,10 @@ CORE_EXPORT bool IsEndOfParagraph(
 bool InSameParagraph(const VisiblePosition&,
                      const VisiblePosition&,
                      EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+bool InSameParagraph(const VisiblePositionInFlatTree&,
+                     const VisiblePositionInFlatTree&,
+                     EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+
 EphemeralRange ExpandToParagraphBoundary(const EphemeralRange&);
 
 // blocks (true paragraphs; line break elements don't break blocks)
@@ -297,8 +317,10 @@ bool IsStartOfDocument(const VisiblePosition&);
 bool IsEndOfDocument(const VisiblePosition&);
 
 // editable content
-VisiblePosition StartOfEditableContent(const VisiblePosition&);
-VisiblePosition EndOfEditableContent(const VisiblePosition&);
+VisiblePositionInFlatTree StartOfEditableContent(
+    const VisiblePositionInFlatTree&);
+VisiblePositionInFlatTree EndOfEditableContent(
+    const VisiblePositionInFlatTree&);
 CORE_EXPORT bool IsEndOfEditableOrNonEditableContent(const VisiblePosition&);
 CORE_EXPORT bool IsEndOfEditableOrNonEditableContent(
     const VisiblePositionInFlatTree&);
@@ -379,14 +401,21 @@ VisiblePositionInFlatTree HonorEditingBoundaryAtOrBefore(
     const VisiblePositionInFlatTree&,
     const PositionInFlatTree&);
 
-Position NextRootInlineBoxCandidatePosition(Node*,
-                                            const VisiblePosition&,
-                                            EditableType);
+PositionInFlatTree NextRootInlineBoxCandidatePosition(
+    Node*,
+    const VisiblePositionInFlatTree&,
+    EditableType);
 
-CORE_EXPORT Position
-PreviousRootInlineBoxCandidatePosition(Node*,
-                                       const VisiblePosition&,
-                                       EditableType);
+CORE_EXPORT
+Position PreviousRootInlineBoxCandidatePosition(Node*,
+                                                const VisiblePosition&,
+                                                EditableType);
+
+CORE_EXPORT
+PositionInFlatTree PreviousRootInlineBoxCandidatePosition(
+    Node*,
+    const VisiblePositionInFlatTree&,
+    EditableType);
 
 }  // namespace blink
 

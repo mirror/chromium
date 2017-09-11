@@ -339,7 +339,7 @@ bool FrameSelection::Modify(SelectionModifyAlteration alter,
                             TextGranularity granularity,
                             SetSelectionBy set_selection_by) {
   SelectionModifier selection_modifier(*GetFrame(),
-                                       ComputeVisibleSelectionInDOMTree(),
+                                       ComputeVisibleSelectionInFlatTree(),
                                        x_pos_for_vertical_arrow_navigation_);
   const bool modified =
       selection_modifier.Modify(alter, direction, granularity);
@@ -362,12 +362,13 @@ bool FrameSelection::Modify(SelectionModifyAlteration alter,
     return true;
   }
 
-  SetSelection(selection_modifier.Selection().AsSelection(),
-               SetSelectionOptions::Builder()
-                   .SetShouldCloseTyping(true)
-                   .SetShouldClearTypingStyle(true)
-                   .SetSetSelectionBy(set_selection_by)
-                   .Build());
+  SetSelection(
+      ConvertToSelectionInDOMTree(selection_modifier.Selection().AsSelection()),
+      SetSelectionOptions::Builder()
+          .SetShouldCloseTyping(true)
+          .SetShouldClearTypingStyle(true)
+          .SetSetSelectionBy(set_selection_by)
+          .Build());
 
   if (granularity == TextGranularity::kLine ||
       granularity == TextGranularity::kParagraph)

@@ -161,6 +161,7 @@ TEST_F(FrameSelectionTest, ModifyExtendWithFlatTree) {
   SetShadowContent("two<content></content>", "host");
   Element* host = GetDocument().getElementById("host");
   Node* const two = FlatTreeTraversal::FirstChild(*host);
+  Node* const one = FlatTreeTraversal::NextSibling(*host);
   // Select "two" for selection in DOM tree
   // Select "twoone" for selection in Flat tree
   Selection().SetSelection(
@@ -176,7 +177,7 @@ TEST_F(FrameSelectionTest, ModifyExtendWithFlatTree) {
   EXPECT_EQ(Position(two, 3), VisibleSelectionInDOMTree().End());
   EXPECT_EQ(PositionInFlatTree(two, 0),
             GetVisibleSelectionInFlatTree().Start());
-  EXPECT_EQ(PositionInFlatTree(two, 3), GetVisibleSelectionInFlatTree().End());
+  EXPECT_EQ(PositionInFlatTree(one, 3), GetVisibleSelectionInFlatTree().End());
 }
 
 TEST_F(FrameSelectionTest, ModifyWithUserTriggered) {

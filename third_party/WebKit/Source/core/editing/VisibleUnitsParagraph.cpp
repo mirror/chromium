@@ -315,14 +315,28 @@ VisiblePosition StartOfNextParagraph(const VisiblePosition& visible_position) {
 
 // TODO(editing-dev): isStartOfParagraph(startOfNextParagraph(pos)) is not
 // always true
-bool InSameParagraph(const VisiblePosition& a,
-                     const VisiblePosition& b,
-                     EditingBoundaryCrossingRule boundary_crossing_rule) {
+template <typename Strategy>
+bool InSameParagraphAlgorithm(
+    const VisiblePositionTemplate<Strategy>& a,
+    const VisiblePositionTemplate<Strategy>& b,
+    EditingBoundaryCrossingRule boundary_crossing_rule) {
   DCHECK(a.IsValid()) << a;
   DCHECK(b.IsValid()) << b;
   return a.IsNotNull() &&
          StartOfParagraph(a, boundary_crossing_rule).DeepEquivalent() ==
              StartOfParagraph(b, boundary_crossing_rule).DeepEquivalent();
+}
+
+bool InSameParagraph(const VisiblePosition& a,
+                     const VisiblePosition& b,
+                     EditingBoundaryCrossingRule boundary_crossing_rule) {
+  return InSameParagraphAlgorithm(a, b, boundary_crossing_rule);
+}
+
+bool InSameParagraph(const VisiblePositionInFlatTree& a,
+                     const VisiblePositionInFlatTree& b,
+                     EditingBoundaryCrossingRule boundary_crossing_rule) {
+  return InSameParagraphAlgorithm(a, b, boundary_crossing_rule);
 }
 
 bool IsStartOfParagraph(const VisiblePosition& pos,
@@ -351,12 +365,13 @@ bool IsEndOfParagraph(const VisiblePositionInFlatTree& pos,
 
 // TODO(editing-dev): We should move |PreviousParagraphPosition()| to
 // "SelectionModifier.cpp"
-VisiblePosition PreviousParagraphPosition(const VisiblePosition& p,
-                                          LayoutUnit x) {
+VisiblePositionInFlatTree PreviousParagraphPosition(
+    const VisiblePositionInFlatTree& p,
+    LayoutUnit x) {
   DCHECK(p.IsValid()) << p;
-  VisiblePosition pos = p;
+  VisiblePositionInFlatTree pos = p;
   do {
-    VisiblePosition n = PreviousLinePosition(pos, x);
+    VisiblePositionInFlatTree n = PreviousLinePosition(pos, x);
     if (n.IsNull() || n.DeepEquivalent() == pos.DeepEquivalent())
       break;
     pos = n;
@@ -366,11 +381,13 @@ VisiblePosition PreviousParagraphPosition(const VisiblePosition& p,
 
 // TODO(editing-dev): We should move |NextParagraphPosition()| to
 // "SelectionModifier.cpp"
-VisiblePosition NextParagraphPosition(const VisiblePosition& p, LayoutUnit x) {
+VisiblePositionInFlatTree NextParagraphPosition(
+    const VisiblePositionInFlatTree& p,
+    LayoutUnit x) {
   DCHECK(p.IsValid()) << p;
-  VisiblePosition pos = p;
+  VisiblePositionInFlatTree pos = p;
   do {
-    VisiblePosition n = NextLinePosition(pos, x);
+    VisiblePositionInFlatTree n = NextLinePosition(pos, x);
     if (n.IsNull() || n.DeepEquivalent() == pos.DeepEquivalent())
       break;
     pos = n;

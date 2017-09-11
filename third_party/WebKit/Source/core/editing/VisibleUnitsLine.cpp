@@ -85,6 +85,11 @@ ContainerNode* HighestEditableRoot(const Position& position,
   return HighestEditableRoot(position);
 }
 
+ContainerNode* HighestEditableRoot(const PositionInFlatTree& position,
+                                   EditableType editable_type) {
+  return HighestEditableRoot(ToPositionInDOMTree(position), editable_type);
+}
+
 ContainerNode* HighestEditableRootOfNode(const Node& node,
                                          EditableType editable_type) {
   // TODO(editing-dev): We should introduce |const Node&| version of
@@ -268,9 +273,21 @@ bool InSameLine(const Node& node, const VisiblePosition& visible_position) {
                     visible_position);
 }
 
-Node* FindNodeInPreviousLine(const Node& start_node,
-                             const VisiblePosition& visible_position,
-                             EditableType editable_type) {
+bool InSameLine(const Node& node,
+                const VisiblePositionInFlatTree& visible_position) {
+  if (!node.GetLayoutObject())
+    return true;
+  return InSameLine(
+      CreateVisiblePosition(PositionInFlatTree::FirstPositionInOrBeforeNode(
+          const_cast<Node*>(&node))),
+      visible_position);
+}
+
+template <typename Strategy>
+Node* FindNodeInPreviousLine(
+    const Node& start_node,
+    const VisiblePositionTemplate<Strategy>& visible_position,
+    EditableType editable_type) {
   for (Node* runner =
            PreviousLeafWithSameEditability(start_node, editable_type);
        runner;
@@ -284,9 +301,10 @@ Node* FindNodeInPreviousLine(const Node& start_node,
 }  // namespace
 
 // FIXME: consolidate with code in previousLinePosition.
-Position PreviousRootInlineBoxCandidatePosition(
+template <typename Strategy>
+PositionTemplate<Strategy> PreviousRootInlineBoxCandidatePositionAlgorithm(
     Node* node,
-    const VisiblePosition& visible_position,
+    const VisiblePositionTemplate<Strategy>& visible_position,
     EditableType editable_type) {
   DCHECK(visible_position.IsValid()) << visible_position;
   ContainerNode* highest_root =
@@ -298,19 +316,37 @@ Position PreviousRootInlineBoxCandidatePosition(
     if (HighestEditableRootOfNode(*runner, editable_type) != highest_root)
       break;
 
-    const Position& candidate =
+    const PositionTemplate<Strategy>& candidate =
         isHTMLBRElement(*runner)
-            ? Position::BeforeNode(*runner)
-            : Position::EditingPositionOf(runner, CaretMaxOffset(runner));
+            ? PositionTemplate<Strategy>::BeforeNode(*runner)
+            : PositionTemplate<Strategy>::EditingPositionOf(
+                  runner, CaretMaxOffset(runner));
     if (IsVisuallyEquivalentCandidate(candidate))
       return candidate;
   }
-  return Position();
+  return PositionTemplate<Strategy>();
 }
 
-Position NextRootInlineBoxCandidatePosition(
+Position PreviousRootInlineBoxCandidatePosition(
     Node* node,
     const VisiblePosition& visible_position,
+    EditableType editable_type) {
+  return PreviousRootInlineBoxCandidatePositionAlgorithm(node, visible_position,
+                                                         editable_type);
+}
+
+PositionInFlatTree PreviousRootInlineBoxCandidatePosition(
+    Node* node,
+    const VisiblePositionInFlatTree& visible_position,
+    EditableType editable_type) {
+  return PreviousRootInlineBoxCandidatePositionAlgorithm(node, visible_position,
+                                                         editable_type);
+}
+
+template <typename Strategy>
+PositionTemplate<Strategy> NextRootInlineBoxCandidatePositioniAlgorithm(
+    Node* node,
+    const VisiblePositionTemplate<Strategy>& visible_position,
     EditableType editable_type) {
   DCHECK(visible_position.IsValid()) << visible_position;
   ContainerNode* highest_root =
@@ -324,12 +360,29 @@ Position NextRootInlineBoxCandidatePosition(
     if (HighestEditableRootOfNode(*runner, editable_type) != highest_root)
       break;
 
-    const Position& candidate =
-        Position::EditingPositionOf(runner, CaretMinOffset(runner));
+    const PositionTemplate<Strategy>& candidate =
+        PositionTemplate<Strategy>::EditingPositionOf(runner,
+                                                      CaretMinOffset(runner));
     if (IsVisuallyEquivalentCandidate(candidate))
       return candidate;
   }
-  return Position();
+  return PositionTemplate<Strategy>();
+}
+
+Position NextRootInlineBoxCandidatePosition(
+    Node* node,
+    const VisiblePosition& visible_position,
+    EditableType editable_type) {
+  return NextRootInlineBoxCandidatePositioniAlgorithm(node, visible_position,
+                                                      editable_type);
+}
+
+PositionInFlatTree NextRootInlineBoxCandidatePosition(
+    Node* node,
+    const VisiblePositionInFlatTree& visible_position,
+    EditableType editable_type) {
+  return NextRootInlineBoxCandidatePositioniAlgorithm(node, visible_position,
+                                                      editable_type);
 }
 
 // FIXME: Rename this function to reflect the fact it ignores bidi levels.
@@ -627,23 +680,27 @@ bool IsLogicalEndOfLine(const VisiblePositionInFlatTree& p) {
   return IsLogicalEndOfLineAlgorithm<EditingInFlatTreeStrategy>(p);
 }
 
-VisiblePosition PreviousLinePosition(const VisiblePosition& visible_position,
-                                     LayoutUnit line_direction_point,
-                                     EditableType editable_type) {
+template <typename Strategy>
+VisiblePositionTemplate<Strategy> PreviousLinePositionAlgorithm(
+    const VisiblePositionTemplate<Strategy>& visible_position,
+    LayoutUnit line_direction_point,
+    EditableType editable_type) {
   DCHECK(visible_position.IsValid()) << visible_position;
 
-  Position p = visible_position.DeepEquivalent();
+  PositionTemplate<Strategy> p = visible_position.DeepEquivalent();
   Node* node = p.AnchorNode();
 
   if (!node)
-    return VisiblePosition();
+    return VisiblePositionTemplate<Strategy>();
 
   LayoutObject* layout_object = node->GetLayoutObject();
   if (!layout_object)
-    return VisiblePosition();
+    return VisiblePositionTemplate<Strategy>();
 
   RootInlineBox* root = nullptr;
-  InlineBox* box = ComputeInlineBoxPosition(visible_position).inline_box;
+  InlineBox* box = ComputeInlineBoxPosition(visible_position.DeepEquivalent(),
+                                            visible_position.Affinity())
+                       .inline_box;
   if (box) {
     root = box->Root().PrevRootBox();
     // We want to skip zero height boxes.
@@ -653,8 +710,9 @@ VisiblePosition PreviousLinePosition(const VisiblePosition& visible_position,
   }
 
   if (!root) {
-    Position position = PreviousRootInlineBoxCandidatePosition(
-        node, visible_position, editable_type);
+    PositionTemplate<Strategy> position =
+        PreviousRootInlineBoxCandidatePosition(node, visible_position,
+                                               editable_type);
     if (position.IsNotNull()) {
       RenderedPosition rendered_position((CreateVisiblePosition(position)));
       root = rendered_position.RootBox();
@@ -672,9 +730,9 @@ VisiblePosition PreviousLinePosition(const VisiblePosition& visible_position,
             ->GetLineLayoutItem();
     Node* node = line_layout_item.GetNode();
     if (node && EditingIgnoresContent(*node))
-      return VisiblePosition::InParentBeforeNode(*node);
-    return CreateVisiblePosition(
-        line_layout_item.PositionForPoint(point_in_line));
+      return VisiblePositionTemplate<Strategy>::InParentBeforeNode(*node);
+    return CreateVisiblePosition(FromPositionInDOMTree<Strategy>(
+        line_layout_item.PositionForPoint(point_in_line)));
   }
 
   // Could not find a previous line. This means we must already be on the first
@@ -684,27 +742,46 @@ VisiblePosition PreviousLinePosition(const VisiblePosition& visible_position,
                               ? RootEditableElement(*node, editable_type)
                               : node->GetDocument().documentElement();
   if (!root_element)
-    return VisiblePosition();
-  return VisiblePosition::FirstPositionInNode(*root_element);
+    return VisiblePositionTemplate<Strategy>();
+  return VisiblePositionTemplate<Strategy>::FirstPositionInNode(*root_element);
 }
 
-VisiblePosition NextLinePosition(const VisiblePosition& visible_position,
-                                 LayoutUnit line_direction_point,
-                                 EditableType editable_type) {
+VisiblePosition PreviousLinePosition(const VisiblePosition& position,
+                                     LayoutUnit line_direction_point,
+                                     EditableType editable_type) {
+  return PreviousLinePositionAlgorithm<EditingStrategy>(
+      position, line_direction_point, editable_type);
+}
+
+VisiblePositionInFlatTree PreviousLinePosition(
+    const VisiblePositionInFlatTree& position,
+    LayoutUnit line_direction_point,
+    EditableType editable_type) {
+  return PreviousLinePositionAlgorithm<EditingInFlatTreeStrategy>(
+      position, line_direction_point, editable_type);
+}
+
+template <typename Strategy>
+VisiblePositionTemplate<Strategy> NextLinePositionAlgorithm(
+    const VisiblePositionTemplate<Strategy>& visible_position,
+    LayoutUnit line_direction_point,
+    EditableType editable_type) {
   DCHECK(visible_position.IsValid()) << visible_position;
 
-  Position p = visible_position.DeepEquivalent();
+  PositionTemplate<Strategy> p = visible_position.DeepEquivalent();
   Node* node = p.AnchorNode();
 
   if (!node)
-    return VisiblePosition();
+    return VisiblePositionTemplate<Strategy>();
 
   LayoutObject* layout_object = node->GetLayoutObject();
   if (!layout_object)
-    return VisiblePosition();
+    return VisiblePositionTemplate<Strategy>();
 
   RootInlineBox* root = nullptr;
-  InlineBox* box = ComputeInlineBoxPosition(visible_position).inline_box;
+  InlineBox* box = ComputeInlineBoxPosition(visible_position.DeepEquivalent(),
+                                            visible_position.Affinity())
+                       .inline_box;
   if (box) {
     root = box->Root().NextRootBox();
     // We want to skip zero height boxes.
@@ -717,7 +794,7 @@ VisiblePosition NextLinePosition(const VisiblePosition& visible_position,
     // FIXME: We need do the same in previousLinePosition.
     Node* child = NodeTraversal::ChildAt(*node, p.ComputeEditingOffset());
     node = child ? child : &NodeTraversal::LastWithinOrSelf(*node);
-    Position position = NextRootInlineBoxCandidatePosition(
+    PositionTemplate<Strategy> position = NextRootInlineBoxCandidatePosition(
         node, visible_position, editable_type);
     if (position.IsNotNull()) {
       RenderedPosition rendered_position((CreateVisiblePosition(position)));
@@ -736,9 +813,9 @@ VisiblePosition NextLinePosition(const VisiblePosition& visible_position,
             ->GetLineLayoutItem();
     Node* node = line_layout_item.GetNode();
     if (node && EditingIgnoresContent(*node))
-      return VisiblePosition::InParentBeforeNode(*node);
-    return CreateVisiblePosition(
-        line_layout_item.PositionForPoint(point_in_line));
+      return VisiblePositionTemplate<Strategy>::InParentBeforeNode(*node);
+    return CreateVisiblePosition(FromPositionInDOMTree<Strategy>(
+        line_layout_item.PositionForPoint(point_in_line)));
   }
 
   // Could not find a next line. This means we must already be on the last line.
@@ -748,8 +825,23 @@ VisiblePosition NextLinePosition(const VisiblePosition& visible_position,
                               ? RootEditableElement(*node, editable_type)
                               : node->GetDocument().documentElement();
   if (!root_element)
-    return VisiblePosition();
-  return VisiblePosition::LastPositionInNode(*root_element);
+    return VisiblePositionTemplate<Strategy>();
+  return VisiblePositionTemplate<Strategy>::LastPositionInNode(*root_element);
+}
+
+VisiblePosition NextLinePosition(const VisiblePosition& position,
+                                 LayoutUnit line_direction_point,
+                                 EditableType editable_type) {
+  return NextLinePositionAlgorithm<EditingStrategy>(
+      position, line_direction_point, editable_type);
+}
+
+VisiblePositionInFlatTree NextLinePosition(
+    const VisiblePositionInFlatTree& position,
+    LayoutUnit line_direction_point,
+    EditableType editable_type) {
+  return NextLinePositionAlgorithm<EditingInFlatTreeStrategy>(
+      position, line_direction_point, editable_type);
 }
 
 }  // namespace blink
