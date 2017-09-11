@@ -14,6 +14,12 @@ mojom("interfaces") {
   public_deps = [
     "//url/mojo:url_mojom_gurl",
   ]
+  buildflag_headers = [
+    "net/net_features.h",
+  ]
+  buildflag_deps = [
+    "//net:features",
+  ]
 
   # TODO(crbug.com/699569): Convert to use the new JS bindings.
   use_new_js_bindings = false
