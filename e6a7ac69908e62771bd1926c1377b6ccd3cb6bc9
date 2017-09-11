@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea47af25_db3eb394",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 59895,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-11T16:07:32Z",
+      "side": 1,
+      "message": "There is already a popup metric in ContentSettings (which governs the popup blocker), so I\u0027ve added it there.",
+      "parentUuid": "6f9f460b_486b308a",
+      "range": {
+        "startLine": 59895,
+        "startChar": 28,
+        "endLine": 59895,
+        "endChar": 29
+      },
+      "revId": "e6a7ac69908e62771bd1926c1377b6ccd3cb6bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deeb4fb5_5b0da47a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "e6a7ac69908e62771bd1926c1377b6ccd3cb6bc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a875a889_c32c55f3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 59897,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-11T16:07:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deeb4fb5_5b0da47a",
+      "range": {
+        "startLine": 59897,
+        "startChar": 24,
+        "endLine": 59897,
+        "endChar": 29
+      },
+      "revId": "e6a7ac69908e62771bd1926c1377b6ccd3cb6bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
