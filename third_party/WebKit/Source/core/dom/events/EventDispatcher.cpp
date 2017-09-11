@@ -185,9 +185,6 @@ DispatchEventResult EventDispatcher::Dispatch() {
   }
   DispatchEventPostProcess(activation_target,
                            pre_dispatch_event_handler_result);
-
-  // Ensure that after event dispatch, the event's target object is the
-  // outermost shadow DOM boundary.
   event_->SetTarget(event_->GetEventPath().GetWindowEventContext().Target());
   event_->SetCurrentTarget(nullptr);
 
@@ -243,6 +240,7 @@ inline void EventDispatcher::DispatchEventAtBubbling() {
   size_t size = event_->GetEventPath().size();
   for (size_t i = 1; i < size; ++i) {
     const NodeEventContext& event_context = event_->GetEventPath()[i];
+    // event_->SetTarget(event_context.Target());
     if (event_context.CurrentTargetSameAsTarget()) {
       event_->SetEventPhase(Event::kAtTarget);
     } else if (event_->bubbles() && !event_->cancelBubble()) {
@@ -252,18 +250,20 @@ inline void EventDispatcher::DispatchEventAtBubbling() {
     }
     event_context.HandleLocalEvents(*event_);
     if (event_->PropagationStopped())
+      event_->SetTarget(event_context.Target());
       return;
   }
   if (event_->bubbles() && !event_->cancelBubble()) {
     event_->SetEventPhase(Event::kBubblingPhase);
     event_->GetEventPath().GetWindowEventContext().HandleLocalEvents(*event_);
   }
+  event_->SetTarget(event_->GetEventPath()[size - 1].Target());
 }
 
 inline void EventDispatcher::DispatchEventPostProcess(
     Node* activation_target,
     EventDispatchHandlingState* pre_dispatch_event_handler_result) {
-  event_->SetTarget(EventPath::EventTargetRespectingTargetRules(*node_));
+  // event_->SetTarget(EventPath::EventTargetRespectingTargetRules(*node_));
   // https://dom.spec.whatwg.org/#concept-event-dispatch
   // 14. Unset event’s dispatch flag, stop propagation flag, and stop immediate
   // propagation flag.
@@ -284,7 +284,7 @@ inline void EventDispatcher::DispatchEventPostProcess(
 
     // Pass the data from the PreDispatchEventHandler to the
     // PostDispatchEventHandler.
-    // This may dispatch an event, and node_ and event_ might be altered.
+    // This may dispatch an event, and node_ and event_ might be altered
     if (activation_target) {
       activation_target->PostDispatchEventHandler(
           event_.Get(), pre_dispatch_event_handler_result);
