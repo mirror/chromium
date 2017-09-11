@@ -1167,7 +1167,8 @@ LayoutRect LayoutObject::VisualRectIncludingCompositedScrolling(
 
 void LayoutObject::ClearPreviousVisualRects() {
   SetVisualRect(LayoutRect());
-  ObjectPaintInvalidator(*this).SetLocationInBacking(LayoutPoint());
+  if (rare_paint_data_)
+    rare_paint_data_->SetLocationInBacking(LayoutPoint());
   // Ensure check paint invalidation of subtree that would be triggered by
   // location change if we had valid previous location.
   SetMayNeedPaintInvalidationSubtree();
@@ -2548,8 +2549,6 @@ void LayoutObject::WillBeDestroyed() {
   }
 
   SetAncestorLineBoxDirty(false);
-
-  ObjectPaintInvalidator::ObjectWillBeDestroyed(*this);
 
   ClearLayoutRootIfNeeded();
 
