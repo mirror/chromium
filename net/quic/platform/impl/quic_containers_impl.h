@@ -5,9 +5,12 @@
 #ifndef NET_QUIC_PLATFORM_IMPL_QUIC_CONTAINERS_IMPL_H_
 #define NET_QUIC_PLATFORM_IMPL_QUIC_CONTAINERS_IMPL_H_
 
+
 #include <unordered_map>
 #include <unordered_set>
 
+#include "base/containers/circular_deque.h"
+#include "base/containers/queue.h"
 #include "base/containers/small_map.h"
 #include "net/base/interval_set.h"
 #include "net/base/linked_hash_map.h"
@@ -46,6 +49,16 @@ using QuicSmallMapImpl = base::small_map<std::unordered_map<Key, Value>, Size>;
 // and mutually disjoint intervals.
 template <typename T>
 using QuicIntervalSetImpl = IntervalSet<T>;
+
+// Represents a simple queue which may be backed by a list or
+// a flat circular buffer.
+template <typename T>
+using QuicCircularQueueImpl = base::queue<T>;
+
+// Represents a double-ended queue which may be backed by a list or
+// a flat circular buffer. Iteration is not required to be stable.
+template <typename T>
+using QuicCircularDequeImpl = base::circular_deque<T>;
 
 }  // namespace net
 
