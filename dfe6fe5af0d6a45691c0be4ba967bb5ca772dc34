@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d047b90_d03405d7",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Oscillator/dezipper.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T16:41:53Z",
+      "side": 1,
+      "message": "Wrap at 80 cols.",
+      "range": {
+        "startLine": 87,
+        "startChar": 15,
+        "endLine": 87,
+        "endChar": 85
+      },
+      "revId": "dfe6fe5af0d6a45691c0be4ba967bb5ca772dc34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "137b9d4d_20ece775",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Oscillator/dezipper.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T16:41:53Z",
+      "side": 1,
+      "message": "At this point, I think we should consider using JSDoc style comments.",
+      "range": {
+        "startLine": 128,
+        "startChar": 6,
+        "endLine": 136,
+        "endChar": 32
+      },
+      "revId": "dfe6fe5af0d6a45691c0be4ba967bb5ca772dc34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980b41ba_f7a4f435",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Oscillator/dezipper.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T16:41:53Z",
+      "side": 1,
+      "message": "nit: a trailing space",
+      "revId": "dfe6fe5af0d6a45691c0be4ba967bb5ca772dc34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7322e625_ca12190a",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Oscillator/dezipper.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T16:41:53Z",
+      "side": 1,
+      "message": "Wrap at 80 cols.",
+      "range": {
+        "startLine": 290,
+        "startChar": 14,
+        "endLine": 290,
+        "endChar": 88
+      },
+      "revId": "dfe6fe5af0d6a45691c0be4ba967bb5ca772dc34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6677937d_1178f7b3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OscillatorNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T16:41:53Z",
+      "side": 1,
+      "message": "typo: changes",
+      "range": {
+        "startLine": 187,
+        "startChar": 33,
+        "endLine": 187,
+        "endChar": 40
+      },
+      "revId": "dfe6fe5af0d6a45691c0be4ba967bb5ca772dc34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
