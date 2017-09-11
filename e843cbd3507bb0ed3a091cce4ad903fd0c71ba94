@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d254e196_b1d9eca3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:45:44Z",
+      "side": 1,
+      "message": "the first line of CL description should be a summary of the change that\u0027s somehwat understandable to Chromium codebase as a whole. I\u0027d recommend:\n\nservice worker: Set performance timing info in ServiceWorkerURLLoaderJob.",
+      "revId": "e843cbd3507bb0ed3a091cce4ad903fd0c71ba94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4abc0d3_aa9c0b27",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:45:44Z",
+      "side": 1,
+      "message": "nit: since start_time is supposed to be the time just before starting the service worker, it\u0027s slightly better to put this just above line 115, since MaybeStartNavigationPreload() doesn\u0027t start the service worker.",
+      "revId": "e843cbd3507bb0ed3a091cce4ad903fd0c71ba94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b43982_4830e22d",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:45:44Z",
+      "side": 1,
+      "message": "let\u0027s also EXPECT_LT(service_worker_start_time, service_worker_ready_time)",
+      "revId": "e843cbd3507bb0ed3a091cce4ad903fd0c71ba94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
