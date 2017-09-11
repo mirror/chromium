@@ -22,6 +22,30 @@
       "revId": "f98e371750daeec10e954eb4076e7eba25b149de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdef96fe_03d48814",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-11T16:45:34Z",
+      "side": 1,
+      "message": "Yes, it will fail to get a framework_instance and won\u0027t make a mojo call.",
+      "parentUuid": "2397c67f_591d58f6",
+      "range": {
+        "startLine": 355,
+        "startChar": 2,
+        "endLine": 355,
+        "endChar": 35
+      },
+      "revId": "f98e371750daeec10e954eb4076e7eba25b149de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
