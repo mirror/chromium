@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "274e3d68_ab129256",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestInterface.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-11T05:47:53Z",
+      "side": 1,
+      "message": "Could you change this to long? It sounds strange that [EnforceRange] is applied to DOMString.",
+      "range": {
+        "startLine": 59,
+        "startChar": 29,
+        "endLine": 59,
+        "endChar": 38
+      },
+      "revId": "a2704e3bb1a3d9e4d4af7f73727eb65c1134ecc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
