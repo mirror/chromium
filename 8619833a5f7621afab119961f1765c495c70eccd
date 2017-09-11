@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed6243b1_3973e8f5",
+        "filename": "extensions/renderer/renderer_messaging_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-11T22:59:26Z",
+      "side": 1,
+      "message": "It\u0027s obvious but doesn\u0027t hurt adding a comment saying a sync nature makes this Unretained(this) safe.",
+      "range": {
+        "startLine": 49,
+        "startChar": 17,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "8619833a5f7621afab119961f1765c495c70eccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d9be1c_48e20846",
+        "filename": "extensions/renderer/renderer_messaging_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-11T22:59:26Z",
+      "side": 1,
+      "message": "here and below: std::make_unique?",
+      "range": {
+        "startLine": 175,
+        "startChar": 21,
+        "endLine": 175,
+        "endChar": 26
+      },
+      "revId": "8619833a5f7621afab119961f1765c495c70eccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0839cf43_ef1016d5",
+        "filename": "extensions/renderer/renderer_messaging_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-11T22:59:26Z",
+      "side": 1,
+      "message": "This and following method:\nShould we add a comment about this Port saying it will be an existing/valid port? i.e. subclasses can assume this is a valid port, ContextHasMessagePort \u003d true.",
+      "range": {
+        "startLine": 110,
+        "startChar": 58,
+        "endLine": 110,
+        "endChar": 72
+      },
+      "revId": "8619833a5f7621afab119961f1765c495c70eccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
