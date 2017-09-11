@@ -20,7 +20,11 @@ class PresentationServiceMock {
         e => this.bindingSet_.addBinding(this, e.handle);
     this.interceptor_.start();
 
+    this.client_ = null;
     this.onSetClient = null;
+
+    this.receiver_ = null;
+    this.onSetReceiver = null;
   }
 
   reset() {
@@ -33,6 +37,13 @@ class PresentationServiceMock {
 
     if (this.onSetClient)
       this.onSetClient();
+  }
+
+  setReceiver(receiver) {
+    this.receiver_ = receiver;
+
+    if (this.onSetReceiver)
+      this.onSetReceiver();
   }
 
   async startPresentation(urls) {
@@ -84,7 +95,7 @@ class PresentationServiceMock {
           new blink.mojom.PresentationConnectionPtr());
     }
 
-    this.client_.onReceiverConnectionAvailable(
+    this.receiver_.onReceiverConnectionAvailable(
         { url: mojoUrl, id: id },
         controllerConnectionPtr, receiverConnectionRequest);
   }
