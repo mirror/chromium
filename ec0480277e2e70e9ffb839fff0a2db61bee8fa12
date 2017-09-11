@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0a3a618_3a0a1107",
+        "filename": "third_party/WebKit/Source/bindings/templates/dictionary_impl.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-11T08:54:43Z",
+      "side": 1,
+      "message": "Could you move this macro to another file, like methods.cpp.tmpl or utilities.cpp.tmpl?\nI feel it acceptable to create a new template file.",
+      "revId": "ec0480277e2e70e9ffb839fff0a2db61bee8fa12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f13933a_c79bab94",
+        "filename": "third_party/WebKit/Source/bindings/templates/dictionary_impl.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-11T08:54:43Z",
+      "side": 1,
+      "message": "nit: remove spaces in {{ and }}.",
+      "revId": "ec0480277e2e70e9ffb839fff0a2db61bee8fa12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff49f381_f6ebc111",
+        "filename": "third_party/WebKit/Source/bindings/templates/dictionary_impl.h.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-11T08:54:43Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "ec0480277e2e70e9ffb839fff0a2db61bee8fa12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
