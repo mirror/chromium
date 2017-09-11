@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df40640a_bf7abfdb",
+        "filename": "net/disk_cache/simple/simple_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-11T22:15:46Z",
+      "side": 1,
+      "message": "No, it changes what happens if you don\u0027t have the experiment flag.\nChanging the experiment flag is dangerous.",
+      "parentUuid": "b224ae7b_b8c53407",
+      "range": {
+        "startLine": 356,
+        "startChar": 18,
+        "endLine": 356,
+        "endChar": 22
+      },
+      "revId": "b5ce672ef24159e5cd0679e68986e84ae4d5b7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efd5daeb_9939c728",
         "filename": "net/disk_cache/simple/simple_index.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-08T18:11:30Z",
       "side": 1,
       "message": "I don\u0027t think you want this ! here. 0 means control. So if someone makes it EVICT_WITH_SIZE as a control, you still want use_size to be true, right?",
+      "range": {
+        "startLine": 359,
+        "startChar": 6,
+        "endLine": 359,
+        "endChar": 7
+      },
+      "revId": "b5ce672ef24159e5cd0679e68986e84ae4d5b7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57cb057e_5b0f8215",
+        "filename": "net/disk_cache/simple/simple_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-11T22:15:46Z",
+      "side": 1,
+      "message": "no,\n 0 \u003d evict with size off\n 1 \u003d evict with size on",
+      "parentUuid": "efd5daeb_9939c728",
       "range": {
         "startLine": 359,
         "startChar": 6,
