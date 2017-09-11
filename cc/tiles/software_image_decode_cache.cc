@@ -327,6 +327,7 @@ void SoftwareImageDecodeCache::RefImage(const ImageKey& key) {
   TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                "SoftwareImageDecodeCache::RefImage", "key", key.ToString());
   lock_.AssertAcquired();
+  LOG(ERROR) << "Reffing image: " << key.ToString();
   int ref = ++decoded_images_ref_counts_[key];
   if (ref == 1) {
     DCHECK_GE(locked_images_budget_.AvailableMemoryBytes(), key.locked_bytes());
@@ -346,6 +347,7 @@ void SoftwareImageDecodeCache::UnrefImage(const DrawImage& image) {
                "SoftwareImageDecodeCache::UnrefImage", "key", key.ToString());
 
   base::AutoLock lock(lock_);
+  LOG(ERROR) << "Unreffing image: " << key.ToString();
   auto ref_count_it = decoded_images_ref_counts_.find(key);
   DCHECK(ref_count_it != decoded_images_ref_counts_.end());
 
@@ -602,7 +604,8 @@ SoftwareImageDecodeCache::GetExactSizeImageDecode(
                  "SoftwareImageDecodeCache::GetOriginalSizeImageDecode - "
                  "decode");
     bool result = paint_image.Decode(decoded_pixels->data(), &decoded_info,
-                                     key.target_color_space().ToSkColorSpace());
+                                     key.target_color_space().ToSkColorSpace(),
+                                     key.frame_key().frame_index());
     if (!result) {
       decoded_pixels->Unlock();
       return nullptr;
@@ -625,7 +628,8 @@ SoftwareImageDecodeCache::GetSubrectImageDecode(const ImageKey& key,
   // so. We could also subrect scaled images.
   SkIRect exact_size_rect = SkIRect::MakeWH(image.width(), image.height());
   DrawImage exact_size_draw_image(image, exact_size_rect, kNone_SkFilterQuality,
-                                  SkMatrix::I(), key.target_color_space());
+                                  SkMatrix::I(), key.frame_key().frame_index(),
+                                  key.target_color_space());
   ImageKey exact_size_key =
       ImageKey::FromDrawImage(exact_size_draw_image, color_type_);
 
@@ -699,7 +703,8 @@ SoftwareImageDecodeCache::GetScaledImageDecode(const ImageKey& key,
                 key.target_size().width(), key.target_size().height())));
 
   DrawImage exact_size_draw_image(image, exact_size_rect, kNone_SkFilterQuality,
-                                  SkMatrix::I(), key.target_color_space());
+                                  SkMatrix::I(), key.frame_key().frame_index(),
+                                  key.target_color_space());
   ImageKey exact_size_key =
       ImageKey::FromDrawImage(exact_size_draw_image, color_type_);
 
