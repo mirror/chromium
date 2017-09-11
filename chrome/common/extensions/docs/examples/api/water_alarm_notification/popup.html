@@ -1,0 +1,42 @@
+<!-- Copyright (c) 2017 The Chromium Authors. All rights reserved.
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file. -->
+<html>
+  <head>
+    <title>Water Popup</title>
+    <style>
+      body {
+        max-height: 100px;
+        text-align: center;
+      }
+
+      #hydrateImg {
+        height: 100px;
+        margin: 5px;
+      }
+
+      button{
+        margin: 5px;
+      }
+    </style>
+
+    <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
+     -->
+
+
+  </head>
+  <body>
+      <img src="./stay_hydrated.png" id="hydrateImg"/>
+      <br>
+
+      <button id="sampleSecond" value="seconds" class="button">Sample Second</button>
+      <button id="15min" value="15">15 Minutes</button>
+      <button id="30min" value="30">30 Minutes</button>
+  <!-- link to event script -->
+   <script src="background.js"></script>
+  </body>
+</html>
