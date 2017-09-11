@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2a953a8_52c1fd3a",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/imageData-colorManagedBehavior.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-11T15:00:01Z",
+      "side": 1,
+      "message": "Add a comment to explain that this is Chrome-specific behavior due to lack for other formats.",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 17
+      },
+      "revId": "85b921b96caedf90f2cd2bf6b006d1d2d6b44ee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
