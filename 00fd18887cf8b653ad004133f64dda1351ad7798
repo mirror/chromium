@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c7bc563_24d14804",
+        "filename": "chrome/browser/media/router/issue_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-11T20:38:09Z",
+      "side": 1,
+      "message": "Returning a temporary variable at the end might make this code more readable. I don\u0027t feel strongly though.",
+      "revId": "00fd18887cf8b653ad004133f64dda1351ad7798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2348aef5_2b76da21",
+        "filename": "chrome/browser/media/router/issue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-11T20:38:09Z",
+      "side": 1,
+      "message": "Can you use base::test:ScopedTaskEnvironment instead?",
+      "revId": "00fd18887cf8b653ad004133f64dda1351ad7798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a09135_02e6e102",
+        "filename": "chrome/browser/media/router/issue_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-11T20:38:09Z",
+      "side": 1,
+      "message": "Consider adding an assertion in TearDown() that the task runner has no pending tasks (to catch bugs in test cases).",
+      "revId": "00fd18887cf8b653ad004133f64dda1351ad7798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8cfcc1a_820a8581",
+        "filename": "chrome/browser/media/router/issue_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-11T20:38:09Z",
+      "side": 1,
+      "message": "Do you need to set expectations on |observer| for the FATAL issue?",
+      "revId": "00fd18887cf8b653ad004133f64dda1351ad7798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
