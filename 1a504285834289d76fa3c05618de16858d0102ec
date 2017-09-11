@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50fbbbd8_74539a67",
+        "filename": "components/autofill/core/browser/webdata/autofill_table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-11T14:47:52Z",
+      "side": 1,
+      "message": "nit: Is this one still necessary?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "1a504285834289d76fa3c05618de16858d0102ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
