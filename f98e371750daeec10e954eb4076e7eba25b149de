@@ -87,6 +87,24 @@
       "revId": "f98e371750daeec10e954eb4076e7eba25b149de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "275bbf7e_73d83554",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-11T18:57:00Z",
+      "side": 1,
+      "message": "These three flags change independently.  There are individual toggles in the Settings page. They just happen to change at the same time when Play store is disabled here.",
+      "parentUuid": "31ce784d_25a8ebdb",
+      "revId": "f98e371750daeec10e954eb4076e7eba25b149de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
