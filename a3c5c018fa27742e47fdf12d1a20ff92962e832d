@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dea8f806_1eb04bd6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-11T18:14:07Z",
+      "side": 1,
+      "message": "nit: Typo :)",
+      "revId": "a3c5c018fa27742e47fdf12d1a20ff92962e832d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6cda9e6_a553c39b",
+        "filename": "content/browser/media/capture/desktop_capture_device_aura_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-11T18:14:07Z",
+      "side": 1,
+      "message": "nit: Is there no ScopedImageTransportFactoryForTest sort of thing we could use, to avoid the need for an explicit Terminate() call?",
+      "revId": "a3c5c018fa27742e47fdf12d1a20ff92962e832d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
