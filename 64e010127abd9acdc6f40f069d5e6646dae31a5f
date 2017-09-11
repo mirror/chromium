@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "950f186c_1de770cd",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-11T21:34:50Z",
+      "side": 1,
+      "message": "Nit: Anything in this comment that is worth saying should probably be in the comment in the .h file.",
+      "revId": "64e010127abd9acdc6f40f069d5e6646dae31a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c19c5d4_a16ebda8",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-11T21:34:50Z",
+      "side": 1,
+      "message": "Nit: I\u0027m not a fan of these commented arg names, but if you really like them, I think the typical style is \", false /* name */);\"",
+      "revId": "64e010127abd9acdc6f40f069d5e6646dae31a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36c4ae7_a7059a76",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-11T21:34:50Z",
+      "side": 1,
+      "message": "Nit: The first and third conditions are redundant with the second; delete them.",
+      "revId": "64e010127abd9acdc6f40f069d5e6646dae31a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
