@@ -308,10 +308,22 @@ interface MyIfacePromise {
  *      PrimitiveType(double)
  *    Type()
  *      StringType(DOMString)
+ *  Iterable()
+ *    Type()
+ *      PrimitiveType(long)
+ *      ExtAttributes()
+ *        ExtAttribute(Clamp)
+ *  Iterable()
+ *    Type()
+ *      StringType(DOMString)
+ *      ExtAttributes()
+ *        ExtAttribute(TreatNullAs) = "EmptyString"
  */
 interface MyIfaceIterable {
   iterable<long>;
   iterable<double, DOMString>;
+  iterable<[Clamp] long>;
+  iterable<[TreatNullAs=EmptyString] DOMString>;
 };
 
 /** TREE
