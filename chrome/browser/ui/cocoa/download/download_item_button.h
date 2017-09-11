@@ -32,6 +32,9 @@
 // Overridden from DraggableButton.
 - (void)beginDrag:(NSEvent*)event;
 
+// Used by tests.
+- (BOOL)showingContextMenu;
+
 @end
 
 #endif  // CHROME_BROWSER_UI_COCOA_DOWNLOAD_DOWNLOAD_ITEM_BUTTON_H_

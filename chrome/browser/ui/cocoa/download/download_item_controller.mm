@@ -93,8 +93,9 @@ class DownloadShelfContextMenuMac : public DownloadShelfContextMenu {
 
 @implementation DownloadItemController
 
+@synthesize shelf = shelf_;
+
 - (id)initWithDownload:(DownloadItem*)downloadItem
-                 shelf:(DownloadShelfController*)shelf
              navigator:(content::PageNavigator*)navigator {
   if ((self = [super initWithNibName:@"DownloadItem"
                               bundle:base::mac::FrameworkBundle()])) {
@@ -108,7 +109,6 @@ class DownloadShelfContextMenuMac : public DownloadShelfContextMenu {
                           name:kBrowserThemeDidChangeNotification
                         object:nil];
 
-    shelf_ = shelf;
     state_ = kNormal;
     creationTime_ = base::Time::Now();
     font_list_.reset(new gfx::FontList(
@@ -364,6 +364,10 @@ class DownloadShelfContextMenuMac : public DownloadShelfContextMenu {
 
 - (IBAction)showContextMenu:(id)sender {
   [progressView_ showContextMenu];
+}
+
+- (BOOL)showingContextMenu {
+  return [progressView_ showingContextMenu];
 }
 
 @end
