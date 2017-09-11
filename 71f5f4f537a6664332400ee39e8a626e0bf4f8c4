@@ -16,6 +16,24 @@
       "revId": "71f5f4f537a6664332400ee39e8a626e0bf4f8c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b95ec6c_d1843ad9",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-11T19:24:55Z",
+      "side": 1,
+      "message": "I have a todo somewhere to refactor TestConditions inside StoryExpectations.\nWhen I used them for SUPPORTED_PLATFORMS things started to make... no sense.\n\nBut yes, for now thats how it is intended. I will make a comment here about it so that others know.",
+      "parentUuid": "99b02252_eda3002f",
+      "revId": "71f5f4f537a6664332400ee39e8a626e0bf4f8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
