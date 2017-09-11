@@ -6,7 +6,6 @@
 
 #include "bindings/core/v8/ToV8ForCore.h"
 #include "bindings/core/v8/serialization/UnpackedSerializedScriptValue.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/dom/MessagePort.h"
 #include "core/fileapi/Blob.h"
 #include "core/fileapi/File.h"
@@ -22,6 +21,7 @@
 #include "core/html/ImageData.h"
 #include "core/imagebitmap/ImageBitmap.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
+#include "core/script/ExecutionContext.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "core/typed_arrays/DOMSharedArrayBuffer.h"
 #include "platform/RuntimeEnabledFeatures.h"

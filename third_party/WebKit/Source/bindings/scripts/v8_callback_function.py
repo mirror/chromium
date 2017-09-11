@@ -23,7 +23,7 @@ CALLBACK_FUNCTION_CPP_INCLUDES = frozenset([
     'bindings/core/v8/NativeValueTraitsImpl.h',
     'bindings/core/v8/ToV8ForCore.h',
     'bindings/core/v8/V8BindingForCore.h',
-    'core/dom/ExecutionContext.h',
+    'core/script/ExecutionContext.h',
     'platform/wtf/Assertions.h',
 ])
 

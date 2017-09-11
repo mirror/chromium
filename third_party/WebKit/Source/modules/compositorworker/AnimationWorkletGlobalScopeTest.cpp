@@ -9,7 +9,7 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "modules/compositorworker/AnimationWorklet.h"

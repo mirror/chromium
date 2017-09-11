@@ -4,7 +4,7 @@
 
 #include "modules/webgl/WebGLQuery.h"
 
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "modules/webgl/WebGL2RenderingContextBase.h"
 #include "public/platform/Platform.h"

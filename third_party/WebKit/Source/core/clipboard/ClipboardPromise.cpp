@@ -9,7 +9,7 @@
 #include "core/clipboard/DataTransfer.h"
 #include "core/clipboard/DataTransferItem.h"
 #include "core/clipboard/DataTransferItemList.h"
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/clipboard/ClipboardMimeTypes.h"
 #include "public/platform/Platform.h"

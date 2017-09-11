@@ -29,7 +29,7 @@
 #include <libxml/tree.h>
 #include <memory>
 #include "core/dom/ParserContentPolicy.h"
-#include "core/dom/PendingScript.h"
+#include "core/script/PendingScript.h"
 #include "core/dom/ScriptableDocumentParser.h"
 #include "core/loader/resource/ScriptResource.h"
 #include "core/xml/parser/XMLErrors.h"

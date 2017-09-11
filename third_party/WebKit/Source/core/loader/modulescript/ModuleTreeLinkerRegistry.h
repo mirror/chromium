@@ -6,7 +6,7 @@
 #define ModuleTreeLinkerRegistry_h
 
 #include "core/CoreExport.h"
-#include "core/dom/AncestorList.h"
+#include "core/script/AncestorList.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"

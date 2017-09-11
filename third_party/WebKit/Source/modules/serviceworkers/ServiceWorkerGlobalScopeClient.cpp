@@ -32,7 +32,7 @@
 
 #include <memory>
 #include <utility>
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "modules/fetch/Response.h"
 #include "public/platform/WebURL.h"

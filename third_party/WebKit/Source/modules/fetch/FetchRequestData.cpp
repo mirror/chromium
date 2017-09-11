@@ -4,8 +4,8 @@
 
 #include "modules/fetch/FetchRequestData.h"
 
-#include "core/dom/ExecutionContext.h"
 #include "core/loader/ThreadableLoader.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/credentialmanager/PasswordCredential.h"
 #include "modules/fetch/BlobBytesConsumer.h"
 #include "modules/fetch/BodyStreamBuffer.h"

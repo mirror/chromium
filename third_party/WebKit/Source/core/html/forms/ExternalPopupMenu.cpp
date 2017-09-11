@@ -32,7 +32,6 @@
 
 #include "build/build_config.h"
 #include "core/dom/NodeComputedStyle.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/exported/WebViewImpl.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
@@ -41,6 +40,7 @@
 #include "core/html/HTMLSelectElement.h"
 #include "core/layout/LayoutBox.h"
 #include "core/page/Page.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/geometry/FloatQuad.h"
 #include "platform/geometry/IntPoint.h"

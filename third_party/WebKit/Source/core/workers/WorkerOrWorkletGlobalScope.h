@@ -6,8 +6,8 @@
 #define WorkerOrWorkletGlobalScope_h
 
 #include "bindings/core/v8/V8CacheOptions.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/UseCounter.h"
+#include "core/script/ExecutionContext.h"
 #include "core/workers/WorkerClients.h"
 
 namespace blink {

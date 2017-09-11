@@ -26,7 +26,6 @@
 #include "core/HTMLNames.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/ShadowRoot.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/dom/Text.h"
 #include "core/dom/events/Event.h"
 #include "core/frame/UseCounter.h"
@@ -36,6 +35,7 @@
 #include "core/html/shadow/DetailsMarkerControl.h"
 #include "core/html/shadow/ShadowElementNames.h"
 #include "core/layout/LayoutBlockFlow.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/text/PlatformLocale.h"
 
 namespace blink {

@@ -33,8 +33,8 @@
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/UseCounter.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "modules/webmidi/MIDIAccess.h"
 #include "modules/webmidi/MIDIConnectionEvent.h"
 

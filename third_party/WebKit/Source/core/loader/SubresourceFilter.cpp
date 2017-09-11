@@ -7,10 +7,10 @@
 #include <utility>
 
 #include "core/dom/Document.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrame.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/DocumentLoader.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/weborigin/KURL.h"

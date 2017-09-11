@@ -25,15 +25,15 @@
 
 #include "modules/indexeddb/IDBOpenDBRequest.h"
 
+#include <memory>
 #include "bindings/core/v8/Nullable.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/indexeddb/IDBDatabase.h"
 #include "modules/indexeddb/IDBDatabaseCallbacks.h"
 #include "modules/indexeddb/IDBTracing.h"
 #include "modules/indexeddb/IDBVersionChangeEvent.h"
-#include <memory>
 
 using blink::WebIDBDatabase;
 

@@ -31,8 +31,8 @@
 #include "modules/quota/DeprecatedStorageQuota.h"
 
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/ExecutionContext.h"
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/ExecutionContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "modules/quota/DeprecatedStorageQuotaCallbacksImpl.h"
 #include "modules/quota/StorageErrorCallback.h"
 #include "modules/quota/StorageQuotaClient.h"

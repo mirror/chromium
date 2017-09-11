@@ -30,8 +30,6 @@
 
 #include "modules/websockets/DocumentWebSocketChannel.h"
 
-#include "core/dom/ExecutionContext.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/fileapi/FileReaderLoader.h"
 #include "core/fileapi/FileReaderLoaderClient.h"
 #include "core/frame/LocalFrame.h"
@@ -46,6 +44,8 @@
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/probe/CoreProbes.h"
+#include "core/script/ExecutionContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "modules/websockets/InspectorWebSocketEvents.h"
 #include "modules/websockets/WebSocketChannelClient.h"

@@ -1,0 +1,59 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//third_party/WebKit/Source/core/core.gni")
+
+blink_core_sources("script") {
+  split_count = 5
+
+  sources = [
+    "AncestorList.h",
+    "ClassicPendingScript.cpp",
+    "ClassicPendingScript.h",
+    "ClassicScript.cpp",
+    "ClassicScript.h",
+    "DocumentModulatorImpl.cpp",
+    "DocumentModulatorImpl.h",
+    "ExecutionContext.cpp",
+    "ExecutionContext.h",
+    "Modulator.cpp",
+    "Modulator.h",
+    "ModulatorImplBase.cpp",
+    "ModulatorImplBase.h",
+    "ModuleMap.cpp",
+    "ModuleMap.h",
+    "ModulePendingScript.cpp",
+    "ModulePendingScript.h",
+    "ModuleScript.cpp",
+    "ModuleScript.h",
+    "PendingScript.cpp",
+    "PendingScript.h",
+    "Script.h",
+    "ScriptElementBase.cpp",
+    "ScriptElementBase.h",
+    "ScriptLoader.cpp",
+    "ScriptLoader.h",
+    "ScriptModuleResolver.h",
+    "ScriptModuleResolverImpl.cpp",
+    "ScriptModuleResolverImpl.h",
+    "ScriptRunner.cpp",
+    "ScriptRunner.h",
+    "ScriptedAnimationController.cpp",
+    "ScriptedAnimationController.h",
+    "ScriptedIdleTaskController.cpp",
+    "ScriptedIdleTaskController.h",
+    "TaskRunnerHelper.cpp",
+    "TaskRunnerHelper.h",
+    "TaskTypeTraits.h",
+    "WorkletModulatorImpl.cpp",
+    "WorkletModulatorImpl.h",
+  ]
+
+  jumbo_excluded_sources = [ "Modulator.cpp" ]  # https://crbug.com/716395
+
+  configs += [
+    # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
+    "//build/config/compiler:no_size_t_to_int_warning",
+  ]
+}

@@ -32,8 +32,8 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/weborigin/SecurityOrigin.h"
 
 namespace blink {

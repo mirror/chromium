@@ -26,7 +26,7 @@
 #include "modules/webaudio/OfflineAudioDestinationNode.h"
 
 #include <algorithm>
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "modules/webaudio/AudioNodeInput.h"
 #include "modules/webaudio/AudioNodeOutput.h"
 #include "modules/webaudio/AudioWorkletThread.h"

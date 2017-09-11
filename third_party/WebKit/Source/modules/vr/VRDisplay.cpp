@@ -7,8 +7,6 @@
 #include "core/css/StylePropertySet.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/FrameRequestCallback.h"
-#include "core/dom/ScriptedAnimationController.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
@@ -18,6 +16,8 @@
 #include "core/layout/LayoutView.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
+#include "core/script/ScriptedAnimationController.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/mailbox_holder.h"
 #include "modules/EventTargetModules.h"
@@ -37,7 +37,7 @@
 #include "public/platform/Platform.h"
 
 #include <array>
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 
 namespace blink {
 

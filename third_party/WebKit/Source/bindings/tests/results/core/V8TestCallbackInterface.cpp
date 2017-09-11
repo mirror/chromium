@@ -16,7 +16,7 @@
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8TestInterfaceEmpty.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/GetPtr.h"
 #include "platform/wtf/RefPtr.h"

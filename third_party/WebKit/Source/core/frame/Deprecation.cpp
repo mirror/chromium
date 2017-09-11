@@ -5,7 +5,6 @@
 #include "core/frame/Deprecation.h"
 
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/DeprecationReport.h"
 #include "core/frame/FrameConsole.h"
 #include "core/frame/LocalFrame.h"
@@ -13,6 +12,7 @@
 #include "core/frame/ReportingContext.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/page/Page.h"
+#include "core/script/ExecutionContext.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "public/platform/WebFeaturePolicyFeature.h"

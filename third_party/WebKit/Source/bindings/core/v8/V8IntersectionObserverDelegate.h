@@ -6,8 +6,8 @@
 #define V8IntersectionObserverDelegate_h
 
 #include "core/CoreExport.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/intersection_observer/IntersectionObserverDelegate.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/bindings/ScopedPersistent.h"
 #include "platform/bindings/TraceWrapperMember.h"

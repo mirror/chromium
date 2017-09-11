@@ -7,8 +7,8 @@
 #include <memory>
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/dom/DOMException.h"
-#include "core/dom/ExecutionContext.h"
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/ExecutionContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "modules/audio_output_devices/AudioOutputDeviceClient.h"
 #include "modules/audio_output_devices/SetSinkIdCallbacks.h"
 #include "platform/bindings/ScriptState.h"

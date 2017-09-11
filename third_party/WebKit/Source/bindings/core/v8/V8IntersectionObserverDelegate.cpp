@@ -7,8 +7,8 @@
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/v8_intersection_observer_callback.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/intersection_observer/IntersectionObserver.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/bindings/V8PrivateProperty.h"
 #include "platform/wtf/Assertions.h"
 

@@ -31,11 +31,11 @@
 #include "modules/filesystem/FileSystemCallbacks.h"
 
 #include <memory>
-#include "core/dom/ExecutionContext.h"
 #include "core/fileapi/BlobCallback.h"
 #include "core/fileapi/File.h"
 #include "core/fileapi/FileError.h"
 #include "core/html/VoidCallback.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/filesystem/DOMFilePath.h"
 #include "modules/filesystem/DOMFileSystem.h"
 #include "modules/filesystem/DOMFileSystemBase.h"

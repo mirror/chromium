@@ -4,8 +4,8 @@
 
 #include "core/loader/NetworkQuietDetector.h"
 
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrame.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/instrumentation/resource_coordinator/FrameResourceCoordinator.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 

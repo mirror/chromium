@@ -6,7 +6,6 @@
 
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalFrame.h"
 #include "core/geometry/DOMRect.h"
 #include "core/html/HTMLImageElement.h"
@@ -14,6 +13,7 @@
 #include "core/html/ImageData.h"
 #include "core/imagebitmap/ImageBitmap.h"
 #include "core/loader/resource/ImageResourceContent.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/graphics/Image.h"
 #include "platform/wtf/CheckedNumeric.h"
 #include "third_party/skia/include/core/SkImage.h"

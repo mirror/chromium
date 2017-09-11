@@ -4,10 +4,10 @@
 
 #include "core/frame/ReportingContext.h"
 
-#include "core/dom/ExecutionContext.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/Report.h"
 #include "core/frame/ReportingObserver.h"
+#include "core/script/ExecutionContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/bindings/ScriptState.h"
 

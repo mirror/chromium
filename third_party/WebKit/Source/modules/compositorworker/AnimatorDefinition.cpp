@@ -4,7 +4,7 @@
 
 #include "modules/compositorworker/AnimatorDefinition.h"
 
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/compositorworker/Animator.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8Binding.h"

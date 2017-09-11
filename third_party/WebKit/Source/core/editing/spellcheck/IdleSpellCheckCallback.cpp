@@ -5,7 +5,6 @@
 #include "core/editing/spellcheck/IdleSpellCheckCallback.h"
 
 #include "core/dom/IdleRequestOptions.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
 #include "core/editing/FrameSelection.h"
@@ -19,6 +18,7 @@
 #include "core/editing/spellcheck/SpellCheckRequester.h"
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/frame/LocalFrame.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/wtf/CurrentTime.h"

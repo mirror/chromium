@@ -27,7 +27,7 @@
 #define HTMLParserScriptRunner_h
 
 #include "bindings/core/v8/ScriptStreamer.h"
-#include "core/dom/PendingScript.h"
+#include "core/script/PendingScript.h"
 #include "core/html/parser/HTMLParserReentryPermit.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"

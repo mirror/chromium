@@ -33,9 +33,9 @@
 #include <memory>
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/origin_trials/OriginTrialContext.h"
+#include "core/script/ExecutionContext.h"
 #include "core/workers/DedicatedWorkerThread.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/InProcessWorkerObjectProxy.h"

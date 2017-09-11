@@ -8,11 +8,11 @@
 #include <memory>
 #include <utility>
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/fileapi/FileReaderLoader.h"
 #include "core/fileapi/FileReaderLoaderClient.h"
 #include "core/frame/LocalFrame.h"
 #include "core/inspector/InspectedFrames.h"
+#include "core/script/ExecutionContext.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "platform/SharedBuffer.h"
 #include "platform/blob/BlobData.h"

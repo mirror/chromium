@@ -6,7 +6,7 @@
 #define ContextFeatureSettings_h
 
 #include "core/CoreExport.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/Supplementable.h"
 
 namespace blink {

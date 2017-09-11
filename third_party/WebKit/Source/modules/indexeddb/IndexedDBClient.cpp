@@ -6,9 +6,9 @@
 
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/LocalFrame.h"
+#include "core/script/ExecutionContext.h"
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerContentSettingsClient.h"
 #include "core/workers/WorkerGlobalScope.h"

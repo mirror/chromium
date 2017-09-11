@@ -6,7 +6,7 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 
 namespace blink {

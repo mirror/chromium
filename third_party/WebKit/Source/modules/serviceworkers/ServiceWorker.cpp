@@ -33,9 +33,9 @@
 #include <memory>
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/dom/MessagePort.h"
 #include "core/dom/events/Event.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/EventTargetModules.h"
 #include "modules/serviceworkers/ServiceWorkerContainerClient.h"
 #include "platform/bindings/ScriptState.h"

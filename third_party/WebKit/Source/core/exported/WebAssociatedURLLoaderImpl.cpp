@@ -34,10 +34,10 @@
 #include <memory>
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/Document.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/loader/DocumentThreadableLoader.h"
 #include "core/loader/DocumentThreadableLoaderClient.h"
 #include "core/loader/ThreadableLoadingContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/Timer.h"
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/exported/WrappedResourceResponse.h"

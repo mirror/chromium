@@ -26,7 +26,7 @@
 #include "modules/speech/SpeechGrammar.h"
 
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 
 namespace blink {
 

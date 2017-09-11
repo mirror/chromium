@@ -7,11 +7,11 @@
 #include <memory>
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/dom/ScriptableDocumentParser.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/inspector/ThreadDebugger.h"
 #include "core/inspector/V8InspectorString.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/ScriptForbiddenScope.h"
 #include "platform/bindings/V8BindingMacros.h"
 #include "platform/bindings/V8PerIsolateData.h"

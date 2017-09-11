@@ -4,9 +4,9 @@
 
 #include "modules/offscreencanvas/OffscreenCanvasModules.h"
 
-#include "core/dom/ExecutionContext.h"
 #include "core/html/canvas/CanvasContextCreationAttributes.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/offscreencanvas2d/OffscreenCanvasRenderingContext2D.h"
 
 namespace blink {

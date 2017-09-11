@@ -5,8 +5,8 @@
 #include "modules/time_zone_monitor/TimeZoneMonitorClient.h"
 
 #include "bindings/core/v8/V8BindingForCore.h"
-#include "core/dom/ExecutionContext.h"
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/ExecutionContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/workers/WorkerBackingThread.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
 #include "core/workers/WorkerThread.h"

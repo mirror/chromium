@@ -32,8 +32,8 @@
 #define DOMFileSystem_h
 
 #include "core/dom/ContextLifecycleObserver.h"
-#include "core/dom/ExecutionContext.h"
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/ExecutionContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "modules/ModulesExport.h"
 #include "modules/filesystem/DOMFileSystemBase.h"
 #include "modules/filesystem/EntriesCallback.h"
