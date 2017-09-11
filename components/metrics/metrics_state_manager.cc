@@ -67,10 +67,18 @@ int64_t RoundSecondsToHour(int64_t time_in_seconds) {
   return 3600 * (time_in_seconds / 3600);
 }
 
+// Records the cloned install histogram.
+void LogClonedInstall() {
+  // Equivalent to UMA_HISTOGRAM_BOOLEAN with the stability flag set.
+  UMA_STABILITY_HISTOGRAM_ENUMERATION("UMA.IsClonedInstall", 1, 2);
+}
+
 class MetricsStateMetricsProvider : public MetricsProvider {
  public:
-  MetricsStateMetricsProvider(PrefService* local_state)
-      : local_state_(local_state) {}
+  MetricsStateMetricsProvider(PrefService* local_state,
+                              bool metrics_reset_ids_on_last_session)
+      : local_state_(local_state),
+        metrics_reset_ids_on_last_session_(metrics_reset_ids_on_last_session) {}
 
   // MetricsProvider:
   void ProvideSystemProfileMetrics(
@@ -81,14 +89,21 @@ class MetricsStateMetricsProvider : public MetricsProvider {
         RoundSecondsToHour(ReadInstallDate(local_state_)));
   }
 
+  void ProvidePreviousSessionData(
+      ChromeUserMetricsExtension* uma_proto) override {
+    if (metrics_reset_ids_on_last_session_)
+      LogClonedInstall();
+  }
+
   void ProvideCurrentSessionData(
       ChromeUserMetricsExtension* uma_proto) override {
     if (local_state_->GetBoolean(prefs::kMetricsResetIds))
-      UMA_HISTOGRAM_BOOLEAN("UMA.IsClonedInstall", true);
+      LogClonedInstall();
   }
 
  private:
   PrefService* local_state_;
+  bool metrics_reset_ids_on_last_session_;
   DISALLOW_COPY_AND_ASSIGN(MetricsStateMetricsProvider);
 };
 
@@ -109,7 +124,8 @@ MetricsStateManager::MetricsStateManager(
       load_client_info_(retrieve_client_info),
       clean_exit_beacon_(backup_registry_key, local_state),
       low_entropy_source_(kLowEntropySourceNotSet),
-      entropy_source_returned_(ENTROPY_SOURCE_NONE) {
+      entropy_source_returned_(ENTROPY_SOURCE_NONE),
+      metrics_reset_ids_on_last_session_(false) {
   ResetMetricsIDsIfNecessary();
   if (enabled_state_provider_->IsConsentGiven())
     ForceClientIdCreation();
@@ -129,7 +145,8 @@ MetricsStateManager::~MetricsStateManager() {
 }
 
 std::unique_ptr<MetricsProvider> MetricsStateManager::GetProvider() {
-  return base::MakeUnique<MetricsStateMetricsProvider>(local_state_);
+  return base::MakeUnique<MetricsStateMetricsProvider>(
+      local_state_, metrics_reset_ids_on_last_session_);
 }
 
 bool MetricsStateManager::IsMetricsReportingEnabled() {
@@ -343,6 +360,7 @@ void MetricsStateManager::UpdateEntropySourceReturnedValue(
 void MetricsStateManager::ResetMetricsIDsIfNecessary() {
   if (!local_state_->GetBoolean(prefs::kMetricsResetIds))
     return;
+  metrics_reset_ids_on_last_session_ = true;
 
   UMA_HISTOGRAM_BOOLEAN("UMA.MetricsIDsReset", true);
 
