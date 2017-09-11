@@ -18,7 +18,7 @@ const FLAG_EXPECTATIONS_PATH = path.resolve(LAYOUT_TESTS_PATH, 'FlagExpectations
 
 function main() {
   const originalTests = scanForTests([
-    '../../../../LayoutTests/http/tests/inspector/network',
+    '../../../../LayoutTests/http/tests/inspector/',
   ]);
 
   console.log(originalTests);
@@ -30,17 +30,20 @@ function main() {
       continue;
     }
     const inputPath = path.resolve(__dirname, '..', '..', '..', '..', 'LayoutTests', inputRelativePath);
-    const inputResourcesPath = path.resolve(inputPath, 'resources');
+    const inputResourcesPath = path.resolve(path.dirname(inputPath), 'resources');
     const outPath = migrateUtils.getOutPath(inputPath, false);
-    const outResourcesPath = path.resolve(outPath, 'resources');
+    const outResourcesPath = path.resolve(path.dirname(outPath), 'resources');
 
+    debugger;
     if (utils.isDir(inputResourcesPath))
       oldToNewResourcesPath.set(inputResourcesPath, outResourcesPath);
     mkdirp.sync(path.dirname(outPath));
 
     const original = fs.readFileSync(inputPath, 'utf-8');
-    const updatedReferences = original.replace(/src="..\/(?=.+-test)/g, 'src="../../inspector/')
-                                  .replace(/src="(?=\w.+-test)/g, 'src="../inspector/');
+    debugger;
+    const updatedReferences = original.replace(/src="\.\//g, 'src="')
+                                  .replace(/src="..\/(?=.+-test)/g, 'src="../../inspector/')
+                                  .replace(/src="(?=\w.+-test)/g, `src="${path.relative(path.dirname(outPath), path.dirname(inputPath))}/`);
     fs.writeFileSync(outPath, updatedReferences);
     fs.unlinkSync(inputPath);
 
@@ -51,8 +54,10 @@ function main() {
     const inputExpectationsPath =
         inputPath.replace(/\.x?html/, '-expected.txt').replace('-expected-expected', '-expected');
     const outExpectationsPath = outPath.replace(/\.x?html/, '-expected.txt').replace('-expected-expected', '-expected');
-    fs.writeFileSync(outExpectationsPath, fs.readFileSync(inputExpectationsPath, 'utf-8'));
-    fs.unlinkSync(inputExpectationsPath);
+    if (utils.isFile(inputExpectationsPath)) {
+      fs.writeFileSync(outExpectationsPath, fs.readFileSync(inputExpectationsPath, 'utf-8'));
+      fs.unlinkSync(inputExpectationsPath);
+    }
   }
 
   const newTestPaths = Array.from(oldToNewTestPath.values()).filter(x => x);
@@ -74,8 +79,10 @@ function main() {
     updateExpectationsFile(filePath);
   }
 
-  for (const [oldResourcesPath, newResourcesPath] of oldToNewResourcesPath)
+  for (const [oldResourcesPath, newResourcesPath] of oldToNewResourcesPath) {
     utils.copyRecursive(oldResourcesPath, path.dirname(newResourcesPath));
+    utils.removeRecursive(oldResourcesPath);
+  }
 
   function updateExpectationsFile(filePath) {
     const expectations = fs.readFileSync(filePath, 'utf-8');
