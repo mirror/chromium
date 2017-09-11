@@ -16,6 +16,24 @@
       "revId": "4fe3195df082d0d0acd8b65282acf367c72d23bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d8af406_43d07feb",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-11T23:23:46Z",
+      "side": 1,
+      "message": "Will be the same as before. Before this CL, the output clip will be the same as the parent\u0027s input clip, so we ended up having to pop all clips on top of the parent effect anyway.\n\nIt is something we should optimize though (for bleed avoidance too). I was thinking to add a walk over the paint chunks to compute the LCA clip of input chunks of an effect.",
+      "parentUuid": "f2c7af1c_d9c8a82e",
+      "revId": "4fe3195df082d0d0acd8b65282acf367c72d23bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
