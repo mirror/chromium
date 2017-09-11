@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49ec655d_05375f8b",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-09-11T22:50:06Z",
+      "side": 1,
+      "message": "This cannot be converted yet because of ServiceWorkerInternalsUI.\nHowever, it is safe​ to convert this to StatusOnceCallback because stop_callbacks_ are guaranteed to run only once.",
+      "revId": "5b572f4c712e94076517dd38f660784e692934db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
