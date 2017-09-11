@@ -1360,13 +1360,11 @@ void PaintPropertyTreeBuilder::InitSingleFragmentFromParent(
     const LayoutObject& object,
     PaintPropertyTreeBuilderContext& full_context,
     bool needs_paint_properties) {
-  object.GetMutableForPainting().EnsureFirstFragment();
-  object.GetMutableForPainting().FirstFragment()->ClearNextFragment();
-  if (needs_paint_properties) {
-    object.GetMutableForPainting()
-        .EnsureFirstFragment()
-        .EnsurePaintProperties();
-  }
+  FragmentData& first_fragment =
+      object.GetMutableForPainting().EnsureFirstFragment();
+  first_fragment.ClearNextFragment();
+  if (needs_paint_properties)
+    first_fragment.EnsurePaintProperties();
   if (full_context.fragments.IsEmpty()) {
     full_context.fragments.push_back(PaintPropertyTreeBuilderFragmentContext());
   } else {
@@ -1404,12 +1402,7 @@ void PaintPropertyTreeBuilder::UpdateFragments(
     if (object.HasLayer())
       paint_layer = ToLayoutBoxModelObject(object).Layer();
 
-    if (!paint_layer ||
-        !paint_layer->ShouldFragmentCompositedBounds(
-            RuntimeEnabledFeatures::SlimmingPaintV2Enabled()
-                ? nullptr
-                : paint_layer
-                      ->EnclosingLayerForPaintInvalidationCrossingFrameBoundaries())) {
+    if (!paint_layer || !paint_layer->ShouldFragmentCompositedBounds()) {
       InitSingleFragmentFromParent(object, full_context,
                                    needs_paint_properties);
     } else {
