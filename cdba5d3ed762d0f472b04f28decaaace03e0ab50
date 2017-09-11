@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f782067a_eb8738e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-11T20:27:57Z",
+      "side": 1,
+      "message": "Actually, most people won\u0027t be able to see it. Just describe what will happen as a result of that CL.",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 67
+      },
+      "revId": "cdba5d3ed762d0f472b04f28decaaace03e0ab50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
