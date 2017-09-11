@@ -16,6 +16,24 @@
       "revId": "73d62b25c98b456b9287e6aaf87e839c4c0d747b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86fef6a_b70d75e7",
+        "filename": "chrome/installer/linux/rpm/calculate_package_deps.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-11T19:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cf0a42f_1f4590cb",
+      "revId": "73d62b25c98b456b9287e6aaf87e839c4c0d747b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
