@@ -57,7 +57,7 @@ def unwrap_nullable_if_needed(idl_type):
 
 # Context for V8 bindings
 
-def dictionary_context(dictionary, interfaces_info):
+def dictionary_context(dictionary, interfaces_info, header_basename):
     includes.clear()
     includes.update(DICTIONARY_CPP_INCLUDES)
 
@@ -75,6 +75,7 @@ def dictionary_context(dictionary, interfaces_info):
             break
 
     cpp_class = v8_utilities.cpp_name(dictionary)
+    v8_class = v8_types.v8_type(cpp_class)
     context = {
         'cpp_class': cpp_class,
         'header_includes': set(DICTIONARY_H_INCLUDES),
@@ -82,8 +83,9 @@ def dictionary_context(dictionary, interfaces_info):
         'required_member_names': sorted([member.name
                                          for member in dictionary.members
                                          if member.is_required]),
+        'this_include_header_name': header_basename,
         'use_permissive_dictionary_conversion': 'PermissiveDictionaryConversion' in dictionary.extended_attributes,
-        'v8_class': v8_types.v8_type(cpp_class),
+        'v8_class': v8_class,
         'v8_original_class': v8_types.v8_type(dictionary.name),
     }
     if dictionary.parent:
@@ -155,7 +157,7 @@ def member_context(dictionary, member):
 
 # Context for implementation classes
 
-def dictionary_impl_context(dictionary, interfaces_info):
+def dictionary_impl_context(dictionary, interfaces_info, header_basename):
     def remove_duplicate_members(members):
         # When [ImplementedAs] is used, cpp_name can conflict. For example,
         # dictionary D { long foo; [ImplementedAs=foo, DeprecateAs=Foo] long oldFoo; };
@@ -181,6 +183,7 @@ def dictionary_impl_context(dictionary, interfaces_info):
         'header_includes': header_includes,
         'cpp_class': v8_utilities.cpp_name(dictionary),
         'members': members,
+        'this_include_header_name': header_basename,
     }
     if dictionary.parent:
         context['parent_cpp_class'] = v8_utilities.cpp_name_from_interfaces_info(

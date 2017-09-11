@@ -134,9 +134,10 @@ class TypedefResolver(Visitor):
 class CodeGeneratorV8Base(CodeGeneratorBase):
     """Base class for v8 bindings generator and IDL dictionary impl generator"""
 
-    def __init__(self, info_provider, cache_dir, output_dir):
+    def __init__(self, info_provider, cache_dir, output_dir, snake_case):
         CodeGeneratorBase.__init__(self, MODULE_PYNAME, info_provider, cache_dir, output_dir)
         self.typedef_resolver = TypedefResolver(info_provider)
+        self.snake_case_generated_files = snake_case
 
     def generate_code(self, definitions, definition_name):
         """Returns .h/.cpp code as ((path, content)...)."""
@@ -154,13 +155,13 @@ class CodeGeneratorV8Base(CodeGeneratorBase):
 
 
 class CodeGeneratorV8(CodeGeneratorV8Base):
-    def __init__(self, info_provider, cache_dir, output_dir):
-        CodeGeneratorV8Base.__init__(self, info_provider, cache_dir, output_dir)
+    def __init__(self, info_provider, cache_dir, output_dir, snake_case):
+        CodeGeneratorV8Base.__init__(self, info_provider, cache_dir, output_dir, snake_case)
 
     def output_paths(self, definition_name):
-        header_path = posixpath.join(self.output_dir,
-                                     'V8%s.h' % definition_name)
-        cpp_path = posixpath.join(self.output_dir, 'V8%s.cpp' % definition_name)
+        basename = 'v8_%s' % to_snake_case(definition_name) if self.snake_case_generated_files else 'V8%s' % definition_name
+        header_path = posixpath.join(self.output_dir, basename + '.h')
+        cpp_path = posixpath.join(self.output_dir, basename + ('.cc' if self.snake_case_generated_files else '.cpp'))
         return header_path, cpp_path
 
     def generate_code_internal(self, definitions, definition_name):
@@ -205,7 +206,8 @@ class CodeGeneratorV8(CodeGeneratorV8Base):
             cpp_template_filename = 'interface.cpp.tmpl'
             interface_context = v8_interface.interface_context
 
-        template_context = interface_context(interface, definitions.interfaces)
+        header_path, cpp_path = self.output_paths(interface_name)
+        template_context = interface_context(interface, definitions.interfaces, posixpath.basename(header_path))
         includes.update(interface_info.get('cpp_includes', {}).get(component, set()))
         if not interface.is_partial and not is_testing_target(full_path):
             template_context['header_includes'].add(self.info_provider.include_path_for_export)
@@ -222,7 +224,6 @@ class CodeGeneratorV8(CodeGeneratorV8Base):
         header_text, cpp_text = self.render_template(
             include_paths, header_template, cpp_template, template_context,
             component)
-        header_path, cpp_path = self.output_paths(interface_name)
         return (
             (header_path, header_text),
             (cpp_path, cpp_text),
@@ -235,8 +236,9 @@ class CodeGeneratorV8(CodeGeneratorV8Base):
         header_template = self.jinja_env.get_template('dictionary_v8.h.tmpl')
         cpp_template = self.jinja_env.get_template('dictionary_v8.cpp.tmpl')
         interface_info = interfaces_info[dictionary_name]
+        header_path, cpp_path = self.output_paths(dictionary_name)
         template_context = v8_dictionary.dictionary_context(
-            dictionary, interfaces_info)
+            dictionary, interfaces_info, posixpath.basename(header_path))
         include_paths = interface_info.get('dependencies_include_paths')
         # Add the include for interface itself
         template_context['header_includes'].add(interface_info['include_path'])
@@ -245,7 +247,6 @@ class CodeGeneratorV8(CodeGeneratorV8Base):
             template_context['exported'] = self.info_provider.specifier_for_export
         header_text, cpp_text = self.render_template(
             include_paths, header_template, cpp_template, template_context)
-        header_path, cpp_path = self.output_paths(dictionary_name)
         return (
             (header_path, header_text),
             (cpp_path, cpp_text),
@@ -253,14 +254,15 @@ class CodeGeneratorV8(CodeGeneratorV8Base):
 
 
 class CodeGeneratorDictionaryImpl(CodeGeneratorV8Base):
-    def __init__(self, info_provider, cache_dir, output_dir):
-        CodeGeneratorV8Base.__init__(self, info_provider, cache_dir, output_dir)
+    def __init__(self, info_provider, cache_dir, output_dir, snake_case):
+        CodeGeneratorV8Base.__init__(self, info_provider, cache_dir, output_dir, snake_case)
 
     def output_paths(self, definition_name, interface_info):
         output_dir = posixpath.join(self.output_dir,
                                     interface_info['relative_dir'])
-        header_path = posixpath.join(output_dir, '%s.h' % definition_name)
-        cpp_path = posixpath.join(output_dir, '%s.cpp' % definition_name)
+        basename = to_snake_case(definition_name) if self.snake_case_generated_files else definition_name
+        header_path = posixpath.join(output_dir, basename + '.h')
+        cpp_path = posixpath.join(output_dir, basename + ('.cc' if self.snake_case_generated_files else '.cpp'))
         return header_path, cpp_path
 
     def generate_code_internal(self, definitions, definition_name):
@@ -271,8 +273,10 @@ class CodeGeneratorDictionaryImpl(CodeGeneratorV8Base):
         interface_info = interfaces_info[definition_name]
         header_template = self.jinja_env.get_template('dictionary_impl.h.tmpl')
         cpp_template = self.jinja_env.get_template('dictionary_impl.cpp.tmpl')
+        header_path, cpp_path = self.output_paths(
+            cpp_name(dictionary), interface_info)
         template_context = v8_dictionary.dictionary_impl_context(
-            dictionary, interfaces_info)
+            dictionary, interfaces_info, posixpath.basename(header_path))
         include_paths = interface_info.get('dependencies_include_paths')
         if not is_testing_target(interface_info.get('full_path')):
             template_context['exported'] = self.info_provider.specifier_for_export
@@ -281,8 +285,6 @@ class CodeGeneratorDictionaryImpl(CodeGeneratorV8Base):
             interface_info.get('additional_header_includes', []))
         header_text, cpp_text = self.render_template(
             include_paths, header_template, cpp_template, template_context)
-        header_path, cpp_path = self.output_paths(
-            cpp_name(dictionary), interface_info)
         return (
             (header_path, header_text),
             (cpp_path, cpp_text),
