@@ -22,6 +22,212 @@
       "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632dcf3e_7be96c0b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-11T15:26:48Z",
+      "side": 1,
+      "message": "would recommend emailFieldIncluded",
+      "range": {
+        "startLine": 66,
+        "startChar": 33,
+        "endLine": 66,
+        "endChar": 46
+      },
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f1e288_34f122c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-11T15:26:48Z",
+      "side": 1,
+      "message": "why not boolean?",
+      "range": {
+        "startLine": 66,
+        "startChar": 25,
+        "endLine": 66,
+        "endChar": 32
+      },
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c4e7dca_a21cdf88",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-11T15:26:48Z",
+      "side": 1,
+      "message": "Could we change all callers to use the more qualified constructor (with the boolean)?",
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e27e67a_dd565fea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-11T15:26:48Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment. Cached where? Updated how? And I would avoid using \"new\" if the profile is an existing profile (if I\u0027m understanding correctly).",
+      "range": {
+        "startLine": 212,
+        "startChar": 15,
+        "endLine": 213,
+        "endChar": 35
+      },
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2707bffe_1cf883a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-11T15:26:48Z",
+      "side": 1,
+      "message": "Same, I would prefer only 1 constructor",
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5733b87f_0b6abab2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-11T15:26:48Z",
+      "side": 1,
+      "message": "update comment",
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161707d8_06bf27d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-11T15:26:48Z",
+      "side": 1,
+      "message": "mDeleteRunnable should always be non-null here, no?",
+      "range": {
+        "startLine": 198,
+        "startChar": 24,
+        "endLine": 198,
+        "endChar": 47
+      },
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3356eb71_5edddceb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfileEditorPreference.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-11T15:26:48Z",
+      "side": 1,
+      "message": "I would rephrase to \"Launches the UI to edit or create an Autofill profile entry.\"",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 61
+      },
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4c941f_5b8d87ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfileEditorPreference.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-11T15:26:48Z",
+      "side": 1,
+      "message": "is there a case where mGUID is non-null?",
+      "range": {
+        "startLine": 45,
+        "startChar": 20,
+        "endLine": 45,
+        "endChar": 40
+      },
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1247d0_88b51549",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfileEditorPreference.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-11T15:26:48Z",
+      "side": 1,
+      "message": "Can you mention the four cases here:\n(1) |address| is null because the user cancelled out of address creation\n(2) |address| is non-null because the user cancelled out of editing an existing address\n(3) |address| is non-null because the user edited an existing address.\n(4) |address| is non-null because the user created a new address.\n\nAnd mention that setProfile is OK to call for cases (2) (3) (4) because it handles updating or creating.\n\nCode reference is here: https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java?rcl\u003d0d04c1eb92d29fb5087d5bf26bfb8404af1429a7\u0026l\u003d192",
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
