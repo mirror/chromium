@@ -101,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "f2076ca5_18ee036d",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-11T15:58:11Z",
+      "side": 1,
+      "message": "Is the concern here that animations etc. updates are not reflected correctly while update is deferred?",
+      "parentUuid": "652963c0_12ee7d5d",
+      "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bec118a2_0b65f12f",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 4
