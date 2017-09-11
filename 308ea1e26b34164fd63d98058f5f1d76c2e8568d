@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d258ec15_71ff3bbd",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-11T19:50:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81a27fea_1f9d8ce8",
+      "revId": "308ea1e26b34164fd63d98058f5f1d76c2e8568d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4716cbd6_10bd0d96",
         "filename": "build/android/diff_resource_sizes.py",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "628c8496_bad0c62a",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-11T19:50:46Z",
+      "side": 1,
+      "message": "Removed. I initially assumed that people would only specify --include-intermediate-results if outputting to chartjson, although I guess there is still value in being able to print out the intermediate results.",
+      "parentUuid": "4716cbd6_10bd0d96",
+      "revId": "308ea1e26b34164fd63d98058f5f1d76c2e8568d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49ef9371_ac755c12",
         "filename": "build/android/diff_resource_sizes.py",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-09T00:20:47Z",
       "side": 1,
       "message": "I\u0027m guessing since this script exists, that the two APKs were built with separate GN args, or at different times. In this case the output directory passed to resource_sizes.py will be invalid for one of the two apks. \n\nIt would probably be better to run resource_sizes.py immediately after building each of them, and then pass the chartjson files to this script.\n\nIf you really want to pass it apks, then you could also consider creating a --no-chromium-output-directory flag for resource_sizes, and have it skip any steps that rely on an output directory when present (most things don\u0027t need an output directory).",
+      "revId": "308ea1e26b34164fd63d98058f5f1d76c2e8568d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91c78cc_1f6327bb",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-11T19:50:46Z",
+      "side": 1,
+      "message": "A couple of things:\n1. Not passing --chromium-output-directory to resource_sizes.py seems to work fine already\n2. This was made assuming we would be compiling the binaries in separate output directories (e.g. out/Release_vr_enabled and out/Release_vr_disabled), so each APK would retain its correct output files (hence why this script takes --chromium-output-directory-base and --chromium-output-directory-diff to correspond with the base/diff APKs)\n\nHowever, I\u0027m fine with adding the option to directly pass existing chartjson to this script if you feel that would be useful.",
+      "parentUuid": "49ef9371_ac755c12",
       "revId": "308ea1e26b34164fd63d98058f5f1d76c2e8568d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ef803c89_6136faea",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-11T19:50:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb8abc05_06fb5d8e",
+      "revId": "308ea1e26b34164fd63d98058f5f1d76c2e8568d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b0bd738_f88170c1",
         "filename": "build/android/diff_resource_sizes.py",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "308ea1e26b34164fd63d98058f5f1d76c2e8568d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f58116c_3d4eb73a",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-11T19:50:46Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "8b0bd738_f88170c1",
+      "revId": "308ea1e26b34164fd63d98058f5f1d76c2e8568d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
