@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1d07030_160d82d9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-11T11:31:56Z",
+      "side": 1,
+      "message": "If this is going to stay constant during the frame\u0027s lifecycle (is it?), could we pass it into the constructor instead?",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "45ccb8941c835d6c343e6e039d29add981d32a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
