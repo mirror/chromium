@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d17e911_e4875d28",
+        "filename": "chrome/browser/download/notification/download_item_notification.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-11T17:18:47Z",
+      "side": 1,
+      "message": "return !item_-\u003eIsDangerous()?",
+      "revId": "c876d1f924d00e16138e8cfb65c4c9f1d56624d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac3939f_109d3b10",
+        "filename": "chrome/browser/download/notification/download_item_notification.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-11T17:18:47Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "c876d1f924d00e16138e8cfb65c4c9f1d56624d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
