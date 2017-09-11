@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c428d989_8b813287",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-11T17:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f96e0a91_c657df86",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 17
+      },
+      "revId": "93387440660c71763ea2d2e7eefd647035f88705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6824ca8_0db1c749",
         "filename": "tools/perf/core/story_expectation_validator.py",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "93387440660c71763ea2d2e7eefd647035f88705",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd72bca9_56ca32b3",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-11T17:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6824ca8_0db1c749",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "93387440660c71763ea2d2e7eefd647035f88705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
