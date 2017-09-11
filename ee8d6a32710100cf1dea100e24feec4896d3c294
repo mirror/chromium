@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4deb79f2_8d624252",
+        "filename": "chromecast/browser/android/cast_content_window_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1242380
+      },
+      "writtenOn": "2017-09-11T20:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f16a80f_cd87fd28",
+      "revId": "ee8d6a32710100cf1dea100e24feec4896d3c294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31723499_bfce77d9",
         "filename": "chromecast/chromecast.gni",
         "patchSetId": 6
@@ -69,6 +87,24 @@
       "revId": "ee8d6a32710100cf1dea100e24feec4896d3c294",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd98d347_ef6a30d4",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1242380
+      },
+      "writtenOn": "2017-09-11T20:13:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5acd9565_3369fa2a",
+      "revId": "ee8d6a32710100cf1dea100e24feec4896d3c294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
