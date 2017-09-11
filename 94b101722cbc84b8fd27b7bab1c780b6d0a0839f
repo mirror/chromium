@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e531ff2_3ac634ec",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/cursors.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-11T18:59:25Z",
+      "side": 1,
+      "message": "You should handle this case now since you handled the backward case above. \"Word\" movement over non-textual content should be the entire leaf object i.e. move by word maps to move by object when not in text.",
+      "revId": "94b101722cbc84b8fd27b7bab1c780b6d0a0839f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04f61253_766a60bd",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/cursors.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-11T18:59:25Z",
+      "side": 1,
+      "message": "Don\u0027t do this. findNextNode already scans the linearization of the automation tree. Are you trying to find the next (directed) inline text box?",
+      "revId": "94b101722cbc84b8fd27b7bab1c780b6d0a0839f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0594f6fc_d6f4ca61",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/cursors.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-11T18:59:25Z",
+      "side": 1,
+      "message": "No curlies for one if liners.",
+      "revId": "94b101722cbc84b8fd27b7bab1c780b6d0a0839f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
