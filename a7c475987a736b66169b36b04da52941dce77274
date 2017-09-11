@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6451a4e3_4bc4a8e0",
+        "filename": "ui/accessibility/platform/test_ax_node_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-11T22:30:31Z",
+      "side": 1,
+      "message": "This should probably just be a helper function, like ReplaceIntAttribute.\nI\u0027d put it in a test helper file in ui/accessibility and disallow it\nfor anything other than tests. For tests we should have any easy way\nto replace an attribute - I know there are a couple of other places\nwhere I\u0027ve done that.",
+      "revId": "a7c475987a736b66169b36b04da52941dce77274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebcd6be9_33108078",
+        "filename": "ui/accessibility/platform/test_ax_node_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-11T22:30:31Z",
+      "side": 1,
+      "message": "The const_cast is evil.\n\nCan\u0027t you just look up the AXNode from |tree_| by id,\nand then modify that?",
+      "revId": "a7c475987a736b66169b36b04da52941dce77274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
