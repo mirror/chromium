@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c7d472e_d94274d7",
+        "filename": "ios/chrome/browser/ui/sync/sync_error_infobar_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-11T08:30:01Z",
+      "side": 1,
+      "message": "Drop the \u0027explicit\u0027, since it\u0027s only there to prevent implicit construction when there\u0027s exactly one parameter.",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "84ba764e735e16890687dfb1f6f1c804896d7d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0cdd32c_558cb6bb",
+        "filename": "ios/chrome/browser/ui/sync/sync_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-11T08:30:01Z",
+      "side": 1,
+      "message": "I like this refactor! When I looked at this initially I assumed that passing in a dispatcher to GetSyncCommandForBrowserState() was the way to go, but then it wasn\u0027t clear what should be returned, or if that meant refactoring all possible commands that could be returned at once. This hoists the command part out of the utility function, which is much cleaner. Nice work.",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 25
+      },
+      "revId": "84ba764e735e16890687dfb1f6f1c804896d7d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dfbdbd4_f29f1e10",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_panel_overlay_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-11T08:30:01Z",
+      "side": 1,
+      "message": "Can this be ApplicationSettingsCommmands?",
+      "range": {
+        "startLine": 35,
+        "startChar": 40,
+        "endLine": 35,
+        "endChar": 59
+      },
+      "revId": "84ba764e735e16890687dfb1f6f1c804896d7d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
