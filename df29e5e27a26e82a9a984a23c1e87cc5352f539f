@@ -16,6 +16,24 @@
       "revId": "df29e5e27a26e82a9a984a23c1e87cc5352f539f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778b8b74_91ff9803",
+        "filename": "third_party/WebKit/Source/core/editing/LinkSelectionTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-09-11T17:08:33Z",
+      "side": 0,
+      "message": "Yes the spec allow to use I-beam when selecting anchor text.\n\n\u003e User agents may also ignore the cursor property and display a cursor of their choice to indicate various states of the UA’s user interface, such as a busy cursor when the page is not responding, or a text cursor when the user is performing text selection.",
+      "parentUuid": "eae2a002_f316b838",
+      "revId": "df29e5e27a26e82a9a984a23c1e87cc5352f539f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
