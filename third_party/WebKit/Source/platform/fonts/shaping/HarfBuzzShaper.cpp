@@ -224,54 +224,70 @@ void HarfBuzzShaper::ExtractShapeResults(
       hb_buffer_get_glyph_infos(range_data->buffer, 0);
 
   unsigned last_change_position = 0;
+  unsigned cluster_start_glyph_index = 0;
 
   if (!num_glyphs)
     return;
 
+  // In the code below a signal edge means a transition from kShaped to kNotDef
+  // or from kNotDef to kShaped, in other words a state change from having a
+  // shaping result to finding missing glyphs.
   for (unsigned glyph_index = 0; glyph_index <= num_glyphs; ++glyph_index) {
-    // Iterating by clusters, check for when the state switches from shaped
-    // to non-shaped and vice versa. Taking into account the edge cases of
-    // beginning of the run and end of the run.
-    previous_cluster = current_cluster;
-    current_cluster = glyph_info[glyph_index].cluster;
-
+    // We proceed by clusters and determine a shaping result - either kShaped or
+    // kNotDef for each cluster. As soon as we know a cluster won't be shaped,
+    // we have to process such a signal edge.
     if (glyph_index < num_glyphs) {
-      // Still the same cluster, merge shaping status.
-      if (previous_cluster == current_cluster && glyph_index != 0) {
-        if (glyph_info[glyph_index].codepoint == 0) {
-          current_cluster_result = kNotDef;
-        } else {
-          // We can only call the current cluster fully shapped, if
-          // all characters that are part of it are shaped, so update
-          // currentClusterResult to kShaped only if the previous
-          // characters have been shaped, too.
-          current_cluster_result =
-              current_cluster_result == kShaped ? kShaped : kNotDef;
-        }
-        continue;
+      previous_cluster = current_cluster;
+      current_cluster = glyph_info[glyph_index].cluster;
+
+      if (current_cluster != previous_cluster) {
+        // We've moved to a new cluster, reset current_cluster_result and move
+        // current result to previous.
+        previous_cluster_result = current_cluster_result;
+        current_cluster_result =
+            glyph_info[glyph_index].codepoint == 0 ? kNotDef : kShaped;
+        // Keep track of the glyph index at which this cluster started, in order
+        // to compute boundaries for done/ready and still to process segments in
+        // the steps below.
+        cluster_start_glyph_index = glyph_index;
+      } else {
+        // We're still processing shaping results within the same cluster. It
+        // can only be called kShaped if it has an unbroken sequence of all
+        // kShaped glyphs (or kUnknown if it's the first glyph).
+        ClusterResult glyph_result =
+            glyph_info[glyph_index].codepoint == 0 ? kNotDef : kShaped;
+        current_cluster_result =
+            glyph_result == kShaped && (current_cluster_result == kShaped ||
+                                        current_cluster_result == kUnknown)
+                ? kShaped
+                : kNotDef;
       }
-      // We've moved to a new cluster.
-      previous_cluster_result = current_cluster_result;
-      current_cluster_result =
-          glyph_info[glyph_index].codepoint == 0 ? kNotDef : kShaped;
     } else {
-      // The code below operates on the "flanks"/changes between kNotDef
-      // and kShaped. In order to keep the code below from explictly
-      // dealing with character indices and run end, we explicitly
-      // terminate the cluster/run here by setting the result value to the
-      // opposite of what it was, leading to atChange turning true.
+      // In order to keep the code below from explictly handling the end of the
+      // text run, we simulate a signal edge by explicitly terminating the
+      // cluster/run here and setting the result value to the opposite of what
+      // it was, leading to atChange turning true. This way the code below can
+      // more easily determine which parts have been shaped, and which ones
+      // still need shaping.
       previous_cluster_result = current_cluster_result;
+      cluster_start_glyph_index = num_glyphs;
       current_cluster_result =
           current_cluster_result == kNotDef ? kShaped : kNotDef;
     }
 
-    bool at_change = (previous_cluster_result != current_cluster_result) &&
-                     previous_cluster_result != kUnknown;
+    // Then we check for when the state changes from shaped to non-shaped and
+    // vice versa. Taking into account the edge cases of beginning of the run
+    // and end of the run.
+    bool at_change = ((previous_cluster_result != current_cluster_result) &&
+                      previous_cluster_result != kUnknown);
     if (!at_change)
       continue;
 
+    // When entering this part of the code, cluster_start_glyph_index needs to
+    // be at the beginning of full clusters.
+
     // Compute the range indices of consecutive shaped or .notdef glyphs.
-    // Cluster information for RTL runs becomes reversed, e.g. character 0
+    // Cluster information for RTL runs becomes reversed, e.g. glyph 0
     // has cluster index 5 in a run of 6 characters.
     unsigned num_characters = 0;
     unsigned num_glyphs_to_insert = 0;
@@ -287,29 +303,32 @@ void HarfBuzzShaper::ExtractShapeResults(
         num_characters = shape_end - glyph_info[last_change_position].cluster;
         num_glyphs_to_insert = num_glyphs - last_change_position;
       } else {
-        num_characters = glyph_info[glyph_index].cluster -
+        num_characters = glyph_info[cluster_start_glyph_index].cluster -
                          glyph_info[last_change_position].cluster;
-        num_glyphs_to_insert = glyph_index - last_change_position;
+        num_glyphs_to_insert = cluster_start_glyph_index - last_change_position;
       }
     } else {
       // Direction Backwards
-      start_index = glyph_info[glyph_index - 1].cluster;
+      start_index = glyph_info[cluster_start_glyph_index - 1].cluster;
       if (last_change_position == 0) {
         // Clamp the end offsets of the queue item to the offsets representing
         // the shaping window.
         unsigned shape_end =
             std::min(range_data->end, current_queue_item.start_index_ +
                                           current_queue_item.num_characters_);
-        num_characters = shape_end - glyph_info[glyph_index - 1].cluster;
+        num_characters =
+            shape_end - glyph_info[cluster_start_glyph_index - 1].cluster;
       } else {
         num_characters = glyph_info[last_change_position - 1].cluster -
-                         glyph_info[glyph_index - 1].cluster;
+                         glyph_info[cluster_start_glyph_index - 1].cluster;
       }
-      num_glyphs_to_insert = glyph_index - last_change_position;
+      num_glyphs_to_insert = cluster_start_glyph_index - last_change_position;
     }
 
+    // If the current cluster is shaped, it means the previous was not and we
+    // need to add the clusters in between to the queue of segments that need to
+    // be shaped with the fallback font.
     if (current_cluster_result == kShaped && !is_last_resort) {
-      // Now it's clear that we need to continue processing.
       if (!font_cycle_queued) {
         range_data->holes_queue.push_back(
             HolesQueueItem(kHolesQueueNextFont, 0, 0));
@@ -340,7 +359,7 @@ void HarfBuzzShaper::ExtractShapeResults(
                               num_glyphs_to_insert, range_data->buffer);
       range_data->font->ReportNotDefGlyph();
     }
-    last_change_position = glyph_index;
+    last_change_position = cluster_start_glyph_index;
   }
 }
 
