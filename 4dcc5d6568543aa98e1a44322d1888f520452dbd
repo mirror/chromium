@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f4e58384_3b384ed6",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-11T17:53:30Z",
+      "side": 1,
+      "message": "Ok that is debatable, whether to put it in comments or the code.  I think comments should at least vive a high level description of what is gonig on so someone doesn\u0027t have to be able to parse your coding style to know, but I am ok with it.",
+      "parentUuid": "e3dd56c8_16f4c181",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7bc260a_809a0b98",
         "filename": "tools/perf/perf_device_trigger.py",
         "patchSetId": 9
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "a73f5441_b33cdb81",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-11T17:53:30Z",
+      "side": 1,
+      "message": "then please rename the file so it isn\u0027t perf specific.",
+      "parentUuid": "000a2cf7_dff3a48b",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d5130ff_9284efbc",
         "filename": "tools/perf/perf_device_trigger.py",
         "patchSetId": 9
@@ -119,6 +155,24 @@
       "side": 1,
       "message": "We need device affinity in here in order to make the script even work at all. And it does preserve device affinity as is.\n\nThis won\u0027t really have to deal with sharding at all, and that\u0027s not in here.",
       "parentUuid": "2d5130ff_9284efbc",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b676679_5e760129",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-11T17:53:30Z",
+      "side": 1,
+      "message": "Then why mention device affinity at all here?  Take it out, no one has context except us on that right now.  Until we add device affinity is it necessary?",
+      "parentUuid": "71f9999d_4a196977",
       "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +226,97 @@
       "side": 1,
       "message": "We need to return some data from this script to the recipe code. This is clarified more in modify_args.",
       "parentUuid": "a938dfa7_03ac3049",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3bc0f3_a74181ba",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-11T17:53:30Z",
+      "side": 1,
+      "message": "what does shards mean here?  number of swarming bots in this unique perf configuration?  \n\nshards is overloaded (in my mind here).  Do you think it would help to re-word the help comments here?",
+      "range": {
+        "startLine": 94,
+        "startChar": 50,
+        "endLine": 94,
+        "endChar": 52
+      },
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b3a944_3bcf4d83",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-11T17:53:30Z",
+      "side": 1,
+      "message": "will this be different for different users of this script?  Is there more than one swarming.py?  \n\nI think we should at least have a default here if there is a common one to make there be less required flags here.",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c00b92fe_1e9543b0",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-11T17:53:30Z",
+      "side": 1,
+      "message": "what format is this json in?  what would you use this for?",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36566ec_db8af483",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-11T17:53:30Z",
+      "side": 1,
+      "message": "can we be clear if this is the same as bot-id here?  Can we just consolidate these two flags and have one?  ie if --shards \u003d count(--bot-id), can we just infer?  will they ever be different?",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1add9c4_51827c68",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-11T17:53:30Z",
+      "side": 1,
+      "message": "ok it looks like my above comment is the case, can we remove one?",
       "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
