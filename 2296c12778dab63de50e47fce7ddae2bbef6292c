@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "793b93a1_dfc1d103",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-11T21:11:13Z",
+      "side": 1,
+      "message": "Discussed with reillyg@ offline and we think it is necessary to set this variable to true in the DeviceOrientationEventPump::SendStartMessage(). This is to handle the situation when neither sensor is successfully initialized, and the next DeviceOrientationEventPump::SendStartMessage() function call still needs to do the sensor fallback when necessary.",
+      "parentUuid": "a257907b_d27ee093",
+      "range": {
+        "startLine": 89,
+        "startChar": 6,
+        "endLine": 89,
+        "endChar": 69
+      },
+      "revId": "2296c12778dab63de50e47fce7ddae2bbef6292c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0028ebc4_4397676f",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
         "patchSetId": 4
