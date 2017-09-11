@@ -65,6 +65,10 @@ class EditingTestBase : public ::testing::Test {
   void SetBodyContent(const std::string&);
   ShadowRoot* SetShadowContent(const char* shadow_content,
                                const char* shadow_host_id);
+  ShadowRoot* SetShadowContent(const char* shadow_content,
+                               const char* host,
+                               const ShadowRootType);
+
   void UpdateAllLifecyclePhases();
 
  private:
