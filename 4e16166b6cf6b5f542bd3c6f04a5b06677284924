@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "768c7b68_d3ad8d21",
+        "filename": "chrome/browser/extensions/updater/chrome_update_client_config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-11T17:42:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "597fd67a_bb048409",
+      "revId": "4e16166b6cf6b5f542bd3c6f04a5b06677284924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0fd5d3f_3a1c1031",
         "filename": "chrome/browser/extensions/updater/chrome_update_client_config.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "4e16166b6cf6b5f542bd3c6f04a5b06677284924",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b6fc13_8e0f8667",
+        "filename": "chrome/browser/extensions/updater/chrome_update_client_config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-11T17:42:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0fd5d3f_3a1c1031",
+      "revId": "4e16166b6cf6b5f542bd3c6f04a5b06677284924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -97,6 +133,24 @@
       "revId": "4e16166b6cf6b5f542bd3c6f04a5b06677284924",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70aee397_9fda3742",
+        "filename": "chrome/browser/extensions/updater/chrome_update_client_config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-11T17:42:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "401e8285_db16db71",
+      "revId": "4e16166b6cf6b5f542bd3c6f04a5b06677284924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
