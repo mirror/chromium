@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "509b1020_05a35811",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-11T02:50:29Z",
+      "side": 1,
+      "message": "FYI, these become accessor properties (whereas before they were data properties). In particular, assignment to them used to succeed and will now silently (IIRC) fail. It\u0027s possible that there exists some extension out there that cares, so be aware (as you probably already are) that this is a small breaking change.",
+      "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e67512_a96f4e39",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-11T02:50:29Z",
+      "side": 1,
+      "message": "or, as you\u0027ve done elsewhere:\n\nv8::Local\u003cv8::Object\u003e self \u003d GetWrapper(isolate).ToLocalChecked();",
+      "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f91fe1_60e03e37",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-11T02:50:29Z",
+      "side": 1,
+      "message": "or, as you\u0027ve done elsewhere:\n\nv8::Local\u003cv8::Object\u003e self \u003d GetWrapper(isolate).ToLocalChecked();",
+      "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf944b2_af9c3507",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-11T02:50:29Z",
+      "side": 1,
+      "message": "I suspect this was a mistake/oversight. It\u0027s immediately upcast before it reaches the actual JSON serializer implementation.\n\nFor context, the internal type used is v8::internal::Object, which corresponds to the public v8::Value. Instead, the public API exposes v8::Object, which corresponds to v8::internal::JSReceiver.\n\nIt should be easy to change this on the V8 side; the only question would be whether it\u0027s okay to just change the type in the signature (literally no code aside from the signature should need changing), or whether they\u0027d rather add a new method name. I\u0027ll see what V8 folk say.",
+      "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a8c63f_314cb669",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-11T02:50:29Z",
+      "side": 1,
+      "message": "While learning about what JSON::Stringify does (for the above comment), it came to my attention that it doesn\u0027t always produce valid JSON if it succeeds. Notably, values like undefined and function(){} will stringify to undefined (the actual undefined value in the JS-exposed JSON.stringify); this API appears to coerce that to the string \"undefined\", which is a string but won\u0027t parse successfully.\n\nYou may wish to handle this case explicitly.",
+      "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bac1522_40b63c86",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-11T02:50:29Z",
+      "side": 1,
+      "message": "Up to you, but if V8_ENABLE_CHECKS, then the As\u003cv8::Object\u003e also does such a check, so this might be redundant.",
+      "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
