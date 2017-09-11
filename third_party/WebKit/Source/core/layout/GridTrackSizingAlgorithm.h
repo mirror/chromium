@@ -166,6 +166,7 @@ class GridTrackSizingAlgorithm final {
   void InitializeTrackSizes();
   void ResolveIntrinsicTrackSizes();
   void StretchFlexibleTracks(Optional<LayoutUnit> free_space);
+  void StretchAutoTracksIfNeeded();
 
   // State machine.
   void AdvanceNextState();
