@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bcae733_2d6c07ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-11T18:57:40Z",
+      "side": 1,
+      "message": "AwSettings?",
+      "range": {
+        "startLine": 7,
+        "startChar": 69,
+        "endLine": 7,
+        "endChar": 79
+      },
+      "revId": "8515d1e1e0108bf414d0fbd2a24a3a0c50f147c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749217e1_38007228",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-11T18:57:40Z",
+      "side": 1,
+      "message": "import things at the top, also I still vote for inlining these things where there is only a single call site",
+      "revId": "8515d1e1e0108bf414d0fbd2a24a3a0c50f147c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec2f12d_04c49a76",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-11T18:57:40Z",
+      "side": 1,
+      "message": "wow is this comment from android source? this is referring to the pre-kitkat webview that wasn\u0027t based on chromium :p",
+      "revId": "8515d1e1e0108bf414d0fbd2a24a3a0c50f147c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a96d62e1_eee236f1",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-11T18:57:40Z",
+      "side": 1,
+      "message": "put this near the top of the file, where all the other static final constants are",
+      "revId": "8515d1e1e0108bf414d0fbd2a24a3a0c50f147c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b768e6_64b46e4e",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-11T18:57:40Z",
+      "side": 1,
+      "message": "probably worth adding the prefix since these aren\u0027t enums, so LAYOUT_ALGORITHM_NORMAL and such",
+      "revId": "8515d1e1e0108bf414d0fbd2a24a3a0c50f147c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
