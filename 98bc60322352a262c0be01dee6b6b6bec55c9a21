@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acdb6697_2ca96d9e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-11T21:42:40Z",
+      "side": 1,
+      "message": "The subject isn\u0027t consistent with line 9. Please make the two consistent. :)",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "98bc60322352a262c0be01dee6b6b6bec55c9a21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd9bd38_3a92f110",
+        "filename": "components/translate/core/browser/translate_ranker_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-11T21:42:40Z",
+      "side": 1,
+      "message": "Nit: No {}\u0027s",
+      "range": {
+        "startLine": 195,
+        "startChar": 24,
+        "endLine": 195,
+        "endChar": 0
+      },
+      "revId": "98bc60322352a262c0be01dee6b6b6bec55c9a21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
