@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "627c8771_1469931a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webstorage/storage_enumerate.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-09-11T17:52:59Z",
+      "side": 1,
+      "message": "I tested Firefox and it worked fine. I can check Edge (stable) tomorrow, but checking Safari is a bit more difficult here.",
+      "parentUuid": "d9a972ef_17997616",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 8
+      },
+      "revId": "fe6848ab7f9eca64feaaf1a65806572d12b40421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e183a9c_dbf64f3a",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webstorage/storage_enumerate.html",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "fe6848ab7f9eca64feaaf1a65806572d12b40421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26cf4572_1ee4529f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webstorage/storage_enumerate.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-09-11T17:52:59Z",
+      "side": 1,
+      "message": "Embarassing mistake, but yes :-) I\u0027ll revise this tomorrow, I think I need to patch a few more parts of the template file to get this this to work correctly.",
+      "parentUuid": "1e183a9c_dbf64f3a",
+      "range": {
+        "startLine": 48,
+        "startChar": 17,
+        "endLine": 48,
+        "endChar": 38
+      },
+      "revId": "fe6848ab7f9eca64feaaf1a65806572d12b40421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
