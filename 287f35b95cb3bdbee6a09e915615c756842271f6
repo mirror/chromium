@@ -140,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "7f9fba45_178f8256",
+        "filename": "net/proxy/mojo_proxy_resolver_factory_manifest.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-11T18:53:17Z",
+      "side": 1,
+      "message": "so is this a privileged interface in any sense?  Would we expect any other service to be able to connect to it?",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 38
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1d6a9f4_be0224b9",
         "filename": "net/proxy/mojo_proxy_resolver_factory_service.h",
         "patchSetId": 8
