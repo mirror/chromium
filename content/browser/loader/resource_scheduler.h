@@ -75,7 +75,7 @@ class CONTENT_EXPORT ResourceScheduler {
   };
   typedef std::vector<MaxRequestsForBDPRange> MaxRequestsForBDPRanges;
 
-  ResourceScheduler();
+  explicit ResourceScheduler(bool enabled);
   ~ResourceScheduler();
 
   // Requests that this ResourceScheduler schedule, and eventually loads, the
@@ -252,6 +252,11 @@ class CONTENT_EXPORT ResourceScheduler {
 
   ClientMap client_map_;
   RequestSet unowned_requests_;
+
+  // Whether or not to enable ResourceScheduling. This will almost always be
+  // enabled, except for some C++ headless embedders who may implement their own
+  // resource scheduling via protocol handlers.
+  const bool enabled_;
 
   // True if requests to servers that support priorities (e.g., H2/QUIC) can
   // be delayed.

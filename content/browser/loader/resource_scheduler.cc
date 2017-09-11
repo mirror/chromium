@@ -993,8 +993,9 @@ class ResourceScheduler::Client {
   base::WeakPtrFactory<ResourceScheduler::Client> weak_ptr_factory_;
 };
 
-ResourceScheduler::ResourceScheduler()
-    : priority_requests_delayable_(
+ResourceScheduler::ResourceScheduler(bool enabled)
+    : enabled_(enabled),
+      priority_requests_delayable_(
           base::FeatureList::IsEnabled(kPrioritySupportedRequestsDelayable)),
       head_priority_requests_delayable_(base::FeatureList::IsEnabled(
           kHeadPrioritySupportedRequestsDelayable)),
@@ -1032,6 +1033,11 @@ std::unique_ptr<ResourceThrottle> ResourceScheduler::ScheduleRequest(
           client_id, url_request, this,
           RequestPriorityParams(url_request->priority(), 0), is_async));
 
+  if (!enabled_) {
+    request->Start(START_SYNC);
+    return std::move(request);
+  }
+
   ClientMap::iterator it = client_map_.find(client_id);
   if (it == client_map_.end()) {
     // There are several ways this could happen:
@@ -1050,6 +1056,9 @@ std::unique_ptr<ResourceThrottle> ResourceScheduler::ScheduleRequest(
 
 void ResourceScheduler::RemoveRequest(ScheduledResourceRequest* request) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  if (!enabled_)
+    return;
+
   if (base::ContainsKey(unowned_requests_, request)) {
     unowned_requests_.erase(request);
     return;
@@ -1169,6 +1178,9 @@ ResourceScheduler::Client* ResourceScheduler::GetClient(int child_id,
 void ResourceScheduler::ReprioritizeRequest(net::URLRequest* request,
                                             net::RequestPriority new_priority,
                                             int new_intra_priority_value) {
+  if (!enabled_)
+    return;
+
   if (request->load_flags() & net::LOAD_IGNORE_LIMITS) {
     // Requests with the IGNORE_LIMITS flag must stay at MAXIMUM_PRIORITY.
     return;
