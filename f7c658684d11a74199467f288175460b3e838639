@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "546febb3_7a9eded4",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-11T22:40:04Z",
+      "side": 1,
+      "message": "Can you please add a comment here documenting the format, not merely making it documented by the current code?\n\nThis is useful because you\u0027re implying the format will evolve to become more expressive, and having the format documented means there\u0027s a natural place to look to find \"historic\" formats.  I.e., you deprecated one field, the code won\u0027t contain that reference anymore, but the prior existence of it needs to be documented so we can make sure not to re-use a field by that name (because older clients would still be sending it for example).",
+      "revId": "f7c658684d11a74199467f288175460b3e838639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23c008b_9c95c1b4",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-11T22:40:04Z",
+      "side": 1,
+      "message": "nit: functions in .cc should be in the same order as the .h",
+      "range": {
+        "startLine": 161,
+        "startChar": 35,
+        "endLine": 161,
+        "endChar": 60
+      },
+      "revId": "f7c658684d11a74199467f288175460b3e838639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb735b67_43a0d869",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-11T22:40:04Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 168,
+        "startChar": 39,
+        "endLine": 168,
+        "endChar": 46
+      },
+      "revId": "f7c658684d11a74199467f288175460b3e838639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83acdb52_be371134",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-11T22:40:04Z",
+      "side": 1,
+      "message": "nit: spelling error, here and below",
+      "range": {
+        "startLine": 97,
+        "startChar": 10,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "f7c658684d11a74199467f288175460b3e838639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320b9aa9_c0a56616",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-11T22:40:04Z",
+      "side": 1,
+      "message": "nit: default?  Did you mean experimental?",
+      "range": {
+        "startLine": 108,
+        "startChar": 58,
+        "endLine": 108,
+        "endChar": 65
+      },
+      "revId": "f7c658684d11a74199467f288175460b3e838639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
