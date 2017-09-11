@@ -88,6 +88,8 @@ class SiteSettingsHandlerTest : public testing::Test {
   SiteSettingsHandlerTest()
       : kNotifications(site_settings::ContentSettingsTypeToGroupName(
             CONTENT_SETTINGS_TYPE_NOTIFICATIONS)),
+        kCookies(site_settings::ContentSettingsTypeToGroupName(
+            CONTENT_SETTINGS_TYPE_COOKIES)),
         handler_(&profile_) {
 #if defined(OS_CHROMEOS)
     mock_user_manager_ = new chromeos::MockUserManager;
@@ -273,8 +275,9 @@ class SiteSettingsHandlerTest : public testing::Test {
     incognito_profile_ = nullptr;
   }
 
-  // Content setting group name for |CONTENT_SETTINGS_TYPE_NOTIFICATIONS|.
+  // Content setting group name for relevate ContentSettingsType.
   const std::string kNotifications;
+  const std::string kCookies;
 
  private:
   content::TestBrowserThreadBundle thread_bundle_;
@@ -334,6 +337,7 @@ TEST_F(SiteSettingsHandlerTest, Origins) {
     histograms.ExpectTotalCount(kUmaBase + ".Allowed", 0);
     histograms.ExpectTotalCount(kUmaBase + ".Blocked", 1);
     histograms.ExpectTotalCount(kUmaBase + ".Reset", 0);
+    histograms.ExpectTotalCount(kUmaBase + ".SessionOnly", 0);
   }
 
   base::ListValue get_exception_list_args;
@@ -867,6 +871,26 @@ TEST_F(SiteSettingsHandlerInfobarTest, SettingPermissionsTriggersInfobar) {
                 ->delegate()
                 ->GetIdentifier());
   EXPECT_TRUE(url::IsSameOriginWith(origin, tab_url));
+}
+
+TEST_F(SiteSettingsHandlerTest, SessionOnlyException) {
+  const std::string google_with_port("https://www.google.com:443");
+  // The display name won't show the port if it's default for that scheme.
+  const std::string kUmaBase("WebsiteSettings.Menu.PermissionChanged");
+  // Test the JS -> C++ -> JS callback path for configuring origins, by
+  // setting Google.com to blocked.
+  base::ListValue set_args;
+  set_args.AppendString(google_with_port);  // Primary pattern.
+  set_args.AppendString(google_with_port);  // Secondary pattern.
+  set_args.AppendString(kCookies);
+  set_args.AppendString(
+      content_settings::ContentSettingToString(CONTENT_SETTING_SESSION_ONLY));
+  set_args.AppendBoolean(false);  // Incognito.
+  base::HistogramTester histograms;
+  handler()->HandleSetCategoryPermissionForPattern(&set_args);
+  EXPECT_EQ(1U, web_ui()->call_data().size());
+  histograms.ExpectTotalCount(kUmaBase, 1);
+  histograms.ExpectTotalCount(kUmaBase + ".SessionOnly", 1);
 }
 
 }  // namespace settings
