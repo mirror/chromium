@@ -138,6 +138,16 @@ void StateController::Initialize() {
 }
 
 void StateController::SetPrimaryProfile(Profile* profile) {
+  const user_manager::User* user =
+      chromeos::ProfileHelper::Get()->GetUserByProfile(profile);
+  if (!user || !user->HasGaiaAccount()) {
+    if (!ready_callback_.is_null()) {
+      ready_callback_.Run();
+      ready_callback_.Reset();
+    }
+    return;
+  }
+
   g_browser_process->profile_manager()->CreateProfileAsync(
       chromeos::ProfileHelper::GetLockScreenAppProfilePath(),
       base::Bind(&StateController::OnProfilesReady,
