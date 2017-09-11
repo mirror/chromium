@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "985cbd5e_48ebc083",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-09-11T03:57:25Z",
+      "side": 1,
+      "message": "Use this constructor in FontFace.cpp?",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 34
+      },
+      "revId": "8125c4f378e06c0fa990f7d0c027a96fb5f39b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95609813_f419921a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserContext.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-09-11T03:57:25Z",
+      "side": 1,
+      "message": "Please add a comment that this is for workers.",
+      "revId": "8125c4f378e06c0fa990f7d0c027a96fb5f39b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
