@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f2594c1d_8b16b7e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-11T19:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcdcbd4f_3e83dc21",
+      "range": {
+        "startLine": 105,
+        "startChar": 23,
+        "endLine": 105,
+        "endChar": 32
+      },
+      "revId": "29fdafbb90236bf54656e6880e25cad3c0d599b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6edee46c_ce21032f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-08T17:57:05Z",
       "side": 1,
       "message": "how does this relate to the 0 above? We should probably have a constant for this and some explanation around where this folder is and how it related to ChromeTabbedActivity folder.",
+      "range": {
+        "startLine": 41,
+        "startChar": 34,
+        "endLine": 41,
+        "endChar": 50
+      },
+      "revId": "29fdafbb90236bf54656e6880e25cad3c0d599b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef65df03_e652dc90",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabPersistencePolicy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-11T19:12:24Z",
+      "side": 1,
+      "message": "It is not related to the 0 above. 0 is just the base directory name for chrome tab models. The reason we set this as 2 is because we have 0 and 1 used for ChromeTabbedActivity, so to make this model sharing the same directory with ChromeTabbedModel, I just use 2 for it.",
+      "parentUuid": "6edee46c_ce21032f",
       "range": {
         "startLine": 41,
         "startChar": 34,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e2808fbd_359232ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelSelectorBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-11T19:12:24Z",
+      "side": 1,
+      "message": "Ops, sorry the code is not used any more.",
+      "parentUuid": "cd03eb75_6d2577f4",
+      "range": {
+        "startLine": 247,
+        "startChar": 5,
+        "endLine": 247,
+        "endChar": 22
+      },
+      "revId": "29fdafbb90236bf54656e6880e25cad3c0d599b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cd02436_533559f8",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "03c0653b_8e9bafe8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-11T19:12:24Z",
+      "side": 1,
+      "message": "I think this is not necessary if I have the StrictMode blocks in each Chrome not available test  below.",
+      "parentUuid": "0cd02436_533559f8",
+      "range": {
+        "startLine": 138,
+        "startChar": 40,
+        "endLine": 138,
+        "endChar": 61
+      },
+      "revId": "29fdafbb90236bf54656e6880e25cad3c0d599b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2ecb552_2b6d23dd",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-08T17:57:05Z",
       "side": 1,
       "message": "lets cache this id value and avoid all these StrictMode logic duplicated.",
+      "range": {
+        "startLine": 442,
+        "startChar": 33,
+        "endLine": 442,
+        "endChar": 67
+      },
+      "revId": "29fdafbb90236bf54656e6880e25cad3c0d599b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052c1093_1381c943",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-11T19:12:24Z",
+      "side": 1,
+      "message": "The StrictMode is needed because when Chrome is not available, BrowserActionsTabModelSelector writes TabState onto disk not because it needs to read this resource id. So caching the id will not help to avoid StrictMode logic here.",
+      "parentUuid": "e2ecb552_2b6d23dd",
       "range": {
         "startLine": 442,
         "startChar": 33,

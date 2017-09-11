@@ -22,6 +22,30 @@
       "revId": "4848fcf31b1904cafa771f61d99f8c6a0eb2651a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bdb2a5a_0ba544d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-11T19:12:24Z",
+      "side": 0,
+      "message": "Sorry I am not quite familiar with this part. Looks like it is called by both initialize() and attachAndFinishReparenting(). Because attachAndFinishReparenting() only handles createDetached() so I think it is still necessary in initialize() for other cases such as createLiveTab(), createTabForLazyLoad() and etc?",
+      "parentUuid": "4c8cd7a1_0639d7bb",
+      "range": {
+        "startLine": 1337,
+        "startChar": 32,
+        "endLine": 1337,
+        "endChar": 33
+      },
+      "revId": "4848fcf31b1904cafa771f61d99f8c6a0eb2651a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
