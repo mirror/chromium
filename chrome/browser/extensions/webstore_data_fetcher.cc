@@ -98,7 +98,7 @@ void WebstoreDataFetcher::Start() {
 
 void WebstoreDataFetcher::OnJsonParseSuccess(
     std::unique_ptr<base::Value> parsed_json) {
-  if (!parsed_json->IsType(base::Value::Type::DICTIONARY)) {
+  if (!parsed_json->is_dict()) {
     OnJsonParseFailure(kInvalidWebstoreResponseError);
     return;
   }
