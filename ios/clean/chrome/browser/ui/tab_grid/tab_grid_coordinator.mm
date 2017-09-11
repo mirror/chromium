@@ -19,6 +19,7 @@
 #import "ios/chrome/browser/web_state_list/web_state_opener.h"
 #import "ios/clean/chrome/browser/ui/commands/context_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/settings_commands.h"
+#import "ios/clean/chrome/browser/ui/commands/splash_screen_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tab_grid_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_dialog_request.h"
@@ -57,10 +58,13 @@
 @property(nonatomic, readonly) WebStateList& webStateList;
 @property(nonatomic, strong) TabGridMediator* mediator;
 @property(nonatomic, readonly) SnapshotCache* snapshotCache;
+@property(nonatomic) BOOL firstTabDisplayed;
 
-@property(nonatomic, readonly)
-    id<SettingsCommands, TabGridCommands, ToolsMenuCommands>
-        callableDispatcher;
+@property(nonatomic, readonly) id<SettingsCommands,
+                                  SplashScreenCommands,
+                                  TabGridCommands,
+                                  ToolsMenuCommands>
+    callableDispatcher;
 
 @end
 
@@ -70,6 +74,7 @@
 @synthesize toolsMenuCoordinator = _toolsMenuCoordinator;
 @synthesize activeTabCoordinator = _activeTabCoordinator;
 @synthesize mediator = _mediator;
+@synthesize firstTabDisplayed = _firstTabDisplayed;
 @dynamic callableDispatcher;
 
 - (instancetype)init {
@@ -115,6 +120,7 @@
       ->AddObserver(_overlayObserverBridge.get());
 
   [super start];
+  [self showTabGridTabAtIndex:self.webStateList.active_index()];
 }
 
 - (void)stop {
@@ -137,9 +143,21 @@
   DCHECK([childCoordinator isKindOfClass:[SettingsCoordinator class]] ||
          [childCoordinator isKindOfClass:[TabCoordinator class]] ||
          [childCoordinator isKindOfClass:[ToolsCoordinator class]]);
-  [self.viewController presentViewController:childCoordinator.viewController
-                                    animated:YES
-                                  completion:nil];
+  if (self.firstTabDisplayed) {
+    [self.viewController presentViewController:childCoordinator.viewController
+                                      animated:YES
+                                    completion:nil];
+  } else {
+    // The first tab to be displayed must be displayed as soon as possible as it
+    // will allow user interaction. Do not animate it.
+    [self.viewController
+        presentViewController:childCoordinator.viewController
+                     animated:NO
+                   completion:^{
+                     [self.callableDispatcher hideSplashScreen];
+                   }];
+    self.firstTabDisplayed = YES;
+  }
 }
 
 - (void)childCoordinatorWillStop:(BrowserCoordinator*)childCoordinator {

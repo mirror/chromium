@@ -10,8 +10,14 @@
 #error "This file requires ARC support."
 #endif
 
+@interface RootContainerViewController ()
+@property(nonatomic, strong) UIViewController* launchScreenController;
+@end
+
 @implementation RootContainerViewController
+
 @synthesize contentViewController = _contentViewController;
+@synthesize launchScreenController = _launchScreenController;
 
 #pragma mark - UIViewController
 
@@ -19,6 +25,15 @@
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor blackColor];
   [self attachChildViewController:self.contentViewController];
+
+  // Load view from Launch Screen and add it to window.
+  // It will be displayed until |self.contentViewController| is ready.
+  NSBundle* mainBundle = [NSBundle mainBundle];
+  NSArray* topObjects =
+      [mainBundle loadNibNamed:@"LaunchScreen" owner:self options:nil];
+  self.launchScreenController = [topObjects lastObject];
+  [self.view addSubview:self.launchScreenController.view];
+  [self.view bringSubviewToFront:self.launchScreenController.view];
 }
 
 #pragma mark - Public properties
@@ -31,6 +46,17 @@
     [self attachChildViewController:contentViewController];
   }
   _contentViewController = contentViewController;
+  if (self.launchScreenController) {
+    // If hideSplashScreen has not been called yet, keep the new view hidden.
+    // This allows to prepare it before displaying it.
+    self.contentViewController.view.hidden = true;
+  }
+}
+
+- (void)hideSplashScreen {
+  [self.launchScreenController.view removeFromSuperview];
+  self.launchScreenController = nil;
+  self.contentViewController.view.hidden = false;
 }
 
 #pragma mark - ChildViewController helper methods

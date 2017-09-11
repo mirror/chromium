@@ -13,6 +13,7 @@ source_set("commands") {
     "navigation_commands.h",
     "ntp_commands.h",
     "settings_commands.h",
+    "splash_screen_commands.h",
     "tab_commands.h",
     "tab_grid_commands.h",
     "tab_strip_commands.h",

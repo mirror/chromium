@@ -6,10 +6,13 @@
 #define IOS_CLEAN_CHROME_BROWSER_UI_ROOT_ROOT_COORDINATOR_H_
 
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator.h"
+#import "ios/clean/chrome/browser/ui/commands/splash_screen_commands.h"
 #import "ios/clean/chrome/browser/url_opening.h"
 
 // Coordinator that runs the root container.
-@interface RootCoordinator : BrowserCoordinator<URLOpening>
+@interface RootCoordinator
+    : BrowserCoordinator<SplashScreenCommands, URLOpening>
+- (void)startBrowserUI;
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_ROOT_ROOT_COORDINATOR_H_

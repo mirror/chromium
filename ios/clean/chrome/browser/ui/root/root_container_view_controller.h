@@ -17,6 +17,8 @@
 // View controller showing the main content.
 @property(nonatomic, strong) UIViewController* contentViewController;
 
+- (void)hideSplashScreen;
+
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_ROOT_ROOT_CONTAINER_VIEW_CONTROLLER_H_

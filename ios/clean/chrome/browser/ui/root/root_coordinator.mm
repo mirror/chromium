@@ -9,6 +9,7 @@
 #endif
 
 #import "ios/chrome/browser/ui/browser_list/browser.h"
+#import "ios/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 #import "ios/clean/chrome/browser/ui/root/root_container_view_controller.h"
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.h"
@@ -30,11 +31,8 @@
 
 - (void)start {
   self.viewController = [[RootContainerViewController alloc] init];
-
-  TabGridCoordinator* tabGridCoordinator = [[TabGridCoordinator alloc] init];
-  [self addChildCoordinator:tabGridCoordinator];
-  [tabGridCoordinator start];
-  self.tabGridCoordinator = tabGridCoordinator;
+  [self.dispatcher startDispatchingToTarget:self
+                                forSelector:@selector(hideSplashScreen)];
 
   [super start];
 }
@@ -46,6 +44,13 @@
   for (BrowserCoordinator* child in self.children) {
     [self removeChildCoordinator:child];
   }
+}
+
+- (void)startBrowserUI {
+  TabGridCoordinator* tabGridCoordinator = [[TabGridCoordinator alloc] init];
+  [self addChildCoordinator:tabGridCoordinator];
+  [tabGridCoordinator start];
+  self.tabGridCoordinator = tabGridCoordinator;
 }
 
 - (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator {
@@ -64,6 +69,12 @@
 
 - (void)openURL:(NSURL*)URL {
   [self.tabGridCoordinator openURL:URL];
+}
+
+#pragma mark - SplashScreenController
+
+- (void)hideSplashScreen {
+  [self.viewController hideSplashScreen];
 }
 
 @end
