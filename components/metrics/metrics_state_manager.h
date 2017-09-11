@@ -195,6 +195,11 @@ class MetricsStateManager {
   // The last entropy source returned by this service, used for testing.
   EntropySourceType entropy_source_returned_;
 
+  // The value of prefs::kMetricsResetIds seen upon startup, i.e., the value
+  // that was appropriate in the previous session.  Used when reporting previous
+  // session (stability) data.
+  bool metrics_reset_ids_on_last_session_;
+
   std::unique_ptr<ClonedInstallDetector> cloned_install_detector_;
 
   DISALLOW_COPY_AND_ASSIGN(MetricsStateManager);
