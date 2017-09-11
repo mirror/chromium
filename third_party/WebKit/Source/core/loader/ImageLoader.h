@@ -25,10 +25,10 @@
 
 #include <memory>
 #include "core/CoreExport.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/loader/resource/ImageResource.h"
 #include "core/loader/resource/ImageResourceContent.h"
 #include "core/loader/resource/ImageResourceObserver.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/WeakPtr.h"

@@ -4,12 +4,12 @@
 
 #include "core/loader/WorkerFetchContext.h"
 
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/UseCounter.h"
 #include "core/loader/MixedContentChecker.h"
 #include "core/loader/SubresourceFilter.h"
 #include "core/probe/CoreProbes.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/timing/WorkerGlobalScopePerformance.h"
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerGlobalScope.h"

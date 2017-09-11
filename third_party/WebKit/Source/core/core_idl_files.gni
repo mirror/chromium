@@ -511,7 +511,7 @@ core_typedefs_enums_only_idl_files =
 
 core_callback_function_idl_files =
     get_path_info([
-                    "dom/FunctionStringCallback.idl",
+                    "script/FunctionStringCallback.idl",
                     "dom/IdleRequestCallback.idl",
                   ],
                   "abspath")

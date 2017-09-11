@@ -31,8 +31,8 @@
 #include "modules/crypto/SubtleCrypto.h"
 
 #include "bindings/core/v8/Dictionary.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/Deprecation.h"
+#include "core/script/ExecutionContext.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "core/typed_arrays/DOMArrayBufferView.h"
 #include "core/typed_arrays/DOMArrayPiece.h"

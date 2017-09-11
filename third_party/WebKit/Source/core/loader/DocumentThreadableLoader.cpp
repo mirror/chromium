@@ -33,7 +33,6 @@
 
 #include <memory>
 #include "core/dom/Document.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/FrameConsole.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
@@ -48,6 +47,7 @@
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/probe/CoreProbes.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/SharedBuffer.h"
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/loader/fetch/FetchParameters.h"

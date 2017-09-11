@@ -31,8 +31,8 @@
 #include "modules/webdatabase/DatabaseTracker.h"
 
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/ExecutionContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "modules/webdatabase/Database.h"
 #include "modules/webdatabase/DatabaseClient.h"
 #include "modules/webdatabase/DatabaseContext.h"

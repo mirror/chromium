@@ -30,9 +30,9 @@
 
 #include "modules/speech/DOMWindowSpeechSynthesis.h"
 
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/wtf/PassRefPtr.h"
 

@@ -26,7 +26,7 @@
 #include "modules/speech/SpeechRecognitionClientProxy.h"
 
 #include <memory>
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/mediastream/MediaStreamTrack.h"
 #include "modules/speech/SpeechGrammarList.h"
 #include "modules/speech/SpeechRecognition.h"

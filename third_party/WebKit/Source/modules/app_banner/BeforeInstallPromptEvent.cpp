@@ -7,9 +7,9 @@
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/frame/UseCounter.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/app_banner/BeforeInstallPromptEventInit.h"
 
 namespace blink {

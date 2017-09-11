@@ -21,10 +21,10 @@
 
 #include "bindings/modules/v8/unsigned_long_or_unsigned_long_sequence.h"
 #include "core/dom/Document.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Navigator.h"
 #include "core/page/Page.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/mojo/MojoHelper.h"
 #include "public/platform/Platform.h"
 #include "services/service_manager/public/cpp/interface_provider.h"

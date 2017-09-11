@@ -4,9 +4,9 @@
 
 #include <memory>
 #include "bindings/core/v8/V8CacheOptions.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/events/MessageEvent.h"
 #include "core/inspector/ConsoleMessageStorage.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/testing/DummyPageHolder.h"
 #include "core/workers/DedicatedWorkerGlobalScope.h"
 #include "core/workers/DedicatedWorkerThread.h"

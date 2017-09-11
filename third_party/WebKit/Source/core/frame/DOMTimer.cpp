@@ -26,10 +26,10 @@
 
 #include "core/frame/DOMTimer.h"
 
-#include "core/dom/ExecutionContext.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/probe/CoreProbes.h"
+#include "core/script/ExecutionContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/wtf/CurrentTime.h"
 

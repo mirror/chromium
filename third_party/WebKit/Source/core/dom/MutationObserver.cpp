@@ -35,13 +35,13 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/v8_mutation_callback.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/dom/MutationObserverInit.h"
 #include "core/dom/MutationObserverRegistration.h"
 #include "core/dom/MutationRecord.h"
 #include "core/dom/Node.h"
 #include "core/html/HTMLSlotElement.h"
 #include "core/probe/CoreProbes.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/bindings/Microtask.h"
 
 namespace blink {

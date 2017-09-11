@@ -26,7 +26,7 @@
 
 #include "core/dom/SuspendableObject.h"
 
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/InstanceCounters.h"
 
 namespace blink {

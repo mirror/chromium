@@ -5,7 +5,7 @@
 #include "modules/mediacapturefromelement/TimedCanvasDrawListener.h"
 
 #include <memory>
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "third_party/skia/include/core/SkImage.h"
 
 namespace blink {

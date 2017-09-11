@@ -9,7 +9,7 @@
 #include "bindings/core/v8/CallbackPromiseAdapter.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/notifications/GetNotificationOptions.h"
 #include "modules/notifications/Notification.h"
 #include "modules/notifications/NotificationData.h"

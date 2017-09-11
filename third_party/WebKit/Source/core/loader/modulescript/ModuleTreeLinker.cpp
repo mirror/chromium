@@ -5,11 +5,11 @@
 #include "core/loader/modulescript/ModuleTreeLinker.h"
 
 #include "bindings/core/v8/ScriptModule.h"
-#include "core/dom/AncestorList.h"
-#include "core/dom/ModuleScript.h"
 #include "core/loader/modulescript/ModuleScriptFetchRequest.h"
 #include "core/loader/modulescript/ModuleTreeLinkerRegistry.h"
 #include "core/loader/modulescript/ModuleTreeReachedUrlSet.h"
+#include "core/script/AncestorList.h"
+#include "core/script/ModuleScript.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/bindings/V8ThrowException.h"
 #include "platform/loader/fetch/ResourceLoadingLog.h"

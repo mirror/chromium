@@ -22,12 +22,12 @@
 
 #include "core/dom/events/Event.h"
 
-#include "core/dom/ExecutionContext.h"
 #include "core/dom/StaticNodeList.h"
 #include "core/dom/events/EventDispatchMediator.h"
 #include "core/dom/events/EventTarget.h"
 #include "core/frame/HostsUsingFeatures.h"
 #include "core/frame/UseCounter.h"
+#include "core/script/ExecutionContext.h"
 #include "core/svg/SVGElement.h"
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"

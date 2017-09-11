@@ -25,9 +25,9 @@
 
 #include "modules/webaudio/MediaElementAudioSourceNode.h"
 
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "modules/webaudio/AudioNodeOutput.h"
 #include "modules/webaudio/BaseAudioContext.h"
 #include "modules/webaudio/MediaElementAudioSourceOptions.h"

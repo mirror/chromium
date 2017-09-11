@@ -31,7 +31,6 @@
 #include "core/frame/VisualViewport.h"
 
 #include <memory>
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/LocalFrameView.h"
@@ -46,6 +45,7 @@
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
 #include "core/probe/CoreProbes.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/Histogram.h"
 #include "platform/geometry/DoubleRect.h"

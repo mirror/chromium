@@ -14,7 +14,7 @@
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8DOMConfiguration.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/wtf/Assertions.h"
 
 namespace blink {

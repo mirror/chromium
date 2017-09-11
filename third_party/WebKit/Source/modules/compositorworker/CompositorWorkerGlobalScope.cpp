@@ -8,7 +8,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/dom/CompositorWorkerProxyClient.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/InProcessWorkerObjectProxy.h"
 #include "modules/EventTargetModules.h"

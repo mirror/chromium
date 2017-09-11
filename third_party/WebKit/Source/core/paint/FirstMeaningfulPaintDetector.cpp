@@ -5,9 +5,9 @@
 #include "core/paint/FirstMeaningfulPaintDetector.h"
 
 #include "core/css/FontFaceSetDocument.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/paint/PaintTiming.h"
 #include "core/probe/CoreProbes.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/Histogram.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"

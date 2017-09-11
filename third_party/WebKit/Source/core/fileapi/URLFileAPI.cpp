@@ -5,10 +5,10 @@
 #include "core/fileapi/URLFileAPI.h"
 
 #include "bindings/core/v8/ExceptionState.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/fileapi/Blob.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/PublicURLManager.h"
+#include "core/script/ExecutionContext.h"
 #include "core/url/DOMURL.h"
 #include "platform/bindings/ScriptState.h"
 

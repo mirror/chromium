@@ -31,7 +31,7 @@
 #include "bindings/modules/v8/ToV8ForModules.h"
 #include "bindings/modules/v8/V8BindingForModules.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/indexeddb/IDBDatabase.h"
 #include "modules/indexeddb/IDBKey.h"
 #include "modules/indexeddb/IDBObjectStore.h"

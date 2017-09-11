@@ -4,8 +4,8 @@
 
 #include "core/workers/WorkletModuleTreeClient.h"
 
-#include "core/dom/ModuleScript.h"
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/ModuleScript.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkletGlobalScope.h"
 #include "platform/CrossThreadFunctional.h"

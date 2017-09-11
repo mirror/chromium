@@ -4,8 +4,8 @@
 
 #include "modules/battery/NavigatorBattery.h"
 
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalFrame.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/battery/BatteryManager.h"
 
 namespace blink {

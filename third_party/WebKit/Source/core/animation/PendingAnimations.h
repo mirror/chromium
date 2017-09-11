@@ -33,7 +33,7 @@
 
 #include "core/CoreExport.h"
 #include "core/animation/Animation.h"
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/Timer.h"
 #include "platform/graphics/CompositorElementId.h"
 #include "platform/heap/Handle.h"

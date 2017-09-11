@@ -5,10 +5,10 @@
 #ifndef IdleSpellCheckCallback_h
 #define IdleSpellCheckCallback_h
 
-#include "core/dom/ScriptedIdleTaskController.h"
 #include "core/dom/SynchronousMutationObserver.h"
 #include "core/editing/EphemeralRange.h"
 #include "core/editing/Position.h"
+#include "core/script/ScriptedIdleTaskController.h"
 #include "platform/Timer.h"
 
 namespace blink {

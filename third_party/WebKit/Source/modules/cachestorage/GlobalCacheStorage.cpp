@@ -4,9 +4,9 @@
 
 #include "modules/cachestorage/GlobalCacheStorage.h"
 
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/UseCounter.h"
+#include "core/script/ExecutionContext.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "modules/cachestorage/CacheStorage.h"
 #include "platform/Supplementable.h"

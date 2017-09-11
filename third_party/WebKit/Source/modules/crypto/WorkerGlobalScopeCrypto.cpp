@@ -30,7 +30,7 @@
 
 #include "modules/crypto/WorkerGlobalScopeCrypto.h"
 
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/crypto/Crypto.h"
 
 namespace blink {

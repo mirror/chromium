@@ -27,13 +27,13 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/Node.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
 #include "core/html/TextControlElement.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/Histogram.h"
 #include "platform/text/TextCheckerClient.h"
 

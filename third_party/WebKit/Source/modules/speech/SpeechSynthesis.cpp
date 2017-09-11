@@ -25,7 +25,7 @@
 
 #include "modules/speech/SpeechSynthesis.h"
 
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/speech/SpeechSynthesisEvent.h"
 #include "platform/speech/PlatformSpeechSynthesisVoice.h"
 #include "platform/wtf/CurrentTime.h"

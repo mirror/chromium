@@ -6,8 +6,8 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
 #include "modules/sensor/SensorErrorEvent.h"

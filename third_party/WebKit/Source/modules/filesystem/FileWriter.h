@@ -32,8 +32,8 @@
 #define FileWriter_h
 
 #include "core/dom/ContextLifecycleObserver.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/fileapi/FileError.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/EventTargetModules.h"
 #include "modules/filesystem/FileWriterBase.h"
 #include "platform/bindings/ActiveScriptWrappable.h"

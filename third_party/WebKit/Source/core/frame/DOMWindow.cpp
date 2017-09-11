@@ -8,7 +8,6 @@
 
 #include "bindings/core/v8/WindowProxyManager.h"
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/dom/SecurityContext.h"
 #include "core/events/MessageEvent.h"
 #include "core/frame/Frame.h"
@@ -26,6 +25,7 @@
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 #include "core/probe/CoreProbes.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/weborigin/Suborigin.h"

@@ -33,9 +33,9 @@
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/dom/events/Event.h"
 #include "core/frame/LocalFrame.h"
+#include "core/script/ExecutionContext.h"
 
 namespace blink {
 

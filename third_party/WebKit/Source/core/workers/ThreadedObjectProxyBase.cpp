@@ -5,8 +5,8 @@
 #include "core/workers/ThreadedObjectProxyBase.h"
 
 #include <memory>
-#include "core/dom/ExecutionContext.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/script/ExecutionContext.h"
 #include "core/workers/ParentFrameTaskRunners.h"
 #include "core/workers/ThreadedMessagingProxyBase.h"
 #include "platform/CrossThreadFunctional.h"

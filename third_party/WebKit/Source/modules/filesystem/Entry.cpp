@@ -29,10 +29,10 @@
  */
 #include "modules/filesystem/Entry.h"
 
-#include "core/dom/ExecutionContext.h"
 #include "core/fileapi/FileError.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/VoidCallback.h"
+#include "core/script/ExecutionContext.h"
 #include "modules/filesystem/DirectoryEntry.h"
 #include "modules/filesystem/EntryCallback.h"
 #include "modules/filesystem/ErrorCallback.h"

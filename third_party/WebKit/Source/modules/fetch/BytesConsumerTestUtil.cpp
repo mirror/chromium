@@ -4,8 +4,8 @@
 
 #include "modules/fetch/BytesConsumerTestUtil.h"
 
-#include "core/dom/ExecutionContext.h"
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/ExecutionContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/Assertions.h"

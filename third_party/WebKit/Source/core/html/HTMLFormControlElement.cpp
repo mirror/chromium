@@ -25,7 +25,6 @@
 #include "core/html/HTMLFormControlElement.h"
 
 #include "core/dom/ElementTraversal.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/dom/events/Event.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLDataListElement.h"
@@ -40,6 +39,7 @@
 #include "core/layout/LayoutTheme.h"
 #include "core/page/Page.h"
 #include "core/page/ValidationMessageClient.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/text/BidiTextRun.h"
 #include "platform/wtf/Vector.h"

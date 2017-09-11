@@ -35,16 +35,16 @@
 #include "bindings/core/v8/V8ObjectBuilder.h"
 #include "core/dom/Document.h"
 #include "core/dom/QualifiedName.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/DOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/origin_trials/OriginTrials.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/timing/PerformanceTiming.h"
-#include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/loader/fetch/ResourceTimingInfo.h"
 
 static const double kLongTaskObserverThreshold = 0.05;
 

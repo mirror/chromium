@@ -18,7 +18,7 @@
 #include "bindings/core/v8/V8TestInterface2.h"
 #include "bindings/tests/idls/modules/TestInterface2Partial.h"
 #include "bindings/tests/idls/modules/TestInterface2Partial2.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/V8ObjectConstructor.h"

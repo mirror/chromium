@@ -28,11 +28,11 @@
 #include <memory>
 #include "bindings/modules/v8/v8_database_callback.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/ExecutionContext.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/html/VoidCallback.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/probe/CoreProbes.h"
+#include "core/script/ExecutionContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "modules/webdatabase/ChangeVersionData.h"
 #include "modules/webdatabase/ChangeVersionWrapper.h"
 #include "modules/webdatabase/DatabaseAuthorizer.h"

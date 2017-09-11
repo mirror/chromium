@@ -6,8 +6,8 @@
 
 #include <memory>
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContext.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "core/script/ExecutionContext.h"
 #include "public/web/WebFrameClient.h"
 
 namespace blink {

@@ -7,7 +7,7 @@
 #include <memory>
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/script/ExecutionContext.h"
 #include "core/streams/ReadableStreamController.h"
 #include "core/streams/ReadableStreamOperations.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"

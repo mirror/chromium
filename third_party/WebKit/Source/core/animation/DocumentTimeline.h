@@ -37,7 +37,7 @@
 #include "core/animation/AnimationTimeline.h"
 #include "core/animation/EffectModel.h"
 #include "core/dom/Element.h"
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/Timer.h"
 #include "platform/animation/CompositorAnimationTimeline.h"
 #include "platform/bindings/ScriptWrappable.h"

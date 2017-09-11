@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #include "build/build_config.h"
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "core/testing/sim/SimRequest.h"
 #include "core/testing/sim/SimTest.h"
 #include "platform/scheduler/renderer/web_view_scheduler.h"

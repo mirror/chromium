@@ -4,8 +4,8 @@
 
 #include "modules/fetch/BytesConsumerForDataConsumerHandle.h"
 
-#include "core/dom/ExecutionContext.h"
-#include "core/dom/TaskRunnerHelper.h"
+#include "core/script/ExecutionContext.h"
+#include "core/script/TaskRunnerHelper.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/wtf/Functional.h"
 #include "public/platform/WebTraceLocation.h"

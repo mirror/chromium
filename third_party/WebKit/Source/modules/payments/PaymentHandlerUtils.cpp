@@ -4,8 +4,8 @@
 
 #include "modules/payments/PaymentHandlerUtils.h"
 
-#include "core/dom/ExecutionContext.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/script/ExecutionContext.h"
 
 namespace blink {
 
