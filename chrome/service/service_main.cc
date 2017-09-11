@@ -7,6 +7,8 @@
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/statistics_recorder.h"
 #include "base/run_loop.h"
+#include "base/task_scheduler/scheduler_worker_pool_params.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "chrome/common/service_process_util.h"
 #include "chrome/service/service_process.h"
 #include "content/public/common/main_function_params.h"
@@ -24,6 +26,21 @@ int CloudPrintServiceProcessMain(
   if (parameters.command_line.HasSwitch(switches::kWaitForDebugger)) {
     base::debug::WaitForDebugger(60, true);
   }
+
+  // Initialize TaskScheduler.
+  constexpr int kMaxBackgroundThreads = 1;
+  constexpr int kMaxBackgroundBlockingThreads = 1;
+  constexpr int kMaxForegroundThreads = 3;
+  constexpr int kMaxForegroundBlockingThreads = 3;
+  constexpr base::TimeDelta kSuggestedReclaimTime =
+      base::TimeDelta::FromSeconds(30);
+  base::TaskScheduler::Create("CloudPrintServiceProcess");
+  base::TaskScheduler::GetInstance()->Start(
+      {{kMaxBackgroundThreads, kSuggestedReclaimTime},
+       {kMaxBackgroundBlockingThreads, kSuggestedReclaimTime},
+       {kMaxForegroundThreads, kSuggestedReclaimTime},
+       {kMaxForegroundBlockingThreads, kSuggestedReclaimTime,
+        base::SchedulerBackwardCompatibility::INIT_COM_STA}});
 
   VLOG(1) << "Service process launched: "
           << parameters.command_line.GetCommandLineString();
