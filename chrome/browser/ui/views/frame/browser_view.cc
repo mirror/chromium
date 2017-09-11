@@ -93,6 +93,7 @@
 #include "chrome/browser/ui/views/translate/translate_bubble_view.h"
 #include "chrome/browser/ui/views/update_recommended_message_box.h"
 #include "chrome/browser/ui/window_sizer/window_sizer.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/command.h"
 #include "chrome/common/features.h"
@@ -1631,6 +1632,12 @@ views::View* BrowserView::GetInitiallyFocusedView() {
 
 bool BrowserView::ShouldShowWindowTitle() const {
 #if defined(OS_CHROMEOS)
+  // PWAs on ChromeOS should always show their title.
+  if (base::FeatureList::IsEnabled(features::kDesktopPWAWindowing) &&
+      browser_->is_app()) {
+    return true;
+  }
+
   // For Chrome OS only, trusted windows (apps and settings) do not show a
   // title, crbug.com/119411. Child windows (i.e. popups) do show a title.
   if (browser_->is_trusted_source())

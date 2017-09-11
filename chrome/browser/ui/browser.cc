@@ -668,8 +668,13 @@ base::string16 Browser::GetWindowTitleFromWebContents(
     title = contents->GetTitle();
     FormatTitleForDisplay(&title);
   }
-  if (title.empty())
+
+  // Leave the title empty for desktop PWAs.
+  if (title.empty() &&
+      !base::FeatureList::IsEnabled(features::kDesktopPWAWindowing) &&
+      !is_app()) {
     title = CoreTabHelper::GetDefaultTitle();
+  }
 
 #if defined(OS_MACOSX)
   // On Mac, we don't want to suffix the page title with the application name.
