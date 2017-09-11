@@ -10281,6 +10281,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="ContentSettings.Popups.FirstDocumentEngagementTime" units="ms">
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    The visible time spent on the first document in a popup. Logged when the
+    first document in a popup is navigated away or is closed.
+  </summary>
+</histogram>
+
 <histogram name="ContextMenu.SaveLinkType" enum="ContextMenuSaveLinkType">
   <owner>qinmin@chromium.org</owner>
   <summary>
