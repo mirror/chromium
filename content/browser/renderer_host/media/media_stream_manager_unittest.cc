@@ -185,7 +185,8 @@ class MediaStreamManagerTest : public ::testing::Test {
   }
 
  protected:
-  std::string MakeMediaAccessRequest(int index) {
+  std::string MakeMediaAccessRequest(const StreamControls& controls,
+                                     int index) {
     const int render_process_id = 1;
     const int render_frame_id = 1;
     const int page_request_id = 1;
@@ -193,7 +194,6 @@ class MediaStreamManagerTest : public ::testing::Test {
     MediaStreamManager::MediaRequestResponseCallback callback =
         base::BindOnce(&MediaStreamManagerTest::ResponseCallback,
                        base::Unretained(this), index);
-    StreamControls controls(true, true);
     return media_stream_manager_->MakeMediaAccessRequest(
         render_process_id, render_frame_id, page_request_id, controls,
         security_origin, std::move(callback));
@@ -213,7 +213,8 @@ class MediaStreamManagerTest : public ::testing::Test {
 };
 
 TEST_F(MediaStreamManagerTest, MakeMediaAccessRequest) {
-  MakeMediaAccessRequest(0);
+  const StreamControls& controls = StreamControls(true, true);
+  MakeMediaAccessRequest(controls, 0);
 
   // Expecting the callback will be triggered and quit the test.
   EXPECT_CALL(*this, Response(0));
@@ -221,22 +222,23 @@ TEST_F(MediaStreamManagerTest, MakeMediaAccessRequest) {
 }
 
 TEST_F(MediaStreamManagerTest, MakeAndCancelMediaAccessRequest) {
-  std::string label = MakeMediaAccessRequest(0);
+  const StreamControls& controls = StreamControls(true, true);
+  std::string label = MakeMediaAccessRequest(controls, 0);
   // No callback is expected.
   media_stream_manager_->CancelRequest(label);
   run_loop_.RunUntilIdle();
 }
 
 TEST_F(MediaStreamManagerTest, MakeMultipleRequests) {
+  const StreamControls& controls = StreamControls(true, true);
   // First request.
-  std::string label1 =  MakeMediaAccessRequest(0);
+  std::string label1 = MakeMediaAccessRequest(controls, 0);
 
   // Second request.
   int render_process_id = 2;
   int render_frame_id = 2;
   int page_request_id = 2;
   url::Origin security_origin;
-  StreamControls controls(true, true);
   MediaStreamManager::MediaRequestResponseCallback callback = base::BindOnce(
       &MediaStreamManagerTest::ResponseCallback, base::Unretained(this), 1);
   std::string label2 = media_stream_manager_->MakeMediaAccessRequest(
@@ -252,13 +254,23 @@ TEST_F(MediaStreamManagerTest, MakeMultipleRequests) {
 }
 
 TEST_F(MediaStreamManagerTest, MakeAndCancelMultipleRequests) {
-  std::string label1 = MakeMediaAccessRequest(0);
-  std::string label2 = MakeMediaAccessRequest(1);
+  const StreamControls& controls = StreamControls(true, true);
+  std::string label1 = MakeMediaAccessRequest(controls, 0);
+  std::string label2 = MakeMediaAccessRequest(controls, 1);
   media_stream_manager_->CancelRequest(label1);
 
   // Expecting the callback from the second request will be triggered and
   // quit the test.
   EXPECT_CALL(*this, Response(1));
+  run_loop_.Run();
+}
+
+TEST_F(MediaStreamManagerTest, MakeSystemAudioAccessRequest) {
+  StreamControls controls = StreamControls(false, true);
+  controls.audio.stream_source = kMediaStreamSourceSystem;
+  std::string label = MakeMediaAccessRequest(controls, 0);
+  // Expecting the callback will be triggered and quit the test.
+  EXPECT_CALL(*this, Response(0));
   run_loop_.Run();
 }
 

@@ -101,6 +101,8 @@ class CONTENT_EXPORT MediaStreamDispatcher
   FRIEND_TEST_ALL_PREFIXES(MediaStreamDispatcherTest,
                            GetNonScreenCaptureDevices);
   FRIEND_TEST_ALL_PREFIXES(MediaStreamDispatcherTest, DeviceClosed);
+  FRIEND_TEST_ALL_PREFIXES(MediaStreamDispatcherTest,
+                           GetSystemAudioCaptureDevice);
 
   struct Request;
 
