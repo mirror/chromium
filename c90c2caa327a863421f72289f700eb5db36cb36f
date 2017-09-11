@@ -16,6 +16,24 @@
       "revId": "c90c2caa327a863421f72289f700eb5db36cb36f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ea60cd_fe2c209b",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5235,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-11T17:20:19Z",
+      "side": 1,
+      "message": "When AbortClientNavigation is called (only way to get to this state), the code already sent a DidStopLoading IPC.\n\n\u003e content.dll!content::RenderFrameImpl::DidStopLoading() Line 5182\n  blink_core.dll!blink::LocalFrameClientImpl::DidStopLoading() Line 625\n  blink_core.dll!blink::ProgressTracker::ProgressCompleted() Line 125\n  blink_core.dll!blink::FrameLoader::DidFinishNavigation() Line 467\n  blink_core.dll!blink::FrameLoader::DetachProvisionalDocumentLoader(blink::DocumentLoader * loader) Line 1207\n  blink_core.dll!blink::DocumentLoader::LoadFailed(const blink::ResourceError \u0026 error) Line 419\n  blink_core.dll!blink::DocumentLoader::DetachFromFrame() Line 774\n  blink_core.dll!blink::WebDocumentLoaderImpl::DetachFromFrame() Line 160\n  blink_core.dll!blink::FrameLoader::DetachDocumentLoader(blink::Member\u003cblink::DocumentLoader\u003e \u0026 loader) Line 540  blink_core.dll!blink::FrameLoader::StopAllLoaders() Line 961\n  blink_core.dll!blink::Document::open() Line 2934",
+      "parentUuid": "40c1768f_a693bdaa",
+      "revId": "c90c2caa327a863421f72289f700eb5db36cb36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
