@@ -668,6 +668,12 @@ static bool NeedsFilter(const LayoutObject& object) {
          (object.StyleRef().HasFilter() || object.HasReflection());
 }
 
+static inline bool TransformOrClipDifferent(
+    const PaintPropertyTreeBuilderFragmentContext::ContainingBlockContext& a,
+    const PaintPropertyTreeBuilderFragmentContext::ContainingBlockContext& b) {
+  return a.clip != b.clip;
+}
+
 void PaintPropertyTreeBuilder::UpdateFilter(
     const LayoutObject& object,
     ObjectPaintProperties& properties,
@@ -677,6 +683,13 @@ void PaintPropertyTreeBuilder::UpdateFilter(
 
   if (object.NeedsPaintPropertyUpdate() || force_subtree_update) {
     if (NeedsFilter(object)) {
+      if (TransformOrClipDifferent(context.current,
+                                   context.absolute_position) ||
+          TransformOrClipDifferent(context.current, context.fixed_position)) {
+        UseCounter::Count(object.GetDocument(),
+                          WebFeature::kFilterAsContainingBlockMayChangeOutput);
+      }
+
       CompositorFilterOperations filter =
           ToLayoutBoxModelObject(object)
               .Layer()
