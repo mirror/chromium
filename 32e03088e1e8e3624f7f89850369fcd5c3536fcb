@@ -99,6 +99,24 @@
       "revId": "32e03088e1e8e3624f7f89850369fcd5c3536fcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd30918_c6260450",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_types.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-11T08:10:19Z",
+      "side": 1,
+      "message": "I see, then how about rename this file as service_worker_registration.mojom? We can also put ServiceWorkerRegistrationObjectInfo inside this file later. As ServiceWorkerRegistrationObjectInfo has a ServiceWorkerRegistrationOptions member, I suppose we can consider them as a logical group for sw registration related types?",
+      "parentUuid": "6f144b7f_8bf3d90c",
+      "revId": "32e03088e1e8e3624f7f89850369fcd5c3536fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
