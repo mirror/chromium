@@ -16,6 +16,40 @@
       "revId": "c235a407f8a4a14aad6f7a0a98e38228c4981336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1398ab09_5ccc679d",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-11T14:14:15Z",
+      "side": 1,
+      "message": "nit: const VectorIcon\u0026 or just VectorIcon (I think they are cheap to copy)",
+      "revId": "c235a407f8a4a14aad6f7a0a98e38228c4981336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8296b643_0d1b9fef",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-11T14:14:15Z",
+      "side": 1,
+      "message": "nit: ash:: not needed, here or below",
+      "revId": "c235a407f8a4a14aad6f7a0a98e38228c4981336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
