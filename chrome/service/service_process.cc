@@ -23,8 +23,6 @@
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/waitable_event.h"
-#include "base/task_scheduler/scheduler_worker_pool_params.h"
-#include "base/task_scheduler/task_scheduler.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -164,22 +162,6 @@ bool ServiceProcess::Initialize(base::MessageLoopForUI* message_loop,
     Teardown();
     return false;
   }
-
-  // Initialize TaskScheduler and redirect SequencedWorkerPool tasks to it.
-  constexpr int kMaxBackgroundThreads = 1;
-  constexpr int kMaxBackgroundBlockingThreads = 1;
-  constexpr int kMaxForegroundThreads = 3;
-  constexpr int kMaxForegroundBlockingThreads = 3;
-  constexpr base::TimeDelta kSuggestedReclaimTime =
-      base::TimeDelta::FromSeconds(30);
-
-  base::TaskScheduler::Create("CloudPrintServiceProcess");
-  base::TaskScheduler::GetInstance()->Start(
-      {{kMaxBackgroundThreads, kSuggestedReclaimTime},
-       {kMaxBackgroundBlockingThreads, kSuggestedReclaimTime},
-       {kMaxForegroundThreads, kSuggestedReclaimTime},
-       {kMaxForegroundBlockingThreads, kSuggestedReclaimTime,
-        base::SchedulerBackwardCompatibility::INIT_COM_STA}});
 
   base::SequencedWorkerPool::EnableWithRedirectionToTaskSchedulerForProcess();
 
