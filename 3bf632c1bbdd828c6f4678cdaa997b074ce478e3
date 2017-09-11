@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a405136_ab123b5a",
+        "filename": "chrome/app/vector_icons/notification_storage_full.1x.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-09-11T09:23:34Z",
+      "side": 1,
+      "message": "It turned out we need 1x icons. https://crbug.com/726241#c17",
+      "revId": "3bf632c1bbdd828c6f4678cdaa997b074ce478e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
