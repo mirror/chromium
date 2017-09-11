@@ -57,6 +57,9 @@ class OmniboxPopupViewIOS : public OmniboxPopupView,
   void OnMatchSelectedForDeletion(const AutocompleteMatch& match) override;
   void OnScroll() override;
 
+  OmniboxPopupMediator* GetMediator();
+  OmniboxPopupMaterialViewController* GetViewController();
+
  private:
   std::unique_ptr<OmniboxPopupModel> model_;
   OmniboxPopupViewSuggestionsDelegate* delegate_;  // weak

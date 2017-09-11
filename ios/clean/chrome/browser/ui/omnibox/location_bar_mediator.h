@@ -13,6 +13,11 @@
 class LocationBarController;
 class WebStateList;
 
+@protocol PopupDisplaying<NSObject>
+- (void)showPopup;
+- (void)hidePopup;
+@end
+
 // LocationBarMediator listens for notifications from various models and updates
 // the UI accordingly.  Unlike other mediators in the new architecture,
 // LocationBarMediator is constrained to operate within the confines of the
@@ -31,6 +36,8 @@ class WebStateList;
 // updates the UI through this LocationBarController object rather than through
 // a consumer.
 - (void)setLocationBar:(std::unique_ptr<LocationBarController>)locationBar;
+
+@property(nonatomic, weak) id<PopupDisplaying> popupDisplayer;
 
 @end
 

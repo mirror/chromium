@@ -8,6 +8,8 @@ source_set("omnibox") {
     "location_bar_coordinator.mm",
     "location_bar_mediator.h",
     "location_bar_mediator.mm",
+    "popup_coordinator.h",
+    "popup_coordinator.mm",
   ]
   deps = [
     ":omnibox_ui",

@@ -33,6 +33,10 @@
 // currently closed.
 @property(nonatomic, strong) UIViewController* findBarViewController;
 
+// View controller showing the omnibox popup. May be nil if the popup is not
+// currently displayed.
+@property(nonatomic, strong) UIViewController* popupViewController;
+
 // Transitioning delegate for containment animations. By default it's the
 // tab container view controller itself.
 @property(nonatomic, weak) id<ContainmentTransitioningDelegate>

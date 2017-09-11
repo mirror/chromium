@@ -51,6 +51,7 @@
 }
 
 @synthesize webStateList = _webStateList;
+@synthesize popupDisplayer = _popupDisplayer;
 
 - (instancetype)initWithWebStateList:(WebStateList*)webStateList {
   if ((self = [super init])) {
@@ -112,11 +113,13 @@
 - (void)locationBarHasBecomeFirstResponder {
   // TODO(crbug.com/708341): Implement this method or edit this comment with an
   // explanation of what this method needs to do.
+  [self.popupDisplayer showPopup];
 }
 
 - (void)locationBarHasResignedFirstResponder {
   // TODO(crbug.com/708341): Implement this method or edit this comment with an
   // explanation of what this method needs to do.
+  [self.popupDisplayer hidePopup];
 }
 
 - (void)locationBarBeganEdit {

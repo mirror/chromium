@@ -122,7 +122,15 @@
     self.viewController.contentViewController =
         self.ntpCoordinator.viewController;
   }
+
+  [self.browser->dispatcher() startDispatchingToTarget:self
+                                           forSelector:@selector(fooBarBaz:)];
+
   [super start];
+}
+
+- (void)fooBarBaz:(UIViewController*)foo {
+  self.viewController.popupViewController = foo;
 }
 
 - (void)stop {

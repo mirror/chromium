@@ -51,6 +51,7 @@ const CGFloat kToolbarHeight = 56.0f;
 @synthesize containmentTransitioningDelegate =
     _containmentTransitioningDelegate;
 @synthesize usesBottomToolbar = _usesBottomToolbar;
+@synthesize popupViewController = _popupViewController;
 
 #pragma mark - UIViewController
 
@@ -124,6 +125,38 @@ const CGFloat kToolbarHeight = 56.0f;
   _toolbarViewController = toolbarViewController;
 }
 
+- (void)setPopupViewController:(UIViewController*)popupViewController {
+  if (_popupViewController == popupViewController) {
+    return;
+  }
+
+  if (_popupViewController) {
+    [_popupViewController willMoveToParentViewController:nil];
+    [_popupViewController removeFromParentViewController];
+    [_popupViewController.view removeFromSuperview];
+    [_popupViewController didMoveToParentViewController:nil];
+  }
+
+  if (popupViewController) {
+    UIView* popup = popupViewController.view;
+    [popupViewController willMoveToParentViewController:self];
+    [self addChildViewController:popupViewController];
+    [self.view addSubview:popup];
+    [NSLayoutConstraint activateConstraints:@[
+      [popup.leftAnchor constraintEqualToAnchor:self.toolbarView.leftAnchor],
+      [popup.rightAnchor constraintEqualToAnchor:self.toolbarView.rightAnchor],
+      [popup.heightAnchor constraintEqualToConstant:300.0f],
+      [popup.topAnchor constraintEqualToAnchor:self.toolbarView.bottomAnchor],
+    ]];
+
+    popup.translatesAutoresizingMaskIntoConstraints = NO;
+    popup.backgroundColor = [UIColor whiteColor];
+    [popupViewController didMoveToParentViewController:self];
+  }
+
+  _popupViewController = popupViewController;
+}
+
 - (void)setUsesBottomToolbar:(BOOL)usesBottomToolbar {
   DCHECK(![self isViewLoaded]);
   _usesBottomToolbar = usesBottomToolbar;
@@ -195,8 +228,9 @@ const CGFloat kToolbarHeight = 56.0f;
 
   [self.view addSubview:self.containerView];
   [self.view addSubview:self.statusBarBackgroundView];
-  [self.containerView addSubview:self.toolbarView];
   [self.containerView addSubview:self.contentView];
+  [self.containerView addSubview:self.toolbarView];
+
   // Findbar should have higher z-order than toolbar.
   [self.containerView addSubview:self.findBarView];
   self.findBarView.hidden = YES;

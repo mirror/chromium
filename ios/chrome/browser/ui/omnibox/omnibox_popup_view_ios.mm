@@ -100,10 +100,10 @@ void OmniboxPopupViewIOS::UpdatePopupAppearance() {
   is_open_ = !result.empty();
 
   if (is_open_) {
-    [presenter_ updateHeightAndAnimateAppearanceIfNecessary];
+    //    [presenter_ updateHeightAndAnimateAppearanceIfNecessary];
     UpdateEditViewIcon();
   } else {
-    [presenter_ animateCollapse];
+    //    [presenter_ animateCollapse];
   }
 
   delegate_->OnResultsChanged(result);
@@ -163,4 +163,12 @@ void OmniboxPopupViewIOS::OnMatchSelectedForDeletion(
 
 void OmniboxPopupViewIOS::OnScroll() {
   delegate_->OnPopupDidScroll();
+}
+
+OmniboxPopupMediator* OmniboxPopupViewIOS::GetMediator() {
+  return mediator_.get();
+}
+
+OmniboxPopupMaterialViewController* OmniboxPopupViewIOS::GetViewController() {
+  return popup_controller_.get();
 }

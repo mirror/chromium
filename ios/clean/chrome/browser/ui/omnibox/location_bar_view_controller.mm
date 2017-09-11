@@ -15,7 +15,6 @@
 @end
 
 @implementation LocationBarViewController
-
 @synthesize omnibox = _omnibox;
 
 - (instancetype)init {

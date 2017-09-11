@@ -361,3 +361,7 @@ void LocationBarControllerImpl::UpdateRightDecorations() {
     [clear_text_button_ setAlpha:1];
   }
 }
+
+OmniboxPopupViewIOS* LocationBarControllerImpl::GetPopupView() {
+  return edit_view_->GetPopupView();
+}

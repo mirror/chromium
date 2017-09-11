@@ -42,6 +42,8 @@ class OmniboxViewIOS : public OmniboxView,
                  id<OmniboxPopupPositioner> positioner);
   ~OmniboxViewIOS() override;
 
+  OmniboxPopupViewIOS* GetPopupView() { return popup_view_.get(); };
+
   // Returns a color representing |security_level|, adjusted based on whether
   // the browser is in Incognito mode.
   static UIColor* GetSecureTextColor(

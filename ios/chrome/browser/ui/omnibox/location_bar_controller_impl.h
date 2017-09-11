@@ -27,6 +27,7 @@ class WebState;
 @protocol LocationBarDelegate;
 @class PageInfoBridge;
 class OmniboxViewIOS;
+class OmniboxPopupViewIOS;
 @class OmniboxClearButtonBridge;
 @protocol OmniboxPopupPositioner;
 @class OmniboxTextFieldIOS;
@@ -43,6 +44,8 @@ class LocationBarControllerImpl : public LocationBarController {
                             id<LocationBarDelegate> delegate,
                             id<BrowserCommands> dispatcher);
   ~LocationBarControllerImpl() override;
+
+  OmniboxPopupViewIOS* GetPopupView();
 
   // OmniboxEditController implementation
   void OnAutocompleteAccept(const GURL& url,
