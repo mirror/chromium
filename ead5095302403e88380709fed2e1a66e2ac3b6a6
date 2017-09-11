@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "48d6d067_1c7bd81e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-11T19:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fa2c8d2_e9406afb",
+      "range": {
+        "startLine": 10,
+        "startChar": 50,
+        "endLine": 10,
+        "endChar": 52
+      },
+      "revId": "ead5095302403e88380709fed2e1a66e2ac3b6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc480c9c_13746996",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-11T19:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a5b8bb7_74f469c1",
+      "range": {
+        "startLine": 10,
+        "startChar": 62,
+        "endLine": 10,
+        "endChar": 65
+      },
+      "revId": "ead5095302403e88380709fed2e1a66e2ac3b6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c19e0d18_250f7286",
         "filename": "/COMMIT_MSG",
         "patchSetId": 10
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-11T18:02:57Z",
       "side": 1,
       "message": "Was this determined via test failures, or by code inspection?\n\nWill help me judge how hard I should be looking at the other changed callsites. In this first pass I didn\u0027t dive into all the references of the changed members.",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 59
+      },
+      "revId": "ead5095302403e88380709fed2e1a66e2ac3b6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e183ec2_c8fb9aae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-11T19:03:21Z",
+      "side": 1,
+      "message": "These were all diagnosed via test failures. circular_deque has a lot of checks against unstable iterator usage that will identify these almost right away. After replacing several hundred deques, net is the first one that relies on pointer stability in a deque. I\u0027m a bit uncomfortable about this and would prefer people manually malloc and use unique_ptrs if they count on pointer stability.",
+      "parentUuid": "c19e0d18_250f7286",
       "range": {
         "startLine": 17,
         "startChar": 13,
@@ -134,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "2d39fae0_8d71852b",
+        "filename": "net/quic/core/quic_unacked_packet_map.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-11T19:03:21Z",
+      "side": 1,
+      "message": "I\u0027m planning on adding a blanket presumbit check for std::deque, so I think we should change everything. I would recommend a circular_deque\u003cunique_ptr\u003cQuicTransmissionInfo\u003e\u003e if you need pointer stability, but that was beyond the scope of this change.",
+      "parentUuid": "53430011_dd33cb7d",
+      "revId": "ead5095302403e88380709fed2e1a66e2ac3b6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecc546e5_d55ae74e",
         "filename": "net/spdy/core/priority_write_scheduler.h",
         "patchSetId": 10
@@ -157,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "a913b3e7_13292685",
+        "filename": "net/spdy/core/priority_write_scheduler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-11T19:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecc546e5_d55ae74e",
+      "range": {
+        "startLine": 264,
+        "startChar": 38,
+        "endLine": 264,
+        "endChar": 43
+      },
+      "revId": "ead5095302403e88380709fed2e1a66e2ac3b6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e525ecf_2dbfa587",
         "filename": "net/spdy/core/priority_write_scheduler.h",
         "patchSetId": 10
@@ -168,6 +282,24 @@
       "writtenOn": "2017-09-11T18:02:57Z",
       "side": 1,
       "message": "@bnc please review this modification - will the performance gains of https://codereview.chromium.org/2020773003 be affected by this?",
+      "revId": "ead5095302403e88380709fed2e1a66e2ac3b6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e2f7ca1_bb4e3544",
+        "filename": "net/spdy/core/priority_write_scheduler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-11T19:03:21Z",
+      "side": 1,
+      "message": "My opinion is that for trivially copyable members, the circular_deque will probably be faster than a std::deque. But this will depend on a lot of things. Note that with circular_deque you can reserve() in advance if you\u0027re going to be adding a bunch of stuff. See the important notes in the circular_deque header above reserve() if you\u0027re thinking about adding this.",
+      "parentUuid": "0e525ecf_2dbfa587",
       "revId": "ead5095302403e88380709fed2e1a66e2ac3b6a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
