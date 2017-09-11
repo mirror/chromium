@@ -11,11 +11,13 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/stl_util.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/autofill/content/renderer/form_autofill_util.h"
 #include "components/autofill/content/renderer/form_classifier.h"
 #include "components/autofill/content/renderer/password_autofill_agent.h"
 #include "components/autofill/content/renderer/password_form_conversion_utils.h"
+#include "components/autofill/core/browser/password_generator.h"
 #include "components/autofill/core/common/autofill_switches.h"
 #include "components/autofill/core/common/form_data.h"
 #include "components/autofill/core/common/password_form.h"
@@ -579,7 +581,7 @@ void PasswordGenerationAgent::PasswordNoLongerGenerated() {
     GetPasswordManagerDriver()->PasswordNoLongerGenerated(*presaved_form);
 }
 
-void PasswordGenerationAgent::UserTriggeredGeneratePassword() {
+void PasswordGenerationAgent::SetupUserTriggeredGeneration() {
   if (last_focused_password_element_.IsNull() || !render_frame())
     return;
 
@@ -616,6 +618,18 @@ void PasswordGenerationAgent::UserTriggeredGeneratePassword() {
   generation_form_data_.reset(new AccountCreationFormData(
       make_linked_ptr(password_form.release()), password_elements));
   is_manually_triggered_ = true;
+}
+
+void PasswordGenerationAgent::UserTriggeredGeneratePassword() {
+  SetupUserTriggeredGeneration();
+  ShowGenerationPopup();
+}
+
+void PasswordGenerationAgent::UserSelectedManualGenerationOption() {
+  SetupUserTriggeredGeneration();
+  last_focused_password_element_.SetAutofillValue(
+      blink::WebString::FromUTF8(std::string()));
+  last_focused_password_element_.SetAutofilled(false);
   ShowGenerationPopup();
 }
 
