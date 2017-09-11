@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df5cf969_ce590eed",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-11T23:40:56Z",
+      "side": 1,
+      "message": "Right now, a filter will always be a path or a directory, however, this may not be the case in the future, as Mark requested, it would be useful if the script can also filter results according to the sources of a GN build target.\n\nBut in any case, I think you\u0027re right, for now, \u0027-p/--path\u0027, \u0027-d/--directory\u0027 is the most accurate name to use.",
+      "parentUuid": "138df4c7_83c99e84",
+      "revId": "305095cc654df35aacaafc38f71d61600280ec73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ae6910d_cfea66e0",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "305095cc654df35aacaafc38f71d61600280ec73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574072c1_7da81114",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-11T23:40:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ae6910d_cfea66e0",
+      "revId": "305095cc654df35aacaafc38f71d61600280ec73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
