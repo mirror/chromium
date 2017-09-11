@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <memory>
 
+#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "net/quic/core/crypto/quic_crypto_server_config.h"
 #include "net/quic/core/crypto/quic_random.h"
@@ -65,7 +66,7 @@ class QuicSimpleServerSessionPeer {
     return s->CreateOutgoingDynamicStream(priority);
   }
 
-  static std::deque<PromisedStreamInfo>* promised_streams(
+  static base::circular_deque<PromisedStreamInfo>* promised_streams(
       QuicSimpleServerSession* s) {
     return &(s->promised_streams_);
   }
