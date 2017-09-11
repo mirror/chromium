@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cbf97767_2a8edd36",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-11T15:34:54Z",
+      "side": 1,
+      "message": "typo; also, make this a complete sentence with a period at the end.",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "3b7051d546489e1219f6302d62c1af582fdd8d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6662b07_97e4b079",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -13,6 +36,29 @@
       "writtenOn": "2017-09-11T15:04:38Z",
       "side": 1,
       "message": "nit: Can you fix line wrapping here?",
+      "revId": "3b7051d546489e1219f6302d62c1af582fdd8d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327a2d7f_6bf0218d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-11T15:34:54Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 16
+      },
       "revId": "3b7051d546489e1219f6302d62c1af582fdd8d45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
