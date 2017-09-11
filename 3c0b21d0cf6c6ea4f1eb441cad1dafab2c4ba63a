@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "72cb2fed_8679ab6c",
+        "filename": "extensions/browser/extension_loader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-11T18:31:22Z",
+      "side": 1,
+      "message": "d2↓ (if you use vim - otherwise, \"don\u0027t close the namespace here, since you open it two lines later\")",
+      "revId": "3c0b21d0cf6c6ea4f1eb441cad1dafab2c4ba63a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d9e2f25_8e229232",
         "filename": "extensions/browser/extension_loader.h",
         "patchSetId": 5
@@ -13,6 +30,30 @@
       "writtenOn": "2017-09-08T00:40:35Z",
       "side": 1,
       "message": "Should probably rename this but I\u0027ll wait for us to agree on a better name, then update this and the CL description.",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 21
+      },
+      "revId": "3c0b21d0cf6c6ea4f1eb441cad1dafab2c4ba63a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f13152b_993d49ab",
+        "filename": "extensions/browser/extension_loader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-11T18:31:22Z",
+      "side": 1,
+      "message": "Any suggestions?\n\nExtensionLoadStateHandler?  :/",
+      "parentUuid": "7d9e2f25_8e229232",
       "range": {
         "startLine": 28,
         "startChar": 6,
