@@ -7,6 +7,7 @@
 #include "content/browser/download/download_stats.h"
 #include "content/browser/download/download_utils.h"
 #include "content/public/browser/download_url_parameters.h"
+#include "net/http/http_status_code.h"
 #include "net/log/net_log_with_source.h"
 
 namespace content {
@@ -66,16 +67,19 @@ void DownloadResponseHandler::OnReceiveResponse(
     const ResourceResponseHead& head,
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
-  if (head.headers)
-    RecordDownloadHttpResponseCode(head.headers->response_code());
-
   create_info_ = CreateDownloadCreateInfo(head);
 
   if (ssl_info)
     cert_status_ = ssl_info->cert_status;
 
-  if (head.headers)
+  // TODO(xingliu): Do not use http cache.
+  // Sets page transition type correctly and call
+  // |RecordDownloadSourcePageTransitionType| here.
+  if (head.headers) {
     has_strong_validators_ = head.headers->HasStrongValidators();
+    RecordDownloadHttpResponseCode(head.headers->response_code());
+    RecordDownloadContentDisposition(create_info_->content_disposition);
+  }
 
   if (create_info_->result != DOWNLOAD_INTERRUPT_REASON_NONE)
     OnResponseStarted(mojom::DownloadStreamHandlePtr());
@@ -110,6 +114,36 @@ DownloadResponseHandler::CreateDownloadCreateInfo(
       !head.headers->GetMimeType(&create_info->original_mime_type)) {
     create_info->original_mime_type.clear();
   }
+  if (head.headers) {
+    // Parse the "content_length" header. Adjust to 0 if no valid
+    // content_length presents.
+    int64_t content_length = head.headers->GetContentLength();
+    create_info->total_bytes = content_length == -1 ? 0 : content_length;
+
+    // Grab the first content-disposition header.  There may be more than one,
+    // though as of this writing, the network stack ensures if there are, they
+    // are all duplicates.
+    head.headers->EnumerateHeader(nullptr, "Content-Disposition",
+                                  &create_info->content_disposition);
+    if (head.headers->HasStrongValidators()) {
+      // If we don't have strong validators as per RFC 7232 section 2, then
+      // we neither store nor use them for range requests.
+      if (!head.headers->EnumerateHeader(nullptr, "Last-Modified",
+                                         &create_info->last_modified))
+        create_info->last_modified.clear();
+      if (!head.headers->EnumerateHeader(nullptr, "ETag", &create_info->etag))
+        create_info->etag.clear();
+    }
+    // Content-Range is validated in HandleSuccessfulServerResponse.
+    // In RFC 7233, a single part 206 partial response must generate
+    // Content-Range. Accept-Range may be sent in 200 response to indicate the
+    // server can handle range request, but optional in 206 response.
+    create_info->accept_range =
+        head.headers->HasHeaderValue("Accept-Ranges", "bytes") ||
+        (head.headers->HasHeader("Content-Range") &&
+         head.headers->response_code() == net::HTTP_PARTIAL_CONTENT);
+  }
+
   return create_info;
 }
 
