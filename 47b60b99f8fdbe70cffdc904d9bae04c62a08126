@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cff2511_f7ead698",
+        "filename": "components/drive/chromeos/file_system/copy_operation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-11T09:34:00Z",
+      "side": 1,
+      "message": "What does this mean?\nIt seems we are respecting preserve_last_modified for last_modified_by_me too.",
+      "range": {
+        "startLine": 139,
+        "startChar": 5,
+        "endLine": 139,
+        "endChar": 43
+      },
+      "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48516c5c_db49529f",
+        "filename": "components/drive/drive.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-11T09:34:00Z",
+      "side": 1,
+      "message": "and last_modified_by_me",
+      "range": {
+        "startLine": 141,
+        "startChar": 5,
+        "endLine": 141,
+        "endChar": 18
+      },
+      "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d02aebb_aecf9ef0",
+        "filename": "components/drive/file_system/copy_operation_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-11T09:34:00Z",
+      "side": 1,
+      "message": "Can\u0027t we let FakeDriveService assign unique last_modified_by_me values for each file?",
+      "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2762bdd_80b08831",
+        "filename": "components/drive/sync/entry_update_performer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-11T09:34:00Z",
+      "side": 1,
+      "message": "What is the point of having this comment and the check below?\nIIUC the last_modified_be_me value shouldn\u0027t affect the behavior of EntryUpdatePerformer.",
+      "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
