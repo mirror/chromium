@@ -12,6 +12,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/open_url_util.h"
+#import "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h"
 #import "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/browser/web/features.h"
 #import "ios/chrome/browser/web/legacy_mailto_url_rewriter.h"
@@ -19,6 +20,7 @@
 #import "ios/chrome/browser/web/mailto_url_rewriter.h"
 #import "ios/chrome/browser/web/nullable_mailto_url_rewriter.h"
 #include "ios/chrome/grit/ios_strings.h"
+#include "ios/third_party/material_components_ios/src/components/BottomSheet/src/MDCBottomSheetController.h"
 #import "net/base/mac/url_conversions.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "url/gurl.h"
@@ -75,8 +77,8 @@ NSString* PromptActionString(NSString* scheme) {
 }
 
 // Launches the mail client app chosen by |rewriter| and records metrics.
-void LaunchMailClientApp(const GURL& URL, MailtoURLRewriter* rewriter) {
-  NSString* launchURL = [rewriter rewriteMailtoURL:URL];
+void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
+  NSString* launchURL = [handler rewriteMailtoURL:URL];
   UMA_HISTOGRAM_BOOLEAN("IOS.MailtoURLRewritten", launchURL != nil);
   NSURL* URLToOpen = [launchURL length] ? [NSURL URLWithString:launchURL]
                                         : net::NSURLWithGURL(URL);
@@ -144,7 +146,7 @@ void LaunchMailClientApp(const GURL& URL, MailtoURLRewriter* rewriter) {
                 handler:^(UIAlertAction* _Nonnull action) {
                   DCHECK(handler);
                   [rewriter setDefaultHandlerID:[handler appStoreID]];
-                  LaunchMailClientApp(URL, rewriter);
+                  LaunchMailClientApp(URL, handler);
                 }];
     [alertController addAction:action];
   }
@@ -157,6 +159,21 @@ void LaunchMailClientApp(const GURL& URL, MailtoURLRewriter* rewriter) {
 
   [[[[UIApplication sharedApplication] keyWindow] rootViewController]
       presentViewController:alertController
+                   animated:YES
+                 completion:nil];
+}
+
+- (void)mdcPromptForMailClientWithURL:(const GURL)URL
+                          URLRewriter:(MailtoURLRewriter*)rewriter {
+  OpenMailHandlerViewController* mailHandlerChooser =
+      [[OpenMailHandlerViewController alloc] initWithRewriter:rewriter];
+  mailHandlerChooser.onMailtoHandlerSelected = ^(MailtoHandler* handler) {
+    LaunchMailClientApp(URL, handler);
+  };
+  MDCBottomSheetController* bottomSheet = [[MDCBottomSheetController alloc]
+      initWithContentViewController:mailHandlerChooser];
+  [[[[UIApplication sharedApplication] keyWindow] rootViewController]
+      presentViewController:bottomSheet
                    animated:YES
                  completion:nil];
 }
@@ -238,11 +255,13 @@ void LaunchMailClientApp(const GURL& URL, MailtoURLRewriter* rewriter) {
         base::FeatureList::IsEnabled(kMailtoPromptForUserChoice)
             ? [NullableMailtoURLRewriter mailtoURLRewriterWithStandardHandlers]
             : [LegacyMailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
-    if (![rewriter defaultHandlerID]) {
-      [self promptForMailClientWithURL:gURL URLRewriter:rewriter];
+    NSString* handlerID = [rewriter defaultHandlerID];
+    if (!handlerID) {
+      [self mdcPromptForMailClientWithURL:gURL URLRewriter:rewriter];
       return YES;
     }
-    LaunchMailClientApp(gURL, rewriter);
+    MailtoHandler* handler = [rewriter defaultHandlerByID:handlerID];
+    LaunchMailClientApp(gURL, handler);
     return YES;
   }
 
