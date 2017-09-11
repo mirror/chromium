@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15e49370_affcdd45",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-11T22:46:04Z",
+      "side": 1,
+      "message": "nit: to allow checking?",
+      "revId": "86e074be1d7c9248f15968e90fa50286001199c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ecf527_44591b63",
+        "filename": "content/browser/storage_partition_impl_map.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-11T22:46:04Z",
+      "side": 1,
+      "message": "Is the \"\u003d true\" necessary here?  The only caller is GetStoragePartitionFromConfig, which always passes can_create now.",
+      "revId": "86e074be1d7c9248f15968e90fa50286001199c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "465c302b_c997f080",
+        "filename": "content/public/browser/browser_context.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-11T22:46:04Z",
+      "side": 1,
+      "message": "Thanks for adding this comment.  I\u0027d also explicitly say that by default this will create a new StoragePartition if it doesn\u0027t exist, unless |can_create| is false.",
+      "revId": "86e074be1d7c9248f15968e90fa50286001199c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
