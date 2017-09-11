@@ -232,6 +232,23 @@
     },
     {
       "key": {
+        "uuid": "da093014_2c4758c0",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-11T22:46:12Z",
+      "side": 1,
+      "message": "This was actually incorrect; I don\u0027t want each individual task to be sharded; this would have triggered way too many tasks.",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f3bc0f3_a74181ba",
         "filename": "tools/perf/perf_device_trigger.py",
         "patchSetId": 9
@@ -272,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "508fedbf_9e8ba57f",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-11T22:46:12Z",
+      "side": 1,
+      "message": "I removed this argument.",
+      "parentUuid": "82b3a944_3bcf4d83",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c00b92fe_1e9543b0",
         "filename": "tools/perf/perf_device_trigger.py",
         "patchSetId": 9
@@ -283,6 +318,24 @@
       "writtenOn": "2017-09-11T17:53:30Z",
       "side": 1,
       "message": "what format is this json in?  what would you use this for?",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60230e5_aa685d73",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-11T22:46:12Z",
+      "side": 1,
+      "message": "This is required by the swarming recipe module. I added a bit to show that.",
+      "parentUuid": "c00b92fe_1e9543b0",
       "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -303,6 +356,24 @@
       "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b62739c_615b04b8",
+        "filename": "tools/perf/perf_device_trigger.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-09-11T22:46:12Z",
+      "side": 1,
+      "message": "I changed this to default to len(args.bot_id); it doesn\u0027t exactly default to this, but it\u0027s not used in the code, and I only assert something about the this argument if it\u0027s provided.",
+      "parentUuid": "a36566ec_db8af483",
+      "revId": "4dcc5d6568543aa98e1a44322d1888f520452dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
