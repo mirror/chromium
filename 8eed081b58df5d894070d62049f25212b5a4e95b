@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a449f186_6b673b42",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIteratorTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-11T19:11:08Z",
+      "side": 1,
+      "message": "This function seems very useful.\n\nCould you put it in EditingTestBase? Can be in a later patch.",
+      "revId": "8eed081b58df5d894070d62049f25212b5a4e95b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aea7c7b_dc985f0e",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIteratorTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-11T19:11:08Z",
+      "side": 1,
+      "message": "This only extracts the first part of the text.\n\nIt should keep advancing the iterator and emitting until reaching the end.",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 32
+      },
+      "revId": "8eed081b58df5d894070d62049f25212b5a4e95b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
