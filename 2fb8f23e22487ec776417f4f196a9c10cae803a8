@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d48ef3a5_83d7e56c",
+        "filename": "chrome/browser/ui/blocked_content/popup_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-11T20:18:58Z",
+      "side": 1,
+      "message": "Yep that\u0027s correct. I\u0027ve added a comment and renamed the member to first_load_visibility_tracker_. WDYT?",
+      "parentUuid": "e00b36c5_76cdcc0b",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 26
+      },
+      "revId": "2fb8f23e22487ec776417f4f196a9c10cae803a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3c96782_aa6571bf",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "2fb8f23e22487ec776417f4f196a9c10cae803a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8530f5_ce2ee4cf",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 10287,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-11T20:18:58Z",
+      "side": 1,
+      "message": "It\u0027s essentially the time spent in the foreground. Tried to clarify the description a bit.",
+      "parentUuid": "a3c96782_aa6571bf",
+      "range": {
+        "startLine": 10287,
+        "startChar": 8,
+        "endLine": 10287,
+        "endChar": 15
+      },
+      "revId": "2fb8f23e22487ec776417f4f196a9c10cae803a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
