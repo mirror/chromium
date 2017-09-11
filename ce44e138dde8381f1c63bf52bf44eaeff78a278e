@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b52e1a5_84e0fa96",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-11T18:01:05Z",
+      "side": 1,
+      "message": "pwnall@ Why disable compression? If anything wouldn\u0027t we want to force it on?",
+      "revId": "ce44e138dde8381f1c63bf52bf44eaeff78a278e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
