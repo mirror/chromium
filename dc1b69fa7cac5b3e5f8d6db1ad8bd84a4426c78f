@@ -22,6 +22,30 @@
       "revId": "dc1b69fa7cac5b3e5f8d6db1ad8bd84a4426c78f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d88682_4c6afcb2",
+        "filename": "tools/perf/page_sets/system_health/native_ui_stories.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-11T18:18:36Z",
+      "side": 1,
+      "message": "I started with this living inside catapult [1], but decided to move this into here since there was concern about accidentally exposing chrome/ash-specific API. Do you think that would be the better place for this?\n\n[1] In //third_party/catapult/telemetry/telemetry/internal/backends/chrome_inspector/",
+      "parentUuid": "89904211_0c1df179",
+      "range": {
+        "startLine": 15,
+        "startChar": 51,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "dc1b69fa7cac5b3e5f8d6db1ad8bd84a4426c78f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
