@@ -163,6 +163,30 @@
       "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e5943e2_b8a0e5a6",
+        "filename": "base/test/scoped_task_environment.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-11T14:19:05Z",
+      "side": 1,
+      "message": "Could this be a separate option so that it can be used at the same time as the MainThreadType option in the future?",
+      "parentUuid": "eac16bc8_e65ed4b3",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
