@@ -397,10 +397,12 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     @Override
     public void onResume() {
         super.onResume();
-        mNativeInitializationController.onResume();
-        if (mLaunchBehindWorkaround != null) mLaunchBehindWorkaround.onResume();
+
         mIsWarmOnResume = !mFirstResumePending || hadWarmStart();
         mFirstResumePending = false;
+
+        mNativeInitializationController.onResume();
+        if (mLaunchBehindWorkaround != null) mLaunchBehindWorkaround.onResume();
     }
 
     @CallSuper
