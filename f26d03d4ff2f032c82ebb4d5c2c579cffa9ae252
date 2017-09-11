@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f12440a_9234e370",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-11T19:17:32Z",
+      "side": 1,
+      "message": "Yes.\n\nDone",
+      "parentUuid": "2aafd0a5_9a90647b",
+      "revId": "f26d03d4ff2f032c82ebb4d5c2c579cffa9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a42be441_ce497242",
         "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-11T18:12:30Z",
       "side": 1,
       "message": "question: is the gyro always in rad/s? i.e. is it possible to do the conversion on the browser side?",
+      "revId": "f26d03d4ff2f032c82ebb4d5c2c579cffa9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6395ec67_a78501ca",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-11T19:17:32Z",
+      "side": 1,
+      "message": "\u003e is the gyro always in rad/s?\n\nYes, it is always in rad/s from the generic_sensor gyroscope backend:\nhttps://cs.chromium.org/chromium/src/services/device/public/cpp/generic_sensor/sensor_reading.h?l\u003d110-116\n\n\u003e i.e. is it possible to do the conversion on the browser side?\n\nIf we need to do the conversion on the browser side, I guess some new sensor type needs to be added such as GYROSCOPE_DEGREES, GYROSCOPE_RADIANS and it will make generic sensor code base more complicated. Since doing the conversion on the render side has very small overhead I think it is reasonable to just do this on the render side.",
+      "parentUuid": "a42be441_ce497242",
       "revId": "f26d03d4ff2f032c82ebb4d5c2c579cffa9ae252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
