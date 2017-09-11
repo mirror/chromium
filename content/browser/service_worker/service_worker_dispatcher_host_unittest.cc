@@ -35,6 +35,7 @@
 #include "content/test/test_content_browser_client.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
 
@@ -176,9 +177,9 @@ class ServiceWorkerDispatcherHostTest : public testing::Test {
   }
 
   void SetUpRegistration(const GURL& scope, const GURL& script_url) {
-    registration_ =
-        new ServiceWorkerRegistration(ServiceWorkerRegistrationOptions(scope),
-                                      1L, helper_->context()->AsWeakPtr());
+    registration_ = new ServiceWorkerRegistration(
+        blink::mojom::ServiceWorkerRegistrationOptions(scope), 1L,
+        helper_->context()->AsWeakPtr());
     version_ = new ServiceWorkerVersion(registration_.get(), script_url, 1L,
                                         helper_->context()->AsWeakPtr());
     std::vector<ServiceWorkerDatabase::ResourceRecord> records;
@@ -234,9 +235,9 @@ class ServiceWorkerDispatcherHostTest : public testing::Test {
   void SendRegister(mojom::ServiceWorkerContainerHost* container_host,
                     GURL pattern,
                     GURL worker_url) {
-    ServiceWorkerRegistrationOptions options(pattern);
+    auto options = blink::mojom::ServiceWorkerRegistrationOptions::New(pattern);
     container_host->Register(
-        worker_url, options,
+        worker_url, std::move(options),
         base::BindOnce(
             [](blink::mojom::ServiceWorkerErrorType error,
                const base::Optional<std::string>& error_msg,
@@ -252,9 +253,9 @@ class ServiceWorkerDispatcherHostTest : public testing::Test {
                 GURL worker_url,
                 blink::mojom::ServiceWorkerErrorType expected) {
     blink::mojom::ServiceWorkerErrorType error;
-    ServiceWorkerRegistrationOptions options(pattern);
+    auto options = blink::mojom::ServiceWorkerRegistrationOptions::New(pattern);
     container_host->Register(
-        worker_url, options,
+        worker_url, std::move(options),
         base::BindOnce(
             [](blink::mojom::ServiceWorkerErrorType* out_error,
                blink::mojom::ServiceWorkerErrorType error,
@@ -427,7 +428,8 @@ TEST_F(ServiceWorkerDispatcherHostTest,
   const int64_t kRegistrationId = 999;  // Dummy value
   scoped_refptr<ServiceWorkerRegistration> registration(
       new ServiceWorkerRegistration(
-          ServiceWorkerRegistrationOptions(GURL("https://www.example.com/")),
+          blink::mojom::ServiceWorkerRegistrationOptions(
+              GURL("https://www.example.com/")),
           kRegistrationId, context()->AsWeakPtr()));
   Unregister(kProviderId, kRegistrationId,
              ServiceWorkerMsg_ServiceWorkerUnregistrationError::ID);
