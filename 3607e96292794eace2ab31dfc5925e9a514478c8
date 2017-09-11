@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6852eb7_63bb23ff",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-11T06:32:10Z",
+      "side": 1,
+      "message": "I\u0027m wondering why there\u0027s no FrameSelection::SetSelection(SelectionInFlatTree)...\n\nExposing the conversion outside FS looks ugly.",
+      "range": {
+        "startLine": 366,
+        "startChar": 6,
+        "endLine": 366,
+        "endChar": 79
+      },
+      "revId": "3607e96292794eace2ab31dfc5925e9a514478c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff000f62_f4b8cf31",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-11T06:32:10Z",
+      "side": 1,
+      "message": "As now we don\u0027t have the granularity shenanigans in VS, and base/extent always point to the same positions as start/end, is there any possibility of cleanup?\n\nIn fact, what\u0027s the difference between SelectionTemplate::is_directional_ and SelectionTemplate::direction_? Their semantics seem quite similar and have been confusing me. Is there any possibility of merge?\n\n(maybe need to cc tanvir.rizvi@ since he\u0027s working on is_directional_).",
+      "range": {
+        "startLine": 124,
+        "startChar": 18,
+        "endLine": 126,
+        "endChar": 21
+      },
+      "revId": "3607e96292794eace2ab31dfc5925e9a514478c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5586c0e_88c64bee",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-11T06:32:10Z",
+      "side": 1,
+      "message": "No such function..",
+      "range": {
+        "startLine": 360,
+        "startChar": 9,
+        "endLine": 360,
+        "endChar": 35
+      },
+      "revId": "3607e96292794eace2ab31dfc5925e9a514478c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f7c8a6_a22d24b1",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsLine.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-11T06:32:10Z",
+      "side": 1,
+      "message": "These two should be merged into a template function.",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 284,
+        "endChar": 1
+      },
+      "revId": "3607e96292794eace2ab31dfc5925e9a514478c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a16c62_dbe67f6f",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsWord.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-11T06:32:10Z",
+      "side": 1,
+      "message": "Could you elaborate on why it should be removed?",
+      "range": {
+        "startLine": 184,
+        "startChar": 22,
+        "endLine": 184,
+        "endChar": 63
+      },
+      "revId": "3607e96292794eace2ab31dfc5925e9a514478c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ad6340_b478dfa7",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-11T06:32:10Z",
+      "side": 1,
+      "message": "Seems redundant.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "3607e96292794eace2ab31dfc5925e9a514478c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
