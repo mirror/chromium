@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b06f8034_fa2aee15",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-11T12:47:04Z",
+      "side": 1,
+      "message": "is it not possible to enable userinteraction on navigationBar?",
+      "range": {
+        "startLine": 372,
+        "startChar": 55,
+        "endLine": 372,
+        "endChar": 68
+      },
+      "revId": "33df43acdd56b03cae5f2ea800ed0e7943a4bf33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
