@@ -165,6 +165,7 @@ ChromePasswordManagerClient::ChromePasswordManagerClient(
     : content::WebContentsObserver(web_contents),
       profile_(Profile::FromBrowserContext(web_contents->GetBrowserContext())),
       password_manager_(this),
+      helper_(this),
 // TODO(crbug.com/706392): Fix password reuse detection for Android.
 #if !defined(OS_ANDROID)
       password_reuse_detection_manager_(this),
@@ -396,20 +397,12 @@ void ChromePasswordManagerClient::NotifyUserAutoSignin(
 
 void ChromePasswordManagerClient::NotifyUserCouldBeAutoSignedIn(
     std::unique_ptr<autofill::PasswordForm> form) {
-  possible_auto_sign_in_ = std::move(form);
+  helper_.NotifyUserCouldBeAutoSignedIn(std::move(form));
 }
 
 void ChromePasswordManagerClient::NotifySuccessfulLoginWithExistingPassword(
     const autofill::PasswordForm& form) {
-  if (!possible_auto_sign_in_)
-    return;
-
-  if (possible_auto_sign_in_->username_value == form.username_value &&
-      possible_auto_sign_in_->password_value == form.password_value &&
-      possible_auto_sign_in_->origin == form.origin) {
-    PromptUserToEnableAutosigninIfNecessary();
-  }
-  possible_auto_sign_in_.reset();
+  helper_.NotifySuccessfulLoginWithExistingPassword(form);
 }
 
 void ChromePasswordManagerClient::NotifyStorePasswordCalled() {
@@ -690,24 +683,6 @@ void ChromePasswordManagerClient::ShowPasswordEditingPopup(
   popup_controller_->Show(false /* display_password */);
 }
 
-void ChromePasswordManagerClient::PromptUserToEnableAutosigninIfNecessary() {
-  if (!password_bubble_experiment::ShouldShowAutoSignInPromptFirstRunExperience(
-          GetPrefs()) ||
-      !GetPrefs()->GetBoolean(
-          password_manager::prefs::kCredentialsEnableAutosignin) ||
-      IsIncognito())
-    return;
-
-#if defined(OS_ANDROID)
-  // Dialog is deleted by the Java counterpart after user interacts with it.
-  AutoSigninFirstRunDialogAndroid* auto_signin_first_run_dialog =
-      new AutoSigninFirstRunDialogAndroid(web_contents());
-  auto_signin_first_run_dialog->ShowDialog();
-#else
-  PasswordsClientUIDelegateFromWebContents(web_contents())
-      ->OnPromptEnableAutoSignin();
-#endif
-}
 
 void ChromePasswordManagerClient::GenerationAvailableForForm(
     const autofill::PasswordForm& form) {
@@ -748,6 +723,25 @@ bool ChromePasswordManagerClient::ShouldAnnotateNavigationEntries(
   }
 
   return true;
+}
+
+void ChromePasswordManagerClient::PromptUserToEnableAutosigninIfNecessary() {
+  if (!password_bubble_experiment::ShouldShowAutoSignInPromptFirstRunExperience(
+          GetPrefs()) ||
+      !GetPrefs()->GetBoolean(
+          password_manager::prefs::kCredentialsEnableAutosignin) ||
+      IsIncognito())
+    return;
+
+#if defined(OS_ANDROID)
+  // Dialog is deleted by the Java counterpart after user interacts with it.
+  AutoSigninFirstRunDialogAndroid* auto_signin_first_run_dialog =
+      new AutoSigninFirstRunDialogAndroid(web_contents());
+  auto_signin_first_run_dialog->ShowDialog();
+#else
+  PasswordsClientUIDelegateFromWebContents(web_contents())
+      ->OnPromptEnableAutoSignin();
+#endif
 }
 
 void ChromePasswordManagerClient::AnnotateNavigationEntry(
