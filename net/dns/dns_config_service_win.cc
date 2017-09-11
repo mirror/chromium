@@ -23,6 +23,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/lock.h"
+#include "base/threading/scoped_blocking_call.h"
 #include "base/threading/thread_checker.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -634,7 +635,7 @@ class DnsConfigServiceWin::Watcher
   DISALLOW_COPY_AND_ASSIGN(Watcher);
 };
 
-// Reads config from registry and IpHelper. All work performed on WorkerPool.
+// Reads config from registry and IpHelper. All work performed in TaskScheduler.
 class DnsConfigServiceWin::ConfigReader : public SerialWorker {
  public:
   explicit ConfigReader(DnsConfigServiceWin* service)
@@ -645,7 +646,7 @@ class DnsConfigServiceWin::ConfigReader : public SerialWorker {
   ~ConfigReader() override {}
 
   void DoWork() override {
-    // Should be called on WorkerPool.
+    // Should be called in TaskScheduler.
     base::TimeTicks start_time = base::TimeTicks::Now();
     DnsSystemSettings settings = {};
     ConfigParseWinResult result = ReadSystemSettings(&settings);
@@ -681,7 +682,7 @@ class DnsConfigServiceWin::ConfigReader : public SerialWorker {
 };
 
 // Reads hosts from HOSTS file and fills in localhost and local computer name if
-// necessary. All work performed on WorkerPool.
+// necessary. All work performed in TaskScheduler.
 class DnsConfigServiceWin::HostsReader : public SerialWorker {
  public:
   explicit HostsReader(DnsConfigServiceWin* service)
@@ -694,6 +695,11 @@ class DnsConfigServiceWin::HostsReader : public SerialWorker {
   ~HostsReader() override {}
 
   void DoWork() override {
+    // At the 75th percentile, the execution time of this method is 18 ms. Use a
+    // ScopedBlockingCall to increment TaskScheduler's thread pool capacity and
+    // thus avoid reducing task throughput during that time.
+    base::ScopedBlockingCall scoped_blocking_call(
+        base::BlockingType::WILL_BLOCK);
     base::TimeTicks start_time = base::TimeTicks::Now();
     HostsParseWinResult result = HOSTS_PARSE_WIN_UNREADABLE_HOSTS_FILE;
     if (ParseHostsFile(path_, &hosts_))
