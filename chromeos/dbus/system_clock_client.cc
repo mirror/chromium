@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "dbus/bus.h"
 #include "dbus/message.h"
 #include "dbus/object_path.h"
@@ -74,10 +75,12 @@ class SystemClockClientImpl : public SystemClockClient {
   // Called once when the service initially becomes available (or immediately if
   // it's already available).
   void ServiceInitiallyAvailable(bool service_is_available) {
-    if (service_is_available)
+    if (service_is_available) {
       GetCanSet();
-    else
+      GetSystemClockLastSyncInfo();
+    } else {
       LOG(ERROR) << "Failed to wait for D-Bus service availability";
+    }
   }
 
   // Called when a TimeUpdated signal is received.
@@ -135,10 +138,60 @@ class SystemClockClientImpl : public SystemClockClient {
                    weak_ptr_factory_.GetWeakPtr()));
   }
 
+  void GetSystemClockLastSyncInfo() {
+    dbus::MethodCall method_call(system_clock::kSystemClockInterface,
+                                 system_clock::kSystemLastSyncInfo);
+    system_clock_proxy_->CallMethod(
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        base::Bind(&SystemClockClientImpl::OnGotSystemClockLastSyncInfo,
+                   weak_ptr_factory_.GetWeakPtr()));
+  }
+
+  void OnGotSystemClockLastSyncInfo(dbus::Response* response) {
+    const base::TimeDelta system_clock_last_sync_info_retry_delay_ =
+        base::TimeDelta::FromSeconds(1);
+    if (!response) {
+      system_clock_synchronized_ = false;
+      LOG(ERROR) << system_clock::kSystemClockInterface << "."
+                 << system_clock::kSystemLastSyncInfo << " request failed.";
+      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+          FROM_HERE,
+          base::Bind(&SystemClockClientImpl::GetSystemClockLastSyncInfo,
+                     weak_ptr_factory_.GetWeakPtr()),
+          system_clock_last_sync_info_retry_delay_);
+      return;
+    }
+
+    dbus::MessageReader reader(response);
+    bool network_synchronized = false;
+    if (!reader.PopBool(&network_synchronized)) {
+      LOG(ERROR) << system_clock::kSystemClockInterface << "."
+                 << system_clock::kSystemLastSyncInfo
+                 << " response lacks network-synchronized argument";
+      return;
+    }
+    LOG(ERROR) << "Daria: network sync = " << network_synchronized;
+    if (network_synchronized) {
+      system_clock_synchronized_ = true;
+    } else {
+      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+          FROM_HERE,
+          base::Bind(&SystemClockClientImpl::GetSystemClockLastSyncInfo,
+                     weak_ptr_factory_.GetWeakPtr()),
+          system_clock_last_sync_info_retry_delay_);
+    }
+  }
+
+  bool IsNetworkSynchronized() { return system_clock_synchronized_; }
+
   // Whether the time can be set. Value is false until the first
   // CanSetTime response is received.
   bool can_set_time_;
   bool can_set_time_initialized_;
+
+  // Value is false until the system time is synchronized with network time.
+  bool system_clock_synchronized_ = false;
+
   dbus::ObjectProxy* system_clock_proxy_;
   base::ObserverList<Observer> observers_;
 
