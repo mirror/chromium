@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceceae8e_fa95d918",
+        "filename": "chrome/browser/resources/sys_internals/line_chart/line_chart.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-11T04:50:07Z",
+      "side": 1,
+      "message": "Remove this \u003d",
+      "range": {
+        "startLine": 269,
+        "startChar": 48,
+        "endLine": 269,
+        "endChar": 49
+      },
+      "revId": "677fd82aca0332413711c9639730dc55b6ae5b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
