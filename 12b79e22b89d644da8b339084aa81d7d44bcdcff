@@ -164,6 +164,30 @@
       "revId": "12b79e22b89d644da8b339084aa81d7d44bcdcff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a8a760_5174d707",
+        "filename": "chrome/android/java/res/layout/content_suggestions_card_modern.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-11T12:36:18Z",
+      "side": 1,
+      "message": "Added a comment above the inner RelativeLayout.\n\nFrom the developer documentation I can only see that nested LinearLayouts are expensive (which makes sense, because they use weighting and therefore need to remeasure).",
+      "parentUuid": "b04d7251_45305d7a",
+      "range": {
+        "startLine": 124,
+        "startChar": 37,
+        "endLine": 124,
+        "endChar": 50
+      },
+      "revId": "12b79e22b89d644da8b339084aa81d7d44bcdcff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
