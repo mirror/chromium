@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "769c756f_178b8a2b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-11T04:56:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc6cc413_ce00395c",
+      "revId": "fea6b7d97a803fffeed79074d36e926fa3438bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddb5026d_21530cc9",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "fea6b7d97a803fffeed79074d36e926fa3438bdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf31a44_74a47640",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-11T04:56:37Z",
+      "side": 1,
+      "message": "Taken a part of this advice, as this notation does not show what the current node position is. ITs a bit tricky, and i think this explanation now makes sense.",
+      "parentUuid": "ddb5026d_21530cc9",
+      "revId": "fea6b7d97a803fffeed79074d36e926fa3438bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ab8efc48_a1a8f323",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-11T04:56:37Z",
+      "side": 1,
+      "message": "Added the check for defensive programming. It seems like a corner case.",
+      "parentUuid": "e7664123_67154aaa",
+      "revId": "fea6b7d97a803fffeed79074d36e926fa3438bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da21ab03_5b334963",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.mm",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "fea6b7d97a803fffeed79074d36e926fa3438bdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff2a6539_4c0879a1",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-11T04:56:37Z",
+      "side": 1,
+      "message": "Added a DCHECK for folder-\u003eHasAncestor(node). But node-\u003eparent()\u003d\u003dfolder is a valid case.",
+      "parentUuid": "da21ab03_5b334963",
+      "revId": "fea6b7d97a803fffeed79074d36e926fa3438bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
