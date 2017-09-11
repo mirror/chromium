@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b2daf8a6_3e87a741",
+        "filename": "ios/chrome/browser/ui/sync/sync_error_infobar_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-11T17:20:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c7d472e_d94274d7",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "84ba764e735e16890687dfb1f6f1c804896d7d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0cdd32c_558cb6bb",
         "filename": "ios/chrome/browser/ui/sync/sync_util.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7007ffcd_c2d7d1b9",
+        "filename": "ios/chrome/browser/ui/sync/sync_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-11T17:20:47Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "c0cdd32c_558cb6bb",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 25
+      },
+      "revId": "84ba764e735e16890687dfb1f6f1c804896d7d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3dfbdbd4_f29f1e10",
         "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_panel_overlay_view.h",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-11T08:30:01Z",
       "side": 1,
       "message": "Can this be ApplicationSettingsCommmands?",
+      "range": {
+        "startLine": 35,
+        "startChar": 40,
+        "endLine": 35,
+        "endChar": 59
+      },
+      "revId": "84ba764e735e16890687dfb1f6f1c804896d7d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd13d863_409f3c13",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_panel_overlay_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-11T17:20:47Z",
+      "side": 1,
+      "message": "Interestingly, I get an error that it cannot initialize a parameter of type id\u003cApplicationSettingsCommands\u003e with an rvalue of type id\u003cApplicationCommands\u003e. The compiler for some odd reason does not recognize that one protocol conforms to the other.",
+      "parentUuid": "3dfbdbd4_f29f1e10",
       "range": {
         "startLine": 35,
         "startChar": 40,
