@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbc926de_31d82a2f",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-11T22:08:43Z",
+      "side": 1,
+      "message": "IMO we should only specify either the former (in which case it\u0027s reasonable to call this more than once) or the latter (in which case they don\u0027t need to know calling this more than once invalidates the previously bound ptr).\n\nMaybe we should just make sure this object is initialized correctly? (by passing in a InterfaceRequest to this constructor)",
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c5bde7_f18fdc2e",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-11T22:08:43Z",
+      "side": 1,
+      "message": "Would it make the setup code simpler if we used MediaRouterDesktop here?",
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70fbd2b2_b41d01fb",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-11T22:08:43Z",
+      "side": 1,
+      "message": "IMO there\u0027s a layering problem here. We shouldn\u0027t rely on EMRPP to circle back to MRMojoImpl perform these checks with side effects. EMRPP or any other MRPs should have as little access to internal states of MRMojoImpl as possible. In terms of correctness, MRMojoImpl should be the only doing these checks before forwarding the calls to the MRPs; otherwise only the desktop implementation will have these checks in place.",
+      "range": {
+        "startLine": 365,
+        "startChar": 33,
+        "endLine": 365,
+        "endChar": 0
+      },
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd4d2db0_e26cda60",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-11T22:08:43Z",
+      "side": 1,
+      "message": "DCHECK(route_); ?",
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae86386_1259cab7",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-11T22:08:43Z",
+      "side": 1,
+      "message": "route_ \u003d route; ?",
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb9b7e2a_f761532a",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-11T22:08:43Z",
+      "side": 1,
+      "message": "no need to qualify media_router:: namespace?",
+      "range": {
+        "startLine": 33,
+        "startChar": 51,
+        "endLine": 33,
+        "endChar": 63
+      },
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c80b447_174494c8",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-11T22:08:43Z",
+      "side": 1,
+      "message": "Should these be parameters be passed by value?",
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "de90faf3_55cf2016",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-11T22:08:43Z",
+      "side": 1,
+      "message": "Ack. This makes sense in the context of Cast\u0027s auto-join. I don\u0027t recall if MRPs override the given presentation ID in other scenarios.",
+      "parentUuid": "449ad244_5279d8c4",
+      "range": {
+        "startLine": 33,
+        "startChar": 38,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "8ed97893569a868e847a363262ea5b6dbc215f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a2f8cec_be8986d2",
         "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.h",
         "patchSetId": 4
