@@ -5,16 +5,20 @@
 #ifndef SERVICES_DEVICE_GENERIC_SENSOR_GENERIC_SENSOR_CONSTS_H_
 #define SERVICES_DEVICE_GENERIC_SENSOR_GENERIC_SENSOR_CONSTS_H_
 
-#define _USE_MATH_DEFINES
-#include <math.h>
+#define _USE_MATH_DEFINES  // For VC++ to get M_PI. This has to be first.
+
+#include <cmath>
 
 namespace device {
 
 // Required for conversion from G/s^2 to m/s^2
 constexpr double kMeanGravity = 9.80665;
 
-// Required for conversion from deg to rad
-constexpr double kRadiansInDegrees = M_PI / 180.0;
+// Conversion ratio from radians to degrees.
+constexpr double kRadiansToDegrees = 180.0 / M_PI;
+
+// Conversion ratio from degrees to radians.
+constexpr double kDegreesToRadians = M_PI / 180.0;
 
 // Required for conversion from Gauss to uT.
 constexpr double kMicroteslaInGauss = 100.0;
