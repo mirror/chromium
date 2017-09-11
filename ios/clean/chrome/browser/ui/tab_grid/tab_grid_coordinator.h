@@ -11,6 +11,17 @@
 // Coordinator that drives a UI showing a scrollable grid of tabs,
 // which each represent a web browsing tab that can be expanded by tapping.
 @interface TabGridCoordinator : BrowserCoordinator<URLOpening>
+
+// Opens a new tab in foreground.
+- (void)openNewTab;
+// TODO(crbug.com/763856): Remove this is if needed once the animation is
+// correct.
+// Dismisses the currently displayed tab (if it exists) and execute
+// |completion|.
+- (void)dismissCurrentTab:(void (^)())completion;
+// Closes all tabs presented by this TabGrid.
+- (void)closeAllTabs;
+
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_TAB_GRID_TAB_GRID_COORDINATOR_H_

@@ -9,6 +9,7 @@
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/clean/chrome/browser/ui/commands/find_in_page_visibility_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/settings_commands.h"
+#import "ios/clean/chrome/browser/ui/commands/tab_management_commands.h"
 
 // Declare all the possible items. If adding or removing items update
 // the value of kToolsMenuNumberOfItems with the new total count.
@@ -16,17 +17,19 @@ const MenuModelItem itemsModelList[kToolsMenuNumberOfItems] = {
     // clang-format off
   { IDS_IOS_TOOLS_MENU_NEW_TAB,                     kToolsMenuNewTabId,
     ToolbarTypeAll,                                 ItemVisibleAlways,
-    nil,                                            ItemEnabledAlways},
+    NSStringFromSelector(@selector(openNewTab)),    ItemEnabledAlways},
   { IDS_IOS_TOOLS_MENU_NEW_INCOGNITO_TAB,           kToolsMenuNewIncognitoTabId,
     ToolbarTypeAll,                                 ItemVisibleAlways,
-    nil,                                            ItemEnabledAlways},
+    NSStringFromSelector(@selector(openNewIncognitoTab)),
+    ItemEnabledAlways},
   { IDS_IOS_TOOLS_MENU_CLOSE_ALL_TABS,              kToolsMenuCloseAllTabsId,
     ToolbarTypeSwitcher,                            ItemVisibleNotIncognitoOnly,
-    nil,                                            ItemEnabledWhenOpenTabs},
+    NSStringFromSelector(@selector(closeAllTabs)),  ItemEnabledWhenOpenTabs},
   { IDS_IOS_TOOLS_MENU_CLOSE_ALL_INCOGNITO_TABS,
     kToolsMenuCloseAllIncognitoTabsId,
     ToolbarTypeSwitcher,                            ItemVisibleIncognitoOnly,
-    nil,                                            ItemEnabledWhenOpenTabs},
+    NSStringFromSelector(@selector(closeAllIncognitoTabs)),
+    ItemEnabledWhenOpenTabs},
   { IDS_IOS_TOOLS_MENU_BOOKMARKS,                   kToolsMenuBookmarksId,
     ToolbarTypeNone,                                ItemVisibleAlways,
     nil,                                            ItemEnabledAlways},

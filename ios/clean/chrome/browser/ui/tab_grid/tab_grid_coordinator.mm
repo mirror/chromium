@@ -59,12 +59,37 @@
 @synthesize mediator = _mediator;
 @dynamic callableDispatcher;
 
+#pragma mark - Public
+
 - (instancetype)init {
   if ((self = [super init])) {
     _overlayObserverBridge =
         base::MakeUnique<OverlayServiceObserverBridge>(self);
   }
   return self;
+}
+
+- (void)openNewTab {
+  [self dismissCurrentTab:^{
+    [self createAndShowNewTabInTabGrid];
+  }];
+}
+
+- (void)dismissCurrentTab:(void (^)())completion {
+  if (self.activeTabCoordinator.started) {
+    [self.activeTabCoordinator.viewController
+        dismissViewControllerAnimated:YES
+                           completion:^{
+                             if (completion)
+                               completion();
+                           }];
+  } else if (completion) {
+    completion();
+  }
+}
+
+- (void)closeAllTabs {
+  self.webStateList.CloseAllWebStates();
 }
 
 #pragma mark - Properties

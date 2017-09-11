@@ -136,6 +136,7 @@
   _webStateObserver.reset();
   [self.dispatcher stopDispatchingToTarget:self];
   [self.navigationController stop];
+  [self.toolbarCoordinator stop];
 }
 
 - (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator {

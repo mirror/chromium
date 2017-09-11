@@ -16,6 +16,7 @@ source_set("commands") {
     "tab_commands.h",
     "tab_grid_commands.h",
     "tab_grid_toolbar_commands.h",
+    "tab_management_commands.h",
     "tab_strip_commands.h",
     "tools_menu_commands.h",
   ]

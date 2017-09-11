@@ -12,6 +12,7 @@
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
 #import "ios/clean/chrome/browser/ui/commands/settings_commands.h"
+#import "ios/clean/chrome/browser/ui/commands/tab_management_commands.h"
 #import "ios/clean/chrome/browser/ui/settings/settings_coordinator.h"
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_container_view_controller.h"
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.h"
@@ -23,7 +24,8 @@
 #endif
 
 @interface TabGridContainerCoordinator ()<SettingsCommands,
-                                          TabGridToolbarCommands>
+                                          TabGridToolbarCommands,
+                                          TabManagementCommands>
 
 // Tab grid handling the non-incognito tabs.
 @property(nonatomic, strong) TabGridCoordinator* normalTabGrid;
@@ -57,6 +59,8 @@
 
   [self.dispatcher startDispatchingToTarget:self
                                 forSelector:@selector(showSettings)];
+  [self.dispatcher startDispatchingToTarget:self
+                                forProtocol:@protocol(TabManagementCommands)];
 
   self.viewController = [[TabGridContainerViewController alloc] init];
   self.viewController.dispatcher = self;
@@ -70,7 +74,7 @@
 
 - (void)stop {
   [super stop];
-  [self.dispatcher stopDispatchingForSelector:@selector(showSettings)];
+  [self.dispatcher stopDispatchingToTarget:self];
 }
 
 - (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator {
@@ -104,6 +108,19 @@
 - (void)setIncognito:(BOOL)incognito {
   _incognito = incognito;
   self.viewController.incognito = incognito;
+}
+
+- (TabGridCoordinator*)incognitoTabGrid {
+  if (!_incognitoTabGrid) {
+    _incognitoTabGrid = [[TabGridCoordinator alloc] init];
+    [self addChildCoordinator:_incognitoTabGrid];
+    _incognitoTabGrid.browser =
+        BrowserListFactory::GetForBrowserState(
+            self.browser->browser_state()->GetOffTheRecordChromeBrowserState())
+            ->CreateNewBrowser();
+    _incognitoTabGrid.dispatcher = self.dispatcher;
+  }
+  return _incognitoTabGrid;
 }
 
 #pragma mark - URLOpening
@@ -141,19 +158,43 @@
     [self.incognitoTabGrid stop];
     [self.normalTabGrid start];
   } else {
-    if (!self.incognitoTabGrid) {
-      self.incognitoTabGrid = [[TabGridCoordinator alloc] init];
-      [self addChildCoordinator:self.incognitoTabGrid];
-      self.incognitoTabGrid.browser =
-          BrowserListFactory::GetForBrowserState(
-              self.browser->browser_state()
-                  ->GetOffTheRecordChromeBrowserState())
-              ->CreateNewBrowser();
-    }
     [self.normalTabGrid stop];
     [self.incognitoTabGrid start];
   }
   self.incognito = !self.incognito;
+}
+
+#pragma mark - TabManagementCommands
+
+- (void)openNewTab {
+  if (self.incognito) {
+    [self.incognitoTabGrid dismissCurrentTab:^{
+      [self toggleIncognito];
+      [self.normalTabGrid openNewTab];
+    }];
+  } else {
+    [self.normalTabGrid openNewTab];
+  }
+}
+
+- (void)openNewIncognitoTab {
+  if (!self.incognito) {
+    [self.normalTabGrid dismissCurrentTab:^{
+      [self toggleIncognito];
+      [self.incognitoTabGrid openNewTab];
+    }];
+  } else {
+    [self.incognitoTabGrid openNewTab];
+  }
+}
+
+- (void)closeAllTabs {
+  [self.incognitoTabGrid closeAllTabs];
+  [self.normalTabGrid closeAllTabs];
+}
+
+- (void)closeAllIncognitoTabs {
+  [self.incognitoTabGrid closeAllTabs];
 }
 
 #pragma mark - SettingsCommands
