@@ -33,6 +33,24 @@
       "revId": "258728415b513363b8041c80d8fb6ac20af97b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08261fca_9235e359",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-11T04:36:11Z",
+      "side": 1,
+      "message": "+tbarzic, could you please describe how you plan to change this method in the upcoming clean-up? Do you have any suggestions on the comments I can add in this CL?",
+      "parentUuid": "14d0788e_4e22f88d",
+      "revId": "258728415b513363b8041c80d8fb6ac20af97b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
