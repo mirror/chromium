@@ -16,6 +16,24 @@
       "revId": "5eb4725e6a62aeef1f5695024a4f19f7d1d21d2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39b972d_3c3cd2be",
+        "filename": "third_party/WebKit/Source/core/paint/SVGPaintContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-11T21:27:41Z",
+      "side": 0,
+      "message": "This is a no-op change because the only caller is SVGPaintContext::ApplyClipMaskAndFilterIfNecessary(), and is only called for creating an optional CompositingRecorder (which is no-op in SPv175/v2).\n\nActually, I think it\u0027s better to make it a DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV175Enabled()), and just early return right after ApplyPaintPropertyState(), since you made SVG filters to use property tree to paint in SPv2.\n\nAnyway, I agree this drive-by change is non-trivial and should be done in a separate CL.",
+      "parentUuid": "bd29d52d_cd3f8034",
+      "revId": "5eb4725e6a62aeef1f5695024a4f19f7d1d21d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
