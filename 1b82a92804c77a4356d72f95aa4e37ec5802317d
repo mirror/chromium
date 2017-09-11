@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3f8c273_95a8101b",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-11T17:27:53Z",
+      "side": 1,
+      "message": "size_t",
+      "range": {
+        "startLine": 246,
+        "startChar": 2,
+        "endLine": 246,
+        "endChar": 15
+      },
+      "revId": "1b82a92804c77a4356d72f95aa4e37ec5802317d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f9ee13_4580c59f",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-11T17:27:53Z",
+      "side": 1,
+      "message": "Let\u0027s introduce a DCHECK that other_possible_passwords isn\u0027t empty",
+      "range": {
+        "startLine": 251,
+        "startChar": 32,
+        "endLine": 251,
+        "endChar": 45
+      },
+      "revId": "1b82a92804c77a4356d72f95aa4e37ec5802317d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
