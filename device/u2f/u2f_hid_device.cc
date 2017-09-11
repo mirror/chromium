@@ -11,8 +11,9 @@
 #include "crypto/random.h"
 #include "device/base/device_client.h"
 #include "device/hid/hid_connection.h"
-#include "u2f_apdu_command.h"
-#include "u2f_message.h"
+#include "device/u2f/u2f_apdu_command.h"
+#include "device/u2f/u2f_command_type.h"
+#include "device/u2f/u2f_message.h"
 
 namespace device {
 
@@ -55,7 +56,7 @@ void U2fHidDevice::Transition(std::unique_ptr<U2fApduCommand> command,
     case State::IDLE: {
       state_ = State::BUSY;
       std::unique_ptr<U2fMessage> msg = U2fMessage::Create(
-          channel_id_, U2fMessage::Type::CMD_MSG, command->GetEncodedCommand());
+          channel_id_, U2fCommandType::MSG, command->GetEncodedCommand());
 
       ArmTimeout(callback);
       // Write message to the device
@@ -110,7 +111,7 @@ void U2fHidDevice::AllocateChannel(std::unique_ptr<U2fApduCommand> command,
   std::vector<uint8_t> nonce(8);
   crypto::RandBytes(nonce.data(), nonce.size());
   std::unique_ptr<U2fMessage> message =
-      U2fMessage::Create(channel_id_, U2fMessage::Type::CMD_INIT, nonce);
+      U2fMessage::Create(channel_id_, U2fCommandType::INIT, nonce);
 
   WriteMessage(
       std::move(message), true,
@@ -303,7 +304,7 @@ void U2fHidDevice::TryWink(const WinkCallback& callback) {
   }
 
   std::unique_ptr<U2fMessage> wink_message = U2fMessage::Create(
-      channel_id_, U2fMessage::Type::CMD_WINK, std::vector<uint8_t>());
+      channel_id_, U2fCommandType::WINK, std::vector<uint8_t>());
   WriteMessage(
       std::move(wink_message), true,
       base::Bind(&U2fHidDevice::OnWink, weak_factory_.GetWeakPtr(), callback));
