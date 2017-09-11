@@ -22,6 +22,30 @@
       "revId": "4b86bb77e9568910388bee2eb3a7e0636817d993",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7775012_638abd2b",
+        "filename": "components/multidevice/service/fake_device_sync.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-09-11T16:31:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e3c005a_4a7ec24a",
+      "range": {
+        "startLine": 18,
+        "startChar": 30,
+        "endLine": 19,
+        "endChar": 53
+      },
+      "revId": "4b86bb77e9568910388bee2eb3a7e0636817d993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
