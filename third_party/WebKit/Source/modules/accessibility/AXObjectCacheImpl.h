@@ -291,7 +291,7 @@ class MODULES_EXPORT AXObjectCacheImpl
   mojom::PermissionStatus accessibility_event_permission_;
   // The permission service, enabling us to check for event listener
   // permission.
-  mojom::blink::PermissionServicePtr permission_service_;
+  mojom::blink::PermissionServiceAssociatedPtr permission_service_;
   mojo::Binding<mojom::blink::PermissionObserver> permission_observer_binding_;
 };
 

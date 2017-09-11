@@ -86,7 +86,6 @@ ScriptPromise StorageManager::persist(ScriptState* script_state) {
   }
   permission_service->RequestPermission(
       CreatePermissionDescriptor(PermissionName::DURABLE_STORAGE),
-      ExecutionContext::From(script_state)->GetSecurityOrigin(),
       UserGestureIndicator::ProcessingUserGesture(),
       ConvertToBaseCallback(
           WTF::Bind(&StorageManager::PermissionRequestComplete,
@@ -117,7 +116,6 @@ ScriptPromise StorageManager::persisted(ScriptState* script_state) {
   }
   permission_service->HasPermission(
       CreatePermissionDescriptor(PermissionName::DURABLE_STORAGE),
-      ExecutionContext::From(script_state)->GetSecurityOrigin(),
       ConvertToBaseCallback(
           WTF::Bind(&StorageManager::PermissionRequestComplete,
                     WrapPersistent(this), WrapPersistent(resolver))));

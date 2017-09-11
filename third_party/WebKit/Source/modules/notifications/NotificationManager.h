@@ -53,7 +53,7 @@ class NotificationManager final
   void OnPermissionServiceConnectionError();
 
   mojom::blink::NotificationServicePtr notification_service_;
-  mojom::blink::PermissionServicePtr permission_service_;
+  mojom::blink::PermissionServiceAssociatedPtr permission_service_;
 };
 
 }  // namespace blink

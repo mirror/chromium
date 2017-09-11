@@ -99,7 +99,7 @@ class MODULES_EXPORT MIDIAccessInitializer : public ScriptPromiseResolver,
   Vector<PortDescriptor> port_descriptors_;
   MIDIOptions options_;
 
-  mojom::blink::PermissionServicePtr permission_service_;
+  mojom::blink::PermissionServiceAssociatedPtr permission_service_;
 };
 
 }  // namespace blink

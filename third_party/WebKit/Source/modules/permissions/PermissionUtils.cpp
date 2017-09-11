@@ -21,17 +21,21 @@ using mojom::blink::PermissionName;
 
 bool ConnectToPermissionService(
     ExecutionContext* execution_context,
-    mojom::blink::PermissionServiceRequest request) {
+    mojom::blink::PermissionServiceAssociatedRequest request) {
   if (execution_context->IsWorkerGlobalScope()) {
-    WorkerThread* thread = ToWorkerGlobalScope(execution_context)->GetThread();
-    thread->GetInterfaceProvider().GetInterface(std::move(request));
-    return true;
+    // TODO(lukasza): DO NOT SUBMIT: Go through a WorkerHost's interface
+    // provider instead of going through the process-global provider.
+    // WorkerThread* thread =
+    // ToWorkerGlobalScope(execution_context)->GetThread();
+    // thread->GetInterfaceProvider().GetInterface(std::move(request));
+    return false;
   }
 
   LocalFrame* frame = ToDocument(execution_context)->GetFrame();
   if (!frame)
     return false;
 
+  // TODO(lukasza): Ooops - need an associated interface instead.
   frame->GetInterfaceProvider().GetInterface(std::move(request));
   return true;
 }
