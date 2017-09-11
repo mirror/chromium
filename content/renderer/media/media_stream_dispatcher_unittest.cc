@@ -24,6 +24,7 @@ namespace content {
 const int kAudioSessionId = 3;
 const int kVideoSessionId = 5;
 const int kScreenSessionId = 7;
+const int kSystemAudioSessionId = 9;
 const int kRequestId1 = 10;
 const int kRequestId2 = 20;
 
@@ -109,7 +110,7 @@ class MediaStreamDispatcherTest : public ::testing::Test {
     return next_ipc_id;
   }
 
-  // CompleteGenerateStream calls the MediaStreamDispathcer::OnStreamGenerated.
+  // CompleteGenerateStream calls the MediaStreamDispatcher::OnStreamGenerated.
   // |ipc_id| must be the the id returned by GenerateStream.
   std::string CompleteGenerateStream(int ipc_id,
                                      int request_id) {
@@ -371,6 +372,48 @@ TEST_F(MediaStreamDispatcherTest, GetNonScreenCaptureDevices) {
   // Verify that the request have been completed.
   EXPECT_EQ(dispatcher_->label_stream_map_.size(), 0u);
   EXPECT_EQ(dispatcher_->requests_.size(), 0u);
+}
+
+TEST_F(MediaStreamDispatcherTest, GetSystemAudioCaptureDevice) {
+  MediaStreamDevices audio_device_array(1);
+  MediaStreamDevice system_audio_device;
+  system_audio_device.name = "System Audio";
+  system_audio_device.id = "system_audio";
+  system_audio_device.type = MEDIA_DESKTOP_AUDIO_CAPTURE;
+  system_audio_device.session_id = kSystemAudioSessionId;
+  audio_device_array[0] = system_audio_device;
+
+  EXPECT_EQ(dispatcher_->requests_.size(), size_t(0));
+  EXPECT_EQ(dispatcher_->label_stream_map_.size(), size_t(0));
+
+  int ipc_request_id = dispatcher_->next_ipc_id_;
+  dispatcher_->OpenDevice(kRequestId1, handler_->AsWeakPtr(),
+                          system_audio_device.id, MEDIA_DESKTOP_AUDIO_CAPTURE,
+                          security_origin_);
+  EXPECT_EQ(dispatcher_->requests_.size(), size_t(1));
+
+  // Complete the OpenDevice of request 1.
+  std::string stream_label = std::string("stream");
+  dispatcher_->OnDeviceOpened(ipc_request_id, stream_label,
+                              system_audio_device);
+  EXPECT_EQ(handler_->request_id_, kRequestId1);
+
+  EXPECT_EQ(dispatcher_->requests_.size(), size_t(0));
+  EXPECT_EQ(dispatcher_->label_stream_map_.size(), size_t(1));
+
+  // Check the audio_session_id.
+  EXPECT_EQ(dispatcher_->audio_session_id(stream_label, 0),
+            kSystemAudioSessionId);
+
+  // Close the device from request 1.
+  dispatcher_->CloseDevice(stream_label);
+  EXPECT_EQ(dispatcher_->audio_session_id(stream_label, 0),
+            MediaStreamDevice::kNoId);
+  EXPECT_EQ(dispatcher_->label_stream_map_.size(), size_t(0));
+
+  // Verify that the request have been completed.
+  EXPECT_EQ(dispatcher_->label_stream_map_.size(), size_t(0));
+  EXPECT_EQ(dispatcher_->requests_.size(), size_t(0));
 }
 
 }  // namespace content
