@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c414ce74_e0e3a01e",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-09-11T13:25:35Z",
+      "side": 1,
+      "message": "Thanks for the pointers, I turned ReprioritizeRequest into a NOP.  Do we need to do anything special Re HasLoadingClients?  The |is_loaded_| state gets mutated by: ResourceScheduler::OnLoadingStateChanged which seems only to be called (indirectly) via WebContentsImpl::LoadingStateChanged; and ResourceScheduler::OnNavigate() which is only called via ResourceSchedulerFilter::OnDidCommitProvisionalLoad.  It seems HasLoadingClients is unaffected by my changes.",
+      "parentUuid": "36a6f286_8ed2c135",
+      "range": {
+        "startLine": 1651,
+        "startChar": 34,
+        "endLine": 1651,
+        "endChar": 35
+      },
+      "revId": "7e4f553b406f0c23ba0430d9492569954b638414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "198b7c21_fd0a6000",
         "filename": "content/browser/loader/resource_dispatcher_host_impl.h",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-05T17:33:05Z",
       "side": 1,
       "message": "How about instead making this something that\u0027s set in construction, or something that\u0027s probed on the ResourceDispatcherHostDelegate?  The delegate pattern  is how historically embedders have controlled the action of content classes, but it has the negative of allowing scheduler usage to vary over the lifetime of the RDHI.  I think setting this type of configuration at construction is also where we\u0027re heading with servicification, though as noted in my previous comment, I don\u0027t think that\u0027s very important.  But you may not have the ability to tweak the constructor in the headless case--I\u0027m not familiar with how that embedder works.  \n\nAnother option that probably isn\u0027t worth it for you unless it\u0027s a good match for your use case is to let the embedder (either in construction or through the delegate) specify the whole ResourceScheduler class.  This would involve specifying an ABC that ResourceScheduler and whatever you wanted to build would inherit from, but it would allow you to do your own scheduling (which the CL description indicates is your goal).",
+      "range": {
+        "startLine": 118,
+        "startChar": 39,
+        "endLine": 118,
+        "endChar": 64
+      },
+      "revId": "7e4f553b406f0c23ba0430d9492569954b638414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba7ba8d_d43f68f1",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-09-11T13:25:35Z",
+      "side": 1,
+      "message": "I\u0027ve done it on construction of ResourceScheduler the based on the ResourceDispatcherHostDelegate.  I\u0027m not sure if that\u0027s the best wiring but it works for us.",
+      "parentUuid": "198b7c21_fd0a6000",
       "range": {
         "startLine": 118,
         "startChar": 39,
