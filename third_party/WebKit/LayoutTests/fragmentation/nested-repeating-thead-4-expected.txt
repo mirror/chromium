@@ -1,0 +1,488 @@
+layer at (0,0) size 800x600 clip at (0,0) size 785x585 scrollWidth 1170 scrollHeight 956
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 785x956 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutBlockFlow {HTML} at (0,0) size 785x956
+    LayoutBlockFlow {BODY} at (8,8) size 769x940
+layer at (8,8) size 769x940 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutBlockFlow {DIV} at (0,0) size 769x940 [bgcolor=#FFFF00]
+    LayoutMultiColumnSet (anonymous) at (0,0) size 769x940
+layer at (8,8) size 377x2134 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutMultiColumnFlowThread (anonymous) at (0,0) size 376.50x2134
+    LayoutTable {TABLE} at (0,0) size 414x2134
+      LayoutTableSection {THEAD} at (0,0) size 414x103
+        LayoutTableRow {TR} at (0,2) size 414x99
+          LayoutTableCell {TD} at (2,2) size 410x99 [r=0 c=0 rs=1 cs=1]
+            LayoutTable {TABLE} at (1,1) size 331x97
+              LayoutTableSection {TBODY} at (0,0) size 331x97
+                LayoutTableRow {TR} at (0,2) size 331x46
+                  LayoutTableCell {TD} at (2,1) size 327x95 [r=0 c=0 rs=2 cs=1]
+                    LayoutText {#text} at (1,2) size 325x90
+                      text run at (1,2) width 325: "HEADER"
+      LayoutTableSection {TBODY} at (0,103) size 414x2031
+        LayoutTableRow {TR} at (0,0) size 414x707
+          LayoutTableCell {TD} at (2,0) size 410x707 [r=0 c=0 rs=1 cs=1]
+            LayoutBlockFlow {DIV} at (1,1) size 1x705
+        LayoutTableRow {TR} at (0,709) size 414x1320
+          LayoutTableCell {TD} at (2,709) size 410x1320 [r=1 c=0 rs=1 cs=1]
+            LayoutBlockFlow {DIV} at (1,17) size 408x1302
+              LayoutBlockFlow {P} at (0,0) size 408x0
+              LayoutBlockFlow {DIV} at (0,0) size 408x1302
+                LayoutTable {TABLE} at (0,0) size 408x1302 [border: (1px outset #808080)]
+                  LayoutTableSection {TBODY} at (1,1) size 406x1300
+                    LayoutTableRow {TR} at (0,0) size 406x42
+                      LayoutTableCell {TD} at (0,10) size 49x22 [border: (1px inset #808080)] [r=0 c=0 rs=1 cs=1]
+                        LayoutInline {STRONG} at (0,0) size 9x19
+                          LayoutText {#text} at (1,1) size 9x19
+                            text run at (1,1) width 9: "n"
+                      LayoutTableCell {TD} at (49,10) size 80x22 [border: (1px inset #808080)] [r=0 c=1 rs=1 cs=1]
+                        LayoutInline {STRONG} at (0,0) size 66x19
+                          LayoutText {#text} at (1,1) size 66x19
+                            text run at (1,1) width 66: "Presta\x{E7}\x{E3}o"
+                      LayoutTableCell {TD} at (129,10) size 78x22 [border: (1px inset #808080)] [r=0 c=2 rs=1 cs=1]
+                        LayoutInline {STRONG} at (0,0) size 42x19
+                          LayoutText {#text} at (1,1) size 42x19
+                            text run at (1,1) width 42: "Juros "
+                      LayoutTableCell {TD} at (207,10) size 98x22 [border: (1px inset #808080)] [r=0 c=3 rs=1 cs=1]
+                        LayoutInline {STRONG} at (0,0) size 87x19
+                          LayoutText {#text} at (1,1) size 87x19
+                            text run at (1,1) width 87: "Amortiza\x{E7}\x{E3}o"
+                      LayoutTableCell {TD} at (305,0) size 101x42 [border: (1px inset #808080)] [r=0 c=4 rs=1 cs=1]
+                        LayoutInline {STRONG} at (0,0) size 58x39
+                          LayoutText {#text} at (1,1) size 58x39
+                            text run at (1,1) width 38: "Saldo"
+                            text run at (1,21) width 58: "Devedor"
+                    LayoutTableRow {TR} at (0,42) size 406x22
+                      LayoutTableCell {TD} at (0,42) size 49x22 [border: (1px inset #808080)] [r=1 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 8x19
+                          text run at (1,1) width 8: "0"
+                      LayoutTableCell {TD} at (49,42) size 80x22 [border: (1px inset #808080)] [r=1 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 72x19
+                          text run at (1,1) width 72: "*********"
+                      LayoutTableCell {TD} at (129,42) size 78x22 [border: (1px inset #808080)] [r=1 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 48x19
+                          text run at (1,1) width 48: "******"
+                      LayoutTableCell {TD} at (207,42) size 98x22 [border: (1px inset #808080)] [r=1 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 96x19
+                          text run at (1,1) width 96: "************"
+                      LayoutTableCell {TD} at (305,42) size 101x22 [border: (1px inset #808080)] [r=1 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 64x19
+                          text run at (1,1) width 64: "50.000,00"
+                    LayoutTableRow {TR} at (0,64) size 406x42
+                      LayoutTableCell {TD} at (0,74) size 49x22 [border: (1px inset #808080)] [r=2 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 8x19
+                          text run at (1,1) width 8: "1"
+                      LayoutTableCell {TD} at (49,64) size 80x42 [border: (1px inset #808080)] [r=2 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,74) size 78x22 [border: (1px inset #808080)] [r=2 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 32x19
+                          text run at (1,1) width 32: "1750"
+                      LayoutTableCell {TD} at (207,74) size 98x22 [border: (1px inset #808080)] [r=2 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 61x19
+                          text run at (1,1) width 61: "-1.363,64"
+                      LayoutTableCell {TD} at (305,74) size 101x22 [border: (1px inset #808080)] [r=2 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 64x19
+                          text run at (1,1) width 64: "48.636,36"
+                    LayoutTableRow {TR} at (0,106) size 406x148
+                      LayoutTableCell {TD} at (0,106) size 49x128 [border: (1px inset #808080)] [r=3 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,107) size 8x19
+                          text run at (1,107) width 8: "2"
+                      LayoutTableCell {TD} at (49,106) size 80x148 [border: (1px inset #808080)] [r=3 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,107) size 56x39
+                          text run at (1,107) width 24: "-R$"
+                          text run at (1,127) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,106) size 78x128 [border: (1px inset #808080)] [r=3 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,107) size 76x19
+                          text run at (1,107) width 76: "1702,27255"
+                      LayoutTableCell {TD} at (207,106) size 98x128 [border: (1px inset #808080)] [r=3 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,107) size 84x19
+                          text run at (1,107) width 84: "-R$ 1.411,37"
+                      LayoutTableCell {TD} at (305,106) size 101x128 [border: (1px inset #808080)] [r=3 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,107) size 87x19
+                          text run at (1,107) width 87: "R$ 47.224,99"
+                    LayoutTableRow {TR} at (0,254) size 406x42
+                      LayoutTableCell {TD} at (0,264) size 49x22 [border: (1px inset #808080)] [r=4 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 8x19
+                          text run at (1,1) width 8: "3"
+                      LayoutTableCell {TD} at (49,254) size 80x42 [border: (1px inset #808080)] [r=4 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,254) size 78x42 [border: (1px inset #808080)] [r=4 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 19: "R$"
+                          text run at (1,21) width 56: "1.652,87"
+                      LayoutTableCell {TD} at (207,264) size 98x22 [border: (1px inset #808080)] [r=4 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 1.460,77"
+                      LayoutTableCell {TD} at (305,264) size 101x22 [border: (1px inset #808080)] [r=4 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 45.764,22"
+                    LayoutTableRow {TR} at (0,296) size 406x42
+                      LayoutTableCell {TD} at (0,306) size 49x22 [border: (1px inset #808080)] [r=5 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 8x19
+                          text run at (1,1) width 8: "4"
+                      LayoutTableCell {TD} at (49,296) size 80x42 [border: (1px inset #808080)] [r=5 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,296) size 78x42 [border: (1px inset #808080)] [r=5 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 19: "R$"
+                          text run at (1,21) width 56: "1.601,75"
+                      LayoutTableCell {TD} at (207,306) size 98x22 [border: (1px inset #808080)] [r=5 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 1.511,89"
+                      LayoutTableCell {TD} at (305,306) size 101x22 [border: (1px inset #808080)] [r=5 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 44.252,33"
+                    LayoutTableRow {TR} at (0,338) size 406x42
+                      LayoutTableCell {TD} at (0,348) size 49x22 [border: (1px inset #808080)] [r=6 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 8x19
+                          text run at (1,1) width 8: "5"
+                      LayoutTableCell {TD} at (49,338) size 80x42 [border: (1px inset #808080)] [r=6 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,338) size 78x42 [border: (1px inset #808080)] [r=6 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 19: "R$"
+                          text run at (1,21) width 56: "1.548,83"
+                      LayoutTableCell {TD} at (207,348) size 98x22 [border: (1px inset #808080)] [r=6 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 1.564,81"
+                      LayoutTableCell {TD} at (305,348) size 101x22 [border: (1px inset #808080)] [r=6 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 42.687,52"
+                    LayoutTableRow {TR} at (0,380) size 406x42
+                      LayoutTableCell {TD} at (0,390) size 49x22 [border: (1px inset #808080)] [r=7 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 8x19
+                          text run at (1,1) width 8: "6"
+                      LayoutTableCell {TD} at (49,380) size 80x42 [border: (1px inset #808080)] [r=7 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,380) size 78x42 [border: (1px inset #808080)] [r=7 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 19: "R$"
+                          text run at (1,21) width 56: "1.494,06"
+                      LayoutTableCell {TD} at (207,390) size 98x22 [border: (1px inset #808080)] [r=7 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 1.619,58"
+                      LayoutTableCell {TD} at (305,390) size 101x22 [border: (1px inset #808080)] [r=7 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 41.067,94"
+                    LayoutTableRow {TR} at (0,422) size 406x42
+                      LayoutTableCell {TD} at (0,432) size 49x22 [border: (1px inset #808080)] [r=8 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 8x19
+                          text run at (1,1) width 8: "7"
+                      LayoutTableCell {TD} at (49,422) size 80x42 [border: (1px inset #808080)] [r=8 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,422) size 78x42 [border: (1px inset #808080)] [r=8 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 19: "R$"
+                          text run at (1,21) width 56: "1.437,38"
+                      LayoutTableCell {TD} at (207,432) size 98x22 [border: (1px inset #808080)] [r=8 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 1.676,26"
+                      LayoutTableCell {TD} at (305,432) size 101x22 [border: (1px inset #808080)] [r=8 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 39.391,68"
+                    LayoutTableRow {TR} at (0,464) size 406x42
+                      LayoutTableCell {TD} at (0,474) size 49x22 [border: (1px inset #808080)] [r=9 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 8x19
+                          text run at (1,1) width 8: "8"
+                      LayoutTableCell {TD} at (49,464) size 80x42 [border: (1px inset #808080)] [r=9 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,464) size 78x42 [border: (1px inset #808080)] [r=9 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 19: "R$"
+                          text run at (1,21) width 56: "1.378,71"
+                      LayoutTableCell {TD} at (207,474) size 98x22 [border: (1px inset #808080)] [r=9 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 1.734,93"
+                      LayoutTableCell {TD} at (305,474) size 101x22 [border: (1px inset #808080)] [r=9 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 37.656,74"
+                    LayoutTableRow {TR} at (0,506) size 406x42
+                      LayoutTableCell {TD} at (0,516) size 49x22 [border: (1px inset #808080)] [r=10 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 8x19
+                          text run at (1,1) width 8: "9"
+                      LayoutTableCell {TD} at (49,506) size 80x42 [border: (1px inset #808080)] [r=10 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,506) size 78x42 [border: (1px inset #808080)] [r=10 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 19: "R$"
+                          text run at (1,21) width 56: "1.317,99"
+                      LayoutTableCell {TD} at (207,516) size 98x22 [border: (1px inset #808080)] [r=10 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 1.795,66"
+                      LayoutTableCell {TD} at (305,516) size 101x22 [border: (1px inset #808080)] [r=10 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 35.861,09"
+                    LayoutTableRow {TR} at (0,548) size 406x42
+                      LayoutTableCell {TD} at (0,558) size 49x22 [border: (1px inset #808080)] [r=11 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 16x19
+                          text run at (1,1) width 16: "10"
+                      LayoutTableCell {TD} at (49,548) size 80x42 [border: (1px inset #808080)] [r=11 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,548) size 78x42 [border: (1px inset #808080)] [r=11 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 19: "R$"
+                          text run at (1,21) width 56: "1.255,14"
+                      LayoutTableCell {TD} at (207,558) size 98x22 [border: (1px inset #808080)] [r=11 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 1.858,50"
+                      LayoutTableCell {TD} at (305,558) size 101x22 [border: (1px inset #808080)] [r=11 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 34.002,59"
+                    LayoutTableRow {TR} at (0,590) size 406x42
+                      LayoutTableCell {TD} at (0,600) size 49x22 [border: (1px inset #808080)] [r=12 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 16x19
+                          text run at (1,1) width 16: "11"
+                      LayoutTableCell {TD} at (49,590) size 80x42 [border: (1px inset #808080)] [r=12 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,590) size 78x42 [border: (1px inset #808080)] [r=12 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 19: "R$"
+                          text run at (1,21) width 56: "1.190,09"
+                      LayoutTableCell {TD} at (207,600) size 98x22 [border: (1px inset #808080)] [r=12 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 1.923,55"
+                      LayoutTableCell {TD} at (305,600) size 101x22 [border: (1px inset #808080)] [r=12 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 32.079,03"
+                    LayoutTableRow {TR} at (0,632) size 406x42
+                      LayoutTableCell {TD} at (0,642) size 49x22 [border: (1px inset #808080)] [r=13 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 16x19
+                          text run at (1,1) width 16: "12"
+                      LayoutTableCell {TD} at (49,632) size 80x42 [border: (1px inset #808080)] [r=13 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,632) size 78x42 [border: (1px inset #808080)] [r=13 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 19: "R$"
+                          text run at (1,21) width 56: "1.122,77"
+                      LayoutTableCell {TD} at (207,642) size 98x22 [border: (1px inset #808080)] [r=13 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 1.990,88"
+                      LayoutTableCell {TD} at (305,642) size 101x22 [border: (1px inset #808080)] [r=13 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 30.088,16"
+                    LayoutTableRow {TR} at (0,674) size 406x42
+                      LayoutTableCell {TD} at (0,684) size 49x22 [border: (1px inset #808080)] [r=14 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 16x19
+                          text run at (1,1) width 16: "13"
+                      LayoutTableCell {TD} at (49,674) size 80x42 [border: (1px inset #808080)] [r=14 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,674) size 78x42 [border: (1px inset #808080)] [r=14 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 19: "R$"
+                          text run at (1,21) width 56: "1.053,09"
+                      LayoutTableCell {TD} at (207,684) size 98x22 [border: (1px inset #808080)] [r=14 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 2.060,56"
+                      LayoutTableCell {TD} at (305,684) size 101x22 [border: (1px inset #808080)] [r=14 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 28.027,60"
+                    LayoutTableRow {TR} at (0,716) size 406x42
+                      LayoutTableCell {TD} at (0,726) size 49x22 [border: (1px inset #808080)] [r=15 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 16x19
+                          text run at (1,1) width 16: "14"
+                      LayoutTableCell {TD} at (49,716) size 80x42 [border: (1px inset #808080)] [r=15 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,726) size 78x22 [border: (1px inset #808080)] [r=15 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 67x19
+                          text run at (1,1) width 67: "R$ 980,97"
+                      LayoutTableCell {TD} at (207,726) size 98x22 [border: (1px inset #808080)] [r=15 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 2.132,68"
+                      LayoutTableCell {TD} at (305,726) size 101x22 [border: (1px inset #808080)] [r=15 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 25.894,93"
+                    LayoutTableRow {TR} at (0,758) size 406x42
+                      LayoutTableCell {TD} at (0,768) size 49x22 [border: (1px inset #808080)] [r=16 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 16x19
+                          text run at (1,1) width 16: "15"
+                      LayoutTableCell {TD} at (49,758) size 80x42 [border: (1px inset #808080)] [r=16 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,768) size 78x22 [border: (1px inset #808080)] [r=16 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 67x19
+                          text run at (1,1) width 67: "R$ 906,32"
+                      LayoutTableCell {TD} at (207,768) size 98x22 [border: (1px inset #808080)] [r=16 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 2.207,32"
+                      LayoutTableCell {TD} at (305,768) size 101x22 [border: (1px inset #808080)] [r=16 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 23.687,61"
+                    LayoutTableRow {TR} at (0,800) size 406x42
+                      LayoutTableCell {TD} at (0,810) size 49x22 [border: (1px inset #808080)] [r=17 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 16x19
+                          text run at (1,1) width 16: "16"
+                      LayoutTableCell {TD} at (49,800) size 80x42 [border: (1px inset #808080)] [r=17 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,810) size 78x22 [border: (1px inset #808080)] [r=17 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 67x19
+                          text run at (1,1) width 67: "R$ 829,07"
+                      LayoutTableCell {TD} at (207,810) size 98x22 [border: (1px inset #808080)] [r=17 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 2.284,58"
+                      LayoutTableCell {TD} at (305,810) size 101x22 [border: (1px inset #808080)] [r=17 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 21.403,03"
+                    LayoutTableRow {TR} at (0,842) size 406x42
+                      LayoutTableCell {TD} at (0,852) size 49x22 [border: (1px inset #808080)] [r=18 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 16x19
+                          text run at (1,1) width 16: "17"
+                      LayoutTableCell {TD} at (49,842) size 80x42 [border: (1px inset #808080)] [r=18 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,852) size 78x22 [border: (1px inset #808080)] [r=18 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 67x19
+                          text run at (1,1) width 67: "R$ 749,11"
+                      LayoutTableCell {TD} at (207,852) size 98x22 [border: (1px inset #808080)] [r=18 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 2.364,54"
+                      LayoutTableCell {TD} at (305,852) size 101x22 [border: (1px inset #808080)] [r=18 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 19.038,50"
+                    LayoutTableRow {TR} at (0,884) size 406x42
+                      LayoutTableCell {TD} at (0,894) size 49x22 [border: (1px inset #808080)] [r=19 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 16x19
+                          text run at (1,1) width 16: "18"
+                      LayoutTableCell {TD} at (49,884) size 80x42 [border: (1px inset #808080)] [r=19 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,894) size 78x22 [border: (1px inset #808080)] [r=19 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 67x19
+                          text run at (1,1) width 67: "R$ 666,35"
+                      LayoutTableCell {TD} at (207,894) size 98x22 [border: (1px inset #808080)] [r=19 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 2.447,29"
+                      LayoutTableCell {TD} at (305,894) size 101x22 [border: (1px inset #808080)] [r=19 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 16.591,20"
+                    LayoutTableRow {TR} at (0,926) size 406x42
+                      LayoutTableCell {TD} at (0,936) size 49x22 [border: (1px inset #808080)] [r=20 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 16x19
+                          text run at (1,1) width 16: "19"
+                      LayoutTableCell {TD} at (49,926) size 80x42 [border: (1px inset #808080)] [r=20 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,936) size 78x22 [border: (1px inset #808080)] [r=20 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 67x19
+                          text run at (1,1) width 67: "R$ 580,69"
+                      LayoutTableCell {TD} at (207,936) size 98x22 [border: (1px inset #808080)] [r=20 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 2.532,95"
+                      LayoutTableCell {TD} at (305,936) size 101x22 [border: (1px inset #808080)] [r=20 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 14.058,25"
+                    LayoutTableRow {TR} at (0,968) size 406x42
+                      LayoutTableCell {TD} at (0,978) size 49x22 [border: (1px inset #808080)] [r=21 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 16x19
+                          text run at (1,1) width 16: "20"
+                      LayoutTableCell {TD} at (49,968) size 80x42 [border: (1px inset #808080)] [r=21 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,978) size 78x22 [border: (1px inset #808080)] [r=21 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 67x19
+                          text run at (1,1) width 67: "R$ 492,04"
+                      LayoutTableCell {TD} at (207,978) size 98x22 [border: (1px inset #808080)] [r=21 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 2.621,60"
+                      LayoutTableCell {TD} at (305,978) size 101x22 [border: (1px inset #808080)] [r=21 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 87x19
+                          text run at (1,1) width 87: "R$ 11.436,65"
+                    LayoutTableRow {TR} at (0,1010) size 406x164
+                      LayoutTableCell {TD} at (0,1010) size 49x22 [border: (1px inset #808080)] [r=22 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 16x19
+                          text run at (1,1) width 16: "21"
+                      LayoutTableCell {TD} at (49,1010) size 80x164 [border: (1px inset #808080)] [r=22 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x161
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,143) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,1010) size 78x22 [border: (1px inset #808080)] [r=22 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 67x19
+                          text run at (1,1) width 67: "R$ 400,28"
+                      LayoutTableCell {TD} at (207,1010) size 98x22 [border: (1px inset #808080)] [r=22 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 2.713,36"
+                      LayoutTableCell {TD} at (305,1010) size 101x22 [border: (1px inset #808080)] [r=22 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 79x19
+                          text run at (1,1) width 79: "R$ 8.723,29"
+                    LayoutTableRow {TR} at (0,1174) size 406x42
+                      LayoutTableCell {TD} at (0,1184) size 49x22 [border: (1px inset #808080)] [r=23 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 16x19
+                          text run at (1,1) width 16: "22"
+                      LayoutTableCell {TD} at (49,1174) size 80x42 [border: (1px inset #808080)] [r=23 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,1184) size 78x22 [border: (1px inset #808080)] [r=23 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 67x19
+                          text run at (1,1) width 67: "R$ 305,32"
+                      LayoutTableCell {TD} at (207,1184) size 98x22 [border: (1px inset #808080)] [r=23 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 2.808,33"
+                      LayoutTableCell {TD} at (305,1184) size 101x22 [border: (1px inset #808080)] [r=23 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 79x19
+                          text run at (1,1) width 79: "R$ 5.914,97"
+                    LayoutTableRow {TR} at (0,1216) size 406x42
+                      LayoutTableCell {TD} at (0,1226) size 49x22 [border: (1px inset #808080)] [r=24 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 16x19
+                          text run at (1,1) width 16: "23"
+                      LayoutTableCell {TD} at (49,1216) size 80x42 [border: (1px inset #808080)] [r=24 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,1226) size 78x22 [border: (1px inset #808080)] [r=24 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 67x19
+                          text run at (1,1) width 67: "R$ 207,02"
+                      LayoutTableCell {TD} at (207,1226) size 98x22 [border: (1px inset #808080)] [r=24 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 2.906,62"
+                      LayoutTableCell {TD} at (305,1226) size 101x22 [border: (1px inset #808080)] [r=24 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 79x19
+                          text run at (1,1) width 79: "R$ 3.008,35"
+                    LayoutTableRow {TR} at (0,1258) size 406x42
+                      LayoutTableCell {TD} at (0,1268) size 49x22 [border: (1px inset #808080)] [r=25 c=0 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 16x19
+                          text run at (1,1) width 16: "24"
+                      LayoutTableCell {TD} at (49,1258) size 80x42 [border: (1px inset #808080)] [r=25 c=1 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x39
+                          text run at (1,1) width 24: "-R$"
+                          text run at (1,21) width 56: "3.113,64"
+                      LayoutTableCell {TD} at (129,1268) size 78x22 [border: (1px inset #808080)] [r=25 c=2 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 67x19
+                          text run at (1,1) width 67: "R$ 105,29"
+                      LayoutTableCell {TD} at (207,1268) size 98x22 [border: (1px inset #808080)] [r=25 c=3 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 84x19
+                          text run at (1,1) width 84: "-R$ 3.008,35"
+                      LayoutTableCell {TD} at (305,1268) size 101x22 [border: (1px inset #808080)] [r=25 c=4 rs=1 cs=1]
+                        LayoutText {#text} at (1,1) size 56x19
+                          text run at (1,1) width 56: "-R$ 0,00"
