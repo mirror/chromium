@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ac6f594_5d235642",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-11T05:53:00Z",
+      "side": 1,
+      "message": "Is it possible to have the callback by value instead of unique_ptr?",
+      "revId": "dd00768a3b1f65009e3eac1a38cd979c49910f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
