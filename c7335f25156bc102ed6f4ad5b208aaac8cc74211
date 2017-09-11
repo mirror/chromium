@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a3d67080_4dd84ef5",
+        "filename": "content/browser/dom_storage/session_storage_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-11T17:55:57Z",
+      "side": 1,
+      "message": "Thx. I decided to go with \"run\" since that is the more commonly used verb.",
+      "parentUuid": "19d69595_02c62647",
+      "revId": "c7335f25156bc102ed6f4ad5b208aaac8cc74211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44858e49_d87d8c8c",
         "filename": "third_party/leveldatabase/leveldb_chrome.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-08T21:44:54Z",
       "side": 1,
       "message": "Nit: How about \"Singleton storing resources shared by Chrome\u0027s leveldb databases.\"",
+      "revId": "c7335f25156bc102ed6f4ad5b208aaac8cc74211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2112b1f_f3e101a3",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-11T17:55:57Z",
+      "side": 1,
+      "message": "Done. I went with \"owning\" instead of \"storing\" as nothing is written to disk.",
+      "parentUuid": "44858e49_d87d8c8c",
       "revId": "c7335f25156bc102ed6f4ad5b208aaac8cc74211",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
