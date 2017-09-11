@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d1e60af_1be50e85",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-09-11T17:59:27Z",
+      "side": 1,
+      "message": "nit: Maybe worth \"(incoming_seed_ !\u003d old_seed_)\" to make clear the \u0026\u0026 is done last",
+      "range": {
+        "startLine": 96,
+        "startChar": 35,
+        "endLine": 96,
+        "endChar": 49
+      },
+      "revId": "cd2a663dda8aab0985019c12321c514c218a5694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dafae6f_634b9b9b",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-09-11T17:59:27Z",
+      "side": 1,
+      "message": "Did you check if a failure here will cause the test to fail?",
+      "range": {
+        "startLine": 99,
+        "startChar": 49,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "cd2a663dda8aab0985019c12321c514c218a5694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503ff23f_a3efa89e",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-09-11T17:59:27Z",
+      "side": 1,
+      "message": "nit: Please add the brackets here as well",
+      "range": {
+        "startLine": 336,
+        "startChar": 49,
+        "endLine": 336,
+        "endChar": 63
+      },
+      "revId": "cd2a663dda8aab0985019c12321c514c218a5694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
