@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89c1981b_6c8f0fdd",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-11T19:07:49Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to use c-style declarations here, do we?  Variables names here are seem to violate the Google style guide, as they\u0027re uncommon abbreviations.",
+      "range": {
+        "startLine": 740,
+        "startChar": 24,
+        "endLine": 740,
+        "endChar": 0
+      },
+      "revId": "552706f224d61b1c55ea992f24868cabb6800368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
