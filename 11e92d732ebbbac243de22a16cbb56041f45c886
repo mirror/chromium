@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "389fd1da_31f3fe6d",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-09-11T21:56:56Z",
+      "side": 1,
+      "message": "What happens if the user drags one handle over another (i.e., collapse selection to nothing)? Would we still keep the left/right handles? If yes, is this the desired behavior?",
+      "revId": "11e92d732ebbbac243de22a16cbb56041f45c886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
