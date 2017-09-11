@@ -99,6 +99,8 @@ def _DisplayLineCoverageReport(target, profdata_path, filter_paths):
   line_coverage_report = _FilterLineCoverageReport(raw_line_coverage_report,
                                                    filter_paths)
 
+  print line_coverage_report
+
   coverage_by_filter = collections.defaultdict(
       lambda: collections.defaultdict(lambda: 0))
   for coverage_file in line_coverage_report:
