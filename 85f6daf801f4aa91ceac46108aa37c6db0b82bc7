@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b00e0649_ddfdbb59",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/web_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-11T16:26:11Z",
+      "side": 1,
+      "message": "Implementation is fine,  but as mentioned in my prior comments, the mediator is the right place for this (since it\u0027s just manipulating the WebState API).",
+      "range": {
+        "startLine": 36,
+        "startChar": 29,
+        "endLine": 36,
+        "endChar": 52
+      },
+      "revId": "85f6daf801f4aa91ceac46108aa37c6db0b82bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
