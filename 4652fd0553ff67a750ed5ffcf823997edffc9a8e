@@ -69,6 +69,24 @@
       "revId": "4652fd0553ff67a750ed5ffcf823997edffc9a8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24fb1b79_49b9fb03",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-11T21:57:59Z",
+      "side": 1,
+      "message": "Prefer early exit is still style improvement though. Anyway, let\u0027s make it stick first.",
+      "parentUuid": "63983369_10fc1e89",
+      "revId": "4652fd0553ff67a750ed5ffcf823997edffc9a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
