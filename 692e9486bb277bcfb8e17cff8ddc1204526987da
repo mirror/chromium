@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c735ade_abdbbb76",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_static_position.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-11T23:41:52Z",
+      "side": 1,
+      "message": "Fixed. Obsolete TODO.",
+      "parentUuid": "e0243a78_3aa2e1d4",
+      "range": {
+        "startLine": 21,
+        "startChar": 31,
+        "endLine": 21,
+        "endChar": 35
+      },
+      "revId": "692e9486bb277bcfb8e17cff8ddc1204526987da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd8e2c3b_67621a65",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "692e9486bb277bcfb8e17cff8ddc1204526987da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe4724a5_6d37baa4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-11T23:41:52Z",
+      "side": 1,
+      "message": "Yes it does.",
+      "parentUuid": "cd8e2c3b_67621a65",
+      "range": {
+        "startLine": 44,
+        "startChar": 13,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "692e9486bb277bcfb8e17cff8ddc1204526987da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
