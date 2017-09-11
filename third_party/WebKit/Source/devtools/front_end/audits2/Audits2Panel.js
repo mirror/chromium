@@ -43,6 +43,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
       preset.setting.addChangeListener(this._updateStartButtonEnabled.bind(this));
     this._showLandingPage();
     SDK.targetManager.observeModels(SDK.ServiceWorkerManager, this);
+    this._isUnderTest = false;
   }
 
   /**
@@ -75,6 +76,28 @@ Audits2.Audits2Panel = class extends UI.Panel {
     Common.EventTarget.removeEventListeners(this._serviceWorkerListeners);
     this._manager = null;
     this._serviceWorkerListeners = null;
+    this._updateStartButtonEnabled();
+  }
+
+  /**
+   * @return {?Element}
+   */
+  _getAuditResultsElementForTest() {
+    return this._auditResultsElement;
+  }
+
+  /**
+   * @return {?UI.Dialog}
+   */
+  _getDialogForTest() {
+    return this._dialog;
+  }
+
+  /**
+   * @param {boolean} value
+   */
+  _setIsUnderTest(value) {
+    this._isUnderTest = value;
     this._updateStartButtonEnabled();
   }
 
@@ -121,7 +144,10 @@ Audits2.Audits2Panel = class extends UI.Panel {
           'Navigate to a different page to start an audit.');
     }
 
-    if (!Runtime.queryParam('can_dock'))
+    // Audits don't work on most undockable targets (extension popup pages, remote debugging, etc).
+    // However, the tests run in a content shell which is not dockable yet audits just fine,
+    // so disable this check when under test.
+    if (!this._isUnderTest && !Runtime.queryParam('can_dock'))
       return Common.UIString('Can only audit tabs. Navigate to this page in a separate tab to start an audit.');
 
     return null;
@@ -302,7 +328,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
           this._updateButton();
           this._updateStatus(Common.UIString('Loading\u2026'));
         })
-        .then(_ => this._protocolService.startLighthouse(this._inspectedURL, categoryIDs))
+        .then(_ => this._protocolService.startLighthouse(this._inspectedURL, categoryIDs, !this._isUnderTest))
         .then(lighthouseResult => {
           if (lighthouseResult && lighthouseResult.fatal) {
             const error = new Error(lighthouseResult.message);
@@ -575,10 +601,11 @@ Audits2.ProtocolService = class extends Common.Object {
   /**
    * @param {string} inspectedURL
    * @param {!Array<string>} categoryIDs
+   * @param {boolean=} log
    * @return {!Promise<!ReportRenderer.ReportJSON>}
    */
-  startLighthouse(inspectedURL, categoryIDs) {
-    return this._send('start', {url: inspectedURL, categoryIDs});
+  startLighthouse(inspectedURL, categoryIDs, log = true) {
+    return this._send('start', {url: inspectedURL, categoryIDs, log});
   }
 
   /**
