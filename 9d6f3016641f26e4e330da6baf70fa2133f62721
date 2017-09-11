@@ -22,6 +22,30 @@
       "revId": "9d6f3016641f26e4e330da6baf70fa2133f62721",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3a2279_626ff6da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-11T11:11:25Z",
+      "side": 0,
+      "message": "I think that in this particular case JavaDoc is redundant - it\u0027s crystal clear what this method does without any comments. Out of all private methods in this class this one is probably the last in terms of JavaDoc necessity :-)",
+      "parentUuid": "11600ed9_bced7e31",
+      "range": {
+        "startLine": 318,
+        "startChar": 4,
+        "endLine": 318,
+        "endChar": 10
+      },
+      "revId": "9d6f3016641f26e4e330da6baf70fa2133f62721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
