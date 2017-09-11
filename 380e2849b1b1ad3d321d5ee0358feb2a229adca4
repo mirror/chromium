@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "485f5a56_4a317be1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-11T02:35:11Z",
+      "side": 1,
+      "message": "Link the master bug?",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 9
+      },
+      "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b6860c_e441cf70",
+        "filename": "components/language/core/browser/baseline_language_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-11T02:35:11Z",
+      "side": 1,
+      "message": "E.g. could there be a DCHECK on the pref_service here re. the requirements mentioned in the class comment?",
+      "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44fed668_9158134b",
+        "filename": "components/language/core/browser/baseline_language_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-11T02:35:11Z",
+      "side": 1,
+      "message": "cosnt",
+      "range": {
+        "startLine": 28,
+        "startChar": 50,
+        "endLine": 28,
+        "endChar": 58
+      },
+      "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c2d36db_cac0942f",
+        "filename": "components/language/core/browser/baseline_language_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-11T02:35:11Z",
+      "side": 1,
+      "message": "Do we need to some kind of validation that the thing we get out of accept_langs_pref here is \"legit\" looking languages?",
+      "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "898ea902_c2c03a57",
+        "filename": "components/language/core/browser/baseline_language_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-11T02:35:11Z",
+      "side": 1,
+      "message": "Possibly naive question:\nThis sounds like an issue which may occur often in Chromium. Is there a more formal way to require this than via a comment?",
+      "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298665e1_e8478b46",
+        "filename": "components/language/core/browser/baseline_language_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-11T02:35:11Z",
+      "side": 1,
+      "message": "In Chromium, I have seen this practice where (blocks of) overrides get commented with the base class to which they belong.\n\nNot saying I like it per se, but can you check if it\u0027s a required style thing or not?",
+      "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa813fe7_2204153d",
+        "filename": "components/language/core/browser/url_language_histogram.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-11T02:35:11Z",
+      "side": 1,
+      "message": "Thankyou for adding an explanatory comment.\n\nHowever, probably coming from naive viewpoint, upon reading it I am a bit unclear how this relates to threading / allowing multiple instances of the histogram to be used on the same thread.\n\n(Before this comment, I was simply unaware :D)\n\nWhat exactly is it about this class / its implementation that enables this?",
+      "range": {
+        "startLine": 27,
+        "startChar": 32,
+        "endLine": 28,
+        "endChar": 30
+      },
+      "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
