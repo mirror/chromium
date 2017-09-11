@@ -5,6 +5,7 @@
 #include "content/renderer/media/video_track_adapter.h"
 
 #include <algorithm>
+#include <cmath>
 #include <limits>
 #include <memory>
 #include <string>
@@ -21,6 +22,7 @@
 #include "build/build_config.h"
 #include "content/public/common/content_switches.h"
 #include "media/base/bind_to_current_loop.h"
+#include "media/base/limits.h"
 #include "media/base/video_util.h"
 
 namespace content {
@@ -49,6 +51,11 @@ void ReleaseOriginalFrame(const scoped_refptr<media::VideoFrame>& frame) {
 void ResetCallbackOnMainRenderThread(
     std::unique_ptr<VideoCaptureDeliverFrameCB> callback) {
   // |callback| will be deleted when this exits.
+}
+
+int ClampToValidDimension(int dimension) {
+  return std::min(static_cast<int>(media::limits::kMaxDimension),
+                  std::max(0, dimension));
 }
 
 }  // anonymous namespace
@@ -454,12 +461,21 @@ void VideoTrackAdapter::CalculateTargetSize(
   // frame with a size that fulfills the constraints.
   const double input_ratio =
       static_cast<double>(input_size.width()) / input_size.height();
+  DCHECK(!std::isnan(input_ratio));
 
   if (input_size.width() > max_frame_size.width() ||
       input_size.height() > max_frame_size.height() ||
       input_ratio > max_aspect_ratio || input_ratio < min_aspect_ratio) {
-    int desired_width = std::min(max_frame_size.width(), input_size.width());
-    int desired_height = std::min(max_frame_size.height(), input_size.height());
+    int desired_width = ClampToValidDimension(
+        std::min(max_frame_size.width(), input_size.width()));
+    int desired_height = ClampToValidDimension(
+        std::min(max_frame_size.height(), input_size.height()));
+
+    // Ignore aspect ratio in this case.
+    if (desired_width * desired_height <= 0) {
+      *desired_size = gfx::Size(desired_width, desired_height);
+      return;
+    }
 
     const double resulting_ratio =
         static_cast<double>(desired_width) / desired_height;
@@ -468,13 +484,17 @@ void VideoTrackAdapter::CalculateTargetSize(
         std::max(std::min(resulting_ratio, max_aspect_ratio), min_aspect_ratio);
 
     if (resulting_ratio < requested_ratio) {
-      desired_height = static_cast<int>((desired_height * resulting_ratio) /
-                                        requested_ratio);
+      double desired_height_fp =
+          (desired_height * resulting_ratio) / requested_ratio;
+      DCHECK(std::isfinite(desired_height_fp));
+      desired_height = static_cast<int>(desired_height_fp);
       // Make sure we scale to an even height to avoid rounding errors
       desired_height = (desired_height + 1) & ~1;
     } else if (resulting_ratio > requested_ratio) {
-      desired_width =
-          static_cast<int>((desired_width * requested_ratio) / resulting_ratio);
+      double desired_width_fp =
+          (desired_width * requested_ratio) / resulting_ratio;
+      DCHECK(std::isfinite(desired_width_fp));
+      desired_width = static_cast<int>(desired_width_fp);
       // Make sure we scale to an even width to avoid rounding errors.
       desired_width = (desired_width + 1) & ~1;
     }
