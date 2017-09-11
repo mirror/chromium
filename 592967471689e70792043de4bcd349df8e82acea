@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4794677_97982bb2",
+        "filename": "content/browser/web_contents/web_contents_impl_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-11T18:40:14Z",
+      "side": 1,
+      "message": "nit: EXPECT_TRUE()",
+      "revId": "592967471689e70792043de4bcd349df8e82acea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f6edb8_69b14707",
+        "filename": "content/browser/web_contents/web_contents_impl_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-11T18:40:14Z",
+      "side": 1,
+      "message": "nit: this one shouldn\u0027t be necessary (NavigateToURL waits for DidStopLoading)",
+      "revId": "592967471689e70792043de4bcd349df8e82acea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c7364d1_1e39901a",
+        "filename": "content/browser/web_contents/web_contents_impl_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-11T18:40:14Z",
+      "side": 1,
+      "message": "nit: this is fine, though there\u0027s a OpenPopup() helper in content_browser_test_utils_internal, which simplifies all this work :)",
+      "revId": "592967471689e70792043de4bcd349df8e82acea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
