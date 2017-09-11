@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1d163de_b7ae0ffe",
+        "filename": "chrome/browser/media/router/issue_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-11T19:27:15Z",
+      "side": 1,
+      "message": "We could do that by adding a field to the IssueInfo / mojo struct when we need to override the default amount. For now, I think it\u0027s reasonable for all the issues to assume the default.",
+      "parentUuid": "51b41d93_ea0f4828",
+      "revId": "c1dd23a07c721ea606b3fa96b5c20a15e1a0e95f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7967cf2_a6767f54",
         "filename": "chrome/browser/media/router/issue_manager.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-08T22:53:05Z",
       "side": 1,
       "message": "Can IssueInfo store a CancelableCallback to clear itself, which is either invoked by PostDelayedTask or canceled if the issue is otherwise cleared?",
+      "revId": "c1dd23a07c721ea606b3fa96b5c20a15e1a0e95f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "697f3baf_1a0413a9",
+        "filename": "chrome/browser/media/router/issue_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-11T19:27:15Z",
+      "side": 1,
+      "message": "I think it would make sense to track CancelableCallback in the IssueManager. Issues / IssueInfos can be copied but CancelableCallback cannot be copied. In previous patchset I commented in issue_manager.h that I did not want to track callbacks for additional complexity. But I added tracking in the latest patchset since it\u0027s actually not too much code.`",
+      "parentUuid": "c7967cf2_a6767f54",
       "revId": "c1dd23a07c721ea606b3fa96b5c20a15e1a0e95f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
