@@ -23,9 +23,6 @@ namespace credential_manager {
 
 namespace {
 
-// Script command prefix for CM API calls. Possible commands to be sent from
-// injected JS are 'credentials.get', 'credentials.store' and
-// 'credentials.preventSilentAccess'.
 constexpr char kCommandPrefix[] = "credentials";
 
 }  // namespace
@@ -48,15 +45,13 @@ CredentialManager::~CredentialManager() {
 bool CredentialManager::HandleScriptCommand(const base::DictionaryValue& json,
                                             const GURL& origin_url,
                                             bool user_is_interacting) {
-  double promise_id_double = -1;
-  // |promiseId| field should be an integer value, but since JavaScript has only
-  // one type for numbers (64-bit float), all numbers in the messages are sent
-  // as doubles.
+  double promise_id_double;
+  int promise_id;
   if (!json.GetDouble("promiseId", &promise_id_double)) {
     DLOG(ERROR) << "Received bad json - no valid 'promiseId' field";
     return false;
   }
-  int promise_id = static_cast<int>(promise_id_double);
+  promise_id = static_cast<int>(promise_id_double);
 
   if (!WebStateContentIsSecureHtml(web_state_)) {
     RejectPromiseWithInvalidStateError(

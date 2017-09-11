@@ -183,10 +183,10 @@ function PasswordCredential(init) {
 
   // Perform following steps:
   // https://w3c.github.io/webappsec-credential-management/#abstract-opdef-create-a-passwordcredential-from-passwordcredentialdata
-  if (!data.id || typeof data.id != 'string') {
+  if (!data.id) {
     throw new TypeError('id must be a non-empty string');
   }
-  if (!data.password || typeof data.password != 'string') {
+  if (!data.password) {
     throw new TypeError('password must be a non-empty string');
   }
   if (data.iconURL && !data.iconURL.startsWith('https://')) {
@@ -260,10 +260,10 @@ Object.defineProperty(PasswordCredential.prototype, Symbol.toStringTag,
  * @constructor
  */
 function FederatedCredential(init) {
-  if (!init.id || typeof init.id != 'string') {
+  if (!init.id) {
     throw new TypeError('id must be a non-empty string');
   }
-  if (!init.provider || typeof init.provider != 'string') {
+  if (!init.provider) {
     throw new TypeError('provider must be a non-empty string');
   }
   if (!init.provider.startsWith('https://') &&
