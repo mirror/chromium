@@ -29,6 +29,8 @@
 
 namespace headless {
 
+uint64_t GenericURLRequestJob::next_request_id_ = 0;
+
 GenericURLRequestJob::GenericURLRequestJob(
     net::URLRequest* request,
     net::NetworkDelegate* network_delegate,
@@ -45,6 +47,7 @@ GenericURLRequestJob::GenericURLRequestJob(
       headless_browser_context_(headless_browser_context),
       request_resource_info_(
           content::ResourceRequestInfo::ForRequest(request_)),
+      request_id_(next_request_id_++),
       weak_factory_(this) {}
 
 GenericURLRequestJob::~GenericURLRequestJob() {
@@ -189,7 +192,7 @@ void GenericURLRequestJob::GetLoadTimingInfo(
 }
 
 uint64_t GenericURLRequestJob::GenericURLRequestJob::GetRequestId() const {
-  return request_->identifier();
+  return request_id_;
 }
 
 const net::URLRequest* GenericURLRequestJob::GetURLRequest() const {
