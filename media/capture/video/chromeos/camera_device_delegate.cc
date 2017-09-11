@@ -151,7 +151,9 @@ void CameraDeviceDelegate::OnMojoConnectionError() {
     OnClosed(0);
   } else {
     // The Mojo channel terminated unexpectedly.
-    stream_buffer_manager_->StopCapture();
+    if (stream_buffer_manager_) {
+      stream_buffer_manager_->StopCapture();
+    }
     device_context_->SetState(CameraDeviceContext::State::kStopped);
     device_context_->SetErrorState(FROM_HERE, "Mojo connection error");
     ResetMojoInterface();
@@ -214,6 +216,11 @@ void CameraDeviceDelegate::OnOpenedDevice(int32_t result) {
   DCHECK(ipc_task_runner_->BelongsToCurrentThread());
 
   if (device_context_->GetState() != CameraDeviceContext::State::kStarting) {
+    if (device_context_->GetState() == CameraDeviceContext::State::kError) {
+      // In case of camera open failed, the HAL can terminate the Mojo channel
+      // before we do and set the state to kError in OnMojoConnectionError.
+      return;
+    }
     DCHECK_EQ(device_context_->GetState(),
               CameraDeviceContext::State::kStopping);
     OnClosed(0);
