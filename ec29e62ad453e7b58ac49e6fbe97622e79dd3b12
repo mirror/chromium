@@ -16,6 +16,24 @@
       "revId": "ec29e62ad453e7b58ac49e6fbe97622e79dd3b12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1afaf1cd_0db02d29",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-11T17:32:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "355c1b12_52c545c1",
+      "revId": "ec29e62ad453e7b58ac49e6fbe97622e79dd3b12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
