@@ -1203,9 +1203,11 @@ void PpapiCdmAdapter::OnDeferredInitializationDone(cdm::StreamType stream_type,
   }
 }
 
-void PpapiCdmAdapter::RequestStorageId() {
+void PpapiCdmAdapter::RequestStorageId(uint32_t version) {
   // If persistent storage is not allowed, no need to get the Storage ID.
-  if (allow_persistent_state_) {
+  // As well, pepper only supports a single version of StorageId (version == 1).
+  // Only allow the request if the specific version (or "latest") is requested.
+  if (allow_persistent_state_ && version <= 1) {
     linked_ptr<pp::Var> response(new pp::Var());
     int32_t result = platform_verification_.GetStorageId(
         response.get(), callback_factory_.NewCallback(
@@ -1217,7 +1219,7 @@ void PpapiCdmAdapter::RequestStorageId() {
     PP_DCHECK(result != PP_OK);
   }
 
-  cdm_->OnStorageId(nullptr, 0);
+  cdm_->OnStorageId(version, nullptr, 0);
 }
 
 // The CDM owns the returned object and must call FileIO::Close() to release it.
@@ -1350,7 +1352,8 @@ void PpapiCdmAdapter::RequestStorageIdDone(
     storage_id_size = 0;
   }
 
-  cdm_->OnStorageId(storage_id_ptr, storage_id_size);
+  // Pepper only supports version 1 of Storage ID.
+  cdm_->OnStorageId(1, storage_id_ptr, storage_id_size);
 }
 
 PpapiCdmAdapter::SessionError::SessionError(
