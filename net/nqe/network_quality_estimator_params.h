@@ -69,7 +69,14 @@ class NET_EXPORT NetworkQualityEstimatorParams {
   // fully utilized. A throughput observation is taken only when the network is
   // considered as fully utilized.
   size_t throughput_min_requests_in_flight() const {
-    return throughput_min_requests_in_flight_;
+    return use_small_responses_ ? 1 : throughput_min_requests_in_flight_;
+  }
+
+  // Tiny transfer sizes may give inaccurate throughput results.
+  // Minimum size of the transfer over which the throughput is computed.
+  int64_t throughput_min_transfer_size_bits() const {
+    return static_cast<int64_t>(throughput_min_transfer_size_kilobytes_) * 8 *
+           1000;
   }
 
   // Returns the weight multiplier per second, which represents the factor by
@@ -173,12 +180,23 @@ class NET_EXPORT NetworkQualityEstimatorParams {
     return historical_time_threshold_;
   }
 
+  // Determines if the responses smaller than |kMinTransferSizeInBytes|
+  // or shorter than |kMinTransferSizeInBytes| can be used in estimating the
+  // network quality. Set to true only for tests.
+  bool use_small_responses() const;
+
+  // |use_small_responses| should only be true when testing.
+  // Allows the responses smaller than |kMinTransferSizeInBits| to be used for
+  // network quality estimation.
+  void SetUseSmallResponsesForTesting(bool use_small_responses);
+
  private:
   // Map containing all field trial parameters related to
   // NetworkQualityEstimator field trial.
   const std::map<std::string, std::string> params_;
 
   const size_t throughput_min_requests_in_flight_;
+  const int throughput_min_transfer_size_kilobytes_;
   const double weight_multiplier_per_second_;
   const double weight_multiplier_per_signal_strength_level_;
   const double correlation_uma_logging_probability_;
@@ -190,6 +208,8 @@ class NET_EXPORT NetworkQualityEstimatorParams {
   const base::TimeDelta increase_in_transport_rtt_logging_interval_;
   const base::TimeDelta recent_time_threshold_;
   const base::TimeDelta historical_time_threshold_;
+
+  bool use_small_responses_;
 
   EffectiveConnectionTypeAlgorithm effective_connection_type_algorithm_;
 
