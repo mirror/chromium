@@ -6,9 +6,9 @@
 #define NET_QUIC_CORE_QUIC_HEADERS_STREAM_H_
 
 #include <cstddef>
-#include <deque>
 #include <memory>
 
+#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "net/quic/core/quic_header_list.h"
 #include "net/quic/core/quic_packets.h"
@@ -92,7 +92,7 @@ class QUIC_EXPORT_PRIVATE QuicHeadersStream : public QuicStream {
   QuicSpdySession* spdy_session_;
 
   // Headers that have not been fully acked.
-  std::deque<CompressedHeaderInfo> unacked_headers_;
+  base::circular_deque<CompressedHeaderInfo> unacked_headers_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicHeadersStream);
 };
