@@ -100,9 +100,6 @@ class MenuModel;
   std::unique_ptr<DownloadItemMac> bridge_;
   std::unique_ptr<DownloadShelfContextMenuMac> menuBridge_;
 
-  // Weak pointer to the shelf that owns us.
-  DownloadShelfController* shelf_;
-
   // The time at which this view was created.
   base::Time creationTime_;
 
@@ -120,9 +117,12 @@ class MenuModel;
   std::unique_ptr<extensions::ExperienceSamplingEvent> sampling_event_;
 };
 
+// Weak pointer to the containing shelf. Must be set to nil when the shelf is
+// no longer valid.
+@property(nonatomic, assign) DownloadShelfController* shelf;
+
 // Initialize controller for |downloadItem|.
 - (id)initWithDownload:(content::DownloadItem*)downloadItem
-                 shelf:(DownloadShelfController*)shelf
              navigator:(content::PageNavigator*)navigator;
 
 // Updates the UI and menu state from |downloadModel|.
@@ -164,6 +164,9 @@ class MenuModel;
 - (IBAction)saveDownload:(id)sender;
 - (IBAction)discardDownload:(id)sender;
 - (IBAction)showContextMenu:(id)sender;
+
+// Is the button showing a context menu? Used by tests.
+- (BOOL)showingContextMenu;
 
 @end
 

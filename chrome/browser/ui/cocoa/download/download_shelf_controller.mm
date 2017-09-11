@@ -209,6 +209,7 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
   // TODO(dmaclach): Remove -- http://crbug.com/25845
   [[download view] removeFromSuperview];
 
+  [download setShelf:nil];
   [downloadItemControllers_ removeObject:download];
 
   if (!isShelfClosing) {
@@ -305,8 +306,8 @@ const NSSize kHoverCloseButtonDefaultSize = { 18, 18 };
   DCHECK([NSThread isMainThread]);
   base::scoped_nsobject<DownloadItemController> controller(
       [[DownloadItemController alloc] initWithDownload:downloadItem
-                                                 shelf:self
                                              navigator:navigator_]);
+  [controller setShelf:self];
   [self add:controller.get()];
 }
 
