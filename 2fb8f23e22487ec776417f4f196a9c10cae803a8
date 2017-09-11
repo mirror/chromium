@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e00b36c5_76cdcc0b",
+        "filename": "chrome/browser/ui/blocked_content/popup_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-11T20:08:25Z",
+      "side": 1,
+      "message": "Can you clarify the flow here? Maybe a comment? My understanding is that you\u0027re using the existence of visibility_tracker_ as a proxy of \"first load\". Yes?",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 26
+      },
+      "revId": "2fb8f23e22487ec776417f4f196a9c10cae803a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
