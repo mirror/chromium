@@ -1375,6 +1375,7 @@ TEST_F(LockScreenAppStateTest, CloseNoteInActiveState) {
                             "Close lock screen note.");
   ClearObservedStates();
 
+  base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(app_window()->closed());
 }
 

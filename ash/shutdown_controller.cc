@@ -17,9 +17,24 @@
 
 namespace ash {
 
+ShutdownController::TestApi::TestApi(ShutdownController* controller)
+    : controller_(controller) {}
+
+void ShutdownController::TestApi::SetRebootOnShutdown(bool reboot_on_shutdown) {
+  controller_->SetRebootOnShutdown(reboot_on_shutdown);
+}
+
 ShutdownController::ShutdownController() {}
 
 ShutdownController::~ShutdownController() {}
+
+void ShutdownController::AddObserver(Observer* observer) {
+  observers_.AddObserver(observer);
+}
+
+void ShutdownController::RemoveObserver(Observer* observer) {
+  observers_.RemoveObserver(observer);
+}
 
 void ShutdownController::ShutDownOrReboot(ShutdownReason reason) {
   // For developers on Linux desktop just exit the app.
@@ -40,7 +55,11 @@ void ShutdownController::ShutDownOrReboot(ShutdownReason reason) {
 }
 
 void ShutdownController::SetRebootOnShutdown(bool reboot_on_shutdown) {
+  if (reboot_on_shutdown_ == reboot_on_shutdown)
+    return;
   reboot_on_shutdown_ = reboot_on_shutdown;
+  for (auto& observer : observers_)
+    observer.OnShutdownPolicyChanged(reboot_on_shutdown_);
 }
 
 void ShutdownController::RequestShutdownFromLoginScreen() {
