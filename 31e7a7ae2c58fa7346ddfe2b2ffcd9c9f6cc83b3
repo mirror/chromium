@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae88ac0d_999cd3a6",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-11T16:47:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f2a8e34_b07ffffa",
+      "range": {
+        "startLine": 248,
+        "startChar": 6,
+        "endLine": 248,
+        "endChar": 10
+      },
+      "revId": "31e7a7ae2c58fa7346ddfe2b2ffcd9c9f6cc83b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06d63fe2_83af3846",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "31e7a7ae2c58fa7346ddfe2b2ffcd9c9f6cc83b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd0246a_96f43792",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-11T16:47:14Z",
+      "side": 1,
+      "message": "Added the condition that is required to have a drop down.",
+      "parentUuid": "06d63fe2_83af3846",
+      "range": {
+        "startLine": 595,
+        "startChar": 14,
+        "endLine": 595,
+        "endChar": 43
+      },
+      "revId": "31e7a7ae2c58fa7346ddfe2b2ffcd9c9f6cc83b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
