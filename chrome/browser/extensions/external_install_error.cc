@@ -301,6 +301,7 @@ ExternalInstallError::ExternalInstallError(
       error_service_(GlobalErrorServiceFactory::GetForProfile(
           Profile::FromBrowserContext(browser_context_))),
       weak_factory_(this) {
+  DLOG(INFO) << "MADE ONE!";
   prompt_.reset(new ExtensionInstallPrompt::Prompt(
       ExtensionInstallPrompt::EXTERNAL_INSTALL_PROMPT));
 
@@ -325,6 +326,8 @@ ExternalInstallError::~ExternalInstallError() {
 
 void ExternalInstallError::OnInstallPromptDone(
     ExtensionInstallPrompt::Result result) {
+  DLOG(INFO) << "On Install Prompt done";
+
   const Extension* extension = GetExtension();
 
   // If the error isn't removed and deleted as part of handling the user's
@@ -428,7 +431,7 @@ void ExternalInstallError::OnFetchComplete() {
   install_ui_.reset(
       new ExtensionInstallPrompt(Profile::FromBrowserContext(browser_context_),
                                  NULL));  // NULL native window.
-
+  DLOG(INFO) << "FetchComplete - show ui";
   install_ui_->ShowDialog(base::Bind(&ExternalInstallError::OnInstallPromptDone,
                                      weak_factory_.GetWeakPtr()),
                           GetExtension(),
@@ -442,9 +445,11 @@ void ExternalInstallError::OnDialogReady(
     ExtensionInstallPromptShowParams* show_params,
     const ExtensionInstallPrompt::DoneCallback& callback,
     std::unique_ptr<ExtensionInstallPrompt::Prompt> prompt) {
+  DLOG(INFO) << "OnDialogReady" << alert_type_;
   prompt_ = std::move(prompt);
 
   if (alert_type_ == BUBBLE_ALERT) {
+    DLOG(INFO) << "ERROR!";
     global_error_.reset(new ExternalInstallBubbleAlert(this, prompt_.get()));
     error_service_->AddUnownedGlobalError(global_error_.get());
 

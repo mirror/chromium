@@ -94,13 +94,15 @@ bool ExternalInstallManager::IsPromptingEnabled() {
 
 void ExternalInstallManager::AddExternalInstallError(const Extension* extension,
                                                      bool is_new_profile) {
+  DLOG(INFO) << "ADD!! is_new_profile=" << is_new_profile;
+  is_new_profile = false;
   // Error already exists or has been previously shown.
   if (base::ContainsKey(errors_, extension->id()) ||
       shown_ids_.count(extension->id()) > 0)
     return;
 
   ExternalInstallError::AlertType alert_type =
-      (ManifestURL::UpdatesFromGallery(extension) && !is_new_profile)
+      (true || (ManifestURL::UpdatesFromGallery(extension) && !is_new_profile))
           ? ExternalInstallError::BUBBLE_ALERT
           : ExternalInstallError::MENU_ALERT;
 
@@ -128,15 +130,18 @@ void ExternalInstallManager::RemoveExternalInstallError(
 }
 
 void ExternalInstallManager::UpdateExternalExtensionAlert() {
+  DLOG(INFO) << "here";
   // If the feature is not enabled do nothing.
   if (!IsPromptingEnabled())
     return;
 
+  DLOG(INFO) << "now here";
   // Look for any extensions that were disabled because of being unacknowledged
   // external extensions.
   const ExtensionSet& disabled_extensions =
       ExtensionRegistry::Get(browser_context_)->disabled_extensions();
   for (const auto& id : unacknowledged_ids_) {
+    DLOG(INFO) << id;
     if (base::ContainsKey(errors_, id) || shown_ids_.count(id) > 0)
       continue;
 
@@ -155,6 +160,7 @@ void ExternalInstallManager::UpdateExternalExtensionAlert() {
     if (is_first_run_)
       extension_prefs_->SetExternalInstallFirstRun(id);
 
+    DLOG(INFO) << "AddInstallError";
     // |first_run| is true if the extension was installed during a first run
     // (even if it's post-first run now).
     AddExternalInstallError(extension,
