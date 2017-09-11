@@ -107,6 +107,7 @@ void ServiceWorkerURLLoaderJob::StartRequest() {
                  weak_factory_.GetWeakPtr(), make_scoped_refptr(active_worker)),
       base::Bind(&ServiceWorkerURLLoaderJob::DidDispatchFetchEvent,
                  weak_factory_.GetWeakPtr()));
+  response_head_.service_worker_start_time = base::TimeTicks::Now();
   did_navigation_preload_ =
       fetch_dispatcher_->MaybeStartNavigationPreloadWithURLLoader(
           resource_request_, url_loader_factory_getter_.get(),
@@ -143,7 +144,9 @@ void ServiceWorkerURLLoaderJob::DeliverErrorResponse() {
 }
 
 void ServiceWorkerURLLoaderJob::DidPrepareFetchEvent(
-    scoped_refptr<ServiceWorkerVersion> version) {}
+    scoped_refptr<ServiceWorkerVersion> version) {
+  response_head_.service_worker_ready_time = base::TimeTicks::Now();
+}
 
 void ServiceWorkerURLLoaderJob::DidDispatchFetchEvent(
     ServiceWorkerStatusCode status,
