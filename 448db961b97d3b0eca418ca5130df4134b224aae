@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a70505ab_9b9ae870",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-11T07:49:43Z",
+      "side": 0,
+      "message": "I\u0027m sure you\u0027re right but I don\u0027t quite follow your example. After we\u0027ve transitioned, overlay_bundle-\u003eoverlay \u003d\u003d overlay2. So when we receive OnSurfaceDestroyed(overlay1) we won\u0027t do anything. TargetSurface() will still be overlay2.\n\nMCVDs CodecImages don\u0027t hold a ref to the overlay. Is this a new behavior for AndroidOverlay in AVDA? I think we can easily add that. We don\u0027t even have to clear the ref from the CodecImages on SurfaceDestroyed() I don\u0027t think. Because they don\u0027t do anything with the overlay except hold onto it to keep it alive.",
+      "parentUuid": "1bbcac92_38ee49c7",
+      "revId": "448db961b97d3b0eca418ca5130df4134b224aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ef83b94_e992add1",
         "filename": "media/gpu/avda_codec_allocator.cc",
         "patchSetId": 2

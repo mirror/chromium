@@ -117,6 +117,24 @@
     },
     {
       "key": {
+        "uuid": "b0a216d9_7314c7de",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-11T07:49:43Z",
+      "side": 1,
+      "message": "True. Well if we haven\u0027t been getting crashes due to doing it the old way I\u0027m fine to leave it that way.\n\nTested on my device: second codec fails with an error. This is probably preferable because the user can click play and retry. If we wait for the release to complete, the playback will hang but not error.",
+      "parentUuid": "0e360b2f_8839974d",
+      "revId": "e921071b92f4a018808899f01e845a9193998b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8b11ef3_34b23a00",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 2
@@ -286,6 +304,24 @@
       "writtenOn": "2017-09-08T14:41:50Z",
       "side": 1,
       "message": "not sure that this shouldn\u0027t be called |target_bundle_| and sometimes \u003d\u003d |surface_texture_bundle_|.  seems like it\u0027s used in that fashion everywhere.  however, it does means aliasing between them when using a surface texture, which i realize you tend to dislike.  :)\n\nhowever, |surface_texture_bundle_| is pretty much a hack.  |target_bundle_| seems like the state we\u0027d really want to keep if we could just make new ST\u0027s any time we like.  this would isolate use of |surface_texture_bundle_| to OnSurfaceChosen().  nobody else would have to remember that we keep one of these things around, including the release cases, since we\u0027d still have a ref to it.\n\npractically, that would remove all the null checks, and the conditional in TargetSurface().  you\u0027d have to initialize |target_bundle_| to |surface_texture_bundle_| before OnSurfaceChosen, maybe, to avoid all the null checks.  maybe not.  might actually not call anything then.",
+      "revId": "e921071b92f4a018808899f01e845a9193998b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58186875_e9dd42f0",
+        "filename": "media/gpu/android/media_codec_video_decoder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-11T07:49:43Z",
+      "side": 1,
+      "message": "Ok, yeah, that sounds good! Will do.",
+      "parentUuid": "33694016_4abb224d",
       "revId": "e921071b92f4a018808899f01e845a9193998b37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
