@@ -244,6 +244,24 @@
     },
     {
       "key": {
+        "uuid": "1b19171f_6047835a",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-11T07:40:02Z",
+      "side": 1,
+      "message": "Ah, yeah, it sounds right.",
+      "parentUuid": "a16b8a6c_d1e54820",
+      "revId": "4b3017c32a533b5b61a75e5cefcd43c085477f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce84b8ba_a3533140",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 1
