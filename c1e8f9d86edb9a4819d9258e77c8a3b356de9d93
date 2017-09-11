@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "754f8d0d_026a7d15",
+        "filename": "content/browser/indexed_db/indexed_db_context_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-11T19:40:57Z",
+      "side": 1,
+      "message": "any reason to not use Origin as the input data type?",
+      "revId": "c1e8f9d86edb9a4819d9258e77c8a3b356de9d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a2dbe1d_48dc5641",
+        "filename": "content/browser/indexed_db/indexed_db_context_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-11T19:40:57Z",
+      "side": 1,
+      "message": "Unlike cache storage, most of IDB mostly does not run on the IO thread, it runs on the TaskRunner() seqeunce: content_impl-\u003eTaskRunner()",
+      "revId": "c1e8f9d86edb9a4819d9258e77c8a3b356de9d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
