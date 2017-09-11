@@ -1,0 +1,48 @@
+syntax = "proto2";
+
+package protobuf_mutator;
+
+message Url {
+  message Scheme {
+    optional string scheme = 1;
+    optional string colon = 2;
+    optional string slash_1 = 3;
+    optional string slash_2 =  4;
+  }
+  optional Scheme scheme = 1;
+
+  message Credentials {
+    optional string username = 1;
+    optional string colon = 2;
+    optional string password = 3;
+    optional string at_sign = 4;
+  }
+
+  optional Credentials credentials = 2;
+
+  optional string host =  3;
+
+  message Port {
+    optional string colon = 1;
+    optional string port = 2;
+  }
+  optional Port port = 4;
+
+  message Path {
+    optional string root = 1;
+    optional string path  = 2;
+  }
+  optional Path path = 5;
+
+  message Query {
+    optional string question_mark = 1;
+    optional string query  = 2;
+  }
+  optional Query query = 6;
+
+  message Fragment {
+    optional string hash = 1;
+    optional string fragment  = 2;
+  }
+  optional Fragment fragment = 7;
+}
