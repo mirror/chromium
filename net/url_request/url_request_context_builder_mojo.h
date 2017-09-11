@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "net/interfaces/proxy_resolver_service.mojom.h"
 #include "net/proxy/dhcp_proxy_script_fetcher_factory.h"
 #include "net/url_request/url_request_context_builder.h"
 
@@ -32,18 +33,14 @@ class URLRequestContextBuilderMojo : public URLRequestContextBuilder {
 
   // Overrides default DhcpProxyScriptFetcherFactory. Ignored if no
   // MojoProxyResolverFactory is provided.
-  void set_dhcp_fetcher_factory(
-      std::unique_ptr<DhcpProxyScriptFetcherFactory> dhcp_fetcher_factory) {
-    dhcp_fetcher_factory_ = std::move(dhcp_fetcher_factory);
-  }
+  void SetDhcpFetcherFactory(
+      std::unique_ptr<DhcpProxyScriptFetcherFactory> dhcp_fetcher_factory);
 
   // Sets Mojo factory used to create ProxyResolvers. If not set, falls back to
-  // URLRequestContext's default behavior. The passed in factory must outlive
-  // the URLRequestContext the builder creates.
-  void set_mojo_proxy_resolver_factory(
-      MojoProxyResolverFactory* mojo_proxy_resolver_factory) {
-    mojo_proxy_resolver_factory_ = mojo_proxy_resolver_factory;
-  }
+  // URLRequestContext's default behavior. The passed in factory is expected
+  // to live as long as the URLRequestContext the builder creates.
+  void SetMojoProxyResolverFactory(
+      interfaces::ProxyResolverFactoryPtr mojo_proxy_resolver_factory);
 
  private:
   std::unique_ptr<ProxyService> CreateProxyService(
@@ -55,7 +52,7 @@ class URLRequestContextBuilderMojo : public URLRequestContextBuilder {
 
   std::unique_ptr<DhcpProxyScriptFetcherFactory> dhcp_fetcher_factory_;
 
-  MojoProxyResolverFactory* mojo_proxy_resolver_factory_ = nullptr;
+  interfaces::ProxyResolverFactoryPtr mojo_proxy_resolver_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(URLRequestContextBuilderMojo);
 };
