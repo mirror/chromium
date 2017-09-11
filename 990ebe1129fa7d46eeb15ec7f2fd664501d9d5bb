@@ -70,6 +70,30 @@
       "revId": "990ebe1129fa7d46eeb15ec7f2fd664501d9d5bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12daf09_08f5554c",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-11T16:58:41Z",
+      "side": 1,
+      "message": "exclude_unwind_tables and optimize_for_size are defined in this file so I get gn errors if I try and use them in compiler.gni because it is imported by this file (so it\u0027s a use before a definition).",
+      "parentUuid": "bf4b7a6c_df1e7da8",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 25
+      },
+      "revId": "990ebe1129fa7d46eeb15ec7f2fd664501d9d5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
