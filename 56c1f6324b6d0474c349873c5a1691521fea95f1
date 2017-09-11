@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bff56899_89354813",
+        "filename": "pdf/pdfium/pdfium_range.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-11T21:19:27Z",
+      "side": 1,
+      "message": "I don\u0027t think this will help.\n\n|index| is only used in the FPDFText_GetText() call. If |index| is negative, then FPDFText_GetText() will check it as its |start| argument and immediately return 0.\n\nThen |api_string_adapter| will be called with Close(0), and that isn\u0027t going to trigger a crash either.",
+      "revId": "56c1f6324b6d0474c349873c5a1691521fea95f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
