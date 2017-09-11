@@ -105,6 +105,24 @@
       "revId": "96aa31cb315089c70b5b3e925f862d2650ab14c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292849ea_066ec8ff",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-11T03:14:06Z",
+      "side": 1,
+      "message": "Thanks! Changed to bind WeakPtr of WebSWProviderImpl.",
+      "parentUuid": "7d10a113_48b22f61",
+      "revId": "96aa31cb315089c70b5b3e925f862d2650ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
