@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cabfba9_f26f9d2e",
+        "filename": "components/offline_pages/core/model/create_archive_task.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T22:54:12Z",
+      "side": 1,
+      "message": "nit: you could try to forward declare if you haven\u0027t.",
+      "revId": "55091889165dbd1a8e75f887b5eb299e41187a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46977c10_fa6abe53",
+        "filename": "components/offline_pages/core/model/create_archive_task.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T22:54:12Z",
+      "side": 1,
+      "message": "nit: empty line after this one.",
+      "range": {
+        "startLine": 67,
+        "startChar": 3,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "55091889165dbd1a8e75f887b5eb299e41187a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
