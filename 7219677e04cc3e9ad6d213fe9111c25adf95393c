@@ -1,0 +1,282 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dd7fec2_9c3e715c",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "The common is a good start, but it\u0027s mostly repeating the blink::mojom::ServiceWorkerStreamCallback interface.\n\nI prefer it to say that it waits for the stream response to finish, and ServiceWorkerURLLoaderJob::CommitCompleted() when its done. That\u0027s a detail that the general base class interface doesn\u0027t have.",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2027b099_060c7fbc",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "This can be one line:\nurl_loader_client_-\u003eOnComplete(ResourceRequestCompletionStatus(net::ERR_ABORTED))",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9e112a_6fa2e84c",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "these lines of code can also be ResourceRequetCOmpletionStatus(error_code) now.",
+      "range": {
+        "startLine": 170,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 13
+      },
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b8bc3c_abb61076",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "This statement looks a little out of place. I prefer setting it aside in its own paragraph and saying something like // |stream_waiter_| calls this when its done.\"\n\nFor consistency with the order in Cancel(), it\u0027d be better for this reset() to be before the url_loader_client_-\u003eOnCompleted().",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9f3cab_9abbfdeb",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "you can std::move(version) too",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb22fe0f_d6f3ebce",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "this feels like it belongs at line 156, it\u0027s similar in its lifetime and function as |fetch_dispatcher_|",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9130a3e_cc1d0892",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "Would be also good to talk about the JobResult return value. I recommend:\n\n\"Returns whether ServiceWorkerURLLoaderJob handled the request. If kHandledRequest was returned, the request is ongoing and the caller can use functions like client_.RunUntilComplete() to wait for completion.\"",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c673b6c_1e728323",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "this looks like a bit too much vertical whitespace: we can remove line 528 here and in the functions below. (Especially when the block is headed with \"// Perform the request\", it makes sense for RunUntiLComplete to be in the same block.)",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af281ab_c1a5d647",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "I vote for moving line 612 to the \"// Write the body stream\" block. It fits logically there. Then We can have another block which is:\n\nclient_.RunUntilComplete();\nEXPECT_EQ(net::OK, client_.completion_status().error_code);",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c7b98d4_f227269f",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "Similar here: reseting the data pipe in line 629 feels better, then the RunUntilComplete() goes directly above testing the completion_status.",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c4e97d_05aa527e",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "don\u0027t need line 704",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f20fb4_97a36dbc",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "for safetly let\u0027s do CHECK_LT(streaming_job_count_, std::numeric_limits\u003cint\u003e::max());\n\nthis will cause a crash instead of doing signed int overflow, which is underfined",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42fba9e4_1d633fcd",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "DCHECK_GT(streaming_job_count_, 0);\n\nthis doesn\u0027t need to be a CHECK, as failing this implies a programming bug.",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74bf8eb3_0f262426",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1718,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "prefer \"streaming_job_count_ \u003e 0\"",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde67b25_7bada3b6",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1918,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "Hmm I think the original code was wrong here. We clear the jobs here but SWDataPipeReader calls Remove*Job() when its done, and the DCHECK there would fail I think.\n\nI think the streaming job people shouuld be responsible for cleaning themselves up. When SW stops, we expect the streaming jobs Mojo binding to break, and they\u0027ll call OnStreamingResposneFinished().\n\nBut I\u0027m not sure if any code depends on the jobs being cleared in OnStopped(). So to keep the patch delta small, let\u0027s go back to the original idea of adding new Add/RemoveStreaming* functions. Then in a follow-up patch let\u0027s try unifying them and removing this part from OnStopped().",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ade97e_27df6753",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:12:54Z",
+      "side": 1,
+      "message": "Since now there is no longer |request_job| or |loader_job|, these function names should be something like \"OnStreamResponseStarted()\", \"OnStreamResponseFinished()\", and the comment could be updated accordingly.",
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
