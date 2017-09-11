@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef385fa8_2679f140",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-11T13:56:52Z",
+      "side": 1,
+      "message": "Is this comment still correct? Generally, the section below could benefit from one or two more lines of documentation.",
+      "range": {
+        "startLine": 114,
+        "startChar": 25,
+        "endLine": 114,
+        "endChar": 32
+      },
+      "revId": "bfd165491f2ef5cdea49b95518865bacc53b18b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ddde4b8_bbb76ff3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-11T13:56:52Z",
+      "side": 1,
+      "message": "What is intervals? My understanding of the English word is the gaps between other things, which would be more likely numColumns - 1. Maybe extract a local variable and document it.",
+      "range": {
+        "startLine": 119,
+        "startChar": 60,
+        "endLine": 119,
+        "endChar": 69
+      },
+      "revId": "bfd165491f2ef5cdea49b95518865bacc53b18b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
