@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10fd7cdf_cc89feca",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-11T17:39:07Z",
+      "side": 1,
+      "message": "Style nit: you could do:\n\nvar parsedURL \u003d securityOrigin.asParsedURL();\nif (!parsedURL || !parsedURL.scheme.startsWith(\u0027http\u0027))\n  return;",
+      "revId": "f4649d7d69d73b36a9a4f61592ffd89cb864035c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
