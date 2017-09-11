@@ -504,6 +504,13 @@ void FrameTreeNode::ResetNavigationRequest(bool keep_state,
 
 }
 
+void FrameTreeNode::TransferNavigationRequest(
+    RenderFrameHostImpl* render_frame_host) {
+  DCHECK(navigation_request_);
+  DCHECK_EQ(this, render_frame_host->frame_tree_node());
+  render_frame_host->TakeNavigationRequest(std::move(navigation_request_));
+}
+
 bool FrameTreeNode::has_started_loading() const {
   return loading_progress_ != kLoadingProgressNotStarted;
 }

@@ -51,6 +51,7 @@ class TestNavigationURLLoaderDelegate : public NavigationURLLoaderDelegate {
   // event happened.
   void WaitForRequestRedirected();
   void WaitForResponseStarted();
+  void WaitForResponseCompleted();
   void WaitForRequestFailed();
   void WaitForRequestStarted();
 
@@ -70,6 +71,7 @@ class TestNavigationURLLoaderDelegate : public NavigationURLLoaderDelegate {
       bool is_download,
       bool is_stream,
       mojom::URLLoaderFactoryPtrInfo loader_factory_ptr_info) override;
+  void OnResponseCompleted() override;
   void OnRequestFailed(bool in_cache,
                        int net_error,
                        const base::Optional<net::SSLInfo>& ssl_info,
@@ -89,6 +91,7 @@ class TestNavigationURLLoaderDelegate : public NavigationURLLoaderDelegate {
 
   std::unique_ptr<base::RunLoop> request_redirected_;
   std::unique_ptr<base::RunLoop> response_started_;
+  std::unique_ptr<base::RunLoop> response_completed_;
   std::unique_ptr<base::RunLoop> request_failed_;
   std::unique_ptr<base::RunLoop> request_started_;
 
