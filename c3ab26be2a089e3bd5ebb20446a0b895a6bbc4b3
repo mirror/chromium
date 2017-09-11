@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72bf4324_dc913213",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "Can you add a comment why we Post the request on the current thread instead of just invoking it?\n(Let\u0027s not change behavior in this CL if it does make sense to invoke it directly.)",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3383de5_d4a21187",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "This should probably be .front().release() since the element being moved is technically still \"in use\" by the std::list, unless you\u0027re sure this is OK. The list implementation would have to be mad for this to be a problem when its being popped on the next line, but thinking about if we\u0027re relying on non-explicit/non-spec assumptions about the implementation.",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdba58a_8826bfc7",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "Now that the UserMediaProcessor is a separate class, make sure any threading model assumptions are documented in UserMediaProcessor.\n\nHere, is there an assumption is that the CurrentRequest doesn\u0027t change in this thread/within the scope of this function? Or is that not an assumption, and it\u0027s OK to log this message and maybe DeleteRequestInfo fails later? If it does change though we would probably access deleted memory.",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2fea420_68df6897",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "Does it make sense to merge DeleteRequestInfo into this function? It\u0027s no longer called from anywhere else and its private.",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1330d64_9879df30",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "If web_request is the current request this would return true, else it would be in the queue?",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6236e3a5_98327ff4",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "This is worrying, UserMediaClientImpl has normal public constructors. You could allocate this object on the stack. Can you add class documentation about lifetime, and should the constructors be hidden in favor of \"UserMediaClientImpl* Create(...)\" to disallow stack allocs?",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3001866e_9cc2e558",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "nit: ..",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af2f2d5_5cff7197",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "Add a comment saying that the OnStreamGenerated/etc (MediaStreamDeviceDispatcherEventHandler overrides) callbacks will be invoked when GenerateStream is done to make the code easier to follow.",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff38117_f23b77d1",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "What happens if multiple requests and/or processes try to open/close the device?",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c686cdda_fa6ec61e",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "We don\u0027t have to do anything (invoke callback etc) in response to the stream generation being cancelled? Because the only cause of cancelling would have come from the MediaStreamImpl?",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e6fa24_46655c14",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "Good ol\u0027 ExtraData. Will this be nuked in the future?",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a84e9c7a_f28b45fc",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "What\u0027s the difference between Stopping and Removing a local source? How is this tied together, OnLocalSourceStopped performs RemoveLocalSource. Are both always performed?",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883e5ffb_99dd90a1",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "(Hmh, std::move() is used as a reset mechanism, while it is still in use for operator bool() and operator\u003d(). I suppose is has been designed with this in mind, but isn\u0027t this a bit iffy?)",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6c50f2a_41c5940d",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "nit: Would it make more sense to either define these (UserMediaProcessor::RequestInfo::*) inline with the class definition, or right after the class definition?",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320f7a52_7039c2f6",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "Is it up to |ready_callback_| to handle the lifetime of |RequestInfo|?\nA request is not reusable (e.g. if it fails, |request_result_| is forever set), should we add DCHECKs?",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec073060_b22a1199",
+        "filename": "content/renderer/media/user_media_processor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "Please add a comment explaining this class.",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31b7e99_65b32a5c",
+        "filename": "content/renderer/media/user_media_processor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-11T13:31:18Z",
+      "side": 1,
+      "message": "Should this be a SequencedTaskRunner?",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
