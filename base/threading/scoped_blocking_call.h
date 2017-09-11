@@ -13,25 +13,66 @@ namespace base {
 // BlockingType indicates the likelihood that a blocking call will actually
 // block.
 enum class BlockingType {
-  // The call might block (e.g. file I/O that might hit in memory cache).
+  // The call will block for more than 10ms at least 75% of the time (e.g. cache
+  // already checked and now pinging server synchronously).
+  WILL_BLOCK,
+  // The call might block, but at least 25% of the time it won't block or will
+  // block for less than 10ms (e.g. file I/O that might hit in memory cache).
   MAY_BLOCK,
-  // The call will definitely block (e.g. cache already checked and now pinging
-  // server synchronously).
-  WILL_BLOCK
 };
 
 namespace internal {
 class BlockingObserver;
 }
 
-// This class can be instantiated in a scope where a a blocking call (which
-// isn't using local computing resources -- e.g. a synchronous network request)
-// is made. Instantiation will hint the BlockingObserver for this thread about
-// the scope of the blocking operation.
+// This class must be instantiated in every scope where a blocking call is made.
+// CPU usage should be minimal within that scope. //base APIs that block
+// instantiate their own ScopedBlockingCall; it is not necessary to instantiate
+// another ScopedBlockingCall in the scope where these APIs are used.
 //
-// In particular, when instantiated from a TaskScheduler parallel or sequenced
-// task, this will allow the thread to be replaced in its pool (more or less
-// aggressively depending on BlockingType).
+// Good:
+//   Data data;
+//   {
+//     ScopedBlockingCall scoped_blocking_call(BlockingType::WILL_BLOCK);
+//     data = GetDataFromNetwork();
+//   }
+//   CPUIntensiveProcessing(data);
+//
+// Bad:
+//   ScopedBlockingCall scoped_blocking_call(BlockingType::WILL_BLOCK);
+//   Data data = GetDataFromNetwork();
+//   CPUIntensiveProcessing(data);  // CPU usage within a ScopedBlockingCall.
+//
+// Good:
+//   Data a;
+//   Data b;
+//   {
+//     ScopedBlockingCall scoped_blocking_call(BlockingType::MAY_BLOCK);
+//     a = GetDataFromMemoryCacheOrNetwork();
+//     b = GetDataFromMemoryCacheOrNetwork();
+//   }
+//   CPUIntensiveProcessing(a);
+//   CPUIntensiveProcessing(b);
+//
+// Bad:
+//   ScopedBlockingCall scoped_blocking_call(BlockingType::MAY_BLOCK);
+//   Data a = GetDataFromMemoryCacheOrNetwork();
+//   Data b = GetDataFromMemoryCacheOrNetwork();
+//   CPUIntensiveProcessing(a);  // CPU usage within a ScopedBlockingCall.
+//   CPUIntensiveProcessing(b);  // CPU usage within a ScopedBlockingCall.
+//
+// Good:
+//   base::WaitableEvent waitable_event(...);
+//   waitable_event.Wait();
+//
+// Bad:
+//  base::WaitableEvent waitable_event(...);
+//  ScopedBlockingCall scoped_blocking_call(BlockingType::WILL_BLOCK);
+//  waitable_event.Wait();  // Wait() instantiates its own ScopedBlockingCall.
+//
+// When a ScopedBlockingCall is instantiated from a TaskScheduler parallel or
+// sequenced task, the thread pool size is incremented to compensate for the
+// blocked thread (more or less aggressively depending on BlockingType).
 class BASE_EXPORT ScopedBlockingCall {
  public:
   ScopedBlockingCall(BlockingType blocking_type);
