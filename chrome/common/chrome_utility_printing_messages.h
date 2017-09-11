@@ -81,13 +81,6 @@ IPC_STRUCT_TRAITS_END()
 //------------------------------------------------------------------------------
 // Utility process messages:
 // These are messages from the browser to the utility process.
-// Tell the utility process to render the given PDF into a PWGRaster.
-IPC_MESSAGE_CONTROL4(ChromeUtilityMsg_RenderPDFPagesToPWGRaster,
-                     IPC::PlatformFileForTransit /* Input PDF file */,
-                     printing::PdfRenderSettings /* PDF render settings */,
-                     // PWG transform settings.
-                     printing::PwgRasterSettings,
-                     IPC::PlatformFileForTransit /* Output PWG file */)
 
 // Tells the utility process to get capabilities and defaults for the specified
 // printer. Used on Windows to isolate the service process from printer driver
@@ -128,12 +121,6 @@ IPC_MESSAGE_CONTROL0(ChromeUtilityMsg_RenderPDFPagesToMetafiles_Stop)
 // These are messages from the utility process to the browser.
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
-// Reply when the utility process has succeeded in rendering the PDF to PWG.
-IPC_MESSAGE_CONTROL0(ChromeUtilityHostMsg_RenderPDFPagesToPWGRaster_Succeeded)
-
-// Reply when an error occurred rendering the PDF to PWG.
-IPC_MESSAGE_CONTROL0(ChromeUtilityHostMsg_RenderPDFPagesToPWGRaster_Failed)
-
 // Reply when the utility process has succeeded in obtaining the printer
 // capabilities and defaults.
 IPC_MESSAGE_CONTROL2(ChromeUtilityHostMsg_GetPrinterCapsAndDefaults_Succeeded,
