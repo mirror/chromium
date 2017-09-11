@@ -82,6 +82,19 @@
 
 #pragma mark - BookmarkHomeViewControllerDelegate
 
+- (void)navigateUrl:(const GURL&)url {
+  if (url.SchemeIs(url::kJavaScriptScheme)) {  // bookmarklet
+    NSString* jsToEval = [base::SysUTF8ToNSString(url.GetContent())
+        stringByRemovingPercentEncoding];
+    [self.loader loadJavaScriptFromLocationBar:jsToEval];
+  } else {
+    [self.loader loadURL:url
+                 referrer:web::Referrer()
+               transition:ui::PAGE_TRANSITION_AUTO_BOOKMARK
+        rendererInitiated:NO];
+  }
+}
+
 - (void)bookmarkHomeViewControllerWantsDismissal:
             (BookmarkHomeViewController*)controller
                                  navigationToUrl:(const GURL&)url {
@@ -93,16 +106,31 @@
     base::RecordAction(
         base::UserMetricsAction("MobileBookmarkManagerEntryOpened"));
 
-    if (url.SchemeIs(url::kJavaScriptScheme)) {  // bookmarklet
-      NSString* jsToEval = [base::SysUTF8ToNSString(url.GetContent())
-          stringByRemovingPercentEncoding];
-      [self.loader loadJavaScriptFromLocationBar:jsToEval];
-    } else {
-      [self.loader loadURL:url
-                   referrer:web::Referrer()
-                 transition:ui::PAGE_TRANSITION_AUTO_BOOKMARK
-          rendererInitiated:NO];
-    }
+    [self navigateUrl:url];
+  }
+}
+
+- (void)
+bookmarkHomeViewControllerWantsDismissal:(BookmarkHomeViewController*)controller
+                        navigationToUrls:(const std::vector<GURL>&)urls {
+  [self dismissBookmarkBrowser];
+
+  if (urls.size() == 0) {
+    return;
+  }
+  // TODO(crbug.com/695749): Record metrics action.
+
+  // open the 1st url in the current tab.
+  if (urls[0] != GURL()) {
+    [self navigateUrl:urls[0]];
+  }
+
+  // open the other urls in background tabs.
+  for (size_t i = 1; i < urls.size(); ++i) {
+    [_loader webPageOrderedOpen:urls[i]
+                       referrer:web::Referrer()
+                   inBackground:YES
+                       appendTo:kLastTab];
   }
 }
 

@@ -30,6 +30,12 @@ class BookmarkNode;
 - (void)bookmarkHomeViewControllerWantsDismissal:
             (BookmarkHomeViewController*)controller
                                  navigationToUrl:(const GURL&)url;
+
+// The view controller wants to be dismissed and open multiple urls.
+- (void)bookmarkHomeViewControllerWantsDismissal:
+            (BookmarkHomeViewController*)controller
+                                navigationToUrls:(const std::vector<GURL>&)urls;
+
 @end
 
 // Class to navigate the bookmark hierarchy, needs subclassing for tablet /

@@ -85,8 +85,13 @@ class PrefRegistrySyncable;
 // Called when something outside the view causes the promo state to change.
 - (void)promoStateChangedAnimated:(BOOL)animated;
 
-// Returns the currently selected edit nodes.
+// The following 2 ivars both represent the set of nodes being edited.
+// The set is for fast lookup.
+// The vector maintains the order that edit nodes were added.
+// Use the relevant instance methods to modify these two ivars in tandem.
+// DO NOT modify these two ivars directly.
 - (const std::set<const bookmarks::BookmarkNode*>&)editNodes;
+- (const std::vector<const bookmarks::BookmarkNode*>&)editNodesOrdered;
 
 @end
 
