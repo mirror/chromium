@@ -62,7 +62,7 @@ cr.define('settings', function() {
     // <if expr="chromeos">
     /** @override */
     openWallpaperManager() {
-      chrome.send('openWallpaperManager');
+      return cr.sendWithPromise('openWallpaperManager');
     }
 
     // </if>
