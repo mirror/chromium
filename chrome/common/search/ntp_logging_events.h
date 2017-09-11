@@ -37,4 +37,30 @@ enum NTPLoggingEventType {
   NTP_EVENT_TYPE_LAST = NTP_ALL_TILES_RECEIVED
 };
 
+// The different types of events that are logged from Voice Search on the NTP.
+// This enum is used to transfer information from the NTP javascript to the
+// renderer and is *not* used as a UMA enum histogram's logged value.
+// Note: Keep in sync with browser/resources/local_ntp/most_visited_single.js
+enum NTPVoiceLoggingEventType {
+  // TODO(oskopek): Comments.
+  NTP_VOICE_ACTIVATE_FAKEBOX = 0,
+  NTP_VOICE_ACTIVATE_KEYBOARD_NONMAC = 1,
+  NTP_VOICE_ACTIVATE_KEYBOARD_MAC = 2,
+  NTP_VOICE_ERROR_NO_SPEECH = 3,
+  NTP_VOICE_ERROR_ABORTED = 4,
+  NTP_VOICE_ERROR_AUDIO_CAPTURE = 5,
+  NTP_VOICE_ERROR_NETWORK = 6,
+  NTP_VOICE_ERROR_NOT_ALLOWED = 7,
+  NTP_VOICE_ERROR_SERVICE_NOT_ALLOWED = 8,
+  NTP_VOICE_ERROR_BAD_GRAMMAR = 9,
+  NTP_VOICE_ERROR_LANGUAGE_NOT_SUPPORTED = 10,
+  NTP_VOICE_ERROR_NO_MATCH = 11,
+  NTP_VOICE_ERROR_OTHER = 12,
+  NTP_VOICE_TRY_AGAIN_LINK = 13,
+  NTP_VOICE_TRY_AGAIN_MIC_BUTTON = 14,
+  NTP_VOICE_QUERY_SUBMITTED = 15,
+
+  NTP_VOICE_EVENT_TYPE_LAST = NTP_VOICE_QUERY_SUBMITTED
+};
+
 #endif  // CHROME_COMMON_SEARCH_NTP_LOGGING_EVENTS_H_

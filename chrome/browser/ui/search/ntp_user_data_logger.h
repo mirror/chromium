@@ -40,6 +40,11 @@ class NTPUserDataLogger
   // event happened.
   void LogEvent(NTPLoggingEventType event, base::TimeDelta time);
 
+  // Called when an event occurs in Voice Search on the NTP that requires
+  // a counter to be incremented. |time| is the delta time from navigation
+  // start until this event happened.
+  void LogVoiceEvent(NTPVoiceLoggingEventType event, base::TimeDelta time);
+
   // Logs an impression on one of the NTP tiles by a given source.
   void LogMostVisitedImpression(int position,
                                 ntp_tiles::TileSource tile_source,

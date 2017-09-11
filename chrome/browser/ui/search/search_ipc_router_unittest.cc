@@ -58,6 +58,8 @@ class MockSearchIPCRouterDelegate : public SearchIPCRouter::Delegate {
   MOCK_METHOD0(OnUndoAllMostVisitedDeletions, void());
   MOCK_METHOD2(OnLogEvent, void(NTPLoggingEventType event,
                                 base::TimeDelta time));
+  MOCK_METHOD2(OnLogVoiceEvent,
+               void(NTPVoiceLoggingEventType event, base::TimeDelta time));
   MOCK_METHOD3(OnLogMostVisitedImpression,
                void(int position,
                     ntp_tiles::TileSource tile_source,
@@ -80,6 +82,7 @@ class MockSearchIPCRouterPolicy : public SearchIPCRouter::Policy {
   MOCK_METHOD0(ShouldProcessUndoMostVisitedDeletion, bool());
   MOCK_METHOD0(ShouldProcessUndoAllMostVisitedDeletions, bool());
   MOCK_METHOD0(ShouldProcessLogEvent, bool());
+  MOCK_METHOD0(ShouldProcessLogVoiceEvent, bool());
   MOCK_METHOD1(ShouldProcessPasteIntoOmnibox, bool(bool));
   MOCK_METHOD0(ShouldProcessChromeIdentityCheck, bool());
   MOCK_METHOD0(ShouldProcessHistorySyncCheck, bool());

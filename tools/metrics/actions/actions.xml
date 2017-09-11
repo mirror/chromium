@@ -11726,6 +11726,138 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="NewTabPage_VoiceSearch_Activate_Fakebox">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when Voice Search on the NTP is activated by clicking or pressing
+    Enter on the microphone icon in the fakebox.
+  </description>
+</action>
+
+<action name="NewTabPage_VoiceSearch_Activate_Keyboard_Mac">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when Voice Search on the NTP is activated using a Mac-specific
+    keyboard shortcut.
+  </description>
+</action>
+
+<action name="NewTabPage_VoiceSearch_Activate_Keyboard_NonMac">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when Voice Search on the NTP is activated using a non-Mac keyboard
+    shortcut.
+  </description>
+</action>
+
+<action name="NewTabPage_VoiceSearch_Error_Aborted" not_user_triggered="true">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when an &quot;aborted&quot; error is received from the Speech
+    Recognition API in Voice Search on the NTP.
+  </description>
+</action>
+
+<action name="NewTabPage_VoiceSearch_Error_AudioCapture"
+    not_user_triggered="true">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when an &quot;audio-capture&quot; error is received from the Speech
+    Recognition API in Voice Search on the NTP.
+  </description>
+</action>
+
+<action name="NewTabPage_VoiceSearch_Error_BadGrammar"
+    not_user_triggered="true">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when an &quot;bad-grammar&quot; error is received from the Speech
+    Recognition API in Voice Search on the NTP.
+  </description>
+</action>
+
+<action name="NewTabPage_VoiceSearch_Error_LanguageNotSupported"
+    not_user_triggered="true">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when an &quot;language-not-supported&quot; error is received from
+    the Speech Recognition API in Voice Search on the NTP.
+  </description>
+</action>
+
+<action name="NewTabPage_VoiceSearch_Error_Network" not_user_triggered="true">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when a &quot;network&quot; error is received from the Speech
+    Recognition API in Voice Search on the NTP.
+  </description>
+</action>
+
+<action name="NewTabPage_VoiceSearch_Error_NoMatch" not_user_triggered="true">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when no transcript could be found for the given audio by the Speech
+    Recognition API in Voice Search on the NTP.
+  </description>
+</action>
+
+<action name="NewTabPage_VoiceSearch_Error_NoSpeech" not_user_triggered="true">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when a &quot;no-speech&quot; error is received from the Speech
+    Recognition API in Voice Search on the NTP.
+  </description>
+</action>
+
+<action name="NewTabPage_VoiceSearch_Error_NotAllowed"
+    not_user_triggered="true">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when a &quot;not-allowed&quot; error is received from the Speech
+    Recognition API in Voice Search on the NTP.
+  </description>
+</action>
+
+<action name="NewTabPage_VoiceSearch_Error_Other" not_user_triggered="true">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when an unknown error is received from the Speech Recognition API
+    in Voice Search on the NTP.
+  </description>
+</action>
+
+<action name="NewTabPage_VoiceSearch_Error_ServiceNotAllowed"
+    not_user_triggered="true">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when a &quot;service-not-allowed&quot; error is received from the
+    Speech Recognition API in Voice Search on the NTP.
+  </description>
+</action>
+
+<action name="NewTabPage_VoiceSearch_QuerySubmitted">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when a query is submitted from Voice Search on the NTP.
+  </description>
+</action>
+
+<action name="NewTabPage_VoiceSearch_TryAgain_Link">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when a user clicks on the &quot;Try Again&quot; link to retry Voice
+    Search on the NTP.
+  </description>
+</action>
+
+<action name="NewTabPage_VoiceSearch_TryAgain_MicButton">
+  <owner>treib@chromium.org</owner>
+  <description>
+    Recorded when a user clicks on the microphone button to retry Voice Search
+    on the NTP.
+  </description>
+</action>
+
 <action name="NewTab_Button">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>

@@ -360,6 +360,15 @@ void SearchTabHelper::OnLogEvent(NTPLoggingEventType event,
 #endif
 }
 
+void SearchTabHelper::OnLogVoiceEvent(NTPVoiceLoggingEventType event,
+                                      base::TimeDelta time) {
+// TODO(kmadhusu): Move platform specific code from here and get rid of #ifdef.
+#if !defined(OS_ANDROID)
+  NTPUserDataLogger::GetOrCreateFromWebContents(web_contents())
+      ->LogVoiceEvent(event, time);
+#endif
+}
+
 void SearchTabHelper::OnLogMostVisitedImpression(
     int position,
     ntp_tiles::TileSource tile_source,

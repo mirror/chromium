@@ -96,6 +96,79 @@ void NTPUserDataLogger::LogEvent(NTPLoggingEventType event,
   }
 }
 
+void NTPUserDataLogger::LogVoiceEvent(NTPVoiceLoggingEventType event,
+                                      base::TimeDelta time) {
+  switch (event) {
+    case NTP_VOICE_ACTIVATE_FAKEBOX:
+      base::RecordAction(
+          base::UserMetricsAction("NewTabPage_VoiceSearch_Activate_Fakebox"));
+      break;
+    case NTP_VOICE_ACTIVATE_KEYBOARD_MAC:
+      base::RecordAction(base::UserMetricsAction(
+          "NewTabPage_VoiceSearch_Activate_Keyboard_Mac"));
+      break;
+    case NTP_VOICE_ACTIVATE_KEYBOARD_NONMAC:
+      base::RecordAction(base::UserMetricsAction(
+          "NewTabPage_VoiceSearch_Activate_Keyboard_NonMac"));
+      break;
+    case NTP_VOICE_ERROR_ABORTED:
+      base::RecordAction(
+          base::UserMetricsAction("NewTabPage_VoiceSearch_Error_Aborted"));
+      break;
+    case NTP_VOICE_ERROR_AUDIO_CAPTURE:
+      base::RecordAction(
+          base::UserMetricsAction("NewTabPage_VoiceSearch_Error_AudioCapture"));
+      break;
+    case NTP_VOICE_ERROR_BAD_GRAMMAR:
+      base::RecordAction(
+          base::UserMetricsAction("NewTabPage_VoiceSearch_Error_BadGrammar"));
+      break;
+    case NTP_VOICE_ERROR_LANGUAGE_NOT_SUPPORTED:
+      base::RecordAction(base::UserMetricsAction(
+          "NewTabPage_VoiceSearch_Error_LanguageNotSupported"));
+      break;
+    case NTP_VOICE_ERROR_NETWORK:
+      base::RecordAction(
+          base::UserMetricsAction("NewTabPage_VoiceSearch_Error_Network"));
+      break;
+    case NTP_VOICE_ERROR_NO_MATCH:
+      base::RecordAction(
+          base::UserMetricsAction("NewTabPage_VoiceSearch_Error_NoMatch"));
+      break;
+    case NTP_VOICE_ERROR_NO_SPEECH:
+      base::RecordAction(
+          base::UserMetricsAction("NewTabPage_VoiceSearch_Error_NoSpeech"));
+      break;
+    case NTP_VOICE_ERROR_NOT_ALLOWED:
+      base::RecordAction(
+          base::UserMetricsAction("NewTabPage_VoiceSearch_Error_NotAllowed"));
+      break;
+    case NTP_VOICE_ERROR_OTHER:
+      base::RecordAction(
+          base::UserMetricsAction("NewTabPage_VoiceSearch_Error_Other"));
+      break;
+    case NTP_VOICE_ERROR_SERVICE_NOT_ALLOWED:
+      base::RecordAction(base::UserMetricsAction(
+          "NewTabPage_VoiceSearch_Error_ServiceNotAllowed"));
+      break;
+    case NTP_VOICE_QUERY_SUBMITTED:
+      base::RecordAction(
+          base::UserMetricsAction("NewTabPage_VoiceSearch_QuerySubmitted"));
+      break;
+    case NTP_VOICE_TRY_AGAIN_LINK:
+      base::RecordAction(
+          base::UserMetricsAction("NewTabPage_VoiceSearch_TryAgain_Link"));
+      break;
+    case NTP_VOICE_TRY_AGAIN_MIC_BUTTON:
+      base::RecordAction(
+          base::UserMetricsAction("NewTabPage_VoiceSearch_TryAgain_MicButton"));
+      break;
+    default:
+      DVLOG(1) << "Unknown Log Event occurred in Voice Search: " << event;
+      break;
+  }
+}
+
 void NTPUserDataLogger::LogMostVisitedImpression(
     int position,
     ntp_tiles::TileSource tile_source,

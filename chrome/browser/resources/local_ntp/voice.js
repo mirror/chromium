@@ -36,6 +36,34 @@ function getChromeUILanguage() {
 
 
 /**
+ * The different types of events that are logged from Voice Search. This enum is
+ * used to transfer information from the Voice Search JavaScript to the
+ * renderer and is not used as a UMA enum histogram's logged value.
+ * Note: Keep in sync with common/ntp_logging_events.h
+ * @enum {!number}
+ * @const
+ */
+const LOG_TYPE = {
+  NTP_VOICE_ACTIVATE_FAKEBOX: 0,
+  NTP_VOICE_ACTIVATE_KEYBOARD_NONMAC: 1,
+  NTP_VOICE_ACTIVATE_KEYBOARD_MAC: 2,
+  NTP_VOICE_ERROR_NO_SPEECH: 3,
+  NTP_VOICE_ERROR_ABORTED: 4,
+  NTP_VOICE_ERROR_AUDIO_CAPTURE: 5,
+  NTP_VOICE_ERROR_NETWORK: 6,
+  NTP_VOICE_ERROR_NOT_ALLOWED: 7,
+  NTP_VOICE_ERROR_SERVICE_NOT_ALLOWED: 8,
+  NTP_VOICE_ERROR_BAD_GRAMMAR: 9,
+  NTP_VOICE_ERROR_LANGUAGE_NOT_SUPPORTED: 10,
+  NTP_VOICE_ERROR_NO_MATCH: 11,
+  NTP_VOICE_ERROR_OTHER: 12,
+  NTP_VOICE_TRY_AGAIN_LINK: 13,
+  NTP_VOICE_TRY_AGAIN_MIC_BUTTON: 14,
+  NTP_VOICE_QUERY_SUBMITTED: 15
+};
+
+
+/**
  * Enum for keyboard event codes.
  * @enum {!string}
  * @const
@@ -257,6 +285,15 @@ speech.recognition_;
 
 
 /**
+ * Log an event from Voice Search.
+ * @param {number} eventType Event from |LOG_TYPE|.
+ */
+speech.logEvent = function(eventType) {
+  window.chrome.embeddedSearch.newTabPage.logVoiceEvent(eventType);
+};
+
+
+/**
  * Initialize the speech module as part of the local NTP. Adds event handlers
  * and shows the fakebox microphone icon.
  * @param {!string} googleBaseUrl Base URL for sending queries to Search.
@@ -277,6 +314,7 @@ speech.init = function(
   fakeboxMicrophoneElem.title = translatedStrings.fakeboxMicrophoneTooltip;
   fakeboxMicrophoneElem.onmouseup = function(event) {
     // If propagated, closes the overlay (click on the background).
+    speech.logEvent(LOG_TYPE.NTP_VOICE_ACTIVATE_FAKEBOX);
     event.stopPropagation();
     speech.toggleStartStop();
   };
@@ -490,6 +528,39 @@ speech.handleRecognitionResult_ = function(responseEvent) {
  * @private
  */
 speech.onErrorReceived_ = function(error) {
+  switch (error) {
+    case RecognitionError.ABORTED:
+      speech.logEvent(LOG_TYPE.NTP_VOICE_ERROR_ABORTED);
+      break;
+    case RecognitionError.AUDIO_CAPTURE:
+      speech.logEvent(LOG_TYPE.NTP_VOICE_ERROR_AUDIO_CAPTURE);
+      break;
+    case RecognitionError.BAD_GRAMMAR:
+      speech.logEvent(LOG_TYPE.NTP_VOICE_ERROR_BAD_GRAMMAR);
+      break;
+    case RecognitionError.LANGUAGE_NOT_SUPPORTED:
+      speech.logEvent(LOG_TYPE.NTP_VOICE_ERROR_LANGUAGE_NOT_SUPPORTED);
+      break;
+    case RecognitionError.NETWORK:
+      speech.logEvent(LOG_TYPE.NTP_VOICE_ERROR_NETWORK);
+      break;
+    case RecognitionError.NO_SPEECH:
+      speech.logEvent(LOG_TYPE.NTP_VOICE_ERROR_NO_SPEECH);
+      break;
+    case RecognitionError.NOT_ALLOWED:
+      speech.logEvent(LOG_TYPE.NTP_VOICE_ERROR_NOT_ALLOWED);
+      break;
+    case RecognitionError.SERVICE_NOT_ALLOWED:
+      speech.logEvent(LOG_TYPE.NTP_VOICE_ERROR_SERVICE_NOT_ALLOWED);
+      break;
+    case RecognitionError.NO_MATCH:
+      speech.logEvent(LOG_TYPE.NTP_VOICE_ERROR_NO_MATCH);
+      break;
+    default:
+      speech.logEvent(LOG_TYPE.NTP_VOICE_ERROR_OTHER);
+      break;
+  }
+
   speech.resetIdleTimer_(speech.IDLE_TIMEOUT_MS_);
   speech.errorTimeoutMs_ = speech.getRecognitionErrorTimeout_(error);
   if (error != RecognitionError.ABORTED) {
@@ -579,6 +650,11 @@ speech.onKeyDown = function(event) {
         event.ctrlKey || (speech.isUserAgentMac_() && event.metaKey);
     if (speech.currentState_ == speech.State_.READY &&
         event.code == KEYCODE.PERIOD && event.shiftKey && ctrlKeyPressed) {
+      if (speech.isUserAgentMac_()) {
+        speech.logEvent(LOG_TYPE.NTP_VOICE_ACTIVATE_KEYBOARD_MAC);
+      } else {
+        speech.logEvent(LOG_TYPE.NTP_VOICE_ACTIVATE_KEYBOARD_NONMAC);
+      }
       speech.toggleStartStop();
     }
   } else {
@@ -675,6 +751,7 @@ speech.submitFinalResult_ = function() {
   const queryUrl = new URL('/search', speech.googleBaseUrl_);
   queryUrl.search = searchParams;
 
+  speech.logEvent(LOG_TYPE.NTP_VOICE_QUERY_SUBMITTED);
   speech.stop_();
   speech.navigateToUrl_(queryUrl);
 };
@@ -1557,6 +1634,15 @@ view.onWindowClick_ = function(event) {
   const shouldRetry =
       retryLinkClicked || (micIconClicked && view.isNoMatchShown_);
   const navigatingAway = supportLinkClicked;
+
+  if (shouldRetry) {
+    if (micIconClicked) {
+      speech.logEvent(LOG_TYPE.NTP_VOICE_TRY_AGAIN_MIC_BUTTON);
+    } else if (retryLinkClicked) {
+      speech.logEvent(LOG_TYPE.NTP_VOICE_TRY_AGAIN_LINK);
+    }
+  }
+
   view.onClick_(submitQuery, shouldRetry, navigatingAway);
 };
 /* END VIEW */

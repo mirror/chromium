@@ -376,6 +376,9 @@ class SearchBoxExtensionWrapper : public v8::Extension {
   // Logs information from the iframes/titles on the NTP.
   static void LogEvent(const v8::FunctionCallbackInfo<v8::Value>& args);
 
+  // Logs information from Voice Search on the NTP.
+  static void LogVoiceEvent(const v8::FunctionCallbackInfo<v8::Value>& args);
+
   // Logs an impression on one of the Most Visited tile on the NTP.
   static void LogMostVisitedImpression(
       const v8::FunctionCallbackInfo<v8::Value>& args);
@@ -501,6 +504,8 @@ SearchBoxExtensionWrapper::GetNativeFunctionTemplate(
     return v8::FunctionTemplate::New(isolate, IsKeyCaptureEnabled);
   if (name_str == "LogEvent")
     return v8::FunctionTemplate::New(isolate, LogEvent);
+  if (name_str == "LogVoiceEvent")
+    return v8::FunctionTemplate::New(isolate, LogVoiceEvent);
   if (name_str == "LogMostVisitedImpression")
     return v8::FunctionTemplate::New(isolate, LogMostVisitedImpression);
   if (name_str == "LogMostVisitedNavigation")
@@ -846,6 +851,28 @@ void SearchBoxExtensionWrapper::LogEvent(
     NTPLoggingEventType event =
         static_cast<NTPLoggingEventType>(args[0]->Uint32Value());
     SearchBox::Get(render_frame)->LogEvent(event);
+  }
+}
+
+// static
+void SearchBoxExtensionWrapper::LogVoiceEvent(
+    const v8::FunctionCallbackInfo<v8::Value>& args) {
+  content::RenderFrame* render_frame =
+      GetRenderFrameWithCheckedOrigin(GURL(chrome::kChromeSearchLocalNtpUrl));
+  if (!render_frame)
+    return;
+
+  if (!args.Length() || !args[0]->IsNumber()) {
+    ThrowInvalidParameters(args);
+    return;
+  }
+
+  DVLOG(1) << render_frame << " LogVoiceEvent";
+
+  if (args[0]->Uint32Value() <= NTP_VOICE_EVENT_TYPE_LAST) {
+    NTPVoiceLoggingEventType event =
+        static_cast<NTPVoiceLoggingEventType>(args[0]->Uint32Value());
+    SearchBox::Get(render_frame)->LogVoiceEvent(event);
   }
 }
 

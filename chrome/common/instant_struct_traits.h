@@ -17,6 +17,8 @@ IPC_ENUM_TRAITS_MAX_VALUE(OmniboxFocusChangeReason,
 
 IPC_ENUM_TRAITS_MAX_VALUE(NTPLoggingEventType, NTP_EVENT_TYPE_LAST)
 
+IPC_ENUM_TRAITS_MAX_VALUE(NTPVoiceLoggingEventType, NTP_VOICE_EVENT_TYPE_LAST)
+
 IPC_ENUM_TRAITS_MAX_VALUE(ntp_tiles::TileSource, ntp_tiles::TileSource::LAST)
 
 IPC_ENUM_TRAITS_MAX_VALUE(ntp_tiles::TileVisualType, ntp_tiles::TILE_TYPE_MAX)

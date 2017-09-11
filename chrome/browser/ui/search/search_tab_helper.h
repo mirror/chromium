@@ -108,6 +108,8 @@ class SearchTabHelper : public content::WebContentsObserver,
   void OnUndoMostVisitedDeletion(const GURL& url) override;
   void OnUndoAllMostVisitedDeletions() override;
   void OnLogEvent(NTPLoggingEventType event, base::TimeDelta time) override;
+  void OnLogVoiceEvent(NTPVoiceLoggingEventType event,
+                       base::TimeDelta time) override;
   void OnLogMostVisitedImpression(int position,
                                   ntp_tiles::TileSource tile_source,
                                   ntp_tiles::TileVisualType tile_type) override;

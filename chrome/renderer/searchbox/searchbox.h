@@ -51,6 +51,9 @@ class SearchBox : public content::RenderFrameObserver,
   // Sends LogEvent to the browser.
   void LogEvent(NTPLoggingEventType event);
 
+  // Sends LogVoiceEvent to the browser.
+  void LogVoiceEvent(NTPVoiceLoggingEventType event);
+
   // Sends LogMostVisitedImpression to the browser.
   void LogMostVisitedImpression(int position,
                                 ntp_tiles::TileSource tile_source,
