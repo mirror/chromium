@@ -18,13 +18,25 @@ void WatcherSet::NotifyState(const HandleSignalsState& state) {
   if (last_known_state_.has_value() && state.equals(last_known_state_.value()))
     return;
   last_known_state_ = state;
-  for (const auto& entry : watchers_)
-    entry.first->NotifyHandleState(owner_, state);
+
+  ++nest_count_;
+  for (const auto& entry : watchers_) {
+    if (!entry.second.removed)
+      entry.first->NotifyHandleState(owner_, state);
+  }
+  if (--nest_count_ == 0)
+    CompactIfNeeded();
 }
 
 void WatcherSet::NotifyClosed() {
-  for (const auto& entry : watchers_)
-    entry.first->NotifyHandleClosed(owner_);
+  ++nest_count_;
+
+  for (const auto& entry : watchers_) {
+    if (!entry.second.removed)
+      entry.first->NotifyHandleClosed(owner_);
+  }
+  if (--nest_count_ == 0)
+    CompactIfNeeded();
 }
 
 MojoResult WatcherSet::Add(const scoped_refptr<WatcherDispatcher>& watcher,
@@ -54,7 +66,7 @@ MojoResult WatcherSet::Add(const scoped_refptr<WatcherDispatcher>& watcher,
 
 MojoResult WatcherSet::Remove(WatcherDispatcher* watcher, uintptr_t context) {
   auto it = watchers_.find(watcher);
-  if (it == watchers_.end())
+  if (it == watchers_.end() || it->second.removed)
     return MOJO_RESULT_NOT_FOUND;
 
   ContextSet& contexts = it->second.contexts;
@@ -63,10 +75,32 @@ MojoResult WatcherSet::Remove(WatcherDispatcher* watcher, uintptr_t context) {
     return MOJO_RESULT_NOT_FOUND;
 
   contexts.erase(context_it);
-  if (contexts.empty())
-    watchers_.erase(it);
+  if (contexts.empty()) {
+    if (nest_count_) {
+      needs_compaction_ = true;
+      it->second.removed = true;
+      it->second.dispatcher = nullptr;
+    } else {
+      watchers_.erase(it);
+    }
+  }
 
   return MOJO_RESULT_OK;
+}
+
+void WatcherSet::CompactIfNeeded() {
+  DCHECK_EQ(0, nest_count_);
+
+  if (!needs_compaction_)
+    return;
+
+  for (auto itr = watchers_.begin(); itr != watchers_.end();) {
+    if (itr->second.removed)
+      itr = watchers_.erase(itr);
+    else
+      ++itr;
+  }
+  needs_compaction_ = false;
 }
 
 WatcherSet::Entry::Entry(const scoped_refptr<WatcherDispatcher>& dispatcher)

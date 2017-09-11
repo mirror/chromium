@@ -53,14 +53,20 @@ class WatcherSet {
 
     scoped_refptr<WatcherDispatcher> dispatcher;
     ContextSet contexts;
+    bool removed = false;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(Entry);
   };
 
+  void CompactIfNeeded();
+
   Dispatcher* const owner_;
   std::map<WatcherDispatcher*, Entry> watchers_;
   base::Optional<HandleSignalsState> last_known_state_;
+
+  int nest_count_ = 0;
+  bool needs_compaction_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(WatcherSet);
 };
