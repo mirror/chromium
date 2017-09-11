@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_CHROME_BROWSER_SIGNIN_GAIA_AUTH_FETCHER_IOS_H_
-#define IOS_CHROME_BROWSER_SIGNIN_GAIA_AUTH_FETCHER_IOS_H_
+#ifndef COMPONENTS_SIGNIN_IOS_BROWSER_GAIA_AUTH_FETCHER_IOS_H
+#define COMPONENTS_SIGNIN_IOS_BROWSER_GAIA_AUTH_FETCHER_IOS_H
 
 #include <memory>
 
@@ -67,4 +67,4 @@ class GaiaAuthFetcherIOS : public GaiaAuthFetcher {
   DISALLOW_COPY_AND_ASSIGN(GaiaAuthFetcherIOS);
 };
 
-#endif  // IOS_CHROME_BROWSER_SIGNIN_GAIA_AUTH_FETCHER_IOS_H_
+#endif  // COMPONENTS_SIGNIN_IOS_BROWSER_GAIA_AUTH_FETCHER_IOS_H
