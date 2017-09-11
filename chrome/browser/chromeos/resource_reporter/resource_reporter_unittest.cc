@@ -14,6 +14,7 @@
 #include "base/memory/memory_pressure_monitor.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/sys_info.h"
 #include "base/timer/mock_timer.h"
 #include "chrome/browser/chromeos/resource_reporter/resource_reporter.h"
 #include "chrome/browser/task_manager/test_task_manager.h"
@@ -67,8 +68,13 @@ class DummyTaskManager : public task_manager::TestTaskManager {
   ~DummyTaskManager() override {}
 
   // task_manager::TestTaskManager:
-  double GetCpuUsage(TaskId task_id) const override {
-    return tasks_.at(task_id)->cpu_percent;
+  double GetPlatformIndependentCPUUsage(TaskId task_id) const override {
+    // |cpu_percent| expresses the expected value that the metrics reporter
+    // should give for this Task's group, which is a percentage-of-total,
+    // so we need to multiply up by the number of cores, to have TaskManager
+    // return the correct percentage-of-core CPU usage.
+    return tasks_.at(task_id)->cpu_percent *
+           base::SysInfo::NumberOfProcessors();
   }
   int64_t GetPhysicalMemoryUsage(TaskId task_id) const override {
     return tasks_.at(task_id)->memory_bytes;
