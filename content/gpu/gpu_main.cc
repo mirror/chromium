@@ -73,8 +73,11 @@
 #endif
 
 #if defined(OS_LINUX)
+#include "content/common/font_config_ipc_linux.h"
 #include "content/common/sandbox_linux/sandbox_linux.h"
 #include "content/public/common/sandbox_init.h"
+#include "third_party/skia/include/core/SkGraphics.h"
+#include "third_party/skia/include/ports/SkFontConfigInterface.h"
 #endif
 
 #if defined(OS_MACOSX)
@@ -299,6 +302,15 @@ int GpuMain(const MainFunctionParams& parameters) {
       tracing::GraphicsMemoryDumpProvider::GetInstance(), "AndroidGraphics",
       nullptr);
 #endif
+
+  if (command_line.HasSwitch(switches::kEnableOOPRasterization)) {
+    SkGraphics::Init();
+#if defined(OS_LINUX)
+    // Set up the font IPC so that the GPU process can create typefaces.
+    SkFontConfigInterface::SetGlobal(new FontConfigIPC(GetSandboxFD()))
+        ->unref();
+#endif
+  }
 
   base::HighResolutionTimerManager hi_res_timer_manager;
 
