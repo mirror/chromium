@@ -81,6 +81,24 @@
       "revId": "32e03088e1e8e3624f7f89850369fcd5c3536fcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f144b7f_8bf3d90c",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_types.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T07:45:48Z",
+      "side": 1,
+      "message": "I\u0027m not really a fan of the pattern set by content/common/service_worker/service_worker_types.mojom :)\n\nI think each type can live in its own file or in some cases a file can have be a logical group of types. It\u0027s too hard to find the code otherwise.",
+      "parentUuid": "4c6163ce_90ad7773",
+      "revId": "32e03088e1e8e3624f7f89850369fcd5c3536fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
