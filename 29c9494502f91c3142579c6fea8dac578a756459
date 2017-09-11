@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "202bd217_3e18e94b",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/change-column-count-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-11T21:01:50Z",
+      "side": 1,
+      "message": "Ok, then it\u0027s something else, I guess. I cannot reproduce the crash at all, FWIW. I\u0027m on Linux.",
+      "parentUuid": "3fdccaa8_c860cb4d",
+      "revId": "29c9494502f91c3142579c6fea8dac578a756459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63cc76a6_2b6fd35f",
         "filename": "third_party/WebKit/LayoutTests/fast/multicol/change-column-count-crash.html",
         "patchSetId": 3
