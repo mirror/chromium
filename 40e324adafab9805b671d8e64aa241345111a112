@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40f5812b_751d1275",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/StereoPanner/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T16:20:05Z",
+      "side": 1,
+      "message": "Wrap this at col 80.",
+      "range": {
+        "startLine": 126,
+        "startChar": 16,
+        "endLine": 126,
+        "endChar": 82
+      },
+      "revId": "40e324adafab9805b671d8e64aa241345111a112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb23005_7eed50df",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/StereoPanner/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T16:20:05Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 142,
+        "startChar": 16,
+        "endLine": 142,
+        "endChar": 82
+      },
+      "revId": "40e324adafab9805b671d8e64aa241345111a112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2193003_be67229f",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/StereoPanner/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T16:20:05Z",
+      "side": 1,
+      "message": "Why .71?",
+      "range": {
+        "startLine": 218,
+        "startChar": 8,
+        "endLine": 218,
+        "endChar": 33
+      },
+      "revId": "40e324adafab9805b671d8e64aa241345111a112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123e939f_d327fd54",
+        "filename": "third_party/WebKit/Source/platform/audio/StereoPanner.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T16:20:05Z",
+      "side": 1,
+      "message": "|target_pan|",
+      "range": {
+        "startLine": 147,
+        "startChar": 13,
+        "endLine": 147,
+        "endChar": 23
+      },
+      "revId": "40e324adafab9805b671d8e64aa241345111a112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

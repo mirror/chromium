@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efca51d9_486362a8",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/StereoPanner/stereopannernode-no-glitch.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T16:20:05Z",
+      "side": 0,
+      "message": "This test does not have a meaning then?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "8c577b8ef4675ae2438197941561a4c401a61283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
