@@ -14,6 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_piece.h"
 #include "base/time/time.h"
+#include "net/base/hash_value.h"
 #include "net/base/net_export.h"
 #include "third_party/boringssl/src/include/openssl/pool.h"
 
@@ -111,6 +112,19 @@ scoped_refptr<X509Certificate> CreateX509CertificateFromBuffers(
 
 // Returns the default ParseCertificateOptions for the net stack.
 ParseCertificateOptions DefaultParseCertificateOptions();
+
+// Returns true if any of the given |public_key_hashes| is present in |roots|, a
+// list of SPKI hashes of length |roots_length|.
+bool IsAnyCertificateInRootList(const HashValueVector& public_key_hashes,
+                                const SHA256HashValue* roots,
+                                size_t roots_length);
+
+// Returns true if |public_key_hashes| contains a certificate issued from
+// Symantec's "legacy" PKI. This constraint excludes certificates that were
+// issued by independently-operated subordinate CAs or from any "Managed CAs"
+// that comply with
+// https://security.googleblog.com/2017/09/chromes-plan-to-distrust-symantec.html.
+NET_EXPORT bool IsLegacySymantecCert(const HashValueVector& cert_hashes);
 
 } // namespace x509_util
 
