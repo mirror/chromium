@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "275f585f_913ebd5d",
+        "filename": "chrome/app/bookmarks_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-09-11T09:17:45Z",
+      "side": 1,
+      "message": "If you do end up labelling the buttons, I still think it\u0027s worthwhile keeping the \"folder tree\" label here.",
+      "revId": "804eaf8daadfec25ef29e28d883847b8036778d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

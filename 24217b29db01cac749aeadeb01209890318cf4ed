@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5aac116c_3a76001d",
+        "filename": "chrome/browser/resources/md_bookmarks/folder_node.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-09-11T09:17:45Z",
+      "side": 1,
+      "message": "You can run this approach past lpalmaro if you want, but I can see some potential issues: I think the string is unlikely to translate well, and there would be ways to end up on one of the sidebar items without having heard the instructions (eg, you know your bookmark is in the \"Gifs\" folder, so you get VoiceOver to jump to the item labelled Gifs).\n\nI think she\u0027s right that the correct way to do this is to un-hide the buttons and label them with something like \"Expand folder\" or \"Collapse folder\" as appropriate. This fits in with the philosophy of giving all the information we can to the screen reader, without trying to force a particular usage method.",
+      "parentUuid": "9aed1eff_aed50001",
+      "revId": "24217b29db01cac749aeadeb01209890318cf4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b155067_5ac1f087",
         "filename": "chrome/browser/resources/md_bookmarks/folder_node.js",
         "patchSetId": 3
@@ -65,6 +83,24 @@
       "writtenOn": "2017-09-11T05:24:14Z",
       "side": 1,
       "message": "This line does the focusability on search lol. selectedFolder_ is the hidden folder\u0027s value, so it keeps that folder tabindex\u003d0 \u003dD",
+      "revId": "24217b29db01cac749aeadeb01209890318cf4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422e0a7a_1627c148",
+        "filename": "chrome/browser/resources/md_bookmarks/folder_node.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-09-11T09:17:45Z",
+      "side": 1,
+      "message": "ahhhhhhhh.",
+      "parentUuid": "1b155067_5ac1f087",
       "revId": "24217b29db01cac749aeadeb01209890318cf4ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
