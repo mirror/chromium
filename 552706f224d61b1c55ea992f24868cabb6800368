@@ -210,6 +210,24 @@
       "revId": "552706f224d61b1c55ea992f24868cabb6800368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76ca145f_aa6366f5",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-09-11T22:02:34Z",
+      "side": 1,
+      "message": "I don\u0027t remember what OSX or BSD does on MSG_TRUNC, but using recvmsg() here is fine. It\u0027s more powerful in general, so I\u0027m happier with recvmsg() than with recvfrom().",
+      "parentUuid": "ecb9e71e_6c41dfbe",
+      "revId": "552706f224d61b1c55ea992f24868cabb6800368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
