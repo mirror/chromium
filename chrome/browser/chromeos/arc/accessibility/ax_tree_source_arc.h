@@ -54,6 +54,9 @@ class AXTreeSourceArc
 
   void Focus(aura::Window* window);
 
+  int32_t GetAXTreeId() const;
+  int32_t GetRootNodeId() const;
+
  private:
   class FocusStealer;
 
