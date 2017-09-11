@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "360f92f5_d3f82467",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-11T16:30:04Z",
+      "side": 1,
+      "message": "I believe you\u0027re now letting the compiler use SSSE3 anywhere it likes inside zlib without a runtime check...\n\nThe usual pattern is to isolate the SSSE3 code to its own build target and set the flag there, much like we\u0027ve done for :zlib_x86_simd.  You might just plop it in there unless you\u0027re very concerned about improving machines with SSSE3 but not SSE4.2?",
+      "revId": "41b4e6bb2f36f0b81520e4e32ea42dd728d94254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca17127b_9f47941b",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-11T16:30:04Z",
+      "side": 1,
+      "message": "I suspect you\u0027ll get the same codegen out of\n\n  __m128i tap1 \u003d _mm_set_epi8(32,31,30,29,28,...);\n  __m128i tap2 \u003d _mm_set_epi8(16,15,14,13,12,...);\n\nAnd that way you won\u0027t need the union.",
+      "revId": "41b4e6bb2f36f0b81520e4e32ea42dd728d94254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff2f0c6_b6bcafd4",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-11T16:30:04Z",
+      "side": 1,
+      "message": "I kind of think this would be easier to read as const __m128i all the way through.  The name __input seemed like some sort of typedef I\u0027d be looking for in one of the intrinsics headers.\n\nOr is there some value in separating these const __m128i from the other non-__input const __m128i?",
+      "revId": "41b4e6bb2f36f0b81520e4e32ea42dd728d94254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeda7eb2_e43a6d9e",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-11T16:30:04Z",
+      "side": 1,
+      "message": "By any chance did you try doing this with just SSE2?  No win without pmaddubsw?",
+      "revId": "41b4e6bb2f36f0b81520e4e32ea42dd728d94254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
