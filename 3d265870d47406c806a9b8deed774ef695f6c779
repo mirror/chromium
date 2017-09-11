@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "06011822_8a45fbbb",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-11T20:47:04Z",
+      "side": 1,
+      "message": "I\u0027ve taken a good look at this and haven\u0027t found a way to do the right thing without calling Show() directly. The indirect ways don\u0027t suit me unfortunately, the only thing I can do is make CanMouseTriggerSlideIn return true (by making IsImmersiveModeEnabled I implemented return false which is obviously not correct).\n\nWould you be fine with me adding a function to ExclusiveAccessBubbleViews that calls Show() so that in a sense I make an indirect call? Looking at ExclusiveAccessBubbleViews::UpdateContent, I would take the last part of it and make a new function that I would call:\n\n  Show();\n\n  // Stop watching the mouse even if UpdateMouseWatcher() will start watching\n  // it again so that the popup with the new content is visible for at least\n  // |kInitialDelayMs|.\n  StopWatchingMouse();\n\n  UpdateMouseWatcher();",
+      "parentUuid": "e4290b4a_3190438b",
+      "revId": "3d265870d47406c806a9b8deed774ef695f6c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc8f37a7_b30a7c99",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 5
