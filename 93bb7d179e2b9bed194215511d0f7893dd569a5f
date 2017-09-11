@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01e96178_d3f89c27",
+        "filename": "ios/web/web_state/web_state_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-11T20:26:17Z",
+      "side": 1,
+      "message": "Is this UMA still accurate? CurrentURLEqualsLastCommittedURL vs equalOrigins?",
+      "range": {
+        "startLine": 662,
+        "startChar": 29,
+        "endLine": 662,
+        "endChar": 61
+      },
+      "revId": "93bb7d179e2b9bed194215511d0f7893dd569a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
