@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4e0eee52_79b85a04",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-11T18:45:48Z",
+      "side": 1,
+      "message": "The commit pass would have to save the offset, which seems overkill given that the submit pass already computes it. Scattering the translations would also be confusing IMO.",
+      "parentUuid": "f60bd6f4_cd2a5c5f",
+      "revId": "c119bd37d56350b76f8089c9bf6d38df136dd13c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43136c6a_0104394e",
         "filename": "components/exo/surface_tree_host.h",
         "patchSetId": 3
