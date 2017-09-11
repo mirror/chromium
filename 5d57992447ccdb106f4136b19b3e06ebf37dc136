@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "226ce486_f63abef4",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T04:07:54Z",
+      "side": 1,
+      "message": "Haha, everyone\u0027s inheriting previous code. Note that ERR_ABROTED is different from ERR_CONNECTION_ABORTED. ERR_ABORTED still seems better IMO (though with yhirano\u0027s work allowing more error codes, we could eventually have some error meaning ERR_SERVICE_WORKER_DIED or something).",
+      "parentUuid": "6abc4b28_e16f0aa8",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9994a639_839824c6",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
         "patchSetId": 2
@@ -187,6 +205,24 @@
       "side": 1,
       "message": "std::make_unique is actually in C++14 and it\u0027s not available yet in my understanding.\nYou can use base::MakeUnique\u003cStreamWaiter\u003e(...) instead.",
       "parentUuid": "4d150ba7_25df6e13",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650b4d0e_5b88fd0c",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T04:07:54Z",
+      "side": 1,
+      "message": "It\u0027s allowed now! https://chromium-cpp.appspot.com/",
+      "parentUuid": "f70bfad6_e7af00bf",
       "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
