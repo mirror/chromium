@@ -66,8 +66,12 @@ class FailingSSLClientSocket : public SSLClientSocket {
 
   const NetLogWithSource& NetLog() const override { return net_log_; }
 
-  void SetSubresourceSpeculation() override {}
-  void SetOmniboxSpeculation() override {}
+  void SetSocketUseCallback(const SocketUseCallback& callback) override {
+    // TODO(csharrison): Implement this method.
+    NOTIMPLEMENTED();
+  }
+
+  void SetWasUsedToServiceRequest() override {}
 
   bool WasEverUsed() const override { return false; }
 

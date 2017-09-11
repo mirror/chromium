@@ -671,17 +671,16 @@ const NetLogWithSource& SSLClientSocketImpl::NetLog() const {
   return net_log_;
 }
 
-void SSLClientSocketImpl::SetSubresourceSpeculation() {
-  if (transport_.get() && transport_->socket()) {
-    transport_->socket()->SetSubresourceSpeculation();
-  } else {
-    NOTREACHED();
-  }
+// Implement this simply by forwarding it to the underlying transport, which
+// will properly call it when it is reused / destroyed.
+void SSLClientSocketImpl::SetSocketUseCallback(
+    const SocketUseCallback& callback) {
+  transport_->socket()->SetSocketUseCallback(callback);
 }
 
-void SSLClientSocketImpl::SetOmniboxSpeculation() {
+void SSLClientSocketImpl::SetWasUsedToServiceRequest() {
   if (transport_.get() && transport_->socket()) {
-    transport_->socket()->SetOmniboxSpeculation();
+    transport_->socket()->SetWasUsedToServiceRequest();
   } else {
     NOTREACHED();
   }

@@ -22,6 +22,7 @@
 #include "net/socket/client_socket_pool.h"
 #include "net/socket/client_socket_pool_base.h"
 #include "net/socket/ssl_client_socket.h"
+#include "net/socket/stream_socket.h"
 #include "net/spdy/chromium/spdy_session.h"
 
 namespace net {
@@ -160,10 +161,12 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocketPool
                     const CompletionCallback& callback,
                     const NetLogWithSource& net_log) override;
 
-  void RequestSockets(const std::string& group_name,
-                      const void* params,
-                      int num_sockets,
-                      const NetLogWithSource& net_log) override;
+  void RequestSockets(
+      const std::string& group_name,
+      const void* params,
+      int num_sockets,
+      const NetLogWithSource& net_log,
+      const StreamSocket::SocketUseCallback& use_callback) override;
 
   void SetPriority(const std::string& group_name,
                    ClientSocketHandle* handle,

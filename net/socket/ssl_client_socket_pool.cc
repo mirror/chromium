@@ -650,14 +650,17 @@ int SSLClientSocketPool::RequestSocket(const std::string& group_name,
                              respect_limits, handle, callback, net_log);
 }
 
-void SSLClientSocketPool::RequestSockets(const std::string& group_name,
-                                         const void* params,
-                                         int num_sockets,
-                                         const NetLogWithSource& net_log) {
+void SSLClientSocketPool::RequestSockets(
+    const std::string& group_name,
+    const void* params,
+    int num_sockets,
+    const NetLogWithSource& net_log,
+    const StreamSocket::SocketUseCallback& use_callback) {
   const scoped_refptr<SSLSocketParams>* casted_params =
       static_cast<const scoped_refptr<SSLSocketParams>*>(params);
 
-  base_.RequestSockets(group_name, *casted_params, num_sockets, net_log);
+  base_.RequestSockets(group_name, *casted_params, num_sockets, net_log,
+                       use_callback);
 }
 
 void SSLClientSocketPool::SetPriority(const std::string& group_name,

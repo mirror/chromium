@@ -23,6 +23,7 @@
 #include "net/socket/next_proto.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/socket/ssl_client_socket_pool.h"
+#include "net/socket/stream_socket.h"
 #include "net/socket/transport_client_socket_pool.h"
 #include "net/spdy/chromium/spdy_session.h"
 
@@ -94,8 +95,8 @@ class HttpProxyClientSocketWrapper : public ProxyClientSocket {
   bool IsConnected() const override;
   bool IsConnectedAndIdle() const override;
   const NetLogWithSource& NetLog() const override;
-  void SetSubresourceSpeculation() override;
-  void SetOmniboxSpeculation() override;
+  void SetSocketUseCallback(const SocketUseCallback& callback) override;
+  void SetWasUsedToServiceRequest() override;
   bool WasEverUsed() const override;
   bool WasAlpnNegotiated() const override;
   NextProto GetNegotiatedProtocol() const override;

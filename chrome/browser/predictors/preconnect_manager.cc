@@ -7,11 +7,22 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/resource_hints.h"
 #include "net/base/net_errors.h"
+#include "net/socket/stream_socket.h"
 
 namespace predictors {
+
+namespace {
+
+void OnPreconnectedSocketComplete(net::StreamSocket::SocketUse socket_use) {
+  UMA_HISTOGRAM_ENUMERATION("Net.Preconnect.Use.Predictor.Learned", socket_use,
+                            net::StreamSocket::SocketUse::SOCKET_LAST_VALUE);
+}
+
+}  // namespace
 
 const bool kAllowCredentialsOnPreconnectByDefault = true;
 
@@ -132,7 +143,7 @@ void PreconnectManager::PreconnectUrl(const GURL& url,
                                       bool allow_credentials) const {
   content::PreconnectUrl(context_getter_.get(), url, site_for_cookies, 1,
                          allow_credentials,
-                         net::HttpRequestInfo::PRECONNECT_MOTIVATED);
+                         base::Bind(&OnPreconnectedSocketComplete));
 }
 
 int PreconnectManager::PreresolveUrl(

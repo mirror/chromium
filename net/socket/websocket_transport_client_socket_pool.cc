@@ -386,7 +386,8 @@ void WebSocketTransportClientSocketPool::RequestSockets(
     const std::string& group_name,
     const void* params,
     int num_sockets,
-    const NetLogWithSource& net_log) {
+    const NetLogWithSource& net_log,
+    const StreamSocket::SocketUseCallback& use_callback) {
   NOTIMPLEMENTED();
 }
 

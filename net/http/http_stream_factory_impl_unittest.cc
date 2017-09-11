@@ -51,6 +51,7 @@
 #include "net/socket/mock_client_socket_pool_manager.h"
 #include "net/socket/next_proto.h"
 #include "net/socket/socket_test_util.h"
+#include "net/socket/stream_socket.h"
 #include "net/spdy/chromium/spdy_session.h"
 #include "net/spdy/chromium/spdy_session_pool.h"
 #include "net/spdy/chromium/spdy_test_util_common.h"
@@ -353,7 +354,8 @@ void PreconnectHelperForURL(int num_streams,
   request.url = url;
   request.load_flags = 0;
 
-  session->http_stream_factory()->PreconnectStreams(num_streams, request);
+  session->http_stream_factory()->PreconnectStreams(
+      num_streams, request, StreamSocket::SocketUseCallback());
   mock_factory->WaitForPreconnects();
 }
 
@@ -391,10 +393,12 @@ class CapturePreconnectsSocketPool : public ParentPool {
     return ERR_UNEXPECTED;
   }
 
-  void RequestSockets(const std::string& group_name,
-                      const void* socket_params,
-                      int num_sockets,
-                      const NetLogWithSource& net_log) override {
+  void RequestSockets(
+      const std::string& group_name,
+      const void* socket_params,
+      int num_sockets,
+      const NetLogWithSource& net_log,
+      const StreamSocket::SocketUseCallback& use_callback) override {
     last_num_streams_ = num_sockets;
   }
 
@@ -1333,7 +1337,8 @@ TEST_F(HttpStreamFactoryTest, ProxyServerPreconnectDifferentPrivacyModes) {
 
   // Request with a different privacy mode should succeed.
   session->http_stream_factory()->PreconnectStreams(
-      num_streams, request_privacy_mode_enabled);
+      num_streams, request_privacy_mode_enabled,
+      StreamSocket::SocketUseCallback());
   EXPECT_EQ(-1, ssl_conn_pool->last_num_streams());
   EXPECT_EQ(num_streams, http_proxy_pool->last_num_streams());
 }

@@ -123,21 +123,12 @@ const NetLogWithSource& SOCKSClientSocket::NetLog() const {
   return net_log_;
 }
 
-void SOCKSClientSocket::SetSubresourceSpeculation() {
-  if (transport_.get() && transport_->socket()) {
-    transport_->socket()->SetSubresourceSpeculation();
-  } else {
-    NOTREACHED();
-  }
+void SOCKSClientSocket::SetSocketUseCallback(
+    const SocketUseCallback& callback) {
+  NOTREACHED();
 }
 
-void SOCKSClientSocket::SetOmniboxSpeculation() {
-  if (transport_.get() && transport_->socket()) {
-    transport_->socket()->SetOmniboxSpeculation();
-  } else {
-    NOTREACHED();
-  }
-}
+void SOCKSClientSocket::SetWasUsedToServiceRequest() {}
 
 bool SOCKSClientSocket::WasEverUsed() const {
   return was_ever_used_;

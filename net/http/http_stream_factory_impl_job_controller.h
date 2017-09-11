@@ -59,7 +59,8 @@ class HttpStreamFactoryImpl::JobController
                                  HttpStreamRequest::StreamType stream_type,
                                  RequestPriority priority);
 
-  void Preconnect(int num_streams);
+  void Preconnect(int num_streams,
+                  const StreamSocket::SocketUseCallback& use_callback);
 
   // From HttpStreamFactoryImpl::Request::Helper.
   // Returns the LoadState for Request.
@@ -373,6 +374,7 @@ class HttpStreamFactoryImpl::JobController
   const SSLConfig server_ssl_config_;
   const SSLConfig proxy_ssl_config_;
   int num_streams_;
+  StreamSocket::SocketUseCallback use_callback_;
   HttpStreamRequest::StreamType stream_type_;
   RequestPriority priority_;
   const NetLogWithSource net_log_;

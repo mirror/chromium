@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 
+#include "base/callback.h"
 #include "base/macros.h"
 #include "net/base/net_export.h"
 #include "net/socket/connection_attempts.h"
@@ -19,7 +20,7 @@ class IPEndPoint;
 class NetLogWithSource;
 class SSLInfo;
 
-class NET_EXPORT_PRIVATE StreamSocket : public Socket {
+class NET_EXPORT StreamSocket : public Socket {
  public:
   // This is used in DumpMemoryStats() to track the estimate of memory usage of
   // a socket.
@@ -39,6 +40,24 @@ class NET_EXPORT_PRIVATE StreamSocket : public Socket {
    private:
     DISALLOW_COPY_AND_ASSIGN(SocketMemoryStats);
   };
+
+  // This enum is used to keep track of socket use, specifically for
+  // preconnected sockets.
+  enum SocketUse {
+    SOCKET_NEVER_CONNECTED,
+
+    SOCKET_CONNECTED_NEVER_USED,
+
+    // The underlying transport layer Read/Write, but was not used to service a
+    // real request.
+    SOCKET_DID_IO,
+
+    // The stream used for a real connection.
+    SOCKET_USED,
+
+    SOCKET_LAST_VALUE
+  };
+  typedef base::Callback<void(SocketUse)> SocketUseCallback;
 
   ~StreamSocket() override {}
 
@@ -89,11 +108,16 @@ class NET_EXPORT_PRIVATE StreamSocket : public Socket {
   // Gets the NetLog for this socket.
   virtual const NetLogWithSource& NetLog() const = 0;
 
-  // Set the annotation to indicate this socket was created for speculative
-  // reasons.  This call is generally forwarded to a basic TCPClientSocket*,
-  // where a UseHistory can be updated.
-  virtual void SetSubresourceSpeculation() = 0;
-  virtual void SetOmniboxSpeculation() = 0;
+  // Set a callback on the underlying transport socket to invoke the callback
+  // about its use. This is paired with SetWasUsedToServiceRequest to inform the
+  // underlying socket whether it was used to service a real request.
+  virtual void SetSocketUseCallback(const SocketUseCallback& callback) = 0;
+
+  // Bubbles information down to the underlying transport layer that this socket
+  // was used for a real request. This is used for metrics logging purposes,
+  // where the underlying transport is not always aware if the bytes they are
+  // reading are metadata or not.
+  virtual void SetWasUsedToServiceRequest() = 0;
 
   // Returns true if the socket ever had any reads or writes.  StreamSockets
   // layered on top of transport sockets should return if their own Read() or
@@ -135,48 +159,6 @@ class NET_EXPORT_PRIVATE StreamSocket : public Socket {
   // default initialized upon entry. Implementations should override fields in
   // |stats|. Default implementation does nothing.
   virtual void DumpMemoryStats(SocketMemoryStats* stats) const {}
-
- protected:
-  // The following class is only used to gather statistics about the history of
-  // a socket.  It is only instantiated and used in basic sockets, such as
-  // TCPClientSocket* instances.  Other classes that are derived from
-  // StreamSocket should forward any potential settings to their underlying
-  // transport sockets.
-  class UseHistory {
-   public:
-    UseHistory();
-    ~UseHistory();
-
-    // Resets the state of UseHistory and emits histograms for the
-    // current state.
-    void Reset();
-
-    void set_was_ever_connected();
-    void set_was_used_to_convey_data();
-
-    // The next two setters only have any impact if the socket has not yet been
-    // used to transmit data.  If called later, we assume that the socket was
-    // reused from the pool, and was NOT constructed to service a speculative
-    // request.
-    void set_subresource_speculation();
-    void set_omnibox_speculation();
-
-    bool was_used_to_convey_data() const;
-
-   private:
-    // Summarize the statistics for this socket.
-    void EmitPreconnectionHistograms() const;
-    // Indicate if this was ever connected.
-    bool was_ever_connected_;
-    // Indicate if this socket was ever used to transmit or receive data.
-    bool was_used_to_convey_data_;
-
-    // Indicate if this socket was first created for speculative use, and
-    // identify the motivation.
-    bool omnibox_speculation_;
-    bool subresource_speculation_;
-    DISALLOW_COPY_AND_ASSIGN(UseHistory);
-  };
 };
 
 }  // namespace net

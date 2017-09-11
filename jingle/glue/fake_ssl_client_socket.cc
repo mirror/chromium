@@ -319,13 +319,12 @@ const net::NetLogWithSource& FakeSSLClientSocket::NetLog() const {
   return transport_socket_->NetLog();
 }
 
-void FakeSSLClientSocket::SetSubresourceSpeculation() {
-  transport_socket_->SetSubresourceSpeculation();
+void FakeSSLClientSocket::SetSocketUseCallback(
+    const net::StreamSocket::SocketUseCallback& callback) {
+  NOTREACHED();
 }
 
-void FakeSSLClientSocket::SetOmniboxSpeculation() {
-  transport_socket_->SetOmniboxSpeculation();
-}
+void FakeSSLClientSocket::SetWasUsedToServiceRequest() {}
 
 bool FakeSSLClientSocket::WasEverUsed() const {
   return transport_socket_->WasEverUsed();
