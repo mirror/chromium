@@ -441,6 +441,10 @@ class ResourceScheduler::Client {
     }
   }
 
+  void ForceStartRequest(ScheduledResourceRequest* request) {
+    StartRequest(request, START_SYNC, RequestStartTrigger::NONE);
+  }
+
   void RemoveRequest(ScheduledResourceRequest* request) {
     if (pending_requests_.IsQueued(request)) {
       pending_requests_.Erase(request);
@@ -993,8 +997,9 @@ class ResourceScheduler::Client {
   base::WeakPtrFactory<ResourceScheduler::Client> weak_ptr_factory_;
 };
 
-ResourceScheduler::ResourceScheduler()
-    : priority_requests_delayable_(
+ResourceScheduler::ResourceScheduler(bool enabled)
+    : enabled_(enabled),
+      priority_requests_delayable_(
           base::FeatureList::IsEnabled(kPrioritySupportedRequestsDelayable)),
       head_priority_requests_delayable_(base::FeatureList::IsEnabled(
           kHeadPrioritySupportedRequestsDelayable)),
@@ -1044,7 +1049,11 @@ std::unique_ptr<ResourceThrottle> ResourceScheduler::ScheduleRequest(
   }
 
   Client* client = it->second;
-  client->ScheduleRequest(*url_request, request.get());
+  if (enabled_) {
+    client->ScheduleRequest(*url_request, request.get());
+  } else {
+    client->ForceStartRequest(request.get());
+  }
   return std::move(request);
 }
 
@@ -1169,6 +1178,9 @@ ResourceScheduler::Client* ResourceScheduler::GetClient(int child_id,
 void ResourceScheduler::ReprioritizeRequest(net::URLRequest* request,
                                             net::RequestPriority new_priority,
                                             int new_intra_priority_value) {
+  if (!enabled_)
+    return;
+
   if (request->load_flags() & net::LOAD_IGNORE_LIMITS) {
     // Requests with the IGNORE_LIMITS flag must stay at MAXIMUM_PRIORITY.
     return;

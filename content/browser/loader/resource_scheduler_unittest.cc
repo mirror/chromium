@@ -181,18 +181,20 @@ class ResourceSchedulerTest : public testing::Test {
 
   // Done separately from construction to allow for modification of command
   // line flags in tests.
-  void InitializeScheduler() {
+  void InitializeScheduler(bool enabled) {
     CleanupScheduler();
 
     // Destroys previous scheduler, also destroys any previously created
     // mock_timer_.
-    scheduler_.reset(new ResourceScheduler());
+    scheduler_.reset(new ResourceScheduler(enabled));
 
     scheduler_->OnClientCreated(kChildId, kRouteId,
                                 &network_quality_estimator_);
     scheduler_->OnClientCreated(kBackgroundChildId, kBackgroundRouteId,
                                 &network_quality_estimator_);
   }
+
+  void InitializeScheduler() { InitializeScheduler(true); }
 
   void CleanupScheduler() {
     if (scheduler_) {
@@ -1964,6 +1966,21 @@ TEST_F(ResourceSchedulerTest, NumDelayableAtStartOfNonDelayableUMA) {
   histogram_tester->ExpectUniqueSample(
       "ResourceScheduler.NumDelayableRequestsInFlightAtStart.NonDelayable", 2,
       1);
+}
+
+TEST_F(ResourceSchedulerTest, DisableScheduler) {
+  InitializeScheduler(false);
+
+  std::unique_ptr<TestRequest> high(
+      NewRequest("http://host/high", net::HIGHEST));
+  std::unique_ptr<TestRequest> low(NewRequest("http://host/req", net::LOWEST));
+
+  std::unique_ptr<TestRequest> request(
+      NewRequest("http://host/req", net::LOWEST));
+
+  // Normally |request| wouldn't start immediately due to the |high| priority
+  // request, but when the scheduler is disabled it starts immediately.
+  EXPECT_TRUE(request->started());
 }
 
 }  // unnamed namespace
