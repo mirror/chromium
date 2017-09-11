@@ -5,6 +5,7 @@ Copyright 2017 The Chromium Authors. All rights reserved.
 Use of this source code is governed by a BSD-style license that can be
 found in the LICENSE file.
 -->
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0,
@@ -18,5 +19,102 @@ found in the LICENSE file.
   <script type="text/javascript" src="index.js"></script>
 </head>
 <body>
+  <div id="sys-internals-drawer" class="hidden" hidden>
+    <div id="sys-internals-drawer-menu" class="hidden">
+      <div id="sys-internals-drawer-title"></div>
+      <hr>
+      <a class="sys-internals-drawer-item" href="#">
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+          <g>
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
+          </g>
+          </svg>
+        </div>
+        Info
+      </a>
+      <hr>
+      <a class="sys-internals-drawer-item" href="#CPU">
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+            <g>
+              <path d="M22 9V7h-2V5c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2v-2h-2V9h2zm-4 10H4V5h14v14zM6 13h5v4H6zm6-6h4v3h-4zM6 7h5v5H6zm6 4h4v6h-4z"></path>
+            </g>
+          </svg>
+        </div>
+        CPU
+      </a>
+      <a class="sys-internals-drawer-item" href="#Memory">
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+            <g>
+              <path d="M15 9H9v6h6V9zm-2 4h-2v-2h2v2zm8-2V9h-2V7c0-1.1-.9-2-2-2h-2V3h-2v2h-2V3H9v2H7c-1.1 0-2 .9-2 2v2H3v2h2v2H3v2h2v2c0 1.1.9 2 2 2h2v2h2v-2h2v2h2v-2h2c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2zm-4 6H7V7h10v10z"></path>
+            </g>
+          </svg>
+        </div>
+        Memory
+      </a>
+      <a class="sys-internals-drawer-item" href="#Zram">
+        <div class="icon">
+          <svg viewBox="0 0 24 24">
+            <g>
+              <path d="M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zm-4 7h20v-4H2v4zm2-3h2v2H4v-2z"></path>
+            </g>
+          </svg>
+        </div>
+        Zram
+      </a>
+    </div>
+  </div>
+  <div id="sys-internals-nav">
+    <div id="sys-internals-nav-menu-btn">
+      <svg viewBox="0 0 20 20">
+        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+      </svg>
+    </div>
+  </div>
+  <div id="sys-internals-body">
+    <div id="sys-internals-chart-root" class="line-chart-root"></div>
+    <div id="sys-internals-infopage-root">
+      <div class="sys-internals-infopage-panel">
+        <h2>CPU</h2>
+        <div class="title">Number of Cores</div>
+        <div class="content" id="sys-internals-infopage-num-of-cpu"></div>
+        <div class="title">Usage</div>
+        <div class="content" id="sys-internals-infopage-cpu-usage"></div>
+        <div class="title">Kernal Time</div>
+        <div class="content" id="sys-internals-infopage-cpu-kernel"></div>
+        <div class="title">User Time</div>
+        <div class="content" id="sys-internals-infopage-cpu-user"></div>
+        <div class="title">Idle Time</div>
+        <div class="content" id="sys-internals-infopage-cpu-idle"></div>
+      </div>
+      <div class="sys-internals-infopage-panel">
+        <h2>Memory</h2>
+        <div class="title">Total Memory</div>
+        <div class="content" id="sys-internals-infopage-memory-total"></div>
+        <div class="title">Used Memory</div>
+        <div class="content" id="sys-internals-infopage-memory-used"></div>
+        <div class="title">Total Swap</div>
+        <div class="content" id="sys-internals-infopage-memory-swap-total">
+        </div>
+        <div class="title">Used Swap</div>
+        <div class="content" id="sys-internals-infopage-memory-swap-used">
+        </div>
+      </div>
+      <div class="sys-internals-infopage-panel">
+        <h2>Zram</h2>
+        <div class="title">Total Used Memory</div>
+        <div class="content" id="sys-internals-infopage-zram-total"></div>
+        <div class="title">Original Memory Size</div>
+        <div class="content" id="sys-internals-infopage-zram-orig"></div>
+        <div class="title">Compressed Memory Size</div>
+        <div class="content" id="sys-internals-infopage-zram-compr"></div>
+        <div class="title">Compression Ratio</div>
+        <div class="content" id="sys-internals-infopage-zram-compr-ratio">
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
