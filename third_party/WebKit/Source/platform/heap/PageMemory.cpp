@@ -72,7 +72,7 @@ PageMemoryRegion* PageMemoryRegion::Allocate(size_t size,
   return new PageMemoryRegion(base, size, num_pages, region_tree);
 }
 
-PageMemoryRegion* RegionTree::Lookup(Address address) {
+MemoryRegion* RegionTree::Lookup(Address address) {
   RegionTreeNode* current = root_;
   while (current) {
     Address base = current->region_->Base();
@@ -90,7 +90,7 @@ PageMemoryRegion* RegionTree::Lookup(Address address) {
   return nullptr;
 }
 
-void RegionTree::Add(PageMemoryRegion* region) {
+void RegionTree::Add(MemoryRegion* region) {
   DCHECK(region);
   RegionTreeNode* new_tree = new RegionTreeNode(region);
   new_tree->AddTo(&root_);
@@ -106,7 +106,7 @@ void RegionTreeNode::AddTo(RegionTreeNode** context) {
   *context = this;
 }
 
-void RegionTree::Remove(PageMemoryRegion* region) {
+void RegionTree::Remove(MemoryRegion* region) {
   DCHECK(region);
   DCHECK(root_);
   Address base = region->Base();

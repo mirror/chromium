@@ -16,7 +16,7 @@ namespace blink {
 class RegionTree;
 class RegionTreeNode;
 
-class MemoryRegion {
+class PLATFORM_EXPORT MemoryRegion {
   USING_FAST_MALLOC(MemoryRegion);
 
  public:
@@ -42,6 +42,44 @@ class MemoryRegion {
  private:
   Address base_;
   size_t size_;
+};
+
+// A RegionTree is a simple binary search tree of MemoryRegions sorted
+// by base addresses.
+class PLATFORM_EXPORT RegionTree {
+  USING_FAST_MALLOC(RegionTree);
+
+ public:
+  RegionTree() : root_(nullptr) {}
+
+  void Add(MemoryRegion*);
+  void Remove(MemoryRegion*);
+  MemoryRegion* Lookup(Address);
+
+ private:
+  RegionTreeNode* root_;
+};
+
+class RegionTreeNode {
+  USING_FAST_MALLOC(RegionTreeNode);
+
+ public:
+  explicit RegionTreeNode(MemoryRegion* region)
+      : region_(region), left_(nullptr), right_(nullptr) {}
+
+  ~RegionTreeNode() {
+    delete left_;
+    delete right_;
+  }
+
+  void AddTo(RegionTreeNode** context);
+
+ private:
+  MemoryRegion* region_;
+  RegionTreeNode* left_;
+  RegionTreeNode* right_;
+
+  friend RegionTree;
 };
 
 // A PageMemoryRegion represents a chunk of reserved virtual address
@@ -102,44 +140,6 @@ class PageMemoryRegion : public MemoryRegion {
   bool in_use_[kBlinkPagesPerRegion];
   int num_pages_;
   RegionTree* region_tree_;
-};
-
-// A RegionTree is a simple binary search tree of PageMemoryRegions sorted
-// by base addresses.
-class RegionTree {
-  USING_FAST_MALLOC(RegionTree);
-
- public:
-  RegionTree() : root_(nullptr) {}
-
-  void Add(PageMemoryRegion*);
-  void Remove(PageMemoryRegion*);
-  PageMemoryRegion* Lookup(Address);
-
- private:
-  RegionTreeNode* root_;
-};
-
-class RegionTreeNode {
-  USING_FAST_MALLOC(RegionTreeNode);
-
- public:
-  explicit RegionTreeNode(PageMemoryRegion* region)
-      : region_(region), left_(nullptr), right_(nullptr) {}
-
-  ~RegionTreeNode() {
-    delete left_;
-    delete right_;
-  }
-
-  void AddTo(RegionTreeNode** context);
-
- private:
-  PageMemoryRegion* region_;
-  RegionTreeNode* left_;
-  RegionTreeNode* right_;
-
-  friend RegionTree;
 };
 
 // Representation of the memory used for a Blink heap page.
