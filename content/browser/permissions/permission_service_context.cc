@@ -151,8 +151,14 @@ GURL PermissionServiceContext::GetEmbeddingOrigin() const {
                         : GURL();
 }
 
+const url::Origin& PermissionServiceContext::GetRequestingOrigin() const {
+  // TODO(lukasza): DO NOT SUBMIT: Can we DCHECK(render_frame_host()); ?
+  // If not, then what should we return when rfh is null?
+  return render_frame_host()->GetLastCommittedOrigin();
+}
+
 RenderFrameHost* PermissionServiceContext::render_frame_host() const {
   return render_frame_host_;
 }
 
-} // namespace content
+}  // namespace content

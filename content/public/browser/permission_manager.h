@@ -5,6 +5,8 @@
 #ifndef CONTENT_PUBLIC_BROWSER_PERMISSION_MANAGER_H_
 #define CONTENT_PUBLIC_BROWSER_PERMISSION_MANAGER_H_
 
+#include <vector>
+
 #include "content/common/content_export.h"
 #include "third_party/WebKit/public/platform/modules/permissions/permission_status.mojom.h"
 
@@ -33,6 +35,9 @@ class CONTENT_EXPORT PermissionManager {
   // CancelPermissionRequest). This can be kNoPendingOperation if
   // there is no further need to cancel the permission in which case |callback|
   // was invoked.
+  // TODO(lukasza): Remove |requesting_origin|, rename |render_frame_host|
+  // to |requesting_frame| and use |requesting_frame->GetLastCommittedOrigin()|
+  // in place of the redundant/removed |requesting_origin|.
   virtual int RequestPermission(
       PermissionType permission,
       RenderFrameHost* render_frame_host,
@@ -50,6 +55,9 @@ class CONTENT_EXPORT PermissionManager {
   // CancelPermissionRequest). This can be kNoPendingOperation if
   // there is no further need to cancel the permission in which case |callback|
   // was invoked.
+  // TODO(lukasza): Remove |requesting_origin|, rename |render_frame_host|
+  // to |requesting_frame| and use |requesting_frame->GetLastCommittedOrigin()|
+  // in place of the redundant/removed |requesting_origin|.
   virtual int RequestPermissions(
       const std::vector<PermissionType>& permission,
       RenderFrameHost* render_frame_host,
@@ -97,4 +105,4 @@ class CONTENT_EXPORT PermissionManager {
 
 }  // namespace content
 
-#endif // CONTENT_PUBLIC_BROWSER_PERMISSION_MANAGER_H_
+#endif  // CONTENT_PUBLIC_BROWSER_PERMISSION_MANAGER_H_

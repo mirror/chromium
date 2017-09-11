@@ -82,13 +82,11 @@ class MockMediaPermission : public media::MediaPermission {
 
   void RequestPermission(
       Type type,
-      const GURL& security_origin,
       const PermissionStatusCB& permission_status_cb) override {
     NOTIMPLEMENTED();
   }
 
   void HasPermission(Type type,
-                     const GURL& security_origin,
                      const PermissionStatusCB& permission_status_cb) override {
     if (type == MediaPermission::AUDIO_CAPTURE) {
       DCHECK(mic_callback_.is_null());
@@ -136,7 +134,7 @@ class FilteringNetworkManagerTest : public testing::Test,
     mock_network_manager_.reset(new MockNetworkManager());
     if (multiple_routes_requested) {
       FilteringNetworkManager* filtering_network_manager =
-          new FilteringNetworkManager(mock_network_manager_.get(), GURL(),
+          new FilteringNetworkManager(mock_network_manager_.get(),
                                       media_permission_.get());
       filtering_network_manager->Initialize();
       network_manager_.reset(filtering_network_manager);

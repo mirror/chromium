@@ -4,6 +4,8 @@
 
 #include "modules/permissions/PermissionStatus.h"
 
+#include <utility>
+
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/dom/Document.h"
 #include "core/dom/events/Event.h"
@@ -94,7 +96,6 @@ void PermissionStatus::StartListening() {
   ConnectToPermissionService(GetExecutionContext(),
                              mojo::MakeRequest(&service));
   service->AddPermissionObserver(descriptor_->Clone(),
-                                 GetExecutionContext()->GetSecurityOrigin(),
                                  status_, std::move(observer));
 }
 

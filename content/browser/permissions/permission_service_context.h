@@ -5,6 +5,9 @@
 #ifndef CONTENT_BROWSER_PERMISSIONS_PERMISSION_SERVICE_CONTEXT_H_
 #define CONTENT_BROWSER_PERMISSIONS_PERMISSION_SERVICE_CONTEXT_H_
 
+#include <memory>
+#include <unordered_map>
+
 #include "base/macros.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/permission_type.h"
@@ -44,7 +47,11 @@ class CONTENT_EXPORT PermissionServiceContext : public WebContentsObserver {
   // May return nullptr during teardown, or when showing an interstitial.
   BrowserContext* GetBrowserContext() const;
 
+  // Gets the origin of the main frame.
   GURL GetEmbeddingOrigin() const;
+
+  // Gets the origin of the frame making a permission request.
+  const url::Origin& GetRequestingOrigin() const;
 
   RenderFrameHost* render_frame_host() const;
 

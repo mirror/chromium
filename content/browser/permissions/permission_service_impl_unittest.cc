@@ -4,6 +4,8 @@
 
 #include "content/browser/permissions/permission_service_impl.h"
 
+#include <utility>
+
 #include "base/run_loop.h"
 #include "base/test/scoped_feature_list.h"
 #include "content/browser/permissions/permission_service_context.h"
@@ -94,7 +96,7 @@ class PermissionServiceImplTest : public RenderViewHostTestHarness {
         base::Bind(&PermissionServiceImplTest::PermissionStatusCallback,
                    base::Unretained(this));
     service_impl_->HasPermission(CreatePermissionDescriptor(permission),
-                                 origin_, callback);
+                                 callback);
     EXPECT_EQ(1u, last_permission_statuses_.size());
     return last_permission_statuses_[0];
   }
@@ -107,7 +109,7 @@ class PermissionServiceImplTest : public RenderViewHostTestHarness {
     base::Callback<void(const std::vector<PermissionStatus>&)> callback =
         base::Bind(&PermissionServiceImplTest::RequestPermissionsCallback,
                    base::Unretained(this));
-    service_impl_->RequestPermissions(std::move(descriptors), origin_,
+    service_impl_->RequestPermissions(std::move(descriptors),
                                       /*user_gesture=*/false, callback);
     EXPECT_EQ(permissions.size(), last_permission_statuses_.size());
     return last_permission_statuses_;
@@ -186,4 +188,4 @@ TEST_F(PermissionServiceImplTest, RequestPermissionsWithFeaturePolicy) {
   EXPECT_EQ(PermissionStatus::GRANTED, result[1]);
 }
 
-}  // namespace
+}  // namespace content

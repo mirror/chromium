@@ -41,7 +41,6 @@ class FilteringNetworkManager : public rtc::NetworkManagerBase,
   // worker thread |task_runner|.
   CONTENT_EXPORT FilteringNetworkManager(
       rtc::NetworkManager* network_manager,
-      const GURL& requesting_origin,
       media::MediaPermission* media_permission);
 
   CONTENT_EXPORT ~FilteringNetworkManager() override;
@@ -112,8 +111,6 @@ class FilteringNetworkManager : public rtc::NetworkManagerBase,
   // helps to identify if the signal is delayed by permission check and increase
   // the setup time.
   base::TimeTicks start_updating_time_;
-
-  GURL requesting_origin_;
 
   base::WeakPtrFactory<FilteringNetworkManager> weak_ptr_factory_;
 
