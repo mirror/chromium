@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "799f8170_a7833807",
+        "filename": "ash/tray_action/test_tray_action_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-11T18:12:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10e823e9_5e13c512",
+      "revId": "258728415b513363b8041c80d8fb6ac20af97b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14d0788e_4e22f88d",
         "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
         "patchSetId": 7
@@ -69,6 +87,24 @@
       "revId": "258728415b513363b8041c80d8fb6ac20af97b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3788826a_fc03ef6e",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-11T18:12:20Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "bd40f3b0_6748a15e",
+      "revId": "258728415b513363b8041c80d8fb6ac20af97b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
