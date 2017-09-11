@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a543e40_66894f68",
+        "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:04:49Z",
+      "side": 0,
+      "message": "great",
+      "revId": "a3449467c5db13b3219808824d55c6c993bae78b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

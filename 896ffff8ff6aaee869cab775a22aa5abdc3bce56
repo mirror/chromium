@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "fcd5864c_e924e714",
+        "filename": "content/browser/service_worker/browser_side_controller_service_worker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:04:49Z",
+      "side": 1,
+      "message": "BTW for new code I\u0027d prefer we use BindOnce with AdaptCallbackForRepeating for talking to legacy code (but this is just existing code, so we can fix in a followup)",
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ef11fb_76a1be66",
+        "filename": "content/browser/service_worker/browser_side_controller_service_worker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:04:49Z",
+      "side": 1,
+      "message": "nit: Lines 23-24 seem a outdated. Maybe we can just delete?",
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6fb3cb5_c6f11357",
         "filename": "content/browser/service_worker/browser_side_controller_service_worker.h",
         "patchSetId": 7
@@ -19,6 +53,75 @@
     },
     {
       "key": {
+        "uuid": "91e66db5_44022379",
+        "filename": "content/browser/service_worker/browser_side_controller_service_worker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:04:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d6fb3cb5_c6f11357",
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0257548_c7dd1154",
+        "filename": "content/browser/service_worker/browser_side_controller_service_worker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:04:49Z",
+      "side": 1,
+      "message": "feels clearer to just say |this| instead of \"this proxy\"",
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566e25fb_64405c5f",
+        "filename": "content/child/service_worker/controller_service_worker_connector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:04:49Z",
+      "side": 1,
+      "message": "for IWYU seems we\u0027re missing some haders: \nmojo/public/cpp/bindings/interface_request.h\nbase/bind_helpers.h\nbase/bind.h",
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a87ee976_512867d6",
+        "filename": "content/child/service_worker/controller_service_worker_connector.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:04:49Z",
+      "side": 1,
+      "message": "Can we have a lightweight class comment like \"Vends a connection to the controller service worker for a given ServiceWorkerContainerHost\". And also talk about who owns this and its lifetime?",
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74111f2e_6d722462",
         "filename": "content/child/service_worker/service_worker_provider_context.h",
         "patchSetId": 7
@@ -30,6 +133,155 @@
       "writtenOn": "2017-09-10T14:02:37Z",
       "side": 1,
       "message": "Slightly reworded as we want to use container_host_ also for SharedWorker controllees regardless of whether we implement navigator.serviceWorker there or not.",
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59a492d_c6fce5bf",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:04:49Z",
+      "side": 1,
+      "message": "great\n\nsuper nit: \"navigator.serviceWorker#*\" probably is better as \"navigator.serviceWorker.*\". (I think # goes after an interface name like ServiceWorkerContainer#\", but that\u0027s looks less readable.)",
+      "parentUuid": "74111f2e_6d722462",
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5cb583b_5359881a",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:04:49Z",
+      "side": 1,
+      "message": "while we\u0027re here we can delete this TODO",
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150992f6_f1b5a9ec",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:04:49Z",
+      "side": 1,
+      "message": "\"One of its Mojo end points\" ?",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 44
+      },
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ba3752_4a3305b8",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:04:49Z",
+      "side": 1,
+      "message": "\"Its other Mojo end point\" ?",
+      "range": {
+        "startLine": 15,
+        "startChar": 29,
+        "endLine": 15,
+        "endChar": 57
+      },
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a33477_08d6d984",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:04:49Z",
+      "side": 1,
+      "message": "Could you explain fetch and postMessage are in this small subset? Maybe incorporate some of my comments from the design doc:\n\"Represents a service worker that is a controller. The controllees use this interface to directly talk to the controller for good performance. Fetch and message are here because ordering must be preserved between them: controller.postMessage(...), controller.fetch(‘...’); from the page must result in a message event then fetch event dispatched to the service worker. They are believed to be the only events whose ordering guarantee is observable from the page context.\"",
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85beb172_6946549f",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:04:49Z",
+      "side": 1,
+      "message": "I know this is from the existing interface, but I\u0027m confused about the \"|response_callback\\ won\u0027t be called\" thing. I susepct this is obsolete now because you added \"OnResposneBlob\" to ServiceWorkerFetcHResponseCallback? Dpes that mean we don\u0027t need fetch_event_id anymore also?",
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f78bd03_3e68a56e",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:04:49Z",
+      "side": 1,
+      "message": "Suggestion: just put // S13nServiceWorker as the first line for consistency with other code\n\nSuper nitty, and we aren\u0027t consistent about this, but I\u0027d prefer \"ServiceWorker\" to refer to the JavaScript \"ServiceWorker\" interface and \"service worker\" to just mean a general \"service worker\" (this aligns with the spec)",
+      "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c6d929_ea00749b",
+        "filename": "content/common/service_worker/service_worker_fetch_response_callback.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:04:49Z",
+      "side": 1,
+      "message": "for consistency \"service worker\"",
       "revId": "896ffff8ff6aaee869cab775a22aa5abdc3bce56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
