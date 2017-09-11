@@ -4,8 +4,6 @@
 
 package org.chromium.chromecast.shell;
 
-import org.chromium.base.Log;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -20,10 +18,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import org.chromium.base.Log;
 
 /**
  * Crash crashdump uploader. Scans the crash dump location provided by CastCrashReporterClient for
@@ -45,12 +44,13 @@ public final class CastCrashUploader {
     private final String mCrashDumpPath;
     private final String mCrashReportUploadUrl;
 
-    public CastCrashUploader(String crashDumpPath, boolean uploadCrashToStaging) {
+    public CastCrashUploader(ScheduledExecutorService executorService, String crashDumpPath,
+            boolean uploadCrashToStaging) {
+        mExecutorService = executorService;
         this.mCrashDumpPath = crashDumpPath;
         mCrashReportUploadUrl = uploadCrashToStaging
                 ? "https://clients2.google.com/cr/staging_report"
                 : "https://clients2.google.com/cr/report";
-        mExecutorService = Executors.newScheduledThreadPool(1);
     }
 
     /** Sets up a periodic uploader, that checks for new dumps to upload every 20 minutes */
@@ -65,6 +65,14 @@ public final class CastCrashUploader {
                 0, // Do first run immediately
                 20, // Run once every 20 minutes
                 TimeUnit.MINUTES);
+    }
+
+    public void uploadOnce() {
+        mExecutorService.schedule(new Runnable() {
+            public void run() {
+                queueAllCrashDumpUploads(false);
+            }
+        }, 0, TimeUnit.MINUTES);
     }
 
     public void removeCrashDumps() {
