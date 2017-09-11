@@ -66,7 +66,7 @@ base::string16 PDFiumRange::GetText() const {
     index -= count - 1;
   }
 
-  if (count > 0) {
+  if (index >= 0 && count > 0) {
     // Adding +1 to count to account for the string terminator that is included.
     PDFiumAPIStringBufferAdapter<base::string16> api_string_adapter(
         &rv, count + 1, false);
