@@ -16,6 +16,24 @@
       "revId": "f6948c624c2b57c311725e31854a84391a73b91b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5edad9_b7915491",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-sandboxed-iframe-allow.htm",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-11T08:36:28Z",
+      "side": 1,
+      "message": "Good point! I\u0027ve switched it to the local origin. Thanks for the help!",
+      "parentUuid": "a23cb8ed_3ab336b0",
+      "revId": "f6948c624c2b57c311725e31854a84391a73b91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
