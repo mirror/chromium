@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65624b53_e1072c6a",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-11T10:45:42Z",
+      "side": 1,
+      "message": "Upon re-reading the specification, it looks like it cannot. Will remove.",
+      "parentUuid": "e46b33d3_c8eeeb18",
+      "range": {
+        "startLine": 285,
+        "startChar": 24,
+        "endLine": 285,
+        "endChar": 33
+      },
+      "revId": "6b5d797cc5953831ec14bfe3da1551e8a24480ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3a83339_ec46b195",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-11T10:03:11Z",
       "side": 1,
       "message": "Hm, so is the problem with repeat because we call toggleStartStop() rather than a dedicated start()?\nNot for this CL, but: Do we ever actually want \"toggle\" logic? I think most places that call this function want to either start or stop, and assume that we\u0027re currently in the other state. Might be easier and cleaner to provide start() and stop() instead?",
+      "range": {
+        "startLine": 287,
+        "startChar": 31,
+        "endLine": 287,
+        "endChar": 0
+      },
+      "revId": "6b5d797cc5953831ec14bfe3da1551e8a24480ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7002c1e0_6203ad20",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-11T10:45:42Z",
+      "side": 1,
+      "message": "Yes, I agree, lets get rid of |toggleStartStop|. Though, I\u0027m still not sure if this would eradicate the problem with the repeated key, so I would suggest keeping the check in either way.",
+      "parentUuid": "c3a83339_ec46b195",
       "range": {
         "startLine": 287,
         "startChar": 31,
