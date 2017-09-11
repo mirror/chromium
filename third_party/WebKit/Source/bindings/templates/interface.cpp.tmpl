@@ -160,7 +160,7 @@ void {{v8_class_or_partial}}::indexedPropertySetterCallback(uint32_t index, v8::
 
 {##############################################################################}
 {% block indexed_property_descriptor %}
-{% if indexed_property_getter %}
+{% if indexed_property_getter or named_property_getter %}
 static void indexedPropertyDescriptor(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>& info) {
   // https://heycam.github.io/webidl/#LegacyPlatformObjectGetOwnProperty
   // Steps 1.1 to 1.2.4 are covered here: we rely on indexedPropertyGetter() to
@@ -175,7 +175,7 @@ static void indexedPropertyDescriptor(uint32_t index, const v8::PropertyCallback
     //        ECMAScript value.
     // 1.2.7. If O implements an interface with an indexed property setter,
     //        then set desc.[[Writable]] to true, otherwise set it to false.
-    v8::PropertyDescriptor desc(getterValue, {% if indexed_property_setter %}true{% else %}false{% endif %});
+    v8::PropertyDescriptor desc(getterValue, {% if indexed_property_setter or named_property_setter %}true{% else %}false{% endif %});
     // 1.2.8. Set desc.[[Enumerable]] and desc.[[Configurable]] to true.
     desc.set_enumerable(true);
     desc.set_configurable(true);
@@ -190,7 +190,7 @@ static void indexedPropertyDescriptor(uint32_t index, const v8::PropertyCallback
 
 {##############################################################################}
 {% block indexed_property_descriptor_callback %}
-{% if indexed_property_getter %}
+{% if indexed_property_getter or named_property_getter %}
 void {{v8_class_or_partial}}::indexedPropertyDescriptorCallback(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>& info) {
   {{cpp_class}}V8Internal::indexedPropertyDescriptor(index, info);
 }
@@ -831,7 +831,7 @@ for (const auto& attributeConfig : {{method.name}}OriginSafeAttributeConfigurati
        if indexed_property_getter or named_property_setter else 'nullptr' %}
 {% set indexed_property_descriptor_callback =
        '%s::indexedPropertyDescriptorCallback' % v8_class_or_partial
-       if indexed_property_getter else 'nullptr' %}
+       if indexed_property_getter or named_property_getter else 'nullptr' %}
 {% set indexed_property_deleter_callback =
        '%s::indexedPropertyDeleterCallback' % v8_class_or_partial
        if indexed_property_deleter or named_property_deleter else 'nullptr' %}
