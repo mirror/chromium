@@ -260,6 +260,11 @@ template("mojom") {
     assert(defined(invoker.component_deps_blink))
   }
 
+  if (defined(invoker.buildflag_headers)) {
+    assert(defined(invoker.buildflag_deps))
+    assert(invoker.buildflag_deps != [])
+  }
+
   js_bindings_mode = "new"
   if (defined(invoker.js_bindings_mode)) {
     js_bindings_mode = invoker.js_bindings_mode
@@ -312,6 +317,54 @@ template("mojom") {
       "--bytecode_path",
       rebase_path("$root_gen_dir/mojo/public/tools/bindings", root_build_dir),
     ]
+
+    # Buildflags
+    if (defined(invoker.buildflag_headers)) {
+      mojom_buildflags = []
+      foreach(buildflag_header, invoker.buildflag_headers) {
+        mojom_buildflags += [ buildflag_header ]
+      }
+      foreach(mojom_buildflag, mojom_buildflags) {
+        common_generator_args += [
+          "--buildflag_header",
+          rebase_path("$root_gen_dir/$mojom_buildflag", root_build_dir),
+        ]
+      }
+    }
+
+    # Limited set of defines.
+    mojom_defines = []
+    if (is_android) {
+      mojom_defines += [ "OS_ANDROID" ]
+    }
+    if (is_fuchsia) {
+      mojom_defines += [ "OS_FUSCHIA" ]
+    }
+    if (is_linux) {
+      mojom_defines += [ "OS_LINUX" ]
+    }
+    if (is_mac) {
+      mojom_defines += [ "OS_MACOSX" ]
+    }
+    if (is_win) {
+      mojom_defines += [ "OS_WIN" ]
+    }
+    if (is_android || is_fuchsia || is_linux || is_mac) {
+      mojom_defines += [ "OS_POSIX" ]
+    }
+    if (is_chromeos) {
+      mojom_defines += [ "OS_CHROMEOS" ]
+    }
+    if (is_ios) {
+      mojom_defines += [ "OS_IOS" ]
+    }
+
+    foreach(mojom_define, mojom_defines) {
+      common_generator_args += [
+        "--preprocessor_define",
+        mojom_define,
+      ]
+    }
 
     if (defined(invoker.import_dirs)) {
       foreach(import_dir, invoker.import_dirs) {
@@ -376,6 +429,11 @@ template("mojom") {
       deps = [
         "//mojo/public/tools/bindings:precompile_templates",
       ]
+      if (defined(invoker.buildflag_deps)) {
+        foreach(buildflag_dep, buildflag_deps) {
+          deps += [ buildflag_dep ]
+        }
+      }
       outputs = generator_shared_cpp_outputs
       args = common_generator_args
       args += [
