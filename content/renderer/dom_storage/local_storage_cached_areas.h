@@ -37,11 +37,22 @@ class CONTENT_EXPORT LocalStorageCachedAreas {
   void CacheAreaClosed(LocalStorageCachedArea* cached_area);
 
  private:
+  struct AreaHolder {
+    scoped_refptr<LocalStorageCachedArea> area;
+    int open_count;
+    AreaHolder(LocalStorageCachedArea* area, int open_count);
+    ~AreaHolder();
+  };
+
+  void ClearAreasIfNeeded();
+  size_t TotalCacheSize() const;
+
   mojom::StoragePartitionService* const storage_partition_service_;
 
   // Maps from an origin to its LocalStorageCachedArea object. The object owns
   // itself.
-  std::map<url::Origin, LocalStorageCachedArea*> cached_areas_;
+  std::map<url::Origin, AreaHolder> cached_areas_;
+  size_t total_cache_limit_;
 
   DISALLOW_COPY_AND_ASSIGN(LocalStorageCachedAreas);
 };
