@@ -101,6 +101,10 @@
   return [handler appName];
 }
 
+- (MailtoHandler*)defaultHandlerByID:(NSString*)handlerID {
+  return _handlers[handlerID];
+}
+
 - (NSString*)rewriteMailtoURL:(const GURL&)gURL {
   NSString* value = [self defaultHandlerID];
   if ([value length]) {

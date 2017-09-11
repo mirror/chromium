@@ -37,6 +37,8 @@ TEST_F(NullableMailtoURLRewriterTest, TestStandardInstance) {
         [handler isAvailable] ? appStoreID : [MailtoURLRewriter systemMailApp];
     [rewriter setDefaultHandlerID:appStoreID];
     EXPECT_NSEQ(expectedDefaultAppID, [rewriter defaultHandlerID]);
+    MailtoHandler* foundHandler = [rewriter defaultHandlerByID:appStoreID];
+    EXPECT_NSEQ(handler, foundHandler);
   }
 }
 
