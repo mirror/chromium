@@ -22,6 +22,30 @@
       "revId": "00cb1dda9c3058de553272abab42b82cb2127415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7de67a_3d68d1f8",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-11T19:48:10Z",
+      "side": 1,
+      "message": "Thanks for pointing that out! The starred state gets changed here: https://cs.chromium.org/chromium/src/chrome/browser/ui/cocoa/browser_window_controller.mm?rcl\u003d9639526f6c40201e5b40c50880d91efc04d85c49\u0026l\u003d1069\n\nUnlike page load which happens frequently and might cause flickering, it\u0027s okay to invalidate the touch bar here since the star state doesn\u0027t change that often.",
+      "parentUuid": "42a91a70_91953c42",
+      "range": {
+        "startLine": 515,
+        "startChar": 8,
+        "endLine": 515,
+        "endChar": 27
+      },
+      "revId": "00cb1dda9c3058de553272abab42b82cb2127415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
