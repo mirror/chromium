@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "df15ee13_d3b58158",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-11T14:58:03Z",
+      "side": 1,
+      "message": "Perhaps we\u0027ve discussed this in a previous review and I\u0027ve forgotten it -- why isn\u0027t this using LogcatMonitor?",
+      "revId": "2cb4502be2ec5ac14bb12619fce7d92332d138bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48faf0d6_d1509c2e",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
