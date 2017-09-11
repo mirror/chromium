@@ -147,8 +147,8 @@ source_set("web_internal") {
     "external_app_launcher.h",
     "external_app_launcher.mm",
     "passkit_dialog_provider.h",
-    "print_observer.h",
-    "print_observer.mm",
+    "print_tab_helper.h",
+    "print_tab_helper.mm",
   ]
   deps = [
     ":chrome_bundle",

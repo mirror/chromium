@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ios/chrome/browser/web/print_observer.h"
+#include "ios/chrome/browser/web/print_tab_helper.h"
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -19,30 +19,35 @@ namespace {
 const char kPrintCommandPrefix[] = "print";
 }
 
-PrintObserver::PrintObserver(web::WebState* web_state,
-                             id<BrowserCommands> dispatcher)
-    : web::WebStateObserver(web_state), dispatcher_(dispatcher) {
+DEFINE_WEB_STATE_USER_DATA_KEY(PrintTabHelper);
+
+PrintTabHelper::~PrintTabHelper() {
+  Detach();
+}
+
+void PrintTabHelper::SetDispatcher(id<BrowserCommands> dispatcher) {
+  dispatcher_ = dispatcher;
+}
+
+PrintTabHelper::PrintTabHelper(web::WebState* web_state)
+    : web::WebStateObserver(web_state) {
   web_state->AddScriptCommandCallback(
-      base::Bind(&PrintObserver::OnPrintCommand, base::Unretained(this)),
+      base::Bind(&PrintTabHelper::OnPrintCommand, base::Unretained(this)),
       kPrintCommandPrefix);
 }
 
-PrintObserver::~PrintObserver() {
+void PrintTabHelper::WebStateDestroyed() {
   Detach();
 }
 
-void PrintObserver::WebStateDestroyed() {
-  Detach();
-}
-
-bool PrintObserver::OnPrintCommand(const base::DictionaryValue&,
-                                   const GURL&,
-                                   bool) {
+bool PrintTabHelper::OnPrintCommand(const base::DictionaryValue&,
+                                    const GURL&,
+                                    bool) {
   [dispatcher_ printTab];
   return true;
 }
 
-void PrintObserver::Detach() {
+void PrintTabHelper::Detach() {
   if (web_state()) {
     web_state()->RemoveScriptCommandCallback(kPrintCommandPrefix);
   }

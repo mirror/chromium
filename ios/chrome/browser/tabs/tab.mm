@@ -96,7 +96,7 @@
 #import "ios/chrome/browser/web/external_app_launcher.h"
 #import "ios/chrome/browser/web/navigation_manager_util.h"
 #import "ios/chrome/browser/web/passkit_dialog_provider.h"
-#include "ios/chrome/browser/web/print_observer.h"
+#include "ios/chrome/browser/web/print_tab_helper.h"
 #import "ios/chrome/browser/web/tab_id_tab_helper.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/web/navigation/navigation_manager_impl.h"
@@ -214,9 +214,6 @@ class TabHistoryContext : public history::Context {
   // Handles retrieving, generating and updating snapshots of CRWWebController's
   // web page.
   WebControllerSnapshotHelper* _webControllerSnapshotHelper;
-
-  // Handles support for window.print JavaScript calls.
-  std::unique_ptr<PrintObserver> _printObserver;
 
   // WebStateImpl for this tab.
   web::WebStateImpl* _webStateImpl;
@@ -400,13 +397,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
   _faviconDriverObserverBridge = std::make_unique<FaviconDriverObserverBridge>(
       self, favicon::WebFaviconDriver::FromWebState(self.webState));
-}
-
-// Attach any tab helpers which are dependent on the dispatcher having been
-// set on the tab.
-- (void)attachDispatcherDependentTabHelpers {
-  _printObserver =
-      base::MakeUnique<PrintObserver>(self.webState, self.dispatcher);
 }
 
 - (id<FindInPageControllerDelegate>)findInPageControllerDelegate {
@@ -638,12 +628,10 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   // should be nil, or the new value should be nil.
   DCHECK(!_dispatcher || !dispatcher);
   _dispatcher = dispatcher;
+
   // Forward the new dispatcher to tab helpers.
-  PasswordTabHelper::FromWebState(self.webState)
-      ->SetDispatcher(self.dispatcher);
-  // If the new dispatcher is nonnull, add tab helpers.
-  if (self.dispatcher)
-    [self attachDispatcherDependentTabHelpers];
+  PasswordTabHelper::FromWebState(self.webState)->SetDispatcher(_dispatcher);
+  PrintTabHelper::FromWebState(self.webState)->SetDispatcher(_dispatcher);
 }
 
 - (void)saveTitleToHistoryDB {
