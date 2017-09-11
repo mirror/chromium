@@ -36,6 +36,40 @@
     },
     {
       "key": {
+        "uuid": "8aa9b27b_8724b0f3",
+        "filename": "device/sensors/data_fetcher_shared_memory_mac.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-11T15:20:09Z",
+      "side": 1,
+      "message": "looks like the precision is somewhat different here because the \u0027float\u0027 version will be used (axis_value is a float)",
+      "revId": "a48685381c8210f275a4dbf5437866cb154e171c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1eb5e57_06560c09",
+        "filename": "device/sensors/sensor_manager_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-11T15:20:09Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "a48685381c8210f275a4dbf5437866cb154e171c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c16736ab_bb32b13d",
         "filename": "ios/chrome/browser/ui/side_swipe/side_swipe_navigation_view.mm",
         "patchSetId": 5
