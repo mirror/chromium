@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a23cb8ed_3ab336b0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-sandboxed-iframe-allow.htm",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-11T08:24:33Z",
+      "side": 1,
+      "message": "this doesn\u0027t need to be REMOTE_ORIGIN for this test case, it looks.",
+      "revId": "f6948c624c2b57c311725e31854a84391a73b91b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
