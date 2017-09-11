@@ -16,6 +16,24 @@
       "revId": "b009c9a38e82faf77fb243e9576bc400be22d422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54b5321_4e477fe2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-11T18:14:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f4f51cc_a2a9baa8",
+      "revId": "b009c9a38e82faf77fb243e9576bc400be22d422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
