@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d9147fd_37c6e8c5",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-11T14:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c96d09c_dd504406",
+      "revId": "fc241083ab184c89e22e6aaeb3430ae2b53ff9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97d85466_a43bbc9e",
         "filename": "net/cert/multi_threaded_cert_verifier.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-08T19:56:03Z",
       "side": 1,
       "message": "Why did you make this change? Is it always guaranteed to post?\n\nIf it isn\u0027t, this will starve the IO thread. I\u0027d be good to understand why this concern.",
+      "revId": "fc241083ab184c89e22e6aaeb3430ae2b53ff9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ffdeedf_17ec42c5",
+        "filename": "net/cert/multi_threaded_cert_verifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-11T14:31:09Z",
+      "side": 1,
+      "message": "The task is guaranteed to be scheduled, unless TaskScheduler is shutting down. Since TaskScheduler is shutdown after the IO thread is joined https://cs.chromium.org/chromium/src/content/browser/browser_main_loop.cc?l\u003d1350-1375\u0026rcl\u003db77dc4487150b1194894c2173609d91ba2ecbbf7, there is no chance of starving the IO thread.\n\nbase::PostTaskWithTraitsAndReplyWithResult returns void  https://cs.chromium.org/chromium/src/base/task_scheduler/post_task.h?l\u003d153\u0026rcl\u003d94a39ba8e2b1ef9aaf79f67d148ee1fd086b3899, so it isn\u0027t possible to keep the same logic as before (since TaskScheduler can decide to skip a task after it has been posted, returning a bool would be misleading).\n\nThe trick below can be used to know when TaskScheduler decides not to schedule a task:\n\nclass OnTaskSkipped {\n public:  \n  OnTaskSkipped(OnTaskSkipped\u0026\u0026 other) {\n    is_valid_ \u003d true;\n    other.is_valid_ \u003d false;\n  }\n\n  ~OnTaskSkipped() {\n    if (is_valid_) {\n       // TaskScheduler skipped the task!\n    }\n  }\n\n  bool is_valid_ \u003d true;\n};\n\nbase::PostTaskWithTraitsAndReplyWithResult(\n  FROM_HERE, { ... },\n  base::BindOnce(..., OnTaskSkipped()),\n  base::BindOnce(...));\n\nDo you think it would be useful to use this trick to call callback.Run(ERR_INSUFFICIENT_RESOURCES) when the task is skipped (doesn\u0027t happen in practice)?",
+      "parentUuid": "97d85466_a43bbc9e",
       "revId": "fc241083ab184c89e22e6aaeb3430ae2b53ff9b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
