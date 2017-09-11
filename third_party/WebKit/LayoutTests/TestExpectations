@@ -15,6 +15,17 @@ crbug.com/569901 crbug.com/24182 [ Debug ] jquery/manipulation.html [ Timeout Pa
 
 # ====== Oilpan-only failures until here ======
 
+# ====== Browserside navigation from here ======
+# These tests started failing when browser-side navigation was turned on.
+crbug.com/762529 http/tests/inspector/network/network-datareceived.html [ Failure ]
+crbug.com/759632 http/tests/inspector/network/network-datasaver-warning.html [ Failure ]
+crbug.com/760924 http/tests/inspector/network/x-frame-options-deny.html [ Failure ]
+crbug.com/762529 virtual/mojo-loading/http/tests/inspector/network/network-datareceived.html [ Failure ]
+crbug.com/759632 virtual/mojo-loading/http/tests/inspector/network/network-datasaver-warning.html [ Failure ]
+crbug.com/760924 virtual/mojo-loading/http/tests/inspector/network/x-frame-options-deny.html [ Failure ]
+crbug.com/576261 [ Win ] virtual/mojo-loading/http/tests/inspector/resource-parameters.html [ Failure ]
+# ====== Browserside navigation until here ======
+
 # ====== Paint team owned tests from here ======
 # The paint team tracks and triages its test failures, and keeping them colocated
 # makes tracking much easier.
