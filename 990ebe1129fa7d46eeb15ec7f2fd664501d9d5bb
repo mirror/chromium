@@ -46,6 +46,30 @@
       "revId": "990ebe1129fa7d46eeb15ec7f2fd664501d9d5bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4b7a6c_df1e7da8",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-11T15:41:49Z",
+      "side": 1,
+      "message": "Please move this logic into https://cs.chromium.org/chromium/src/build/config/compiler/compiler.gni?type\u003dcs\u0026q\u003denable_frame_pointers\u0026sq\u003dpackage:chromium\u0026l\u003d72.",
+      "parentUuid": "ae3d9d13_df03bfb0",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 25
+      },
+      "revId": "990ebe1129fa7d46eeb15ec7f2fd664501d9d5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
