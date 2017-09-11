@@ -17,6 +17,8 @@
 @protocol TabGridCommands;
 @protocol TabHistoryPopupCommands;
 @protocol TabStripCommands;
+@protocol ToolbarButtonFactory;
+@protocol ToolbarConfiguration;
 @protocol ToolsMenuCommands;
 
 // View controller for a toolbar, which will show a horizontal row of
@@ -34,7 +36,14 @@
                                        TabGridCommands,
                                        TabHistoryPopupCommands,
                                        TabStripCommands,
-                                       ToolsMenuCommands>)dispatcher;
+                                       ToolsMenuCommands>)dispatcher
+                     buttonFactory:(id<ToolbarButtonFactory>)buttonFactory
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
+- (instancetype)initWithNibName:(NSString*)nibNameOrNil
+                         bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
 
 // The dispatcher for this view controller
 @property(nonatomic, weak) id<NavigationCommands,
@@ -45,6 +54,9 @@
     dispatcher;
 
 @property(nonatomic, strong) UIViewController* locationBarViewController;
+
+// Configuration object used to style the toolbar.
+@property(nonatomic, strong) id<ToolbarConfiguration> configuration;
 
 // By default, this view controller does not interact with the tab strip. When
 // |usesTabStrip| is YES, the tab switcher button first displays the tab strip.

@@ -4,6 +4,7 @@
 
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.h"
 
+#include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #import "ios/chrome/browser/ui/broadcaster/chrome_broadcaster.h"
 #import "ios/chrome/browser/ui/browser_list/browser.h"
@@ -15,6 +16,10 @@
 #import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator.h"
 #import "ios/clean/chrome/browser/ui/omnibox/location_bar_coordinator.h"
+#import "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory_incognito.h"
+#import "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory_normal.h"
+#import "ios/clean/chrome/browser/ui/toolbar/toolbar_configuration_incognito.h"
+#import "ios/clean/chrome/browser/ui/toolbar/toolbar_configuration_normal.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_mediator.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h"
 #import "ios/clean/chrome/browser/ui/tools/tools_coordinator.h"
@@ -70,9 +75,24 @@
   if (self.started)
     return;
 
-  self.viewController = [[ToolbarViewController alloc]
-      initWithDispatcher:self.callableDispatcher];
+  id<ToolbarButtonFactory> factory = nil;
+  if (self.browser->browser_state()->IsOffTheRecord()) {
+    factory = [[ToolbarButtonFactoryIncognito alloc] init];
+  } else {
+    factory = [[ToolbarButtonFactoryNormal alloc] init];
+  }
+
+  self.viewController =
+      [[ToolbarViewController alloc] initWithDispatcher:self.callableDispatcher
+                                          buttonFactory:factory];
   self.viewController.usesTabStrip = self.usesTabStrip;
+  if (self.browser->browser_state()->IsOffTheRecord()) {
+    self.viewController.configuration =
+        [[ToolbarConfigurationIncognito alloc] init];
+  } else {
+    self.viewController.configuration =
+        [[ToolbarConfigurationNormal alloc] init];
+  }
 
   [self.dispatcher startDispatchingToTarget:self
                                 forSelector:@selector(showToolsMenu)];
@@ -135,6 +155,8 @@
       [[ToolsMenuConfiguration alloc] initWithDisplayView:nil];
   menuConfiguration.inTabSwitcher = NO;
   menuConfiguration.noOpenedTabs = NO;
+  menuConfiguration.inIncognito =
+      self.browser->browser_state()->IsOffTheRecord();
   menuConfiguration.inNewTabPage =
       (self.webState->GetLastCommittedURL() == GURL(kChromeUINewTabURL));
 

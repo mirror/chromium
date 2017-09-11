@@ -2,25 +2,25 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "ios/clean/chrome/browser/ui/toolbar/toolbar_button+factory.h"
+#import "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory_normal.h"
 
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/chrome/grit/ios_theme_resources.h"
+#import "ios/clean/chrome/browser/ui/toolbar/toolbar_button.h"
+#import "ios/clean/chrome/browser/ui/toolbar/toolbar_constants.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
-@implementation ToolbarButton (Factory)
+@implementation ToolbarButtonFactoryNormal
 
-#pragma mark - ToolbarButton Setup
-
-+ (instancetype)backToolbarButton {
-  ToolbarButton* backButton = [self
+- (ToolbarButton*)backToolbarButton {
+  ToolbarButton* backButton = [ToolbarButton
       toolbarButtonWithImageForNormalState:NativeReversableImage(
                                                IDR_IOS_TOOLBAR_LIGHT_BACK, YES)
                   imageForHighlightedState:
@@ -33,8 +33,8 @@
   return backButton;
 }
 
-+ (instancetype)forwardToolbarButton {
-  ToolbarButton* forwardButton = [self
+- (ToolbarButton*)forwardToolbarButton {
+  ToolbarButton* forwardButton = [ToolbarButton
       toolbarButtonWithImageForNormalState:NativeReversableImage(
                                                IDR_IOS_TOOLBAR_LIGHT_FORWARD,
                                                YES)
@@ -49,8 +49,8 @@
   return forwardButton;
 }
 
-+ (instancetype)tabSwitcherStripToolbarButton {
-  ToolbarButton* tabSwitcherStripButton = [self
+- (ToolbarButton*)tabSwitcherStripToolbarButton {
+  ToolbarButton* tabSwitcherStripButton = [ToolbarButton
       toolbarButtonWithImageForNormalState:NativeImage(
                                                IDR_IOS_TOOLBAR_LIGHT_OVERVIEW)
                   imageForHighlightedState:
@@ -59,22 +59,28 @@
                          NativeImage(IDR_IOS_TOOLBAR_LIGHT_OVERVIEW_DISABLED)];
   tabSwitcherStripButton.accessibilityLabel =
       l10n_util::GetNSString(IDS_IOS_TOOLBAR_SHOW_TABS);
+  [tabSwitcherStripButton
+      setTitleColor:UIColorFromRGB(kToolbarButtonTitleNormalColor)
+           forState:UIControlStateNormal];
+  [tabSwitcherStripButton
+      setTitleColor:UIColorFromRGB(kToolbarButtonTitleHighlightedColor)
+           forState:UIControlStateHighlighted];
   return tabSwitcherStripButton;
 }
 
-+ (instancetype)tabSwitcherGridToolbarButton {
+- (ToolbarButton*)tabSwitcherGridToolbarButton {
   ToolbarButton* tabSwitcherGridButton =
-      [self toolbarButtonWithImageForNormalState:
-                [UIImage imageNamed:@"tabswitcher_tab_switcher_button"]
-                        imageForHighlightedState:nil
-                           imageForDisabledState:nil];
+      [ToolbarButton toolbarButtonWithImageForNormalState:
+                         [UIImage imageNamed:@"tabswitcher_tab_switcher_button"]
+                                 imageForHighlightedState:nil
+                                    imageForDisabledState:nil];
   tabSwitcherGridButton.accessibilityLabel =
       l10n_util::GetNSString(IDS_IOS_TOOLBAR_SHOW_TAB_GRID);
   return tabSwitcherGridButton;
 }
 
-+ (instancetype)toolsMenuToolbarButton {
-  ToolbarButton* toolsMenuButton = [self
+- (ToolbarButton*)toolsMenuToolbarButton {
+  ToolbarButton* toolsMenuButton = [ToolbarButton
       toolbarButtonWithImageForNormalState:NativeImage(
                                                IDR_IOS_TOOLBAR_LIGHT_TOOLS)
                   imageForHighlightedState:
@@ -86,8 +92,8 @@
   return toolsMenuButton;
 }
 
-+ (instancetype)shareToolbarButton {
-  ToolbarButton* shareButton = [self
+- (ToolbarButton*)shareToolbarButton {
+  ToolbarButton* shareButton = [ToolbarButton
       toolbarButtonWithImageForNormalState:NativeImage(
                                                IDR_IOS_TOOLBAR_LIGHT_SHARE)
                   imageForHighlightedState:
@@ -99,8 +105,8 @@
   return shareButton;
 }
 
-+ (instancetype)reloadToolbarButton {
-  ToolbarButton* reloadButton = [self
+- (ToolbarButton*)reloadToolbarButton {
+  ToolbarButton* reloadButton = [ToolbarButton
       toolbarButtonWithImageForNormalState:NativeReversableImage(
                                                IDR_IOS_TOOLBAR_LIGHT_RELOAD,
                                                YES)
@@ -115,8 +121,8 @@
   return reloadButton;
 }
 
-+ (instancetype)stopToolbarButton {
-  ToolbarButton* stopButton = [self
+- (ToolbarButton*)stopToolbarButton {
+  ToolbarButton* stopButton = [ToolbarButton
       toolbarButtonWithImageForNormalState:NativeImage(
                                                IDR_IOS_TOOLBAR_LIGHT_STOP)
                   imageForHighlightedState:
@@ -127,13 +133,13 @@
   return stopButton;
 }
 
-+ (instancetype)starToolbarButton {
-  ToolbarButton* starButton =
-      [self toolbarButtonWithImageForNormalState:NativeImage(
-                                                     IDR_IOS_TOOLBAR_LIGHT_STAR)
-                        imageForHighlightedState:
-                            NativeImage(IDR_IOS_TOOLBAR_LIGHT_STAR_PRESSED)
-                           imageForDisabledState:nil];
+- (ToolbarButton*)starToolbarButton {
+  ToolbarButton* starButton = [ToolbarButton
+      toolbarButtonWithImageForNormalState:NativeImage(
+                                               IDR_IOS_TOOLBAR_LIGHT_STAR)
+                  imageForHighlightedState:
+                      NativeImage(IDR_IOS_TOOLBAR_LIGHT_STAR_PRESSED)
+                     imageForDisabledState:nil];
   starButton.accessibilityLabel = l10n_util::GetNSString(IDS_TOOLTIP_STAR);
   return starButton;
 }
