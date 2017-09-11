@@ -42,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "24abb468_8a5ae469",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-11T20:36:26Z",
+      "side": 1,
+      "message": "Initializes",
+      "range": {
+        "startLine": 160,
+        "startChar": 5,
+        "endLine": 160,
+        "endChar": 15
+      },
+      "revId": "93d199da048eda321ced91f78ec6097accb7c5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77a559e2_78520363",
         "filename": "chrome/browser/media/router/media_router_feature.cc",
         "patchSetId": 4
@@ -53,6 +76,30 @@
       "writtenOn": "2017-09-11T16:14:08Z",
       "side": 1,
       "message": "what\u0027s the rollout plan for this?\n\nAre we going to use a finch experiment to turn it on, or just switch this to on by default and use a finch experiment to modify the params if needed?",
+      "range": {
+        "startLine": 37,
+        "startChar": 50,
+        "endLine": 37,
+        "endChar": 77
+      },
+      "revId": "93d199da048eda321ced91f78ec6097accb7c5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076f681d_377e910b",
+        "filename": "chrome/browser/media/router/media_router_feature.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-11T20:36:26Z",
+      "side": 1,
+      "message": "I think we should turn this on by default to achieve parity with extension.\n\nWe should then add in a few channel related metrics:\n- success count\n- failure count\n- # of attempts before channel is created successfully\n- (possibly others)\n\nOnce the UMA is in place, we can then experiment with different parameters, which I assume can be defined in fixed groups.",
+      "parentUuid": "77a559e2_78520363",
       "range": {
         "startLine": 37,
         "startChar": 50,
