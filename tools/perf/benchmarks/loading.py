@@ -60,16 +60,7 @@ class LoadingMobile(_LoadingBase):
   @classmethod
   def ShouldDisable(cls, possible_browser):
     # crbug.com/619254
-    if possible_browser.browser_type == 'reference':
-      return True
-
-    # crbug.com/676612
-    if ((possible_browser.platform.GetDeviceTypeName() == 'Nexus 6' or
-         possible_browser.platform.GetDeviceTypeName() == 'AOSP on Shamu') and
-        possible_browser.browser_type == 'android-webview'):
-      return True
-
-    return False
+    return possible_browser.browser_type == 'reference'
 
   def CreateStorySet(self, options):
     return page_sets.LoadingMobileStorySet(
@@ -79,6 +70,8 @@ class LoadingMobile(_LoadingBase):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
+        self.DisableBenchmark(
+            [story.expectations.ANDROID_NEXUS6_WEBVIEW], 'crbug.com/676612')
         self.DisableStory('GFK', [story.expectations.ALL],
                           'N5X Timeout issue: crbug.com/702175')
         self.DisableStory('MLSMatrix', [story.expectations.ALL],

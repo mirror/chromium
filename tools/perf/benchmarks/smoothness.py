@@ -91,18 +91,14 @@ class SmoothnessToughFiltersCases(_Smoothness):
   @classmethod
   def ShouldDisable(cls, possible_browser):
     # http://crbug.com/616520
-    if (cls.IsSvelte(possible_browser) and
-        possible_browser.browser_type == 'reference'):
-      return True
-    # http://crbug.com/624032
-    if possible_browser.platform.GetDeviceTypeName() == 'Nexus 6':
-      return True
-    return False
+    return (cls.IsSvelte(possible_browser) and
+        possible_browser.browser_type == 'reference')
 
   def GetExpectations(self):
     class StoryExpectations(story_module.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass # Nothing.
+        self.DisableBenchmark([story_module.expectations.ANDROID_NEXUS6],
+                              'crbug.com/624032')
     return StoryExpectations()
 
 
@@ -756,17 +752,11 @@ class SmoothnessPathologicalMobileSites(_Smoothness):
   def Name(cls):
     return 'smoothness.pathological_mobile_sites'
 
-  @classmethod
-  def ShouldDisable(cls, possible_browser):
-    # http://crbug.com/685342
-    if possible_browser.platform.GetDeviceTypeName() == 'Nexus 7':
-      return True
-    return False
-
   def GetExpectations(self):
     class StoryExpectations(story_module.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass
+        self.DisableBenchmark([story_module.expectations.ANDROID_NEXUS7],
+                              'crbug.com/685342')
     return StoryExpectations()
 
 
@@ -794,10 +784,6 @@ class SmoothnessToughAdCases(_Smoothness):
     return 'smoothness.tough_ad_cases'
 
   @classmethod
-  def ShouldDisable(cls, possible_browser):
-    return cls.IsSvelte(possible_browser)  # http://crbug.com/555089
-
-  @classmethod
   def ValueCanBeAddedPredicate(cls, value, is_first_result):
     del is_first_result  # unused
     # These pages don't scroll so it's not necessary to measure input latency.
@@ -806,7 +792,8 @@ class SmoothnessToughAdCases(_Smoothness):
   def GetExpectations(self):
     class StoryExpectations(story_module.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass # Nothing.
+        self.DisableBenchmark([story_module.expectations.ANDROID_SVELTE],
+                              'www.crbug.com/555089')
     return StoryExpectations()
 
 
@@ -819,14 +806,11 @@ class SmoothnessToughWebGLAdCases(_Smoothness):
   def Name(cls):
     return 'smoothness.tough_webgl_ad_cases'
 
-  @classmethod
-  def ShouldDisable(cls, possible_browser):
-    return cls.IsSvelte(possible_browser)  # http://crbug.com/574485
-
   def GetExpectations(self):
     class StoryExpectations(story_module.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass # Nothing.
+        self.DisableBenchmark([story_module.expectations.ANDROID_SVELTE],
+                              'crbug.com/574485')
     return StoryExpectations()
 
 
