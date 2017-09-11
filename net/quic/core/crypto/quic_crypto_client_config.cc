@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <memory>
 
+#include "base/containers/queue.h"
 #include "base/metrics/histogram_macros.h"
 #include "net/quic/core/crypto/cert_compressor.h"
 #include "net/quic/core/crypto/chacha20_poly1305_encrypter.h"
@@ -192,7 +193,7 @@ void QuicCryptoClientConfig::CachedState::InvalidateServerConfig() {
   server_config_.clear();
   scfg_.reset();
   SetProofInvalid();
-  std::queue<QuicConnectionId> empty_queue;
+  base::queue<QuicConnectionId> empty_queue;
   using std::swap;
   swap(server_designated_connection_ids_, empty_queue);
 }
@@ -237,7 +238,7 @@ void QuicCryptoClientConfig::CachedState::Clear() {
   proof_verify_details_.reset();
   scfg_.reset();
   ++generation_counter_;
-  std::queue<QuicConnectionId> empty_queue;
+  base::queue<QuicConnectionId> empty_queue;
   using std::swap;
   swap(server_designated_connection_ids_, empty_queue);
 }
