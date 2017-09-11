@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02f28987_b053378e",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-11T18:51:22Z",
+      "side": 1,
+      "message": "It should be crashing at this point.",
+      "range": {
+        "startLine": 219,
+        "startChar": 11,
+        "endLine": 219,
+        "endChar": 26
+      },
+      "revId": "ba20233dd6a0bd6ab70e4ad32ec50bd0d9dcbf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed83c8af_13648c00",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-11T18:51:22Z",
+      "side": 1,
+      "message": "This would crash in background mode without whitelisting \"global/\" dumps.",
+      "range": {
+        "startLine": 257,
+        "startChar": 9,
+        "endLine": 257,
+        "endChar": 28
+      },
+      "revId": "ba20233dd6a0bd6ab70e4ad32ec50bd0d9dcbf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
