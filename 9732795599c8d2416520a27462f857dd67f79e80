@@ -16,6 +16,24 @@
       "revId": "9732795599c8d2416520a27462f857dd67f79e80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f27cf1_575bee41",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-11T08:58:18Z",
+      "side": 1,
+      "message": "It is better to introduce TextIteratorTextNodeHandler::EmitText() which\nis ComputeTextAndOffsetsForEmission() + text_state_.EmitText()\nSince text_content_start and text_content_end are used for text_state_.EmitText(). Once we introduce TITextNodeHandler::EmitText()\nwe don\u0027t need to expose text_content_start and text_content_end out side\nEmitText().\n\nIn other words, EmitText() is L123 to L129 and expanding ComputeTextAndOffsetsForEmission",
+      "parentUuid": "38dd8947_9497f3dd",
+      "revId": "9732795599c8d2416520a27462f857dd67f79e80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
