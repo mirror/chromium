@@ -22,6 +22,30 @@
       "revId": "85f6daf801f4aa91ceac46108aa37c6db0b82bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc926547_7fe23e56",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/web_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-11T18:48:07Z",
+      "side": 1,
+      "message": "I misunderstood that comment by thinking you meant the SadTabMediator I had previously created, not the WebContentsMediator.\n\nI will move it there, the only problem is that TabView needs a dispatcher, and unless I refactor how the SadTabView is initialized there\u0027s no way to set SadTabView\u0027s dispatcher in the Coordinator and then display the correct SadTabView on the mediator. So a dispatcher needs to be passed down to the mediator, and I\u0027m not really sure if thats what we want. Though is tricky because is just using the WebState API as you mention. \n\nBoth options are not perfect, so let me know if you have a preference. I think I\u0027d rather keep it like this than passing down a dispatcher to the mediator.\nThe other option is to refactor SadTabView, but that kind of defeats the purpose of boxing.",
+      "parentUuid": "b00e0649_ddfdbb59",
+      "range": {
+        "startLine": 36,
+        "startChar": 29,
+        "endLine": 36,
+        "endChar": 52
+      },
+      "revId": "85f6daf801f4aa91ceac46108aa37c6db0b82bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
