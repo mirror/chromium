@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c40183eb_8e5a78ad",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-11T11:24:36Z",
+      "side": 1,
+      "message": "Nit:  if (!other_possible_passwords.empty()) {",
+      "range": {
+        "startLine": 547,
+        "startChar": 32,
+        "endLine": 547,
+        "endChar": 43
+      },
+      "revId": "0c59e180a29f482c6016c61173b91397b1937369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
