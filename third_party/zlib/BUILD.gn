@@ -71,8 +71,17 @@ static_library("zlib") {
     "zutil.h",
   ]
 
+  defines = [ ]
+
   if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
     sources += [ "x86.c" ]
+
+    defines += [ "ADLER32_SIMD" ]
+    if (is_win && !is_clang) {
+      defines += [ "__SSSE3__" ]
+    } else if (is_clang) {
+      cflags = [ "-mssse3" ]
+    }
   }
 
   configs -= [ "//build/config/compiler:chromium_code" ]
