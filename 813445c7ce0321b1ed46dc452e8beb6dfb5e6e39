@@ -52,6 +52,24 @@
       "revId": "813445c7ce0321b1ed46dc452e8beb6dfb5e6e39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc90a26c_8c61f2bb",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutFlexibleBox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-11T11:51:29Z",
+      "side": 1,
+      "message": "Yes, we remove the comment, now that the new grammar is enabled by default. However, the FIXME is still valid if it refers to https://crbug.com/722287",
+      "parentUuid": "a3ebaaaf_e4bd4aa2",
+      "revId": "813445c7ce0321b1ed46dc452e8beb6dfb5e6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
