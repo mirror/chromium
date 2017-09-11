@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d3bdd0d4_69151c84",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Oscillator/dezipper.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-11T17:40:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d047b90_d03405d7",
+      "range": {
+        "startLine": 87,
+        "startChar": 15,
+        "endLine": 87,
+        "endChar": 85
+      },
+      "revId": "dfe6fe5af0d6a45691c0be4ba967bb5ca772dc34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "137b9d4d_20ece775",
         "filename": "third_party/WebKit/LayoutTests/webaudio/Oscillator/dezipper.html",
         "patchSetId": 7
@@ -65,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aa67a590_6d1a6f0c",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Oscillator/dezipper.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-11T17:40:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "980b41ba_f7a4f435",
+      "revId": "dfe6fe5af0d6a45691c0be4ba967bb5ca772dc34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7322e625_ca12190a",
         "filename": "third_party/WebKit/LayoutTests/webaudio/Oscillator/dezipper.html",
         "patchSetId": 7
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "388f3558_57cd2950",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Oscillator/dezipper.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-11T17:40:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7322e625_ca12190a",
+      "range": {
+        "startLine": 290,
+        "startChar": 14,
+        "endLine": 290,
+        "endChar": 88
+      },
+      "revId": "dfe6fe5af0d6a45691c0be4ba967bb5ca772dc34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6677937d_1178f7b3",
         "filename": "third_party/WebKit/Source/modules/webaudio/OscillatorNode.cpp",
         "patchSetId": 7
@@ -108,6 +174,30 @@
       "revId": "dfe6fe5af0d6a45691c0be4ba967bb5ca772dc34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e284760_e801d6fb",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OscillatorNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-11T17:40:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6677937d_1178f7b3",
+      "range": {
+        "startLine": 187,
+        "startChar": 33,
+        "endLine": 187,
+        "endChar": 40
+      },
+      "revId": "dfe6fe5af0d6a45691c0be4ba967bb5ca772dc34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
