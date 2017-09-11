@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f1e6ac9_ab91bfc1",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/cursors.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-11T19:40:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e531ff2_3ac634ec",
+      "revId": "94b101722cbc84b8fd27b7bab1c780b6d0a0839f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04f61253_766a60bd",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/cursors.js",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "631c49fb_0db5669f",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/cursors.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-11T19:40:50Z",
+      "side": 1,
+      "message": "I need to skip nodes that don\u0027t have any word starts, since findNextNode() doesn\u0027t do that.",
+      "parentUuid": "04f61253_766a60bd",
+      "revId": "94b101722cbc84b8fd27b7bab1c780b6d0a0839f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0594f6fc_d6f4ca61",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/cursors.js",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-11T18:59:25Z",
       "side": 1,
       "message": "No curlies for one if liners.",
+      "revId": "94b101722cbc84b8fd27b7bab1c780b6d0a0839f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b931d130_dbefed6f",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/cursors.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-11T19:40:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0594f6fc_d6f4ca61",
       "revId": "94b101722cbc84b8fd27b7bab1c780b6d0a0839f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
