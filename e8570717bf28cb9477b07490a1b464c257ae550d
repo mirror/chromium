@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "759c152a_e4c2fecb",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4875,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-11T17:20:01Z",
+      "side": 1,
+      "message": "can you note that this refers to network devices, and maybe give an example.",
+      "revId": "e8570717bf28cb9477b07490a1b464c257ae550d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a136c4d_c757fdb7",
+        "filename": "chrome/browser/resources/chromeos/network_ui/network_ui.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-11T17:20:01Z",
+      "side": 1,
+      "message": "nit: I\u0027d either move this to cr_onc_types, or rename typedef so it\u0027s not part of CrOnc object.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 21
+      },
+      "revId": "e8570717bf28cb9477b07490a1b464c257ae550d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024fb422_ad41289d",
+        "filename": "chrome/browser/resources/chromeos/network_ui/network_ui.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-11T17:20:01Z",
+      "side": 1,
+      "message": "it would be nice to add a test for this (to cr_network_icon tests) if there isn\u0027t one already.\n\n(out of scope here, though)",
+      "range": {
+        "startLine": 121,
+        "startChar": 7,
+        "endLine": 121,
+        "endChar": 76
+      },
+      "revId": "e8570717bf28cb9477b07490a1b464c257ae550d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ccc89d_7b625e3a",
+        "filename": "chrome/browser/resources/chromeos/network_ui/network_ui.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-11T17:20:01Z",
+      "side": 1,
+      "message": "it might be cleaner to define a state type on CrNetworkIconElement and set it up here (for one, closure would complain if network icon starts depending on a property that\u0027s not in device state)",
+      "range": {
+        "startLine": 122,
+        "startChar": 24,
+        "endLine": 122,
+        "endChar": 67
+      },
+      "revId": "e8570717bf28cb9477b07490a1b464c257ae550d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad985c0e_b2ed1fbe",
+        "filename": "chrome/browser/resources/chromeos/network_ui/network_ui.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-11T17:20:01Z",
+      "side": 1,
+      "message": "the method would not strip _; it would strip {_ and _}.",
+      "range": {
+        "startLine": 201,
+        "startChar": 34,
+        "endLine": 201,
+        "endChar": 37
+      },
+      "revId": "e8570717bf28cb9477b07490a1b464c257ae550d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8b6784_56dc4410",
+        "filename": "chrome/browser/resources/chromeos/network_ui/network_ui.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-11T17:20:01Z",
+      "side": 1,
+      "message": "this might be more readable (you could event split this into separate functions for handling network services and devices):\n\nif (guid) {\n  switch(selectedId) {\n    case \u0027shill\u0027:\n      chrome.send(\u0027getShillNetworkProperties\u0027, [guid]);\n      break;\n    case \u0027state\u0027:\n      chrome.networkingPrivate.getState(guid, function(properties) {\n        showDetail(properties, chrome.runtime.lastError);\n      });\n      break;\n     case \u0027managed\u0027:\n       chrome.networkingPrivate.getManagedProperties(\n           guid, function(properties) {\n         showDetail(properties, chrome.runtime.lastError);\n       });\n       break;\n     default:\n       chrome.networkingPrivate.getProperties(guid, function(properties) {\n         showDetail(properties, chrome.runtime.lastError);\n       });\n    }\n  } else {\n    if (selectedId \u003d\u003d \u0027shill\u0027) {\n      chrome.networkingPrivate.getProperties(guid, function(properties) {\n          showDetail(properties, chrome.runtime.lastError);\n        });\n    } else {\n      showDetail(state, \u0027\u0027);\n    }\n      \n  }\n}",
+      "revId": "e8570717bf28cb9477b07490a1b464c257ae550d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89320b7_b25fc10f",
+        "filename": "chrome/browser/ui/webui/chromeos/network_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-11T17:20:01Z",
+      "side": 1,
+      "message": "nit: nl",
+      "revId": "e8570717bf28cb9477b07490a1b464c257ae550d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
