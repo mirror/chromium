@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c990ee0a_9001ca77",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-11T19:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "539ae11b_044f6038",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 14
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e2e5827_e41cc021",
         "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "583083b1_f7c51198",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-11T19:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e2e5827_e41cc021",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78e40a3b_f882e8cc",
         "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
         "patchSetId": 15
@@ -68,6 +116,30 @@
       "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd57a5fb_44cc721a",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-11T19:40:17Z",
+      "side": 1,
+      "message": "Obsolete. Going back to SlideAnimation now.",
+      "parentUuid": "78e40a3b_f882e8cc",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 19
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "5ef1b974_5395c2ec",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-11T19:40:17Z",
+      "side": 1,
+      "message": "I\u0027m using SlideAnimation now. This works on both Mac and Linux.",
+      "parentUuid": "b6be550e_d81d1d45",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 51
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8937cadf_46caaca0",
         "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
         "patchSetId": 15
@@ -237,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "89cb4c99_174ed073",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-11T19:40:17Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "8937cadf_46caaca0",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 19
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30a2f8ae_dfe3a950",
         "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
         "patchSetId": 15
@@ -257,6 +377,30 @@
       "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf2b375_e38cb5c9",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-11T19:40:17Z",
+      "side": 1,
+      "message": "Obsolete. We return in the block.",
+      "parentUuid": "30a2f8ae_dfe3a950",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 19
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -379,6 +523,30 @@
     },
     {
       "key": {
+        "uuid": "a39e57cb_8e6c025c",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-11T19:40:17Z",
+      "side": 1,
+      "message": "Going back to the SlideAnimation implementation :-|",
+      "parentUuid": "218bd538_8d3981ef",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 55
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16e67a66_cd84b3cc",
         "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.h",
         "patchSetId": 15
@@ -399,6 +567,30 @@
       "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95cfe50_f29e415b",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-11T19:40:17Z",
+      "side": 1,
+      "message": "According to the spec, we hide the indicator without animation once the ESC key is held for 1000ms, and we hide it with animation if the user releases the key before the 1000ms timeout.",
+      "parentUuid": "16e67a66_cd84b3cc",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 25
+      },
+      "revId": "20b9936af90a50cf5a15726cfd4ceec8f073fb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
