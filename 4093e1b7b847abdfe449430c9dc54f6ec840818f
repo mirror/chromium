@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66b40f68_5236b37e",
+        "filename": "media/gpu/v4l2_jpeg_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-11T01:35:27Z",
+      "side": 1,
+      "message": "This makes front() a nullptr and frees the job_record, while the previous code did not do so. A similar issue is introduced in some other locations in this file as well.",
+      "revId": "4093e1b7b847abdfe449430c9dc54f6ec840818f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3a2d98_212f80c7",
+        "filename": "media/gpu/v4l2_jpeg_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-11T01:35:27Z",
+      "side": 1,
+      "message": "job_record is null",
+      "revId": "4093e1b7b847abdfe449430c9dc54f6ec840818f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b30cce_53e76eed",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-11T01:35:27Z",
+      "side": 1,
+      "message": "picture is null",
+      "revId": "4093e1b7b847abdfe449430c9dc54f6ec840818f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
