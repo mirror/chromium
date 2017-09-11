@@ -231,6 +231,7 @@ void CrasUnifiedStream::Start(AudioSourceCallback* callback) {
 }
 
 void CrasUnifiedStream::Stop() {
+  LOG(ERROR) << "cras stream: stop...";
   if (!client_)
     return;
 
@@ -260,6 +261,7 @@ int CrasUnifiedStream::UnifiedCallback(cras_client* client,
                                        const timespec* input_ts,
                                        const timespec* output_ts,
                                        void* arg) {
+  LOG(ERROR) << "unified callback.......";
   CrasUnifiedStream* me = static_cast<CrasUnifiedStream*>(arg);
   return me->DispatchCallback(frames,
                               input_samples,
