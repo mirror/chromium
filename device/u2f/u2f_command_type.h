@@ -11,19 +11,25 @@ namespace device {
 
 // The type of a command that can be sent either to or from a U2F authenticator,
 // i.e., a request or a response.
-//
-// TODO(pkalinnikov): Merge BLE-specific commands to this type.
 enum class U2fCommandType : uint8_t {
+  UNDEFINED = 0x00,
+
   // PING command encapsulates arbitrary data. It is used both for requests, and
   // the corresponding responses containing the same data. The command is aimed
   // at checking the device's availability.
   CMD_PING = 0x81,
+
+  // KEEPALIVE is used only in responses from BLE authenticators.
+  CMD_KEEPALIVE = 0x82,
+
   // MSG command encapsulates a U2F raw message. It is used both for requests,
   // and the corresponding responses.
   CMD_MSG = 0x83,
+
   // INIT and WINK are specific to U2F over USB, used only as requests.
   CMD_INIT = 0x86,
   CMD_WINK = 0x88,
+
   // ERROR command is used as response only.
   CMD_ERROR = 0xBF,
 };
