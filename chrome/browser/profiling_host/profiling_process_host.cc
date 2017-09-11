@@ -66,15 +66,8 @@ void OnTraceUploadComplete(TraceCrashServiceUploader* uploader,
                            bool success,
                            const std::string& feedback);
 
-void UploadTraceToCrashServer(base::FilePath file_path,
+void UploadTraceToCrashServer(std::string file_contents,
                               std::string trigger_name) {
-  std::string file_contents;
-  if (!base::ReadFileToStringWithMaxSize(file_path, &file_contents,
-                                         kMaxTraceSizeUploadInBytes)) {
-    DLOG(ERROR) << "Cannot read trace file contents.";
-    return;
-  }
-
   base::Value rules_list(base::Value::Type::LIST);
   base::Value rule(base::Value::Type::DICTIONARY);
   rule.SetKey("rule", base::Value("MEMLOG"));
@@ -98,6 +91,23 @@ void UploadTraceToCrashServer(base::FilePath file_path,
                      std::move(metadata),
                      content::TraceUploader::UploadProgressCallback(),
                      base::Bind(&OnTraceUploadComplete, base::Owned(uploader)));
+}
+
+void ReadTraceForUpload(base::FilePath file_path, std::string trigger_name) {
+  std::string file_contents;
+  bool success = base::ReadFileToStringWithMaxSize(file_path, &file_contents,
+                                                   kMaxTraceSizeUploadInBytes);
+  base::DeleteFile(file_path, false);
+
+  if (!success) {
+    DLOG(ERROR) << "Cannot read trace file contents.";
+    return;
+  }
+
+  content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::UI)
+      ->PostTask(FROM_HERE, base::BindOnce(&UploadTraceToCrashServer,
+                                           std::move(file_contents),
+                                           std::move(trigger_name)));
 }
 
 void OnTraceUploadComplete(TraceCrashServiceUploader* uploader,
@@ -333,7 +343,7 @@ void ProfilingProcessHost::ConfigureBackgroundProfilingTriggers() {
 }
 
 void ProfilingProcessHost::RequestProcessDump(base::ProcessId pid,
-                                              const base::FilePath& dest) {
+                                              base::FilePath dest) {
   if (!connector_) {
     DLOG(ERROR)
         << "Requesting process dump when profiling process hasn't started.";
@@ -344,8 +354,8 @@ void ProfilingProcessHost::RequestProcessDump(base::ProcessId pid,
   base::PostTaskWithTraits(
       FROM_HERE, {base::TaskPriority::USER_VISIBLE, base::MayBlock()},
       base::BindOnce(&ProfilingProcessHost::GetOutputFileOnBlockingThread,
-                     base::Unretained(this), pid, dest, kNoTriggerName,
-                     kNoUpload));
+                     base::Unretained(this), pid, std::move(dest),
+                     kNoTriggerName, kNoUpload));
 }
 
 void ProfilingProcessHost::RequestProcessReport(base::ProcessId pid,
@@ -356,17 +366,11 @@ void ProfilingProcessHost::RequestProcessReport(base::ProcessId pid,
     return;
   }
 
-  base::FilePath output_path;
-  if (!CreateTemporaryFile(&output_path)) {
-    DLOG(ERROR) << "Cannot create temporary file for memory dump.";
-    return;
-  }
-
   const bool kUpload = true;
   base::PostTaskWithTraits(
       FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
       base::BindOnce(&ProfilingProcessHost::GetOutputFileOnBlockingThread,
-                     base::Unretained(this), pid, std::move(output_path),
+                     base::Unretained(this), pid, base::FilePath(),
                      std::move(trigger_name), kUpload));
 }
 
@@ -408,9 +412,16 @@ void ProfilingProcessHost::LaunchAsService() {
 
 void ProfilingProcessHost::GetOutputFileOnBlockingThread(
     base::ProcessId pid,
-    const base::FilePath& dest,
+    base::FilePath dest,
     std::string trigger_name,
     bool upload) {
+  if (dest.empty()) {
+    if (!CreateTemporaryFile(&dest)) {
+      DLOG(ERROR) << "Cannot create temporary file for memory dump.";
+      return;
+    }
+  }
+
   base::File file(dest,
                   base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
   content::BrowserThread::PostTask(
@@ -448,13 +459,10 @@ void ProfilingProcessHost::OnProcessDumpComplete(base::FilePath file_path,
   }
 
   if (upload) {
-    UploadTraceToCrashServer(file_path, trigger_name);
-
-    // Uploaded file is a temporary file and must be deleted.
     base::PostTaskWithTraits(
         FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-        base::BindOnce(base::IgnoreResult(&base::DeleteFile), file_path,
-                       false));
+        base::BindOnce(&ReadTraceForUpload, std::move(file_path),
+                       std::move(trigger_name)));
   }
 }
 
