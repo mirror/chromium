@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "224fccf1_b0b1bb2d",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/BiquadFilter/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T17:00:43Z",
+      "side": 1,
+      "message": "How about `${prefix} Output from ${paramName}...`? If this clang still gives up the lemon, we should just leave it as-is.",
+      "parentUuid": "fcabe3cf_ed938ec0",
+      "range": {
+        "startLine": 268,
+        "startChar": 18,
+        "endLine": 270,
+        "endChar": 70
+      },
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b30b92f9_de6dce27",
         "filename": "third_party/WebKit/Source/modules/webaudio/BiquadDSPKernel.cpp",
         "patchSetId": 6
@@ -294,6 +318,30 @@
       "side": 1,
       "message": "Yes and no. What this does is basically check to see if the new value is different from the previous value and sets filter_coefficients_dirty_ to be true if so.  Then in UpdateCoefficientsIfNecessary(), filter_coefficients_dirty_ is checked.  If they\u0027re dirty, we update immediately to the new value instead of using SmoothedValue() to get a smoothed value.\n\nPerhaps I should rewwrite this and make the biquad filter keep track of the previous set value.\n\nI was kind of thinking this would be done when the Smooth() methods are removed.",
       "parentUuid": "a9eebb4e_754e0162",
+      "range": {
+        "startLine": 92,
+        "startChar": 37,
+        "endLine": 92,
+        "endChar": 46
+      },
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ef3b61a_6e5a380a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BiquadProcessor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T17:00:43Z",
+      "side": 1,
+      "message": "I would say no to rewriting it in this CL. We should land this and try to bring the optimization/refactoring in the future CL.",
+      "parentUuid": "55e8be89_8287d24a",
       "range": {
         "startLine": 92,
         "startChar": 37,
