@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15795133_bd6640a2",
+        "filename": "third_party/crc32c/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-11T20:39:11Z",
+      "side": 1,
+      "message": "nit: I think you have to remove the line completely, because I use #ifdef\u0027s (not #if\u0027s) everywhere.",
+      "revId": "91eaed9716819c858d7679486d901c686fb2dc93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
