@@ -87,6 +87,24 @@
       "revId": "7f333b106f7691a99ba5d83bfc5b6e83ea07ba7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec2d3fc_f0ef0b1b",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-11T01:17:20Z",
+      "side": 1,
+      "message": "For what it\u0027s worth, the generated WebIDL dictionary code will accept null and undefined, but just leave the provided dictionary alone (i.e. with its default values).",
+      "parentUuid": "5124fb19_0786bf5b",
+      "revId": "7f333b106f7691a99ba5d83bfc5b6e83ea07ba7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
