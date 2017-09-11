@@ -54,6 +54,8 @@ class CONTENT_EXPORT NavigationURLLoaderDelegate {
       bool is_stream,
       mojom::URLLoaderFactoryPtrInfo subresource_url_loader_factory_info) = 0;
 
+  virtual void OnResponseCompleted() = 0;
+
   // Called if the request fails before receving a response. |net_error| is a
   // network error code for the failure. |has_stale_copy_in_cache| is true if
   // there is a stale copy of the unreachable page in cache. |ssl_info| is the

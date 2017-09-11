@@ -108,6 +108,12 @@ void NavigationURLLoaderImpl::NotifyResponseStarted(
       ssl_status, std::move(navigation_data), request_id, is_download,
       is_stream, mojom::URLLoaderFactoryPtrInfo());
 }
+
+void NavigationURLLoaderImpl::NotifyResponseCompleted() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  delegate_->OnResponseCompleted();
+}
+
 void NavigationURLLoaderImpl::NotifyRequestFailed(
     bool in_cache,
     int net_error,
