@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "641691f8_08ef21cf",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-11T09:25:58Z",
+      "side": 1,
+      "message": "This isn\u0027t mentioned in the description. Did enter not work to start voice search before?!\nAlso should it be keydown rather than keyup? That\u0027s what we use for submission below.",
+      "range": {
+        "startLine": 288,
+        "startChar": 4,
+        "endLine": 288,
+        "endChar": 0
+      },
+      "revId": "aa780906f448d58631b9c9adf77657ea18c065de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
