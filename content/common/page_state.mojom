@@ -1,0 +1,87 @@
+module content.mojom;
+
+import "mojo/common/string16.mojom";
+
+struct FileSystem {
+  mojo.common.mojom.String16 filesystem_url;
+  int64 offset;
+  int64 length;
+  double modification_time;
+};
+
+struct File {
+  mojo.common.mojom.String16 path;
+  int64 offset;
+  int64 length;
+  double modification_time;
+};
+
+union Element {
+  string blob;
+  array<uint8> bytes;
+  File file;
+  FileSystem file_system;
+};
+
+struct RequestBody {
+  array<Element> elements;
+  int64 identifier;
+  bool contains_sensitive_info;
+};
+
+struct HttpBody {
+  mojo.common.mojom.String16 http_content_type;
+  RequestBody? request_body;
+  bool contains_passwords = false;
+};
+
+struct Point {
+  int32 x = 0;
+  int32 y = 0;
+};
+
+struct PointF {
+  double x = 0.0;
+  double y = 0.0;
+};
+
+enum ScrollRestorationType {
+  AUTO = 0,
+  MANUAL = 1
+};
+
+enum WebReferrerPolicy {
+  Always = 0,
+  Default = 1,
+  NoReferrerWhenDowngrade = 2,
+  Never = 3,
+  Origin = 4,
+  OriginWhenCrossOrigin = 5,
+  NoReferrerWhenDowngradeOriginWhenCrossOrigin = 6,
+  SameOrigin = 7,
+  StrictOrigin = 8
+};
+
+struct FrameState {
+  mojo.common.mojom.String16 http_content_type;
+  mojo.common.mojom.String16 url_string;
+  mojo.common.mojom.String16 referrer;
+  mojo.common.mojom.String16 target;
+  mojo.common.mojom.String16 state_object;
+  array<mojo.common.mojom.String16> document_state;
+  ScrollRestorationType scroll_restoration_type;
+  bool did_save_scroll_or_scale_state;
+  PointF visual_viewport_scroll_offset;
+  Point scroll_offset;
+  int64 item_sequence_number;
+  int64 document_sequence_number;
+  double page_scale_factor;
+  WebReferrerPolicy referrer_policy;
+  HttpBody http_body;
+  array<FrameState> children;
+};
+
+struct PageState {
+  array<mojo.common.mojom.String16> referenced_files;
+  FrameState top;
+};

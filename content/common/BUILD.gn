@@ -625,6 +625,7 @@ mojom("mojo_bindings") {
     "memory_coordinator.mojom",
     "message_port.mojom",
     "native_types.mojom",
+    "page_state.mojom",
     "push_messaging.mojom",
     "render_frame_message_filter.mojom",
     "render_message_filter.mojom",
