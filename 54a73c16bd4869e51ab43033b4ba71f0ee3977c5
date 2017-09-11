@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9009f8d0_6b1df60c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-09-11T17:34:00Z",
+      "side": 1,
+      "message": "patternMatchedIndex\notherwise patternMatchedLength \u003d\u003d\u003d 0 would be a falsy value.",
+      "range": {
+        "startLine": 1108,
+        "startChar": 9,
+        "endLine": 1108,
+        "endChar": 29
+      },
+      "revId": "54a73c16bd4869e51ab43033b4ba71f0ee3977c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
