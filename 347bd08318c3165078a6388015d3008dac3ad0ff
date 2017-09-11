@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a52138f5_f5ab07a4",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-11T13:43:04Z",
+      "side": 1,
+      "message": "There is no need to pollute the production code with this testing method. If a tests sets a different delay, it should know the value and just use it.",
+      "range": {
+        "startLine": 353,
+        "startChar": 16,
+        "endLine": 353,
+        "endChar": 60
+      },
+      "revId": "347bd08318c3165078a6388015d3008dac3ad0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
