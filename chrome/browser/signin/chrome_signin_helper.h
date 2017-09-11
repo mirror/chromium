@@ -7,6 +7,7 @@
 
 #include <string>
 
+#include "base/time/time.h"
 #include "content/public/browser/resource_request_info.h"
 
 namespace net {
@@ -21,6 +22,11 @@ class ProfileIOData;
 // profile, so that Gaia can modify its response accordingly and let Chrome
 // handle signin accordingly.
 namespace signin {
+
+// When Dice is enabled, the AccountReconcilor is blocked for a short delay
+// after sending requests to Gaia. Exposed for testing.
+void SetDiceAccountReconcilorBlockDelayForTesting(int delay_ms);
+base::TimeDelta GetDiceAccountReconcilorBlockDelayForTesting();
 
 // Adds an account consistency header to Gaia requests from a connected profile,
 // with the exception of requests from gaia webview. Must be called on IO
