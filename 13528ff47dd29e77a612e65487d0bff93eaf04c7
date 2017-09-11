@@ -16,6 +16,24 @@
       "revId": "13528ff47dd29e77a612e65487d0bff93eaf04c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6de8a8_7e6dfd11",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-11T18:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b07708a3_98df25d8",
+      "revId": "13528ff47dd29e77a612e65487d0bff93eaf04c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
