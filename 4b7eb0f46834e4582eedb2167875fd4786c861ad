@@ -16,6 +16,24 @@
       "revId": "4b7eb0f46834e4582eedb2167875fd4786c861ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3804bdbd_3705ee87",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-11T08:53:48Z",
+      "side": 1,
+      "message": "the formatting seems to depend on whether there is a comma after \"false\". I added one to make it consistent.",
+      "parentUuid": "ae1a10c6_cdd026d7",
+      "revId": "4b7eb0f46834e4582eedb2167875fd4786c861ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
