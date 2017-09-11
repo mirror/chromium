@@ -36,12 +36,29 @@ from name_utilities import lower_first, upper_camel_case
 import template_expander
 
 
-def apply_property_naming_defaults(property_):
-    def set_if_none(property_, key, value):
-        if property_[key] is None:
-            property_[key] = value
+def set_if_none(property_, key, value):
+    if property_[key] is None:
+        property_[key] = value
 
+
+def apply_field_naming_defaults(field):
+    upper_camel = upper_camel_case(field['name'])
+    set_if_none(field, 'name_for_methods', upper_camel.replace('Webkit', ''))
+    name = field['name_for_methods']
+    simple_type_name = str(field['type_name']).split('::')[-1]
+    set_if_none(field, 'type_name', 'E' + name)
+    set_if_none(field, 'getter', name if simple_type_name != name else 'Get' + name)
+    set_if_none(field, 'setter', 'Set' + name)
+    set_if_none(field, 'inherited', False)
+    set_if_none(field, 'initial', 'Initial' + name)
+    if 'css_property' in field:
+        field['should_declare_functions'] = field['css_property']['should_declare_functions']
+
+
+def apply_property_naming_defaults(property_):
     # TODO(meade): Delete this once all methods are moved to CSSPropertyAPIs.
+    # TODO(shend): Use name_utilities for manipulating names.
+    # TODO(shend): Rearrange the code below to separate assignment and set_if_none
     upper_camel = upper_camel_case(property_['name'])
     set_if_none(
         property_, 'name_for_methods', upper_camel.replace('Webkit', ''))
@@ -83,8 +100,11 @@ class StyleBuilderWriter(css_properties.CSSProperties):
         'lower_first': lower_first,
     }
 
-    def __init__(self, json5_file_path):
-        super(StyleBuilderWriter, self).__init__(json5_file_path)
+    def __init__(self, json5_file_path, **extra_paramaters):
+        if 'extra_field_path' not in extra_paramaters:
+            extra_paramaters['extra_field_path'] = json5_file_path[1]
+
+        super(StyleBuilderWriter, self).__init__([json5_file_path[0]], **extra_paramaters)
         self._outputs = {('StyleBuilderFunctions.h'): self.generate_style_builder_functions_h,
                          ('StyleBuilderFunctions.cpp'): self.generate_style_builder_functions_cpp,
                          ('StyleBuilder.cpp'): self.generate_style_builder,
@@ -92,6 +112,9 @@ class StyleBuilderWriter(css_properties.CSSProperties):
 
         for property in self._properties.values():
             apply_property_naming_defaults(property)
+
+        for field_ in self._fields.values():
+            apply_field_naming_defaults(field_)
 
     @template_expander.use_jinja('templates/StyleBuilderFunctions.h.tmpl',
                                  filters=filters)
