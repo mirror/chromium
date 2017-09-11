@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb62e191_44870847",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-11T04:21:52Z",
+      "side": 1,
+      "message": "AFAICT, |include_app_name| means the BROWSER name (e.g., \"$TITLE - Google Chrome\"), not the app name. However weirdly it internally checks if it\u0027s an app window and if so, it ignores this setting. So it probably doesn\u0027t matter either way, but I think setting it to \"true\" is wrong (we do NOT want the Browser title here).",
+      "range": {
+        "startLine": 1564,
+        "startChar": 49,
+        "endLine": 1564,
+        "endChar": 53
+      },
+      "revId": "99e0ce0c90334bb94432fda837060d3871ffd655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1acddd_b5c65b67",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1566,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-11T04:21:52Z",
+      "side": 1,
+      "message": "Nit: Blank line after return (i.e., after the \"}\").",
+      "revId": "99e0ce0c90334bb94432fda837060d3871ffd655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
