@@ -118,14 +118,13 @@ class EmptyDataHandle final : public WebDataConsumerHandle {
 static const int kMaxCORSRedirects = 20;
 
 void DocumentThreadableLoader::LoadResourceSynchronously(
-    Document& document,
+    ThreadableLoadingContext& loading_context,
     const ResourceRequest& request,
     ThreadableLoaderClient& client,
     const ThreadableLoaderOptions& options,
     const ResourceLoaderOptions& resource_loader_options) {
-  (new DocumentThreadableLoader(*ThreadableLoadingContext::Create(document),
-                                &client, kLoadSynchronously, options,
-                                resource_loader_options))
+  (new DocumentThreadableLoader(loading_context, &client, kLoadSynchronously,
+                                options, resource_loader_options))
       ->Start(request);
 }
 
