@@ -290,6 +290,10 @@ void PopulateAXState(arc::mojom::AccessibilityNodeInfoData* node,
     out_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
                               ui::AX_RESTRICTION_DISABLED);
   }
+
+  if (!GetBooleanProperty(node, AXBooleanProperty::VISIBLE_TO_USER)) {
+    out_data->AddState(ui::AX_STATE_INVISIBLE);
+  }
 }
 
 }  // namespace
@@ -397,6 +401,14 @@ void AXTreeSourceArc::Focus(aura::Window* window) {
   if (!view->Contains(focus_stealer_.get()))
     view->AddChildView(focus_stealer_.get());
   focus_stealer_->Steal();
+}
+
+int32_t AXTreeSourceArc::GetAXTreeId() const {
+  return tree_id();
+}
+
+int32_t AXTreeSourceArc::GetRootNodeId() const {
+  return root_id_;
 }
 
 bool AXTreeSourceArc::GetTreeData(ui::AXTreeData* data) const {

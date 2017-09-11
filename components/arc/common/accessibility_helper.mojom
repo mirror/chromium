@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Next MinVersion: 6
+// Next MinVersion: 7
 
 module arc.mojom;
 
@@ -251,6 +251,9 @@ struct AccessibilityEventData {
   AccessibilityEventType event_type;
   int32 source_id;
   array<AccessibilityNodeInfoData> node_data;
+
+  // notification_key is set only for an event on an Android notification.
+  [MinVersion=6]string? notification_key;
 };
 
 // AccessibilityActionData is a struct to contain info of AccessibilityAction in
@@ -263,6 +266,9 @@ struct AccessibilityActionData {
 
   // custom_action_id must be set if action_type is CUSTOM_ACTION.
   int32 custom_action_id;
+
+  // Root node id where the action is performed on.
+  [MinVersion=6]int32 root_node_id;
 };
 
 // Next method ID: 2
