@@ -324,7 +324,7 @@ IN_PROC_BROWSER_TEST_F(NotificationsApiTest, TestGetPermissionLevel) {
     std::unique_ptr<base::Value> result(utils::RunFunctionAndReturnSingleResult(
         notification_function.get(), "[]", browser(), utils::NONE));
 
-    EXPECT_EQ(base::Value::Type::STRING, result->GetType());
+    EXPECT_EQ(base::Value::Type::STRING, result->type());
     std::string permission_level;
     EXPECT_TRUE(result->GetAsString(&permission_level));
     EXPECT_EQ("granted", permission_level);
@@ -347,7 +347,7 @@ IN_PROC_BROWSER_TEST_F(NotificationsApiTest, TestGetPermissionLevel) {
     std::unique_ptr<base::Value> result(utils::RunFunctionAndReturnSingleResult(
         notification_function.get(), "[]", browser(), utils::NONE));
 
-    EXPECT_EQ(base::Value::Type::STRING, result->GetType());
+    EXPECT_EQ(base::Value::Type::STRING, result->type());
     std::string permission_level;
     EXPECT_TRUE(result->GetAsString(&permission_level));
     EXPECT_EQ("denied", permission_level);

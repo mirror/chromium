@@ -88,8 +88,8 @@ struct DictionaryIdComparator {
       : collator_(collator) {}
 
   bool operator()(const base::Value& a, const base::Value& b) const {
-    DCHECK(a.GetType() == base::Value::Type::DICTIONARY);
-    DCHECK(b.GetType() == base::Value::Type::DICTIONARY);
+    DCHECK(a.is_dict());
+    DCHECK(b.is_dict());
     const base::DictionaryValue* a_dict;
     bool a_is_dictionary = a.GetAsDictionary(&a_dict);
     DCHECK(a_is_dictionary);

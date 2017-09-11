@@ -554,7 +554,7 @@ class IdentityGetAccountsFunctionTest : public IdentityTestWithSignin {
         if (info.get())
           msg << info->id << " ";
         else
-          msg << result << "<-" << result.GetType() << " ";
+          msg << result << "<-" << result.type() << " ";
       }
     }
 
