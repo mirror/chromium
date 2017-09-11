@@ -11,6 +11,10 @@
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 
+namespace tracked_objects {
+class Location;
+}
+
 namespace base {
 
 // ThreadTaskRunnerHandle stores a reference to a thread's TaskRunner
@@ -22,6 +26,9 @@ class BASE_EXPORT ThreadTaskRunnerHandle {
  public:
   // Gets the SingleThreadTaskRunner for the current thread.
   static scoped_refptr<SingleThreadTaskRunner> Get();
+
+  static scoped_refptr<SingleThreadTaskRunner> Get(
+      const tracked_objects::Location& from_here);
 
   // Returns true if the SingleThreadTaskRunner is already created for
   // the current thread.

@@ -226,6 +226,8 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
   bool PostNonNestableDelayedTask(const tracked_objects::Location& from_here,
                                   base::OnceClosure task,
                                   base::TimeDelta delay) override;
+  scoped_refptr<base::SingleThreadTaskRunner> Clone(
+      const tracked_objects::Location& from_here) override;
 
  protected:
   explicit TaskQueue(std::unique_ptr<internal::TaskQueueImpl> impl);

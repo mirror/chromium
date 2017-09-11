@@ -32,6 +32,12 @@ scoped_refptr<SingleThreadTaskRunner> ThreadTaskRunnerHandle::Get() {
   return current->task_runner_;
 }
 
+scoped_refptr<SingleThreadTaskRunner> ThreadTaskRunnerHandle::Get(
+    const tracked_objects::Location& from_here) {
+  scoped_refptr<SingleThreadTaskRunner> task_runner = Get();
+  return task_runner ? task_runner->Clone(from_here) : nullptr;
+}
+
 // static
 bool ThreadTaskRunnerHandle::IsSet() {
   return !!lazy_tls_ptr.Pointer()->Get();

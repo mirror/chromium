@@ -41,6 +41,52 @@ bool TaskQueue::PostNonNestableDelayedTask(
   return impl_->PostNonNestableDelayedTask(from_here, std::move(task), delay);
 }
 
+namespace {
+
+class SingleThreadTaskRunnerWrapper : public base::SingleThreadTaskRunner {
+ public:
+  SingleThreadTaskRunnerWrapper(scoped_refptr<TaskQueue> task_queue,
+                                const tracked_objects::Location& location)
+      : task_queue_(task_queue), location_(location) {}
+
+  bool PostNonNestableDelayedTask(const tracked_objects::Location& from_here,
+                                  base::OnceClosure task,
+                                  base::TimeDelta delay) override {
+    return task_queue_->PostNonNestableDelayedTask(from_here, std::move(task),
+                                                   delay);
+  }
+
+  bool PostDelayedTask(const tracked_objects::Location& from_here,
+                       base::OnceClosure task,
+                       base::TimeDelta delay) override {
+    return task_queue_->PostDelayedTask(from_here, std::move(task), delay);
+  }
+
+  bool RunsTasksInCurrentSequence() const override {
+    return task_queue_->RunsTasksInCurrentSequence();
+  }
+
+  scoped_refptr<base::SingleThreadTaskRunner> Clone(
+      const tracked_objects::Location& from_here) {
+    return new SingleThreadTaskRunnerWrapper(task_queue_, from_here);
+  }
+
+ private:
+  ~SingleThreadTaskRunnerWrapper() override {}
+
+  scoped_refptr<TaskQueue> task_queue_;
+  tracked_objects::Location location_;
+
+  DISALLOW_COPY_AND_ASSIGN(SingleThreadTaskRunnerWrapper);
+};
+
+}  // namespace
+
+scoped_refptr<base::SingleThreadTaskRunner> TaskQueue::Clone(
+    const tracked_objects::Location& from_here) {
+  return new SingleThreadTaskRunnerWrapper(this, from_here);
+}
+
 std::unique_ptr<TaskQueue::QueueEnabledVoter>
 TaskQueue::CreateQueueEnabledVoter() {
   return impl_->CreateQueueEnabledVoter(this);

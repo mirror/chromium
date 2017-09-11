@@ -8,6 +8,10 @@
 #include "base/base_export.h"
 #include "base/sequenced_task_runner.h"
 
+namespace tracked_objects {
+class Location;
+}
+
 namespace base {
 
 // A SingleThreadTaskRunner is a SequencedTaskRunner with one more
@@ -26,6 +30,13 @@ class BASE_EXPORT SingleThreadTaskRunner : public SequencedTaskRunner {
  public:
   // A more explicit alias to RunsTasksInCurrentSequence().
   bool BelongsToCurrentThread() const { return RunsTasksInCurrentSequence(); }
+
+  // A helper method to save metadata from ThreadTaskRunnerHandle::Get.
+  // Subclasses might return a new SingleThreadTaskRunner object
+  // containing the captured metadata.
+  // Returns the same object by default.
+  virtual scoped_refptr<SingleThreadTaskRunner> Clone(
+      const tracked_objects::Location& from_here);
 
  protected:
   ~SingleThreadTaskRunner() override {}
