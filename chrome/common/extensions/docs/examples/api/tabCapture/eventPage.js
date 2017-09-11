@@ -17,8 +17,8 @@ chrome.browserAction.onClicked.addListener(function(tab) {
          // to be of any arbitrary size.
          minWidth: 16,
          minHeight: 9,
-         maxWidth: 854,
-         maxHeight: 480,
+         maxWidth: 320,
+         maxHeight: 180,
          maxFrameRate: 60,  // Note: Frame rate is variable (0 <= x <= 60).
        },
      },
