@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad3cbf7b_f8b112f7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-09-11T23:59:34Z",
+      "side": 1,
+      "message": "lol, I forgot about this one, should have added this test to ignore list for my script.\nDone",
+      "parentUuid": "f8ed3e10_444fb0b2",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 27
+      },
+      "revId": "bbdf0b89f288385966555c83e74513517fcb17e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46af5a9b_44ac3de4",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/photo_picker/PhotoPickerDialogTest.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-11T23:46:23Z",
       "side": 1,
       "message": "Did these used to be on ChromeActivityTestCaseBase?",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 2
+      },
+      "revId": "bbdf0b89f288385966555c83e74513517fcb17e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a045a072_dfce73ba",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/photo_picker/PhotoPickerDialogTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-09-11T23:59:34Z",
+      "side": 1,
+      "message": "Yes, https://cs.chromium.org/chromium/src/chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestCaseBase.java?l\u003d35",
+      "parentUuid": "46af5a9b_44ac3de4",
       "range": {
         "startLine": 45,
         "startChar": 0,
