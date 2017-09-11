@@ -16,6 +16,24 @@
       "revId": "f5e56d285a855dd3184d7b7766f2829f6da74ee6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98518bb1_1bc0987e",
+        "filename": "content/common/sandbox_init_mac.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-11T21:00:44Z",
+      "side": 1,
+      "message": "Sure.  I don\u0027t think we can leave it unset if we get a true return, but can\u0027t hurt.",
+      "parentUuid": "73e31f31_fc61319a",
+      "revId": "f5e56d285a855dd3184d7b7766f2829f6da74ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
