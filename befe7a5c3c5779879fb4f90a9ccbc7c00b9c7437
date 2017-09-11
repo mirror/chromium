@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5da35b49_6eddd8d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-11T23:54:04Z",
+      "side": 1,
+      "message": "The JavaDocs say:\n\n\"To support smooth scrolling, you must override smoothScrollToPosition(RecyclerView, State, int) and create a RecyclerView.SmoothScroller.\"\n\n\"RecyclerView.LayoutManager is responsible for creating the actual scroll action. If you want to provide a custom smooth scroll logic, override smoothScrollToPosition(RecyclerView, State, int) in your LayoutManager.\"\n\n\nDoes tapping on the currently selected icon just jump the content to the top instead of scrolling? What happens if you use #scrollToPosition() instead?",
+      "range": {
+        "startLine": 433,
+        "startChar": 22,
+        "endLine": 433,
+        "endChar": 44
+      },
+      "revId": "befe7a5c3c5779879fb4f90a9ccbc7c00b9c7437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37cd055_680d3b96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-11T23:54:04Z",
+      "side": 1,
+      "message": "Could this be hard-coded to 0 instead of RecyclerView#getTop()?",
+      "range": {
+        "startLine": 433,
+        "startChar": 45,
+        "endLine": 433,
+        "endChar": 67
+      },
+      "revId": "befe7a5c3c5779879fb4f90a9ccbc7c00b9c7437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
