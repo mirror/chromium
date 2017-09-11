@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "39f56032_041b4a0e",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-09-11T13:28:13Z",
+      "side": 1,
+      "message": "Alright, I figured it would be on the IO thread if in a separate process. It it\u0027s going to be on the main thread, this makes sense.",
+      "parentUuid": "b000db43_538ce01d",
+      "revId": "557ab3d9f9d5175d4a30eb71b2c8b94d55dd6494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f9f6618_8eebcd3c",
         "filename": "media/audio/audio_system_impl_unittest.cc",
         "patchSetId": 3
