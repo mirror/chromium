@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "085fd6ab_45248881",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-11T23:55:53Z",
+      "side": 1,
+      "message": "Hmmmm this is way more complex than what I had in mind :(... I still think a CAS loop which yields is simple and gets the job done (can set a stop_accepting_tasks_ AtomicFlag to make sure it doesn\u0027t livelock).\n\nI\u0027m not saying we should go out of our way to support the old behaviour; just that we should keep the status quo and I think my proposal, same as before, is a good in between (allows removal of the broad RW-lock API while keeping current desired behaviour).\n\nAnd again, I\u0027m not saying I agree with the current behaviour either, just that I\u0027m not comfortable with changing it in a migration/removal CL which should be a no-op (nor do I think it\u0027s worth spending any time on after this CL unless it blocks something else).",
+      "parentUuid": "a56f2b3e_1145c42a",
+      "revId": "42e020db8d57ca82f293fac616eb8f66ac614796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2001a8d_3b1bb325",
         "filename": "base/message_loop/incoming_task_queue.cc",
         "patchSetId": 6
