@@ -16,6 +16,24 @@
       "revId": "efd9b8c990ee825f73712550c78db4289ba0a988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed3cdd4_afbd589b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 5116,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-11T15:22:59Z",
+      "side": 1,
+      "message": "-printTab was not receiving the webState and does the following:\n\n  - (void)printTab {\n    Tab* currentTab \u003d [_model currentTab];\n    ...\n\nSo the limitation was there, just implicit.",
+      "parentUuid": "2e929982_98b4aa1b",
+      "revId": "efd9b8c990ee825f73712550c78db4289ba0a988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
