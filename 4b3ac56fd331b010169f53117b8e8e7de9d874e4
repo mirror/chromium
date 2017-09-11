@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "4f2b63e6_2efad88c",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-11T04:16:18Z",
+      "side": 1,
+      "message": "AddToHomescreenDataFetcher seems to know too much about InstallableManager\u0027s implementation here, if it needs to trigger an installability check in order to help InstallableManager collect metrics properly.  It looks like it is also assuming that if !is_waiting_for_manifest, then InstallableManager doesn\u0027t need this assistance. This also seems like too much knowledge.\n\nIs there some other way to trigger this installable check that doesn\u0027t require AddToHomescreenDataFetcher to know about InstallableManager internals?",
+      "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7554af_d172fe1f",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-11T04:16:18Z",
+      "side": 1,
+      "message": "Do you need to call metrics_.Start() here (or somewhere, at least)?",
+      "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a7154fb_b70ba2fd",
         "filename": "chrome/browser/installable/installable_metrics.cc",
         "patchSetId": 6
@@ -30,6 +64,40 @@
       "writtenOn": "2017-09-08T06:51:00Z",
       "side": 1,
       "message": "What about:\n\n  if (check_passed)\n    WriteMetricsAndResetCounts(\n        InstallabilityCheckStatus::IN_PROGRESS_PROGRESSIVE_WEB_APP,\n        AddToHomescreenTimeoutStatus::TIMEOUT_MANIFEST_FETCH_PROGRESSIVE_WEB_APP,\n        AddToHomescreenTimeoutStatus::TIMEOUT_INSTALLABILITY_CHECK_PROGRESSIVE_WEB_APP);\n  } else {\n    WriteMetricsAndResetCounts(\n        InstallabilityCheckStatus::IN_PROGRESS_NON_PROGRESSIVE_WEB_APP,\n        AddToHomescreenTimeoutStatus::TIMEOUT_MANIFEST_FETCH_NON_PROGRESSIVE_WEB_APP,\n        AddToHomescreenTimeoutStatus::TIMEOUT_INSTALLABILITY_CHECK_NON_PROGRESSIVE_WEB_APP);\n\n  }\n\npros:\n  * it\u0027s shorter.\n  * you can easily see which statuses are used together (i.e. it\u0027s all PROGRESSIVE or all NON_PROGRESSIVE).\n  * not so many variables to keep track of.\ncons:\n  * it\u0027s not as obvious that the same function is called in both cases (WriteMetricsAndResetCounts) (but since they are called close together, it\u0027s pretty easy to see by eyeballing it).",
+      "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643161d2_62f8d43f",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-11T04:16:18Z",
+      "side": 1,
+      "message": "Is it possible that Start() might be called after some of the accumulators (e.g. menu_open_count) have been  incremented?  Might that attribute those counts to the NOT_COMPLETED bucket when they should be attributed to the NOT_STARTED bucket?\n\nAlso, it\u0027s a bit weird that counts would be attributed to IN_PROGRESS_PROGRESSIVE_WEB_APP or IN_PROGRESS_NOT_PROGRESSIVE_WEB_APP if a check completes (Resolve is called), but NOT_COMPLETED if no check completes. Is it accurate to say that NOT_COMPLETED could be named IN_PROGRESS_UNKNOWN?  If so, is it possible to rename that (or add a comment explaining the name)?",
+      "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b1df1af_5b9deb50",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-11T04:16:18Z",
+      "side": 1,
+      "message": "Nit: rather than have Flush do two things (write out queued metrics and reset the state), I would just have it write out queued metrics, because:\n\n1. It gives callers the flexibility to call Flush whenever and however many times they want.\n2. Flush duplicates the functionality of the constructor somewhat (by setting recorder_ to a new AccumulatingRecorder).\n3. It adds an extra state transition (from Direct back to Accumulating), which makes it a little harder to reason about (it\u0027s a simple class now, so that\u0027s not such a big deal, but who knows what the future will hold).\n\nIf the caller wants to write out queued metrics and reset the state, they could call Flush and then Create a new InstallableMetrics.\n\nFeel free to ignore.",
       "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
