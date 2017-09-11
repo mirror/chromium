@@ -34,9 +34,7 @@ void ShellAccessTokenStore::LoadAccessTokens(
 
 void ShellAccessTokenStore::GetRequestContextOnUIThread(
     content::ShellBrowserContext* shell_browser_context) {
-  system_request_context_ =
-      BrowserContext::GetDefaultStoragePartition(shell_browser_context)->
-          GetURLRequestContext();
+  system_request_context_ = nullptr;
 }
 
 void ShellAccessTokenStore::RespondOnOriginatingThread(
