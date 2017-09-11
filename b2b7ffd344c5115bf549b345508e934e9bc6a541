@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fa06bf53_13c09c77",
+        "filename": "third_party/WebKit/Source/build/scripts/make_runtime_features.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-11T23:56:16Z",
+      "side": 1,
+      "message": "this is very similar to ACRONYMS in name_utilities.py. Can you update ACRONYMS in name_utilities.py, and remove this ACRONYMS and acronym_upper_first()?",
+      "revId": "b2b7ffd344c5115bf549b345508e934e9bc6a541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e89db391_4c96db77",
         "filename": "third_party/WebKit/Source/build/scripts/make_runtime_features.py",
         "patchSetId": 1
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "In my investigation, feature name is already words such as \"MediaStreamTrackContentHint\" that can be handled in class_member_name() without calling split_name().",
       "parentUuid": "e89db391_4c96db77",
+      "revId": "b2b7ffd344c5115bf549b345508e934e9bc6a541",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c2e0478_e739164d",
+        "filename": "third_party/WebKit/Source/build/scripts/make_runtime_features.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-11T23:56:16Z",
+      "side": 1,
+      "message": "Ah, I understand. You are correct.  class_member_name() has @naming_style decorator, which splits the input string.",
+      "parentUuid": "2935d7bb_7d978974",
       "revId": "b2b7ffd344c5115bf549b345508e934e9bc6a541",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
