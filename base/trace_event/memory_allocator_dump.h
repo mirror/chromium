@@ -50,7 +50,7 @@ class BASE_EXPORT MemoryAllocatorDump {
     // indefinitely lived const char* strings, the only reason we copy
     // them into a std::string is to handle Mojo (de)serialization.
     // TODO(hjd): Investigate optimization (e.g. using StringPiece).
-    Entry();  // Only for deserialization.
+    Entry();
     Entry(std::string name, std::string units, uint64_t value);
     Entry(std::string name, std::string units, std::string value);
     Entry(Entry&& other) noexcept;
@@ -113,12 +113,11 @@ class BASE_EXPORT MemoryAllocatorDump {
   // Called at trace generation time to populate the TracedValue.
   void AsValueInto(TracedValue* value) const;
 
+  MemoryDumpLevelOfDetail level_of_detail() const { return level_of_detail_; }
+
   // Get the size for this dump.
   // The size is the value set with AddScalar(kNameSize, kUnitsBytes, size);
-  // TODO(hjd): this should return an Optional<uint64_t>.
-  uint64_t GetSizeInternal() const;
-
-  MemoryDumpLevelOfDetail level_of_detail() const { return level_of_detail_; }
+  uint64_t GetSizeInBytes() const;
 
   // Use enum Flags to set values.
   void set_flags(int flags) { flags_ |= flags; }

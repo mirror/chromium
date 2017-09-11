@@ -7,7 +7,6 @@
 #include <string.h>
 
 #include "base/format_macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_provider.h"
@@ -90,7 +89,6 @@ void MemoryAllocatorDump::AddString(const char* name,
 
 void MemoryAllocatorDump::DumpAttributes(TracedValue* value) const {
   std::string string_conversion_buffer;
-
   for (const Entry& entry : entries_) {
     value->BeginDictionaryWithCopiedName(entry.name);
     switch (entry.entry_type) {
@@ -122,7 +120,7 @@ void MemoryAllocatorDump::AsValueInto(TracedValue* value) const {
   value->EndDictionary();  // "allocator_name/heap_subheap": { ... }
 }
 
-uint64_t MemoryAllocatorDump::GetSizeInternal() const {
+uint64_t MemoryAllocatorDump::GetSizeInBytes() const {
   if (cached_size_.has_value())
     return *cached_size_;
   for (const auto& entry : entries_) {
@@ -132,12 +130,13 @@ uint64_t MemoryAllocatorDump::GetSizeInternal() const {
       return entry.value_uint64;
     }
   }
+  // TODO(hjd): Convert to return optional.
   return 0;
 };
 
 std::unique_ptr<TracedValue> MemoryAllocatorDump::attributes_for_testing()
     const {
-  std::unique_ptr<TracedValue> attributes = MakeUnique<TracedValue>();
+  std::unique_ptr<TracedValue> attributes = std::make_unique<TracedValue>();
   DumpAttributes(attributes.get());
   return attributes;
 }

@@ -118,7 +118,7 @@ TEST_F(StructTraitsTest, MemoryAllocatorDump) {
   EXPECT_EQ(42u, output->guid().ToUint64());
   EXPECT_EQ("absolute/name", output->absolute_name());
   EXPECT_EQ(MemoryAllocatorDump::WEAK, output->flags());
-  EXPECT_EQ(10u, output->GetSizeInternal());
+  EXPECT_EQ(10u, output->GetSizeInBytes());
   EXPECT_EQ(MemoryDumpLevelOfDetail::DETAILED, output->level_of_detail());
   MemoryAllocatorDump::Entry expected_entry1("size", "bytes", 10);
   EXPECT_THAT(output->entries_for_testing(),

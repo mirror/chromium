@@ -299,7 +299,7 @@ bool LevelDBDatabaseImpl::OnMemoryDump(
   // client's dump.
   global_dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
                          base::trace_event::MemoryAllocatorDump::kUnitsBytes,
-                         dump->GetSizeInternal());
+                         dump->GetSizeInBytes());
   return true;
 }
 
