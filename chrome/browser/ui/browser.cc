@@ -647,19 +647,29 @@ gfx::Image Browser::GetCurrentPageIcon() const {
 
 base::string16 Browser::GetWindowTitleForCurrentTab(
     bool include_app_name) const {
-  return GetWindowTitleFromWebContents(
-      include_app_name, tab_strip_model_->GetActiveWebContents());
+  return GetWindowTitleForCurrentTab(include_app_name,
+                                     CoreTabHelper::GetDefaultTitle());
+}
+
+base::string16 Browser::GetWindowTitleForCurrentTab(
+    bool include_app_name,
+    const base::string16& default_title) const {
+  return GetWindowTitleFromWebContents(include_app_name,
+                                       tab_strip_model_->GetActiveWebContents(),
+                                       default_title);
 }
 
 base::string16 Browser::GetWindowTitleForTab(bool include_app_name,
                                              int index) const {
   return GetWindowTitleFromWebContents(
-      include_app_name, tab_strip_model_->GetWebContentsAt(index));
+      include_app_name, tab_strip_model_->GetWebContentsAt(index),
+      CoreTabHelper::GetDefaultTitle());
 }
 
 base::string16 Browser::GetWindowTitleFromWebContents(
     bool include_app_name,
-    content::WebContents* contents) const {
+    content::WebContents* contents,
+    const base::string16& default_title) const {
   base::string16 title;
 
   // |contents| can be NULL because GetWindowTitleForCurrentTab is called by the
@@ -669,7 +679,7 @@ base::string16 Browser::GetWindowTitleFromWebContents(
     FormatTitleForDisplay(&title);
   }
   if (title.empty())
-    title = CoreTabHelper::GetDefaultTitle();
+    title = default_title;
 
 #if defined(OS_MACOSX)
   // On Mac, we don't want to suffix the page title with the application name.

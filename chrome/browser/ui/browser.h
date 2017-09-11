@@ -319,6 +319,9 @@ class Browser : public TabStripModelObserver,
   // Gets the title of the window based on the selected tab's title.
   // Disables additional formatting when |include_app_name| is false.
   base::string16 GetWindowTitleForCurrentTab(bool include_app_name) const;
+  base::string16 GetWindowTitleForCurrentTab(
+      bool include_app_name,
+      const base::string16& default_title) const;
 
   // Gets the window title of the tab at |index|.
   // Disables additional formatting when |include_app_name| is false.
@@ -328,7 +331,8 @@ class Browser : public TabStripModelObserver,
   // Disables additional formatting when |include_app_name| is false.
   base::string16 GetWindowTitleFromWebContents(
       bool include_app_name,
-      content::WebContents* contents) const;
+      content::WebContents* contents,
+      const base::string16& default_title) const;
 
   // Prepares a title string for display (removes embedded newlines, etc).
   static void FormatTitleForDisplay(base::string16* title);
