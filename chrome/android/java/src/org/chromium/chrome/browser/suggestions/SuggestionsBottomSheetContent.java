@@ -427,4 +427,9 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
             return touchRect;
         }
     }
+
+    @Override
+    public void scrollToTop() {
+        mRecyclerView.smoothScrollToPosition(mRecyclerView.getTop());
+    }
 }
