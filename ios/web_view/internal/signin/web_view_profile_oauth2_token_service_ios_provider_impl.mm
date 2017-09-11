@@ -6,6 +6,9 @@
 
 #include "base/logging.h"
 #include "base/strings/sys_string_conversions.h"
+#import "ios/web_view/internal/signin/cwv_authentication_controller_internal.h"
+#import "ios/web_view/public/cwv_authentication_controller_delegate.h"
+#import "ios/web_view/public/cwv_identity.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -22,11 +25,49 @@ void WebViewProfileOAuth2TokenServiceIOSProviderImpl::GetAccessToken(
     const std::string& client_id,
     const std::string& client_secret,
     const std::set<std::string>& scopes,
-    const AccessTokenCallback& callback) {}
+    const AccessTokenCallback& callback) {
+  if (!controller_.get()) {
+    return;
+  }
+  AccessTokenCallback scoped_callback = callback;
+
+  NSString* gaiaID = base::SysUTF8ToNSString(gaia_id);
+  NSString* clientID = base::SysUTF8ToNSString(client_id);
+  NSString* clientSecret = base::SysUTF8ToNSString(client_secret);
+  NSMutableArray* scopes_array = [[NSMutableArray alloc] init];
+  for (const auto& scope : scopes) {
+    [scopes_array addObject:base::SysUTF8ToNSString(scope)];
+  }
+  void (^token_callback)(NSString*, NSDate*, NSError*) =
+      ^void(NSString* token, NSDate* expiration, NSError* error) {
+        if (!scoped_callback.is_null()) {
+          scoped_callback.Run(token, expiration, error);
+        }
+      };
+
+  [[controller_ delegate] authenticationController:controller_.get()
+                           getAccessTokenForGaiaID:gaiaID
+                                          clientID:clientID
+                                      clientSecret:clientSecret
+                                            scopes:scopes_array
+                                          callback:token_callback];
+}
 
 std::vector<ProfileOAuth2TokenServiceIOSProvider::AccountInfo>
 WebViewProfileOAuth2TokenServiceIOSProviderImpl::GetAllAccounts() const {
-  return {};
+  if (!controller_.get()) {
+    return {};
+  }
+  NSArray<CWVIdentity*>* identities = [[controller_ delegate]
+      authenticationControllerGetAllIdentities:controller_.get()];
+  std::vector<ProfileOAuth2TokenServiceIOSProvider::AccountInfo> accounts;
+  for (CWVIdentity* identity in identities) {
+    ProfileOAuth2TokenServiceIOSProvider::AccountInfo account;
+    account.email = base::SysNSStringToUTF8(identity.userEmail);
+    account.gaia = base::SysNSStringToUTF8(identity.gaiaID);
+    accounts.push_back(account);
+  }
+  return accounts;
 }
 
 AuthenticationErrorCategory

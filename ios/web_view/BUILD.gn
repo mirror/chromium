@@ -49,6 +49,15 @@ ios_web_view_public_headers = [
   "public/cwv_web_view.h",
   "public/cwv_web_view_configuration.h",
 ]
+if (ios_web_view_enable_sync) {
+  ios_web_view_public_headers += [
+    "public/ChromeSync.h",
+    "public/cwv_authentication_controller.h",
+    "public/cwv_authentication_controller_delegate.h",
+    "public/cwv_identity.h",
+    "public/cwv_web_view+sync.h",
+  ]
+}
 
 ios_web_view_sources = [
   "internal/app/application_context.cc",
@@ -123,6 +132,8 @@ ios_web_view_sources = [
   "internal/web_view_java_script_dialog_presenter.mm",
   "internal/web_view_network_delegate.cc",
   "internal/web_view_network_delegate.h",
+  "internal/web_view_sync_initializer.cc",
+  "internal/web_view_sync_initializer.h",
   "internal/web_view_url_request_context_getter.h",
   "internal/web_view_url_request_context_getter.mm",
   "internal/web_view_web_client.h",
@@ -135,6 +146,14 @@ ios_web_view_sources = [
   "internal/web_view_web_state_policy_decider.mm",
 ]
 ios_web_view_sources += ios_web_view_public_headers
+if (ios_web_view_enable_sync) {
+  ios_web_view_sources += [
+    "internal/cwv_web_view+sync.mm",
+    "internal/signin/cwv_authentication_controller.mm",
+    "internal/signin/cwv_authentication_controller_internal.h",
+    "internal/signin/cwv_identity.mm",
+  ]
+}
 
 ios_web_view_deps = [
   ":packed_resources",
@@ -183,6 +202,9 @@ ios_framework_bundle("web_view") {
   public = [
     "public/ChromeWebView.h",
   ]
+  if (ios_web_view_enable_sync) {
+    public += [ "public/ChromeSync.h" ]
+  }
 
   sources = ios_web_view_sources
   if (ios_web_view_include_cronet) {
