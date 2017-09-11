@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ebafb62_b94d58ee",
+        "filename": "net/disk_cache/simple/simple_backend_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-11T18:47:50Z",
+      "side": 0,
+      "message": "Hmm, maybe removing this note was premature --- I haven\u0027t reduced repetitiveness quite as much as I had hoped.",
+      "range": {
+        "startLine": 408,
+        "startChar": 48,
+        "endLine": 408,
+        "endChar": 0
+      },
+      "revId": "11fec36039b14d99c7eb937eb034281f6fa854da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
