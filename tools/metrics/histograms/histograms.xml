@@ -15533,6 +15533,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Download.ContentAudioType" enum="DownloadAudioType">
+  <owner>jming@chromium.org</owner>
+  <summary>Types of audio files that are downloaded.</summary>
+</histogram>
+
 <histogram name="Download.ContentDisposition" enum="DownloadContentDisposition">
   <owner>asanka@chromium.org</owner>
   <summary>
@@ -15556,12 +15561,22 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Download.ContentTextType" enum="DownloadTextType">
+  <owner>jming@chromium.org</owner>
+  <summary>Types of text files that are downloaded.</summary>
+</histogram>
+
 <histogram name="Download.ContentType" enum="DownloadContentType">
   <obsolete>
     Deprecated 03/2017, and replaced by Download.Start.ContentType.
   </obsolete>
   <owner>asanka@chromium.org</owner>
   <summary>Content types that are downloaded.</summary>
+</histogram>
+
+<histogram name="Download.ContentVideoType" enum="DownloadVideoType">
+  <owner>jming@chromium.org</owner>
+  <summary>Types of video files that are downloaded.</summary>
 </histogram>
 
 <histogram name="Download.Counts" enum="DownloadCountType">
