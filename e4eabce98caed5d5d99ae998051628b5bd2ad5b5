@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2922614b_19338a7d",
+        "filename": "device/u2f/u2f_command_type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-09-11T10:03:11Z",
+      "side": 1,
+      "message": "Casey: I was writing this comment with BLE in mind. Please verify that it is also true for USB. Does that response\u0027s type match the request\u0027s type (unless there is an ERROR)?",
+      "revId": "e4eabce98caed5d5d99ae998051628b5bd2ad5b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63529ae7_a6b71550",
+        "filename": "device/u2f/u2f_command_type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-09-11T10:03:11Z",
+      "side": 1,
+      "message": "Casey: Should I elaborate here on what these commands are for?",
+      "revId": "e4eabce98caed5d5d99ae998051628b5bd2ad5b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
