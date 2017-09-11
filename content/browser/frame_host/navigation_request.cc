@@ -768,12 +768,6 @@ void NavigationRequest::OnRequestFailed(
         expected_pending_entry_id);
   }
 
-  // If the request was canceled by the user do not show an error page.
-  if (net_error == net::ERR_ABORTED) {
-    frame_tree_node_->ResetNavigationRequest(false, true);
-    return;
-  }
-
   // Decide whether to leave the error page in the original process.
   // * If this was a renderer-initiated navigation, and the request is blocked
   //   because the initiating document wasn't allowed to make the request,

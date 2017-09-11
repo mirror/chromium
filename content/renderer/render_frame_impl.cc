@@ -5303,6 +5303,11 @@ void RenderFrameImpl::OnFailedNavigation(
   if (!ShouldDisplayErrorPageForFailedLoad(error_code, common_params.url)) {
     // The browser expects this frame to be loading an error page. Inform it
     // that the load stopped.
+    for (auto& observer : render_view_->observers())
+      observer.DidFailProvisionalLoad(frame_, error);
+    for (auto& observer : observers_)
+      observer.DidFailProvisionalLoad(error);
+    frame_->StopProvisionalLoader();
     Send(new FrameHostMsg_DidStopLoading(routing_id_));
     browser_side_navigation_pending_ = false;
     return;

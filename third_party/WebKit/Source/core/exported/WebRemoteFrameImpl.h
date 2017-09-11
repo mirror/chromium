@@ -37,6 +37,7 @@ class CORE_EXPORT WebRemoteFrameImpl final
   WebRect VisibleContentRect() const override;
   WebView* View() const override;
   void StopLoading() override;
+  void StopProvisionalLoader() override;
 
   // WebRemoteFrame methods:
   WebLocalFrame* CreateLocalChild(WebTreeScopeType,
