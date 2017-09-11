@@ -10,4 +10,7 @@ import "net/interfaces/ip_address.mojom";
 struct IPEndPoint {
   IPAddress address;
   uint16 port;
+#if BUILDFLAG(DISABLE_FILE_SUPPORT)
+  bool hello;
+#endif
 };
