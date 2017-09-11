@@ -51,6 +51,24 @@
       "revId": "96aa31cb315089c70b5b3e925f862d2650ab14c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f134d4_0889ad0b",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T01:10:20Z",
+      "side": 1,
+      "message": "Good catch and my bad for just believing the comment. Also aside from the callback can container_host() return nullptr here (like GetRegistrations line 154)?\n\nFor the callback ,seems like we should just bind using WeakPtr?",
+      "parentUuid": "54dca6a7_191a9130",
+      "revId": "96aa31cb315089c70b5b3e925f862d2650ab14c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
