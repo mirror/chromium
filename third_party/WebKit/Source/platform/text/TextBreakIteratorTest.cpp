@@ -18,7 +18,7 @@ class TextBreakIteratorTest : public ::testing::Test {
 
   // The expected break positions must be specified UTF-16 character boundaries.
   void MatchLineBreaks(LineBreakType line_break_type,
-                       bool break_after_space,
+                       BreakSpaceType break_space,
                        const Vector<int> expected_break_positions) {
     if (test_string_.Is8Bit()) {
       test_string_ = String::Make16BitFrom8BitSource(test_string_.Characters8(),
@@ -26,7 +26,7 @@ class TextBreakIteratorTest : public ::testing::Test {
     }
     LazyLineBreakIterator lazy_break_iterator(test_string_);
     lazy_break_iterator.SetBreakType(line_break_type);
-    lazy_break_iterator.SetBreakAfterSpace(break_after_space);
+    lazy_break_iterator.SetBreakSpace(break_space);
     TestIsBreakable(expected_break_positions, lazy_break_iterator);
     TestNextBreakOpportunity(expected_break_positions, lazy_break_iterator);
   }
@@ -103,13 +103,13 @@ TEST_P(BreakTypeTest, EmptyDefaultConstructor) {
 #define MATCH_LINE_BREAKS(LINEBREAKTYPE, ...)      \
   {                                                \
     DECLARE_BREAKSVECTOR(__VA_ARGS__);             \
-    MatchLineBreaks(LINEBREAKTYPE, false, breaks); \
+    MatchLineBreaks(LINEBREAKTYPE, BreakSpaceType::kBefore, breaks);   \
   }
 
 #define MATCH_BREAK_AFTER_SPACE(LINEBREAKTYPE, ...) \
   {                                                 \
     DECLARE_BREAKSVECTOR(__VA_ARGS__);              \
-    MatchLineBreaks(LINEBREAKTYPE, true, breaks);   \
+    MatchLineBreaks(LINEBREAKTYPE, BreakSpaceType::kAfter, breaks);   \
   }
 
 TEST_F(TextBreakIteratorTest, Basic) {

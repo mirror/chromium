@@ -86,6 +86,12 @@ enum class LineBreakType {
   kKeepAll,
 };
 
+enum class BreakSpaceType {
+  kBefore,
+  kBeforeSpace,
+  kAfter,
+};
+
 PLATFORM_EXPORT std::ostream& operator<<(std::ostream&, LineBreakType);
 
 class PLATFORM_EXPORT LazyLineBreakIterator final {
@@ -218,10 +224,8 @@ class PLATFORM_EXPORT LazyLineBreakIterator final {
   // When 'white-space:pre-wrap', or when in editing, leaging/trailing spaces
   // need to be preserved, and this optimization needs to be disabled. This mode
   // is compatible with UAX#14/ICU. http://unicode.org/reports/tr14/
-  bool BreakAfterSpace() const { return break_after_space_; }
-  void SetBreakAfterSpace(bool break_after_space) {
-    break_after_space_ = break_after_space;
-  }
+  BreakSpaceType BreakSpace() const { return break_space_; }
+  void SetBreakSpace(BreakSpaceType break_space) { break_space_ = break_space; }
 
   inline bool IsBreakable(int pos,
                           int& next_breakable,
@@ -261,7 +265,7 @@ class PLATFORM_EXPORT LazyLineBreakIterator final {
     cached_prior_context_length_ = 0;
   }
 
-  template <typename CharacterType, LineBreakType, bool>
+  template <typename CharacterType, LineBreakType, BreakSpaceType>
   int NextBreakablePosition(int pos, const CharacterType* str) const;
   template <typename CharacterType, LineBreakType>
   int NextBreakablePosition(int pos, const CharacterType* str) const;
@@ -278,7 +282,7 @@ class PLATFORM_EXPORT LazyLineBreakIterator final {
   mutable const UChar* cached_prior_context_;
   mutable unsigned cached_prior_context_length_;
   LineBreakType break_type_;
-  bool break_after_space_ = false;
+  BreakSpaceType break_space_ = BreakSpaceType::kBefore;
 };
 
 // Iterates over "extended grapheme clusters", as defined in UAX #29.
