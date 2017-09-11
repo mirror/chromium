@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "14fc8481_d964e7cf",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-11T18:35:21Z",
+      "side": 1,
+      "message": "Do you need this and the ax notification in ArcNotificationContentView::OnNotificationSurfaceAdded too?",
+      "revId": "a502ec832fb8f3cf1029f0379ca4da84e96479a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae0b2e42_efc3e090",
         "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
         "patchSetId": 5
