@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be90ce5b_dd2f8155",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-11T22:50:46Z",
+      "side": 1,
+      "message": "is hacky the correct word? Is there something inherently flaky or sloppy with this output format? Or is it just providing less data to parse?",
+      "range": {
+        "startLine": 135,
+        "startChar": 71,
+        "endLine": 135,
+        "endChar": 76
+      },
+      "revId": "1e45accca01f31d86af8e9a4763acd92f0c6ee31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cec8e8d5_3ca82927",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-11T22:50:46Z",
+      "side": 1,
+      "message": "s/noises/noise",
+      "range": {
+        "startLine": 170,
+        "startChar": 18,
+        "endLine": 170,
+        "endChar": 24
+      },
+      "revId": "1e45accca01f31d86af8e9a4763acd92f0c6ee31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f7129c5_c4a1fffd",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-11T22:50:46Z",
+      "side": 1,
+      "message": "maybe move the comments from above about this variable to here?\n\n\"The 3rd to last line contains the total number of lines.\"",
+      "range": {
+        "startLine": 178,
+        "startChar": 24,
+        "endLine": 178,
+        "endChar": 0
+      },
+      "revId": "1e45accca01f31d86af8e9a4763acd92f0c6ee31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaea4a21_d6eccb5a",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-11T22:50:46Z",
+      "side": 1,
+      "message": "should this be \"missed_lines_index\"? Would \"uncovered_lines_index\" make any sense?",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 20
+      },
+      "revId": "1e45accca01f31d86af8e9a4763acd92f0c6ee31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c240738_1ee2ff64",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-11T22:50:46Z",
+      "side": 1,
+      "message": "maybe move the comments from above about this variable to here?\n\n\"The 2nd to last line contains the total number of uncovered lines.\"",
+      "revId": "1e45accca01f31d86af8e9a4763acd92f0c6ee31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
