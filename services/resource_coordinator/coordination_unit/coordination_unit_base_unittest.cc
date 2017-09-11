@@ -8,9 +8,9 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/values.h"
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl_unittest_util.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_provider_impl.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_test_harness.h"
 #include "services/resource_coordinator/coordination_unit/mock_coordination_unit_graphs.h"
 #include "services/resource_coordinator/public/interfaces/coordination_unit.mojom.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
@@ -20,13 +20,13 @@ namespace resource_coordinator {
 
 namespace {
 
-class CoordinationUnitImplTest : public CoordinationUnitImplTestBase {};
+class CoordinationUnitBaseTest : public CoordinationUnitTestHarness {};
 
-using CoordinationUnitImplDeathTest = CoordinationUnitImplTest;
+using CoordinationUnitBaseDeathTest = CoordinationUnitBaseTest;
 
 }  // namespace
 
-TEST_F(CoordinationUnitImplTest, AddChildBasic) {
+TEST_F(CoordinationUnitBaseTest, AddChildBasic) {
   CoordinationUnitID tab_cu_id(CoordinationUnitType::kFrame, std::string());
   CoordinationUnitID frame1_cu_id(CoordinationUnitType::kFrame, std::string());
   CoordinationUnitID frame2_cu_id(CoordinationUnitType::kFrame, std::string());
@@ -44,7 +44,7 @@ TEST_F(CoordinationUnitImplTest, AddChildBasic) {
 }
 
 #if (!defined(NDEBUG) || defined(DCHECK_ALWAYS_ON)) && GTEST_HAS_DEATH_TEST
-TEST_F(CoordinationUnitImplDeathTest, AddChildOnCyclicReference) {
+TEST_F(CoordinationUnitBaseDeathTest, AddChildOnCyclicReference) {
   ::testing::FLAGS_gtest_death_test_style = "threadsafe";
 
   CoordinationUnitID frame1_cu_id(CoordinationUnitType::kFrame, std::string());
@@ -62,7 +62,7 @@ TEST_F(CoordinationUnitImplDeathTest, AddChildOnCyclicReference) {
   EXPECT_DEATH(frame3_cu->AddChild(frame1_cu->id()), "");
 }
 #else
-TEST_F(CoordinationUnitImplTest, AddChildOnCyclicReference) {
+TEST_F(CoordinationUnitBaseTest, AddChildOnCyclicReference) {
   CoordinationUnitID frame1_cu_id(CoordinationUnitType::kFrame, std::string());
   CoordinationUnitID frame2_cu_id(CoordinationUnitType::kFrame, std::string());
   CoordinationUnitID frame3_cu_id(CoordinationUnitType::kFrame, std::string());
@@ -84,7 +84,7 @@ TEST_F(CoordinationUnitImplTest, AddChildOnCyclicReference) {
 #endif  // (!defined(NDEBUG) || defined(DCHECK_ALWAYS_ON)) &&
         //     GTEST_HAS_DEATH_TEST
 
-TEST_F(CoordinationUnitImplTest, RemoveChild) {
+TEST_F(CoordinationUnitBaseTest, RemoveChild) {
   auto parent_coordination_unit =
       CreateCoordinationUnit(CoordinationUnitType::kFrame);
   auto child_coordination_unit =
@@ -113,7 +113,7 @@ TEST_F(CoordinationUnitImplTest, RemoveChild) {
   EXPECT_EQ(0u, child_coordination_unit->parents().size());
 }
 
-TEST_F(CoordinationUnitImplTest, GetSetProperty) {
+TEST_F(CoordinationUnitBaseTest, GetSetProperty) {
   auto coordination_unit =
       CreateCoordinationUnit(CoordinationUnitType::kWebContents);
 
@@ -130,7 +130,7 @@ TEST_F(CoordinationUnitImplTest, GetSetProperty) {
   EXPECT_EQ(41, test_value);
 }
 
-TEST_F(CoordinationUnitImplTest,
+TEST_F(CoordinationUnitBaseTest,
        GetAssociatedCoordinationUnitsForSingleTabInSingleProcess) {
   MockSingleTabInSingleProcessCoordinationUnitGraph cu_graph;
 
@@ -147,7 +147,7 @@ TEST_F(CoordinationUnitImplTest,
   EXPECT_EQ(1u, processes_associated_with_tab.count(cu_graph.process.get()));
 }
 
-TEST_F(CoordinationUnitImplTest,
+TEST_F(CoordinationUnitBaseTest,
        GetAssociatedCoordinationUnitsForMultipleTabsInSingleProcess) {
   MockMultipleTabsInSingleProcessCoordinationUnitGraph cu_graph;
 
@@ -171,7 +171,7 @@ TEST_F(CoordinationUnitImplTest,
   EXPECT_EQ(1u, processes_associated_with_tab.count(cu_graph.process.get()));
 }
 
-TEST_F(CoordinationUnitImplTest,
+TEST_F(CoordinationUnitBaseTest,
        GetAssociatedCoordinationUnitsForSingleTabWithMultipleProcesses) {
   MockSingleTabWithMultipleProcessesCoordinationUnitGraph cu_graph;
 
@@ -196,7 +196,7 @@ TEST_F(CoordinationUnitImplTest,
             processes_associated_with_tab.count(cu_graph.other_process.get()));
 }
 
-TEST_F(CoordinationUnitImplTest,
+TEST_F(CoordinationUnitBaseTest,
        GetAssociatedCoordinationUnitsForMultipleTabsWithMultipleProcesses) {
   MockMultipleTabsWithMultipleProcessesCoordinationUnitGraph cu_graph;
 

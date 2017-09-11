@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 
 #include <unordered_map>
 
@@ -19,7 +19,7 @@ namespace resource_coordinator {
 namespace {
 
 using CUIDMap = std::unordered_map<CoordinationUnitID,
-                                   std::unique_ptr<CoordinationUnitImpl>>;
+                                   std::unique_ptr<CoordinationUnitBase>>;
 
 CUIDMap& g_cu_map() {
   static CUIDMap* instance = new CUIDMap();
@@ -29,32 +29,32 @@ CUIDMap& g_cu_map() {
 }  // namespace
 
 // static
-const FrameCoordinationUnitImpl* CoordinationUnitImpl::ToFrameCoordinationUnit(
-    const CoordinationUnitImpl* coordination_unit) {
+const FrameCoordinationUnitImpl* CoordinationUnitBase::ToFrameCoordinationUnit(
+    const CoordinationUnitBase* coordination_unit) {
   DCHECK(coordination_unit->id().type == CoordinationUnitType::kFrame);
   return static_cast<const FrameCoordinationUnitImpl*>(coordination_unit);
 }
 
 // static
 WebContentsCoordinationUnitImpl*
-CoordinationUnitImpl::ToWebContentsCoordinationUnit(
-    CoordinationUnitImpl* coordination_unit) {
+CoordinationUnitBase::ToWebContentsCoordinationUnit(
+    CoordinationUnitBase* coordination_unit) {
   DCHECK(coordination_unit->id().type == CoordinationUnitType::kWebContents);
   return static_cast<WebContentsCoordinationUnitImpl*>(coordination_unit);
 }
 
 // static
 const WebContentsCoordinationUnitImpl*
-CoordinationUnitImpl::ToWebContentsCoordinationUnit(
-    const CoordinationUnitImpl* cu) {
+CoordinationUnitBase::ToWebContentsCoordinationUnit(
+    const CoordinationUnitBase* cu) {
   DCHECK(cu->id().type == CoordinationUnitType::kWebContents);
   return static_cast<const WebContentsCoordinationUnitImpl*>(cu);
 }
 
 // static
-std::vector<CoordinationUnitImpl*>
-CoordinationUnitImpl::GetCoordinationUnitsOfType(CoordinationUnitType type) {
-  std::vector<CoordinationUnitImpl*> results;
+std::vector<CoordinationUnitBase*>
+CoordinationUnitBase::GetCoordinationUnitsOfType(CoordinationUnitType type) {
+  std::vector<CoordinationUnitBase*> results;
   for (auto& el : g_cu_map()) {
     if (el.second->id().type == type)
       results.push_back(el.second.get());
@@ -62,18 +62,18 @@ CoordinationUnitImpl::GetCoordinationUnitsOfType(CoordinationUnitType type) {
   return results;
 }
 
-void CoordinationUnitImpl::AssertNoActiveCoordinationUnits() {
+void CoordinationUnitBase::AssertNoActiveCoordinationUnits() {
   CHECK(g_cu_map().empty());
 }
 
-void CoordinationUnitImpl::ClearAllCoordinationUnits() {
+void CoordinationUnitBase::ClearAllCoordinationUnits() {
   g_cu_map().clear();
 }
 
-CoordinationUnitImpl* CoordinationUnitImpl::CreateCoordinationUnit(
+CoordinationUnitBase* CoordinationUnitBase::CreateCoordinationUnit(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref) {
-  std::unique_ptr<CoordinationUnitImpl> new_cu;
+  std::unique_ptr<CoordinationUnitBase> new_cu;
 
   switch (id.type) {
     case CoordinationUnitType::kFrame:
@@ -90,7 +90,7 @@ CoordinationUnitImpl* CoordinationUnitImpl::CreateCoordinationUnit(
       break;
     default:
       new_cu =
-          base::MakeUnique<CoordinationUnitImpl>(id, std::move(service_ref));
+          base::MakeUnique<CoordinationUnitBase>(id, std::move(service_ref));
   }
 
   auto it = g_cu_map().insert(std::make_pair(new_cu->id(), std::move(new_cu)));
@@ -98,46 +98,46 @@ CoordinationUnitImpl* CoordinationUnitImpl::CreateCoordinationUnit(
   return it.first->second.get();
 }
 
-void CoordinationUnitImpl::Destruct() {
+void CoordinationUnitBase::Destruct() {
   size_t erased_count = g_cu_map().erase(id_);
   // After this point |this| is destructed and should not be accessed anymore.
   DCHECK_EQ(erased_count, 1u);
 }
 
-CoordinationUnitImpl::CoordinationUnitImpl(
+CoordinationUnitBase::CoordinationUnitBase(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
     : id_(id.type, id.id), binding_(this) {
   service_ref_ = std::move(service_ref);
 }
 
-CoordinationUnitImpl::~CoordinationUnitImpl() {
-  for (CoordinationUnitImpl* child : children_) {
+CoordinationUnitBase::~CoordinationUnitBase() {
+  for (CoordinationUnitBase* child : children_) {
     child->RemoveParent(this);
   }
 
-  for (CoordinationUnitImpl* parent : parents_) {
+  for (CoordinationUnitBase* parent : parents_) {
     parent->RemoveChild(this);
   }
 }
 
-void CoordinationUnitImpl::Bind(mojom::CoordinationUnitRequest request) {
+void CoordinationUnitBase::Bind(mojom::CoordinationUnitRequest request) {
   binding_.Bind(std::move(request));
 }
 
-void CoordinationUnitImpl::SendEvent(mojom::Event event) {
+void CoordinationUnitBase::SendEvent(mojom::Event event) {
   OnEventReceived(event);
 }
 
-void CoordinationUnitImpl::GetID(const GetIDCallback& callback) {
+void CoordinationUnitBase::GetID(const GetIDCallback& callback) {
   callback.Run(id_);
 }
 
-void CoordinationUnitImpl::AddBinding(mojom::CoordinationUnitRequest request) {
+void CoordinationUnitBase::AddBinding(mojom::CoordinationUnitRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
 
-void CoordinationUnitImpl::AddChild(const CoordinationUnitID& child_id) {
+void CoordinationUnitBase::AddChild(const CoordinationUnitID& child_id) {
   // TODO(ojan): Make this a DCHECK. When does it make sense to add a
   // CoordinationUnit as its own child?
   if (child_id == id_) {
@@ -146,7 +146,7 @@ void CoordinationUnitImpl::AddChild(const CoordinationUnitID& child_id) {
 
   auto child_iter = g_cu_map().find(child_id);
   if (child_iter != g_cu_map().end()) {
-    CoordinationUnitImpl* child = child_iter->second.get();
+    CoordinationUnitBase* child = child_iter->second.get();
     // In order to avoid cyclic reference inside the coordination unit graph. If
     // |child| is one of the ancestors of |this| coordination unit, then |child|
     // should not be added, abort this operation. If |this| coordination unit is
@@ -166,7 +166,7 @@ void CoordinationUnitImpl::AddChild(const CoordinationUnitID& child_id) {
   }
 }
 
-bool CoordinationUnitImpl::AddChild(CoordinationUnitImpl* child) {
+bool CoordinationUnitBase::AddChild(CoordinationUnitBase* child) {
   bool success =
       children_.count(child) ? false : children_.insert(child).second;
 
@@ -178,13 +178,13 @@ bool CoordinationUnitImpl::AddChild(CoordinationUnitImpl* child) {
   return success;
 }
 
-void CoordinationUnitImpl::RemoveChild(const CoordinationUnitID& child_id) {
+void CoordinationUnitBase::RemoveChild(const CoordinationUnitID& child_id) {
   auto child_iter = g_cu_map().find(child_id);
   if (child_iter == g_cu_map().end()) {
     return;
   }
 
-  CoordinationUnitImpl* child = child_iter->second.get();
+  CoordinationUnitBase* child = child_iter->second.get();
 
   DCHECK(child->id_ == child_id);
   DCHECK(child != this);
@@ -194,7 +194,7 @@ void CoordinationUnitImpl::RemoveChild(const CoordinationUnitID& child_id) {
   }
 }
 
-bool CoordinationUnitImpl::RemoveChild(CoordinationUnitImpl* child) {
+bool CoordinationUnitBase::RemoveChild(CoordinationUnitBase* child) {
   size_t children_removed = children_.erase(child);
   bool success = children_removed > 0;
 
@@ -206,7 +206,7 @@ bool CoordinationUnitImpl::RemoveChild(CoordinationUnitImpl* child) {
   return success;
 }
 
-void CoordinationUnitImpl::AddParent(CoordinationUnitImpl* parent) {
+void CoordinationUnitBase::AddParent(CoordinationUnitBase* parent) {
   DCHECK_EQ(0u, parents_.count(parent));
   parents_.insert(parent);
 
@@ -214,7 +214,7 @@ void CoordinationUnitImpl::AddParent(CoordinationUnitImpl* parent) {
     observer.OnParentAdded(this, parent);
 }
 
-void CoordinationUnitImpl::RemoveParent(CoordinationUnitImpl* parent) {
+void CoordinationUnitBase::RemoveParent(CoordinationUnitBase* parent) {
   size_t parents_removed = parents_.erase(parent);
   DCHECK_EQ(1u, parents_removed);
 
@@ -222,8 +222,8 @@ void CoordinationUnitImpl::RemoveParent(CoordinationUnitImpl* parent) {
     observer.OnParentRemoved(this, parent);
 }
 
-bool CoordinationUnitImpl::HasAncestor(CoordinationUnitImpl* ancestor) {
-  for (CoordinationUnitImpl* parent : parents_) {
+bool CoordinationUnitBase::HasAncestor(CoordinationUnitBase* ancestor) {
+  for (CoordinationUnitBase* parent : parents_) {
     if (parent == ancestor || parent->HasAncestor(ancestor)) {
       return true;
     }
@@ -232,8 +232,8 @@ bool CoordinationUnitImpl::HasAncestor(CoordinationUnitImpl* ancestor) {
   return false;
 }
 
-bool CoordinationUnitImpl::HasDescendant(CoordinationUnitImpl* descendant) {
-  for (CoordinationUnitImpl* child : children_) {
+bool CoordinationUnitBase::HasDescendant(CoordinationUnitBase* descendant) {
+  for (CoordinationUnitBase* child : children_) {
     if (child == descendant || child->HasDescendant(descendant)) {
       return true;
     }
@@ -242,10 +242,10 @@ bool CoordinationUnitImpl::HasDescendant(CoordinationUnitImpl* descendant) {
   return false;
 }
 
-std::set<CoordinationUnitImpl*>
-CoordinationUnitImpl::GetChildCoordinationUnitsOfType(
+std::set<CoordinationUnitBase*>
+CoordinationUnitBase::GetChildCoordinationUnitsOfType(
     CoordinationUnitType type) const {
-  std::set<CoordinationUnitImpl*> coordination_units;
+  std::set<CoordinationUnitBase*> coordination_units;
 
   for (auto* child : children()) {
     if (child->id().type != type)
@@ -260,10 +260,10 @@ CoordinationUnitImpl::GetChildCoordinationUnitsOfType(
   return coordination_units;
 }
 
-std::set<CoordinationUnitImpl*>
-CoordinationUnitImpl::GetParentCoordinationUnitsOfType(
+std::set<CoordinationUnitBase*>
+CoordinationUnitBase::GetParentCoordinationUnitsOfType(
     CoordinationUnitType type) const {
-  std::set<CoordinationUnitImpl*> coordination_units;
+  std::set<CoordinationUnitBase*> coordination_units;
 
   for (auto* parent : parents()) {
     if (parent->id().type != type)
@@ -278,14 +278,14 @@ CoordinationUnitImpl::GetParentCoordinationUnitsOfType(
   return coordination_units;
 }
 
-std::set<CoordinationUnitImpl*>
-CoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
+std::set<CoordinationUnitBase*>
+CoordinationUnitBase::GetAssociatedCoordinationUnitsOfType(
     CoordinationUnitType type) const {
   NOTREACHED();
-  return std::set<CoordinationUnitImpl*>();
+  return std::set<CoordinationUnitBase*>();
 }
 
-bool CoordinationUnitImpl::GetProperty(const mojom::PropertyType property_type,
+bool CoordinationUnitBase::GetProperty(const mojom::PropertyType property_type,
                                        int64_t* result) const {
   auto value_it = properties_.find(property_type);
 
@@ -297,38 +297,38 @@ bool CoordinationUnitImpl::GetProperty(const mojom::PropertyType property_type,
   return false;
 }
 
-void CoordinationUnitImpl::SetProperty(mojom::PropertyType property_type,
+void CoordinationUnitBase::SetProperty(mojom::PropertyType property_type,
                                        int64_t value) {
   // The |CoordinationUnitGraphObserver| API specification dictates that
-  // the property is guarranteed to be set on the |CoordinationUnitImpl|
-  // and propagated to the appropriate associated |CoordianationUnitImpl|
+  // the property is guarranteed to be set on the |CoordinationUnitBase|
+  // and propagated to the appropriate associated |CoordianationUnitBase|
   // before |OnPropertyChanged| is invoked on all of the registered observers.
   properties_[property_type] = value;
   PropagateProperty(property_type, value);
   OnPropertyChanged(property_type, value);
 }
 
-void CoordinationUnitImpl::BeforeDestroyed() {
+void CoordinationUnitBase::BeforeDestroyed() {
   for (auto& observer : observers_)
     observer.OnBeforeCoordinationUnitDestroyed(this);
 }
 
-void CoordinationUnitImpl::AddObserver(
+void CoordinationUnitBase::AddObserver(
     CoordinationUnitGraphObserver* observer) {
   observers_.AddObserver(observer);
 }
 
-void CoordinationUnitImpl::RemoveObserver(
+void CoordinationUnitBase::RemoveObserver(
     CoordinationUnitGraphObserver* observer) {
   observers_.RemoveObserver(observer);
 }
 
-void CoordinationUnitImpl::OnEventReceived(const mojom::Event event) {
+void CoordinationUnitBase::OnEventReceived(const mojom::Event event) {
   for (auto& observer : observers_)
     observer.OnEventReceived(this, event);
 }
 
-void CoordinationUnitImpl::OnPropertyChanged(
+void CoordinationUnitBase::OnPropertyChanged(
     const mojom::PropertyType property_type,
     int64_t value) {
   for (auto& observer : observers_)

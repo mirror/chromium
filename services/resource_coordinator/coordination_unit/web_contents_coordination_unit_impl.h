@@ -8,19 +8,19 @@
 #include <set>
 
 #include "base/macros.h"
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 
 namespace resource_coordinator {
 
-class WebContentsCoordinationUnitImpl : public CoordinationUnitImpl {
+class WebContentsCoordinationUnitImpl : public CoordinationUnitBase {
  public:
   WebContentsCoordinationUnitImpl(
       const CoordinationUnitID& id,
       std::unique_ptr<service_manager::ServiceContextRef> service_ref);
   ~WebContentsCoordinationUnitImpl() override;
 
-  // CoordinationUnitImpl implementation.
-  std::set<CoordinationUnitImpl*> GetAssociatedCoordinationUnitsOfType(
+  // CoordinationUnitBase implementation.
+  std::set<CoordinationUnitBase*> GetAssociatedCoordinationUnitsOfType(
       CoordinationUnitType type) const override;
   void RecalculateProperty(const mojom::PropertyType property_type) override;
 
@@ -37,7 +37,7 @@ class WebContentsCoordinationUnitImpl : public CoordinationUnitImpl {
   bool CalculateExpectedTaskQueueingDuration(int64_t* output);
 
   // Returns the main frame CU or nullptr if this tab has no main frame.
-  CoordinationUnitImpl* GetMainFrameCoordinationUnit();
+  CoordinationUnitBase* GetMainFrameCoordinationUnit();
 
   DISALLOW_COPY_AND_ASSIGN(WebContentsCoordinationUnitImpl);
 };

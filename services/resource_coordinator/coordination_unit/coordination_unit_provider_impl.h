@@ -30,7 +30,7 @@ class CoordinationUnitProviderImpl : public mojom::CoordinationUnitProvider {
   void Bind(
       resource_coordinator::mojom::CoordinationUnitProviderRequest request);
 
-  void OnConnectionError(CoordinationUnitImpl* coordination_unit);
+  void OnConnectionError(CoordinationUnitBase* coordination_unit);
 
   // Overridden from mojom::CoordinationUnitProvider:
   void CreateCoordinationUnit(

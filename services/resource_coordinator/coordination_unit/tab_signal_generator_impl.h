@@ -13,7 +13,7 @@
 
 namespace resource_coordinator {
 
-class CoordinationUnitImpl;
+class CoordinationUnitBase;
 class FrameCoordinationUnitImpl;
 class WebContentsCoordinationUnitImpl;
 
@@ -31,7 +31,7 @@ class TabSignalGeneratorImpl : public CoordinationUnitGraphObserver,
   void AddObserver(mojom::TabSignalObserverPtr observer) override;
 
   // CoordinationUnitGraphObserver implementation.
-  bool ShouldObserve(const CoordinationUnitImpl* coordination_unit) override;
+  bool ShouldObserve(const CoordinationUnitBase* coordination_unit) override;
   void OnFramePropertyChanged(const FrameCoordinationUnitImpl* frame_cu,
                               const mojom::PropertyType property_type,
                               int64_t value) override;
