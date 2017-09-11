@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d4aa966_e454d84f",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-11T18:47:22Z",
+      "side": 1,
+      "message": "Coincidentally, I\u0027m working on a pair of CLs that will move this over to the UI thread (And significantly refactor this class, though Mojoifying the consumer end, so it can be used with the network service, rather than at the utility process end of things, so while there are a lot of conflicts, most shouldn\u0027t be functional...hopefully).  This change will make that a little simpler.",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 44
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c7a702_ad79a949",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-11T18:47:22Z",
+      "side": 1,
+      "message": "// namespace",
+      "range": {
+        "startLine": 28,
+        "startChar": 1,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3d1c28_504033fd",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-11T18:47:22Z",
+      "side": 1,
+      "message": "Do we have any tests that destroy and re-create a factory?  I\u0027m not seeing any.  I don\u0027t want to land anything in this space without them, as I don\u0027t feel that we can be sure this CL works without them.  Coincidentally, I\u0027m adding some in my CL (And hopefully they\u0027ll still work with this one, without any changes).\n\nAlso, will this shut down the utility process?  I\u0027m assuming it will?",
+      "range": {
+        "startLine": 99,
+        "startChar": 28,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1906f78b_f2ab8fb7",
+        "filename": "net/proxy/mojo_proxy_resolver_factory_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-11T18:47:22Z",
+      "side": 1,
+      "message": "I don\u0027t think we want net/ to depend on services/.  Can we move this out of net/, particularly given that net/ doesn\u0027t even use this service?",
+      "range": {
+        "startLine": 15,
+        "startChar": 35,
+        "endLine": 15,
+        "endChar": 41
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6882124d_de6c9a87",
+        "filename": "net/proxy/mojo_proxy_resolver_factory_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-11T18:47:22Z",
+      "side": 1,
+      "message": "Can we document this class?",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 35
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43823620_9f8d839c",
+        "filename": "net/proxy/mojo_proxy_resolver_factory_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-11T18:47:22Z",
+      "side": 1,
+      "message": "What is a ServiceContextRef?  It doesn\u0027t look to be documented.",
+      "range": {
+        "startLine": 23,
+        "startChar": 39,
+        "endLine": 23,
+        "endChar": 56
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d6a9f4_be0224b9",
+        "filename": "net/proxy/mojo_proxy_resolver_factory_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-11T18:47:22Z",
+      "side": 1,
+      "message": "Again, can we document all these?  We have something like two dozen classes named Proxy[Resolver|Factory|Service|Client|Request]*, and they\u0027re very hard to keep straight.",
+      "range": {
+        "startLine": 17,
+        "startChar": 40,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
