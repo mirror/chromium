@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "576d7acf_15818597",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_result_consumer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-11T13:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23d4fe67_0b0c061b",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 9
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f1db8db_db3e51dc",
         "filename": "ios/chrome/browser/ui/omnibox/autocomplete_result_consumer.h",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-08T08:47:38Z",
       "side": 1,
       "message": "Eventually these should be -autocompleteResultConsumer:didSelectRow: to be a \u0027proper\u0027 delegate, but this is fine as-is for now.",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 20
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63890162_071d4d91",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_result_consumer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-11T13:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f1db8db_db3e51dc",
       "range": {
         "startLine": 14,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fb87214b_8c2fbc4e",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-11T13:36:27Z",
+      "side": 1,
+      "message": "Yes, this int is AutocompleteMatchType. I\u0027ll look into why this is exposed as an int, and for now I\u0027ll add a comment here.",
+      "parentUuid": "5c4b4166_328c27a2",
+      "range": {
+        "startLine": 24,
+        "startChar": 47,
+        "endLine": 24,
+        "endChar": 64
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c254b3c_921cf218",
         "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion.h",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "598c729a_212830ff",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-11T13:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c254b3c_921cf218",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 14
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dfe6f02_8f481fc8",
         "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion.h",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-08T08:47:38Z",
       "side": 1,
       "message": "Note for the future: ideally the UI layer doesn\u0027t know or care about GURL or NSURL objects, just images and strings.",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 7
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed027db_83a1298e",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-11T13:36:27Z",
+      "side": 1,
+      "message": "Yes, but fixing image fetching is too much for this one CL. This will be fixed eventually.",
+      "parentUuid": "1dfe6f02_8f481fc8",
       "range": {
         "startLine": 37,
         "startChar": 3,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "68205cdc_361ce94e",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-11T13:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "233457d3_c37f86ab",
+      "range": {
+        "startLine": 11,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b830a582_1b6fe3f2",
         "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.h",
         "patchSetId": 5
@@ -160,6 +304,30 @@
       "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e514f4cf_1f818219",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-11T13:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b830a582_1b6fe3f2",
+      "range": {
+        "startLine": 15,
+        "startChar": 34,
+        "endLine": 15,
+        "endChar": 48
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "8f49f828_bdc48497",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-11T13:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3989f528_c3ffcdd7",
+      "range": {
+        "startLine": 77,
+        "startChar": 32,
+        "endLine": 77,
+        "endChar": 35
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca297738_fdc197f4",
         "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.mm",
         "patchSetId": 5
@@ -206,6 +398,30 @@
       "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9372f3b_7ec2b5b4",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-11T13:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca297738_fdc197f4",
+      "range": {
+        "startLine": 105,
+        "startChar": 46,
+        "endLine": 105,
+        "endChar": 49
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "e87ddd2f_24d4aaa1",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-11T13:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4565275b_4e8431ec",
+      "range": {
+        "startLine": 128,
+        "startChar": 72,
+        "endLine": 128,
+        "endChar": 74
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5086d70a_ffde58f0",
         "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.mm",
         "patchSetId": 5
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "6a88f15e_7b8a3155",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-11T13:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5086d70a_ffde58f0",
+      "range": {
+        "startLine": 187,
+        "startChar": 13,
+        "endLine": 187,
+        "endChar": 20
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de896450_7909d6be",
         "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.mm",
         "patchSetId": 5
@@ -266,6 +530,30 @@
       "writtenOn": "2017-09-08T08:47:38Z",
       "side": 1,
       "message": "why cast to id instead of leaving these as NSStrings?",
+      "range": {
+        "startLine": 221,
+        "startChar": 8,
+        "endLine": 221,
+        "endChar": 10
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd3457c_fe25ccb9",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-11T13:36:27Z",
+      "side": 1,
+      "message": "All of this code is just being moved. I\u0027ll try to apply your comments, even though this was initially beyond the scope for this CL.\n\nIn this case, I\u0027m removing these local vars altogether, using the system provided constants directly.",
+      "parentUuid": "de896450_7909d6be",
       "range": {
         "startLine": 221,
         "startChar": 8,
@@ -298,6 +586,30 @@
       "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "461020a2_3ef896c4",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_suggestion_formatter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-11T13:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42fdaa9b_d8fc5efa",
+      "range": {
+        "startLine": 223,
+        "startChar": 11,
+        "endLine": 223,
+        "endChar": 25
+      },
+      "revId": "6d9c2c35dc47ba34ba47c74bd44834d70e144db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
