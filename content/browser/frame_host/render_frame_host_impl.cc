@@ -1672,6 +1672,30 @@ RenderFrameHostImpl::PassNavigationHandleOwnership() {
   return std::move(navigation_handle_);
 }
 
+void RenderFrameHostImpl::TakeNavigationRequest(
+    std::unique_ptr<NavigationRequest> navigation_request) {
+  navigation_requests_.push_back(std::move(navigation_request));
+}
+
+void RenderFrameHostImpl::ReleaseNavigationRequest(
+    NavigationRequest* navigation_request) {
+  auto it = std::find_if(
+      std::begin(navigation_requests_), std::end(navigation_requests_),
+      [navigation_request](const std::unique_ptr<NavigationRequest>& ptr) {
+        return navigation_request == ptr.get();
+      });
+
+  if (it == navigation_requests_.end()) {
+    // This can't happen, a NavigationRequest is added in the
+    // RenderFrameHostImpl when the first elements of its response are received
+    // and is removed when its response is complete.
+    NOTREACHED();
+    return;
+  }
+
+  navigation_requests_.erase(it);
+}
+
 void RenderFrameHostImpl::SwapOut(
     RenderFrameProxyHost* proxy,
     bool is_loading) {
