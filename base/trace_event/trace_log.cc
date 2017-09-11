@@ -577,13 +577,21 @@ void TraceLog::SetEnabled(const TraceConfig& trace_config,
     if (modes_to_enable & FILTERING_MODE) {
       DCHECK(!trace_config.event_filters().empty())
           << "Attempting to enable filtering without any filters";
-      DCHECK(enabled_event_filters_.empty()) << "Attempting to re-enable "
-                                                "filtering when filters are "
-                                                "already enabled.";
 
-      // Use the given event filters only if filtering was not enabled.
-      if (enabled_event_filters_.empty())
-        enabled_event_filters_ = trace_config.event_filters();
+      // Enable filters not previously enabled.
+      std::set<std::string> enabled_predicates;
+      for (auto it = enabled_event_filters_.begin();
+           it != enabled_event_filters_.end();
+           ++it) {
+        enabled_predicates.insert(it->predicate_name());
+      }
+      for (auto it = trace_config.event_filters().begin();
+           it != trace_config.event_filters().end();
+           ++it) {
+        if (!enabled_predicates.count(it->predicate_name())) {
+          enabled_event_filters_.push_back(*it);
+        }
+      }
     }
     // Keep the |trace_config_| updated with only enabled filters in case anyone
     // tries to read it using |GetCurrentTraceConfig| (even if filters are
