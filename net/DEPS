@@ -3,6 +3,7 @@ include_rules = [
   "+gin",
   "+jni",
   "+mojo/public",
+  "+services/service_manager/public",
   "+third_party/apple_apsl",
   "+third_party/boringssl/src/include",
   "+third_party/nss",

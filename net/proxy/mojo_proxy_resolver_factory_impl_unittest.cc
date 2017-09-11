@@ -91,6 +91,15 @@ class TestProxyResolverFactory : public ProxyResolverV8TracingFactory {
   std::unique_ptr<PendingRequest> pending_request_;
 };
 
+class TestMojoProxyResolverFactoryImpl : public MojoProxyResolverFactoryImpl {
+ public:
+  explicit TestMojoProxyResolverFactoryImpl(
+      std::unique_ptr<ProxyResolverV8TracingFactory> proxy_resolver_factory)
+      : MojoProxyResolverFactoryImpl(
+            std::unique_ptr<service_manager::ServiceContextRef>(),
+            std::move(proxy_resolver_factory)) {}
+};
+
 }  // namespace
 
 class MojoProxyResolverFactoryImplTest
@@ -99,7 +108,7 @@ class MojoProxyResolverFactoryImplTest
  public:
   void SetUp() override {
     mock_factory_ = new TestProxyResolverFactory(&waiter_);
-    mojo::MakeStrongBinding(std::make_unique<MojoProxyResolverFactoryImpl>(
+    mojo::MakeStrongBinding(std::make_unique<TestMojoProxyResolverFactoryImpl>(
                                 base::WrapUnique(mock_factory_)),
                             mojo::MakeRequest(&factory_));
   }

@@ -10,6 +10,8 @@ module net.interfaces;
 import "host_resolver_service.mojom";
 import "url/mojo/url.mojom";
 
+const string kProxyResolverFactoryServiceName = "net_proxy_resolver_factory";
+
 // Mirror of net::ProxyServer::Scheme.
 enum ProxyScheme {
   INVALID,
