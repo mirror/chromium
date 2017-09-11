@@ -194,8 +194,6 @@ void ArcSessionManager::RegisterProfilePrefs(
 bool ArcSessionManager::IsOobeOptInActive() {
   // ARC OOBE OptIn is optional for now. Test if it exists and login host is
   // active.
-  if (!user_manager::UserManager::Get()->IsCurrentUserNew())
-    return false;
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kEnableArcOOBEOptIn)) {
     return false;
