@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "09ded9fb_8ee34ce2",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-11T05:31:12Z",
+      "side": 1,
+      "message": "I see. Then you don\u0027t have to add @param. Thanks!",
+      "parentUuid": "0748b379_f02047e1",
+      "revId": "dc2bc810595623e09d5f6c9139aeeecc3a640eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73ee9fe1_380a1f43",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
         "patchSetId": 14
