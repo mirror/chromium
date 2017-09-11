@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "109db387_3d92a8c7",
+        "filename": "net/nqe/network_quality_estimator_params.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-11T23:56:04Z",
+      "side": 1,
+      "message": "I\u0027d prefer the definition in the cc file.",
+      "revId": "700f9cd0ecb86bc72e68a1028385b9ca77f77b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
