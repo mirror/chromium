@@ -1498,9 +1498,14 @@ void SourceBufferStream::SetSelectedRange(SourceBufferRange* range) {
 }
 
 Ranges<base::TimeDelta> SourceBufferStream::GetBufferedTime() const {
+  DVLOG(1) << __func__ << "internal ranges_=" << RangesToString(ranges_);
   Ranges<base::TimeDelta> ranges;
   for (RangeList::const_iterator itr = ranges_.begin();
        itr != ranges_.end(); ++itr) {
+    // TODO(wolenetz): If we have disjoint |ranges_| that overlap their
+    // presentation time here, we'll coalesce them in |ranges| result, but that
+    // signals that we could play continuously through what we internally think
+    // are disjoint ranges. See https://crbug.com/763518.
     ranges.Add((*itr)->GetStartTimestamp().ToPresentationTime(),
                (*itr)->GetBufferedEndTimestamp().ToPresentationTime());
   }
