@@ -38,6 +38,7 @@
 #include "core/editing/SetSelectionOptions.h"
 #include "core/editing/commands/TypingCommand.h"
 #include "core/editing/markers/DocumentMarkerController.h"
+#include "core/editing/spellcheck/SpellChecker.h"
 #include "core/editing/state_machines/BackwardCodePointStateMachine.h"
 #include "core/editing/state_machines/ForwardCodePointStateMachine.h"
 #include "core/events/CompositionEvent.h"
@@ -496,21 +497,38 @@ void InputMethodController::AddImeTextSpans(
     if (ephemeral_line_range.IsNull())
       continue;
 
-    if (ime_text_span.GetType() == ImeTextSpan::Type::kComposition) {
-      GetDocument().Markers().AddCompositionMarker(
-          ephemeral_line_range, ime_text_span.UnderlineColor(),
-          ime_text_span.Thick() ? StyleableMarker::Thickness::kThick
-                                : StyleableMarker::Thickness::kThin,
-          ime_text_span.BackgroundColor());
-    } else if (ime_text_span.GetType() == ImeTextSpan::Type::kSuggestion) {
-      GetDocument().Markers().AddSuggestionMarker(
-          ephemeral_line_range, ime_text_span.Suggestions(),
-          SuggestionMarker::SuggestionType::kNotMisspelling,
-          ime_text_span.SuggestionHighlightColor(),
-          ime_text_span.UnderlineColor(),
-          ime_text_span.Thick() ? StyleableMarker::Thickness::kThick
-                                : StyleableMarker::Thickness::kThin,
-          ime_text_span.BackgroundColor());
+    switch (ime_text_span.GetType()) {
+      case ImeTextSpan::Type::kComposition:
+        GetDocument().Markers().AddCompositionMarker(
+            ephemeral_line_range, ime_text_span.UnderlineColor(),
+            ime_text_span.Thick() ? StyleableMarker::Thickness::kThick
+                                  : StyleableMarker::Thickness::kThin,
+            ime_text_span.BackgroundColor());
+        break;
+      case ImeTextSpan::Type::kSuggestion:
+      case ImeTextSpan::Type::kMisspellingSuggestion:
+        const SuggestionMarker::SuggestionType suggestion_type =
+            ime_text_span.GetType() == ImeTextSpan::Type::kMisspellingSuggestion
+                ? SuggestionMarker::SuggestionType::kMisspelling
+                : SuggestionMarker::SuggestionType::kNotMisspelling;
+
+        // If spell-checking is disabled for an element, we ignore suggestion
+        // markers used to mark misspelled words, but allow other ones (e.g.,
+        // markers added by an IME to allow picking between multiple possible
+        // words, none of which is necessarily misspelled).
+        if (suggestion_type == SuggestionMarker::SuggestionType::kMisspelling &&
+            !SpellChecker::IsSpellCheckingEnabledAt(
+                ephemeral_line_range.StartPosition()))
+          return;
+
+        GetDocument().Markers().AddSuggestionMarker(
+            ephemeral_line_range, ime_text_span.Suggestions(), suggestion_type,
+            ime_text_span.SuggestionHighlightColor(),
+            ime_text_span.UnderlineColor(),
+            ime_text_span.Thick() ? StyleableMarker::Thickness::kThick
+                                  : StyleableMarker::Thickness::kThin,
+            ime_text_span.BackgroundColor());
+        break;
     }
   }
 }
