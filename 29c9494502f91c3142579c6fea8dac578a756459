@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e0a271fb_3f06473f",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/change-column-count-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-11T19:44:33Z",
+      "side": 1,
+      "message": "No need for the -webkit- prefix.",
+      "revId": "29c9494502f91c3142579c6fea8dac578a756459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f5f34f3_cb8989b7",
         "filename": "third_party/WebKit/LayoutTests/fast/multicol/change-column-count-crash.html",
         "patchSetId": 3
@@ -13,6 +30,41 @@
       "writtenOn": "2017-09-11T19:02:43Z",
       "side": 1,
       "message": "Oddly, all of these divs are required. Not sure why.",
+      "revId": "29c9494502f91c3142579c6fea8dac578a756459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd99ac9_ac695699",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/change-column-count-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-11T19:44:33Z",
+      "side": 1,
+      "message": "Because that increases the chances of a layout pass before adding the text to #target, perhaps?\n\nDid you try to do a document.body.offsetTop (to force layout) before changing the DOM instead?",
+      "parentUuid": "4f5f34f3_cb8989b7",
+      "revId": "29c9494502f91c3142579c6fea8dac578a756459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63cc76a6_2b6fd35f",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/change-column-count-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-11T19:44:33Z",
+      "side": 1,
+      "message": "Should write a testharness test instead, to eliminate the need for the -expected.txt file.",
       "revId": "29c9494502f91c3142579c6fea8dac578a756459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
