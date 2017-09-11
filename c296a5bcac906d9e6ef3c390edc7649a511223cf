@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a8227048_b5d76166",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/BiquadFilter/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-11T16:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea6a05ee_48e6d81e",
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd139a09_34cfab46",
         "filename": "third_party/WebKit/LayoutTests/webaudio/BiquadFilter/dezipper.html",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1962218_18b36b69",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/BiquadFilter/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-11T16:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd139a09_34cfab46",
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c5a67600_686cbc4b",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/BiquadFilter/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-11T16:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10328b2d_384ee8bb",
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f85b26f_fedd4bcb",
         "filename": "third_party/WebKit/LayoutTests/webaudio/BiquadFilter/dezipper.html",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "352ed38f_5c518386",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/BiquadFilter/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-11T16:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f85b26f_fedd4bcb",
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "fcabe3cf_ed938ec0",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/BiquadFilter/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-11T16:27:00Z",
+      "side": 1,
+      "message": "Heh. clang-format mangled that from a simple `Output from ${paramName} setter...`\n\nShould I rewrite to \u0027Output from \u0027 + paramName + \u0027 setter...\u0027?",
+      "parentUuid": "7a0166a7_a8338e38",
+      "range": {
+        "startLine": 268,
+        "startChar": 18,
+        "endLine": 270,
+        "endChar": 70
+      },
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b30b92f9_de6dce27",
         "filename": "third_party/WebKit/Source/modules/webaudio/BiquadDSPKernel.cpp",
         "patchSetId": 6
@@ -104,6 +200,30 @@
       "writtenOn": "2017-09-11T15:55:42Z",
       "side": 1,
       "message": "Is this the only part that does smoothing?",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 61
+      },
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48a0408_bdb924e4",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BiquadDSPKernel.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-11T16:27:00Z",
+      "side": 1,
+      "message": "I believe so.",
+      "parentUuid": "b30b92f9_de6dce27",
       "range": {
         "startLine": 55,
         "startChar": 6,
@@ -150,6 +270,30 @@
       "writtenOn": "2017-09-11T15:55:42Z",
       "side": 1,
       "message": "So smoothing can still happen if this code path runs. Or am I missing something?",
+      "range": {
+        "startLine": 92,
+        "startChar": 37,
+        "endLine": 92,
+        "endChar": 46
+      },
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e8be89_8287d24a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BiquadProcessor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-11T16:27:00Z",
+      "side": 1,
+      "message": "Yes and no. What this does is basically check to see if the new value is different from the previous value and sets filter_coefficients_dirty_ to be true if so.  Then in UpdateCoefficientsIfNecessary(), filter_coefficients_dirty_ is checked.  If they\u0027re dirty, we update immediately to the new value instead of using SmoothedValue() to get a smoothed value.\n\nPerhaps I should rewwrite this and make the biquad filter keep track of the previous set value.\n\nI was kind of thinking this would be done when the Smooth() methods are removed.",
+      "parentUuid": "a9eebb4e_754e0162",
       "range": {
         "startLine": 92,
         "startChar": 37,
