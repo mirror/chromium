@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48045859_7783d4aa",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T05:18:45Z",
+      "side": 1,
+      "message": "can you use OnceClosure for new code?",
+      "revId": "d00c51b29e4c53ca93815e686bad7a08ac552854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
