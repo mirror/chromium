@@ -22,7 +22,7 @@ class MessageLoop;
 class SequencedWorkerPool;
 }
 
-namespace tracked_objects {
+namespace base {
 class Location;
 }
 
@@ -93,30 +93,29 @@ class WebThread {
   // otherwise.
   // They return true iff the thread existed and the task was posted.
   static bool PostTask(ID identifier,
-                       const tracked_objects::Location& from_here,
+                       const base::Location& from_here,
                        base::OnceClosure task);
   static bool PostDelayedTask(ID identifier,
-                              const tracked_objects::Location& from_here,
+                              const base::Location& from_here,
                               base::OnceClosure task,
                               base::TimeDelta delay);
   static bool PostNonNestableTask(ID identifier,
-                                  const tracked_objects::Location& from_here,
+                                  const base::Location& from_here,
                                   base::OnceClosure task);
-  static bool PostNonNestableDelayedTask(
-      ID identifier,
-      const tracked_objects::Location& from_here,
-      base::OnceClosure task,
-      base::TimeDelta delay);
+  static bool PostNonNestableDelayedTask(ID identifier,
+                                         const base::Location& from_here,
+                                         base::OnceClosure task,
+                                         base::TimeDelta delay);
 
   static bool PostTaskAndReply(ID identifier,
-                               const tracked_objects::Location& from_here,
+                               const base::Location& from_here,
                                base::OnceClosure task,
                                base::OnceClosure reply);
 
   template <typename ReturnType, typename ReplyArgType>
   static bool PostTaskAndReplyWithResult(
       ID identifier,
-      const tracked_objects::Location& from_here,
+      const base::Location& from_here,
       base::OnceCallback<ReturnType()> task,
       base::OnceCallback<void(ReplyArgType)> reply) {
     scoped_refptr<base::SingleThreadTaskRunner> task_runner =
@@ -127,7 +126,7 @@ class WebThread {
 
   template <class T>
   static bool DeleteSoon(ID identifier,
-                         const tracked_objects::Location& from_here,
+                         const base::Location& from_here,
                          const T* object) {
     return GetTaskRunnerForThread(identifier)->DeleteSoon(from_here, object);
   }
@@ -153,15 +152,14 @@ class WebThread {
   // If you need to PostTaskAndReplyWithResult, use
   // base::PostTaskAndReplyWithResult() with GetBlockingPool() as the task
   // runner.
-  static bool PostBlockingPoolTask(const tracked_objects::Location& from_here,
+  static bool PostBlockingPoolTask(const base::Location& from_here,
                                    base::OnceClosure task);
-  static bool PostBlockingPoolTaskAndReply(
-      const tracked_objects::Location& from_here,
-      base::OnceClosure task,
-      base::OnceClosure reply);
+  static bool PostBlockingPoolTaskAndReply(const base::Location& from_here,
+                                           base::OnceClosure task,
+                                           base::OnceClosure reply);
   static bool PostBlockingPoolSequencedTask(
       const std::string& sequence_token_name,
-      const tracked_objects::Location& from_here,
+      const base::Location& from_here,
       base::OnceClosure task);
 
   // Returns the thread pool used for blocking file I/O. Use this object to
