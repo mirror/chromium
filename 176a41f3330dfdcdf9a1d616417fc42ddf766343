@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "630c3706_3db5d7ab",
+        "filename": "cc/layers/nine_patch_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-09-11T05:33:29Z",
+      "side": 1,
+      "message": "you are welcome :)",
+      "parentUuid": "89600bf9_87cfb976",
+      "revId": "176a41f3330dfdcdf9a1d616417fc42ddf766343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66984e94_d42af842",
         "filename": "cc/layers/ui_resource_layer_impl.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "febb1d02_bdb66a75",
+        "filename": "cc/layers/ui_resource_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-09-11T05:33:29Z",
+      "side": 1,
+      "message": "i think you mean that I should make one single call to ResourceIdForUIResource. Since it does not request a valid ui_resource_id_, I will make the call before verification.",
+      "parentUuid": "66984e94_d42af842",
+      "revId": "176a41f3330dfdcdf9a1d616417fc42ddf766343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe4c21e0_af1921c0",
         "filename": "cc/layers/ui_resource_layer_impl.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-08T21:32:56Z",
       "side": 1,
       "message": "remove this :)",
+      "revId": "176a41f3330dfdcdf9a1d616417fc42ddf766343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135f69de_6d41741f",
+        "filename": "cc/layers/ui_resource_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-09-11T05:33:29Z",
+      "side": 1,
+      "message": "Sorry.\nDone",
+      "parentUuid": "fe4c21e0_af1921c0",
       "revId": "176a41f3330dfdcdf9a1d616417fc42ddf766343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
