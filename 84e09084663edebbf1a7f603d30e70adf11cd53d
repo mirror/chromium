@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10e91933_8d2f8b83",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-11T12:34:56Z",
+      "side": 1,
+      "message": "nit: add a . at the end of this comment.",
+      "revId": "84e09084663edebbf1a7f603d30e70adf11cd53d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
