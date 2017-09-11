@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a61e6c11_10e6e41b",
+        "filename": "components/autofill/core/common/password_form.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-11T15:01:19Z",
+      "side": 1,
+      "message": "To me, it makes more sense and should simplify the logic. \n\nnit: did you consider to rename the variable to |all_possible_passwords|?",
+      "range": {
+        "startLine": 188,
+        "startChar": 29,
+        "endLine": 188,
+        "endChar": 61
+      },
+      "revId": "0d04c1eb92d29fb5087d5bf26bfb8404af1429a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
