@@ -10,6 +10,7 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/optional.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/browser_process.h"
@@ -67,8 +68,6 @@ using testing::Return;
 using testing::_;
 
 using chromeos::CryptohomeClient;
-using chromeos::DBUS_METHOD_CALL_SUCCESS;
-using chromeos::DBusMethodCallStatus;
 using chromeos::DBusThreadManager;
 using chromeos::NetworkPortalDetector;
 using chromeos::NetworkPortalDetectorTestImpl;
@@ -212,13 +211,6 @@ class NetworkingPrivateChromeOSApiTest : public ExtensionApiTest {
     ExtensionApiTest::SetUpInProcessBrowserTestFixture();
   }
 
-  static void AssignString(std::string* out,
-                           DBusMethodCallStatus call_status,
-                           const std::string& result) {
-    CHECK_EQ(call_status, DBUS_METHOD_CALL_SUCCESS);
-    *out = result;
-  }
-
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ExtensionApiTest::SetUpCommandLine(command_line);
     // Whitelist the extension ID of the test extension.
@@ -245,7 +237,12 @@ class NetworkingPrivateChromeOSApiTest : public ExtensionApiTest {
     std::string userhash;
     DBusThreadManager::Get()->GetCryptohomeClient()->GetSanitizedUsername(
         cryptohome::Identification(user->GetAccountId()),
-        base::Bind(&AssignString, &userhash_));
+        base::BindOnce(
+            [](std::string* out, base::Optional<std::string> result) {
+              CHECK(result.has_value());
+              *out = std::move(result).value();
+            },
+            &userhash_));
     content::RunAllPendingInMessageLoop();
     CHECK(!userhash_.empty());
   }
