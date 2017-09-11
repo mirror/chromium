@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48b3b68f_7d78ec04",
+        "filename": "third_party/WebKit/Source/core/editing/markers/MarkerTestUtilities.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-11T14:08:30Z",
+      "side": 1,
+      "message": "I don\u0027t know which coding style this naming adheres to (CompareMarkers is what I\u0027d expected), but maybe there was a good reason...",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "4574e7862352ea362b69d82e16ec33f50aa3dd7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
