@@ -950,6 +950,46 @@ IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest, NewNamedWindow) {
   }
 }
 
+// Test that HasOriginalOpener() tracks provenance through closed WebContentses.
+IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest,
+                       HasOriginalOpenerTracksThroughClosedWebContents) {
+  Shell* shell1 = shell();
+  NavigateToURL(shell1, GURL("about:blank"));
+
+  Shell* shell2 = nullptr;
+  {
+    ShellAddedObserver new_shell_observer;
+    EXPECT_TRUE(
+        ExecuteScript(shell1, "window.open('about:blank','new_window1');"));
+
+    shell2 = new_shell_observer.GetShell();
+    WaitForLoadStop(shell2->web_contents());
+  }
+
+  Shell* shell3 = nullptr;
+  {
+    ShellAddedObserver new_shell_observer;
+    EXPECT_TRUE(
+        ExecuteScript(shell2, "window.open('about:blank','new_window2');"));
+
+    shell3 = new_shell_observer.GetShell();
+    WaitForLoadStop(shell3->web_contents());
+  }
+
+  EXPECT_EQ(shell2->web_contents(),
+            WebContents::FromRenderFrameHost(
+                shell3->web_contents()->GetOriginalOpener()));
+  EXPECT_EQ(shell1->web_contents(),
+            WebContents::FromRenderFrameHost(
+                shell2->web_contents()->GetOriginalOpener()));
+
+  shell2->Close();
+
+  EXPECT_EQ(shell1->web_contents(),
+            WebContents::FromRenderFrameHost(
+                shell3->web_contents()->GetOriginalOpener()));
+}
+
 // TODO(clamy): Make the test work on Windows and on Mac. On Mac and Windows,
 // there seem to be an issue with the ShellJavascriptDialogManager.
 // Flaky on all platforms: https://crbug.com/655628
