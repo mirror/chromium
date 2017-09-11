@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "c81ad19c_b9b2bb54",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-11T16:02:41Z",
+      "side": 1,
+      "message": "I don\u0027t see the value in using LogcatMonitor. It assumes you want to write to disk, and this code doesn\u0027t use any of the other functionality it provides. I think we should at least finish building out this feature without LogcatMonitor before deciding whether it\u0027s a good idea to upstream some of it. If we switch to it now, I think it would do nothing except limit our flexibility.",
+      "parentUuid": "883aadfa_9dc468c1",
+      "revId": "2cb4502be2ec5ac14bb12619fce7d92332d138bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48faf0d6_d1509c2e",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
