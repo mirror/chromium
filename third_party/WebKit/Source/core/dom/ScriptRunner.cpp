@@ -281,6 +281,9 @@ bool ScriptRunner::DoTryStream(ScriptLoader* script_loader) {
   if (!pending_script)
     return false;
 
+  if (pending_script->IsCurrentlyStreaming())
+    return false;
+
   bool success = pending_script->StartStreamingIfPossible(
       ScriptStreamer::kAsync,
       WTF::Bind(&ScriptRunner::NotifyScriptStreamerFinished,

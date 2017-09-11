@@ -383,12 +383,10 @@ void ScriptStreamer::StartStreamingLoadedScript(
   // Since the script has already loaded, we will not receive any
   // notificatations for incoming data. So we will just emulate those right
   // here.
-  DCHECK(resource->IsLoaded());
+  script->SetStreamer(streamer);
+  CHECK(resource->IsLoaded());
   streamer->NotifyAppendData(resource);
-  if (!streamer->StreamingSuppressed()) {
-    script->SetStreamer(streamer);
-    streamer->NotifyFinished(resource);
-  }
+  streamer->NotifyFinished(resource);
 }
 
 bool ScriptStreamer::ConvertEncoding(
