@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47d01896_e187853d",
+        "filename": "tools/perf/benchmarks/loading.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-11T23:47:26Z",
+      "side": 1,
+      "message": "We don\u0027t care about reference browser failing anymore",
+      "revId": "2d9c3e56b8d6bb09cc9ab456874edecfa0f4fb9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
