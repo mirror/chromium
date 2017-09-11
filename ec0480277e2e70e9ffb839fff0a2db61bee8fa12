@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd1737a1_b885ce9a",
+        "filename": "third_party/WebKit/Source/bindings/templates/dictionary_impl.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-11T09:01:40Z",
+      "side": 1,
+      "message": "because I feel it strange to import dictionary.cpp.tmpl in dictionary.h.tmpl.\n\n+small nit: put a space before %}",
+      "parentUuid": "f0a3a618_3a0a1107",
+      "revId": "ec0480277e2e70e9ffb839fff0a2db61bee8fa12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f13933a_c79bab94",
         "filename": "third_party/WebKit/Source/bindings/templates/dictionary_impl.cpp.tmpl",
         "patchSetId": 2
