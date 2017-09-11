@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "b950bbee_3fb4fe71",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-11T21:01:07Z",
+      "side": 1,
+      "message": "Since we\u0027re here, can we add comments saying to keep this in sync with entry \"xyz\" in enums.xml?",
+      "range": {
+        "startLine": 562,
+        "startChar": 0,
+        "endLine": 562,
+        "endChar": 22
+      },
+      "revId": "fa7f15ef07bddfa598751dbe41c1a15c2ef07e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61662bfb_975fde78",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-11T21:01:07Z",
+      "side": 1,
+      "message": "Does it make sense to generalize this out a bit from all the helper methods?  e.g. something like enum class : public uint32_t, return a uint32_t from the helper, pass in the arraysize(), etc.?",
+      "range": {
+        "startLine": 670,
+        "startChar": 2,
+        "endLine": 677,
+        "endChar": 3
+      },
+      "revId": "fa7f15ef07bddfa598751dbe41c1a15c2ef07e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a9e5624_9c71092a",
         "filename": "content/browser/download/download_stats.cc",
         "patchSetId": 3
