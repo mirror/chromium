@@ -1485,6 +1485,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 
   bool always_uses_gpu = true;
   bool established_gpu_channel = false;
+  const bool is_mus = IsUsingMus();
 #if defined(OS_ANDROID)
   // TODO(crbug.com/439322): This should be set to |true|.
   established_gpu_channel = false;
@@ -1494,7 +1495,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   established_gpu_channel = true;
   if (!GpuDataManagerImpl::GetInstance()->CanUseGpuBrowserCompositor() ||
       parsed_command_line_.HasSwitch(switches::kDisableGpuEarlyInit) ||
-      IsUsingMus()) {
+      is_mus) {
     established_gpu_channel = always_uses_gpu = false;
   }
   gpu::GpuChannelEstablishFactory* factory =
@@ -1504,7 +1505,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
     factory = BrowserGpuChannelHostFactory::instance();
   }
 #if !defined(OS_ANDROID)
-  if (!IsUsingMus()) {
+  if (!is_mus) {
     // TODO(kylechar): Remove flag along with surface sequences.
     // See https://crbug.com/676384.
     auto surface_lifetime_type =
@@ -1525,8 +1526,11 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 #endif
 
   DCHECK(factory);
-  ImageTransportFactory::Initialize(GetResizeTaskRunner());
-  ImageTransportFactory::GetInstance()->SetGpuChannelEstablishFactory(factory);
+  if (!is_mus) {
+    ImageTransportFactory::Initialize(GetResizeTaskRunner());
+    ImageTransportFactory::GetInstance()->SetGpuChannelEstablishFactory(
+        factory);
+  }
 #if defined(USE_AURA)
   if (env_->mode() == aura::Env::Mode::LOCAL) {
     env_->set_context_factory(GetContextFactory());
@@ -1628,7 +1632,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   // ChildProcess instance which is created by the renderer thread.
   if (GpuDataManagerImpl::GetInstance()->GpuAccessAllowed(NULL) &&
       !established_gpu_channel && always_uses_gpu && !UsingInProcessGpu() &&
-      !IsUsingMus()) {
+      !is_mus) {
     TRACE_EVENT_INSTANT0("gpu", "Post task to launch GPU process",
                          TRACE_EVENT_SCOPE_THREAD);
     BrowserThread::PostTask(
