@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5ab1b31_c802c1c0",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-11T18:29:24Z",
+      "side": 1,
+      "message": "Is it always safe to create/recreate based on window content changed? Could we get window content change on existing notification? It could result in an automation client losing focus/context.",
+      "revId": "a502ec832fb8f3cf1029f0379ca4da84e96479a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "460d5262_781d4593",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-11T18:29:24Z",
+      "side": 1,
+      "message": "I\u0027m assuming the hosting widget gets destroyed here (so we need do nothing to notify automation clients of the notification\u0027s removal).",
+      "revId": "a502ec832fb8f3cf1029f0379ca4da84e96479a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58dae8df_76536b85",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-11T18:29:24Z",
+      "side": 1,
+      "message": "Will we always want to create this tree source for all filter modes?",
+      "revId": "a502ec832fb8f3cf1029f0379ca4da84e96479a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae0b2e42_efc3e090",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-11T18:29:24Z",
+      "side": 1,
+      "message": "The interface intentionally hides the ax tree id. You should get it via getting the ax tree data (see other examples in this file).",
+      "revId": "a502ec832fb8f3cf1029f0379ca4da84e96479a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2b03653_018625f7",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-11T18:29:24Z",
+      "side": 1,
+      "message": "Simple accessers go into header as +int32_t root_id() { return root_id_; }",
+      "revId": "a502ec832fb8f3cf1029f0379ca4da84e96479a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
