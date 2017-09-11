@@ -57,6 +57,8 @@ class UI_BASE_EXPORT OSExchangeDataProviderMac
   // Returns the data for the specified type in the pasteboard.
   NSData* GetNSDataForType(NSString* type) const;
 
+  NSArray* GetAvailableTypes() const;
+
   // Creates an OSExchangeData object from the given NSPasteboard object.
   static std::unique_ptr<OSExchangeData> CreateDataFromPasteboard(
       NSPasteboard* pasteboard);
