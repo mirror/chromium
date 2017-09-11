@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "fadcce63_6370a33d",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T01:18:15Z",
+      "side": 1,
+      "message": "Yea let\u0027s do ERR_ABORTED for now. I\u0027d rather tell the client that the load was aborted instead of CONN_RESET, which feels more of an error at the network level (at the TCP layer). +shimazu FYI: does this sound right?",
+      "parentUuid": "6d7d6bdd_4dcee46c",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9994a639_839824c6",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
         "patchSetId": 2
