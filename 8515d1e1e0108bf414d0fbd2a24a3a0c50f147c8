@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "f7b86879_0a2dacf7",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-09-11T22:14:00Z",
+      "side": 1,
+      "message": "Yeah, I agree; I don\u0027t think there\u0027s any reason to group all the converters together into a utility class instead of just inlining them.",
+      "parentUuid": "749217e1_38007228",
+      "revId": "8515d1e1e0108bf414d0fbd2a24a3a0c50f147c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ec2f12d_04c49a76",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
         "patchSetId": 5
@@ -53,6 +71,24 @@
       "writtenOn": "2017-09-11T18:57:40Z",
       "side": 1,
       "message": "wow is this comment from android source? this is referring to the pre-kitkat webview that wasn\u0027t based on chromium :p",
+      "revId": "8515d1e1e0108bf414d0fbd2a24a3a0c50f147c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e3506d_a1ee278f",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-09-11T22:14:00Z",
+      "side": 1,
+      "message": "Yeah, we don\u0027t rely on enums matching up that way any more ;)",
+      "parentUuid": "7ec2f12d_04c49a76",
       "revId": "8515d1e1e0108bf414d0fbd2a24a3a0c50f147c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
