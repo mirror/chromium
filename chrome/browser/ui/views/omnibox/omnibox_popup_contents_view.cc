@@ -60,18 +60,6 @@ class OmniboxPopupContentsView::AutocompletePopupWidget
 ////////////////////////////////////////////////////////////////////////////////
 // OmniboxPopupContentsView, public:
 
-OmniboxPopupView* OmniboxPopupContentsView::Create(
-    const gfx::FontList& font_list,
-    OmniboxView* omnibox_view,
-    OmniboxEditModel* edit_model,
-    LocationBarView* location_bar_view) {
-  OmniboxPopupContentsView* view = nullptr;
-  view = new OmniboxPopupContentsView(
-      font_list, omnibox_view, edit_model, location_bar_view);
-  view->Init();
-  return view;
-}
-
 OmniboxPopupContentsView::OmniboxPopupContentsView(
     const gfx::FontList& font_list,
     OmniboxView* omnibox_view,
@@ -114,14 +102,9 @@ OmniboxPopupContentsView::OmniboxPopupContentsView(
     g_bottom_shadow.Get() =
         gfx::ImageSkiaOperations::CreateHorizontalShadow(shadows, true);
   }
-}
 
-void OmniboxPopupContentsView::Init() {
-  // This can't be done in the constructor as at that point we aren't
-  // necessarily our final class yet, and we may have subclasses
-  // overriding CreateResultView.
   for (size_t i = 0; i < AutocompleteResult::GetMaxMatches(); ++i) {
-    OmniboxResultView* result_view = CreateResultView(i, font_list_);
+    OmniboxResultView* result_view = new OmniboxResultView(this, i, font_list_);
     result_view->SetVisible(false);
     AddChildViewAt(result_view, static_cast<int>(i));
   }
@@ -440,12 +423,6 @@ int OmniboxPopupContentsView::CalculatePopupHeight() {
   // interior between each row of text.
   return popup_height + kPopupVerticalPadding * 2 +
          g_top_shadow.Get().height() + g_bottom_shadow.Get().height();
-}
-
-OmniboxResultView* OmniboxPopupContentsView::CreateResultView(
-    int model_index,
-    const gfx::FontList& font_list) {
-  return new OmniboxResultView(this, model_index, font_list);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
