@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "73a2f99f_1d9269b6",
+        "filename": "chrome/browser/chromeos/eol_notification.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-11T16:27:29Z",
+      "side": 1,
+      "message": "Yeah. NDS won\u0027t care about delegate IDs anymore, it\u0027ll just use a value unique to the particular notification.",
+      "parentUuid": "9b99eb2e_e0df52a3",
+      "range": {
+        "startLine": 78,
+        "startChar": 38,
+        "endLine": 78,
+        "endChar": 42
+      },
+      "revId": "f6617bde2fc223c2fb86349cfb84dccf50a9ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f69db73e_fb42cc79",
         "filename": "chrome/browser/chromeos/eol_notification.cc",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-02T00:13:44Z",
       "side": 1,
       "message": "is this id ever not the same as notification.tag?",
+      "range": {
+        "startLine": 169,
+        "startChar": 38,
+        "endLine": 169,
+        "endChar": 56
+      },
+      "revId": "f6617bde2fc223c2fb86349cfb84dccf50a9ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca44784_d437d27e",
+        "filename": "chrome/browser/chromeos/eol_notification.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-11T16:27:29Z",
+      "side": 1,
+      "message": "The MessageCenterNotificationManager kept them separate and then specialized on the per-origin restrictions unique to the developer-exposed uses. For NDS they\u0027re identical.",
+      "parentUuid": "f69db73e_fb42cc79",
       "range": {
         "startLine": 169,
         "startChar": 38,
