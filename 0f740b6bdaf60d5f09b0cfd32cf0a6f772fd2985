@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39364c35_4ac7a366",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1226098
+      },
+      "writtenOn": "2017-09-11T08:59:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b00ff705_eed5b31b",
+      "revId": "0f740b6bdaf60d5f09b0cfd32cf0a6f772fd2985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a66a2040_479b8c79",
         "filename": "third_party/WebKit/Source/modules/payments/PaymentResponse.idl",
         "patchSetId": 2
