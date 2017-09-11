@@ -218,7 +218,7 @@ if (is_android) {
   # than just the current one) since these are needed by the Android toolchain
   # file to define toolchains for all possible targets in one pass.
 
-  android_sdk = "${android_sdk_root}/platforms/android-${android_sdk_version}"
+  android_sdk = "${android_sdk_root}/platforms/$android_sdk_build_tools_version"
 
   # Path to the Android NDK and SDK.
   android_ndk_include_dir = "$android_ndk_root/usr/include"
