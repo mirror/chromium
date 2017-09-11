@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f36a2e7e_722c5ddc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-11T18:13:29Z",
+      "side": 1,
+      "message": "Can you make the first line more descriptive? This is what appears in the compact form of git log.\n\nI would make this say:\n\nUpdate test_tool.py to use the C++14 standard when running tests.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "d1c3c7c0dd410d66b6b45244c3398322063ab7ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c86a09_613c51d2",
+        "filename": "tools/clang/scripts/test_tool.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-11T18:13:29Z",
+      "side": 1,
+      "message": "How about doing f.read().splitlines()?",
+      "revId": "d1c3c7c0dd410d66b6b45244c3398322063ab7ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
