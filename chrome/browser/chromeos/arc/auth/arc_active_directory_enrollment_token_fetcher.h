@@ -84,9 +84,6 @@ class ArcActiveDirectoryEnrollmentTokenFetcher
   // Calls callback_ with an error status and resets state.
   void CancelSamlFlow();
 
-  // Callback called from ArcSupportHost when the SAML flow is finished.
-  void OnSamlFlowFinished(bool result);
-
   ArcSupportHost* const support_host_ = nullptr;  // Not owned.
 
   std::unique_ptr<policy::DeviceManagementRequestJob> fetch_request_job_;
