@@ -11,7 +11,25 @@
 
 namespace blink {
 
-class SimplifiedBackwardsTextIteratorTest : public EditingTestBase {};
+class SimplifiedBackwardsTextIteratorTest : public EditingTestBase {
+ protected:
+  void InsertStyleElement(const std::string& style_rules) {
+    Element* const style = GetDocument().createElement("style");
+    style->setTextContent(String(style_rules.data(), style_rules.size()));
+    GetDocument().body()->parentNode()->InsertBefore(style,
+                                                     GetDocument().body());
+  }
+
+  std::string ExtractStringInRange(const std::string selection_text) {
+    const SelectionInDOMTree selection = SetSelectionTextToBody(selection_text);
+    SimplifiedBackwardsTextIterator iterator(EphemeralRange(
+        selection.ComputeStartPosition(), selection.ComputeEndPosition()));
+    BackwardsTextBuffer buffer;
+    iterator.CopyTextTo(&buffer);
+    CString utf8 = String(buffer.Data(), buffer.Size()).Utf8();
+    return std::string(utf8.data(), utf8.length());
+  }
+};
 
 template <typename Strategy>
 static String ExtractString(const Element& element) {
@@ -23,6 +41,25 @@ static String ExtractString(const Element& element) {
     it.CopyTextTo(&buffer);
   }
   return String(buffer.Data(), buffer.Size());
+}
+
+TEST_F(SimplifiedBackwardsTextIteratorTest, CopyTextToInFirstLetterPart) {
+  InsertStyleElement("p::first-letter {font-size: 200%}");
+  // TODO(editing-dev): |SimplifiedBackwardsTextIterator| should not account
+  // collapsed whitespace (http://crbug.com/760428)
+
+  // Simulate PreviousBoundary()
+  EXPECT_EQ(" ", ExtractStringInRange("^<p> |[(3)]678</p>"));
+  EXPECT_EQ(" [", ExtractStringInRange("^<p> [|(3)]678</p>"));
+  EXPECT_EQ(" [(", ExtractStringInRange("^<p> [(|3)]678</p>"));
+  EXPECT_EQ(" [(3", ExtractStringInRange("^<p> [(3|)]678</p>"));
+  EXPECT_EQ(" [(3)", ExtractStringInRange("^<p> [(3)|]678</p>"));
+  EXPECT_EQ(" [(3)]", ExtractStringInRange("^<p> [(3)]|678</p>"));
+  EXPECT_EQ("6", ExtractStringInRange("^<p> [(3)]6|78</p>"))
+      << "|iterator| in remaining part";
+
+  EXPECT_EQ("(3)", ExtractStringInRange("<p> [^(3)|]678</p>"))
+      << "Iterate in first-letter patter";
 }
 
 TEST_F(SimplifiedBackwardsTextIteratorTest, Basic) {
