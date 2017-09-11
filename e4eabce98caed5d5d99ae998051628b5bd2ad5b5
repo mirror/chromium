@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd20e24b_ae5350bc",
+        "filename": "device/u2f/u2f_command_type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1175054
+      },
+      "writtenOn": "2017-09-11T14:31:01Z",
+      "side": 1,
+      "message": "Yes this is also true for USB. I think you could be more succinct by splitting the comment into 2 comments, with corresponding comments above each command.",
+      "parentUuid": "2922614b_19338a7d",
+      "revId": "e4eabce98caed5d5d99ae998051628b5bd2ad5b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63529ae7_a6b71550",
         "filename": "device/u2f/u2f_command_type.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-11T10:03:11Z",
       "side": 1,
       "message": "Casey: Should I elaborate here on what these commands are for?",
+      "revId": "e4eabce98caed5d5d99ae998051628b5bd2ad5b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a92f9628_a9ec108b",
+        "filename": "device/u2f/u2f_command_type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1175054
+      },
+      "writtenOn": "2017-09-11T14:31:01Z",
+      "side": 1,
+      "message": "I think that would be useful if you did. INIT is used for requesting a unique channel from the device, WINK is to indicate to the user that this device is active.",
+      "parentUuid": "63529ae7_a6b71550",
       "revId": "e4eabce98caed5d5d99ae998051628b5bd2ad5b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
