@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e642fe3e_e7621d0b",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T20:34:34Z",
+      "side": 1,
+      "message": "I wonder if we can shortcut it at least a little bit. In original version I think we were actually only using that to clean cache... so that would be my first attempt at filtering stuff down a little bit. (By namespace)",
+      "range": {
+        "startLine": 179,
+        "startChar": 17,
+        "endLine": 179,
+        "endChar": 58
+      },
+      "revId": "fa438808582e14fc43e89b914ed98e17d8881964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8347d62d_d769112d",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T20:34:34Z",
+      "side": 1,
+      "message": "put space in next line",
+      "range": {
+        "startLine": 185,
+        "startChar": 65,
+        "endLine": 185,
+        "endChar": 66
+      },
+      "revId": "fa438808582e14fc43e89b914ed98e17d8881964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd1f849_82dc5b75",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T20:34:34Z",
+      "side": 1,
+      "message": "That conversion could be done above in anonymous namespace and then we don\u0027t leak all of the internal abstractions and representations. e.g. PageInfo...\n\nYou could do it by wrapping the original callback in the factory method.\n\nSee: https://chromium-review.googlesource.com/c/chromium/src/+/658202/2/components/offline_pages/core/model/get_pages_task.cc#198 for example.",
+      "range": {
+        "startLine": 281,
+        "startChar": 49,
+        "endLine": 281,
+        "endChar": 66
+      },
+      "revId": "fa438808582e14fc43e89b914ed98e17d8881964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed1ea53b_e22363ce",
+        "filename": "components/offline_pages/core/model/delete_page_task.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T20:34:34Z",
+      "side": 1,
+      "message": "it will be peculiar to use as a pair.\nDid you consider simply having a struct with: { result; pages; } ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 26
+      },
+      "revId": "fa438808582e14fc43e89b914ed98e17d8881964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94208200_0815f30e",
+        "filename": "components/offline_pages/core/model/delete_page_task.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T20:34:34Z",
+      "side": 1,
+      "message": "I am a little worried with the number of different pageinfo/result objects declared in this Task, and outside of it.\n\nI\u0027ll gladly take a second look at that with you to try to minimize it, or hide as much as possible in anonymous namespace as implementation detail.",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 57
+      },
+      "revId": "fa438808582e14fc43e89b914ed98e17d8881964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
