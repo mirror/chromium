@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42a91a70_91953c42",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-11T19:43:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure that\u0027s enough. While the stop button needs updating at load stop time, and the back/forward also, the starred state can change at any time. (Open the same page in two windows; when you star one of them, the star in the window of the other updates too.)\n\nI\u0027m not sure offhand how to tie into that.",
+      "range": {
+        "startLine": 515,
+        "startChar": 8,
+        "endLine": 515,
+        "endChar": 27
+      },
+      "revId": "00cb1dda9c3058de553272abab42b82cb2127415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
