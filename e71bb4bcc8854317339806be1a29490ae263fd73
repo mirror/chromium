@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d462873f_8849e154",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-11T05:04:13Z",
+      "side": 1,
+      "message": "nit: move this into a constant since you\u0027re repeating it",
+      "range": {
+        "startLine": 158,
+        "startChar": 57,
+        "endLine": 158,
+        "endChar": 62
+      },
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36b401d_7a4b23b5",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-11T05:04:13Z",
+      "side": 1,
+      "message": "how did you test this? you don\u0027t have break statements here, so i suspect each of these cases will fall through and register extra locks and then you\u0027ll log a warning and return... right?",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a317bec_3e1c204c",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-11T05:04:13Z",
+      "side": 1,
+      "message": "just inline AcquireWakeLockInternal calls in the various cases above?",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2f7ea4_699f535b",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-11T05:04:13Z",
+      "side": 1,
+      "message": "inline this call above too?",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d494e8a4_08e0bfbd",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-11T05:04:13Z",
+      "side": 1,
+      "message": "please add comments documenting this, e.g.\n\n  // Information about wake locks registered with PowerPolicyController\n  // in Chrome. All Android wake locks of a given type are condensed\n  // into a single Chrome wake lock.\n  struct WakeLockInfo {\n    // ID returned by PowerPolicyController.\n    int id;\n    // Number of Android wake locks held at this level.\n    int count;",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c9a708_ceb6fc6a",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-11T05:04:13Z",
+      "side": 1,
+      "message": "nit: id?",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e4b72f6_2185bb65",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-11T05:04:13Z",
+      "side": 1,
+      "message": "nit: count? also use int: https://google.github.io/styleguide/cppguide.html#Integer_Types (\"You should not use the unsigned integer types such as uint32_t, unless there is a valid reason such as representing a bit pattern rather than a number, or you need defined overflow modulo 2^N. In particular, do not use unsigned types to say a number will never be negative. Instead, use assertions for this.\")",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b86bc98_04baff62",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-11T05:04:13Z",
+      "side": 1,
+      "message": "update this comment",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af66de6d_e2a09486",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-11T05:04:13Z",
+      "side": 1,
+      "message": "this should be a map instead of a multimap now, right?",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
