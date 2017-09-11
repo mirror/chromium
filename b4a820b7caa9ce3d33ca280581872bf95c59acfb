@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce6d9b1d_a68d775f",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-09-11T16:57:17Z",
+      "side": 1,
+      "message": "Can we remove this function altogether?",
+      "revId": "b4a820b7caa9ce3d33ca280581872bf95c59acfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
