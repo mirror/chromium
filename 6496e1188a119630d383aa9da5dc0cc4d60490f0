@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b28073_d4ec4563",
+        "filename": "cc/resources/video_resource_updater.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-11T18:33:42Z",
+      "side": 1,
+      "message": "nit: SetUseR16ForTesting (or set_use_r16_for_testing is fine)",
+      "revId": "6496e1188a119630d383aa9da5dc0cc4d60490f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8a85dc_079ce003",
+        "filename": "components/viz/common/resources/resource_settings.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-11T18:33:42Z",
+      "side": 1,
+      "message": "nit: maybe move those lines to before buffer_to_texture_target_map, so that the bools can fall into the same word and avoid padding growing the struct size",
+      "revId": "6496e1188a119630d383aa9da5dc0cc4d60490f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
