@@ -23,11 +23,15 @@ class TestServer {
   // Returns URL which respond with setting cookie to |cookie_line| and echo it
   // in response body.
   static std::string GetSetCookieURL(const std::string& cookie_line);
+  // Returns URL which responds with a hash of the data posted with the request.
+  static std::string GetRequestHashURL();
   // Prepares response and returns URL which respond with |data_size| of bytes
   // in response body.
   static std::string PrepareBigDataURL(long data_size);
   // Releases response created by PrepareBigDataURL().
   static void ReleaseBigDataURL();
+  // Calculates the hash of a given char array.
+  static long CalculateArrayHash(const char* array, long length);
 };
 
 }  // namespace cronet
