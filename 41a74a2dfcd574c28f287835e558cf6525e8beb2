@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98b40e72_e88b13f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-11T19:21:21Z",
+      "side": 1,
+      "message": "If the are no accounts on the device, you pass null here, but getProfileData argument isn\u0027t Nullable.\nI\u0027d prefer using null reference to profile data, though. TBH, having a non-null profile data object for account that doesn\u0027t exist seems a bit weird to me.",
+      "range": {
+        "startLine": 182,
+        "startChar": 79,
+        "endLine": 182,
+        "endChar": 97
+      },
+      "revId": "41a74a2dfcd574c28f287835e558cf6525e8beb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67b1f5c_1575690f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-11T19:21:21Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 411,
+        "startChar": 79,
+        "endLine": 411,
+        "endChar": 97
+      },
+      "revId": "41a74a2dfcd574c28f287835e558cf6525e8beb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9a00ee_68dfdf26",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-11T19:21:21Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 369,
+        "startChar": 53,
+        "endLine": 369,
+        "endChar": 71
+      },
+      "revId": "41a74a2dfcd574c28f287835e558cf6525e8beb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4cd6513_ed335053",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-11T19:21:21Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 158,
+        "startChar": 79,
+        "endLine": 158,
+        "endChar": 97
+      },
+      "revId": "41a74a2dfcd574c28f287835e558cf6525e8beb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34dec927_95ea21e1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ProfileDataCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-11T19:21:21Z",
+      "side": 1,
+      "message": "Sorry if I haven\u0027t been clear on this, but I think we should come up with a better name if we\u0027re going to make this class public.",
+      "range": {
+        "startLine": 96,
+        "startChar": 24,
+        "endLine": 96,
+        "endChar": 34
+      },
+      "revId": "41a74a2dfcd574c28f287835e558cf6525e8beb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a800df_1b490f8c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ProfileDataCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-11T19:21:21Z",
+      "side": 1,
+      "message": "This field is actually not Nullable. This will hold a reference to the placeholder image even if there are no accounts present.",
+      "range": {
+        "startLine": 98,
+        "startChar": 23,
+        "endLine": 98,
+        "endChar": 31
+      },
+      "revId": "41a74a2dfcd574c28f287835e558cf6525e8beb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ffd1fad_42c6fdf5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ProfileDataCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-11T19:21:21Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 102,
+        "startChar": 57,
+        "endLine": 102,
+        "endChar": 65
+      },
+      "revId": "41a74a2dfcd574c28f287835e558cf6525e8beb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d22a294_61e37da8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ProfileDataCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-11T19:21:21Z",
+      "side": 1,
+      "message": "Add: \"... if it is available, otherwise returns a placeholder image.\"",
+      "range": {
+        "startLine": 118,
+        "startChar": 45,
+        "endLine": 118,
+        "endChar": 46
+      },
+      "revId": "41a74a2dfcd574c28f287835e558cf6525e8beb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "914680dc_d30fda2d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ProfileDataCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-11T19:21:21Z",
+      "side": 1,
+      "message": "Because of this condition CacheEntry.getFullName actually returns full name OR account email. Adding getFullNameOrEmail() to CacheEntry makes more sense to me.",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 9
+      },
+      "revId": "41a74a2dfcd574c28f287835e558cf6525e8beb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4076d522_01f68ef2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ProfileDataCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-11T19:21:21Z",
+      "side": 1,
+      "message": "Why create a new object every time if you\u0027re using the same object for storage?",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 97
+      },
+      "revId": "41a74a2dfcd574c28f287835e558cf6525e8beb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432b5829_8d72cb7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ProfileDataCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-11T19:21:21Z",
+      "side": 1,
+      "message": "Current implementation provides two ways for accessing avatar: getProfileData(accountName).getPicture() and getImage(accountName). I think we should remove getImage, getFullName and getGivenName and make all clients use getProfileData(accountName) instead.",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 5
+      },
+      "revId": "41a74a2dfcd574c28f287835e558cf6525e8beb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
