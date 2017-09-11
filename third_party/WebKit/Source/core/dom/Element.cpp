@@ -2779,6 +2779,11 @@ bool Element::hasAttributeNS(const AtomicString& namespace_uri,
   return GetElementData()->Attributes().Find(q_name);
 }
 
+void Element::focus(FocusOptions options) {
+  focus(FocusParams(SelectionBehaviorOnFocus::kRestore, kWebFocusTypeNone,
+                    nullptr, options));
+}
+
 void Element::focus(const FocusParams& params) {
   if (!isConnected())
     return;
@@ -2809,7 +2814,7 @@ void Element::focus(const FocusParams& params) {
                          .FindFocusableElementInShadowHost(*this);
     if (found && IsShadowIncludingInclusiveAncestorOf(found)) {
       found->focus(FocusParams(SelectionBehaviorOnFocus::kReset,
-                               kWebFocusTypeForward, nullptr));
+                               kWebFocusTypeForward, nullptr, params.options));
       return;
     }
   }
@@ -2831,9 +2836,11 @@ void Element::focus(const FocusParams& params) {
   }
 }
 
-void Element::UpdateFocusAppearance(
-    SelectionBehaviorOnFocus selection_behavior) {
+void Element::UpdateFocusAppearance(SelectionBehaviorOnFocus selection_behavior,
+                                    const FocusOptions& options) {
   if (selection_behavior == SelectionBehaviorOnFocus::kNone)
+    return;
+  if (options.preventScroll())
     return;
   if (IsRootEditableElement(*this)) {
     LocalFrame* frame = GetDocument().GetFrame();
@@ -2860,10 +2867,18 @@ void Element::UpdateFocusAppearance(
             .SetShouldClearTypingStyle(true)
             .SetDoNotSetFocus(true)
             .Build());
-    frame->Selection().RevealSelection();
-  } else if (GetLayoutObject() &&
-             !GetLayoutObject()->IsLayoutEmbeddedContent()) {
-    GetLayoutObject()->ScrollRectToVisible(BoundingBox());
+    if (!options.hasScrollOptions()) {
+      frame->Selection().RevealSelection();
+      return;
+    }
+  }
+  if (GetLayoutObject() && !GetLayoutObject()->IsLayoutEmbeddedContent()) {
+    if (!options.preventScroll()) {
+      if (options.hasScrollOptions())
+        scrollIntoViewWithOptions(options.scrollOptions());
+      else
+        GetLayoutObject()->ScrollRectToVisible(BoundingBox());
+    }
   }
 }
 
