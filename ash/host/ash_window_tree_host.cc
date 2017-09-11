@@ -10,6 +10,7 @@
 #include "ash/shell_port.h"
 #include "base/memory/ptr_util.h"
 #include "ui/aura/client/screen_position_client.h"
+#include "ui/aura/env.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/events/event.h"
 #include "ui/gfx/geometry/rect.h"
@@ -21,6 +22,11 @@ AshWindowTreeHost::AshWindowTreeHost() {}
 AshWindowTreeHost::~AshWindowTreeHost() = default;
 
 void AshWindowTreeHost::TranslateLocatedEvent(ui::LocatedEvent* event) {
+  // NOTE: This code is not called in mus/mash, it is handled on the server
+  // side.
+  // TODO(sky): file bug here.
+  DCHECK(aura::Env::GetInstance()->mode() == aura::Env::Mode::LOCAL);
+
   if (event->IsTouchEvent())
     return;
 
