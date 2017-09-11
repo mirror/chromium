@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5eab49d_023471f5",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/suggested-value-after-empty-suggested-value.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-11T04:11:34Z",
+      "side": 1,
+      "message": "Could you use w3c test harness?\nSince, we don\u0027t need to have expected text, Blink developers are\ngetting familiar with w3c test harness, easier to check test result.",
+      "revId": "6bb61a7230aba63c22923be60f571b7dd7c6dbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc98052_84109a1b",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-11T04:11:34Z",
+      "side": 1,
+      "message": "nit: s/String/const String/",
+      "revId": "6bb61a7230aba63c22923be60f571b7dd7c6dbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b973594_33c1b107",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-11T04:11:34Z",
+      "side": 1,
+      "message": "nit: Could you remove an extra blank line?",
+      "revId": "6bb61a7230aba63c22923be60f571b7dd7c6dbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de594fa9_77010517",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-11T04:11:34Z",
+      "side": 1,
+      "message": "nit: s/String/const String/",
+      "revId": "6bb61a7230aba63c22923be60f571b7dd7c6dbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
