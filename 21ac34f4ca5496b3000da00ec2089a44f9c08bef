@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a519d72d_ce7a93f0",
+        "filename": "ios/chrome/browser/ui/external_file_remover.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-11T17:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bb674a4_9e7ea7d8",
+      "range": {
+        "startLine": 30,
+        "startChar": 56,
+        "endLine": 30,
+        "endChar": 68
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfd14c50_c5fd3c26",
         "filename": "ios/chrome/browser/ui/external_file_remover.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf00d763_8f1ad633",
+        "filename": "ios/chrome/browser/ui/external_file_remover.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-11T17:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfd14c50_c5fd3c26",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8b84f29d_021fcbf4",
+        "filename": "ios/chrome/browser/ui/external_file_remover.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-11T17:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf1bf15f_9a54a610",
+      "range": {
+        "startLine": 52,
+        "startChar": 28,
+        "endLine": 52,
+        "endChar": 43
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3183b9a_bf9ae4ac",
         "filename": "ios/chrome/browser/ui/external_file_remover.h",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa4c1a5_56f4bae2",
+        "filename": "ios/chrome/browser/ui/external_file_remover.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-11T17:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3183b9a_bf9ae4ac",
+      "range": {
+        "startLine": 55,
+        "startChar": 54,
+        "endLine": 55,
+        "endChar": 58
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5536a325_cbb44188",
+        "filename": "ios/chrome/browser/ui/external_file_remover.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-11T17:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2c6c360_f3f9ffa9",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 25
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f281e3d2_840a8f56",
         "filename": "ios/chrome/browser/ui/external_file_remover.mm",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9210ffb4_818da557",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-11T17:26:10Z",
+      "side": 1,
+      "message": "Thanks for the TabModel explanation, it was really useful! I\u0027ll go with 3 specially since this is only called when removing all data, so we can be sure we will be doing that.",
+      "parentUuid": "f281e3d2_840a8f56",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 37
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3f9e8555_e8c6461f",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-11T17:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a535e25e_f4f70197",
+      "range": {
+        "startLine": 118,
+        "startChar": 22,
+        "endLine": 118,
+        "endChar": 31
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "894b525e_ef71fc4b",
         "filename": "ios/chrome/browser/ui/external_file_remover.mm",
         "patchSetId": 7
@@ -183,6 +351,30 @@
       "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1053166c_e32d2cae",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-11T17:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "894b525e_ef71fc4b",
+      "range": {
+        "startLine": 120,
+        "startChar": 17,
+        "endLine": 120,
+        "endChar": 25
+      },
+      "revId": "21ac34f4ca5496b3000da00ec2089a44f9c08bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
