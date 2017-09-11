@@ -1559,6 +1559,8 @@ id<GREYMatcher> ContextBarTrailingButtonWithLabel(NSString* label) {
 + (NSString*)contextBarMoreString {
   return l10n_util::GetNSString(IDS_IOS_BOOKMARK_CONTEXT_BAR_MORE);
 }
-// TODO(crbug.com/695749): Add egtest for spinner and empty background
+// TODO(crbug.com/695749): Add egtests for:
+// 1. Spinner and empty background.
+// 2. Reorder bookmarks.
 
 @end
