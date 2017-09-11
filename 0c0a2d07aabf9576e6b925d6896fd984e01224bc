@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "972cced4_4a4d5bc3",
+        "filename": "content/browser/media/capture/aura_window_capture_machine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-11T18:12:35Z",
+      "side": 1,
+      "message": "nit: This isn\u0027t a very helpful comment; it\u0027s clear from the code that that\u0027s what we\u0027re doing - the comment should explain _why_.  In this case why, for example, do we need to call OnLostResources() here, rather than letting the pipeline be torn down in the destructure?  Is that just to ensure that we\u0027ll crash gracefully if anything mistakenly touches it later?",
+      "revId": "0c0a2d07aabf9576e6b925d6896fd984e01224bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
