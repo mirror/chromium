@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa58ff33_ccbeec26",
+        "filename": "components/history/core/browser/top_sites_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-11T16:54:11Z",
+      "side": 1,
+      "message": "As this information is for topsites it\u0027s better scoped as a member of TopSitesImpl. Also, make it constexpr and style guide says these constants should be before constructor/destructor.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 40
+      },
+      "revId": "68704f65da42fc55994a5b680c201736a77b4154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
