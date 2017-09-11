@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "fa78c755_c377102a",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-11T11:55:04Z",
+      "side": 1,
+      "message": "Good point - probably not worth the trouble. (It wouldn\u0027t actually create extra translation effort, because identical strings get de-duped for translation and there are other strings that say \"Unknown error\". But still.)",
+      "parentUuid": "efd2a22c_6829f70a",
+      "range": {
+        "startLine": 1055,
+        "startChar": 16,
+        "endLine": 1055,
+        "endChar": 0
+      },
+      "revId": "651b3eb6a2c7bd00ca36d7bdcb088a3677949366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4e9347a_e33d9a10",
         "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
         "patchSetId": 6

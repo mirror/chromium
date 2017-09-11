@@ -862,6 +862,24 @@
       "revId": "3092389cba117308f58f66674366a842e321c0a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e7e6b31_d9571393",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-11T11:55:04Z",
+      "side": 1,
+      "message": "I think the API returns multiple results, and *each* of those has multiple alternatives. And as far as I can tell, we only ever use the first one - in handleRecognitionResult_, we do \"results[j][0]\". I think the \"j\" is the index of the result, and the \"0\" is the alternative.\nAnyway, not for this CL.",
+      "parentUuid": "d03ca46b_d9715ae9",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
