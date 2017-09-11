@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a869d0a1_a64a5394",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-11T22:10:26Z",
+      "side": 1,
+      "message": "I think moving this code here from network_handler is error-prone. It should only be run if we have NavigationThrottle which is going to cancel the navigation based on this request being aborted, and DevToolsURLInterceptorRequestJob has no idea about it.\n\nDoes the old way work, or moving it here has some desirable side-effect?",
+      "revId": "8dd5e0dd843d5985c2bb3b6dc81e9698bcf1aa7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
