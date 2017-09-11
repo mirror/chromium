@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc78b105_4be26003",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleCategoryPreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-09-11T22:21:21Z",
+      "side": 1,
+      "message": "So this method is currently used for javascript (and some others) to add exceptions to ALLOW some sites, but what the mocks show for sound is adding exceptions to BLOCK sites, so regardless of whether or not we will allow BLOCK by default, we will need this logic change here. I\u0027m discussing this w/ Rachel. I personally want to give the user the ability to BLOCK by default (and whitelist sites) for a couple reasons. Firstly, we allow the user to BLOCK every other site setting by default, so it\u0027s good for consistency. And secondly, I\u0027ve already seen users ask for this and I think it makes sense to have. Also, we *do* give users the ability to BLOCK by default on desktop (just like every other site setting).",
+      "parentUuid": "7d271d07_bf78644c",
+      "revId": "02b71c2d30d5cd15f1e3f7dfa4a6822c3d8142a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2474c5e_59c4ea72",
         "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-11T17:44:28Z",
       "side": 1,
       "message": "This will allow to change the default setting. I do not see that in the mock. Would your implementation allow to set \"disabled\" by default?",
+      "revId": "02b71c2d30d5cd15f1e3f7dfa4a6822c3d8142a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af76e915_449eac06",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-09-11T22:21:21Z",
+      "side": 1,
+      "message": "Currently, yes. See above comment",
+      "parentUuid": "b2474c5e_59c4ea72",
       "revId": "02b71c2d30d5cd15f1e3f7dfa4a6822c3d8142a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
