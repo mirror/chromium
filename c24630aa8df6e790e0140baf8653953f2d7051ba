@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92251eb3_e70f31b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadManagerUi.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T22:46:04Z",
+      "side": 1,
+      "message": "Is this the only way to initialize offline item collection for offline pages?\nDid you consider doing that in some other way?\n\nIt almost as if we are counting on a side effect of a constructor (call to init method)...\n\nPerhaps this is perfectly fine and I am simply missing a comment why we are doing it this way.\nI imagine a good explanation would be proper lifecycle management of the underlying object, but please think it through (and maybe discuss with David or myself) and then provide good comment for that.",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 30
+      },
+      "revId": "c24630aa8df6e790e0140baf8653953f2d7051ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74899ac5_9cd07970",
+        "filename": "chrome/browser/offline_pages/android/downloads/offline_page_download_bridge.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T22:46:04Z",
+      "side": 1,
+      "message": "Given that this is the only item that stays here, please add a comment in class documentation that this is only left in place to handle the download button in UI. As that is how I read what\u0027s left.",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 20
+      },
+      "revId": "c24630aa8df6e790e0140baf8653953f2d7051ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e835729_9990fc81",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T22:46:04Z",
+      "side": 1,
+      "message": "I see this code is moved from the bridge. In general, it appears to be very inefficient, so please add a\n\n// TODO(fgorski): Clean this up in a way where 2 round trips + GetAllRequests is not necessary. E.g. CancelByGuid(guid) might do the trick.\n\nthis applies to all 3 methods.",
+      "range": {
+        "startLine": 291,
+        "startChar": 24,
+        "endLine": 291,
+        "endChar": 38
+      },
+      "revId": "c24630aa8df6e790e0140baf8653953f2d7051ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6008d73_ed083b48",
+        "filename": "components/offline_pages/core/downloads/offline_item_conversions.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T22:46:04Z",
+      "side": 1,
+      "message": "Could you also add tests for these 2 methods?",
+      "revId": "c24630aa8df6e790e0140baf8653953f2d7051ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e69e7c76_68cccd50",
+        "filename": "components/offline_pages/core/downloads/offline_item_conversions.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T22:46:04Z",
+      "side": 1,
+      "message": "please use a class with static methods.\n\nWe are trying to minimize pollution of our namespace with functions.\n\nClass could be named: OfflineItemConversions or OfflineItemsConverter.",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "c24630aa8df6e790e0140baf8653953f2d7051ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
