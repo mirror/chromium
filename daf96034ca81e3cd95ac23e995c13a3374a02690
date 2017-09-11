@@ -22,6 +22,30 @@
       "revId": "daf96034ca81e3cd95ac23e995c13a3374a02690",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9321ba5_6918d10b",
+        "filename": "device/hid/public/interfaces/hid.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-11T23:25:52Z",
+      "side": 1,
+      "message": "If the device sends one the report ID is packed by like this on the wire. For consistency between platforms (some of which pack it in themselves) the C++ interface always includes it in the buffer for consistency and to reduce the number of places where we need to expand or shrink the buffer in order to add or remove it.\n\nThe chrome.hid extension API always handles it as a separate parameter since buffers needed to be copied on that boundary anyways. We could do either here since Mojo represents a similar boundary.",
+      "parentUuid": "f3a93c67_5f5fafda",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 9
+      },
+      "revId": "daf96034ca81e3cd95ac23e995c13a3374a02690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
