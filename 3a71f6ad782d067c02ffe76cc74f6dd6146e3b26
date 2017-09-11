@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97e98430_997b8cec",
+        "filename": "components/exo/data_device_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-11T05:12:13Z",
+      "side": 1,
+      "message": "\"\u003d nullptr\" is preferred in chromium code",
+      "range": {
+        "startLine": 74,
+        "startChar": 27,
+        "endLine": 74,
+        "endChar": 36
+      },
+      "revId": "3a71f6ad782d067c02ffe76cc74f6dd6146e3b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "458f9d03_f42c0460",
+        "filename": "components/exo/data_device_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-11T05:12:13Z",
+      "side": 1,
+      "message": "\u003d true",
+      "range": {
+        "startLine": 75,
+        "startChar": 42,
+        "endLine": 75,
+        "endChar": 48
+      },
+      "revId": "3a71f6ad782d067c02ffe76cc74f6dd6146e3b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df57865_6293b4d5",
+        "filename": "components/exo/test/test_data_offer_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-11T05:12:13Z",
+      "side": 1,
+      "message": "how much of this is needed for data device tests? Ideally we\u0027d be able to test data device without this (or very minimal version of offer) and a real test data offer delegate would only be needed for the data offer unit tests.",
+      "revId": "3a71f6ad782d067c02ffe76cc74f6dd6146e3b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a8b20c_c3eddd5d",
+        "filename": "components/exo/test/test_data_offer_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-11T05:12:13Z",
+      "side": 1,
+      "message": "\" \u003d DndAction::kNone\" is preferred in chromium code",
+      "range": {
+        "startLine": 38,
+        "startChar": 23,
+        "endLine": 38,
+        "endChar": 41
+      },
+      "revId": "3a71f6ad782d067c02ffe76cc74f6dd6146e3b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
