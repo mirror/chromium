@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "367f16de_5e74e959",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-11T22:16:22Z",
+      "side": 1,
+      "message": "Nit: I\u0027d leave off the last sentence; it confused me because it was vague (which heuristics?  Only the ones where you check this?) and it\u0027s redundant with the comments there anyway.",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae5c7d0_74309987",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-11T22:16:22Z",
+      "side": 1,
+      "message": "Implementing this this way -- instead of by bailing with \"UNKNOWN\" or the like here -- seems like it will matter if the user types \"foo bar@baz\" and hits ctrl-enter.  I think with your code, that will be URL, but maybe it should be UNKNOWN instead?  Not sure.  What do you think should happen here?  Also, we should have a testcase for this.\n\nI also worry about future maintenance.  Not bailing out here means if we add more conditions below, we may need to \"\u0026\u0026 !username_has_space\" to get them to do the right thing.",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4048e67a_46d0fcfa",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-11T22:16:22Z",
+      "side": 1,
+      "message": "Nit: The example here isn\u0027t actually applicable to this specific check. \n Maybe instead the added text should be \"However, if the username has a space, this may be input like \"dep missing: @test/\", which should not be parsed as a URL (with the username \"dep missing: \").\"",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e14849_484cc8be",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-11T22:16:22Z",
+      "side": 1,
+      "message": "Nit: again help prevent -\u003e prevents; returning URL -\u003e being treated as URLs",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a9bfe6_2564c52f",
+        "filename": "components/omnibox/browser/autocomplete_input_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-11T22:16:22Z",
+      "side": 1,
+      "message": "Nit: I\u0027d use \"space\" instead of \"unexpected\" here to match below.\n\nI\u0027d also put these cases below the \"user:pass@foo.com\" case, since they seem inserted in the middle as-is.",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3238256_9de12a49",
+        "filename": "components/omnibox/browser/autocomplete_input_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-11T22:16:22Z",
+      "side": 1,
+      "message": "What about without double slashes?",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
