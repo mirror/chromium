@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8ed3e10_444fb0b2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-11T23:46:23Z",
+      "side": 1,
+      "message": "We left this class behind because of a bug in bookmarks code that interacted poorly with the JUnit4 conversion (crbug.com/722303)",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 27
+      },
+      "revId": "bbdf0b89f288385966555c83e74513517fcb17e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46af5a9b_44ac3de4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/photo_picker/PhotoPickerDialogTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-11T23:46:23Z",
+      "side": 1,
+      "message": "Did these used to be on ChromeActivityTestCaseBase?",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 2
+      },
+      "revId": "bbdf0b89f288385966555c83e74513517fcb17e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60c6066_b3fa0f1e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/photo_picker/PhotoPickerDialogTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-11T23:46:23Z",
+      "side": 1,
+      "message": "nit: Let\u0027s add message \u003d here and to testSingleSelectionPhoto as well",
+      "range": {
+        "startLine": 256,
+        "startChar": 4,
+        "endLine": 256,
+        "endChar": 17
+      },
+      "revId": "bbdf0b89f288385966555c83e74513517fcb17e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
