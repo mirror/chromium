@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "6d7d6bdd_4dcee46c",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T00:44:24Z",
+      "side": 1,
+      "message": "I\u0027m not sure, but ERR_CONNECTION_RESET is used in SWURLRequest. (I looked OnAborted() in SWDataPipeReader.) So I use that, but I think ERR_ABORTED is more natural, too.",
+      "parentUuid": "9fd36560_b8332c9e",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9994a639_839824c6",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
         "patchSetId": 2
