@@ -159,10 +159,16 @@ void NGLineBreaker::BreakLine(NGLineInfo* line_info) {
       state = LineBreakState::kNotBreakable;
     } else if (item.Type() == NGInlineItem::kFloating) {
       state = HandleFloat(item, item_result);
-    } else {
+    } else if (item.Length()) {
+      item_result->prohibit_break_after =
+          !break_iterator_.IsBreakable(item_result->end_offset);
+      state = item_result->prohibit_break_after ? LineBreakState::kNotBreakable
+                                                : LineBreakState::kIsBreakable;
       MoveToNextOf(item);
+    } else {
       item_result->prohibit_break_after = true;
       state = LineBreakState::kNotBreakable;
+      MoveToNextOf(item);
     }
   }
   if (state == LineBreakState::kIsBreakable && line_.HasAvailableWidth() &&
