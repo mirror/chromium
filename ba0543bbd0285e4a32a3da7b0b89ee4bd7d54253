@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "842c2b56_87baa78c",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3279,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-11T16:42:41Z",
+      "side": 1,
+      "message": "Instead of the early out, maybe we could just copy the queue?  Then reentrancy is safe.\n\n  AnchoringAdjustmentQueue queue_copy \u003d anchoring_adjustment_queue_;\n  anchoring_adjustment_queue_.clear();\n  for (WeakMember\u003cScrollableArea\u003e\u0026 scroller : queue_copy) {\n    ...\n  }",
+      "range": {
+        "startLine": 3279,
+        "startChar": 41,
+        "endLine": 3279,
+        "endChar": 44
+      },
+      "revId": "ba0543bbd0285e4a32a3da7b0b89ee4bd7d54253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
