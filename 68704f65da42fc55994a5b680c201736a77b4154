@@ -22,6 +22,30 @@
       "revId": "68704f65da42fc55994a5b680c201736a77b4154",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a8e416_5562adb1",
+        "filename": "components/history/core/browser/top_sites_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-11T20:30:26Z",
+      "side": 1,
+      "message": "I\u0027ve made them public members of TopSiteImpl. Also I\u0027ve made them constexpr. I think static is needed for constexpr.",
+      "parentUuid": "fa58ff33_ccbeec26",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 40
+      },
+      "revId": "68704f65da42fc55994a5b680c201736a77b4154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
