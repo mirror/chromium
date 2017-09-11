@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "92c6793b_f5f24647",
+        "filename": "components/drive/chromeos/file_system/touch_operation.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-11T07:39:31Z",
+      "side": 1,
+      "message": "Oops, sorry, I forgot to mention. I actually tried issuing requests manually and verified that when I set modifiedDate to some past date modifiedByMeDate is also updated to the same value.",
+      "parentUuid": "50c501fd_aa5175fe",
+      "revId": "c6970ace50c75246fe61eb434233a80de266e54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e67b37a_10175d42",
         "filename": "components/drive/drive.proto",
         "patchSetId": 8
