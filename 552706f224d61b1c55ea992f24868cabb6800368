@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "1de2a940_021f625c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-11T19:50:27Z",
+      "side": 1,
+      "message": "change",
+      "range": {
+        "startLine": 11,
+        "startChar": 34,
+        "endLine": 11,
+        "endChar": 41
+      },
+      "revId": "552706f224d61b1c55ea992f24868cabb6800368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32592b2a_fa4cbd1b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-11T19:50:27Z",
+      "side": 1,
+      "message": "Windows",
+      "range": {
+        "startLine": 12,
+        "startChar": 32,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "552706f224d61b1c55ea992f24868cabb6800368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0058e1_1d858283",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-11T19:50:27Z",
+      "side": 1,
+      "message": "Is there a bug number for this change?",
+      "revId": "552706f224d61b1c55ea992f24868cabb6800368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89c1981b_6c8f0fdd",
         "filename": "net/socket/udp_socket_posix.cc",
         "patchSetId": 2
@@ -19,6 +82,23 @@
         "endLine": 740,
         "endChar": 0
       },
+      "revId": "552706f224d61b1c55ea992f24868cabb6800368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa651c1_59a29257",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-11T19:50:27Z",
+      "side": 1,
+      "message": "Could the same thing be accomplished using recvfrom() and passing MSG_TRUNC / checking the returned byte count?\n\nI am not familiar with any tradeoffs between the approaches, but I expect @jri knows more and may have more useful feedback to give.",
       "revId": "552706f224d61b1c55ea992f24868cabb6800368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
