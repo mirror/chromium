@@ -42,6 +42,8 @@ import mojom.fileutil as fileutil
 from mojom.generate import translate
 from mojom.generate import template_expander
 from mojom.generate.generator import AddComputedData
+from mojom.preprocess import buildflag_scanner
+from mojom.preprocess import preprocessor
 from mojom.parse.parser import Parse
 
 
@@ -142,11 +144,13 @@ class MojomProcessor(object):
     _processed_files: {Dict[str, mojom.generate.module.Module]} Mapping from
         relative mojom filename paths to the module AST for that mojom file.
   """
-  def __init__(self, should_generate):
+  def __init__(self, should_generate, buildflags, defines):
     self._should_generate = should_generate
     self._processed_files = {}
     self._parsed_files = {}
     self._typemap = {}
+    self._buildflags = buildflags
+    self._defines = defines
 
   def LoadTypemaps(self, typemaps):
     # Support some very simple single-line comments in typemap JSON.
@@ -240,6 +244,8 @@ class MojomProcessor(object):
       sys.exit(1)
 
     try:
+      source = preprocessor.PreprocessSource(source, rel_filename.path,
+                                             self._buildflags, self._defines)
       tree = Parse(source, rel_filename.path)
     except Error as e:
       full_stack = imported_filename_stack + [rel_filename.path]
@@ -271,7 +277,15 @@ def _Generate(args, remaining_args):
 
   fileutil.EnsureDirectoryExists(args.output_dir)
 
-  processor = MojomProcessor(lambda filename: filename in args.filename)
+  buildflags = {}
+  for buildflag_file in args.buildflag_header:
+    buildflags.update(buildflag_scanner.GetBuildFlags(buildflag_file))
+  defines = []
+  for define in args.preprocessor_define:
+    defines.append(define)
+  processor = MojomProcessor(lambda filename: filename in args.filename,
+                             buildflags,
+                             defines)
   processor.LoadTypemaps(set(args.typemaps))
   for filename in args.filename:
     processor.ProcessFile(args, remaining_args, generator_modules, filename)
@@ -367,6 +381,17 @@ def main():
       "--support_lazy_serialization",
       help="If set, generated bindings will serialize lazily when possible.",
       action="store_true")
+  generate_parser.add_argument(
+      "--buildflag_header",
+      action="append",
+      default = [],
+      help="Adds a path to a buildflag header that will be scanned for "
+      "buildflags for preprocessing.")
+  generate_parser.add_argument(
+      "--preprocessor_define",
+      action="append",
+      default = [],
+      help="Adds a define to the set that preprocessing considers true.")
   generate_parser.set_defaults(func=_Generate)
 
   precompile_parser = subparsers.add_parser("precompile",

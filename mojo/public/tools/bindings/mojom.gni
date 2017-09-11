@@ -313,6 +313,54 @@ template("mojom") {
       rebase_path("$root_gen_dir/mojo/public/tools/bindings", root_build_dir),
     ]
 
+    # Buildflags
+    if (defined(invoker.buildflags)) {
+      mojom_buildflags = []
+      foreach(buildflag_target, invoker.buildflags) {
+        mojom_buildflags += [ get_target_outputs(buildflag_target) ]
+      }
+      foreach(mojom_buildflag, mojom_buildflags) {
+        common_generator_args += [
+          "--buildflag_header",
+          mojom_buildflag,
+        ]
+      }
+    }
+
+    # Limited set of defines.
+    mojom_defines = []
+    if (is_android) {
+      mojom_defines += [ "OS_ANDROID" ]
+    }
+    if (is_fuchsia) {
+      mojom_defines += [ "OS_FUSCHIA" ]
+    }
+    if (is_linux) {
+      mojom_defines += [ "OS_LINUX" ]
+    }
+    if (is_mac) {
+      mojom_defines += [ "OS_MACOSX" ]
+    }
+    if (is_win) {
+      mojom_defines += [ "OS_WIN" ]
+    }
+    if (is_android || is_fuchsia || is_linux || is_mac) {
+      mojom_defines += [ "OS_POSIX" ]
+    }
+    if (is_chromeos) {
+      mojom_defines += [ "OS_CHROMEOS" ]
+    }
+    if (is_ios) {
+      mojom_defines += [ "OS_IOS" ]
+    }
+
+    foreach(mojom_define, mojom_defines) {
+      common_generator_args += [
+        "--preprocessor_define",
+        mojom_define,
+      ]
+    }
+
     if (defined(invoker.import_dirs)) {
       foreach(import_dir, invoker.import_dirs) {
         common_generator_args += [
