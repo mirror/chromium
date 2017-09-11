@@ -231,7 +231,7 @@ class ServiceWorkerInstalledScriptsSenderTest : public testing::Test {
   void SetUp() override {
     helper_ = base::MakeUnique<EmbeddedWorkerTestHelper>(base::FilePath());
 
-    context()->storage()->LazyInitialize(base::Bind(&base::DoNothing));
+    context()->storage()->LazyInitializeForTest(base::Bind(&base::DoNothing));
     base::RunLoop().RunUntilIdle();
 
     pattern_ = GURL("http://www.example.com/test/");
