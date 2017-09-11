@@ -41,7 +41,6 @@ from webkitpy.style.checkers.common import categories as CommonCategories
 from webkitpy.style.checkers.cpp import CppChecker
 from webkitpy.style.checkers.jsonchecker import JSONChecker
 from webkitpy.style.checkers.png import PNGChecker
-from webkitpy.style.checkers.python import PythonChecker
 from webkitpy.style.checkers.test_expectations import TestExpectationsChecker
 from webkitpy.style.checkers.text import TextChecker
 from webkitpy.style.checkers.xcodeproj import XcodeProjectFileChecker
@@ -147,8 +146,6 @@ _CPP_FILE_EXTENSIONS = [
 ]
 
 _JSON_FILE_EXTENSION = 'json'
-
-_PYTHON_FILE_EXTENSION = 'py'
 
 _TEXT_FILE_EXTENSIONS = [
     'cc',
@@ -365,7 +362,7 @@ class FileType:
     CPP = 2
     JSON = 3
     PNG = 4
-    PYTHON = 5
+    # PYTHON = 5
     TEXT = 6
     # WATCHLIST = 7
     XML = 8
@@ -434,11 +431,6 @@ class CheckerDispatcher(object):
             return FileType.CPP
         elif file_extension == _JSON_FILE_EXTENSION:
             return FileType.JSON
-        elif file_extension == _PYTHON_FILE_EXTENSION:
-            return FileType.PYTHON
-        elif not file_extension and os.path.dirname(file_path).endswith(os.path.join('Tools', 'Scripts')):
-            # TODO(qyearsley): Update this when Blink is moved from third_party/WebKit.
-            return FileType.PYTHON
         elif file_extension in _XML_FILE_EXTENSIONS:
             return FileType.XML
         elif file_extension == _XCODEPROJ_FILE_EXTENSION:
@@ -461,8 +453,6 @@ class CheckerDispatcher(object):
                                  handle_style_error, min_confidence)
         elif file_type == FileType.JSON:
             checker = JSONChecker(file_path, handle_style_error)
-        elif file_type == FileType.PYTHON:
-            checker = PythonChecker(file_path, handle_style_error)
         elif file_type == FileType.XML:
             checker = XMLChecker(file_path, handle_style_error)
         elif file_type == FileType.XCODEPROJ:
