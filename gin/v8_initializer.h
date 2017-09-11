@@ -33,6 +33,10 @@ class GIN_EXPORT V8Initializer {
                                         const char** snapshot_data_out,
                                         int* snapshot_size_out);
 
+  // Returns a persistent pointer of StartupData, which holds information about
+  // v8_snapshot_blob.bin.
+  static v8::StartupData* GetExistingStartupData();
+
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
 
   // Load V8 snapshot from user provided platform file descriptors.
