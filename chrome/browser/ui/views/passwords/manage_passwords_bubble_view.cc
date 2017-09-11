@@ -241,8 +241,13 @@ std::unique_ptr<views::Combobox> GeneratePasswordDropdownView(
        form.other_possible_passwords) {
     passwords.push_back(base::string16(possible_password.length(), '*'));
   }
-  return std::make_unique<views::Combobox>(
+  std::unique_ptr<views::Combobox> combobox = std::make_unique<views::Combobox>(
       std::make_unique<ui::SimpleComboboxModel>(passwords));
+  combobox->SetSelectedIndex(std::distance(
+      form.other_possible_passwords.begin(),
+      find(form.other_possible_passwords.begin(),
+           form.other_possible_passwords.end(), form.password_value)));
+  return combobox;
 }
 
 // Builds a credential row, adds the given elements to the layout.
@@ -584,6 +589,12 @@ void ManagePasswordsBubbleView::PendingView::ToggleEditingState(
   if (editing_ && accept_changes) {
     parent_->model()->OnUsernameEdited(
         static_cast<views::Textfield*>(username_field_)->text());
+    if (password_view_button_) {
+      parent_->model()->OnPasswordSelected(
+          parent_->model()->pending_password().other_possible_passwords.at(
+              static_cast<views::Combobox*>(password_field_)
+                  ->selected_index()));
+    }
   }
   editing_ = !editing_;
   edit_button_->SetEnabled(!editing_);
