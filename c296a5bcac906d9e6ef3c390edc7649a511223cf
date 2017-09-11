@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea6a05ee_48e6d81e",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/BiquadFilter/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T15:55:42Z",
+      "side": 1,
+      "message": "Why a blank line?",
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd139a09_34cfab46",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/BiquadFilter/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T15:55:42Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10328b2d_384ee8bb",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/BiquadFilter/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T15:55:42Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f85b26f_fedd4bcb",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/BiquadFilter/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T15:55:42Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a0166a7_a8338e38",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/BiquadFilter/dezipper.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T15:55:42Z",
+      "side": 1,
+      "message": "What\u0027s happening here?",
+      "range": {
+        "startLine": 268,
+        "startChar": 18,
+        "endLine": 270,
+        "endChar": 70
+      },
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30b92f9_de6dce27",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BiquadDSPKernel.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T15:55:42Z",
+      "side": 1,
+      "message": "Is this the only part that does smoothing?",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 61
+      },
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90ed72f_24ca0e87",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BiquadProcessor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T15:55:42Z",
+      "side": 1,
+      "message": "TODO items now go with a crbug. Can you create an issue and add the issue number here?",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 14
+      },
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9eebb4e_754e0162",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BiquadProcessor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-11T15:55:42Z",
+      "side": 1,
+      "message": "So smoothing can still happen if this code path runs. Or am I missing something?",
+      "range": {
+        "startLine": 92,
+        "startChar": 37,
+        "endLine": 92,
+        "endChar": 46
+      },
+      "revId": "c296a5bcac906d9e6ef3c390edc7649a511223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
