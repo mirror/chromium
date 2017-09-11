@@ -28,7 +28,7 @@ class CONTENT_EXPORT ServiceWorkerJobCoordinator {
   ~ServiceWorkerJobCoordinator();
 
   void Register(const GURL& script_url,
-                const ServiceWorkerRegistrationOptions& options,
+                const blink::mojom::ServiceWorkerRegistrationOptions& options,
                 ServiceWorkerProviderHost* provider_host,
                 const ServiceWorkerRegisterJob::RegistrationCallback& callback);
 

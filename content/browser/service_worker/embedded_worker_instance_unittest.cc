@@ -64,7 +64,7 @@ class ProviderHostEndpoints : public mojom::ServiceWorkerContainerHost {
  private:
   // Implements mojom::ServiceWorkerContainerHost.
   void Register(const GURL& script_url,
-                const ServiceWorkerRegistrationOptions& options,
+                blink::mojom::ServiceWorkerRegistrationOptionsPtr options,
                 RegisterCallback callback) override {
     NOTIMPLEMENTED();
   }

@@ -236,7 +236,8 @@ class ServiceWorkerInstalledScriptsSenderTest : public testing::Test {
 
     pattern_ = GURL("http://www.example.com/test/");
     registration_ = base::MakeRefCounted<ServiceWorkerRegistration>(
-        ServiceWorkerRegistrationOptions(pattern_), 1L, context()->AsWeakPtr());
+        blink::mojom::ServiceWorkerRegistrationOptions(pattern_), 1L,
+        context()->AsWeakPtr());
     version_ = base::MakeRefCounted<ServiceWorkerVersion>(
         registration_.get(),
         GURL("http://www.example.com/test/service_worker.js"),

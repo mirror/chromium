@@ -332,7 +332,8 @@ class ServiceWorkerWriteToCacheJobTest : public testing::Test {
 
     // A new unstored registration/version.
     registration_ = new ServiceWorkerRegistration(
-        ServiceWorkerRegistrationOptions(scope_), 1L, context()->AsWeakPtr());
+        blink::mojom::ServiceWorkerRegistrationOptions(scope_), 1L,
+        context()->AsWeakPtr());
     version_ =
         new ServiceWorkerVersion(registration_.get(), script_url_,
                                  NextVersionId(), context()->AsWeakPtr());

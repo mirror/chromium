@@ -170,7 +170,7 @@ class ServiceWorkerVersionTest : public testing::Test {
 
     pattern_ = GURL("http://www.example.com/test/");
     registration_ = new ServiceWorkerRegistration(
-        ServiceWorkerRegistrationOptions(pattern_), 1L,
+        blink::mojom::ServiceWorkerRegistrationOptions(pattern_), 1L,
         helper_->context()->AsWeakPtr());
     version_ = new ServiceWorkerVersion(
         registration_.get(),

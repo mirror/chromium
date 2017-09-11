@@ -409,7 +409,8 @@ class ServiceWorkerURLLoaderJobTest
     storage()->LazyInitialize(base::Bind(&base::DoNothing));
     base::RunLoop().RunUntilIdle();
     registration_ = new ServiceWorkerRegistration(
-        ServiceWorkerRegistrationOptions(GURL("https://example.com/")),
+        blink::mojom::ServiceWorkerRegistrationOptions(
+            GURL("https://example.com/")),
         storage()->NewRegistrationId(), helper_->context()->AsWeakPtr());
     version_ = new ServiceWorkerVersion(
         registration_.get(), GURL("https://example.com/service_worker.js"),

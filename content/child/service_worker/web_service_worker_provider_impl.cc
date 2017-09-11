@@ -106,9 +106,9 @@ void WebServiceWorkerProviderImpl::RegisterServiceWorker(
   TRACE_EVENT_ASYNC_BEGIN2(
       "ServiceWorker", "WebServiceWorkerProviderImpl::RegisterServiceWorker",
       this, "Scope", pattern.spec(), "Script URL", script_url.spec());
-  ServiceWorkerRegistrationOptions options(pattern);
+  auto options = blink::mojom::ServiceWorkerRegistrationOptions::New(pattern);
   context_->container_host()->Register(
-      script_url, options,
+      script_url, std::move(options),
       base::BindOnce(&WebServiceWorkerProviderImpl::OnRegistered,
                      weak_factory_.GetWeakPtr(), std::move(callbacks)));
 }
