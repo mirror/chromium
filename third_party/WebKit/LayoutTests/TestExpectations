@@ -73,6 +73,8 @@ crbug.com/664850 virtual/display_list_2d_canvas/fast/canvas/OffscreenCanvas-comm
 crbug.com/664852 virtual/gpu/fast/canvas/canvas-createImageBitmap-webgl.html [ Pass Failure ]
 crbug.com/664852 virtual/gpu/fast/canvas/OffscreenCanvas-2d-drawImage.html [ Pass Failure ]
 
+crbug.com/763495 virtual/color_space/fast/canvas/color-space/display_linear-rgb.html [ Failure ]
+
 ########## Bugs to fix ##########
 # This is a missing event and increasing the timeout or using run-after-layout-and-paint doesn't
 # seem to fix it.
@@ -615,6 +617,8 @@ crbug.com/567837 fast/hidpi/static [ Skip ]
 # refactor. See [crbug.com/676432] for a minimized repro.
 crbug.com/676432 fullscreen/full-screen-iframe-zIndex.html [ Skip ]
 crbug.com/676432 virtual/android/fullscreen/full-screen-iframe-zIndex.html [ Skip ]
+
+crbug.com/688509 fast/css/object-fit-canvas.html [ Failure ]
 
 crbug.com/538697 [ Win ] virtual/threaded/printing/webgl-oversized-printing.html [ Failure Crash ]
 crbug.com/538697 [ Win ] printing/webgl-oversized-printing.html [ Failure Crash ]
