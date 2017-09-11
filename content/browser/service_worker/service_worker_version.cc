@@ -701,16 +701,14 @@ void ServiceWorkerVersion::RemoveControllee(
   }
 }
 
-void ServiceWorkerVersion::AddStreamingURLRequestJob(
-    const ServiceWorkerURLRequestJob* request_job) {
-  DCHECK(streaming_url_request_jobs_.find(request_job) ==
-         streaming_url_request_jobs_.end());
-  streaming_url_request_jobs_.insert(request_job);
+void ServiceWorkerVersion::OnStreamResponseStarted() {
+  CHECK_LT(streaming_job_count_, std::numeric_limits<int>::max());
+  streaming_job_count_++;
 }
 
-void ServiceWorkerVersion::RemoveStreamingURLRequestJob(
-    const ServiceWorkerURLRequestJob* request_job) {
-  streaming_url_request_jobs_.erase(request_job);
+void ServiceWorkerVersion::OnStreamResponseFinished() {
+  DCHECK_GT(streaming_job_count_, 0);
+  streaming_job_count_--;
   if (!HasWork()) {
     for (auto& observer : listeners_)
       observer.OnNoWork(this);
@@ -1719,7 +1717,7 @@ void ServiceWorkerVersion::StopWorkerIfIdle() {
 }
 
 bool ServiceWorkerVersion::HasWork() const {
-  return !pending_requests_.IsEmpty() || !streaming_url_request_jobs_.empty() ||
+  return !pending_requests_.IsEmpty() || streaming_job_count_ > 0 ||
          !start_callbacks_.empty();
 }
 
@@ -1917,9 +1915,6 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
   external_request_uuid_to_request_id_.clear();
   event_dispatcher_.reset();
   installed_scripts_sender_.reset();
-
-  // TODO(falken): Call SWURLRequestJob::ClearStream here?
-  streaming_url_request_jobs_.clear();
 
   for (auto& observer : listeners_)
     observer.OnRunningStateChanged(this);
