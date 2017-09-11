@@ -98,7 +98,6 @@ WebPreferences::WebPreferences()
       hyperlink_auditing_enabled(true),
       allow_universal_access_from_file_urls(false),
       allow_file_access_from_file_urls(false),
-      experimental_webgl_enabled(false),
       pepper_3d_enabled(false),
       flash_3d_enabled(true),
       flash_stage3d_enabled(false),

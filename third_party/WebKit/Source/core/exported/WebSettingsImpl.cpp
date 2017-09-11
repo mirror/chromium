@@ -438,10 +438,6 @@ void WebSettingsImpl::SetOfflineWebApplicationCacheEnabled(bool enabled) {
   settings_->SetOfflineWebApplicationCacheEnabled(enabled);
 }
 
-void WebSettingsImpl::SetExperimentalWebGLEnabled(bool enabled) {
-  settings_->SetWebGLEnabled(enabled);
-}
-
 void WebSettingsImpl::SetRenderVSyncNotificationEnabled(bool enabled) {
   render_v_sync_notification_enabled_ = enabled;
 }
