@@ -8,12 +8,17 @@ import android.os.Handler;
 import android.view.Surface;
 
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 /**
  * DialogOverlayCore::Host implementation that transfers messages to the thread on which it was
  * constructed.  Due to threading concerns, waitForCleanup is not forwarded.
  */
 class ThreadHoppingHost implements DialogOverlayCore.Host {
+    // Number of seconds we'll wait for client cleanup before we give up.  We don't want to keep
+    // onSurfaceDestroyed waiting forever.
+    private static final int CLEANUP_TIMEOUT_SECONDS = 2;
+
     // Handler for the host we're proxying to.  Typically Browser::UI.
     private Handler mHandler;
 
@@ -56,11 +61,23 @@ class ThreadHoppingHost implements DialogOverlayCore.Host {
     public void waitForCleanup() {
         while (true) {
             try {
-                mSemaphore.acquire();
+                // TODO(liberato): in case of InterruptedException, we really should adjust the
+                // timeout to reflect remaining time.
+                mSemaphore.tryAcquire(CLEANUP_TIMEOUT_SECONDS, TimeUnit.SECONDS);
                 break;
             } catch (InterruptedException e) {
             }
         }
+    }
+
+    @Override
+    public void enforceCleanup() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mHost.enforceCleanup();
+            }
+        });
     }
 
     // Notify us that cleanup has started.  This is called on |mHandler|'s thread.
