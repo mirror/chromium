@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eae2a002_f316b838",
+        "filename": "third_party/WebKit/Source/core/editing/LinkSelectionTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-11T09:01:46Z",
+      "side": 0,
+      "message": "I think it is better to use I-beam instead of hand when selecting anchor\ntext to provide visual feedback to user.\n\nCould you ask UX designer about this?\nIf the spec doesn\u0027t allow or say, we should change the spec.",
+      "revId": "df29e5e27a26e82a9a984a23c1e87cc5352f539f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
