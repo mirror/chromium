@@ -34,6 +34,10 @@ void ApplyContextParamsToBuilder(
     net::URLRequestContextBuilder* builder,
     mojom::NetworkContextParams* network_context_params,
     NetworkServiceImpl* network_service) {
+  builder->set_enable_brotli(network_context_params->enable_brotli);
+  if (network_context_params->context_name)
+    builder->set_name(*network_context_params->context_name);
+
   if (!network_context_params->http_cache_enabled) {
     builder->DisableHttpCache();
   } else {
