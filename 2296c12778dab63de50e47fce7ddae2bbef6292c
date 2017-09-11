@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c3211872_41c9c75e",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-11T16:50:12Z",
+      "side": 1,
+      "message": "After some further thinking, I think this variables still needs to be initialized inside this DeviceOrientationEventPump::SendStartMessage() function, since DeviceOrientationEventPump::SendStartMessage() may be called multiple times, and if neither sensor is initialized after this function call, the next call of this function should still try the fallback to absolute sensor if relative sensor initialization fails. But if this variable is initialized to be true in the constructor and it will not become true again because it is set to false in DeviceOrientationEventPump::DidStartIfPossible().\n\nWhat do you think?",
+      "parentUuid": "63768899_fdd18d34",
+      "range": {
+        "startLine": 89,
+        "startChar": 6,
+        "endLine": 89,
+        "endChar": 69
+      },
+      "revId": "2296c12778dab63de50e47fce7ddae2bbef6292c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0028ebc4_4397676f",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
         "patchSetId": 4
