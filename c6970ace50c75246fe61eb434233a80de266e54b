@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f3605f1_b9c7593c",
+        "filename": "components/drive/chromeos/file_system/touch_operation.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-11T05:43:24Z",
+      "side": 1,
+      "message": "After revisiting API reference, I realized drive#file.modifiedByMeDate is more similar to drive#file.modifiedDate rather than drive#change.modificationDate. So my implementation in this PS was wrong, and we should update the new field when PlatformFileInfoProto.last_modified is updated.",
+      "parentUuid": "de805dbc_e94422d7",
+      "revId": "c6970ace50c75246fe61eb434233a80de266e54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e67b37a_10175d42",
         "filename": "components/drive/drive.proto",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "c6970ace50c75246fe61eb434233a80de266e54b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6229b9_82f7445c",
+        "filename": "components/drive/drive.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-11T05:43:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e67b37a_10175d42",
+      "revId": "c6970ace50c75246fe61eb434233a80de266e54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6d3c5d28_4d26fcc3",
+        "filename": "components/drive/drive.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-11T05:43:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd5778ac_fcf58e7a",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 27
+      },
+      "revId": "c6970ace50c75246fe61eb434233a80de266e54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "009e71cf_5063edf0",
         "filename": "google_apis/drive/drive_api_parser.h",
         "patchSetId": 8
@@ -73,6 +133,24 @@
       "revId": "c6970ace50c75246fe61eb434233a80de266e54b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149bfe79_6cbd3012",
+        "filename": "google_apis/drive/drive_api_parser.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-11T05:43:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "009e71cf_5063edf0",
+      "revId": "c6970ace50c75246fe61eb434233a80de266e54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
