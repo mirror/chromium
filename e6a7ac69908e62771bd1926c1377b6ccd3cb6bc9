@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f9f460b_486b308a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 59895,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-11T15:33:47Z",
+      "side": 1,
+      "message": "This is adding a new top-level prefix. We generally discourage this unless you expect this prefix to be used for a bunch more metrics. If not, suggest finding a different place to nest this under.\n\nFor example, if this is related to Omnibox UI, maybe it can be under Omnibox.Popups.*",
+      "range": {
+        "startLine": 59895,
+        "startChar": 28,
+        "endLine": 59895,
+        "endChar": 29
+      },
+      "revId": "e6a7ac69908e62771bd1926c1377b6ccd3cb6bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deeb4fb5_5b0da47a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 59897,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-11T15:33:47Z",
+      "side": 1,
+      "message": "This description is not complete enough for me to understand what this is about.\n\nWhere are they clicking? On the actual popup window itself? In some UI like the omnibox? Something else? Please expand the description.\n\nAlso, is this specific to some platforms - e.g. like desktop ones? If so, also mention.",
+      "range": {
+        "startLine": 59897,
+        "startChar": 24,
+        "endLine": 59897,
+        "endChar": 29
+      },
+      "revId": "e6a7ac69908e62771bd1926c1377b6ccd3cb6bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
