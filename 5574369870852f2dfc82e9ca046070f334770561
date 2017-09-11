@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "b8dae12a_39264130",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-11T17:48:56Z",
+      "side": 1,
+      "message": "I got rid of this entirely in the latest patchset, as it was only used by the one call anyway.",
+      "parentUuid": "8eeb26c1_210390a9",
+      "range": {
+        "startLine": 35,
+        "startChar": 32,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "5574369870852f2dfc82e9ca046070f334770561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09ec0c96_6cfcbc16",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 26
@@ -352,6 +376,30 @@
       "revId": "5574369870852f2dfc82e9ca046070f334770561",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d44668_5ac2b7bc",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-11T17:48:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad14f9d2_032ef0c9",
+      "range": {
+        "startLine": 1087,
+        "startChar": 4,
+        "endLine": 1087,
+        "endChar": 11
+      },
+      "revId": "5574369870852f2dfc82e9ca046070f334770561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
