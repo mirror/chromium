@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6aa889e_12b68727",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-11T21:37:53Z",
+      "side": 1,
+      "message": "So I wasn\u0027t able to think of a nicer way to do this. Originally, I wanted have an arg like:\n\nbuildflags \u003d [\n  \"//net:features\",\n]\n\nBut get_target_outputs() only works if the target is defined in the same file. So you have to specify both which is sad...",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 5
+      },
+      "revId": "8d2651990d5894b86a42041dcba1592f16e7ad6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04f5f1d_4d983384",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-11T21:37:53Z",
+      "side": 1,
+      "message": "I think the dep is not quite right, since it only adds it to the shared cpp sources. I\u0027ll update this in a later PS.\n\n(This will allow me to remove the silencing of unused variables on line 265 as well)",
+      "range": {
+        "startLine": 432,
+        "startChar": 0,
+        "endLine": 436,
+        "endChar": 7
+      },
+      "revId": "8d2651990d5894b86a42041dcba1592f16e7ad6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af4c8b7_e73b3040",
+        "filename": "net/interfaces/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-11T21:37:53Z",
+      "side": 1,
+      "message": "Note: this is just a testing change and won\u0027t be committed.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 3
+      },
+      "revId": "8d2651990d5894b86a42041dcba1592f16e7ad6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
