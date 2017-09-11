@@ -750,29 +750,32 @@ void PaintPropertyTreeBuilder::UpdateFragmentClip(
     PaintPropertyTreeBuilderFragmentContext& context,
     bool& force_subtree_update,
     bool& clip_changed) {
-  if (object.NeedsPaintPropertyUpdate() || force_subtree_update) {
-    bool local_clip_added_or_removed = false;
-    bool local_clip_changed = false;
-    // It's possible to still have no clips even if NeedsFragmentationClip is
-    // true, in the case when the FragmentainerIterator returns none.
-    if (NeedsFragmentationClip(object) && context.fragment_clip_context) {
-      LayoutRect clip_rect(context.fragment_clip_context->fragment_clip);
+  if (!NeedsFragmentationClip(object) || !context.fragment_clip_context)
+    return;
+  if (!object.NeedsPaintPropertyUpdate() && !force_subtree_update)
+    return;
 
-      FloatRoundedRect rounded_clip_rect((FloatRect(clip_rect)));
+  bool local_clip_added_or_removed = false;
+  bool local_clip_changed = false;
+  // It's possible to still have no clips even if NeedsFragmentationClip is
+  // true, in the case when the FragmentainerIterator returns none.
+  if (NeedsFragmentationClip(object) && context.fragment_clip_context) {
+    LayoutRect clip_rect(context.fragment_clip_context->fragment_clip);
 
-      if (properties.FragmentClip() &&
-          properties.FragmentClip()->ClipRect() != rounded_clip_rect)
-        local_clip_changed = true;
+    FloatRoundedRect rounded_clip_rect((FloatRect(clip_rect)));
 
-      auto result = properties.UpdateFragmentClip(
-          context.current.clip, context.current.transform, rounded_clip_rect);
-      local_clip_added_or_removed |= result.NewNodeCreated();
-    } else {
-      local_clip_added_or_removed |= properties.ClearFragmentClip();
-    }
-    force_subtree_update |= local_clip_added_or_removed;
-    clip_changed |= local_clip_changed || local_clip_added_or_removed;
+    if (properties.FragmentClip() &&
+        properties.FragmentClip()->ClipRect() != rounded_clip_rect)
+      local_clip_changed = true;
+
+    auto result = properties.UpdateFragmentClip(
+        context.current.clip, context.current.transform, rounded_clip_rect);
+    local_clip_added_or_removed |= result.NewNodeCreated();
+  } else {
+    local_clip_added_or_removed |= properties.ClearFragmentClip();
   }
+  force_subtree_update |= local_clip_added_or_removed;
+  clip_changed |= local_clip_changed || local_clip_added_or_removed;
 }
 
 static bool NeedsCssClip(const LayoutObject& object) {
