@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09aa1439_a51a55f1",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-11T11:14:38Z",
+      "side": 1,
+      "message": "Yes, |.searchParams| would be ideal, but it is a read-only property (not documented anywhere?!):\n\n TypeError: Cannot assign to read only property \u0027searchParams\u0027\n\n¯\\_(ツ)_/¯ ... keeping this as is.",
+      "parentUuid": "751e9e69_e92a39f7",
+      "range": {
+        "startLine": 676,
+        "startChar": 33,
+        "endLine": 676,
+        "endChar": 0
+      },
+      "revId": "651b3eb6a2c7bd00ca36d7bdcb088a3677949366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c212e7d3_95bfb909",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "efd2a22c_6829f70a",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-11T11:14:38Z",
+      "side": 1,
+      "message": "The reason is that if the recognition API changed in the future (or something similar happened), and the API actually sent an \"other\" error, this would throw. AFAICT, the remote NTP just shows an empty error message (but I wasn\u0027t able to test that properly).\n\nI agree with showing \"Unknown error\", but that would require localization of the message. I\u0027m fine with adding that, just wanted to get your opinion first. WDYT?",
+      "parentUuid": "c212e7d3_95bfb909",
+      "range": {
+        "startLine": 1055,
+        "startChar": 16,
+        "endLine": 1055,
+        "endChar": 0
+      },
+      "revId": "651b3eb6a2c7bd00ca36d7bdcb088a3677949366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4e9347a_e33d9a10",
         "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-08T14:30:31Z",
       "side": 1,
       "message": "I\u0027m wondering how you\u0027d pronounce \"🔍\"... :D",
+      "range": {
+        "startLine": 825,
+        "startChar": 51,
+        "endLine": 825,
+        "endChar": 0
+      },
+      "revId": "651b3eb6a2c7bd00ca36d7bdcb088a3677949366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c1611ef_22a3815a",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-11T11:14:38Z",
+      "side": 1,
+      "message": "I just went crazy with Unicode at that point :D",
+      "parentUuid": "e4e9347a_e33d9a10",
       "range": {
         "startLine": 825,
         "startChar": 51,

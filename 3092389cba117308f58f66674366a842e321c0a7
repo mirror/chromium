@@ -458,6 +458,30 @@
     },
     {
       "key": {
+        "uuid": "a691b698_65ae74f9",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-11T11:14:38Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6e3db629_b4496df2",
+      "range": {
+        "startLine": 398,
+        "startChar": 74,
+        "endLine": 398,
+        "endChar": 0
+      },
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad9cf8af_af649b71",
         "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
         "patchSetId": 4
@@ -717,6 +741,24 @@
     },
     {
       "key": {
+        "uuid": "492cf1f8_afd2f0eb",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-11T11:14:38Z",
+      "side": 1,
+      "message": "Yes, exactly. Added comment.",
+      "parentUuid": "03ddbd0f_dd8edfcf",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62dc7a97_5954733e",
         "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
         "patchSetId": 4
@@ -799,6 +841,24 @@
       "side": 1,
       "message": "Ack.\nI guess I was mostly asking why we even set maxAlternatives to 4 in the real API. Do you know if that makes any difference? Could we just set it to 1 there too? (Not for this CL of course)",
       "parentUuid": "c02fd26c_6aaa3639",
+      "revId": "3092389cba117308f58f66674366a842e321c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d03ca46b_d9715ae9",
+        "filename": "chrome/test/data/local_ntp/voice_speech_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-11T11:14:38Z",
+      "side": 1,
+      "message": "I think we actually use it for interim results. In |handleRecognitionResult_|, we loop over the returned results and concatenate them. Not sure how often this actually occurs, but I wouldn\u0027t touch it right now without more research.\n\nhttps://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognitionResult/length",
+      "parentUuid": "b9496c64_def1143a",
       "revId": "3092389cba117308f58f66674366a842e321c0a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
