@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6662b07_97e4b079",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-11T15:04:38Z",
+      "side": 1,
+      "message": "nit: Can you fix line wrapping here?",
+      "revId": "3b7051d546489e1219f6302d62c1af582fdd8d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca0b190b_af687f6c",
+        "filename": "chrome/browser/extensions/api/webrtc_audio_private/webrtc_audio_private_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-11T15:04:38Z",
+      "side": 1,
+      "message": "it\u0027s not clear what type media::AudioSystem::CreateInstance() returns, so prefer explicitly typing it here rather than using auto.",
+      "revId": "3b7051d546489e1219f6302d62c1af582fdd8d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
