@@ -48,7 +48,7 @@ void CloseButtonTexture::Draw(SkCanvas* sk_canvas,
   canvas->Save();
   canvas->Translate(gfx::Vector2d(size_.height() * (1 - kIconScaleFactor) / 2,
                                   size_.height() * (1 - kIconScaleFactor) / 2));
-  PaintVectorIcon(canvas, vector_icons::kCloseIcon,
+  PaintVectorIcon(canvas, vector_icons::kClose16Icon,
                   size_.height() * kIconScaleFactor,
                   color_scheme().close_button_foreground);
   canvas->Restore();
