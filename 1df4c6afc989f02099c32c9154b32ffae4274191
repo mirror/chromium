@@ -34,6 +34,24 @@
       "revId": "1df4c6afc989f02099c32c9154b32ffae4274191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37fb8597_2e717909",
+        "filename": "ash/wm/overview/scoped_overview_animation_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-11T21:06:54Z",
+      "side": 1,
+      "message": "if there\u0027s no opacity change then why is a RS needed in the first place? RS caching is only an improvement if RS is needed. If RS is not needed than forcing RS and caching is a regression.\n\nHow do we animate opacity when exiting but not when entering? I don\u0027t understand how that would work. When is the opacity different from the original?",
+      "parentUuid": "5a61c8c7_0086c7a8",
+      "revId": "1df4c6afc989f02099c32c9154b32ffae4274191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
