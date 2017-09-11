@@ -356,6 +356,8 @@ without changes to the corresponding grd file. -->
                  file="html/util.html" type="chrome_html" />
       <structure name="IDR_WEBUI_HTML_WEBUI_LISTENER_BEHAVIOR"
                  file="html/web_ui_listener_behavior.html" type="chrome_html" />
+      <structure name="IDR_WEBUI_HTML_TIMER_PROXY"
+                 file="html/timer_proxy.html" type="chrome_html" />
 
       <structure name="IDR_WEBUI_JS_ACTION_LINK"
                  file="js/action_link.js" type="chrome_html" />
@@ -496,6 +498,8 @@ without changes to the corresponding grd file. -->
                  file="js/web_ui_listener_behavior.js" type="chrome_html" />
       <structure name="IDR_WEBUI_JS_WEBUI_RESOURCE_TEST"
                  file="js/webui_resource_test.js" type="chrome_html" />
+      <structure name="IDR_WEBUI_JS_TIMER_PROXY"
+                 file="js/timer_proxy.js" type="chrome_html" />
       <if expr="not is_android">
         <part file="cr_components_resources.grdp" />
         <part file="cr_elements_resources.grdp" />
