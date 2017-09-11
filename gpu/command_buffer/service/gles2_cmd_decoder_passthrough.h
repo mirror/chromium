@@ -69,6 +69,34 @@ struct PassthroughResources {
   std::unordered_map<GLuint, MappedBuffer> mapped_buffer_map;
 };
 
+class ScopedFramebufferBindingReset {
+ public:
+  ScopedFramebufferBindingReset();
+  ~ScopedFramebufferBindingReset();
+
+ private:
+  GLint draw_framebuffer_;
+  GLint read_framebuffer_;
+};
+
+class ScopedRenderbufferBindingReset {
+ public:
+  ScopedRenderbufferBindingReset();
+  ~ScopedRenderbufferBindingReset();
+
+ private:
+  GLint renderbuffer_;
+};
+
+class ScopedTexture2DBindingReset {
+ public:
+  ScopedTexture2DBindingReset();
+  ~ScopedTexture2DBindingReset();
+
+ private:
+  GLint texture_;
+};
+
 class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
  public:
   GLES2DecoderPassthroughImpl(GLES2DecoderClient* client,
@@ -323,6 +351,18 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
 
   void VerifyServiceTextureObjectsExist();
 
+  void ResizeRenderbuffer(GLuint renderbuffer,
+                          const gfx::Size& size,
+                          GLsizei samples,
+                          GLenum internal_format);
+  void Resize2DTexture(TexturePassthrough* texture,
+                       const gfx::Size& size,
+                       GLenum internal_format,
+                       GLenum format,
+                       GLenum type);
+
+  bool IsEmulatedFramebufferBound(GLenum target) const;
+
   GLES2DecoderClient* client_;
 
   int commands_to_process_;
@@ -436,6 +476,89 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
   std::unordered_map<GLenum, ActiveQuery> active_queries_;
 
   std::set<GLenum> errors_;
+
+  // Default framebuffer emulation
+  struct EmulatedDefaultFramebufferFormat {
+    GLenum color_renderbuffer_internal_format = GL_NONE;
+    GLenum color_texture_internal_format = GL_NONE;
+    GLenum color_texture_format = GL_NONE;
+    GLenum color_texture_type = GL_NONE;
+    GLenum depth_stencil_internal_format = GL_NONE;
+    GLenum depth_internal_format = GL_NONE;
+    GLenum stencil_internal_format = GL_NONE;
+    GLint samples = 0;
+  };
+
+  struct EmulatedColorBuffer {
+    EmulatedColorBuffer();
+    ~EmulatedColorBuffer();
+
+    scoped_refptr<TexturePassthrough> texture;
+
+    gfx::Size size;
+
+    DISALLOW_COPY_AND_ASSIGN(EmulatedColorBuffer);
+  };
+
+  struct EmulatedDefaultFramebuffer {
+    EmulatedDefaultFramebuffer();
+    ~EmulatedDefaultFramebuffer();
+
+    // Service ID of the framebuffer
+    GLuint framebuffer_service_id = 0;
+
+    // Service ID of the color renderbuffer (if multisampled)
+    GLuint color_buffer_service_id = 0;
+
+    // Color buffer texture (if not multisampled)
+    std::unique_ptr<EmulatedColorBuffer> color_texture;
+
+    // Service ID of the depth stencil renderbuffer
+    GLuint depth_stencil_buffer_service_id = 0;
+
+    // Service ID of the depth renderbuffer
+    GLuint depth_buffer_service_id = 0;
+
+    // Service ID of the stencil renderbuffer (
+    GLuint stencil_buffer_service_id = 0;
+
+    gfx::Size size;
+
+    DISALLOW_COPY_AND_ASSIGN(EmulatedDefaultFramebuffer);
+  };
+  EmulatedDefaultFramebufferFormat emulated_default_framebuffer_format_;
+  std::unique_ptr<EmulatedDefaultFramebuffer> emulated_back_buffer_;
+  std::unique_ptr<EmulatedColorBuffer> emulated_front_buffer_;
+  GLuint temp_front_buffer_fbo_id_;  // Service ID
+  bool offscreen_single_buffer_;
+  bool offscreen_target_buffer_preserved_;
+  std::vector<std::unique_ptr<EmulatedColorBuffer>> in_use_color_textures_;
+  std::vector<std::unique_ptr<EmulatedColorBuffer>> available_color_textures_;
+  size_t create_color_buffer_count_for_test_;
+
+  EmulatedDefaultFramebuffer* CreateEmulatedDefaultFramebuffer(
+      const EmulatedDefaultFramebufferFormat& format);
+  bool ResizeEmulatedDefaultFramebuffer(
+      EmulatedDefaultFramebuffer* fbo,
+      const EmulatedDefaultFramebufferFormat& format,
+      const gfx::Size& size);
+  void DestroyEmulatedDefaultFramebuffer(EmulatedDefaultFramebuffer* fbo,
+                                         bool have_context);
+
+  EmulatedColorBuffer* CreateEmulatedColorBuffer(
+      const EmulatedDefaultFramebufferFormat& format);
+  void ResizeEmulatedColorBuffer(EmulatedColorBuffer* color_buffer,
+                                 const EmulatedDefaultFramebufferFormat& format,
+                                 const gfx::Size& size);
+  void DestroyEmulatedColorBuffer(EmulatedColorBuffer* color_buffer,
+                                  bool have_context);
+
+  // Maximum 2D texture size for limiting offscreen framebuffer sizes
+  GLint max_2d_texture_size_;
+
+  // State tracking of currently bound draw and read framebuffers (client IDs)
+  GLuint bound_draw_framebuffer_;
+  GLuint bound_read_framebuffer_;
 
   // Tracing
   std::unique_ptr<GPUTracer> gpu_tracer_;
