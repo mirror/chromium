@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e78f439_cde0e88e",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/ContentSettingsAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-09-11T09:43:24Z",
+      "side": 1,
+      "message": "Nit: Please add \"// Intentional no-op\". for consistency.",
+      "range": {
+        "startLine": 185,
+        "startChar": 4,
+        "endLine": 185,
+        "endChar": 5
+      },
+      "revId": "d6ba49125953bb104564d21f7558299c5bf77740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3edd2dda_629205fd",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/ContentSettingsAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-09-11T09:43:24Z",
+      "side": 1,
+      "message": "Nit: here too.",
+      "range": {
+        "startLine": 189,
+        "startChar": 8,
+        "endLine": 189,
+        "endChar": 14
+      },
+      "revId": "d6ba49125953bb104564d21f7558299c5bf77740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
