@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31b09980_c75121a9",
+        "filename": "ui/app_list/presenter/app_list_presenter_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-11T16:25:52Z",
+      "side": 1,
+      "message": "optional nit: This is no longer a simple getter. Consider rename it to something like GetAnimationDurationFullscreen.",
+      "range": {
+        "startLine": 70,
+        "startChar": 25,
+        "endLine": 70,
+        "endChar": 54
+      },
+      "revId": "22a2adb6547a131b70c2c2657394dd4c975a6c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
