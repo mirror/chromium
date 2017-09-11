@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b88e31aa_a1814d8c",
+        "filename": "ios/chrome/browser/web/print_tab_helper.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-11T13:23:17Z",
+      "side": 1,
+      "message": "Out of curiosity, can the destructor ever be called without WebStateDestroyed() being called first?",
+      "revId": "9d32b58f7b66f8d0b13fa5157f7ec90aedba65e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35a6bad_c1634b54",
+        "filename": "ios/chrome/browser/web/print_tab_helper.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-11T13:23:17Z",
+      "side": 1,
+      "message": "How should this work instead, in a world where tab helpers are not allowed to directly get a pointer to a dispatcher?",
+      "revId": "9d32b58f7b66f8d0b13fa5157f7ec90aedba65e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
