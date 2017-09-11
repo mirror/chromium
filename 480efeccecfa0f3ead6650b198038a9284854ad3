@@ -16,6 +16,24 @@
       "revId": "480efeccecfa0f3ead6650b198038a9284854ad3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc1b77c_6c39ab92",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-11T21:54:56Z",
+      "side": 1,
+      "message": "I originally tried that but it looks pretty wonky without it, so I can see why it was done this way.",
+      "parentUuid": "f660251f_44008e64",
+      "revId": "480efeccecfa0f3ead6650b198038a9284854ad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
