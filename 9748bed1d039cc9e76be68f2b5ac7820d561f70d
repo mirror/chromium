@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bd5bc12_9af572b8",
+        "filename": "chrome/browser/chromeos/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-11T21:53:24Z",
+      "side": 1,
+      "message": "can we hide the bridge behind a flag so we aren\u0027t trying to instantiate this on systems where it isn\u0027t supported? is the plan to turn this on everywhere eventually?",
+      "revId": "9748bed1d039cc9e76be68f2b5ac7820d561f70d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
