@@ -16,6 +16,24 @@
       "revId": "c73379d1a241a238c7022bcefc7e777d1df4063d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5108bb99_11cf9301",
+        "filename": "media/audio/alsa/alsa_input.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001872
+      },
+      "writtenOn": "2017-09-11T17:25:36Z",
+      "side": 1,
+      "message": "This is a very good question. I am not 100% sure myself.\nFrom my experiments on a single machine it looks like number of frames did not change within this while loop. However, if it does happen new frames count will give us more accurate time estimation.\n(not sure if alsa can get new frames asynchronously, but I don\u0027t see reasons why not)",
+      "parentUuid": "ea490826_0e41b65b",
+      "revId": "c73379d1a241a238c7022bcefc7e777d1df4063d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
