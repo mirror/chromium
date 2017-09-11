@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca84f97c_5bfa7187",
+        "filename": "components/exo/data_offer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-11T05:21:14Z",
+      "side": 1,
+      "message": "nit: not needed.",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 7
+      },
+      "revId": "05e8afe9cf14aad7e65db6024a2b8d997f2a0c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f59ec03_d3f3eec4",
+        "filename": "components/exo/data_offer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-11T05:21:14Z",
+      "side": 1,
+      "message": "PLOG(ERROR) \u003c\u003c \"pipe2()\"",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 63
+      },
+      "revId": "05e8afe9cf14aad7e65db6024a2b8d997f2a0c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60289509_67e1f326",
+        "filename": "components/exo/data_offer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-11T05:21:14Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 9
+      },
+      "revId": "05e8afe9cf14aad7e65db6024a2b8d997f2a0c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "833b3552_41c5d6d2",
+        "filename": "components/exo/data_offer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-11T05:21:14Z",
+      "side": 1,
+      "message": "PLOG",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 39
+      },
+      "revId": "05e8afe9cf14aad7e65db6024a2b8d997f2a0c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdaa6dc7_a8f07529",
+        "filename": "components/exo/data_offer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-11T05:21:14Z",
+      "side": 1,
+      "message": "SendEvents is not a good name. Can you change this to SetTextDropData?",
+      "range": {
+        "startLine": 78,
+        "startChar": 22,
+        "endLine": 78,
+        "endChar": 32
+      },
+      "revId": "05e8afe9cf14aad7e65db6024a2b8d997f2a0c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
