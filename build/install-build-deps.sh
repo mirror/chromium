@@ -196,6 +196,7 @@ dev_list="\
   perl
   pkg-config
   python
+  python-bs4
   python-cherrypy3
   python-crypto
   python-dev
