@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "40178a27_4c7adbf6",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-11T01:50:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0e99e8d7_481acc73",
+      "range": {
+        "startLine": 338,
+        "startChar": 15,
+        "endLine": 338,
+        "endChar": 28
+      },
+      "revId": "cc73815fd7c9835a67f14b3c366e3cc2295f6007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5d4ecda_3442c1d4",
         "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
         "patchSetId": 3
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "\u003e Why doesn\u0027t this use TestTabActionDoesNotOpenAppWindow like below?\n\u003e \n\nWe don\u0027t actually want to test this in this test; it\u0027s just the setup. What we want to test happens below. I ended up changing TestTabAction... to return false if there are any failures and called it in an ASSERT to signal that it\u0027s just setting up the real part of the test. \n\n\u003e Is the below a separate test case to the above? Or are these somehow related to one another?\n\nAre you referring to the AppUrlSelf test above or just the above statement? The AppUrlSelf test makes sure the app window is opened when navigating to the app\u0027s website. The above statement is just setup for this test. This is more like the test below.",
       "parentUuid": "c5d4ecda_3442c1d4",
+      "range": {
+        "startLine": 425,
+        "startChar": 2,
+        "endLine": 425,
+        "endChar": 11
+      },
+      "revId": "cc73815fd7c9835a67f14b3c366e3cc2295f6007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "566bc86b_3fe2f7e2",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-11T01:50:20Z",
+      "side": 1,
+      "message": "As above, I don\u0027t think the ASSERT is really necessary here (that\u0027s just for if the rest of the test is going to crash or behave unspecifiedly, which I don\u0027t think is the case here), and then you can delete the bool return value.\n\nAck.",
+      "parentUuid": "46be8d6e_9f0f5043",
       "range": {
         "startLine": 425,
         "startChar": 2,

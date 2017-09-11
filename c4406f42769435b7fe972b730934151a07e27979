@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ee0ba04_fa49b33a",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-11T01:50:20Z",
+      "side": 1,
+      "message": "Does this need an ASSERT or can we just continue the test from here?\n\n(Removing the ASSERT means you can remove the bool result from this function also.)",
+      "range": {
+        "startLine": 370,
+        "startChar": 4,
+        "endLine": 370,
+        "endChar": 15
+      },
+      "revId": "c4406f42769435b7fe972b730934151a07e27979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
