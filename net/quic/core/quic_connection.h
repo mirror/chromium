@@ -18,14 +18,13 @@
 
 #include <cstddef>
 #include <cstdint>
-#include <deque>
 #include <list>
 #include <map>
 #include <memory>
-#include <queue>
 #include <string>
 #include <vector>
 
+#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "net/quic/core/crypto/quic_decrypter.h"
 #include "net/quic/core/quic_alarm.h"
@@ -911,7 +910,8 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // established, but which could not be decrypted.  We buffer these on
   // the assumption that they could not be processed because they were
   // sent with the INITIAL encryption and the CHLO message was lost.
-  std::deque<std::unique_ptr<QuicEncryptedPacket>> undecryptable_packets_;
+  base::circular_deque<std::unique_ptr<QuicEncryptedPacket>>
+      undecryptable_packets_;
 
   // Maximum number of undecryptable packets the connection will store.
   size_t max_undecryptable_packets_;
