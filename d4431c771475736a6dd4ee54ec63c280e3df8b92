@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "720bcd40_ac43ebfa",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-11T20:48:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43ebb855_a1b9502d",
+      "revId": "d4431c771475736a6dd4ee54ec63c280e3df8b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daebe35a_395c73f4",
         "filename": "ash/shelf/login_shelf_view_unittest.cc",
         "patchSetId": 9
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "49ef3e0c_474a3310",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-11T20:48:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e46e0770_ffc75a6c",
+      "revId": "d4431c771475736a6dd4ee54ec63c280e3df8b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0ab957b_8235d306",
         "filename": "ash/shelf/login_shelf_view_unittest.cc",
         "patchSetId": 9
@@ -104,6 +140,24 @@
       "revId": "d4431c771475736a6dd4ee54ec63c280e3df8b92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6874a2a4_954cbf89",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-11T20:48:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0ab957b_8235d306",
+      "revId": "d4431c771475736a6dd4ee54ec63c280e3df8b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
