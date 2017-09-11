@@ -52,7 +52,6 @@ from webkitpy.style.checker import StyleProcessor
 from webkitpy.style.checker import StyleProcessorConfiguration
 from webkitpy.style.checkers.cpp import CppChecker
 from webkitpy.style.checkers.jsonchecker import JSONChecker
-from webkitpy.style.checkers.python import PythonChecker
 from webkitpy.style.checkers.text import TextChecker
 from webkitpy.style.checkers.xml import XMLChecker
 from webkitpy.style.error_handlers import DefaultStyleErrorHandler
@@ -365,10 +364,6 @@ class CheckerDispatcherDispatchTest(unittest.TestCase):
         """Assert that the dispatched checker is a JSONChecker."""
         self.assert_checker(file_path, JSONChecker)
 
-    def assert_checker_python(self, file_path):
-        """Assert that the dispatched checker is a PythonChecker."""
-        self.assert_checker(file_path, PythonChecker)
-
     def assert_checker_text(self, file_path):
         """Assert that the dispatched checker is a TextChecker."""
         self.assert_checker(file_path, TextChecker)
@@ -425,27 +420,6 @@ class CheckerDispatcherDispatchTest(unittest.TestCase):
         self.assert_checker_json(file_path)
         checker = self.dispatch(file_path)
         self.assertEqual(checker._handle_style_error,
-                         self.mock_handle_style_error)
-
-    def test_python_paths(self):
-        """Test paths that should be checked as Python."""
-        paths = [
-            "foo.py",
-            "Tools/Scripts/modules/text_style.py",
-            os.path.join("Tools", "Scripts", "check-webkit-style"),
-        ]
-
-        for path in paths:
-            self.assert_checker_python(path)
-
-        # Check checker attributes on a typical input.
-        file_base = "foo"
-        file_extension = "css"
-        file_path = file_base + "." + file_extension
-        self.assert_checker_text(file_path)
-        checker = self.dispatch(file_path)
-        self.assertEqual(checker.file_path, file_path)
-        self.assertEqual(checker.handle_style_error,
                          self.mock_handle_style_error)
 
     def test_text_paths(self):
