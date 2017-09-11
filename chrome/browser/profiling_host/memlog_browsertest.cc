@@ -223,10 +223,9 @@ IN_PROC_BROWSER_TEST_P(MemlogBrowserTest, EndToEnd) {
     std::unique_ptr<base::Value> dump_json =
         ReadDumpFile(browser_dumpfile_path);
     ASSERT_TRUE(dump_json);
-    // TODO(ajwong): Make these verify allocation amounts in the browser using
-    // kBrowserAllocSize, kBrowserAllocCount, and kBrowserAllocFlushFillSize
-    // after the baseline tests are determined to be stable.
-    ASSERT_NO_FATAL_FAILURE(ValidateDump(dump_json.get(), 0, 0, 0));
+    ASSERT_NO_FATAL_FAILURE(ValidateDump(dump_json.get(), kBrowserAllocSize,
+                                         kBrowserAllocCount,
+                                         kBrowserAllocFlushFillSize));
   }
 
   {
