@@ -143,6 +143,29 @@ static void namedPropertyEnumerator(const v8::PropertyCallbackInfo<v8::Array>& i
   V8SetReturnValue(info, ToV8(names, info.Holder(), info.GetIsolate()).As<v8::Array>());
 }
 
+static void indexedPropertyDescriptor(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>& info) {
+  // https://heycam.github.io/webidl/#LegacyPlatformObjectGetOwnProperty
+  // Steps 1.1 to 1.2.4 are covered here: we rely on indexedPropertyGetter() to
+  // call the getter function and check that |index| is a valid property index,
+  // in which case it will have set info.GetReturnValue() to something other
+  // than undefined.
+  V8TestSpecialOperations::indexedPropertyGetterCallback(index, info);
+  v8::Local<v8::Value> getterValue = info.GetReturnValue().Get();
+  if (!getterValue->IsUndefined()) {
+    // 1.2.5. Let |desc| be a newly created Property Descriptor with no fields.
+    // 1.2.6. Set desc.[[Value]] to the result of converting value to an
+    //        ECMAScript value.
+    // 1.2.7. If O implements an interface with an indexed property setter,
+    //        then set desc.[[Writable]] to true, otherwise set it to false.
+    v8::PropertyDescriptor desc(getterValue, false);
+    // 1.2.8. Set desc.[[Enumerable]] and desc.[[Configurable]] to true.
+    desc.set_enumerable(true);
+    desc.set_configurable(true);
+    // 1.2.9. Return |desc|.
+    V8SetReturnValue(info, desc);
+  }
+}
+
 } // namespace TestSpecialOperationsV8Internal
 
 void V8TestSpecialOperations::namedItemMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -193,6 +216,10 @@ void V8TestSpecialOperations::indexedPropertyGetterCallback(uint32_t index, cons
   TestSpecialOperationsV8Internal::namedPropertyGetter(propertyName, info);
 }
 
+void V8TestSpecialOperations::indexedPropertyDescriptorCallback(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>& info) {
+  TestSpecialOperationsV8Internal::indexedPropertyDescriptor(index, info);
+}
+
 void V8TestSpecialOperations::indexedPropertySetterCallback(uint32_t index, v8::Local<v8::Value> v8Value, const v8::PropertyCallbackInfo<v8::Value>& info) {
   const AtomicString& propertyName = AtomicString::Number(index);
 
@@ -226,7 +253,7 @@ static void installV8TestSpecialOperationsTemplate(
   v8::IndexedPropertyHandlerConfiguration indexedPropertyHandlerConfig(
       V8TestSpecialOperations::indexedPropertyGetterCallback,
       V8TestSpecialOperations::indexedPropertySetterCallback,
-      nullptr,
+      V8TestSpecialOperations::indexedPropertyDescriptorCallback,
       nullptr,
       nullptr,
       nullptr,
