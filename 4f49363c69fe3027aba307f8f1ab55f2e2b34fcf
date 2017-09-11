@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66774805_49095df9",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-11T21:26:48Z",
+      "side": 1,
+      "message": "Comments in this file would help a lot (both to clarify that this defines the serialization format for session history items for persistent storage and future Mojo IPCs, and to give guidance on how to safely modify it for future versions).  At first glance, it\u0027s not clear why these definitions matter and what the implications of changing them are.",
+      "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff8f009a_db2394f7",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-11T21:26:48Z",
+      "side": 1,
+      "message": "Is there a reason to move this as well as rename it?  It makes it harder to spot if there\u0027s a behavior change here (I don\u0027t think so?) and may be unnecessary churn to the code history for people looking through git blame.",
+      "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a07b6e72_cbe16b6c",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-11T21:26:48Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85492ecf_23880608",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-11T21:26:48Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eba47ff_aadf9141",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-11T21:26:48Z",
+      "side": 1,
+      "message": "Let\u0027s clearly distinguish the legacy section from new code, such as a horizontal line like line 33 and a comment about what\u0027s in each section.  (I\u0027m not opposed to moving it to a new file, but maybe that\u0027s overkill if we can make it clear here.)",
+      "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df27b9ae_c054c245",
+        "filename": "content/common/page_state_serialization.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-11T21:26:48Z",
+      "side": 1,
+      "message": "What\u0027s this for?  (I see references to \"quirk of the format\" in the .cc file.  Is the value used anywhere?  We should clarify in comments if it\u0027s different than the rest.)",
+      "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07988ce_4dc89c76",
+        "filename": "content/common/page_state_serialization_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-11T21:26:48Z",
+      "side": 1,
+      "message": "I\u0027m finding this confusing to reverse engineer, since it\u0027s very close to TestBackwardsCompat but some of the names are reversed (encoded vs decoded) or used in a different way, and it\u0027s largely reordered.\n\n1) Can you clarify what this is testing, perhaps with a comment?  Will future unit tests need to add things like this, the way they currently add to the list above?  (If not, can we put some kind of a \"Add tests for future versions here\" comment in the right place?)\n\n2) If the naming/reordering is a code improvement in general (e.g., I don\u0027t immediately see why we called line 224 \"encoded\" when it\u0027s coming out of Base64Decode), then maybe we should clean up the code in both places to make them easier to compare?",
+      "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
