@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "377c760b_09495ad2",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-11T22:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bba16c5c_2babe3c5",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2857da19_ff5ab7e9",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-11T21:45:45Z",
       "side": 1,
       "message": "Instead of hiding all children and then making them selectively visible, just move the if (...) SetVisible(true) to SetVisible(...), ie,\n\n  GetViewByID(kShutdown)-\u003eSetVisible(show_reboot_ \u0026\u0026 !is_lock_screen_note_in_foreground);",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf65142_01ee614e",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-11T22:55:33Z",
+      "side": 1,
+      "message": "Done. But I want to keep the early return for the ACTIVE/UNKNOWN case.",
+      "parentUuid": "2857da19_ff5ab7e9",
       "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fd2b5ebe_e50aa67e",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-11T22:55:33Z",
+      "side": 1,
+      "message": "AFAIK calling Layout() is a no-op for the ACTIVE case.",
+      "parentUuid": "ec9f5170_518aca49",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84d71a71_edefd8e3",
         "filename": "ash/shelf/login_shelf_view_unittest.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400ad5f1_36ff1687",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-11T22:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84d71a71_edefd8e3",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b06c63cd_1775211d",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-11T22:55:33Z",
+      "side": 1,
+      "message": "Done. Changed to passing in the initialize list directly.",
+      "parentUuid": "5fd1bb92_5a9eb492",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ee8542a_f48c570e",
         "filename": "ash/shelf/shelf.cc",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-11T21:45:45Z",
       "side": 1,
       "message": "This is a little but funky, and I think it might be easy to forget to add some additional state here.\n\nIs there a way to make LoginShelfView aware of the initial changes without republishing them?\n\nAlso, are most of these are no-ops? because the observer state will already be set to that value and you added the if (current_state_ \u003d\u003d new_state) return; checks?",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd1540b_68d9744e",
+        "filename": "ash/shelf/shelf.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-11T22:55:33Z",
+      "side": 1,
+      "message": "First I believe we don\u0027t want to pass in the initial values to the constructor of LoginShelfView, so the only other way I can think of is to let LoginShelfView initialize the states by itself in its constructor, however that requires LoginShelfView to be able to access the states, so it goes back to the original question: should the view observe the states directly or Shelf has to do it? If Shelf is responsible to observe the states for the view then it should also initialize the view in this current way.\n\nI didn\u0027t set the initial values of the cached states in LoginShelfView, perhaps we may assign a most frequent value to each one of them so that \u0027if (current_state_ \u003d\u003d new_state) return;\u0027 can be hit the most often. \n\nThey will always hit the early return in updateUi() (these codes will only be executed once when session state first becomes ACTIVE). But they may not be considered no-ops anymore because they have to trigger \u0027setting all children to invisible\u0027 in this current patch.",
+      "parentUuid": "0ee8542a_f48c570e",
       "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9353d604_5ef9a118",
+        "filename": "ash/shelf/shelf.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-11T22:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7d7bcec_78f5deaa",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
