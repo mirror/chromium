@@ -214,6 +214,24 @@
     },
     {
       "key": {
+        "uuid": "86bf621a_d7bf2400",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-11T04:24:17Z",
+      "side": 1,
+      "message": "Ah, thanks, ERR_ABORTED sounds good.\nI created an issue (https://crbug.com/763762) for making a new error code.",
+      "parentUuid": "54716688_584be030",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9994a639_839824c6",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
         "patchSetId": 2
@@ -349,6 +367,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "650b4d0e_5b88fd0c",
+      "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c5c1a88_2081a189",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-11T04:24:17Z",
+      "side": 1,
+      "message": "Wow, I didn\u0027t know that, thanks!!",
+      "parentUuid": "deb0454c_4e4ebbca",
       "revId": "5d57992447ccdb106f4136b19b3e06ebf37dc136",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
