@@ -8,6 +8,8 @@
 #include "base/strings/sys_string_conversions.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/strings/grit/components_strings.h"
+#import "ios/chrome/browser/signin/authentication_service.h"
+#import "ios/chrome/browser/signin/authentication_service_factory.h"
 #include "ios/chrome/browser/signin/signin_manager_factory.h"
 #import "ios/chrome/browser/ui/authentication/signin_earlgrey_utils.h"
 #include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
@@ -276,6 +278,38 @@ id<GREYMatcher> ButtonWithIdentity(ChromeIdentity* identity) {
 
   [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
       performAction:grey_tap()];
+}
+
+- (void)testMDMError {
+  ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
+  ios::FakeChromeIdentityService* fakeChromeIdentityService =
+      ios::FakeChromeIdentityService::GetInstanceFromChromeProvider();
+  fakeChromeIdentityService->AddIdentity(identity);
+  fakeChromeIdentityService->SetFakeMDMError(true);
+
+  //  ios::ChromeBrowserState* browser_state =
+  //      chrome_test_util::GetOriginalBrowserState();
+  //  AuthenticationService* authService =
+  //      AuthenticationServiceFactory::GetForBrowserState(browser_state);
+  // Sign In |identity|, then open the Account Settings.
+  [ChromeEarlGreyUI openSettingsMenu];
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
+  [[EarlGrey selectElementWithMatcher:ButtonWithIdentity(identity)]
+      performAction:grey_tap()];
+  AcceptAccountConsistencyPopup();
+  [SigninEarlGreyUtils assertSignedInWithIdentity:identity];
+  [ChromeEarlGreyUI tapSettingsMenuButton:SettingsAccountButton()];
+
+  // Open the "Disconnect Account" dialog, then tap "Cancel".
+  [ChromeEarlGreyUI tapAccountsMenuButton:SignOutAccountsButton()];
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::CancelButton()]
+      performAction:grey_tap()];
+
+  // Check that Account Settings screen is open and |identity| is signed in.
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::
+                                          SettingsAccountsCollectionView()]
+      assertWithMatcher:grey_sufficientlyVisible()];
+  [SigninEarlGreyUtils assertSignedInWithIdentity:identity];
 }
 
 @end

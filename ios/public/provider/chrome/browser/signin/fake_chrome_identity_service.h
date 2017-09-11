@@ -78,8 +78,11 @@ class FakeChromeIdentityService : public ChromeIdentityService {
   // is unknown.
   void RemoveIdentity(ChromeIdentity* identity);
 
+  void SetFakeMDMError(bool fakeMDMError);
+
  private:
   base::scoped_nsobject<NSMutableArray> identities_;
+  bool _fakeMDMError;
 };
 
 }  // namespace ios
