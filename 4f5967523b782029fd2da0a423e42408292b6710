@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac5ecd2a_1eab1ba0",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-11T14:17:36Z",
+      "side": 1,
+      "message": "I think this block is also common.",
+      "range": {
+        "startLine": 729,
+        "startChar": 6,
+        "endLine": 733,
+        "endChar": 20
+      },
+      "revId": "4f5967523b782029fd2da0a423e42408292b6710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2682feb_72c9abee",
+        "filename": "components/password_manager/core/browser/password_manager_client_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-11T14:17:36Z",
+      "side": 1,
+      "message": "Why do we care?",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 8
+      },
+      "revId": "4f5967523b782029fd2da0a423e42408292b6710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad907d8_a4c9963e",
+        "filename": "components/password_manager/core/browser/password_manager_client_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-11T14:17:36Z",
+      "side": 1,
+      "message": "should have a virtual protected destructor.",
+      "range": {
+        "startLine": 15,
+        "startChar": 1,
+        "endLine": 15,
+        "endChar": 7
+      },
+      "revId": "4f5967523b782029fd2da0a423e42408292b6710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668acdba_bf643438",
+        "filename": "components/password_manager/core/browser/password_manager_client_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-11T14:17:36Z",
+      "side": 1,
+      "message": "This class should know if it\u0027s necessary or not.",
+      "range": {
+        "startLine": 19,
+        "startChar": 43,
+        "endLine": 19,
+        "endChar": 54
+      },
+      "revId": "4f5967523b782029fd2da0a423e42408292b6710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9308b0_c3ad0e4e",
+        "filename": "ios/chrome/browser/passwords/ios_chrome_password_manager_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-11T14:17:36Z",
+      "side": 1,
+      "message": "I don\u0027t understand why you introduce this if you don\u0027t use it. You can fully use the new helper class in this CL. You can also touch the account chooser logic.",
+      "range": {
+        "startLine": 42,
+        "startChar": 31,
+        "endLine": 42,
+        "endChar": 66
+      },
+      "revId": "4f5967523b782029fd2da0a423e42408292b6710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
