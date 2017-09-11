@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1710096_fcd6f553",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-11T07:52:11Z",
+      "side": 1,
+      "message": "If there is no title, leave it empty..",
+      "range": {
+        "startLine": 672,
+        "startChar": 5,
+        "endLine": 672,
+        "endChar": 22
+      },
+      "revId": "50601fd570c83d6de984b5819e0c246aea240f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6474c009_674fb8b1",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-11T07:52:11Z",
+      "side": 1,
+      "message": "I think you have a bug in your condition.. we still want to GetDefaultTitle() for non-apps when this feature is enabled.\n\n(does this really need a feature check? bookmark apps that have no title seem obscure, and setting a title for them just seems like a bug)",
+      "revId": "50601fd570c83d6de984b5819e0c246aea240f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85465bd9_e488a36c",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1638,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-11T07:52:11Z",
+      "side": 1,
+      "message": "I think we should still fall through to the condition below rather than `return true` here.\n\nAnd did you check that the ChromeOS settings app isn\u0027t affected? I\u0027m pretty sure that\u0027s an \"app\", but it\u0027s not a hosted app, nor a packaged app (so still uses BrowserView). There may be others.\n\nbrowser.cc checks for a non-null |hosted_app_controller_|",
+      "revId": "50601fd570c83d6de984b5819e0c246aea240f43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
