@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bbe70d9_e9ee727a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-11T01:03:23Z",
+      "side": 1,
+      "message": "Could we share this code, as well as constructing the the same_origin_frame_pathname and cross_origin_frame_url in a common function? I\u0027m actually about to change a few lines in this code and I would have to do it in 2 places otherwise.",
+      "revId": "2ad5f90204922833368e10ac03d27d8e1c847bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb1494e_3ed71c07",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-11T01:03:23Z",
+      "side": 1,
+      "message": "nit: may want to clarify that this is with allow none",
+      "revId": "2ad5f90204922833368e10ac03d27d8e1c847bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
