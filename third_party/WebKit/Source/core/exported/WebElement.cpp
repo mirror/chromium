@@ -53,12 +53,10 @@ bool WebElement::IsFormControlElement() const {
 // TODO(dglazkov): Remove. Consumers of this code should use
 // Node:hasEditableStyle.  http://crbug.com/612560
 bool WebElement::IsEditable() const {
-  const Element* element = ConstUnwrap<Element>();
-
-  element->GetDocument().UpdateStyleAndLayoutTree();
-  if (HasEditableStyle(*element))
+  if (IsContentEditable())
     return true;
 
+  const Element* element = ConstUnwrap<Element>();
   if (element->IsTextControl()) {
     if (!ToTextControlElement(element)->IsDisabledOrReadOnly())
       return true;
