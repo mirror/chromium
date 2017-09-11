@@ -177,6 +177,24 @@
       "revId": "3591dfe7ad03feeb590b6492e8331a0782ddc6b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a93152_67c10969",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3885,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-09-11T16:38:15Z",
+      "side": 1,
+      "message": "Not 100% sure what you are asking, but if the scheme is file:// then the user is opening a file on their local machine in chrome. The document itself is created by Chrome or by a plugin that the user has installed (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/DOMImplementation.cpp?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d224).\n\nWe looked through a couple of alternatives to the ExecuteJavascript, one was to possibly modify the media document code to add a flag to default to fullscreen in our specific case, which would only have worked for half our use cases, another was to bypass the fullscreening and handle it later, but I could not get a working prototype going in either case, and in both cases it would only have been half a solution. The notes I made can be viewed here: https://docs.google.com/document/d/1J-dJScXWuIRrQPYo-ffAqCQQdtHsfndp8RAaVs51wQk/edit#heading\u003dh.5z2rf8qzcxku\n\nDoes that answer the questions?",
+      "parentUuid": "a1555778_0e6ffff2",
+      "revId": "3591dfe7ad03feeb590b6492e8331a0782ddc6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
