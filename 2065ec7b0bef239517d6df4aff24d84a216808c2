@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87161d90_bb272def",
+        "filename": "components/offline_pages/core/model/get_pages_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T23:30:03Z",
+      "side": 1,
+      "message": "The part that will not look good is:\nGetPagesTask::GetPagesTaskMatchingClientIds\n\nCurrently proposed:\nGetPagesTask::CreateTaskForClientIds\n\nHow about:\nGetPagesTask::CreateTaskMatchingClientIds?",
+      "parentUuid": "4373db28_cbf9518b",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34fbe303_c9ff00e2",
         "filename": "components/offline_pages/core/test_task_runner.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-11T20:05:36Z",
       "side": 1,
       "message": "The word \"task\" is somewhat redundant and it\u0027s very confusing in this particular spot.\n\nTestingTaskQueueTaskRunner?\nTestingTaskQueue?",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0057d754_55ed3e9b",
+        "filename": "components/offline_pages/core/test_task_runner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-11T23:30:03Z",
+      "side": 1,
+      "message": "\u003e The word \"task\" is somewhat redundant and it\u0027s very confusing in this particular spot.\n\u003e \nNot sure I understand why... It currently has one job: to run a task.\n\n\u003e TestingTaskQueueTaskRunner?\n\u003e TestingTaskQueue?\nBoth of these mentions TaskQueue, which Is otherwise not mentioned in either .h or .cc\n\nIs the point to put the \"Task\" in a better context?\nIs it worth it?",
+      "parentUuid": "34fbe303_c9ff00e2",
       "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
