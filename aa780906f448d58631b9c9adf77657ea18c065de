@@ -22,6 +22,30 @@
       "revId": "aa780906f448d58631b9c9adf77657ea18c065de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d6915b_a65da341",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-11T09:55:16Z",
+      "side": 1,
+      "message": "Will change commit message, sorry. I never noticed, but it did not. Now that I think about it, I wonder where the feature got lost, because I really tried to be careful while porting code from the remote NTP.\n\nYes, it should be keydown. Then we get a problem with KeyboardEvent repetition if the user holds the pressed key, but I think that is solvable.",
+      "parentUuid": "641691f8_08ef21cf",
+      "range": {
+        "startLine": 288,
+        "startChar": 4,
+        "endLine": 288,
+        "endChar": 0
+      },
+      "revId": "aa780906f448d58631b9c9adf77657ea18c065de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
