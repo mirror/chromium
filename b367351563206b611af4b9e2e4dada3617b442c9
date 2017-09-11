@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8383603d_c353cab3",
+        "filename": "base/files/file_path_watcher_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-11T17:57:18Z",
+      "side": 1,
+      "message": "Added a more complete comment to explain the unusual usage here.",
+      "parentUuid": "f91ecaec_65e3a6d7",
+      "revId": "b367351563206b611af4b9e2e4dada3617b442c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f8c1ac9_0999acab",
         "filename": "base/files/file_path_watcher_linux.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "b367351563206b611af4b9e2e4dada3617b442c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d8698b_53f6b24f",
+        "filename": "base/files/file_path_watcher_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-11T17:57:18Z",
+      "side": 1,
+      "message": "Yes; it\u0027s not strictly necessary but having special-case exceptions to the general rule, and requiring developers to grok surrounding comments \u0026 context is something we should avoid unless it is really necessary, in general.\n\nMore importantly, we have a Clang rule that enforces the |weak_factory_| being the final member.",
+      "parentUuid": "9f8c1ac9_0999acab",
+      "revId": "b367351563206b611af4b9e2e4dada3617b442c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
