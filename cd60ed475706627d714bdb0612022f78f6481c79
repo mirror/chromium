@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fac9453_1a8c8911",
+        "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-11T03:39:04Z",
+      "side": 1,
+      "message": "Could add DCHECK(notifier_id.type !\u003d message_center::NotifierId::SYSTEM_COMPONENT)?\n\nOnly system notification should post notification without profile ID.",
+      "revId": "cd60ed475706627d714bdb0612022f78f6481c79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
