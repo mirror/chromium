@@ -46,6 +46,30 @@
       "revId": "dc1b69fa7cac5b3e5f8d6db1ad8bd84a4426c78f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "720768f9_6caec44d",
+        "filename": "tools/perf/page_sets/system_health/native_ui_stories.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-11T18:22:48Z",
+      "side": 1,
+      "message": "Can you elaborate? I don\u0027t understand why wrapping these code in catapult with higher level API in catapult a bad thing.",
+      "parentUuid": "83d88682_4c6afcb2",
+      "range": {
+        "startLine": 15,
+        "startChar": 51,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "dc1b69fa7cac5b3e5f8d6db1ad8bd84a4426c78f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
