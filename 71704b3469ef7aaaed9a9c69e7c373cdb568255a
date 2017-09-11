@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "79513cb2_e68ac5ff",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-11T03:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d68eedb7_85b66fb5",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffc7f5c3_2237d3eb",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.h",
         "patchSetId": 12
@@ -50,6 +68,24 @@
       "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0327919_a46fbc3e",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-11T03:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffc7f5c3_2237d3eb",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "bb6c8166_b583ea58",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-11T03:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2248b7e_3a201916",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c9db728_81a94abf",
         "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
         "patchSetId": 12
@@ -84,6 +138,24 @@
       "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82fa514d_289c9fda",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-11T03:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c9db728_81a94abf",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "dbc6f09f_266a23b7",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-11T03:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5980735a_53439dc8",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c22a37eb_6a5a1199",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
         "patchSetId": 12
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "a0b175b0_491584fa",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2029,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-11T03:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c22a37eb_6a5a1199",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "364bc528_1309592d",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
         "patchSetId": 12
@@ -132,6 +240,24 @@
       "writtenOn": "2017-09-08T07:56:51Z",
       "side": 1,
       "message": "Since SetBaseAndExtent() doesn\u0027t work for null position.\nWe should check null selection and null position form\nToPositionInFlatTree().",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0307e236_9a623949",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2033,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-11T03:12:42Z",
+      "side": 1,
+      "message": "Then what should we do when the base null selection or either of base or extent is null?",
+      "parentUuid": "364bc528_1309592d",
       "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "a9940265_a5790b68",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-11T03:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58196e05_652cb5c1",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93c6dcdc_da318a37",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.h",
         "patchSetId": 12
@@ -169,6 +313,24 @@
       "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ed96fa_7395b874",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-11T03:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93c6dcdc_da318a37",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "78207953_4c447939",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-11T03:12:42Z",
+      "side": 1,
+      "message": "I think PreviousRootInLineBoxCandidatePosition still need to keep DOM Tree version since it\u0027s called by PreviousLinePosition(), which may take DOMTree version input. I added a detailed explanation to VisibleUnitsLine.cpp\u0027s comment.",
+      "parentUuid": "ed7f27fd_b28513b4",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23f60702_0048ddbe",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.h",
         "patchSetId": 12
@@ -203,6 +383,24 @@
       "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e2e783_ddfad86f",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-11T03:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23f60702_0048ddbe",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "517f03f9_12d6fa82",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsLine.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-11T03:12:42Z",
+      "side": 1,
+      "message": "I think PreviousRootInlineBoxCandidatePosition() itself is only called by SelectionModifier related functions, \nbut this function is used inside PreviousLinePosition() in VisibleUnitsLine.cpp. \nThe PreviousLinePosition() must support DOM tree version since AXObject.cpp call this function, \nand thus it seems PreviousRootInLineBoxCandidatePosition() still need to support DOMTree version as well.",
+      "parentUuid": "799f1b37_65863666",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ad78ebe_5709c865",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsWord.cpp",
         "patchSetId": 12
@@ -237,6 +453,24 @@
       "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d7edeb_05dc6e13",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsWord.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-11T03:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ad78ebe_5709c865",
+      "revId": "71704b3469ef7aaaed9a9c69e7c373cdb568255a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
