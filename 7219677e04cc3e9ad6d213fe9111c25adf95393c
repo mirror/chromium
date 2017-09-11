@@ -59,6 +59,30 @@
     },
     {
       "key": {
+        "uuid": "9e78fcc3_23f95b6a",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-09-11T07:39:21Z",
+      "side": 1,
+      "message": "Sorry for miss it... But I have one question. Is not it necessary to set completion_time?",
+      "parentUuid": "cb9e112a_6fa2e84c",
+      "range": {
+        "startLine": 170,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 13
+      },
+      "revId": "7219677e04cc3e9ad6d213fe9111c25adf95393c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47b8bc3c_abb61076",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
         "patchSetId": 3
