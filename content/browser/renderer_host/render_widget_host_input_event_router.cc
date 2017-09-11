@@ -316,8 +316,10 @@ void RenderWidgetHostInputEventRouter::RouteMouseWheelEvent(
         &transformed_point);
   }
 
-  if (!target)
+  if (!target) {
+    root_view->WheelEventAck(*event, INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS);
     return;
+  }
 
   event->SetPositionInWidget(transformed_point.x(), transformed_point.y());
   target->ProcessMouseWheelEvent(*event, latency);
@@ -430,8 +432,12 @@ void RenderWidgetHostInputEventRouter::RouteTouchEvent(
         touchscreen_gesture_target_map_[event->unique_touch_event_id] =
             touch_target_;
 
-        if (!touch_target_.target)
+        if (!touch_target_.target) {
+          TouchEventWithLatencyInfo touch_with_latency(*event, latency);
+          root_view->ProcessAckedTouchEvent(
+              touch_with_latency, INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS);
           return;
+        }
 
         if (touch_target_.target == bubbling_gesture_scroll_target_.target) {
           SendGestureScrollEnd(
@@ -448,10 +454,15 @@ void RenderWidgetHostInputEventRouter::RouteTouchEvent(
       break;
     }
     case blink::WebInputEvent::kTouchMove:
-      if (touch_target_.target) {
-        TransformEventTouchPositions(event, touch_target_.delta);
-        touch_target_.target->ProcessTouchEvent(*event, latency);
+      if (!touch_target_.target) {
+        TouchEventWithLatencyInfo touch_with_latency(*event, latency);
+        root_view->ProcessAckedTouchEvent(
+            touch_with_latency, INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS);
+        return;
       }
+
+      TransformEventTouchPositions(event, touch_target_.delta);
+      touch_target_.target->ProcessTouchEvent(*event, latency);
       break;
     case blink::WebInputEvent::kTouchEnd:
     case blink::WebInputEvent::kTouchCancel:
@@ -461,8 +472,13 @@ void RenderWidgetHostInputEventRouter::RouteTouchEvent(
       if (active_touches_)
         active_touches_ -= CountChangedTouchPoints(*event);
       DCHECK_GE(active_touches_, 0);
-      if (!touch_target_.target)
+
+      if (!touch_target_.target) {
+        TouchEventWithLatencyInfo touch_with_latency(*event, latency);
+        root_view->ProcessAckedTouchEvent(
+            touch_with_latency, INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS);
         return;
+      }
 
       TransformEventTouchPositions(event, touch_target_.delta);
       touch_target_.target->ProcessTouchEvent(*event, latency);
@@ -900,8 +916,11 @@ void RenderWidgetHostInputEventRouter::RouteTouchscreenGestureEvent(
     }
   }
 
-  if (!touchscreen_gesture_target_.target)
+  if (!touchscreen_gesture_target_.target) {
+    root_view->GestureEventAck(*event,
+                               INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS);
     return;
+  }
 
   // TODO(mohsen): Add tests to check event location.
   event->x += touchscreen_gesture_target_.delta.x();
@@ -938,8 +957,11 @@ void RenderWidgetHostInputEventRouter::RouteTouchpadGestureEvent(
     }
   }
 
-  if (!touchpad_gesture_target_.target)
+  if (!touchpad_gesture_target_.target) {
+    root_view->GestureEventAck(*event,
+                               INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS);
     return;
+  }
 
   // TODO(mohsen): Add tests to check event location.
   event->x += touchpad_gesture_target_.delta.x();
