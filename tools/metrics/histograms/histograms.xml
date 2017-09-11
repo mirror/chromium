@@ -59975,6 +59975,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Popups.BlockerActions" enum="PopupBlockerAction">
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    Counts of various events related to the popup blocker. Including blocked
+    popups and overridden (clicked through) popups.
+  </summary>
+</histogram>
+
 <histogram name="Power.BacklightLevelOnAC" units="%">
   <owner>derat@chromium.org</owner>
   <summary>
