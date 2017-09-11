@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6dfbd634_17d71d36",
+        "filename": "net/dns/host_resolver_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-11T14:24:12Z",
+      "side": 1,
+      "message": "ScopedBlockingCall no longer needed here. ConditionVariable instantiates its own ScopedBlockingCall https://chromium-review.googlesource.com/c/chromium/src/+/654058",
+      "parentUuid": "baf96e63_5f962df8",
+      "revId": "ed0d2741b9a7bed8fffe14ec04f10eb1919542d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "633c9756_3189012c",
         "filename": "net/dns/host_resolver_impl_unittest.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-01T17:45:55Z",
       "side": 1,
       "message": "It seems inefficient to construct this temporary in a loop, given that by definition, this task runner can\u0027t also start running some other task while the loop is processing.",
+      "revId": "ed0d2741b9a7bed8fffe14ec04f10eb1919542d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ef26c2_652c1099",
+        "filename": "net/dns/host_resolver_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-11T14:24:12Z",
+      "side": 1,
+      "message": "ScopedBlockingCall no longer needed here. WaitableEvent instantiates its own ScopedBlockingCall https://chromium-review.googlesource.com/c/chromium/src/+/654058",
+      "parentUuid": "633c9756_3189012c",
       "revId": "ed0d2741b9a7bed8fffe14ec04f10eb1919542d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +124,48 @@
         "endLine": 204,
         "endChar": 38
       },
+      "revId": "ed0d2741b9a7bed8fffe14ec04f10eb1919542d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ecc926a_5de4b12b",
+        "filename": "net/dns/host_resolver_proc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-11T14:24:12Z",
+      "side": 1,
+      "message": "MAY_BLOCK is now implemented https://chromium-review.googlesource.com/c/chromium/src/+/639330 :)\n\nTaskScheduler manages a thread pool whose initial size is chosen to maximize CPU usage when there are pending tasks. If a task makes a blocking call and the thread pool size doesn\u0027t change, CPU usage is no longer maximized. The goal of ScopedBlockingCall is to increment the thread pool size during blocking calls so that CPU usage is always maximized.\n\nA WILL_BLOCK ScopedBlockingCall increments the thread pool size immediately.\nA MAY_BLOCK ScopedBlockingCall increments the thread pool size if it stays alive for a few ms.\n\nI\u0027m about to land clearer documentation for ScopedBlockingCall https://chromium-review.googlesource.com/c/chromium/src/+/657259/2/base/threading/scoped_blocking_call.h A trace https://drive.google.com/a/google.com/file/d/0B83u4q-r0vlmZmItWHRSQldDWlE/view?usp\u003dsharing (open in chrome://tracing) and jank profiler dashboard data clearly show that DNS lookups fall into the WILL_BLOCK category.",
+      "parentUuid": "bbf7c8a1_cf84c416",
+      "range": {
+        "startLine": 204,
+        "startChar": 28,
+        "endLine": 204,
+        "endChar": 38
+      },
+      "revId": "ed0d2741b9a7bed8fffe14ec04f10eb1919542d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002293d0_b2912ae6",
+        "filename": "net/dns/host_resolver_proc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-11T14:24:12Z",
+      "side": 1,
+      "message": "Discussed offline with rsleevi@:\n- Most of the time in this method is spent in blocking calls. Therefore, there should be an active ScopedBlockingCall instance for the whole duration of this method.\n- It wouldn\u0027t be appropriate to have a ScopedBlockingCall for the whole duration of this method if it used a significant amount of CPU.",
+      "parentUuid": "107de277_2ade1a05",
       "revId": "ed0d2741b9a7bed8fffe14ec04f10eb1919542d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

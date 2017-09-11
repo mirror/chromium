@@ -16,6 +16,24 @@
       "revId": "86bbdf613f979271a555fa02d6564e4482a6ff1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565a6c5d_d2cec29d",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-11T14:24:12Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "e7085b8c_29987f43",
+      "revId": "86bbdf613f979271a555fa02d6564e4482a6ff1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
