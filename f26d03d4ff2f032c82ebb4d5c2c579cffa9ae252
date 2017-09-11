@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aafd0a5_9a90647b",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-11T18:12:30Z",
+      "side": 1,
+      "message": "do you need to include \u003cmath\u003e or \u003ccmath\u003e for this?",
+      "revId": "f26d03d4ff2f032c82ebb4d5c2c579cffa9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42be441_ce497242",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-11T18:12:30Z",
+      "side": 1,
+      "message": "question: is the gyro always in rad/s? i.e. is it possible to do the conversion on the browser side?",
+      "revId": "f26d03d4ff2f032c82ebb4d5c2c579cffa9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
