@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c620fd_05f702c8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookies/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-11T11:06:04Z",
+      "side": 1,
+      "message": "COMPONENT: Internals\u003eNetwork\u003eCookies",
+      "revId": "8cd2c9133685c1620ae2927130c7b8a73350d932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
