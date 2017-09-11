@@ -87979,7 +87979,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>michaeldo@chromium.com</owner>
   <summary>
     [iOS] Reports URL matches between the return value from the WebState's
-    GetLastCommittedURL and GetCurrentURL methods. It is expected the values
+    GetLastCommittedURL and GetCurrentURL methods. It is expected the origins
     will be equal to confirm that GetCurrentURL can now be replaced with
     GetLastCommittedURL. This will be called each time WebStateImpl::
     GetCurrentURL(URLVerificationTrustLevel* trust_level) is called, which is an
