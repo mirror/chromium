@@ -511,6 +511,9 @@ void AppsGridView::InitiateDrag(AppListItemView* view,
   reorder_placeholder_ = drag_view_init_index_;
   ExtractDragLocation(root_location, &drag_start_grid_view_);
   drag_view_start_ = gfx::Point(drag_view_->x(), drag_view_->y());
+  LOG(ERROR) << "***** InitiateDrag drag_view_->bounds="
+             << drag_view_->bounds().ToString()
+             << " drag_start_grid_view_=" << drag_start_grid_view_.ToString();
 }
 
 void AppsGridView::StartDragAndDropHostDragAfterLongPress(Pointer pointer) {
@@ -541,6 +544,10 @@ bool AppsGridView::UpdateDragFromItem(Pointer pointer,
   gfx::Point drag_point_in_grid_view;
   ExtractDragLocation(event.root_location(), &drag_point_in_grid_view);
   UpdateDrag(pointer, drag_point_in_grid_view);
+  gfx::Rect drag_view_bounds_in_screen = drag_view_->bounds();
+  views::View::ConvertRectToScreen(this, &drag_view_bounds_in_screen);
+  LOG(ERROR) << "***** UpdateDragFromItem drag_view_->bounds_in_screen="
+             << drag_view_bounds_in_screen.ToString();
   if (!dragging())
     return false;
 
@@ -548,9 +555,20 @@ bool AppsGridView::UpdateDragFromItem(Pointer pointer,
   // forwarded.
   gfx::Point location_in_screen = drag_point_in_grid_view;
   views::View::ConvertPointToScreen(this, &location_in_screen);
+  LOG(ERROR) << "***** UpdateDragFromItem mouse_location_in_screen="
+             << location_in_screen.ToString();
+
+  if (!drag_view_bounds_in_screen.Contains(location_in_screen))
+    LOG(ERROR) << "***** UpdateDragFromItem mouse pointer not in drag item "
+                  "view bounds";
+
   DispatchDragEventToDragAndDropHost(location_in_screen);
-  if (drag_and_drop_host_)
-    drag_and_drop_host_->UpdateDragIconProxy(location_in_screen);
+  if (drag_and_drop_host_) {
+    LOG(ERROR) << "***** UpdateDragFromItem drag_view icon origin_in_screen="
+               << drag_view_->icon()->GetBoundsInScreen().origin().ToString();
+    drag_and_drop_host_->UpdateDragIconProxyByLocation(
+        drag_view_->icon()->GetBoundsInScreen().origin());
+  }
   return true;
 }
 
@@ -569,6 +587,10 @@ void AppsGridView::UpdateDrag(Pointer pointer, const gfx::Point& point) {
     return;
 
   drag_view_->SetPosition(drag_view_start_ + drag_vector);
+  LOG(ERROR) << "***** UpdateDrag mouse_point=" << point.ToString()
+             << " drag_view_->bounds=" << drag_view_->bounds().ToString()
+             << " mouseContainsInDragViewBounds="
+             << drag_view_->bounds().Contains(point);
 
   last_drag_point_ = point;
   const Index last_reorder_drop_target = reorder_drop_target_;
@@ -2038,10 +2060,17 @@ void AppsGridView::StartDragAndDropHostDrag(const gfx::Point& grid_location) {
   // We have to hide the original item since the drag and drop host will do
   // the OS dependent code to "lift off the dragged item".
   DCHECK(!IsDraggingForReparentInRootLevelGridView());
-  drag_and_drop_host_->CreateDragIconProxy(
-      screen_location, drag_view_->item()->icon(), drag_view_, delta,
-      kDragAndDropProxyScale);
-  SetViewHidden(drag_view_, true /* hide */, true /* no animation */);
+  LOG(ERROR) << "***** StartDragAndDropHostDrag drag_view_->bounds="
+             << drag_view_->bounds().ToString() << " drag_view->bounsInScreen="
+             << drag_view_->GetBoundsInScreen().ToString()
+             << " drag_view_->icon()->bounds="
+             << drag_view_->icon()->bounds().ToString() << " iconInScreen="
+             << drag_view_->icon()->GetBoundsInScreen().ToString();
+  drag_and_drop_host_->CreateDragIconProxyByLocation(
+      drag_view_->icon()->GetBoundsInScreen().origin(),
+      drag_view_->item()->icon(), drag_view_, kDragAndDropProxyScale);
+
+  SetViewHidden(drag_view_, false /* hide */, true /* no animation */);
 }
 
 void AppsGridView::DispatchDragEventToDragAndDropHost(
