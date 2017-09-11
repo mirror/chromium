@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1528aea4_3ce9fab9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-11T14:28:00Z",
+      "side": 1,
+      "message": "nit: maybe add a comment that documents that the order matters here?",
+      "range": {
+        "startLine": 401,
+        "startChar": 8,
+        "endLine": 401,
+        "endChar": 23
+      },
+      "revId": "09b9b62b05347c2a29bc21e2419f771d5b43b8eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
