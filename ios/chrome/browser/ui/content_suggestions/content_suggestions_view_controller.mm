@@ -247,6 +247,34 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
   }
 }
 
+- (BOOL)accessibilityScroll:(UIAccessibilityScrollDirection)direction {
+  // The collection displays the fake omnibox on the top of the other elements.
+  // The default scrolling action scrolls for the full height of the collection,
+  // hiding elements behing the fake omnibox. This reduces the scrolling by the
+  // height of the fake omnibox.
+  if (direction == UIAccessibilityScrollDirectionDown) {
+    CGFloat displacement = self.collectionView.contentOffset.y +
+                           self.collectionView.bounds.size.height -
+                           ntp_header::kToolbarHeight;
+    displacement = MIN(self.collectionView.contentSize.height -
+                           self.collectionView.bounds.size.height,
+                       displacement);
+    self.collectionView.contentOffset =
+        CGPointMake(self.collectionView.contentOffset.x, displacement);
+  } else if (direction == UIAccessibilityScrollDirectionUp) {
+    CGFloat displacement = self.collectionView.contentOffset.y -
+                           self.collectionView.bounds.size.height +
+                           ntp_header::kToolbarHeight;
+    displacement = MAX(0, displacement);
+    self.collectionView.contentOffset =
+        CGPointMake(self.collectionView.contentOffset.x, displacement);
+  } else {
+    return NO;
+  }
+
+  return YES;
+}
+
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   // Resize the collection as it might have been rotated while not being
