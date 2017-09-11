@@ -17,6 +17,7 @@ deps = [
 ]
 type_mappings = [
   "chrome.mojom.NTPLoggingEventType=::NTPLoggingEventType",
+  "chrome.mojom.NTPVoiceLoggingEventType=::NTPVoiceLoggingEventType",
   "chrome.mojom.TileSource=::ntp_tiles::TileSource",
   "chrome.mojom.TileVisualType=::ntp_tiles::TileVisualType",
   "chrome.mojom.OmniboxFocusState=::OmniboxFocusState",

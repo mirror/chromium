@@ -56,6 +56,7 @@ if (!chrome.embeddedSearch) {
       native function GetThemeBackgroundInfo();
       native function IsInputInProgress();
       native function LogEvent();
+      native function LogVoiceEvent();
       native function LogMostVisitedImpression();
       native function LogMostVisitedNavigation();
       native function UndoAllMostVisitedDeletions();
@@ -112,6 +113,12 @@ if (!chrome.embeddedSearch) {
       // checking the invoking context's origin in searchbox_extension.cc.
       this.logEvent = function(histogram_name) {
         LogEvent(histogram_name);
+      };
+
+      // This method is restricted to chrome-search://local-ntp pages by
+      // checking the invoking context's origin in searchbox_extension.cc.
+      this.logVoiceEvent = function(histogram_name) {
+        LogVoiceEvent(histogram_name);
       };
 
       // This method is restricted to chrome-search://most-visited pages by

@@ -55,6 +55,11 @@ class SearchIPCRouter : public content::WebContentsObserver,
     virtual void OnLogEvent(NTPLoggingEventType event,
                             base::TimeDelta time) = 0;
 
+    // Called to signal that an event has occurred in Voice Search on
+    // the New Tab Page at a particular time since navigation start.
+    virtual void OnLogVoiceEvent(NTPVoiceLoggingEventType event,
+                                 base::TimeDelta time) = 0;
+
     // Called to log an impression from a given provider on the New Tab Page.
     virtual void OnLogMostVisitedImpression(
         int position,
@@ -100,6 +105,7 @@ class SearchIPCRouter : public content::WebContentsObserver,
     virtual bool ShouldProcessUndoMostVisitedDeletion() = 0;
     virtual bool ShouldProcessUndoAllMostVisitedDeletions() = 0;
     virtual bool ShouldProcessLogEvent() = 0;
+    virtual bool ShouldProcessLogVoiceEvent() = 0;
     virtual bool ShouldProcessPasteIntoOmnibox(bool is_active_tab) = 0;
     virtual bool ShouldProcessChromeIdentityCheck() = 0;
     virtual bool ShouldProcessHistorySyncCheck() = 0;
@@ -164,6 +170,9 @@ class SearchIPCRouter : public content::WebContentsObserver,
   void LogEvent(int page_seq_no,
                 NTPLoggingEventType event,
                 base::TimeDelta time) override;
+  void LogVoiceEvent(int page_seq_no,
+                     NTPVoiceLoggingEventType event,
+                     base::TimeDelta time) override;
   void LogMostVisitedImpression(int page_seq_no,
                                 int position,
                                 ntp_tiles::TileSource tile_source,

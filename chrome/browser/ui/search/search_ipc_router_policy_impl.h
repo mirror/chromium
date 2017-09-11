@@ -27,6 +27,7 @@ class SearchIPCRouterPolicyImpl : public SearchIPCRouter::Policy {
   bool ShouldProcessUndoMostVisitedDeletion() override;
   bool ShouldProcessUndoAllMostVisitedDeletions() override;
   bool ShouldProcessLogEvent() override;
+  bool ShouldProcessLogVoiceEvent() override;
   bool ShouldProcessPasteIntoOmnibox(bool is_active_tab) override;
   bool ShouldProcessChromeIdentityCheck() override;
   bool ShouldProcessHistorySyncCheck() override;

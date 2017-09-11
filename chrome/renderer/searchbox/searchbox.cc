@@ -243,6 +243,17 @@ void SearchBox::LogEvent(NTPLoggingEventType event) {
   embedded_search_service_->LogEvent(page_seq_no_, event, delta);
 }
 
+void SearchBox::LogVoiceEvent(NTPVoiceLoggingEventType event) {
+  // navigation_start in ms.
+  uint64_t start =
+      1000 * (render_frame()->GetWebFrame()->Performance().NavigationStart());
+  uint64_t now =
+      (base::TimeTicks::Now() - base::TimeTicks::UnixEpoch()).InMilliseconds();
+  DCHECK(now >= start);
+  base::TimeDelta delta = base::TimeDelta::FromMilliseconds(now - start);
+  embedded_search_service_->LogVoiceEvent(page_seq_no_, event, delta);
+}
+
 void SearchBox::LogMostVisitedImpression(int position,
                                          ntp_tiles::TileSource tile_source,
                                          ntp_tiles::TileVisualType tile_type) {

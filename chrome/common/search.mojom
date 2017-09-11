@@ -12,6 +12,9 @@ import "url/mojo/url.mojom";
 enum NTPLoggingEventType;
 
 [Native]
+enum NTPVoiceLoggingEventType;
+
+[Native]
 enum OmniboxFocusState;
 
 [Native]
@@ -51,6 +54,11 @@ interface EmbeddedSearch {
   // Logs events from InstantExtended New Tab Pages.
   LogEvent(int32 page_seq_no,
            NTPLoggingEventType event,
+           mojo.common.mojom.TimeDelta time);
+
+  // Logs events from Voice Search on InstantExtended New Tab Pages.
+  LogVoiceEvent(int32 page_seq_no,
+           NTPVoiceLoggingEventType event,
            mojo.common.mojom.TimeDelta time);
 
   // Logs an impression on one of the Most Visited tile on the InstantExtended

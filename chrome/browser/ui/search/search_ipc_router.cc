@@ -216,6 +216,18 @@ void SearchIPCRouter::LogEvent(int page_seq_no,
   delegate_->OnLogEvent(event, time);
 }
 
+void SearchIPCRouter::LogVoiceEvent(int page_seq_no,
+                                    NTPVoiceLoggingEventType event,
+                                    base::TimeDelta time) {
+  if (page_seq_no != commit_counter_)
+    return;
+
+  if (!policy_->ShouldProcessLogVoiceEvent())
+    return;
+
+  delegate_->OnLogVoiceEvent(event, time);
+}
+
 void SearchIPCRouter::LogMostVisitedImpression(
     int page_seq_no,
     int position,

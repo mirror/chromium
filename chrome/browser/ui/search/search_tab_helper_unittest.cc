@@ -58,6 +58,8 @@ class MockSearchIPCRouterDelegate : public SearchIPCRouter::Delegate {
   MOCK_METHOD0(OnUndoAllMostVisitedDeletions, void());
   MOCK_METHOD2(OnLogEvent, void(NTPLoggingEventType event,
                                 base::TimeDelta time));
+  MOCK_METHOD2(OnLogVoiceEvent,
+               void(NTPVoiceLoggingEventType event, base::TimeDelta time));
   MOCK_METHOD3(OnLogMostVisitedImpression,
                void(int position,
                     ntp_tiles::TileSource tile_source,
