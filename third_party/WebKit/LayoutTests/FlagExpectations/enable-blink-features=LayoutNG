@@ -13291,7 +13291,6 @@ crbug.com/591099 http/tests/xmlhttprequest/access-control-response-with-body-syn
 crbug.com/591099 http/tests/xmlhttprequest/access-control-response-with-expose-headers.html [ Failure Pass ]
 crbug.com/591099 http/tests/xmlhttprequest/access-control-sandboxed-iframe-allow-origin-null.html [ Failure Pass ]
 crbug.com/591099 http/tests/xmlhttprequest/access-control-sandboxed-iframe-denied-without-wildcard.html [ Failure Pass Timeout ]
-crbug.com/591099 http/tests/xmlhttprequest/access-control-sandboxed-iframe-denied.html [ Failure Pass ]
 crbug.com/591099 http/tests/xmlhttprequest/async-xhr-revalidate-after-sync-xhr.html [ Failure Pass ]
 crbug.com/591099 http/tests/xmlhttprequest/authorization-header.html [ Failure Pass ]
 crbug.com/591099 http/tests/xmlhttprequest/binary-x-user-defined.html [ Failure Pass ]
