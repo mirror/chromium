@@ -41,7 +41,6 @@ class SharedSampler : public base::RefCountedThreadSafe<SharedSampler> {
   // when the refresh is done on the worker thread.
   // These callbacks are passed via RegisterCallbacks.
   using OnIdleWakeupsCallback = base::Callback<void(int)>;
-  using OnPhysicalMemoryCallback = base::Callback<void(int64_t)>;
   using OnStartTimeCallback = base::Callback<void(base::Time)>;
   using OnCpuTimeCallback = base::Callback<void(base::TimeDelta)>;
 
@@ -51,7 +50,6 @@ class SharedSampler : public base::RefCountedThreadSafe<SharedSampler> {
   // Registers task group specific callbacks.
   void RegisterCallbacks(base::ProcessId process_id,
                          const OnIdleWakeupsCallback& on_idle_wakeups,
-                         const OnPhysicalMemoryCallback& on_physical_memory,
                          const OnStartTimeCallback& on_start_time,
                          const OnCpuTimeCallback& on_cpu_time);
 
@@ -83,7 +81,6 @@ class SharedSampler : public base::RefCountedThreadSafe<SharedSampler> {
     ~Callbacks();
 
     OnIdleWakeupsCallback on_idle_wakeups;
-    OnPhysicalMemoryCallback on_physical_memory;
     OnStartTimeCallback on_start_time;
     OnCpuTimeCallback on_cpu_time;
 
@@ -97,7 +94,6 @@ class SharedSampler : public base::RefCountedThreadSafe<SharedSampler> {
   struct RefreshResult {
     base::ProcessId process_id;
     int idle_wakeups_per_second;
-    int64_t physical_bytes;
     base::Time start_time;
     base::TimeDelta cpu_time;
   };

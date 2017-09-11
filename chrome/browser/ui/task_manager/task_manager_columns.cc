@@ -25,11 +25,9 @@ const TableColumnData kColumns[] = {
      true, true},
     {IDS_TASK_MANAGER_PROFILE_NAME_COLUMN, ui::TableColumn::LEFT, -1, 0, 60,
      200, true, true, false},
-    {IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN, ui::TableColumn::RIGHT, -1, 0,
+    {IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN, ui::TableColumn::RIGHT, -1, 0,
      arraysize("800 MiB") * kCharWidth, -1, true, false, true},
     {IDS_TASK_MANAGER_SHARED_MEM_COLUMN, ui::TableColumn::RIGHT, -1, 0,
-     arraysize("800 MiB") * kCharWidth, -1, true, false, false},
-    {IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN, ui::TableColumn::RIGHT, -1, 0,
      arraysize("800 MiB") * kCharWidth, -1, true, false, false},
 
 #if defined(OS_CHROMEOS)
@@ -111,9 +109,8 @@ std::string GetColumnIdAsString(int column_id) {
   switch (column_id) {
     COLUMN_CASE(IDS_TASK_MANAGER_TASK_COLUMN);
     COLUMN_CASE(IDS_TASK_MANAGER_PROFILE_NAME_COLUMN);
-    COLUMN_CASE(IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN);
-    COLUMN_CASE(IDS_TASK_MANAGER_SHARED_MEM_COLUMN);
     COLUMN_CASE(IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN);
+    COLUMN_CASE(IDS_TASK_MANAGER_SHARED_MEM_COLUMN);
     COLUMN_CASE(IDS_TASK_MANAGER_SWAPPED_MEM_COLUMN);
     COLUMN_CASE(IDS_TASK_MANAGER_CPU_COLUMN);
     COLUMN_CASE(IDS_TASK_MANAGER_START_TIME_COLUMN);

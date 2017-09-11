@@ -24,7 +24,7 @@ namespace {
 
 // A mask for the refresh types that are done in the background thread.
 const int kBackgroundRefreshTypesMask =
-    REFRESH_TYPE_CPU | REFRESH_TYPE_MEMORY | REFRESH_TYPE_IDLE_WAKEUPS |
+    REFRESH_TYPE_CPU | REFRESH_TYPE_IDLE_WAKEUPS |
 #if defined(OS_WIN)
     REFRESH_TYPE_START_TIME | REFRESH_TYPE_CPU_TIME |
 #endif  // defined(OS_WIN)
@@ -128,8 +128,6 @@ TaskGroup::TaskGroup(
     shared_sampler_->RegisterCallbacks(
         process_id_,
         base::Bind(&TaskGroup::OnIdleWakeupsRefreshDone,
-                   weak_ptr_factory_.GetWeakPtr()),
-        base::Bind(&TaskGroup::OnPhysicalMemoryUsageRefreshDone,
                    weak_ptr_factory_.GetWeakPtr()),
         base::Bind(&TaskGroup::OnStartTimeRefreshDone,
                    weak_ptr_factory_.GetWeakPtr()),
@@ -307,15 +305,6 @@ void TaskGroup::OnCpuTimeRefreshDone(base::TimeDelta cpu_time) {
 
   cpu_time_ = cpu_time;
   OnBackgroundRefreshTypeFinished(REFRESH_TYPE_CPU_TIME);
-}
-
-void TaskGroup::OnPhysicalMemoryUsageRefreshDone(int64_t physical_bytes) {
-#if defined(OS_WIN)
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  memory_usage_.physical_bytes = physical_bytes;
-  OnBackgroundRefreshTypeFinished(REFRESH_TYPE_PHYSICAL_MEMORY);
-#endif  // OS_WIN
 }
 
 void TaskGroup::OnMemoryUsageRefreshDone(MemoryUsageStats memory_usage) {

@@ -49,7 +49,6 @@ bool IsSharedByGroup(int column_id) {
   switch (column_id) {
     case IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN:
     case IDS_TASK_MANAGER_SHARED_MEM_COLUMN:
-    case IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN:
     case IDS_TASK_MANAGER_SWAPPED_MEM_COLUMN:
     case IDS_TASK_MANAGER_CPU_COLUMN:
     case IDS_TASK_MANAGER_START_TIME_COLUMN:
@@ -370,10 +369,6 @@ base::string16 TaskManagerTableModel::GetText(int row, int column) {
       return stringifier_->GetMemoryUsageText(
           observed_task_manager()->GetSharedMemoryUsage(tasks_[row]), false);
 
-    case IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN:
-      return stringifier_->GetMemoryUsageText(
-          observed_task_manager()->GetPhysicalMemoryUsage(tasks_[row]), false);
-
     case IDS_TASK_MANAGER_SWAPPED_MEM_COLUMN:
       return stringifier_->GetMemoryUsageText(
           observed_task_manager()->GetSwappedMemoryUsage(tasks_[row]), false);
@@ -522,11 +517,6 @@ int TaskManagerTableModel::CompareValues(int row1,
       return ValueCompare(
           observed_task_manager()->GetSharedMemoryUsage(tasks_[row1]),
           observed_task_manager()->GetSharedMemoryUsage(tasks_[row2]));
-
-    case IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN:
-      return ValueCompare(
-          observed_task_manager()->GetPhysicalMemoryUsage(tasks_[row1]),
-          observed_task_manager()->GetPhysicalMemoryUsage(tasks_[row2]));
 
     case IDS_TASK_MANAGER_SWAPPED_MEM_COLUMN:
       return ValueCompare(
@@ -723,11 +713,10 @@ void TaskManagerTableModel::UpdateRefreshTypes(int column_id, bool visibility) {
       type = REFRESH_TYPE_CPU_TIME;
       break;
 
-    case IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN:
-      type = REFRESH_TYPE_PHYSICAL_MEMORY;
+    case IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN:
+      type = REFRESH_TYPE_PRIVATE_MEMORY;
       break;
 
-    case IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN:
     case IDS_TASK_MANAGER_SHARED_MEM_COLUMN:
     case IDS_TASK_MANAGER_SWAPPED_MEM_COLUMN:
       type = REFRESH_TYPE_MEMORY_DETAILS;

@@ -102,8 +102,8 @@ void TaskManagerTester::ToggleColumnVisibility(ColumnSpecifier column) {
     case ColumnSpecifier::PROCESS_ID:
       column_id = IDS_TASK_MANAGER_PROCESS_ID_COLUMN;
       break;
-    case ColumnSpecifier::PHYSICAL_MEMORY:
-      column_id = IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN;
+    case ColumnSpecifier::PRIVATE_MEMORY:
+      column_id = IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN;
       break;
     case ColumnSpecifier::SQLITE_MEMORY_USED:
       column_id = IDS_TASK_MANAGER_SQLITE_MEMORY_USED_COLUMN;
@@ -136,8 +136,8 @@ int64_t TaskManagerTester::GetColumnValue(ColumnSpecifier column, int row) {
     case ColumnSpecifier::COLUMN_NONE:
     case ColumnSpecifier::MEMORY_STATE:
       break;
-    case ColumnSpecifier::PHYSICAL_MEMORY:
-      value = task_manager()->GetPhysicalMemoryUsage(task_id);
+    case ColumnSpecifier::PRIVATE_MEMORY:
+      value = task_manager()->GetPrivateMemoryUsage(task_id);
       success = true;
       break;
     case ColumnSpecifier::PROCESS_ID:
