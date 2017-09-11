@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86d54e43_c33e7f66",
+        "filename": "content/common/service_worker/service_worker_types.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T06:53:08Z",
+      "side": 0,
+      "message": "great :)",
+      "revId": "dd00768a3b1f65009e3eac1a38cd979c49910f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
