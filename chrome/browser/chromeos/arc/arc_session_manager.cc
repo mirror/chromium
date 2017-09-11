@@ -44,6 +44,7 @@
 #include "components/arc/arc_util.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
+#include "components/session_manager/core/session_manager.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace arc {
@@ -194,7 +195,8 @@ void ArcSessionManager::RegisterProfilePrefs(
 bool ArcSessionManager::IsOobeOptInActive() {
   // ARC OOBE OptIn is optional for now. Test if it exists and login host is
   // active.
-  if (!user_manager::UserManager::Get()->IsCurrentUserNew())
+  if (!user_manager::UserManager::Get()->IsCurrentUserNew() &&
+      !session_manager::SessionManager::Get()->IsSessionStarted())
     return false;
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kEnableArcOOBEOptIn)) {
