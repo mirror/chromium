@@ -13,6 +13,7 @@
 #include "base/observer_list.h"
 #include "base/supports_user_data.h"
 #include "components/offline_pages/core/background/request_coordinator.h"
+#include "components/offline_pages/core/client_policy_controller.h"
 #include "components/offline_pages/core/downloads/download_ui_item.h"
 #include "components/offline_pages/core/offline_page_model.h"
 #include "components/offline_pages/core/offline_page_types.h"
@@ -104,6 +105,9 @@ class DownloadUIAdapter : public OfflinePageModel::Observer,
   // via Observer or directly by the user (as in 'open').
   void DeleteItem(const std::string& guid);
   int64_t GetOfflineIdByGuid(const std::string& guid) const;
+
+  // Returns the policy controller.
+  ClientPolicyController* GetPolicyController() const;
 
   // OfflinePageModel::Observer
   void OfflinePageModelLoaded(OfflinePageModel* model) override;
