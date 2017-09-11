@@ -16,6 +16,24 @@
       "revId": "3bf632c1bbdd828c6f4678cdaa997b074ce478e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed90525e_dad3448b",
+        "filename": "chrome/app/vector_icons/notification_storage_full.1x.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-11T16:05:46Z",
+      "side": 1,
+      "message": "Sebastien said \"some of them\". Is this one that needs both? I asked him to stop providing both assets when there was no effective difference, but I don\u0027t think he applied that retroactively.",
+      "parentUuid": "7a405136_ab123b5a",
+      "revId": "3bf632c1bbdd828c6f4678cdaa997b074ce478e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
