@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77a6c925_d93ade73",
+        "filename": "gin/public/isolate_holder.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-09-11T13:14:57Z",
+      "side": 1,
+      "message": "Why not in V8PerIsolateData? There is already a startup_data_ field in that class and it would make the API more consistent between the IsolateHolder constructors that they get passed their snapshot data.",
+      "revId": "ea161af64c8f361a84ab3514928c5e9477250d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
