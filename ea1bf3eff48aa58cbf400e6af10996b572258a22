@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f56c9fc0_f3cb6e43",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-09-11T01:11:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbb57256_2f87d571",
+      "revId": "ea1bf3eff48aa58cbf400e6af10996b572258a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "954c33e2_8a94bea2",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "ea1bf3eff48aa58cbf400e6af10996b572258a22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38969624_2b10749d",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-09-11T01:11:31Z",
+      "side": 1,
+      "message": "Done, using accessor at in unordered_map allows const here.",
+      "parentUuid": "954c33e2_8a94bea2",
+      "revId": "ea1bf3eff48aa58cbf400e6af10996b572258a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b9002b50_1600e6be",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-09-11T01:11:31Z",
+      "side": 1,
+      "message": "Done, added a comment true /* show_size */.",
+      "parentUuid": "cf13d4ed_4c874b59",
+      "revId": "ea1bf3eff48aa58cbf400e6af10996b572258a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15a7dc41_0a5109d1",
         "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "def16414_895e054d",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-09-11T01:11:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15a7dc41_0a5109d1",
+      "revId": "ea1bf3eff48aa58cbf400e6af10996b572258a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "432eba81_6c0ec013",
         "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "ea1bf3eff48aa58cbf400e6af10996b572258a22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149adf28_f6ea48ec",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-09-11T01:11:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "432eba81_6c0ec013",
+      "revId": "ea1bf3eff48aa58cbf400e6af10996b572258a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
