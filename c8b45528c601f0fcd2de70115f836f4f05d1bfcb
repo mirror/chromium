@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45817898_ce59ce73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-11T16:39:57Z",
+      "side": 1,
+      "message": "I believe this needs updating to reflect the updated contents :)",
+      "revId": "c8b45528c601f0fcd2de70115f836f4f05d1bfcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36bef800_c32d7136",
+        "filename": "net/cert/multi_threaded_cert_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-11T16:39:57Z",
+      "side": 1,
+      "message": "This feels like an abstraction failing that it has to be done ::WithBaseSyncPrimitives for unittests.\n\nI\u0027m uncomfortable with that direction of coupling, and the documentation didn\u0027t seem to provide a good explanation as to why it needs to exist.",
+      "revId": "c8b45528c601f0fcd2de70115f836f4f05d1bfcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c910e17_b99d65b7",
+        "filename": "net/cert/multi_threaded_cert_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-11T16:39:57Z",
+      "side": 1,
+      "message": "From an abstraction layer, this also seems to be a net-negative for the TaskScheduler, in that now the order of shutdown (and guarantee of tasks) is, well, non-existent.\n\nI understand you can wrap with cancellation semantics, but that seems very much an error-prone anti-pattern; that is, the new API provides less guarantees than the older API, and I would think that the pattern it poses to support (namely, tasks can be skipped or cancelled after posting) is one that will lead to memory leaks, resource leaks, and bad user experience.\n\nFor this call, the reason I\u0027m uncomfortable is:\n1) It\u0027s assuming the task is always guaranteed to post, but that isn\u0027t guaranteed by the API (as you note, it\u0027s an implicit contract with how the IO thread and Task Scheduler work)\n2) If one of these tasks fail to run, the socket will be indefinitely starved, occupying resources and virtually impossible to find out the cause of that starvation\n3) To defend against that starvation, it has to be written in a new holder class to track whether or not it will be posted/run - and if not, to run \u0027a task\u0027 anyways.\n\n#3 is most concerning, and that seems like a major design limitation. If I did properly understand, and tasks aren\u0027t guaranteed to run, then I\u0027m quite concerned for //net\u0027s usage, because the patterns around continuations mean that if any task is cancelled or fails to run, the state machine will be wedged and all other assumptions go out the window.",
+      "revId": "c8b45528c601f0fcd2de70115f836f4f05d1bfcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
