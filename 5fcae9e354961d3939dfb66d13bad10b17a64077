@@ -73,6 +73,24 @@
       "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ee5384_11ff57b5",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-11T08:03:45Z",
+      "side": 1,
+      "message": "CSChromium could be run by using chrome_clean_skeleton target to build.\nIt seems both adding bookmark and login do not work on chrome_clean_skeleton yet.\nI will add a TODO here to test the code when they are ready.",
+      "parentUuid": "cbb71879_a29ca7ad",
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
