@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "597fd67a_bb048409",
+        "filename": "chrome/browser/extensions/updater/chrome_update_client_config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-11T17:01:54Z",
+      "side": 1,
+      "message": "nit: add\n// update_client::ActivityDataService:\n\nabove this block.",
+      "revId": "4e16166b6cf6b5f542bd3c6f04a5b06677284924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0fd5d3f_3a1c1031",
+        "filename": "chrome/browser/extensions/updater/chrome_update_client_config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-11T17:01:54Z",
+      "side": 1,
+      "message": "Comment on ownership",
+      "revId": "4e16166b6cf6b5f542bd3c6f04a5b06677284924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fd4e48a_fc31280d",
         "filename": "chrome/browser/extensions/updater/chrome_update_client_config.cc",
         "patchSetId": 3
@@ -46,6 +80,23 @@
       "revId": "4e16166b6cf6b5f542bd3c6f04a5b06677284924",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "401e8285_db16db71",
+        "filename": "chrome/browser/extensions/updater/chrome_update_client_config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-11T17:01:54Z",
+      "side": 1,
+      "message": "This DCHECK isn\u0027t really necessary - std::make_unique\u003c\u003e can\u0027t fail.",
+      "revId": "4e16166b6cf6b5f542bd3c6f04a5b06677284924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
