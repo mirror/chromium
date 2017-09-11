@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e71d586_7f569960",
+        "filename": "content/browser/download/download_response_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-11T19:50:47Z",
+      "side": 1,
+      "message": "move this to a common file so it can be shared between DownloadRequestCore and DownloadResponseHandler.",
+      "revId": "793ef3dea1bb24feb9d647acdb0658e79145fc28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
