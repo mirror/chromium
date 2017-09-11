@@ -5,8 +5,10 @@
 #include "modules/media_controls/MediaDownloadInProductHelpManager.h"
 
 #include "core/frame/LocalFrameClient.h"
+#include "core/page/ChromeClient.h"
 #include "modules/media_controls/MediaControlsImpl.h"
 #include "modules/media_controls/elements/MediaControlDownloadButtonElement.h"
+#include "platform/PlatformChromeClient.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
@@ -63,6 +65,10 @@ void MediaDownloadInProductHelpManager::
   if (button_rect.IsEmpty())
     return;
 
+  IntRect button_rect_in_screen =
+      controls_->GetDocument().View()->GetChromeClient()->ViewportToScreen(
+          button_rect, controls_->GetDocument().View());
+
   media_download_in_product_trigger_observed_ = true;
   frame->Client()->GetInterfaceProvider()->GetInterface(
       mojo::MakeRequest(&media_in_product_help_));
@@ -74,7 +80,7 @@ void MediaDownloadInProductHelpManager::
   // MaybeShow should always make the controls visible since we early out if
   // CanShow is false for the controls.
   controls_->MaybeShow();
-  media_in_product_help_->ShowInProductHelpWidget(button_rect);
+  media_in_product_help_->ShowInProductHelpWidget(button_rect_in_screen);
 }
 
 void MediaDownloadInProductHelpManager::StateUpdated() {
