@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce40da60_c8398e8d",
+        "filename": "net/dns/serial_worker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-11T21:03:10Z",
+      "side": 0,
+      "message": "RetryWork() can be deleted now.",
+      "range": {
+        "startLine": 34,
+        "startChar": 38,
+        "endLine": 34,
+        "endChar": 47
+      },
+      "revId": "f2cd0517b262faf95321d46b9858236900d4de4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
