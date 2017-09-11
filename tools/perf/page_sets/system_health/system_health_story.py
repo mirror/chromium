@@ -16,38 +16,6 @@ from telemetry.page import shared_page_state
 _WAIT_TIME_AFTER_LOAD = 10
 
 
-class _SystemHealthSharedState(shared_page_state.SharedPageState):
-  """Shared state which enables disabling stories on individual platforms.
-
-  This class adds support for enabling/disabling individual stories on
-  individual platforms using the same approaches as for benchmarks:
-
-  **************
-  *** DEPRECATED: Please use story expectations in ./exepctions.py to disable.
-  **************
-
-    1. Disabled/Enabled decorator:
-
-       @decorators.Disabled('win')
-       class Story(system_health_story.SystemHealthStory):
-         ...
-
-    2. ShouldDisable method:
-
-       class Story(system_health_story.SystemHealthStory):
-         ...
-
-         @classmethod
-         def ShouldDisable(cls, possible_browser):
-           return possible_browser.platform.GetOSName() == 'win'
-  """
-
-  def CanRunStory(self, story):
-    if self._finder_options.run_disabled_tests:
-      return True
-    return story.CanRun(self.possible_browser)
-
-
 class _MetaSystemHealthStory(type):
   """Metaclass for SystemHealthStory."""
 
@@ -83,8 +51,8 @@ class SystemHealthStory(page.Page):
         assert t in story_tags.ALL_TAGS
         tags.append(t.name)
     super(SystemHealthStory, self).__init__(
-        shared_page_state_class=_SystemHealthSharedState, page_set=story_set,
-        name=self.NAME, url=self.URL, tags=tags,
+        shared_page_state_class=shared_page_state.SharedPageState,
+        page_set=story_set, name=self.NAME, url=self.URL, tags=tags,
         credentials_path='../data/credentials.json',
         grouping_keys={'case': case, 'group': group},
         platform_specific=self.PLATFORM_SPECIFIC)
