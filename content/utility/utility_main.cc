@@ -67,8 +67,8 @@ int UtilityMain(const MainFunctionParams& parameters) {
   }
 
 #if defined(OS_WIN)
-  bool no_sandbox = parameters.command_line.HasSwitch(switches::kNoSandbox);
-  if (!no_sandbox) {
+  if (!IsUnsandboxedSandboxType(SandboxTypeFromCommandLine(
+          parameters.command_line)) {
     sandbox::TargetServices* target_services =
         parameters.sandbox_info->target_services;
     if (!target_services)
