@@ -50,7 +50,7 @@ bool GetSandboxInfoFromCommandLine(int* sandbox_type,
   }
 
   *sandbox_type = SandboxTypeFromCommandLine(*command_line);
-  if (*sandbox_type == SANDBOX_TYPE_NO_SANDBOX)
+  if (IsUnsandboxedSandboxType(*sandbox_type))
     return false;
 
   if (command_line->HasSwitch(switches::kV2SandboxedEnabled)) {
