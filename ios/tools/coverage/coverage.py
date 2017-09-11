@@ -10,12 +10,14 @@
         such as ios_chrome_unittests. To simply play with this tool, you are
         suggested to start with 'url_unittests'.
 
-  ios/tools/coverage/coverage.py target
-    Generate code coverage report for |target| and restrict the results to ios/.
-
   ios/tools/coverage/coverage.py -f path1 -f path2 target
     Generate code coverage report for |target| and restrict the results to
     |path1| and |path2|.
+
+  ios/tools/coverage/coverage.py target -f path --reuse-profdata
+  out/Coverage-iphonesimulator/coverage.profdata
+    Skip running tests and reuse the specified profile data file to generate
+    code coverage report.
 
   For more info, please refer to ios/tools/coverage/coverage.py -h
 
@@ -42,13 +44,6 @@ PROFDATA_FILE_NAME = 'coverage.profdata'
 # coverage configuration, and the path to the file is part of the log that can
 # be identified with the following identifier.
 PROFRAW_LOG_IDENTIFIER = 'Coverage data at '
-
-# By default, code coverage results are restricted to 'ios/' directory.
-# If the filter arguments are defined, they will override the default values.
-# Having default values are important because otherwise the code coverage data
-# returned by "llvm-cove" will include completely unrelated directories such as
-# 'base/' and 'url/'.
-DEFAULT_FILTER_PATHS = ['ios/']
 
 # Only test targets with the following postfixes are considered to be valid.
 VALID_TEST_TARGET_POSTFIXES = ['unittests', 'inttests', 'egtests']
@@ -445,12 +440,9 @@ def _ParseCommandArguments():
   arg_parser = argparse.ArgumentParser()
   arg_parser.usage = __doc__
 
-  arg_parser.add_argument('-f', '--filter', type=str, action='append',
+  arg_parser.add_argument('-f', '--filter', action='append', required=True,
                           help='Paths used to restrict code coverage results '
-                               'to specific directories, and the default value '
-                               'is \'ios/\'. \n'
-                               'NOTE: if this value is defined, it will '
-                               'override instead of appeding to the defaults.')
+                               'to specific directories.')
 
   arg_parser.add_argument('-j', '--jobs', type=int, default=None,
                           help='Run N jobs to build in parallel. If not '
@@ -458,7 +450,7 @@ def _ParseCommandArguments():
                                'based on CPUs availability. Please refer to '
                                '\'ninja -h\' for more details.')
 
-  arg_parser.add_argument('-r', '--reuse-profdata', type=str,
+  arg_parser.add_argument('-r', '--reuse-profdata',
                           help='Skip building test target and running tests '
                                'and re-use the specified profile data file.')
 
@@ -514,15 +506,13 @@ def Main():
     jobs = DEFAULT_GOMA_JOBS
 
   _AssertCoverageBuildDirectoryExists()
-  if args.filter:
-    _AssertFilterPathsExist(args.filter)
+  _AssertFilterPathsExist(args.filter)
 
   profdata_path = args.reuse_profdata
   if not profdata_path:
     profdata_path = _CreateCoverageProfileDataForTarget(target, jobs)
 
-  _DisplayLineCoverageReport(target, profdata_path,
-                             args.filter or DEFAULT_FILTER_PATHS)
+  _DisplayLineCoverageReport(target, profdata_path, args.filter)
 
 if __name__ == '__main__':
   sys.exit(Main())
