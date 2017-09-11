@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "96343480_50206fc4",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-09-11T18:35:38Z",
+      "side": 1,
+      "message": "Please add a comment to the class explaining the parameters.",
+      "revId": "cd2a663dda8aab0985019c12321c514c218a5694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d1e60af_1be50e85",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
         "patchSetId": 1
