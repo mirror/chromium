@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a62a0c4_09e2e02f",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-09-11T06:48:24Z",
+      "side": 1,
+      "message": "Instead of doing this, I think we\u0027d be better to define an \"affected_by_all\" parameter that is true by default. Then you can fully generate these APIs too.",
+      "revId": "4a2762ac495029a83289f0df5dafcd9640499a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
