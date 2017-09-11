@@ -33,6 +33,7 @@
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/KeyboardEvent.h"
 #include "core/events/PointerEvent.h"
+#include "core/frame/DOMVisualViewport.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/fullscreen/Fullscreen.h"
@@ -74,6 +75,7 @@
 #include "modules/remoteplayback/RemotePlayback.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -694,6 +696,8 @@ void MediaControlsImpl::ToggleTextTrackList() {
   if (!text_track_list_->IsWanted())
     window_event_listener_->Start();
 
+  PositionPopupMenu(text_track_list_);
+
   text_track_list_->SetVisible(!text_track_list_->IsWanted());
 }
 
@@ -1056,7 +1060,7 @@ void MediaControlsImpl::ElementSizeChangedTimerFired(TimerBase*) {
 
 void MediaControlsImpl::ComputeWhichControlsFit() {
   // Hide all controls that don't fit, and show the ones that do.
-  // This might be better suited for a layout, but since JS media controls
+  // This might be better suited for a rayout, but since JS media controls
   // won't benefit from that anwyay, we just do it here like JS will.
 
   // Controls that we'll hide / show, in order of decreasing priority.
@@ -1181,6 +1185,29 @@ void MediaControlsImpl::ComputeWhichControlsFit() {
   }
 }
 
+void MediaControlsImpl::PositionPopupMenu(Element* popup_menu) {
+  constexpr int kPopupMenuMarginPx = 4;
+  const char kImportant[] = "important";
+
+  DCHECK(MediaElement().getBoundingClientRect());
+  DCHECK(GetDocument().domWindow());
+  DCHECK(GetDocument().domWindow()->visualViewport());
+
+  DOMRect* bounding_client_rect = MediaElement().getBoundingClientRect();
+  DOMVisualViewport* viewport = GetDocument().domWindow()->visualViewport();
+  ;
+
+  int bottom = viewport->height() - bounding_client_rect->y() -
+               bounding_client_rect->height() + kPopupMenuMarginPx;
+  int right = viewport->width() - bounding_client_rect->x() -
+              bounding_client_rect->width() + kPopupMenuMarginPx;
+
+  popup_menu->style()->setProperty("bottom", WTF::String::Number(bottom),
+                                   kImportant, ASSERT_NO_EXCEPTION);
+  popup_menu->style()->setProperty("right", WTF::String::Number(right),
+                                   kImportant, ASSERT_NO_EXCEPTION);
+}
+
 void MediaControlsImpl::Invalidate(Element* element) {
   if (!element)
     return;
@@ -1215,6 +1242,9 @@ void MediaControlsImpl::ToggleOverflowMenu() {
 
   if (!overflow_list_->IsWanted())
     window_event_listener_->Start();
+
+  PositionPopupMenu(overflow_list_);
+
   overflow_list_->SetIsWanted(!overflow_list_->IsWanted());
 }
 
