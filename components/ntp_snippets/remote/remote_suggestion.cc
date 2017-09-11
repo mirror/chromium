@@ -81,8 +81,6 @@ static_assert(
         kArticlesRemoteId,
     "kArticlesRemoteId has a wrong value?!");
 
-const int kChromeReaderDefaultExpiryTimeMins = 3 * 24 * 60;
-
 RemoteSuggestion::RemoteSuggestion(const std::vector<std::string>& ids,
                                    int remote_category_id)
     : ids_(ids),
@@ -94,128 +92,6 @@ RemoteSuggestion::RemoteSuggestion(const std::vector<std::string>& ids,
       content_type_(ContentType::UNKNOWN) {}
 
 RemoteSuggestion::~RemoteSuggestion() = default;
-
-// static
-std::unique_ptr<RemoteSuggestion>
-RemoteSuggestion::CreateFromChromeReaderDictionary(
-    const base::DictionaryValue& dict,
-    const base::Time& fetch_date) {
-  const base::DictionaryValue* content = nullptr;
-  if (!dict.GetDictionary("contentInfo", &content)) {
-    return nullptr;
-  }
-
-  // Need at least a primary id.
-  std::string primary_id;
-  if (!content->GetString("url", &primary_id) || primary_id.empty()) {
-    return nullptr;
-  }
-
-  const base::ListValue* corpus_infos_list = nullptr;
-  if (!content->GetList("sourceCorpusInfo", &corpus_infos_list)) {
-    DLOG(WARNING) << "No sources found for article " << primary_id;
-    return nullptr;
-  }
-
-  std::vector<std::string> ids(1, primary_id);
-  std::vector<SnippetSource> sources;
-  for (const auto& value : *corpus_infos_list) {
-    const base::DictionaryValue* dict_value = nullptr;
-    if (!value.GetAsDictionary(&dict_value)) {
-      DLOG(WARNING) << "Invalid source info for article " << primary_id;
-      continue;
-    }
-
-    std::string corpus_id_str;
-    GURL corpus_id;
-    if (dict_value->GetString("corpusId", &corpus_id_str)) {
-      corpus_id = GURL(corpus_id_str);
-    }
-
-    if (!corpus_id.is_valid()) {
-      // We must at least have a valid source URL.
-      DLOG(WARNING) << "Invalid article url " << corpus_id_str;
-      continue;
-    }
-    const base::DictionaryValue* publisher_data = nullptr;
-    std::string site_title;
-    if (dict_value->GetDictionary("publisherData", &publisher_data)) {
-      if (!publisher_data->GetString("sourceName", &site_title)) {
-        // It's possible but not desirable to have no publisher data.
-        DLOG(WARNING) << "No publisher name for article " << corpus_id_str;
-      }
-    } else {
-      DLOG(WARNING) << "No publisher data for article " << corpus_id_str;
-    }
-
-    std::string amp_url_str;
-    GURL amp_url;
-    // Expected to not have AMP url sometimes.
-    if (dict_value->GetString("ampUrl", &amp_url_str)) {
-      amp_url = GURL(amp_url_str);
-      DLOG_IF(WARNING, !amp_url.is_valid())
-          << "Invalid AMP url " << amp_url_str;
-    }
-    sources.emplace_back(corpus_id, site_title,
-                         amp_url.is_valid() ? amp_url : GURL());
-    // We use the raw string so that we can compare it against other primary
-    // IDs. Parsing the ID as a URL might add a trailing slash (and we don't do
-    // this for the primary ID).
-    ids.push_back(corpus_id_str);
-  }
-  if (sources.empty()) {
-    DLOG(WARNING) << "No sources found for article " << primary_id;
-    return nullptr;
-  }
-
-  std::unique_ptr<RemoteSuggestion> snippet(
-      new RemoteSuggestion(ids, kArticlesRemoteId));
-  snippet->fetch_date_ = fetch_date;
-
-  std::string title;
-  if (content->GetString("title", &title)) {
-    snippet->title_ = title;
-  }
-  std::string salient_image_url;
-  if (content->GetString("thumbnailUrl", &salient_image_url)) {
-    snippet->salient_image_url_ = GURL(salient_image_url);
-  }
-  std::string snippet_str;
-  if (content->GetString("snippet", &snippet_str)) {
-    snippet->snippet_ = snippet_str;
-  }
-  // The creation and expiry timestamps are uint64s which are stored as strings.
-  std::string creation_timestamp_str;
-  if (content->GetString("creationTimestampSec", &creation_timestamp_str)) {
-    snippet->publish_date_ = TimeFromJsonString(creation_timestamp_str);
-  }
-  std::string expiry_timestamp_str;
-  if (content->GetString("expiryTimestampSec", &expiry_timestamp_str)) {
-    snippet->expiry_date_ = TimeFromJsonString(expiry_timestamp_str);
-  }
-
-  // If publish and/or expiry date are missing, fill in reasonable defaults.
-  if (snippet->publish_date_.is_null()) {
-    snippet->publish_date_ = base::Time::Now();
-  }
-  if (snippet->expiry_date_.is_null()) {
-    snippet->expiry_date_ =
-        snippet->publish_date() +
-        base::TimeDelta::FromMinutes(kChromeReaderDefaultExpiryTimeMins);
-  }
-
-  const SnippetSource& source = FindBestSource(sources);
-  snippet->url_ = source.url;
-  snippet->publisher_name_ = source.publisher_name;
-  snippet->amp_url_ = source.amp_url;
-
-  double score;
-  if (dict.GetDouble("score", &score)) {
-    snippet->score_ = score;
-  }
-
-  return snippet;
-}
 
 // static
 std::unique_ptr<RemoteSuggestion>
