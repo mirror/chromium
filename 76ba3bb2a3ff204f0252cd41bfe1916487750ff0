@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8530eb8a_6612835b",
+        "filename": "components/autofill/content/renderer/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-11T12:25:02Z",
+      "side": 1,
+      "message": "To me, the name is a bit weird. In ML, there are detection and classification tasks. Here we mix both terms. \nHow about \"html_based_username_detector\"?",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "76ba3bb2a3ff204f0252cd41bfe1916487750ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b79a915_13efbfeb",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-11T12:25:02Z",
+      "side": 1,
+      "message": "do we also consider placeholder and aria-label?",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 69
+      },
+      "revId": "76ba3bb2a3ff204f0252cd41bfe1916487750ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2a4c4c_24f7e786",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-11T12:25:02Z",
+      "side": 1,
+      "message": "\u003d\u003e GetUsernameFieldBasedOnHtmlAttributes?",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 25
+      },
+      "revId": "76ba3bb2a3ff204f0252cd41bfe1916487750ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86888845_e52754a3",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-11T12:25:02Z",
+      "side": 1,
+      "message": "We don\u0027t change |control_elements|, make it const and pass by reference (\u0026). Otherwise, the whole vector will be copied to stack which we don\u0027t need. \n\nFor input arguments: const and by reference.\nFor output arguments: by pointer.\n\n|control_elements| and |password_form| (do we actually need |PasswordForm| or |FormData|) are inputs,  username_element is output.",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 62
+      },
+      "revId": "76ba3bb2a3ff204f0252cd41bfe1916487750ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
