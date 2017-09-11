@@ -53,6 +53,7 @@ class AutofillPaymentInstrument
       const std::vector<std::string>& supported_networks,
       const std::set<autofill::CreditCard::CardType>& supported_types,
       bool supported_types_specified) const override;
+  const SkBitmap* icon_bitmap() const override;
 
   // autofill::payments::FullCardRequest::ResultDelegate:
   void OnFullCardRequestSucceeded(
@@ -68,9 +69,13 @@ class AutofillPaymentInstrument
 
   autofill::CreditCard* credit_card() { return &credit_card_; }
 
+  const std::string& method_name() const { return method_name_; }
+
  private:
   // Generates the basic card response and sends it to the delegate.
   void GenerateBasicCardResponse();
+
+  const std::string method_name_;
 
   // A copy of the card is owned by this object.
   autofill::CreditCard credit_card_;
