@@ -187,7 +187,10 @@ ToolsMenuModel::~ToolsMenuModel() {}
 void ToolsMenuModel::Build(Browser* browser) {
   AddItemWithStringId(IDC_SAVE_PAGE, IDS_SAVE_PAGE);
 
-  if (extensions::util::IsNewBookmarkAppsEnabled()) {
+  if (extensions::util::IsNewBookmarkAppsEnabled() &&
+      // If kExperimentalAppBanners is enabled, this is moved to the top level
+      // menu.
+      !base::FeatureList::IsEnabled(features::kExperimentalAppBanners)) {
     int string_id = IDS_ADD_TO_DESKTOP;
 #if defined(OS_MACOSX)
     string_id = IDS_ADD_TO_APPLICATIONS;
@@ -732,6 +735,18 @@ void AppMenuModel::Build() {
     AddItemWithStringId(IDC_ROUTE_MEDIA, IDS_MEDIA_ROUTER_MENU_ITEM_TITLE);
 
   AddItemWithStringId(IDC_FIND, IDS_FIND);
+  if (extensions::util::IsNewBookmarkAppsEnabled() &&
+      base::FeatureList::IsEnabled(features::kExperimentalAppBanners)) {
+    int string_id = IDS_ADD_TO_DESKTOP;
+#if defined(OS_MACOSX)
+    string_id = IDS_ADD_TO_APPLICATIONS;
+#endif
+#if defined(USE_ASH)
+    string_id = IDS_ADD_TO_SHELF;
+#endif  // defined(USE_ASH)
+    AddItemWithStringId(IDC_CREATE_HOSTED_APP, string_id);
+  }
+
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableDomDistiller))
     AddItemWithStringId(IDC_DISTILL_PAGE, IDS_DISTILL_PAGE);
