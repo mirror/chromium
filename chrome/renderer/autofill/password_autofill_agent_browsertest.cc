@@ -2106,8 +2106,8 @@ TEST_F(PasswordAutofillAgentTest,
   CheckTextFieldsState(std::string("foobar"), false, std::string(), false);
 }
 
-// Test that the last plain text field before a password field is chosen as a
-// username, in a form with 2 plain text fields without username predictions.
+// Choose the plain text field indicated by the HTML based username detector,
+// in a form with 2 plain text fields without username predicitons.
 TEST_F(PasswordAutofillAgentTest, FindingUsernameWithoutAutofillPredictions) {
   LoadHTML(kFormHTMLWithTwoTextFields);
   UpdateUsernameAndPasswordElements();
@@ -2120,9 +2120,9 @@ TEST_F(PasswordAutofillAgentTest, FindingUsernameWithoutAutofillPredictions) {
   static_cast<content::RenderFrameObserver*>(password_autofill_agent_)
       ->WillSubmitForm(username_element_.Form());
 
-  // Observe that the PasswordAutofillAgent identifies the second field (e-mail)
-  // as username.
-  ExpectFormSubmittedWithUsernameAndPasswords("temp@google.com", "random", "");
+  // Observe that the PasswordAutofillAgent identifies the first field
+  // (username) as username.
+  ExpectFormSubmittedWithUsernameAndPasswords("temp", "random", "");
 }
 
 // Tests that field predictions are followed when identifying the username
