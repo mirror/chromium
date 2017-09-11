@@ -457,7 +457,7 @@ TEST_F(LocalStorageContextMojoTest, MetaDataClearedOnDelete) {
   wrapper->Put(key, value, "source", base::BindOnce(&NoOpSuccess));
   wrapper.reset();
   context()->OpenLocalStorage(origin1, MakeRequest(&wrapper));
-  wrapper->Delete(key, "source", base::BindOnce(&NoOpSuccess));
+  wrapper->Delete(key, value, "source", base::BindOnce(&NoOpSuccess));
   wrapper.reset();
 
   // Make sure all data gets committed to disk.

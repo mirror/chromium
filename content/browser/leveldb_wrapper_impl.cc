@@ -41,6 +41,16 @@ base::TimeDelta LevelDBWrapperImpl::RateLimiter::ComputeDelayNeeded(
   return base::TimeDelta();
 }
 
+LevelDBWrapperImpl::NullableValue::NullableValue() : deleted(true) {}
+LevelDBWrapperImpl::NullableValue::NullableValue(
+    const std::vector<uint8_t>& value)
+    : deleted(false), value(value) {}
+LevelDBWrapperImpl::NullableValue::NullableValue(const NullableValue& other) =
+    default;
+LevelDBWrapperImpl::NullableValue::~NullableValue() {}
+LevelDBWrapperImpl::NullableValue& LevelDBWrapperImpl::NullableValue::operator=(
+    NullableValue&& other) = default;
+
 LevelDBWrapperImpl::CommitBatch::CommitBatch() : clear_all_first(false) {}
 LevelDBWrapperImpl::CommitBatch::~CommitBatch() {}
 
@@ -102,8 +112,8 @@ void LevelDBWrapperImpl::OnMemoryDump(
           ->system_allocator_pool_name();
   if (commit_batch_) {
     size_t data_size = 0;
-    for (const auto& key : commit_batch_->changed_keys)
-      data_size += key.size();
+    for (const auto& iter : commit_batch_->changed_values)
+      data_size += iter.first.size() + iter.second.value.size();
     auto* commit_batch_mad = pmd->CreateAllocatorDump(name + "/commit_batch");
     commit_batch_mad->AddScalar(
         base::trace_event::MemoryAllocatorDump::kNameSize,
@@ -145,9 +155,29 @@ void LevelDBWrapperImpl::Put(const std::vector<uint8_t>& key,
                              const std::vector<uint8_t>& value,
                              const std::string& source,
                              PutCallback callback) {
+  NullableValue old_value;
+  PutInternal(key, value, old_value, source, std::move(callback));
+}
+
+void LevelDBWrapperImpl::Change(const std::vector<uint8_t>& key,
+                                const std::vector<uint8_t>& value,
+                                const std::vector<uint8_t>& client_old_value,
+                                const std::string& source,
+                                PutCallback callback) {
+  PutInternal(key, value, NullableValue(client_old_value), source,
+              std::move(callback));
+}
+
+// TODO: define in order.
+void LevelDBWrapperImpl::PutInternal(const std::vector<uint8_t>& key,
+                                     const std::vector<uint8_t>& value,
+                                     const NullableValue& client_old_value,
+                                     const std::string& source,
+                                     PutCallback callback) {
   if (!map_) {
-    LoadMap(base::Bind(&LevelDBWrapperImpl::Put, base::Unretained(this), key,
-                       value, source, base::Passed(&callback)));
+    LoadMap(base::Bind(&LevelDBWrapperImpl::PutInternal, base::Unretained(this),
+                       key, value, client_old_value, source,
+                       base::Passed(&callback)));
     return;
   }
 
@@ -174,13 +204,13 @@ void LevelDBWrapperImpl::Put(const std::vector<uint8_t>& key,
 
   if (database_) {
     CreateCommitBatchIfNeeded();
-    commit_batch_->changed_keys.insert(key);
+    // Values will be taken from |map_| before committing.
+    commit_batch_->changed_values[key] = NullableValue();
   }
 
   std::vector<uint8_t> old_value;
-  if (has_old_item) {
+  if (has_old_item)
     old_value.swap((*map_)[key]);
-  }
   (*map_)[key] = value;
   bytes_used_ = new_bytes_used;
   if (!has_old_item) {
@@ -200,11 +230,12 @@ void LevelDBWrapperImpl::Put(const std::vector<uint8_t>& key,
 }
 
 void LevelDBWrapperImpl::Delete(const std::vector<uint8_t>& key,
+                                const std::vector<uint8_t>& client_old_value,
                                 const std::string& source,
                                 DeleteCallback callback) {
   if (!map_) {
     LoadMap(base::Bind(&LevelDBWrapperImpl::Delete, base::Unretained(this), key,
-                       source, base::Passed(&callback)));
+                       client_old_value, source, base::Passed(&callback)));
     return;
   }
 
@@ -216,7 +247,7 @@ void LevelDBWrapperImpl::Delete(const std::vector<uint8_t>& key,
 
   if (database_) {
     CreateCommitBatchIfNeeded();
-    commit_batch_->changed_keys.insert(std::move(found->first));
+    commit_batch_->changed_values[std::move(found->first)].deleted = true;
   }
 
   std::vector<uint8_t> old_value(std::move(found->second));
@@ -245,7 +276,7 @@ void LevelDBWrapperImpl::DeleteAll(const std::string& source,
   if (database_) {
     CreateCommitBatchIfNeeded();
     commit_batch_->clear_all_first = true;
-    commit_batch_->changed_keys.clear();
+    commit_batch_->changed_values.clear();
   }
 
   map_->clear();
@@ -363,8 +394,9 @@ void LevelDBWrapperImpl::OnGotMigrationData(std::unique_ptr<ValueMap> data) {
 
   if (database_ && !empty()) {
     CreateCommitBatchIfNeeded();
+    // Values will be taken from |map_| before committing.
     for (const auto& it : *map_)
-      commit_batch_->changed_keys.insert(it.first);
+      commit_batch_->changed_values[it.first] = NullableValue();
     CommitChanges();
   }
 
@@ -443,20 +475,22 @@ void LevelDBWrapperImpl::CommitChanges() {
     operations.push_back(std::move(item));
   }
   size_t data_size = 0;
-  for (const auto& key: commit_batch_->changed_keys) {
+  for (const auto& it : commit_batch_->changed_values) {
+    const auto& key = it.first;
     data_size += key.size();
     leveldb::mojom::BatchedOperationPtr item =
         leveldb::mojom::BatchedOperation::New();
     item->key.reserve(prefix_.size() + key.size());
     item->key.insert(item->key.end(), prefix_.begin(), prefix_.end());
     item->key.insert(item->key.end(), key.begin(), key.end());
-    auto it = map_->find(key);
-    if (it == map_->end()) {
+    const auto& kv_it = map_->find(key);
+
+    if (kv_it == map_->end()) {
       item->type = leveldb::mojom::BatchOperationType::DELETE_KEY;
     } else {
       item->type = leveldb::mojom::BatchOperationType::PUT_KEY;
-      item->value = it->second;
-      data_size += it->second.size();
+      item->value = kv_it->second;
+      data_size += item->value->size();
     }
     operations.push_back(std::move(item));
   }
