@@ -497,8 +497,8 @@ void FrameTreeNode::ResetNavigationRequest(bool keep_state,
   // document.open, do not send an IPC to the renderer process as it already
   // expects the navigation to stop.
   if (was_renderer_initiated && inform_renderer) {
-    current_frame_host()->Send(
-        new FrameMsg_Stop(current_frame_host()->GetRoutingID()));
+    //current_frame_host()->Send(
+      //  new FrameMsg_Stop(current_frame_host()->GetRoutingID()));
   }
 
 }
