@@ -1310,7 +1310,7 @@ void PrintPreviewHandler::SendPrinterSetup(
   auto caps = base::MakeUnique<base::DictionaryValue>();
   if (destination_info &&
       destination_info->Remove(printing::kPrinterCapabilities, &caps_value) &&
-      caps_value->IsType(base::Value::Type::DICTIONARY)) {
+      caps_value->is_dict()) {
     caps = base::DictionaryValue::From(std::move(caps_value));
   } else {
     LOG(WARNING) << "Printer setup failed";
