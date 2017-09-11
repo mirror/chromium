@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb0f5595_5097e5f3",
+        "filename": "chrome/browser/ui/views/elevation_icon_setter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-11T19:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf3a4693_b5f59138",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "66fbfbb33da1b3453d69cd0a3fa61a3d250d02c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c8efe67_138c54f6",
         "filename": "chrome/browser/ui/views/elevation_icon_setter.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f92919b8_e0225821",
+        "filename": "chrome/browser/ui/views/elevation_icon_setter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-11T19:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c8efe67_138c54f6",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 7
+      },
+      "revId": "66fbfbb33da1b3453d69cd0a3fa61a3d250d02c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e85e9ef0_be8f1900",
         "filename": "chrome/browser/ui/views/elevation_icon_setter.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "66fbfbb33da1b3453d69cd0a3fa61a3d250d02c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c1fd10_395bf2bd",
+        "filename": "chrome/browser/ui/views/elevation_icon_setter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-11T19:18:08Z",
+      "side": 1,
+      "message": "After reading this class more carefully, this class simply doesn\u0027t do anything on non-Windows platforms (not even calling the callback; that requires a non-null icon), so I deleted the non-Windows branch instead.",
+      "parentUuid": "e85e9ef0_be8f1900",
+      "range": {
+        "startLine": 72,
+        "startChar": 18,
+        "endLine": 72,
+        "endChar": 34
+      },
+      "revId": "66fbfbb33da1b3453d69cd0a3fa61a3d250d02c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
