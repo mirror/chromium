@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efeb94b0_0e6bee92",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T14:26:46Z",
+      "side": 1,
+      "message": "\"This class waits for completion of a stream response from the service worker. It calls ServiceWorkerURLLoader::CommitComplete() upon completion of the response.\"",
+      "revId": "0af749e5c33707c44709e603b35478300dcc44b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552192c1_058e2565",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T14:26:46Z",
+      "side": 1,
+      "message": "\"calls this when done\"",
+      "revId": "0af749e5c33707c44709e603b35478300dcc44b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b819ff4_56c2e73c",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-11T14:26:46Z",
+      "side": 1,
+      "message": "the parentheses here seem not needed",
+      "revId": "0af749e5c33707c44709e603b35478300dcc44b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
