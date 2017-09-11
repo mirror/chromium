@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78bbbccd_cbf4e955",
+        "filename": "chrome/browser/extensions/updater/chrome_update_client_config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-11T16:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fd4e48a_fc31280d",
+      "range": {
+        "startLine": 45,
+        "startChar": 20,
+        "endLine": 45,
+        "endChar": 23
+      },
+      "revId": "4e16166b6cf6b5f542bd3c6f04a5b06677284924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "676e5bca_43307018",
         "filename": "components/update_client/activity_data_service.h",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "4e16166b6cf6b5f542bd3c6f04a5b06677284924",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7938abff_e49a185f",
+        "filename": "components/update_client/activity_data_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-11T16:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "676e5bca_43307018",
+      "revId": "4e16166b6cf6b5f542bd3c6f04a5b06677284924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
