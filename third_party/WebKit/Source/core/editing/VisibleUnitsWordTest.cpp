@@ -51,20 +51,18 @@ TEST_F(VisibleUnitsWordTest, StartOfWordCrossing) {
 
 TEST_F(VisibleUnitsWordTest, StartOfWordFirstLetter) {
   InsertStyleElement("p::first-letter {font-size:200%;}");
-  // TODO(editing-dev): We should make expected texts as same as
-  // "StartOfWordBasic".
-  EXPECT_EQ("<p> (1|) abc def</p>", DoStartOfWord("<p>| (1) abc def</p>"));
-  EXPECT_EQ("<p> (1|) abc def</p>", DoStartOfWord("<p> |(1) abc def</p>"));
-  EXPECT_EQ("<p> (1|) abc def</p>", DoStartOfWord("<p> (|1) abc def</p>"));
+  EXPECT_EQ("<p> |(1) abc def</p>", DoStartOfWord("<p>| (1) abc def</p>"));
+  EXPECT_EQ("<p> |(1) abc def</p>", DoStartOfWord("<p> |(1) abc def</p>"));
+  EXPECT_EQ("<p> (|1) abc def</p>", DoStartOfWord("<p> (|1) abc def</p>"));
   EXPECT_EQ("<p> (1|) abc def</p>", DoStartOfWord("<p> (1|) abc def</p>"));
   EXPECT_EQ("<p> (1)| abc def</p>", DoStartOfWord("<p> (1)| abc def</p>"));
-  EXPECT_EQ("<p> |(1) abc def</p>", DoStartOfWord("<p> (1) |abc def</p>"));
-  EXPECT_EQ("<p> |(1) abc def</p>", DoStartOfWord("<p> (1) a|bc def</p>"));
-  EXPECT_EQ("<p> |(1) abc def</p>", DoStartOfWord("<p> (1) ab|c def</p>"));
-  EXPECT_EQ("<p> (1)| abc def</p>", DoStartOfWord("<p> (1) abc| def</p>"));
-  EXPECT_EQ("<p> (1) |abc def</p>", DoStartOfWord("<p> (1) abc |def</p>"));
-  EXPECT_EQ("<p> (1) |abc def</p>", DoStartOfWord("<p> (1) abc d|ef</p>"));
-  EXPECT_EQ("<p> (1) |abc def</p>", DoStartOfWord("<p> (1) abc de|f</p>"));
+  EXPECT_EQ("<p> (1) |abc def</p>", DoStartOfWord("<p> (1) |abc def</p>"));
+  EXPECT_EQ("<p> (1) |abc def</p>", DoStartOfWord("<p> (1) a|bc def</p>"));
+  EXPECT_EQ("<p> (1) |abc def</p>", DoStartOfWord("<p> (1) ab|c def</p>"));
+  EXPECT_EQ("<p> (1) abc| def</p>", DoStartOfWord("<p> (1) abc| def</p>"));
+  EXPECT_EQ("<p> (1) abc |def</p>", DoStartOfWord("<p> (1) abc |def</p>"));
+  EXPECT_EQ("<p> (1) abc |def</p>", DoStartOfWord("<p> (1) abc d|ef</p>"));
+  EXPECT_EQ("<p> (1) abc |def</p>", DoStartOfWord("<p> (1) abc de|f</p>"));
   EXPECT_EQ("<p> (1) abc def|</p>", DoStartOfWord("<p> (1) abc def|</p>"));
   EXPECT_EQ("<p> (1) abc def|</p>", DoStartOfWord("<p> (1) abc def</p>|"));
 }
