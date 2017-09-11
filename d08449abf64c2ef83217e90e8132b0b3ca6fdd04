@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "257242ed_7783ed9f",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-11T13:31:07Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 518,
+        "startChar": 2,
+        "endLine": 518,
+        "endChar": 18
+      },
+      "revId": "d08449abf64c2ef83217e90e8132b0b3ca6fdd04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
