@@ -3478,6 +3478,10 @@ const FeatureEntry kFeatureEntries[] = {
      kOsDesktop,  // TODO(peria): Add Android support.
      FEATURE_VALUE_TYPE(features::kV8ContextSnapshot)},
 
+    {"enable-parallel-downloading", flag_descriptions::kParallelDownloadingName,
+     flag_descriptions::kParallelDownloadingDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kParallelDownloading)},
+
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
     // enums.xml and don't forget to run AboutFlagsHistogramTest unit test.
