@@ -39,6 +39,24 @@
       "revId": "133f03bf6402196079e80b446092d5bd3f5690fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99cfc1d0_9663a945",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/cache/resources/etag-200-different.php",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-12T05:56:38Z",
+      "side": 1,
+      "message": "I noticed you have removed it.\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/656297/2/third_party/WebKit/LayoutTests/http/tests/cache/resources/etag-200-different.php#14\n\nI retract this comment.",
+      "parentUuid": "a732cbde_b6653951",
+      "revId": "133f03bf6402196079e80b446092d5bd3f5690fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
