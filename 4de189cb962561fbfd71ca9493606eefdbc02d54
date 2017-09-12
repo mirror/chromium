@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "948fc554_69af1df7",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-12T14:51:47Z",
+      "side": 1,
+      "message": "I will check this value with Pete or mardini as soon as they stay at there desk.",
+      "range": {
+        "startLine": 191,
+        "startChar": 35,
+        "endLine": 191,
+        "endChar": 36
+      },
+      "revId": "4de189cb962561fbfd71ca9493606eefdbc02d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
