@@ -265,19 +265,13 @@ IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest, TestOpenPopupIncognito) {
   test_util.HidePopup();
 }
 
+class ReenableBrowserActionInteractiveTest : public BrowserActionInteractiveTest, public testing::WithParamInterface<int> {};
+
 // Tests that an extension can open a popup in the last active incognito window
 // even from a background page with a non-incognito profile.
 // (crbug.com/448853)
-#if defined(OS_WIN)
-// Fails on XP: http://crbug.com/515717
-#define MAYBE_TestOpenPopupIncognitoFromBackground \
-  DISABLED_TestOpenPopupIncognitoFromBackground
-#else
-#define MAYBE_TestOpenPopupIncognitoFromBackground \
-  TestOpenPopupIncognitoFromBackground
-#endif
-IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest,
-                       MAYBE_TestOpenPopupIncognitoFromBackground) {
+IN_PROC_BROWSER_TEST_F(ReenableBrowserActionInteractiveTest,
+                       TestOpenPopupIncognitoFromBackground) {
   if (!ShouldRunPopupTest())
     return;
 
@@ -296,6 +290,8 @@ IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest,
   EXPECT_TRUE(test_util.HasPopup());
   test_util.HidePopup();
 }
+
+INSTANTIATE_TEST_CASE_P(ReenableTest, ReenableBrowserActionInteractiveTest, testing::Range(0, 100));
 
 #if defined(OS_LINUX)
 #define MAYBE_TestOpenPopupDoesNotCloseOtherPopups DISABLED_TestOpenPopupDoesNotCloseOtherPopups
