@@ -162,6 +162,7 @@
 #define fill_window_sse Cr_z_fill_window_sse
 #define read_buf Cr_z_read_buf
 #define x86_check_features Cr_z_x86_check_features
+#define x86_cpu_enable_ssse3 Cr_z_x86_cpu_enable_ssse3
 #define x86_cpu_enable_simd Cr_z_x86_cpu_enable_simd
 
 #endif  /* THIRD_PARTY_ZLIB_NAMES_H_ */
