@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe349a74_608e0818",
+        "filename": "content/public/common/sandbox_type.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-12T01:10:55Z",
+      "side": 1,
+      "message": "actually, can this be moved somewhere inside content/ as it\u0027s only called from inside content? or are you planning on calling this from chrome?",
+      "revId": "302f7834e363c8eadbb8f0ff2156a06111b0590f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
