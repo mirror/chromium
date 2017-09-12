@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b10680ba_1490d90c",
+        "filename": "ios/web_view/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-12T08:10:58Z",
+      "side": 1,
+      "message": "As discussed offline, this part (and other parts which depend on this) must be configurable.",
+      "range": {
+        "startLine": 137,
+        "startChar": 31,
+        "endLine": 137,
+        "endChar": 0
+      },
+      "revId": "797d42a408b5588d853b109fa850e6a834420e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
