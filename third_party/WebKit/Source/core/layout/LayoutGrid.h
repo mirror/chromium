@@ -106,7 +106,8 @@ class LayoutGrid final : public LayoutBlock {
   LayoutUnit GridGap(GridTrackSizingDirection) const;
   LayoutUnit GridItemOffset(GridTrackSizingDirection) const;
 
-  static const StyleContentAlignmentData& ContentAlignmentNormalBehavior();
+  ContentDistributionType ContentDistributionAlignment(
+      GridTrackSizingDirection) const;
 
  protected:
   ItemPosition SelfAlignmentNormalBehavior(
@@ -297,6 +298,7 @@ class LayoutGrid final : public LayoutBlock {
                                                       LineDirectionMode);
   static LayoutUnit SynthesizedBaselineFromBorderBox(const LayoutBox&,
                                                      LineDirectionMode);
+  static const StyleContentAlignmentData& ContentAlignmentNormalBehavior();
 
   typedef HashMap<unsigned,
                   std::unique_ptr<BaselineContext>,

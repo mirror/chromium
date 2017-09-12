@@ -2228,6 +2228,17 @@ static ContentAlignmentData ContentDistributionOffset(
   return {};
 }
 
+ContentDistributionType LayoutGrid::ContentDistributionAlignment(
+    GridTrackSizingDirection direction) const {
+  // TODO(rego): In the future we might prefer to return a
+  // StyleContentAlignmentData, but for now it's not needed.
+  return direction == kForColumns
+             ? StyleRef().ResolvedJustifyContentDistribution(
+                   ContentAlignmentNormalBehavior())
+             : StyleRef().ResolvedAlignContentDistribution(
+                   ContentAlignmentNormalBehavior());
+}
+
 ContentAlignmentData LayoutGrid::ComputeContentPositionAndDistributionOffset(
     GridTrackSizingDirection direction,
     const LayoutUnit& available_free_space,
@@ -2239,10 +2250,7 @@ ContentAlignmentData LayoutGrid::ComputeContentPositionAndDistributionOffset(
                                  : StyleRef().ResolvedAlignContentPosition(
                                        ContentAlignmentNormalBehavior());
   ContentDistributionType distribution =
-      is_row_axis ? StyleRef().ResolvedJustifyContentDistribution(
-                        ContentAlignmentNormalBehavior())
-                  : StyleRef().ResolvedAlignContentDistribution(
-                        ContentAlignmentNormalBehavior());
+      ContentDistributionAlignment(direction);
   // If <content-distribution> value can't be applied, 'position' will become
   // the associated <content-position> fallback value.
   ContentAlignmentData content_alignment = ContentDistributionOffset(
