@@ -16,6 +16,24 @@
       "revId": "76a93b12c58782d0d6031daabb09073abb907a80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9a765b_c3d311c7",
+        "filename": "net/ssl/ssl_platform_key_nss.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-12T13:03:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b094488_06bbab93",
+      "revId": "76a93b12c58782d0d6031daabb09073abb907a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

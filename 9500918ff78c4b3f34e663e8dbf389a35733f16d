@@ -16,6 +16,24 @@
       "revId": "9500918ff78c4b3f34e663e8dbf389a35733f16d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef12dc7_49205f1c",
+        "filename": "net/ssl/client_cert_store_nss.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-12T13:03:29Z",
+      "side": 0,
+      "message": "TaskScheduler only skips tasks *during shutdown*.\n\nTo prevent a task from being skipped, post it with TaskShutdownBehavior::BLOCK_SHUTDOWN. This provides stronger guarantees than base::WorkerPool (the process will not exit before the task is done running).\n\nTo do some work when a task is skipped, use base::ScopedClosureRunner. We have seen very few cases where this is necessary (does starvation matters when the process is about to be terminated?).\n\nNote: We are working hard on terminating the process at the end of TaskScheduler shutdown. This will completely remove the need for code that handles what happens \"after TaskScheduler shutdown\".",
+      "parentUuid": "2f3d1ee2_40ee19c4",
+      "revId": "9500918ff78c4b3f34e663e8dbf389a35733f16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
