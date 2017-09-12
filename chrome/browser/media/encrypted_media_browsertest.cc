@@ -38,7 +38,7 @@
 #endif
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-#include "chrome/browser/media/pepper_cdm_test_helper.h"
+#include "chrome/browser/media/library_cdm_test_helper.h"
 #include "media/base/media_switches.h"
 #include "media/cdm/cdm_paths.h"
 #endif
@@ -305,16 +305,17 @@ class EncryptedMediaTestBase : public MediaBrowserTest {
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
     if (IsExternalClearKey(key_system)) {
-      RegisterPepperCdm(command_line, media::kClearKeyCdmBaseDirectory,
-                        media::kClearKeyCdmAdapterFileName,
-                        media::kClearKeyCdmDisplayName,
-                        media::kClearKeyCdmPepperMimeType);
       if (cdm_host_type == CdmHostType::kMojo) {
+        RegisterExternalClearKey(command_line);
         scoped_feature_list_.InitWithFeatures(
             {media::kExternalClearKeyForTesting, media::kMojoCdm,
              media::kSupportExperimentalCdmInterface},
             {});
       } else {
+        RegisterPepperCdm(command_line, media::kClearKeyCdmBaseDirectory,
+                          media::kClearKeyCdmAdapterFileName,
+                          media::kClearKeyCdmDisplayName,
+                          media::kClearKeyCdmPepperMimeType);
         // Pepper CDMs are conditionally compiled with or without support for
         // experimental CDMs, so media::kSupportExperimentalCdmInterface is
         // not needed as it isn't checked.
@@ -343,6 +344,11 @@ class ECKEncryptedMediaTest : public EncryptedMediaTestBase,
   // e.g. kExternalClearKeyFileIOTestKeySystem is used to test file IO.
   void TestNonPlaybackCases(const std::string& key_system,
                             const std::string& expected_title) {
+    // When mojo CDM is used, make sure the Clear Key CDM is properly registered
+    // in CdmRegistry.
+    if (IsUsingMojoCdm())
+      EXPECT_TRUE(IsLibraryCdmRegistered(media::kClearKeyCdmType));
+
     // Since we do not test playback, arbitrarily choose a test file and source
     // type.
     RunEncryptedMediaTest(kDefaultEmePlayer, "bear-a_enc-a.webm",

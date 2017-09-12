@@ -148,6 +148,8 @@ const char kMSEVideoBufferSizeLimit[] = "mse-video-buffer-size-limit";
 const char kIgnoreAutoplayRestrictionsForTests[] =
     "ignore-autoplay-restrictions";
 
+const char kClearKeyCdmPath[] = "clear-key-cdm-path";
+
 #if !defined(OS_ANDROID)
 // Turns on the internal media session backend. This should be used by embedders
 // that want to control the media playback with the media session interfaces.
@@ -166,7 +168,7 @@ const char kNoUserGestureRequiredPolicy[] = "no-user-gesture-required";
 // Autoplay policy to require a user gesture in order to play.
 const char kUserGestureRequiredPolicy[] = "user-gesture-required";
 
-// Autoplay policy to require a user gesture in ordor to play for cross origin
+// Autoplay policy to require a user gesture in order to play for cross origin
 // iframes.
 const char kUserGestureRequiredForCrossOriginPolicy[] =
     "user-gesture-required-for-cross-origin";
