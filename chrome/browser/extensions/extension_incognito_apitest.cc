@@ -53,14 +53,10 @@ IN_PROC_BROWSER_TEST_F(IncognitoApiTest, IncognitoNoScript) {
   EXPECT_TRUE(result);
 }
 
-#if defined(OS_WIN)
-// This test is very flaky on XP. http://crbug.com/248821
-#define MAYBE_IncognitoYesScript DISABLED_IncognitoYesScript
-#else
-#define MAYBE_IncognitoYesScript IncognitoYesScript
-#endif
+class IncognitoReenableTest : public IncognitoApiTest,
+                              public testing::WithParamInterface<int> {};
 
-IN_PROC_BROWSER_TEST_F(IncognitoApiTest, MAYBE_IncognitoYesScript) {
+IN_PROC_BROWSER_TEST_P(IncognitoReenableTest, IncognitoYesScript) {
   // Load a dummy extension. This just tests that we don't regress a
   // crash fix when multiple incognito- and non-incognito-enabled extensions
   // are mixed.
@@ -91,6 +87,11 @@ IN_PROC_BROWSER_TEST_F(IncognitoApiTest, MAYBE_IncognitoYesScript) {
       &result));
   EXPECT_TRUE(result);
 }
+
+INSTANTIATE_TEST_CASE_P(
+    ReenableTests,
+    IncognitoReenableTest,
+    testing::Range(0, 100));
 
 // Tests that an extension which is enabled for incognito mode doesn't
 // accidentially create and incognito profile.
