@@ -46,6 +46,30 @@
       "revId": "85f6daf801f4aa91ceac46108aa37c6db0b82bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c60d1c1_a2526775",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/web_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-12T13:56:39Z",
+      "side": 1,
+      "message": "mediators can be passed dispatchers (in the form of id\u003cwhatever\u003e); this is totally fine. Coordinators, on the other hand, should do as little model-layer work as possible.",
+      "parentUuid": "bc926547_7fe23e56",
+      "range": {
+        "startLine": 36,
+        "startChar": 29,
+        "endLine": 36,
+        "endChar": 52
+      },
+      "revId": "85f6daf801f4aa91ceac46108aa37c6db0b82bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
