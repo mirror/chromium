@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8ccc721f_328ec3af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-12T03:21:29Z",
+      "side": 1,
+      "message": "It hasn\u0027t been filed yet, but I will update this when it has.",
+      "parentUuid": "485f5a56_4a317be1",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 9
+      },
+      "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81b6860c_e441cf70",
         "filename": "components/language/core/browser/baseline_language_model.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b68a896_3c809dc2",
+        "filename": "components/language/core/browser/baseline_language_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-12T03:21:29Z",
+      "side": 1,
+      "message": "Adding check for accept languages, but not the histogram (which would require \"plumbing\" through the check logic). Let me know if you want more.",
+      "parentUuid": "81b6860c_e441cf70",
+      "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "d586b261_8eeb261d",
+        "filename": "components/language/core/browser/baseline_language_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-12T03:21:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44fed668_9158134b",
+      "range": {
+        "startLine": 28,
+        "startChar": 50,
+        "endLine": 28,
+        "endChar": 58
+      },
+      "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c2d36db_cac0942f",
         "filename": "components/language/core/browser/baseline_language_model.cc",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7655ba3_b9e066d7",
+        "filename": "components/language/core/browser/baseline_language_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-12T03:21:29Z",
+      "side": 1,
+      "message": "It\u0027s a good thought, but I\u0027m not sure of exactly what to check. Existing uses (e.g.\nhttps://cs.chromium.org/chromium/src/components/translate/core/browser/translate_accept_languages.cc?l\u003d67\u0026rcl\u003d525e2fd74d713739ca2e2f30f07619a850a93852\nhttps://cs.chromium.org/chromium/src/chrome/browser/spellchecker/spellcheck_service.cc?l\u003d135\u0026rcl\u003d9543219edf8628157ff8b1e8b1a3d81c93b508c2\nhttps://cs.chromium.org/chromium/src/components/translate/core/browser/translate_accept_languages.cc?l\u003d68\u0026rcl\u003d9543219edf8628157ff8b1e8b1a3d81c93b508c2\n) often don\u0027t check for anything.\n\nLeaving as-is if you\u0027re ok with that.",
+      "parentUuid": "9c2d36db_cac0942f",
+      "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "e7f18371_9e5c9442",
+        "filename": "components/language/core/browser/baseline_language_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-12T03:21:29Z",
+      "side": 1,
+      "message": "Not of which I\u0027m aware. This might actually be a less common issue than you\u0027d imagine: often a set of preferences is only read by the one class that also registers them. Leaving as-is.",
+      "parentUuid": "898ea902_c2c03a57",
+      "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "298665e1_e8478b46",
         "filename": "components/language/core/browser/baseline_language_model.h",
         "patchSetId": 2
@@ -113,6 +215,24 @@
       "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748e07f6_ea6d5d62",
+        "filename": "components/language/core/browser/baseline_language_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-12T03:21:29Z",
+      "side": 1,
+      "message": "Couldn\u0027t find a definitive answer - adding in.",
+      "parentUuid": "298665e1_e8478b46",
+      "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +256,30 @@
       "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9aae8b9_4e47bb84",
+        "filename": "components/language/core/browser/url_language_histogram.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-12T03:21:29Z",
+      "side": 1,
+      "message": "Yes, in retrospect this isn\u0027t the best explanation.\n\nThe thought process is this: because the state of the histogram is read from/written to prefs during each method call, methods from multiple objects can be called in a (non-overlapping) sequence without instance-specific state going \"out of sync\".\n\nUpdated comment.",
+      "parentUuid": "aa813fe7_2204153d",
+      "range": {
+        "startLine": 27,
+        "startChar": 32,
+        "endLine": 28,
+        "endChar": 30
+      },
+      "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
