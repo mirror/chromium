@@ -286,7 +286,8 @@ gfx::SwapResult ImageTransportSurfaceOverlayMac::SwapBuffersInternal(
   return gfx::SwapResult::SWAP_ACK;
 }
 
-gfx::SwapResult ImageTransportSurfaceOverlayMac::SwapBuffers() {
+gfx::SwapResult ImageTransportSurfaceOverlayMac::SwapBuffers(
+    std::vector<ui::LatencyInfo>> *latency_info) {
   return SwapBuffersInternal(
       gfx::Rect(0, 0, pixel_size_.width(), pixel_size_.height()));
 }

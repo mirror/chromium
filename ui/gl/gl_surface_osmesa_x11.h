@@ -30,7 +30,8 @@ class GL_EXPORT GLSurfaceOSMesaX11 : public GLSurfaceOSMesa {
               float scale_factor,
               bool alpha) override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(
+      std::vector<ui::LatencyInfo>* latency_info) override;
   bool SupportsPostSubBuffer() override;
   gfx::SwapResult PostSubBuffer(int x, int y, int width, int height) override;
 
