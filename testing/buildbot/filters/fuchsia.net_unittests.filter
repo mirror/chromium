@@ -6,7 +6,6 @@
 -PythonUtils*
 -SQLite*
 -UDPSocketTest.PartialRecv
--UnixDomain*Socket*
 -URLRequest*FTP*
 -URLRequestQuic*
 
