@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "82c363fe_bb7f5186",
+        "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-12T21:51:29Z",
+      "side": 1,
+      "message": "Preferred style is don\u0027t DCHECK things you\u0027re about to dereference. Only DCHECK if the use site is much later on. See style guide entry here:\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#check_dcheck_and-notreached",
+      "revId": "5f2fd93c308bfe44a911b277e62a96c29516f34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88db13d6_dd476443",
         "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
         "patchSetId": 7
@@ -19,6 +36,166 @@
         "endLine": 28,
         "endChar": 18
       },
+      "revId": "5f2fd93c308bfe44a911b277e62a96c29516f34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db83444c_f1e141ad",
+        "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-12T21:51:29Z",
+      "side": 1,
+      "message": "Per the implementing code it currently can\u0027t be.",
+      "parentUuid": "88db13d6_dd476443",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 18
+      },
+      "revId": "5f2fd93c308bfe44a911b277e62a96c29516f34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a7a054_0abf67ef",
+        "filename": "media/blink/webmediacapabilitiesclient_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-12T21:51:29Z",
+      "side": 1,
+      "message": "Hmm is this syntax correct? I\u0027d expect a \u0026VideoPerfInfoCallback",
+      "revId": "5f2fd93c308bfe44a911b277e62a96c29516f34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c661a919_90de87dd",
+        "filename": "media/mojo/interfaces/video_decode_perf_history.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-12T21:51:29Z",
+      "side": 1,
+      "message": "Document parameters.",
+      "revId": "5f2fd93c308bfe44a911b277e62a96c29516f34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "037451b6_ddef16fc",
+        "filename": "media/mojo/services/media_capabilities_database.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-12T21:51:29Z",
+      "side": 1,
+      "message": "const\u0026",
+      "revId": "5f2fd93c308bfe44a911b277e62a96c29516f34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04ed5ac_3fe68a9c",
+        "filename": "media/mojo/services/media_capabilities_database.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-12T21:51:29Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "revId": "5f2fd93c308bfe44a911b277e62a96c29516f34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d11707_05020d86",
+        "filename": "media/mojo/services/video_decode_perf_history.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-12T21:51:29Z",
+      "side": 1,
+      "message": "How is a global + sequence checker thread safe? Two instances may be on different sequences?",
+      "revId": "5f2fd93c308bfe44a911b277e62a96c29516f34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e220fd_1265251e",
+        "filename": "media/mojo/services/video_decode_perf_history.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-12T21:51:29Z",
+      "side": 1,
+      "message": "Delete all these or take them out of DVLOG(1).",
+      "revId": "5f2fd93c308bfe44a911b277e62a96c29516f34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b484275a_41afc8d9",
+        "filename": "media/mojo/services/video_decode_perf_history.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-12T21:51:29Z",
+      "side": 1,
+      "message": "Just use a base::StringPrintf directly in the DLOG instead?",
+      "revId": "5f2fd93c308bfe44a911b277e62a96c29516f34d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bade9383_a4871aee",
+        "filename": "media/mojo/services/video_decode_perf_history_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-12T21:51:29Z",
+      "side": 1,
+      "message": "Typically you don\u0027t want both constructor/destructor + setup/teardown. Just one or the other.",
       "revId": "5f2fd93c308bfe44a911b277e62a96c29516f34d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
