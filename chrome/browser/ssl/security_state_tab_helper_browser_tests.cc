@@ -14,7 +14,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/profiles/profile_window.h"
-#include "chrome/browser/safe_browsing/safe_browsing_service.h"
+#include "chrome/browser/safe_browsing/chrome_password_protection_service.h"
 #include "chrome/browser/ssl/cert_verifier_browser_test.h"
 #include "chrome/browser/ssl/ssl_blocking_page.h"
 #include "chrome/browser/ui/browser.h"
@@ -28,7 +28,6 @@
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/features.h"
-#include "components/safe_browsing/password_protection/password_protection_service.h"
 #include "components/security_state/content/ssl_status_input_event_data.h"
 #include "components/security_state/core/security_state.h"
 #include "components/security_state/core/switches.h"
@@ -876,8 +875,8 @@ IN_PROC_BROWSER_TEST_F(
   // Update security state of the current page to match
   // SB_THREAT_TYPE_PASSWORD_REUSE.
   safe_browsing::PasswordProtectionService* service =
-      g_browser_process->safe_browsing_service()->GetPasswordProtectionService(
-          browser()->profile());
+      safe_browsing::ChromePasswordProtectionService::
+          GetPasswordProtectionService(browser()->profile());
   service->UpdateSecurityState(safe_browsing::SB_THREAT_TYPE_PASSWORD_REUSE,
                                contents);
   observer.WaitForDidChangeVisibleSecurityState();
@@ -912,8 +911,8 @@ IN_PROC_BROWSER_TEST_F(
   // Update security state of the current page to match
   // SB_THREAT_TYPE_PASSWORD_REUSE.
   safe_browsing::PasswordProtectionService* service =
-      g_browser_process->safe_browsing_service()->GetPasswordProtectionService(
-          browser()->profile());
+      safe_browsing::ChromePasswordProtectionService::
+          GetPasswordProtectionService(browser()->profile());
   service->UpdateSecurityState(safe_browsing::SB_THREAT_TYPE_PASSWORD_REUSE,
                                contents);
   observer.WaitForDidChangeVisibleSecurityState();
