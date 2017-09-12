@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73e6701_b934c2fe",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-12T07:37:17Z",
+      "side": 1,
+      "message": "looks safe to omit",
+      "range": {
+        "startLine": 63,
+        "startChar": 22,
+        "endLine": 63,
+        "endChar": 23
+      },
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d15d8b1_f0e955ce",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-12T07:37:17Z",
+      "side": 1,
+      "message": "How about s/InitiateIMSGF/InitiateSubgraphFetch/?",
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "525ea6e1_66ef85e8",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-12T07:37:17Z",
+      "side": 1,
+      "message": "Should we factor out L233-365 as MTL::ContinueSubgraphFetchingWithNewFetchedNode(module_script)\n[pro]\n- we can avoid non-ModuleScriptLoader calling into NotifyMLF\n- we can remove ++num_incomplete_fetches_ hack in FetchRootInline",
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d64539_83a31f93",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-12T07:37:17Z",
+      "side": 1,
+      "message": "FinalizeSubgraphFetchingForOneModuleScript() for name consistency if we do the factoring out as suggested in L233.",
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f67e4d_af73678f",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-12T07:37:17Z",
+      "side": 1,
+      "message": "I prefer HHS\u003cMember\u003cMS\u003e\u003e* when we are modifying the argument set.",
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "993d8963_f501edf9",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-12T07:37:17Z",
+      "side": 1,
+      "message": "Optional take(url)?",
+      "range": {
+        "startLine": 108,
+        "startChar": 32,
+        "endLine": 108,
+        "endChar": 0
+      },
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1912f16_9d55b999",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-12T07:37:17Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeebdb61_a7775048",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-12T07:37:17Z",
+      "side": 1,
+      "message": "oneline",
+      "range": {
+        "startLine": 422,
+        "startChar": 33,
+        "endLine": 422,
+        "endChar": 0
+      },
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
