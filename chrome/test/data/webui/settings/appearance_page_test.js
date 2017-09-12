@@ -23,6 +23,9 @@ class TestAppearanceBrowserProxy extends TestBrowserProxy {
 
     /** @private */
     this.isHomeUrlValid_ = true;
+
+    /** @private */
+    this.isHidden_ = true;
   }
 
   /** @override */
@@ -46,6 +49,7 @@ class TestAppearanceBrowserProxy extends TestBrowserProxy {
   /** @override */
   openWallpaperManager() {
     this.methodCalled('openWallpaperManager');
+    return Promise.resolve(this.isHidden_);
   }
 
   /** @override */
@@ -79,6 +83,11 @@ class TestAppearanceBrowserProxy extends TestBrowserProxy {
    */
   setValidStartupPageResponse(isValid) {
     this.isHomeUrlValid_ = isValid;
+  }
+
+  /** @param {boolean} Whether should hide the wallpaper policy indicator */
+  setHideWallpaperPolicyIndicator(isHidden) {
+    this.isHidden_ = isHidden;
   }
 }
 
@@ -120,6 +129,20 @@ suite('AppearanceHandler', function() {
 
   if (cr.isChromeOS) {
     test('wallpaperManager', function() {
+      // Should hide the wallpaper policy indicator and enable the right expand
+      // button if we can open the wallpaper setting page.
+      appearanceBrowserProxy.setHideWallpaperPolicyIndicator(true);
+      Polymer.dom.flush();
+      assertTrue(appearancePage.$$('#wallpaperPolicyIndicator').hidden);
+      assertFalse(appearancePage.$$('#wallpaperExpandButton').disabled);
+
+      // Should show the wallpaper policy indicator and disable the right expand
+      // button if we can not open the wallpaper setting page.
+      appearanceBrowserProxy.setHideWallpaperPolicyIndicator(false);
+      Polymer.dom.flush();
+      assertFalse(appearancePage.$$('#wallpaperPolicyIndicator').hidden);
+      assertTrue(appearancePage.$$('#wallpaperExpandButton').disabled);
+
       var button = appearancePage.$.wallpaperButton;
       assertTrue(!!button);
       MockInteractions.tap(button);
