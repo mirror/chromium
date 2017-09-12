@@ -23,7 +23,8 @@ class GLSurfaceCast : public gl::NativeViewGLSurfaceEGL {
 
   // gl::GLSurface:
   bool SupportsSwapBuffersWithBounds() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(
+      std::vector<ui::LatencyInfo>* latency_info) override;
   gfx::SwapResult SwapBuffersWithBounds(
       const std::vector<gfx::Rect>& rects) override;
   bool Resize(const gfx::Size& size,
