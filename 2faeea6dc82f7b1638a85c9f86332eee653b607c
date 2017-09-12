@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75dac8fa_f6a269af",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-09-12T01:25:36Z",
+      "side": 1,
+      "message": "Do you know by any chance why initializeTrayItems has not be called before you need it?\n\nAs I see it you might call TrayBackgroundView::Initialize() multiple times now which might then set in turn multiple observers which could then cause trouble on shutdown or other events.",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 403,
+        "endChar": 35
+      },
+      "revId": "2faeea6dc82f7b1638a85c9f86332eee653b607c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
