@@ -6,6 +6,7 @@
 
 Notification::Notification(
     message_center::NotificationType type,
+    const std::string& id,
     const base::string16& title,
     const base::string16& body,
     const gfx::Image& icon,
@@ -14,9 +15,9 @@ Notification::Notification(
     const GURL& origin_url,
     const std::string& tag,
     const message_center::RichNotificationData& rich_notification_data,
-    scoped_refptr<NotificationDelegate> delegate)
+    scoped_refptr<message_center::NotificationDelegate> delegate)
     : message_center::Notification(type,
-                                   delegate->id(),
+                                   id,
                                    title,
                                    body,
                                    icon,
@@ -33,14 +34,13 @@ Notification::Notification(const std::string& id,
     : message_center::Notification(id, notification),
       tag_(notification.tag()),
       service_worker_scope_(notification.service_worker_scope()),
-      delegate_(notification.delegate()) {
-}
+      delegate_(notification.delegate_) {}
 
 Notification::Notification(const Notification& notification)
     : message_center::Notification(notification),
       tag_(notification.tag()),
       service_worker_scope_(notification.service_worker_scope()),
-      delegate_(notification.delegate()) {}
+      delegate_(notification.delegate_) {}
 
 Notification::~Notification() {}
 
@@ -48,6 +48,6 @@ Notification& Notification::operator=(const Notification& notification) {
   message_center::Notification::operator=(notification);
   tag_ = notification.tag();
   service_worker_scope_ = notification.service_worker_scope();
-  delegate_ = notification.delegate();
+  delegate_ = notification.delegate_;
   return *this;
 }
