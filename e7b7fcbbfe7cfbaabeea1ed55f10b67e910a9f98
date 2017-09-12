@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "1afed528_0665ddb0",
+        "filename": "net/quic/platform/impl/quic_containers_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-12T17:21:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bc58a45_267428fa",
+      "revId": "e7b7fcbbfe7cfbaabeea1ed55f10b67e910a9f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e56d0b2_5bc5eecb",
         "filename": "net/quic/platform/impl/quic_containers_impl.h",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2017-09-12T04:13:23Z",
       "side": 1,
       "message": "For this I\u0027d say \"pointer or iterator stability\". Normally people have problems with iterator invalidation, but some net code likes to take the addresses of stuff in the queue and it caused the less-common problem.",
+      "revId": "e7b7fcbbfe7cfbaabeea1ed55f10b67e910a9f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab1525e_79c3f566",
+        "filename": "net/quic/platform/impl/quic_containers_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-12T17:21:12Z",
+      "side": 1,
+      "message": "Good point!",
+      "parentUuid": "6e56d0b2_5bc5eecb",
       "revId": "e7b7fcbbfe7cfbaabeea1ed55f10b67e910a9f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
