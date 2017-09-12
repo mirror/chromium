@@ -53,7 +53,7 @@ class ServiceWorkerProviderContextTest : public testing::Test {
   }
 
   void CreateObjectInfoAndVersionAttributes(
-      ServiceWorkerRegistrationObjectInfo* info,
+      blink::mojom::ServiceWorkerRegistrationObjectInfo* info,
       ServiceWorkerVersionAttributes* attrs) {
     info->handle_id = 10;
     info->registration_id = 20;
@@ -82,7 +82,7 @@ class ServiceWorkerProviderContextTest : public testing::Test {
 TEST_F(ServiceWorkerProviderContextTest, CreateForController) {
   // Assume that these objects are passed from the browser process and own
   // references to browser-side registration/worker representations.
-  ServiceWorkerRegistrationObjectInfo registration_info;
+  blink::mojom::ServiceWorkerRegistrationObjectInfo registration_info;
   ServiceWorkerVersionAttributes version_attrs;
   CreateObjectInfoAndVersionAttributes(&registration_info, &version_attrs);
   std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration =

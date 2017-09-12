@@ -121,13 +121,13 @@ void ServiceWorkerProviderContext::SetRegistration(
 }
 
 void ServiceWorkerProviderContext::GetRegistration(
-    ServiceWorkerRegistrationObjectInfo* info,
+    blink::mojom::ServiceWorkerRegistrationObjectInfoPtr* info,
     ServiceWorkerVersionAttributes* attrs) {
   DCHECK(!main_thread_task_runner_->RunsTasksInCurrentSequence());
   ControllerState* state = controller_state_.get();
   DCHECK(state);
   DCHECK(state->registration);
-  *info = state->registration->info();
+  *info = state->registration->info().Clone();
   if (state->installing)
     attrs->installing = state->installing->info();
   if (state->waiting)

@@ -39,7 +39,7 @@ ServiceWorkerVersionInfo::ServiceWorkerVersionInfo()
       status(ServiceWorkerVersion::NEW),
       fetch_handler_existence(
           ServiceWorkerVersion::FetchHandlerExistence::UNKNOWN),
-      registration_id(kInvalidServiceWorkerRegistrationId),
+      registration_id(blink::mojom::kInvalidServiceWorkerRegistrationId),
       version_id(kInvalidServiceWorkerVersionId),
       process_id(ChildProcessHost::kInvalidUniqueID),
       thread_id(kInvalidEmbeddedWorkerThreadId),
@@ -71,7 +71,7 @@ ServiceWorkerVersionInfo::ServiceWorkerVersionInfo(
 ServiceWorkerVersionInfo::~ServiceWorkerVersionInfo() {}
 
 ServiceWorkerRegistrationInfo::ServiceWorkerRegistrationInfo()
-    : registration_id(kInvalidServiceWorkerRegistrationId),
+    : registration_id(blink::mojom::kInvalidServiceWorkerRegistrationId),
       delete_flag(IS_NOT_DELETED),
       stored_version_size_bytes(0) {}
 

@@ -44,7 +44,6 @@ class ThreadSafeSender;
 class WebServiceWorkerImpl;
 class WebServiceWorkerRegistrationImpl;
 struct ServiceWorkerObjectInfo;
-struct ServiceWorkerRegistrationObjectInfo;
 struct ServiceWorkerVersionAttributes;
 
 // This class manages communication with the browser process about
@@ -122,14 +121,14 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   // created, increments interprocess references to the registration and its
   // versions via ServiceWorker(Registration)HandleReference.
   scoped_refptr<WebServiceWorkerRegistrationImpl> GetOrCreateRegistration(
-      const ServiceWorkerRegistrationObjectInfo& info,
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
       const ServiceWorkerVersionAttributes& attrs);
 
   // Returns the existing registration or a newly created one. Always adopts
   // interprocess references to the registration and its versions via
   // ServiceWorker(Registration)HandleReference.
   scoped_refptr<WebServiceWorkerRegistrationImpl> GetOrAdoptRegistration(
-      const ServiceWorkerRegistrationObjectInfo& info,
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
       const ServiceWorkerVersionAttributes& attrs);
 
   static ServiceWorkerDispatcher* GetOrCreateThreadSpecificInstance(
@@ -231,7 +230,7 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   // Assumes that the given object information retains an interprocess handle
   // reference passed from the browser process, and adopts it.
   std::unique_ptr<ServiceWorkerRegistrationHandleReference> Adopt(
-      const ServiceWorkerRegistrationObjectInfo& info);
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info);
   std::unique_ptr<ServiceWorkerHandleReference> Adopt(
       const ServiceWorkerObjectInfo& info);
 

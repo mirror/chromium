@@ -54,7 +54,7 @@ WebServiceWorkerRegistrationImpl::WebServiceWorkerRegistrationImpl(
     std::unique_ptr<ServiceWorkerRegistrationHandleReference> handle_ref)
     : handle_ref_(std::move(handle_ref)), proxy_(nullptr) {
   DCHECK(handle_ref_);
-  DCHECK_NE(kInvalidServiceWorkerRegistrationHandleId,
+  DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationHandleId,
             handle_ref_->handle_id());
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();

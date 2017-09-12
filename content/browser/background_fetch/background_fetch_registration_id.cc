@@ -11,7 +11,8 @@
 namespace content {
 
 BackgroundFetchRegistrationId::BackgroundFetchRegistrationId()
-    : service_worker_registration_id_(kInvalidServiceWorkerRegistrationId) {}
+    : service_worker_registration_id_(
+          blink::mojom::kInvalidServiceWorkerRegistrationId) {}
 
 BackgroundFetchRegistrationId::BackgroundFetchRegistrationId(
     int64_t service_worker_registration_id,
@@ -52,7 +53,8 @@ bool BackgroundFetchRegistrationId::operator<(
 }
 
 bool BackgroundFetchRegistrationId::is_null() const {
-  return service_worker_registration_id_ == kInvalidServiceWorkerRegistrationId;
+  return service_worker_registration_id_ ==
+         blink::mojom::kInvalidServiceWorkerRegistrationId;
 }
 
 }  // namespace content

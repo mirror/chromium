@@ -170,9 +170,9 @@ NotificationDatabase::Status NotificationDatabase::ReadNotificationData(
 
 NotificationDatabase::Status NotificationDatabase::ReadAllNotificationData(
     std::vector<NotificationDatabaseData>* notification_data_vector) const {
-  return ReadAllNotificationDataInternal(GURL() /* origin */,
-                                         kInvalidServiceWorkerRegistrationId,
-                                         notification_data_vector);
+  return ReadAllNotificationDataInternal(
+      GURL() /* origin */, blink::mojom::kInvalidServiceWorkerRegistrationId,
+      notification_data_vector);
 }
 
 NotificationDatabase::Status
@@ -180,7 +180,8 @@ NotificationDatabase::ReadAllNotificationDataForOrigin(
     const GURL& origin,
     std::vector<NotificationDatabaseData>* notification_data_vector) const {
   return ReadAllNotificationDataInternal(
-      origin, kInvalidServiceWorkerRegistrationId, notification_data_vector);
+      origin, blink::mojom::kInvalidServiceWorkerRegistrationId,
+      notification_data_vector);
 }
 
 NotificationDatabase::Status
@@ -238,9 +239,9 @@ NotificationDatabase::DeleteAllNotificationDataForOrigin(
     const GURL& origin,
     const std::string& tag,
     std::set<std::string>* deleted_notification_ids) {
-  return DeleteAllNotificationDataInternal(origin, tag,
-                                           kInvalidServiceWorkerRegistrationId,
-                                           deleted_notification_ids);
+  return DeleteAllNotificationDataInternal(
+      origin, tag, blink::mojom::kInvalidServiceWorkerRegistrationId,
+      deleted_notification_ids);
 }
 
 NotificationDatabase::Status
@@ -320,7 +321,8 @@ NotificationDatabase::ReadAllNotificationDataInternal(
     if (status != STATUS_OK)
       return status;
 
-    if (service_worker_registration_id != kInvalidServiceWorkerRegistrationId &&
+    if (service_worker_registration_id !=
+            blink::mojom::kInvalidServiceWorkerRegistrationId &&
         notification_database_data.service_worker_registration_id !=
             service_worker_registration_id) {
       continue;
@@ -364,7 +366,8 @@ NotificationDatabase::DeleteAllNotificationDataInternal(
       continue;
     }
 
-    if (service_worker_registration_id != kInvalidServiceWorkerRegistrationId &&
+    if (service_worker_registration_id !=
+            blink::mojom::kInvalidServiceWorkerRegistrationId &&
         notification_database_data.service_worker_registration_id !=
             service_worker_registration_id) {
       continue;

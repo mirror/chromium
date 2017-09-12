@@ -41,7 +41,7 @@ void ServiceWorkerUnregisterJob::Start() {
 }
 
 void ServiceWorkerUnregisterJob::Abort() {
-  CompleteInternal(kInvalidServiceWorkerRegistrationId,
+  CompleteInternal(blink::mojom::kInvalidServiceWorkerRegistrationId,
                    SERVICE_WORKER_ERROR_ABORT);
 }
 
@@ -65,13 +65,13 @@ void ServiceWorkerUnregisterJob::OnRegistrationFound(
     scoped_refptr<ServiceWorkerRegistration> registration) {
   if (status == SERVICE_WORKER_ERROR_NOT_FOUND) {
     DCHECK(!registration.get());
-    Complete(kInvalidServiceWorkerRegistrationId,
+    Complete(blink::mojom::kInvalidServiceWorkerRegistrationId,
              SERVICE_WORKER_ERROR_NOT_FOUND);
     return;
   }
 
   if (status != SERVICE_WORKER_OK || registration->is_uninstalling()) {
-    Complete(kInvalidServiceWorkerRegistrationId, status);
+    Complete(blink::mojom::kInvalidServiceWorkerRegistrationId, status);
     return;
   }
 

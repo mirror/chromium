@@ -240,7 +240,8 @@ IN_PROC_BROWSER_TEST_F(PaymentAppBrowserTest,
   std::vector<int64_t> registrationIds = GetAllPaymentAppRegistrationIDs();
   ASSERT_EQ(1U, registrationIds.size());
 
-  bool payment_aborted = AbortPayment(kInvalidServiceWorkerRegistrationId);
+  bool payment_aborted =
+      AbortPayment(blink::mojom::kInvalidServiceWorkerRegistrationId);
   ASSERT_FALSE(payment_aborted);
 
   ClearStoragePartitionData();

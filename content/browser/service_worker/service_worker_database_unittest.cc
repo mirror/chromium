@@ -943,7 +943,8 @@ TEST(ServiceWorkerDatabaseTest, Registration_UninitializedDatabase) {
   EXPECT_EQ(ServiceWorkerDatabase::STATUS_ERROR_NOT_FOUND,
             database->ReadRegistration(
                 100, origin, &data_out, &resources_out));
-  EXPECT_EQ(kInvalidServiceWorkerRegistrationId, data_out.registration_id);
+  EXPECT_EQ(blink::mojom::kInvalidServiceWorkerRegistrationId,
+            data_out.registration_id);
   EXPECT_TRUE(resources_out.empty());
   GURL origin_out;
   EXPECT_EQ(ServiceWorkerDatabase::STATUS_ERROR_NOT_FOUND,
@@ -966,7 +967,8 @@ TEST(ServiceWorkerDatabaseTest, Registration_UninitializedDatabase) {
   EXPECT_EQ(ServiceWorkerDatabase::STATUS_ERROR_NOT_FOUND,
             database->ReadRegistration(
                 100, origin, &data_out, &resources_out));
-  EXPECT_EQ(kInvalidServiceWorkerRegistrationId, data_out.registration_id);
+  EXPECT_EQ(blink::mojom::kInvalidServiceWorkerRegistrationId,
+            data_out.registration_id);
   EXPECT_TRUE(resources_out.empty());
   EXPECT_EQ(ServiceWorkerDatabase::STATUS_ERROR_NOT_FOUND,
             database->ReadRegistrationOrigin(100, &origin_out));

@@ -38,7 +38,6 @@ class ServiceWorkerRegistration;
 class ServiceWorkerRegistrationHandle;
 class ServiceWorkerVersion;
 struct ServiceWorkerObjectInfo;
-struct ServiceWorkerRegistrationObjectInfo;
 struct ServiceWorkerVersionAttributes;
 
 // ServiceWorkerDispatcherHost is the browser-side endpoint for several IPC
@@ -104,7 +103,7 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
   void GetRegistrationObjectInfoAndVersionAttributes(
       base::WeakPtr<ServiceWorkerProviderHost> provider_host,
       ServiceWorkerRegistration* registration,
-      ServiceWorkerRegistrationObjectInfo* out_info,
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr* out_info,
       ServiceWorkerVersionAttributes* out_attrs);
 
   // Returns the existing registration handle whose reference count is

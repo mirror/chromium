@@ -53,7 +53,7 @@ class ServiceWorkerDispatcherTest : public testing::Test {
   }
 
   void CreateObjectInfoAndVersionAttributes(
-      ServiceWorkerRegistrationObjectInfo* info,
+      blink::mojom::ServiceWorkerRegistrationObjectInfo* info,
       ServiceWorkerVersionAttributes* attrs) {
     info->handle_id = 10;
     info->registration_id = 20;
@@ -163,7 +163,7 @@ TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker) {
 
   // Assume that these objects are passed from the browser process and own
   // references to browser-side registration/worker representations.
-  ServiceWorkerRegistrationObjectInfo info;
+  blink::mojom::ServiceWorkerRegistrationObjectInfo info;
   ServiceWorkerVersionAttributes attrs;
   CreateObjectInfoAndVersionAttributes(&info, &attrs);
 
@@ -252,7 +252,7 @@ TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker_Null) {
   const int kProviderId = 10;
   bool should_notify_controllerchange = true;
 
-  ServiceWorkerRegistrationObjectInfo info;
+  blink::mojom::ServiceWorkerRegistrationObjectInfo info;
   ServiceWorkerVersionAttributes attrs;
   CreateObjectInfoAndVersionAttributes(&info, &attrs);
 
@@ -278,7 +278,7 @@ TEST_F(ServiceWorkerDispatcherTest, OnPostMessage) {
 
   // Assume that these objects are passed from the browser process and own
   // references to browser-side registration/worker representations.
-  ServiceWorkerRegistrationObjectInfo info;
+  blink::mojom::ServiceWorkerRegistrationObjectInfo info;
   ServiceWorkerVersionAttributes attrs;
   CreateObjectInfoAndVersionAttributes(&info, &attrs);
 
@@ -310,7 +310,7 @@ TEST_F(ServiceWorkerDispatcherTest, OnPostMessage) {
 }
 
 TEST_F(ServiceWorkerDispatcherTest, GetServiceWorker) {
-  ServiceWorkerRegistrationObjectInfo info;
+  blink::mojom::ServiceWorkerRegistrationObjectInfo info;
   ServiceWorkerVersionAttributes attrs;
   CreateObjectInfoAndVersionAttributes(&info, &attrs);
 
@@ -338,7 +338,7 @@ TEST_F(ServiceWorkerDispatcherTest, GetServiceWorker) {
 }
 
 TEST_F(ServiceWorkerDispatcherTest, GetOrCreateRegistration) {
-  ServiceWorkerRegistrationObjectInfo info;
+  blink::mojom::ServiceWorkerRegistrationObjectInfo info;
   ServiceWorkerVersionAttributes attrs;
   CreateObjectInfoAndVersionAttributes(&info, &attrs);
 
@@ -386,7 +386,7 @@ TEST_F(ServiceWorkerDispatcherTest, GetOrCreateRegistration) {
 }
 
 TEST_F(ServiceWorkerDispatcherTest, GetOrAdoptRegistration) {
-  ServiceWorkerRegistrationObjectInfo info;
+  blink::mojom::ServiceWorkerRegistrationObjectInfo info;
   ServiceWorkerVersionAttributes attrs;
   CreateObjectInfoAndVersionAttributes(&info, &attrs);
 
