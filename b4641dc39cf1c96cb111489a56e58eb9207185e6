@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c40d07c_3fade11a",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-12T18:02:12Z",
+      "side": 1,
+      "message": "The context menu can also be triggered for images, not just links.",
+      "range": {
+        "startLine": 208,
+        "startChar": 30,
+        "endLine": 208,
+        "endChar": 34
+      },
+      "revId": "b4641dc39cf1c96cb111489a56e58eb9207185e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
