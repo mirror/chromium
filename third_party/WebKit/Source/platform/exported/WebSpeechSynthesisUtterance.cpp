@@ -26,7 +26,7 @@
 #include "public/platform/WebSpeechSynthesisUtterance.h"
 
 #include "platform/speech/PlatformSpeechSynthesisUtterance.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/RefPtr.h"
 
 namespace blink {

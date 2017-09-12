@@ -58,7 +58,7 @@ ConvolverHandler::ConvolverHandler(AudioNode& node, float sample_rate)
   Initialize();
 }
 
-PassRefPtr<ConvolverHandler> ConvolverHandler::Create(AudioNode& node,
+RefPtr<ConvolverHandler> ConvolverHandler::Create(AudioNode& node,
                                                       float sample_rate) {
   return AdoptRef(new ConvolverHandler(node, sample_rate));
 }

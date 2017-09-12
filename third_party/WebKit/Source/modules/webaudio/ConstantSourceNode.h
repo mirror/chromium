@@ -8,7 +8,7 @@
 #include "modules/webaudio/AudioParam.h"
 #include "modules/webaudio/AudioScheduledSourceNode.h"
 #include "platform/audio/AudioBus.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Threading.h"
 
@@ -22,7 +22,7 @@ class ExceptionState;
 
 class ConstantSourceHandler final : public AudioScheduledSourceHandler {
  public:
-  static PassRefPtr<ConstantSourceHandler> Create(AudioNode&,
+  static RefPtr<ConstantSourceHandler> Create(AudioNode&,
                                                   float sample_rate,
                                                   AudioParamHandler& offset);
   ~ConstantSourceHandler() override;

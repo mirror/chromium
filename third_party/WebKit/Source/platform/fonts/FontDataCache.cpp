@@ -43,7 +43,7 @@ const unsigned kCMaxInactiveFontData = 225;
 const unsigned kCTargetInactiveFontData = 200;
 #endif
 
-PassRefPtr<SimpleFontData> FontDataCache::Get(
+RefPtr<SimpleFontData> FontDataCache::Get(
     const FontPlatformData* platform_data,
     ShouldRetain should_retain,
     bool subpixel_ascent_descent) {

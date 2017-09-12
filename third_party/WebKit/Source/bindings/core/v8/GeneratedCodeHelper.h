@@ -14,7 +14,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/CoreExport.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "v8/include/v8.h"
 
 namespace blink {
@@ -29,7 +29,7 @@ CORE_EXPORT void V8ConstructorAttributeGetter(
 
 CORE_EXPORT v8::Local<v8::Value> V8Deserialize(
     v8::Isolate*,
-    PassRefPtr<SerializedScriptValue>);
+    RefPtr<SerializedScriptValue>);
 
 // ExceptionToRejectPromiseScope converts a possible exception to a reject
 // promise and returns the promise instead of throwing the exception.

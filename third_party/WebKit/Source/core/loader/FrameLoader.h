@@ -242,7 +242,7 @@ class CORE_EXPORT FrameLoader final {
                  HistoryItem*);
 
   void LoadInSameDocument(const KURL&,
-                          PassRefPtr<SerializedScriptValue> state_object,
+                          RefPtr<SerializedScriptValue> state_object,
                           FrameLoadType,
                           HistoryItem*,
                           ClientRedirectPolicy,

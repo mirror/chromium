@@ -78,10 +78,10 @@ class PLATFORM_EXPORT CachingWordShapeIterator final {
   }
 
  private:
-  PassRefPtr<const ShapeResult> ShapeWordWithoutSpacing(const TextRun&,
+  RefPtr<const ShapeResult> ShapeWordWithoutSpacing(const TextRun&,
                                                         const Font*);
 
-  PassRefPtr<const ShapeResult> ShapeWord(const TextRun& word_run,
+  RefPtr<const ShapeResult> ShapeWord(const TextRun& word_run,
                                           const Font* font) {
     if (LIKELY(!spacing_.HasSpacing()))
       return ShapeWordWithoutSpacing(word_run, font);
