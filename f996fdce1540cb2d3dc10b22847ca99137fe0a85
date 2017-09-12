@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8252f70_14a18da5",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewContentsClientAdapter.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-09-12T23:10:33Z",
+      "side": 1,
+      "message": "This actually breaks things downstream (I had to make the following patch:\n\nhttp://paste.googleplex.com/4849925665849344?raw\n\nBut without it, we can\u0027t completely remove ValueCallback from AwContents and friends, because this method overrides AwContentsClient.onSafeBrowsingHit.\n\nWhat\u0027s the best way forward?",
+      "range": {
+        "startLine": 640,
+        "startChar": 12,
+        "endLine": 640,
+        "endChar": 20
+      },
+      "revId": "f996fdce1540cb2d3dc10b22847ca99137fe0a85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
