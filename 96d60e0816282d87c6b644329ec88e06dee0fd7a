@@ -34,6 +34,24 @@
       "revId": "96d60e0816282d87c6b644329ec88e06dee0fd7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5192480_78e64ae6",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-12T17:54:00Z",
+      "side": 0,
+      "message": "yeah, I think this way is fine. nevermind.",
+      "parentUuid": "6a3273d0_3be3544f",
+      "revId": "96d60e0816282d87c6b644329ec88e06dee0fd7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
