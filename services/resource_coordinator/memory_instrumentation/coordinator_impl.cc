@@ -128,6 +128,8 @@ void CoordinatorImpl::RequestGlobalMemoryDump(
     const base::trace_event::MemoryDumpRequestArgs& args_in,
     const RequestGlobalMemoryDumpCallback& callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  TRACE_EVENT0(base::trace_event::MemoryDumpManager::kTraceCategory,
+               "GlobalMemoryDump.Request");
 
   UMA_HISTOGRAM_COUNTS_1000("Memory.Experimental.Debug.GlobalDumpQueueLength",
                             queued_memory_dump_requests_.size());
@@ -419,6 +421,8 @@ void CoordinatorImpl::RemovePendingResponse(
 }
 
 void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
+  TRACE_EVENT0(base::trace_event::MemoryDumpManager::kTraceCategory,
+               "GlobalMemoryDump.Computation");
   DCHECK(!queued_memory_dump_requests_.empty());
   QueuedMemoryDumpRequest* request = &queued_memory_dump_requests_.front();
   if (!request->dump_in_progress || request->pending_responses.size() > 0)
