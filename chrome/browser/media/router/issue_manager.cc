@@ -53,38 +53,55 @@ IssueManager::~IssueManager() {
 
 void IssueManager::AddIssue(const IssueInfo& issue_info) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  auto it = std::find_if(issues_.begin(), issues_.end(),
-                         [&issue_info](const std::unique_ptr<Issue>& issue) {
-                           return issue_info == issue->info();
-                         });
+  auto it = std::find_if(
+      issues_.begin(), issues_.end(),
+      [&issue_info](const std::unique_ptr<IssueManager::Entry>& entry) {
+        return issue_info == entry->issue.info();
+      });
   if (it != issues_.end())
     return;
 
-  auto issue = base::MakeUnique<Issue>(issue_info);
+  Issue issue(issue_info);
+  std::unique_ptr<base::CancelableClosure> cancelable_dismiss_cb;
   base::TimeDelta timeout = GetAutoDismissTimeout(issue_info);
   if (!timeout.is_zero()) {
-    const Issue::Id& issue_id = issue->id();
-    auto auto_dismiss_issue_cb = base::Bind(
-        &IssueManager::ClearIssue, base::Unretained(this), issue->id());
-    auto_dismiss_issue_callbacks_.emplace(
-        issue_id,
-        base::MakeUnique<base::CancelableClosure>(auto_dismiss_issue_cb));
-    task_runner_->PostDelayedTask(FROM_HERE, auto_dismiss_issue_cb, timeout);
+    cancelable_dismiss_cb =
+        base::MakeUnique<base::CancelableClosure>(base::Bind(
+            &IssueManager::ClearIssue, base::Unretained(this), issue.id()));
+    task_runner_->PostDelayedTask(FROM_HERE, cancelable_dismiss_cb->callback(),
+                                  timeout);
   }
 
-  issues_.push_back(std::move(issue));
+  issues_.push_back(base::MakeUnique<IssueManager::Entry>(
+      issue, std::move(cancelable_dismiss_cb)));
   MaybeUpdateTopIssue();
 }
 
 void IssueManager::ClearIssue(const Issue::Id& issue_id) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  issues_.erase(
+  auto it = std::remove_if(
+      issues_.begin(), issues_.end(),
+      [&issue_id](const std::unique_ptr<IssueManager::Entry>& entry) {
+        return issue_id == entry->issue.id();
+      });
+  if (it == issues_.end())
+    return;
+
+  issues_.erase(it, issues_.end());
+  MaybeUpdateTopIssue();
+}
+
+void IssueManager::ClearNonBlockingIssues() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  auto it =
       std::remove_if(issues_.begin(), issues_.end(),
-                     [&issue_id](const std::unique_ptr<Issue>& issue) {
-                       return issue_id == issue->id();
-                     }),
-      issues_.end());
-  auto_dismiss_issue_callbacks_.erase(issue_id);
+                     [](const std::unique_ptr<IssueManager::Entry>& entry) {
+                       return !entry->issue.info().is_blocking;
+                     });
+  if (it == issues_.end())
+    return;
+
+  issues_.erase(it, issues_.end());
   MaybeUpdateTopIssue();
 }
 
@@ -104,19 +121,28 @@ void IssueManager::UnregisterObserver(IssuesObserver* observer) {
   issues_observers_.RemoveObserver(observer);
 }
 
+IssueManager::Entry::Entry(
+    const Issue& issue,
+    std::unique_ptr<base::CancelableClosure> cancelable_dismiss_callback)
+    : issue(issue),
+      cancelable_dismiss_callback(std::move(cancelable_dismiss_callback)) {}
+
+IssueManager::Entry::~Entry() = default;
+
 void IssueManager::MaybeUpdateTopIssue() {
   const Issue* new_top_issue = nullptr;
   if (!issues_.empty()) {
     // Select the first blocking issue in the list of issues.
     // If there are none, simply select the first issue in the list.
-    auto it = std::find_if(issues_.begin(), issues_.end(),
-                           [](const std::unique_ptr<Issue>& issue) {
-                             return issue->info().is_blocking;
-                           });
+    auto it =
+        std::find_if(issues_.begin(), issues_.end(),
+                     [](const std::unique_ptr<IssueManager::Entry>& entry) {
+                       return entry->issue.info().is_blocking;
+                     });
     if (it == issues_.end())
       it = issues_.begin();
 
-    new_top_issue = it->get();
+    new_top_issue = &it->get()->issue;
   }
 
   // If we've found a new top issue, then report it via the observer.
