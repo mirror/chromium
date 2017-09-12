@@ -662,9 +662,9 @@ class RendererSchedulerImplTest : public ::testing::Test {
         RendererSchedulerImpl::kEndIdleWhenHiddenDelayMillis);
   }
 
-  static base::TimeDelta stop_timers_when_backgrounded_delay() {
+  static base::TimeDelta stop_when_backgrounded_delay() {
     return base::TimeDelta::FromMilliseconds(
-        RendererSchedulerImpl::kStopTimersWhenBackgroundedDelayMillis);
+        RendererSchedulerImpl::kStopWhenBackgroundedDelayMillis);
   }
 
   static base::TimeDelta rails_response_time() {
@@ -2433,7 +2433,7 @@ TEST_F(RendererSchedulerImplTest, MultipleStopsNeedMultipleResumes) {
 }
 
 TEST_F(RendererSchedulerImplTest, PauseRenderer) {
-  scheduler_->SetTimerQueueStoppingWhenBackgroundedEnabled(true);
+  scheduler_->SetStoppingWhenBackgroundedEnabled(true);
   // Assume that the renderer is backgrounded.
   scheduler_->SetRendererBackgrounded(true);
 
@@ -2560,7 +2560,7 @@ TEST_F(RendererSchedulerImplTest, ShutdownPreventsPostingOfNewTasks) {
 }
 
 TEST_F(RendererSchedulerImplTest, TestRendererBackgroundedTimerSuspension) {
-  scheduler_->SetTimerQueueStoppingWhenBackgroundedEnabled(true);
+  scheduler_->SetStoppingWhenBackgroundedEnabled(true);
 
   std::vector<std::string> run_order;
   PostTestTasks(&run_order, "T1 T2");
@@ -2584,7 +2584,7 @@ TEST_F(RendererSchedulerImplTest, TestRendererBackgroundedTimerSuspension) {
   EXPECT_THAT(run_order, ::testing::ElementsAre(std::string("T3")));
 
   // Advance the time until after the scheduled timer queue suspension.
-  now = base::TimeTicks() + stop_timers_when_backgrounded_delay() +
+  now = base::TimeTicks() + stop_when_backgrounded_delay() +
         base::TimeDelta::FromMilliseconds(10);
   run_order.clear();
   clock_->SetNowTicks(now);
