@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b58757fa_7e2254f8",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-12T16:07:59Z",
+      "side": 1,
+      "message": "why did we need to wrap this in a declare_args block? is there some case now where users need to override enable_frame_pointers?",
+      "revId": "e8eeaf88d0e1a934684845307df81e56b3ecb98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
