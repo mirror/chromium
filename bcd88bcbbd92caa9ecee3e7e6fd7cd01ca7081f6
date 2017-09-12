@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "97ce1fe0_52cab36e",
+        "filename": "components/cronet/android/test/javaperftests/run.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-12T17:36:11Z",
+      "side": 1,
+      "message": "This is a very a-typical benchmark, and not part of the core group of telemetry benchmarks found in tools/perf. My reason for not changing it to expectations is I didn\u0027t want to break any assumptions the test owners had when running the benchmark. I dont know how/where this is ran or if it is even ran on a waterfall.\n\nI can move it to story expectations if people think thats the correct thing to do. I\u0027d likely need help from the owners of the infra that runs it to make it respect story expectations. Do you know the owner of this benchmark/infra? I do not see anything cronet related listed in https://chromeperf.appspot.com/ \u003e other pages \u003e test owners",
+      "parentUuid": "e453f875_0072555f",
+      "range": {
+        "startLine": 210,
+        "startChar": 30,
+        "endLine": 210,
+        "endChar": 0
+      },
+      "revId": "bcd88bcbbd92caa9ecee3e7e6fd7cd01ca7081f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdb249e7_451ba29f",
         "filename": "tools/perf/contrib/cros_benchmarks/page_cycler_v2.py",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "bcd88bcbbd92caa9ecee3e7e6fd7cd01ca7081f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586b409e_0f740371",
+        "filename": "tools/perf/contrib/cros_benchmarks/page_cycler_v2.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-12T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdb249e7_451ba29f",
+      "revId": "bcd88bcbbd92caa9ecee3e7e6fd7cd01ca7081f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "c93a0cbc_520035fa",
+        "filename": "tools/perf/contrib/cros_benchmarks/page_cycler_v2.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-12T17:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0310ba0f_738b8b1d",
+      "revId": "bcd88bcbbd92caa9ecee3e7e6fd7cd01ca7081f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "196ea4f5_6142ad3c",
         "filename": "tools/perf/core/trybot_command_unittest.py",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-12T17:08:39Z",
       "side": 1,
       "message": "These tests probably should later be removed/updated.",
+      "revId": "bcd88bcbbd92caa9ecee3e7e6fd7cd01ca7081f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1e5a04_2c401780",
+        "filename": "tools/perf/core/trybot_command_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-12T17:36:11Z",
+      "side": 1,
+      "message": "I think they should be updated to use StoryExpectations for testing if a benchmark will run via trybot. \n\nI think that update should happen in a followup CL though, so I added a todo to this. For this CL I would like to still switch it to decorators.* so that we no longer have anything using bencmark.Enable/Disable however.",
+      "parentUuid": "196ea4f5_6142ad3c",
       "revId": "bcd88bcbbd92caa9ecee3e7e6fd7cd01ca7081f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
