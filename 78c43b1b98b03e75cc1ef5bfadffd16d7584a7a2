@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70b1ebf9_c062ec89",
+        "filename": "components/feature_engagement/features.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-12T00:54:42Z",
+      "side": 1,
+      "message": "What features does IPH need that are only provided by Windows and Linux (and not CrOS). IIRC, views was a large part of this, but CrOS has views too.",
+      "range": {
+        "startLine": 6,
+        "startChar": 2,
+        "endLine": 6,
+        "endChar": 74
+      },
+      "revId": "78c43b1b98b03e75cc1ef5bfadffd16d7584a7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
