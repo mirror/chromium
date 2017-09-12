@@ -53,7 +53,7 @@ NSMutableArray<NSData*>* _responseData;
   return body;
 }
 
-- (BOOL)waitForDone {
+- (BOOL)waitOnce {
   int64_t deadline_ns = 20 * NSEC_PER_SEC;
   return dispatch_semaphore_wait(
              _semaphore, dispatch_time(DISPATCH_TIME_NOW, deadline_ns)) == 0;
@@ -66,7 +66,8 @@ NSMutableArray<NSData*>* _responseData;
 - (void)URLSession:(NSURLSession*)session
                     task:(NSURLSessionTask*)task
     didCompleteWithError:(NSError*)error {
-  [self setError:error];
+  if (error)
+    [self setError:error];
   dispatch_semaphore_signal(_semaphore);
 }
 
@@ -126,7 +127,7 @@ void CronetTestBase::StartDataTaskAndWaitForCompletion(
     NSURLSessionDataTask* task) {
   [delegate_ reset];
   [task resume];
-  CHECK([delegate_ waitForDone]);
+  CHECK([delegate_ waitOnce]);
 }
 
 ::testing::AssertionResult CronetTestBase::IsResponseSuccessful() {
