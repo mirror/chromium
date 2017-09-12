@@ -16,6 +16,24 @@
       "revId": "84d22eb83e8b5202b1b441fb5edf529c0a2a0b8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bebaf5_65a1e3f1",
+        "filename": "third_party/WebKit/public/platform/WebLayer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-12T20:20:34Z",
+      "side": 1,
+      "message": "Ah thats on the Impl. So is the full answer WebLayerImpl::SetOpaque?",
+      "parentUuid": "de4a59df_5e94491b",
+      "revId": "84d22eb83e8b5202b1b441fb5edf529c0a2a0b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
