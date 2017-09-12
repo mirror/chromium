@@ -317,7 +317,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
         mBottomToolbarTopShadow =
                 (ImageView) getRootView().findViewById(R.id.bottom_toolbar_shadow);
         mBottomToolbarTopShadowDrawable =
-                (LayerDrawable) getResources().getDrawable(R.drawable.bottom_toolbar_shadow);
+                (LayerDrawable) getResources().getDrawable(R.drawable.modern_bottom_toolbar_shadow);
 
         mBottomToolbarTopShadowDrawable.getDrawable(0).setAlpha(255);
         mBottomToolbarTopShadowDrawable.getDrawable(1).setAlpha(0);
