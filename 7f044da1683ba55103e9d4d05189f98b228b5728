@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e2bc043d_d746827c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": ":D",
+      "parentUuid": "e357e718_d74b1c09",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dd93f33_ac816aee",
         "filename": "/COMMIT_MSG",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "130a87b8_255a89de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "http://media0.giphy.com/media/ivVrBrN228rC/giphy.gif",
+      "parentUuid": "1dd93f33_ac816aee",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b650f45f_695c04b8",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b049a7d_ad83a635",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6525ecc_a5f93881",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1edc59f_89ac6774",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6525ecc_a5f93881",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "03e5bfe3_29e76ba3",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a528fe6_a19b2acf",
+      "range": {
+        "startLine": 612,
+        "startChar": 57,
+        "endLine": 613,
+        "endChar": 17
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f78a607_e18d9bab",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 14
@@ -107,6 +203,24 @@
       "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b87bd85_6d888922",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f78a607_e18d9bab",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "8dd4bbcf_f989d53f",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef749bdf_d5e781a1",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9c97498_1e08c8cb",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 14
@@ -141,6 +273,24 @@
       "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656fe7cf_b2389798",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "Added a TODO.",
+      "parentUuid": "c9c97498_1e08c8cb",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "11b982cd_8d574cb5",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "Its consistent with blink. I couldn\u0027t trace back to the code where the logic is but I traced to verify that blink stops these animations. Its good for cpu usage since its a lot of wasted work to animate anything offscreen.",
+      "parentUuid": "443ae6f3_f12574d2",
+      "range": {
+        "startLine": 795,
+        "startChar": 25,
+        "endLine": 795,
+        "endChar": 44
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9ab0c71_f90a92ad",
         "filename": "cc/layers/picture_layer_impl.h",
         "patchSetId": 14
@@ -178,6 +352,30 @@
       "writtenOn": "2017-09-12T15:09:12Z",
       "side": 1,
       "message": "nit: CamelCasePlease",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 40
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896583e8_ff21c031",
+        "filename": "cc/layers/picture_layer_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "But its just a trivial accessor...",
+      "parentUuid": "d9ab0c71_f90a92ad",
       "range": {
         "startLine": 116,
         "startChar": 16,
@@ -207,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "0e417508_59400ea0",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "Done.\nAlso, magic constant copied from blink: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/graphics/BitmapImage.cpp?dr\u003dCSs\u0026l\u003d501.",
+      "parentUuid": "afa1d80e_18ac0fc4",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f8ea360_eeb24505",
         "filename": "cc/trees/image_animation_controller.cc",
         "patchSetId": 14
@@ -230,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "1bfede58_42942d15",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f8ea360_eeb24505",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 32
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "970be7d9_ec180257",
         "filename": "cc/trees/image_animation_controller.cc",
         "patchSetId": 14
@@ -241,6 +481,30 @@
       "writtenOn": "2017-09-12T15:09:12Z",
       "side": 1,
       "message": "There\u0027s probably an optimization possible here.. If the image has 2 frames with infinite loop and 10ms delay, and your now - next_desired_frame_time is like 4 minutes, then this will iterate for a long time. Whereas we can modulo and figure out exactly what frame we should land on.",
+      "range": {
+        "startLine": 242,
+        "startChar": 2,
+        "endLine": 242,
+        "endChar": 62
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90485153_ddbf46d0",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "You mean something along the lines of keeping the total time for a single loop in the animation and avoiding full iterations for catching up?\n\nnum_of_iterations_skipped \u003d (now - next_desired_frame_time_) % total_loop_time;\nrepetitions_completed_ +\u003d num_of_iterations_skipped;\nnext_desired_frame_time_ +\u003d num_of_iterations_skipped * total_loop_time;\n\nWould it be okay if I take this in a follow-up?",
+      "parentUuid": "970be7d9_ec180257",
       "range": {
         "startLine": 242,
         "startChar": 2,
@@ -276,6 +540,30 @@
     },
     {
       "key": {
+        "uuid": "ad9c11db_a32ed6ac",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "If we are going to skip the first frame on the second iteration then it wouldn\u0027t catch up and play from the start.\n\n|next_desired_frame_time \u003c\u003d now| is checking if we will be skipping this frame to catch up.",
+      "parentUuid": "ed64ddb3_57973606",
+      "range": {
+        "startLine": 257,
+        "startChar": 4,
+        "endLine": 258,
+        "endChar": 41
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ec9e5e3_35ca28ed",
         "filename": "cc/trees/image_animation_controller.cc",
         "patchSetId": 14
@@ -299,6 +587,30 @@
     },
     {
       "key": {
+        "uuid": "739d28d5_e779b69d",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ec9e5e3_35ca28ed",
+      "range": {
+        "startLine": 285,
+        "startChar": 9,
+        "endLine": 285,
+        "endChar": 27
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00510d12_8060984e",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 14
@@ -313,6 +625,24 @@
       "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0532a408_f0946d20",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00510d12_8060984e",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -339,6 +669,30 @@
     },
     {
       "key": {
+        "uuid": "8c49b5c4_0ebaa3fa",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da0bc2a4_9b6d93a6",
+      "range": {
+        "startLine": 26,
+        "startChar": 56,
+        "endLine": 26,
+        "endChar": 61
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39941470_666bd37d",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 14
@@ -353,6 +707,24 @@
       "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba41fb03_e5d161e2",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39941470_666bd37d",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -373,6 +745,24 @@
     },
     {
       "key": {
+        "uuid": "59dcd6c1_e6f5b16b",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "That\u0027s a good point, saves multiple lookups in the map. But that would require passing the vector of animated_images_metadata and makes the API slightly unclear, since the rest of metadata is irrelevant here.",
+      "parentUuid": "8d13e2c6_3bc1e155",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d6687f4_ca406894",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 14
@@ -387,6 +777,24 @@
       "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4091e8ac_86c42be2",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "I added 764189 for the issues to address for that. It should all be external to this class.",
+      "parentUuid": "6d6687f4_ca406894",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -413,6 +821,30 @@
     },
     {
       "key": {
+        "uuid": "367ebf2a_f22c1724",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "I meant to say it called whenever the visibility of layer might have changed. So the driver\u0027s ShouldAnimate decision is affected.",
+      "parentUuid": "1f669e9e_908dae61",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 79
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b03a525d_91acd936",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 14
@@ -436,6 +868,30 @@
     },
     {
       "key": {
+        "uuid": "db7e5e4f_d08dca9d",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "Its kinda like PushPropertiesTo I guess. I went with PushPendingToActive, similar to SyncedProperty.",
+      "parentUuid": "b03a525d_91acd936",
+      "range": {
+        "startLine": 88,
+        "startChar": 9,
+        "endLine": 88,
+        "endChar": 28
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ebbdec9_48004a5d",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 14
@@ -450,6 +906,24 @@
       "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b1b7c3_43c401a5",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "I did look for something I could re-use from cc/base but nothing supports changing the notification time. And then it needed tracking for when we receive the animate response from a callback, so I figured a different class is better.",
+      "parentUuid": "9ebbdec9_48004a5d",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -476,6 +950,30 @@
     },
     {
       "key": {
+        "uuid": "0f018473_7c2ff3cb",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "base::TimeTicks::Now() is an expensive call that we prefer to avoid. That\u0027s why the rest of the animation system also uses now from the BeginFrameArgs.",
+      "parentUuid": "28825f5f_ff2f4200",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 74
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13e5231c_c7afa0a8",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 14
@@ -499,6 +997,30 @@
     },
     {
       "key": {
+        "uuid": "7a885fbf_da130fd1",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "B-)",
+      "parentUuid": "13e5231c_c7afa0a8",
+      "range": {
+        "startLine": 278,
+        "startChar": 4,
+        "endLine": 278,
+        "endChar": 40
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c28257ea_f25d4fe2",
         "filename": "content/public/common/content_switches.cc",
         "patchSetId": 14
@@ -519,6 +1041,30 @@
       "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "febcaf8c_6ab6d665",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T21:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c28257ea_f25d4fe2",
+      "range": {
+        "startLine": 360,
+        "startChar": 23,
+        "endLine": 360,
+        "endChar": 30
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
