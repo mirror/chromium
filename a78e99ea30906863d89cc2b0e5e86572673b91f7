@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60344843_f3f5affe",
+        "filename": "content/renderer/media/video_track_adapter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-12T14:51:14Z",
+      "side": 1,
+      "message": "I suggest adding a test for when is_rotated is true",
+      "range": {
+        "startLine": 67,
+        "startChar": 1,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "a78e99ea30906863d89cc2b0e5e86572673b91f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
