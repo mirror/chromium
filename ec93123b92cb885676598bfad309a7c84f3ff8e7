@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75078b74_d5874296",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-12T12:14:46Z",
+      "side": 1,
+      "message": "I think you could use `element-\u003eIsMediaControls()` here. It would save you some expensive comparisons. `element-\u003eIsMediaControlElements()` might help too. Those are available in Node.h.",
+      "revId": "ec93123b92cb885676598bfad309a7c84f3ff8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
