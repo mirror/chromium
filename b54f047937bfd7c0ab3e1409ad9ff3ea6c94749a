@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a113cbf_943a3d36",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/DownloadActivityTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-09-12T18:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d0fba2d_8dcf1517",
+      "range": {
+        "startLine": 244,
+        "startChar": 18,
+        "endLine": 244,
+        "endChar": 0
+      },
+      "revId": "b54f047937bfd7c0ab3e1409ad9ff3ea6c94749a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f54348cb_77c4ae5f",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/UkmIncognitoTest.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "b54f047937bfd7c0ab3e1409ad9ff3ea6c94749a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a33bb5_b4bad2fa",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/UkmIncognitoTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-09-12T18:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f54348cb_77c4ae5f",
+      "range": {
+        "startLine": 30,
+        "startChar": 18,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "b54f047937bfd7c0ab3e1409ad9ff3ea6c94749a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "87e45a63_495607f1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/geo/GeolocationHeaderTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-09-12T18:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f003c4f0_206b6282",
+      "range": {
+        "startLine": 40,
+        "startChar": 23,
+        "endLine": 40,
+        "endChar": 37
+      },
+      "revId": "b54f047937bfd7c0ab3e1409ad9ff3ea6c94749a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0cdfdbc_b728b3d2",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/photo_picker/PhotoPickerDialogTest.java",
         "patchSetId": 10
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-12T17:32:13Z",
       "side": 1,
       "message": "we used to have to exclude the other annotations if we marked a test as disabled, is that no longer the case and we only need to add @DisableTest but can leave the others?",
+      "range": {
+        "startLine": 209,
+        "startChar": 5,
+        "endLine": 209,
+        "endChar": 17
+      },
+      "revId": "b54f047937bfd7c0ab3e1409ad9ff3ea6c94749a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21dc95b7_d8487590",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/photo_picker/PhotoPickerDialogTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-09-12T18:12:43Z",
+      "side": 1,
+      "message": "Ya, that was the case from at least more than 1 year ago. Now commenting out other annotations actually causes errors. When a method start with test- prefix does not @Test annotation, findbug would complain",
+      "parentUuid": "d0cdfdbc_b728b3d2",
       "range": {
         "startLine": 209,
         "startChar": 5,
