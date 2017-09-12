@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e90d032_3798c516",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T04:52:00Z",
+      "side": 1,
+      "message": "Done.  (Removed.)",
+      "parentUuid": "367f16de_5e74e959",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aae5c7d0_74309987",
         "filename": "components/omnibox/browser/autocomplete_input.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6988e92_26c5bf73",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T04:52:00Z",
+      "side": 1,
+      "message": "\u003e Implementing this this way -- instead of by bailing with \"UNKNOWN\" or the like here -- seems like it will matter if the user types \"foo bar@baz\" and hits ctrl-enter.  I think with your code, that will be URL, but maybe it should be UNKNOWN instead?\n\nDesired TLD is URL-seeking; I think it\u0027s appropriate that it overrides this generally-no-space in username heuristic.\n\n\u003eWhat do you think should happen here?  Also, we should have a testcase for this.\nAdded test case.\n \n\u003e I also worry about future maintenance.  Not bailing out here means if we add more conditions below, we may need to \"\u0026\u0026 !username_has_space\" to get them to do the right thing.\n\nWe can\u0027t bail out here as unknown.  (That was my first implementation, and it\u0027s wrong.)  Below we assign QUERY to certain invalid-IP-address-like things.  Returning UNKNOWN for these known QUERY types is wrong.\n\n(That what I was alluding to when I said\n// The heuristics below avoid returning URL type for these inputs.\nbecause we still allow the heuristics to return QUERY types.)",
+      "parentUuid": "aae5c7d0_74309987",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "27a0285d_f4664952",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T04:52:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4048e67a_46d0fcfa",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16e14849_484cc8be",
         "filename": "components/omnibox/browser/autocomplete_input.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e246d8_e7b1ad3e",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T04:52:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16e14849_484cc8be",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7485510b_ad175cf1",
+        "filename": "components/omnibox/browser/autocomplete_input_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T04:52:00Z",
+      "side": 1,
+      "message": "Did both.",
+      "parentUuid": "01a9bfe6_2564c52f",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3238256_9de12a49",
         "filename": "components/omnibox/browser/autocomplete_input_unittest.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c5f2a4_909ae0b1",
+        "filename": "components/omnibox/browser/autocomplete_input_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T04:52:00Z",
+      "side": 1,
+      "message": "Added test.  (Correctly also decides that URL is a good guess.)",
+      "parentUuid": "b3238256_9de12a49",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
