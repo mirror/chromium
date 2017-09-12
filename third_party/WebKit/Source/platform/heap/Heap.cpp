@@ -122,12 +122,12 @@ void ThreadHeapStats::Reset() {
 }
 
 void ThreadHeapStats::IncreaseAllocatedObjectSize(size_t delta) {
-  AtomicAdd(&allocated_object_size_, static_cast<long>(delta));
+  allocated_object_size_ += delta;
   ProcessHeap::IncreaseTotalAllocatedObjectSize(delta);
 }
 
 void ThreadHeapStats::DecreaseAllocatedObjectSize(size_t delta) {
-  AtomicSubtract(&allocated_object_size_, static_cast<long>(delta));
+  allocated_object_size_ -= delta;
   ProcessHeap::DecreaseTotalAllocatedObjectSize(delta);
 }
 
