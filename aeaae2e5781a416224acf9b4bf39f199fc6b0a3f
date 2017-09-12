@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b546f396_9c6c7372",
+        "filename": "ios/build/bots/chromium.mac/ios-device-xcode-clang.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-12T22:15:35Z",
+      "side": 1,
+      "message": "Dumb question... this is pointing to the old rev since this is Xcode\u0027s version, and we can\u0027t go beyond what is installed?",
+      "revId": "aeaae2e5781a416224acf9b4bf39f199fc6b0a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
