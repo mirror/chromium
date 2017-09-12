@@ -15,6 +15,7 @@
 #include "content/public/common/resource_response.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/system/data_pipe.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/redirect_info.h"
 #include "third_party/WebKit/public/platform/WebURLLoader.h"
 #include "url/gurl.h"
@@ -69,6 +70,7 @@ class CONTENT_EXPORT WebURLLoaderImpl : public blink::WebURLLoader {
                                   const ResourceResponseInfo& info,
                                   blink::WebURLResponse* response,
                                   bool report_security_info);
+
   // WebURLLoader methods:
   void LoadSynchronously(const blink::WebURLRequest& request,
                          blink::WebURLResponse& response,
@@ -85,6 +87,7 @@ class CONTENT_EXPORT WebURLLoaderImpl : public blink::WebURLLoader {
  private:
   class Context;
   class RequestPeerImpl;
+
   scoped_refptr<Context> context_;
 
   DISALLOW_COPY_AND_ASSIGN(WebURLLoaderImpl);
