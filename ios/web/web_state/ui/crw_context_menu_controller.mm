@@ -204,7 +204,8 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
 }
 
 - (void)longPressGestureRecognizerBegan {
-  [self cancelAllTouches];
+  if ([_DOMElementForLastTouch count])
+    [self cancelAllTouches];
 
   if ([_delegate respondsToSelector:@selector(webView:handleContextMenu:)]) {
     _locationForLastTouch = [_contextMenuRecognizer locationInView:_webView];
