@@ -45,6 +45,10 @@ TEST(CSSParserFastPathsTest, ParseInitialAndInheritKeyword) {
   value = CSSParserFastPaths::MaybeParseValue(CSSPropertyMargin, "initial",
                                               kHTMLStandardMode);
   ASSERT_EQ(nullptr, value);
+  value = CSSParserFastPaths::MaybeParseValue(CSSPropertyMarginTop, "unset",
+                                              kHTMLStandardMode);
+  ASSERT_NE(nullptr, value);
+  EXPECT_TRUE(value->IsUnsetValue());
 }
 
 TEST(CSSParserFastPathsTest, ParseTransform) {
