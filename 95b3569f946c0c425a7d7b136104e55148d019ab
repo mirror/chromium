@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d9044e0_e02e120a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-12T21:28:48Z",
+      "side": 1,
+      "message": "non-glue layers?",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "95b3569f946c0c425a7d7b136104e55148d019ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c591d329_3bdb253c",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContentsClientBridge.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-12T21:28:48Z",
+      "side": 1,
+      "message": "err... clang-format did this? can you undo this by hand and wrap this in /* clang-format off */ and /* clang-format on */ comments",
+      "revId": "95b3569f946c0c425a7d7b136104e55148d019ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1e3773_3841c3eb",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContentsStatics.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-12T21:28:48Z",
+      "side": 1,
+      "message": "again, don\u0027t touch this just yet, this is going to break downstream code",
+      "revId": "95b3569f946c0c425a7d7b136104e55148d019ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d337424_3b79b62e",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwValueCallback.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-12T21:28:48Z",
+      "side": 1,
+      "message": "someone pointed me to https://cs.chromium.org/chromium/src/base/android/java/src/org/chromium/base/Callback.java?q\u003dcallback.java\u0026sq\u003dpackage:chromium\n\nprobably should use that instead, and saves you from defining another build target. sorry for not telling you earlier..",
+      "revId": "95b3569f946c0c425a7d7b136104e55148d019ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
