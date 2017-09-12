@@ -802,7 +802,7 @@ CrSettingsSiteDataDetailsTest.prototype = {
   /** @override */
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
     '../test_browser_proxy.js',
-    'test_site_settings_prefs_browser_proxy.js',
+    'test_local_data_browser_proxy.js',
     'site_data_details_subpage_tests.js',
   ]),
 };
@@ -903,7 +903,7 @@ CrSettingsSiteDetailsTest.prototype = {
   /** @override */
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
     '../test_browser_proxy.js',
-    'test_site_settings_prefs_browser_proxy.js',
+    'test_local_data_browser_proxy.js',
     'site_details_tests.js',
   ]),
 };
@@ -927,7 +927,7 @@ CrSettingsSiteDetailsPermissionTest.prototype = {
   /** @override */
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
     '../test_browser_proxy.js',
-    'test_site_settings_prefs_browser_proxy.js',
+    'test_local_data_browser_proxy.js',
     'site_details_permission_tests.js',
   ]),
 };
@@ -1058,7 +1058,7 @@ CrSettingsSiteDataTest.prototype = {
 
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
     '../test_browser_proxy.js',
-    'test_site_settings_prefs_browser_proxy.js',
+    'test_local_data_browser_proxy.js',
     'site_data_test.js',
   ]),
 };
