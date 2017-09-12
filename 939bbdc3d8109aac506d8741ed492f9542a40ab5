@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbf34b17_a9e499a5",
+        "filename": "chrome/profiling/allocation_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-12T22:24:16Z",
+      "side": 1,
+      "message": "s/Meed/Need",
+      "revId": "939bbdc3d8109aac506d8741ed492f9542a40ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57237303_9ce56bb2",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-12T22:24:16Z",
+      "side": 1,
+      "message": "can you also update memlog_browsertest.cc to:\n1) Make PartitionAlloc allocations in the browser process.\n2) Confirm that we output this info for partition alloc, and have appropriate data in the dump?\n\nYou\u0027ll want to add the allocations here:\nhttps://cs.chromium.org/chromium/src/chrome/browser/profiling_host/memlog_browsertest.cc?type\u003dcs\u0026q\u003dmemlog_browsertest.cc\u0026sq\u003dpackage:chromium\u0026l\u003d191\n\nAnd the checks just need to be refactored to support both malloc and partition_alloc",
+      "revId": "939bbdc3d8109aac506d8741ed492f9542a40ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
