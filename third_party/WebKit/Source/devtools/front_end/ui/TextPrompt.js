@@ -107,6 +107,8 @@ UI.TextPrompt = class extends Common.Object {
     this._boundOnKeyDown = this.onKeyDown.bind(this);
     this._boundOnInput = this.onInput.bind(this);
     this._boundOnMouseWheel = this.onMouseWheel.bind(this);
+    this._boundOnFocus = this.onFocus.bind(this);
+    this._boundOnBlur = this.onBlur.bind(this);
     this._boundClearAutocomplete = this.clearAutocomplete.bind(this);
     this._proxyElement = element.ownerDocument.createElement('span');
     var shadowRoot = UI.createShadowRootWithCoreStyles(this._proxyElement, 'ui/textPrompt.css');
@@ -121,7 +123,8 @@ UI.TextPrompt = class extends Common.Object {
     this._element.addEventListener('input', this._boundOnInput, false);
     this._element.addEventListener('mousewheel', this._boundOnMouseWheel, false);
     this._element.addEventListener('selectstart', this._boundClearAutocomplete, false);
-    this._element.addEventListener('blur', this._boundClearAutocomplete, false);
+    this._element.addEventListener('focus', this._boundOnFocus, false);
+    this._element.addEventListener('blur', this._boundOnBlur, false);
 
     this._suggestBox = new UI.SuggestBox(this, 20, true);
 
@@ -202,12 +205,23 @@ UI.TextPrompt = class extends Common.Object {
       this._element.removeAttribute('data-placeholder');
   }
 
+  /**
+   * @param {boolean} enabled
+   */
+  setEnabled(enabled) {
+    if (enabled)
+      this._element.setAttribute('contenteditable', 'plaintext-only');
+    else
+      this._element.removeAttribute('contenteditable');
+  }
+
   _removeFromElement() {
     this.clearAutocomplete();
     this._element.removeEventListener('keydown', this._boundOnKeyDown, false);
     this._element.removeEventListener('input', this._boundOnInput, false);
     this._element.removeEventListener('selectstart', this._boundClearAutocomplete, false);
-    this._element.removeEventListener('blur', this._boundClearAutocomplete, false);
+    this._element.removeEventListener('focus', this._boundOnFocus, false);
+    this._element.removeEventListener('blur', this._boundOnBlur, false);
     if (this._isEditing)
       this._stopEditing();
     if (this._suggestBox)
@@ -238,6 +252,15 @@ UI.TextPrompt = class extends Common.Object {
       this._element.removeEventListener('blur', this._blurListener, false);
     this._contentElement.classList.remove('text-prompt-editing');
     delete this._isEditing;
+  }
+
+  onFocus() {
+    this.dispatchEventToListeners(UI.TextPrompt.Events.Focused);
+  }
+
+  onBlur() {
+    this.clearAutocomplete();
+    this.dispatchEventToListeners(UI.TextPrompt.Events.Blurred);
   }
 
   /**
@@ -638,5 +661,7 @@ UI.TextPrompt.DefaultAutocompletionTimeout = 250;
 
 /** @enum {symbol} */
 UI.TextPrompt.Events = {
+  Blurred: Symbol('Blurred'),
+  Focused: Symbol('Focused'),
   TextChanged: Symbol('TextChanged')
 };
