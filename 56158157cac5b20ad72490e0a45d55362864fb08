@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c0b193b8_03f82791",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-12T18:22:07Z",
+      "side": 1,
+      "message": "I guess my thought was that the presence of the username-with-space on these makes them extremely ambiguous.  Consider the input \"a b@123.45/\"\n\nCurrent behavior: URL (because of the trailing slash)\nYour change: QUERY (because of the not-likely-an-IP check)\nMy proposal: UNKNOWN (because of the \"a b@\")\n\nI\u0027m sure URL is not right, but I\u0027m not sure QUERY is better than UNKNOWN.  This seems more UNKNOWNy to me (\"likely a search, but maybe you wanted to navigate?\").  What gives you such confidence that UNKNOWN is wrong for this?",
+      "parentUuid": "e6988e92_26c5bf73",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4048e67a_46d0fcfa",
         "filename": "components/omnibox/browser/autocomplete_input.cc",
         "patchSetId": 2
@@ -153,6 +171,24 @@
       "writtenOn": "2017-09-12T17:30:52Z",
       "side": 1,
       "message": "!username_has_space here?\n\nE.g. something like:\ncan\u0027t login @localhost:8080",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "293a9f74_9c804fe3",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-12T18:22:07Z",
+      "side": 1,
+      "message": "Unless the user hit ctrl-enter, this case will have already been classified as UNKNOWN by the conditional just above.\n\nIf they do hit ctrl-enter, this will be converted to \"http://can\u0027t login @localhost.com:8080\", which is kinda weird but Mark feels is correct.  I\u0027m not certain he\u0027s wrong.",
+      "parentUuid": "7e0684a2_6338fd44",
       "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

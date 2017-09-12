@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee413ae9_434a45fa",
+        "filename": "components/omnibox/browser/autocomplete_input_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-12T18:22:07Z",
+      "side": 1,
+      "message": "Nit: I\u0027d remove the \".com\" on this input string, because that seems like a more strenuous test of the logic here.",
+      "revId": "6e4793ab033e7a34809caffd586de328ce7d9fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
