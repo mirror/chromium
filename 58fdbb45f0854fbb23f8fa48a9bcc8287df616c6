@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "5f09acec_57d2abe6",
+        "filename": "chromecast/browser/cast_display_configurator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-09-12T17:55:43Z",
+      "side": 1,
+      "message": "Had to revert back to base::Bind, since the native delegate code uses legacy callbacks.",
+      "parentUuid": "673de7ca_e8250e84",
+      "range": {
+        "startLine": 37,
+        "startChar": 31,
+        "endLine": 37,
+        "endChar": 35
+      },
+      "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "644c6af4_65f95ce2",
         "filename": "chromecast/browser/cast_display_configurator.cc",
         "patchSetId": 3
@@ -119,6 +143,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "644c6af4_65f95ce2",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 62,
+        "endChar": 16
+      },
+      "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3af41f34_81d16934",
+        "filename": "chromecast/browser/cast_display_configurator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-09-12T17:55:43Z",
+      "side": 1,
+      "message": "Had to revert back to base::Bind, since the native delegate code uses legacy callbacks.",
+      "parentUuid": "98cb4c39_52bb34bc",
       "range": {
         "startLine": 62,
         "startChar": 12,

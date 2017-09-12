@@ -16,6 +16,24 @@
       "revId": "94cbdd081455b8c0828d0516f1de2789edad5c0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885cbca7_e5b41f50",
+        "filename": "chromecast/browser/cast_browser_main_parts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-09-12T17:55:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bf36f3c_0f140095",
+      "revId": "94cbdd081455b8c0828d0516f1de2789edad5c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
