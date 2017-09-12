@@ -380,11 +380,21 @@ TEST_F(NetworkSessionConfiguratorTest, Http2SettingsFromFieldTrialParams) {
   EXPECT_EQ(expected_settings, params_.http2_settings);
 }
 
+TEST_F(NetworkSessionConfiguratorTest, TCPFastOpenEnabled) {
+  base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
+  command_line.AppendSwitch(switches::kEnableTcpFastOpen);
+  ParseCommandLineAndFieldTrials(command_line);
+
+  EXPECT_TRUE(params_.enable_tcp_fast_open);
+  EXPECT_FALSE(params_.enable_tcp_fast_open_for_ssl);
+}
+
 TEST_F(NetworkSessionConfiguratorTest, TCPFastOpenHttpsEnabled) {
   base::FieldTrialList::CreateFieldTrial("TCPFastOpen", "HttpsEnabled");
 
   ParseFieldTrials();
 
+  EXPECT_FALSE(params_.enable_tcp_fast_open);
   EXPECT_TRUE(params_.enable_tcp_fast_open_for_ssl);
 }
 
