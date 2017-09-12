@@ -298,17 +298,17 @@ public class OfflinePageDownloadBridge implements DownloadServiceDelegate, Offli
     @CalledByNative
     static void createDownloadItemAndAddToList(List<OfflinePageDownloadItem> list, String guid,
             String url, int downloadState, long downloadProgressBytes, String title,
-            String targetPath, long startTimeMs, long totalBytes) {
+            String targetPath, long startTimeMs, long totalBytes, boolean isSuggested) {
         list.add(createDownloadItem(guid, url, downloadState, downloadProgressBytes, title,
-                targetPath, startTimeMs, totalBytes));
+                targetPath, startTimeMs, totalBytes, isSuggested));
     }
 
     @CalledByNative
     static OfflinePageDownloadItem createDownloadItem(String guid, String url, int downloadState,
             long downloadProgressBytes, String title, String targetPath, long startTimeMs,
-            long totalBytes) {
+            long totalBytes, boolean isSuggested) {
         return new OfflinePageDownloadItem(guid, url, downloadState, downloadProgressBytes, title,
-                targetPath, startTimeMs, totalBytes);
+                targetPath, startTimeMs, totalBytes, isSuggested);
     }
 
     private native long nativeInit(Profile profile);

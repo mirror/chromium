@@ -327,21 +327,19 @@ public class StubbedProvider implements BackendProvider {
         long startTime = dateToEpoch(date);
         int downloadState = org.chromium.components.offlinepages.downloads.DownloadState.COMPLETE;
         if (which == 0) {
-            return new OfflinePageDownloadItem("offline_guid_1", "https://url.com",
-                    downloadState, 0, "page 1",
-                    "/data/fake_path/Downloads/first_file", startTime, 1000);
+            return new OfflinePageDownloadItem("offline_guid_1", "https://url.com", downloadState,
+                    0, "page 1", "/data/fake_path/Downloads/first_file", startTime, 1000, false);
         } else if (which == 1) {
             return new OfflinePageDownloadItem("offline_guid_2", "http://stuff_and_things.com",
-                    downloadState, 0, "page 2",
-                    "/data/fake_path/Downloads/file_two", startTime, 10000);
+                    downloadState, 0, "page 2", "/data/fake_path/Downloads/file_two", startTime,
+                    10000, false);
         } else if (which == 2) {
-            return new OfflinePageDownloadItem("offline_guid_3", "https://url.com",
-                    downloadState, 100, "page 3",
-                    "/data/fake_path/Downloads/3_file", startTime, 100000);
+            return new OfflinePageDownloadItem("offline_guid_3", "https://url.com", downloadState,
+                    100, "page 3", "/data/fake_path/Downloads/3_file", startTime, 100000, false);
         } else if (which == 3) {
             return new OfflinePageDownloadItem("offline_guid_4", "https://thangs.com",
-                    downloadState, 1024, "page 4",
-                    "/data/fake_path/Downloads/4", startTime, ONE_GIGABYTE * 5L);
+                    downloadState, 1024, "page 4", "/data/fake_path/Downloads/4", startTime,
+                    ONE_GIGABYTE * 5L, false);
         } else {
             return null;
         }

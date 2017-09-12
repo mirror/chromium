@@ -185,28 +185,34 @@ void DuplicateCheckDone(const GURL& url,
 
 void ToJavaOfflinePageDownloadItemList(
     JNIEnv* env,
+    ClientPolicyController* policy_controller,
     const JavaRef<jobject>& j_result_obj,
     const std::vector<const DownloadUIItem*>& items) {
   for (const auto* item : items) {
+    bool is_suggested =
+        policy_controller->IsDisabledWhenPrefetchDisabled(item->name_space);
     Java_OfflinePageDownloadBridge_createDownloadItemAndAddToList(
         env, j_result_obj, ConvertUTF8ToJavaString(env, item->guid),
         ConvertUTF8ToJavaString(env, item->url.spec()), item->download_state,
         item->download_progress_bytes,
         ConvertUTF16ToJavaString(env, item->title),
         ConvertUTF8ToJavaString(env, item->target_path.value()),
-        item->start_time.ToJavaTime(), item->total_bytes);
+        item->start_time.ToJavaTime(), item->total_bytes, is_suggested);
   }
 }
 
 ScopedJavaLocalRef<jobject> ToJavaOfflinePageDownloadItem(
     JNIEnv* env,
+    ClientPolicyController* policy_controller,
     const DownloadUIItem& item) {
+  bool is_suggested =
+      policy_controller->IsDisabledWhenPrefetchDisabled(item.name_space);
   return Java_OfflinePageDownloadBridge_createDownloadItem(
       env, ConvertUTF8ToJavaString(env, item.guid),
       ConvertUTF8ToJavaString(env, item.url.spec()), item.download_state,
       item.download_progress_bytes, ConvertUTF16ToJavaString(env, item.title),
       ConvertUTF8ToJavaString(env, item.target_path.value()),
-      item.start_time.ToJavaTime(), item.total_bytes);
+      item.start_time.ToJavaTime(), item.total_bytes, is_suggested);
 }
 
 std::vector<int64_t> FilterRequestsByGuid(
@@ -359,7 +365,8 @@ void OfflinePageDownloadBridge::GetAllItems(
 
   std::vector<const DownloadUIItem*> items =
       download_ui_adapter_->GetAllItems();
-  ToJavaOfflinePageDownloadItemList(env, j_result_obj, items);
+  ToJavaOfflinePageDownloadItemList(
+      env, download_ui_adapter_->GetPolicyController(), j_result_obj, items);
 }
 
 ScopedJavaLocalRef<jobject> OfflinePageDownloadBridge::GetItemByGuid(
@@ -370,7 +377,8 @@ ScopedJavaLocalRef<jobject> OfflinePageDownloadBridge::GetItemByGuid(
   const DownloadUIItem* item = download_ui_adapter_->GetItem(guid);
   if (item == nullptr)
     return ScopedJavaLocalRef<jobject>();
-  return ToJavaOfflinePageDownloadItem(env, *item);
+  return ToJavaOfflinePageDownloadItem(
+      env, download_ui_adapter_->GetPolicyController(), *item);
 }
 
 void OfflinePageDownloadBridge::DeleteItemByGuid(
@@ -502,7 +510,9 @@ void OfflinePageDownloadBridge::ItemAdded(const DownloadUIItem& item) {
   if (obj.is_null())
     return;
   Java_OfflinePageDownloadBridge_downloadItemAdded(
-      env, obj, ToJavaOfflinePageDownloadItem(env, item));
+      env, obj,
+      ToJavaOfflinePageDownloadItem(
+          env, download_ui_adapter_->GetPolicyController(), item));
 }
 
 void OfflinePageDownloadBridge::ItemDeleted(const std::string& guid) {
@@ -520,7 +530,9 @@ void OfflinePageDownloadBridge::ItemUpdated(const DownloadUIItem& item) {
   if (obj.is_null())
     return;
   Java_OfflinePageDownloadBridge_downloadItemUpdated(
-      env, obj, ToJavaOfflinePageDownloadItem(env, item));
+      env, obj,
+      ToJavaOfflinePageDownloadItem(
+          env, download_ui_adapter_->GetPolicyController(), item));
 }
 
 static jlong Init(JNIEnv* env,

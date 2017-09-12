@@ -101,6 +101,10 @@ void DownloadUIAdapter::RemoveObserver(Observer* observer) {
     ClearCache();
 }
 
+ClientPolicyController* DownloadUIAdapter::GetPolicyController() const {
+  return model_->GetPolicyController();
+}
+
 void DownloadUIAdapter::OfflinePageModelLoaded(OfflinePageModel* model) {
   // This signal is not used here.
 }
