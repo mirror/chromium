@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a06c6214_75db1959",
+        "filename": "components/offline_pages/core/downloads/download_ui_item.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-12T18:02:21Z",
+      "side": 1,
+      "message": "Why have name_space here instead of is_suggested? It seems better to me to have the code in DownloadUIItem where it can be unit tested rather than in the JNI bridge.",
+      "revId": "4b73e49c4838c9c004b6ad1955d9ad23c353dfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
