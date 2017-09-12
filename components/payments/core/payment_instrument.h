@@ -13,9 +13,7 @@
 #include "base/strings/string16.h"
 #include "build/build_config.h"
 #include "components/autofill/core/browser/credit_card.h"
-#if !defined(OS_IOS)
 #include "ui/gfx/image/image_skia.h"
-#endif
 
 namespace payments {
 
@@ -60,9 +58,7 @@ class PaymentInstrument {
   // Return the sub/label of payment instrument, to be displayed to the user.
   virtual base::string16 GetLabel() const = 0;
   virtual base::string16 GetSublabel() const = 0;
-#if !defined(OS_IOS)
-  virtual const gfx::ImageSkia* icon_image() const = 0;
-#endif
+  virtual const gfx::ImageSkia* icon_image() const;
 
   // Returns true if this payment instrument can be used to fulfill a request
   // specifying |method| as a supported method of payment, false otherwise.
