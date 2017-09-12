@@ -62,6 +62,7 @@
 #include "content/public/common/content_switches.h"
 #include "device/geolocation/geolocation_delegate.h"
 #include "device/geolocation/geolocation_provider.h"
+#include "google_apis/google_api_keys.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
 #include "media/base/media.h"
 #include "media/base/media_switches.h"
@@ -197,6 +198,14 @@ namespace shell {
 
 namespace {
 
+// Gets a URLRequestContextGetter. Must be called on UI thread.
+scoped_refptr<net::URLRequestContextGetter> GetRequestContextGetterOnUiThread(
+    content::BrowserContext* const browser_context) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  return content::BrowserContext::GetDefaultStoragePartition(browser_context)
+      ->GetURLRequestContext();
+}
+
 // A provider of services for Geolocation.
 class CastGeolocationDelegate : public device::GeolocationDelegate {
  public:
@@ -205,6 +214,20 @@ class CastGeolocationDelegate : public device::GeolocationDelegate {
 
   scoped_refptr<device::AccessTokenStore> CreateAccessTokenStore() override {
     return new CastAccessTokenStore(context_);
+  }
+
+  void GetGeolocationRequestContext(
+      base::OnceCallback<
+          void(const scoped_refptr<net::URLRequestContextGetter>)> callback)
+      override {
+    content::BrowserThread::PostTaskAndReplyWithResult(
+        content::BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&GetRequestContextGetterOnUiThread, context_),
+        std::move(callback));
+  }
+
+  std::string GetNetworkGeolocationApiKey() override {
+    return google_apis::GetAPIKey();
   }
 
  private:
