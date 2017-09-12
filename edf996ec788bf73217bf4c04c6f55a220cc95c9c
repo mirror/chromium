@@ -16,6 +16,24 @@
       "revId": "edf996ec788bf73217bf4c04c6f55a220cc95c9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7bca956_885793f1",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/mediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-12T10:32:17Z",
+      "side": 1,
+      "message": "Fixed: https://drive.google.com/a/google.com/file/d/0BzpyxnHuohdhLXZpYUUwSFhRUTQ/view?usp\u003dsharing",
+      "parentUuid": "9c353147_390c68b6",
+      "revId": "edf996ec788bf73217bf4c04c6f55a220cc95c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
