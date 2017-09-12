@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a3a0f82_553c2c47",
+        "filename": "third_party/WebKit/LayoutTests/SlowTests",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-12T01:28:09Z",
+      "side": 1,
+      "message": "don\u0027t forget prevent-run!",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71827626_e178fd71",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/audits2/audits2-prevent-run.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-12T01:28:09Z",
+      "side": 1,
+      "message": "hah clever, but let\u0027s listen to the event. SDK.TargetManager.Events.InspectedURLChanged https://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js?q\u003dtargetmanager\u0026sq\u003dpackage:chromium\u0026l\u003d630",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b507205f_188881e4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/audits2/audits2-prevent-run.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-12T01:28:09Z",
+      "side": 1,
+      "message": "You can use TestRunner.mainTarget instead of SDK.targetManager.mainTarget() - I think they should be the same (my guess is this was just to shorten keystrokes but maybe there\u0027s some tricky tests that make this different).",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c922c32_35ca7d5a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/audits2/audits2-successful-run.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-12T01:28:09Z",
+      "side": 1,
+      "message": "nit: devtools usually calls this \"dumpDialogState\" for brevity (e.g. dumpConsoleMessages)",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1790e8d9_64b38f8d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/audits2/audits2-successful-run.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-12T01:28:09Z",
+      "side": 1,
+      "message": "Could do \u0027typeof audit.rawValue\u0027 in case rawValue changes type (e.g. string instead of number)",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f496062_f61905a4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_test_runner/Audits2TestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-12T01:28:09Z",
+      "side": 1,
+      "message": "add JsDoc annotations please. Historically, it\u0027s gotten hard to refactor test helpers b/c there\u0027s no type annotations.",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2073a2f_fdb5baa7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_test_runner/Audits2TestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-12T01:28:09Z",
+      "side": 1,
+      "message": "nit: Let\u0027s spell out our identifiers e.g. btn, onMsg",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef71261_3d986cbe",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_test_runner/Audits2TestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-12T01:28:09Z",
+      "side": 1,
+      "message": "Might as well just query the display property of the element.",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e7a8eb9_15c58d2c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_test_runner/module.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-12T01:28:09Z",
+      "side": 1,
+      "message": "once you add annotations then you can compile :)",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089f34bd_cce0c15a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_worker/Audits2Service.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-12T01:28:09Z",
+      "side": 1,
+      "message": "seems odd to guard disable and enable logging, since you\u0027re controlling the flow... what\u0027s the reason?",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
