@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3912f10a_21a97a0e",
+        "filename": "chrome/test/vr/perf/vr_perf_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-12T18:41:59Z",
+      "side": 1,
+      "message": "Just making sure this is intentional.  It looks a bit odd.",
+      "revId": "aa889498bca57ae0ccbc6b922039037833798371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
