@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "54177d11_803daf17",
+        "filename": "components/history/core/browser/top_sites_database.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-12T18:37:48Z",
+      "side": 1,
+      "message": "UpdatePageRank and RemoveURl aren\u0027t used anywhere apart from tests. GetPageThumbnail is still used in one place outside tests. I agree that the first two methods should be moved into the private section. However, I prefer to do this in anther CL, as reordering the methods (especially in .cc file) will mess up with other non-reordering changes.",
+      "parentUuid": "b83709a0_30a08773",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 21
+      },
+      "revId": "fb81695a5b178c95b3a0888aa6b5ac28a1a9a5e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93e528aa_39439e1a",
         "filename": "components/history/core/browser/top_sites_database.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "fb81695a5b178c95b3a0888aa6b5ac28a1a9a5e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad97de9b_7bfd6bf7",
+        "filename": "components/history/core/browser/top_sites_database.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-12T18:37:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93e528aa_39439e1a",
+      "range": {
+        "startLine": 59,
+        "startChar": 6,
+        "endLine": 59,
+        "endChar": 21
+      },
+      "revId": "fb81695a5b178c95b3a0888aa6b5ac28a1a9a5e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
