@@ -128,7 +128,8 @@ PaintImage BitmapImage::CreateAndCacheFrame(size_t index) {
   builder.set_paint_image_generator(std::move(generator))
       .set_frame_index(index)
       .set_repetition_count(repetition_count_)
-      .set_completion_state(completion_state);
+      .set_completion_state(completion_state)
+      .set_reset_animation_count_stamp(reset_animation_count_stamp_);
 
   // The caching of the decoded image data by the external users of this image
   // is keyed based on the uniqueID of the underlying SkImage for this
@@ -588,13 +589,13 @@ void BitmapImage::StopAnimation() {
 }
 
 void BitmapImage::ResetAnimation() {
-  // TODO(khushalsagar): Plumb this resetting of animation to cc.
   StopAnimation();
   current_frame_index_ = 0;
   repetitions_complete_ = 0;
   desired_frame_start_time_ = 0;
   animation_finished_ = false;
   cached_frame_ = PaintImage();
+  reset_animation_count_stamp_++;
 }
 
 bool BitmapImage::MaybeAnimated() {
