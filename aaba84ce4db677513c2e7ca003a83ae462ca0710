@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d19cd69f_0b87050d",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-12T00:58:31Z",
+      "side": 1,
+      "message": "|web_contents|",
+      "range": {
+        "startLine": 80,
+        "startChar": 11,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd414f52_586f80d8",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-12T00:58:31Z",
+      "side": 1,
+      "message": "can this be const?",
+      "range": {
+        "startLine": 82,
+        "startChar": 37,
+        "endLine": 82,
+        "endChar": 44
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4252fd1b_36d7c3e9",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-12T00:58:31Z",
+      "side": 1,
+      "message": "is this leaking?",
+      "range": {
+        "startLine": 105,
+        "startChar": 33,
+        "endLine": 105,
+        "endChar": 52
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29416702_5edfdd8a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 55742,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-12T00:58:31Z",
+      "side": 1,
+      "message": "nit: nparker should review the CL if he\u0027s being added as an owner.\npersonally, I think you can be the sole owner.",
+      "range": {
+        "startLine": 55742,
+        "startChar": 9,
+        "endLine": 55742,
+        "endChar": 16
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
