@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a41bb1e6_ae87798e",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-12T19:58:48Z",
+      "side": 1,
+      "message": "that\u0027s already being done internally by CreateVectorIcon. ImageSkia is cheap to copy, the meat is in ImageSkiaStorage.",
+      "parentUuid": "43261f0d_d78e86e3",
+      "revId": "89c3e5271283591c9b499497f76d89b043a5aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd093365_152b2966",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-12T18:54:11Z",
       "side": 1,
       "message": "The point of this rework was to let us break away from 1x icons.  However, digging into the CreateVectorIcon and IconDescription code, it seems like if a 1x icon exists, we\u0027re forced to use it.  For VR, we explicity do not want the 1x icon.  I must be missing something.",
+      "range": {
+        "startLine": 92,
+        "startChar": 33,
+        "endLine": 92,
+        "endChar": 34
+      },
+      "revId": "89c3e5271283591c9b499497f76d89b043a5aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ff5760_3c4a2820",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-12T19:58:48Z",
+      "side": 1,
+      "message": "It depends on the scale of the canvas. The vector icon source is a CanvasImageSource; GetRepresentation (below) calls GetImageForScale[1] which creates a canvas with the scale you passed below. So unless this scale happens to be exactly 1 (in which case you probably do want \nfoo.1x.icon) you\u0027ll be using the foo.icon definition.\n\n[1] https://cs.chromium.org/chromium/src/ui/gfx/image/canvas_image_source.cc?rcl\u003d837e59d79dd3706bf43c94c0ed93a323850182a3\u0026l\u003d22",
+      "parentUuid": "dd093365_152b2966",
       "range": {
         "startLine": 92,
         "startChar": 33,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "811001a7_70bd0ef7",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-12T19:58:48Z",
+      "side": 1,
+      "message": "looks fine to me. The only thing that seems to be missing is the RemoveRepresentation I mentioned before.",
+      "parentUuid": "c6135a9f_7a6f76f0",
+      "revId": "89c3e5271283591c9b499497f76d89b043a5aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5805f24b_cc33d6d6",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-12T18:54:11Z",
       "side": 1,
       "message": "I\u0027m not sure I\u0027m doing this right either.  When I create an ImageSkiaRep, I choose how big the representation should be.  But despite that DrawImageIntInPixel takes a destination width and height.  Shouldn\u0027t it derive that from the ImageSkiaRep?  Or is width/height acting as clipping bounds here instead?",
+      "revId": "89c3e5271283591c9b499497f76d89b043a5aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac95ec9_f078b27a",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-12T19:58:48Z",
+      "side": 1,
+      "message": "It seems like you\u0027re doing it right.",
+      "parentUuid": "5805f24b_cc33d6d6",
       "revId": "89c3e5271283591c9b499497f76d89b043a5aaef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
