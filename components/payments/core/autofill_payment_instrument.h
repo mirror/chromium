@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "build/build_config.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/payments/full_card_request.h"
@@ -53,6 +54,9 @@ class AutofillPaymentInstrument
       const std::vector<std::string>& supported_networks,
       const std::set<autofill::CreditCard::CardType>& supported_types,
       bool supported_types_specified) const override;
+#if !defined(OS_IOS)
+  const gfx::ImageSkia* icon_image() const override;
+#endif
 
   // autofill::payments::FullCardRequest::ResultDelegate:
   void OnFullCardRequestSucceeded(
@@ -68,9 +72,13 @@ class AutofillPaymentInstrument
 
   autofill::CreditCard* credit_card() { return &credit_card_; }
 
+  const std::string& method_name() const { return method_name_; }
+
  private:
   // Generates the basic card response and sends it to the delegate.
   void GenerateBasicCardResponse();
+
+  const std::string method_name_;
 
   // A copy of the card is owned by this object.
   autofill::CreditCard credit_card_;
