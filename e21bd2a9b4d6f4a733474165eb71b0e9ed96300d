@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1d50c1_e786e988",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_match_formatter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-12T13:00:09Z",
+      "side": 1,
+      "message": "How expensive is this copy?",
+      "revId": "e21bd2a9b4d6f4a733474165eb71b0e9ed96300d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5abcf00d_e36d3dfc",
+        "filename": "ios/chrome/browser/ui/omnibox/image_retriever.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-12T13:00:09Z",
+      "side": 1,
+      "message": "We have enough variations of image fetchers floating around that I think introducing a new one moves us in the wrong direction.  We should try to go back through and convert everyone to use a single implementation at some point.\n\nWhy is this protocol better than simply passing an ImageFetcher around?",
+      "revId": "e21bd2a9b4d6f4a733474165eb71b0e9ed96300d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
