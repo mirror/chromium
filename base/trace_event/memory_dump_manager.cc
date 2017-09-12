@@ -224,6 +224,9 @@ void MemoryDumpManager::EnableHeapProfilingIfNeeded() {
 #if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
   HeapProfilingMode profiling_mode = GetHeapProfilingModeFromCommandLine();
   if (IsHeapProfilingModeEnabled(profiling_mode)) {
+    // Poke TraceLog instance to avoid deadlock.
+    // https://crbug.com/764357
+    TraceLog::GetInstance();
     EnableHeapProfiling(profiling_mode);
   } else {
     if (profiling_mode == kHeapProfilingModeInvalid) {
