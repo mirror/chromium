@@ -22,6 +22,30 @@
       "revId": "a294fa531eb06ca677dc724576a464f14244d44e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20913ce1_d04629db",
+        "filename": "chromecast/base/thread_health_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1153085
+      },
+      "writtenOn": "2017-09-12T22:30:50Z",
+      "side": 1,
+      "message": "The one problem is that the class is not constructed on the doctor task runner. I couldn\u0027t find a way to construct an object asynchronously and hold a reference to it...\n\nMy workaround was to construct it on the thread that ThreadHealthChecker was constructed in, but then have ThreadHealthChecker post a task to the doctor task runner to start, where Internal both asserts that it\u0027s being called on the doctor\u0027s thread.\n\nI will warmly welcome any suggestions for a better approach.",
+      "parentUuid": "43f7445e_639ba38b",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "a294fa531eb06ca677dc724576a464f14244d44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
