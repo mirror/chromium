@@ -1,0 +1,64 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// This file contains the definition of the Url protobuf used in the
+// url_parse_proto_fuzzer that is meant to serve as an example for future
+// Chromium fuzzers that use libprotobuf-mutator.
+// We will consider the format of a URL for this fuzzer, to be
+// [scheme:][//host][:port][/path][?query][#value]
+// There may be some URLs chrome treats as valid that this syntax does not
+// capture. However, we will ignore them for the sake of simplicity.
+// It is recommended to read this file in conjunction with
+// convert_protobuf_to_string() in url_parse_proto_fuzzer.cc as logic in this
+// function is sometimes used to ensure that the Url Protocol Buffer obeys the
+// syntax we have defined for URLs. Though reading it is completely unecessary
+// for understand this fuzzer, we have roughly followed RFC 3986
+// (https://tools.ietf.org/html/rfc3986) which defines the syntax of URIs (which
+// URLs are a subset of).
+
+syntax = "proto2";
+
+package url_parse_proto_fuzzer;
+
+// Here we define the format for a Url Protocol Buffer. This will be passed to
+// our fuzzer function.
+message Url {
+  // If there is a scheme, then it must be followed by a colon. A scheme is in
+  // practice not required in a URL. Therefore, we will define the scheme as
+  // optional but ensure it is followed by a colon in our conversion code if it
+  // is included.
+  optional string scheme = 1;
+
+  // The syntax rules of the two slashes that precede the host in a URL are
+  // surprisingly complex. They are not required, even if a scheme is included
+  // (http:example.com is treated as valid), and are valid even if a scheme is
+  // not included (//example.com is treated as file:///example.com). They can
+  // even be backslashes (http:\\example.com and http\/example.com are both
+  // valid) and there can be any number of them (http:/example.com and
+  // http://////example.com are both valid).
+  // We will therefore define slashes as a string and let libFuzzer figure out
+  // what is valid, since the rules are hard to easily define with protobuf.
+  optional string slashes = 2;
+
+  // Hosts, like everything else in our Url definition, is optional, since in
+  // real life, there are valid URLs that do not have hosts, such as data URLs.
+  optional string host = 3;
+
+  // ports are unsigned integers between 1-2^16. The closest type to this in the
+  // proto2 format is uint32. Also if a port number is specified it must be
+  // preceded by a colon (consider "google.com80" 80 will be interpreted as part
+  // of the host). The conversion code will ensure this is the case.
+  optional uint32 port = 4;
+
+  // A path must begin with a "/". This will be ensured in the conversion code.
+  optional string path = 5;
+
+  // A query must preceded by a "?". This will be ensured in the conversion
+  // code.
+  optional string query = 6;
+
+  // A fragment must preceded by a "#". This will be ensured in the conversion
+  // code.
+  optional string fragment = 7;
+}
