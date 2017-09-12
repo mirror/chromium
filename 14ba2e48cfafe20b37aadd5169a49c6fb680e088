@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5620c0c1_d0e834b8",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-12T19:34:30Z",
+      "side": 1,
+      "message": "closed_icon_ \u003d open_icon_ \u003d gfx::CreateVectorIcon?\n\nand can we add a todo to merge the two icon members?",
+      "range": {
+        "startLine": 106,
+        "startChar": 13,
+        "endLine": 106,
+        "endChar": 29
+      },
+      "revId": "14ba2e48cfafe20b37aadd5169a49c6fb680e088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
