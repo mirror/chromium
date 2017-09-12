@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "774f461d_52f95f70",
+        "filename": "chrome/browser/extensions/api/storage/managed_value_store_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T22:49:39Z",
+      "side": 1,
+      "message": "LoadSchemasOnBlocking pool actually hits the file system, so we should probably be using GetExtensionFileTaskRunner().",
+      "revId": "6df124dcdf1f6e3845633c604c2f2cf786b43185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
