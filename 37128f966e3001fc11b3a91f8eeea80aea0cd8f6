@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bcb9b55_a792cd5b",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-12T20:24:16Z",
+      "side": 1,
+      "message": "normalized is not correct anymore. please update this to make it clear that this matrix represents current buffer transform + buffer scale.",
+      "range": {
+        "startLine": 734,
+        "startChar": 5,
+        "endLine": 735,
+        "endChar": 50
+      },
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a8011c_9f44b541",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-12T20:24:16Z",
+      "side": 1,
+      "message": "nit: |buffer_matrix| and follow work can potentially make this a member that is updated when buffer transform/scale changes",
+      "range": {
+        "startLine": 736,
+        "startChar": 11,
+        "endLine": 736,
+        "endChar": 34
+      },
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a832a16a_a25703b1",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-12T20:24:16Z",
+      "side": 1,
+      "message": "I think this logic would be cleaner if we didn\u0027t use |transformed_buffer_size| which is already adjusted for the transform. so current_resource_.size.width() here instead similar adjustments below.",
+      "range": {
+        "startLine": 744,
+        "startChar": 44,
+        "endLine": 744,
+        "endChar": 74
+      },
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff3c930_04c33f93",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-12T20:24:16Z",
+      "side": 1,
+      "message": "let\u0027s always include state_.buffer_scale in this matrix too. I think that makes the code easier to understand.",
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30d4138_a96c6ec2",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-12T20:24:16Z",
+      "side": 1,
+      "message": "can we use gfx::Transform here?",
+      "range": {
+        "startLine": 759,
+        "startChar": 2,
+        "endLine": 759,
+        "endChar": 10
+      },
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9602d42_ddccd87f",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-12T20:24:16Z",
+      "side": 1,
+      "message": "can we make this add the needed adjustment to go from buffer_matrix (that includes transform+scale) to the viewport size? \"content_size_ / state_.buffer_scale\" basically?",
+      "range": {
+        "startLine": 760,
+        "startChar": 2,
+        "endLine": 766,
+        "endChar": 60
+      },
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2075a03e_a35895e0",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-12T20:24:16Z",
+      "side": 1,
+      "message": "can we keep this normalized and include the transform from buffer coordinates to normalized coordinates in the transform below?",
+      "range": {
+        "startLine": 786,
+        "startChar": 16,
+        "endLine": 786,
+        "endChar": 31
+      },
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490ede5d_bb2ebd92",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-12T20:24:16Z",
+      "side": 1,
+      "message": "gfx::Transform here?",
+      "range": {
+        "startLine": 792,
+        "startChar": 6,
+        "endLine": 792,
+        "endChar": 14
+      },
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b093c153_92eb2596",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-12T20:24:16Z",
+      "side": 1,
+      "message": "this should not be needed if we include buffer_scale above instead",
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a6d1cb_dbbc2031",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-12T20:24:16Z",
+      "side": 1,
+      "message": "\"gfx::RectF uv_rect(state_.crop);\" ?",
+      "range": {
+        "startLine": 800,
+        "startChar": 6,
+        "endLine": 800,
+        "endChar": 48
+      },
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
