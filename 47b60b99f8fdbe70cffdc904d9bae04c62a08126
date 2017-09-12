@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d1e232b5_da4ee46b",
+        "filename": "components/drive/chromeos/file_system/copy_operation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-12T05:29:26Z",
+      "side": 1,
+      "message": "It depends on what we expect to preserve_last_modified\u003dtrue. It preserves last_modified, but does not preserve last_modified_by_me.\n\nThat is, if the source file has last_modified\u003dA and last_modified_by_me\u003dB, then the destination file will have last_modified\u003dA and last_modified_by_me\u003dA (not B).\n\nI thought this is surprising from the name of \"preserve_last_modified\" so I added comments here. I will update the comment of CopyOperation::Copy() too for more clarification.",
+      "parentUuid": "5cff2511_f7ead698",
+      "range": {
+        "startLine": 139,
+        "startChar": 5,
+        "endLine": 139,
+        "endChar": 43
+      },
+      "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48516c5c_db49529f",
         "filename": "components/drive/drive.proto",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d3b74e6f_5e63a406",
+        "filename": "components/drive/drive.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-12T05:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48516c5c_db49529f",
+      "range": {
+        "startLine": 141,
+        "startChar": 5,
+        "endLine": 141,
+        "endChar": 18
+      },
+      "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d02aebb_aecf9ef0",
         "filename": "components/drive/file_system/copy_operation_unittest.cc",
         "patchSetId": 9
@@ -59,6 +107,24 @@
       "writtenOn": "2017-09-11T09:34:00Z",
       "side": 1,
       "message": "Can\u0027t we let FakeDriveService assign unique last_modified_by_me values for each file?",
+      "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d432e4b_c39ff3c2",
+        "filename": "components/drive/file_system/copy_operation_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-12T05:29:26Z",
+      "side": 1,
+      "message": "I considered it but did not do so in this PS because making changes to FakeDriveService would affect all other tests. In the latest PS I changed FakeDriveService, but in fact I needed to update conflict_resolver_unittest.cc.\n\nWhich way do you prefer?",
+      "parentUuid": "9d02aebb_aecf9ef0",
       "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -79,6 +145,24 @@
       "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e9f955_fa5159de",
+        "filename": "components/drive/sync/entry_update_performer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-12T05:29:26Z",
+      "side": 1,
+      "message": "OK, let\u0027s drop this change.",
+      "parentUuid": "e2762bdd_80b08831",
+      "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
