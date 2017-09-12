@@ -22,6 +22,30 @@
       "revId": "101c6038ed5ff103977081bde8fdd2025633553a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f36314_dac45cd6",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-12T15:59:20Z",
+      "side": 0,
+      "message": "At the moment I think that WorkerBackingThread (returned by GetWorkerBackingThread()) should contain a reference to WorkerScheduler, but I\u0027m still not sure about the details.",
+      "parentUuid": "455e16cf_4a6be021",
+      "range": {
+        "startLine": 390,
+        "startChar": 13,
+        "endLine": 390,
+        "endChar": 44
+      },
+      "revId": "101c6038ed5ff103977081bde8fdd2025633553a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
