@@ -460,9 +460,26 @@ void EventTarget::RemovedEventListener(
 
 bool EventTarget::SetAttributeEventListener(const AtomicString& event_type,
                                             EventListener* listener) {
-  ClearAttributeEventListener(event_type);
-  if (!listener)
+  EventListener* oldListener = GetAttributeEventListener(event_type);
+  if (!listener) {
+    if (oldListener)
+      removeEventListener(event_type, oldListener, false);
     return false;
+  }
+  if (oldListener) {
+    EventListenerVector& listener_vector = *GetEventListeners(event_type);
+    int index = -1;
+    for (auto& event_listener : listener_vector) {
+      ++index;
+      EventListener* listenerTemp = event_listener.Listener();
+      if (listenerTemp->IsAttribute() &&
+          listenerTemp->BelongsToTheCurrentWorld(GetExecutionContext())) {
+        RegisteredEventListener& registered_listener = listener_vector[index];
+        registered_listener.setListener(listener);
+        return true;
+      }
+    }
+  }
   return addEventListener(event_type, listener, false);
 }
 
