@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "91a7d451_208b7db8",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T10:54:35Z",
+      "side": 1,
+      "message": "Unfortunately, this is a limitation of ASSERT_. We don\u0027t want an early return because\n- it can\u0027t happen ever in production and\n- a test will timeout in this case without a clear reason.\n\nThe way it\u0027s done now, a test will crash (fine for finding a regression) with a nice message printed before.",
+      "parentUuid": "c5e50c8d_5346e071",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 14
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ec509ae_a7ed5262",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 12
