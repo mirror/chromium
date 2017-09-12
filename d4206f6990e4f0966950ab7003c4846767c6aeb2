@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d84f3338_9dbe01f3",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-12T01:57:59Z",
+      "side": 1,
+      "message": "We\u0027ve been having trouble with misspellings spanning multiple nodes for quite a long time.\n\nThis part is similar: if the misspelling spans multiple nodes, we don\u0027t have a good way to support it anyways; if the misspelling is in a single text node, it\u0027s perfectly supported.\n\nSo maybe we just add a note about the bug and triage it to crbug.com/720065?",
+      "parentUuid": "6a206960_c6b0e69f",
+      "revId": "d4206f6990e4f0966950ab7003c4846767c6aeb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae13d8c4_b78780c0",
         "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
         "patchSetId": 1
