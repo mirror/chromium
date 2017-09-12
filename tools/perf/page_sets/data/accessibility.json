@@ -1,0 +1,24 @@
+{
+    "archives": {
+        "Amazon": {
+            "DEFAULT": "accessibility_000.wprgo"
+        },
+        "Aria-owns Demo": {
+            "DEFAULT": "accessibility_000.wprgo"
+        },
+        "Contenteditable Typing": {
+            "DEFAULT": "accessibility_000.wprgo"
+        },
+        "Freedom Scientific Live Regions Demo": {
+            "DEFAULT": "accessibility_000.wprgo"
+        },
+        "Scrolling Chromium Code Search Page": {
+            "DEFAULT": "accessibility_000.wprgo"
+        },
+        "Wikipedia": {
+            "DEFAULT": "accessibility_000.wprgo"
+        }
+    },
+    "description": "Describes the Web Page Replay archives for a story set. Don't edit by hand! Use record_wpr for updating.",
+    "platform_specific": true
+}
