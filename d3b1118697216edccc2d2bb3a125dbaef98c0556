@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30642d67_c077d724",
+        "filename": "content/browser/loader/mojo_pipe_writer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-12T10:25:35Z",
+      "side": 1,
+      "message": "virtual ~Delegate() \u003d default;",
+      "revId": "d3b1118697216edccc2d2bb3a125dbaef98c0556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
