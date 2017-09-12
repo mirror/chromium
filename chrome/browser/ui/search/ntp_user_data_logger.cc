@@ -25,6 +25,9 @@
 
 namespace {
 
+const char kActionsHist[] = "NewTabPage.VoiceActions";
+const char kErrorsHist[] = "NewTabPage.VoiceErrors";
+
 void RecordSyncSessionMetrics(content::WebContents* contents) {
   if (!contents)
     return;
@@ -39,6 +42,44 @@ void RecordSyncSessionMetrics(content::WebContents* contents) {
   sync_sessions::SyncSessionsMetrics::RecordYoungestForeignTabAgeOnNTP(
       sessions);
 }
+
+// This enum must match the numbering for NewTabPageVoiceActions in enums.xml.
+// Do not reorder or remove items, only add new items before VOICE_ACTIONS_MAX.
+enum VoiceActions {
+  // Activated by clicking on the fakebox icon.
+  ACTIVATE_FAKEBOX = 0,
+  // Activated by keyboard shortcut.
+  ACTIVATE_KEYBOARD = 1,
+  // Close the voice overlay by a user's explicit action.
+  CLOSE_OVERLAY = 2,
+  // Submitted voice query.
+  QUERY_SUBMITTED = 3,
+  // Clicked on support link in error message.
+  SUPPORT_LINK_CLICKED = 4,
+  // Retried by clicking Try Again link.
+  TRY_AGAIN_LINK = 5,
+  // Retried by clicking microphone button.
+  TRY_AGAIN_MIC_BUTTON = 6,
+
+  VOICE_ACTIONS_MAX
+};
+
+// This enum must match the numbering for NewTabPageVoiceErrors in enums.xml.
+// Do not reorder or remove items, only add new items before VOICE_ERRORS_MAX.
+enum VoiceErrors {
+  ABORTED = 0,
+  AUDIO_CAPTURE = 1,
+  BAD_GRAMMAR = 2,
+  LANGUAGE_NOT_SUPPORTED = 3,
+  NETWORK = 4,
+  NO_MATCH = 5,
+  NO_SPEECH = 6,
+  NOT_ALLOWED = 7,
+  OTHER = 8,
+  SERVICE_NOT_ALLOWED = 9,
+
+  VOICE_ERRORS_MAX
+};
 
 }  // namespace
 
@@ -92,6 +133,65 @@ void NTPUserDataLogger::LogEvent(NTPLoggingEventType event,
       break;
     case NTP_ALL_TILES_LOADED:
       EmitNtpStatistics(time);
+      break;
+    case NTP_VOICE_ACTION_ACTIVATE_FAKEBOX:
+      UMA_HISTOGRAM_ENUMERATION(kActionsHist, ACTIVATE_FAKEBOX,
+                                VOICE_ACTIONS_MAX);
+      break;
+    case NTP_VOICE_ACTION_ACTIVATE_KEYBOARD:
+      UMA_HISTOGRAM_ENUMERATION(kActionsHist, ACTIVATE_FAKEBOX,
+                                VOICE_ACTIONS_MAX);
+      break;
+    case NTP_VOICE_ACTION_CLOSE_OVERLAY:
+      UMA_HISTOGRAM_ENUMERATION(kActionsHist, CLOSE_OVERLAY, VOICE_ACTIONS_MAX);
+      break;
+    case NTP_VOICE_ACTION_QUERY_SUBMITTED:
+      UMA_HISTOGRAM_ENUMERATION(kActionsHist, QUERY_SUBMITTED,
+                                VOICE_ACTIONS_MAX);
+      break;
+    case NTP_VOICE_ACTION_SUPPORT_LINK_CLICKED:
+      UMA_HISTOGRAM_ENUMERATION(kActionsHist, SUPPORT_LINK_CLICKED,
+                                VOICE_ACTIONS_MAX);
+      break;
+    case NTP_VOICE_ACTION_TRY_AGAIN_LINK:
+      UMA_HISTOGRAM_ENUMERATION(kActionsHist, TRY_AGAIN_LINK,
+                                VOICE_ACTIONS_MAX);
+      break;
+    case NTP_VOICE_ACTION_TRY_AGAIN_MIC_BUTTON:
+      UMA_HISTOGRAM_ENUMERATION(kActionsHist, TRY_AGAIN_MIC_BUTTON,
+                                VOICE_ACTIONS_MAX);
+      break;
+    case NTP_VOICE_ERROR_ABORTED:
+      UMA_HISTOGRAM_ENUMERATION(kErrorsHist, ABORTED, VOICE_ERRORS_MAX);
+      break;
+    case NTP_VOICE_ERROR_AUDIO_CAPTURE:
+      UMA_HISTOGRAM_ENUMERATION(kErrorsHist, AUDIO_CAPTURE, VOICE_ERRORS_MAX);
+      break;
+    case NTP_VOICE_ERROR_BAD_GRAMMAR:
+      UMA_HISTOGRAM_ENUMERATION(kErrorsHist, BAD_GRAMMAR, VOICE_ERRORS_MAX);
+      break;
+    case NTP_VOICE_ERROR_LANGUAGE_NOT_SUPPORTED:
+      UMA_HISTOGRAM_ENUMERATION(kErrorsHist, LANGUAGE_NOT_SUPPORTED,
+                                VOICE_ERRORS_MAX);
+      break;
+    case NTP_VOICE_ERROR_NETWORK:
+      UMA_HISTOGRAM_ENUMERATION(kErrorsHist, NETWORK, VOICE_ERRORS_MAX);
+      break;
+    case NTP_VOICE_ERROR_NO_MATCH:
+      UMA_HISTOGRAM_ENUMERATION(kErrorsHist, NO_MATCH, VOICE_ERRORS_MAX);
+      break;
+    case NTP_VOICE_ERROR_NO_SPEECH:
+      UMA_HISTOGRAM_ENUMERATION(kErrorsHist, NO_SPEECH, VOICE_ERRORS_MAX);
+      break;
+    case NTP_VOICE_ERROR_NOT_ALLOWED:
+      UMA_HISTOGRAM_ENUMERATION(kErrorsHist, NOT_ALLOWED, VOICE_ERRORS_MAX);
+      break;
+    case NTP_VOICE_ERROR_OTHER:
+      UMA_HISTOGRAM_ENUMERATION(kErrorsHist, OTHER, VOICE_ERRORS_MAX);
+      break;
+    case NTP_VOICE_ERROR_SERVICE_NOT_ALLOWED:
+      UMA_HISTOGRAM_ENUMERATION(kErrorsHist, SERVICE_NOT_ALLOWED,
+                                VOICE_ERRORS_MAX);
       break;
   }
 }
