@@ -46,6 +46,30 @@
       "revId": "3a739cbcf58dde9ec724f956d3aa8a190c6b1bff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624b5cb7_cc279ef5",
+        "filename": "device/u2f/u2f_command_type.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-12T15:08:26Z",
+      "side": 1,
+      "message": "Today I learned something new. I\u0027m American and I was never taught to use a comma there.",
+      "parentUuid": "b069059d_4bf019f0",
+      "range": {
+        "startLine": 13,
+        "startChar": 7,
+        "endLine": 13,
+        "endChar": 8
+      },
+      "revId": "3a739cbcf58dde9ec724f956d3aa8a190c6b1bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
