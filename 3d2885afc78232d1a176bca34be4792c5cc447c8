@@ -16,6 +16,24 @@
       "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3a1a49_7ccf97d4",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-12T01:44:56Z",
+      "side": 1,
+      "message": "We\u0027ll have two ways for doing the same thing - OnLayerCreated and OnLayerRecreated in the delegate. I don\u0027t think it\u0027s right.\n\n\nIf you\u0027re concerned about the delegate being reassigned, how about passing the delegate in LayerOwner constructor? It\u0027ll make it immutable.\n\n\nWDYT?",
+      "parentUuid": "4767e502_d57bf20a",
+      "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
