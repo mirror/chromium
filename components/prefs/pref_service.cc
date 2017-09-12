@@ -313,7 +313,7 @@ const base::Value* PrefService::GetUserPrefValue(
   if (!user_pref_store_->GetMutableValue(path, &value))
     return NULL;
 
-  if (!value->IsType(pref->GetType())) {
+  if (value->type() != pref->GetType()) {
     NOTREACHED() << "Pref value type doesn't match registered type.";
     return NULL;
   }
@@ -487,7 +487,7 @@ base::Value* PrefService::GetMutableUserPref(const std::string& path,
   // exist or isn't the correct type, create a new user preference.
   base::Value* value = NULL;
   if (!user_pref_store_->GetMutableValue(path, &value) ||
-      !value->IsType(type)) {
+      value->type() != type) {
     if (type == base::Value::Type::DICTIONARY) {
       value = new base::DictionaryValue;
     } else if (type == base::Value::Type::LIST) {
@@ -570,7 +570,7 @@ const base::Value* PrefService::Preference::GetRecommendedValue() const {
 
   const base::Value* found_value = NULL;
   if (pref_value_store()->GetRecommendedValue(name_, type_, &found_value)) {
-    DCHECK(found_value->IsType(type_));
+    DCHECK(found_value->type() == type_);
     return found_value;
   }
 
@@ -634,7 +634,7 @@ const base::Value* PrefService::GetPreferenceValue(
     const base::Value* found_value = NULL;
     base::Value::Type default_type = default_value->GetType();
     if (pref_value_store_->GetValue(path, default_type, &found_value)) {
-      DCHECK(found_value->IsType(default_type));
+      DCHECK(found_value->type() == default_type);
       return found_value;
     } else {
       // Every registered preference has at least a default value.
