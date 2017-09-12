@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ee2a64d_08100937",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-12T22:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fb5a02c_745820cc",
+      "revId": "37fd68c5efe765120bdf38bcddb118be106b21ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "956d1dae_c33fea2e",
         "filename": "content/browser/android/selection_popup_controller.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-12T14:22:30Z",
       "side": 1,
       "message": "what if context is null?",
+      "revId": "37fd68c5efe765120bdf38bcddb118be106b21ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de9f3cfb_d2c8df79",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-12T22:55:14Z",
+      "side": 1,
+      "message": "The comment above clarifies that. Null check is done inside the touch handle class to use application context instead if null.",
+      "parentUuid": "956d1dae_c33fea2e",
       "revId": "37fd68c5efe765120bdf38bcddb118be106b21ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bc3dd494_e18173f5",
+        "filename": "content/browser/android/selection_popup_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-12T22:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11bd6cbb_7a9482c0",
+      "revId": "37fd68c5efe765120bdf38bcddb118be106b21ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd1bbcf5_c05dd71a",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-12T14:22:30Z",
       "side": 1,
       "message": "I didn\u0027t dig into this, is this guaranteed?",
+      "revId": "37fd68c5efe765120bdf38bcddb118be106b21ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dcbdd24_08f105f1",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-12T22:55:14Z",
+      "side": 1,
+      "message": "Yes it is created together with CVC, and set here in RWHVA when CVC becomes available. So it\u0027s  replaceable with DCHECK(content_view_core_).",
+      "parentUuid": "cd1bbcf5_c05dd71a",
       "revId": "37fd68c5efe765120bdf38bcddb118be106b21ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "37fd68c5efe765120bdf38bcddb118be106b21ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f42255_757adb20",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-12T22:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f70c602_3997b401",
+      "revId": "37fd68c5efe765120bdf38bcddb118be106b21ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
