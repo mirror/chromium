@@ -322,14 +322,26 @@ void TypingCommand::InsertText(
       CreateVisibleSelection(passed_selection_for_insertion);
 
   String new_text = text;
-  if (composition_type != kTextCompositionUpdate)
+  if (composition_type != kTextCompositionUpdate) {
     new_text = DispatchBeforeTextInsertedEvent(text, selection_for_insertion);
+    // webkitBeforeTextInserted event handler might destroy document.
+    if (!document.GetFrame() || document.GetFrame()->GetDocument() != &document)
+      return;
+  }
 
   if (composition_type == kTextCompositionConfirm) {
     if (DispatchTextInputEvent(frame, new_text) !=
         DispatchEventResult::kNotCanceled)
       return;
+    // textInput event handler might destroy document.
+    if (!document.GetFrame() || document.GetFrame()->GetDocument() != &document)
+      return;
   }
+
+  // webkitBeforeTextInserted or textInput event handlers may have invalidated
+  // the selection.
+  if (!selection_for_insertion.IsValidFor(document))
+    return;
 
   // Do nothing if no need to delete and insert.
   if (selection_for_insertion.IsCaret() && new_text.IsEmpty())
