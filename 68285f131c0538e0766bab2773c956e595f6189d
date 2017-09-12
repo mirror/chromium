@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e959cad_58b3babd",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-12T16:51:23Z",
+      "side": 1,
+      "message": "It feels odd that we have made registration and binding into two separate procedures that\nalways happen together anyways. This has led to some unnecessary complication IMHO.\n\nHere is what currently happens\nAP::RegisterPlayer\n (1)-\u003e AH::RegisterPlayerForElement(p, e)\n       -\u003e EA::AddPlayer(p)\n (2)-\u003e AP::BindElementAnimations()\n       -\u003e AT::BindElementAnimations()\n          -\u003e AH::GetElementAnimationsForElementId()\n\n\nI think we can simplify do the binding i.e., set element animations on player,\nas we are registering the player with element animations. \nThis makes the new flow will be something like:\n\nAP::RegisterPlayer\n -\u003e AH::RegisterPlayerForElement(p, e)\n   -\u003e EA::AddPlayer(p)\n     -\u003e AT::SetElementAnimation(ea)\n\nThis allows us to do the following clean ups:\n - Remove AP::{Un}BindElementAnimations and\n - Replace AT::BindElementAnimations() with AT::SetElementAnimation()\n - Make AH::GetElementAnimationsForElementId a private method.",
+      "range": {
+        "startLine": 118,
+        "startChar": 22,
+        "endLine": 118,
+        "endChar": 43
+      },
+      "revId": "68285f131c0538e0766bab2773c956e595f6189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61bd8a31_6145c5cd",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-12T16:51:23Z",
+      "side": 1,
+      "message": "Can we just get rid of this and just call the relevant method of \nticker directly in tests?",
+      "range": {
+        "startLine": 205,
+        "startChar": 22,
+        "endLine": 205,
+        "endChar": 55
+      },
+      "revId": "68285f131c0538e0766bab2773c956e595f6189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df48b46b_ae85a1c6",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-12T16:51:23Z",
+      "side": 1,
+      "message": "I feel we only ever need to invokde EA and AP setNeedsPushProperties\nwhen this transition from false-\u003etrue.\n\nThis is slightly more efficient as we avoid unnecessary propagation of\nthe dirty bit up the tree. This is however unrelated to the CL and \nbest be done for all usage of this pattern. Perhaps just a TODO\nwith a bug filed?",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 43
+      },
+      "revId": "68285f131c0538e0766bab2773c956e595f6189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838643db_99f3a247",
+        "filename": "cc/animation/animation_ticker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-12T16:51:23Z",
+      "side": 1,
+      "message": "nit: Please add comments to these methods. In particular regarding the condition\nunder which they return true.\n\nElementAnimations seem to be notifying all its all its tickers and depending on\nthem to ensure they only pick the one relevant to them.",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 29
+      },
+      "revId": "68285f131c0538e0766bab2773c956e595f6189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

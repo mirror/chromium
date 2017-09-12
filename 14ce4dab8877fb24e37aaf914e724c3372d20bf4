@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec819940_7b103406",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-12T16:51:23Z",
+      "side": 1,
+      "message": "nit: Can we just move this test function to AnimationTicker?",
+      "range": {
+        "startLine": 242,
+        "startChar": 22,
+        "endLine": 242,
+        "endChar": 55
+      },
+      "revId": "14ce4dab8877fb24e37aaf914e724c3372d20bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
