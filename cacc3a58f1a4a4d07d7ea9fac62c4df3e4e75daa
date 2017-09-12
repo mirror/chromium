@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "549ce75c_fba93300",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-09-12T17:36:00Z",
+      "side": 0,
+      "message": "Yuck, did we actually ship this?",
+      "revId": "cacc3a58f1a4a4d07d7ea9fac62c4df3e4e75daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

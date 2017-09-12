@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a87668fd_31a3770f",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-09-12T17:36:00Z",
+      "side": 1,
+      "message": "optional: might be cleaner to make a convenience wrapper for IsFieldRequired that takes a ServerFieldType, so we can just leave all the code the same here except the value we pass to the EditorField constructor. If it lived in payment_request_data_util or some other appropriate place in components, then I could use it in the iOS fix, too.",
+      "revId": "97f80fce7429185d943bdb149f928d0660a21175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
