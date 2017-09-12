@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef5e9a91_f9e55447",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-12T23:52:55Z",
+      "side": 1,
+      "message": "Why not just [ -z \"$VERBOSE\" ] ? No smiley face?",
+      "revId": "fb57b7def5fa4db544de53f95d2a69e477458598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "757fc857_95efad38",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-12T23:52:55Z",
+      "side": 1,
+      "message": "Would it be simpler to not run the command in subshell, and capture the output some other way? e.g.\n\nlocal OUTPUTFILE\u003d$(mktemp)\nexec 3\u003e \"$OUTPUTFILE\"\necho \"$@\" 1\u003e\u00263\n\"$@\" 2\u003e\u00263 1\u003e\u00263\nexec 3\u003e\u0026-\ncat \"$OUTPUTFILE\"\nrm \"$OUTPUTFILE\"",
+      "revId": "fb57b7def5fa4db544de53f95d2a69e477458598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
