@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c353147_390c68b6",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/mediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-12T10:12:33Z",
+      "side": 1,
+      "message": "maybe you could have the icon a bit more on the left, it seems a bit far away right now",
+      "revId": "edf996ec788bf73217bf4c04c6f55a220cc95c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
