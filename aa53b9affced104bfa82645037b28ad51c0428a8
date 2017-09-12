@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7e002d28_93e3a3c3",
+        "filename": "components/language/core/browser/baseline_language_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-12T05:37:16Z",
+      "side": 1,
+      "message": "Yes: the initial client of this model will be only translate, which already strips region codes off languages before using them.",
+      "parentUuid": "58444e7f_9d248cda",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dff5516b_16cc88fe",
         "filename": "components/language/core/browser/baseline_language_model.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-12T04:27:03Z",
       "side": 1,
       "message": "This assumes the accept language prefs do not change over the lifetime of this model? Should you document that?",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0fd34b1_02d444fe",
+        "filename": "components/language/core/browser/baseline_language_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-12T05:37:16Z",
+      "side": 1,
+      "message": "This is the name of the preference; the value itself is re-queried each time. I think it\u0027s fine to assume that the preference name doesn\u0027t change.",
+      "parentUuid": "dff5516b_16cc88fe",
       "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d021b54f_a4da43f3",
+        "filename": "components/language/core/browser/baseline_language_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-12T05:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8b3fa2e_c616263c",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ece54405_60ea9399",
         "filename": "components/language/core/browser/baseline_language_model_unittest.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0871e7a_93477b13",
+        "filename": "components/language/core/browser/baseline_language_model_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-12T05:37:16Z",
+      "side": 1,
+      "message": "I had a look / chat to people, and couldn\u0027t find one that was widely used (e.g. https://cs.chromium.org/chromium/src/cc/base/math_util.h?l\u003d164\u0026rcl\u003d0fc9c713bab87120fa0c78eafa876506333ee235 isn\u0027t used by others). Advice was to put it up for review and see if anyone offers any suggestions!",
+      "parentUuid": "ece54405_60ea9399",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2f5ef3a8_eae45016",
+        "filename": "components/language/core/browser/baseline_language_model_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-12T05:37:16Z",
+      "side": 1,
+      "message": "This is an arbitrary constant (it\u0027s just that the same one must be used when registering/updating prefs). Or would you like me to add tests that check the model is querying the specific pref specified at construction?",
+      "parentUuid": "edf5cba0_a9ea9179",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15239679_a40d2bca",
         "filename": "components/language/core/browser/language_model.h",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d824dcf4_6c5a961c",
+        "filename": "components/language/core/browser/language_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-12T05:37:16Z",
+      "side": 1,
+      "message": "Sorry, forgot to add file to branch. Fixed.",
+      "parentUuid": "15239679_a40d2bca",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
