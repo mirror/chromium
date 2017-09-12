@@ -1,0 +1,452 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c60da12_4979bf94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "We should probably have this based on master, unless there\u0027s something in the other branch it relies on?",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40af4ca6_26b2b61a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "This commit message should be a high-level description of what\u0027s being done in the following format:\n\n\u003ctitle\u003e\n\n\u003cdescription\u003e\n\nBug: \u003cbug number\u003e\nChange-Id: \u003cchange id\u003e\n\nSo for this one, something like:\n\n[Extensions Docs] Add an example for event pages and notifications\n\nCurrently, no examples adequately demonstrate the usage of event pages,\nwhich is particularly bad since we want people to be using event pages\nwhenever possible.  Add a new example using event pages and the\nnotifications API.\n\nBug: None\nChange-Id: \u003cleave the same\u003e\n\n(the above is just an example; feel free to reword!)",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc788806_7e9cbecc",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "We no longer use (c) in new copyright warnings (confusing, I know).  So this should be just\nCopyright 2017 The Chromium Authors. All rights reserved.",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19e1343_63ee7458",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "it would be good to have this in strict mode to catch some potential issues; let\u0027s add\n\u0027use strict\u0027;\nhere.",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0199f6e3_789287d9",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "Do these work?  setAlarm isn\u0027t defined at this point.",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c04d91b_93caeca7",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "Google/Chromium have style guides for code that we should follow in the examples.  The JS guide is here:\nhttps://google.github.io/styleguide/jsguide.html\n\nIt\u0027ll take awhile to get used to, but it\u0027s nice to have all code match the same style.  Don\u0027t feel the need to memorize the entire guide; reviewers should let you know when something violates style.  But knowing some of the basic rules will be helpful in cutting down review cycles. :)",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba20f26c_fc1dcc66",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "space between ) and {, so\nfunction setAlarm(event) {",
+      "range": {
+        "startLine": 9,
+        "startChar": 23,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255c75fc_76424fbf",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "use single-quotes (i.e., \u0027) in JS -\u003e {text: \u0027ON\u0027}\n\n(I\u0027ll only comment here, but it goes for all JS files)",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "267c1b4a_365639fc",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "Spaces between if ( and ) {\n\nso\n\nif (minutes \u003d\u003d\u003d \u0027seconds\u0027) {",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa08315d_65c37791",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "two-space indentation for if-blocks",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebfb4efb_661c358c",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "two-space indentation for if-blocks",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64657be4_882ff2bc",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "remove this line",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deeb4bed_3d87722e",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "remove this line",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da667eb_b6f87f8e",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "Put type: \u0027basic\u0027 on a new line, so that all the keys match up. i.e.,\nchrome.notifications.create({\n  type: \u0027basic\u0027,\n  iconUrl: \u0027drink_water.png\u0027,\n  ...\n, function(id) {\n  ...\n});",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f528e64c_bbaea12b",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "Put type: \u0027basic\u0027 on a new line, so that all the keys match up. i.e.,\nchrome.notifications.create({\n  type: \u0027basic\u0027,\n  iconUrl: \u0027drink_water.png\u0027,\n  ...\n, function(id) {\n  ...\n});",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3d1e88_f0f673e2",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "declare myNotificationId somewhere outside this scope.",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0717aaf6_87e3acf0",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "Prefer descriptive variable names over abbreviates, so in this case, notificationId and buttonIndex",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf7a7b1_d05a63c3",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "Prefer descriptive variable names over abbreviates, so in this case, notificationId and buttonIndex",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a05cdf8_102a969c",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "Should we ever be notified a different notification?  If so, when?",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd16bd3_5fc05d28",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "If we do the same action here and below, we can all it once outside of the ifs:\n\nvar delayInMinutes;\nif (buttonIndex \u003d\u003d\u003d 0) {\n  delayInMinutes \u003d 0.1;\n} else {\n  delayInMinutes \u003d 15;\n}\nchrome.browserAction.setBadgeText({text: \u0027ON\u0027});\nchrome.alarms.create({delayInMinutes: delayInMinutes});",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16689c68_1bd8d3ba",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "If we do the same action here and below, we can all it once outside of the ifs:\n\nvar delayInMinutes;\nif (buttonIndex \u003d\u003d\u003d 0) {\n  delayInMinutes \u003d 0.1;\n} else {\n  delayInMinutes \u003d 15;\n}\nchrome.browserAction.setBadgeText({text: \u0027ON\u0027});\nchrome.alarms.create({delayInMinutes: delayInMinutes});",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3eb4f7_38b9e3f9",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/drink_water.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "Are these images made by you or free of copyright?",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06dbe4ae_b95ecd39",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "two-space indentation",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9014d80_763132f5",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "This is a bit awkward - it\u0027s strange to use the popup.html file as both the popup and the background page, since they have very different functions.  I\u0027d suggest splitting them into two pages - popup.html and background.html (or even, background.js as a scripts entry).",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cbd12a8_6447ba54",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "Note: this won\u0027t be an event page unless you include persistent: false.",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e615b9c_164d021a",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/popup.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T16:30:40Z",
+      "side": 1,
+      "message": "What does \"Sample second\" mean?",
+      "revId": "352e49cc4d3ab410030164ca6dafdb07f526128e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
