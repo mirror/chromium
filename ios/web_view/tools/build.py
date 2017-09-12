@@ -4,7 +4,7 @@
 # found in the LICENSE file.
 
 """
-Builds and packages CronetChromeWebView.framework.
+Builds and packages ChromeWebView.framework.
 """
 
 import argparse
@@ -22,7 +22,7 @@ def target_dir_name(build_config, target_device):
   return '%s-iphone%s' % (build_config, target_device)
 
 def build(build_config, target_device, extra_gn_options, extra_ninja_options):
-  """Generates and builds CronetChromeWebView.framework.
+  """Generates and builds ChromeWebView.framework.
 
   Args:
     build_config: A string describing the build configuration. Ex: 'Debug'
@@ -68,7 +68,7 @@ def build(build_config, target_device, extra_gn_options, extra_ninja_options):
   ninja_options = '-C %s' % build_dir
   if extra_ninja_options:
     ninja_options += ' %s' % extra_ninja_options
-  ninja_command = ('ninja %s ios/web_view:cronet_ios_web_view_package' %
+  ninja_command = ('ninja %s ios/web_view:ios_web_view_package' %
                    ninja_options)
   print ninja_command
   return os.system(ninja_command)
@@ -85,15 +85,15 @@ def copy_build_products(build_config, target_device, out_dir):
   build_dir = os.path.join("out", target_dir)
 
   # Copy framework.
-  framework_source = os.path.join(build_dir, 'CronetChromeWebView.framework')
+  framework_source = os.path.join(build_dir, 'ChromeWebView.framework')
   framework_dest = os.path.join(out_dir, target_dir,
-                                'CronetChromeWebView.framework')
+                                'ChromeWebView.framework')
   print 'Copying %s to %s' % (framework_source, framework_dest)
   shutil.copytree(framework_source, framework_dest)
 
   # Copy symbols.
-  symbols_source = os.path.join(build_dir, 'CronetChromeWebView.dSYM')
-  symbols_dest = os.path.join(out_dir, target_dir, 'CronetChromeWebView.dSYM')
+  symbols_source = os.path.join(build_dir, 'ChromeWebView.dSYM')
+  symbols_dest = os.path.join(out_dir, target_dir, 'ChromeWebView.dSYM')
   print 'Copying %s to %s' % (symbols_source, symbols_dest)
   shutil.copytree(symbols_source, symbols_dest)
 
@@ -102,7 +102,7 @@ def package_framework(build_config,
                       out_dir,
                       extra_gn_options,
                       extra_ninja_options):
-  """Builds CronetChromeWebView.framework and copies the result to out_dir.
+  """Builds ChromeWebView.framework and copies the result to out_dir.
 
   Args:
     build_config: A string describing the build configuration. Ex: 'Debug'
@@ -130,9 +130,9 @@ def package_framework(build_config,
   return 0
 
 def package_all_frameworks(out_dir, extra_gn_options, extra_ninja_options):
-  """Builds CronetChromeWebView.framework.
+  """Builds ChromeWebView.framework.
 
-  Builds Release and Debug versions of CronetChromeWebView.framework for both
+  Builds Release and Debug versions of ChromeWebView.framework for both
     iOS devices and simulator and copies the resulting frameworks into out_dir.
 
   Args:
@@ -145,7 +145,7 @@ def package_all_frameworks(out_dir, extra_gn_options, extra_ninja_options):
   Returns:
     0 if all builds are successful or 1 if any build fails.
   """
-  print 'Building CronetChromeWebView.framework...'
+  print 'Building ChromeWebView.framework...'
 
   # Package all builds in the output directory
   os.makedirs(out_dir)
@@ -164,25 +164,29 @@ def package_all_frameworks(out_dir, extra_gn_options, extra_ninja_options):
 
   # Copy common files from last built package to out_dir.
   build_dir = os.path.join("out", target_dir_name('Release', 'os'))
-  package_dir = os.path.join(build_dir, 'cronet_ios_web_view')
+  package_dir = os.path.join(build_dir, 'ios_web_view')
   shutil.copy2(os.path.join(package_dir, 'AUTHORS'), out_dir)
   shutil.copy2(os.path.join(package_dir, 'LICENSE'), out_dir)
   shutil.copy2(os.path.join(package_dir, 'VERSION'), out_dir)
 
-  print '\nSuccess! CronetChromeWebView.framework is packaged into %s' % out_dir
+  print '\nSuccess! ChromeWebView.framework is packaged into %s' % out_dir
 
   return 0
 
 def main():
-  description = "Build and package CronetChromeWebView.framework"
+  description = "Build and package ChromeWebView.framework"
   parser = argparse.ArgumentParser(description=description)
 
-  parser.add_argument('out_dir', nargs='?', default='out/CronetChromeWebView',
+  parser.add_argument('out_dir', nargs='?', default='out/ChromeWebView',
                       help='path to output directory')
   parser.add_argument('--no_goma', action='store_true',
                       help='Prevents adding use_goma=true to the gn args.')
   parser.add_argument('--ninja_args',
                       help='Additional gn args to pass through to ninja.')
+  parser.add_argument('--include_cronet', action='store_true',
+                      help='Combines Cronet and ChromeWebView as 1 framework.')
+  parser.add_argument('--enable_sync', action='store_true',
+                      help='Enables public API for ChromeSync.')
 
   options, extra_options = parser.parse_known_args()
   print 'Options:', options
@@ -197,10 +201,15 @@ def main():
     print >>sys.stderr, 'The output directory already exists: ' + out_dir
     return 1
 
-  gn_options = '' if options.no_goma else 'use_goma=true'
+  extra_gn_options = ''
+  if not options.no_goma:
+    extra_gn_options += 'use_goma=true '
+  if options.include_cronet:
+    extra_gn_options += 'ios_web_view_include_cronet=true '
+  if options.enable_sync:
+    extra_gn_options += 'ios_web_view_enable_sync=true '
 
-  return package_all_frameworks(out_dir, gn_options, options.ninja_args)
-
+  return package_all_frameworks(out_dir, extra_gn_options, options.ninja_args)
 
 if __name__ == '__main__':
   sys.exit(main())
