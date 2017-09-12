@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88aa3519_1269761e",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-09-12T00:20:45Z",
+      "side": 1,
+      "message": "What about...\n\nif (upload) {\n  DCHECK(dest.empty());\n  [...]\n}",
+      "revId": "51a274a8ce4bd059b89a47635dd8f535e18317aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
