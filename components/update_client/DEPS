@@ -6,6 +6,7 @@ include_rules = [
   "+components/version_info",
   "+courgette",
   "+crypto",
+  "+extensions/common",
   "+libxml",
   "+net",
   "+third_party/libxml",
