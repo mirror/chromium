@@ -32,7 +32,7 @@
 #include "modules/webaudio/AudioScheduledSourceNode.h"
 #include "modules/webaudio/PannerNode.h"
 #include "platform/audio/AudioBus.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Threading.h"
 
@@ -48,7 +48,7 @@ class BaseAudioContext;
 
 class AudioBufferSourceHandler final : public AudioScheduledSourceHandler {
  public:
-  static PassRefPtr<AudioBufferSourceHandler> Create(
+  static RefPtr<AudioBufferSourceHandler> Create(
       AudioNode&,
       float sample_rate,
       AudioParamHandler& playback_rate,

@@ -36,7 +36,7 @@
 #include "modules/webaudio/AudioSummingJunction.h"
 #include "modules/webaudio/BaseAudioContext.h"
 #include "platform/bindings/ScriptWrappable.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/ThreadSafeRefCounted.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -104,7 +104,7 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
   static const double kDefaultSmoothingConstant;
   static const double kSnapThreshold;
 
-  static PassRefPtr<AudioParamHandler> Create(BaseAudioContext& context,
+  static RefPtr<AudioParamHandler> Create(BaseAudioContext& context,
                                               AudioParamType param_type,
                                               double default_value,
                                               float min_value,

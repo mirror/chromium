@@ -35,7 +35,7 @@
 #include "modules/speech/SpeechRecognitionResultList.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebMediaStreamTrack.h"
 #include "public/platform/WebSecurityOrigin.h"

@@ -33,7 +33,7 @@
 
 #include "platform/Length.h"
 #include "platform/LengthFunctions.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/RefPtr.h"
 
@@ -41,7 +41,7 @@ namespace blink {
 
 class PLATFORM_EXPORT CalculationValue : public RefCounted<CalculationValue> {
  public:
-  static PassRefPtr<CalculationValue> Create(PixelsAndPercent value,
+  static RefPtr<CalculationValue> Create(PixelsAndPercent value,
                                              ValueRange range) {
     return AdoptRef(new CalculationValue(value, range));
   }

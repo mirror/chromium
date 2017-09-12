@@ -35,7 +35,7 @@ class PLATFORM_EXPORT FEDiffuseLighting final : public FELighting {
                                    const Color&,
                                    float,
                                    float,
-                                   PassRefPtr<LightSource>);
+                                   RefPtr<LightSource>);
   ~FEDiffuseLighting() override;
 
   Color LightingColor() const;
@@ -48,7 +48,7 @@ class PLATFORM_EXPORT FEDiffuseLighting final : public FELighting {
   bool SetDiffuseConstant(float);
 
   const LightSource* GetLightSource() const;
-  void SetLightSource(PassRefPtr<LightSource>);
+  void SetLightSource(RefPtr<LightSource>);
 
   TextStream& ExternalRepresentation(TextStream&, int indention) const override;
 
@@ -57,7 +57,7 @@ class PLATFORM_EXPORT FEDiffuseLighting final : public FELighting {
                     const Color&,
                     float,
                     float,
-                    PassRefPtr<LightSource>);
+                    RefPtr<LightSource>);
 };
 
 }  // namespace blink

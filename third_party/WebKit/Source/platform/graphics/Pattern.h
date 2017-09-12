@@ -36,7 +36,7 @@
 #include "third_party/skia/include/core/SkRefCnt.h"
 
 #include "platform/wtf/Noncopyable.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/RefCounted.h"
 
 class SkMatrix;
@@ -55,9 +55,9 @@ class PLATFORM_EXPORT Pattern : public RefCounted<Pattern> {
     kRepeatModeXY = kRepeatModeX | kRepeatModeY
   };
 
-  static PassRefPtr<Pattern> CreateImagePattern(PassRefPtr<Image>,
+  static RefPtr<Pattern> CreateImagePattern(RefPtr<Image>,
                                                 RepeatMode = kRepeatModeXY);
-  static PassRefPtr<Pattern> CreatePaintRecordPattern(
+  static RefPtr<Pattern> CreatePaintRecordPattern(
       sk_sp<PaintRecord>,
       const FloatRect& record_bounds,
       RepeatMode = kRepeatModeXY);

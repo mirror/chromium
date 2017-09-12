@@ -60,7 +60,7 @@ OfflineAudioDestinationHandler::OfflineAudioDestinationHandler(
   SetInternalChannelInterpretation(AudioBus::kSpeakers);
 }
 
-PassRefPtr<OfflineAudioDestinationHandler>
+RefPtr<OfflineAudioDestinationHandler>
 OfflineAudioDestinationHandler::Create(AudioNode& node,
                                        unsigned number_of_channels,
                                        size_t frames_to_process,
@@ -114,7 +114,7 @@ void OfflineAudioDestinationHandler::StartRendering() {
     GetRenderingThread()->GetWebTaskRunner()->PostTask(
         BLINK_FROM_HERE,
         CrossThreadBind(&OfflineAudioDestinationHandler::StartOfflineRendering,
-                        WrapPassRefPtr(this)));
+                        WrapRefPtr(this)));
     return;
   }
 
@@ -123,7 +123,7 @@ void OfflineAudioDestinationHandler::StartRendering() {
   GetRenderingThread()->GetWebTaskRunner()->PostTask(
       BLINK_FROM_HERE,
       CrossThreadBind(&OfflineAudioDestinationHandler::DoOfflineRendering,
-                      WrapPassRefPtr(this)));
+                      WrapRefPtr(this)));
 }
 
 void OfflineAudioDestinationHandler::StopRendering() {
@@ -200,7 +200,7 @@ void OfflineAudioDestinationHandler::DoOfflineRendering() {
       GetRenderingThread()->GetWebTaskRunner()->PostTask(
           BLINK_FROM_HERE,
           Bind(&OfflineAudioDestinationHandler::DoOfflineRendering,
-               WrapPassRefPtr(this)));
+               WrapRefPtr(this)));
       return;
     }
 
@@ -251,7 +251,7 @@ void OfflineAudioDestinationHandler::SuspendOfflineRendering() {
         ->PostTask(BLINK_FROM_HERE,
                    CrossThreadBind(
                        &OfflineAudioDestinationHandler::NotifySuspend,
-                       WrapPassRefPtr(this), Context()->CurrentSampleFrame()));
+                       WrapRefPtr(this), Context()->CurrentSampleFrame()));
   }
 }
 
@@ -265,7 +265,7 @@ void OfflineAudioDestinationHandler::FinishOfflineRendering() {
         ->PostTask(
             BLINK_FROM_HERE,
             CrossThreadBind(&OfflineAudioDestinationHandler::NotifyComplete,
-                            WrapPassRefPtr(this)));
+                            WrapRefPtr(this)));
   }
 }
 

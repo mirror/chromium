@@ -35,7 +35,7 @@
 #include "platform/image-decoders/SegmentReader.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Noncopyable.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/RefPtr.h"
 
 namespace blink {
@@ -49,9 +49,9 @@ class PLATFORM_EXPORT FastSharedBufferReader final {
   WTF_MAKE_NONCOPYABLE(FastSharedBufferReader);
 
  public:
-  FastSharedBufferReader(PassRefPtr<SegmentReader> data);
+  FastSharedBufferReader(RefPtr<SegmentReader> data);
 
-  void SetData(PassRefPtr<SegmentReader>);
+  void SetData(RefPtr<SegmentReader>);
 
   // Returns a consecutive buffer that carries the data starting
   // at |data_position| with |length| bytes.

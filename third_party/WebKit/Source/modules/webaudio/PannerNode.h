@@ -59,7 +59,7 @@ class PannerHandler final : public AudioHandler {
     kDistanceConeGainDirty = 0x2,
   };
 
-  static PassRefPtr<PannerHandler> Create(AudioNode&,
+  static RefPtr<PannerHandler> Create(AudioNode&,
                                           float sample_rate,
                                           AudioParamHandler& position_x,
                                           AudioParamHandler& position_y,

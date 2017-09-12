@@ -542,7 +542,7 @@ void FrameLoader::DetachDocumentLoader(Member<DocumentLoader>& loader) {
 
 void FrameLoader::LoadInSameDocument(
     const KURL& url,
-    PassRefPtr<SerializedScriptValue> state_object,
+    RefPtr<SerializedScriptValue> state_object,
     FrameLoadType frame_load_type,
     HistoryItem* history_item,
     ClientRedirectPolicy client_redirect,

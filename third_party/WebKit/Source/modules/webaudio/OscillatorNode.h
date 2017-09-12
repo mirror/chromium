@@ -30,7 +30,7 @@
 #include "modules/webaudio/AudioScheduledSourceNode.h"
 #include "modules/webaudio/OscillatorOptions.h"
 #include "platform/audio/AudioBus.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Threading.h"
 
@@ -49,7 +49,7 @@ class OscillatorHandler final : public AudioScheduledSourceHandler {
   // These must be defined as in the .idl file.
   enum { SINE = 0, SQUARE = 1, SAWTOOTH = 2, TRIANGLE = 3, CUSTOM = 4 };
 
-  static PassRefPtr<OscillatorHandler> Create(AudioNode&,
+  static RefPtr<OscillatorHandler> Create(AudioNode&,
                                               float sample_rate,
                                               const String& oscillator_type,
                                               PeriodicWave* wave_table,

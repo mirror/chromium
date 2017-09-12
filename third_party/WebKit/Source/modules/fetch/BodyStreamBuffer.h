@@ -37,9 +37,9 @@ class MODULES_EXPORT BodyStreamBuffer final : public UnderlyingSourceBase,
   ScriptValue Stream();
 
   // Callable only when neither locked nor disturbed.
-  PassRefPtr<BlobDataHandle> DrainAsBlobDataHandle(
+  RefPtr<BlobDataHandle> DrainAsBlobDataHandle(
       BytesConsumer::BlobSizePolicy);
-  PassRefPtr<EncodedFormData> DrainAsFormData();
+  RefPtr<EncodedFormData> DrainAsFormData();
   void StartLoading(FetchDataLoader*, FetchDataLoader::Client* /* client */);
   void Tee(BodyStreamBuffer**, BodyStreamBuffer**);
 

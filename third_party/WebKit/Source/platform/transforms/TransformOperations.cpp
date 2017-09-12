@@ -99,7 +99,7 @@ TransformOperations TransformOperations::BlendByMatchingOperations(
   return result;
 }
 
-PassRefPtr<TransformOperation>
+RefPtr<TransformOperation>
 TransformOperations::BlendByUsingMatrixInterpolation(
     const TransformOperations& from,
     double progress) const {

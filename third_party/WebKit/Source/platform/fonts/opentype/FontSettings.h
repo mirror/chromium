@@ -7,7 +7,7 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/wtf/Allocator.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Vector.h"
@@ -65,7 +65,7 @@ class PLATFORM_EXPORT FontFeatureSettings
   WTF_MAKE_NONCOPYABLE(FontFeatureSettings);
 
  public:
-  static PassRefPtr<FontFeatureSettings> Create() {
+  static RefPtr<FontFeatureSettings> Create() {
     return AdoptRef(new FontFeatureSettings());
   }
 
@@ -79,7 +79,7 @@ class PLATFORM_EXPORT FontVariationSettings
   WTF_MAKE_NONCOPYABLE(FontVariationSettings);
 
  public:
-  static PassRefPtr<FontVariationSettings> Create() {
+  static RefPtr<FontVariationSettings> Create() {
     return AdoptRef(new FontVariationSettings());
   }
 

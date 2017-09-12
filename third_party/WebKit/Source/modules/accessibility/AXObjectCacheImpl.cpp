@@ -84,7 +84,7 @@
 #include "modules/accessibility/AXTableRow.h"
 #include "modules/accessibility/AXVirtualObject.h"
 #include "modules/permissions/PermissionUtils.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/modules/permissions/permission.mojom-blink.h"
 #include "public/platform/modules/permissions/permission_status.mojom-blink.h"

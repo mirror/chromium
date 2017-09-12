@@ -46,9 +46,9 @@ class PLATFORM_EXPORT SharedBufferChunkReader final {
   WTF_MAKE_NONCOPYABLE(SharedBufferChunkReader);
 
  public:
-  SharedBufferChunkReader(PassRefPtr<const SharedBuffer>,
+  SharedBufferChunkReader(RefPtr<const SharedBuffer>,
                           const Vector<char>& separator);
-  SharedBufferChunkReader(PassRefPtr<const SharedBuffer>,
+  SharedBufferChunkReader(RefPtr<const SharedBuffer>,
                           const char* separator);
 
   void SetSeparator(const Vector<char>&);

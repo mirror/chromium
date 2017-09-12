@@ -28,7 +28,7 @@
 
 #include "modules/webaudio/AudioNode.h"
 #include "modules/webaudio/AudioParam.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Threading.h"
 
 namespace blink {
@@ -42,7 +42,7 @@ class GainOptions;
 
 class GainHandler final : public AudioHandler {
  public:
-  static PassRefPtr<GainHandler> Create(AudioNode&,
+  static RefPtr<GainHandler> Create(AudioNode&,
                                         float sample_rate,
                                         AudioParamHandler& gain);
 

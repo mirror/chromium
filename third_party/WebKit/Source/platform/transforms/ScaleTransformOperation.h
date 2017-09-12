@@ -32,13 +32,13 @@ namespace blink {
 class PLATFORM_EXPORT ScaleTransformOperation final
     : public TransformOperation {
  public:
-  static PassRefPtr<ScaleTransformOperation> Create(double sx,
+  static RefPtr<ScaleTransformOperation> Create(double sx,
                                                     double sy,
                                                     OperationType type) {
     return AdoptRef(new ScaleTransformOperation(sx, sy, 1, type));
   }
 
-  static PassRefPtr<ScaleTransformOperation> Create(double sx,
+  static RefPtr<ScaleTransformOperation> Create(double sx,
                                                     double sy,
                                                     double sz,
                                                     OperationType type) {
@@ -58,7 +58,7 @@ class PLATFORM_EXPORT ScaleTransformOperation final
   void Apply(TransformationMatrix& transform, const FloatSize&) const override {
     transform.Scale3d(x_, y_, z_);
   }
-  PassRefPtr<TransformOperation> Blend(const TransformOperation* from,
+  RefPtr<TransformOperation> Blend(const TransformOperation* from,
                                        double progress,
                                        bool blend_to_identity = false) override;
 
@@ -79,7 +79,7 @@ class PLATFORM_EXPORT ScaleTransformOperation final
     return x_ == s->x_ && y_ == s->y_ && z_ == s->z_;
   }
 
-  PassRefPtr<TransformOperation> Zoom(double factor) final { return this; }
+  RefPtr<TransformOperation> Zoom(double factor) final { return this; }
 
   ScaleTransformOperation(double sx, double sy, double sz, OperationType type)
       : x_(sx), y_(sy), z_(sz), type_(type) {

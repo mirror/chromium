@@ -39,7 +39,7 @@ AnalyserHandler::AnalyserHandler(AudioNode& node, float sample_rate)
   Initialize();
 }
 
-PassRefPtr<AnalyserHandler> AnalyserHandler::Create(AudioNode& node,
+RefPtr<AnalyserHandler> AnalyserHandler::Create(AudioNode& node,
                                                     float sample_rate) {
   return AdoptRef(new AnalyserHandler(node, sample_rate));
 }

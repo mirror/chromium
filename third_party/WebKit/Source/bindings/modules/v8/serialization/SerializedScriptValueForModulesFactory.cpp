@@ -10,7 +10,7 @@
 
 namespace blink {
 
-PassRefPtr<SerializedScriptValue>
+RefPtr<SerializedScriptValue>
 SerializedScriptValueForModulesFactory::Create(
     v8::Isolate* isolate,
     v8::Local<v8::Value> value,
