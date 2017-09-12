@@ -63,8 +63,8 @@ class EditingTestBase : public ::testing::Test {
   FrameSelection& Selection() const;
 
   void SetBodyContent(const std::string&);
-  ShadowRoot* SetShadowContent(const char* shadow_content,
-                               const char* shadow_host_id);
+  ShadowRoot* SetShadowContentDeprecated(const char* shadow_content,
+                                         const char* shadow_host_id);
   void UpdateAllLifecyclePhases();
 
  private:

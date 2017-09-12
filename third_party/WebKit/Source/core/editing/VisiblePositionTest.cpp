@@ -20,7 +20,7 @@ TEST_F(VisiblePositionTest, ShadowV0DistributedNodes) {
       "id='s5'>55</span><content select=#one></content><span "
       "id='s6'>66</span></a>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Element* body = GetDocument().body();
   Element* one = body->QuerySelector("#one");
