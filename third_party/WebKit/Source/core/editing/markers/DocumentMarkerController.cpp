@@ -282,9 +282,12 @@ void DocumentMarkerController::AddMarkerToNode(Node* node,
   DocumentMarkerList* const list = ListForType(markers, new_marker_type);
   list->Add(new_marker);
 
-  // repaint the affected node
-  if (node->GetLayoutObject()) {
-    node->GetLayoutObject()->SetShouldDoFullPaintInvalidation(
+  InvalidatePaintForNode(*node);
+}
+
+void DocumentMarkerController::InvalidatePaintForNode(const Node& node) {
+  if (node.GetLayoutObject()) {
+    node.GetLayoutObject()->SetShouldDoFullPaintInvalidation(
         PaintInvalidationReason::kDocumentMarker);
   }
 }
@@ -325,11 +328,8 @@ void DocumentMarkerController::MoveMarkers(Node* src_node,
       doc_dirty = true;
   }
 
-  // repaint the affected node
-  if (doc_dirty && dst_node->GetLayoutObject()) {
-    dst_node->GetLayoutObject()->SetShouldDoFullPaintInvalidation(
-        PaintInvalidationReason::kDocumentMarker);
-  }
+  if (doc_dirty)
+    InvalidatePaintForNode(*dst_node);
 }
 
 void DocumentMarkerController::RemoveMarkersInternal(
@@ -377,10 +377,8 @@ void DocumentMarkerController::RemoveMarkersInternal(
   }
 
   // repaint the affected node
-  if (doc_dirty && node->GetLayoutObject()) {
-    node->GetLayoutObject()->SetShouldDoFullPaintInvalidation(
-        PaintInvalidationReason::kDocumentMarker);
-  }
+  if (doc_dirty)
+    InvalidatePaintForNode(*node);
 }
 
 DocumentMarker* DocumentMarkerController::FirstMarkerIntersectingOffsetRange(
@@ -659,10 +657,7 @@ void DocumentMarkerController::RemoveMarkersFromList(
 
   if (needs_repainting) {
     const Node& node = *iterator->key;
-    if (LayoutObject* layout_object = node.GetLayoutObject()) {
-      layout_object->SetShouldDoFullPaintInvalidation(
-          PaintInvalidationReason::kDocumentMarker);
-    }
+    InvalidatePaintForNode(node);
     InvalidatePaintForTickmarks(node);
   }
 
@@ -691,12 +686,7 @@ void DocumentMarkerController::RepaintMarkers(
       if (!list || list->IsEmpty() || !marker_types.Contains(type))
         continue;
 
-      // cause the node to be redrawn
-      if (LayoutObject* layout_object = node->GetLayoutObject()) {
-        layout_object->SetShouldDoFullPaintInvalidation(
-            PaintInvalidationReason::kDocumentMarker);
-        break;
-      }
+      InvalidatePaintForNode(*node);
     }
   }
 }
@@ -745,11 +735,9 @@ bool DocumentMarkerController::SetTextMatchMarkersActive(Node* node,
   bool doc_dirty = ToTextMatchMarkerListImpl(list)->SetTextMatchMarkersActive(
       start_offset, end_offset, active);
 
-  // repaint the affected node
-  if (doc_dirty && node->GetLayoutObject()) {
-    node->GetLayoutObject()->SetShouldDoFullPaintInvalidation(
-        PaintInvalidationReason::kDocumentMarker);
-  }
+  if (doc_dirty)
+    InvalidatePaintForNode(*node);
+
   return doc_dirty;
 }
 
@@ -817,8 +805,7 @@ void DocumentMarkerController::DidUpdateCharacterData(CharacterData* node,
   if (!node->GetLayoutObject())
     return;
   InvalidateRectsForTextMatchMarkersInNode(*node);
-  // repaint the affected node
-  node->GetLayoutObject()->SetShouldDoFullPaintInvalidation();
+  InvalidatePaintForNode(*node);
 }
 
 }  // namespace blink
