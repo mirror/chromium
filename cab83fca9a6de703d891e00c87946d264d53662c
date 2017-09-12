@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2001cd26_b1fdd064",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-12T23:51:55Z",
+      "side": 1,
+      "message": "just get origin + width and use min_distance below?",
+      "revId": "cab83fca9a6de703d891e00c87946d264d53662c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5033c8a_9ea8e45d",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-12T23:51:55Z",
+      "side": 1,
+      "message": "std::max(std::min(x, bounds_in_screen.right() - 1),\n        bounds.in_screen.x());\nstd::max(std:min(y .....))\n\n?",
+      "revId": "cab83fca9a6de703d891e00c87946d264d53662c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
