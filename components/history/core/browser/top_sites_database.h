@@ -32,17 +32,15 @@ class TopSitesDatabase {
   // Returns true on success. If false, no other functions should be called.
   bool Init(const base::FilePath& db_name);
 
-  // Thumbnails ----------------------------------------------------------------
-
   // Returns a list of all URLs currently in the table.
   // WARNING: clears both input arguments.
   void GetPageThumbnails(MostVisitedURLList* urls,
                          std::map<GURL, Images>* thumbnails);
 
-  // Set a thumbnail for a URL. |url_rank| is the position of the URL
+  // Sets a thumbnail for a URL. |new_rank| is the position of the URL
   // in the list of TopURLs, zero-based.
-  // If the URL is not in the table, add it. If it is, replace its
-  // thumbnail and rank. Shift the ranks of other URLs if necessary.
+  // If the URL is not in the table, add it. If it is, replaces its
+  // thumbnail and rank. Shifts the ranks of other URLs if necessary.
   void SetPageThumbnail(const MostVisitedURL& url,
                         int new_rank,
                         const Images& thumbnail);
@@ -51,11 +49,14 @@ class TopSitesDatabase {
   // Use SetPageThumbnail if it's not.
   void UpdatePageRank(const MostVisitedURL& url, int new_rank);
 
-  // Get a thumbnail for a given page. Returns true iff we have the thumbnail.
+  // Gets a thumbnail for a given page. Returns true iff we have the thumbnail.
   bool GetPageThumbnail(const GURL& url, Images* thumbnail);
 
-  // Remove the record for this URL. Returns true iff removed successfully.
+  // Removes the record for this URL. Returns true iff removed successfully.
   bool RemoveURL(const MostVisitedURL& url);
+
+  // Updates the database according to the changes recorded in |delta|.
+  void ApplyDelta(const TopSitesDelta& delta);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(TopSitesDatabaseTest, Version1);
@@ -89,8 +90,21 @@ class TopSitesDatabase {
   // Returns true if the database query succeeds.
   bool UpdatePageThumbnail(const MostVisitedURL& url, const Images& thumbnail);
 
+  // Sets a thumbnail for a URL. |new_rank| is the position of the URL
+  // in the list of TopURLs, zero-based.
+  // If the URL is not in the table, add it. If it is, replaces its
+  // thumbnail and rank. Shifts the ranks of other URLs if necessary.
+  // Should be called within an open transaction.
+  void SetPageThumbnailNoTransaction(const MostVisitedURL& url,
+                                     int new_rank,
+                                     const Images& thumbnail);
+
   // Returns |url|'s current rank or kRankOfNonExistingURL if not present.
   int GetURLRank(const MostVisitedURL& url);
+
+  // Removes the record for this URL. Returns true iff removed successfully.
+  // Should be called within an open transaction.
+  bool RemoveURLNoTransaction(const MostVisitedURL& url);
 
   // Helper function to implement internals of Init().  This allows
   // Init() to retry in case of failure, since some failures will

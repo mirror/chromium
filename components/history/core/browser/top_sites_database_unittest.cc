@@ -436,4 +436,84 @@ TEST_F(TopSitesDatabaseTest, AddRemoveEditThumbnails) {
   EXPECT_EQ(kUrl0, urls[1].url);
 }
 
+TEST_F(TopSitesDatabaseTest, ApplyDelta) {
+  ASSERT_TRUE(CreateDatabaseFromSQL(file_name_, "TopSites.v3.sql"));
+
+  TopSitesDatabase db;
+  ASSERT_TRUE(db.Init(file_name_));
+
+  GURL mapsUrl = GURL("http://maps.google.com/");
+
+  TopSitesDelta delta;
+  // Delete kUrl0. Now db has kUrl1 and kUrl2.
+  MostVisitedURL url_to_delete(kUrl0, base::ASCIIToUTF16("Google"));
+  delta.deleted.push_back(url_to_delete);
+
+  // Add a new URL, not forced, rank = 0. Now db has mapsUrl, kUrl1 and kUrl2.
+  MostVisitedURLWithRank url_to_add;
+  url_to_add.url = MostVisitedURL(mapsUrl, base::ASCIIToUTF16("Google Maps"));
+  url_to_add.rank = 0;
+  delta.added.push_back(url_to_add);
+
+  // Move kUrl1 by updating its rank to 2. Now db has mapsUrl, kUrl2 and kUrl1.
+  MostVisitedURLWithRank url_to_move;
+  url_to_move.url = MostVisitedURL(kUrl1, base::ASCIIToUTF16("Google Chrome"));
+  url_to_move.rank = 2;
+  delta.moved.push_back(url_to_move);
+
+  // Update db.
+  db.ApplyDelta(delta);
+
+  // Read db and verify.
+  MostVisitedURLList urls;
+  std::map<GURL, Images> thumbnails;
+  db.GetPageThumbnails(&urls, &thumbnails);
+  ASSERT_EQ(3u, urls.size());
+  ASSERT_EQ(3u, thumbnails.size());
+  EXPECT_EQ(mapsUrl, urls[0].url);
+  EXPECT_EQ(kUrl2, urls[1].url);
+  EXPECT_EQ(kUrl1, urls[2].url);
+}
+
+TEST_F(TopSitesDatabaseTest, ApplyDeltaSeparately) {
+  ASSERT_TRUE(CreateDatabaseFromSQL(file_name_, "TopSites.v3.sql"));
+
+  TopSitesDatabase db;
+  ASSERT_TRUE(db.Init(file_name_));
+
+  GURL mapsUrl = GURL("http://maps.google.com/");
+
+  TopSitesDelta delta;
+  // Delete kUrl0. Now db has kUrl1 and kUrl2.
+  MostVisitedURL url_to_delete(kUrl0, base::ASCIIToUTF16("Google"));
+  delta.deleted.push_back(url_to_delete);
+
+  // Add a new URL, not forced, rank = 0. Now db has mapsUrl, kUrl1 and kUrl2.
+  MostVisitedURLWithRank url_to_add;
+  url_to_add.url = MostVisitedURL(mapsUrl, base::ASCIIToUTF16("Google Maps"));
+  url_to_add.rank = 0;
+  delta.added.push_back(url_to_add);
+
+  // Move kUrl1 by updating its rank to 2. Now db has mapsUrl, kUrl2 and kUrl1.
+  MostVisitedURLWithRank url_to_move;
+  url_to_move.url = MostVisitedURL(kUrl1, base::ASCIIToUTF16("Google Chrome"));
+  url_to_move.rank = 2;
+  delta.moved.push_back(url_to_move);
+
+  // Update db.
+  db.RemoveURL(delta.deleted[0]);
+  db.SetPageThumbnail(delta.added[0].url, delta.added[0].rank, Images());
+  db.UpdatePageRank(delta.moved[0].url, delta.moved[0].rank);
+
+  // Read db and verify.
+  MostVisitedURLList urls;
+  std::map<GURL, Images> thumbnails;
+  db.GetPageThumbnails(&urls, &thumbnails);
+  ASSERT_EQ(3u, urls.size());
+  ASSERT_EQ(3u, thumbnails.size());
+  EXPECT_EQ(mapsUrl, urls[0].url);
+  EXPECT_EQ(kUrl2, urls[1].url);
+  EXPECT_EQ(kUrl1, urls[2].url);
+}
+
 }  // namespace history
