@@ -17,13 +17,16 @@ namespace settings {
 
 ChangePasswordHandler::ChangePasswordHandler(Profile* profile)
     : profile_(profile), service_(nullptr) {
-  if (g_browser_process && g_browser_process->safe_browsing_service()) {
-    service_ = g_browser_process->safe_browsing_service()
-                   ->GetPasswordProtectionService(profile_);
-  }
+  service_ = safe_browsing::ChromePasswordProtectionService::
+      GetPasswordProtectionService(profile_);
+  if (service_)
+    service_->AddObserver(this);
 }
 
-ChangePasswordHandler::~ChangePasswordHandler() {}
+ChangePasswordHandler::~ChangePasswordHandler() {
+  if (service_)
+    service_->RemoveObserver(this);
+}
 
 void ChangePasswordHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
@@ -35,8 +38,21 @@ void ChangePasswordHandler::RegisterMessages() {
                                    base::Unretained(this)));
 }
 
+void ChangePasswordHandler::OnGaiaPasswordChanged() {
+  CallJavascriptFunction("cr.webUIListenerCallback",
+                         base::Value("change-password-on-dismiss"));
+}
+
+void ChangePasswordHandler::OnMarkingSiteAsLegitimate(const GURL& url) {
+  if (service_->unhandled_password_reuses().empty()) {
+    CallJavascriptFunction("cr.webUIListenerCallback",
+                           base::Value("change-password-on-dismiss"));
+  }
+}
+
 void ChangePasswordHandler::HandleChangePasswordPageShown(
     const base::ListValue* args) {
+  AllowJavascript();
   if (service_) {
     service_->OnWarningShown(
         web_ui()->GetWebContents(),
