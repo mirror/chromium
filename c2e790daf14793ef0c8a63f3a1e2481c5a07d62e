@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7da907b2_e1459c96",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-12T07:29:06Z",
+      "side": 0,
+      "message": "I believe this can be removed now.",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 62
+      },
+      "revId": "c2e790daf14793ef0c8a63f3a1e2481c5a07d62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a123ed_2e033667",
+        "filename": "components/ntp_snippets/remote/remote_suggestion_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-12T07:29:06Z",
+      "side": 0,
+      "message": "Delete this comment? This must be *the only* form now.",
+      "range": {
+        "startLine": 452,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 61
+      },
+      "revId": "c2e790daf14793ef0c8a63f3a1e2481c5a07d62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428fca55_ab3c517c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-12T07:29:06Z",
+      "side": 0,
+      "message": "wow, it did not complain when the class was removed.",
+      "range": {
+        "startLine": 81,
+        "startChar": 15,
+        "endLine": 81,
+        "endChar": 46
+      },
+      "revId": "c2e790daf14793ef0c8a63f3a1e2481c5a07d62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d732834_fa1d875d",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-12T07:29:06Z",
+      "side": 0,
+      "message": "Why did we want to remove the histogram?",
+      "range": {
+        "startLine": 831,
+        "startChar": 6,
+        "endLine": 832,
+        "endChar": 35
+      },
+      "revId": "c2e790daf14793ef0c8a63f3a1e2481c5a07d62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

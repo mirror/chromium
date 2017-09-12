@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3cd0648_0fddeb0f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-12T07:29:06Z",
+      "side": 1,
+      "message": "Could you add a bit more context please?\n\" , which was used when content suggestions were fetched directly from ChromeReader\".",
+      "range": {
+        "startLine": 7,
+        "startChar": 46,
+        "endLine": 7,
+        "endChar": 47
+      },
+      "revId": "12d32ba7ac39216c7c162dc096836ea3ba8ee240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d60659_e688561f",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-12T07:29:06Z",
+      "side": 1,
+      "message": "This seems obsolete as well (unless an ancient ChromeReader suggestion is still persisted in the database, which feels unlikely). Could you remove this and DCHECK that there is only one source instead?",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "12d32ba7ac39216c7c162dc096836ea3ba8ee240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f82a5e_029eb7f0",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-12T07:29:06Z",
+      "side": 1,
+      "message": "It looks like |repeated SnippetSourceProto sources \u003d 8| in SnippetProto is not needed anymore. Instead we just need to inline one SnippetSourceProto fields. However, this proto is persisted in the database, thus, the fix is not that simple. Could you add a TODO to the proto?",
+      "range": {
+        "startLine": 51,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 24
+      },
+      "revId": "12d32ba7ac39216c7c162dc096836ea3ba8ee240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87391f5a_969970e8",
+        "filename": "components/ntp_snippets/remote/remote_suggestion_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-12T07:29:06Z",
+      "side": 1,
+      "message": "remove this word?",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "12d32ba7ac39216c7c162dc096836ea3ba8ee240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
