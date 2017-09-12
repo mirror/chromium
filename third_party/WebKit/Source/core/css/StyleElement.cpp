@@ -18,7 +18,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "core/dom/StyleElement.h"
+#include "core/css/StyleElement.h"
 
 #include "bindings/core/v8/ScriptController.h"
 #include "core/css/MediaList.h"
@@ -50,9 +50,11 @@ StyleElement::StyleElement(Document* document, bool created_by_parser)
       registered_as_candidate_(false),
       start_position_(TextPosition::BelowRangePosition()) {
   if (created_by_parser && document &&
-      document->GetScriptableDocumentParser() && !document->IsInDocumentWrite())
+      document->GetScriptableDocumentParser() &&
+      !document->IsInDocumentWrite()) {
     start_position_ =
         document->GetScriptableDocumentParser()->GetTextPosition();
+  }
 }
 
 StyleElement::~StyleElement() {}
@@ -110,9 +112,10 @@ StyleElement::ProcessingResult StyleElement::Process(Element& element) {
 void StyleElement::ClearSheet(Element& owner_element) {
   DCHECK(sheet_);
 
-  if (sheet_->IsLoading())
+  if (sheet_->IsLoading()) {
     owner_element.GetDocument().GetStyleEngine().RemovePendingSheet(
         owner_element, style_engine_context_);
+  }
 
   sheet_.Release()->ClearOwnerNode();
 }
