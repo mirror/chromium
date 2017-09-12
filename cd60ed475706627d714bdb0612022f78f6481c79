@@ -34,6 +34,24 @@
       "revId": "cd60ed475706627d714bdb0612022f78f6481c79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32e92435_b98ddbe0",
+        "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-12T03:43:22Z",
+      "side": 1,
+      "message": "IsAshSystemNotifier() returns true only when it\u0027s a system notification and is from Ash. Here, it\u0027s possible to reach if a system notification is not from Ash.",
+      "parentUuid": "cb160e3d_ea30b324",
+      "revId": "cd60ed475706627d714bdb0612022f78f6481c79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
