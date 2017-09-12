@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "17d55b98_4ea8fbb8",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-12T19:51:25Z",
+      "side": 1,
+      "message": "Thank you for explaining!",
+      "parentUuid": "edf434ad_bde514a0",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbb2b5ca_87e92557",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 3
@@ -69,6 +87,24 @@
       "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "710fb87e_8bcb4489",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-12T19:51:25Z",
+      "side": 1,
+      "message": "I don\u0027t think so. The examples I was thinking of are pthread_mutex_trylock [1] and std::mutex::try_lock [2].\n\n[1] http://pubs.opengroup.org/onlinepubs/009604499/functions/pthread_mutex_lock.html\n[2] http://en.cppreference.com/w/cpp/thread/mutex/try_lock",
+      "parentUuid": "1d1eef52_d68ac049",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -247,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "975bb98e_96695f83",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-12T19:51:25Z",
+      "side": 1,
+      "message": "If you\u0027re OK with inverting the condition, owns_file_ / owns_fd_ / uses_dedicated_fd_ seem a bit clearer. open_before_read_ is significantly better than temporary_file_, so how about pick your favorite?",
+      "parentUuid": "2378ea0b_1af1b419",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d577b9a_8be78e53",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 3
@@ -276,6 +330,24 @@
       "side": 1,
       "message": "No, not always from the same thread, but contention would have only done the initialization multiple times right.\n\nBut, good point. I used a static (made cleaner by https://chromium-review.googlesource.com/656108).",
       "parentUuid": "9d577b9a_8be78e53",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "346fa4d1_b79bc5d3",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-12T19:51:25Z",
+      "side": 1,
+      "message": "Thank you!\n\nI don\u0027t think this is an issue on any of the architectures that we currently target* but, according to my understanding of the memory model, you can\u0027t assume that the write will happen atomically. In theory, you could be reading partial results of a write (complete garbage) and return that. (Am I wrong? If so, please help me get better!)\n\n*All architectures I know of use some cache coherence protocol to synchronize cores\u0027 access to memory, so all synchronization happens at cache line granularity. As long as the static is naturally aligned, it won\u0027t cross a cache line.",
+      "parentUuid": "93f8daa1_38064484",
       "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
