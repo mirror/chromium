@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "380a43eb_75ab8f63",
+        "filename": "chrome/browser/resources/sys_internals/compiled_resources2.gyp",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-12T04:23:24Z",
+      "side": 1,
+      "message": "shall be changed to \u0027sys_internals\u0027, so third_party/closure_compiler/run_compiler sys_internals would build this target.",
+      "range": {
+        "startLine": 7,
+        "startChar": 22,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "621f875b_487be3b1",
+        "filename": "chrome/browser/resources/sys_internals/externs.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-12T04:23:24Z",
+      "side": 1,
+      "message": "GeneralZramType, GeneralMemoryType and GeneralZramType are only used in index.js.\nThe declarations could be in index.js.",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 18
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940b8f63_8a850455",
+        "filename": "chrome/browser/resources/sys_internals/index.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-12T04:23:24Z",
+      "side": 1,
+      "message": "resources/css/roboto.css doesn\u0027t apply to chromeos and android.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 47
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e25271_6ebe13af",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-12T04:23:24Z",
+      "side": 1,
+      "message": "this variable is used only by getDiffAndUpdateCounter_(), how about make it a closure?\nex: let getDiffAndUpdateCounter_ \u003d function() {\n  let counter \u003d {};\n  return function() { ... counter ... };\n}();",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 13
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5750b95_32ab8f70",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-12T04:23:24Z",
+      "side": 1,
+      "message": "UNITS",
+      "range": {
+        "startLine": 98,
+        "startChar": 6,
+        "endLine": 98,
+        "endChar": 10
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4335ae_f6981704",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-12T04:23:24Z",
+      "side": 1,
+      "message": "UNITS",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 10
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea729001_af8d0666",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-12T04:23:24Z",
+      "side": 1,
+      "message": "How about using classList.remove(), classList.add() ?",
+      "range": {
+        "startLine": 163,
+        "startChar": 30,
+        "endLine": 163,
+        "endChar": 44
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc3ee91c_59b4b94c",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-12T04:23:24Z",
+      "side": 1,
+      "message": "How about get timeTick inside the timeout function?",
+      "range": {
+        "startLine": 237,
+        "startChar": 24,
+        "endLine": 237,
+        "endChar": 25
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb3afd3_4da5f3f9",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-12T04:23:24Z",
+      "side": 1,
+      "message": "can be replaced by isInfoPage()",
+      "range": {
+        "startLine": 256,
+        "startChar": 6,
+        "endLine": 256,
+        "endChar": 25
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7e2754_c0ba919e",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-12T04:23:24Z",
+      "side": 1,
+      "message": "this could be move to the timeout function in sendUpdateRequest_() to make it more clear that it calls self after timeout.",
+      "range": {
+        "startLine": 261,
+        "startChar": 2,
+        "endLine": 261,
+        "endChar": 20
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2d74b3_946e1da4",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-12T04:23:24Z",
+      "side": 1,
+      "message": "for the first time we get the cpus data.",
+      "range": {
+        "startLine": 319,
+        "startChar": 72,
+        "endLine": 320,
+        "endChar": 32
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a66865_4d3f33c4",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-12T04:23:24Z",
+      "side": 1,
+      "message": "should handle the case that origDataSize \u003d\u003d 0?",
+      "range": {
+        "startLine": 392,
+        "startChar": 13,
+        "endLine": 392,
+        "endChar": 34
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a711f24_afe883d7",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-12T04:23:24Z",
+      "side": 1,
+      "message": "Is it necessary to mod here?",
+      "range": {
+        "startLine": 426,
+        "startChar": 4,
+        "endLine": 426,
+        "endChar": 41
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "993fb5e9_45c10631",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-12T04:23:24Z",
+      "side": 1,
+      "message": "comment before variable name?",
+      "range": {
+        "startLine": 560,
+        "startChar": 22,
+        "endLine": 560,
+        "endChar": 56
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
