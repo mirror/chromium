@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81016f13_81499c04",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-12T20:20:57Z",
+      "side": 1,
+      "message": "trailing underscore for @private vars",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 35
+      },
+      "revId": "60fcf7e814f807ee9240e26b2b8ac0f5ffcaa929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
