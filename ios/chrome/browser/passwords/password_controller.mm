@@ -33,6 +33,8 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #include "ios/chrome/browser/infobars/infobar_manager_impl.h"
+#include "ios/chrome/browser/passwords/credential_manager.h"
+#include "ios/chrome/browser/passwords/credential_manager_features.h"
 #import "ios/chrome/browser/passwords/ios_chrome_save_password_infobar_delegate.h"
 #import "ios/chrome/browser/passwords/ios_chrome_update_password_infobar_delegate.h"
 #import "ios/chrome/browser/passwords/js_password_manager.h"
@@ -264,6 +266,7 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
   std::unique_ptr<PasswordGenerationManager> passwordGenerationManager_;
   std::unique_ptr<PasswordManagerClient> passwordManagerClient_;
   std::unique_ptr<PasswordManagerDriver> passwordManagerDriver_;
+  std::unique_ptr<credential_manager::CredentialManager> credentialManager_;
   PasswordGenerationAgent* passwordGenerationAgent_;
 
   __weak JsPasswordManager* passwordJsManager_;
@@ -321,6 +324,13 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
     webStateObserverBridge_.reset(
         new web::WebStateObserverBridge(webState, self));
     sent_request_to_store_ = NO;
+
+    if (base::FeatureList::IsEnabled(
+            credential_manager::features::kCredentialManager)) {
+      credentialManager_ =
+          std::make_unique<credential_manager::CredentialManager>(
+              passwordManagerClient_.get(), webState_);
+    }
   }
   return self;
 }
@@ -354,6 +364,7 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
   passwordManagerDriver_.reset();
   passwordManager_.reset();
   passwordManagerClient_.reset();
+  credentialManager_.reset();
 }
 
 #pragma mark -
