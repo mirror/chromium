@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fdb601f2_75371bd4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-09-12T23:06:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d9044e0_e02e120a",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "95b3569f946c0c425a7d7b136104e55148d019ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c591d329_3bdb253c",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwContentsClientBridge.java",
         "patchSetId": 7
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "8140a786_95460653",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContentsStatics.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-09-12T23:06:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f1e3773_3841c3eb",
+      "revId": "95b3569f946c0c425a7d7b136104e55148d019ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d337424_3b79b62e",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwValueCallback.java",
         "patchSetId": 7
@@ -73,6 +115,24 @@
       "revId": "95b3569f946c0c425a7d7b136104e55148d019ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06649114_b216a213",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwValueCallback.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-09-12T23:06:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d337424_3b79b62e",
+      "revId": "95b3569f946c0c425a7d7b136104e55148d019ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
