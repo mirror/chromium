@@ -94,6 +94,7 @@
 #include "chrome/browser/chromeos/system/input_device_settings.h"
 #include "chrome/browser/chromeos/ui/low_disk_notification.h"
 #include "chrome/browser/chromeos/upgrade_detector_chromeos.h"
+#include "chrome/browser/component_updater/cros_component_installer.h"
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/net/chrome_network_delegate.h"
@@ -769,6 +770,17 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
     VLOG(1) << "Relaunching browser for user: " << account_id.Serialize()
             << " with hash: " << user_id_hash;
   }
+
+  // Set product name ("Chrome OS" or "Chromium OS") to be used in context
+  // header of new-style notification.
+  message_center::MessageCenter::Get()->SetProductOSName(
+      l10n_util::GetStringUTF16(IDS_PRODUCT_OS_NAME));
+
+  // Register all installed components for regular update.
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::MayBlock()},
+      base::BindOnce(component_updater::CrOSComponent::GetInstalledComponents),
+      base::BindOnce(component_updater::CrOSComponent::RegisterComponents));
 }
 
 class GuestLanguageSetCallbackData {
