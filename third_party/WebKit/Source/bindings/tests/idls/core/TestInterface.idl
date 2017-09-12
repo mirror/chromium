@@ -132,6 +132,7 @@
     [SecureContext,Exposed=Window,RuntimeEnabled=SecureFeature] attribute bool secureContextWindowExposedRuntimeEnabledAttribute;
     [SecureContext,Exposed=Worker,RuntimeEnabled=SecureFeature] void secureContextWorkerExposedRuntimeEnabledMethod();
     [SecureContext,Exposed=Worker,RuntimeEnabled=SecureFeature] attribute bool secureContextWorkerExposedRuntimeEnabledAttribute;
+
 };
 
 TestInterface implements TestImplements;
