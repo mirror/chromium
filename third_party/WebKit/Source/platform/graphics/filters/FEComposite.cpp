@@ -115,6 +115,12 @@ bool FEComposite::AffectsTransparentPixels() const {
 FloatRect FEComposite::MapInputs(const FloatRect& rect) const {
   FloatRect i1 = InputEffect(0)->MapRect(rect);
   FloatRect i2 = InputEffect(1)->MapRect(rect);
+
+  TextStream ts;
+  ExternalRepresentation(ts, 0);
+  LOG(ERROR) << ts.Release() << " rect=" << rect.ToString();
+  LOG(ERROR) << " i1=" << i1.ToString() << " i2=" << i2.ToString();
+
   switch (type_) {
     case FECOMPOSITE_OPERATOR_IN:
       // 'in' has output only in the intersection of both inputs.
@@ -199,12 +205,14 @@ sk_sp<SkImageFilter> FEComposite::CreateImageFilterInternal(
   SkImageFilter::CropRect crop_rect = GetCropRect();
 
   if (type_ == FECOMPOSITE_OPERATOR_ARITHMETIC) {
+    LOG(ERROR) << "Creating SkArithmeticImageFilter";
     return SkArithmeticImageFilter::Make(
         SkFloatToScalar(k1_), SkFloatToScalar(k2_), SkFloatToScalar(k3_),
         SkFloatToScalar(k4_), requires_pm_color_validation,
         std::move(background), std::move(foreground), &crop_rect);
   }
 
+  LOG(ERROR) << "Creating SkXfermodeImageFilter";
   return SkXfermodeImageFilter::Make(ToBlendMode(type_), std::move(background),
                                      std::move(foreground), &crop_rect);
 }
