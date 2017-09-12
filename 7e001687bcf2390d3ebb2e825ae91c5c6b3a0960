@@ -349,6 +349,24 @@
       "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fc1344e_484db07f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_worker/Audits2Service.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-12T18:01:12Z",
+      "side": 1,
+      "message": "Yeah. I think disabling logging permanently seems OK to me for now. Until we move to a world where we re-use DevTools front end across tests (which is a long time from now :), this isn\u0027t really an issue.",
+      "parentUuid": "d665f4a7_b8de2c38",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
