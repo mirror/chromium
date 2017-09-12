@@ -662,9 +662,9 @@ class RendererSchedulerImplTest : public ::testing::Test {
         RendererSchedulerImpl::kEndIdleWhenHiddenDelayMillis);
   }
 
-  static base::TimeDelta stop_timers_when_backgrounded_delay() {
+  static base::TimeDelta stop_when_backgrounded_delay() {
     return base::TimeDelta::FromMilliseconds(
-        RendererSchedulerImpl::kStopTimersWhenBackgroundedDelayMillis);
+        RendererSchedulerImpl::kStopWhenBackgroundedDelayMillis);
   }
 
   static base::TimeDelta rails_response_time() {
@@ -2433,7 +2433,7 @@ TEST_F(RendererSchedulerImplTest, MultipleStopsNeedMultipleResumes) {
 }
 
 TEST_F(RendererSchedulerImplTest, PauseRenderer) {
-  scheduler_->SetTimerQueueStoppingWhenBackgroundedEnabled(true);
+  scheduler_->SetStoppingWhenBackgroundedEnabled(true);
   // Assume that the renderer is backgrounded.
   scheduler_->SetRendererBackgrounded(true);
 
@@ -2560,7 +2560,7 @@ TEST_F(RendererSchedulerImplTest, ShutdownPreventsPostingOfNewTasks) {
 }
 
 TEST_F(RendererSchedulerImplTest, TestRendererBackgroundedTimerSuspension) {
-  scheduler_->SetTimerQueueStoppingWhenBackgroundedEnabled(true);
+  scheduler_->SetStoppingWhenBackgroundedEnabled(true);
 
   std::vector<std::string> run_order;
   PostTestTasks(&run_order, "T1 T2");
@@ -2584,7 +2584,7 @@ TEST_F(RendererSchedulerImplTest, TestRendererBackgroundedTimerSuspension) {
   EXPECT_THAT(run_order, ::testing::ElementsAre(std::string("T3")));
 
   // Advance the time until after the scheduled timer queue suspension.
-  now = base::TimeTicks() + stop_timers_when_backgrounded_delay() +
+  now = base::TimeTicks() + stop_when_backgrounded_delay() +
         base::TimeDelta::FromMilliseconds(10);
   run_order.clear();
   clock_->SetNowTicks(now);
@@ -2608,6 +2608,57 @@ TEST_F(RendererSchedulerImplTest, TestRendererBackgroundedTimerSuspension) {
   PostTestTasks(&run_order, "T6");
   RunUntilIdle();
   EXPECT_THAT(run_order, ::testing::ElementsAre(std::string("T6")));
+}
+
+TEST_F(RendererSchedulerImplTest, TestRendererBackgroundedLoadingSuspension) {
+  scheduler_->SetStoppingWhenBackgroundedEnabled(true);
+
+  std::vector<std::string> run_order;
+  PostTestTasks(&run_order, "L1 L2");
+
+  base::TimeTicks now;
+
+  // The background signal will not immediately suspend the loading queue.
+  scheduler_->SetRendererBackgrounded(true);
+  now += base::TimeDelta::FromMilliseconds(1100);
+  clock_->SetNowTicks(now);
+  RunUntilIdle();
+  EXPECT_THAT(run_order,
+              ::testing::ElementsAre(std::string("L1"), std::string("L2")));
+
+  run_order.clear();
+  PostTestTasks(&run_order, "L3");
+
+  now += base::TimeDelta::FromSeconds(1);
+  clock_->SetNowTicks(now);
+  RunUntilIdle();
+  EXPECT_THAT(run_order, ::testing::ElementsAre(std::string("L3")));
+
+  // Advance the time until after the scheduled loading queue suspension.
+  now = base::TimeTicks() + stop_when_backgrounded_delay() +
+        base::TimeDelta::FromMilliseconds(10);
+  run_order.clear();
+  clock_->SetNowTicks(now);
+  RunUntilIdle();
+  ASSERT_TRUE(run_order.empty());
+
+  // Loading tasks should be paused until the foregrounded signal.
+  PostTestTasks(&run_order, "L4 L5");
+  now += base::TimeDelta::FromSeconds(10);
+  clock_->SetNowTicks(now);
+  RunUntilIdle();
+  EXPECT_THAT(run_order, ::testing::ElementsAre());
+
+  scheduler_->SetRendererBackgrounded(false);
+  RunUntilIdle();
+  EXPECT_THAT(run_order,
+              ::testing::ElementsAre(std::string("L4"), std::string("L5")));
+
+  // Subsequent loading tasks should fire as usual.
+  run_order.clear();
+  PostTestTasks(&run_order, "L6");
+  RunUntilIdle();
+  EXPECT_THAT(run_order, ::testing::ElementsAre(std::string("L6")));
 }
 
 TEST_F(RendererSchedulerImplTest,
