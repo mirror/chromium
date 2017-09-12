@@ -140,6 +140,30 @@
     },
     {
       "key": {
+        "uuid": "88adfed2_e78708fa",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T23:14:37Z",
+      "side": 1,
+      "message": "I haven\u0027t reviewed the rest of this CL in depth, but just wanted to reply real quickly here.\n\nThe reason we use utf-16 is because all web-exposed strings are expected to be utf-16. utf16 -\u003e utf8 isn\u0027t always a reversible transformation, for Reasons.\n\n(unique name is a bit of a special case and ignores this: internally it just works with utf8. But I guess this is OK because it never actually goes back out to Blink?)\n\nAnyway, we just need to carefully consider what should remain string16 and what can change to string. It\u0027s probably easier to just keep everything as-is (except for unique name maybe ;-)",
+      "parentUuid": "82b9a7e7_27cb5505",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 28
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ed6b5ee_add14a94",
         "filename": "content/common/page_state.mojom",
         "patchSetId": 7
