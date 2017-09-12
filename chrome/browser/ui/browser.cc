@@ -147,6 +147,7 @@
 #include "chrome/browser/upgrade_detector.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/chrome_constants.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/custom_handlers/protocol_handler.h"
 #include "chrome/common/pref_names.h"
@@ -668,7 +669,9 @@ base::string16 Browser::GetWindowTitleFromWebContents(
     title = contents->GetTitle();
     FormatTitleForDisplay(&title);
   }
-  if (title.empty())
+
+  // If there is no title, leave it empty for apps.
+  if (title.empty() && !is_app())
     title = CoreTabHelper::GetDefaultTitle();
 
 #if defined(OS_MACOSX)
