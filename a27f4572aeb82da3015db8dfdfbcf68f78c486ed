@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a01af2d_3025c529",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestInterface.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-12T06:09:33Z",
+      "side": 1,
+      "message": "Could you remove this? Looks like we already have the test case in TestObject.idl.",
+      "revId": "a27f4572aeb82da3015db8dfdfbcf68f78c486ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
