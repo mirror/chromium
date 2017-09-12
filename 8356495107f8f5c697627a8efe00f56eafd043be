@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c96b358_7a2764bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-12T15:49:11Z",
+      "side": 1,
+      "message": "nit: Add a TODO to use StateChangeReason when it lands?",
+      "range": {
+        "startLine": 142,
+        "startChar": 16,
+        "endLine": 142,
+        "endChar": 76
+      },
+      "revId": "8356495107f8f5c697627a8efe00f56eafd043be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
