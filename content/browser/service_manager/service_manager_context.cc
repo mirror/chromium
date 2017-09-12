@@ -345,6 +345,8 @@ ServiceManagerContext::ServiceManagerContext() {
     service_manager::EmbeddedServiceInfo resource_coordinator_info;
     resource_coordinator_info.factory =
         base::Bind(&resource_coordinator::ResourceCoordinatorService::Create);
+    resource_coordinator_info.task_runner =
+        BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
     packaged_services_connection_->AddEmbeddedService(
         resource_coordinator::mojom::kServiceName, resource_coordinator_info);
   }
