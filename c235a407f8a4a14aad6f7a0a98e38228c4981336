@@ -86,6 +86,24 @@
       "revId": "c235a407f8a4a14aad6f7a0a98e38228c4981336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e12c22b8_7af63e8c",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-12T14:10:53Z",
+      "side": 1,
+      "message": "Oops, sorry, I missed that this was in chrome/browser code. We have too much ash system UI code in chrome/browser. :-(",
+      "parentUuid": "3257b580_a19a528f",
+      "revId": "c235a407f8a4a14aad6f7a0a98e38228c4981336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
