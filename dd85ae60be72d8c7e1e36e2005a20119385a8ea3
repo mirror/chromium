@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3649b693_dec27532",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 87978,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-12T04:22:12Z",
+      "side": 1,
+      "message": "Since you\u0027re changing the semantics of this histogram, please deprecate the old one (mark it as \u003cobsolete\u003e) and introduce a new histogram with a different name.  Otherwise, it can be hard to reason about the data, as different Chrome versions have different semantics.",
+      "range": {
+        "startLine": 87978,
+        "startChar": 75,
+        "endLine": 87978,
+        "endChar": 0
+      },
+      "revId": "dd85ae60be72d8c7e1e36e2005a20119385a8ea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
