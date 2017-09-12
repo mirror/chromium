@@ -34,7 +34,9 @@ libFuzzer.
 * [Reproducing] contains information on how to reproduce bugs reported by
   ClusterFuzz.
 * [Reference] contains detailed references for different integration parts.
-
+* [Getting Started With libprotobuf-mutator Guide] walks through the steps
+necessary to create a libprotobuf-mutator fuzzer, for developers already 
+familiar with libFuzzer.
 
 ## Trophies
 * [ClusterFuzz Bugs] - issues found and automatically filed by ClusterFuzz.
@@ -63,3 +65,4 @@ libFuzzer.
 [OSS Trophies]: http://llvm.org/docs/LibFuzzer.html#trophies
 [Guided in-process fuzzing of Chrome components]: https://security.googleblog.com/2016/08/guided-in-process-fuzzing-of-chrome.html
 [libFuzzer Infrastructure Bugs]: https://bugs.chromium.org/p/chromium/issues/list?q=label:LibFuzzer-Infra
+[Getting Started With libprotobuf-mutator Guide]: libprotobuf-mutator.md
