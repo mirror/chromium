@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b3410ba_6bd1cde2",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-12T18:52:46Z",
+      "side": 1,
+      "message": "Added InterfaceRequest as a parameter to the ctor.",
+      "parentUuid": "cbc926de_31d82a2f",
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86c5bde7_f18fdc2e",
         "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy_unittest.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "59020c83_6054c15c",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-12T18:52:46Z",
+      "side": 1,
+      "message": "Removed the use of MR here",
+      "parentUuid": "86c5bde7_f18fdc2e",
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70fbd2b2_b41d01fb",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 6
@@ -47,6 +83,30 @@
       "writtenOn": "2017-09-11T22:08:43Z",
       "side": 1,
       "message": "IMO there\u0027s a layering problem here. We shouldn\u0027t rely on EMRPP to circle back to MRMojoImpl perform these checks with side effects. EMRPP or any other MRPs should have as little access to internal states of MRMojoImpl as possible. In terms of correctness, MRMojoImpl should be the only doing these checks before forwarding the calls to the MRPs; otherwise only the desktop implementation will have these checks in place.",
+      "range": {
+        "startLine": 365,
+        "startChar": 33,
+        "endLine": 365,
+        "endChar": 0
+      },
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da868950_19225c54",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-12T18:52:46Z",
+      "side": 1,
+      "message": "I agree that we want to avoid MRPs reaching into MR\u0027s internal states if possible. I\u0027m thinking of doing the checks and state changes when we queue a request but not when we execute it (as shown in the new patchset). This might be more inefficient in some cases e.g. when we queue requests to both start and stop observing, but correctness shouldn\u0027t be affected if we keep the order of the requests. What do you think?",
+      "parentUuid": "70fbd2b2_b41d01fb",
       "range": {
         "startLine": 365,
         "startChar": 33,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "d70382a4_1c80f8ad",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-12T18:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd4d2db0_e26cda60",
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cae86386_1259cab7",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.cc",
         "patchSetId": 6
@@ -90,6 +168,24 @@
       "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31597e61_ac694b3c",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-12T18:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cae86386_1259cab7",
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "f27ca49a_660c672e",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-12T18:52:46Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "fb9b7e2a_f761532a",
+      "range": {
+        "startLine": 33,
+        "startChar": 51,
+        "endLine": 33,
+        "endChar": 63
+      },
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c80b447_174494c8",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.h",
         "patchSetId": 6
@@ -127,6 +247,24 @@
       "writtenOn": "2017-09-11T22:08:43Z",
       "side": 1,
       "message": "Should these be parameters be passed by value?",
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845d5e33_481f31ae",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-12T18:52:46Z",
+      "side": 1,
+      "message": "I\u0027m not sure how to make WithArg() move the callback object when calling this function, which would be necessary for passing by value.",
+      "parentUuid": "0c80b447_174494c8",
       "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
