@@ -43,11 +43,8 @@ int AutocompleteClassifier::DefaultOmniboxProviders() {
       // Custom search engines cannot be used on mobile.
       AutocompleteProvider::TYPE_KEYWORD |
 #endif
-#if !defined(OS_IOS)
-      // "Shortcuts" and "Zero Suggest" are not supported on iOS.
       AutocompleteProvider::TYPE_SHORTCUTS |
       AutocompleteProvider::TYPE_ZERO_SUGGEST |
-#endif
       (base::FeatureList::IsEnabled(omnibox::kEnableClipboardProvider)
            ? AutocompleteProvider::TYPE_CLIPBOARD_URL
            : 0) |
