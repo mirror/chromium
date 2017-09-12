@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33c10272_f4ef3566",
+        "filename": "remoting/host/input_injector_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-09-12T22:29:38Z",
+      "side": 1,
+      "message": "Removed any dependency on Ozone from //remoting/. ui::CreateSystemInputInjector() now consults either an override or a native input injector factory, determined by what\u0027s been set.",
+      "parentUuid": "b462e8a2_8cb6ef92",
+      "range": {
+        "startLine": 149,
+        "startChar": 14,
+        "endLine": 149,
+        "endChar": 45
+      },
+      "revId": "2f938bf92d116ed5a0e36132906ab9272871af10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bad0517_cfa8f76f",
         "filename": "ui/aura/mus/system_input_injector_mus.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "2f938bf92d116ed5a0e36132906ab9272871af10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "145d84ea_183fe331",
+        "filename": "ui/aura/mus/system_input_injector_mus.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-09-12T22:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bad0517_cfa8f76f",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 24
+      },
+      "revId": "2f938bf92d116ed5a0e36132906ab9272871af10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
