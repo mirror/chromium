@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "40215b25_7d9084ce",
+        "filename": "components/drive/chromeos/file_system/copy_operation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-12T10:44:08Z",
+      "side": 1,
+      "message": "I\u0027m not very sure what you think is unclear, but anyway I\u0027ll try my best to clarify the comment here. If you still think it\u0027s unclear, please talk to me offline, or suggest texts.",
+      "parentUuid": "dee0a519_56c42120",
+      "range": {
+        "startLine": 139,
+        "startChar": 5,
+        "endLine": 139,
+        "endChar": 43
+      },
+      "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48516c5c_db49529f",
         "filename": "components/drive/drive.proto",
         "patchSetId": 9
@@ -170,6 +194,24 @@
       "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70f5542_c16e8220",
+        "filename": "components/drive/file_system/copy_operation_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-12T10:44:08Z",
+      "side": 1,
+      "message": "OK, let\u0027s ask the owner.",
+      "parentUuid": "7cf66359_0831849b",
+      "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

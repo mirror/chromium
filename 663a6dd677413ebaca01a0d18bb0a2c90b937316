@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "04ea4880_799d27dc",
+        "filename": "chrome/browser/sync_file_system/drive_backend/conflict_resolver_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-12T10:44:08Z",
+      "side": 1,
+      "message": "Before my change last_modified of all files were 0, but now they differ, and the latest file is picked as a primary.\nhttps://cs.chromium.org/chromium/src/chrome/browser/sync_file_system/drive_backend/conflict_resolver.cc?rcl\u003d251a3311605b4f065b84d26a150ff1a3feb4abd0\u0026l\u003d204\n\nI\u0027m not 100% sure this test intended comparing files with the same timestamp or with different timestamps, but my bet is the latter and I updated the expectation. I\u0027ll ask the owner if I\u0027m right.",
+      "parentUuid": "6cad8161_ee06596c",
+      "revId": "663a6dd677413ebaca01a0d18bb0a2c90b937316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2c60cb2_5adfcdbf",
         "filename": "components/drive/chromeos/file_system/copy_operation.h",
         "patchSetId": 11
@@ -62,6 +80,54 @@
       "revId": "663a6dd677413ebaca01a0d18bb0a2c90b937316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74269270_72ae2435",
+        "filename": "components/drive/chromeos/file_system/copy_operation.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-12T10:44:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2c60cb2_5adfcdbf",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 12
+      },
+      "revId": "663a6dd677413ebaca01a0d18bb0a2c90b937316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97dbbaba_8c0d5cdb",
+        "filename": "components/drive/chromeos/file_system/copy_operation.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-09-12T10:44:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dd81c03_699c27dc",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 61
+      },
+      "revId": "663a6dd677413ebaca01a0d18bb0a2c90b937316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
