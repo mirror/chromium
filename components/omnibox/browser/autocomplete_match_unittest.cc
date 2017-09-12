@@ -227,8 +227,10 @@ TEST(AutocompleteMatchTest, GetMatchComponents) {
 
       // Match within the subdomain.
       {"http://www.google.com", {"www"}, false, true, false},
+      {"http://www.google.com", {"www."}, false, true, false},
       // Don't consider matches on the '.' delimiter as a match_in_subdomain.
       {"http://www.google.com", {"."}, false, false, false},
+      {"http://www.google.com", {".goo"}, false, false, false},
       // Matches within the domain.
       {"http://www.google.com", {"goo"}, false, false, false},
       // Verify that in private registries, we detect matches in subdomains.

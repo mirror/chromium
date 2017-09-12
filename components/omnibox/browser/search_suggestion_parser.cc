@@ -270,23 +270,20 @@ SearchSuggestionParser::NavigationResult::CalculateAndClassifyMatchContents(
     return;
   }
 
-  // First look for the user's input inside the formatted url as it would be
-  // without trimming the scheme, so we can find matches at the beginning of the
-  // scheme.
-  const URLPrefix* prefix =
-      URLPrefix::BestURLPrefix(formatted_url_, input_text);
-  size_t match_start = (prefix == NULL) ?
-      formatted_url_.find(input_text) : prefix->prefix.length();
+  size_t match_start =
+      url_.possibly_invalid_spec().find(base::UTF16ToUTF8(input_text));
 
   bool match_in_scheme = false;
   bool match_in_subdomain = false;
   bool match_after_host = false;
-  AutocompleteMatch::GetMatchComponents(
-      url_, {{match_start, match_start + input_text.length()}},
-      &match_in_scheme, &match_in_subdomain, &match_after_host);
+  if (match_start != std::string::npos) {
+    AutocompleteMatch::GetMatchComponents(
+        url_, {{match_start, match_start + input_text.length()}},
+        &match_in_scheme, &match_in_subdomain, &match_after_host);
+  }
+
   auto format_types = AutocompleteMatch::GetFormatTypes(
       match_in_scheme, match_in_subdomain, match_after_host);
-
   base::string16 match_contents =
       url_formatter::FormatUrl(url_, format_types, net::UnescapeRule::SPACES,
                                nullptr, nullptr, &match_start);
