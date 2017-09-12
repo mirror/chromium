@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3b37d95a_17b07d16",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-12T00:19:21Z",
+      "side": 1,
+      "message": "I called it hacky mainly because it involved hard coded indexes to filter out noises and locate line coverage stats from the output. But I think you\u0027re right, hacky is not the correct word here, the output is consistent.",
+      "parentUuid": "be90ce5b_dd2f8155",
+      "range": {
+        "startLine": 135,
+        "startChar": 71,
+        "endLine": 135,
+        "endChar": 76
+      },
+      "revId": "1e45accca01f31d86af8e9a4763acd92f0c6ee31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cec8e8d5_3ca82927",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "05465c60_5c54f14d",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-12T00:19:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cec8e8d5_3ca82927",
+      "range": {
+        "startLine": 170,
+        "startChar": 18,
+        "endLine": 170,
+        "endChar": 24
+      },
+      "revId": "1e45accca01f31d86af8e9a4763acd92f0c6ee31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f7129c5_c4a1fffd",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-11T22:50:46Z",
       "side": 1,
       "message": "maybe move the comments from above about this variable to here?\n\n\"The 3rd to last line contains the total number of lines.\"",
+      "range": {
+        "startLine": 178,
+        "startChar": 24,
+        "endLine": 178,
+        "endChar": 0
+      },
+      "revId": "1e45accca01f31d86af8e9a4763acd92f0c6ee31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1607384_af969a9e",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-12T00:19:21Z",
+      "side": 1,
+      "message": "The above comment is not related to the index. Above comment strips out unrelated lines, however, here the indexes are used to identify the correct columns.",
+      "parentUuid": "0f7129c5_c4a1fffd",
       "range": {
         "startLine": 178,
         "startChar": 24,
@@ -108,6 +180,48 @@
       "revId": "1e45accca01f31d86af8e9a4763acd92f0c6ee31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2944477_5011e227",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-12T00:19:21Z",
+      "side": 1,
+      "message": "I agree \"uncovered_lines\" is a better name, but I name it \"missed_lines\" just to be consistent with the headers in the output: \"Missed Lines\"",
+      "parentUuid": "eaea4a21_d6eccb5a",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 20
+      },
+      "revId": "1e45accca01f31d86af8e9a4763acd92f0c6ee31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436c84db_fe90b342",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-12T00:19:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c240738_1ee2ff64",
+      "revId": "1e45accca01f31d86af8e9a4763acd92f0c6ee31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
