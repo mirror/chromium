@@ -48,6 +48,8 @@ const CGFloat kVerticalPaddingBetweenLabelAndDetailLabel = 8;
   [super configureCell:cell];
   cell.imageView.image = self.image;
   cell.accessoryType = self.accessoryType;
+  if (cell.accessoryType == MDCCollectionViewCellAccessoryDisclosureIndicator)
+    cell.accessoryView.tintColor = [[MDCPalette greyPalette] tint400];
 
   cell.textLabel.attributedText =
       [self attributedStringForText:self.text

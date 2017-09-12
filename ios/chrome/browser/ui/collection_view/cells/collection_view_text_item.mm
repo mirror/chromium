@@ -67,6 +67,8 @@
 - (void)configureCell:(CollectionViewTextCell*)cell {
   [super configureCell:cell];
   cell.accessoryType = self.accessoryType;
+  if (cell.accessoryType == MDCCollectionViewCellAccessoryDisclosureIndicator)
+    cell.accessoryView.tintColor = [[MDCPalette greyPalette] tint400];
   cell.textLabel.text = self.text;
   cell.detailTextLabel.text = self.detailText;
   cell.isAccessibilityElement = YES;

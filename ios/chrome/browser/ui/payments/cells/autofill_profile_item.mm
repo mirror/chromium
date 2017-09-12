@@ -47,6 +47,8 @@ const CGFloat kVerticalSpacingBetweenLabels = 8;
 - (void)configureCell:(AutofillProfileCell*)cell {
   [super configureCell:cell];
   cell.accessoryType = self.accessoryType;
+  if (cell.accessoryType == MDCCollectionViewCellAccessoryDisclosureIndicator)
+    cell.accessoryView.tintColor = [[MDCPalette greyPalette] tint400];
   cell.nameLabel.text = self.name;
   cell.addressLabel.text = self.address;
   cell.phoneNumberLabel.text = self.phoneNumber;
