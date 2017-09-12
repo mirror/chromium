@@ -1,0 +1,265 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9b80831_255da130",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:39:52Z",
+      "side": 1,
+      "message": "Change the CL description (note that you can just use the edit button on this page) to something like:\n\nAdding an empty chrome://interventions page\n\nThis page will add new functionality for debugging interventions in chrome, but for now it shows \"Interventions -- Comming soon!\".",
+      "revId": "7ee8ac2225a85bbc2548c6fe3f69f9e0fcd69a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3a76dd_cb755014",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:39:52Z",
+      "side": 1,
+      "message": "Remove this and remove file from changelist.",
+      "revId": "7ee8ac2225a85bbc2548c6fe3f69f9e0fcd69a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb688268_91e3e421",
+        "filename": "chrome/browser/resources/interventions_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:39:52Z",
+      "side": 1,
+      "message": "You can actually put the html in browser_resource.grd I believe. Separating the resources is only needed for larger projects that will have many resources.\n\nSee https://codereview.chromium.org/2003883002",
+      "revId": "7ee8ac2225a85bbc2548c6fe3f69f9e0fcd69a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7c68e6_6e96e3a0",
+        "filename": "chrome/browser/ui/webui/interventions/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:39:52Z",
+      "side": 1,
+      "message": "Not sure you need these deps or any DEPS file here",
+      "revId": "7ee8ac2225a85bbc2548c6fe3f69f9e0fcd69a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37dd194_0ace2289",
+        "filename": "chrome/browser/ui/webui/interventions/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:39:52Z",
+      "side": 1,
+      "message": "chromium only allows committers to be OWNERS, so remove yourself.",
+      "revId": "7ee8ac2225a85bbc2548c6fe3f69f9e0fcd69a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5952b3_c124f950",
+        "filename": "chrome/browser/ui/webui/interventions/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:39:52Z",
+      "side": 1,
+      "message": "ryansturm@chromium.org",
+      "revId": "7ee8ac2225a85bbc2548c6fe3f69f9e0fcd69a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533da2df_d7d173e6",
+        "filename": "chrome/browser/ui/webui/interventions/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:39:52Z",
+      "side": 1,
+      "message": "s/Internals\u003eNetwork\u003eLogging/UI\u003eBrowser\u003ePreviews/",
+      "revId": "7ee8ac2225a85bbc2548c6fe3f69f9e0fcd69a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78407af_c029c55e",
+        "filename": "chrome/browser/ui/webui/interventions/interventions_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:39:52Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "7ee8ac2225a85bbc2548c6fe3f69f9e0fcd69a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56aaff0c_94477bd6",
+        "filename": "chrome/browser/ui/webui/interventions/interventions_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:39:52Z",
+      "side": 1,
+      "message": "Go through thee headers and only include the ones that are used in this file. In general, chromium code includes what it needs in the header in the header, and anything extra it needs in the cc file. When there is an object that can be forward declared in the header, we will forward declare it there and include the header in the cc file.\n\nIt\u0027s somewhat confusing if you don\u0027t know about the c++ compile system, so feel free to ask for more details.",
+      "revId": "7ee8ac2225a85bbc2548c6fe3f69f9e0fcd69a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97cde31f_ea995244",
+        "filename": "chrome/browser/ui/webui/interventions/interventions_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:39:52Z",
+      "side": 1,
+      "message": "Remove all using, as chromium no longer uses it.",
+      "revId": "7ee8ac2225a85bbc2548c6fe3f69f9e0fcd69a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "367b186e_9bf0291c",
+        "filename": "chrome/browser/ui/webui/interventions/interventions_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:39:52Z",
+      "side": 1,
+      "message": "remove this block comment, it\u0027s a weird net/ style thing that we don\u0027t use.",
+      "revId": "7ee8ac2225a85bbc2548c6fe3f69f9e0fcd69a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9534413c_097e8201",
+        "filename": "chrome/browser/ui/webui/interventions/interventions_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:39:52Z",
+      "side": 1,
+      "message": "remove log",
+      "revId": "7ee8ac2225a85bbc2548c6fe3f69f9e0fcd69a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b85c49b_8896b055",
+        "filename": "chrome/browser/ui/webui/interventions/interventions_ui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:39:52Z",
+      "side": 1,
+      "message": "2017",
+      "revId": "7ee8ac2225a85bbc2548c6fe3f69f9e0fcd69a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b46fc5_59da5f40",
+        "filename": "chrome/browser/ui/webui/net_internals/net_internals_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:39:52Z",
+      "side": 1,
+      "message": "Remove this and undo changes to the file.",
+      "revId": "7ee8ac2225a85bbc2548c6fe3f69f9e0fcd69a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b62c926_fabeb704",
+        "filename": "chrome/common/url_constants.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:39:52Z",
+      "side": 1,
+      "message": "There should be a corresponding entry in tools/histograms/enums.xml under WebUIUrlHashes",
+      "revId": "7ee8ac2225a85bbc2548c6fe3f69f9e0fcd69a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
