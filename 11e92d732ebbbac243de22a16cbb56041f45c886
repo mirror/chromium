@@ -34,6 +34,24 @@
       "revId": "11e92d732ebbbac243de22a16cbb56041f45c886",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ec1c43e_f52fc836",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-09-12T17:04:30Z",
+      "side": 1,
+      "message": "Right, that was the old Aura behavior which is not possible after unification with Clank. In this case I\u0027d guess rest of this condition which checks for |is_selection_dragging| and the above comment and code are also useless after your change. Right?",
+      "parentUuid": "e809ce6a_fcd17940",
+      "revId": "11e92d732ebbbac243de22a16cbb56041f45c886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
