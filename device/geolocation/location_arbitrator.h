@@ -59,10 +59,8 @@ class DEVICE_GEOLOCATION_EXPORT LocationArbitrator : public LocationProvider {
   // testing classes.
   virtual scoped_refptr<AccessTokenStore> NewAccessTokenStore();
   virtual std::unique_ptr<LocationProvider> NewNetworkLocationProvider(
-      const scoped_refptr<AccessTokenStore>& access_token_store,
       const scoped_refptr<net::URLRequestContextGetter>& context,
-      const GURL& url,
-      const base::string16& access_token);
+      const std::string& api_key);
   virtual std::unique_ptr<LocationProvider> NewSystemLocationProvider();
   virtual base::Time GetTimeNow() const;
 
