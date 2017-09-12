@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "261df7a0_26d350b8",
+        "filename": "components/exo/data_device_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-12T03:55:05Z",
+      "side": 1,
+      "message": "nit: This event seems a bit inappropriate as a member. I think it would be a bit more appropriate as variable in each test function",
+      "revId": "354aa09e1fc2cdce1dfee2a8878b1d7ada2824cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be94653_d5334358",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-12T03:55:05Z",
+      "side": 1,
+      "message": "please add a really minimal implementation to data_device_unittest.cc instead",
+      "revId": "354aa09e1fc2cdce1dfee2a8878b1d7ada2824cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
