@@ -22,6 +22,30 @@
       "revId": "ce503b9877b11f3cee0f97a238df18096197c95f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5c0243_96a6c816",
+        "filename": "net/interfaces/ip_endpoint.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T00:14:54Z",
+      "side": 1,
+      "message": "Yep: should have mentioned but I\u0027m working on more local tests. I just wanted to get some overall thoughts on this looks from the GN side and overall implementation first.",
+      "parentUuid": "682a6473_05a40484",
+      "range": {
+        "startLine": 13,
+        "startChar": 35,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "ce503b9877b11f3cee0f97a238df18096197c95f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
