@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d3e5c2d2_60b35af4",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-12T09:12:32Z",
+      "side": 1,
+      "message": "Ah, actually I think this is the first place to use |remote_endpoints_|.\n\n1: Add a MockServiceWorkerContainer.\nYou can refer to ServiceWorkerInstalledScriptsSenderTest. That test creates MockSWInstalledScriptsManager which is mocking a renderer-side class.\nhttps://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc?type\u003dcs\u0026q\u003dMockServiceWorkerInstalledScriptsManager\u0026sq\u003dpackage:chromium\u0026l\u003d183\n\n2: Bind the instance with remote_endpoints_.client_request().\n3: Check if the method is actually called. You might need to call base::RunLoop().RunUntilIdle().",
+      "parentUuid": "dec059bb_f32a4a80",
+      "range": {
+        "startLine": 399,
+        "startChar": 29,
+        "endLine": 399,
+        "endChar": 0
+      },
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4526a3e1_2a8cdc63",
         "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
         "patchSetId": 3
