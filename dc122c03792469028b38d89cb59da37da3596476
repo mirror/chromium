@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90432f59_2539a3ff",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-12T22:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "282acfd2_9818d8f4",
+      "range": {
+        "startLine": 2,
+        "startChar": 18,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "dc122c03792469028b38d89cb59da37da3596476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fd4009a_5af2ee45",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html-media-capture/OWNERS",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-12T15:19:37Z",
       "side": 1,
       "message": "#TEAM: media-dev@chromium.org ?",
+      "revId": "dc122c03792469028b38d89cb59da37da3596476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9c2916_ef71588b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html-media-capture/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-12T22:25:56Z",
+      "side": 1,
+      "message": "Gladly, I wasn\u0027t sure how broad the umbrella was.",
+      "parentUuid": "0fd4009a_5af2ee45",
       "revId": "dc122c03792469028b38d89cb59da37da3596476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "8751fca2_1861ae34",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-record/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-12T22:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eec931f1_4fbfff9d",
+      "revId": "dc122c03792469028b38d89cb59da37da3596476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9006a644_6fc1dc27",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/navigation-timing/OWNERS",
         "patchSetId": 3
@@ -70,6 +130,30 @@
       "writtenOn": "2017-09-12T20:40:20Z",
       "side": 1,
       "message": "This probably be tyoshino",
+      "range": {
+        "startLine": 2,
+        "startChar": 20,
+        "endLine": 2,
+        "endChar": 0
+      },
+      "revId": "dc122c03792469028b38d89cb59da37da3596476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af720fab_95451911",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/navigation-timing/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-12T22:25:56Z",
+      "side": 1,
+      "message": "Do you that sunjian@, panicker@, or both should be replaced?",
+      "parentUuid": "9006a644_6fc1dc27",
       "range": {
         "startLine": 2,
         "startChar": 20,
