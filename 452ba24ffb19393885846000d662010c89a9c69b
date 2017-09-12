@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "895058de_3ea2ad0b",
+        "filename": "content/shell/browser/shell_browser_main_parts.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-12T23:02:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c6dd707_6a10a375",
+      "revId": "452ba24ffb19393885846000d662010c89a9c69b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17f15dd0_066deb96",
         "filename": "content/shell/browser/shell_browser_main_parts.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "452ba24ffb19393885846000d662010c89a9c69b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb20a078_68eac20b",
+        "filename": "content/shell/browser/shell_browser_main_parts.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-12T23:02:04Z",
+      "side": 1,
+      "message": "I think you\u0027re right. I will leave any change to a separate CL though.\n\nGeolocationDelegate will be removed soonish actually, though I plan to use it for one more thing before then.",
+      "parentUuid": "17f15dd0_066deb96",
+      "revId": "452ba24ffb19393885846000d662010c89a9c69b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
