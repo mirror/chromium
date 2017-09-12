@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3af17297_1f247ecc",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-09-12T22:17:48Z",
+      "side": 1,
+      "message": "I would suggest having this cleanup in a separate CL. The rename CL should be just mechanic changes because it will touch many files. It is hard to track if something unexpected happens.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 6
+      },
+      "revId": "b4728320120adfaa7a3743e85fae2b4406d9e076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e718e0c1_77170455",
+        "filename": "services/resource_coordinator/coordination_unit/mock_coordination_unit_graphs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-09-12T22:17:48Z",
+      "side": 1,
+      "message": "Is it possible to just use page and process (full names)? Or PA (Page) and PR (Process)?",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 5
+      },
+      "revId": "b4728320120adfaa7a3743e85fae2b4406d9e076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
