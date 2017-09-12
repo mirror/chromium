@@ -16,6 +16,24 @@
       "revId": "b2fd4ab556f8cfbb2b33a17c356af6569192e0b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aac6c05_3a111bf2",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-12T16:52:33Z",
+      "side": 1,
+      "message": "This DHCECK verifies that correct observed value is being passed to WaitEnd() below, so to me this seems like a reasonable place for it (perhaps it would be better if there was no empty line between the DCHECK and WaitEnd()). Anyway, given that I already landed this CL I think we can keep it as is and fix it when this code needs to be changed again.",
+      "parentUuid": "10c674e4_aaa11b65",
+      "revId": "b2fd4ab556f8cfbb2b33a17c356af6569192e0b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
