@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1165e57f_aa8eaed4",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/css_properties.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-12T00:45:26Z",
+      "side": 1,
+      "message": "Hmm, is it possible to put this code into make_computed_style_base? Seems a bit weird to put computed style specific code in something which is used by other code generators.",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "542e961e_2b970520",
+        "filename": "third_party/WebKit/Source/build/scripts/make_style_builder.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-12T00:45:26Z",
+      "side": 1,
+      "message": "Again, is it possible to put this in make_computed_style_base, or a separate utility/helper file?",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb87b214_621af60f",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-12T00:45:26Z",
+      "side": 1,
+      "message": "Feel free to remove the field_ prefix now, since everything here is field-level.",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6fec5f7_7dd14acc",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-12T00:45:26Z",
+      "side": 1,
+      "message": "This is not related to ComputedStyle.",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc1fb9c_c73a932b",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-12T00:45:26Z",
+      "side": 1,
+      "message": "I think this is a property-level parameter, unless there are properties with both inherited and noninherited fields?",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4757251_9c5fb540",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-12T00:45:26Z",
+      "side": 1,
+      "message": "Hmmm, I think independent is a property-level parameter. Did you have trouble keeping this as property level?",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
