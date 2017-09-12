@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "918c62be_4cd43850",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-12T18:03:17Z",
+      "side": 1,
+      "message": "nit: This should be done by follow up patch(es). Please revise patch description.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 53
+      },
+      "revId": "b466337123f8ee9aab69bfab87d67ce1f5cd3961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d68620_756dd5a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-12T18:03:17Z",
+      "side": 1,
+      "message": "Please add bug number 764420.",
+      "revId": "b466337123f8ee9aab69bfab87d67ce1f5cd3961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
