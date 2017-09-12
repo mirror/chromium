@@ -111,6 +111,11 @@ class CSSParserImpl {
       size_t offset,
       const CSSParserContext*);
 
+  static HeapVector<CSSProperty> ParseContentValuesForLazyStyle(
+      const String&,
+      size_t offset,
+      const CSSParserContext*);
+
  private:
   enum RuleListType { kTopLevelRuleList, kRegularRuleList, kKeyframesRuleList };
 
@@ -147,6 +152,8 @@ class CSSParserImpl {
                               CSSParserTokenStream& block);
 
   void ConsumeDeclarationList(CSSParserTokenStream&, StyleRule::RuleType);
+  HeapVector<CSSProperty> ConsumeContentValues(CSSParserTokenStream&,
+                                               StyleRule::RuleType);
   void ConsumeDeclaration(CSSParserTokenRange, StyleRule::RuleType);
   void ConsumeDeclarationValue(CSSParserTokenRange,
                                CSSPropertyID,

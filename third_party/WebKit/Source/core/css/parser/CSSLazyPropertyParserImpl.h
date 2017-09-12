@@ -21,6 +21,7 @@ class CSSLazyPropertyParserImpl : public CSSLazyPropertyParser {
 
   // CSSLazyPropertyParser:
   StylePropertySet* ParseProperties() override;
+  HeapVector<CSSProperty> ParseContentValues() override;
 
   DEFINE_INLINE_TRACE() {
     visitor->Trace(lazy_state_);

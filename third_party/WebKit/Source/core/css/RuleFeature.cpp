@@ -518,18 +518,29 @@ void RuleFeatureSet::UpdateInvalidationSetsForContentAttribute(
   // If any ::before and ::after rules specify 'content: attr(...)', we
   // need to create invalidation sets for those attributes to have content
   // changes applied through style recalc.
+  if (rule_data.Rule()->HasParsedProperties()) {
+    const StylePropertySet& property_set = rule_data.Rule()->Properties();
 
-  const StylePropertySet& property_set = rule_data.Rule()->Properties();
+    int property_index = property_set.FindPropertyIndex(CSSPropertyContent);
 
-  int property_index = property_set.FindPropertyIndex(CSSPropertyContent);
+    if (property_index == -1)
+      return;
 
-  if (property_index == -1)
-    return;
+    StylePropertySet::PropertyReference content_property =
+        property_set.PropertyAt(property_index);
+    EnsureContentAttributeInvalidationSet(content_property.Value());
 
-  StylePropertySet::PropertyReference content_property =
-      property_set.PropertyAt(property_index);
-  const CSSValue& content_value = content_property.Value();
+  } else {
+    const HeapVector<CSSProperty> content_values =
+        rule_data.Rule()->ContentValues();
 
+    for (auto& content_property : content_values)
+      EnsureContentAttributeInvalidationSet(*content_property.Value());
+  }
+}
+
+void RuleFeatureSet::EnsureContentAttributeInvalidationSet(
+    const CSSValue& content_value) {
   if (!content_value.IsValueList())
     return;
 
