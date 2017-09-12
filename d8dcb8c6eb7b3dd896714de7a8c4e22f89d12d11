@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed809203_0c069f05",
+        "filename": "tools/perf/contrib/cros_benchmarks/tab_switching_bench.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-09-12T18:08:49Z",
+      "side": 1,
+      "message": "supernit: are there two or one spaces after an end-of-line comment? You seem to use both styles.",
+      "revId": "d8dcb8c6eb7b3dd896714de7a8c4e22f89d12d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
