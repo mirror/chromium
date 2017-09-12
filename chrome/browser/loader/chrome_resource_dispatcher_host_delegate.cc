@@ -403,9 +403,10 @@ ChromeResourceDispatcherHostDelegate::ChromeResourceDispatcherHostDelegate()
     : download_request_limiter_(g_browser_process->download_request_limiter()),
       safe_browsing_(g_browser_process->safe_browsing_service())
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-      , user_script_listener_(new extensions::UserScriptListener())
+      ,
+      user_script_listener_(new extensions::UserScriptListener())
 #endif
-      {
+{
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(
@@ -466,8 +467,7 @@ void ChromeResourceDispatcherHostDelegate::RequestBeginning(
                                          info->GetResourceType()));
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
-  ProfileIOData* io_data = ProfileIOData::FromResourceContext(
-      resource_context);
+  ProfileIOData* io_data = ProfileIOData::FromResourceContext(resource_context);
 
 #if defined(OS_ANDROID)
   if (resource_type != content::RESOURCE_TYPE_MAIN_FRAME)
@@ -512,9 +512,7 @@ void ChromeResourceDispatcherHostDelegate::RequestBeginning(
   signin::FixAccountConsistencyRequestHeader(request, GURL() /* redirect_url */,
                                              io_data);
 
-  AppendStandardResourceThrottles(request,
-                                  resource_context,
-                                  resource_type,
+  AppendStandardResourceThrottles(request, resource_context, resource_type,
                                   throttles);
 #if BUILDFLAG(ENABLE_NACL)
   AppendComponentUpdaterThrottles(request, *info, resource_context,
@@ -535,7 +533,7 @@ void ChromeResourceDispatcherHostDelegate::DownloadStarting(
     bool is_new_request,
     std::vector<std::unique_ptr<content::ResourceThrottle>>* throttles) {
   const content::ResourceRequestInfo* info =
-        content::ResourceRequestInfo::ForRequest(request);
+      content::ResourceRequestInfo::ForRequest(request);
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&NotifyDownloadInitiatedOnUI,
@@ -551,8 +549,7 @@ void ChromeResourceDispatcherHostDelegate::DownloadStarting(
   // If this isn't a new request, the standard resource throttles have already
   // been added, so no need to add them again.
   if (is_new_request) {
-    AppendStandardResourceThrottles(request,
-                                    resource_context,
+    AppendStandardResourceThrottles(request, resource_context,
                                     content::RESOURCE_TYPE_MAIN_FRAME,
                                     throttles);
 #if defined(OS_ANDROID)
@@ -574,8 +571,9 @@ void ChromeResourceDispatcherHostDelegate::DownloadStarting(
 }
 
 ResourceDispatcherHostLoginDelegate*
-    ChromeResourceDispatcherHostDelegate::CreateLoginDelegate(
-        net::AuthChallengeInfo* auth_info, net::URLRequest* request) {
+ChromeResourceDispatcherHostDelegate::CreateLoginDelegate(
+    net::AuthChallengeInfo* auth_info,
+    net::URLRequest* request) {
   return CreateLoginPrompt(auth_info, request);
 }
 
@@ -603,8 +601,8 @@ bool ChromeResourceDispatcherHostDelegate::HandleExternalProtocol(
   ChromeNavigationUIData* navigation_data =
       static_cast<ChromeNavigationUIData*>(info->GetNavigationUIData());
   if ((extensions::WebViewRendererState::GetInstance()->IsGuest(child_id) ||
-      (navigation_data &&
-       navigation_data->GetExtensionNavigationUIData()->is_web_view())) &&
+       (navigation_data &&
+        navigation_data->GetExtensionNavigationUIData()->is_web_view())) &&
       !url.SchemeIs(url::kMailToScheme)) {
     return false;
   }
@@ -682,7 +680,8 @@ void ChromeResourceDispatcherHostDelegate::AppendStandardResourceThrottles(
 }
 
 bool ChromeResourceDispatcherHostDelegate::ShouldForceDownloadResource(
-    const GURL& url, const std::string& mime_type) {
+    const GURL& url,
+    const std::string& mime_type) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   // Special-case user scripts to get downloaded instead of viewed.
   return extensions::UserScript::IsURLUserScript(url, mime_type);
@@ -712,9 +711,8 @@ bool ChromeResourceDispatcherHostDelegate::ShouldInterceptResourceAsStream(
         extension_info_map->extensions().GetByID(extension_id);
     // The white-listed extension may not be installed, so we have to NULL check
     // |extension|.
-    if (!extension ||
-        (profile_is_off_the_record &&
-         !extension_info_map->IsIncognitoEnabled(extension_id))) {
+    if (!extension || (profile_is_off_the_record &&
+                       !extension_info_map->IsIncognitoEnabled(extension_id))) {
       continue;
     }
     MimeTypesHandler* handler = MimeTypesHandler::GetHandler(extension);
@@ -880,8 +878,7 @@ void ChromeResourceDispatcherHostDelegate::RequestComplete(
           url_request->was_cached(), std::move(data_reduction_proxy_data),
           net_error, url_request->GetTotalReceivedBytes(),
           url_request->GetRawBodyBytes(), original_content_length,
-          url_request->creation_time(),
-          std::move(load_timing_info)));
+          url_request->creation_time(), std::move(load_timing_info)));
 }
 
 content::PreviewsState ChromeResourceDispatcherHostDelegate::GetPreviewsState(
@@ -938,7 +935,7 @@ content::PreviewsState ChromeResourceDispatcherHostDelegate::GetPreviewsState(
 // static
 void ChromeResourceDispatcherHostDelegate::
     SetExternalProtocolHandlerDelegateForTesting(
-    ExternalProtocolHandler::Delegate* delegate) {
+        ExternalProtocolHandler::Delegate* delegate) {
   g_external_protocol_handler_delegate = delegate;
 }
 
@@ -971,6 +968,6 @@ ChromeResourceDispatcherHostDelegate::GetNavigationData(
 std::unique_ptr<net::ClientCertStore>
 ChromeResourceDispatcherHostDelegate::CreateClientCertStore(
     content::ResourceContext* resource_context) {
-  return ProfileIOData::FromResourceContext(resource_context)->
-      CreateClientCertStore();
+  return ProfileIOData::FromResourceContext(resource_context)
+      ->CreateClientCertStore();
 }

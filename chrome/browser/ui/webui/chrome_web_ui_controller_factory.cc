@@ -36,6 +36,7 @@
 #include "chrome/browser/ui/webui/identity_internals_ui.h"
 #include "chrome/browser/ui/webui/instant_ui.h"
 #include "chrome/browser/ui/webui/interstitials/interstitial_ui.h"
+#include "chrome/browser/ui/webui/interventions/interventions_ui.h"
 #include "chrome/browser/ui/webui/invalidations_ui.h"
 #include "chrome/browser/ui/webui/local_state/local_state_ui.h"
 #include "chrome/browser/ui/webui/log_web_ui_url.h"
@@ -218,19 +219,19 @@ typedef WebUIController* (*WebUIFactoryFunction)(WebUI* web_ui,
                                                  const GURL& url);
 
 // Template for defining WebUIFactoryFunction.
-template<class T>
+template <class T>
 WebUIController* NewWebUI(WebUI* web_ui, const GURL& url) {
   return new T(web_ui);
 }
 
 // Special case for older about: handlers.
-template<>
+template <>
 WebUIController* NewWebUI<AboutUI>(WebUI* web_ui, const GURL& url) {
   return new AboutUI(web_ui, url.host());
 }
 
 #if defined(OS_CHROMEOS)
-template<>
+template <>
 WebUIController* NewWebUI<chromeos::OobeUI>(WebUI* web_ui, const GURL& url) {
   return new chromeos::OobeUI(web_ui, url);
 }
@@ -248,7 +249,7 @@ WebUIController* NewWebUI<proximity_auth::ProximityAuthUI>(WebUI* web_ui,
 #endif
 
 // Special cases for DOM distiller.
-template<>
+template <>
 WebUIController* NewWebUI<dom_distiller::DomDistillerUi>(WebUI* web_ui,
                                                          const GURL& url) {
   // The DomDistillerUi can not depend on components/dom_distiller/content,
@@ -258,8 +259,8 @@ WebUIController* NewWebUI<dom_distiller::DomDistillerUi>(WebUI* web_ui,
   dom_distiller::DomDistillerService* service =
       dom_distiller::DomDistillerServiceFactory::GetForBrowserContext(
           browser_context);
-  return new dom_distiller::DomDistillerUi(
-      web_ui, service, dom_distiller::kDomDistillerScheme);
+  return new dom_distiller::DomDistillerUi(web_ui, service,
+                                           dom_distiller::kDomDistillerScheme);
 }
 
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
@@ -292,7 +293,7 @@ bool IsAboutUI(const GURL& url) {
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
           || url.host_piece() == chrome::kChromeUIDiscardsHost
 #endif
-          );  // NOLINT
+  );  // NOLINT
 }
 
 // Returns a function that can be used to create the right type of WebUI for a
@@ -337,6 +338,8 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
     return &NewWebUI<InstantUI>;
   if (url.host_piece() == chrome::kChromeUIInterstitialHost)
     return &NewWebUI<InterstitialUI>;
+  if (url.host_piece() == chrome::kChromeUIInterventionsHost)
+    return &NewWebUI<InterventionsUI>;
   if (url.host_piece() == chrome::kChromeUIInvalidationsHost)
     return &NewWebUI<InvalidationsUI>;
   if (url.host_piece() == chrome::kChromeUILocalStateHost)
@@ -382,9 +385,9 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
   if (url.host_piece() == chrome::kChromeUIVersionHost)
     return &NewWebUI<VersionUI>;
 
-  /****************************************************************************
-   * OS Specific #defines
-   ***************************************************************************/
+/****************************************************************************
+ * OS Specific #defines
+ ***************************************************************************/
 #if !defined(OS_ANDROID)
 #if !defined(OS_CHROMEOS)
   // AppLauncherPage is not needed on Android or ChromeOS.
@@ -523,10 +526,10 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
     return &NewWebUI<WelcomeWin10UI>;
 #endif  // defined(OS_WIN)
 
-  /****************************************************************************
-   * Other #defines and special logics.
-   ***************************************************************************/
-#if BUILDFLAG(ENABLE_NACL)
+/****************************************************************************
+ * Other #defines and special logics.
+ ***************************************************************************/
+#if !defined(DISABLE_NACL)
   if (url.host_piece() == chrome::kChromeUINaClHost)
     return &NewWebUI<NaClUI>;
 #endif
@@ -623,19 +626,22 @@ void RunFaviconCallbackAsync(
 }  // namespace
 
 WebUI::TypeID ChromeWebUIControllerFactory::GetWebUIType(
-      content::BrowserContext* browser_context, const GURL& url) const {
+    content::BrowserContext* browser_context,
+    const GURL& url) const {
   Profile* profile = Profile::FromBrowserContext(browser_context);
   WebUIFactoryFunction function = GetWebUIFactoryFunction(NULL, profile, url);
   return function ? reinterpret_cast<WebUI::TypeID>(function) : WebUI::kNoWebUI;
 }
 
 bool ChromeWebUIControllerFactory::UseWebUIForURL(
-    content::BrowserContext* browser_context, const GURL& url) const {
+    content::BrowserContext* browser_context,
+    const GURL& url) const {
   return GetWebUIType(browser_context, url) != WebUI::kNoWebUI;
 }
 
 bool ChromeWebUIControllerFactory::UseWebUIBindingsForURL(
-    content::BrowserContext* browser_context, const GURL& url) const {
+    content::BrowserContext* browser_context,
+    const GURL& url) const {
   return UseWebUIForURL(browser_context, url);
 }
 
@@ -694,8 +700,8 @@ void ChromeWebUIControllerFactory::GetFaviconForURL(
         gfx::Size(candidate_edge_size, candidate_edge_size));
   }
   std::vector<size_t> selected_indices;
-  SelectFaviconFrameIndices(
-      candidate_sizes, desired_sizes_in_pixel, &selected_indices, NULL);
+  SelectFaviconFrameIndices(candidate_sizes, desired_sizes_in_pixel,
+                            &selected_indices, NULL);
   for (size_t i = 0; i < selected_indices.size(); ++i) {
     size_t selected_index = selected_indices[i];
     ui::ScaleFactor selected_resource_scale =
@@ -721,14 +727,13 @@ ChromeWebUIControllerFactory* ChromeWebUIControllerFactory::GetInstance() {
   return base::Singleton<ChromeWebUIControllerFactory>::get();
 }
 
-ChromeWebUIControllerFactory::ChromeWebUIControllerFactory() {
-}
+ChromeWebUIControllerFactory::ChromeWebUIControllerFactory() {}
 
-ChromeWebUIControllerFactory::~ChromeWebUIControllerFactory() {
-}
+ChromeWebUIControllerFactory::~ChromeWebUIControllerFactory() {}
 
 base::RefCountedMemory* ChromeWebUIControllerFactory::GetFaviconResourceBytes(
-    const GURL& page_url, ui::ScaleFactor scale_factor) const {
+    const GURL& page_url,
+    ui::ScaleFactor scale_factor) const {
 #if !defined(OS_ANDROID)  // Bookmarks are part of NTP on Android.
   // The bookmark manager is a chrome extension, so we have to check for it
   // before we check for extension scheme.
