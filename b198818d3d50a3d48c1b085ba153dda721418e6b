@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9667019c_08b6d3bb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/cors-rfc1918/addressspace-document-appcache.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-12T18:37:57Z",
+      "side": 1,
+      "message": "could you please explain the intention of this change in the CL description?",
+      "revId": "b198818d3d50a3d48c1b085ba153dda721418e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
