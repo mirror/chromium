@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bef0ab9_9038aad4",
+        "filename": "chrome/browser/chromeos/policy/DEPS",
+        "patchSetId": 24
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-12T18:16:13Z",
+      "side": 1,
+      "message": "why is this needed?",
+      "revId": "a88358b042b887086015f545bf575ec0c46a67d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e26c74_96d66c68",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-12T18:16:13Z",
+      "side": 1,
+      "message": "please include by full path (third_party/icu/source/i18n/unicode/gregocal.h) - then you also shouldn\u0027t need the DEPS entry",
+      "revId": "a88358b042b887086015f545bf575ec0c46a67d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
