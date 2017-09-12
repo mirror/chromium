@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8cb2d9df_a7c89cae",
+        "filename": "components/autofill/content/renderer/password_generation_agent.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-09-12T11:58:38Z",
+      "side": 1,
+      "message": "I feel that it might trick the user: user clicks \"Generate a strong password...\" and we\u0027re not generating password right away, but instead showing automatic generation. User might think that we already have generated a password.",
+      "parentUuid": "21a46156_87b2a6b0",
+      "range": {
+        "startLine": 630,
+        "startChar": 1,
+        "endLine": 630,
+        "endChar": 50
+      },
+      "revId": "04b0461dc0d207d439cf5f0ed157f82c8c16192e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfa39ff4_de241aac",
         "filename": "components/autofill/content/renderer/password_generation_agent.cc",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "04b0461dc0d207d439cf5f0ed157f82c8c16192e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ce0a46_16bef71d",
+        "filename": "components/autofill/content/renderer/password_generation_agent.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-09-12T11:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfa39ff4_de241aac",
+      "range": {
+        "startLine": 631,
+        "startChar": 6,
+        "endLine": 631,
+        "endChar": 46
+      },
+      "revId": "04b0461dc0d207d439cf5f0ed157f82c8c16192e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "88e6e92f_99b6a805",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-09-12T11:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed5cda9_ad9773e8",
+      "range": {
+        "startLine": 152,
+        "startChar": 3,
+        "endLine": 152,
+        "endChar": 51
+      },
+      "revId": "04b0461dc0d207d439cf5f0ed157f82c8c16192e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55301eee_05fb7d25",
         "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
         "patchSetId": 14
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f3934bf0_92487d31",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-09-12T11:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55301eee_05fb7d25",
+      "range": {
+        "startLine": 154,
+        "startChar": 3,
+        "endLine": 155,
+        "endChar": 28
+      },
+      "revId": "04b0461dc0d207d439cf5f0ed157f82c8c16192e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6c0b73b_390b391e",
         "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
         "patchSetId": 14
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-12T10:13:05Z",
       "side": 1,
       "message": "It\u0027s pity to do round trip between the browser and the renderer processes, but I agree that in the current architecture it\u0027s hard to avoid.",
+      "range": {
+        "startLine": 430,
+        "startChar": 4,
+        "endLine": 430,
+        "endChar": 67
+      },
+      "revId": "04b0461dc0d207d439cf5f0ed157f82c8c16192e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d70a942_6bb8821c",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-09-12T11:58:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f6c0b73b_390b391e",
       "range": {
         "startLine": 430,
         "startChar": 4,
@@ -137,6 +257,30 @@
       "revId": "04b0461dc0d207d439cf5f0ed157f82c8c16192e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf7ce47_dc7ffc67",
+        "filename": "components/password_manager/core/browser/password_autofill_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-09-12T11:58:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19fe684f_c6a37f7b",
+      "range": {
+        "startLine": 1028,
+        "startChar": 0,
+        "endLine": 1029,
+        "endChar": 76
+      },
+      "revId": "04b0461dc0d207d439cf5f0ed157f82c8c16192e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
