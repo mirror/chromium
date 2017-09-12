@@ -22,6 +22,30 @@
       "revId": "2faeea6dc82f7b1638a85c9f86332eee653b607c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c2d090f_fcb57419",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-12T01:47:50Z",
+      "side": 1,
+      "message": "SystemTray::InitializeTrayItems? I found in that function it calls TrayBackgroundView::Initialize() already.\nWhat I did is to add TrayBackgroundView::Initialize() for PaletteTray? Since after this, when the anchor of the Palette tray or bubble changed, its AnchorUpdated function will be called.\n\nSorry, am I in the right understanding?",
+      "parentUuid": "75dac8fa_f6a269af",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 403,
+        "endChar": 35
+      },
+      "revId": "2faeea6dc82f7b1638a85c9f86332eee653b607c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
