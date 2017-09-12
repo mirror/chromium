@@ -350,9 +350,8 @@ void ContentHashFetcherJob::DoneFetchingVerifiedContents(bool success) {
     return;
   }
 
-  content::BrowserThread::PostBlockingPoolSequencedTask(
-      "ContentHashFetcher",
-      FROM_HERE,
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
       base::Bind(&ContentHashFetcherJob::MaybeCreateHashes, this));
 }
 
