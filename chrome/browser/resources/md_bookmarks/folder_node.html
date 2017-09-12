@@ -92,7 +92,7 @@
             on-tap="toggleFolder_"
             on-mousedown="preventDefault_"
             tabindex="-1"
-            aria-hidden="true">
+            aria-label$="[[getButtonAriaLabel_(isOpen, item_)]]">
           <iron-icon icon="cr:arrow-drop-down" is-open$="[[isOpen]]">
           </iron-icon>
         </button>
