@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a28e31e5_a2c7916b",
+        "filename": "content/browser/payments/payment_instrument_icon_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-12T21:16:15Z",
+      "side": 1,
+      "message": "nit: download or decode the...",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 28
+      },
+      "revId": "1a2c97a515af4e07f9eb41290e8415c9ddf37cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d13a19be_49c737e6",
+        "filename": "content/browser/payments/payment_instrument_icon_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-12T21:16:15Z",
+      "side": 1,
+      "message": "can_download_icon could be false because of invalid icon_url, so we might want to try next one in that case?",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 24
+      },
+      "revId": "1a2c97a515af4e07f9eb41290e8415c9ddf37cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8581067a_aad16ef7",
+        "filename": "content/browser/payments/payment_instrument_icon_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-12T21:16:15Z",
+      "side": 1,
+      "message": "nit: GetProviderWebContents ?",
+      "range": {
+        "startLine": 94,
+        "startChar": 13,
+        "endLine": 94,
+        "endChar": 31
+      },
+      "revId": "1a2c97a515af4e07f9eb41290e8415c9ddf37cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
