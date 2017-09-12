@@ -16,6 +16,24 @@
       "revId": "32cbf7de88abf7adb26b49ddd841153137104cd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5590970_f41d815e",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_transfer_controller.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-12T05:54:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34cea347_e71a707d",
+      "revId": "32cbf7de88abf7adb26b49ddd841153137104cd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
