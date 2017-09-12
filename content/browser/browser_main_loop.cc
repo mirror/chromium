@@ -40,7 +40,6 @@
 #include "base/task_scheduler/single_thread_task_runner_thread_mode.h"
 #include "base/task_scheduler/task_scheduler.h"
 #include "base/task_scheduler/task_traits.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -1350,16 +1349,6 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
       }
     }
 
-    // Close the blocking I/O pool after the other threads. Other threads such
-    // as the I/O thread may need to schedule work like closing files or
-    // flushing data during shutdown, so the blocking pool needs to be
-    // available. There may also be slow operations pending that will blcok
-    // shutdown, so closing it here (which will block until required operations
-    // are complete) gives more head start for those operations to finish.
-    {
-      TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:ThreadPool");
-      BrowserThreadImpl::ShutdownThreadPool();
-    }
     {
       TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:TaskScheduler");
       base::TaskScheduler::GetInstance()->Shutdown();
