@@ -25,6 +25,236 @@
     },
     {
       "key": {
+        "uuid": "c2d3a88f_7575f063",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T15:59:18Z",
+      "side": 1,
+      "message": "did you call \"git cl format\"? why it is single-column list?",
+      "range": {
+        "startLine": 50,
+        "startChar": 44,
+        "endLine": 55,
+        "endChar": 61
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78dd02c_172fdf76",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T15:59:18Z",
+      "side": 1,
+      "message": "we need to double check whether translation of \"ID\" and \"login\" are useful. they both are technical terms with ambiguous meaning.",
+      "range": {
+        "startLine": 184,
+        "startChar": 18,
+        "endLine": 184,
+        "endChar": 35
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5be705_1deffa13",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T15:59:18Z",
+      "side": 1,
+      "message": "can we always use partial match?",
+      "range": {
+        "startLine": 364,
+        "startChar": 5,
+        "endLine": 364,
+        "endChar": 23
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94653f60_635cf045",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T15:59:18Z",
+      "side": 1,
+      "message": "you can remove negation operators here and in the line before.",
+      "range": {
+        "startLine": 389,
+        "startChar": 14,
+        "endLine": 389,
+        "endChar": 15
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5edae1b2_11070dbd",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T15:59:18Z",
+      "side": 1,
+      "message": "I would use ternary (conditional) operator here.",
+      "range": {
+        "startLine": 391,
+        "startChar": 11,
+        "endLine": 395,
+        "endChar": 59
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d0577d_f4d20194",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T15:59:18Z",
+      "side": 1,
+      "message": "is it what arraysize macros do?",
+      "range": {
+        "startLine": 398,
+        "startChar": 28,
+        "endLine": 398,
+        "endChar": 62
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abfc7f24_74c971ec",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T15:59:18Z",
+      "side": 1,
+      "message": "you can do the following: \nbool username_found \u003d !username_element.IsNull();\n\nBut I would prefer to ignore whether username_element.IsNull() within the method. Caller says \"get username field\" and gives a pointer for output. \n\nTo me, the method should not care about the content of |username_element|.\n\nFor the code reader who didn\u0027t go into this method, this logic would be a suprise. The logic should be on the caller side. \n\nI would add DCHECK(username_element), to check whether username_element is not null and to show expectations of this method.",
+      "range": {
+        "startLine": 484,
+        "startChar": 2,
+        "endLine": 486,
+        "endChar": 27
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cfc5e6c_078a7853",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T15:59:18Z",
+      "side": 1,
+      "message": "we can make an array of pairs of array of special words and HTMLAttribute of special words. And make all these calls in one loop.\n\nfor (pair\u003cvector\u003cconst char* const[]\u003e, HTMLAttribute\u003e heuristic : all_heuristics) {\n       if (SearchForPartialMatch(control_elements, form_data, heuristic.first, heuristic.second, username_element)) break;\n}\n\nThe comments you listed here (e.g. like \"1.1. Search for...\") would be useful. You can add them to the method description or as comment to |all_heuristics|.\n\nUpdate: realized that the method to be called depends on HTMLAttribute.",
+      "range": {
+        "startLine": 490,
+        "startChar": 2,
+        "endLine": 494,
+        "endChar": 3
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7de63e_7887711b",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T15:59:18Z",
+      "side": 1,
+      "message": "what words?",
+      "range": {
+        "startLine": 496,
+        "startChar": 21,
+        "endLine": 496,
+        "endChar": 31
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa51c6f_2fe0f82b",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T15:59:18Z",
+      "side": 1,
+      "message": "It is strange that |userTranslations| contains only values in latin alphabet. The values are used for search inside labels that are visible to users. \n\nIt would be strange if, say, Arabic site will use romanized values instead of native alphabet.\n\nWe should think about it.",
+      "range": {
+        "startLine": 499,
+        "startChar": 37,
+        "endLine": 499,
+        "endChar": 53
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b47613a_0a9e3f70",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 9
