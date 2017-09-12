@@ -375,6 +375,30 @@
       "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e59d88_36a375a9",
+        "filename": "chromecast/browser/cast_display_configurator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-09-12T17:56:13Z",
+      "side": 1,
+      "message": "No, I mean:\n\nCastScreen* const cast_screen_;\n\nie the pointer itself is const, not the value it points to.",
+      "parentUuid": "88ae3ba7_f94d0739",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
