@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32723e9c_8d0229c9",
+        "filename": "components/sync/model/sync_error.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T04:45:32Z",
+      "side": 1,
+      "message": "I wonder if there\u0027s an easy way to find the \"should be Optional\" stuff...",
+      "revId": "90800c0b9da284724a5816013e22059d89413838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912d7205_b579ff7f",
+        "filename": "components/sync/syncable/write_transaction_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T04:45:32Z",
+      "side": 1,
+      "message": "base::Location is assignable. I filed a bug and I\u0027ll fix this in a followup: https://crbug.com/764195",
+      "revId": "90800c0b9da284724a5816013e22059d89413838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
