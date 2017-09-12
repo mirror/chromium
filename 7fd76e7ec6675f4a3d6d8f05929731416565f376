@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1e18c276_88a3b7f3",
+        "filename": "dbus/message.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-12T03:44:53Z",
+      "side": 1,
+      "message": "Ugh, thanks for the explanation.\nProbably, we should just make this a ctor which takes DBusMessage*, but it\u0027s beyond this CL\u0027s scope.",
+      "parentUuid": "fd681119_40225fca",
+      "revId": "7fd76e7ec6675f4a3d6d8f05929731416565f376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "882f591b_dce086f1",
         "filename": "dbus/message.cc",
         "patchSetId": 1
