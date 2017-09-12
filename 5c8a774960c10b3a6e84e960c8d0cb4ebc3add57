@@ -22,6 +22,30 @@
       "revId": "5c8a774960c10b3a6e84e960c8d0cb4ebc3add57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3fe2c3_a7135ced",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-12T09:32:27Z",
+      "side": 1,
+      "message": "True, but most of this CL is :) And I mentioned it explicitly in the message. Have checked it, behaves in the same way AFAICT. Fixed tests. Will leave the statement out.",
+      "parentUuid": "2a341dfa_e76a264a",
+      "range": {
+        "startLine": 330,
+        "startChar": 42,
+        "endLine": 330,
+        "endChar": 0
+      },
+      "revId": "5c8a774960c10b3a6e84e960c8d0cb4ebc3add57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
