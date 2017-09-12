@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1f0b52e2_1cafed56",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1335,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-12T09:34:54Z",
+      "side": 1,
+      "message": "Let\u0027s remove the IfNeeded() suffix. All the steps of the algorithm are \"if needed\" so it does not add anything to have it here.",
+      "revId": "1ed13fd94f88428b49d461959ab67fedfe46fdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a55e0fa7_31381c37",
         "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
         "patchSetId": 4
@@ -13,6 +30,23 @@
       "writtenOn": "2017-09-12T09:04:07Z",
       "side": 1,
       "message": "I think we can define a new public API in LayoutGrid, like ContentAlignment(GridAxis) so these multiple lines can be replaced by a single line, independently of the direction/axis logic. \n\nWe have similar API for SelfAlignmentForChild() and DefaultAlignment()",
+      "revId": "1ed13fd94f88428b49d461959ab67fedfe46fdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad24cca_c29cf5f3",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-12T09:34:54Z",
+      "side": 1,
+      "message": "Since this is a new step of the algorithm I think it\u0027d be better to create this auto_sized_tracks vector in the InitializeTrackSizes step as we do for example for flex tracks. This way we could save this extra loop + GetGridTrackSize.\n\nAnd you could also add the early return below just at the beginning of this method as you have done for the stretch flexible tracks step.",
       "revId": "1ed13fd94f88428b49d461959ab67fedfe46fdf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
