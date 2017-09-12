@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "10d552b3_dbd2e4d2",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-12T16:57:07Z",
+      "side": 1,
+      "message": "Syntax 6 of http://en.cppreference.com/w/cpp/language/string_literal\nIt is a way to avoid having to escape characters in strings.\n\nI can use standard \"\" if you prefer.",
+      "parentUuid": "3e94ec61_c7ac7677",
+      "revId": "ca4b037bc242b9c2ed565b448b5d4404233037b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be0f71fe_6d31ccb8",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-12T15:43:54Z",
       "side": 1,
       "message": "this will be flaky as you pointed out in the other cl\n\nthe test i added in https://chromium-review.googlesource.com/c/chromium/src/+/660882 shouldn\u0027t be flaky, as it injects the XHR right before the renderer gets the window.location call.",
+      "revId": "ca4b037bc242b9c2ed565b448b5d4404233037b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66448e6_15aca4a7",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-12T16:57:07Z",
+      "side": 1,
+      "message": "Hmm, for a reason I don\u0027t know, your test doesn\u0027t pass with this CL.\nI will have to go, so I will upload the addressed comment and keep it like this. Feel free to take this CL.",
+      "parentUuid": "be0f71fe_6d31ccb8",
       "revId": "ca4b037bc242b9c2ed565b448b5d4404233037b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
