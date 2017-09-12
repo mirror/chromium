@@ -18,6 +18,7 @@
 #include "media/base/android/media_codec_bridge.h"
 #include "media/base/decoder_buffer.h"
 #include "media/gpu/android/device_info.h"
+#include "media/gpu/avda_surface_bundle.h"
 #include "media/gpu/media_gpu_export.h"
 #include "media/gpu/surface_texture_gl_owner.h"
 
@@ -65,11 +66,13 @@ class MEDIA_GPU_EXPORT CodecOutputBuffer {
 class MEDIA_GPU_EXPORT CodecWrapper {
  public:
   // |codec| should be in the flushed state, i.e., freshly configured or after a
-  // Flush(). |output_buffer_release_cb| will be run whenever an output buffer
-  // is released back to the codec (whether it's rendered or not). This is a
-  // signal that the codec might be ready to accept more input. It may be run on
-  // any thread.
+  // Flush(). |surface_bundle| must be a nonnull bundle that the codec was
+  // configured with. |output_buffer_release_cb| will be run whenever an output
+  // buffer is released back to the codec (whether it's rendered or not). This
+  // is a signal that the codec might be ready to accept more input. It may be
+  // run on any thread.
   CodecWrapper(std::unique_ptr<MediaCodecBridge> codec,
+               scoped_refptr<AVDASurfaceBundle> surface_bundle,
                base::Closure output_buffer_release_cb);
   ~CodecWrapper();
 
@@ -99,6 +102,12 @@ class MEDIA_GPU_EXPORT CodecWrapper {
   // Flushes the codec and discards all output buffers.
   bool Flush();
 
+  // Sets the given surface and returns true on success.
+  bool SetSurface(scoped_refptr<AVDASurfaceBundle> surface_bundle);
+
+  // Returns the surface bundle that the codec is currently configured with.
+  AVDASurfaceBundle* SurfaceBundle();
+
   // Queues |buffer| if the codec has an available input buffer.
   enum class QueueStatus { kOk, kError, kTryAgainLater, kNoKey };
   QueueStatus QueueInputBuffer(const DecoderBuffer& buffer,
@@ -116,9 +125,6 @@ class MEDIA_GPU_EXPORT CodecWrapper {
       base::TimeDelta* presentation_time,
       bool* end_of_stream,
       std::unique_ptr<CodecOutputBuffer>* codec_buffer);
-
-  // Sets the given surface and returns true on success.
-  bool SetSurface(const base::android::JavaRef<jobject>& surface);
 
  private:
   scoped_refptr<CodecWrapperImpl> impl_;
