@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c4d049e_eb183cc0",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "Before this change, as soon as user click \"Change Password\" on the settings page, this change password card will disappear.\n\nAfter this change, settings card will only disappear if (1) we observe a password hash change (a.k.a. user actually changed their password), or (2) user marked all the reuse legitimate.",
+      "parentUuid": "458b4fea_70df9fad",
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d19cd69f_0b87050d",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 9
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "03cf994d_8ae1791b",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d19cd69f_0b87050d",
+      "range": {
+        "startLine": 80,
+        "startChar": 11,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd414f52_586f80d8",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 9
@@ -62,6 +104,30 @@
       "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec120e39_425b7e30",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd414f52_586f80d8",
+      "range": {
+        "startLine": 82,
+        "startChar": 37,
+        "endLine": 82,
+        "endChar": 44
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "78377e76_8182b84d",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "ACK.\npref_change_registrar_ is already a unique_ptr. obj will be destructed automatically at the end of its lifetime.",
+      "parentUuid": "4aec1a48_b7d58b23",
+      "range": {
+        "startLine": 105,
+        "startChar": 33,
+        "endLine": 105,
+        "endChar": 52
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6187b2d_e400f4ae",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 9
@@ -158,6 +248,54 @@
     },
     {
       "key": {
+        "uuid": "22ad7ef3_6ec79dbf",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "As long as kSafeBrowsingEnabled is true for that profile. Added null checking around |service|.",
+      "parentUuid": "a6187b2d_e400f4ae",
+      "range": {
+        "startLine": 138,
+        "startChar": 11,
+        "endLine": 138,
+        "endChar": 18
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9052c51_decfb0e7",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6572c0e_a7ce5488",
+      "range": {
+        "startLine": 138,
+        "startChar": 48,
+        "endLine": 138,
+        "endChar": 52
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74828f7e_e9da04c6",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 9
@@ -172,6 +310,24 @@
       "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7653599c_70e407b3",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "ACK\nit actually needs a NavigationEntry instead of GURL here.\nGetLastCommittedEntry() vs. GetLastCommittedURL().",
+      "parentUuid": "74828f7e_e9da04c6",
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -198,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "57546073_c7c53678",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a59a1d09_10f95f75",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 25
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aac6037d_7fe8568c",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
         "patchSetId": 9
@@ -212,6 +392,24 @@
       "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf229a6a_81e7fa94",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aac6037d_7fe8568c",
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -238,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "126d7d67_0f10abaa",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "Changed to Origin and refine the comment to mention the top-level frame.",
+      "parentUuid": "f480ed70_2eea052c",
+      "range": {
+        "startLine": 177,
+        "startChar": 31,
+        "endLine": 177,
+        "endChar": 35
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e6c0988_306ad485",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
         "patchSetId": 9
@@ -258,6 +480,30 @@
       "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6ea035_c0ca5230",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e6c0988_306ad485",
+      "range": {
+        "startLine": 34,
+        "startChar": 53,
+        "endLine": 34,
+        "endChar": 65
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -284,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "f746d591_1f6ca5a6",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80cce5f6_f5dc441a",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b5ffb23_f1462f06",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
         "patchSetId": 9
@@ -298,6 +568,24 @@
       "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5e16ae_f66ee8e4",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "Good call. Added UMA histogram checking.",
+      "parentUuid": "5b5ffb23_f1462f06",
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +606,24 @@
     },
     {
       "key": {
+        "uuid": "c7f6da0e_a0c5a02c",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "visible entry might include pending/uncommitted entries.\nhttps://cs.chromium.org/chromium/src/content/public/browser/web_contents.h?l\u003d232\n\nPassword reuse pings should always be on committed entries (since page has been already rendered).\nAs we haven\u0027t started to block navigation at this moment, it is safer to get the committed entry and URL instead of the visible ones.",
+      "parentUuid": "73363b22_4a42efe2",
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f76895a1_9239c387",
         "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
         "patchSetId": 9
@@ -332,6 +638,24 @@
       "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca459b29_57d50f7b",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "You\u0027re right. Good call.\nStatic function created. I\u0027ll create a follow up CL to clean up the use of GetPasswordProtectionService  in password manager and page info separately.",
+      "parentUuid": "f76895a1_9239c387",
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -355,6 +679,30 @@
       "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec80d3dd_77e0f279",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25c7c99a_0af31641",
+      "range": {
+        "startLine": 49,
+        "startChar": 51,
+        "endLine": 49,
+        "endChar": 52
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -405,6 +753,30 @@
     },
     {
       "key": {
+        "uuid": "6c37cd8c_1e2d69ff",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 55742,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d19f16c3_95ce5891",
+      "range": {
+        "startLine": 55742,
+        "startChar": 9,
+        "endLine": 55742,
+        "endChar": 16
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f1512ba_8fba314f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -419,6 +791,24 @@
       "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fdab30d_25524f00",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 55744,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-12T18:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f1512ba_8fba314f",
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
