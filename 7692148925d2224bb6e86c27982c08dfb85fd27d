@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a957977a_974c4f01",
+        "filename": "base/trace_event/trace_log.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-12T21:20:51Z",
+      "side": 1,
+      "message": "AssertIOAllowed() unless using base sync primitives (ref. base::WithBaseSyncPrimitives() docs in task_traits.h)",
+      "range": {
+        "startLine": 535,
+        "startChar": 2,
+        "endLine": 535,
+        "endChar": 47
+      },
+      "revId": "7692148925d2224bb6e86c27982c08dfb85fd27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c45c01d_ae5d7447",
+        "filename": "content/browser/tracing/tracing_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-12T21:20:51Z",
+      "side": 1,
+      "message": "Add a scoped_refptr\u003cbase::SequencedTaskRunner\u003e member to TracingControllerImpl and use it to post tasks against |this|. Otherwise you\u0027re posting tasks in parallel (i.e. a disable task is technically allowed to run in parallel or even before a previously posted enable task -- or even two enable tasks could run in parallel)",
+      "range": {
+        "startLine": 674,
+        "startChar": 5,
+        "endLine": 674,
+        "endChar": 26
+      },
+      "revId": "7692148925d2224bb6e86c27982c08dfb85fd27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b060b98a_184cb988",
+        "filename": "content/browser/tracing/tracing_controller_impl_data_sinks.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-12T21:20:51Z",
+      "side": 1,
+      "message": "background_task_runner_ (specific name helps readability)",
+      "range": {
+        "startLine": 119,
+        "startChar": 49,
+        "endLine": 119,
+        "endChar": 61
+      },
+      "revId": "7692148925d2224bb6e86c27982c08dfb85fd27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
