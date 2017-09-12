@@ -617,6 +617,8 @@ component("ash") {
     "system/web_notification/web_notification_tray.h",
     "touch/ash_touch_transform_controller.cc",
     "touch/ash_touch_transform_controller.h",
+    "touch/touch_devices_controller.cc",
+    "touch/touch_devices_controller.h",
     "touch/touch_hud_debug.cc",
     "touch/touch_hud_debug.h",
     "touch/touch_hud_projection.cc",

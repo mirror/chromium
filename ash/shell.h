@@ -159,6 +159,7 @@ class SystemTrayController;
 class SystemTrayNotifier;
 class ToplevelWindowEventHandler;
 class ToastManager;
+class TouchDevicesController;
 class TrayAction;
 class TrayBluetoothHelper;
 class VirtualKeyboardController;
@@ -339,6 +340,9 @@ class ASH_EXPORT Shell : public SessionObserver,
     return new_window_controller_.get();
   }
   NightLightController* night_light_controller();
+  TouchDevicesController* touch_devices_controller() {
+    return touch_devices_controller_.get();
+  }
   SessionController* session_controller() { return session_controller_.get(); }
   ShelfController* shelf_controller() { return shelf_controller_.get(); }
   ShelfModel* shelf_model();
@@ -706,6 +710,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<SystemTrayController> system_tray_controller_;
   std::unique_ptr<SystemTrayNotifier> system_tray_notifier_;
   std::unique_ptr<ToastManager> toast_manager_;
+  std::unique_ptr<TouchDevicesController> touch_devices_controller_;
   std::unique_ptr<TrayAction> tray_action_;
   std::unique_ptr<VpnList> vpn_list_;
   std::unique_ptr<WallpaperController> wallpaper_controller_;
