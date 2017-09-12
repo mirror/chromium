@@ -12,6 +12,54 @@
 #include "ui/views/widget/native_widget_mac.h"
 #include "ui/views/widget/widget.h"
 
+// An NSView that allows the rendering size of its child subview to be different
+// than its own frame size, which will result in showing a scaled version of the
+// child.
+@interface NativeViewHostMacScalingView : NSView {
+}
+
+- (id)init;
+- (void)attach:(NSView*)subview;
+- (BOOL)hasAttachedSubview:(NSView*)subview;
+- (void)showWithFrame:(NSRect)frame andSize:(NSSize)size;
+@end
+
+@implementation NativeViewHostMacScalingView
+
+- (id)init {
+  if (self = [super initWithFrame:NSZeroRect]) {
+    // NativeViewHostMac::ShowWidget() provides manual layout.
+    [self setAutoresizingMask:NSViewNotSizable];
+  }
+  return self;
+}
+
+- (void)attach:(NSView*)subview {
+  if ([[self subviews] count] == 0) {
+    [self addSubview:subview];
+  } else if ([[self subviews] objectAtIndex:0] != subview) {
+    [self replaceSubview:[[self subviews] objectAtIndex:0] with:subview];
+  }
+}
+
+- (BOOL)hasAttachedSubview:(NSView*)subview {
+  if ([[self subviews] count] > 0 &&
+      [[self subviews] objectAtIndex:0] == subview) {
+    return YES;
+  }
+  return NO;
+}
+
+- (void)showWithFrame:(NSRect)frame andSize:(NSSize)size {
+  [self setFrame:frame];
+  const NSRect bounds = NSMakeRect(0, 0, size.width, size.height);
+  [self setBounds:bounds];
+  DCHECK([[self subviews] count] > 0);
+  [[[self subviews] objectAtIndex:0] setFrame:bounds];
+}
+
+@end  // @implementation NativeViewHostMacScalingView
+
 namespace views {
 namespace {
 
@@ -41,16 +89,19 @@ NativeViewHostMac::~NativeViewHostMac() {
 // NativeViewHostMac, NativeViewHostWrapper implementation:
 
 void NativeViewHostMac::AttachNativeView() {
-  DCHECK(host_->native_view());
-  DCHECK(!native_view_);
-  native_view_.reset([host_->native_view() retain]);
+  NSView* const native_view = host_->native_view();
+  DCHECK(native_view);
+  DCHECK(!scaling_view_);
+  scaling_view_.reset([[NativeViewHostMacScalingView alloc] init]);
+  [scaling_view_ attach:native_view];
 
-  EnsureNativeViewHasNoChildWidgets(native_view_);
+  EnsureNativeViewHasNoChildWidgets(native_view);
   BridgedNativeWidget* bridge = NativeWidgetMac::GetBridgeForNativeWindow(
       host_->GetWidget()->GetNativeWindow());
   DCHECK(bridge);
-  [bridge->ns_view() addSubview:native_view_];
-  bridge->SetAssociationForView(host_, native_view_);
+
+  [bridge->ns_view() addSubview:scaling_view_];
+  bridge->SetAssociationForView(host_, scaling_view_);
 }
 
 void NativeViewHostMac::NativeViewDetaching(bool destroyed) {
@@ -60,16 +111,20 @@ void NativeViewHostMac::NativeViewDetaching(bool destroyed) {
   // reference is retained until the NativeViewHost is detached.
   DCHECK(!destroyed);
 
-  // |native_view_| can be nil here if RemovedFromWidget() is called before
+  // |scaling_view_| can be nil here if RemovedFromWidget() is called before
   // NativeViewHost::Detach().
-  if (!native_view_) {
+  if (!scaling_view_) {
     DCHECK(![host_->native_view() superview]);
     return;
   }
 
-  DCHECK(native_view_ == host_->native_view());
+  DCHECK([scaling_view_ hasAttachedSubview:host_->native_view()]);
   [host_->native_view() setHidden:YES];
-  [host_->native_view() removeFromSuperview];
+  // Retain the native view for the remainder of this scope, since removing it
+  // from its superview could cause it to be released.
+  const base::scoped_nsobject<NSView> retained_native_view(
+      [host_->native_view() retain]);
+  [scaling_view_ removeFromSuperview];
 
   EnsureNativeViewHasNoChildWidgets(host_->native_view());
   BridgedNativeWidget* bridge = NativeWidgetMac::GetBridgeForNativeWindow(
@@ -78,7 +133,7 @@ void NativeViewHostMac::NativeViewDetaching(bool destroyed) {
   if (bridge)
     bridge->ClearAssociationForView(host_);
 
-  native_view_.reset();
+  scaling_view_.reset();
 }
 
 void NativeViewHostMac::AddedToWidget() {
@@ -113,7 +168,14 @@ void NativeViewHostMac::UninstallClip() {
   NOTIMPLEMENTED();
 }
 
-void NativeViewHostMac::ShowWidget(int x, int y, int w, int h) {
+void NativeViewHostMac::ShowWidget(int x,
+                                   int y,
+                                   int w,
+                                   int h,
+                                   int render_w,
+                                   int render_h) {
+  DCHECK(scaling_view_);  // AttachNativeView() should have been called.
+
   if (host_->fast_resize())
     NOTIMPLEMENTED();
 
@@ -129,8 +191,9 @@ void NativeViewHostMac::ShowWidget(int x, int y, int w, int h) {
   // Convert window coordinates to the hosted view's superview, since that's how
   // coordinates of the hosted view's frame is based.
   NSRect container_rect =
-      [[host_->native_view() superview] convertRect:window_rect fromView:nil];
-  [host_->native_view() setFrame:container_rect];
+      [[scaling_view_ superview] convertRect:window_rect fromView:nil];
+  [scaling_view_ showWithFrame:container_rect
+                       andSize:NSMakeSize(render_w, render_h)];
   [host_->native_view() setHidden:NO];
 }
 

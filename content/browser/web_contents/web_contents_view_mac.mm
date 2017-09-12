@@ -164,17 +164,16 @@ void WebContentsViewMac::GetScreenInfo(ScreenInfo* results) const {
 }
 
 void WebContentsViewMac::GetContainerBounds(gfx::Rect* out) const {
-  NSWindow* window = [cocoa_view_.get() window];
-  NSRect bounds = [cocoa_view_.get() bounds];
-  if (window)  {
-    // Convert bounds to window coordinate space.
-    bounds = [cocoa_view_.get() convertRect:bounds toView:nil];
+  // Note: This implementation should pretty much do the exact same thing that
+  // is found in RenderWidgetHostViewMac::GetViewBounds().
 
-    // Convert bounds to screen coordinate space.
-    bounds = [window convertRectToScreen:bounds];
+  const NSRect bounds = [cocoa_view_.get() bounds];
+  const gfx::Size size(NSWidth(bounds), NSHeight(bounds));
+  NSWindow* const window = [cocoa_view_.get() window];
+  if (!window) {
+    *out = gfx::Rect(size);
+    return;
   }
-
-  *out = gfx::ScreenRectFromNSRect(bounds);
 }
 
 void WebContentsViewMac::StartDragging(
