@@ -169,6 +169,7 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
     private DownloadManagerToolbar mToolbar;
     private SelectableListLayout<DownloadHistoryItemWrapper> mSelectableListLayout;
     private boolean mIsSeparateActivity;
+    private int mTop = 0;
 
     /**
      * Constructs a new DownloadManagerUi.
@@ -510,5 +511,12 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
     @VisibleForTesting
     public static void setProviderForTests(BackendProvider provider) {
         sProviderForTests = provider;
+    }
+
+    /**
+     * Called to scroll to the top of the downloads list.
+     */
+    public void scrollToTop() {
+        mRecyclerView.smoothScrollToPosition(mTop);
     }
 }

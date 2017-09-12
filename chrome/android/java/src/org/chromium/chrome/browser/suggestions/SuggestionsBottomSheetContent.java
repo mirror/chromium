@@ -67,6 +67,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     private boolean mNewTabShown;
     private boolean mSearchProviderHasLogo = true;
     private float mLastSheetHeightFraction = 1f;
+    private int mTop = 0;
 
     // The sheet height fractions at which the logo transitions start and end.
     private static final float LOGO_TRANSITION_BOTTOM_START = 0.3f;
@@ -436,5 +437,10 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
             touchRect.right = touchRect.left + childView.getMeasuredWidth();
             return touchRect;
         }
+    }
+
+    @Override
+    public void scrollToTop() {
+        mRecyclerView.smoothScrollToPosition(mTop);
     }
 }

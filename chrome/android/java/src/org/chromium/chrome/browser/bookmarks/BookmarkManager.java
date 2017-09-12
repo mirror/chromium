@@ -64,6 +64,7 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
     private LargeIconBridge mLargeIconBridge;
     private String mInitialUrl;
     private boolean mIsDialogUi;
+    private int mTop = 0;
 
     private final BookmarkModelObserver mBookmarkModelObserver = new BookmarkModelObserver() {
 
@@ -460,5 +461,12 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
     @VisibleForTesting
     public BookmarkActionBar getToolbarForTests() {
         return mToolbar;
+    }
+
+    /**
+     * Called to scroll to the top of the bookmarks list.
+     */
+    public void scrollToTop() {
+        mRecyclerView.smoothScrollToPosition(mTop);
     }
 }

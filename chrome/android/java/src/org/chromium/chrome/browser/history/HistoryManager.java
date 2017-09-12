@@ -72,6 +72,7 @@ public class HistoryManager implements OnMenuItemClickListener, SignInStateObser
     private final RecyclerView mRecyclerView;
     private final SnackbarManager mSnackbarManager;
     private LargeIconBridge mLargeIconBridge;
+    private int mTop = 0;
 
     private boolean mIsSearching;
     private boolean mShouldShowInfoHeader;
@@ -469,5 +470,12 @@ public class HistoryManager implements OnMenuItemClickListener, SignInStateObser
     @Override
     public void onDismissNoAction(Object actionData) {
         // Handler for the link copied snackbar. Do nothing.
+    }
+
+    /**
+     * Called to scroll to the top of the history list.
+     */
+    public void scrollToTop() {
+        mRecyclerView.smoothScrollToPosition(mTop);
     }
 }
