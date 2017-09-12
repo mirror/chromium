@@ -44,6 +44,8 @@ class PasswordsPrivateEventRouter : public KeyedService {
       const std::string& username,
       const std::string& plaintext_password);
 
+  void OnShowImportExportButtons();
+
  protected:
   explicit PasswordsPrivateEventRouter(content::BrowserContext* context);
 

@@ -123,6 +123,23 @@ class TestDelegate : public PasswordsPrivateDelegate {
 
   void SetProfile(Profile* profile) { profile_ = profile; }
 
+  void ShowImportExportButtons() override {
+    PasswordsPrivateEventRouter* router =
+        PasswordsPrivateEventRouterFactory::GetForProfile(profile_);
+    if (router)
+      router->OnShowImportExportButtons();
+  }
+
+  void ImportPasswords(content::WebContents* web_contents) override {
+    // The testing of password importing should be handled via
+    // |PasswordManagerPorter|.
+  }
+
+  void ExportPasswords(content::WebContents* web_contents) override {
+    // The testing of password exporting should be handled via
+    // |PasswordManagerPorter|.
+  }
+
  private:
   // The current list of entries/exceptions. Cached here so that when new
   // observers are added, this delegate can send the current lists without
@@ -199,6 +216,14 @@ IN_PROC_BROWSER_TEST_F(PasswordsPrivateApiTest, GetSavedPasswordList) {
 
 IN_PROC_BROWSER_TEST_F(PasswordsPrivateApiTest, GetPasswordExceptionList) {
   EXPECT_TRUE(RunPasswordsSubtest("getPasswordExceptionList")) << message_;
+}
+
+IN_PROC_BROWSER_TEST_F(PasswordsPrivateApiTest, ImportPasswords) {
+  EXPECT_TRUE(RunPasswordsSubtest("importPasswords")) << message_;
+}
+
+IN_PROC_BROWSER_TEST_F(PasswordsPrivateApiTest, ExportPasswords) {
+  EXPECT_TRUE(RunPasswordsSubtest("exportPasswords")) << message_;
 }
 
 }  // namespace extensions

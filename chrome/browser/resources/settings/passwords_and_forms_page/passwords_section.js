@@ -70,6 +70,28 @@ class PasswordManager {
    * @param {function(!PasswordManager.PlaintextPasswordEvent):void} callback
    */
   getPlaintextPassword(loginPair, callback) {}
+
+  /**
+   * Add an observer to the displaying of the import/export buttons.
+   * @param {function():void} listener
+   */
+  addShowImportExportButtonsListener(listener) {}
+
+  /**
+   * Removes an observer from the displaying of the import/export buttons.
+   * @param {function():void} listener
+   */
+  removeShowImportExportButtonsListener(listener) {}
+
+  /**
+   * Triggers the dialogue for importing passwords.
+   */
+  importPasswords() {}
+
+  /**
+   * Triggers the dialogue for exporting passwords.
+   */
+  exportPasswords() {}
 }
 
 /** @typedef {chrome.passwordsPrivate.PasswordUiEntry} */
@@ -146,6 +168,26 @@ class PasswordManagerImpl {
     chrome.passwordsPrivate.onPlaintextPasswordRetrieved.addListener(listener);
     chrome.passwordsPrivate.requestPlaintextPassword(loginPair);
   }
+
+  /** @override */
+  addShowImportExportButtonsListener(listener) {
+    chrome.passwordsPrivate.onShowImportExportButtons.addListener(listener);
+  }
+
+  /** @override */
+  removeShowImportExportButtonsListener(listener) {
+    chrome.passwordsPrivate.onShowImportExportButtons.removeListener(listener);
+  }
+
+  /** @override */
+  importPasswords() {
+    chrome.passwordsPrivate.importPasswords();
+  }
+
+  /** @override */
+  exportPasswords() {
+    chrome.passwordsPrivate.exportPasswords();
+  }
 }
 
 cr.addSingletonGetter(PasswordManagerImpl);
@@ -211,6 +253,8 @@ Polymer({
   listeners: {
     'show-password': 'showPassword_',
     'password-menu-tap': 'onPasswordMenuTap_',
+    'import-passwords': 'onImportTap_',
+    'export-passwords': 'onExportTap_',
   },
 
   /**
@@ -249,8 +293,15 @@ Polymer({
       this.passwordExceptions = list;
     };
 
+    var showImportExportButtons = () => {
+      var dom = Polymer.dom(this.root);
+      dom.querySelector('#import').hidden = false;
+      dom.querySelector('#export').hidden = false;
+    };
+
     this.setSavedPasswordsListener_ = setSavedPasswordsListener;
     this.setPasswordExceptionsListener_ = setPasswordExceptionsListener;
+    this.showImportExportButtons_ = showImportExportButtons;
 
     // Set the manager. These can be overridden by tests.
     this.passwordManager_ = PasswordManagerImpl.getInstance();
@@ -264,6 +315,10 @@ Polymer({
         setSavedPasswordsListener);
     this.passwordManager_.addExceptionListChangedListener(
         setPasswordExceptionsListener);
+
+    // Listen for UI changes.
+    this.passwordManager_.addShowImportExportButtonsListener(
+        showImportExportButtons);
   },
 
   /** @override */
@@ -274,6 +329,8 @@ Polymer({
     this.passwordManager_.removeExceptionListChangedListener(
         /** @type {function(!Array<PasswordManager.ExceptionEntry>):void} */ (
             this.setPasswordExceptionsListener_));
+    this.passwordManager_.removeExceptionListChangedListener(
+        /** @type {function():void} */ (this.showImportExportButtons_));
   },
 
   /**
@@ -356,6 +413,22 @@ Polymer({
   },
 
   /**
+   * Fires an event that should trigger the password import process.
+   * @private
+   */
+  onImportTap_: function() {
+    this.passwordManager_.importPasswords();
+  },
+
+  /**
+   * Fires an event that should trigger the password export process.
+   * @private
+   */
+  onExportTap_: function() {
+    this.passwordManager_.exportPasswords();
+  },
+
+  /**
    * Returns true if the list exists and has items.
    * @param {Array<Object>} list
    * @return {boolean}
@@ -387,4 +460,11 @@ Polymer({
     return toggleValue ? this.i18n('toggleOn') : this.i18n('toggleOff');
   }
 });
+
+// Add a dummy event listener for displaying the import/export buttons. This
+// addresses an otherwise difficult race condition in the event handling.
+// This is a temporary solution while password importing/exporting is behind a
+// flag -- once the buttons are displayed permanently, all events associated
+// with |ShowImportExportButtons| can be removed.
+PasswordManagerImpl.getInstance().addShowImportExportButtonsListener(() => {});
 })();
