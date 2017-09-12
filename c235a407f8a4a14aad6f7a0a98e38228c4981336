@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b00a4ce1_0557c7fe",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-09-12T05:19:36Z",
+      "side": 1,
+      "message": "They will not be copyable. https://crrev.com/c/657274",
+      "parentUuid": "1398ab09_5ccc679d",
+      "revId": "c235a407f8a4a14aad6f7a0a98e38228c4981336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8296b643_0d1b9fef",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "c235a407f8a4a14aad6f7a0a98e38228c4981336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3257b580_a19a528f",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-09-12T05:19:36Z",
+      "side": 1,
+      "message": "ash:: needed as it\u0027s under chromeos namespace. (otherwise compile errors)",
+      "parentUuid": "8296b643_0d1b9fef",
+      "revId": "c235a407f8a4a14aad6f7a0a98e38228c4981336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
