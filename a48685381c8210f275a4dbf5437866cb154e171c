@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d77fdeb8_e31e4457",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 6605,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-12T02:38:46Z",
+      "side": 1,
+      "message": "Yes.  Failed to catch this one when I reworked the CL from base to gfx.",
+      "parentUuid": "faa31931_613fe642",
+      "revId": "a48685381c8210f275a4dbf5437866cb154e171c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fed558d4_3523fd0a",
         "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ab65b7a8_7bc051dd",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 6631,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-12T02:38:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fed558d4_3523fd0a",
+      "revId": "a48685381c8210f275a4dbf5437866cb154e171c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aa9b27b_8724b0f3",
         "filename": "device/sensors/data_fetcher_shared_memory_mac.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-11T15:20:09Z",
       "side": 1,
       "message": "looks like the precision is somewhat different here because the \u0027float\u0027 version will be used (axis_value is a float)",
+      "revId": "a48685381c8210f275a4dbf5437866cb154e171c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fdb88b4_9eb8192b",
+        "filename": "device/sensors/data_fetcher_shared_memory_mac.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-12T02:38:46Z",
+      "side": 1,
+      "message": "So, to be clear, the issue is that the old code took a single-precision result of atan2 and then did a double-precision multiply/divide on it, whereas the new version does a single-precision multiply/divide.\n\nDoes the difference matter?  If so, I can fix by explicitly casting to double, but we should probably only do that if we\u0027re sure it matters.  Is it possible to write a test to validate this?",
+      "parentUuid": "8aa9b27b_8724b0f3",
       "revId": "a48685381c8210f275a4dbf5437866cb154e171c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +153,24 @@
       "side": 1,
       "message": "On second thought, can we switch to \"CGFloat(base::kPiDouble)\" everywhere in this file?  That will give us the higher precision on arm64 and downcast to float as needed on armv7.",
       "parentUuid": "c16736ab_bb32b13d",
+      "revId": "a48685381c8210f275a4dbf5437866cb154e171c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d03b1a_579b7f6a",
+        "filename": "ios/chrome/browser/ui/side_swipe/side_swipe_navigation_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-12T02:38:46Z",
+      "side": 1,
+      "message": "I tried to do what you ask.  Another route would be to add a CGFloat version of the constant (under an ifdef) to base/numerics/math_constants.h.  I didn\u0027t go that route because it seemed of questionable utility, but feedback welcome.",
+      "parentUuid": "485adf00_05efa0b2",
       "revId": "a48685381c8210f275a4dbf5437866cb154e171c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
