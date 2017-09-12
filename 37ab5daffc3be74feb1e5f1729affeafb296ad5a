@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d637874d_49c2ca8b",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1855,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-12T08:26:58Z",
+      "side": 1,
+      "message": "Could you introduce flat tree version test for swapped lines?\ne.g.\n\n\u003cdiv\u003e\n  \u003ctemplate data-mode\u003d\"open\"\u003e\n    \u003cslot name\u003d\"three\"\u003e\u003c/slot\u003e\n    \u003cslot name\u003d\"two\"\u003e\u003c/slot\u003e\n    \u003cslot name\u003d\"one\"\u003e\u003c/slot\u003e\n  \u003c/template\u003e\n  \u003cdiv slot\u003d\"one\"\u003e111\u003c/div\u003e\n  \u003cdiv slot\u003d\"two\"\u003e222\u003c/div\u003e\n  \u003cdiv slot\u003d\"three\"\u003e333\u003c/div\u003e\n\u003c/div\u003e\n\nPreviousRootInlineBoxCandidatePosition() from \"one\" should be \"two\".",
+      "revId": "37ab5daffc3be74feb1e5f1729affeafb296ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
