@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "42bdfcb3_bbdb4c2f",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-text-nodes-disconnect-on-webkitBeforeTextInserted-event.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-12T19:32:38Z",
+      "side": 1,
+      "message": "\u003e 1)webkitBeforeTextInserted worked when invoked on div rather than document.\n\u003e 2)if focus element is made as \u0027b|az\u0027 instead of |baz then the nodes were getting disconnected.\n\u003e 3)execCommand had to be invoked from selection.document rather than document\n\nYou found the reason.\n\nselection_test() creates a subframe and runs the test in it. We should always use selection.document, which is the document of the subframe, instead of the (main frame) document.",
+      "parentUuid": "4a2f1208_3fa61dbc",
+      "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdd0c7ca_b2ed47f0",
         "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-text-remove-iframe-on-webkitBeforeTextInserted-event.html",
         "patchSetId": 7
@@ -124,6 +142,24 @@
       "side": 1,
       "message": "Did you mean to add the names of the test case here ?",
       "parentUuid": "9fa0b01a_1e0f4604",
+      "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76fe08e0_03e3deef",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-12T19:32:38Z",
+      "side": 1,
+      "message": "Yes. Example:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/editing/commands/DeleteSelectionCommand.cpp?type\u003dcs\u0026q\u003dreach+file:core/editing/commands\u0026sq\u003dpackage:chromium\u0026l\u003d1070",
+      "parentUuid": "c505b120_f5ceb313",
       "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
