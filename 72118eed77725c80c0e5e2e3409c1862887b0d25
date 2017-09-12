@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "225cf85a_2db5acc0",
+        "filename": "net/interfaces/proxy_resolver_service.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-12T22:40:13Z",
+      "side": 1,
+      "message": "While this does require the network service to invoke callbacks, this seems like the best balance of performance and robustness.\n\nOther options:\n\n* We could proxy all PAC executions through the browser process as well, which would make it easier to track live resolvers, but that would add an extra process hop for all requests, when using a proxy (Not two hops, though, so just 50% more than now, assuming no DNS resolutions, which obviously can add a ton of hops).  This is probably acceptable, but I\u0027m really not a fan of adding process hops for every request, except when really needed.\n* We could give either the PAC service or the NetworkService another channel to hang on to, and when it\u0027s destroyed, we assume the ProxyResolver is as well.  Not a big fan of the API surface area for that.\n* We could just not kill the utility process, if we ever had a PAC script.  I\u0027m not sure how often we transition from having ProxyResolver to not having one.  May be most common with bad PAC scripts.  I\u0027d be fine with this, though it does seem a waste of resources.",
+      "range": {
+        "startLine": 64,
+        "startChar": 24,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "72118eed77725c80c0e5e2e3409c1862887b0d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
