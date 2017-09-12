@@ -16,6 +16,24 @@
       "revId": "700f9cd0ecb86bc72e68a1028385b9ca77f77b15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15189ef_b417aa83",
+        "filename": "net/nqe/network_quality_estimator_params.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-12T00:18:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "109db387_3d92a8c7",
+      "revId": "700f9cd0ecb86bc72e68a1028385b9ca77f77b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
