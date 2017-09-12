@@ -12,17 +12,20 @@
 #include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
+#include "services/network/public/cpp/net_adapters.h"
+#include "url/gurl.h"
 
 namespace content {
 
+class ServiceWorkerCacheWriter;
 class URLLoaderFactoryGetter;
+struct HttpResponseInfoIOBuffer;
 
 // S13nServiceWorker:
 // Used by a Service Worker for script loading only during the installation
 // time. For now this is just a proxy loader for the network loader.
 // Eventually this should replace the existing URLRequestJob-based request
 // interception for script loading, namely ServiceWorkerWriteToCacheJob.
-// TODO(kinuko): Implement this.
 class CONTENT_EXPORT ServiceWorkerScriptURLLoader
     : public mojom::URLLoader,
       public mojom::URLLoaderClient {
@@ -43,7 +46,7 @@ class CONTENT_EXPORT ServiceWorkerScriptURLLoader
   void SetPriority(net::RequestPriority priority,
                    int32_t intra_priority_value) override;
 
-  // mojom::URLLoaderClient for simply proxying network:
+  // mojom::URLLoaderClient:
   void OnReceiveResponse(const ResourceResponseHead& response_head,
                          const base::Optional<net::SSLInfo>& ssl_info,
                          mojom::DownloadedTempFilePtr downloaded_file) override;
@@ -60,10 +63,46 @@ class CONTENT_EXPORT ServiceWorkerScriptURLLoader
   void OnComplete(const ResourceRequestCompletionStatus& status) override;
 
  private:
+  void InitializeScriptCacheWriter();
+
+  // Writes the given headers into the ServiceWorkerScriptCache.
+  void WriteHeaders(scoped_refptr<HttpResponseInfoIOBuffer> info_buffer);
+  void OnWriteHeadersComplete(net::Error error);
+
+  // Called repeatedly when the data is ready to be read and passes it into
+  // WriteData().
+  void OnDataAvailable(MojoResult);
+
+  // Writes the given data into the ServiceWorkerScriptCache.
+  void WriteData(scoped_refptr<net::IOBuffer> buffer, size_t available_bytes);
+  void OnWriteDataComplete(net::Error error);
+
+  const GURL url_;
+
+  // This should be RESOURCE_TYPE_SERVICE_WORKER for the main script or
+  // RESOURCE_TYPE_SCRIPT for an imported script.
+  const ResourceType resource_type_;
+
+  const int resource_id_;
+
   mojom::URLLoaderPtr network_loader_;
   mojo::Binding<mojom::URLLoaderClient> network_client_binding_;
+
+  // Used for forwarding a fetched script to the controller in a renderer.
   mojom::URLLoaderClientPtr forwarding_client_;
+  mojo::ScopedDataPipeProducerHandle forwarding_producer_;
+
   scoped_refptr<ServiceWorkerVersion> version_;
+  std::unique_ptr<ServiceWorkerCacheWriter> cache_writer_;
+
+  // Used for receiving a fetched script from the network service.
+  mojo::ScopedDataPipeConsumerHandle consumer_;
+  mojo::SimpleWatcher watcher_;
+
+  // Adapter for transferring data from a mojo data pipe to net.
+  scoped_refptr<network::MojoToNetPendingBuffer> pending_read_;
+
+  base::WeakPtrFactory<ServiceWorkerScriptURLLoader> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerScriptURLLoader);
 };

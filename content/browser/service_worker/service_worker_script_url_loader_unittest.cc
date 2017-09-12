@@ -81,6 +81,8 @@ class ServiceWorkerScriptURLLoaderTest : public testing::Test {
     helper_ = base::MakeUnique<EmbeddedWorkerTestHelper>(
         base::FilePath(), base::MakeRefCounted<URLLoaderFactoryGetter>());
 
+    InitializeStorage();
+
     // Initialize URLLoaderFactory.
     mojom::URLLoaderFactoryPtr test_loader_factory;
     mojo::MakeStrongBinding(base::MakeUnique<MockNetworkURLLoaderFactory>(),
@@ -100,6 +102,13 @@ class ServiceWorkerScriptURLLoaderTest : public testing::Test {
     version_->SetStatus(ServiceWorkerVersion::NEW);
   }
 
+  void InitializeStorage() {
+    base::RunLoop run_loop;
+    helper_->context()->storage()->LazyInitializeForTest(
+        run_loop.QuitClosure());
+    run_loop.Run();
+  }
+
   void DoRequest() {
     // Dummy values.
     int routing_id = 0;
@@ -109,6 +118,7 @@ class ServiceWorkerScriptURLLoaderTest : public testing::Test {
     ResourceRequest request;
     request.url = version_->script_url();
     request.method = "GET";
+    request.resource_type = RESOURCE_TYPE_SERVICE_WORKER;
 
     DCHECK(!loader_);
     loader_ = base::MakeUnique<ServiceWorkerScriptURLLoader>(
