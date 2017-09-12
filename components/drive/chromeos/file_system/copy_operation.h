@@ -57,6 +57,8 @@ class CopyOperation {
   // with a target of |dest_file_path|.
   // If |preserve_last_modified| is set to true, this tries to preserve
   // last modified time stamp. This is supported only on Drive API v2.
+  // However last_modified_by_me timestamp will not preserved and set to
+  // the same timestamp as last_modified.
   // Invokes |callback| when finished with the result of the operation.
   // |callback| must not be null.
   void Copy(const base::FilePath& src_file_path,
