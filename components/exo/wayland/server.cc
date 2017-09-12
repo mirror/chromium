@@ -9,6 +9,7 @@
 #include <gaming-input-unstable-v1-server-protocol.h>
 #include <gaming-input-unstable-v2-server-protocol.h>
 #include <grp.h>
+#include <inputfd-unstable-v1-server-protocol.h>
 #include <keyboard-configuration-unstable-v1-server-protocol.h>
 #include <keyboard-extension-unstable-v1-server-protocol.h>
 #include <linux/input.h>
@@ -60,6 +61,9 @@
 #include "components/exo/gamepad_delegate.h"
 #include "components/exo/gaming_seat.h"
 #include "components/exo/gaming_seat_delegate.h"
+#include "components/exo/inputfd_evdev_device_delegate.h"
+#include "components/exo/inputfd_evdev_seat.h"
+#include "components/exo/inputfd_evdev_seat_delegate.h"
 #include "components/exo/keyboard.h"
 #include "components/exo/keyboard_delegate.h"
 #include "components/exo/keyboard_device_configuration_delegate.h"
@@ -4170,6 +4174,169 @@ void bind_gaming_input_v1_DEPRECATED(wl_client* client,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// inputfd interface:
+
+// Inputfd Evdev Device Delegate that send device events to client.
+class WaylandInputfdEvdevDeviceDelegate : public InputfdEvdevDeviceDelegate {
+ public:
+  explicit WaylandInputfdEvdevDeviceDelegate(wl_resource* evdev_device_resource)
+      : evdev_device_resource_(evdev_device_resource) {}
+
+  static void ResetEvdevDeviceResource(wl_resource* resource) {
+    WaylandInputfdEvdevDeviceDelegate* delegate =
+        GetUserDataAs<WaylandInputfdEvdevDeviceDelegate>(resource);
+    if (delegate) {
+      delegate->evdev_device_resource_ = nullptr;
+    }
+  }
+
+  void OnInitName(const char* name) override {
+    if (!evdev_device_resource_) {
+      return;
+    }
+    zwp_inputfd_device_evdev_v1_send_name(evdev_device_resource_, name);
+  }
+
+  void OnInitUsbID(uint32_t vid, uint32_t pid) override {
+    if (!evdev_device_resource_) {
+      return;
+    }
+    zwp_inputfd_device_evdev_v1_send_usb_id(evdev_device_resource_, vid, pid);
+  }
+
+  void OnInitDone() override {
+    if (!evdev_device_resource_) {
+      return;
+    }
+    zwp_inputfd_device_evdev_v1_send_done(evdev_device_resource_);
+  }
+
+  void OnRemoved() override {
+    if (!evdev_device_resource_) {
+      return;
+    }
+    zwp_inputfd_device_evdev_v1_send_removed(evdev_device_resource_);
+    wl_client_flush(wl_resource_get_client(evdev_device_resource_));
+    // Reset the user data in resource. evdev_device_destroy won't delete the
+    // memory when destroy is received from client.
+    wl_resource_set_user_data(evdev_device_resource_, nullptr);
+    delete this;
+  }
+
+  void OnFocusIn(uint32_t serial, int32_t fd, Surface* surface) override {
+    if (!evdev_device_resource_) {
+      return;
+    }
+    zwp_inputfd_device_evdev_v1_send_focus_in(evdev_device_resource_, serial,
+                                              fd, GetSurfaceResource(surface));
+  }
+
+  void OnFocusOut() override {
+    if (!evdev_device_resource_) {
+      return;
+    }
+    zwp_inputfd_device_evdev_v1_send_focus_out(evdev_device_resource_);
+  }
+
+ private:
+  // This object is deleted by OnRemoved();
+  ~WaylandInputfdEvdevDeviceDelegate() override {}
+
+  // The wayland resource associated with this device.
+  wl_resource* evdev_device_resource_;
+
+  DISALLOW_COPY_AND_ASSIGN(WaylandInputfdEvdevDeviceDelegate);
+};
+
+void evdev_device_destroy(wl_client* client, wl_resource* resource) {
+  wl_resource_destroy(resource);
+}
+
+const struct zwp_inputfd_device_evdev_v1_interface inputfd_evdev_device_impl = {
+    evdev_device_destroy};
+
+class WaylandInputfdEvdevSeatDelegate : public InputfdEvdevSeatDelegate {
+ public:
+  WaylandInputfdEvdevSeatDelegate(wl_resource* evdev_seat_resource)
+      : evdev_seat_resource_(evdev_seat_resource) {}
+
+  void OnInputfdEvdevSeatDestroying(InputfdEvdevSeat* evdev_seat) override {
+    delete this;
+  }
+
+  bool CanAcceptGamepadEventsForSurface(Surface* surface) const override {
+    wl_resource* surface_resource = GetSurfaceResource(surface);
+    return surface_resource && wl_resource_get_client(surface_resource) ==
+                                   wl_resource_get_client(evdev_seat_resource_);
+  }
+
+  InputfdEvdevDeviceDelegate* DeviceAdded() override {
+    wl_resource* evdev_device_resource =
+        wl_resource_create(wl_resource_get_client(evdev_seat_resource_),
+                           &zwp_inputfd_device_evdev_v1_interface,
+                           wl_resource_get_version(evdev_seat_resource_), 0);
+
+    InputfdEvdevDeviceDelegate* evdev_device_delegate =
+        new WaylandInputfdEvdevDeviceDelegate(evdev_device_resource);
+
+    wl_resource_set_implementation(
+        evdev_device_resource, &inputfd_evdev_device_impl,
+        evdev_device_delegate,
+        &WaylandInputfdEvdevDeviceDelegate::ResetEvdevDeviceResource);
+
+    zwp_inputfd_seat_evdev_v1_send_device_added(evdev_seat_resource_,
+                                                evdev_device_resource);
+
+    return evdev_device_delegate;
+  }
+
+ private:
+  // The wayland resource associated with the seat.
+  wl_resource* evdev_seat_resource_;
+
+  DISALLOW_COPY_AND_ASSIGN(WaylandInputfdEvdevSeatDelegate);
+};
+
+void inputfd_evdev_seat_destroy(wl_client* client, wl_resource* resource) {
+  wl_resource_destroy(resource);
+}
+
+const struct zwp_inputfd_seat_evdev_v1_interface inputfd_evdev_seat_impl = {
+    inputfd_evdev_seat_destroy};
+
+void zwp_inputfd_get_seat_evdev(wl_client* client,
+                                wl_resource* resource,
+                                uint32_t id,
+                                wl_resource* seat) {
+  wl_resource* inputfd_seat_evdev_resource =
+      wl_resource_create(client, &zwp_inputfd_seat_evdev_v1_interface,
+                         wl_resource_get_version(resource), id);
+
+  SetImplementation(
+      inputfd_seat_evdev_resource, &inputfd_evdev_seat_impl,
+      base::MakeUnique<InputfdEvdevSeat>(
+          new WaylandInputfdEvdevSeatDelegate(inputfd_seat_evdev_resource)));
+}
+
+void inputfd_manager_destroy(wl_client* client, wl_resource* resource) {
+  wl_resource_destroy(resource);
+}
+
+const struct zwp_inputfd_manager_v1_interface inputfd_manager_implementation = {
+    zwp_inputfd_get_seat_evdev, inputfd_manager_destroy};
+
+void bind_inputfd(wl_client* client,
+                  void* data,
+                  uint32_t version,
+                  uint32_t id) {
+  wl_resource* resource = wl_resource_create(
+      client, &zwp_inputfd_manager_v1_interface, version, id);
+
+  wl_resource_set_implementation(resource, &inputfd_manager_implementation,
+                                 nullptr, nullptr);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // touch_stylus interface:
 
 class WaylandTouchStylusDelegate : public TouchStylusDelegate {
@@ -4602,6 +4769,8 @@ Server::Server(Display* display)
                    display_, bind_gaming_input_v1_DEPRECATED);
   wl_global_create(wl_display_.get(), &zcr_gaming_input_v2_interface, 1,
                    display_, bind_gaming_input);
+  wl_global_create(wl_display_.get(), &zwp_inputfd_manager_v1_interface, 1,
+                   display_, bind_inputfd);
   wl_global_create(wl_display_.get(), &zcr_stylus_v1_interface, 2, display_,
                    bind_stylus_v1_DEPRECATED);
   wl_global_create(wl_display_.get(), &zcr_stylus_v2_interface, 1, display_,

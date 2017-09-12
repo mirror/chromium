@@ -26,8 +26,8 @@ config("aura_shell_protocol_config") {
 source_set("aura_shell_protocol") {
   sources = [
     "aura-shell-client-protocol.h",
-    "aura-shell-server-protocol.h",
     "aura-shell-protocol.c",
+    "aura-shell-server-protocol.h",
   ]
 
   deps = [
@@ -61,6 +61,7 @@ source_set("wayland") {
     "//third_party/wayland:wayland_server",
     "//third_party/wayland-protocols:alpha_compositing_protocol",
     "//third_party/wayland-protocols:gaming_input_protocol",
+    "//third_party/wayland-protocols:inputfd_protocol",
     "//third_party/wayland-protocols:keyboard_configuration_protocol",
     "//third_party/wayland-protocols:keyboard_extension_protocol",
     "//third_party/wayland-protocols:presentation_time_protocol",
