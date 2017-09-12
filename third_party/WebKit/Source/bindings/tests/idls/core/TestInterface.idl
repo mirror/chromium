@@ -132,6 +132,11 @@
     [SecureContext,Exposed=Window,RuntimeEnabled=SecureFeature] attribute bool secureContextWindowExposedRuntimeEnabledAttribute;
     [SecureContext,Exposed=Worker,RuntimeEnabled=SecureFeature] void secureContextWorkerExposedRuntimeEnabledMethod();
     [SecureContext,Exposed=Worker,RuntimeEnabled=SecureFeature] attribute bool secureContextWorkerExposedRuntimeEnabledAttribute;
+
+    void voidMethodTestArgumentWithClampOptional([Clamp] optional long longOptionalClampArg);
+    void voidMethodTestArgumentWithClamp([Clamp] long long longClampArg);
+    void voidMethodTestArgumentWithEnforceRange([EnforceRange] long... longEnforceArg);
+    void voidMethodTestArgumentWithTreatNullAs([TreatNullAs=EmptyString] DOMString stringArg);
 };
 
 TestInterface implements TestImplements;
