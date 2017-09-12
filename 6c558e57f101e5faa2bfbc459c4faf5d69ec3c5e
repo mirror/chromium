@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c150654_8979d913",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1878,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-12T20:37:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88bc3ced_6ba08f10",
+      "revId": "6c558e57f101e5faa2bfbc459c4faf5d69ec3c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c2541f3_bbb08e4e",
         "filename": "chrome/browser/ui/ash/multi_user/multi_user_window_manager_chromeos_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "6c558e57f101e5faa2bfbc459c4faf5d69ec3c5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa961ea9_bfee052b",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_window_manager_chromeos_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1575,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-12T20:37:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c2541f3_bbb08e4e",
+      "revId": "6c558e57f101e5faa2bfbc459c4faf5d69ec3c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
