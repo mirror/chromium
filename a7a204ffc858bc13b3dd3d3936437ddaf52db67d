@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98377e30_61076106",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T15:58:23Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this means.",
+      "range": {
+        "startLine": 10,
+        "startChar": 57,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b58853a_3e96e13b",
+        "filename": "ash/host/ash_window_tree_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T15:58:23Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b45cad_c818a9ae",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T15:58:23Z",
+      "side": 1,
+      "message": "DCHECK_EQ\n\nDocument in the header too please? :)",
+      "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd323b5_547cfc7b",
+        "filename": "services/ui/ws/event_dispatcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T15:58:23Z",
+      "side": 1,
+      "message": "Can you add a comment here explaining the relation in the locations in |event_location| and the locations in |event|? I assume |event.location()|/|event.root_location()| would be the same as |event_location.location|?",
+      "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5517f7a2_e12bc4ec",
+        "filename": "services/ui/ws/event_dispatcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T15:58:23Z",
+      "side": 1,
+      "message": "Would it make sense to move EventLocation into ui/events/, and add as an optional field to LocatedEvent? I think it will go towards resolving https://crbug.com/608547, and make the code in here simpler.",
+      "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a99547_161ebabb",
+        "filename": "services/ui/ws/event_location.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T15:58:23Z",
+      "side": 1,
+      "message": "|location|",
+      "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7154627_3bdf371f",
+        "filename": "services/ui/ws/event_location.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T15:58:23Z",
+      "side": 1,
+      "message": "This is in pixels, but in display layout, instead of screen layout, but still not DIP, right?",
+      "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5070c5_ebe4cc7b",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T15:58:23Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
