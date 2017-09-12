@@ -112,6 +112,7 @@ class WebMediaStreamSource {
   BLINK_PLATFORM_EXPORT void SetExtraData(ExtraData*);
 
   BLINK_PLATFORM_EXPORT void SetEchoCancellation(bool echo_cancellation);
+  BLINK_PLATFORM_EXPORT void SetLatency(double latency);
 
   BLINK_PLATFORM_EXPORT WebMediaConstraints Constraints();
 

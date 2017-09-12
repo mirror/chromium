@@ -153,14 +153,16 @@ AudioCaptureSettings::AudioCaptureSettings(
     bool enable_hotword,
     bool disable_local_echo,
     bool enable_automatic_output_device_selection,
-    const AudioProcessingProperties& audio_processing_properties)
+    const AudioProcessingProperties& audio_processing_properties,
+    base::Optional<double> requested_latency)
     : failed_constraint_name_(nullptr),
       device_id_(std::move(device_id)),
       audio_parameters_(audio_parameters),
       hotword_enabled_(enable_hotword),
       disable_local_echo_(disable_local_echo),
       render_to_associated_sink_(enable_automatic_output_device_selection),
-      audio_processing_properties_(audio_processing_properties) {}
+      audio_processing_properties_(audio_processing_properties),
+      requested_latency_(requested_latency) {}
 
 AudioCaptureSettings::AudioCaptureSettings(const AudioCaptureSettings& other) =
     default;
@@ -170,6 +172,7 @@ AudioCaptureSettings::AudioCaptureSettings(AudioCaptureSettings&& other) =
     default;
 AudioCaptureSettings& AudioCaptureSettings::operator=(
     AudioCaptureSettings&& other) = default;
+AudioCaptureSettings::~AudioCaptureSettings() = default;
 
 bool GetConstraintValueAsBoolean(
     const blink::WebMediaConstraints& constraints,
