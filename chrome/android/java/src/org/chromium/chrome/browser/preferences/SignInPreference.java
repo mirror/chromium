@@ -18,6 +18,7 @@ import org.chromium.chrome.browser.firstrun.FirstRunSignInProcessor;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.signin.AccountManagementFragment;
 import org.chromium.chrome.browser.signin.AccountSigninActivity;
+import org.chromium.chrome.browser.signin.DisplayableProfileData;
 import org.chromium.chrome.browser.signin.ProfileDataCache;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
 import org.chromium.chrome.browser.signin.SigninManager;
@@ -147,16 +148,17 @@ public class SignInPreference
         Account[] accounts = AccountManagerFacade.get().tryGetGoogleAccounts();
         String defaultAccountName = accounts.length == 0 ? null : accounts[0].name;
 
+        DisplayableProfileData profileData = null;
         if (defaultAccountName != null) {
             mProfileDataCache.update(Collections.singletonList(defaultAccountName));
+            profileData = mProfileDataCache.getProfileData(defaultAccountName);
         }
 
         if (mSigninPromoController == null) {
-            mSigninPromoController =
-                    new SigninPromoController(mProfileDataCache, SigninAccessPoint.SETTINGS);
+            mSigninPromoController = new SigninPromoController(SigninAccessPoint.SETTINGS);
         }
 
-        mSigninPromoController.setAccountName(defaultAccountName);
+        mSigninPromoController.setProfileData(profileData);
         if (!mShowingPromo) {
             mSigninPromoController.recordSigninPromoImpression();
         }
@@ -184,18 +186,17 @@ public class SignInPreference
 
     private void setupSignedIn(String accountName) {
         mProfileDataCache.update(Collections.singletonList(accountName));
+        DisplayableProfileData profileData = mProfileDataCache.getProfileData(accountName);
 
         setLayoutResource(R.layout.account_management_account_row);
-        String title = mProfileDataCache.getFullName(accountName);
-        if (title == null) title = accountName;
-        setTitle(title);
+        setTitle(profileData.getFullNameOrEmail());
         setSummary(SyncPreference.getSyncStatusSummary(getContext()));
         setFragment(AccountManagementFragment.class.getName());
-        setIcon(mProfileDataCache.getImage(accountName));
-
+        setIcon(profileData.getImage());
         setWidgetLayoutResource(
                 SyncPreference.showSyncErrorIcon(getContext()) ? R.layout.sync_error_widget : 0);
         setViewEnabled(true);
+
         mSigninPromoController = null;
         mShowingPromo = false;
     }

@@ -473,11 +473,11 @@ public class AccountSigninView extends FrameLayout {
     }
 
     private void updateSignedInAccountInfo() {
-        mSigninAccountImage.setImageDrawable(mProfileData.getImage(mSelectedAccountName));
+        DisplayableProfileData profileData = mProfileData.getProfileData(mSelectedAccountName);
+        mSigninAccountImage.setImageDrawable(profileData.getImage());
         String name = null;
-        if (mIsChildAccount) name = mProfileData.getGivenName(mSelectedAccountName);
-        if (name == null) name = mProfileData.getFullName(mSelectedAccountName);
-        if (name == null) name = mSelectedAccountName;
+        if (mIsChildAccount) name = profileData.getGivenName();
+        if (name == null) name = profileData.getFullNameOrEmail();
         mSigninAccountName.setText(getResources().getString(R.string.signin_hi_name, name));
         mSigninAccountEmail.setText(mSelectedAccountName);
     }
