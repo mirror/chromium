@@ -230,20 +230,22 @@ bool DeferredImageDecoder::FrameIsReceivedAtIndex(size_t index) const {
 }
 
 TimeDelta DeferredImageDecoder::FrameDurationAtIndex(size_t index) const {
-  TimeDelta duration;
-  if (metadata_decoder_)
-    duration = metadata_decoder_->FrameDurationAtIndex(index);
+  if (metadata_decoder_) {
+    // Many annoying ads specify a 0 duration to make an image flash as quickly
+    // as possible. We follow Firefox's behavior and use a duration of 100 ms
+    // for any frames that specify a duration of <= 10 ms. See
+    // <rdar://problem/7689300> and <http://webkit.org/b/36082> for more
+    // information.
+    TimeDelta duration = metadata_decoder_->FrameDurationAtIndex(index);
+    if (duration <= TimeDelta::FromMilliseconds(10))
+      duration = TimeDelta::FromMilliseconds(100);
+    return duration;
+  }
+
   if (index < frame_data_.size())
-    duration = frame_data_[index].duration_;
+    return frame_data_[index].duration_;
 
-  // Many annoying ads specify a 0 duration to make an image flash as quickly as
-  // possible. We follow Firefox's behavior and use a duration of 100 ms for any
-  // frames that specify a duration of <= 10 ms. See <rdar://problem/7689300>
-  // and <http://webkit.org/b/36082> for more information.
-  if (duration <= TimeDelta::FromMilliseconds(10))
-    duration = TimeDelta::FromMilliseconds(100);
-
-  return duration;
+  return TimeDelta();
 }
 
 ImageOrientation DeferredImageDecoder::OrientationAtIndex(size_t index) const {
@@ -293,7 +295,7 @@ void DeferredImageDecoder::PrepareLazyDecodedFrames() {
     return;
 
   for (size_t i = previous_size; i < frame_data_.size(); ++i) {
-    frame_data_[i].duration_ = metadata_decoder_->FrameDurationAtIndex(i);
+    frame_data_[i].duration_ = FrameDurationAtIndex(i);
     frame_data_[i].orientation_ = metadata_decoder_->Orientation();
     frame_data_[i].is_received_ = metadata_decoder_->FrameIsReceivedAtIndex(i);
   }
