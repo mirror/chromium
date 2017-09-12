@@ -122,13 +122,10 @@ void FakeAuthPolicyClient::AuthenticateUser(
     LOG(ERROR) << "authpolicyd not started";
     error = authpolicy::ERROR_DBUS_FAILURE;
   } else {
-    if (auth_error_ == authpolicy::ERROR_NONE) {
-      if (object_guid.empty())
-        account_info.set_account_id(base::MD5String(user_principal_name));
-      else
-        account_info.set_account_id(object_guid);
-    }
-    error = auth_error_;
+    if (object_guid.empty())
+      account_info.set_account_id(base::MD5String(user_principal_name));
+    else
+      account_info.set_account_id(object_guid);
   }
   PostDelayedClosure(base::BindOnce(std::move(callback), error, account_info),
                      dbus_operation_delay_);
@@ -137,23 +134,19 @@ void FakeAuthPolicyClient::AuthenticateUser(
 void FakeAuthPolicyClient::GetUserStatus(const std::string& object_guid,
                                          GetUserStatusCallback callback) {
   authpolicy::ActiveDirectoryUserStatus user_status;
-  user_status.set_password_status(password_status_);
-  user_status.set_tgt_status(tgt_status_);
+  user_status.set_password_status(
+      authpolicy::ActiveDirectoryUserStatus::PASSWORD_VALID);
+  user_status.set_tgt_status(authpolicy::ActiveDirectoryUserStatus::TGT_VALID);
 
   authpolicy::ActiveDirectoryAccountInfo* const account_info =
       user_status.mutable_account_info();
   account_info->set_account_id(object_guid);
-  if (!display_name_.empty())
-    account_info->set_display_name(display_name_);
-  if (!given_name_.empty())
-    account_info->set_given_name(given_name_);
+  account_info->set_display_name("John Doe");
+  account_info->set_given_name("John");
 
   PostDelayedClosure(
       base::BindOnce(std::move(callback), authpolicy::ERROR_NONE, user_status),
       dbus_operation_delay_);
-  if (!on_get_status_closure_.is_null())
-    PostDelayedClosure(std::move(on_get_status_closure_),
-                       dbus_operation_delay_);
 }
 
 void FakeAuthPolicyClient::GetUserKerberosFiles(

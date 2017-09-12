@@ -69,32 +69,6 @@ class CHROMEOS_EXPORT FakeAuthPolicyClient : public AuthPolicyClient {
 
   bool started() const { return started_; }
 
-  void set_auth_error(authpolicy::ErrorType auth_error) {
-    auth_error_ = auth_error;
-  }
-
-  void set_display_name(const std::string& display_name) {
-    display_name_ = display_name;
-  }
-
-  void set_given_name(const std::string& given_name) {
-    given_name_ = given_name;
-  }
-
-  void set_password_status(
-      authpolicy::ActiveDirectoryUserStatus::PasswordStatus password_status) {
-    password_status_ = password_status;
-  }
-
-  void set_tgt_status(
-      authpolicy::ActiveDirectoryUserStatus::TgtStatus tgt_status) {
-    tgt_status_ = tgt_status;
-  }
-
-  void set_on_get_status_closure(base::OnceClosure on_get_status_closure) {
-    on_get_status_closure_ = std::move(on_get_status_closure);
-  }
-
   void DisableOperationDelayForTesting() {
     dbus_operation_delay_ = disk_operation_delay_ =
         base::TimeDelta::FromSeconds(0);
@@ -102,15 +76,6 @@ class CHROMEOS_EXPORT FakeAuthPolicyClient : public AuthPolicyClient {
 
  private:
   bool started_ = false;
-  // If valid called after GetUserStatusCallback is called.
-  base::OnceClosure on_get_status_closure_;
-  authpolicy::ErrorType auth_error_ = authpolicy::ERROR_NONE;
-  std::string display_name_;
-  std::string given_name_;
-  authpolicy::ActiveDirectoryUserStatus::PasswordStatus password_status_ =
-      authpolicy::ActiveDirectoryUserStatus::PASSWORD_VALID;
-  authpolicy::ActiveDirectoryUserStatus::TgtStatus tgt_status_ =
-      authpolicy::ActiveDirectoryUserStatus::TGT_VALID;
   // Delay operations to be more realistic.
   base::TimeDelta dbus_operation_delay_ = base::TimeDelta::FromSeconds(3);
   base::TimeDelta disk_operation_delay_ =

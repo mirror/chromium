@@ -545,6 +545,8 @@ static_library("test_support") {
     "cryptohome/mock_homedir_methods.h",
     "dbus/biod/test_utils.cc",
     "dbus/biod/test_utils.h",
+    "dbus/mock_auth_policy_client.cc",
+    "dbus/mock_auth_policy_client.h",
     "dbus/mock_lorgnette_manager_client.cc",
     "dbus/mock_lorgnette_manager_client.h",
     "dbus/mock_permission_broker_client.cc",

@@ -34,6 +34,7 @@
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_auth_policy_client.h"
+#include "chromeos/dbus/mock_auth_policy_client.h"
 #include "chromeos/settings/cros_settings_names.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/user_names.h"
@@ -193,6 +194,52 @@ const char kAdButton[] = "button";
 const char kAdWelcomMessage[] = "welcomeMsg";
 const char kAdAutocompleteRealm[] = "userInput /deep/ #domainLabel";
 
+class TestAuthPolicyClient : public MockAuthPolicyClient {
+ public:
+  TestAuthPolicyClient()
+      : fake_auth_policy_client_(base::MakeUnique<FakeAuthPolicyClient>()) {
+    fake_auth_policy_client_->set_started(true);
+  }
+
+  void AuthenticateUser(const std::string& user_principal_name,
+                        const std::string& object_guid,
+                        int password_fd,
+                        AuthCallback callback) override {
+    authpolicy::ActiveDirectoryAccountInfo account_info;
+    if (auth_error_ == authpolicy::ERROR_NONE) {
+      if (object_guid.empty())
+        account_info.set_account_id(base::MD5String(user_principal_name));
+      else
+        account_info.set_account_id(object_guid);
+    }
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE,
+        base::BindOnce(std::move(callback), auth_error_, account_info));
+  }
+
+  void RefreshDevicePolicy(RefreshPolicyCallback callback) override {
+    fake_auth_policy_client_->RefreshDevicePolicy(std::move(callback));
+  }
+
+  void RefreshUserPolicy(const AccountId& account_id,
+                         RefreshPolicyCallback callback) override {
+    fake_auth_policy_client_->RefreshUserPolicy(account_id,
+                                                std::move(callback));
+  }
+
+  void set_auth_error(authpolicy::ErrorType auth_error) {
+    auth_error_ = auth_error;
+  }
+
+ protected:
+  // Used to write empty device and user policies on disk.
+  std::unique_ptr<FakeAuthPolicyClient> fake_auth_policy_client_;
+  authpolicy::ErrorType auth_error_ = authpolicy::ERROR_NONE;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(TestAuthPolicyClient);
+};
+
 class ActiveDirectoryLoginTest : public LoginManagerTest {
  public:
   ActiveDirectoryLoginTest()
@@ -207,23 +254,30 @@ class ActiveDirectoryLoginTest : public LoginManagerTest {
 
   ~ActiveDirectoryLoginTest() override = default;
 
+  void SetUp() override {
+    SetupMockAuthPolicyClient();
+    LoginManagerTest::SetUp();
+  }
+
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitch(switches::kOobeSkipPostLogin);
     LoginManagerTest::SetUpCommandLine(command_line);
   }
 
-  void SetUpOnMainThread() override {
-    LoginManagerTest::SetUpOnMainThread();
-    fake_auth_policy_client()->DisableOperationDelayForTesting();
-  }
-
   void MarkAsActiveDirectoryEnterprise() {
     StartupUtils::MarkOobeCompleted();
     base::RunLoop loop;
-    fake_auth_policy_client()->RefreshDevicePolicy(
+    DBusThreadManager::Get()->GetAuthPolicyClient()->RefreshDevicePolicy(
         base::BindOnce(&ActiveDirectoryLoginTest::OnRefreshedPolicy,
                        base::Unretained(this), loop.QuitClosure()));
     loop.Run();
+  }
+
+  void SetupMockAuthPolicyClient() {
+    auto mock_client = base::MakeUnique<TestAuthPolicyClient>();
+    mock_auth_policy_client_ = mock_client.get();
+    DBusThreadManager::GetSetterForTesting()->SetAuthPolicyClient(
+        std::move(mock_client));
   }
 
   // Checks if Active Directory login is visible.
@@ -308,19 +362,21 @@ class ActiveDirectoryLoginTest : public LoginManagerTest {
     return "document.querySelector('#offline-ad-auth /deep/ #" + element_id +
            "')";
   }
-  FakeAuthPolicyClient* fake_auth_policy_client() {
-    return static_cast<FakeAuthPolicyClient*>(
-        DBusThreadManager::Get()->GetAuthPolicyClient());
+
+  TestAuthPolicyClient* mock_auth_policy_client() {
+    return mock_auth_policy_client_;
   }
 
   const std::string test_realm_;
-
  private:
   // Used for the callback from FakeAuthPolicy::RefreshDevicePolicy.
   void OnRefreshedPolicy(const base::Closure& closure, bool status) {
     EXPECT_TRUE(status);
     closure.Run();
   }
+
+  // Owned by DBusThreadManager.
+  TestAuthPolicyClient* mock_auth_policy_client_ = nullptr;
 
   ScopedStubInstallAttributes install_attributes_;
 
@@ -434,6 +490,11 @@ IN_PROC_BROWSER_TEST_F(ActiveDirectoryLoginTest, PRE_LoginSuccess) {
 
 // Test successful Active Directory login.
 IN_PROC_BROWSER_TEST_F(ActiveDirectoryLoginTest, LoginSuccess) {
+  EXPECT_CALL(*mock_auth_policy_client(), DoGetUserKerberosFiles(_, _))
+      .Times(1);
+  EXPECT_CALL(*mock_auth_policy_client(), DoGetUserStatus(_, _)).Times(1);
+  EXPECT_CALL(*mock_auth_policy_client(), ConnectToSignal(_, _, _)).Times(1);
+
   TestLoginVisible();
   TestDomainVisible();
 
@@ -473,14 +534,14 @@ IN_PROC_BROWSER_TEST_F(ActiveDirectoryLoginTest, LoginErrors) {
   TestUserError();
   TestDomainHidden();
 
-  fake_auth_policy_client()->set_auth_error(authpolicy::ERROR_BAD_USER_NAME);
+  mock_auth_policy_client()->set_auth_error(authpolicy::ERROR_BAD_USER_NAME);
   SubmitActiveDirectoryCredentials(
       std::string(kTestActiveDirectoryUser) + "@" + test_realm_, kPassword);
   WaitForMessage(&message_queue, "\"ShowAuthError\"");
   TestUserError();
   TestDomainVisible();
 
-  fake_auth_policy_client()->set_auth_error(authpolicy::ERROR_BAD_PASSWORD);
+  mock_auth_policy_client()->set_auth_error(authpolicy::ERROR_BAD_PASSWORD);
   SubmitActiveDirectoryCredentials(kTestActiveDirectoryUser, kPassword);
   WaitForMessage(&message_queue, "\"ShowAuthError\"");
   TestPasswordError();
