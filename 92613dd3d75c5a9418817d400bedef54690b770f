@@ -1,0 +1,497 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acdc5b8b_654fcc01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "indent.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5417f3a5_9b03a34e",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "Nit: Reword?\n\n ... the existing AvPair with of type |TargetInfoAvId::kFlags| will be updated to include the |TargetInfoAvFlags::kMicPresent| bit.\n\nAt least for me, it\u0027s not obvious what a flags AvPair is.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7013397f_a98070b2",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "|server_timestamp| ?",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4007b67a_5e0b6cb8",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "Let\u0027s either skip this, or also check for kChannelBindings and kTargetName.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe99271d_74e68a74",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "For symmetry with NtlmBufferReader, I\u0027d much rather have this logic go into NtlmBufferWriter. This function can still exist here or be folded into GenerateUpdatedTargetInfo, but the knowledge of how to write an AvPair should be in NtlmBufferWriter.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31eb3336_5d6b7674",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "nit: should use sizeof(v1_hash) instead of kNtlmHashLen. Here and in the previous line.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e69374a8_070d6363",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "Later we should consider eliminating this copy and either consume |av_pairs| as a mutable vector, or an rvalue reference. AvPairs aren\u0027t particularly cheap to copy.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1642160b_014a0923",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "Probably want to refer to section 3.3.2 where |temp| is defined.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0e64631_ec96b03a",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "\"server certificate\" or \"server\u0027s certificate\"",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ecac3f_c0e27017",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "The digest algorithm isn\u0027t limited to SHA-256. It just happens to be the one that we end up with most of the time. It\u0027s probably best if we not rely on an assumption that the channel bindings string is 53 bytes long. We should allow for the possibility that it\u0027s different.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eeda007_635a0ab4",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "Rebase with the patch to move crypto operations to use BoringSSL?",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae34024_03725efd",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "hmm? KEY_EXCH is never negotiated?\n\nAlso, should specify that the MIC is as defined above only for V2 and when KEY_EXCH is not defined. Otherwise this function should take exported_session_key and note that the latter is the same as session_base_key for the capabilities negotiated in this implementation.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd76d198_eb6daa1e",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "Let\u0027s move this into the while() loop along with the ReadAvPairHeader() call. Then we can do av_pairs-\u003epush_back(std::move(pair)) inside the loop to avoid an extra buffer copy.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5107bd47_462adf44",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "*there",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adbcc875_99a9f77d",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "How about we not add kEol pair in the first place? We just need to keep track of whether we saw it.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41585adf_a9644ea0",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "let\u0027s move the sec_buf.length \u003d\u003d 0 and sec_buf.length \u003c kAvPairHeaderLen checks into ReadTargetInfo(). The latter is already there.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28fbc25_0258e614",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "We can create a reader for a slice of the buffer, right? Or is that another CL? I thought we were getting rid of this pattern.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3197ce6_88a62361",
+        "filename": "net/ntlm/ntlm_buffer_reader_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "Could you add at test for a zero length buffer for completeness? This is especially the case if you follow the prior request to move the zero check into ReadTargetInfo().",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f435eab_d5352bea",
+        "filename": "net/ntlm/ntlm_buffer_reader_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b4da24_386397f2",
+        "filename": "net/ntlm/ntlm_buffer_reader_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "doesn\u0027t this have two terminators? Unclear why we need this test.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af31764_b6619eee",
+        "filename": "net/ntlm/ntlm_buffer_reader_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "No tests for ReadTargetInfoPayload()? :-(",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "839f6b44_7818259a",
+        "filename": "net/ntlm/ntlm_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "it should be okay for URLs to exceed the 80 column limit. Were you getting presubmit errors?",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27034999_453f1d68",
+        "filename": "net/ntlm/ntlm_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "Should probably mention the intentional omission of KEYEX, SIGN and SEAL.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733be0d4_e8f64512",
+        "filename": "net/ntlm/ntlm_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "same thing WRT URLs exceeding 80 columns.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a7de08_72429aa8",
+        "filename": "net/ntlm/ntlm_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "Same comment about assuming SHA-256. You can just refer to the RFC and leave it at that. Or point people to net::x509_util::CreateTLSServerEndPointChannelBinding().",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165b99e7_d3de953d",
+        "filename": "net/ntlm/ntlm_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "Mention |client_time|? Also note that we can trivially use base::Time here instead.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aaaed58_9a7be036",
+        "filename": "net/ntlm/ntlm_constants.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "|EOL| → |kEol|",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88f652e_150c87cc",
+        "filename": "net/ntlm/ntlm_constants.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "|FLAGS| → |kFlags|\n|TIMESTAMP| → |kTimestamp|",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f529e5a_128678e3",
+        "filename": "net/ntlm/ntlm_test_data.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T22:49:36Z",
+      "side": 1,
+      "message": "FYI. I\u0027m going to assume you combed through this to make sure the resulting message is correct :-)",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
