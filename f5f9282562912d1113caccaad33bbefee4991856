@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7630853d_c9d18803",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-12T04:27:13Z",
+      "side": 1,
+      "message": "https://heycam.github.io/webidl/#LegacyPlatformObjectGetOwnProperty\n\nIf the platform object supports indexed properties without setter and the property name is an array index, then we should return {writable: false} regardless of whether named properties are supported or not or whether named property setter is supported or not.  I.e. we should reach step 1.2.9. through 1.2.7. in the above link.\n\nWe should fall back to named properties\u0027 case only when indexed_property_getter is not supported.",
+      "revId": "f5f9282562912d1113caccaad33bbefee4991856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
