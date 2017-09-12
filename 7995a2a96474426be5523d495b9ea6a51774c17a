@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9f53675a_a0645873",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-12T22:15:10Z",
+      "side": 1,
+      "message": "please add the bug id.",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "7995a2a96474426be5523d495b9ea6a51774c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7258d11_96b35647",
         "filename": "chrome/browser/ui/webui/interventions/OWNERS",
         "patchSetId": 9
@@ -34,6 +57,98 @@
       "revId": "7995a2a96474426be5523d495b9ea6a51774c17a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd868637_f9284546",
+        "filename": "chrome/browser/ui/webui/interventions/interventions_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-12T22:15:10Z",
+      "side": 1,
+      "message": "same comment for copyright.",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "7995a2a96474426be5523d495b9ea6a51774c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35f3ce7_901a8f2a",
+        "filename": "chrome/browser/ui/webui/interventions/interventions_ui.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-12T22:15:10Z",
+      "side": 1,
+      "message": "Use the new copyright format. See https://cs.chromium.org/chromium/src/net/nqe/event_creator.h for example.",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "7995a2a96474426be5523d495b9ea6a51774c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9adfe598_80a328a2",
+        "filename": "chrome/common/url_constants.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-12T22:15:10Z",
+      "side": 1,
+      "message": "why was this changed?",
+      "range": {
+        "startLine": 820,
+        "startChar": 5,
+        "endLine": 820,
+        "endChar": 12
+      },
+      "revId": "7995a2a96474426be5523d495b9ea6a51774c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6488eb_696b81b8",
+        "filename": "chrome/common/url_constants.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-12T22:15:10Z",
+      "side": 1,
+      "message": "same comment here.",
+      "range": {
+        "startLine": 826,
+        "startChar": 5,
+        "endLine": 826,
+        "endChar": 12
+      },
+      "revId": "7995a2a96474426be5523d495b9ea6a51774c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
