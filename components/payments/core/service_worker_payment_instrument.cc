@@ -3,7 +3,9 @@
 // found in the LICENSE file.
 
 #include "components/payments/core/service_worker_payment_instrument.h"
+
 #include "base/strings/utf_string_conversions.h"
+#include "ui/gfx/image/image_skia.h"
 
 namespace payments {
 
@@ -12,7 +14,13 @@ namespace payments {
 ServiceWorkerPaymentInstrument::ServiceWorkerPaymentInstrument(
     std::unique_ptr<content::StoredPaymentApp> stored_payment_app_info)
     : PaymentInstrument(0, PaymentInstrument::Type::SERVICE_WORKER_APP),
-      stored_payment_app_info_(std::move(stored_payment_app_info)) {}
+      stored_payment_app_info_(std::move(stored_payment_app_info)) {
+  if (stored_payment_app_info_->icon) {
+    icon_image_ =
+        gfx::ImageSkia::CreateFrom1xBitmap(*(stored_payment_app_info_->icon))
+            .DeepCopy();
+  }
+}
 
 ServiceWorkerPaymentInstrument::~ServiceWorkerPaymentInstrument() {}
 
@@ -60,8 +68,8 @@ bool ServiceWorkerPaymentInstrument::IsValidForModifier(
   return false;
 }
 
-const SkBitmap* ServiceWorkerPaymentInstrument::icon_bitmap() const {
-  return stored_payment_app_info_->icon.get();
+const gfx::ImageSkia* ServiceWorkerPaymentInstrument::icon_image() const {
+  return icon_image_.get();
 }
 
 }  // namespace payments

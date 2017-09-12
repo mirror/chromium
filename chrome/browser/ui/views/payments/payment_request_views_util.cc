@@ -32,7 +32,6 @@
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/point_f.h"
-#include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/native_theme/native_theme.h"
 #include "ui/views/border.h"
@@ -236,14 +235,14 @@ std::unique_ptr<views::View> CreateSheetHeaderView(
 
 std::unique_ptr<views::ImageView> CreateInstrumentIconView(
     int icon_resource_id,
-    const SkBitmap* bitmap,
+    const gfx::ImageSkia* img,
     const base::string16& tooltip_text,
     float opacity) {
   std::unique_ptr<views::ImageView> icon_view =
       base::MakeUnique<views::ImageView>();
   icon_view->set_can_process_events_within_subtree(false);
-  if (bitmap != nullptr) {
-    icon_view->SetImage(gfx::ImageSkia::CreateFrom1xBitmap(*bitmap));
+  if (img != nullptr) {
+    icon_view->SetImage(*img);
   } else {
     icon_view->SetImage(ResourceBundle::GetSharedInstance()
                             .GetImageNamed(icon_resource_id)

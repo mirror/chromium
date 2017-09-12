@@ -749,7 +749,7 @@ PaymentSheetViewController::CreatePaymentMethodRow() {
 
     std::unique_ptr<views::ImageView> icon_view = CreateInstrumentIconView(
         selected_instrument->icon_resource_id(),
-        selected_instrument->icon_bitmap(), selected_instrument->GetLabel());
+        selected_instrument->icon_image(), selected_instrument->GetLabel());
     icon_view->SetImageSize(gfx::Size(32, 20));
 
     return builder.AccessibleContent(selected_instrument->GetLabel())

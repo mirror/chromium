@@ -162,7 +162,7 @@ bool AutofillPaymentInstrument::IsValidForModifier(
   return is_supported_type && is_supported_network;
 }
 
-const SkBitmap* AutofillPaymentInstrument::icon_bitmap() const {
+const gfx::ImageSkia* AutofillPaymentInstrument::icon_image() const {
   return nullptr;
 }
 
