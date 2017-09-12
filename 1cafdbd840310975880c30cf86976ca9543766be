@@ -34,6 +34,24 @@
       "revId": "1cafdbd840310975880c30cf86976ca9543766be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c9a6aa_edcc02d8",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1118279
+      },
+      "writtenOn": "2017-09-12T17:08:13Z",
+      "side": 1,
+      "message": "Hmm..\n\nFunctionality guarded by kMultidevice isn\u0027t _inherently_ implemented within ARC -- that is the case today, but future implementations of this or other features may be done natively in Chrome and not use ARC at all.\n\nHowever, if I keep the feature constant where it is today, will that cause a dependency cycle if \nI depend on the constant from components/arc following Hidehiko\u0027s CL? \nBasically do I have no choice but to move it into Multidevice?\n\nMaybe that\u0027s OK if we intend to move the feature to be \"enabled\" for everyone eventually, then we won\u0027t need the feature constant at all anymore in the future, so in a scenario in which we migrated the implementations away from ARC, we could just ignore or delete the constant.   \n\nSteven, WDYT?",
+      "parentUuid": "c2ed6452_98b16d04",
+      "revId": "1cafdbd840310975880c30cf86976ca9543766be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
