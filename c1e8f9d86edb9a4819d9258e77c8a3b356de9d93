@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "63133d90_074f09d5",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-12T05:28:44Z",
+      "side": 1,
+      "message": "Sorry, I did not catch this in previous CL, but this should be instead done in Disable() method (overridden from base class).",
+      "revId": "c1e8f9d86edb9a4819d9258e77c8a3b356de9d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f9829f_fb82c1f6",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-12T05:28:44Z",
+      "side": 1,
+      "message": "Should we recreate observers here? I.e. can two hosts from the same profile have different storage partitions?",
+      "revId": "c1e8f9d86edb9a4819d9258e77c8a3b356de9d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "754f8d0d_026a7d15",
         "filename": "content/browser/indexed_db/indexed_db_context_impl.cc",
         "patchSetId": 2
