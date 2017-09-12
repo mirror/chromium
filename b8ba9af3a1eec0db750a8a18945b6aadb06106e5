@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2af4677_fdf068e2",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-12T15:22:52Z",
+      "side": 1,
+      "message": "Should this be in the block that we only run if the method changed?  Not exactly a major optimization, just seems like that\u0027s the method-block, so it makes more sense there.",
+      "range": {
+        "startLine": 310,
+        "startChar": 4,
+        "endLine": 310,
+        "endChar": 21
+      },
+      "revId": "b8ba9af3a1eec0db750a8a18945b6aadb06106e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570cad7e_9cc38e37",
+        "filename": "content/public/common/referrer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-12T15:22:52Z",
+      "side": 1,
+      "message": "Don\u0027t suppose we could sneak in a DCHECK somewhere that ReferrerPolicyForUrlRequest(NetReferrerPolicyToBlinkReferrerPolicy(foo)) \u003d\u003d foo?  (Switching orders may not be true, because of blink::kWebReferrerPolicyDefault).",
+      "range": {
+        "startLine": 136,
+        "startChar": 35,
+        "endLine": 136,
+        "endChar": 73
+      },
+      "revId": "b8ba9af3a1eec0db750a8a18945b6aadb06106e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
