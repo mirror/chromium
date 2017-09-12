@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdb249e7_451ba29f",
+        "filename": "tools/perf/contrib/cros_benchmarks/page_cycler_v2.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-12T17:08:39Z",
+      "side": 1,
+      "message": "You can ignore this as the benchmark is only run on cros bots now.",
+      "revId": "bcd88bcbbd92caa9ecee3e7e6fd7cd01ca7081f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0310ba0f_738b8b1d",
+        "filename": "tools/perf/contrib/cros_benchmarks/page_cycler_v2.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-12T17:08:39Z",
+      "side": 1,
+      "message": "Same here",
+      "revId": "bcd88bcbbd92caa9ecee3e7e6fd7cd01ca7081f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196ea4f5_6142ad3c",
+        "filename": "tools/perf/core/trybot_command_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-12T17:08:39Z",
+      "side": 1,
+      "message": "These tests probably should later be removed/updated.",
+      "revId": "bcd88bcbbd92caa9ecee3e7e6fd7cd01ca7081f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
