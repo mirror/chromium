@@ -89,11 +89,8 @@ class PLATFORM_EXPORT MemoryCoordinator final
   void ClearMemory();
   static void ClearThreadSpecificMemory();
 
-  static void CalculateAndSetApproximatedDeviceMemory();
 
-  static float approximated_device_memory_gb_;
   static bool is_low_end_device_;
-  static int64_t physical_memory_mb_;
 
   HeapHashSet<WeakMember<MemoryCoordinatorClient>> clients_;
   HashSet<WebThread*> web_threads_;
