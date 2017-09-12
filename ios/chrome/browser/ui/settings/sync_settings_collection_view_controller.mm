@@ -594,11 +594,11 @@ typedef NS_ENUM(NSInteger, ItemType) {
   SyncSetupService::SyncServiceState syncState =
       GetSyncStateForBrowserState(_browserState);
   if (ShouldShowSyncSignin(syncState)) {
-    [self chromeExecuteCommand:
-              [[ShowSigninCommand alloc]
-                  initWithOperation:AUTHENTICATION_OPERATION_REAUTHENTICATE
-                        accessPoint:signin_metrics::AccessPoint::
-                                        ACCESS_POINT_UNKNOWN]];
+    [self.dispatcher
+        showSignin:[[ShowSigninCommand alloc]
+                       initWithOperation:AUTHENTICATION_OPERATION_REAUTHENTICATE
+                             accessPoint:signin_metrics::AccessPoint::
+                                             ACCESS_POINT_UNKNOWN]];
   } else if (ShouldShowSyncSettings(syncState)) {
     [self.dispatcher showSyncSettings];
   } else if (ShouldShowSyncPassphraseSettings(syncState)) {

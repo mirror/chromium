@@ -252,7 +252,8 @@ const CGFloat kSubtitleMinimunLineHeight = 24.0;
   _signinPromoViewMediator = [[SigninPromoViewMediator alloc]
       initWithBrowserState:_browserState
                accessPoint:signin_metrics::AccessPoint::
-                               ACCESS_POINT_TAB_SWITCHER];
+                               ACCESS_POINT_TAB_SWITCHER
+                dispatcher:self.dispatcher];
   _signinPromoView.delegate = _signinPromoViewMediator;
   _signinPromoViewMediator.consumer = self;
   [[_signinPromoViewMediator createConfigurator]
@@ -453,11 +454,11 @@ const CGFloat kSubtitleMinimunLineHeight = 24.0;
   SyncSetupService::SyncServiceState syncState =
       GetSyncStateForBrowserState(_browserState);
   if (ShouldShowSyncSignin(syncState)) {
-    [self chromeExecuteCommand:
-              [[ShowSigninCommand alloc]
-                  initWithOperation:AUTHENTICATION_OPERATION_REAUTHENTICATE
-                        accessPoint:signin_metrics::AccessPoint::
-                                        ACCESS_POINT_UNKNOWN]];
+    [self.dispatcher
+        showSignin:[[ShowSigninCommand alloc]
+                       initWithOperation:AUTHENTICATION_OPERATION_REAUTHENTICATE
+                             accessPoint:signin_metrics::AccessPoint::
+                                             ACCESS_POINT_UNKNOWN]];
   } else if (ShouldShowSyncSettings(syncState)) {
     [self.dispatcher showSyncSettings];
   } else if (ShouldShowSyncPassphraseSettings(syncState)) {

@@ -32,10 +32,9 @@
 #endif
 
 // static
-bool SyncErrorInfoBarDelegate::Create(
-    infobars::InfoBarManager* infobar_manager,
-    ios::ChromeBrowserState* browser_state,
-    id<ApplicationSettingsCommands> dispatcher) {
+bool SyncErrorInfoBarDelegate::Create(infobars::InfoBarManager* infobar_manager,
+                                      ios::ChromeBrowserState* browser_state,
+                                      id<ApplicationCommands> dispatcher) {
   DCHECK(infobar_manager);
   std::unique_ptr<ConfirmInfoBarDelegate> delegate(
       new SyncErrorInfoBarDelegate(browser_state, dispatcher));
@@ -45,7 +44,7 @@ bool SyncErrorInfoBarDelegate::Create(
 
 SyncErrorInfoBarDelegate::SyncErrorInfoBarDelegate(
     ios::ChromeBrowserState* browser_state,
-    id<ApplicationSettingsCommands> dispatcher)
+    id<ApplicationCommands> dispatcher)
     : browser_state_(browser_state), dispatcher_(dispatcher) {
   DCHECK(!browser_state->IsOffTheRecord());
   icon_ = gfx::Image([UIImage imageNamed:@"infobar_warning"]);
@@ -97,14 +96,11 @@ gfx::Image SyncErrorInfoBarDelegate::GetIcon() const {
 
 bool SyncErrorInfoBarDelegate::Accept() {
   if (ShouldShowSyncSignin(error_state_)) {
-    UIWindow* main_window = [[UIApplication sharedApplication] keyWindow];
-    DCHECK(main_window);
-    [main_window
-        chromeExecuteCommand:
-            [[ShowSigninCommand alloc]
-                initWithOperation:AUTHENTICATION_OPERATION_REAUTHENTICATE
-                      accessPoint:signin_metrics::AccessPoint::
-                                      ACCESS_POINT_UNKNOWN]];
+    [dispatcher_
+        showSignin:[[ShowSigninCommand alloc]
+                       initWithOperation:AUTHENTICATION_OPERATION_REAUTHENTICATE
+                             accessPoint:signin_metrics::AccessPoint::
+                                             ACCESS_POINT_UNKNOWN]];
   } else if (ShouldShowSyncSettings(error_state_)) {
     [dispatcher_ showSyncSettings];
   } else if (ShouldShowSyncPassphraseSettings(error_state_)) {

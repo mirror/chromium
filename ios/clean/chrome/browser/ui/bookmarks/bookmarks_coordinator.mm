@@ -50,7 +50,8 @@
         [[BookmarkControllerFactory alloc] init];
     self.bookmarkBrowser = [bookmarkControllerFactory
         bookmarkControllerWithBrowserState:self.browser->browser_state()
-                                    loader:self.loader];
+                                    loader:self.loader
+                                dispatcher:nil];
     self.bookmarkBrowser.homeDelegate = self;
 
     if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
@@ -68,7 +69,8 @@
   } else {
     self.viewController = [[BookmarkHomeTabletNTPController alloc]
         initWithLoader:self.loader
-          browserState:self.browser->browser_state()];
+          browserState:self.browser->browser_state()
+            dispatcher:nil];
   }
   self.loader.viewControllerForAlert = self.viewController;
   [super start];
