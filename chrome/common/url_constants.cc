@@ -67,6 +67,7 @@ const char kChromeUIIdentityInternalsURL[] = "chrome://identity-internals/";
 const char kChromeUIInspectURL[] = "chrome://inspect/";
 const char kChromeUIInstantURL[] = "chrome://instant/";
 const char kChromeUIInterstitialURL[] = "chrome://interstitials/";
+const char kChromeUIInterventionsURL[] = "chrome://interventions/";
 const char kChromeUIInvalidationsURL[] = "chrome://invalidations/";
 const char kChromeUIMemoryInternalsURL[] = "chrome://memory-internals/";
 const char kChromeUINaClURL[] = "chrome://nacl/";
@@ -213,6 +214,7 @@ const char kChromeUIIdentityInternalsHost[] = "identity-internals";
 const char kChromeUIInspectHost[] = "inspect";
 const char kChromeUIInstantHost[] = "instant";
 const char kChromeUIInterstitialHost[] = "interstitials";
+const char kChromeUIInterventionsHost[] = "interventions";
 const char kChromeUIInvalidationsHost[] = "invalidations";
 const char kChromeUIKillHost[] = "kill";
 const char kChromeUILargeIconHost[] = "large-icon";
@@ -547,7 +549,7 @@ const char kEnhancedPlaybackNotificationLearnMoreURL[] =
     "https://support.google.com/chromebook/?p=enhanced_playback";
 #elif defined(OS_ANDROID)
 // Keep in sync with chrome/android/java/strings/android_chrome_strings.grd
-    "https://support.google.com/chrome/?p=mobile_protected_content";
+"https://support.google.com/chrome/?p=mobile_protected_content";
 #endif
 
 const char kChromiumProjectURL[] = "https://www.chromium.org/";
@@ -652,6 +654,7 @@ const char* const kChromeHostURLs[] = {
     kChromeUIFlagsHost,
     kChromeUIGCMInternalsHost,
     kChromeUIHistoryHost,
+    kChromeUIInterventionsHost,
     kChromeUIInvalidationsHost,
     kChromeUILocalStateHost,
     kChromeUIMediaEngagementHost,
@@ -813,12 +816,14 @@ const char kLinuxWheezyPreciseDeprecationURL[] =
 // TODO(mark): Change to a Help Center URL when one is available.
 // https://crbug.com/555044
 const char kMac10_678_DeprecationURL[] =
-    "https://chrome.blogspot.com/2015/11/updates-to-chrome-platform-support.html";
+    "https://chrome.blogspot.com/2015/11/"
+    "updates-to-chrome-platform-support.html";
 #endif
 
 #if defined(OS_WIN)
 const char kWindowsXPVistaDeprecationURL[] =
-    "https://chrome.blogspot.com/2015/11/updates-to-chrome-platform-support.html";
+    "https://chrome.blogspot.com/2015/11/"
+    "updates-to-chrome-platform-support.html";
 #endif
 
 const char kChooserBluetoothOverviewURL[] =
