@@ -5,6 +5,7 @@
 #include "chrome/browser/payments/android/payment_manifest_web_data_service_android.h"
 
 #include <string>
+#include <vector>
 
 #include "base/android/jni_array.h"
 #include "base/android/jni_string.h"
@@ -14,6 +15,7 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/web_data_service_factory.h"
 #include "components/keyed_service/core/service_access_type.h"
+#include "components/payments/content/payment_manifest_web_data_service.h"
 #include "components/webdata/common/web_data_results.h"
 #include "jni/PaymentManifestWebDataService_jni.h"
 
