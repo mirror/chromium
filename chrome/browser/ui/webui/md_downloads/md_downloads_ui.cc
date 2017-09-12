@@ -103,7 +103,7 @@ content::WebUIDataSource* CreateDownloadsUIHTMLSource(Profile* profile) {
   source->AddResourcePath("2x/no_downloads.png",
                           IDR_MD_DOWNLOADS_2X_NO_DOWNLOADS_PNG);
 
-#if BUILDFLAG(USE_VULCANIZE)
+#if BUILDFLAG(OPTIMIZE_WEBUI)
   std::unordered_set<std::string> exclude_from_gzip;
   exclude_from_gzip.insert("1x/incognito_marker.png");
   exclude_from_gzip.insert("2x/incognito_marker.png");

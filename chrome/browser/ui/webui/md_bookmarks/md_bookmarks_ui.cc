@@ -120,7 +120,7 @@ content::WebUIDataSource* CreateMdBookmarksUIHTMLSource(Profile* profile) {
                           IDR_MD_BOOKMARKS_IMAGES_FOLDER_OPEN_SVG);
   source->AddResourcePath("images/folder.svg",
                           IDR_MD_BOOKMARKS_IMAGES_FOLDER_SVG);
-#if BUILDFLAG(USE_VULCANIZE)
+#if BUILDFLAG(OPTIMIZE_WEBUI)
   source->AddResourcePath("crisper.js", IDR_MD_BOOKMARKS_CRISPER_JS);
   source->SetDefaultResource(IDR_MD_BOOKMARKS_VULCANIZED_HTML);
   std::unordered_set<std::string> exclusions;
