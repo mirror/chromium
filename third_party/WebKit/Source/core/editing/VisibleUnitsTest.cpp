@@ -1846,9 +1846,9 @@ TEST_F(VisibleUnitsTest,
       "</div>");
   Element* const one = GetDocument().getElementById("one");
   Element* const two = GetDocument().getElementById("two");
-  const VisiblePosition& visible_position =
-      CreateVisiblePosition(Position::LastPositionInNode(*two));
-  EXPECT_EQ(Position(one->firstChild(), 7),
+  const VisiblePositionInFlatTree& visible_position =
+      CreateVisiblePosition(PositionInFlatTree::LastPositionInNode(*two));
+  EXPECT_EQ(PositionInFlatTree(one->firstChild(), 7),
             PreviousRootInlineBoxCandidatePosition(
                 two->lastChild(), visible_position, kContentIsEditable));
 }
