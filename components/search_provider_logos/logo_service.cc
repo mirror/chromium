@@ -96,58 +96,41 @@ class LogoDelegateImpl : public search_provider_logos::LogoDelegate {
   DISALLOW_COPY_AND_ASSIGN(LogoDelegateImpl);
 };
 
-class CallbackLogoObserver : public LogoObserver {
- public:
-  CallbackLogoObserver(LogoCallback on_cached_logo_available,
-                       EncodedLogoCallback on_cached_encoded_logo_available,
-                       LogoCallback on_fresh_logo_available,
-                       EncodedLogoCallback on_fresh_encoded_logo_available)
-      : on_cached_logo_available_(std::move(on_cached_logo_available)),
-        on_cached_encoded_logo_available_(
-            std::move(on_cached_encoded_logo_available)),
-        on_fresh_logo_available_(std::move(on_fresh_logo_available)),
-        on_fresh_encoded_logo_available_(
-            std::move(on_fresh_encoded_logo_available)) {}
+void ObserverOnLogoAvailable(LogoObserver* observer,
+                             bool from_cache,
+                             LogoCallbackType type,
+                             const base::Optional<Logo>& logo) {
+  switch (type) {
+    case LogoCallbackType::DISABLED:
+    case LogoCallbackType::CANCELED:
+    case LogoCallbackType::FAILED:
+      break;
 
-  void OnLogoAvailable(const Logo* logo, bool from_cache) override {
-    if (from_cache) {
-      if (on_cached_logo_available_) {
-        std::move(on_cached_logo_available_)
-            .Run(logo ? base::make_optional(*logo) : base::nullopt);
-      }
-    } else {
-      if (on_fresh_logo_available_) {
-        std::move(on_fresh_logo_available_)
-            .Run(logo ? base::make_optional(*logo) : base::nullopt);
-      }
-    }
+    case LogoCallbackType::REVALIDATED:
+      // TODO(sfiera): double-check whether we should inform the observer of the
+      // fresh metadata.
+      break;
+
+    case LogoCallbackType::FETCHED:
+    case LogoCallbackType::CLEARED:
+      observer->OnLogoAvailable(logo ? &logo.value() : nullptr, from_cache);
+      break;
   }
-
-  void OnEncodedLogoAvailable(const EncodedLogo* logo,
-                              bool from_cache) override {
-    if (from_cache) {
-      if (on_cached_encoded_logo_available_) {
-        std::move(on_cached_encoded_logo_available_)
-            .Run(logo ? base::make_optional(*logo) : base::nullopt);
-      }
-    } else {
-      if (on_fresh_encoded_logo_available_) {
-        std::move(on_fresh_encoded_logo_available_)
-            .Run(logo ? base::make_optional(*logo) : base::nullopt);
-      }
-    }
+  if (!from_cache) {
+    observer->OnObserverRemoved();
   }
+}
 
-  void OnObserverRemoved() override { delete this; }
-
- private:
-  LogoCallback on_cached_logo_available_;
-  EncodedLogoCallback on_cached_encoded_logo_available_;
-  LogoCallback on_fresh_logo_available_;
-  EncodedLogoCallback on_fresh_encoded_logo_available_;
-
-  DISALLOW_COPY_AND_ASSIGN(CallbackLogoObserver);
-};
+void RunCallbacksWithDisabled(LogoCallbacks callbacks) {
+  std::move(callbacks.on_cached_decoded_logo)
+      .Run(LogoCallbackType::DISABLED, base::nullopt);
+  std::move(callbacks.on_cached_encoded_logo)
+      .Run(LogoCallbackType::DISABLED, base::nullopt);
+  std::move(callbacks.on_fresh_decoded_logo)
+      .Run(LogoCallbackType::DISABLED, base::nullopt);
+  std::move(callbacks.on_fresh_encoded_logo)
+      .Run(LogoCallbackType::DISABLED, base::nullopt);
+}
 
 }  // namespace
 
@@ -166,15 +149,24 @@ LogoService::LogoService(
 LogoService::~LogoService() = default;
 
 void LogoService::GetLogo(search_provider_logos::LogoObserver* observer) {
+  LogoCallbacks callbacks;
+  callbacks.on_cached_decoded_logo =
+      base::BindOnce(ObserverOnLogoAvailable, observer, true);
+  callbacks.on_fresh_decoded_logo =
+      base::BindOnce(ObserverOnLogoAvailable, observer, false);
+  GetLogo(std::move(callbacks));
+}
+
+void LogoService::GetLogo(LogoCallbacks callbacks) {
   if (!template_url_service_) {
-    observer->OnObserverRemoved();
+    RunCallbacksWithDisabled(std::move(callbacks));
     return;
   }
 
   const TemplateURL* template_url =
       template_url_service_->GetDefaultSearchProvider();
   if (!template_url) {
-    observer->OnObserverRemoved();
+    RunCallbacksWithDisabled(std::move(callbacks));
     return;
   }
 
@@ -223,7 +215,7 @@ void LogoService::GetLogo(search_provider_logos::LogoObserver* observer) {
   }
 
   if (!logo_url.is_valid() && !doodle_url.is_valid()) {
-    observer->OnObserverRemoved();
+    RunCallbacksWithDisabled(std::move(callbacks));
     return;
   }
 
@@ -267,23 +259,7 @@ void LogoService::GetLogo(search_provider_logos::LogoObserver* observer) {
                    use_gray_background_));
   }
 
-  logo_tracker_->GetLogo(observer);
-}
-
-void LogoService::GetLogo(LogoCallback on_cached_logo_available,
-                          LogoCallback on_fresh_logo_available) {
-  // CallbackLogoObserver is self-deleting.
-  GetLogo(new CallbackLogoObserver(
-      std::move(on_cached_logo_available), EncodedLogoCallback(),
-      std::move(on_fresh_logo_available), EncodedLogoCallback()));
-}
-
-void LogoService::GetEncodedLogo(EncodedLogoCallback on_cached_logo_available,
-                                 EncodedLogoCallback on_fresh_logo_available) {
-  // CallbackLogoObserver is self-deleting.
-  GetLogo(new CallbackLogoObserver(
-      LogoCallback(), std::move(on_cached_logo_available), LogoCallback(),
-      std::move(on_fresh_logo_available)));
+  logo_tracker_->GetLogo(std::move(callbacks));
 }
 
 void LogoService::SetLogoCacheForTests(std::unique_ptr<LogoCache> cache) {
