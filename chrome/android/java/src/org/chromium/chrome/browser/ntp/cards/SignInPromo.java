@@ -24,6 +24,7 @@ import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.signin.AccountSigninActivity;
+import org.chromium.chrome.browser.signin.DisplayableProfileData;
 import org.chromium.chrome.browser.signin.ProfileDataCache;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
 import org.chromium.chrome.browser.signin.SigninManager;
@@ -116,8 +117,8 @@ public class SignInPromo extends OptionalLeaf implements ImpressionTracker.Liste
             int imageSize = context.getResources().getDimensionPixelSize(R.dimen.user_picture_size);
             mProfileDataCache =
                     new ProfileDataCache(context, Profile.getLastUsedProfile(), imageSize);
-            mSigninPromoController = new SigninPromoController(
-                    mProfileDataCache, SigninAccessPoint.NTP_CONTENT_SUGGESTIONS);
+            mSigninPromoController =
+                    new SigninPromoController(SigninAccessPoint.NTP_CONTENT_SUGGESTIONS);
             mGenericPromoData = null;
         } else {
             mProfileDataCache = null;
@@ -152,7 +153,7 @@ public class SignInPromo extends OptionalLeaf implements ImpressionTracker.Liste
         assert !mWasDismissed;
         if (mArePersonalizedPromosEnabled) {
             return new PersonalizedPromoViewHolder(
-                    parent, contextMenuManager, config, mProfileDataCache, mSigninPromoController);
+                    parent, config, contextMenuManager, mProfileDataCache, mSigninPromoController);
         }
         return new GenericPromoViewHolder(parent, contextMenuManager, config);
     }
@@ -323,17 +324,19 @@ public class SignInPromo extends OptionalLeaf implements ImpressionTracker.Liste
     /**
      * View Holder for {@link SignInPromo} if the personalized promo is to be shown.
      */
-    private static class PersonalizedPromoViewHolder extends CardViewHolder {
-        private final ProfileDataCache mProfileDataCache;
-        private final SigninPromoController mSigninPromoController;
+    @VisibleForTesting
+    public static class PersonalizedPromoViewHolder extends CardViewHolder {
+        private ProfileDataCache mProfileDataCache;
+        private SigninPromoController mSigninPromoController;
 
-        public PersonalizedPromoViewHolder(SuggestionsRecyclerView parent,
-                ContextMenuManager contextMenuManager, UiConfig config,
-                ProfileDataCache profileDataCache, SigninPromoController signinPromoController) {
+        public PersonalizedPromoViewHolder(SuggestionsRecyclerView parent, UiConfig config,
+                ContextMenuManager contextMenuManager, ProfileDataCache profileDataCache,
+                SigninPromoController signinPromoController) {
             super(FeatureUtilities.isChromeHomeModernEnabled()
                             ? R.layout.personalized_signin_promo_view_modern_content_suggestions
                             : R.layout.personalized_signin_promo_view_ntp_content_suggestions,
                     parent, config, contextMenuManager);
+
             if (!FeatureUtilities.isChromeHomeModernEnabled()) {
                 getParams().topMargin = parent.getResources().getDimensionPixelSize(
                         R.dimen.ntp_sign_in_promo_margin_top);
@@ -344,7 +347,7 @@ public class SignInPromo extends OptionalLeaf implements ImpressionTracker.Liste
         }
 
         @Override
-        protected void onBindViewHolder() {
+        public void onBindViewHolder() {
             super.onBindViewHolder();
             updatePersonalizedSigninPromo();
         }
@@ -361,12 +364,21 @@ public class SignInPromo extends OptionalLeaf implements ImpressionTracker.Liste
             Account[] accounts = AccountManagerFacade.get().tryGetGoogleAccounts();
             String defaultAccountName = accounts.length == 0 ? null : accounts[0].name;
 
+            DisplayableProfileData profileData = null;
             if (defaultAccountName != null) {
                 mProfileDataCache.update(Collections.singletonList(defaultAccountName));
+                profileData = mProfileDataCache.getProfileData(defaultAccountName);
             }
+            mSigninPromoController.setProfileData(profileData);
 
-            mSigninPromoController.setAccountName(defaultAccountName);
+            SigninPromoView view = (SigninPromoView) itemView;
+            mSigninPromoController.setupSigninPromoView(view.getContext(), view, null);
+        }
 
+        @VisibleForTesting
+        public void configureView(@Nullable DisplayableProfileData profileData) {
+            super.onBindViewHolder();
+            mSigninPromoController.setProfileData(profileData);
             SigninPromoView view = (SigninPromoView) itemView;
             mSigninPromoController.setupSigninPromoView(view.getContext(), view, null);
         }
