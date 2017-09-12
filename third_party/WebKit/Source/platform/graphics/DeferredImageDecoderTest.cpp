@@ -391,7 +391,7 @@ class MultiFrameDeferredImageDecoderTest : public DeferredImageDecoderTest {
 
 TEST_F(MultiFrameDeferredImageDecoderTest, PaintImage) {
   frame_count_ = 2;
-  frame_duration_ = TimeDelta::FromMilliseconds(10);
+  frame_duration_ = TimeDelta::FromMilliseconds(20);
   last_complete_frame_ = 0u;
   lazy_decoder_->SetData(data_, false);
 

@@ -229,9 +229,10 @@ class DiscardableImageGenerator {
           paint_image.GetFrameMetadata(), paint_image.repetition_count());
     }
 
-    image_set_.emplace_back(
-        DrawImage(std::move(paint_image), src_irect, filter_quality, matrix),
-        image_rect);
+    size_t frame_index = paint_image.frame_index();
+    image_set_.emplace_back(DrawImage(std::move(paint_image), src_irect,
+                                      filter_quality, matrix, frame_index),
+                            image_rect);
   }
 
   // This canvas is used only for tracking transform/clip/filter state from the

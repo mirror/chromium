@@ -113,6 +113,8 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
     return display_list_;
   }
 
+  const DisplayItemList* display_list() const { return display_list_.get(); }
+
   SkColor background_color() const { return background_color_; }
 
  protected:
