@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f5934a0_385f8e05",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-12T01:32:20Z",
+      "side": 0,
+      "message": "This refactor could be its own separate CL.",
+      "range": {
+        "startLine": 398,
+        "startChar": 27,
+        "endLine": 398,
+        "endChar": 50
+      },
+      "revId": "bd7f5972e2e3400bfaa2772370555f22eff12117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

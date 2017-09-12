@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3198637_cb038f8a",
+        "filename": "chrome/browser/resources/md_bookmarks/debouncer.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-12T01:32:20Z",
+      "side": 1,
+      "message": "I wonder if it might be possible to use the debouncer in polymer. Should be different CL.",
+      "range": {
+        "startLine": 87,
+        "startChar": 15,
+        "endLine": 87,
+        "endChar": 24
+      },
+      "revId": "44c6e50ffd02e1e1ed79ff03987a9aef59b4ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe31b0f2_43e7db46",
+        "filename": "ui/webui/resources/cr_elements/cr_toast/cr_toast.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-12T01:32:20Z",
+      "side": 1,
+      "message": "aria-hidden doesn\u0027t prevent tab focus from happening.\nSee cr-drawer as an example on how to transition before hiding\n(cr-drawer closes a dialog, but you would this.hidden \u003d true; instead)\nWhen you use the |hidden| attribute, there\u0027s no need to use aria-hidden anymore",
+      "range": {
+        "startLine": 56,
+        "startChar": 23,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "44c6e50ffd02e1e1ed79ff03987a9aef59b4ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
