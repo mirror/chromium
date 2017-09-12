@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08fb4a66_3de49dd2",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T14:38:34Z",
+      "side": 1,
+      "message": "I don\u0027t see why you need this method at all.",
+      "range": {
+        "startLine": 358,
+        "startChar": 34,
+        "endLine": 358,
+        "endChar": 53
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c10d84_dfe9d90e",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T14:38:34Z",
+      "side": 1,
+      "message": "Declaration order should match definition order.",
+      "range": {
+        "startLine": 733,
+        "startChar": 1,
+        "endLine": 733,
+        "endChar": 0
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "868159ef_0380604f",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T14:38:34Z",
+      "side": 1,
+      "message": "If it\u0027s \u0027override\u0027 then mark it so.",
+      "range": {
+        "startLine": 195,
+        "startChar": 7,
+        "endLine": 195,
+        "endChar": 26
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac68f825_14a8a293",
+        "filename": "components/password_manager/core/browser/password_manager_client_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T14:38:34Z",
+      "side": 1,
+      "message": "Can we just do what the current code does?",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 41
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28914a2_804c0241",
+        "filename": "components/password_manager/core/browser/password_manager_client_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T14:38:34Z",
+      "side": 1,
+      "message": "ShouldPromptToEnableAutoSignIn.",
+      "range": {
+        "startLine": 73,
+        "startChar": 34,
+        "endLine": 73,
+        "endChar": 69
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91fb4ac9_2434e922",
+        "filename": "components/password_manager/core/browser/password_manager_client_helper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T14:38:34Z",
+      "side": 1,
+      "message": "Apply \u0027const\u0027 to the methods where applicable.",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7298b9c_f84a6c81",
+        "filename": "components/password_manager/core/browser/password_manager_client_helper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T14:38:34Z",
+      "side": 1,
+      "message": "methods before the members",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 42
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51287d4_cec69cf2",
+        "filename": "ios/chrome/browser/passwords/ios_chrome_password_manager_client.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T14:38:34Z",
+      "side": 1,
+      "message": "can be private",
+      "range": {
+        "startLine": 90,
+        "startChar": 59,
+        "endLine": 90,
+        "endChar": 73
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
