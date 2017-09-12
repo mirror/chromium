@@ -55,6 +55,7 @@ def build(build_config, target_device, extra_gn_options, extra_ninja_options):
             'disable_file_support=true disable_ftp_support=true '
             'disable_brotli_filter=true ios_enable_code_signing=false '
             'enable_dsyms=true '
+            'ios_web_view_include_cronet=true '
             'target_cpu="%s" additional_target_cpus = ["%s"] %s %s' %
             (target_cpu, additional_cpu, build_config_gn_args,
              extra_gn_options))
@@ -68,7 +69,7 @@ def build(build_config, target_device, extra_gn_options, extra_ninja_options):
   ninja_options = '-C %s' % build_dir
   if extra_ninja_options:
     ninja_options += ' %s' % extra_ninja_options
-  ninja_command = ('ninja %s ios/web_view:cronet_ios_web_view_package' %
+  ninja_command = ('ninja %s ios/web_view:ios_web_view_package' %
                    ninja_options)
   print ninja_command
   return os.system(ninja_command)
