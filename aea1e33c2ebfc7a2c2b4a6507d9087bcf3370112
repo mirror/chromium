@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "249c3d70_c36e3380",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T08:41:54Z",
+      "side": 1,
+      "message": "This probably can be removed as well.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 16
+      },
+      "revId": "aea1e33c2ebfc7a2c2b4a6507d9087bcf3370112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba893000_5916839b",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T08:41:54Z",
+      "side": 1,
+      "message": "Make this private, there are no subclasses anymore.",
+      "range": {
+        "startLine": 89,
+        "startChar": 1,
+        "endLine": 89,
+        "endChar": 10
+      },
+      "revId": "aea1e33c2ebfc7a2c2b4a6507d9087bcf3370112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20c82230_f713963c",
+        "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T08:41:54Z",
+      "side": 1,
+      "message": "Nit: Wrapping \"foo\" in base::StringPiece should not be necessary, as base::StringPiece has an implicit constructor from const char*. Also applies below.",
+      "range": {
+        "startLine": 68,
+        "startChar": 31,
+        "endLine": 68,
+        "endChar": 48
+      },
+      "revId": "aea1e33c2ebfc7a2c2b4a6507d9087bcf3370112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58853b5d_19514a46",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T08:41:54Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 8
+      },
+      "revId": "aea1e33c2ebfc7a2c2b4a6507d9087bcf3370112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb0e323_5900f4b8",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T08:41:54Z",
+      "side": 1,
+      "message": "This field seems unused and currently causes Windows compilation to fail. Simply remove it?",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "aea1e33c2ebfc7a2c2b4a6507d9087bcf3370112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
