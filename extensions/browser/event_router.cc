@@ -328,18 +328,38 @@ void EventRouter::RemoveLazyServiceWorkerEventListener(
 void EventRouter::AddFilteredEventListener(const std::string& event_name,
                                            content::RenderProcessHost* process,
                                            const std::string& extension_id,
+                                           base::Optional<ExtensionHostMsg_ServiceWorkerIdentifier> worker_identifier,
                                            const base::DictionaryValue& filter,
                                            bool add_lazy_listener) {
-  listeners_.AddListener(EventListener::ForExtension(
-      event_name, extension_id, process,
-      std::unique_ptr<DictionaryValue>(filter.DeepCopy())));
+  if (!worker_identifier) {
+    listeners_.AddListener(EventListener::ForExtension(
+        event_name, extension_id, process,
+        std::unique_ptr<DictionaryValue>(filter.DeepCopy())));
+  } else {
+    listeners_.AddListener(EventListener::ForExtensionServiceWorker(
+        event_name, extension_id, process,
+        worker_identifier.value().scope,
+        worker_identifier.value().thread_id,
+        std::unique_ptr<DictionaryValue>(filter.DeepCopy())));
+  }
 
   if (!add_lazy_listener)
     return;
 
-  bool added = listeners_.AddListener(EventListener::ForExtension(
-      event_name, extension_id, nullptr,
-      std::unique_ptr<DictionaryValue>(filter.DeepCopy())));
+  bool added = false;
+  if (!worker_identifier) {
+    added = listeners_.AddListener(EventListener::ForExtension(
+        event_name, extension_id, nullptr,
+        std::unique_ptr<DictionaryValue>(filter.DeepCopy())));
+  } else {
+    added = listeners_.AddListener(EventListener::ForExtensionServiceWorker(
+        event_name, extension_id,
+        nullptr,
+        worker_identifier.value().scope,
+        kNonWorkerThreadId,  // Lazy, without worker thread id.
+        std::unique_ptr<DictionaryValue>(filter.DeepCopy())));
+
+  }
   if (added)
     AddFilterToEvent(event_name, extension_id, &filter);
 }
@@ -349,11 +369,21 @@ void EventRouter::RemoveFilteredEventListener(
     const std::string& event_name,
     content::RenderProcessHost* process,
     const std::string& extension_id,
+    base::Optional<ExtensionHostMsg_ServiceWorkerIdentifier> worker_identifier,
     const base::DictionaryValue& filter,
     bool remove_lazy_listener) {
-  std::unique_ptr<EventListener> listener = EventListener::ForExtension(
-      event_name, extension_id, process,
-      std::unique_ptr<DictionaryValue>(filter.DeepCopy()));
+  std::unique_ptr<EventListener> listener;
+  if (!worker_identifier) {
+    listener = EventListener::ForExtension(
+        event_name, extension_id, process,
+        std::unique_ptr<DictionaryValue>(filter.DeepCopy()));
+  } else {
+    listener = EventListener::ForExtensionServiceWorker(
+        event_name, extension_id, process,
+        worker_identifier.value().scope,
+        worker_identifier.value().thread_id,
+        std::unique_ptr<DictionaryValue>(filter.DeepCopy()));
+  }
 
   listeners_.RemoveListener(listener.get());
 

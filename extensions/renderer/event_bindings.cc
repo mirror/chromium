@@ -35,95 +35,12 @@ namespace extensions {
 
 namespace {
 
-// A map of event names to the number of contexts listening to that event.
-// We notify the browser about event listeners when we transition between 0
-// and 1.
-typedef std::map<std::string, int> EventListenerCounts;
+const int kIgnoreRoutingId = 0;
 
-// A map of extension IDs to listener counts for that extension.
-base::LazyInstance<std::map<std::string, EventListenerCounts>>::DestructorAtExit
-    g_listener_counts = LAZY_INSTANCE_INITIALIZER;
-
-// A collection of the unmanaged events (i.e., those for which the browser is
-// not notified of changes) that have listeners, by context.
-base::LazyInstance<std::map<ScriptContext*, std::set<std::string>>>::Leaky
-    g_unmanaged_listeners = LAZY_INSTANCE_INITIALIZER;
-
-// A map of (extension ID, event name) pairs to the filtered listener counts
-// for that pair. The map is used to keep track of which filters are in effect
-// for which events.  We notify the browser about filtered event listeners when
-// we transition between 0 and 1.
-using FilteredEventListenerKey = std::pair<std::string, std::string>;
-using FilteredEventListenerCounts =
-    std::map<FilteredEventListenerKey, std::unique_ptr<ValueCounter>>;
-base::LazyInstance<FilteredEventListenerCounts>::DestructorAtExit
-    g_filtered_listener_counts = LAZY_INSTANCE_INITIALIZER;
-
-base::LazyInstance<EventFilter>::DestructorAtExit g_event_filter =
-    LAZY_INSTANCE_INITIALIZER;
-
-// Gets a unique string key identifier for a ScriptContext.
-// TODO(kalman): Just use pointer equality...?
-std::string GetKeyForScriptContext(ScriptContext* script_context) {
-  const std::string& extension_id = script_context->GetExtensionID();
-  CHECK(crx_file::id_util::IdIsValid(extension_id) ||
-        script_context->url().is_valid());
-  return crx_file::id_util::IdIsValid(extension_id)
-             ? extension_id
-             : script_context->url().spec();
-}
-
-// Increments the number of event-listeners for the given |event_name| and
-// ScriptContext. Returns the count after the increment.
-int IncrementEventListenerCount(ScriptContext* script_context,
-                                const std::string& event_name) {
-  return ++g_listener_counts
-               .Get()[GetKeyForScriptContext(script_context)][event_name];
-}
-
-// Decrements the number of event-listeners for the given |event_name| and
-// ScriptContext. Returns the count after the increment.
-int DecrementEventListenerCount(ScriptContext* script_context,
-                                const std::string& event_name) {
-  return --g_listener_counts
-               .Get()[GetKeyForScriptContext(script_context)][event_name];
-}
-
-// Add a filter to |event_name| in |extension_id|, returning true if it
-// was the first filter for that event in that extension.
-bool AddFilter(const std::string& event_name,
-               const std::string& extension_id,
-               const base::DictionaryValue& filter) {
-  FilteredEventListenerKey key(extension_id, event_name);
-  FilteredEventListenerCounts& all_counts = g_filtered_listener_counts.Get();
-  FilteredEventListenerCounts::const_iterator counts = all_counts.find(key);
-  if (counts == all_counts.end()) {
-    counts =
-        all_counts.insert(std::make_pair(key, std::make_unique<ValueCounter>()))
-            .first;
-  }
-  return counts->second->Add(filter);
-}
-
-// Remove a filter from |event_name| in |extension_id|, returning true if it
-// was the last filter for that event in that extension.
-bool RemoveFilter(const std::string& event_name,
-                  const std::string& extension_id,
-                  base::DictionaryValue* filter) {
-  FilteredEventListenerKey key(extension_id, event_name);
-  FilteredEventListenerCounts& all_counts = g_filtered_listener_counts.Get();
-  FilteredEventListenerCounts::const_iterator counts = all_counts.find(key);
-  if (counts == all_counts.end())
-    return false;
-  // Note: Remove() returns true if it removed the last filter equivalent to
-  // |filter|. If there are more equivalent filters, or if there weren't any in
-  // the first place, it returns false.
-  if (counts->second->Remove(*filter)) {
-    if (counts->second->is_empty())
-      all_counts.erase(counts);  // Clean up if there are no more filters.
-    return true;
-  }
-  return false;
+int GetDummyRoutingId(ScriptContext* context) {
+  if (context->context_type() == Feature::SERVICE_WORKER_CONTEXT)
+    return kIgnoreRoutingId;
+  return context->GetRenderFrame()->GetRoutingID();
 }
 
 // Returns a v8::Array containing the ids of the listeners that match the given
@@ -131,15 +48,16 @@ bool RemoveFilter(const std::string& event_name,
 v8::Local<v8::Array> GetMatchingListeners(ScriptContext* script_context,
                                           const std::string& event_name,
                                           const EventFilteringInfo& info) {
-  const EventFilter& event_filter = g_event_filter.Get();
+  const EventFilter& event_filter = EventBookkeeper::GetForContext(script_context)->GetEventFilter();
   v8::Isolate* isolate = script_context->isolate();
   v8::Local<v8::Context> context = script_context->v8_context();
 
   // Only match events routed to this context's RenderFrame or ones that don't
   // have a routingId in their filter.
+  int routing_id = GetDummyRoutingId(script_context);
   std::set<EventFilter::MatcherID> matched_event_filters =
       event_filter.MatchEvent(event_name, info,
-                              script_context->GetRenderFrame()->GetRoutingID());
+                              routing_id);
   v8::Local<v8::Array> array(
       v8::Array::New(isolate, matched_event_filters.size()));
   int i = 0;
@@ -191,22 +109,12 @@ EventBindings::~EventBindings() {}
 
 bool EventBindings::HasListener(ScriptContext* script_context,
                                 const std::string& event_name) {
-  const auto& unmanaged_listeners = g_unmanaged_listeners.Get();
-  auto unmanaged_iter = unmanaged_listeners.find(script_context);
-  if (unmanaged_iter != unmanaged_listeners.end() &&
-      base::ContainsKey(unmanaged_iter->second, event_name)) {
+  EventBookkeeper* bookkeeper = EventBookkeeper::GetForContext(script_context);
+  DCHECK(script_context);
+  if (bookkeeper->HasUnmanagedListener(script_context, event_name))
     return true;
-  }
-  const auto& managed_listeners = g_listener_counts.Get();
-  auto managed_iter =
-      managed_listeners.find(GetKeyForScriptContext(script_context));
-  if (managed_iter != managed_listeners.end()) {
-    auto event_iter = managed_iter->second.find(event_name);
-    if (event_iter != managed_iter->second.end() && event_iter->second > 0) {
-      return true;
-    }
-  }
-
+  if (bookkeeper->HasManagedListener(script_context, event_name))
+    return true;
   return false;
 }
 
@@ -258,7 +166,10 @@ void EventBindings::AttachEvent(const std::string& event_name,
   // chrome/test/data/extensions/api_test/events/background.js.
   attached_event_names_.insert(event_name);
 
-  if (IncrementEventListenerCount(context(), event_name) == 1) {
+  EventBookkeeper* bookkeeper = EventBookkeeper::GetForContext(
+      context());
+
+  if (bookkeeper->IncrementEventListenerCount(context(), event_name) == 1) {
     ipc_message_sender_->SendAddUnfilteredEventListenerIPC(context(),
                                                            event_name);
   }
@@ -289,7 +200,10 @@ void EventBindings::DetachEvent(const std::string& event_name,
   // See comment in AttachEvent().
   attached_event_names_.erase(event_name);
 
-  if (DecrementEventListenerCount(context(), event_name) == 0) {
+  EventBookkeeper* bookkeeper = EventBookkeeper::GetForContext(
+      context());
+
+  if (bookkeeper->DecrementEventListenerCount(context(), event_name) == 0) {
     ipc_message_sender_->SendRemoveUnfilteredEventListenerIPC(context(),
                                                               event_name);
   }
@@ -334,10 +248,17 @@ void EventBindings::AttachFilteredEvent(
 
   bool supports_lazy_listeners = args[2]->BooleanValue();
 
-  int id = g_event_filter.Get().AddEventMatcher(
+  bool is_for_service_worker =
+      context()->context_type() == Feature::SERVICE_WORKER_CONTEXT;
+  printf("Built filter: is_for_service_worker: %d\n", is_for_service_worker);
+  int routing_id_dummy = GetDummyRoutingId(context());
+  EventBookkeeper* bookkeeper = EventBookkeeper::GetForContext(context());
+  DCHECK(bookkeeper);
+  EventFilter& event_filter = bookkeeper->GetEventFilter();
+  int id = event_filter.AddEventMatcher(
       event_name,
       std::make_unique<EventMatcher>(
-          std::move(filter), context()->GetRenderFrame()->GetRoutingID()));
+          std::move(filter), routing_id_dummy));
   if (id == -1) {
     args.GetReturnValue().Set(static_cast<int32_t>(-1));
     return;
@@ -345,11 +266,11 @@ void EventBindings::AttachFilteredEvent(
   attached_matcher_ids_.insert(id);
 
   // Only send IPCs the first time a filter gets added.
-  const EventMatcher* matcher = g_event_filter.Get().GetEventMatcher(id);
+  const EventMatcher* matcher = event_filter.GetEventMatcher(id);
   DCHECK(matcher);
   base::DictionaryValue* filter_weak = matcher->value();
   const ExtensionId& extension_id = context()->GetExtensionID();
-  if (AddFilter(event_name, extension_id, *filter_weak)) {
+  if (bookkeeper->AddFilter(event_name, extension_id, *filter_weak)) {
     bool lazy = supports_lazy_listeners &&
                 ExtensionFrameHelper::IsContextForEventPage(context());
     ipc_message_sender_->SendAddFilteredEventListenerIPC(context(), event_name,
@@ -373,14 +294,17 @@ void EventBindings::DetachFilteredEventHandler(
 
 void EventBindings::DetachFilteredEvent(int matcher_id,
                                         bool remove_lazy_event) {
-  EventFilter& event_filter = g_event_filter.Get();
+  EventBookkeeper* bookkeeper = EventBookkeeper::GetForContext(
+      context());
+  // TODO: const?
+  EventFilter& event_filter = bookkeeper->GetEventFilter();
   EventMatcher* event_matcher = event_filter.GetEventMatcher(matcher_id);
 
   const std::string& event_name = event_filter.GetEventName(matcher_id);
 
   // Only send IPCs the last time a filter gets removed.
   const ExtensionId& extension_id = context()->GetExtensionID();
-  if (RemoveFilter(event_name, extension_id, event_matcher->value())) {
+  if (bookkeeper->RemoveFilter(event_name, extension_id, event_matcher->value())) {
     bool remove_lazy = remove_lazy_event &&
                        ExtensionFrameHelper::IsContextForEventPage(context());
     ipc_message_sender_->SendRemoveFilteredEventListenerIPC(
@@ -398,7 +322,8 @@ void EventBindings::AttachUnmanagedEvent(
   CHECK_EQ(1, args.Length());
   CHECK(args[0]->IsString());
   std::string event_name = gin::V8ToString(args[0]);
-  g_unmanaged_listeners.Get()[context()].insert(event_name);
+  EventBookkeeper* bookkeeper = EventBookkeeper::GetForContext(context());
+  bookkeeper->AddUnmanagedEvent(context(), event_name);
 }
 
 void EventBindings::DetachUnmanagedEvent(
@@ -408,7 +333,8 @@ void EventBindings::DetachUnmanagedEvent(
   CHECK_EQ(1, args.Length());
   CHECK(args[0]->IsString());
   std::string event_name = gin::V8ToString(args[0]);
-  g_unmanaged_listeners.Get()[context()].erase(event_name);
+  EventBookkeeper* bookkeeper = EventBookkeeper::GetForContext(context());
+  bookkeeper->RemoveUnmanagedEvent(context(), event_name);
 }
 
 void EventBindings::OnInvalidated() {
@@ -429,7 +355,8 @@ void EventBindings::OnInvalidated() {
   DCHECK(attached_matcher_ids_.empty())
       << "Filtered events cannot be attached during invalidation";
 
-  g_unmanaged_listeners.Get().erase(context());
+  EventBookkeeper* bookkeeper = EventBookkeeper::GetForContext(context());
+  bookkeeper->RemoveAllUnmanagedListeners(context());
 }
 
 }  // namespace extensions

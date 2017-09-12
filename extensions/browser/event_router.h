@@ -30,6 +30,7 @@
 #include "url/gurl.h"
 
 class GURL;
+struct ExtensionHostMsg_ServiceWorkerIdentifier;
 
 namespace content {
 class BrowserContext;
@@ -175,16 +176,21 @@ class EventRouter : public KeyedService,
   void AddFilteredEventListener(const std::string& event_name,
                                 content::RenderProcessHost* process,
                                 const std::string& extension_id,
+                                base::Optional<ExtensionHostMsg_ServiceWorkerIdentifier> worker_identifier,
+                                //base::Optional<GURL> service_worker_scope,
+                                //int worker_thread_id,
                                 const base::DictionaryValue& filter,
                                 bool add_lazy_listener);
 
   // If |remove_lazy_listener| is true also remove the lazy version of this
   // listener.
-  void RemoveFilteredEventListener(const std::string& event_name,
-                                   content::RenderProcessHost* process,
-                                   const std::string& extension_id,
-                                   const base::DictionaryValue& filter,
-                                   bool remove_lazy_listener);
+  void RemoveFilteredEventListener(
+      const std::string& event_name,
+      content::RenderProcessHost* process,
+      const std::string& extension_id,
+      base::Optional<ExtensionHostMsg_ServiceWorkerIdentifier> worker_identifier,
+      const base::DictionaryValue& filter,
+      bool remove_lazy_listener);
 
   // Returns true if there is at least one listener for the given event.
   bool HasEventListener(const std::string& event_name) const;
