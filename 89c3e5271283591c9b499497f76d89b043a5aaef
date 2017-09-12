@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "0a89ee20_51120f08",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-12T20:54:28Z",
+      "side": 1,
+      "message": "Ah, ok. Will you ever be \"done\" with that scale factor?\n\nI wouldn\u0027t blow away the representation after every use, no.",
+      "parentUuid": "f8fc41e7_679fb749",
+      "revId": "89c3e5271283591c9b499497f76d89b043a5aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5805f24b_cc33d6d6",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 1
