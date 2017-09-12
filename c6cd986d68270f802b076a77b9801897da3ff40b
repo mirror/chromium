@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73d43ed4_e99b4f7f",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-09-12T01:49:10Z",
+      "side": 1,
+      "message": "It\u0027s kind of weird that this has no template inputs. Are they included in other_inputs?",
+      "revId": "c6cd986d68270f802b076a77b9801897da3ff40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
