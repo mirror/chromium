@@ -142,7 +142,7 @@ class ClearAllServiceWorkersHelper
       if (version->running_status() == EmbeddedWorkerStatus::STARTING ||
           version->running_status() == EmbeddedWorkerStatus::RUNNING) {
         version->StopWorker(
-            base::Bind(&ClearAllServiceWorkersHelper::OnResult, this));
+            base::BindOnce(&ClearAllServiceWorkersHelper::OnResult, this));
       }
     }
     for (const auto& registration_info : registrations) {

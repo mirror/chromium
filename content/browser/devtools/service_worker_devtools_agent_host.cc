@@ -23,7 +23,7 @@ void TerminateServiceWorkerOnIO(
     int64_t version_id) {
   if (ServiceWorkerContextCore* context = context_weak.get()) {
     if (ServiceWorkerVersion* version = context->GetLiveVersion(version_id))
-      version->StopWorker(base::Bind(&StatusNoOp));
+      version->StopWorker(base::BindOnce(&StatusNoOp));
   }
 }
 
@@ -32,9 +32,9 @@ void UnregisterServiceWorkerOnIO(
     int64_t version_id) {
   if (ServiceWorkerContextCore* context = context_weak.get()) {
     if (ServiceWorkerVersion* version = context->GetLiveVersion(version_id)) {
-        version->StopWorker(base::Bind(&StatusNoOp));
-        context->UnregisterServiceWorker(
-            version->scope(), base::Bind(&StatusNoOp));
+      version->StopWorker(base::BindOnce(&StatusNoOp));
+      context->UnregisterServiceWorker(version->scope(),
+                                       base::Bind(&StatusNoOp));
     }
   }
 }
