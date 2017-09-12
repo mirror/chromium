@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36cf687b_b2fd0962",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-09-12T14:30:41Z",
+      "side": 1,
+      "message": "BackgroundSyncManager also uses this definition.\nI\u0027d prefer to do a follow-up for this​",
+      "revId": "b82247ed5033d2802798bb66590744dd633d997c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
