@@ -690,8 +690,11 @@ void DefaultState::UpdateBoundsFromState(WindowState* window_state,
 
 // static
 void DefaultState::CenterWindow(WindowState* window_state) {
-  if (!window_state->IsNormalOrSnapped())
+  if (!window_state->CanSnap() || !window_state->IsNormalOrSnapped()) {
+    ::wm::AnimateWindow(window_state->window(),
+                        ::wm::WINDOW_ANIMATION_TYPE_BOUNCE);
     return;
+  }
   aura::Window* window = window_state->window();
   if (window_state->IsSnapped()) {
     gfx::Rect center_in_screen = display::Screen::GetScreen()
