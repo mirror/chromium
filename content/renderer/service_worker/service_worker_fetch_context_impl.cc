@@ -12,6 +12,30 @@
 
 namespace content {
 
+namespace {
+
+class SyncLoadTerminatorImpl
+    : public blink::WebWorkerFetchContext::SyncLoadTerminator {
+ public:
+  SyncLoadTerminatorImpl(base::OnceClosure closure)
+      : closure_(std::move(closure)) {}
+  ~SyncLoadTerminatorImpl() override {}
+  void Terminate() override { std::move(closure_).Run(); }
+
+ private:
+  base::OnceClosure closure_;
+};
+
+}  // namespace
+
+ServiceWorkerFetchContextImpl::TerminateSyncLoadEvent::TerminateSyncLoadEvent()
+    : event_(base::WaitableEvent::ResetPolicy::AUTOMATIC,
+             base::WaitableEvent::InitialState::NOT_SIGNALED) {}
+
+void ServiceWorkerFetchContextImpl::TerminateSyncLoadEvent::Signal() {
+  event_.Signal();
+}
+
 ServiceWorkerFetchContextImpl::ServiceWorkerFetchContextImpl(
     const GURL& worker_script_url,
     ChildURLLoaderFactoryGetter::Info url_loader_factory_getter_info,
@@ -19,14 +43,25 @@ ServiceWorkerFetchContextImpl::ServiceWorkerFetchContextImpl(
     : worker_script_url_(worker_script_url),
       url_loader_factory_getter_info_(
           std::move(url_loader_factory_getter_info)),
-      service_worker_provider_id_(service_worker_provider_id) {}
+      service_worker_provider_id_(service_worker_provider_id),
+      terminate_sync_load_event_(
+          base::MakeRefCounted<TerminateSyncLoadEvent>()) {}
 
 ServiceWorkerFetchContextImpl::~ServiceWorkerFetchContextImpl() {}
+
+std::unique_ptr<blink::WebWorkerFetchContext::SyncLoadTerminator>
+ServiceWorkerFetchContextImpl::CreateSyncLoadTerminator() {
+  return base::MakeUnique<SyncLoadTerminatorImpl>(base::BindOnce(
+      &ServiceWorkerFetchContextImpl::TerminateSyncLoadEvent::Signal,
+      terminate_sync_load_event_));
+}
 
 void ServiceWorkerFetchContextImpl::InitializeOnWorkerThread(
     scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner) {
   resource_dispatcher_ = base::MakeUnique<ResourceDispatcher>(
       nullptr, std::move(loading_task_runner));
+  resource_dispatcher_->set_terminate_sync_load_event(
+      terminate_sync_load_event_->event());
 
   url_loader_factory_getter_ = url_loader_factory_getter_info_.Bind();
 }

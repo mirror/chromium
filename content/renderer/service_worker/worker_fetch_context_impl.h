@@ -5,6 +5,7 @@
 #ifndef CONTENT_RENDERER_SERVICE_WORKER_WORKER_FETCH_CONTEXT_IMPL_H_
 #define CONTENT_RENDERER_SERVICE_WORKER_WORKER_FETCH_CONTEXT_IMPL_H_
 
+#include "base/memory/ref_counted.h"
 #include "content/common/service_worker/service_worker_provider.mojom.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/child/child_url_loader_factory_getter.h"
@@ -45,6 +46,7 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   // blink::WebWorkerFetchContext implementation:
   void InitializeOnWorkerThread(
       scoped_refptr<base::SingleThreadTaskRunner>) override;
+  std::unique_ptr<SyncLoadTerminator> CreateSyncLoadTerminator() override;
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
       const blink::WebURLRequest& request,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner) override;
@@ -81,6 +83,19 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   void set_is_secure_context(bool flag);
 
  private:
+  class TerminateSyncLoadEvent
+      : public base::RefCountedThreadSafe<TerminateSyncLoadEvent> {
+   public:
+    TerminateSyncLoadEvent();
+    void Signal();
+    base::WaitableEvent* event() { return &event_; }
+
+   private:
+    friend class base::RefCountedThreadSafe<TerminateSyncLoadEvent>;
+    ~TerminateSyncLoadEvent() = default;
+    base::WaitableEvent event_;
+  };
+
   bool Send(IPC::Message* message);
 
   mojo::Binding<mojom::ServiceWorkerWorkerClient> binding_;
@@ -110,6 +125,7 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   GURL site_for_cookies_;
   bool is_secure_context_ = false;
   int appcache_host_id_ = blink::WebApplicationCacheHost::kAppCacheNoHostId;
+  scoped_refptr<TerminateSyncLoadEvent> terminate_sync_load_event_;
 };
 
 }  // namespace content
