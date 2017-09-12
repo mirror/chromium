@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8ecd1ef8_d07e168d",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 12
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T19:45:26Z",
+      "side": 1,
+      "message": "I believe that chrome can load ash strings, so this should be an okay place for a shared definition. If the webui can\u0027t use grd strings, then duplicates between grd (for views) and whatever webui uses is probably fine, but we already have \"Shut down\" in grd, we should avoid adding duplicates when they can be shared.",
+      "parentUuid": "d2ec6f56_e11f59f4",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8c63ade_db8f9a61",
         "filename": "ash/root_window_controller.cc",
         "patchSetId": 12
@@ -134,6 +152,24 @@
       "side": 1,
       "message": "I used the suggested pattern in the previous patch and changed to this current one, but I realize that in order to make the buttons match spec I\u0027ll need to create a LoginShelfButton class. Otherwise since label() is declared protected by LabelButton, the label font and size cannot be adjusted.. It\u0027ll be like the following:\n\nclass LoginShelfButton : public LabelButton, public ButtonListener {\n  LoginShelfButton(string text, ImageSkia image, Closure callback) {\n      // Move all initialization codes in CreateButton() here.\n      // Modify label font size.     \n  }\n\n  // Overwrite GetInsets() and CreateInkDrop(), otherwise it seems we can\u0027t customize the \n  // button.\n\n  // Overwrite ButtonPressed() to call the callback passed in the constructor.\n}\n\nWhat do you think?",
       "parentUuid": "0661af2b_e83a015e",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e41757_3d44b2a6",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T19:45:26Z",
+      "side": 1,
+      "message": "I\u0027m not sure how this ButtonListener impl is related to a LabelButton subclass. LoginShelfView can still be the ButtonListener for a custom button type. I still stand by my suggestion above.\n\nAs for LoginShelfButton, I\u0027m okay with that or adding a LabelButton::SetFontList (with proper testing).",
+      "parentUuid": "03a65023_fb5de403",
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
