@@ -22,6 +22,30 @@
       "revId": "3298b735638085d89a31c5fe5a58b43ae7e6f196",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c87f3a9e_49e82759",
+        "filename": "third_party/leveldatabase/leveldb_chrome.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-12T18:14:03Z",
+      "side": 1,
+      "message": "Good point, and I agree, but I don\u0027t know a good solution - maybe you can suggest one.\n\nHere\u0027s my dilemna:\n\n1) The code in env_chromium.h is much more than a leveldb::Env implementation.\n2) The current namespace, leveldb_env, implies that is for our \"Env\" implementation, and it\u0027s much more than that.\n\nAll of leveldb is in the \"leveldb\" namespace. The ideas, so far, have been:\n\n1) leveldb::chrome\n2) chrome::leveldb\n3) storage::leveldb\n4) leveldb_chrome\n\nThe problems with each idea is:\n\n1) The leveldb project owns that namespace, and we probably shouldn\u0027t extend it.\n2) This code isn\u0027t in //chrome, so we probably shouldn\u0027t be in that namespace.\n3) I believe //storage contains code that all have web facing API\u0027s - leveldb does not.\n4) leveldb_chrome is a compound name really asking for a nested namespace.\n\nSo I feel stuck for a good solution here and welcome any ideas you may have.",
+      "parentUuid": "5160455f_103190e8",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "3298b735638085d89a31c5fe5a58b43ae7e6f196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
