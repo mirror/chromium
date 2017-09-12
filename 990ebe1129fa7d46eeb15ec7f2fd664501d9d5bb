@@ -118,6 +118,30 @@
       "revId": "990ebe1129fa7d46eeb15ec7f2fd664501d9d5bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fa137c4_933eb54e",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-12T12:14:15Z",
+      "side": 1,
+      "message": "I moved everything to compiler.gni (the setting of exclude_unwind_tables and optimize_for_size was just dependent on is_* flags that were already set), as I imagine I need more than the default values for these variables.",
+      "parentUuid": "1a991233_83f0e500",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 25
+      },
+      "revId": "990ebe1129fa7d46eeb15ec7f2fd664501d9d5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
