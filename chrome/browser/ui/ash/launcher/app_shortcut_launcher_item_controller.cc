@@ -325,11 +325,18 @@ ash::ShelfAction AppShortcutLauncherItemController::ActivateContent(
 }
 
 bool AppShortcutLauncherItemController::AdvanceToNextApp() {
+  LOG(ERROR) << "JAMES AdvanceToNextApp";
   std::vector<content::WebContents*> items = GetRunningApplications();
   if (items.size() >= 1) {
+    LOG(ERROR) << "JAMES 2";
+    //JAMES is this for Ctrl-2 or Alt-2 or whatever? for non-packaged apps?
     Browser* browser = chrome::FindBrowserWithWindow(
         ash::wm::GetActiveWindow());
+    //JAMES - can't do this, it won't bring the browser to front if an app
+    // window is frontmost
+    // Browser* browser = chrome::FindLastActive();
     if (browser) {
+      LOG(ERROR) << "JAMES 3";
       TabStripModel* tab_strip = browser->tab_strip_model();
       content::WebContents* active = tab_strip->GetWebContentsAt(
           tab_strip->active_index());
