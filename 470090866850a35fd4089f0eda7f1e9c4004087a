@@ -22,6 +22,30 @@
       "revId": "470090866850a35fd4089f0eda7f1e9c4004087a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a77011_43f11abf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-12T17:48:59Z",
+      "side": 1,
+      "message": "It is, but this has been the case as long as we\u0027ve had this metric. I filed a bug to fix it here: crbug.com/764410",
+      "parentUuid": "e4a065ef_a7fbac21",
+      "range": {
+        "startLine": 878,
+        "startChar": 20,
+        "endLine": 879,
+        "endChar": 55
+      },
+      "revId": "470090866850a35fd4089f0eda7f1e9c4004087a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
