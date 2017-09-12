@@ -211,6 +211,10 @@ CORE_EXPORT VisiblePosition
 PreviousLinePosition(const VisiblePosition&,
                      LayoutUnit line_direction_point,
                      EditableType = kContentIsEditable);
+CORE_EXPORT VisiblePositionInFlatTree
+PreviousLinePosition(const VisiblePositionInFlatTree&,
+                     LayoutUnit line_direction_point,
+                     EditableType = kContentIsEditable);
 CORE_EXPORT VisiblePosition NextLinePosition(const VisiblePosition&,
                                              LayoutUnit line_direction_point,
                                              EditableType = kContentIsEditable);
@@ -388,6 +392,11 @@ PreviousRootInlineBoxCandidatePosition(Node*,
                                        const VisiblePosition&,
                                        EditableType);
 
+CORE_EXPORT PositionInFlatTree
+PreviousRootInlineBoxCandidatePosition(Node*,
+                                       const VisiblePositionInFlatTree&,
+                                       EditableType);
 }  // namespace blink
+// namespace blink
 
 #endif  // VisibleUnits_h
