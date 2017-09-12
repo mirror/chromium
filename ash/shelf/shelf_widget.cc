@@ -9,6 +9,7 @@
 #include "ash/public/cpp/window_properties.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/app_list_button.h"
+#include "ash/shelf/login_shelf_view.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_background_animator_observer.h"
 #include "ash/shelf/shelf_constants.h"
@@ -120,6 +121,7 @@ ShelfWidget::ShelfWidget(aura::Window* shelf_container, Shelf* shelf)
       status_area_widget_(nullptr),
       delegate_view_(new DelegateView(this)),
       shelf_view_(new ShelfView(Shell::Get()->shelf_model(), shelf_, this)),
+      login_shelf_view_(new LoginShelfView()),
       background_animator_(SHELF_BACKGROUND_DEFAULT,
                            shelf_,
                            Shell::Get()->wallpaper_controller()) {
@@ -144,6 +146,7 @@ ShelfWidget::ShelfWidget(aura::Window* shelf_container, Shelf* shelf)
   // added to the model.
   shelf_view_->Init();
   GetContentsView()->AddChildView(shelf_view_);
+  GetContentsView()->AddChildView(login_shelf_view_);
 
   shelf_layout_manager_ = new ShelfLayoutManager(this, shelf_);
   shelf_layout_manager_->AddObserver(this);
@@ -279,6 +282,37 @@ void ShelfWidget::UpdateIconPositionForPanel(aura::Window* panel) {
   gfx::Rect bounds = panel->GetBoundsInScreen();
   ::wm::ConvertRectFromScreen(shelf_window, &bounds);
   shelf_view_->UpdatePanelIconPosition(id, bounds.CenterPoint());
+}
+
+void ShelfWidget::UpdateAfterSessionStateChange(
+    session_manager::SessionState state) {
+  switch (state) {
+    case session_manager::SessionState::ACTIVE:
+      shelf_view_->SetVisible(true);
+      login_shelf_view_->SetVisible(false);
+      // TODO(wzang): Combine with the codes specific to SessionState::ACTIVE
+      // in PostCreateShelf() when view-based shelf on login screen is
+      // supported.
+      break;
+    case session_manager::SessionState::LOCKED:
+    case session_manager::SessionState::LOGIN_SECONDARY:
+      login_shelf_view_->SetVisible(true);
+      shelf_view_->SetVisible(false);
+      break;
+    default:
+      login_shelf_view_->SetVisible(false);
+      shelf_view_->SetVisible(false);
+      break;
+  }
+  login_shelf_view_->UpdateAfterSessionStateChange(state);
+}
+
+void ShelfWidget::UpdateShutdownPolicy(bool reboot_on_shutdown) {
+  login_shelf_view_->UpdateShutdownPolicy(reboot_on_shutdown);
+}
+
+void ShelfWidget::UpdateLockScreenNoteState(mojom::TrayActionState state) {
+  login_shelf_view_->UpdateLockScreenNoteState(state);
 }
 
 gfx::Rect ShelfWidget::GetScreenBoundsOfItemIconForWindow(
