@@ -192,6 +192,20 @@ gfx::NativeViewAccessible NativeViewAccessibilityBase::HitTestSync(int x,
   return GetNativeObject();
 }
 
+gfx::Rect NativeViewAccessibilityBase::GetScreenBoundsForRangeSync(
+    const gfx::Range& range) {
+  if (!view_)
+    return gfx::Rect();
+
+  WordLookupClient* text_lookup_client = view_->GetWordLookupClient();
+  if (!text_lookup_client)
+    return gfx::Rect();
+
+  gfx::Rect bounds = text_lookup_client->GetRelativeBoundsForRange(range);
+  View::ConvertRectToScreen(view_, &bounds);
+  return bounds;
+}
+
 gfx::NativeViewAccessible NativeViewAccessibilityBase::GetFocus() {
   FocusManager* focus_manager = view_->GetFocusManager();
   View* focused_view =
