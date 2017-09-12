@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb43e794_f510a4f2",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestInterface.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-12T06:43:25Z",
+      "side": 1,
+      "message": "remove this empty line.",
+      "revId": "4316d166c4aeb10f0ce3ee19187054a8feac7395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e1992da_0b8ec362",
+        "filename": "tools/idl_parser/test_parser/interface_web.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-12T06:43:25Z",
+      "side": 1,
+      "message": "optional: AnnotatedType ?",
+      "range": {
+        "startLine": 464,
+        "startChar": 29,
+        "endLine": 464,
+        "endChar": 46
+      },
+      "revId": "4316d166c4aeb10f0ce3ee19187054a8feac7395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc0a90c_99d61c51",
+        "filename": "tools/idl_parser/test_parser/interface_web.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-12T06:43:25Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 491,
+        "startChar": 29,
+        "endLine": 491,
+        "endChar": 62
+      },
+      "revId": "4316d166c4aeb10f0ce3ee19187054a8feac7395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
