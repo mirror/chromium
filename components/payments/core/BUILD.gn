@@ -57,7 +57,7 @@ static_library("core") {
     "subkey_requester.cc",
     "subkey_requester.h",
   ]
-  
+
   deps = [
     "//base",
     "//components/autofill/core/browser",
