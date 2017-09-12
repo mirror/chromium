@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dea617e_3455c802",
+        "filename": "content/browser/accessibility/browser_accessibility_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-12T00:14:48Z",
+      "side": 1,
+      "message": "I don\u0027t think this is right - if you say to scroll\nUP or DOWN, it\u0027s going to correctly compute \"y\" but\n\"x\" is going to be left at zero.\n\nTest this by zooming into a page that\u0027s not\nmobile-optimized so it\u0027s possible to scroll in\nboth the x and y directions.",
+      "revId": "8d450e4c0223f28ba9a89cf6c663f4cbcaf724d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
