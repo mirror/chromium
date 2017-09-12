@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09605895_a3235e1c",
+        "filename": "ui/aura/env.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-12T17:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc0a51b1_fc4f24cd",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 42
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88393305_4a53a89d",
         "filename": "ui/aura/env.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bb09a8_80fd987e",
+        "filename": "ui/aura/env.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-12T17:08:54Z",
+      "side": 1,
+      "message": "Done\n\nBut the style guide says:\n\"if it would otherwise make sense to use a type as a member by-value, don\u0027t convert it to a pointer just to be able to forward-declare the type.\"",
+      "parentUuid": "88393305_4a53a89d",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 44
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1f3e7660_814ab024",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-12T17:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c06d235e_3ff3d828",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 22
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a61c202_61f47ac0",
         "filename": "ui/aura/window.cc",
         "patchSetId": 1
@@ -85,6 +157,24 @@
       "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1437a9a_3408dc56",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-12T17:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a61c202_61f47ac0",
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "72eb26ef_6fa8e902",
+        "filename": "ui/aura/window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-12T17:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "199d3e53_31a71215",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 34
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab67e36a_38237d84",
         "filename": "ui/aura/window_delegate.h",
         "patchSetId": 1
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "b9e82e19_144bef71",
+        "filename": "ui/aura/window_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-12T17:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab67e36a_38237d84",
+      "range": {
+        "startLine": 92,
+        "startChar": 5,
+        "endLine": 92,
+        "endChar": 46
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c90f619_cd4b4ec6",
         "filename": "ui/aura/window_occlusion_tracker.cc",
         "patchSetId": 1
@@ -145,6 +283,24 @@
       "writtenOn": "2017-09-06T16:49:09Z",
       "side": 1,
       "message": "This doesn\u0027t seem right. A window being invisible doesn\u0027t necessarily mean it\u0027s occluded, does it?",
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d73330f_d04cd701",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-12T17:08:54Z",
+      "side": 1,
+      "message": "All actions that we want to perform when a window is covered by other windows (discard tabs, throttle timers) can also be performed when IsVisible() is false. Also, Apple treats hidden as occluded (https://developer.apple.com/documentation/appkit/nswindowocclusionstate/nswindowocclusionstatevisible?language\u003dobjc - verified experimentally).\n\nFor these reasons, I prefer considering !IsVisible() windows as occluded. Thoughts?",
+      "parentUuid": "0c90f619_cd4b4ec6",
       "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -171,6 +327,30 @@
       "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff6d27a_fdd1270e",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-12T17:08:54Z",
+      "side": 1,
+      "message": "Agreed that I should use a WeakPtrFactory. |recompute_scheduled_| is still useful to ensure that I don\u0027t schedule multiple RecomputeWindowOcclusionStates tasks (with the current code, if the bounds and stacking order of multiple windows change in the same task, only one  RecomputeWindowOcclusionStates task is scheduled).",
+      "parentUuid": "e8d44ff2_165ca0b0",
+      "range": {
+        "startLine": 64,
+        "startChar": 21,
+        "endLine": 64,
+        "endChar": 43
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -221,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "e8d05dca_8e592f1e",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-12T17:08:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a122025b_cd996c64",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 39
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50a3ba2c_f60d5fcc",
         "filename": "ui/aura/window_occlusion_tracker.h",
         "patchSetId": 1
@@ -241,6 +445,30 @@
       "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e488909_3b3fedca",
+        "filename": "ui/aura/window_occlusion_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-12T17:08:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50a3ba2c_f60d5fcc",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
