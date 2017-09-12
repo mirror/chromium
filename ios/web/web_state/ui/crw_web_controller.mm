@@ -1431,7 +1431,11 @@ registerLoadRequestForURL:(const GURL&)requestURL
   _loadPhase = web::LOAD_REQUESTED;
   _lastRegisteredRequestURL = requestURL;
 
-  if (!redirect) {
+  // Back and forward navigation is broken for native views, and
+  // |recordStateInHistory| is doing nothing for back/forward navigation on web
+  // view.
+  bool backOrForward = transition & ui::PAGE_TRANSITION_FORWARD_BACK;
+  if (!redirect && !backOrForward) {
     // Record state of outgoing page.
     [self recordStateInHistory];
   }
