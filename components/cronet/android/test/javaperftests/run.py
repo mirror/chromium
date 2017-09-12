@@ -69,6 +69,7 @@ from pylib import pexpect
 from telemetry import android
 from telemetry import benchmark
 from telemetry import benchmark_runner
+from telemetry import decorators
 from telemetry import project_config
 from telemetry import story
 from telemetry.value import scalar
@@ -206,7 +207,7 @@ class CronetPerfTestMeasurement(
           'ms', jsonResults[test]))
 
 
-@benchmark.Enabled('android')
+@decorators.Enabled('android')
 class CronetPerfTestBenchmark(benchmark.Benchmark):
   # Benchmark implementation spawning off Cronet perf test measurement and
   # StorySet.
