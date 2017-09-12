@@ -22,6 +22,30 @@
       "revId": "bd477e688bad80b4a445b1a562c2da26cb5b59db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06a031a_0d976c88",
+        "filename": "headless/public/util/virtual_time_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-09-12T17:19:50Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s the behavior I was aiming for. Thinking of BeginFrames, and the following example:\nScheduleRepeatingTask(begin_frame_task, 100);\n[.. and at some point later ..]\nGrantVirtualTimeBudget(.., 500, ..);\n\nI\u0027d want to run a frame at 0, 100, 200, 300, 400, but not at 500 - as I\u0027d assume that\u0027s when a screenshot would be taken (provided no further GrantVirtualTimeBudget call is made).\n\nI could modify this to start at 100 instead (and include 500 if you wish), but then I\u0027d like a notification in the task that a new virtual time budget will be granted (with another continue callback). I\u0027d need that to support multiple GrantVirtualTimeBudget calls in sequence.",
+      "parentUuid": "70ba1cd2_70aa78d6",
+      "range": {
+        "startLine": 140,
+        "startChar": 9,
+        "endLine": 140,
+        "endChar": 18
+      },
+      "revId": "bd477e688bad80b4a445b1a562c2da26cb5b59db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
