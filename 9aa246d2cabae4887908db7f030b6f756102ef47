@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4691874c_2f183151",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-12T05:24:36Z",
+      "side": 1,
+      "message": "Yes. Removed.",
+      "parentUuid": "3ce24385_880099e1",
+      "revId": "9aa246d2cabae4887908db7f030b6f756102ef47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0d93ca9_5424be5e",
         "filename": "ui/android/view_android.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "9aa246d2cabae4887908db7f030b6f756102ef47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a06faca_99ff7802",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-12T05:24:36Z",
+      "side": 1,
+      "message": "Done. Updated the test to not alter this value too.",
+      "parentUuid": "f0d93ca9_5424be5e",
+      "revId": "9aa246d2cabae4887908db7f030b6f756102ef47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
