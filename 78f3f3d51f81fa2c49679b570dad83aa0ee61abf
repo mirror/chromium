@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e47dc7e0_1534a888",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1161559
+      },
+      "writtenOn": "2017-09-12T16:22:15Z",
+      "side": 1,
+      "message": "Fine by me, will change.",
+      "parentUuid": "7c18f73d_d40465e6",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "78f3f3d51f81fa2c49679b570dad83aa0ee61abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a82ec1ec_eea39193",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 7
@@ -84,6 +108,30 @@
       "writtenOn": "2017-09-11T15:55:11Z",
       "side": 1,
       "message": "this seems out of place here\nI\u0027d suggest adding service error as an argument to DiagnosticesCallback (and pottentially renaming it to something like RequestStatus)",
+      "range": {
+        "startLine": 181,
+        "startChar": 4,
+        "endLine": 181,
+        "endChar": 16
+      },
+      "revId": "78f3f3d51f81fa2c49679b570dad83aa0ee61abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594e0663_f0fc905d",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1161559
+      },
+      "writtenOn": "2017-09-12T16:22:15Z",
+      "side": 1,
+      "message": "I am somewhat concerned about changing the DiagnosticsCallback interface because our JS code which uses it may be on different versions of Chrome. If the error is just another field to check for, then it\u0027s straightforward to support both versions of the API. If it\u0027s an entirely new field in the callback, I suspect that may make it more difficult?",
+      "parentUuid": "a82ec1ec_eea39193",
       "range": {
         "startLine": 181,
         "startChar": 4,
