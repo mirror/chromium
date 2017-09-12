@@ -32,6 +32,7 @@ class CORE_EXPORT CSSTokenizer {
 
   size_t Offset() const { return input_.Offset(); }
   size_t PreviousOffset() const { return prev_offset_; }
+  size_t BlockNestingLevel() const { return block_stack_.size(); }
 
  private:
   CSSParserToken TokenizeSingle();
