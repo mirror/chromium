@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "build/build_config.h"
 #include "components/autofill/core/browser/credit_card.h"
 #if !defined(OS_IOS)
 #include "ui/gfx/image/image_skia.h"
