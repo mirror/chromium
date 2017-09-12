@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ab8698d1_49791fb5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/SVGLength-px-with-context.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-12T08:25:11Z",
+      "side": 1,
+      "message": "I primarily meant the comment, but of course it\u0027s possible to punt on upstreaming the test as a whole as well.",
+      "parentUuid": "578ab37b_ca98b32f",
+      "range": {
+        "startLine": 24,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 93
+      },
+      "revId": "6a1208b9d4e9ed34d05fce521905df524c4c26e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cf2f61c_383631d0",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/SVGLength-px.html",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Should we have to make a fix first or update the Test ?\nWhat is the expected output here?",
       "parentUuid": "6cf2f61c_383631d0",
+      "range": {
+        "startLine": 25,
+        "startChar": 57,
+        "endLine": 25,
+        "endChar": 117
+      },
+      "revId": "6a1208b9d4e9ed34d05fce521905df524c4c26e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb80b580_b275a325",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/SVGLength-px.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-12T08:25:11Z",
+      "side": 1,
+      "message": "Definitely the latter (update the test), the former can happen after that.\n\nThe expected result would be 2(%).",
+      "parentUuid": "278821b5_b543ac0a",
       "range": {
         "startLine": 25,
         "startChar": 57,
