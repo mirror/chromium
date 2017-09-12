@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d55c7c1_5bf5fbcb",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-12T03:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9dc98ff_ef12b342",
+      "revId": "93d199da048eda321ced91f78ec6097accb7c5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0af3baec_ff1e1c2d",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "98ee8bf0_e0ceb947",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-12T03:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0af3baec_ff1e1c2d",
+      "range": {
+        "startLine": 385,
+        "startChar": 15,
+        "endLine": 385,
+        "endChar": 21
+      },
+      "revId": "93d199da048eda321ced91f78ec6097accb7c5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24abb468_8a5ae469",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
         "patchSetId": 4
@@ -62,6 +104,30 @@
       "revId": "93d199da048eda321ced91f78ec6097accb7c5e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f4038c_3f39984c",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-12T03:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24abb468_8a5ae469",
+      "range": {
+        "startLine": 160,
+        "startChar": 5,
+        "endLine": 160,
+        "endChar": 15
+      },
+      "revId": "93d199da048eda321ced91f78ec6097accb7c5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +166,30 @@
       "side": 1,
       "message": "I think we should turn this on by default to achieve parity with extension.\n\nWe should then add in a few channel related metrics:\n- success count\n- failure count\n- # of attempts before channel is created successfully\n- (possibly others)\n\nOnce the UMA is in place, we can then experiment with different parameters, which I assume can be defined in fixed groups.",
       "parentUuid": "77a559e2_78520363",
+      "range": {
+        "startLine": 37,
+        "startChar": 50,
+        "endLine": 37,
+        "endChar": 77
+      },
+      "revId": "93d199da048eda321ced91f78ec6097accb7c5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734fc15d_304a0e66",
+        "filename": "chrome/browser/media/router/media_router_feature.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-12T03:58:31Z",
+      "side": 1,
+      "message": "Thinking of control this by one finch config containing both EnableCastDiscovery and EnableCastChannelRetry feature (still not sure how)...",
+      "parentUuid": "076f681d_377e910b",
       "range": {
         "startLine": 37,
         "startChar": 50,
