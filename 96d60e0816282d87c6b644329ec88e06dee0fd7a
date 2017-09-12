@@ -16,6 +16,24 @@
       "revId": "96d60e0816282d87c6b644329ec88e06dee0fd7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3273d0_3be3544f",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-12T17:36:50Z",
+      "side": 0,
+      "message": "I thought about that, and my only concern was that it might be confusing to mix the following two errors together:\n1. the user provided profdata doesn\u0027t exist.\n2. the tool fails to generate profdata.\n\nSo, my intention was to make the error message specific that the user provided profile data file doesn\u0027t exist. Maybe I should also make the error message also more specific: \"The provided profile data file ... doesn\u0027t exist.\" WDYT?",
+      "parentUuid": "9d44653d_f63f809a",
+      "revId": "96d60e0816282d87c6b644329ec88e06dee0fd7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
