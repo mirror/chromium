@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d79696bb_c14f40b3",
+        "filename": "third_party/WebKit/LayoutTests/SlowTests",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-12T21:00:26Z",
+      "side": 1,
+      "message": "Done :)",
+      "parentUuid": "91569b96_d42f9b0c",
+      "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f429c45_f53a4edd",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/audits2/audits2-successful-run-expected.txt",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "239cd7f0_f9c0728e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/audits2/audits2-successful-run-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-12T21:00:26Z",
+      "side": 1,
+      "message": "Yeah talked this over with Paul and at least for now it\u0027s nice to have this as an alert that something new started failing we didn\u0027t expect, but would probably remove if we started rolling much more frequently.",
+      "parentUuid": "9f429c45_f53a4edd",
+      "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f646600_7f3ee33e",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b545a8_431e002d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-12T21:00:26Z",
+      "side": 1,
+      "message": "Perfect, done.",
+      "parentUuid": "0f646600_7f3ee33e",
+      "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "83cedde1_cec194b9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-12T21:00:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7b9009c_54471c1d",
+      "range": {
+        "startLine": 614,
+        "startChar": 49,
+        "endLine": 614,
+        "endChar": 55
+      },
+      "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "155a1bc2_3fa9a842",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2_worker/Audits2Service.js",
         "patchSetId": 4
@@ -87,6 +165,24 @@
       "writtenOn": "2017-09-12T19:03:05Z",
       "side": 1,
       "message": "disableLoggingForTesting? I\u0027d actually prefer to move all console.log manipulations to the test code by exposing an empty _disableLoggingForTesting method here, which you sniff in test.",
+      "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce8289be_deeebfb5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_worker/Audits2Service.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-12T21:00:26Z",
+      "side": 1,
+      "message": "Ah clever! This is running inside the worker context though, I\u0027m assuming the default sniffer logic just does monkey patching (based on https://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js?type\u003dcs\u0026q\u003daddSniffer\u0026sq\u003dpackage:chromium\u0026l\u003d100). Is there a method for sniffing in a worker I missed? Creating one seems more to add more complexity than disabling here, but I\u0027m not exactly a wizard at targets/contexts :)",
+      "parentUuid": "155a1bc2_3fa9a842",
       "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
