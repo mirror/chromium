@@ -273,16 +273,14 @@ IN_PROC_BROWSER_TEST_F(AppApiTest, MAYBE_AppProcessInstances) {
 // Test that hosted apps with the background permission but that set
 // allow_js_access to false also use a process per app instance model.
 // Separate instances should be in separate processes.
-// Flaky on XP: http://crbug.com/165834
-#if defined(OS_WIN)
-#define MAYBE_AppProcessBackgroundInstances \
-    DISABLED_AppProcessBackgroundInstances
-#else
-#define MAYBE_AppProcessBackgroundInstances AppProcessBackgroundInstances
-#endif
-IN_PROC_BROWSER_TEST_F(AppApiTest, MAYBE_AppProcessBackgroundInstances) {
+class ReenableAppApiTest : public AppApiTest,
+                           public testing::WithParamInterface<int> {};
+
+IN_PROC_BROWSER_TEST_P(ReenableAppApiTest, AppProcessBackgroundInstances) {
   TestAppInstancesHelper("app_process_background_instances");
 }
+
+INSTANTIATE_TEST_CASE_P(ReenableTests, ReenableAppApiTest, testing::Range(0, 100));
 
 // Tests that bookmark apps do not use the app process model and are treated
 // like normal web pages instead.  http://crbug.com/104636.
