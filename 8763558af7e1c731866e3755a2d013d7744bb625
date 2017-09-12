@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f96923ef_937520da",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-12T19:42:09Z",
+      "side": 1,
+      "message": "Update this comment as it hints that doing exactly this (ScheduleWork inside lock) is bad",
+      "revId": "8763558af7e1c731866e3755a2d013d7744bb625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
