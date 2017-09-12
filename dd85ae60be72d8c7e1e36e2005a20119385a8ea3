@@ -46,6 +46,30 @@
       "revId": "dd85ae60be72d8c7e1e36e2005a20119385a8ea3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da73e883_f60217c4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 87978,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-12T22:46:13Z",
+      "side": 1,
+      "message": "I do still think you should rename the histogram, so that there is a clean break between differences in semantics.  You can just append a \"2\" to the name to rename it, though I think CurrentOriginEqualsLastCommittedOrigin would be even clearer.\n\nThat said, given that this is a fairly narrowly targeted histogram that\u0027s likely only viewed by a very small group of developers, I won\u0027t insist.  I would suggest at least adding a small reminder line, along the lines of \"Note: Prior to M63, this measured whether URLs were equal, rather than comparing origins.\"",
+      "parentUuid": "093e7e03_69240709",
+      "range": {
+        "startLine": 87978,
+        "startChar": 75,
+        "endLine": 87978,
+        "endChar": 0
+      },
+      "revId": "dd85ae60be72d8c7e1e36e2005a20119385a8ea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
