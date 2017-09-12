@@ -131,4 +131,69 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterSpecialSubframeNavigationsBrowserTest,
   EXPECT_FALSE(script_resource_was_loaded);
 }
 
+// Navigate to a site with site hierarchy a(b(c)). Let a navigate c to a blank
+// URL, and expect that the resulting frame has activation and that its
+// activation is inherited by its child frames properly in the browser process.
+IN_PROC_BROWSER_TEST_F(SubresourceFilterSpecialSubframeNavigationsBrowserTest,
+                       NavigateCrossProcessBlankUrl_ChildFrameGetsActivation) {
+  const GURL main_url(embedded_test_server()->GetURL(
+      "a.com", "/cross_site_iframe_factory.html?a(b(c))"));
+  ConfigureAsPhishingURL(main_url);
+  ASSERT_NO_FATAL_FAILURE(
+      SetRulesetToDisallowURLsWithPathSuffix("included_script.js"));
+  const GURL included_url(embedded_test_server()->GetURL(
+      "a.com", "/subresource_filter/included_script.js"));
+
+  ui_test_utils::NavigateToURL(browser(), main_url);
+
+  // The root node will initiate the navigation; its grandchild node will be the
+  // target of the navigation.
+  content::TestNavigationObserver navigation_observer(web_contents(), 1);
+  EXPECT_TRUE(content::ExecuteScript(
+      web_contents()->GetMainFrame(),
+      base::StringPrintf("var blank_url = 'about:blank';"
+                         "window.frames[0][0].location.href = blank_url;")));
+  navigation_observer.Wait();
+
+  content::RenderFrameHost* target = content::FrameMatchingPredicate(
+      web_contents(), base::Bind([](content::RenderFrameHost* rfh) {
+        return rfh->GetLastCommittedURL() == url::kAboutBlankURL;
+      }));
+  ASSERT_NE(target, nullptr);
+
+  std::string script =
+      R"(let script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = "%s";
+      script.onload = () => { window.domAutomationController.send(true); };
+      script.onerror = () => { window.domAutomationController.send(false); };
+      document.body.appendChild(script);)";
+
+  bool script_resource_was_loaded = false;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      target, base::StringPrintf(script.c_str(), included_url.spec().c_str()),
+      &script_resource_was_loaded));
+
+  EXPECT_FALSE(script_resource_was_loaded);
+
+  // Create a child frame to make sure that the activation state is passed on to
+  // the child frame as well.
+  std::string iframe_script =
+      R"(let grandChild = document.createElement('iframe');
+     grandChild.name = "grandChild";
+     grandChild.src = "frame_with_included_script.html";
+     grandChild.onload = () => { window.domAutomationController.send(true); };
+     grandChild.onerror = () => { window.domAutomationController.send(false); };
+     document.body.appendChild(grandChild);)";
+
+  bool iframe_was_loaded = false;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(target, iframe_script,
+                                                   &iframe_was_loaded));
+  EXPECT_TRUE(iframe_was_loaded);
+
+  const std::vector<const char*> subframe_names{"grandChild"};
+  ASSERT_NO_FATAL_FAILURE(
+      ExpectParsedScriptElementLoadedStatusInFrames(subframe_names, {false}));
+}
+
 }  // namespace subresource_filter

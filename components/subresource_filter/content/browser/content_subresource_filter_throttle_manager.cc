@@ -24,11 +24,29 @@
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/console_message_level.h"
 #include "net/base/net_errors.h"
 
 namespace subresource_filter {
+
+namespace {
+
+// Helper function to return the first frame starting from |frame_host|'s
+// parent that is local to this frame.
+content::RenderFrameHost* GetFirstLocalAncestorForSpecialUrls(
+    content::RenderFrameHost* frame_host) {
+  DCHECK(frame_host);
+  content::RenderFrameHost* parent = frame_host->GetParent();
+  while (parent &&
+         frame_host->GetProcess()->GetID() != parent->GetProcess()->GetID()) {
+    parent = parent->GetParent();
+  }
+  return parent;
+}
+
+}  // namespace
 
 bool ContentSubresourceFilterThrottleManager::Delegate::AllowRulesetRules() {
   return true;
@@ -292,8 +310,8 @@ ContentSubresourceFilterThrottleManager::GetParentFrameFilter(
   DCHECK(parent);
 
   // Filter will be null for those special url navigations that were added in
-  // MaybeActivateSubframeSpecialUrls. Return the filter of the first parent
-  // with a non-null filter.
+  // MaybeActivateSubframeSpecialUrls. Return the filter of the first local
+  // ancestor with a non-null filter.
   while (parent) {
     auto it = activated_frame_hosts_.find(parent);
     if (it == activated_frame_hosts_.end())
@@ -301,7 +319,8 @@ ContentSubresourceFilterThrottleManager::GetParentFrameFilter(
 
     if (it->second.get())
       return it->second.get();
-    parent = it->first->GetParent();
+
+    parent = GetFirstLocalAncestorForSpecialUrls(parent);
   }
 
   // Since null filter is only possible for special navigations of iframes, the
@@ -359,9 +378,16 @@ void ContentSubresourceFilterThrottleManager::MaybeActivateSubframeSpecialUrls(
   if (!frame_host)
     return;
 
-  content::RenderFrameHost* parent = navigation_handle->GetParentFrame();
-  DCHECK(parent);
-  if (base::ContainsKey(activated_frame_hosts_, parent))
+  // Since for special urls there is no IPC before this point from the renderer,
+  // make sure that the browser process computes the activation state in the
+  // same manner as the renderer process. In the renderer the activation state
+  // of the first local ancestor is inherited as the activation state of this
+  // frame since its possible that the parent of the frame is not local to it.
+  // Using the same logic here.
+  content::RenderFrameHost* parent =
+      GetFirstLocalAncestorForSpecialUrls(frame_host);
+
+  if (parent && base::ContainsKey(activated_frame_hosts_, parent))
     activated_frame_hosts_[frame_host] = nullptr;
 }
 
