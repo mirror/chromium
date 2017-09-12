@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d620fcac_4e114387",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-09-12T23:31:58Z",
+      "side": 1,
+      "message": "AFAICT, VPNs could always become the default service, even before we started making the physical/logical distinction in shill commit 91a7ad738c18bf2447a.",
+      "parentUuid": "f35ebcf2_24258cf6",
+      "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54b3c50e_65652530",
         "filename": "components/arc/net/arc_net_host_impl.cc",
         "patchSetId": 5
@@ -36,6 +54,42 @@
     },
     {
       "key": {
+        "uuid": "6dfc83de_2df16ff2",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-09-12T23:31:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54b3c50e_65652530",
+      "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d949480d_18239fe5",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-09-12T23:31:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54b3c50e_65652530",
+      "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5877da34_e75b32a0",
         "filename": "components/arc/net/arc_net_host_impl.cc",
         "patchSetId": 5
@@ -47,6 +101,24 @@
       "writtenOn": "2017-09-12T22:03:57Z",
       "side": 1,
       "message": "Instead, modify c/b/chromeos/net/network_conenct_delegate_chromeos.cc::ShowNetworkConfigure() to handle arc VPN and have that trigger the ConfigureAndroidVpn() call.",
+      "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f46d697_68516212",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-09-12T23:31:58Z",
+      "side": 1,
+      "message": "Unfortunately that is never called.  The calling sequence seems to be:\n\n    NetworkStateListDetailedView::HandleViewClicked\n    SystemTrayController::ShowNetworkSettings\n    SystemTrayClient::ShowNetworkSettings\n    SystemTrayClient::ShowNetworkSettingsHelper",
+      "parentUuid": "5877da34_e75b32a0",
       "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
