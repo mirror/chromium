@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a206960_c6b0e69f",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-12T01:23:54Z",
+      "side": 1,
+      "message": "I\u0027m confused about purpose of |IsSpellCheckingEnabledAt()|.\n\nWhen |ephemeral_line_range| holds\n\u003cspan spellcheck\u003dtrue\u003eOn\u003c/span\u003e\u003cspan spellcheck\u003dfalse\u003eOff\u003c/span\u003e\u003cspan spellcheck\u003dtrue\u003eOn\u003c/span\u003e\n\nIsSpellCheckingEnabledAt(range.start)| returns true, but the range\ncontains disabled part.\n\nShould we have |IsSpellCheckingEnabled(const EphemeralRange\u0026)|?",
+      "revId": "d4206f6990e4f0966950ab7003c4846767c6aeb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae13d8c4_b78780c0",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-12T01:23:54Z",
+      "side": 1,
+      "message": "Could you introduce a helper function to convert |ImeTextSpan::Thick()|\nto |StyleableMarker::Thickness|?\n\nAt least we have two call sites in this patch, L504 and L528.",
+      "revId": "d4206f6990e4f0966950ab7003c4846767c6aeb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
