@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e71ef0b4_890e8355",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-12T18:16:47Z",
+      "side": 1,
+      "message": "Ah, sorry, ignore my comment on the other CL.",
+      "range": {
+        "startLine": 274,
+        "startChar": 8,
+        "endLine": 274,
+        "endChar": 13
+      },
+      "revId": "cb11ad4eced8fcf6d91690a5318fb726d54521ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
