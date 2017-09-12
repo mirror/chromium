@@ -85,6 +85,8 @@ static_library("zlib") {
         "contrib/arm/chunkcopy.h",
         "contrib/arm/inffast.c",
         "contrib/arm/inflate.c",
+        "contrib/arm/neon_adler32.c",
+        "contrib/arm/neon_adler32.h",
       ]
     }
   }
