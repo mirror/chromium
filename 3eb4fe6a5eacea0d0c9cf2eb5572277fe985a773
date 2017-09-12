@@ -350,6 +350,24 @@
       "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1173fb_c546afa3",
+        "filename": "third_party/zlib/neon_adler32.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-12T17:58:17Z",
+      "side": 1,
+      "message": "Coolio, I will validate the change in zlib buildsystem and adjust the current patch properly.\no/",
+      "parentUuid": "ab0e365e_eada7cbf",
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
