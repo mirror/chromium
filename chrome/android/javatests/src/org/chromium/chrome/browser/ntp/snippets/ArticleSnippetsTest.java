@@ -373,7 +373,8 @@ public class ArticleSnippetsTest {
                 new DummySuggestionsEventReporter();
         private final SuggestionsRanker mSuggestionsRanker = new SuggestionsRanker();
         private final DiscardableReferencePool mReferencePool = new DiscardableReferencePool();
-        private final ImageFetcher mImageFetcher = new MockImageFetcher(mSnippetsSource);
+        private final ImageFetcher mImageFetcher =
+                new MockImageFetcher(mSnippetsSource, mReferencePool);
 
         @Override
         public SuggestionsSource getSuggestionsSource() {
@@ -415,8 +416,9 @@ public class ArticleSnippetsTest {
     }
 
     private class MockImageFetcher extends ImageFetcher {
-        public MockImageFetcher(SuggestionsSource suggestionsSource) {
-            super(suggestionsSource, null, null);
+        public MockImageFetcher(
+                SuggestionsSource suggestionsSource, DiscardableReferencePool referencePool) {
+            super(suggestionsSource, null, referencePool, null);
         }
 
         @Override
