@@ -37,6 +37,7 @@ class VideoPlaneController;
 
 namespace shell {
 class CastBrowserProcess;
+class CastDisplayConfigurator;
 class URLRequestContextFactory;
 
 class CastBrowserMainParts : public content::BrowserMainParts {
@@ -73,6 +74,7 @@ class CastBrowserMainParts : public content::BrowserMainParts {
   std::unique_ptr<media::VideoPlaneController> video_plane_controller_;
   std::unique_ptr<media::MediaCapsImpl> media_caps_;
   std::unique_ptr<CastWindowManager> window_manager_;
+  std::unique_ptr<CastDisplayConfigurator> display_configurator_;
 
 #if BUILDFLAG(IS_CAST_USING_CMA_BACKEND)
   // CMA thread used by AudioManager, MojoRenderer, and MediaPipelineBackend.
