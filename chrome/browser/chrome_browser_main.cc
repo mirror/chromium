@@ -163,6 +163,7 @@
 #include "device/geolocation/geolocation_delegate.h"
 #include "device/geolocation/geolocation_provider.h"
 #include "extensions/features/features.h"
+#include "google_apis/google_api_keys.h"
 #include "media/base/localized_strings.h"
 #include "media/media_features.h"
 #include "net/base/net_module.h"
@@ -297,6 +298,21 @@ class ChromeGeolocationDelegate : public device::GeolocationDelegate {
 
   scoped_refptr<device::AccessTokenStore> CreateAccessTokenStore() final {
     return new ChromeAccessTokenStore();
+  }
+
+  void GetGeolocationRequestContext(
+      base::OnceCallback<
+          void(const scoped_refptr<net::URLRequestContextGetter>)> callback)
+      override {
+    BrowserThread::PostTaskAndReplyWithResult(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&BrowserProcess::system_request_context,
+                       base::Unretained(g_browser_process)),
+        std::move(callback));
+  }
+
+  std::string GetNetworkGeolocationApiKey() override {
+    return google_apis::GetAPIKey();
   }
 
  private:

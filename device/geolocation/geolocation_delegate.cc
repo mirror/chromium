@@ -22,4 +22,14 @@ GeolocationDelegate::OverrideSystemLocationProvider() {
   return nullptr;
 }
 
+// Provides no request context by default.
+void GeolocationDelegate::GetGeolocationRequestContext(
+    base::OnceCallback<void(const scoped_refptr<net::URLRequestContextGetter>)>
+    /* unused */) {}
+
+// Provides no API key by default.
+std::string GeolocationDelegate::GetNetworkGeolocationApiKey() {
+  return std::string();
+}
+
 }  // namespace device

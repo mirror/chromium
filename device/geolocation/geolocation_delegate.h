@@ -9,6 +9,7 @@
 
 #include "base/memory/ref_counted.h"
 #include "device/geolocation/geolocation_export.h"
+#include "net/url_request/url_request_context_getter.h"
 
 namespace device {
 class AccessTokenStore;
@@ -27,6 +28,22 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationDelegate {
   // Creates a new AccessTokenStore for geolocation. May return nullptr.
   // Won't be called unless UseNetworkLocationProviders() is true.
   virtual scoped_refptr<AccessTokenStore> CreateAccessTokenStore();
+
+  // Allows an embedder to provide a URLRequestContext to use for network
+  // geolocation queries. |callback| will be invoked on the calling thread with
+  // a URLRequestContextGetter.
+  // TODO(crbug.com/709301): Once GeolocationProvider hangs off DeviceService,
+  // move this to ContentBrowserClient & pass (as a callback) to DeviceService
+  // constructor.
+  virtual void GetGeolocationRequestContext(
+      base::OnceCallback<
+          void(const scoped_refptr<net::URLRequestContextGetter>)> callback);
+
+  // Allows an embedder to provide a Google API Key to use for network
+  // geolocation queries. Can be empty to send no API key. Call from any thread.
+  // TODO(crbug.com/709301): Once GeolocationProvider hangs off DeviceService,
+  // move this to ContentBrowserClient & pass to DeviceService constructor.
+  virtual std::string GetNetworkGeolocationApiKey();
 
   // Allows an embedder to return its own LocationProvider implementation.
   // Return nullptr to use the default one for the platform to be created.
