@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a341dfa_e76a264a",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T09:12:28Z",
+      "side": 1,
+      "message": "This part is not a refactoring :)  I assume you\u0027ve checked that it still works? Also, 1 is the default value, so maybe just leave it out?",
+      "range": {
+        "startLine": 330,
+        "startChar": 42,
+        "endLine": 330,
+        "endChar": 0
+      },
+      "revId": "5c8a774960c10b3a6e84e960c8d0cb4ebc3add57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
