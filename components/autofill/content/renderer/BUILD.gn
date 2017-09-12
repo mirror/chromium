@@ -39,6 +39,7 @@ static_library("renderer") {
 
     # TODO(elawrence): remove security_state/core when the Form-Not-Secure
     # feature is fully launched. https://crbug.com/677295
+    "//components/autofill/core/browser:browser",
     "//components/security_state/core",
     "//components/strings",
     "//content/public/common",
