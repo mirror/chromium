@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df672b8e_ffcb8a3b",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-09-12T19:05:55Z",
+      "side": 1,
+      "message": "Mostly done:\n\n1. I left the calls as Bind/Unbind because they actually perform state-DCHECKing, so it is more complex than just setting an EA. \n2. I cannot make AH::GetElementAnimationsForElementId private quite yet as there are a bunch of callers, mostly unittests.",
+      "parentUuid": "8e959cad_58b3babd",
+      "range": {
+        "startLine": 118,
+        "startChar": 22,
+        "endLine": 118,
+        "endChar": 43
+      },
+      "revId": "68285f131c0538e0766bab2773c956e595f6189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61bd8a31_6145c5cd",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "68285f131c0538e0766bab2773c956e595f6189d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e656f4c_fc472a0e",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-09-12T19:05:55Z",
+      "side": 1,
+      "message": "As per conversation, this is called by Blink - we don\u0027t want to expose them to AnimationTicker (at least not yet.)",
+      "parentUuid": "61bd8a31_6145c5cd",
+      "range": {
+        "startLine": 205,
+        "startChar": 22,
+        "endLine": 205,
+        "endChar": 55
+      },
+      "revId": "68285f131c0538e0766bab2773c956e595f6189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fdf0d46a_4af3a67e",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-09-12T19:05:55Z",
+      "side": 1,
+      "message": "Filed crbug.com/764405 and left a TODO",
+      "parentUuid": "df48b46b_ae85a1c6",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 43
+      },
+      "revId": "68285f131c0538e0766bab2773c956e595f6189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "838643db_99f3a247",
         "filename": "cc/animation/animation_ticker.h",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "68285f131c0538e0766bab2773c956e595f6189d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1898a9ea_8aca453d",
+        "filename": "cc/animation/animation_ticker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-09-12T19:05:55Z",
+      "side": 1,
+      "message": "Added a comment, lmk if you think more is needed.",
+      "parentUuid": "838643db_99f3a247",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 29
+      },
+      "revId": "68285f131c0538e0766bab2773c956e595f6189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -22,6 +22,30 @@
       "revId": "14ce4dab8877fb24e37aaf914e724c3372d20bf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec103183_a4d1ef27",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-09-12T19:05:55Z",
+      "side": 1,
+      "message": "As per conversation, this is called by Blink - we don\u0027t want to expose them to AnimationTicker (at least not yet.)",
+      "parentUuid": "ec819940_7b103406",
+      "range": {
+        "startLine": 242,
+        "startChar": 22,
+        "endLine": 242,
+        "endChar": 55
+      },
+      "revId": "14ce4dab8877fb24e37aaf914e724c3372d20bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
