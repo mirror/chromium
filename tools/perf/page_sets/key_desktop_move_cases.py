@@ -5,8 +5,6 @@ from telemetry.page import page as page_module
 from telemetry.page import shared_page_state
 from telemetry import story
 
-from page_sets.login_helpers import google_login
-
 
 class KeyDesktopMoveCasesPage(page_module.Page):
 
@@ -36,10 +34,9 @@ class GmailMouseScrollPage(KeyDesktopMoveCasesPage):
           callback(api.getScrollableElement());
         });
       }'''
+    self.credentials = 'google'
 
   def RunNavigateSteps(self, action_runner):
-    google_login.LoginGoogleAccount(action_runner, 'googletest',
-                                    self.credentials_path)
     super(GmailMouseScrollPage, self).RunNavigateSteps(action_runner)
     action_runner.WaitForJavaScriptCondition(
         'window.gmonkey !== undefined &&'
