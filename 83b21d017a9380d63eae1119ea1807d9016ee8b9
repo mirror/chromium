@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbfbf0c2_61283369",
+        "filename": "content/renderer/media/media_stream_dispatcher_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T17:31:46Z",
+      "side": 1,
+      "message": "nit: have -\u003e has",
+      "range": {
+        "startLine": 414,
+        "startChar": 29,
+        "endLine": 414,
+        "endChar": 33
+      },
+      "revId": "83b21d017a9380d63eae1119ea1807d9016ee8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
