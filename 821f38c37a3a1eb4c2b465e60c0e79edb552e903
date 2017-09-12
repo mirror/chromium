@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ea5deca_203d98c1",
+        "filename": "chrome/browser/ui/webui/interstitials/interstitial_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-12T17:34:37Z",
+      "side": 1,
+      "message": "I\u0027d suggest pulling `web_contents-\u003eGetURL().path()` out into a variable above this line, and adding a comment to explain why we use that instead of |path|.",
+      "range": {
+        "startLine": 438,
+        "startChar": 6,
+        "endLine": 438,
+        "endChar": 35
+      },
+      "revId": "821f38c37a3a1eb4c2b465e60c0e79edb552e903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d221d7_d4b1e70e",
+        "filename": "chrome/browser/ui/webui/interstitials/interstitial_ui_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-12T17:34:37Z",
+      "side": 1,
+      "message": "nit: add a period at the end of this comment",
+      "range": {
+        "startLine": 52,
+        "startChar": 39,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "821f38c37a3a1eb4c2b465e60c0e79edb552e903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
