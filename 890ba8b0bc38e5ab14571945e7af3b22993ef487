@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eedf8186_51eb83e0",
+        "filename": "components/exo/test/run_all_perftests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-12T22:41:23Z",
+      "side": 1,
+      "message": "To use real hardware GPU, we can add a helper function to append switches::kUseGpuInTests so that to set |use_software_gl| to false in gl_surface_test_support.cc\nhttps://cs.chromium.org/chromium/src/ui/gl/test/gl_surface_test_support.cc?l\u003d50\u0026rcl\u003d5cc46455bd2d34bbf305f9296cde1a2dd048b2a7\n\n\nint RunHelper(ash::AshTestSuite* test_suite) {\n  base::CommandLine::ForCurrentProcess()-\u003eAppendSwitch(\n      switches::kUseGpuInTests);\n  return test_suite-\u003eRun();\n}\n\n\nint main(int argc, char** argv) {\n  exo::ExoPerfTestSuite test_suite(argc, argv);\n\n#if !defined(OS_IOS)\n  mojo::edk::Init();\n#endif\n\n  return base::LaunchUnitTestsSerially(\n      argc, argv,\n      base::Bind(\u0026RunHelper, base::Unretained(\u0026test_suite)));\n}\n\n}",
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
