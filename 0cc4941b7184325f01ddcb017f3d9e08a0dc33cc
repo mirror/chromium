@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d4119e1_590b0788",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-12T18:30:27Z",
+      "side": 1,
+      "message": "Why the check for IsWebGLContext()? It\u0027s odd because it relates to the type of context exposed to the client, not the underlying GL context (i.e. which feature is available, such as GL_DEPTH_STENCIL_ATTACHMENT).",
+      "revId": "0cc4941b7184325f01ddcb017f3d9e08a0dc33cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9739ff02_9551a058",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-12T18:30:27Z",
+      "side": 1,
+      "message": "What makes this DCHECK valid? I think we may want some code in Initialize to force using a texture if we\u0027re in single-buffer mode.",
+      "revId": "0cc4941b7184325f01ddcb017f3d9e08a0dc33cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98022d72_bc953d3d",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-12T18:30:27Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "0cc4941b7184325f01ddcb017f3d9e08a0dc33cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "602b5a49_cdfda0e5",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3065,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-12T18:30:27Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure assigning and moving emulated_front_buffer_ in the same statement is not undefined behavior. Maybe worth going through an intermediate variable.",
+      "revId": "0cc4941b7184325f01ddcb017f3d9e08a0dc33cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
