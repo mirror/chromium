@@ -16,6 +16,7 @@ from utilities import get_file_contents
 from utilities import idl_filename_to_basename
 from utilities import read_idl_files_list_from_file
 from utilities import should_generate_impl_file_from_idl
+from utilities import to_snake_case
 from utilities import write_file
 
 
@@ -43,6 +44,9 @@ def parse_options():
     parser.add_option('--idl-files-list', help="a text file containing the IDL file paths, so the command line doesn't exceed OS length limits.")
     parser.add_option('--gyp-format-list', default=False, action='store_true', help="if specified, idl-files-list is newline separated. When unspecified, it's formatted as a Posix command line.")
     parser.add_option('--output')
+    # TODO(tkent): Remove the option after the great mv. crbug.com/760462
+    parser.add_option('--snake-case-generated-files',
+                      action='store_true', default=False)
 
     options, args = parser.parse_args()
     if options.output is None:
@@ -79,6 +83,10 @@ def extract_meta_data(file_paths):
     return meta_data_list
 
 
+def get_basename(name, snake_case):
+    return to_snake_case(name) if snake_case else name
+
+
 def main():
     options = parse_options()
 
@@ -89,7 +97,8 @@ def main():
                        for meta_data in meta_data_list]
     interface_names.sort()
 
-    includes = ['#include "bindings/modules/v8/%s.h"' % interface_name
+    includes = ['#include "bindings/modules/v8/%s.h"' %
+                get_basename(interface_name, options.snake_case_generated_files)
                 for interface_name in interface_names]
     initialize_calls = ['  %s::initialize();' % interface_name
                         for interface_name in interface_names]
