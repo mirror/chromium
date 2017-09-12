@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e244440_23c17e6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-09-12T11:37:29Z",
+      "side": 1,
+      "message": "Thanks for fixing this.",
+      "revId": "71be8283e91d7aa66007071077e50f42d6817953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a978a496_7babfe0b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-09-12T11:37:29Z",
+      "side": 1,
+      "message": "From 636300, GetAssociatedOutputDeviceID was added in M61. From 764228, you only want to fix it in M62?",
+      "revId": "71be8283e91d7aa66007071077e50f42d6817953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b6f05e_a38fabc4",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-09-12T11:37:29Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with Bind. By default it\u0027s Unretained?",
+      "revId": "71be8283e91d7aa66007071077e50f42d6817953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
