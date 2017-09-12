@@ -36,6 +36,11 @@ enum class LinkTarget {
   BLANK,
 };
 
+enum class FormMethod {
+  POST,
+  GET,
+};
+
 namespace {
 
 // Inserts an iframe in the main frame of |web_contents|.
@@ -69,15 +74,49 @@ void ClickLinkAndWait(content::WebContents* web_contents,
   ui_test_utils::UrlLoadObserver url_observer(
       target_url, content::NotificationService::AllSources());
   std::string script = base::StringPrintf(
+      "(() => {"
       "const link = document.createElement('a');"
       "link.href = '%s';"
       "link.target = '%s';"
       "document.body.appendChild(link);"
       "const event = new MouseEvent('click', {'view': window});"
-      "link.dispatchEvent(event);",
+      "link.dispatchEvent(event);"
+      "})();",
       target_url.spec().c_str(),
       target == LinkTarget::SELF ? "_self" : "_blank");
-  EXPECT_TRUE(content::ExecuteScript(web_contents, script));
+  ASSERT_TRUE(content::ExecuteScript(web_contents, script));
+  url_observer.Wait();
+}
+
+// Creates a <form> element with a |target_url| action and |method| method. Adds
+// the form to the DOM with a button and clicks the button. Returns once
+// |target_url| has been loaded.
+//
+// If |method| is FormMethod::GET, |target_url| should contain an empty query
+// string, since that URL will be loaded when submitting the form.
+void SubmitFormAndWait(content::WebContents* web_contents,
+                       const GURL& target_url,
+                       FormMethod method) {
+  if (method == FormMethod::GET) {
+    ASSERT_TRUE(target_url.has_query());
+    ASSERT_TRUE(target_url.query().empty());
+  }
+
+  ui_test_utils::UrlLoadObserver url_observer(
+      target_url, content::NotificationService::AllSources());
+  std::string script = base::StringPrintf(
+      "(() => {"
+      "const form = document.createElement('form');"
+      "form.action = '%s';"
+      "form.method = '%s';"
+      "const button = document.createElement('input');"
+      "button.type = 'submit';"
+      "form.appendChild(button);"
+      "document.body.appendChild(form);"
+      "button.dispatchEvent(new MouseEvent('click', {'view': window}));"
+      "})();",
+      target_url.spec().c_str(), method == FormMethod::POST ? "post" : "get");
+  ASSERT_TRUE(content::ExecuteScript(web_contents, script));
   url_observer.Wait();
 }
 
@@ -118,6 +157,7 @@ class BookmarkAppUrlRedirectorBrowserTest : public ExtensionBrowserTest {
         base::BindRepeating([](const HttpRequest& request) {
           auto response = base::MakeUnique<BasicHttpResponse>();
           response->set_content_type("text/html");
+          response->AddCustomHeader("Access-Control-Allow-Origin", "*");
           return static_cast<std::unique_ptr<HttpResponse>>(
               std::move(response));
         }));
@@ -166,6 +206,27 @@ class BookmarkAppUrlRedirectorBrowserTest : public ExtensionBrowserTest {
   // Navigates the active tab to the launching page.
   void NavigateToLaunchingPage() {
     ui_test_utils::NavigateToURL(browser(), GetLaunchingPageURL());
+  }
+
+  // Checks that, after running |action|, the initial tab's window doesn't have
+  // any new tabs, the initial tab did not navigate, and that no new windows
+  // have been opened.
+  void TestTabActionDoesNotNavigateOrOpenAppWindow(
+      const base::Closure& action) {
+    size_t num_browsers = chrome::GetBrowserCount(profile());
+    int num_tabs = browser()->tab_strip_model()->count();
+    content::WebContents* initial_tab =
+        browser()->tab_strip_model()->GetActiveWebContents();
+    GURL initial_url = initial_tab->GetLastCommittedURL();
+
+    action.Run();
+
+    EXPECT_EQ(num_browsers, chrome::GetBrowserCount(profile()));
+    EXPECT_EQ(browser(), chrome::FindLastActive());
+    EXPECT_EQ(num_tabs, browser()->tab_strip_model()->count());
+    EXPECT_EQ(initial_tab,
+              browser()->tab_strip_model()->GetActiveWebContents());
+    EXPECT_EQ(initial_url, initial_tab->GetLastCommittedURL());
   }
 
   // Checks that, after running |action|, the initial tab's window doesn't have
@@ -424,6 +485,86 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, OutOfScopeUrlSelf) {
       base::Bind(&ClickLinkAndWait,
                  browser()->tab_strip_model()->GetActiveWebContents(),
                  out_of_scope_url, LinkTarget::SELF));
+}
+
+// Tests that submitting a form using POST does not open a new app window.
+IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
+                       PostFormSubmission) {
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  const GURL in_scope_url = embedded_test_server()->GetURL(kInScopeUrlPath);
+  TestTabActionDoesNotOpenAppWindow(
+      in_scope_url,
+      base::Bind(&SubmitFormAndWait,
+                 browser()->tab_strip_model()->GetActiveWebContents(),
+                 in_scope_url, FormMethod::POST));
+}
+
+// Tests that submitting a form using GET does not open a new app window.
+IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, GetFormSubmission) {
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  GURL::Replacements replacements;
+  replacements.SetQuery("", url::Component(0, 0));
+  const GURL in_scope_form_url = embedded_test_server()
+                                     ->GetURL(kInScopeUrlPath)
+                                     .ReplaceComponents(replacements);
+  TestTabActionDoesNotOpenAppWindow(
+      in_scope_form_url,
+      base::Bind(&SubmitFormAndWait,
+                 browser()->tab_strip_model()->GetActiveWebContents(),
+                 in_scope_form_url, FormMethod::GET));
+}
+
+// Tests that prerender links don't open the app.
+IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, PrerenderLinks) {
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  TestTabActionDoesNotNavigateOrOpenAppWindow(base::Bind(
+      [](content::WebContents* web_contents, const GURL& target_url) {
+        std::string script = base::StringPrintf(
+            "(() => {"
+            "const prerender_link = document.createElement('link');"
+            "prerender_link.rel = 'prerender';"
+            "prerender_link.href = '%s';"
+            "prerender_link.addEventListener('webkitprerenderstop',"
+            "() => window.domAutomationController.send(true));"
+            "document.body.appendChild(prerender_link);"
+            "})();",
+            target_url.spec().c_str());
+        bool result;
+        ASSERT_TRUE(content::ExecuteScriptAndExtractBool(web_contents, script,
+                                                         &result));
+        ASSERT_TRUE(result);
+      },
+      browser()->tab_strip_model()->GetActiveWebContents(),
+      embedded_test_server()->GetURL(kInScopeUrlPath)));
+}
+
+// Tests fetch calls don't open a new App window.
+IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, Fetch) {
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  TestTabActionDoesNotNavigateOrOpenAppWindow(base::Bind(
+      [](content::WebContents* web_contents, const GURL& target_url) {
+        std::string script = base::StringPrintf(
+            "(() => {"
+            "fetch('%s').then(response => {"
+            "  window.domAutomationController.send(response.ok);"
+            "});"
+            "})();",
+            target_url.spec().c_str());
+        bool result;
+        ASSERT_TRUE(content::ExecuteScriptAndExtractBool(web_contents, script,
+                                                         &result));
+        ASSERT_TRUE(result);
+      },
+      browser()->tab_strip_model()->GetActiveWebContents(),
+      embedded_test_server()->GetURL(kInScopeUrlPath)));
 }
 
 // Tests that clicking links inside a website for an installed app doesn't open
