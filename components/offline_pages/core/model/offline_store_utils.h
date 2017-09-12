@@ -21,6 +21,9 @@ class OfflineStoreUtils {
   // Converts a file path to a UTF8 string.
   static std::string GetUTF8StringFromPath(const base::FilePath& path);
 
+  // Converts a UTF8 string to a file path.
+  static base::FilePath GetPathFromUTF8String(const std::string& path_string);
+
   // Converts an ItemActionStatus to AddPageResult.
   static AddPageResult ItemActionStatusToAddPageResult(ItemActionStatus status);
 };
