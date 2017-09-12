@@ -372,6 +372,8 @@ String FontFace::status() const {
 void FontFace::SetLoadStatus(LoadStatusType status) {
   status_ = status;
   DCHECK(status_ != kError || error_);
+  if (!GetExecutionContext())
+    return;
 
   // When promises are resolved with 'thenables', instead of the object being
   // returned directly, the 'then' method is executed (the resolver tries to
