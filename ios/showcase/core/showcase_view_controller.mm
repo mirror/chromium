@@ -100,6 +100,7 @@ NSString* const kUseCaseKey = @"useCase";
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                   reuseIdentifier:@"cell"];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryView.tintColor = [[MDCPalette greyPalette] tint400];
   }
   showcase::ModelRow* row = self.displayedRows[indexPath.row];
   cell.textLabel.text = row[showcase::kClassForDisplayKey];

@@ -47,6 +47,8 @@ const CGFloat kVerticalSpacingBetweenLabels = 8;
 - (void)configureCell:(PaymentsTextCell*)cell {
   [super configureCell:cell];
   cell.accessoryType = self.accessoryType;
+  if (cell.accessoryType == MDCCollectionViewCellAccessoryDisclosureIndicator)
+    cell.accessoryView.tintColor = [[MDCPalette greyPalette] tint400];
   cell.textLabel.text = self.text;
   cell.detailTextLabel.text = self.detailText;
   cell.imageView.image = self.image;

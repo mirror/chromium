@@ -59,6 +59,8 @@ const CGFloat kHorizontalErrorIconFixedSize = 25;
   cell.textLabel.text = self.text;
   cell.detailTextLabel.text = self.detailText;
   cell.accessoryType = self.accessoryType;
+  if (cell.accessoryType == MDCCollectionViewCellAccessoryDisclosureIndicator)
+    cell.accessoryView.tintColor = [[MDCPalette greyPalette] tint400];
   if (self.shouldDisplayError) {
     cell.errorIcon.image = [UIImage imageNamed:@"settings_error"];
     cell.detailTextLabel.textColor = [[MDCPalette cr_redPalette] tint500];

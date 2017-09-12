@@ -66,6 +66,8 @@
 - (void)configureCell:(CollectionViewDetailCell*)cell {
   [super configureCell:cell];
   cell.accessoryType = self.accessoryType;
+  if (cell.accessoryType == MDCCollectionViewCellAccessoryDisclosureIndicator)
+    cell.accessoryView.tintColor = [[MDCPalette greyPalette] tint400];
   NSString* textLabelFormat = self.required ? @"%@*" : @"%@";
   cell.textLabel.text = [NSString stringWithFormat:textLabelFormat, self.name];
   cell.detailTextLabel.text = self.value;

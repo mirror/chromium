@@ -54,6 +54,8 @@ const CGFloat kHorizontalPadding = 16;
   cell.methodTypeIconView.image = self.methodTypeIcon;
   cell.reserveRoomForAccessoryType = self.reserveRoomForAccessoryType;
   cell.accessoryType = self.accessoryType;
+  if (cell.accessoryType == MDCCollectionViewCellAccessoryDisclosureIndicator)
+    cell.accessoryView.tintColor = [[MDCPalette greyPalette] tint400];
 }
 
 @end
