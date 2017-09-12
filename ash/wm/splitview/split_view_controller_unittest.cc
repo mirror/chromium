@@ -366,4 +366,94 @@ TEST_F(SplitViewControllerTest, SwapWindows) {
   EXPECT_EQ(split_view_controller()->right_window(), window2.get());
 }
 
+// Test the rotation functionalities in split view mode.
+TEST_F(SplitViewControllerTest, RotationTest) {
+  UpdateDisplay("407x407");
+  const gfx::Rect bounds(0, 0, 200, 200);
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
+  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
+
+  split_view_controller()->SnapWindow(window1.get(), SplitViewController::LEFT);
+  split_view_controller()->SnapWindow(window2.get(),
+                                      SplitViewController::RIGHT);
+
+  gfx::Rect bounds_window1 = window1->GetBoundsInScreen();
+  gfx::Rect bounds_window2 = window2->GetBoundsInScreen();
+  gfx::Rect bounds_divider =
+      split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
+
+  // Test |window1|, divider and |window2| are aligned horizontally.
+  // |window1| is on the left, then the divider, and then |window2|.
+  EXPECT_EQ(bounds_divider.x(), bounds_window1.x() + bounds_window1.width());
+  EXPECT_EQ(bounds_window2.x(), bounds_divider.x() + bounds_divider.width());
+  EXPECT_EQ(bounds_window1.height(), bounds_divider.height());
+  EXPECT_EQ(bounds_window1.height(), bounds_window2.height());
+
+  // Rotate the screen by 90 degree.
+  const display::Display& display =
+      display::Screen::GetScreen()->GetDisplayNearestWindow(window1.get());
+  Shell::Get()->display_manager()->SetDisplayRotation(
+      display.id(), display::Display::ROTATE_90,
+      display::Display::ROTATION_SOURCE_ACTIVE);
+  bounds_window1 = window1->GetBoundsInScreen();
+  bounds_window2 = window2->GetBoundsInScreen();
+  bounds_divider =
+      split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
+
+  // Test that |window1|, divider, |window2| are now aligned vertically.
+  // |window2| is on the top, then the divider, and then |window1|.
+  EXPECT_EQ(bounds_divider.y(), bounds_window2.y() + bounds_window2.height());
+  EXPECT_EQ(bounds_window1.y(), bounds_divider.y() + bounds_divider.height());
+  EXPECT_EQ(bounds_window1.width(), bounds_divider.width());
+  EXPECT_EQ(bounds_window1.width(), bounds_window2.width());
+
+  // Rotate the screen by 180 degree.
+  Shell::Get()->display_manager()->SetDisplayRotation(
+      display.id(), display::Display::ROTATE_180,
+      display::Display::ROTATION_SOURCE_ACTIVE);
+  bounds_window1 = window1->GetBoundsInScreen();
+  bounds_window2 = window2->GetBoundsInScreen();
+  bounds_divider =
+      split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
+
+  // Test that |window1|, divider, |window2| are now aligned horizontally.
+  // |window2| is on the left, then the divider, and then |window1|.
+  EXPECT_EQ(bounds_divider.x(), bounds_window2.x() + bounds_window2.width());
+  EXPECT_EQ(bounds_window1.x(), bounds_divider.x() + bounds_divider.width());
+  EXPECT_EQ(bounds_window1.height(), bounds_divider.height());
+  EXPECT_EQ(bounds_window1.height(), bounds_window2.height());
+
+  // Rotate the screen by 270 degree.
+  Shell::Get()->display_manager()->SetDisplayRotation(
+      display.id(), display::Display::ROTATE_270,
+      display::Display::ROTATION_SOURCE_ACTIVE);
+  bounds_window1 = window1->GetBoundsInScreen();
+  bounds_window2 = window2->GetBoundsInScreen();
+  bounds_divider =
+      split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
+
+  // Test that |window1|, divider, |window2| are now aligned vertically.
+  // |window1| is on the top, then the divider, and then |window2|.
+  EXPECT_EQ(bounds_divider.y(), bounds_window1.y() + bounds_window1.height());
+  EXPECT_EQ(bounds_window2.y(), bounds_divider.y() + bounds_divider.height());
+  EXPECT_EQ(bounds_window1.width(), bounds_divider.width());
+  EXPECT_EQ(bounds_window1.width(), bounds_window2.width());
+
+  // Rotate the screen back to 0 degree.
+  Shell::Get()->display_manager()->SetDisplayRotation(
+      display.id(), display::Display::ROTATE_0,
+      display::Display::ROTATION_SOURCE_ACTIVE);
+  bounds_window1 = window1->GetBoundsInScreen();
+  bounds_window2 = window2->GetBoundsInScreen();
+  bounds_divider =
+      split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
+
+  // Test |window1|, divider and |window2| are aligned horizontally.
+  // |window1| is on the left, then the divider, and then |window2|.
+  EXPECT_EQ(bounds_divider.x(), bounds_window1.x() + bounds_window1.width());
+  EXPECT_EQ(bounds_window2.x(), bounds_divider.x() + bounds_divider.width());
+  EXPECT_EQ(bounds_window1.height(), bounds_divider.height());
+  EXPECT_EQ(bounds_window1.height(), bounds_window2.height());
+}
+
 }  // namespace ash

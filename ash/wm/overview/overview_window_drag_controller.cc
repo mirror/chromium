@@ -15,6 +15,7 @@
 #include "ash/wm/wm_event.h"
 #include "ash/wm/workspace/phantom_window_controller.h"
 #include "ui/aura/window.h"
+#include "ui/display/screen.h"
 #include "ui/wm/core/coordinate_conversion.h"
 
 namespace ash {
@@ -72,7 +73,11 @@ void OverviewWindowDragController::Drag(const gfx::Point& location_in_screen) {
                                                        location_in_screen);
 }
 
-void OverviewWindowDragController::CompleteDrag() {
+void OverviewWindowDragController::CompleteDrag(
+    const gfx::Point& location_in_screen) {
+  // Update window grid bounds and |snap_position_| in case the screen
+  // orientation was changed.
+  UpdatePhantomWindowAndWindowGrid(location_in_screen);
   phantom_window_controller_.reset();
   window_selector_->SetSplitViewOverviewOverlayVisible(false, gfx::Point());
 
@@ -150,13 +155,45 @@ SplitViewController::SnapPosition OverviewWindowDragController::GetSnapPosition(
   gfx::Rect area(
       ScreenUtil::GetDisplayWorkAreaBoundsInParent(item_->GetWindow()));
   ::wm::ConvertRectToScreen(item_->GetWindow()->GetRootWindow(), &area);
-  area.Inset(kScreenEdgeInsetForDrag, 0);
 
-  if (location_in_screen.x() <= area.x())
-    return SplitViewController::LEFT;
-  if (location_in_screen.x() >= area.right() - 1)
-    return SplitViewController::RIGHT;
-  return SplitViewController::NONE;
+  const display::Display::Rotation rotation =
+      display::Screen::GetScreen()
+          ->GetDisplayNearestWindow(item_->GetWindow())
+          .rotation();
+
+  switch (rotation) {
+    case display::Display::ROTATE_0:
+      area.Inset(kScreenEdgeInsetForDrag, 0);
+      if (location_in_screen.x() <= area.x())
+        return SplitViewController::LEFT;
+      if (location_in_screen.x() >= area.right() - 1)
+        return SplitViewController::RIGHT;
+      return SplitViewController::NONE;
+
+    case display::Display::ROTATE_90:
+      area.Inset(0, kScreenEdgeInsetForDrag);
+      if (location_in_screen.y() <= area.y())
+        return SplitViewController::RIGHT;
+      if (location_in_screen.y() >= area.bottom() - 1)
+        return SplitViewController::LEFT;
+      return SplitViewController::NONE;
+
+    case display::Display::ROTATE_180:
+      area.Inset(kScreenEdgeInsetForDrag, 0);
+      if (location_in_screen.x() <= area.x())
+        return SplitViewController::RIGHT;
+      if (location_in_screen.x() >= area.right() - 1)
+        return SplitViewController::LEFT;
+      return SplitViewController::NONE;
+
+    case display::Display::ROTATE_270:
+      area.Inset(0, kScreenEdgeInsetForDrag);
+      if (location_in_screen.y() <= area.y())
+        return SplitViewController::LEFT;
+      if (location_in_screen.y() >= area.bottom() - 1)
+        return SplitViewController::RIGHT;
+      return SplitViewController::NONE;
+  }
 }
 
 gfx::Rect OverviewWindowDragController::GetGridBounds(
