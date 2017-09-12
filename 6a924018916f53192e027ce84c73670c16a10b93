@@ -46,6 +46,30 @@
       "revId": "6a924018916f53192e027ce84c73670c16a10b93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1149e3e_172604e7",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/CronetUploadDataStream.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-12T17:19:53Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion! I have added a check to make sure caller doesn\u0027t change the limit of the buffer.\n\nI didn\u0027t add for pure Java implementation. Let me know if you\u0027d like me to add an equivalent check there.",
+      "parentUuid": "4957568f_45056140",
+      "range": {
+        "startLine": 53,
+        "startChar": 20,
+        "endLine": 53,
+        "endChar": 31
+      },
+      "revId": "6a924018916f53192e027ce84c73670c16a10b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
