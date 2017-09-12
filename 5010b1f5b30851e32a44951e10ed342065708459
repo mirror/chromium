@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c321c8e_a258a5dd",
+        "filename": "extensions/browser/content_hash_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T22:51:19Z",
+      "side": 1,
+      "message": "As with the other, this also uses the file system, so should probably use GetExtensionFileTaskrunner()",
+      "revId": "5010b1f5b30851e32a44951e10ed342065708459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
