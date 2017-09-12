@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9816a6d2_21ddd3c9",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-12T16:30:49Z",
+      "side": 1,
+      "message": "You should add a DCHECK that |page_urls| is not empty",
+      "revId": "6c356dd5b4d198b4b3633a15032f00b4e10863ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a0f9a57_2d4be88f",
+        "filename": "components/history/core/browser/history_backend_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1774,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-12T16:30:49Z",
+      "side": 1,
+      "message": "Why is this one {url1} and the others are std::set\u003cGURL\u003e{url1} ?",
+      "revId": "6c356dd5b4d198b4b3633a15032f00b4e10863ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32dcae86_db058311",
+        "filename": "components/history/core/browser/history_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-12T16:30:49Z",
+      "side": 1,
+      "message": "Nit: \"replace all of the favicon\" -\u003e \"replace the favicon\"\n\nI think that this makes more sense now that you have \"all URLs\" in the next lne",
+      "revId": "6c356dd5b4d198b4b3633a15032f00b4e10863ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
