@@ -5,7 +5,9 @@
 #import "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.h"
 
 #include "base/mac/foundation_util.h"
+#import "ios/chrome/browser/ui/collection_view/cells/collection_view_switch_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_text_item.h"
+#import "ios/chrome/browser/web/features.h"
 #import "ios/chrome/browser/web/mailto_handler.h"
 #import "ios/chrome/browser/web/mailto_url_rewriter.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -21,16 +23,19 @@ namespace {
 
 typedef NS_ENUM(NSInteger, SectionIdentifier) {
   SectionIdentifierMailtoHandlers = kSectionIdentifierEnumZero,
+  SectionIdentifierAlwaysAsk,
 };
 
 typedef NS_ENUM(NSInteger, ItemType) {
   ItemTypeMailtoHandlers = kItemTypeEnumZero,
+  ItemTypeAlwaysAskSwitch,
 };
 
 }  // namespace
 
 @interface ComposeEmailHandlerCollectionViewController () {
   MailtoURLRewriter* _rewriter;
+  CollectionViewSwitchItem* _alwaysAskItem;
 }
 
 // Returns the MailtoHandler at |indexPath|.
@@ -79,6 +84,17 @@ typedef NS_ENUM(NSInteger, ItemType) {
     [model addItem:item
         toSectionWithIdentifier:SectionIdentifierMailtoHandlers];
   }
+
+  if (base::FeatureList::IsEnabled(kMailtoPromptInMDCStyle)) {
+    [model addSectionWithIdentifier:SectionIdentifierAlwaysAsk];
+    _alwaysAskItem =
+        [[CollectionViewSwitchItem alloc] initWithType:ItemTypeAlwaysAskSwitch];
+    _alwaysAskItem.text =
+        l10n_util::GetNSString(IDS_IOS_CHOOSE_EMAIL_ASK_TOGGLE);
+    _alwaysAskItem.on = currentHandlerID == nil;
+    [model addItem:_alwaysAskItem
+        toSectionWithIdentifier:SectionIdentifierAlwaysAsk];
+  }
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -94,10 +110,13 @@ typedef NS_ENUM(NSInteger, ItemType) {
 - (BOOL)collectionView:(UICollectionView*)collectionView
     shouldHighlightItemAtIndexPath:(NSIndexPath*)indexPath {
   // Disallow highlight (ripple effect) if the handler for the tapped row is not
-  // available.
-  return [[self handlerAtIndexPath:indexPath] isAvailable] &&
-         [super collectionView:collectionView
-             shouldHighlightItemAtIndexPath:indexPath];
+  // a mailto:// handler or not available.
+  BOOL result = [super collectionView:collectionView
+       shouldHighlightItemAtIndexPath:indexPath];
+  NSInteger itemType =
+      [self.collectionViewModel itemTypeForIndexPath:indexPath];
+  return itemType == ItemTypeMailtoHandlers &&
+         [[self handlerAtIndexPath:indexPath] isAvailable] && result;
 }
 
 - (void)collectionView:(UICollectionView*)collectionView
@@ -140,6 +159,47 @@ typedef NS_ENUM(NSInteger, ItemType) {
   [_rewriter setDefaultHandlerID:[handler appStoreID]];
 
   [self reconfigureCellsForItems:modifiedItems];
+}
+
+- (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
+                 cellForItemAtIndexPath:(NSIndexPath*)indexPath {
+  UICollectionViewCell* cell =
+      [super collectionView:collectionView cellForItemAtIndexPath:indexPath];
+
+  NSInteger itemType =
+      [self.collectionViewModel itemTypeForIndexPath:indexPath];
+  if (itemType == ItemTypeAlwaysAskSwitch) {
+    CollectionViewSwitchCell* switchCell =
+        base::mac::ObjCCastStrict<CollectionViewSwitchCell>(cell);
+    [switchCell.switchView addTarget:self
+                              action:@selector(alwaysAsk:)
+                    forControlEvents:UIControlEventValueChanged];
+  }
+
+  return cell;
+}
+
+- (void)alwaysAsk:(id)sender {
+  BOOL isOn = [sender isOn];
+  [_alwaysAskItem setOn:isOn];
+  if (!isOn) {
+    [_rewriter setDefaultHandlerID:nil];
+
+    // Iterate through the rows and remove the checkmark from any that has it.
+    NSMutableArray* modifiedItems = [NSMutableArray array];
+    for (id item in [self.collectionViewModel
+             itemsInSectionWithIdentifier:SectionIdentifierMailtoHandlers]) {
+      CollectionViewTextItem* textItem =
+          base::mac::ObjCCastStrict<CollectionViewTextItem>(item);
+      DCHECK_EQ(ItemTypeMailtoHandlers, textItem.type);
+      if (textItem.accessoryType == MDCCollectionViewCellAccessoryCheckmark) {
+        // Unchecks any currently checked selection.
+        textItem.accessoryType = MDCCollectionViewCellAccessoryNone;
+        [modifiedItems addObject:textItem];
+      }
+    }
+    [self reconfigureCellsForItems:modifiedItems];
+  }
 }
 
 #pragma mark - Private
