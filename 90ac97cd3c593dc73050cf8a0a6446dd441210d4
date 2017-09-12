@@ -307,6 +307,24 @@
     },
     {
       "key": {
+        "uuid": "06602a0f_b6d9af06",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T17:52:17Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s quite the same thing though.\n\nThe consumer can choose to treat visibility change and occlusion change differently, or the same way (like RenderWidgetHostViewAura does [1]). So having them separate would also work. I don\u0027t feel strongly either way though, and it wouldn\u0027t be very difficult to switch the behaviour later, I suppose. So I\u0027ll leave this upto you/sky@/other folks.\n\n[1] https://cs.chromium.org/chromium/src/content/browser/renderer_host/render_widget_host_view_aura.cc?l\u003d534",
+      "parentUuid": "2d73330f_d04cd701",
+      "revId": "90ac97cd3c593dc73050cf8a0a6446dd441210d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8d44ff2_165ca0b0",
         "filename": "ui/aura/window_occlusion_tracker.cc",
         "patchSetId": 1

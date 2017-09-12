@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "045acefa_96aae6ba",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T17:52:17Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be necessary.",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c74bb039_2b6d530e",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T17:52:17Z",
+      "side": 1,
+      "message": "Should you also check that the window\u0027s opacity is not animating?",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf0b12c_44367624",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T17:52:17Z",
+      "side": 1,
+      "message": "Get it from Env instance instead?",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2cd94a_145a16cc",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T17:52:17Z",
+      "side": 1,
+      "message": "This can probably trigger \u0027variable not used\u0027 in release/non-dcheck builds?",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33e6743_ae21ac8b",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T17:52:17Z",
+      "side": 1,
+      "message": "Since Env is creating it, can it just send itself in the ctor?",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "294404c1_963b2b8f",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T17:52:17Z",
+      "side": 1,
+      "message": "This means that it is possible for a previously occluded window to know that it was unoccluded *after* the next frame, right? So we will end up with a window on screen that doesn\u0027t yet know that it has been unoccluded.",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2fc6278_7a6e98da",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T17:52:17Z",
+      "side": 1,
+      "message": "Only if the window was visible + unoccluded + !LAYER_NOT_DRAWN?",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e5a176_cf45d3ee",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T17:52:17Z",
+      "side": 1,
+      "message": "Only if the window is visible + !LAYER_NOT_DRAWN.",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f4b984_6090057d",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T17:52:17Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
