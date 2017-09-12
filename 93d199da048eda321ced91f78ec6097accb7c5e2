@@ -199,6 +199,30 @@
       "revId": "93d199da048eda321ced91f78ec6097accb7c5e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c811a05b_1e41a62f",
+        "filename": "chrome/browser/media/router/media_router_feature.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-12T15:47:51Z",
+      "side": 1,
+      "message": "I like the idea of just having one feature flag (and then different params).\n\nIn that case we don\u0027t need this line at all (just use the \u0027EnableCastDiscovery\u0027 feature above).\n\nIf that flag is disabled then there will be no retries, if it is enabled but there are no params (which there won\u0027t be unless we add server side config) then the default retry config will be used.  Then we can add server side config later to adjust params as needed.",
+      "parentUuid": "734fc15d_304a0e66",
+      "range": {
+        "startLine": 37,
+        "startChar": 50,
+        "endLine": 37,
+        "endChar": 77
+      },
+      "revId": "93d199da048eda321ced91f78ec6097accb7c5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

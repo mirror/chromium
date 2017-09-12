@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31f51f74_d819a555",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-12T15:47:51Z",
+      "side": 1,
+      "message": "Per other comment about using one feature, change this to use \u0027CastDiscoveryEnabled\u0027 instead and then remove/switch the references to retry enabled everywhere else.",
+      "revId": "67bd76bb945faa749f72238db462229a9927178e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
