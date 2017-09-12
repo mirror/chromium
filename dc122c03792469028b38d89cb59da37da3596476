@@ -187,6 +187,30 @@
       "revId": "dc122c03792469028b38d89cb59da37da3596476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297ae366_d3aacff1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/navigation-timing/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-12T22:35:08Z",
+      "side": 1,
+      "message": "Sure, I\u0027ll keep just tyoshino@, easy to fix later if needed.",
+      "parentUuid": "87c86152_0067512b",
+      "range": {
+        "startLine": 2,
+        "startChar": 20,
+        "endLine": 2,
+        "endChar": 0
+      },
+      "revId": "dc122c03792469028b38d89cb59da37da3596476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
