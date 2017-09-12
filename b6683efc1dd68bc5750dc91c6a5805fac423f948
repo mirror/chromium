@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "d70c89e6_91aed603",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_conditional_features.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-12T08:00:46Z",
+      "side": 1,
+      "message": "Looks similar to CodeGeneratorV8Base.get_output_basename(). Is it possible to factor out common logic into v8_utilities.py ?",
+      "revId": "b6683efc1dd68bc5750dc91c6a5805fac423f948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11a36ff8_33064985",
         "filename": "third_party/WebKit/Source/bindings/scripts/generate_init_partial_interfaces.py",
         "patchSetId": 1
