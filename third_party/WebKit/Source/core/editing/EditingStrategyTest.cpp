@@ -16,7 +16,7 @@ TEST_F(EditingStrategyTest, caretMaxOffset) {
   const char* shadow_content =
       "<content select=#two></content><content select=#one></content>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
   Node* host = GetDocument().getElementById("host");
   Node* one = GetDocument().getElementById("one");
   Node* two = GetDocument().getElementById("two");
