@@ -44,22 +44,25 @@ using BacktraceTable = std::map<BacktraceNode, size_t>;
 // backtrace to give a stable ordering, even if that ordering has no
 // intrinsic meaning.
 struct UniqueAlloc {
-  UniqueAlloc(AllocatorType alloc, const Backtrace* bt, size_t sz, int ctx_id)
-      : allocator(alloc), backtrace(bt), size(sz), context_id(ctx_id) {}
+  UniqueAlloc(AllocatorType alloc, const Backtrace* bt, int ctx_id)
+      : allocator(alloc), backtrace(bt), context_id(ctx_id) {}
 
   bool operator<(const UniqueAlloc& other) const {
-    return std::tie(allocator, backtrace, size, context_id) <
-           std::tie(other.allocator, other.backtrace, other.size,
-                    other.context_id);
+    return std::tie(allocator, backtrace, context_id) <
+           std::tie(other.allocator, other.backtrace, other.context_id);
   }
 
   AllocatorType allocator;
   const Backtrace* backtrace;
-  size_t size;
   int context_id;
 };
 
-using UniqueAllocCount = std::map<UniqueAlloc, int>;
+struct UniqueAllocMetrics {
+  size_t size;
+  size_t count;
+};
+
+using UniqueAllocCount = std::map<UniqueAlloc, UniqueAllocMetrics>;
 
 // The hardcoded ID for having no context for an allocation.
 constexpr int kUnknownTypeId = 0;
@@ -261,7 +264,7 @@ void WriteCounts(const UniqueAllocCount& alloc_counts, std::ostream& out) {
       out << ",\n";
     else
       first_time = false;
-    out << cur.second;
+    out << cur.second.count;
   }
   out << "]";
 }
@@ -276,7 +279,7 @@ void WriteSizes(const UniqueAllocCount& alloc_counts, std::ostream& out) {
       out << ",\n";
     else
       first_time = false;
-    out << cur.first.size;
+    out << cur.second.size;
   }
   out << "]";
 }
@@ -354,25 +357,26 @@ void ExportMemoryMapsAndV2StackTraceToJSON(const ExportParams& params,
 
   // Aggregate allocations. Allocations with the same metadata (we don't use
   // addresses) get grouped.
-  UniqueAllocCount alloc_counts;
+  UniqueAllocCount alloc_metrics;
   for (const auto& alloc : *params.set) {
-    UniqueAlloc unique_alloc(alloc.allocator(), alloc.backtrace(), alloc.size(),
+    UniqueAlloc unique_alloc(alloc.allocator(), alloc.backtrace(),
                              alloc.context_id());
-    alloc_counts[unique_alloc]++;
+    UniqueAllocMetrics& metrics = alloc_metrics[unique_alloc];
+    metrics.size += alloc.size();
+    metrics.count++;
   }
 
   size_t total_size = 0;
   size_t total_count = 0;
   // Filter irrelevant allocations.
-  for (auto alloc = alloc_counts.begin(); alloc != alloc_counts.end();) {
-    size_t alloc_count = alloc->second;
-    size_t alloc_size = alloc->first.size;
-    size_t alloc_total_size = alloc_size * alloc_count;
-    total_size += alloc_total_size;
+  for (auto alloc = alloc_metrics.begin(); alloc != alloc_metrics.end();) {
+    size_t alloc_count = alloc->second.count;
+    size_t alloc_size = alloc->second.size;
+    total_size += alloc_size;
     total_count += alloc_count;
-    if (alloc_total_size < params.min_size_threshold &&
+    if (alloc_size < params.min_size_threshold &&
         alloc_count < params.min_count_threshold) {
-      alloc = alloc_counts.erase(alloc);
+      alloc = alloc_metrics.erase(alloc);
     } else {
       ++alloc;
     }
@@ -429,7 +433,7 @@ void ExportMemoryMapsAndV2StackTraceToJSON(const ExportParams& params,
   // Put all required context strings in the string table and generate a
   // mapping from allocation context_id to string ID.
   std::map<int, size_t> context_to_string_map;
-  FillContextStrings(alloc_counts, *params.context_map, &string_table,
+  FillContextStrings(alloc_metrics, *params.context_map, &string_table,
                      &context_to_string_map);
 
   // Find all backtraces referenced by the set and not filtered. The backtrace
@@ -439,7 +443,7 @@ void ExportMemoryMapsAndV2StackTraceToJSON(const ExportParams& params,
   //
   // The map maps backtrace keys to node IDs (computed below).
   std::map<const Backtrace*, size_t> backtraces;
-  for (const auto& alloc : alloc_counts)
+  for (const auto& alloc : alloc_metrics)
     backtraces.emplace(alloc.first.backtrace, 0);
 
   // Write each backtrace, converting the string for the stack entry to string
@@ -460,13 +464,13 @@ void ExportMemoryMapsAndV2StackTraceToJSON(const ExportParams& params,
 
   // Allocators section.
   out << "\"allocators\":{\"malloc\":{\n";
-  WriteCounts(alloc_counts, out);
+  WriteCounts(alloc_metrics, out);
   out << ",\n";
-  WriteSizes(alloc_counts, out);
+  WriteSizes(alloc_metrics, out);
   out << ",\n";
-  WriteTypes(alloc_counts, out);
+  WriteTypes(alloc_metrics, out);
   out << ",\n";
-  WriteAllocatorNodes(alloc_counts, backtraces, out);
+  WriteAllocatorNodes(alloc_metrics, backtraces, out);
   out << "}}\n";  // End of allocators section.
 
   WriteHeapsV2Footer(out);
