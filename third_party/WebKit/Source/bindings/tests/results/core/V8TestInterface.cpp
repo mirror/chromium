@@ -1767,6 +1767,76 @@ static void secureContextWorkerExposedRuntimeEnabledMethodMethod(const v8::Funct
   impl->secureContextWorkerExposedRuntimeEnabledMethod();
 }
 
+static void voidMethodTestArgumentWithClampOptionalMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kExecutionContext, "TestInterface", "voidMethodTestArgumentWithClampOptional");
+
+  TestInterfaceImplementation* impl = V8TestInterface::ToImpl(info.Holder());
+
+  int32_t longOptionalClampArg;
+  int numArgsPassed = info.Length();
+  while (numArgsPassed > 0) {
+    if (!info[numArgsPassed - 1]->IsUndefined())
+      break;
+    --numArgsPassed;
+  }
+  if (UNLIKELY(numArgsPassed <= 0)) {
+    impl->voidMethodTestArgumentWithClampOptional();
+    return;
+  }
+  longOptionalClampArg = NativeValueTraits<IDLLong>::NativeValue(info.GetIsolate(), info[0], exceptionState, kClamp);
+  if (exceptionState.HadException())
+    return;
+
+  impl->voidMethodTestArgumentWithClampOptional(longOptionalClampArg);
+}
+
+static void voidMethodTestArgumentWithClampMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kExecutionContext, "TestInterface", "voidMethodTestArgumentWithClamp");
+
+  TestInterfaceImplementation* impl = V8TestInterface::ToImpl(info.Holder());
+
+  if (UNLIKELY(info.Length() < 1)) {
+    exceptionState.ThrowTypeError(ExceptionMessages::NotEnoughArguments(1, info.Length()));
+    return;
+  }
+
+  int64_t longClampArg;
+  longClampArg = NativeValueTraits<IDLLongLong>::NativeValue(info.GetIsolate(), info[0], exceptionState, kClamp);
+  if (exceptionState.HadException())
+    return;
+
+  impl->voidMethodTestArgumentWithClamp(longClampArg);
+}
+
+static void voidMethodTestArgumentWithEnforceRangeMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kExecutionContext, "TestInterface", "voidMethodTestArgumentWithEnforceRange");
+
+  TestInterfaceImplementation* impl = V8TestInterface::ToImpl(info.Holder());
+
+  Vector<int32_t> longEnforceArg;
+  longEnforceArg = ToImplArguments<Vector<int32_t>>(info, 0, exceptionState);
+  if (exceptionState.HadException())
+    return;
+
+  impl->voidMethodTestArgumentWithEnforceRange(longEnforceArg);
+}
+
+static void voidMethodTestArgumentWithTreatNullAsMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  TestInterfaceImplementation* impl = V8TestInterface::ToImpl(info.Holder());
+
+  if (UNLIKELY(info.Length() < 1)) {
+    V8ThrowException::ThrowTypeError(info.GetIsolate(), ExceptionMessages::FailedToExecute("voidMethodTestArgumentWithTreatNullAs", "TestInterface", ExceptionMessages::NotEnoughArguments(1, info.Length())));
+    return;
+  }
+
+  V8StringResource<kTreatNullAsEmptyString> stringArg;
+  stringArg = info[0];
+  if (!stringArg.Prepare())
+    return;
+
+  impl->voidMethodTestArgumentWithTreatNullAs(stringArg);
+}
+
 static void implementsVoidMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
   TestInterfaceImplementation* impl = V8TestInterface::ToImpl(info.Holder());
 
@@ -3099,6 +3169,30 @@ void V8TestInterface::secureContextWorkerExposedRuntimeEnabledMethodMethodCallba
   TestInterfaceImplementationV8Internal::secureContextWorkerExposedRuntimeEnabledMethodMethod(info);
 }
 
+void V8TestInterface::voidMethodTestArgumentWithClampOptionalMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceImplementation_voidMethodTestArgumentWithClampOptional");
+
+  TestInterfaceImplementationV8Internal::voidMethodTestArgumentWithClampOptionalMethod(info);
+}
+
+void V8TestInterface::voidMethodTestArgumentWithClampMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceImplementation_voidMethodTestArgumentWithClamp");
+
+  TestInterfaceImplementationV8Internal::voidMethodTestArgumentWithClampMethod(info);
+}
+
+void V8TestInterface::voidMethodTestArgumentWithEnforceRangeMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceImplementation_voidMethodTestArgumentWithEnforceRange");
+
+  TestInterfaceImplementationV8Internal::voidMethodTestArgumentWithEnforceRangeMethod(info);
+}
+
+void V8TestInterface::voidMethodTestArgumentWithTreatNullAsMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceImplementation_voidMethodTestArgumentWithTreatNullAs");
+
+  TestInterfaceImplementationV8Internal::voidMethodTestArgumentWithTreatNullAsMethod(info);
+}
+
 void V8TestInterface::implementsVoidMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceImplementation_implementsVoidMethod");
 
@@ -3449,6 +3543,10 @@ static const V8DOMConfiguration::MethodConfiguration V8TestInterfaceMethods[] = 
     {"alwaysExposedStaticMethod", V8TestInterface::alwaysExposedStaticMethodMethodCallback, 0, v8::None, V8DOMConfiguration::kOnInterface, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
     {"staticReturnDOMWrapperMethod", V8TestInterface::staticReturnDOMWrapperMethodMethodCallback, 0, v8::None, V8DOMConfiguration::kOnInterface, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
     {"legacyInterfaceTypeCheckingMethod", V8TestInterface::legacyInterfaceTypeCheckingMethodMethodCallback, 1, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
+    {"voidMethodTestArgumentWithClampOptional", V8TestInterface::voidMethodTestArgumentWithClampOptionalMethodCallback, 0, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
+    {"voidMethodTestArgumentWithClamp", V8TestInterface::voidMethodTestArgumentWithClampMethodCallback, 1, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
+    {"voidMethodTestArgumentWithEnforceRange", V8TestInterface::voidMethodTestArgumentWithEnforceRangeMethodCallback, 0, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
+    {"voidMethodTestArgumentWithTreatNullAs", V8TestInterface::voidMethodTestArgumentWithTreatNullAsMethodCallback, 1, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
     {"implementsVoidMethod", V8TestInterface::implementsVoidMethodMethodCallback, 0, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
     {"implementsComplexMethod", V8TestInterface::implementsComplexMethodMethodCallback, 2, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
     {"implementsCustomVoidMethod", V8TestInterface::implementsCustomVoidMethodMethodCallback, 0, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
