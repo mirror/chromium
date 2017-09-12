@@ -19,6 +19,7 @@ import static org.mockito.Mockito.when;
 import android.content.Context;
 import android.os.Handler;
 import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
@@ -349,5 +350,16 @@ public class ThreadedInputConnectionTest {
         mInOrder.verify(mImeAdapter, never())
                 .updateExtractedText(anyInt(), any(ExtractedText.class));
         mInOrder.verify(mImeAdapter).updateSelection(0, 0, -1, -1);
+    }
+
+    @Test
+    @Feature("TextInput")
+    public void testKeyEventClearsPendingAccent() {
+        // Set 'ACUTE ACCENT' as the pending accent
+        mConnection.setCombiningAccentOnUiThread(0x00b4);
+        KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_A);
+        mConnection.sendKeyEventOnUiThread(event);
+
+        assertEquals(mConnection.getCombiningAccent(), 0);
     }
 }

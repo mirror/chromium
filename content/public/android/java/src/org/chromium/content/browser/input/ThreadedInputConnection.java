@@ -497,6 +497,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
                 builder.appendCodePoint(combined);
                 String text = builder.toString();
                 mImeAdapter.sendCompositionToNative(text, 1, text.length() > 0, 0);
+                cancelCombiningAccentOnUiThread();
                 return true;
             }
             // Noncombinable character; commit the accent character and fall through to sending
@@ -504,6 +505,11 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
             finishComposingTextOnUiThread();
         }
         return false;
+    }
+
+    @VisibleForTesting
+    public int getCombiningAccent() {
+        return mPendingAccent;
     }
 
     @VisibleForTesting
