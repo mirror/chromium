@@ -11,6 +11,7 @@
 #import "ios/clean/chrome/browser/ui/transitions/presenters/menu_presentation_delegate.h"
 
 @protocol ContainmentTransitioningDelegate;
+@class ToolbarConfiguration;
 
 // Abstract base class for a view controller that contains several views,
 // each managed by their own view controllers.
@@ -43,6 +44,9 @@
 // of the screen. This property cannot be changed after the view has been
 // loaded.
 @property(nonatomic, assign) BOOL usesBottomToolbar;
+
+// Color of the status bar.
+@property(nonatomic, strong) UIColor* statusBarBackgroundColor;
 
 @end
 
