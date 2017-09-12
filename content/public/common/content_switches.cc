@@ -712,6 +712,8 @@ const char kOverscrollStartThreshold[] = "overscroll-start-threshold";
 //  'forcealltrue' to force the value on all nodes.
 const char kPassiveListenersDefault[] = "passive-listeners-default";
 
+const char kPerfBenchmark[] = "--perf-benchmark";
+
 // Argument to the process type that indicates a PPAPI broker process type.
 const char kPpapiBrokerProcess[]            = "ppapi-broker";
 
