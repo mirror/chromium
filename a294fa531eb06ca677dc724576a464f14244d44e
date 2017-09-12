@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43f7445e_639ba38b",
+        "filename": "chromecast/base/thread_health_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-09-12T22:20:34Z",
+      "side": 1,
+      "message": "I would expect to see the Detach happen in the ctor above, then have a DCHECK_CALLED_ON_VALID_THREAD called in this method. That makes it explicitly clear that the THREAD_CHECKER is attached to the doctor_task_runner_ (and that all methods in the class are called on this task_runner).",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "a294fa531eb06ca677dc724576a464f14244d44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
