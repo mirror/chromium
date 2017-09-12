@@ -25,8 +25,8 @@ enum class SimpleExperimentType : uint32_t {
   NONE = 0,
   SIZE = 1,
 
-  // param = 0 -> control group
-  // param = 1 -> experiment group
+  // param = 0 -> evict by time only
+  // param = 1 -> evict by time and size
   EVICT_WITH_SIZE = 2,
 };
 
