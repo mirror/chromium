@@ -7,11 +7,8 @@
 -SQLite*
 -UnixDomain*Socket*
 -URLRequest*FTP*
--URLRequestQuic*
 
 # Following tests pass locally, but flake on bots.
--DiskCacheTest.BlockFiles_Grow
--DiskCacheBackendTest.SimpleCacheDeleteQuickly
 -URLRequestTestHTTP.GetTest_ManyCookies
 
 # https://crbug.com/755552
