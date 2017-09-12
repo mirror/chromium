@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a39dc20_57d4fcc5",
+        "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-09-12T21:36:27Z",
+      "side": 1,
+      "message": "OK, takes a RandomAccessFile now.",
+      "parentUuid": "a1c6c205_a718c9ef",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03870c64_ca905df1",
         "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8393e5e_6dbc55cf",
+        "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-09-12T21:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03870c64_ca905df1",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9f1a4422_d42a4ea6",
+        "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-09-12T21:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5154f7b0_6e011de2",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04a9cd14_91aff515",
         "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a40907_135bd75d",
+        "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-09-12T21:36:27Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be possible. I\u0027ve added assert statements to that effect. If it does happen, then lastException will be null, and trying to throw lastException will raise a NullPointerException. Is that a good way to handle it? Or should I check if lastException is null and throw a SignatureNotFound exception?",
+      "parentUuid": "04a9cd14_91aff515",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ed536790_afc29248",
+        "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-09-12T21:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efb309bd_40b62efa",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfb433b8_bef4c20e",
         "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a7f12b_4ddf19c3",
+        "filename": "components/update_client/android/java/src/org/chromium/components/update_client/ApkUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-09-12T21:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfb433b8_bef4c20e",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
