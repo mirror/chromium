@@ -7,6 +7,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <set>
+
 #include "base/files/scoped_temp_dir.h"
 #include "base/i18n/time_formatting.h"
 #include "base/macros.h"
@@ -209,7 +211,7 @@ TEST_F(BookmarkHTMLWriterTest, Test) {
       ->AddPage(url1, base::Time::Now(), history::SOURCE_BROWSED);
   FaviconServiceFactory::GetForProfile(&profile,
                                        ServiceAccessType::EXPLICIT_ACCESS)
-      ->SetFavicons(url1, url1_favicon, favicon_base::FAVICON,
+      ->SetFavicons(std::set<GURL>{url1}, url1_favicon, favicon_base::FAVICON,
                     gfx::Image::CreateFrom1xBitmap(bitmap));
   const BookmarkNode* f2 = model->AddFolder(f1, 1, f2_title);
   model->AddURLWithCreationTimeAndMetaInfo(f2, 0, url2_title, url2, t2, NULL);
@@ -244,7 +246,8 @@ TEST_F(BookmarkHTMLWriterTest, Test) {
   // Clear favicon so that it would be read from file.
   FaviconServiceFactory::GetForProfile(&profile,
                                        ServiceAccessType::EXPLICIT_ACCESS)
-      ->SetFavicons(url1, url1_favicon, favicon_base::FAVICON, gfx::Image());
+      ->SetFavicons(std::set<GURL>{url1}, url1_favicon, favicon_base::FAVICON,
+                    gfx::Image());
 
   // Read the bookmarks back in.
   std::vector<ImportedBookmarkEntry> parsed_bookmarks;

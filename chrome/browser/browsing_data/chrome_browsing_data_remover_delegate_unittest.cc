@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 
+#include <set>
 #include <string>
 #include <utility>
 #include <vector>
@@ -400,7 +401,8 @@ class RemoveFaviconTester {
     SkBitmap bitmap;
     bitmap.allocN32Pixels(gfx::kFaviconSize, gfx::kFaviconSize);
     bitmap.eraseColor(SK_ColorBLUE);
-    favicon_service_->SetFavicons(page_url, page_url, favicon_base::FAVICON,
+    favicon_service_->SetFavicons(std::set<GURL>{page_url}, page_url,
+                                  favicon_base::FAVICON,
                                   gfx::Image::CreateFrom1xBitmap(bitmap));
   }
 

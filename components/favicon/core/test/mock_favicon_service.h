@@ -100,7 +100,7 @@ class MockFaviconService : public FaviconService {
                     scoped_refptr<base::RefCountedMemory> bitmap_data,
                     const gfx::Size& pixel_size));
   MOCK_METHOD4(SetFavicons,
-               void(const GURL& page_url,
+               void(const std::set<GURL>& page_urls,
                     const GURL& icon_url,
                     favicon_base::IconType icon_type,
                     const gfx::Image& image));

@@ -611,18 +611,22 @@ void HistoryService::MergeFavicon(
                  page_url, icon_url, icon_type, bitmap_data, pixel_size));
 }
 
-void HistoryService::SetFavicons(const GURL& page_url,
+void HistoryService::SetFavicons(const std::set<GURL>& page_urls,
                                  favicon_base::IconType icon_type,
                                  const GURL& icon_url,
                                  const std::vector<SkBitmap>& bitmaps) {
   DCHECK(backend_task_runner_) << "History service being called after cleanup";
   DCHECK(thread_checker_.CalledOnValidThread());
-  if (history_client_ && !history_client_->CanAddURL(page_url))
-    return;
+
+  std::set<GURL> page_urls_to_save;
+  for (const GURL& page_url : page_urls) {
+    if (!history_client_ || history_client_->CanAddURL(page_url))
+      page_urls_to_save.insert(page_url);
+  }
 
   ScheduleTask(PRIORITY_NORMAL,
                base::Bind(&HistoryBackend::SetFavicons, history_backend_,
-                          page_url, icon_type, icon_url, bitmaps));
+                          page_urls_to_save, icon_type, icon_url, bitmaps));
 }
 
 void HistoryService::SetOnDemandFavicons(const GURL& page_url,
