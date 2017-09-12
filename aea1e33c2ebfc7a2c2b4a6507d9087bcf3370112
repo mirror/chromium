@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "55095cf9_663ae71a",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-09-12T17:32:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "249c3d70_c36e3380",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 16
+      },
+      "revId": "aea1e33c2ebfc7a2c2b4a6507d9087bcf3370112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba893000_5916839b",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 20
@@ -45,6 +69,30 @@
       "revId": "aea1e33c2ebfc7a2c2b4a6507d9087bcf3370112",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf5f7bd_c4b7ecfc",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-09-12T17:32:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba893000_5916839b",
+      "range": {
+        "startLine": 89,
+        "startChar": 1,
+        "endLine": 89,
+        "endChar": 10
+      },
+      "revId": "aea1e33c2ebfc7a2c2b4a6507d9087bcf3370112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "daec9759_52cedea9",
+        "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-09-12T17:32:09Z",
+      "side": 1,
+      "message": "Done. Also adding a const char* constructor, as discussed out-of-band, to avoid the ambiguous conversion error between StringPiece and string\u0026\u0026.",
+      "parentUuid": "20c82230_f713963c",
+      "range": {
+        "startLine": 68,
+        "startChar": 31,
+        "endLine": 68,
+        "endChar": 48
+      },
+      "revId": "aea1e33c2ebfc7a2c2b4a6507d9087bcf3370112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58853b5d_19514a46",
         "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
         "patchSetId": 20
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9bc90927_0e61fbb1",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-09-12T17:32:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58853b5d_19514a46",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 8
+      },
+      "revId": "aea1e33c2ebfc7a2c2b4a6507d9087bcf3370112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfb0e323_5900f4b8",
         "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
         "patchSetId": 20
@@ -114,6 +210,30 @@
       "revId": "aea1e33c2ebfc7a2c2b4a6507d9087bcf3370112",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55239d86_b3adaa79",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-09-12T17:32:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfb0e323_5900f4b8",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "aea1e33c2ebfc7a2c2b4a6507d9087bcf3370112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
