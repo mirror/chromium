@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a88faa5e_c62bc773",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-12T04:32:42Z",
+      "side": 1,
+      "message": "this looks like a uaf, the unique_ptr returned by CreateFor is immediately destroyed, leading to a dangling pointer",
+      "revId": "af4604a29af52c18305ff673d3e7db0583b4c3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
