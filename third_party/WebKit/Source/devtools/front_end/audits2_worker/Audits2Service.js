@@ -40,6 +40,9 @@ var Audits2Service = class {
    * @return {!Promise<!ReportRenderer.ReportJSON>}
    */
   start(params) {
+    if (params.disableLogging)
+      this._disableLogging();
+
     self.listenForStatus(message => {
       this.statusUpdate(message[1]);
     });
@@ -60,7 +63,11 @@ var Audits2Service = class {
                  fatal: true,
                  message: err.message,
                  stack: err.stack,
-               }));
+               }))
+        .then(result => {
+          this._enableLogging();
+          return result;
+        });
   }
 
   /**
@@ -114,6 +121,24 @@ var Audits2Service = class {
       this._onMessage = cb;
     if (eventName === 'close')
       this._onClose = cb;
+  }
+
+  _disableLogging() {
+    if (this._originalLog)
+      return;
+
+    /* eslint-disable no-console */
+    this._originalLog = console.log;
+    console.log = () => undefined;
+    /* eslint-enable no-console */
+  }
+
+  _enableLogging() {
+    if (!this._originalLog)
+      return;
+
+    console.log = this._originalLog;  // eslint-disable-line no-console
+    this._originalLog = undefined;
   }
 };
 
