@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88bc3ced_6ba08f10",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1878,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T19:34:29Z",
+      "side": 1,
+      "message": "q: Should this also check that browser2 is currently active?",
+      "revId": "6c558e57f101e5faa2bfbc459c4faf5d69ec3c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c2541f3_bbb08e4e",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_window_manager_chromeos_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1575,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T19:34:29Z",
+      "side": 1,
+      "message": "q: Should these be all replaced with wm core functions?",
+      "revId": "6c558e57f101e5faa2bfbc459c4faf5d69ec3c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
