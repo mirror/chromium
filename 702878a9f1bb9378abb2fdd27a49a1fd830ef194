@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aba4d2e9_522028bf",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T20:35:45Z",
+      "side": 1,
+      "message": "It looks like this file is only changed because of git cl format from when you had a Log statement. If that\u0027s the case, now that the log is gone, you should remove the file from the commit.",
+      "revId": "702878a9f1bb9378abb2fdd27a49a1fd830ef194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64ce643_05bc58f5",
+        "filename": "chrome/browser/ui/webui/interventions/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T20:35:45Z",
+      "side": 1,
+      "message": "Actually this is supposed to be \"# COMPONENT: UI\u003eBrowser\u003ePreviews\"\n\nfor future reference s/some text/other text/ means: spelling, change \"some text\" to \"other text\".",
+      "revId": "702878a9f1bb9378abb2fdd27a49a1fd830ef194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e6d186d_2f91e77d",
+        "filename": "chrome/browser/ui/webui/interventions/interventions_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T20:35:45Z",
+      "side": 1,
+      "message": "I don\u0027t think you need stddef.h.",
+      "revId": "702878a9f1bb9378abb2fdd27a49a1fd830ef194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9af126_7864886d",
+        "filename": "chrome/browser/ui/webui/interventions/interventions_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T20:35:45Z",
+      "side": 1,
+      "message": "macros is already included in the header, so it can be removed here.",
+      "revId": "702878a9f1bb9378abb2fdd27a49a1fd830ef194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "647d24e8_89365993",
+        "filename": "chrome/browser/ui/webui/interventions/interventions_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T20:35:45Z",
+      "side": 1,
+      "message": "I don\u0027t think you are using url_constants.h anywhere in here?",
+      "revId": "702878a9f1bb9378abb2fdd27a49a1fd830ef194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f9c126_9523022a",
+        "filename": "chrome/browser/ui/webui/interventions/interventions_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T20:35:45Z",
+      "side": 1,
+      "message": "#include \u003cunordered_set\u003e",
+      "range": {
+        "startLine": 26,
+        "startChar": 23,
+        "endLine": 26,
+        "endChar": 36
+      },
+      "revId": "702878a9f1bb9378abb2fdd27a49a1fd830ef194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e130e08_2777bba9",
+        "filename": "chrome/browser/ui/webui/interventions/interventions_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T20:35:45Z",
+      "side": 1,
+      "message": "Can you add a TODO comment here to hook up the PreviewsLog stuff. \"TODO(thanhdle): Add a previews message handler. crbug.com/764409\"",
+      "revId": "702878a9f1bb9378abb2fdd27a49a1fd830ef194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b103523_b0ecb3fd",
+        "filename": "chrome/browser/ui/webui/net_internals/net_internals_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T20:35:45Z",
+      "side": 1,
+      "message": "If the only change is the git cl format stuff again, remove this file from the commit.",
+      "revId": "702878a9f1bb9378abb2fdd27a49a1fd830ef194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "000329db_f27a186a",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T20:35:45Z",
+      "side": 1,
+      "message": "I think you had a bad rebase or something, I doubt you should be changing this file. Can you remove it from the change?",
+      "revId": "702878a9f1bb9378abb2fdd27a49a1fd830ef194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
