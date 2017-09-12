@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12bd7a60_0bba0358",
+        "filename": "components/history/core/browser/top_sites_database.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-12T23:56:32Z",
+      "side": 1,
+      "message": "You should no longer need the no-transaction variants, right? If you say tests uses them, update the tests please.",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 21
+      },
+      "revId": "0f660e7e80bf0f2a58da477613d410d79ae57c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
