@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "282acfd2_9818d8f4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-09-12T20:40:20Z",
+      "side": 1,
+      "message": "tdresser@ would be appropriate owner here",
+      "range": {
+        "startLine": 2,
+        "startChar": 18,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "dc122c03792469028b38d89cb59da37da3596476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fd4009a_5af2ee45",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html-media-capture/OWNERS",
         "patchSetId": 3
@@ -30,6 +53,29 @@
       "writtenOn": "2017-09-12T15:19:37Z",
       "side": 1,
       "message": "#TEAM: media-dev@chromium.org ?",
+      "revId": "dc122c03792469028b38d89cb59da37da3596476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9006a644_6fc1dc27",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/navigation-timing/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-09-12T20:40:20Z",
+      "side": 1,
+      "message": "This probably be tyoshino",
+      "range": {
+        "startLine": 2,
+        "startChar": 20,
+        "endLine": 2,
+        "endChar": 0
+      },
       "revId": "dc122c03792469028b38d89cb59da37da3596476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
