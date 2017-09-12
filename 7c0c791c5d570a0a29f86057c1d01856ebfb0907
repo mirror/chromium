@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f57f9589_55e5e8d2",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T22:31:40Z",
+      "side": 1,
+      "message": "I think you\u0027d want to check at least one of path, query, and ref is non-empty.\n\nAfter all, consider an input such as foo.com/?bar or maybe foo.com?bar",
+      "revId": "7c0c791c5d570a0a29f86057c1d01856ebfb0907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a5cc25_bdd06b26",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T22:31:40Z",
+      "side": 1,
+      "message": "What happens for intranet sites?  A match in the hostname should make match in subdomain true, right?",
+      "range": {
+        "startLine": 270,
+        "startChar": 47,
+        "endLine": 270,
+        "endChar": 0
+      },
+      "revId": "7c0c791c5d570a0a29f86057c1d01856ebfb0907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
