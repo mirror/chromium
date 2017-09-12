@@ -1660,6 +1660,13 @@ TEST_F(WorkspaceLayoutManagerKeyboardTest, IgnoreKeyboardBoundsChange) {
 
 // Test that backdrop works in split view mode.
 TEST_F(WorkspaceLayoutManagerBackdropTest, BackdropForSplitScreenTest) {
+  // TODO(sammiequon): Fix this. This test does not work in mash due to windows
+  // opened in tablet mode entering immersive mode, which creates a mash widget
+  // whose parent is also |default_container()|, thus messing up the asserts and
+  // indexes of this test.
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kAshEnableTabletSplitView);
   ShowTopWindowBackdropForContainer(default_container(), true);
