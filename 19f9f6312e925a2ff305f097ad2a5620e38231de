@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1edc4c54_d544a101",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-sandboxed-iframe-denied-without-wildcard.htm",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-12T02:01:59Z",
+      "side": 1,
+      "message": "maybe \"the original origin\" is better than \"its own origin\"?",
+      "revId": "19f9f6312e925a2ff305f097ad2a5620e38231de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
