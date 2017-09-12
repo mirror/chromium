@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0fa9d8b_88722bdb",
+        "filename": "components/ntp_snippets/remote/proto/ntp_snippets.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-12T10:39:29Z",
+      "side": 1,
+      "message": "Still you could go further and inline this completely.\nCould you add a TODO?",
+      "range": {
+        "startLine": 25,
+        "startChar": 11,
+        "endLine": 25,
+        "endChar": 29
+      },
+      "revId": "4dd91618ac418643e7d97723fb87bc3cb6e16b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6b860e_827dc334",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-12T10:39:29Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 185,
+        "startChar": 31,
+        "endLine": 185,
+        "endChar": 32
+      },
+      "revId": "4dd91618ac418643e7d97723fb87bc3cb6e16b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f670db_018ec7e2",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-12T10:39:29Z",
+      "side": 1,
+      "message": "Can you delete it completely?\n\nAccording to CS TimeToJsonString is not used at all and TimeFromJsonString seem to be not used after your CL.",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 62
+      },
+      "revId": "4dd91618ac418643e7d97723fb87bc3cb6e16b91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
