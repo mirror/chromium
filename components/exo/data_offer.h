@@ -63,6 +63,7 @@ class DataOffer : public ui::PropertyHandler {
   DndAction dnd_action() { return dnd_action_; }
 
  private:
+  // Can be null for tests
   DataOfferDelegate* const delegate_;
 
   // Map between mime type and drop data bytes.
