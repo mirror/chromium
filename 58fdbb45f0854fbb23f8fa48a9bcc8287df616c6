@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc7f4ae3_13222912",
+        "filename": "chromecast/browser/cast_display_configurator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-09-12T17:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7843e00_492beb8e",
+      "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91d78369_b7d39981",
         "filename": "chromecast/browser/cast_display_configurator.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673de7ca_e8250e84",
+        "filename": "chromecast/browser/cast_display_configurator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-09-12T17:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91d78369_b7d39981",
+      "range": {
+        "startLine": 37,
+        "startChar": 31,
+        "endLine": 37,
+        "endChar": 35
+      },
+      "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "98cb4c39_52bb34bc",
+        "filename": "chromecast/browser/cast_display_configurator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-09-12T17:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "644c6af4_65f95ce2",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 62,
+        "endChar": 16
+      },
+      "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4ef5e76_9880e798",
         "filename": "chromecast/browser/cast_display_configurator.h",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f67e8bbc_d77c18cc",
+        "filename": "chromecast/browser/cast_display_configurator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-09-12T17:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4ef5e76_9880e798",
+      "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "8abacdfa_55e99b18",
+        "filename": "chromecast/browser/cast_display_configurator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-09-12T17:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5709af65_1249d66e",
+      "range": {
+        "startLine": 39,
+        "startChar": 36,
+        "endLine": 39,
+        "endChar": 45
+      },
+      "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ad676b7_2217ea56",
         "filename": "chromecast/browser/cast_display_configurator.h",
         "patchSetId": 3
@@ -119,6 +227,24 @@
       "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd4a9d5_ae665d77",
+        "filename": "chromecast/browser/cast_display_configurator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-09-12T17:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ad676b7_2217ea56",
+      "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "f64b04c9_98b9ef55",
+        "filename": "chromecast/browser/cast_display_configurator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-09-12T17:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47577331_b79f7f47",
+      "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9c07f7b_52b6fa4f",
         "filename": "chromecast/browser/cast_display_configurator.h",
         "patchSetId": 3
@@ -150,6 +294,30 @@
       "writtenOn": "2017-09-12T16:33:54Z",
       "side": 1,
       "message": "const ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ae3ba7_f94d0739",
+        "filename": "chromecast/browser/cast_display_configurator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-09-12T17:36:54Z",
+      "side": 1,
+      "message": "We are going to call non-const OnDisplayChanged method through this pointer, so it must be non-const.",
+      "parentUuid": "d9c07f7b_52b6fa4f",
       "range": {
         "startLine": 49,
         "startChar": 12,
