@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "02a8fdeb_7e435d09",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-12T17:45:50Z",
+      "side": 1,
+      "message": "And what happens when we have a unittest that doesn\u0027t provide that primitive?\n\nI\u0027m still having trouble believing this is the right layer (and I actually think https://chromium-review.googlesource.com/c/chromium/src/+/637024 feels like it highlights it more), that something like a CV being usable relies on these traits. It\u0027s somewhat odd that this is coupled with assuming the unittest wants to do that.\n\nThis is where ScopedAllowIO seemed to make it clearer and more logical. Is there a reason that we don\u0027t have ScopedAllowBaseSyncPrimitives (and used in the unittest) versus this approach?",
+      "revId": "08e734eaf4a2ad173ab844a597de5df85c1aec06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf923beb_f5ed8c47",
         "filename": "net/dns/host_resolver_impl.cc",
         "patchSetId": 13
