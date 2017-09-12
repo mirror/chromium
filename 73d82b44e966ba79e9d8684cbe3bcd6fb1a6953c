@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bcec448_8809fe9f",
+        "filename": "components/omnibox/browser/autocomplete_match.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T19:58:42Z",
+      "side": 1,
+      "message": "nit: the unstripped URL spec\n\n(This clarification is particularly important because of where you put this function in this file.  See the above function.)",
+      "range": {
+        "startLine": 214,
+        "startChar": 71,
+        "endLine": 214,
+        "endChar": 79
+      },
+      "revId": "73d82b44e966ba79e9d8684cbe3bcd6fb1a6953c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "621e7087_5952d2b2",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T19:58:42Z",
+      "side": 1,
+      "message": "Can you add tests for \"www.\" and \".goo\"?  (true, true?)",
+      "range": {
+        "startLine": 235,
+        "startChar": 62,
+        "endLine": 235,
+        "endChar": 0
+      },
+      "revId": "73d82b44e966ba79e9d8684cbe3bcd6fb1a6953c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a851554d_5a1b28a6",
+        "filename": "components/omnibox/browser/search_suggestion_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T19:58:42Z",
+      "side": 1,
+      "message": "I think this is wrong.  You\u0027re calculating match_start by looking at the formatted_url_, yet then using those indices to index into the full url spec (unformatted).  What am I missing?",
+      "range": {
+        "startLine": 285,
+        "startChar": 63,
+        "endLine": 285,
+        "endChar": 0
+      },
+      "revId": "73d82b44e966ba79e9d8684cbe3bcd6fb1a6953c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
