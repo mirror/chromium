@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "97abb6f1_cd8ba2f1",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-12T00:20:11Z",
+      "side": 1,
+      "message": "To use the CAS loop in this system, the WaitableEvent simply becomes the CAS and that\u0027s CAS\u0027ing a form of |kShutdownStartedMask| (except using the MSB).\n\n* The contract is that you must increment it at the top of this method. \n* And you AtomicDecrement when done (in a ScopedClosure to which we pass a pre-bound RepeatingClosure (to avoid a Bind() call every PostTask()).\n\nScopedCall handles this\n\n* It being negative after the AtomicIncrement is equivalent to |accept_new_tasks_ \u003d\u003d false|.\n\nThis is the same as signaling the shutdown bit.\n\n* In the destructor you loop CAS 0 to std::numerics_limits\u003cAtomic32\u003e::min() before destroying |message_loop_|.\n\nThis is the same as using a waitable event to signal 0 and the stop bit is the same as CAS swapping in a negative value.\n\nAll of the complexity in the counter solution is in managing the counter.",
+      "parentUuid": "085fd6ab_45248881",
+      "revId": "42e020db8d57ca82f293fac616eb8f66ac614796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2001a8d_3b1bb325",
         "filename": "base/message_loop/incoming_task_queue.cc",
         "patchSetId": 6
