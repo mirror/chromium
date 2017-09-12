@@ -16,6 +16,24 @@
       "revId": "798db327c3712a20911e9d0a2beef47921020108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb4ac21_6fe60f81",
+        "filename": "media/base/mime_util_internal.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-12T17:06:08Z",
+      "side": 1,
+      "message": "Of the video codecs, only vp8 and theora are \"simple\", in that their mime parsing is done by simple reg-ex matching and they do not have a notion of codec \"profile\". This NOTREACHED will enforce that we add additional *PROFILE_ANY for any future \"simple\" video codec. We probably won\u0027t ever hit this though.",
+      "parentUuid": "09fe431c_76590c50",
+      "revId": "798db327c3712a20911e9d0a2beef47921020108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
