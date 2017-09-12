@@ -153,6 +153,8 @@ class SSLClientSocketImpl : public SSLClientSocket,
   int DoHandshakeComplete(int result);
   int DoChannelIDLookup();
   int DoChannelIDLookupComplete(int result);
+  int DoCreateCert(int result);
+  void OnCertCreated(scoped_refptr<X509Certificate> cert);
   int DoVerifyCert(int result);
   int DoVerifyCertComplete(int result);
   void DoConnectCallback(int result);
@@ -313,6 +315,7 @@ class SSLClientSocketImpl : public SSLClientSocket,
     STATE_HANDSHAKE_COMPLETE,
     STATE_CHANNEL_ID_LOOKUP,
     STATE_CHANNEL_ID_LOOKUP_COMPLETE,
+    STATE_CREATE_CERT,
     STATE_VERIFY_CERT,
     STATE_VERIFY_CERT_COMPLETE,
   };
@@ -354,6 +357,7 @@ class SSLClientSocketImpl : public SSLClientSocket,
   SSLErrorDetails connect_error_details_;
 
   NetLogWithSource net_log_;
+
   base::WeakPtrFactory<SSLClientSocketImpl> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(SSLClientSocketImpl);
