@@ -16,10 +16,11 @@ public class OfflinePageDownloadItem {
     private final String mTargetPath;
     private final long mStartTimeMs;
     private final long mTotalBytes;
+    private final boolean mIsSuggested;
 
     public OfflinePageDownloadItem(String guid, String url, int downloadState,
-            long downloadProgressBytes, String title, String targetPath,
-            long startTimeMs, long totalBytes) {
+            long downloadProgressBytes, String title, String targetPath, long startTimeMs,
+            long totalBytes, boolean isSuggested) {
         mGuid = guid;
         mUrl = url;
         mDownloadState = downloadState;
@@ -28,6 +29,7 @@ public class OfflinePageDownloadItem {
         mTargetPath = targetPath;
         mStartTimeMs = startTimeMs;
         mTotalBytes = totalBytes;
+        mIsSuggested = isSuggested;
     }
 
     /** @return GUID identifying the item. */
@@ -76,6 +78,6 @@ public class OfflinePageDownloadItem {
 
     /** @return Whether this page is to be shown in the suggested reading section. */
     public boolean isSuggested() {
-        return false;
+        return mIsSuggested;
     }
 }
