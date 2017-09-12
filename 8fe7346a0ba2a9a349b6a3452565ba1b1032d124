@@ -16,6 +16,24 @@
       "revId": "8fe7346a0ba2a9a349b6a3452565ba1b1032d124",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb6652a_186bf5d8",
+        "filename": "base/numerics/math_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-12T02:13:04Z",
+      "side": 1,
+      "message": "If double is 64 bits, then the closest value it can really store is 3.1415926535897930 (per http://babbage.cs.qc.cuny.edu/IEEE-754.old/Decimal.html ), so we should be fine here.\n\nI suspect that M_PI definition is useful if your architecture has a type with \u003e64-bit precision, e.g. 128-bit quad-precision floating point; then using M_PI in such a context would still be OK.",
+      "parentUuid": "dbe1b9bd_a0b1c797",
+      "revId": "8fe7346a0ba2a9a349b6a3452565ba1b1032d124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
