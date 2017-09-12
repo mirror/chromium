@@ -599,6 +599,21 @@ class CONTENT_EXPORT IndexedDBBackingStore
 
   LevelDBDatabase* db() { return db_.get(); }
 
+  // Returns true if a blob cleanup job is pending on journal_cleaning_timer_.
+  bool IsBlobCleanupPending();
+
+  int NumBlobFilesDeletedForTesting() {
+#if DCHECK_IS_ON()
+    return num_blob_files_deleted_;
+#else
+    // DCHECK must be enabled to track this.
+    return 0;
+#endif
+  }
+
+  // Stops the journal_cleaning_timer_ and runs its pending task.
+  void ForceRunBlobCleanup();
+
  protected:
   friend class base::RefCounted<IndexedDBBackingStore>;
 
@@ -625,7 +640,7 @@ class CONTENT_EXPORT IndexedDBBackingStore
       Transaction::ChainedBlobWriter* chained_blob_writer);
 
   // Remove the referenced file on disk.
-  virtual bool RemoveBlobFile(int64_t database_id, int64_t key) const;
+  virtual bool RemoveBlobFile(int64_t database_id, int64_t key);
 
   // Schedule a call to CleanPrimaryJournalIgnoreReturn() via
   // an owned timer. If this object is destroyed, the timer
@@ -676,12 +691,15 @@ class CONTENT_EXPORT IndexedDBBackingStore
   // store, delete all referenced blob files, and erase the journal entry.
   // This must not be used while temporary entries are present e.g. during
   // a two-stage transaction commit with blobs.
-  leveldb::Status CleanUpBlobJournal(const std::string& level_db_key) const;
+  leveldb::Status CleanUpBlobJournal(const std::string& level_db_key);
 
   // Synchronously delete the files and/or directories on disk referenced by
   // the blob journal.
-  leveldb::Status CleanUpBlobJournalEntries(
-      const BlobJournalType& journal) const;
+  leveldb::Status CleanUpBlobJournalEntries(const BlobJournalType& journal);
+
+  void IncrementCommittingTransactionCount();
+  // Can run a journal cleaning job if one is pending.
+  void DecrementCommittingTransactionCount();
 
   IndexedDBFactory* indexed_db_factory_;
   const url::Origin origin_;
@@ -699,7 +717,15 @@ class CONTENT_EXPORT IndexedDBBackingStore
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
   std::set<int> child_process_ids_granted_;
   std::map<std::string, std::unique_ptr<BlobChangeRecord>> incognito_blob_map_;
+
+  bool execute_journal_cleaning_on_no_txns_ = false;
+  int num_aggregated_journal_cleaning_requests_ = 0;
   base::OneShotTimer journal_cleaning_timer_;
+  // Stores the first start of the timer before any restarts.
+  base::TimeTicks journal_cleaning_timer_start_;
+#if DCHECK_IS_ON()
+  int num_blob_files_deleted_ = 0;
+#endif
 
   std::unique_ptr<LevelDBDatabase> db_;
   std::unique_ptr<LevelDBComparator> comparator_;
