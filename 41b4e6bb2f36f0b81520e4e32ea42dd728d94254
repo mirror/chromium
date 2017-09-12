@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "ce1ec626_ef424ba0",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-12T03:19:13Z",
+      "side": 1,
+      "message": "Right, confirmed same code gen.  I wrote out all the constants this way in the next patch to make it clear that |ones| was epi16, and removed the union.  Note that the order suggested:\n\n  __m128i tap1 \u003d _mm_set_epi8(32,31,30,29,28,...);\n  __m128i tap2 \u003d _mm_set_epi8(16,15,14,13,12,...);\n\nis back-to-front.  The bench tool on the bug complained that the computed adler32 was wrong, and it is correct, but this does give us an opportunity ...\n\nI\u0027m going to upload a patch using this \"wrong taps order\" to assess test coverage, I expect the bots to explode ... we\u0027ll come back and fix that later.",
+      "parentUuid": "ca17127b_9f47941b",
+      "revId": "41b4e6bb2f36f0b81520e4e32ea42dd728d94254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ff2f0c6_b6bcafd4",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "7ca1965a_ef3ee905",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-12T03:19:13Z",
+      "side": 1,
+      "message": "Thought it might help readability :).  I\u0027m fine with using __m128i though, let\u0027s go with your suggestion.   Done.",
+      "parentUuid": "0ff2f0c6_b6bcafd4",
+      "revId": "41b4e6bb2f36f0b81520e4e32ea42dd728d94254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aeda7eb2_e43a6d9e",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 3
@@ -67,6 +103,24 @@
       "revId": "41b4e6bb2f36f0b81520e4e32ea42dd728d94254",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff862a5d_6f1c7875",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-12T03:19:13Z",
+      "side": 1,
+      "message": "Yes I tried with SSE2, no joy, requires a different approach, and it\u0027s not as fast as this method ... \"No win without pmaddubsw?\" exactly.",
+      "parentUuid": "aeda7eb2_e43a6d9e",
+      "revId": "41b4e6bb2f36f0b81520e4e32ea42dd728d94254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
