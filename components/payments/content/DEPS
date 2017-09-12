@@ -12,5 +12,4 @@ include_rules = [
   "+third_party/WebKit/public/platform/modules/payments",
   "+third_party/libphonenumber",
   "+ui/base",
-  "+ui/gfx/image/image_skia.h",
 ]
