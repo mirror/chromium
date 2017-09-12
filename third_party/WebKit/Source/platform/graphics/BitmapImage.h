@@ -98,6 +98,10 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
 
   PaintImage PaintImageForCurrentFrame() override;
 
+  void set_decoder_for_testing(std::unique_ptr<DeferredImageDecoder> decoder) {
+    decoder_ = std::move(decoder);
+  }
+
  private:
   enum RepetitionCountStatus : uint8_t {
     kUnknown,    // We haven't checked the source's repetition count.
