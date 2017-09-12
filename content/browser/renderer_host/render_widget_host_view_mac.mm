@@ -868,16 +868,29 @@ bool RenderWidgetHostViewMac::IsShowing() {
 
 gfx::Rect RenderWidgetHostViewMac::GetViewBounds() const {
   NSRect bounds = [cocoa_view_ bounds];
+  const gfx::Size size(NSWidth(bounds), NSHeight(bounds));
   // TODO(shess): In case of !window, the view has been removed from
   // the view hierarchy because the tab isn't main.  Could retrieve
   // the information from the main tab for our window.
   NSWindow* enclosing_window = ApparentWindowForView(cocoa_view_);
   if (!enclosing_window)
-    return gfx::Rect(gfx::Size(NSWidth(bounds), NSHeight(bounds)));
+    return gfx::Rect(size);
 
-  bounds = [cocoa_view_ convertRect:bounds toView:nil];
-  bounds = [enclosing_window convertRectToScreen:bounds];
-  return FlipNSRectToRectScreen(bounds);
+  NSRect boundsInScreen = [cocoa_view_ convertRect:bounds toView:nil];
+  boundsInScreen = [enclosing_window convertRectToScreen:boundsInScreen];
+  const gfx::Point origin = FlipNSRectToRectScreen(boundsInScreen).origin();
+
+  // Note: The GetViewBounds() API is a bit weird: The origin of the Rect is a
+  // point on the screen, in the screen's coordinate system. However, the size
+  // of the Rect is the rendering size, and not necessarily the size this view
+  // will occupy in the screen. The two may be different whenever this view is
+  // being scaled by any layer transforms in the ancestors in the hierarchy.
+  //
+  // TODO(miu): GetViewBounds() should be fixed because it's really returning
+  // two different things in one return value. Perhaps it should be deprecated
+  // in favor of GetRequestedRendererSize() and something new like
+  // GetPositionOnScreen()?
+  return gfx::Rect(origin, size);
 }
 
 void RenderWidgetHostViewMac::UpdateCursor(const WebCursor& cursor) {
