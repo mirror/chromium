@@ -78,6 +78,7 @@ test("blink_heap_unittests") {
     "BlinkGCMemoryDumpProviderTest.cpp",
     "HeapCompactTest.cpp",
     "HeapTest.cpp",
+    "PageMemoryTest.cpp",
     "PersistentTest.cpp",
     "RunAllTests.cpp",
   ]

@@ -496,7 +496,8 @@ void ThreadHeap::VisitStackRoots(Visitor* visitor) {
 
 BasePage* ThreadHeap::LookupPageForAddress(Address address) {
   DCHECK(ThreadState::Current()->IsInGC());
-  if (PageMemoryRegion* region = region_tree_->Lookup(address)) {
+  if (PageMemoryRegion* region =
+          static_cast<PageMemoryRegion*>(region_tree_->Lookup(address))) {
     return region->PageFromAddress(address);
   }
   return nullptr;
