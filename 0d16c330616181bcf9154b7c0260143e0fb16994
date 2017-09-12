@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b7d6b00_617e89ed",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestInterface2.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-12T01:56:45Z",
+      "side": 1,
+      "message": "I can\u0027t see the difference with my eyes, but could you revert this change?\n(I guess you have removed a new line character \u0027\\n\u0027 at the end of the file.)",
+      "revId": "0d16c330616181bcf9154b7c0260143e0fb16994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
