@@ -32,7 +32,6 @@ ElementAnimations::ElementAnimations()
       element_id_(),
       has_element_in_active_list_(false),
       has_element_in_pending_list_(false),
-      needs_push_properties_(false),
       needs_update_impl_client_state_(false) {}
 
 ElementAnimations::~ElementAnimations() {}
@@ -132,17 +131,9 @@ bool ElementAnimations::IsEmpty() const {
   return !players_list_.might_have_observers();
 }
 
-void ElementAnimations::SetNeedsPushProperties() {
-  needs_push_properties_ = true;
-}
-
 void ElementAnimations::PushPropertiesTo(
     scoped_refptr<ElementAnimations> element_animations_impl) const {
   DCHECK_NE(this, element_animations_impl);
-
-  if (!needs_push_properties_)
-    return;
-  needs_push_properties_ = false;
 
   // Update impl client state.
   if (needs_update_impl_client_state_)
@@ -255,7 +246,6 @@ bool ElementAnimations::ScrollOffsetAnimationWasInterrupted() const {
 
 void ElementAnimations::SetNeedsUpdateImplClientState() {
   needs_update_impl_client_state_ = true;
-  SetNeedsPushProperties();
 }
 
 void ElementAnimations::NotifyClientFloatAnimated(float opacity,
