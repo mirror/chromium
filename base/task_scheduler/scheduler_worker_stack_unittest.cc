@@ -35,6 +35,9 @@ class MockSchedulerWorkerDelegate : public SchedulerWorker::Delegate {
   TimeDelta GetSleepTimeout() override {
     return TimeDelta::Max();
   }
+  void OnCanScheduleSequence(scoped_refptr<Sequence> sequence) override {
+    ADD_FAILURE() << "Unexpected call to OnCanScheduleSequence().";
+  }
 };
 
 class TaskSchedulerWorkerStackTest : public testing::Test {
