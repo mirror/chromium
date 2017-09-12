@@ -40,8 +40,6 @@ class _PageCyclerV2(perf_benchmark.PerfBenchmark):
     return False
 
 
-@benchmark.Disabled('win10')
-@benchmark.Disabled('android')  # crbug.com/654217
 @benchmark.Owner(emails=['kouhei@chromium.org', 'ksakamoto@chromium.org'])
 class PageCyclerV2Typical25(_PageCyclerV2):
   """Page load time benchmark for a 25 typical web pages.
@@ -62,7 +60,7 @@ class PageCyclerV2Typical25(_PageCyclerV2):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass # Nothing disabled.
+        pass  # Nothing disabled.
     return StoryExpectations()
 
 
@@ -135,7 +133,6 @@ class PageCyclerV2IntlHiRu(_PageCyclerV2):
     return StoryExpectations()
 
 
-@benchmark.Disabled('android')  # crbug.com/666898
 @benchmark.Owner(emails=['kouhei@chromium.org', 'ksakamoto@chromium.org'])
 class PageCyclerV2IntlJaZh(_PageCyclerV2):
   """Page load time benchmark for a variety of pages in Japanese and Chinese.
@@ -154,7 +151,7 @@ class PageCyclerV2IntlJaZh(_PageCyclerV2):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass # Nothing disabled.
+        pass  # Nothing disabled.
     return StoryExpectations()
 
 
