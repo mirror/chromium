@@ -1,0 +1,37 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef HighContrastImageClassifier_h
+#define HighContrastImageClassifier_h
+
+#include <vector>
+
+#include "platform/graphics/GraphicsTypes.h"
+#include "platform/graphics/Image.h"
+
+namespace blink {
+
+class HighContrastImageClassifier {
+ public:
+  HighContrastImageClassifier() = default;
+  ~HighContrastImageClassifier() = default;
+
+  // Decides if a high contrast filter should be applied to the image or not.
+  HighContrastClassification ShouldApplyHighContrastFilterToImage(Image&);
+
+ private:
+  HighContrastClassification ClassifyImage(const SkPixmap&);
+
+  // Get sample pixels from the image.
+  void GetSamples(const SkPixmap&, std::vector<SkColor>*, float*);
+
+  // Computes the feafures given image samples.
+  void GetFeatures(const std::vector<SkColor>&,
+                   const float,
+                   std::vector<float>*);
+};
+
+}  // namespace blink
+
+#endif  // HighContrastImageClassifier_h
