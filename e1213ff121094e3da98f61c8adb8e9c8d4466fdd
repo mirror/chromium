@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d2ec6f56_e11f59f4",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 12
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-12T19:23:08Z",
+      "side": 1,
+      "message": "Since everything behind this CL is hidden behind a flag, I think we can\u0027t remove the old\nstrings until it becomes default. Even after that, we have to support web UI login and\nviews-based lock screen concurrently for some time, so buttons appearing on both screens\n(e.g. shutdown) has to have duplicates.. However we can move all the strings to another place\nthat both /ash and /chrome can have dependency on.. that will avoid duplication as a whole.",
+      "parentUuid": "8c911bd5_eb60d87b",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8c63ade_db8f9a61",
         "filename": "ash/root_window_controller.cc",
         "patchSetId": 12
@@ -98,6 +116,24 @@
       "writtenOn": "2017-09-12T18:24:51Z",
       "side": 1,
       "message": "This is not a good pattern (please avoid keying by pointer and setting callbacks bound to an unretained raw pointer to this class). Instead, switch on the view id (ButtonId) of |sender| here to invoke the appropriate behavior (ideally inlining the OnShutdownOrRestart/OnSignOut/etc. code in ButtonPressed, since they\u0027re all very simple).",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a65023_fb5de403",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-12T19:23:08Z",
+      "side": 1,
+      "message": "I used the suggested pattern in the previous patch and changed to this current one, but I realize that in order to make the buttons match spec I\u0027ll need to create a LoginShelfButton class. Otherwise since label() is declared protected by LabelButton, the label font and size cannot be adjusted.. It\u0027ll be like the following:\n\nclass LoginShelfButton : public LabelButton, public ButtonListener {\n  LoginShelfButton(string text, ImageSkia image, Closure callback) {\n      // Move all initialization codes in CreateButton() here.\n      // Modify label font size.     \n  }\n\n  // Overwrite GetInsets() and CreateInkDrop(), otherwise it seems we can\u0027t customize the \n  // button.\n\n  // Overwrite ButtonPressed() to call the callback passed in the constructor.\n}\n\nWhat do you think?",
+      "parentUuid": "0661af2b_e83a015e",
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
