@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6810d1a_8d7a2637",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 2123,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-12T05:43:52Z",
+      "side": 1,
+      "message": "You are passing the callback into swatchIcon that calls the computedCallback which in turn calls a method on swatchIcon... It looks like swatchIcon needs something from the embedder and you could achieve it via:\n\nswatchIcon.setContrastInfoProvider(this._requestBackgroundColors.bind(this));\n\nwhen swatch icon needs contrast info it would simply call the provider and update itself.",
+      "revId": "7d67d25a18115334f621ba84b2820920ba3a23e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de48f9c_55c40f7a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-12T05:43:52Z",
+      "side": 1,
+      "message": "Don\u0027t remove the experiment yet, add it here instead. You still need the new setting, just add experiment\u003d\u0027colorContrastRatio\u0027 in the setting\u0027s descriptor.",
+      "revId": "7d67d25a18115334f621ba84b2820920ba3a23e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
