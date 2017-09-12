@@ -25,6 +25,23 @@ namespace media {
 namespace {
 // Time in seconds between two successive measurements of audio power levels.
 constexpr int kPowerMonitorLogIntervalSeconds = 15;
+
+// Used to log the result of rendering startup.
+// Elements in this enum should not be deleted or rearranged; the only
+// permitted operation is to add new elements before
+// RENDERING_STARTUP_RESULT_MAX and update RENDERING_STARTUP_RESULT_MAX.
+enum AudioRenderingStartupResult {
+  RENDERING_STARTUP_OK = 0,
+  RENDERING_STARTUP_CREATE_STREAM_FAILED = 1,
+  RENDERING_STARTUP_OPEN_STREAM_FAILED = 2,
+  RENDERING_STARTUP_RESULT_MAX = RENDERING_STARTUP_OPEN_STREAM_FAILED,
+};
+
+void LogStartupResult(AudioRenderingStartupResult result) {
+  UMA_HISTOGRAM_ENUMERATION("Media.RenderingStreamCreationResult", result,
+                            RENDERING_STARTUP_RESULT_MAX + 1);
+}
+
 }  // namespace
 
 AudioOutputController::AudioOutputController(
@@ -128,16 +145,20 @@ void AudioOutputController::DoCreate(bool is_for_device_change) {
       audio_manager_->MakeAudioOutputStreamProxy(params_, output_device_id_);
   if (!stream_) {
     state_ = kError;
+    LogStartupResult(RENDERING_STARTUP_CREATE_STREAM_FAILED);
     handler_->OnControllerError();
     return;
   }
 
   if (!stream_->Open()) {
     DoStopCloseAndClearStream();
+    LogStartupResult(RENDERING_STARTUP_OPEN_STREAM_FAILED);
     state_ = kError;
     handler_->OnControllerError();
     return;
   }
+
+  LogStartupResult(RENDERING_STARTUP_OK);
 
   // Everything started okay, so re-register for state change callbacks if
   // stream_ was created via AudioManager.
@@ -243,6 +264,9 @@ void AudioOutputController::DoClose() {
     DoStopCloseAndClearStream();
     sync_reader_->Close();
     state_ = kClosed;
+
+    UMA_HISTOGRAM_BOOLEAN("Media.AudioOutputController.CallbackError",
+                          error_during_callback_);
   }
 }
 
@@ -266,6 +290,9 @@ void AudioOutputController::DoSetVolume(double volume) {
 
 void AudioOutputController::DoReportError() {
   DCHECK(message_loop_->BelongsToCurrentThread());
+  TRACE_EVENT0("audio", "AudioOutputController::DoReportError");
+  DLOG(ERROR) << "AudioOutputController::DoReportError";
+  error_during_callback_ = true;
   if (state_ != kClosed)
     handler_->OnControllerError();
 }
@@ -400,7 +427,7 @@ void AudioOutputController::OnDeviceChange() {
         return "closed";
       case AudioOutputController::kError:
         return "error";
-    };
+    }
     return "unknown";
   };
 
