@@ -6,12 +6,8 @@
 
 namespace payments {
 
-PaymentInstrument::PaymentInstrument(const std::string& method_name,
-                                     int icon_resource_id,
-                                     Type type)
-    : method_name_(method_name),
-      icon_resource_id_(icon_resource_id),
-      type_(type) {}
+PaymentInstrument::PaymentInstrument(int icon_resource_id, Type type)
+    : icon_resource_id_(icon_resource_id), type_(type) {}
 
 PaymentInstrument::~PaymentInstrument() {}
 

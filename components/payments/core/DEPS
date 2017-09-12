@@ -9,11 +9,13 @@ include_rules = [
   "+components/prefs",
   "+components/pref_registry",
   "+components/strings",
+  "+content/public/browser/stored_payment_app.h",
   "+net",
   "+services/metrics/public",
   "+third_party/libaddressinput",
   "+third_party/libphonenumber",
   "+third_party/re2",
+  "+third_party/skia/include/core/SkBitmap.h",
   "+ui/base",
 ]
 

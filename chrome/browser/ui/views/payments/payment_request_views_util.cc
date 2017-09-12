@@ -32,6 +32,7 @@
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/point_f.h"
+#include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/native_theme/native_theme.h"
 #include "ui/views/border.h"
@@ -235,19 +236,24 @@ std::unique_ptr<views::View> CreateSheetHeaderView(
 
 std::unique_ptr<views::ImageView> CreateInstrumentIconView(
     int icon_resource_id,
+    const SkBitmap* bitmap,
     const base::string16& tooltip_text,
     float opacity) {
-  std::unique_ptr<views::ImageView> card_icon_view =
+  std::unique_ptr<views::ImageView> icon_view =
       base::MakeUnique<views::ImageView>();
-  card_icon_view->set_can_process_events_within_subtree(false);
-  card_icon_view->SetImage(ResourceBundle::GetSharedInstance()
-                               .GetImageNamed(icon_resource_id)
-                               .AsImageSkia());
-  card_icon_view->SetTooltipText(tooltip_text);
-  card_icon_view->SetPaintToLayer();
-  card_icon_view->layer()->SetFillsBoundsOpaquely(false);
-  card_icon_view->layer()->SetOpacity(opacity);
-  return card_icon_view;
+  icon_view->set_can_process_events_within_subtree(false);
+  if (bitmap != nullptr) {
+    icon_view->SetImage(gfx::ImageSkia::CreateFrom1xBitmap(*bitmap));
+  } else {
+    icon_view->SetImage(ResourceBundle::GetSharedInstance()
+                            .GetImageNamed(icon_resource_id)
+                            .AsImageSkia());
+  }
+  icon_view->SetTooltipText(tooltip_text);
+  icon_view->SetPaintToLayer();
+  icon_view->layer()->SetFillsBoundsOpaquely(false);
+  icon_view->layer()->SetOpacity(opacity);
+  return icon_view;
 }
 
 std::unique_ptr<views::View> CreateProductLogoFooterView() {
