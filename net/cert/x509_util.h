@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+#include "base/callback.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_piece.h"
 #include "base/time/time.h"
@@ -108,6 +109,10 @@ NET_EXPORT bssl::UniquePtr<CRYPTO_BUFFER> CreateCryptoBuffer(
 // least one element.
 scoped_refptr<X509Certificate> CreateX509CertificateFromBuffers(
     STACK_OF(CRYPTO_BUFFER) * buffers);
+
+void CreateX509CertificateFromBuffersAsync(
+    STACK_OF(CRYPTO_BUFFER) * buffers,
+    base::Callback<void(scoped_refptr<X509Certificate>)> callback);
 
 // Returns the default ParseCertificateOptions for the net stack.
 ParseCertificateOptions DefaultParseCertificateOptions();

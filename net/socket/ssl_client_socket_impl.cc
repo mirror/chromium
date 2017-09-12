@@ -1159,7 +1159,7 @@ int SSLClientSocketImpl::DoHandshakeComplete(int result) {
   }
 
   // Verify the certificate.
-  next_handshake_state_ = STATE_VERIFY_CERT;
+  next_handshake_state_ = STATE_CREATE_CERT;
   return OK;
 }
 
@@ -1197,11 +1197,24 @@ int SSLClientSocketImpl::DoChannelIDLookupComplete(int result) {
   return OK;
 }
 
+int SSLClientSocketImpl::DoCreateCert(int result) {
+  DCHECK(start_cert_verification_time_.is_null());
+  x509_util::CreateX509CertificateFromBuffersAsync(
+      SSL_get0_peer_certificates(ssl_.get()),
+      base::Bind(&SSLClientSocketImpl::OnCertCreated,
+                 weak_factory_.GetWeakPtr()));
+  return ERR_IO_PENDING;
+}
+
+void SSLClientSocketImpl::OnCertCreated(scoped_refptr<X509Certificate> cert) {
+  DCHECK_EQ(STATE_CREATE_CERT, next_handshake_state_);
+  next_handshake_state_ = STATE_VERIFY_CERT;
+  server_cert_ = cert;
+  OnHandshakeIOComplete(OK);
+}
+
 int SSLClientSocketImpl::DoVerifyCert(int result) {
   DCHECK(start_cert_verification_time_.is_null());
-
-  server_cert_ = x509_util::CreateX509CertificateFromBuffers(
-      SSL_get0_peer_certificates(ssl_.get()));
 
   // OpenSSL decoded the certificate, but the platform certificate
   // implementation could not. This is treated as a fatal SSL-level protocol
@@ -1351,6 +1364,10 @@ int SSLClientSocketImpl::DoHandshakeLoop(int last_io_result) {
         break;
       case STATE_CHANNEL_ID_LOOKUP_COMPLETE:
         rv = DoChannelIDLookupComplete(rv);
+        break;
+      case STATE_CREATE_CERT:
+        DCHECK_EQ(OK, rv);
+        rv = DoCreateCert(rv);
         break;
       case STATE_VERIFY_CERT:
         DCHECK_EQ(OK, rv);

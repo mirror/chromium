@@ -8,6 +8,7 @@
 
 #include "base/lazy_instance.h"
 #include "base/strings/string_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "crypto/openssl_util.h"
@@ -159,6 +160,20 @@ class BufferPoolSingleton {
   // The singleton is leaky, so there is no need to use a smart pointer.
   CRYPTO_BUFFER_POOL* pool_;
 };
+
+std::vector<base::StringPiece> CreateDerChain(STACK_OF(CRYPTO_BUFFER) *
+                                              buffers) {
+  // Convert the certificate chains to a platform certificate handle.
+  std::vector<base::StringPiece> der_chain;
+  der_chain.reserve(sk_CRYPTO_BUFFER_num(buffers));
+  for (size_t i = 0; i < sk_CRYPTO_BUFFER_num(buffers); ++i) {
+    const CRYPTO_BUFFER* cert = sk_CRYPTO_BUFFER_value(buffers, i);
+    der_chain.push_back(base::StringPiece(
+        reinterpret_cast<const char*>(CRYPTO_BUFFER_data(cert)),
+        CRYPTO_BUFFER_len(cert)));
+  }
+  return der_chain;
+}
 
 base::LazyInstance<BufferPoolSingleton>::Leaky g_buffer_pool_singleton =
     LAZY_INSTANCE_INITIALIZER;
@@ -416,16 +431,23 @@ scoped_refptr<X509Certificate> CreateX509CertificateFromBuffers(
   return X509Certificate::CreateFromHandle(sk_CRYPTO_BUFFER_value(buffers, 0),
                                            intermediate_chain);
 #else
-  // Convert the certificate chains to a platform certificate handle.
-  std::vector<base::StringPiece> der_chain;
-  der_chain.reserve(sk_CRYPTO_BUFFER_num(buffers));
-  for (size_t i = 0; i < sk_CRYPTO_BUFFER_num(buffers); ++i) {
-    const CRYPTO_BUFFER* cert = sk_CRYPTO_BUFFER_value(buffers, i);
-    der_chain.push_back(base::StringPiece(
-        reinterpret_cast<const char*>(CRYPTO_BUFFER_data(cert)),
-        CRYPTO_BUFFER_len(cert)));
-  }
-  return X509Certificate::CreateFromDERCertChain(der_chain);
+  return X509Certificate::CreateFromDERCertChain(CreateDerChain(buffers));
+#endif
+}
+
+void CreateX509CertificateFromBuffersAsync(
+    STACK_OF(CRYPTO_BUFFER) * buffers,
+    base::Callback<void(scoped_refptr<X509Certificate>)> callback) {
+#if BUILDFLAG(USE_BYTE_CERTS)
+  base::PostTask(
+      FROM_HERE,
+      base::Bind(callback, CreateX509CertificateFromBuffers(buffers)));
+#else
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
+      base::Bind(&X509Certificate::CreateFromDERCertChain,
+                 CreateDerChain(buffers)),
+      callback);
 #endif
 }
 
