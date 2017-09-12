@@ -11,7 +11,7 @@
 #include "base/macros.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_observer.h"
-#include "ui/display/display_observer.h"
+#include "ui/display/display.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
@@ -33,8 +33,7 @@ class SplitViewController;
 // to resize the left and right windows accordingly. The divider widget should
 // always placed above its observed windows to be able to receive events.
 class ASH_EXPORT SplitViewDivider : public aura::WindowObserver,
-                                    public ::wm::ActivationChangeObserver,
-                                    public display::DisplayObserver {
+                                    public ::wm::ActivationChangeObserver {
  public:
   SplitViewDivider(SplitViewController* controller, aura::Window* root_window);
   ~SplitViewDivider() override;
@@ -42,6 +41,7 @@ class ASH_EXPORT SplitViewDivider : public aura::WindowObserver,
   // Gets the size of the divider widget. The divider widget is enlarged during
   // dragging. For now, it's a vertical rectangle.
   static gfx::Size GetDividerSize(const gfx::Rect& work_area_bounds,
+                                  display::Display::Rotation rotation,
                                   bool is_dragging);
 
   // Updates |divider_widget_|'s bounds.
@@ -60,10 +60,6 @@ class ASH_EXPORT SplitViewDivider : public aura::WindowObserver,
   void OnWindowActivated(ActivationReason reason,
                          aura::Window* gained_active,
                          aura::Window* lost_active) override;
-
-  // display::DisplayObserver:
-  void OnDisplayMetricsChanged(const display::Display& display,
-                               uint32_t metrics) override;
 
   views::Widget* divider_widget() { return divider_widget_.get(); }
 
