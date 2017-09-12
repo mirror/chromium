@@ -337,16 +337,13 @@ void TouchActionTest::RunTestOnTree(
       SendTouchEvent(web_view, WebInputEvent::kTouchStart, window_point);
 
       AtomicString expected_action = element->getAttribute("expected-action");
-      if (expected_action == "auto") {
-        // Auto is the default - no action set.
-        EXPECT_EQ(0, client.TouchActionSetCount()) << failure_context_pos;
-        EXPECT_EQ(TouchAction::kTouchActionAuto, client.LastTouchAction())
-            << failure_context_pos;
-      } else {
         // Should have received exactly one touch action.
         EXPECT_EQ(1, client.TouchActionSetCount()) << failure_context_pos;
         if (client.TouchActionSetCount()) {
-          if (expected_action == "none") {
+          if (expected_action == "auto") {
+            EXPECT_EQ(TouchAction::kTouchActionAuto, client.LastTouchAction())
+                << failure_context_pos;
+          } else if (expected_action == "none") {
             EXPECT_EQ(TouchAction::kTouchActionNone, client.LastTouchAction())
                 << failure_context_pos;
           } else if (expected_action == "pan-x") {
@@ -367,7 +364,6 @@ void TouchActionTest::RunTestOnTree(
                    << expected_action.Ascii().data() << "\" "
                    << failure_context_pos;
           }
-        }
       }
 
       // Reset webview touch state.

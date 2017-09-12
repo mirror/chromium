@@ -805,4 +805,97 @@ TEST(TouchActionFilterTest, TouchpadScroll) {
   EXPECT_FALSE(filter.FilterGestureEvent(&scroll_begin));
 }
 
+TEST(TouchActionFilterTest, WhiteListedTouchActionMatchesHint) {
+  TouchActionFilter filter;
+
+  filter.ResetTouchAction();
+  filter.OnSetWhiteListedTouchAction(cc::kTouchActionPanX);
+
+  WebGestureEvent scroll_begin =
+      SyntheticWebGestureEventBuilder::BuildScrollBegin(2, 3, kSourceDevice);
+  const float kDeltaX = 5;
+  const float kDeltaY = 10;
+  WebGestureEvent scroll_update =
+      SyntheticWebGestureEventBuilder::BuildScrollUpdate(kDeltaX, kDeltaY, 0,
+                                                         kSourceDevice);
+  WebGestureEvent scroll_end = SyntheticWebGestureEventBuilder::Build(
+      WebInputEvent::kGestureScrollEnd, kSourceDevice);
+  WebGestureEvent tap = SyntheticWebGestureEventBuilder::Build(
+      WebInputEvent::kGestureTap, kSourceDevice);
+
+  EXPECT_FALSE(filter.FilterGestureEvent(&scroll_begin));
+  EXPECT_TRUE(filter.FilterGestureEvent(&scroll_update));
+  EXPECT_EQ(kDeltaX, scroll_update.data.scroll_update.delta_x);
+  EXPECT_EQ(kDeltaY, scroll_update.data.scroll_update.delta_y);
+  EXPECT_TRUE(filter.FilterGestureEvent(&scroll_end));
+  filter.ResetTouchAction();
+  EXPECT_FALSE(filter.FilterGestureEvent(&tap));
+}
+
+TEST(TouchActionFilterTest, WhiteListedTouchActionNotMatchHint) {
+  TouchActionFilter filter;
+
+  filter.ResetTouchAction();
+  filter.OnSetWhiteListedTouchAction(cc::kTouchActionPanX);
+
+  WebGestureEvent scroll_begin =
+      SyntheticWebGestureEventBuilder::BuildScrollBegin(3, 2, kSourceDevice);
+  const float kDeltaX = 10;
+  const float kDeltaY = 5;
+  WebGestureEvent scroll_update =
+      SyntheticWebGestureEventBuilder::BuildScrollUpdate(kDeltaX, kDeltaY, 0,
+                                                         kSourceDevice);
+  WebGestureEvent scroll_end = SyntheticWebGestureEventBuilder::Build(
+      WebInputEvent::kGestureScrollEnd, kSourceDevice);
+  WebGestureEvent tap = SyntheticWebGestureEventBuilder::Build(
+      WebInputEvent::kGestureTap, kSourceDevice);
+
+  EXPECT_FALSE(filter.FilterGestureEvent(&scroll_begin));
+  EXPECT_FALSE(filter.FilterGestureEvent(&scroll_update));
+  EXPECT_EQ(kDeltaX, scroll_update.data.scroll_update.delta_x);
+  // PanY is not allowed, the accumulated y scrolling resets at scroll update.
+  EXPECT_EQ(0, scroll_update.data.scroll_update.delta_y);
+  EXPECT_FALSE(filter.FilterGestureEvent(&scroll_end));
+  filter.ResetTouchAction();
+  EXPECT_FALSE(filter.FilterGestureEvent(&tap));
+}
+
+TEST(TouchActionFilterTest, WhiteListedWithKnownRealTouchAction) {
+  TouchActionFilter filter;
+
+  filter.ResetTouchAction();
+  filter.OnSetWhiteListedTouchAction(cc::kTouchActionPanX);
+
+  WebGestureEvent scroll_begin =
+      SyntheticWebGestureEventBuilder::BuildScrollBegin(3, 2, kSourceDevice);
+  const float kDeltaX = 10;
+  const float kDeltaY = 5;
+  WebGestureEvent scroll_update =
+      SyntheticWebGestureEventBuilder::BuildScrollUpdate(kDeltaX, kDeltaY, 0,
+                                                         kSourceDevice);
+  EXPECT_FALSE(filter.FilterGestureEvent(&scroll_begin));
+  EXPECT_FALSE(filter.FilterGestureEvent(&scroll_update));
+  EXPECT_EQ(kDeltaX, scroll_update.data.scroll_update.delta_x);
+  // PanY is not allowed, the accumulated y scrolling resets at scroll update.
+  EXPECT_EQ(0, scroll_update.data.scroll_update.delta_y);
+
+  const float kNewDeltaX = 15;
+  const float kNewDeltaY = 7;
+  filter.OnSetTouchAction(cc::kTouchActionPan);
+  scroll_update = SyntheticWebGestureEventBuilder::BuildScrollUpdate(
+      kNewDeltaX, kNewDeltaY, 0, kSourceDevice);
+  WebGestureEvent scroll_end = SyntheticWebGestureEventBuilder::Build(
+      WebInputEvent::kGestureScrollEnd, kSourceDevice);
+  WebGestureEvent tap = SyntheticWebGestureEventBuilder::Build(
+      WebInputEvent::kGestureTap, kSourceDevice);
+  EXPECT_FALSE(filter.FilterGestureEvent(&scroll_update));
+  EXPECT_EQ(kNewDeltaX, scroll_update.data.scroll_update.delta_x);
+  // The kDeltaY = 5 is accumulated. At this moment we know the real touch
+  // action, we apply the accumulated delta_y.
+  EXPECT_EQ(kDeltaY + kNewDeltaY, scroll_update.data.scroll_update.delta_y);
+  EXPECT_FALSE(filter.FilterGestureEvent(&scroll_end));
+  filter.ResetTouchAction();
+  EXPECT_FALSE(filter.FilterGestureEvent(&tap));
+}
+
 }  // namespace content
