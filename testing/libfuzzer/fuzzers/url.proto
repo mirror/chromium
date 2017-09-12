@@ -1,0 +1,52 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+syntax = "proto2";
+
+package protobuf_mutator;
+
+// We will consider the format of a URL for this fuzzer, to be
+// [scheme_name://]host[:port][/path][?query_string][#value]
+// There are in fact some URLs chrome will treat as valid that this syntax does
+// not capture (eg http:\\google.com). However, we will ignore them for
+// the sake of simplicity.
+// We will refer to [scheme_name://] as the "scheme".  It is recommended to
+// read this file in conjunction with convert_protobuf_to_string() in
+// url_parse_proto_fuzzer.cc.
+
+// Here we define the format for a URL Protocol Buffer.
+message Url {
+  // Below we define the format for a scheme, since its syntax rules are not
+  // so simple.
+  // Only the colon is mandatory in a scheme. A scheme does not need anything
+  // except for a colon (try navigating to :google.com). A scheme is not
+  // required in a URL. Therefore, we will ensure that a scheme has a colon in
+  // our conversion code, everything else in a scheme is optional.
+  message Scheme {
+    optional string scheme_name = 1;
+    // Allow libFuzzer to follow the scheme colon with 0, 1 or 2 slashes. The
+    // colon is followed by a slash for each value of slash_1 and slash_2 that
+    // is true. This is handled in the converter.
+    optional bool slash_1 = 2;
+    optional bool slash_2 = 3;
+  }
+  // Define the scheme as an optional first part of a URL.
+  optional Scheme scheme = 1;
+
+  optional string host = 2;
+
+  // port_numbers are unsigned integers between 1-2^16. The closest type
+  // to this in the proto2 format is uint32.
+  // Also if a port number is specified, it must be preceded by a colon
+  // (consider google.com80: 80 will be interpreted as part of the host). The
+  // conversion code will ensure this is the case.
+  optional uint32 port_number = 3;
+
+  // path, queries, and fragments also must be started with certain characters,
+  // this will also be handled in the conversion code.
+  optional string path = 4;
+
+  optional string query_string = 5;
+  optional string fragment_value = 6;
+}
