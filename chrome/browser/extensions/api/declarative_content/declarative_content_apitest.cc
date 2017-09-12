@@ -598,15 +598,12 @@ IN_PROC_BROWSER_TEST_F(DeclarativeContentApiTest, MAYBE_RulesPersistence) {
 }
 
 // http://crbug.com/304373
-#if defined(OS_WIN)
-// Fails on XP: http://crbug.com/515717
-#define MAYBE_UninstallWhileActivePageAction \
-  DISABLED_UninstallWhileActivePageAction
-#else
-#define MAYBE_UninstallWhileActivePageAction UninstallWhileActivePageAction
-#endif
-IN_PROC_BROWSER_TEST_F(DeclarativeContentApiTest,
-                       MAYBE_UninstallWhileActivePageAction) {
+class ReenableDeclarativeContentApiTest :
+    public DeclarativeContentApiTest,
+    public testing::WithParamInterface<int> {};
+
+IN_PROC_BROWSER_TEST_P(ReenableDeclarativeContentApiTest,
+                       UninstallWhileActivePageAction) {
   ext_dir_.WriteManifest(kDeclarativeContentManifest);
   ext_dir_.WriteFile(FILE_PATH_LITERAL("background.js"), kBackgroundHelpers);
   const Extension* extension = LoadExtension(ext_dir_.UnpackedPath());
@@ -902,16 +899,8 @@ IN_PROC_BROWSER_TEST_F(DeclarativeContentApiTest,
 }
 
 // https://crbug.com/517492
-#if defined(OS_WIN)
-// Fails on XP: http://crbug.com/515717
-#define MAYBE_RemoveAllRulesAfterExtensionUninstall \
-  DISABLED_RemoveAllRulesAfterExtensionUninstall
-#else
-#define MAYBE_RemoveAllRulesAfterExtensionUninstall \
-  RemoveAllRulesAfterExtensionUninstall
-#endif
-IN_PROC_BROWSER_TEST_F(DeclarativeContentApiTest,
-                       MAYBE_RemoveAllRulesAfterExtensionUninstall) {
+IN_PROC_BROWSER_TEST_P(ReenableDeclarativeContentApiTest,
+                       RemoveAllRulesAfterExtensionUninstall) {
   ext_dir_.WriteManifest(kDeclarativeContentManifest);
   ext_dir_.WriteFile(FILE_PATH_LITERAL("background.js"), kBackgroundHelpers);
 
@@ -951,6 +940,7 @@ IN_PROC_BROWSER_TEST_F(DeclarativeContentApiTest,
             ExecuteScriptInBackgroundPage(extension->id(), kRemoveTestRule1));
 }
 
+INSTANTIATE_TEST_CASE_P(ReenableTest, ReenableDeclarativeContentApiTest, testing::Range(0, 100));
 
 // TODO(wittman): Once ChromeContentRulesRegistry operates on condition and
 // action interfaces, add a test that checks that a navigation always evaluates
