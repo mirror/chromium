@@ -281,9 +281,10 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
   }
 
   // If we're supposed to force video overlays, then make sure that they're
-  // enabled all the time.
-  always_enable_overlays_ = base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kForceVideoOverlays);
+  // enabled all the time.  Also be sure to notify the decoder via OverlayInfo,
+  // so that it knows to use them also.
+  always_enable_overlays_ = overlay_info_.force_overlay =
+      params->force_overlays();
 
   if (base::FeatureList::IsEnabled(media::kOverlayFullscreenVideo)) {
     bool use_android_overlay =

@@ -21,7 +21,7 @@ class MEDIA_GPU_EXPORT AndroidVideoSurfaceChooser {
   // Input state used for choosing the surface type.
   struct State {
     // Is an overlay required?
-    bool is_required = false;
+    bool is_overlay_required = false;
 
     // Is the player currently in fullscreen?
     bool is_fullscreen = false;

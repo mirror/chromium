@@ -288,7 +288,8 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
           watch_time_recorder_provider_.get(),
           base::Bind(&MediaFactory::CreateVideoDecodeStatsRecorder,
                      base::Unretained(this)),
-          base::Bind(&blink::WebSurfaceLayerBridge::Create, layer_tree_view)));
+          base::Bind(&blink::WebSurfaceLayerBridge::Create, layer_tree_view),
+          base::FeatureList::IsEnabled(media::kForceVideoOverlays)));
 
   media::WebMediaPlayerImpl* media_player = new media::WebMediaPlayerImpl(
       web_frame, client, encrypted_client, GetWebMediaPlayerDelegate(),

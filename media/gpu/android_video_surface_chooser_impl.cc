@@ -45,7 +45,7 @@ void AndroidVideoSurfaceChooserImpl::Initialize(
   if (!allow_dynamic_) {
     if (overlay_factory_ &&
         (current_state_.is_fullscreen || current_state_.is_secure ||
-         current_state_.is_required)) {
+         current_state_.is_overlay_required)) {
       SwitchToOverlay();
     } else {
       SwitchToSurfaceTexture();
@@ -108,8 +108,8 @@ void AndroidVideoSurfaceChooserImpl::Choose() {
     new_overlay_state = kUsingOverlay;
 
   // Try to use an overlay if possible for protected content.  If the compositor
-  // won't promote, though, it's okay if we switch out.  Set |is_required| in
-  // addition, if you don't want this behavior.
+  // won't promote, though, it's okay if we switch out.  Set
+  // |is_overlay_required| in addition, if you don't want this behavior.
   if (current_state_.is_secure)
     new_overlay_state = kUsingOverlay;
 
@@ -142,7 +142,7 @@ void AndroidVideoSurfaceChooserImpl::Choose() {
 
   // If an overlay is required, then choose one.  The only way we won't is if we
   // don't have a factory or our request fails.
-  if (current_state_.is_required)
+  if (current_state_.is_overlay_required)
     new_overlay_state = kUsingOverlay;
 
   // If we have no factory, then we definitely don't want to use overlays.

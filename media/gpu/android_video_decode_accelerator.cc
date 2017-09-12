@@ -362,13 +362,6 @@ bool AndroidVideoDecodeAccelerator::Initialize(const Config& config,
     return false;
   }
 
-  // If we're supposed to use overlays all the time, then they should always
-  // be marked as required.
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kForceVideoOverlays)) {
-    surface_chooser_state_.is_required = is_overlay_required_ = true;
-  }
-
   // For encrypted media, start by initializing the CDM.  Otherwise, start with
   // the surface.
   if (config_.is_encrypted()) {
@@ -1299,6 +1292,11 @@ void AndroidVideoDecodeAccelerator::SetOverlayInfo(
 
   surface_chooser_state_.is_frame_hidden = overlay_info.is_frame_hidden;
 
+  // Require an overlay if |overlay_info| says to, or if this is L1 content.
+  surface_chooser_state_.is_overlay_required =
+      codec_config_->requires_secure_codec ||
+      config_.overlay_info.force_overlay;
+
   if (overlay_info.is_fullscreen && !surface_chooser_state_.is_fullscreen) {
     // It would be nice if we could just delay until we get a hint from an
     // overlay that's "in fullscreen" in the sense that the CompositorFrame it
@@ -1521,11 +1519,11 @@ void AndroidVideoDecodeAccelerator::OnMediaCryptoReady(
   codec_config_->media_crypto = std::move(media_crypto);
   codec_config_->requires_secure_codec = requires_secure_video_codec;
   // Request a secure surface in all cases.  For L3, it's okay if we fall back
-  // to SurfaceTexture rather than fail composition.  For L1, it's required.
-  // It's also required if the command line says so.
+  // to SurfaceTexture rather than fail composition.
   surface_chooser_state_.is_secure = true;
-  surface_chooser_state_.is_required =
-      requires_secure_video_codec || is_overlay_required_;
+  // Require an overlay if |overlay_info| says to, or if this is L1 content.
+  surface_chooser_state_.is_overlay_required =
+      requires_secure_video_codec || config_.overlay_info.force_overlay;
 
   // After receiving |media_crypto_| we can start with surface creation.
   StartSurfaceChooser();
@@ -1812,7 +1810,7 @@ void AndroidVideoDecodeAccelerator::CacheFrameInformation() {
   // Overlay.
   if (surface_chooser_state_.is_secure) {
     cached_frame_information_ =
-        surface_chooser_state_.is_required ? OVERLAY_L1 : OVERLAY_L3;
+        codec_config_->requires_secure_codec ? OVERLAY_L1 : OVERLAY_L3;
     return;
   }
 

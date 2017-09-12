@@ -134,9 +134,6 @@ const char kVideoUnderflowThresholdMs[] = "video-underflow-threshold-ms";
 const char kDisableRTCSmoothnessAlgorithm[] =
     "disable-rtc-smoothness-algorithm";
 
-// Force media player using SurfaceView instead of SurfaceTexture on Android.
-const char kForceVideoOverlays[] = "force-video-overlays";
-
 // Allows explicitly specifying MSE audio/video buffer sizes.
 // Default values are 150M for video and 12M for audio.
 const char kMSEAudioBufferSizeLimit[] = "mse-audio-buffer-size-limit";
@@ -263,6 +260,10 @@ const base::Feature kVideoBlitColorAccuracy{"video-blit-color-accuracy",
 // no effect.
 const base::Feature kExternalClearKeyForTesting{
     "external-clear-key-for-testing", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Force media player using SurfaceView instead of SurfaceTexture on Android.
+const base::Feature kForceVideoOverlays{"ForceVideoOverlays",
+                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kSupportExperimentalCdmInterface{
     "SupportExperimentalCdmInterface", base::FEATURE_DISABLED_BY_DEFAULT};

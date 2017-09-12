@@ -406,9 +406,6 @@ class MEDIA_GPU_EXPORT AndroidVideoDecodeAccelerator
 
   std::unique_ptr<PromotionHintAggregator> promotion_hint_aggregator_;
 
-  // Are overlays required by command-line options?
-  bool is_overlay_required_ = false;
-
   // Must match AVDAFrameInformation UMA enum.  Please do not remove or re-order
   // values, only append new ones.
   enum FrameInformation {

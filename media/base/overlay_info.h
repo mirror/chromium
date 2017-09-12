@@ -44,6 +44,10 @@ struct MEDIA_EXPORT OverlayInfo {
 
   // Is the player's frame hidden / closed?
   bool is_frame_hidden = false;
+
+  // Should we require use of an overlay?  This is maintained for ATV.  Please
+  // don't set it elsewhere.
+  bool force_overlay = false;
 };
 
 using ProvideOverlayInfoCB = base::Callback<void(const OverlayInfo&)>;

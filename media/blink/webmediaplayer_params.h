@@ -77,7 +77,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
       mojom::WatchTimeRecorderProvider* provider,
       CreateCapabilitiesRecorderCB create_capabilities_recorder_cb,
       base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
-          blink::WebSurfaceLayerBridgeObserver*)> bridge_callback);
+          blink::WebSurfaceLayerBridgeObserver*)> bridge_callback,
+      bool force_overlays);
 
   ~WebMediaPlayerParams();
 
@@ -153,6 +154,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
     return create_capabilities_recorder_cb_;
   }
 
+  bool force_overlays() const { return force_overlays_; }
+
  private:
   DeferLoadCB defer_load_cb_;
   scoped_refptr<SwitchableAudioRendererSink> audio_renderer_sink_;
@@ -176,6 +179,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
   base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
       blink::WebSurfaceLayerBridgeObserver*)>
       create_bridge_callback_;
+  bool force_overlays_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(WebMediaPlayerParams);
 };
