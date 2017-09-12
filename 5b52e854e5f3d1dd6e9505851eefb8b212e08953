@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c63cd90_866d6934",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-12T01:48:31Z",
+      "side": 1,
+      "message": "This implementation is not exactly the same as what was removed from HistoryURLProvider... because the old implementation had some quirks that are now accounted for and fixed via the new unit tests.",
+      "revId": "5b52e854e5f3d1dd6e9505851eefb8b212e08953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

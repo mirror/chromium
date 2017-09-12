@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37726153_06422916",
+        "filename": "components/omnibox/browser/search_suggestion_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-12T01:48:31Z",
+      "side": 1,
+      "message": "This HasHTTPScheme(input_text) call is here to never trim the scheme if the input text contains \"http\". It\u0027s only applicable in cases like... http://http.com or http://http.foo.com\n\nI left it here to preserve old behavior, but I\u0027m not sure we even need it. If the autocomplete match is \"http.com\", I don\u0027t think it\u0027s a big deal to strip the scheme.",
+      "revId": "68fb968387cbba97e743a59df503c0956d13f8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
