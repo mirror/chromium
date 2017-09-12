@@ -52,6 +52,24 @@
       "revId": "11e92d732ebbbac243de22a16cbb56041f45c886",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b99177d2_0412500c",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1153876
+      },
+      "writtenOn": "2017-09-12T18:31:09Z",
+      "side": 1,
+      "message": "I was wondering why |is_selection_dragging| was needed. I\u0027ve gone ahead and removed it.",
+      "parentUuid": "0ec1c43e_f52fc836",
+      "revId": "11e92d732ebbbac243de22a16cbb56041f45c886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
