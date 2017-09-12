@@ -18,6 +18,7 @@
 #include "ui/aura/mus/window_port_mus.h"
 #include "ui/aura/mus/window_tree_client.h"
 #include "ui/aura/window.h"
+#include "ui/aura/window_occlusion_tracker.h"
 #include "ui/aura/window_port_for_shutdown.h"
 #include "ui/events/event_target_iterator.h"
 #include "ui/events/platform/platform_event_source.h"
@@ -147,6 +148,7 @@ void Env::SetWindowTreeClient(WindowTreeClient* window_tree_client) {
 Env::Env(Mode mode)
     : mode_(mode),
       env_controller_(new EnvInputStateController),
+      window_occlusion_tracker_(std::make_unique<WindowOcclusionTracker>(this)),
       mouse_button_flags_(0),
       is_touch_down_(false),
       get_last_mouse_location_from_mus_(mode_ == Mode::MUS),
