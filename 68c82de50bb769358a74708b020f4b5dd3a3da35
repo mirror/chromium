@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f0489c3e_963a0c13",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-12T17:07:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d96b1344_91d77ec3",
+      "range": {
+        "startLine": 134,
+        "startChar": 49,
+        "endLine": 134,
+        "endChar": 50
+      },
+      "revId": "68c82de50bb769358a74708b020f4b5dd3a3da35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "680656b0_d1a55aba",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "68c82de50bb769358a74708b020f4b5dd3a3da35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579d78d8_99e69897",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-12T17:07:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "680656b0_d1a55aba",
+      "revId": "68c82de50bb769358a74708b020f4b5dd3a3da35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
