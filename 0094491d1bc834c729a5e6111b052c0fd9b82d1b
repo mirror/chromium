@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa29ec71_6c2b5be0",
+        "filename": "ui/compositor/compositor_switches.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-12T19:39:02Z",
+      "side": 1,
+      "message": "Can you instead point at a bug, and add a comment to the bug pointing at this doc? It\u0027s less likely for bugs to grow stale vs links like this.",
+      "range": {
+        "startLine": 42,
+        "startChar": 37,
+        "endLine": 42,
+        "endChar": 58
+      },
+      "revId": "0094491d1bc834c729a5e6111b052c0fd9b82d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db7e764_63c824bf",
+        "filename": "ui/views/view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4502,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-12T19:39:02Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "range": {
+        "startLine": 4502,
+        "startChar": 0,
+        "endLine": 4502,
+        "endChar": 2
+      },
+      "revId": "0094491d1bc834c729a5e6111b052c0fd9b82d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
