@@ -4,6 +4,7 @@
 
 #include "modules/webaudio/AudioWorkletProcessor.h"
 
+#include "modules/webaudio/AudioBuffer.h"
 #include "modules/webaudio/AudioWorkletGlobalScope.h"
 
 namespace blink {
@@ -38,10 +39,12 @@ v8::Local<v8::Object> AudioWorkletProcessor::InstanceLocal(
   return instance_.NewLocal(isolate);
 }
 
-void AudioWorkletProcessor::Process(AudioBuffer* input_buffer,
-                                    AudioBuffer* output_buffer) {
+void AudioWorkletProcessor::Process(
+    Vector<AudioBus*>* inputBuses,
+    Vector<AudioBus*>* outputBuses,
+    HashMap<String, std::unique_ptr<AudioFloatArray>>* param_value_map) {
   DCHECK(global_scope_->IsContextThread());
-  global_scope_->Process(this, input_buffer, output_buffer);
+  global_scope_->Process(this, inputBuses, outputBuses, param_value_map);
 }
 
 DEFINE_TRACE(AudioWorkletProcessor) {
