@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c1e4174_6649ebc5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-12T18:36:36Z",
+      "side": 1,
+      "message": "Nit: perhaps something like:\n\nIn the TLS 1.3 handshake, the client speaks last, so any middlebox problems\naround the final flight will not be captured by the per-connection\nNet.SSL_Connection_Error_TLS13Experiment. Add a per-request metric\nto capture those.",
+      "revId": "a8f95ebda163da48b68c62e526c60530fef218d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
