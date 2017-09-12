@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd90b8c6_af4c2c6c",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_grid.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-12T06:27:22Z",
+      "side": 1,
+      "message": "Add\n@return ...",
+      "revId": "219bb84030ec0750c3f56da8e45368f115198872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e9f2996_6d972887",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_grid.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-12T06:27:22Z",
+      "side": 1,
+      "message": "Is it possible that there are multiple thumbnails per index?\nHow about returning a single element?",
+      "revId": "219bb84030ec0750c3f56da8e45368f115198872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe32fe84_9134a5da",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-12T06:27:22Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "219bb84030ec0750c3f56da8e45368f115198872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
