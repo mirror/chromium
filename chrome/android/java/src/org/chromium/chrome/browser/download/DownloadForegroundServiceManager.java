@@ -175,6 +175,7 @@ public class DownloadForegroundServiceManager {
                 return;
             }
             mBoundService = ((DownloadForegroundService.LocalBinder) service).getService();
+            mBoundService.addObserver(DownloadNotificationService2.getInstance());
             processDownloadUpdateQueue(true /* isProcessingPending */);
         }
 
@@ -216,6 +217,7 @@ public class DownloadForegroundServiceManager {
         mPinnedNotificationId = INVALID_NOTIFICATION_ID;
 
         if (mBoundService != null) {
+            mBoundService.removeObserver(DownloadNotificationService2.getInstance());
             stopAndUnbindServiceInternal(isCancelled);
             mBoundService = null;
         }
