@@ -167,7 +167,8 @@ DispatchEventResult EventDispatcher::Dispatch() {
     }
   }
 
-  event_->SetTarget(EventPath::EventTargetRespectingTargetRules(*node_));
+  target_ = EventPath::EventTargetRespectingTargetRules(*node_);
+  event_->SetTarget(target_);
 #if DCHECK_IS_ON()
   DCHECK(!EventDispatchForbiddenScope::IsEventDispatchForbidden());
 #endif
@@ -185,10 +186,8 @@ DispatchEventResult EventDispatcher::Dispatch() {
   }
   DispatchEventPostProcess(activation_target,
                            pre_dispatch_event_handler_result);
-
-  // Ensure that after event dispatch, the event's target object is the
-  // outermost shadow DOM boundary.
-  event_->SetTarget(event_->GetEventPath().GetWindowEventContext().Target());
+  // event_->SetTarget(event_->GetEventPath().GetWindowEventContext().Target());
+  event_->SetTarget(target_);
   event_->SetCurrentTarget(nullptr);
 
   return EventTarget::GetDispatchEventResult(*event_);
@@ -243,6 +242,8 @@ inline void EventDispatcher::DispatchEventAtBubbling() {
   size_t size = event_->GetEventPath().size();
   for (size_t i = 1; i < size; ++i) {
     const NodeEventContext& event_context = event_->GetEventPath()[i];
+    // event_->SetTarget(event_context.Target());
+    target_ = event_context.Target();
     if (event_context.CurrentTargetSameAsTarget()) {
       event_->SetEventPhase(Event::kAtTarget);
     } else if (event_->bubbles() && !event_->cancelBubble()) {
@@ -284,7 +285,7 @@ inline void EventDispatcher::DispatchEventPostProcess(
 
     // Pass the data from the PreDispatchEventHandler to the
     // PostDispatchEventHandler.
-    // This may dispatch an event, and node_ and event_ might be altered.
+    // This may dispatch an event, and node_ and event_ might be altered
     if (activation_target) {
       activation_target->PostDispatchEventHandler(
           event_.Get(), pre_dispatch_event_handler_result);
