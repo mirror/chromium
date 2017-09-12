@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0aab4f25_ee6c75b8",
+        "filename": "ui/views/controls/menu/menu_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-12T19:55:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dea1172_8d6943bf",
+      "revId": "8686b94ec49e3a42a8709b75449a6993984dfe97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4218eb2e_01878de7",
         "filename": "ui/views/controls/menu/menu_host.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ac6347a9_fc263289",
+        "filename": "ui/views/controls/menu/menu_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-12T19:55:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4218eb2e_01878de7",
+      "revId": "8686b94ec49e3a42a8709b75449a6993984dfe97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b513c3c3_582d542b",
         "filename": "ui/views/controls/menu/menu_host.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-12T16:59:34Z",
       "side": 1,
       "message": "It looks like we can use GestureRecognizer on mac too. So I would just remove all the defined(OS_MACOSX) checks added in this CL.",
+      "revId": "8686b94ec49e3a42a8709b75449a6993984dfe97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f00357_e2a84089",
+        "filename": "ui/views/controls/menu/menu_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-12T19:55:03Z",
+      "side": 1,
+      "message": "Sorry, I think I didn\u0027t give enough explanation for this. I tried to remove all the !defined(OS_MACOSX) in ps#4, but that will fail mac-chromium related trybots. \n\nThe reason should because that GestureRecognizer does not work on Mac. GestureRecognizerImplMac (https://codesearch.chromium.org/chromium/src/ui/events/gestures/gesture_recognizer_impl_mac.cc?q\u003dGestureRecognizerImplMac\u0026sq\u003dpackage:chromium\u0026l\u003d17) is currently a\ndummy impl to make compiler happy. Also Mac does not use Views code fully.\nWidget::GetNativeView gives NSView* and it would not compile with\nTransferEventsTo since NSView* is not a GestureConsumer*.",
+      "parentUuid": "b513c3c3_582d542b",
       "revId": "8686b94ec49e3a42a8709b75449a6993984dfe97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
