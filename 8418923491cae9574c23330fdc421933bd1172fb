@@ -16,6 +16,24 @@
       "revId": "8418923491cae9574c23330fdc421933bd1172fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62cc587c_5dcf56ab",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-12T23:25:41Z",
+      "side": 1,
+      "message": "Can you please clarify how this should look?\n\nWhat\u0027s the distinction between the SuggestionMarkerProperties and Builder classes? If the answer is that the Builder class should have a .build() method which returns a SuggestionMarkerProperties instance that SuggestionMarker should store, this doesn\u0027t work since some of the properties are stored on SuggestionMarker\u0027s base class StyleableMarker.",
+      "parentUuid": "8812ad7d_d986965b",
+      "revId": "8418923491cae9574c23330fdc421933bd1172fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
