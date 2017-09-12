@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbd853dc_d6ac993d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-12T15:50:27Z",
+      "side": 1,
+      "message": "Is that ever possible?",
+      "range": {
+        "startLine": 108,
+        "startChar": 65,
+        "endLine": 108,
+        "endChar": 94
+      },
+      "revId": "14dc047225df91e473702a20e22b09b30aad8e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d97e408b_9df31ff9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-12T15:50:27Z",
+      "side": 1,
+      "message": "All the prefetch code is irrelevant, here we only want to support offline pages that the user explicitly downloaded.",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 83
+      },
+      "revId": "14dc047225df91e473702a20e22b09b30aad8e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
