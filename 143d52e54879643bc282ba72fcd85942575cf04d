@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d723d06_36f2e494",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-12T16:01:29Z",
+      "side": 1,
+      "message": "Why not use UIControlStateNormal, UIControlStateHighlighted, UIControlStateDisabled?",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 28,
+        "endChar": 2
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "221b8a15_baef3d2d",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-12T16:01:29Z",
+      "side": 1,
+      "message": "nit: Please comment.",
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd41daed_e8c3745a",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_configuration.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-12T16:01:29Z",
+      "side": 1,
+      "message": "nit: Please comment.",
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2b7b58_ff0e518a",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_style.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-12T16:01:29Z",
+      "side": 1,
+      "message": "I don\u0027t love that this comment references an array that lives elsewhere. I also don\u0027t love that we are using enums as numbers. This feels a bit like magic to me.",
+      "range": {
+        "startLine": 8,
+        "startChar": 55,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf54d568_a80bc3ea",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-12T16:01:29Z",
+      "side": 1,
+      "message": "nit: period (.)",
+      "range": {
+        "startLine": 48,
+        "startChar": 32,
+        "endLine": 48,
+        "endChar": 42
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac82d3f_29b0cdfd",
+        "filename": "ios/clean/chrome/browser/ui/tools/menu_overflow_controls_stackview.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-12T16:01:29Z",
+      "side": 1,
+      "message": "s/venting/vending. Remove \"the\" in \"vending the buttons\".",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 40
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
