@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de4a59df_5e94491b",
+        "filename": "third_party/WebKit/public/platform/WebLayer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-12T19:13:08Z",
+      "side": 1,
+      "message": "I still think you mean WebLayer::SetOpaque here and not SetOpacity? https://cs.chromium.org/chromium/src/cc/blink/web_layer_impl.cc?q\u003dweblayerimpl::setcontentsop\u0026sq\u003dpackage:chromium\u0026l\u003d146\n\nSorry for the api confusion, but opacity here is \"draw the layer with transparency applied to it\" and contents opaque means \"the pixel contents of this layer are known to be opaque or not\".  A layer can have opaque contents but also be drawn with some non-1 opacity.",
+      "revId": "84d22eb83e8b5202b1b441fb5edf529c0a2a0b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
