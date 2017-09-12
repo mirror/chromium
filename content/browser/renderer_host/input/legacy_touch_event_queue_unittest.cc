@@ -2532,7 +2532,7 @@ TEST_F(LegacyTouchEventQueueTest, FilterTouchMovesWhenNoPointerChanged) {
 
   // Do not really move any touch points, but use previous values.
   MoveTouchPoint(0, 10, 10);
-  ChangeTouchPointRadius(1, 1, 1);
+  ChangeTouchPointRadius(1, 12.5, 12.5);
   MoveTouchPoint(1, 2, 2);
   EXPECT_EQ(2U, queued_event_count());
   EXPECT_EQ(0U, GetAndResetSentEventCount());
