@@ -16,6 +16,24 @@
       "revId": "328d3beea8bbc40028bf0f6b664ec62b36104d29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdeb2c6e_1fd1c403",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-12T21:17:45Z",
+      "side": 0,
+      "message": "I\u0027m not sure how pref deprecation works. I would just leave it, since it\u0027s been less than a year.",
+      "parentUuid": "20a10fbb_5e8c5dbd",
+      "revId": "328d3beea8bbc40028bf0f6b664ec62b36104d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
