@@ -89,6 +89,10 @@ class WebLayer {
 
   virtual void SetOpacity(float) = 0;
   virtual float Opacity() const = 0;
+  // If set to true, content opaqueness cannot be changed using setOpaque.
+  // However, it can still be modified using SetContentsOpaque on the
+  // cc::Layer.
+  virtual void SetContentsOpaqueIsFixed(bool) = 0;
 
   virtual void SetBlendMode(WebBlendMode) = 0;
   virtual WebBlendMode BlendMode() const = 0;
