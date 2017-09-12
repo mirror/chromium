@@ -26,6 +26,7 @@ class ServiceWorkerFetchContextImpl : public blink::WebWorkerFetchContext {
   ~ServiceWorkerFetchContextImpl() override;
 
   // blink::WebWorkerFetchContext implementation:
+  base::OnceClosure CreateSyncLoadTerminator() override;
   void InitializeOnWorkerThread(base::SingleThreadTaskRunner*) override;
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
       const blink::WebURLRequest& request,
@@ -37,6 +38,19 @@ class ServiceWorkerFetchContextImpl : public blink::WebWorkerFetchContext {
   blink::WebURL SiteForCookies() const override;
 
  private:
+  class TerminateSyncLoadEvent
+      : public base::RefCountedThreadSafe<TerminateSyncLoadEvent> {
+   public:
+    TerminateSyncLoadEvent();
+    void Signal();
+    base::WaitableEvent* event() { return &event_; }
+
+   private:
+    friend class RefCountedThreadSafe<TerminateSyncLoadEvent>;
+    ~TerminateSyncLoadEvent() = default;
+    base::WaitableEvent event_;
+  };
+
   const GURL worker_script_url_;
   // Consumed on the worker thread to create |url_loader_factory_getter_|.
   ChildURLLoaderFactoryGetter::Info url_loader_factory_getter_info_;
@@ -47,6 +61,7 @@ class ServiceWorkerFetchContextImpl : public blink::WebWorkerFetchContext {
   scoped_refptr<ChildURLLoaderFactoryGetter> url_loader_factory_getter_;
 
   bool is_data_saver_enabled_ = false;
+  scoped_refptr<TerminateSyncLoadEvent> terminate_sync_load_event_;
 };
 
 }  // namespace content

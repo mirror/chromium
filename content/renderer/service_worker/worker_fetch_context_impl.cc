@@ -5,6 +5,8 @@
 #include "content/renderer/service_worker/worker_fetch_context_impl.h"
 
 #include "base/feature_list.h"
+#include "base/memory/ref_counted.h"
+#include "base/synchronization/waitable_event.h"
 #include "content/child/child_thread_impl.h"
 #include "content/child/request_extra_data.h"
 #include "content/child/resource_dispatcher.h"
@@ -16,6 +18,14 @@
 
 namespace content {
 
+WorkerFetchContextImpl::TerminateSyncLoadEvent::TerminateSyncLoadEvent()
+    : event_(base::WaitableEvent::ResetPolicy::AUTOMATIC,
+             base::WaitableEvent::InitialState::NOT_SIGNALED) {}
+
+void WorkerFetchContextImpl::TerminateSyncLoadEvent::Signal() {
+  event_.Signal();
+}
+
 WorkerFetchContextImpl::WorkerFetchContextImpl(
     mojom::ServiceWorkerWorkerClientRequest service_worker_client_request,
     ChildURLLoaderFactoryGetter::Info url_loader_factory_getter_info)
@@ -23,9 +33,16 @@ WorkerFetchContextImpl::WorkerFetchContextImpl(
       service_worker_client_request_(std::move(service_worker_client_request)),
       url_loader_factory_getter_info_(
           std::move(url_loader_factory_getter_info)),
-      thread_safe_sender_(ChildThreadImpl::current()->thread_safe_sender()) {}
+      thread_safe_sender_(ChildThreadImpl::current()->thread_safe_sender()),
+      terminate_sync_load_event_(
+          base::MakeRefCounted<TerminateSyncLoadEvent>()) {}
 
 WorkerFetchContextImpl::~WorkerFetchContextImpl() {}
+
+base::OnceClosure WorkerFetchContextImpl::CreateSyncLoadTerminator() {
+  return base::BindOnce(&WorkerFetchContextImpl::TerminateSyncLoadEvent::Signal,
+                        terminate_sync_load_event_);
+}
 
 void WorkerFetchContextImpl::InitializeOnWorkerThread(
     base::SingleThreadTaskRunner* loading_task_runner) {
@@ -34,6 +51,8 @@ void WorkerFetchContextImpl::InitializeOnWorkerThread(
   DCHECK(!binding_.is_bound());
   resource_dispatcher_ =
       base::MakeUnique<ResourceDispatcher>(nullptr, loading_task_runner);
+  resource_dispatcher_->set_terminate_sync_load_event(
+      terminate_sync_load_event_->event());
 
   url_loader_factory_getter_ = url_loader_factory_getter_info_.Bind();
 

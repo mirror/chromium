@@ -103,6 +103,8 @@ class CORE_EXPORT ThreadedMessagingProxyBase
 
   bool asked_to_terminate_;
 
+  base::OnceClosure sync_load_terminator_;
+
   // Used to keep this alive until the worker thread gets terminated. This is
   // necessary because the co-owner (i.e., Worker or Worklet object) can be
   // destroyed before thread termination.

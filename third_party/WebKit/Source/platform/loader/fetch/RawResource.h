@@ -77,6 +77,8 @@ class PLATFORM_EXPORT RawResource final : public Resource {
   bool WillFollowRedirect(const ResourceRequest&,
                           const ResourceResponse&) override;
 
+  int64_t GetDownloadedFileLength() const { return downloaded_file_length_; }
+
  private:
   class RawResourceFactory : public NonTextResourceFactory {
    public:
@@ -107,6 +109,8 @@ class PLATFORM_EXPORT RawResource final : public Resource {
   void ReportResourceTimingToClients(const ResourceTimingInfo&) override;
   bool MatchPreload(const FetchParameters&) override;
   void NotifyFinished() override;
+
+  int64_t downloaded_file_length_ = 0;
 
   // Used for preload matching.
   std::unique_ptr<BufferingDataPipeWriter> data_pipe_writer_;

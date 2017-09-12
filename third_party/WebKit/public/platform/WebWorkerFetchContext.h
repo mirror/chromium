@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/callback_forward.h"
 #include "public/platform/WebApplicationCacheHost.h"
 #include "public/platform/WebDocumentSubresourceFilter.h"
 #include "public/platform/WebURL.h"
@@ -29,6 +30,8 @@ class WebDocumentSubresourceFilter;
 class WebWorkerFetchContext {
  public:
   virtual ~WebWorkerFetchContext() {}
+
+  virtual base::OnceClosure CreateSyncLoadTerminator() = 0;
 
   virtual void InitializeOnWorkerThread(base::SingleThreadTaskRunner*) = 0;
 
