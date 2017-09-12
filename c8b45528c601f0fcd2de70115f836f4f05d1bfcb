@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "5e4cf969_8e4763b7",
+        "filename": "net/cert/multi_threaded_cert_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-12T22:19:23Z",
+      "side": 1,
+      "message": "Actually, it\u0027s needed in production.\n\nWithBaseSyncPrimitives() exists because //base sync primitives are a common source of hangs and annotating tasks that use them facilitates diagnosis. At runtime, it is equivalent to MayBlock().",
+      "parentUuid": "36bef800_c32d7136",
+      "revId": "c8b45528c601f0fcd2de70115f836f4f05d1bfcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c910e17_b99d65b7",
         "filename": "net/cert/multi_threaded_cert_verifier.cc",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-09-11T16:39:57Z",
       "side": 1,
       "message": "From an abstraction layer, this also seems to be a net-negative for the TaskScheduler, in that now the order of shutdown (and guarantee of tasks) is, well, non-existent.\n\nI understand you can wrap with cancellation semantics, but that seems very much an error-prone anti-pattern; that is, the new API provides less guarantees than the older API, and I would think that the pattern it poses to support (namely, tasks can be skipped or cancelled after posting) is one that will lead to memory leaks, resource leaks, and bad user experience.\n\nFor this call, the reason I\u0027m uncomfortable is:\n1) It\u0027s assuming the task is always guaranteed to post, but that isn\u0027t guaranteed by the API (as you note, it\u0027s an implicit contract with how the IO thread and Task Scheduler work)\n2) If one of these tasks fail to run, the socket will be indefinitely starved, occupying resources and virtually impossible to find out the cause of that starvation\n3) To defend against that starvation, it has to be written in a new holder class to track whether or not it will be posted/run - and if not, to run \u0027a task\u0027 anyways.\n\n#3 is most concerning, and that seems like a major design limitation. If I did properly understand, and tasks aren\u0027t guaranteed to run, then I\u0027m quite concerned for //net\u0027s usage, because the patterns around continuations mean that if any task is cancelled or fails to run, the state machine will be wedged and all other assumptions go out the window.",
+      "revId": "c8b45528c601f0fcd2de70115f836f4f05d1bfcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d5aaef_4108f636",
+        "filename": "net/cert/multi_threaded_cert_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-12T22:19:23Z",
+      "side": 1,
+      "message": "TaskScheduler provides clear guarantees:\n- SKIP_ON_SHUTDOWN and CONTINUE_ON_SHUTDOWN tasks may be skipped during shutdown.\n- BLOCK_SHUTDOWN tasks are never skipped. The process does not exit until they have completed their execution.\n\nSince tasks are only skipped during shutdown, memory leaks and resource leaks are not a real issue.\n\n1) -\u003e The task will run unless shutdown starts before it is scheduled.\n2) -\u003e This starvation will only happen during TaskScheduler shutdown, which happens shortly before process termination. How is skipping the task during shutdown different from the task taking a long time to run during shutdown (in both cases, the task won\u0027t complete before process termination)?\n3) -\u003e This is probably not needed given the fact that starvation only happens during shutdown.\n\nNote: TaskScheduler shutdown is expected to happen just before process termination. If that helps, I could make this clearer in task_scheduler.h.",
+      "parentUuid": "9c910e17_b99d65b7",
       "revId": "c8b45528c601f0fcd2de70115f836f4f05d1bfcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
