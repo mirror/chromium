@@ -34,6 +34,24 @@
       "revId": "3bf632c1bbdd828c6f4678cdaa997b074ce478e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc2fbc1_b69508e3",
+        "filename": "chrome/app/vector_icons/notification_storage_full.1x.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-09-12T02:08:37Z",
+      "side": 1,
+      "message": "Removed 1x icon for now.\n\nI would confirm with sebastien again, and let me create a cleanup CL later that removes unmodified 1x icons and adds modified 1x icons.\n\nIn the crbug he said \"most of them\" and I\u0027m not sure which is true.",
+      "parentUuid": "ed90525e_dad3448b",
+      "revId": "3bf632c1bbdd828c6f4678cdaa997b074ce478e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
