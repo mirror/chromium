@@ -34,6 +34,24 @@
       "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74948282_f912c102",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-12T02:08:02Z",
+      "side": 1,
+      "message": "LayerOwnerDelegate is used in ContentsWebView for a thing which is not delegating. ContentsWebView is simply performing some extra logic, which is related to some web view specific animations. It\u0027s not delegation. It\u0027s an observer pattern.\n\nHowever, resetting local surface id *is* a delegation, as it\u0027s required to make LayerOwner::RecreateLayer work properly.\n\nSo, ideally we should have both - an observer and a delegate, though it would be an overkill. So, I\u0027d suggest to simply change the delegate into an observer. WDYT?",
+      "parentUuid": "6c3a1a49_7ccf97d4",
+      "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
