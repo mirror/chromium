@@ -16,6 +16,24 @@
       "revId": "aa889498bca57ae0ccbc6b922039037833798371",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "657e9f49_4780bdc7",
+        "filename": "chrome/test/vr/perf/vr_perf_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-12T18:44:57Z",
+      "side": 1,
+      "message": "Yep. The output format supports multiple tests in the summary, each with their own test cases with pass/fail information, but we only have one in this case (whatever\u0027s in self._test_name) and its set of results (whatever\u0027s in self._results_summary)",
+      "parentUuid": "3912f10a_21a97a0e",
+      "revId": "aa889498bca57ae0ccbc6b922039037833798371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
