@@ -107,6 +107,8 @@ void MojoProxyResolverFactoryImpl::CreateResolver(
   jobs_[job_ptr] = std::move(job);
 }
 
+void MojoProxyResolverFactoryImpl::OnResolverDestroyed() {}
+
 void MojoProxyResolverFactoryImpl::RemoveJob(Job* job) {
   auto it = jobs_.find(job);
   DCHECK(it != jobs_.end());
