@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fcce689_341746dd",
+        "filename": "ui/webui/resources/cr_elements/paper_input_style_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-12T20:33:57Z",
+      "side": 1,
+      "message": "Nit: Remove blank line?",
+      "revId": "23ea1a7122872d932c9be1dedfd807b4a5bc8608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
