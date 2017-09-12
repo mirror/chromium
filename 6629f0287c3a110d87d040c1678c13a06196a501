@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3ed8aba_17dff921",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-12T15:42:49Z",
+      "side": 1,
+      "message": "I see that other mojo files have a \"copyright\" header (e.g. see url/mojo/url.mojom).",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19cd2f9_077ff172",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-12T15:42:49Z",
+      "side": 1,
+      "message": "Below we are introducing types with pretty generic names (File, Element, Point, PointF, etc.). \n Do we need to worry about naming conflicts down the road?  Can we consider using another namespace/module name to disambiguate (e.g. |module history.mojom| ???).",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 20
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678c741d_4ec6cc39",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-12T15:42:49Z",
+      "side": 1,
+      "message": "Would it make sense to rename to FileSystemFile?  (to make it clear at a first glance that this doesn\u0027t represent a whole filesystem, but a single file)",
+      "range": {
+        "startLine": 5,
+        "startChar": 7,
+        "endLine": 5,
+        "endChar": 17
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e240306_725d6faa",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-12T15:42:49Z",
+      "side": 1,
+      "message": "I see that storage::DataElement::offset and length are unsigned integers.  Can we also use unsigned integers here?",
+      "range": {
+        "startLine": 7,
+        "startChar": 2,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7feb8a9_6c8edf23",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-12T15:42:49Z",
+      "side": 1,
+      "message": "Can this be changed to use Time struct from //mojo/common/time.mojom?",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b9a7e7_27cb5505",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-12T15:42:49Z",
+      "side": 1,
+      "message": "Maybe string16 is okay, but once we commit to it, the serialization format is \"forever\", right?  So maybe we can consider pros/cons of using a generic mojo \"string\" type here (and in other fields)?\n\nI don\u0027t know why in the past we started with utf16 strings in the serialized output.  I suspect that this was because in the past we had to work directly with blink data types.",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 28
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed6b5ee_add14a94",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-12T15:42:49Z",
+      "side": 1,
+      "message": "Maybe rename to \"blob_uuid\"?  (to match the name of the storage::DataElement accessor)",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb88c9fc_bf5ce4ae",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-12T15:42:49Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/cppguide.html#Enumerator_Names says \"New code should prefer constant-style naming if possible.\"",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 6
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f03c4b54_d6fe519f",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-12T15:42:49Z",
+      "side": 1,
+      "message": "nit: Do we want a \"k\" prefix to fully follow https://google.github.io/styleguide/cppguide.html#Enumerator_Names",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 8
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7afad70_db3e6b71",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-12T15:42:49Z",
+      "side": 1,
+      "message": "Do the values here need to match another enum (i.e. blink::WebReferrerPolicy)?  If so, then:\n1. Can you please add a comment to point this out\n2. Can we please add compile-time static_assert(s) to verify that the enums match (not sure exactly where;  for precedent please see STATIC_ASSERT_ENUM macro from third_party/WebKit/Source/platform/wtf/Assertions.h)",
+      "range": {
+        "startLine": 56,
+        "startChar": 27,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "992ec0a9_0002e14d",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-12T15:42:49Z",
+      "side": 1,
+      "message": "Can this be Url from //url/mojo/url.mojom?",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 28
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad6273e_878ae3bb",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-12T15:42:49Z",
+      "side": 1,
+      "message": "Maybe this can be AsUTF8Unsafe() if we follow the suggestions I had for the mojom declaration.",
+      "range": {
+        "startLine": 715,
+        "startChar": 26,
+        "endLine": 715,
+        "endChar": 42
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd2e9bc_af63d213",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-12T15:42:49Z",
+      "side": 1,
+      "message": "Maybe |.ToDoubleT()| would be unnecessary if we follow the suggestions I had for the mojom declaration.",
+      "range": {
+        "startLine": 716,
+        "startChar": 48,
+        "endLine": 716,
+        "endChar": 60
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
