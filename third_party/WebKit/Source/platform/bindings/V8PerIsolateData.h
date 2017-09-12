@@ -261,6 +261,7 @@ class PLATFORM_EXPORT V8PerIsolateData {
                                                      V8FunctionTemplateMap&);
 
   V8ContextSnapshotMode v8_context_snapshot_mode_;
+  std::unique_ptr<v8::StartupData> existing_blob_;
   // This isolate_holder_ must be initialized before initializing some other
   // members below.
   gin::IsolateHolder isolate_holder_;

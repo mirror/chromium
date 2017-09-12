@@ -40,6 +40,7 @@
 #include "public/platform/Platform.h"
 #include "public/web/WebKit.h"
 #include "v8/include/v8-debug.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -98,7 +99,8 @@ V8PerIsolateData::V8PerIsolateData(
 // main thread.
 V8PerIsolateData::V8PerIsolateData(const intptr_t* reference_table)
     : v8_context_snapshot_mode_(V8ContextSnapshotMode::kTakeSnapshot),
-      isolate_holder_(reference_table, nullptr),
+      existing_blob_(new v8::StartupData),
+      isolate_holder_(reference_table, existing_blob_.get()),
       interface_template_map_for_v8_context_snapshot_(GetIsolate()),
       string_cache_(WTF::WrapUnique(new StringCache(GetIsolate()))),
       private_property_(V8PrivateProperty::Create()),
