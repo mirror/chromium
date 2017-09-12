@@ -1,0 +1,51 @@
+<html>
+<head>
+<script src="../inspector-test.js"></script>
+<script src="cache-storage-test.js"></script>
+<script>
+
+async function test() {
+  var cacheStorageModel = InspectorTest.mainTarget.model(SDK.ServiceWorkerCacheModel);
+  cacheStorageModel.enable();
+  let invalidOrigins = ['http', 'test://fake', 'test://fake.origin.com', 'chrome://test'];
+  let validOrigins = ['http://fake.origin.com', 'https://fake.origin.com'];
+
+  var promise;
+  InspectorTest.addResult('Invalid Origins:');
+  for (let origin of invalidOrigins) {
+    promise = InspectorTest.addSnifferPromise(SDK.ServiceWorkerCacheModel.prototype, '_invalidForTest');
+    InspectorTest.addResult('Track origin: ' + origin);
+    cacheStorageModel._addOrigin(origin);
+    await promise;
+    InspectorTest.addResult('    valid = ' + cacheStorageModel._isValidSecurityOrigin(origin));
+
+    promise = InspectorTest.addSnifferPromise(SDK.ServiceWorkerCacheModel.prototype, '_invalidForTest');
+    InspectorTest.addResult('Untrack origin: ' + origin);
+    cacheStorageModel._removeOrigin(origin);
+    await promise;
+    InspectorTest.addResult('    valid = ' + cacheStorageModel._isValidSecurityOrigin(origin));
+  }
+
+  InspectorTest.addResult('\nValid Origins:');
+  for (let origin of validOrigins) {
+    promise = InspectorTest.addSnifferPromise(SDK.ServiceWorkerCacheModel.prototype, '_validForTest');
+    InspectorTest.addResult('Track origin: ' + origin);
+    cacheStorageModel._addOrigin(origin);
+    await promise;
+    InspectorTest.addResult('    valid = ' + cacheStorageModel._isValidSecurityOrigin(origin));
+
+    promise = InspectorTest.addSnifferPromise(SDK.ServiceWorkerCacheModel.prototype, '_validForTest');
+    InspectorTest.addResult('Untrack origin: ' + origin);
+    cacheStorageModel._removeOrigin(origin);
+    await promise;
+    InspectorTest.addResult('    valid = ' + cacheStorageModel._isValidSecurityOrigin(origin));
+  }
+
+  InspectorTest.completeTest();
+}
+</script>
+</head>
+<body onload="runTest()">
+<p>Tests that cache storage live update only tracks valid security origins.</p>
+</body>
+</html>

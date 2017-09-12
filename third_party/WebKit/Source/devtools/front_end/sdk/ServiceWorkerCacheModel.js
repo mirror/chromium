@@ -124,10 +124,8 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
 
   _addOrigin(securityOrigin) {
     this._loadCacheNames(securityOrigin);
-    var parsedURL = securityOrigin.asParsedURL();
-    if (!parsedURL || !parsedURL.scheme.startsWith('http'))
-      return;
-    this._storageAgent.trackCacheStorageForOrigin(securityOrigin);
+    if (this._isValidSecurityOrigin(securityOrigin))
+      this._storageAgent.trackCacheStorageForOrigin(securityOrigin);
   }
 
   /**
@@ -141,10 +139,18 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
         this._cacheRemoved(cache);
       }
     }
+    if (this._isValidSecurityOrigin(securityOrigin))
+      this._storageAgent.untrackCacheStorageForOrigin(securityOrigin);
+  }
+
+  _isValidSecurityOrigin(securityOrigin) {
     var parsedURL = securityOrigin.asParsedURL();
-    if (!parsedURL || !parsedURL.scheme.startsWith('http'))
-      return;
-    this._storageAgent.untrackCacheStorageForOrigin(securityOrigin);
+    if (!parsedURL || !parsedURL.scheme.startsWith('http')) {
+      this._invalidForTest();
+      return false;
+    }
+    this._validForTest();
+    return true;
   }
 
   /**
@@ -261,6 +267,12 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
   cacheStorageContentUpdated(origin, cacheName) {
     this.dispatchEventToListeners(
         SDK.ServiceWorkerCacheModel.Events.CacheStorageContentUpdated, {origin: origin, cacheName: cacheName});
+  }
+
+  _validForTest() {
+  }
+
+  _invalidForTest() {
   }
 };
 

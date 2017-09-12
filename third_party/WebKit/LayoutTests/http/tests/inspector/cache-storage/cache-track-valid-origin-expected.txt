@@ -1,0 +1,30 @@
+Tests that cache storage live update only tracks valid security origins.
+
+Invalid Origins:
+Track origin: http
+    valid = false
+Untrack origin: http
+    valid = false
+Track origin: test://fake
+    valid = false
+Untrack origin: test://fake
+    valid = false
+Track origin: test://fake.origin.com
+    valid = false
+Untrack origin: test://fake.origin.com
+    valid = false
+Track origin: chrome://test
+    valid = false
+Untrack origin: chrome://test
+    valid = false
+
+Valid Origins:
+Track origin: http://fake.origin.com
+    valid = true
+Untrack origin: http://fake.origin.com
+    valid = true
+Track origin: https://fake.origin.com
+    valid = true
+Untrack origin: https://fake.origin.com
+    valid = true
+
