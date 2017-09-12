@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b8d6d13_4b5a7d21",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/cache/resources/etag-200-different.php",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-12T05:16:35Z",
+      "side": 1,
+      "message": "Can you tell me why this resource is located here? It looks all users live in security/subresourceIntegrity.",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "133f03bf6402196079e80b446092d5bd3f5690fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a732cbde_b6653951",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/cache/resources/etag-200-different.php",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-12T05:16:35Z",
+      "side": 1,
+      "message": "?\u003e needed?",
+      "revId": "133f03bf6402196079e80b446092d5bd3f5690fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
