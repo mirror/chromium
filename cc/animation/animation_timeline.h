@@ -48,7 +48,6 @@ class CC_ANIMATION_EXPORT AnimationTimeline
   AnimationPlayer* GetPlayerById(int player_id) const;
 
   void SetNeedsPushProperties();
-  bool needs_push_properties() const { return needs_push_properties_; }
 
  private:
   friend class base::RefCounted<AnimationTimeline>;
