@@ -7,10 +7,14 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "base/strings/string16.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/favicon/favicon_service_factory.h"
@@ -90,6 +94,12 @@ class PendingTaskWaiter : public content::WebContentsObserver {
         weak_factory_(this) {}
   ~PendingTaskWaiter() override {}
 
+  void AlsoRequireUrl(const GURL& url) { required_url_ = url; }
+
+  void AlsoRequireTitle(const base::string16& title) {
+    required_title_ = title;
+  }
+
   void Wait() {
     base::RunLoop run_loop;
     quit_closure_ = run_loop.QuitClosure();
@@ -98,9 +108,21 @@ class PendingTaskWaiter : public content::WebContentsObserver {
 
  private:
   // content::WebContentsObserver:
-  void DidStopLoading() override {
+  void DidStopLoading() override { TestUrlAndTitle(); }
+
+  void TitleWasSet(content::NavigationEntry* entry,
+                   bool explicit_set) override {
+    TestUrlAndTitle();
+  }
+
+  void TestUrlAndTitle() {
     if (!required_url_.is_empty() &&
         required_url_ != web_contents()->GetLastCommittedURL()) {
+      return;
+    }
+
+    if (required_title_.has_value() &&
+        *required_title_ != web_contents()->GetTitle()) {
       return;
     }
 
@@ -130,7 +152,8 @@ class PendingTaskWaiter : public content::WebContentsObserver {
   }
 
   base::Closure quit_closure_;
-  const GURL required_url_;
+  GURL required_url_;
+  base::Optional<base::string16> required_title_;
   base::WeakPtrFactory<PendingTaskWaiter> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PendingTaskWaiter);
@@ -228,6 +251,44 @@ IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest, ReloadBypassingCache) {
   ASSERT_TRUE(delegate->was_requested());
   EXPECT_TRUE(delegate->bypassed_cache());
 }
+
+// Test that favicon mappings are removed if the page initially lists a favicon
+// and later uses Javascript to remove it.
+IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest, RemoveFaviconViaJavascript) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  GURL url = embedded_test_server()->GetURL(
+      "/favicon/page_removing_favicon_via_js.html");
+
+  PendingTaskWaiter waiter(web_contents());
+  waiter.AlsoRequireTitle(base::ASCIIToUTF16("OK"));
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), url, WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_NONE);
+  waiter.Wait();
+
+  EXPECT_EQ(nullptr,
+            GetFaviconForPageURL(url, favicon_base::FAVICON).bitmap_data);
+}
+
+// Test that favicon mappings are removed if the page initially lists a touch
+// icon and later uses Javascript to remove it.
+#if defined(OS_ANDROID)
+IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest, RemoveTouchIconViaJavascript) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  GURL url = embedded_test_server()->GetURL(
+      "/favicon/page_removing_touch_icon_via_js.html");
+
+  PendingTaskWaiter waiter(web_contents());
+  waiter.AlsoRequireTitle(base::ASCIIToUTF16("OK"));
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), url, WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_NONE);
+  waiter.Wait();
+
+  EXPECT_EQ(nullptr,
+            GetFaviconForPageURL(url, favicon_base::TOUCH_ICON).bitmap_data);
+}
+#endif
 
 // Test that loading a page that contains icons only in the Web Manifest causes
 // those icons to be used.
@@ -501,7 +562,8 @@ IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
   GURL pushstate_url = embedded_test_server()->GetURL(
       "/favicon/pushstate_with_manifest.html#pushState");
 
-  PendingTaskWaiter waiter(web_contents(), /*required_url=*/pushstate_url);
+  PendingTaskWaiter waiter(web_contents());
+  waiter.AlsoRequireUrl(pushstate_url);
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), url, WindowOpenDisposition::CURRENT_TAB,
       ui_test_utils::BROWSER_TEST_NONE);
