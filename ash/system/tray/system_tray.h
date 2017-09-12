@@ -118,6 +118,7 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
   TrayAudio* GetTrayAudio() const;
 
   // TrayBackgroundView:
+  const char* GetClassName() const override;
   void UpdateAfterShelfAlignmentChange() override;
   void AnchorUpdated() override;
   base::string16 GetAccessibleNameForTray() override;

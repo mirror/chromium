@@ -241,6 +241,10 @@ gfx::Rect UserView::GetBoundsInScreenOfUserButtonForTest() {
   return user_card_container_->GetBoundsInScreen();
 }
 
+const char* UserView::GetClassName() const {
+  return "UserView";
+}
+
 int UserView::GetHeightForWidth(int width) const {
   return GetPreferredSize().height();
 }
