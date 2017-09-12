@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70e1d542_1864741d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-12T06:58:23Z",
+      "side": 1,
+      "message": "This is still context menu. Move is the next line.",
+      "parentUuid": "f6e90122_4dcc1eb6",
+      "revId": "d359e5fae5090b7c740539b65845fb3fc4e51d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c12082b_813f6a36",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d359e5fae5090b7c740539b65845fb3fc4e51d7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47469039_ee951551",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-12T06:58:23Z",
+      "side": 1,
+      "message": "same.",
+      "parentUuid": "1c12082b_813f6a36",
+      "revId": "d359e5fae5090b7c740539b65845fb3fc4e51d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
