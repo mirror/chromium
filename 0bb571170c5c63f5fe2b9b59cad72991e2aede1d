@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0a77c59_fc9992d0",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-12T18:43:15Z",
+      "side": 1,
+      "message": "You\u0027ll have to handle the fallback tree as well.",
+      "revId": "0bb571170c5c63f5fe2b9b59cad72991e2aede1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8921b27_d3d8fa52",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-12T18:43:15Z",
+      "side": 1,
+      "message": "Is a notification needed to refresh the automation tree here?",
+      "revId": "0bb571170c5c63f5fe2b9b59cad72991e2aede1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ed2ee4a_3806ecdd",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-12T18:43:15Z",
+      "side": 1,
+      "message": "You do this as well in the observer in ArcAccessibilityHelperBridge.",
+      "revId": "0bb571170c5c63f5fe2b9b59cad72991e2aede1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
