@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b3d6e56_5c02f7ae",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_grid.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-12T09:21:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd90b8c6_af4c2c6c",
+      "revId": "219bb84030ec0750c3f56da8e45368f115198872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e9f2996_6d972887",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_grid.js",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-12T06:27:22Z",
       "side": 1,
       "message": "Is it possible that there are multiple thumbnails per index?\nHow about returning a single element?",
+      "revId": "219bb84030ec0750c3f56da8e45368f115198872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18815de4_e9974cc5",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_grid.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-12T09:21:24Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/ui/file_grid.js?l\u003d671\u0026rcl\u003dcb0bf9cd6334c13def288e5ab731c2a71a8232e3\nIt seems as if sometimes, there might be multiple thumbnails per index, but I wasn\u0027t able to figure out when this happens - I basically copied their approach.. Would you prefer I return all or one?",
+      "parentUuid": "9e9f2996_6d972887",
       "revId": "219bb84030ec0750c3f56da8e45368f115198872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
