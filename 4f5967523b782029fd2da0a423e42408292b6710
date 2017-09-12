@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22fcd679_70963f04",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-12T12:24:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac5ecd2a_1eab1ba0",
+      "range": {
+        "startLine": 729,
+        "startChar": 6,
+        "endLine": 733,
+        "endChar": 20
+      },
+      "revId": "4f5967523b782029fd2da0a423e42408292b6710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2682feb_72c9abee",
         "filename": "components/password_manager/core/browser/password_manager_client_helper.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "4f5967523b782029fd2da0a423e42408292b6710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac2f35d_c5cdba57",
+        "filename": "components/password_manager/core/browser/password_manager_client_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-12T12:24:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2682feb_72c9abee",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 8
+      },
+      "revId": "4f5967523b782029fd2da0a423e42408292b6710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d482224b_561fe311",
+        "filename": "components/password_manager/core/browser/password_manager_client_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-12T12:24:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bad907d8_a4c9963e",
+      "range": {
+        "startLine": 15,
+        "startChar": 1,
+        "endLine": 15,
+        "endChar": 7
+      },
+      "revId": "4f5967523b782029fd2da0a423e42408292b6710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "668acdba_bf643438",
         "filename": "components/password_manager/core/browser/password_manager_client_helper.h",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5116c614_bcd2f2bb",
+        "filename": "components/password_manager/core/browser/password_manager_client_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-12T12:24:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "668acdba_bf643438",
+      "range": {
+        "startLine": 19,
+        "startChar": 43,
+        "endLine": 19,
+        "endChar": 54
+      },
+      "revId": "4f5967523b782029fd2da0a423e42408292b6710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf9308b0_c3ad0e4e",
         "filename": "ios/chrome/browser/passwords/ios_chrome_password_manager_client.h",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-11T14:17:36Z",
       "side": 1,
       "message": "I don\u0027t understand why you introduce this if you don\u0027t use it. You can fully use the new helper class in this CL. You can also touch the account chooser logic.",
+      "range": {
+        "startLine": 42,
+        "startChar": 31,
+        "endLine": 42,
+        "endChar": 66
+      },
+      "revId": "4f5967523b782029fd2da0a423e42408292b6710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a66f7102_3e15f663",
+        "filename": "ios/chrome/browser/passwords/ios_chrome_password_manager_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-12T12:24:46Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t understand why you introduce this if you don\u0027t use it. \n\nDone, I forgot to add Helper as a member here and actually use it.\n\n\u003e You can also touch the account chooser logic.\n\nI moved OnCredentialsChosen logic to helper class (although it is yet unused in IOS client), also two more methods which use PasswordManager::DropFormManagers",
+      "parentUuid": "cf9308b0_c3ad0e4e",
       "range": {
         "startLine": 42,
         "startChar": 31,
