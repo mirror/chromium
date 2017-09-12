@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "adfd46c4_3d19efd4",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/css_properties.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-12T01:04:58Z",
+      "side": 1,
+      "message": "well I think parsing the inner field is also a part of reading CSSProperties.json5 so I put it here so that whenever someone need a self._fields they can get it by passing in the extra_field_path? if you put this in make_computed_style_base you will have to duplicate it in make_value_id_mappings",
+      "parentUuid": "1165e57f_aa8eaed4",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "542e961e_2b970520",
         "filename": "third_party/WebKit/Source/build/scripts/make_style_builder.py",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-12T00:45:26Z",
       "side": 1,
       "message": "Again, is it possible to put this in make_computed_style_base, or a separate utility/helper file?",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3119e88_bc930e38",
+        "filename": "third_party/WebKit/Source/build/scripts/make_style_builder.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-12T01:04:58Z",
+      "side": 1,
+      "message": "I think a helper file can cut it, I will see whats avai",
+      "parentUuid": "542e961e_2b970520",
       "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9e822bca_f7edc9e0",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-12T01:04:58Z",
+      "side": 1,
+      "message": "in another patch pls, I dont want to have this patch do the renaming, it is very confusing :((",
+      "parentUuid": "eb87b214_621af60f",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6fec5f7_7dd14acc",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee59b46_94ac44bc",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-12T01:04:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e6fec5f7_7dd14acc",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8aa6e431_3f1bac04",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-12T01:04:58Z",
+      "side": 1,
+      "message": "nope, how about true extra fields that do not have a parent property",
+      "parentUuid": "cbc1fb9c_c73a932b",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4757251_9c5fb540",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-12T00:45:26Z",
       "side": 1,
       "message": "Hmmm, I think independent is a property-level parameter. Did you have trouble keeping this as property level?",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8baf148e_9319ce12",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-12T01:04:58Z",
+      "side": 1,
+      "message": "yes, it throws an error, it is a property level thing but the field has to inherit it",
+      "parentUuid": "a4757251_9c5fb540",
       "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
