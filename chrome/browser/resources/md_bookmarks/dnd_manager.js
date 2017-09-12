@@ -288,9 +288,9 @@ cr.define('bookmarks', function() {
 
     /**
      * Used to instantly remove the indicator style in tests.
-     * @private {bookmarks.TimerProxy}
+     * @private {TimerProxy}
      */
-    this.timerProxy = new bookmarks.TimerProxy();
+    this.timerProxy = new TimerProxy();
   }
 
   DropIndicator.prototype = {
@@ -393,9 +393,9 @@ cr.define('bookmarks', function() {
 
     /**
      * Used to instantly clearDragData in tests.
-     * @private {bookmarks.TimerProxy}
+     * @private {TimerProxy}
      */
-    this.timerProxy_ = new bookmarks.TimerProxy();
+    this.timerProxy_ = new TimerProxy();
 
     /**
      * The bookmark drag and drop indicator chip.
@@ -981,7 +981,7 @@ cr.define('bookmarks', function() {
           isBookmarkList(dropDestination.element);
     },
 
-    /** @param {bookmarks.TimerProxy} timerProxy */
+    /** @param {TimerProxy} timerProxy */
     setTimerProxyForTesting: function(timerProxy) {
       this.timerProxy_ = timerProxy;
       this.dropIndicator_.timerProxy = timerProxy;

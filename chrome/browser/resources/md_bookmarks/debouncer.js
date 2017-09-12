@@ -3,41 +3,20 @@
 // found in the LICENSE file.
 
 /**
- * @fileoverview A class that mediates window timer calls to support mockability
- * in tests.
+ * @fileoverview A debouncer which fires the given callback after a delay. The
+ * delay can be refreshed by calling restartTimeout. Resetting the timeout with
+ * no delay moves the callback to the end of the task queue.
  */
 
 cr.define('bookmarks', function() {
-  /** @constructor */
-  function TimerProxy() {}
-
-  TimerProxy.prototype = {
-    /**
-     * @param {function()|string} fn
-     * @param {number=} delay
-     * @return {number}
-     */
-    setTimeout: function(fn, delay) {
-      return window.setTimeout(fn, delay);
-    },
-
-    /** @param {number|undefined?} id */
-    clearTimeout: function(id) {
-      window.clearTimeout(id);
-    },
-  };
-
   /**
-   * A debouncer which fires the given callback after a delay. The delay can be
-   * refreshed by calling restartTimeout. Resetting the timeout with no delay
-   * moves the callback to the end of the task queue.
    * @param {!function()} callback
    * @constructor
    */
   function Debouncer(callback) {
     /** @private {!function()} */
     this.callback_ = callback;
-    /** @private {!bookmarks.TimerProxy} */
+    /** @private {!TimerProxy} */
     this.timerProxy_ = new TimerProxy();
     /** @private {?number} */
     this.timer_ = null;
@@ -106,6 +85,5 @@ cr.define('bookmarks', function() {
 
   return {
     Debouncer: Debouncer,
-    TimerProxy: TimerProxy,
   };
 });
