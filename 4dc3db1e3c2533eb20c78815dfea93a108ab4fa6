@@ -16,6 +16,24 @@
       "revId": "4dc3db1e3c2533eb20c78815dfea93a108ab4fa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dbfc5a0_051487c1",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-12T01:16:42Z",
+      "side": 1,
+      "message": "Ah yes it can now be private.\n\nThe struct is a holder that keeps layout-related parameters in one place. I would still need a  Rect + LayoutType in place of the struct. Are you suggesting it be replaced with the two?",
+      "parentUuid": "3f462c0b_1daaa8ab",
+      "revId": "4dc3db1e3c2533eb20c78815dfea93a108ab4fa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
