@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6db7dbdf_944c66a5",
+        "filename": "media/audio/audio_input_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-12T12:24:41Z",
+      "side": 1,
+      "message": "Sounds good to do. I created two new classes: PowerObserverHelper which can be reused in the resource closing experiment I\u0027m working on (and, if extended, also in AudioManagerMac), and AliveChecker. There\u0027s a few todos to iron out (those without name tag), and tests.\n\nBut for now, take a look at the interfaces of the new classes.",
+      "parentUuid": "2cc698f4_e59b611b",
+      "revId": "5163a812843cbdc7acbc9a60a30a7403c6916939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c92b3003_1c1b2279",
         "filename": "media/audio/audio_input_device.h",
         "patchSetId": 5
@@ -103,6 +121,24 @@
       "revId": "5163a812843cbdc7acbc9a60a30a7403c6916939",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de50f86_a392b986",
+        "filename": "media/audio/audio_input_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-12T12:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c92b3003_1c1b2279",
+      "revId": "5163a812843cbdc7acbc9a60a30a7403c6916939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
