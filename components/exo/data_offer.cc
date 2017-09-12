@@ -53,7 +53,8 @@ void WriteFileDescriptor(base::ScopedFD fd,
 DataOffer::DataOffer(DataOfferDelegate* delegate) : delegate_(delegate) {}
 
 DataOffer::~DataOffer() {
-  delegate_->OnDataOfferDestroying(this);
+  if (delegate_)
+    delegate_->OnDataOfferDestroying(this);
   for (DataOfferObserver& observer : observers_) {
     observer.OnDataOfferDestroying(this);
   }
@@ -90,13 +91,15 @@ void DataOffer::Finish() {
 void DataOffer::SetActions(const base::flat_set<DndAction>& dnd_actions,
                            DndAction preferred_action) {
   dnd_action_ = preferred_action;
-  delegate_->OnAction(preferred_action);
+  if (delegate_)
+    delegate_->OnAction(preferred_action);
 }
 
 void DataOffer::SetSourceActions(
     const base::flat_set<DndAction>& source_actions) {
   source_actions_ = source_actions;
-  delegate_->OnSourceActions(source_actions);
+  if (delegate_)
+    delegate_->OnSourceActions(source_actions);
 }
 
 void DataOffer::SetDropData(FileHelper* file_helper,
@@ -122,6 +125,8 @@ void DataOffer::SetDropData(FileHelper* file_helper,
       }
     }
   }
+  if (!delegate_)
+    return;
   for (const auto& pair : drop_data_) {
     delegate_->OnOffer(pair.first);
   }
