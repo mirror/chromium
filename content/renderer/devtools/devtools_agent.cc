@@ -25,8 +25,8 @@
 #include "content/renderer/render_frame_impl.h"
 #include "content/renderer/render_widget.h"
 #include "ipc/ipc_channel.h"
+#include "third_party/WebKit/public/platform/WebFloatPoint.h"
 #include "third_party/WebKit/public/platform/WebFloatRect.h"
-#include "third_party/WebKit/public/platform/WebPoint.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/web/WebDevToolsAgent.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -34,7 +34,7 @@
 using blink::WebDevToolsAgent;
 using blink::WebDevToolsAgentClient;
 using blink::WebLocalFrame;
-using blink::WebPoint;
+using blink::WebFloatPoint;
 using blink::WebString;
 
 using base::trace_event::TraceLog;
@@ -275,7 +275,7 @@ void DevToolsAgent::OnInspectElement(int session_id, int x, int y) {
   blink::WebFloatRect point_rect(x, y, 0, 0);
   frame_->GetRenderWidget()->ConvertWindowToViewport(&point_rect);
   GetWebAgent()->InspectElementAt(session_id,
-                                  WebPoint(point_rect.x, point_rect.y));
+                                  WebFloatPoint(point_rect.x, point_rect.y));
 }
 
 void DevToolsAgent::OnRequestNewWindowACK(bool success) {
