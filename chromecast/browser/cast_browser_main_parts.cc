@@ -33,6 +33,7 @@
 #include "chromecast/browser/cast_browser_context.h"
 #include "chromecast/browser/cast_browser_process.h"
 #include "chromecast/browser/cast_content_browser_client.h"
+#include "chromecast/browser/cast_display_configurator.h"
 #include "chromecast/browser/cast_memory_pressure_monitor.h"
 #include "chromecast/browser/cast_net_log.h"
 #include "chromecast/browser/devtools/remote_debugging_server.h"
@@ -462,6 +463,8 @@ int CastBrowserMainParts::PreCreateThreads() {
   cast_browser_process_->SetCastScreen(base::WrapUnique(new CastScreen()));
   DCHECK(!display::Screen::GetScreen());
   display::Screen::SetScreenInstance(cast_browser_process_->cast_screen());
+  display_configurator_ = base::MakeUnique<CastDisplayConfigurator>(
+      cast_browser_process_->cast_screen());
 #endif
 
   content::ChildProcessSecurityPolicy::GetInstance()->RegisterWebSafeScheme(
