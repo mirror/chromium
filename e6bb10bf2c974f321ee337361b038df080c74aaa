@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "11064e50_8f466f54",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-12T11:31:18Z",
+      "side": 1,
+      "message": "beginChange/endChange is used for minimizing the number of \u0027change\u0027 event.\nAs we know that the selection is not changed outside the superclass\u0027s function, let\u0027s remove beginChange/endChange here.\nFuture readers might be confused with the purpose of beginChange/endChange.",
+      "parentUuid": "d6b418b6_385b4cca",
+      "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca7e8a00_356bb39c",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
         "patchSetId": 15
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "9fbddcf5_0e7e741e",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-12T11:31:18Z",
+      "side": 1,
+      "message": "The new code can still be simplified by using arrow function.\n\nWhen you are suggested actual code snippet, please follow it asap or choose different style with a rationale.",
+      "parentUuid": "16be74bc_3f4daf54",
+      "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6abf7dde_2ff6cef4",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
         "patchSetId": 15
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "The superclass method will set the focus to the item nearest to the last item that got deleted if all of them were deleted (see https://codesearch.chromium.org/chromium/src/ui/webui/resources/js/cr/ui/list_selection_model.js?l\u003d352\u0026rcl\u003da3c45f3749fe0fab81aea4391518fd2bd9f090dc for reference), so we need to override this part. Except, of course, if I should move this logic to the superclass instead - I\u0027m just not sure if other teams are depending on the behavior of the superclass, so I did it in this file.",
       "parentUuid": "6abf7dde_2ff6cef4",
+      "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8cce854_105194fc",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-12T11:31:18Z",
+      "side": 1,
+      "message": "IIUC, the expected behavior is that a new file should be selected when all selected files are deleted but we should leave check-select mode.\nSo I think we don\u0027t need to clear the selected indexes here.",
+      "parentUuid": "1e40ca00_cba58c2e",
       "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
