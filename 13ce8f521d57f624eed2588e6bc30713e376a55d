@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5a10d08_c31b0843",
+        "filename": "cc/base/math_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-12T21:51:51Z",
+      "side": 0,
+      "message": "why remove the DCHECK()?\nSeems like an odd thing to do in a refactoring CL.",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 10
+      },
+      "revId": "13ce8f521d57f624eed2588e6bc30713e376a55d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
