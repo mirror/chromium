@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #import "components/password_manager/core/browser/password_manager_client.h"
+#include "components/password_manager/core/browser/password_manager_client_helper.h"
 #include "components/password_manager/core/browser/password_manager_metrics_recorder.h"
 #include "components/password_manager/sync/browser/sync_credentials_filter.h"
 #include "components/prefs/pref_member.h"
@@ -31,13 +32,16 @@ class PasswordFormManager;
 
 @property(readonly, nonatomic) ios::ChromeBrowserState* browserState;
 
+@property(readonly) password_manager::PasswordManager* passwordManager;
+
 @property(readonly, nonatomic) const GURL& lastCommittedURL;
 
 @end
 
 // An iOS implementation of password_manager::PasswordManagerClient.
 class IOSChromePasswordManagerClient
-    : public password_manager::PasswordManagerClient {
+    : public password_manager::PasswordManagerClient,
+      public password_manager::PasswordManagerClientHelperDelegate {
  public:
   explicit IOSChromePasswordManagerClient(
       id<PasswordManagerClientDelegate> delegate);
@@ -62,6 +66,7 @@ class IOSChromePasswordManagerClient
       std::unique_ptr<password_manager::PasswordFormManager> saved_form_manager)
       override;
   bool IsIncognito() const override;
+  const password_manager::PasswordManager* GetPasswordManager() const override;
   PrefService* GetPrefs() override;
   password_manager::PasswordStore* GetPasswordStore() const override;
   void NotifyUserAutoSignin(
@@ -81,6 +86,10 @@ class IOSChromePasswordManagerClient
   ukm::SourceId GetUkmSourceId() override;
   password_manager::PasswordManagerMetricsRecorder& GetMetricsRecorder()
       override;
+
+  // password_manager::PasswordManagerClientHelperDelegate implementation.
+  void PromptUserToEnableAutosignin() override;
+  password_manager::PasswordManager* GetPasswordManager() override;
 
  private:
   id<PasswordManagerClientDelegate> delegate_;  // (weak)
