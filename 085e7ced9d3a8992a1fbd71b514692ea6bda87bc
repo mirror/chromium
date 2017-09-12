@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe09ef7b_22221f8c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2197,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-12T22:10:35Z",
+      "side": 1,
+      "message": "you\u0027ll want to use url.equals (or probably better TextUtils.equals(...)) here.",
+      "range": {
+        "startLine": 2197,
+        "startChar": 23,
+        "endLine": 2197,
+        "endChar": 24
+      },
+      "revId": "085e7ced9d3a8992a1fbd71b514692ea6bda87bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
