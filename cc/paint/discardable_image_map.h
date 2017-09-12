@@ -34,7 +34,8 @@ class CC_PAINT_EXPORT DiscardableImageMap {
     AnimatedImageMetadata(PaintImage::Id paint_image_id,
                           PaintImage::CompletionState completion_state,
                           std::vector<FrameMetadata> frames,
-                          int repetition_count);
+                          int repetition_count,
+                          int reset_animation_count_stamp);
     AnimatedImageMetadata(const AnimatedImageMetadata& other);
     ~AnimatedImageMetadata();
 
@@ -42,6 +43,7 @@ class CC_PAINT_EXPORT DiscardableImageMap {
     PaintImage::CompletionState completion_state;
     std::vector<FrameMetadata> frames;
     int repetition_count;
+    int reset_animation_count_stamp;
   };
 
   DiscardableImageMap();

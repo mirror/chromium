@@ -215,15 +215,16 @@ bool ImageAnimationController::AnimationState::AdvanceFrame(
   DCHECK(ShouldAnimate());
 
   // Start the animation from the first frame, if not yet started. We don't need
-  // an invalidation here since the pending/active tree should be displaying the
-  // first frame.
+  // an invalidation here if the pending and active tree are both displaying the
+  // first frame. Its possible for the 2 to be different if the animation was
+  // reset, in which case we are starting again from the first frame on the
+  // pending tree.
   if (!animation_started_) {
     DCHECK_EQ(pending_index_, 0u);
-    DCHECK_EQ(pending_index_, active_index_);
 
     next_desired_frame_time_ = now + frames_[0].duration;
     animation_started_ = true;
-    return false;
+    return pending_index_ != active_index_;
   }
 
   // Don't advance the animation if its not time yet to move to the next frame.
@@ -303,6 +304,11 @@ void ImageAnimationController::AnimationState::UpdateMetadata(
   if (pending_index_ == last_frame_index && is_complete() &&
       repetitions_completed_ == 0)
     repetitions_completed_++;
+
+  if (reset_animation_count_stamp_ < data.reset_animation_count_stamp) {
+    reset_animation_count_stamp_ = data.reset_animation_count_stamp;
+    ResetAnimation();
+  }
 }
 
 void ImageAnimationController::AnimationState::PushPendingToActive() {
@@ -327,6 +333,14 @@ void ImageAnimationController::AnimationState::UpdateStateFromDrivers() {
       break;
     }
   }
+}
+
+void ImageAnimationController::AnimationState::ResetAnimation() {
+  animation_started_ = false;
+  next_desired_frame_time_ = base::TimeTicks();
+  repetitions_completed_ = 0;
+  pending_index_ = 0u;
+  // Don't reset the |active_index_|, tiles on the active tree still need it.
 }
 
 size_t ImageAnimationController::AnimationState::NextFrameIndex() const {
