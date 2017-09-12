@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "11c6a153_88ce8825",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-12T13:34:20Z",
+      "side": 1,
+      "message": "Whoops!  There\u0027s _mm_setr_epi8 if you like writing them in the order you had.",
+      "parentUuid": "ce1ec626_ef424ba0",
+      "revId": "41b4e6bb2f36f0b81520e4e32ea42dd728d94254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ff2f0c6_b6bcafd4",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 3
