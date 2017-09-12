@@ -32,9 +32,12 @@
 #include "components/signin/core/browser/fake_gaia_cookie_manager_service.h"
 #include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
+#include "components/signin/core/browser/scoped_account_consistency.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_metrics.h"
 #include "components/signin/core/browser/test_signin_client.h"
+#include "components/signin/core/common/profile_management_switches.h"
+#include "components/signin/core/common/signin_features.h"
 #include "components/sync_preferences/pref_service_syncable.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "google_apis/gaia/fake_oauth2_token_service_delegate.h"
@@ -314,6 +317,17 @@ TEST_F(AccountReconcilorTest, ProfileAlreadyConnected) {
   ASSERT_TRUE(reconcilor);
   ASSERT_TRUE(reconcilor->IsRegisteredWithTokenService());
 }
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+TEST_F(AccountReconcilorTest, EnabledWithDice) {
+  signin::ScopedAccountConsistencyDice scoped_dice;
+  ASSERT_TRUE(signin::IsAccountConsistencyDiceEnabled());
+  AccountReconcilor* reconcilor =
+      AccountReconcilorFactory::GetForProfile(profile());
+  ASSERT_TRUE(reconcilor);
+  ASSERT_TRUE(reconcilor->IsRegisteredWithTokenService());
+}
+#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
 TEST_F(AccountReconcilorTest, GetAccountsFromCookieSuccess) {
   const std::string account_id =

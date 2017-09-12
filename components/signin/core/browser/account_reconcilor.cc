@@ -97,9 +97,7 @@ void AccountReconcilor::Initialize(bool start_reconcile_if_tokens_available) {
   VLOG(1) << "AccountReconcilor::Initialize";
   RegisterWithSigninManager();
 
-  // If this user is not signed in, the reconcilor should do nothing but
-  // wait for signin.
-  if (IsProfileConnected()) {
+  if (IsReconcilorEnabled()) {
     RegisterWithCookieManagerService();
     RegisterWithContentSettings();
     RegisterWithTokenService();
@@ -190,8 +188,9 @@ void AccountReconcilor::UnregisterWithCookieManagerService() {
   registered_with_cookie_manager_service_ = false;
 }
 
-bool AccountReconcilor::IsProfileConnected() {
-  return signin_manager_->IsAuthenticated();
+bool AccountReconcilor::IsReconcilorEnabled() {
+  return signin_manager_->IsAuthenticated() ||
+         signin::IsAccountConsistencyDiceEnabled();
 }
 
 signin_metrics::AccountReconcilorState AccountReconcilor::GetState() {
@@ -294,8 +293,8 @@ void AccountReconcilor::StartReconcile() {
 
   reconcile_start_time_ = base::Time::Now();
 
-  if (!IsProfileConnected() || !client_->AreSigninCookiesAllowed()) {
-    VLOG(1) << "AccountReconcilor::StartReconcile: !connected or no cookies";
+  if (!IsReconcilorEnabled() || !client_->AreSigninCookiesAllowed()) {
+    VLOG(1) << "AccountReconcilor::StartReconcile: !enabled or no cookies";
     return;
   }
 
@@ -359,7 +358,8 @@ void AccountReconcilor::OnGaiaAccountsInCookieUpdated(
 
 void AccountReconcilor::ValidateAccountsFromTokenService() {
   primary_account_ = signin_manager_->GetAuthenticatedAccountId();
-  DCHECK(!primary_account_.empty());
+  DCHECK(signin::IsAccountConsistencyDiceEnabled() ||
+         !primary_account_.empty());
 
   chrome_accounts_ = token_service_->GetAccounts();
 

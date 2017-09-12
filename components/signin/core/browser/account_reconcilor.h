@@ -107,9 +107,11 @@ class AccountReconcilor : public KeyedService,
  private:
   friend class Lock;
   friend class AccountReconcilorTest;
+  friend class DiceBrowserTestBase;
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, SigninManagerRegistration);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, Reauth);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, ProfileAlreadyConnected);
+  FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, EnabledWithDice);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest,
                            StartReconcileCookiesDisabled);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest,
@@ -156,7 +158,8 @@ class AccountReconcilor : public KeyedService,
   void RegisterWithContentSettings();
   void UnregisterWithContentSettings();
 
-  bool IsProfileConnected();
+  // The reconcilor is enabled if Sync or Dice is enabled.
+  bool IsReconcilorEnabled();
   // Returns true if account consistency is enabled (Mirror or Dice).
   bool IsAccountConsistencyEnabled();
 
