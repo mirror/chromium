@@ -196,6 +196,17 @@ class Json5File(object):
             raise Exception("Unknown value: '%s'\nValid values: %s, \
                 Please change your value to a valid value" % (value, valid_values))
 
+    def validate_dictionary(self, dictionary):
+        for key, value in dictionary.items():
+            if key not in self.parameters and key != 'name':
+                raise Exception(
+                    "Unknown parameter: '%s'\nKnown params: %s" %
+                    (key, self.parameters.keys()))
+            if key != 'name':
+                assert self.parameters[key] is not None, \
+                    "Specification for parameter 'key' cannot be None. Use {} instead."
+                if value is not None:
+                    self._validate_parameter(self.parameters[key], value)
 
 class Writer(object):
     # Subclasses should override.

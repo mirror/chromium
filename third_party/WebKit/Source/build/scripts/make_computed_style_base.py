@@ -581,31 +581,24 @@ def _evaluate_rare_inherit_group(all_properties, properties_ranking_file,
 class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
     def __init__(self, json5_file_paths):
         # Read CSSProperties.json5
-        super(ComputedStyleBaseWriter, self).__init__([json5_file_paths[0]])
+        super(ComputedStyleBaseWriter, self).__init__([json5_file_paths[0]], extra_field_path=json5_file_paths[1])
 
         # Ignore shorthand properties
         for property_ in self._properties.values():
-            if property_['field_template'] is not None:
+            if len(property_["fields"]) > 0:
                 assert not property_['longhands'], \
                     "Shorthand '{}' cannot have a field_template.".format(property_['name'])
 
-        css_properties = [value for value in self._properties.values() if not value['longhands']]
         # We sort the enum values based on each value's position in
         # the keywords as listed in CSSProperties.json5. This will ensure that if there is a continuous
         # segment in CSSProperties.json5 matching the segment in this enum then
         # the generated enum will have the same order and continuity as
         # CSSProperties.json5 and we can get the longest continuous segment.
         # Thereby reduce the switch case statement to the minimum.
-        css_properties = keyword_utils.sort_keyword_properties_by_canonical_order(css_properties,
-                                                                                  json5_file_paths[3],
-                                                                                  self.json5_file.parameters)
-
-        for property_ in css_properties:
-            # Set default values for extra parameters in ComputedStyleExtraFields.json5.
-            property_['custom_copy'] = False
-            property_['custom_compare'] = False
-            property_['mutable'] = False
-
+        css_properties_fields = self._fields.values()
+        css_properties_fields = keyword_utils.sort_keyword_properties_by_canonical_order(css_properties_fields,
+                                                                                         json5_file_paths[3],
+                                                                                         self.json5_file.parameters)
         # Read ComputedStyleExtraFields.json5 using the parameter specification from the CSS properties file.
         extra_fields = json5_generator.Json5File.load_from_files(
             [json5_file_paths[1]],
@@ -616,9 +609,9 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
             if property_['mutable']:
                 assert property_['field_template'] == 'monotonic_flag', \
                     'mutable keyword only implemented for monotonic_flag'
-            make_style_builder.apply_property_naming_defaults(property_)
+            make_style_builder.apply_field_naming_defaults(property_)
 
-        all_properties = css_properties + extra_fields
+        all_properties = css_properties_fields + extra_fields
 
         self._generated_enums = _create_enums(all_properties)
 
@@ -651,7 +644,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
     def generate_base_computed_style_h(self):
         return {
             'input_files': self._input_files,
-            'properties': self._properties,
+            'properties': self._fields,
             'enums': self._generated_enums,
             'include_paths': self._include_paths,
             'computed_style': self._root_group,
@@ -662,7 +655,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
     def generate_base_computed_style_cpp(self):
         return {
             'input_files': self._input_files,
-            'properties': self._properties,
+            'properties': self._fields,
             'enums': self._generated_enums,
             'include_paths': self._include_paths,
             'computed_style': self._root_group,
@@ -673,7 +666,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
     def generate_base_computed_style_constants(self):
         return {
             'input_files': self._input_files,
-            'properties': self._properties,
+            'properties': self._fields,
             'enums': self._generated_enums,
         }
 

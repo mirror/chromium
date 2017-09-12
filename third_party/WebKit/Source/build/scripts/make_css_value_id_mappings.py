@@ -98,21 +98,20 @@ def _find_enum_longest_continuous_segment(property_, name_to_position_dictionary
 
 class CSSValueIDMappingsWriter(make_style_builder.StyleBuilderWriter):
     def __init__(self, json5_file_path):
-        super(CSSValueIDMappingsWriter, self).__init__([json5_file_path[0]])
+        super(CSSValueIDMappingsWriter, self).__init__([json5_file_path[0]], extra_field_path=json5_file_path[2])
         self._outputs = {
             'CSSValueIDMappingsGenerated.h': self.generate_css_value_mappings,
         }
         self.css_values_dictionary_file = json5_file_path[1]
-        css_properties = [value for value in self._properties.values() if not value['longhands']]
         # We sort the enum values based on each value's position in
         # the keywords as listed in CSSProperties.json5. This will ensure that if there is a continuous
         # segment in CSSProperties.json5 matching the segment in this enum then
         # the generated enum will have the same order and continuity as
         # CSSProperties.json5 and we can get the longest continuous segment.
         # Thereby reduce the switch case statement to the minimum.
-        css_properties = keyword_utils.sort_keyword_properties_by_canonical_order(css_properties,
-                                                                                  json5_file_path[1],
-                                                                                  self.json5_file.parameters)
+        keyword_utils.sort_keyword_properties_by_canonical_order(self._fields.values(),
+                                                                 json5_file_path[1],
+                                                                 self.json5_file.parameters)
 
 
     @template_expander.use_jinja('templates/CSSValueIDMappingsGenerated.h.tmpl')
@@ -125,7 +124,7 @@ class CSSValueIDMappingsWriter(make_style_builder.StyleBuilderWriter):
         ).name_dictionaries
         name_to_position_dictionary = dict(zip([x['name'] for x in css_values_dictionary], range(len(css_values_dictionary))))
 
-        for property_ in self._properties.values():
+        for property_ in self._fields.values():
             include_paths.update(property_['include_paths'])
             if property_['field_template'] == 'multi_keyword':
                 mappings[property_['type_name']] = {

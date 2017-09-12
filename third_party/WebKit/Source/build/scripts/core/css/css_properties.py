@@ -29,7 +29,7 @@ def check_property_parameters(property_to_check):
 
 
 class CSSProperties(json5_generator.Writer):
-    def __init__(self, file_paths):
+    def __init__(self, file_paths, **extra_paramaters):
         json5_generator.Writer.__init__(self, file_paths)
 
         # StylePropertyMetadata assumes that there are at most 1024 properties + aliases.
@@ -104,6 +104,37 @@ class CSSProperties(json5_generator.Writer):
         self._properties_including_aliases += self._aliases
 
         self.last_unresolved_property_id = max(property_["enum_value"] for property_ in self._properties_including_aliases)
+        if 'extra_field_path' in extra_paramaters:
+            # read extra_field and extract fields from CSSProperties.json5
+            # there are main field and sub field, main field is always at fields[0]
+            fields = []
+            extra_fields_file = json5_generator.Json5File.load_from_files([extra_paramaters['extra_field_path']])
+            self.field_parameters = extra_fields_file.parameters
+            common_parameters = set(self.field_parameters.keys()).intersection(set(self.json5_file.parameters))
+            field_only_parameters = set(self.field_parameters.keys()).difference(common_parameters)
+            for property_ in self._properties.values():
+                if len(property_['fields']) > 0:
+                    for field in property_['fields']:
+                        if 'name' not in field:
+                            field['name'] = property_['name']
+
+                        for param in common_parameters:
+                            if param not in field:
+                                field[param] = property_[param]
+
+                        for param in field_only_parameters:
+                            if param not in field:
+                                if 'default' in self.field_parameters[param]:
+                                    field[param] = self.field_parameters[param]['default']
+                                elif 'default' not in self.field_parameters[param]:
+                                    field[param] = None
+
+                        extra_fields_file.validate_dictionary(field)
+                        field['css_property'] = property_
+                        fields.append(field)
+
+            self._fields = {field['name']: field for field in fields}
+
 
     def properties(self):
         return self._properties
