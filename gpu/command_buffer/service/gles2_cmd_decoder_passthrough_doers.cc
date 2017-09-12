@@ -2815,7 +2815,7 @@ error::Error GLES2DecoderPassthroughImpl::DoSwapBuffers() {
     return error::kNoError;
   }
 
-  gfx::SwapResult result = surface_->SwapBuffers();
+  gfx::SwapResult result = surface_->SwapBuffers(nullptr);
   if (result == gfx::SwapResult::SWAP_FAILED) {
     LOG(ERROR) << "Context lost because SwapBuffers failed.";
     if (!CheckResetStatus()) {

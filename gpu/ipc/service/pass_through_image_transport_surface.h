@@ -39,7 +39,8 @@ class PassThroughImageTransportSurface : public gl::GLSurfaceAdapter {
   // GLSurface implementation.
   bool Initialize(gl::GLSurfaceFormat format) override;
   void Destroy() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(
+      std::vector<ui::LatencyInfo>* latency_info) override;
   void SwapBuffersAsync(const SwapCompletionCallback& callback) override;
   gfx::SwapResult SwapBuffersWithBounds(
       const std::vector<gfx::Rect>& rects) override;
@@ -65,14 +66,14 @@ class PassThroughImageTransportSurface : public gl::GLSurfaceAdapter {
   // Add |latency_info| to be reported and augumented with GPU latency
   // components next time there is a GPU buffer swap.
   void AddLatencyInfo(const std::vector<ui::LatencyInfo>& latency_info);
-  std::unique_ptr<std::vector<ui::LatencyInfo>> StartSwapBuffers();
-  void FinishSwapBuffers(
-      std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info,
-      gfx::SwapResult result);
-  void FinishSwapBuffersAsync(
-      std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info,
-      GLSurface::SwapCompletionCallback callback,
-      gfx::SwapResult result);
+  bool StartSwapBuffers(std::vector<ui::LatencyInfo>* latency_info);
+  void FinishSwapBuffers(std::vector<ui::LatencyInfo> latency_info,
+                         bool has_browser_snapshot_request,
+                         gfx::SwapResult result);
+  void FinishSwapBuffersAsync(std::vector<ui::LatencyInfo> latency_info,
+                              GLSurface::SwapCompletionCallback callback,
+                              bool has_browser_snapshot_request,
+                              gfx::SwapResult result);
 
   base::WeakPtr<ImageTransportSurfaceDelegate> delegate_;
   std::vector<ui::LatencyInfo> latency_info_;
