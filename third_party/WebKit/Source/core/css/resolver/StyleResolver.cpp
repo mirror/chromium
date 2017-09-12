@@ -94,6 +94,17 @@
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/wtf/StdLibExtras.h"
 
+namespace {
+
+// Check if the element is a media control.
+bool IsMediaControl(const blink::Element* element) {
+  DCHECK(element);
+  return element->ShadowPseudoId().StartsWith("-internal-media-") ||
+         element->ShadowPseudoId().StartsWith("-webkit-media-");
+}
+
+}  // namespace
+
 namespace blink {
 
 namespace {
@@ -189,7 +200,25 @@ void StyleResolver::SetRuleUsageTracker(StyleRuleUsageTracker* tracker) {
   tracker_ = tracker;
 }
 
-static inline ScopedStyleResolver* ScopedResolverFor(const Element& element) {
+// Check if the element has an ancestor that is a media control.
+bool StyleResolver::HasMediaControlAncestor(const blink::Element* element) {
+  DCHECK(element);
+
+  while (element) {
+    if (IsMediaControl(element))
+      return true;
+
+    if (element->IsShadowRoot()) {
+      element = element->OwnerShadowHost();
+    } else {
+      element = element->ParentOrShadowHostElement();
+    }
+  }
+
+  return false;
+}
+
+ScopedStyleResolver* StyleResolver::ScopedResolverFor(const Element& element) {
   // For normal elements, returning element->treeScope().scopedStyleResolver()
   // is enough. Rules for ::cue and custom pseudo elements like
   // ::-webkit-meter-bar pierce through a single shadow dom boundary and apply
@@ -198,11 +227,13 @@ static inline ScopedStyleResolver* ScopedResolverFor(const Element& element) {
   // An assumption here is that these elements belong to scopes without a
   // ScopedStyleResolver due to the fact that VTT scopes and UA shadow trees
   // don't have <style> or <link> elements. This is backed up by the DCHECKs
-  // below.
+  // below. The one exception to this assumption are the media controls which
+  // use a <style> element for CSS animations in the shadow DOM.
 
   TreeScope* tree_scope = &element.GetTreeScope();
   if (ScopedStyleResolver* resolver = tree_scope->GetScopedStyleResolver()) {
-    DCHECK(element.ShadowPseudoId().IsEmpty());
+    if (!HasMediaControlAncestor(&element))
+      DCHECK(element.ShadowPseudoId().IsEmpty());
     DCHECK(!element.IsVTTElement());
     return resolver;
   }
