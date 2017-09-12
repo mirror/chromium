@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c975c72d_19803e89",
+        "filename": "content/child/service_worker/controller_service_worker_connector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-12T14:58:02Z",
+      "side": 1,
+      "message": "(ah i wrote that before reading Kinuko\u0027s response so it\u0027s a bit redundant)",
+      "parentUuid": "37c41e72_52320a5b",
+      "revId": "554f788d13945d71974c78bc91bf4f490e5ec819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4e01621_8dd9f0a8",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 11
