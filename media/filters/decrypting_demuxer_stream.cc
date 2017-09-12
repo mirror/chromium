@@ -4,6 +4,8 @@
 
 #include "media/filters/decrypting_demuxer_stream.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/location.h"
@@ -14,6 +16,8 @@
 #include "media/base/decoder_buffer.h"
 #include "media/base/media_log.h"
 #include "media/base/media_util.h"
+
+#include "base/strings/stringprintf.h"
 
 namespace media {
 
@@ -261,6 +265,37 @@ void DecryptingDemuxerStream::DecryptPendingBuffer() {
           base::Bind(&DecryptingDemuxerStream::DeliverBuffer, weak_this_)));
 }
 
+static std::string HexDump(base::StringPiece binary_input) {
+  int offset = 0;
+  const int kBytesPerLine = 16;  // Max bytes dumped per line
+  const char* buf = binary_input.data();
+  int bytes_remaining = binary_input.size();
+  std::string s;  // our output
+  const char* p = buf;
+  while (bytes_remaining > 0) {
+    const int line_bytes = std::min(bytes_remaining, kBytesPerLine);
+    base::StringAppendF(&s, "0x%04x:  ", offset);  // Do the line header
+    for (int i = 0; i < kBytesPerLine; ++i) {
+      if (i < line_bytes) {
+        base::StringAppendF(&s, "%02x", static_cast<unsigned char>(p[i]));
+      } else {
+        s += "  ";  // two-space filler instead of two-space hex digits
+      }
+      if (i % 2)
+        s += ' ';
+    }
+    s += ' ';
+    for (int i = 0; i < line_bytes; ++i) {  // Do the ASCII dump
+      s += (p[i] > 32 && p[i] < 127) ? p[i] : '.';
+    }
+    bytes_remaining -= line_bytes;
+    offset += line_bytes;
+    p += line_bytes;
+    s += '\n';
+  }
+  return s;
+}
+
 void DecryptingDemuxerStream::DeliverBuffer(
     Decryptor::Status status,
     const scoped_refptr<DecoderBuffer>& decrypted_buffer) {
@@ -321,6 +356,15 @@ void DecryptingDemuxerStream::DeliverBuffer(
 
   pending_buffer_to_decrypt_ = NULL;
   state_ = kIdle;
+
+  const size_t kMaxSizeToDump = 1024;
+  base::StringPiece data(
+      reinterpret_cast<const char*>(decrypted_buffer->data()),
+      std::min(kMaxSizeToDump, decrypted_buffer->data_size()));
+
+  LOG(ERROR) << "HexDump of decrypted data";
+  LOG(ERROR) << HexDump(data);
+
   base::ResetAndReturn(&read_cb_).Run(kOk, decrypted_buffer);
 }
 
