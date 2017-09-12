@@ -142,6 +142,23 @@
     },
     {
       "key": {
+        "uuid": "7e0684a2_6338fd44",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-12T17:30:52Z",
+      "side": 1,
+      "message": "!username_has_space here?\n\nE.g. something like:\ncan\u0027t login @localhost:8080",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01a9bfe6_2564c52f",
         "filename": "components/omnibox/browser/autocomplete_input_unittest.cc",
         "patchSetId": 2
