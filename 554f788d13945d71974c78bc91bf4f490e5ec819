@@ -16,6 +16,24 @@
       "revId": "554f788d13945d71974c78bc91bf4f490e5ec819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d428fb_7ceb06b2",
+        "filename": "content/child/service_worker/controller_service_worker_connector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-12T14:10:56Z",
+      "side": 1,
+      "message": "I\u0027m imagining a race case like: a resource loading has started about the same time as the service worker is killing itself after being idle for a while. I think in this case we should restart the service worker and resend the request to it?  We probably would need to be careful not to repeat this multiple times though if we get multiple connection errors in a row. For fetch timeout cases my current thinking is that the sender (i.e. the controllee) times it and asks the browser-process to kill it if it takes too long.",
+      "parentUuid": "8eb0ca15_c283dfe9",
+      "revId": "554f788d13945d71974c78bc91bf4f490e5ec819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
