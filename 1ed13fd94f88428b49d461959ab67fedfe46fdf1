@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a55e0fa7_31381c37",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-12T09:04:07Z",
+      "side": 1,
+      "message": "I think we can define a new public API in LayoutGrid, like ContentAlignment(GridAxis) so these multiple lines can be replaced by a single line, independently of the direction/axis logic. \n\nWe have similar API for SelfAlignmentForChild() and DefaultAlignment()",
+      "revId": "1ed13fd94f88428b49d461959ab67fedfe46fdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
