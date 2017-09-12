@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "f1f431e2_0aaf6eba",
+        "filename": "ash/shelf/shelf.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "It seems like ShelfWidget should be/own the session state observer, so it can swap the visibility of its |shelf_view_|/|login_shelf_view_|, it can also instruct LoginShelfView to update the buttons as needed. Shell/RootWindowController/(Shelf?) should probably not be involved. I also think it\u0027s okay for ShelfWidget and the [Login]ShelfView classes to check the session state in their constructors as needed.",
+      "parentUuid": "094c6adf_a5d7ba69",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7d7bcec_78f5deaa",
         "filename": "ash/shelf/shelf.h",
         "patchSetId": 10

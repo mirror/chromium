@@ -1,0 +1,497 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c911bd5_eb60d87b",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 12
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "Please use/move existing strings if possible; adding duplicates is not good.\n(eg. use these to replace IDS_SHUTDOWN_BUTTON/IDS_RESTART_BUTTON/etc.)",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c63ade_db8f9a61",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "nit: In general, avoid \"we\" in comments. Use passive verbs instead, like \"Returns true if the md-based login/lock UI is enabled.\"",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28515712_97a56d6b",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "So, by using this container, the shelf window is always visible regardless of the lock state? (ie. we don\u0027t need to swap containers on session state changes?) Sounds good, but maybe update the comment for kShellWindowId_LockScreenRelatedContainersContainer? (\"Only used by PowerButtonController for animating lower-level containers.\")",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8f338e_02cd6230",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c0c943e_ac78a5f4",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "Are you sure that the LoginShelfView itself should be focusable? (ShelfView doesn\u0027t do that...) It seems like just the buttons it contains should be focusable.",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0661af2b_e83a015e",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "This is not a good pattern (please avoid keying by pointer and setting callbacks bound to an unretained raw pointer to this class). Instead, switch on the view id (ButtonId) of |sender| here to invoke the appropriate behavior (ideally inlining the OnShutdownOrRestart/OnSignOut/etc. code in ButtonPressed, since they\u0027re all very simple).",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac705638_dc1f4a07",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "Why bother setting all the children invisible? Why not just rely on this LoginShelfView becoming invisible?",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd6d7b03_b1a2fc77",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "nit: no (c)",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c0549d_0d25de35",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "nit: forward declare enum class ash::mojom::TrayActionState instead?",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575d53f7_91581c38",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "nit: needed?",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0572568c_3989a16b",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "nit: most enums use ALL_CAPS identifiers.",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2946de9b_c4706391",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "The others are mostly obvious, but this one isn\u0027t, consider commenting on all.",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086bab0d_fdf510e3",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "Add comments for all class methods",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838a4f56_24a251c6",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "nit: |string_id| or |string_resource_id|",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c70836af_c2188f82",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "Initialize all these values here",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5900bdf6_c28c5867",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae7d0c94_704686c2",
+        "filename": "ash/shelf/shelf.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "As per the other comment thread, move this elsewhere (mostly to LoginShelfView, some to ShelfWidget as needed)",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32854c51_cb604e15",
+        "filename": "ash/shelf/shelf.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "Match override ordering with the order of subclasses listed above.",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea5a738c_d6da604e",
+        "filename": "ash/shelf/shelf.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "LoginTrayView should do this directly, avoid indirection when possible.",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf768e5_6d8e0a59",
+        "filename": "ash/shelf/shelf.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "LoginTrayView should do this directly, avoid indirection when possible.",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab711e29_72777fcd",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "q: Should we always hide the currently-visible view, before showing the currently-hidden view?",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc51ccf_654fafc0",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "nit: avoid default, list out the cases here.",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b1d4e5e_e229894b",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "Does it make sense to hide both here? (what happens if the session state gets stuck here?)",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3ed40a_afb97561",
+        "filename": "ash/shelf/shelf_widget.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be needed if ShelfWidget winds up implementing the observer interface itself.",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c4ec68_7b06390d",
+        "filename": "ash/shelf/shelf_widget.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "Not needed",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ef8c8a_4143096b",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "Why do you reset to the primary login screen state before the block below?\n(seems like ClearLogin might conflict with the attempt to lock the screen below)",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f59a0ab5_bbd027c9",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "Is it okay to transition directly from LOCKED to LOGIN_SECONDARY in this test?\n(seems like that\u0027s not a realistic state transition in production usage)",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c924ced_48ae708f",
+        "filename": "ash/shutdown_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "nit: for a single simple bool set for testing, I\u0027d suggest (1) casting the ash::ShutdownController to ash::mojom::ShutdownController in the test to call that interface\u0027s public SetRebootOnShutdown, or (2) adding a SetRebootOnShutdownForTesting on this ash::ShutdownController",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2a3f91_58c48a49",
+        "filename": "chrome/browser/ui/webui/chromeos/login/oobe_ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-12T18:24:51Z",
+      "side": 1,
+      "message": "q: should this string be something like \"showMDLogin\"?",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
