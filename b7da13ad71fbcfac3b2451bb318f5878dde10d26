@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4498e741_2027acf4",
+        "filename": "testing/libfuzzer/fuzzers/url.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-12T17:23:32Z",
+      "side": 1,
+      "message": "Yes there is this format (sort of). I didn\u0027t include it intentionally.\n\nI actually had this in a previous upload, but I removed it. https://chromium-review.googlesource.com/c/chromium/src/+/660784/3/testing/libfuzzer/fuzzers/url.proto#13\n\nI removed it for two reasons:\n\n1. The main purpose of the fuzzer is to serve as an example for developers writing libprotobuf-mutator fuzzers in Chromium, so I thought it is more important for the example to be straightforward rather than a perfect fuzzer.\n\n2. It\u0027s not allowed by Chromium (mouse over or click this link: http://user:password@chromium.org/ you\u0027ll see Chrome has stripped user:password@ from the URL even though I included it).\nThe code the fuzzer is testing has to handle username:password@ when it shows up (https://cs.chromium.org/chromium/src/url/gurl.h?q\u003duser+password+url\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d305), but I figured including it would be even more excessive due to reason 1.\n\nI can add it back if we think it would be better to include it. I don\u0027t feel very strongly either way. What do you think?",
+      "parentUuid": "f76bb90c_1a1acec0",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 23
+      },
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9da41c19_40f1ec37",
         "filename": "testing/libfuzzer/fuzzers/url.proto",
         "patchSetId": 4
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "5a0113bf_a29ad99e",
+        "filename": "testing/libfuzzer/fuzzers/url.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-12T17:23:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb7807d1_b4107a22",
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a56e8f56_3384da9e",
         "filename": "testing/libfuzzer/fuzzers/url.proto",
         "patchSetId": 4
@@ -74,6 +116,24 @@
       "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7be8240_923a635a",
+        "filename": "testing/libfuzzer/fuzzers/url.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-12T17:23:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a56e8f56_3384da9e",
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "1ae60eff_726505df",
+        "filename": "testing/libfuzzer/fuzzers/url_parse_proto_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-12T17:23:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9eb7551f_d781ed12",
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e95523c8_e7876b78",
         "filename": "testing/libfuzzer/fuzzers/url_parse_proto_fuzzer.cc",
         "patchSetId": 4
@@ -105,6 +183,24 @@
       "writtenOn": "2017-09-12T13:21:19Z",
       "side": 1,
       "message": "Why src/src, probably file a bug to get it to be src/",
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3339fb65_8b73d6f5",
+        "filename": "testing/libfuzzer/fuzzers/url_parse_proto_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-12T17:23:32Z",
+      "side": 1,
+      "message": "We agreed in person that renaming is more trouble than its worth.",
+      "parentUuid": "e95523c8_e7876b78",
       "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -146,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "bfb08a5f_765a3053",
+        "filename": "testing/libfuzzer/fuzzers/url_parse_proto_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-12T17:23:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b28ea04_bd4232db",
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d63dde1b_08aad9ac",
         "filename": "testing/libfuzzer/fuzzers/url_parse_proto_fuzzer.cc",
         "patchSetId": 4
@@ -160,6 +274,24 @@
       "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c788640_46889076",
+        "filename": "testing/libfuzzer/fuzzers/url_parse_proto_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-12T17:23:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d63dde1b_08aad9ac",
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "0673fdfc_762dc201",
+        "filename": "testing/libfuzzer/fuzzers/url_parse_proto_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-12T17:23:32Z",
+      "side": 1,
+      "message": "You\u0027re correct. Great catch. Thanks!\n\nDone",
+      "parentUuid": "deb2cf38_cfd77da0",
+      "range": {
+        "startLine": 60,
+        "startChar": 18,
+        "endLine": 60,
+        "endChar": 35
+      },
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef74c011_6ad630ce",
         "filename": "testing/libfuzzer/fuzzers/url_parse_proto_fuzzer.cc",
         "patchSetId": 4
@@ -200,6 +356,24 @@
       "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d19d78_94281952",
+        "filename": "testing/libfuzzer/fuzzers/url_parse_proto_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-12T17:23:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef74c011_6ad630ce",
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
