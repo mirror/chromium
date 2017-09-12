@@ -315,14 +315,28 @@ VisiblePosition StartOfNextParagraph(const VisiblePosition& visible_position) {
 
 // TODO(editing-dev): isStartOfParagraph(startOfNextParagraph(pos)) is not
 // always true
-bool InSameParagraph(const VisiblePosition& a,
-                     const VisiblePosition& b,
-                     EditingBoundaryCrossingRule boundary_crossing_rule) {
+template <typename Strategy>
+bool InSameParagraphAlgorithm(
+    const VisiblePositionTemplate<Strategy>& a,
+    const VisiblePositionTemplate<Strategy>& b,
+    EditingBoundaryCrossingRule boundary_crossing_rule) {
   DCHECK(a.IsValid()) << a;
   DCHECK(b.IsValid()) << b;
   return a.IsNotNull() &&
          StartOfParagraph(a, boundary_crossing_rule).DeepEquivalent() ==
              StartOfParagraph(b, boundary_crossing_rule).DeepEquivalent();
+}
+
+bool InSameParagraph(const VisiblePosition& a,
+                     const VisiblePosition& b,
+                     EditingBoundaryCrossingRule boundary_crossing_rule) {
+  return InSameParagraphAlgorithm(a, b, boundary_crossing_rule);
+}
+
+bool InSameParagraph(const VisiblePositionInFlatTree& a,
+                     const VisiblePositionInFlatTree& b,
+                     EditingBoundaryCrossingRule boundary_crossing_rule) {
+  return InSameParagraphAlgorithm(a, b, boundary_crossing_rule);
 }
 
 bool IsStartOfParagraph(const VisiblePosition& pos,

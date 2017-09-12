@@ -274,6 +274,9 @@ CORE_EXPORT bool IsEndOfParagraph(
 bool InSameParagraph(const VisiblePosition&,
                      const VisiblePosition&,
                      EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
+bool InSameParagraph(const VisiblePositionInFlatTree&,
+                     const VisiblePositionInFlatTree&,
+                     EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
 EphemeralRange ExpandToParagraphBoundary(const EphemeralRange&);
 
 // blocks (true paragraphs; line break elements don't break blocks)
