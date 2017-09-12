@@ -33,6 +33,23 @@
       "revId": "fbcb9242225adfa297d4f17fab61a511f1d7d6d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0178b6ec_26efb362",
+        "filename": "extensions/browser/extension_web_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T01:20:00Z",
+      "side": 1,
+      "message": "Do we still need these lines?",
+      "revId": "fbcb9242225adfa297d4f17fab61a511f1d7d6d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
