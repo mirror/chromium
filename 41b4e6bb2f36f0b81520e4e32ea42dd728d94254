@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dbe85aaf_7cc018e9",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-12T16:59:23Z",
+      "side": 1,
+      "message": "\u003e I believe you\u0027re now letting the compiler use SSSE3 anywhere it likes inside zlib without a runtime check...\n\nGood point.\n\n\u003e The usual pattern is to isolate the SSSE3 code to its own build target and set the flag there, much like we\u0027ve done for :zlib_x86_simd.  You might just plop it in there unless you\u0027re very concerned about improving machines with SSSE3 but not SSE4.2?\n\nMoved it into to its own build target (cribbed from the zlib_x86_simd target and their use of stub code).  Kept it as a separate target so we could add NEON to it  later, added a FIXME.\n\nTrying it on the bots now, patch set #7, PTAL.",
+      "parentUuid": "360f92f5_d3f82467",
+      "revId": "41b4e6bb2f36f0b81520e4e32ea42dd728d94254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca17127b_9f47941b",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 3
