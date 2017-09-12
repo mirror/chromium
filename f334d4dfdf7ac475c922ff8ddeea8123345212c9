@@ -353,6 +353,24 @@
       "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8968c46c_fe4e6802",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-12T05:35:17Z",
+      "side": 1,
+      "message": "Hmm, from memory, \u0027independent\u0027 was a property-level parameter. If a property has \u0027independent: True\u0027, then we generate an additional field called the inherited_flag. It doesn\u0027t really make sense for fields to be independent I think...",
+      "parentUuid": "d4138f3b_9701a1ba",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
