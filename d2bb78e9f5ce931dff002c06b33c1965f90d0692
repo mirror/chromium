@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fc0dea9_51f82507",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/pointerevents/pointerevent_touch-adjustment_click_target-manual.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-09-12T19:08:40Z",
+      "side": 1,
+      "message": "Actually should we make it a WPT?\nThe test won\u0027t work on other browsers and there is no standardized behavior, but one can argue that having a WPT could help others understanding Chrome\u0027s behavior.",
+      "revId": "d2bb78e9f5ce931dff002c06b33c1965f90d0692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
