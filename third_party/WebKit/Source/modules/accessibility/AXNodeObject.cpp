@@ -2406,8 +2406,13 @@ Element* AXNodeObject::ActionElement() const {
   if (!node)
     return nullptr;
 
-  if (node->IsElementNode() && IsClickable())
-    return ToElement(node);
+  const AXObject* obj = this;
+
+  while (obj && !obj->GetNode()->IsElementNode())
+    obj = obj->ParentObject();
+
+  if (obj && obj->GetNode()->IsElementNode())
+    return ToElement(obj->GetNode());
 
   Element* anchor = AnchorElement();
   Element* click_element = MouseButtonListener();
