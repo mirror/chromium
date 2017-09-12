@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91569b96_d42f9b0c",
+        "filename": "third_party/WebKit/LayoutTests/SlowTests",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-12T19:03:05Z",
+      "side": 1,
+      "message": "Let\u0027s mark all audits2 tests slow. I cannot imagine these to run fast ever. Unless we switch to FastMode :)",
+      "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f429c45_f53a4edd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/audits2/audits2-successful-run-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-12T19:03:05Z",
+      "side": 1,
+      "message": "Are you going to update this with every roll? I wonder whether it is going to be inconvenient.",
+      "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f646600_7f3ee33e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-12T19:03:05Z",
+      "side": 1,
+      "message": "There is Host.isUnderTest() method.",
+      "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b9009c_54471c1d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-12T19:03:05Z",
+      "side": 1,
+      "message": "Make this disableLog, so that default is false.",
+      "range": {
+        "startLine": 614,
+        "startChar": 49,
+        "endLine": 614,
+        "endChar": 55
+      },
+      "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "155a1bc2_3fa9a842",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_worker/Audits2Service.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-12T19:03:05Z",
+      "side": 1,
+      "message": "disableLoggingForTesting? I\u0027d actually prefer to move all console.log manipulations to the test code by exposing an empty _disableLoggingForTesting method here, which you sniff in test.",
+      "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
