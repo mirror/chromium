@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3904449e_bcae402e",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-12T03:42:49Z",
+      "side": 1,
+      "message": "It\u0027s preferable to expose the entire SuggestionMarkerListImpl object vs. adding type-specific methods to DMC?\n\nOn DocumentMarkerController, we already have:\n\n- RemoveSpellingMarkersUnderWords()\n- SetTextMatchMarkersActive() (one version for an EphemeralRange and one for an offset range within a Node)\n- LayoutRectsForTextMatchMarkers()\n- InvalidateRectsForAllTextMatchMarkers()\n- InvalidateRectsForTextMatchMarkersInNode()\n\nI think what you\u0027re proposing would be inconsistent with what we\u0027re currently doing.",
+      "parentUuid": "f3a74411_d50bfaf5",
+      "revId": "1d19cdda0df0cb21a455263d76e090833821e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8874c3f8_6a42a781",
         "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "1d19cdda0df0cb21a455263d76e090833821e9ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919ad7ac_61918465",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-12T03:42:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8874c3f8_6a42a781",
+      "revId": "1d19cdda0df0cb21a455263d76e090833821e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1682ecd9_4e22568b",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-12T03:42:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4c88a81e_23ebfbdb",
+      "revId": "1d19cdda0df0cb21a455263d76e090833821e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c4c5982_8975e04b",
         "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "1d19cdda0df0cb21a455263d76e090833821e9ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6131499_b2f9fa28",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-12T03:42:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5c4c5982_8975e04b",
+      "revId": "1d19cdda0df0cb21a455263d76e090833821e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
