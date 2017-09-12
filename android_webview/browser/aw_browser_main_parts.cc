@@ -62,6 +62,18 @@ class AwGeolocationDelegate : public device::GeolocationDelegate {
     return nullptr;
   }
 
+  void GetGeolocationRequestContext(
+      base::OnceCallback<
+          void(const scoped_refptr<net::URLRequestContextGetter>)> callback)
+      override {
+    NOTREACHED() << "No network geolocation for Android webview";
+  }
+
+  std::string GetNetworkGeolocationApiKey() override {
+    NOTREACHED() << "No network geolocation for Android webview";
+    return std::string();
+  }
+
  private:
   DISALLOW_COPY_AND_ASSIGN(AwGeolocationDelegate);
 };
