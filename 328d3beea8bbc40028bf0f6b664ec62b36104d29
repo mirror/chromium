@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20a10fbb_5e8c5dbd",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-12T19:05:56Z",
+      "side": 0,
+      "message": "I am not sure if we can remove at this time. If we would better not, I will restore it.",
+      "revId": "328d3beea8bbc40028bf0f6b664ec62b36104d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
