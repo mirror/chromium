@@ -482,6 +482,7 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   NSView* BrowserCompositorMacGetNSView() const override;
   SkColor BrowserCompositorMacGetGutterColor(SkColor color) const override;
   void BrowserCompositorMacOnBeginFrame() override;
+  viz::LocalSurfaceId GetLocalSurfaceId() const override;
 
   // AcceleratedWidgetMacNSView implementation.
   NSView* AcceleratedWidgetGetNSView() const override;

@@ -400,6 +400,11 @@ void RenderWidgetHostViewMac::BrowserCompositorMacOnBeginFrame() {
   UpdateNeedsBeginFramesInternal();
 }
 
+viz::LocalSurfaceId RenderWidgetHostViewMac::GetLocalSurfaceId() const {
+  // TODO(fsamuel): Implement this.
+  return viz::LocalSurfaceId();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // AcceleratedWidgetMacNSView, public:
 
