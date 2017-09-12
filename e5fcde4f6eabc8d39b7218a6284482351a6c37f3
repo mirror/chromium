@@ -16,6 +16,24 @@
       "revId": "e5fcde4f6eabc8d39b7218a6284482351a6c37f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081ffd53_ab9a07cd",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-12T23:46:20Z",
+      "side": 1,
+      "message": "Done. Added comments for the named parameters.",
+      "parentUuid": "1c6c3d37_b7d1f38b",
+      "revId": "e5fcde4f6eabc8d39b7218a6284482351a6c37f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
