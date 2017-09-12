@@ -339,6 +339,7 @@ ServiceWorkerDatabase::Status ServiceWorkerDatabase::GetNextAvailableIds(
 
 ServiceWorkerDatabase::Status
 ServiceWorkerDatabase::GetOriginsWithRegistrations(std::set<GURL>* origins) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK(sequence_checker_.CalledOnValidSequence());
   DCHECK(origins->empty());
 
@@ -1239,6 +1240,7 @@ ServiceWorkerDatabase::Status ServiceWorkerDatabase::DeleteAllDataForOrigins(
 }
 
 ServiceWorkerDatabase::Status ServiceWorkerDatabase::DestroyDatabase() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK(sequence_checker_.CalledOnValidSequence());
   Disable(FROM_HERE, STATUS_OK);
 
@@ -1842,6 +1844,7 @@ void ServiceWorkerDatabase::BumpNextVersionIdIfNeeded(
 }
 
 bool ServiceWorkerDatabase::IsOpen() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   return db_ != NULL;
 }
 
@@ -1882,6 +1885,7 @@ void ServiceWorkerDatabase::HandleWriteResult(
 }
 
 bool ServiceWorkerDatabase::IsDatabaseInMemory() const {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   return path_.empty();
 }
 

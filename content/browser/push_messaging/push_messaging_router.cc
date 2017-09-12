@@ -30,6 +30,7 @@ const int kPushMessageTimeoutSeconds = 90;
 void RunDeliverCallback(
     const PushMessagingRouter::DeliverMessageCallback& deliver_message_callback,
     mojom::PushDeliveryStatus delivery_status) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
@@ -45,6 +46,7 @@ void PushMessagingRouter::DeliverMessage(
     int64_t service_worker_registration_id,
     const PushEventPayload& payload,
     const DeliverMessageCallback& deliver_message_callback) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   StoragePartition* partition =
       BrowserContext::GetStoragePartitionForSite(browser_context, origin);
@@ -80,6 +82,7 @@ void PushMessagingRouter::FindServiceWorkerRegistrationCallback(
     const DeliverMessageCallback& deliver_message_callback,
     ServiceWorkerStatusCode service_worker_status,
     scoped_refptr<ServiceWorkerRegistration> service_worker_registration) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   UMA_HISTOGRAM_ENUMERATION("PushMessaging.DeliveryStatus.FindServiceWorker",
                             service_worker_status,
@@ -117,6 +120,7 @@ void PushMessagingRouter::DeliverMessageToWorker(
     const scoped_refptr<ServiceWorkerRegistration>& service_worker_registration,
     const PushEventPayload& payload,
     const DeliverMessageCallback& deliver_message_callback) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   int request_id = service_worker->StartRequestWithCustomTimeout(
       ServiceWorkerMetrics::EventType::PUSH,
@@ -125,8 +129,10 @@ void PushMessagingRouter::DeliverMessageToWorker(
       base::TimeDelta::FromSeconds(kPushMessageTimeoutSeconds),
       ServiceWorkerVersion::KILL_ON_TIMEOUT);
 
+  LOG(WARNING) << "ANITA: " << __FUNCTION__ << "About to dispatch push event";
   service_worker->event_dispatcher()->DispatchPushEvent(
       payload, service_worker->CreateSimpleEventCallback(request_id));
+  LOG(WARNING) << "ANITA: " << __FUNCTION__ << "Dispatched push event";
 }
 
 // static
@@ -134,6 +140,7 @@ void PushMessagingRouter::DeliverMessageEnd(
     const DeliverMessageCallback& deliver_message_callback,
     const scoped_refptr<ServiceWorkerRegistration>& service_worker_registration,
     ServiceWorkerStatusCode service_worker_status) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   UMA_HISTOGRAM_ENUMERATION("PushMessaging.DeliveryStatus.ServiceWorkerEvent",
                             service_worker_status,

@@ -51,6 +51,7 @@ ServiceWorkerRegistration::ServiceWorkerRegistration(
       resources_total_size_bytes_(0),
       context_(context),
       task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+        LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK_NE(kInvalidServiceWorkerRegistrationId, registration_id);
   DCHECK(context_);
@@ -58,6 +59,7 @@ ServiceWorkerRegistration::ServiceWorkerRegistration(
 }
 
 ServiceWorkerRegistration::~ServiceWorkerRegistration() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(!listeners_.might_have_observers());
   if (context_)
@@ -67,6 +69,7 @@ ServiceWorkerRegistration::~ServiceWorkerRegistration() {
 }
 
 ServiceWorkerVersion* ServiceWorkerRegistration::GetNewestVersion() const {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   if (installing_version())
     return installing_version();
   if (waiting_version())
@@ -75,26 +78,31 @@ ServiceWorkerVersion* ServiceWorkerRegistration::GetNewestVersion() const {
 }
 
 void ServiceWorkerRegistration::AddListener(Listener* listener) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   listeners_.AddObserver(listener);
 }
 
 void ServiceWorkerRegistration::RemoveListener(Listener* listener) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   listeners_.RemoveObserver(listener);
 }
 
 void ServiceWorkerRegistration::NotifyRegistrationFailed() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   for (auto& observer : listeners_)
     observer.OnRegistrationFailed(this);
   NotifyRegistrationFinished();
 }
 
 void ServiceWorkerRegistration::NotifyUpdateFound() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   for (auto& observer : listeners_)
     observer.OnUpdateFound(this);
 }
 
 void ServiceWorkerRegistration::NotifyVersionAttributesChanged(
     ChangedVersionAttributesMask mask) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   for (auto& observer : listeners_)
     observer.OnVersionAttributesChanged(this, mask, GetInfo());
   if (mask.active_changed() || mask.waiting_changed())
@@ -102,6 +110,7 @@ void ServiceWorkerRegistration::NotifyVersionAttributesChanged(
 }
 
 ServiceWorkerRegistrationInfo ServiceWorkerRegistration::GetInfo() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   return ServiceWorkerRegistrationInfo(
       pattern(), registration_id_,
@@ -114,6 +123,7 @@ ServiceWorkerRegistrationInfo ServiceWorkerRegistration::GetInfo() {
 
 void ServiceWorkerRegistration::SetActiveVersion(
     const scoped_refptr<ServiceWorkerVersion>& version) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   if (active_version_ == version)
     return;
 
@@ -136,6 +146,7 @@ void ServiceWorkerRegistration::SetActiveVersion(
 
 void ServiceWorkerRegistration::SetWaitingVersion(
     const scoped_refptr<ServiceWorkerVersion>& version) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   if (waiting_version_ == version)
     return;
 
@@ -152,6 +163,7 @@ void ServiceWorkerRegistration::SetWaitingVersion(
 
 void ServiceWorkerRegistration::SetInstallingVersion(
     const scoped_refptr<ServiceWorkerVersion>& version) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   if (installing_version_ == version)
     return;
 
@@ -165,6 +177,7 @@ void ServiceWorkerRegistration::SetInstallingVersion(
 }
 
 void ServiceWorkerRegistration::UnsetVersion(ServiceWorkerVersion* version) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   if (!version)
     return;
   ChangedVersionAttributesMask mask;
@@ -176,6 +189,7 @@ void ServiceWorkerRegistration::UnsetVersion(ServiceWorkerVersion* version) {
 void ServiceWorkerRegistration::UnsetVersionInternal(
     ServiceWorkerVersion* version,
     ChangedVersionAttributesMask* mask) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK(version);
   if (installing_version_.get() == version) {
     installing_version_ = NULL;
@@ -192,6 +206,7 @@ void ServiceWorkerRegistration::UnsetVersionInternal(
 }
 
 void ServiceWorkerRegistration::ActivateWaitingVersionWhenReady() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK(waiting_version());
   should_activate_when_ready_ = true;
   if (IsReadyToActivate()) {
@@ -203,6 +218,7 @@ void ServiceWorkerRegistration::ActivateWaitingVersionWhenReady() {
 }
 
 void ServiceWorkerRegistration::ClaimClients() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK(context_);
   DCHECK(active_version());
 
@@ -222,6 +238,7 @@ void ServiceWorkerRegistration::ClaimClients() {
 }
 
 void ServiceWorkerRegistration::ClearWhenReady() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK(context_);
   if (is_uninstalling_)
     return;
@@ -239,6 +256,7 @@ void ServiceWorkerRegistration::ClearWhenReady() {
 
 void ServiceWorkerRegistration::AbortPendingClear(
     const StatusCallback& callback) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK(context_);
   if (!is_uninstalling()) {
     callback.Run(SERVICE_WORKER_OK);
@@ -261,6 +279,7 @@ void ServiceWorkerRegistration::AbortPendingClear(
 }
 
 void ServiceWorkerRegistration::OnNoControllees(ServiceWorkerVersion* version) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   if (!context_)
     return;
   DCHECK_EQ(active_version(), version);
@@ -273,6 +292,7 @@ void ServiceWorkerRegistration::OnNoControllees(ServiceWorkerVersion* version) {
 }
 
 void ServiceWorkerRegistration::OnNoWork(ServiceWorkerVersion* version) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   if (!context_)
     return;
   DCHECK_EQ(active_version(), version);
@@ -281,24 +301,31 @@ void ServiceWorkerRegistration::OnNoWork(ServiceWorkerVersion* version) {
 }
 
 bool ServiceWorkerRegistration::IsReadyToActivate() const {
-  if (!should_activate_when_ready_)
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
+  if (!should_activate_when_ready_) {
+    LOG(WARNING) << "ANITA: " << __FUNCTION__ << " returning - shouldn't activate";
     return false;
+  }
 
   DCHECK(waiting_version());
   const ServiceWorkerVersion* waiting = waiting_version();
   const ServiceWorkerVersion* active = active_version();
   if (!active) {
+    LOG(WARNING) << "ANITA: " << __FUNCTION__ << " returning - not active";
     return true;
   }
   if (IsLameDuckActiveVersion()) {
+    LOG(WARNING) << "ANITA: " << __FUNCTION__ << " returning - lame duck active";
     return !active->HasWork() ||
            waiting->TimeSinceSkipWaiting() > kMaxLameDuckTime ||
            active->TimeSinceNoControllees() > kMaxLameDuckTime;
   }
+  LOG(WARNING) << "ANITA: " << __FUNCTION__ << " returning - end of method";
   return false;
 }
 
 bool ServiceWorkerRegistration::IsLameDuckActiveVersion() const {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   if (!waiting_version() || !active_version())
     return false;
   return waiting_version()->skip_waiting() ||
@@ -306,6 +333,7 @@ bool ServiceWorkerRegistration::IsLameDuckActiveVersion() const {
 }
 
 void ServiceWorkerRegistration::StartLameDuckTimerIfNeeded() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   if (!IsLameDuckActiveVersion() || lame_duck_timer_.IsRunning()) {
     return;
   }
@@ -317,6 +345,7 @@ void ServiceWorkerRegistration::StartLameDuckTimerIfNeeded() {
 }
 
 void ServiceWorkerRegistration::RemoveLameDuckIfNeeded() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   if (!should_activate_when_ready_) {
     lame_duck_timer_.Stop();
     return;
@@ -333,6 +362,7 @@ void ServiceWorkerRegistration::RemoveLameDuckIfNeeded() {
 }
 
 void ServiceWorkerRegistration::ActivateWaitingVersion(bool delay) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(context_);
   DCHECK(IsReadyToActivate());
@@ -436,6 +466,7 @@ void ServiceWorkerRegistration::DeleteVersion(
 }
 
 void ServiceWorkerRegistration::NotifyRegistrationFinished() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   std::vector<base::Closure> callbacks;
   callbacks.swap(registration_finished_callbacks_);
   for (const auto& callback : callbacks)
@@ -444,10 +475,12 @@ void ServiceWorkerRegistration::NotifyRegistrationFinished() {
 
 void ServiceWorkerRegistration::SetTaskRunnerForTest(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   task_runner_ = task_runner;
 }
 
 void ServiceWorkerRegistration::EnableNavigationPreload(bool enable) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   navigation_preload_state_.enabled = enable;
   if (active_version_)
     active_version_->SetNavigationPreloadState(navigation_preload_state_);
@@ -455,6 +488,7 @@ void ServiceWorkerRegistration::EnableNavigationPreload(bool enable) {
 
 void ServiceWorkerRegistration::SetNavigationPreloadHeader(
     const std::string& header) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   navigation_preload_state_.header = header;
   if (active_version_)
     active_version_->SetNavigationPreloadState(navigation_preload_state_);
@@ -462,6 +496,7 @@ void ServiceWorkerRegistration::SetNavigationPreloadHeader(
 
 void ServiceWorkerRegistration::RegisterRegistrationFinishedCallback(
     const base::Closure& callback) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   // This should only be called if the registration is in progress.
   DCHECK(!active_version() && !waiting_version() && !is_uninstalled() &&
          !is_uninstalling());
@@ -522,6 +557,7 @@ void ServiceWorkerRegistration::OnDeleteFinished(
 }
 
 void ServiceWorkerRegistration::Clear() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   is_uninstalling_ = false;
   is_uninstalled_ = true;
   should_activate_when_ready_ = false;
@@ -565,6 +601,7 @@ void ServiceWorkerRegistration::OnRestoreFinished(
     const StatusCallback& callback,
     scoped_refptr<ServiceWorkerVersion> version,
     ServiceWorkerStatusCode status) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   if (!context_) {
     callback.Run(SERVICE_WORKER_ERROR_ABORT);
     return;

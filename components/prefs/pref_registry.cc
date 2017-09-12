@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
@@ -15,9 +16,11 @@
 
 PrefRegistry::PrefRegistry()
     : defaults_(new DefaultPrefStore()) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__ << base::debug::StackTrace().ToString();
 }
 
 PrefRegistry::~PrefRegistry() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__ << base::debug::StackTrace().ToString();
 }
 
 uint32_t PrefRegistry::GetRegistrationFlags(

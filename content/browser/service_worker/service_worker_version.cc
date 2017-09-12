@@ -11,6 +11,7 @@
 #include <string>
 
 #include "base/command_line.h"
+#include "base/debug/stack_trace.h"
 #include "base/guid.h"
 #include "base/location.h"
 #include "base/memory/ref_counted.h"
@@ -296,6 +297,7 @@ ServiceWorkerVersion::ServiceWorkerVersion(
       clock_(base::MakeUnique<base::DefaultClock>()),
       ping_controller_(new PingController(this)),
       weak_factory_(this) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__ << base::debug::StackTrace().ToString();
   DCHECK_NE(kInvalidServiceWorkerVersionId, version_id);
   DCHECK(context_);
   DCHECK(registration);
@@ -306,6 +308,7 @@ ServiceWorkerVersion::ServiceWorkerVersion(
 }
 
 ServiceWorkerVersion::~ServiceWorkerVersion() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__ << base::debug::StackTrace().ToString();
   in_dtor_ = true;
 
   // Record UMA if the worker was trying to start. One way we get here is if the
@@ -607,6 +610,7 @@ bool ServiceWorkerVersion::StartExternalRequest(
 bool ServiceWorkerVersion::FinishRequest(int request_id,
                                          bool was_handled,
                                          base::Time dispatch_event_time) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   PendingRequest* request = pending_requests_.Lookup(request_id);
   if (!request)
     return false;
@@ -654,6 +658,7 @@ bool ServiceWorkerVersion::FinishExternalRequest(
 
 ServiceWorkerVersion::SimpleEventCallback
 ServiceWorkerVersion::CreateSimpleEventCallback(int request_id) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   // The weak reference to |this| is safe because storage of the callbacks, the
   // pending responses of the ServiceWorkerEventDispatcher, is owned by |this|.
   return base::Bind(&ServiceWorkerVersion::OnSimpleEventFinished,
@@ -707,6 +712,7 @@ void ServiceWorkerVersion::OnStreamResponseStarted() {
 }
 
 void ServiceWorkerVersion::OnStreamResponseFinished() {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   DCHECK_GT(pending_stream_response_count_, 0);
   pending_stream_response_count_--;
   if (!HasWork()) {
@@ -1075,6 +1081,7 @@ void ServiceWorkerVersion::OnSimpleEventFinished(
     int request_id,
     ServiceWorkerStatusCode status,
     base::Time dispatch_event_time) {
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
   PendingRequest* request = pending_requests_.Lookup(request_id);
   // |request| will be null when the request has been timed out.
   if (!request)
@@ -1084,7 +1091,9 @@ void ServiceWorkerVersion::OnSimpleEventFinished(
 
   FinishRequest(request_id, status == SERVICE_WORKER_OK, dispatch_event_time);
 
+  LOG(WARNING) << "ANITA: " << __FUNCTION__ << " about to run error callback";
   callback.Run(status);
+  LOG(WARNING) << "ANITA: " << __FUNCTION__ << " ran error callback";
 }
 
 void ServiceWorkerVersion::CountFeature(uint32_t feature) {

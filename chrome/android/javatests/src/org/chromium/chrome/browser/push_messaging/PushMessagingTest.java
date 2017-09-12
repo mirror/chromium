@@ -23,13 +23,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
-import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.infobar.InfoBar;
 import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
@@ -40,7 +39,8 @@ import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.util.InfoBarUtil;
 import org.chromium.chrome.test.util.browser.TabTitleObserver;
-import org.chromium.chrome.test.util.browser.notifications.MockNotificationManagerProxy.NotificationEntry;
+import org.chromium.chrome.test.util.browser.notifications.MockNotificationManagerProxy
+        .NotificationEntry;
 import org.chromium.components.gcm_driver.GCMDriver;
 import org.chromium.components.gcm_driver.GCMMessage;
 import org.chromium.components.gcm_driver.instance_id.FakeInstanceIDWithSubtype;
@@ -62,6 +62,7 @@ import java.util.concurrent.TimeoutException;
 })
 @SuppressLint("NewApi")
 public class PushMessagingTest implements PushMessagingServiceObserver.Listener {
+    private static final String TAG = "ANITA";
     @Rule
     public NotificationTestRule mNotificationTestRule = new NotificationTestRule();
 
@@ -69,7 +70,6 @@ public class PushMessagingTest implements PushMessagingServiceObserver.Listener 
             "/chrome/test/data/push_messaging/push_messaging_test_android.html";
     private static final String ABOUT_BLANK = "about:blank";
     private static final int TITLE_UPDATE_TIMEOUT_SECONDS = (int) scaleTimeout(5);
-    private static final String PRIVATE_DATA_DIRECTORY_SUFFIX = "chrome";
 
     private final CallbackHelper mMessageHandledHelper;
     private String mPushTestPage;
@@ -134,18 +134,21 @@ public class PushMessagingTest implements PushMessagingServiceObserver.Listener 
     /**
      * Verifies that PushManager.subscribe() fails if permission is dismissed or blocked.
      */
-    //@MediumTest
-    //@Feature({"Browser", "PushMessaging"})
-    //@CommandLineFlags.Add("disable-features=ModalPermissionPrompts")
+    @MediumTest
+    @Feature({"Browser", "PushMessaging"})
+    @CommandLineFlags.Add("disable-features=ModalPermissionPrompts")
     @Test
-    @DisabledTest
     public void testPushPermissionDenied() throws InterruptedException, TimeoutException {
+        Log.d(TAG, ">>> testPushPermissionDenied");
         // Notifications permission should initially be prompt.
         Assert.assertEquals("\"default\"", runScriptBlocking("Notification.permission"));
+        Log.d(TAG, "Notification.permission <<<");
 
         // PushManager.subscribePush() should show the notifications infobar.
         Assert.assertEquals(0, mNotificationTestRule.getInfoBars().size());
+        Log.d(TAG, ">>> subscribePush 1");
         runScript("subscribePush()");
+        Log.d(TAG, "subscribePush <<<");
         InfoBar infoBar = getInfobarBlocking();
 
         // Dismissing the infobar should cause subscribe() to fail.
@@ -160,7 +163,9 @@ public class PushMessagingTest implements PushMessagingServiceObserver.Listener 
         runScriptAndWaitForTitle("sendToTest('reset title')", "reset title");
 
         // PushManager.subscribePush() should show the notifications infobar again.
+        Log.d(TAG, ">>> subscribePush 2");
         runScript("subscribePush()");
+        Log.d(TAG, "subscribePush <<<");
         infoBar = getInfobarBlocking();
 
         // Denying the infobar should cause subscribe() to fail.
@@ -176,12 +181,15 @@ public class PushMessagingTest implements PushMessagingServiceObserver.Listener 
         mNotificationTestRule.loadUrl(mPushTestPage);
 
         // PushManager.subscribePush() should now fail immediately without showing an infobar.
+        Log.d(TAG, ">>> subscribePush 3");
         runScriptAndWaitForTitle("subscribePush()",
                 "subscribe fail: NotAllowedError: Registration failed - permission denied");
+        Log.d(TAG, "subscribePush <<<");
         Assert.assertEquals(0, mNotificationTestRule.getInfoBars().size());
 
         // Notifications permission should still be denied.
         Assert.assertEquals("\"denied\"", runScriptBlocking("Notification.permission"));
+        Log.d(TAG, "testPushPermissionDenied << ");
     }
 
     /**
@@ -215,7 +223,6 @@ public class PushMessagingTest implements PushMessagingServiceObserver.Listener 
     @Test
     @MediumTest
     @Feature({"Browser", "PushMessaging"})
-    @RetryOnFailure
     public void testPushAndShowNotification() throws InterruptedException, TimeoutException {
         mNotificationTestRule.setNotificationContentSettingForCurrentOrigin(ContentSetting.ALLOW);
         runScriptAndWaitForTitle("subscribePush()", "subscribe ok");
@@ -235,7 +242,6 @@ public class PushMessagingTest implements PushMessagingServiceObserver.Listener 
     @Test
     @LargeTest
     @Feature({"Browser", "PushMessaging"})
-    @RetryOnFailure
     public void testDefaultNotification() throws InterruptedException, TimeoutException {
         // Start off using the tab loaded in setUp().
         Assert.assertEquals(1, mNotificationTestRule.getActivity().getCurrentTabModel().getCount());
