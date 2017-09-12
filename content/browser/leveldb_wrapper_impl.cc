@@ -425,10 +425,11 @@ base::TimeDelta LevelDBWrapperImpl::ComputeCommitDelay() const {
 }
 
 void LevelDBWrapperImpl::CommitChanges() {
-  DCHECK(database_);
-  DCHECK(map_);
   if (!commit_batch_)
     return;
+
+  DCHECK(database_);
+  DCHECK(map_);
 
   commit_rate_limiter_.add_samples(1);
 
