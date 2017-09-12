@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb149799_4f849494",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-12T20:26:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b02ff75_9f5d27a8",
+      "revId": "68fb968387cbba97e743a59df503c0956d13f8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a1fc4f0_9b34f327",
         "filename": "components/omnibox/browser/autocomplete_match.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "68fb968387cbba97e743a59df503c0956d13f8a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0bef937_b72b2bbf",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-12T20:26:33Z",
+      "side": 1,
+      "message": "Done. That\u0027s exactly what I meant. I reworded it per your suggestions.",
+      "parentUuid": "2a1fc4f0_9b34f327",
+      "revId": "68fb968387cbba97e743a59df503c0956d13f8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ca5deb63_26e68d01",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-12T20:26:33Z",
+      "side": 1,
+      "message": "There is a set of unittests here: https://cs.chromium.org/chromium/src/components/omnibox/browser/scored_history_match_unittest.cc?q\u003dScoredHistoryMatch\u0026sq\u003dpackage:chromium\u0026l\u003d281\n\nThey aren\u0027t removed in this CL, because we haven\u0027t ported over ScoredHistoryMatch to use this new logic yet. Even after we port it over... I\u0027m not completely sure we should remove those tests, since those tests also exercise the term matching logic used for ScoredHistoryMatch.",
+      "parentUuid": "76901b69_3853df84",
+      "revId": "68fb968387cbba97e743a59df503c0956d13f8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6d8872d_e197246a",
         "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "68fb968387cbba97e743a59df503c0956d13f8a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7493c005_a06d1e60",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-12T20:26:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6d8872d_e197246a",
+      "revId": "68fb968387cbba97e743a59df503c0956d13f8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -102,6 +174,24 @@
       "revId": "68fb968387cbba97e743a59df503c0956d13f8a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1b248a_eaaad50f",
+        "filename": "components/omnibox/browser/search_suggestion_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-12T20:26:33Z",
+      "side": 1,
+      "message": "Done. I removed it to Keep It Simple Stupid.",
+      "parentUuid": "e681835a_910c3745",
+      "revId": "68fb968387cbba97e743a59df503c0956d13f8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
