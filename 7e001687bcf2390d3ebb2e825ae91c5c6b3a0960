@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0b8433cb_d00e30e9",
+        "filename": "third_party/WebKit/LayoutTests/SlowTests",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-12T16:56:24Z",
+      "side": 1,
+      "message": "prevent-run never runs the audits so it\u0027s not actually slow",
+      "parentUuid": "4a3a0f82_553c2c47",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71827626_e178fd71",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/audits2/audits2-prevent-run.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33355b2c_8f7d6778",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/audits2/audits2-prevent-run.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-12T16:56:24Z",
+      "side": 1,
+      "message": "perfect! this is exactly what I was looking for :)",
+      "parentUuid": "71827626_e178fd71",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "89df1342_3d3785fd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/audits2/audits2-prevent-run.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-12T16:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b507205f_188881e4",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c922c32_35ca7d5a",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/audits2/audits2-successful-run.js",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444ad812_ce9cee9e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/audits2/audits2-successful-run.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-12T16:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c922c32_35ca7d5a",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b9f71d11_0fa1b412",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/audits2/audits2-successful-run.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-12T16:56:24Z",
+      "side": 1,
+      "message": "Ack, we mostly care about truthiness here since that\u0027s what is used for pass/fail",
+      "parentUuid": "1790e8d9_64b38f8d",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f496062_f61905a4",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2_test_runner/Audits2TestRunner.js",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c316b947_e6d77b31",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_test_runner/Audits2TestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-12T16:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f496062_f61905a4",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "49b3ee1c_737e3ef2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_test_runner/Audits2TestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-12T16:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2073a2f_fdb5baa7",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fef71261_3d986cbe",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2_test_runner/Audits2TestRunner.js",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc7d601_72a07361",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_test_runner/Audits2TestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-12T16:56:24Z",
+      "side": 1,
+      "message": "fair, done",
+      "parentUuid": "fef71261_3d986cbe",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "e4355643_038fd385",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_test_runner/module.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-12T16:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e7a8eb9_15c58d2c",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "089f34bd_cce0c15a",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2_worker/Audits2Service.js",
         "patchSetId": 2
@@ -166,6 +328,24 @@
       "writtenOn": "2017-09-12T01:28:09Z",
       "side": 1,
       "message": "seems odd to guard disable and enable logging, since you\u0027re controlling the flow... what\u0027s the reason?",
+      "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d665f4a7_b8de2c38",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_worker/Audits2Service.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-12T16:56:24Z",
+      "side": 1,
+      "message": "if start gets called twice then console.log will be set to noop permanently on the second _enableLogging without a guard, though I\u0027ve been thinking this whole disable/enable is sort of unnecessary since there\u0027s not a case right now where we ever need to turn back on logging once we turn it off",
+      "parentUuid": "089f34bd_cce0c15a",
       "revId": "7e001687bcf2390d3ebb2e825ae91c5c6b3a0960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
