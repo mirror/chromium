@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "344b36e2_09992225",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-12T23:48:44Z",
+      "side": 1,
+      "message": "This controller class and the url_loader_ have separate instances of the resource_request_ and the headers so I don\u0027t think we\u0027ll be applying the changes twice to the same object, but we may be making the sames changes to each copy. Right?",
+      "parentUuid": "cb3f33c2_ac8229c1",
+      "revId": "2924cdc086f83c345dbecfc821b5da58bc5e7dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26dbdf30_dbc7382a",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "2924cdc086f83c345dbecfc821b5da58bc5e7dbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dbc4d3f_4dba9d7d",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-12T23:48:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26dbdf30_dbc7382a",
+      "revId": "2924cdc086f83c345dbecfc821b5da58bc5e7dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "08adc062_a5c93cc5",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-12T23:48:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "873d5403_3f0d05e2",
+      "revId": "2924cdc086f83c345dbecfc821b5da58bc5e7dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b3b1151_58f3a356",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "2924cdc086f83c345dbecfc821b5da58bc5e7dbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea84d90_b7c4a529",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-12T23:48:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6b3b1151_58f3a356",
+      "revId": "2924cdc086f83c345dbecfc821b5da58bc5e7dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
