@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "492a8af7_bf2958be",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-12T22:56:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f57f9589_55e5e8d2",
+      "revId": "7c0c791c5d570a0a29f86057c1d01856ebfb0907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4a5cc25_bdd06b26",
         "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "7c0c791c5d570a0a29f86057c1d01856ebfb0907",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b835a7fe_9d5fc9e6",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-12T22:56:21Z",
+      "side": 1,
+      "message": "Done. Good catch on intranet sites. I made it false for intranet sites by setting has_domain to true only if domain_length \u003e 0.",
+      "parentUuid": "e4a5cc25_bdd06b26",
+      "range": {
+        "startLine": 270,
+        "startChar": 47,
+        "endLine": 270,
+        "endChar": 0
+      },
+      "revId": "7c0c791c5d570a0a29f86057c1d01856ebfb0907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
