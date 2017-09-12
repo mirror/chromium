@@ -10,6 +10,8 @@
 #include "content/browser/android/string_message_codec.h"
 #include "jni/AppWebMessagePort_jni.h"
 
+using blink_common::MessagePort;
+
 namespace content {
 
 // static

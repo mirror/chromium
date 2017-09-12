@@ -17,7 +17,6 @@
 #include "content/child/service_worker/service_worker_network_provider.h"
 #include "content/child/service_worker/service_worker_provider_context.h"
 #include "content/child/shared_worker_devtools_agent.h"
-#include "content/child/webmessageportchannel_impl.h"
 #include "content/common/worker_messages.h"
 #include "content/public/child/child_url_loader_factory_getter.h"
 #include "content/public/common/appcache_info.h"
@@ -35,6 +34,8 @@
 #include "third_party/WebKit/public/web/WebSharedWorker.h"
 #include "third_party/WebKit/public/web/WebSharedWorkerClient.h"
 #include "url/origin.h"
+
+using blink_common::MessagePort;
 
 namespace content {
 
@@ -310,25 +311,22 @@ bool EmbeddedSharedWorkerStub::Send(IPC::Message* message) {
   return RenderThreadImpl::current()->Send(message);
 }
 
-void EmbeddedSharedWorkerStub::ConnectToChannel(
-    int connection_request_id,
-    std::unique_ptr<WebMessagePortChannelImpl> channel) {
+void EmbeddedSharedWorkerStub::ConnectToChannel(int connection_request_id,
+                                                MessagePort channel) {
   impl_->Connect(std::move(channel));
   Send(new WorkerHostMsg_WorkerConnected(connection_request_id, route_id_));
 }
 
 void EmbeddedSharedWorkerStub::OnConnect(int connection_request_id,
                                          const MessagePort& port) {
-  auto channel = base::MakeUnique<WebMessagePortChannelImpl>(port);
   if (running_) {
-    ConnectToChannel(connection_request_id, std::move(channel));
+    ConnectToChannel(connection_request_id, port);
   } else {
     // If two documents try to load a SharedWorker at the same time, the
     // WorkerMsg_Connect for one of the documents can come in before the
     // worker is started. Just queue up the connect and deliver it once the
     // worker starts.
-    pending_channels_.emplace_back(
-        std::make_pair(connection_request_id, std::move(channel)));
+    pending_channels_.emplace_back(std::make_pair(connection_request_id, port));
   }
 }
 

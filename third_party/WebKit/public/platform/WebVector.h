@@ -82,6 +82,7 @@ class WebVector {
   WebVector(WebVector<T>&& other) { Swap(other); }
 
   WebVector(std::vector<T>&& other) : data_(std::move(other)) {}
+  operator std::vector<T>() && { return std::move(data_); }
 
   WebVector& operator=(const WebVector& other) {
     if (this != &other)

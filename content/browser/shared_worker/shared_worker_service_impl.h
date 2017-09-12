@@ -20,9 +20,12 @@
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/worker_service.h"
 
+namespace blink_common {
+class MessagePort;
+}
+
 namespace content {
 
-class MessagePort;
 class SharedWorkerInstance;
 class SharedWorkerHost;
 class SharedWorkerMessageFilter;
@@ -51,7 +54,7 @@ class CONTENT_EXPORT SharedWorkerServiceImpl : public WorkerService {
                     int frame_id,
                     mojom::SharedWorkerInfoPtr info,
                     mojom::SharedWorkerClientPtr client,
-                    const MessagePort& port,
+                    const blink_common::MessagePort& port,
                     ResourceContext* resource_context,
                     const WorkerStoragePartitionId& partition_id);
   void CountFeature(SharedWorkerMessageFilter* filter,

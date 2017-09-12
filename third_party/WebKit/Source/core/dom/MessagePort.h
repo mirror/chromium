@@ -37,24 +37,20 @@
 #include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Vector.h"
-#include "public/platform/WebMessagePortChannel.h"
-#include "public/platform/WebMessagePortChannelClient.h"
+#include "third_party/WebKit/common/message_port/message_port.h"
 
 namespace blink {
 
 class ExceptionState;
 class ExecutionContext;
-class MessagePort;
 class ScriptState;
 class SerializedScriptValue;
 
-typedef Vector<std::unique_ptr<WebMessagePortChannel>, 1>
-    MessagePortChannelArray;
+using MessagePortChannelArray = std::vector<blink_common::MessagePort>;
 
 class CORE_EXPORT MessagePort : public EventTargetWithInlineData,
                                 public ActiveScriptWrappable<MessagePort>,
-                                public ContextLifecycleObserver,
-                                public WebMessagePortChannelClient {
+                                public ContextLifecycleObserver {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(MessagePort);
 
@@ -71,18 +67,12 @@ class CORE_EXPORT MessagePort : public EventTargetWithInlineData,
   void start();
   void close();
 
-  void Entangle(std::unique_ptr<WebMessagePortChannel>);
-  std::unique_ptr<WebMessagePortChannel> Disentangle();
-
-  static WebMessagePortChannelArray ToWebMessagePortChannelArray(
-      MessagePortChannelArray);
-
-  // Returns an empty array if the passed array is empty.
-  static MessagePortArray* ToMessagePortArray(ExecutionContext*,
-                                              WebMessagePortChannelArray);
+  void Entangle(mojo::ScopedMessagePipeHandle);
+  void Entangle(blink_common::MessagePort);
+  blink_common::MessagePort Disentangle();
 
   // Returns an empty array if there is an exception, or if the passed array is
-  // nullptr/empty.
+  // empty.
   static MessagePortChannelArray DisentanglePorts(ExecutionContext*,
                                                   const MessagePortArray&,
                                                   ExceptionState&);
@@ -127,12 +117,10 @@ class CORE_EXPORT MessagePort : public EventTargetWithInlineData,
 
   // A port gets neutered when it is transferred to a new owner via
   // postMessage().
-  bool IsNeutered() const { return !entangled_channel_; }
+  bool IsNeutered() const { return !port_; }
 
   // For testing only: allows inspection of the entangled channel.
-  WebMessagePortChannel* EntangledChannelForTesting() const {
-    return entangled_channel_.get();
-  }
+  MojoHandle EntangledHandleForTesting() const;
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -142,11 +130,10 @@ class CORE_EXPORT MessagePort : public EventTargetWithInlineData,
                      MessagePortChannelArray& channels);
 
  private:
-  // WebMessagePortChannelClient implementation.
-  void MessageAvailable() override;
+  void MessageAvailable();
   void DispatchMessages();
 
-  std::unique_ptr<WebMessagePortChannel> entangled_channel_;
+  std::unique_ptr<blink_common::MessagePort> port_;
 
   int pending_dispatch_task_ = 0;
   bool started_ = false;

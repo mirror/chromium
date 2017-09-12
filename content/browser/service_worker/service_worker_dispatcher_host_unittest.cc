@@ -37,6 +37,8 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
+using blink_common::MessagePort;
+
 namespace content {
 
 namespace {

@@ -35,11 +35,11 @@
 #include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebCommon.h"
 #include "public/platform/WebContentSecurityPolicy.h"
+#include "third_party/WebKit/common/message_port/message_port.h"
 
 namespace blink {
 
 class WebString;
-class WebMessagePortChannel;
 class WebSharedWorkerClient;
 class WebURL;
 
@@ -61,7 +61,7 @@ class BLINK_EXPORT WebSharedWorker {
       mojo::ScopedMessagePipeHandle content_settings_handle) = 0;
 
   // Sends a connect event to the SharedWorker context.
-  virtual void Connect(std::unique_ptr<WebMessagePortChannel>) = 0;
+  virtual void Connect(blink_common::MessagePort) = 0;
 
   // Invoked to shutdown the worker when there are no more associated documents.
   // This eventually deletes this instance.

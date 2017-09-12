@@ -7,11 +7,11 @@
 #include "base/memory/ptr_util.h"
 #include "content/browser/shared_worker/shared_worker_service_impl.h"
 #include "content/browser/storage_partition_impl.h"
-#include "content/common/message_port.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
+#include "third_party/WebKit/common/message_port/message_port.h"
 
 namespace content {
 
@@ -75,7 +75,7 @@ void SharedWorkerConnectorImpl::Connect(
     mojo::ScopedMessagePipeHandle message_port) {
   SharedWorkerServiceImpl::GetInstance()->CreateWorker(
       process_id_, frame_id_, std::move(info), std::move(client),
-      MessagePort(std::move(message_port)), resource_context_,
+      blink_common::MessagePort(std::move(message_port)), resource_context_,
       WorkerStoragePartitionId(worker_storage_partition_));
 }
 

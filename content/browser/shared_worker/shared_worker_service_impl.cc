@@ -188,7 +188,7 @@ class SharedWorkerServiceImpl::SharedWorkerPendingInstance {
         int render_process_id,
         int render_frame_route_id,
         mojom::SharedWorkerClientPtr client,
-        const MessagePort& message_port,
+        const blink_common::MessagePort& message_port,
         blink::mojom::SharedWorkerCreationContextType creation_context_type)
         : render_process_id(render_process_id),
           render_frame_route_id(render_frame_route_id),
@@ -198,7 +198,7 @@ class SharedWorkerServiceImpl::SharedWorkerPendingInstance {
     const int render_process_id;
     const int render_frame_route_id;
     mojom::SharedWorkerClientPtr client;
-    MessagePort message_port;
+    blink_common::MessagePort message_port;
     const blink::mojom::SharedWorkerCreationContextType creation_context_type;
   };
 
@@ -340,7 +340,7 @@ void SharedWorkerServiceImpl::CreateWorker(
     int frame_id,
     mojom::SharedWorkerInfoPtr info,
     mojom::SharedWorkerClientPtr client,
-    const MessagePort& port,
+    const blink_common::MessagePort& port,
     ResourceContext* resource_context,
     const WorkerStoragePartitionId& partition_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
