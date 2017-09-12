@@ -87,6 +87,9 @@ class CC_EXPORT TileManagerClient {
   // rasterized with missing images need to be invalidated.
   virtual void RequestImplSideInvalidationForCheckerImagedTiles() = 0;
 
+  virtual size_t GetFrameIndexForImage(const PaintImage& paint_image,
+                                       WhichTree tree) const = 0;
+
  protected:
   virtual ~TileManagerClient() {}
 };
