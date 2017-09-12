@@ -28,7 +28,8 @@ void Release(int* release_call_count) {
   (*release_call_count)++;
 }
 
-TEST_F(BufferTest, ReleaseCallback) {
+// Disabled due to flakiness. See http://crbug.com/764227.
+TEST_F(BufferTest, DISABLED_ReleaseCallback) {
   gfx::Size buffer_size(256, 256);
   auto buffer = base::MakeUnique<Buffer>(
       exo_test_helper()->CreateGpuMemoryBuffer(buffer_size));
