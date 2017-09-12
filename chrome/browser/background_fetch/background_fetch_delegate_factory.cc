@@ -7,6 +7,7 @@
 #include "chrome/browser/background_fetch/background_fetch_delegate_impl.h"
 #include "chrome/browser/profiles/profile.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
+#include "components/keyed_service/core/keyed_service.h"
 #include "content/public/browser/background_fetch_delegate.h"
 
 // static
