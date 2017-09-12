@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03c89119_5bf524ca",
+        "filename": "ipc/ipc_channel_mojo.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T23:07:41Z",
+      "side": 1,
+      "message": "Wouldn\u0027t we normally use an EnumTraits for this? I guess it\u0027s because it\u0027s not going through the usual bindings. I assume it\u0027s not easy to directly use the mojom type either?\n\nI wonder if we can use a  TypeConverter template specialization instead to make it easier to keep track of things that do have to do these types of conversions manually? WDYT?",
+      "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86200611_17f710ca",
+        "filename": "ipc/ipc_channel_mojo.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T23:07:41Z",
+      "side": 1,
+      "message": "DLOG perhaps?\n\n(I\u0027m not actually sure what the value of logging here is)",
+      "range": {
+        "startLine": 329,
+        "startChar": 6,
+        "endLine": 329,
+        "endChar": 9
+      },
+      "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca2314a_09c88985",
+        "filename": "ipc/ipc_message_attachment.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T23:07:41Z",
+      "side": 1,
+      "message": "Nit: The style guide prefers sizeof(platform_handle)",
+      "range": {
+        "startLine": 71,
+        "startChar": 17,
+        "endLine": 71,
+        "endChar": 35
+      },
+      "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd8c6c8_aac0adea",
+        "filename": "ipc/ipc_message_attachment.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T23:07:41Z",
+      "side": 1,
+      "message": "In theory, once we can conditionally include things for mojoms, would it make sense to #if/#endif the enumerators here as well?",
+      "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8171a120_b99b470f",
+        "filename": "mojo/public/cpp/bindings/lib/native_struct_serialization.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T23:07:41Z",
+      "side": 1,
+      "message": "It\u0027s a little sad that we dupe this. Maybe the earlier suggestion re: using TypeConverter (and putting it in a separate file) would be a natural way to express this?",
+      "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e983e24_c25d4f8f",
+        "filename": "mojo/public/cpp/bindings/lib/native_struct_serialization.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T23:07:41Z",
+      "side": 1,
+      "message": "Out of curiosity, why would input be null?",
+      "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c128839f_b179c0ce",
+        "filename": "mojo/public/cpp/bindings/lib/native_struct_serialization.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T23:07:41Z",
+      "side": 1,
+      "message": "What\u0027s the difference between this and NativeStructSerializerImpl? Some class-level comments might be useful (just so readers can figure out what an unmapped native struct vs a native struct is)",
+      "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
