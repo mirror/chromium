@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb2c502a_89920088",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T14:01:17Z",
+      "side": 1,
+      "message": "Calling directly should be OK here. Added a TODO to change it in a follow-up CL.",
+      "parentUuid": "72bf4324_dc913213",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3383de5_d4a21187",
         "filename": "content/renderer/media/user_media_client_impl.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6c5dad90_fe9c1f36",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T14:01:17Z",
+      "side": 1,
+      "message": "I\u0027m confident that is that this is OK according to spec since popping the element does not use it and that\u0027s the only operation after the move.",
+      "parentUuid": "c3383de5_d4a21187",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afdba58a_8826bfc7",
         "filename": "content/renderer/media/user_media_client_impl.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-11T13:31:18Z",
       "side": 1,
       "message": "Now that the UserMediaProcessor is a separate class, make sure any threading model assumptions are documented in UserMediaProcessor.\n\nHere, is there an assumption is that the CurrentRequest doesn\u0027t change in this thread/within the scope of this function? Or is that not an assumption, and it\u0027s OK to log this message and maybe DeleteRequestInfo fails later? If it does change though we would probably access deleted memory.",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9c62ba_02ed073e",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T14:01:17Z",
+      "side": 1,
+      "message": "Added some documentation about the assumptions in UMP.\nI added a TODO to remove CurrentRequest anyway since it\u0027s used only for logging this message. Maybe we can log unconditonally (changing message to saying \"attempting to cancel\") or not log anything at all.",
+      "parentUuid": "afdba58a_8826bfc7",
       "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "256d360e_47c4e2ac",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T14:01:17Z",
+      "side": 1,
+      "message": "Done. Makes sense. I hadn\u0027t realized since, in principle, just wanted to keep the code as similar as possible to the original. But this is a safe change for this CL.",
+      "parentUuid": "b2fea420_68df6897",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1330d64_9879df30",
         "filename": "content/renderer/media/user_media_client_impl.cc",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44fb6340_76192079",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T14:01:17Z",
+      "side": 1,
+      "message": "Else it would be in the queue or nowhere.\nIt cannot be in  UserMediaProcessor and the queue at the same time.",
+      "parentUuid": "c1330d64_9879df30",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "5c104c54_3c9bf8eb",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T14:01:17Z",
+      "side": 1,
+      "message": "Good idea. Added a TODO for a follow-up CL.",
+      "parentUuid": "6236e3a5_98327ff4",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3001866e_9cc2e558",
         "filename": "content/renderer/media/user_media_processor.cc",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bdd4497_aab1b08a",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T14:01:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3001866e_9cc2e558",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "592599c8_47624112",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T14:01:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2af2f2d5_5cff7197",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ff38117_f23b77d1",
         "filename": "content/renderer/media/user_media_processor.cc",
         "patchSetId": 3
@@ -152,6 +296,24 @@
       "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45aea340_5644b057",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T14:01:17Z",
+      "side": 1,
+      "message": "The only relevant question here would be multiple requests since each process would have a separate UMP.\n\nWith regards to requests, the source maintains a list of tracks from whatever streams (streams don\u0027t actually exist in content). When all tracks for a source stop, then the source invokes a StopCallback which removes the source from |local_sources_| in UMP. Adding/Removing tracks always occurs on the main thread, so there is no possibility of races.\n\nIn this particular function, the device was opened on the browser side, but the stream/track that was supposed to use it was cancelled. If there is no other stream/track using the source, then it must be stopped on the browser side.",
+      "parentUuid": "1ff38117_f23b77d1",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "3a35111c_6f60763a",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T14:01:17Z",
+      "side": 1,
+      "message": "If the request was cancelled it no longer exists in Blink, so there is no callback to invoke. The MediaStream never got to exist and the only thing to do is clean up if necessary.\nClean up in this context means closing the device on the server if no other streams/tracks are using it.",
+      "parentUuid": "c686cdda_fa6ec61e",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31e6fa24_46655c14",
         "filename": "content/renderer/media/user_media_processor.cc",
         "patchSetId": 3
@@ -183,6 +363,24 @@
       "writtenOn": "2017-09-11T13:31:18Z",
       "side": 1,
       "message": "Good ol\u0027 ExtraData. Will this be nuked in the future?",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b3a48f_d38296d0",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T14:01:17Z",
+      "side": 1,
+      "message": "Hopefully :)\nFor sources it shouldn\u0027t be too difficult.",
+      "parentUuid": "31e6fa24_46655c14",
       "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "cf64e05d_43c3cf05",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T14:01:17Z",
+      "side": 1,
+      "message": "StopLocalSource tells the source to stop doing work (e.g., stop monitoring frames), but the source object remains in |local_sources_| in the UMP. If the second argument is true, the source is also stopped on the browser.\nRemoveLocalSource removes the source object from |local_sources_| in the UMP.\n\nIn this case (OnDeviceStopped), StopLocalSource simply does local cleanup in the renderer since this callback is invoked when the server closes the device.",
+      "parentUuid": "a84e9c7a_f28b45fc",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "883e5ffb_99dd90a1",
         "filename": "content/renderer/media/user_media_processor.cc",
         "patchSetId": 3
@@ -217,6 +433,24 @@
       "writtenOn": "2017-09-11T13:31:18Z",
       "side": 1,
       "message": "(Hmh, std::move() is used as a reset mechanism, while it is still in use for operator bool() and operator\u003d(). I suppose is has been designed with this in mind, but isn\u0027t this a bit iffy?)",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa37f274_8fc281ec",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T14:01:17Z",
+      "side": 1,
+      "message": "I had some trouble with std::move and a DCHECK(!request_completed_cb_) during early testing of this CL.\nI\u0027m not sure DCHECK(!cb) after std::move(cb) is correct according to the C++ standard, so I switched with ResetAndReturn() and the DCHECK worked fine. Since I was still playing with the code, maybe the trouble was caused by something else. Anyway I feel more comfortable with DCHECK(!cb) after an explicit Reset than after an std::move().\n\nI consulted https://chromium.googlesource.com/chromium/src/+/master/docs/callback.md and base::ResetAndReturn().Run() is still considered a valid idiom.",
+      "parentUuid": "883e5ffb_99dd90a1",
       "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "17f089d5_de9e084a",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T14:01:17Z",
+      "side": 1,
+      "message": "Done. Defined them right after the class definition.",
+      "parentUuid": "b6c50f2a_41c5940d",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "320f7a52_7039c2f6",
         "filename": "content/renderer/media/user_media_processor.cc",
         "patchSetId": 3
@@ -254,6 +506,24 @@
       "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef7e8bc_2a053d7d",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-12T14:01:17Z",
+      "side": 1,
+      "message": "|ready_callback_| does not manage the lifetime of |RequestInfo| by contract, but |ready_callback_| goes up to Blink and it might result in the whole frame being destroyed with everything in it, including RequestInfo, UMP and UMCI, so it\u0027s important not to do anything right after ready_callback_ runs.",
+      "parentUuid": "320f7a52_7039c2f6",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
