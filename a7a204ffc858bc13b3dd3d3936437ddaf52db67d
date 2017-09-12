@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64c9939b_ed26c82d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-12T18:27:11Z",
+      "side": 1,
+      "message": "I updated the description. Any better?",
+      "parentUuid": "98377e30_61076106",
+      "range": {
+        "startLine": 10,
+        "startChar": 57,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b58853a_3e96e13b",
         "filename": "ash/host/ash_window_tree_host.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6341b5_058e4e91",
+        "filename": "ash/host/ash_window_tree_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-12T18:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b58853a_3e96e13b",
+      "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "0875dbc3_9d643f69",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-12T18:27:11Z",
+      "side": 1,
+      "message": "I had tried DCHECK_EQ first and gave up because of macro hell. I\u0027m not sur why the compile fails. Here\u0027s the compile error:\n\nIn file included from ../../services/ui/ws/event_dispatcher.cc:5:\nIn file included from ../../services/ui/ws/event_dispatcher.h:16:\nIn file included from gen/services/ui/public/interfaces/cursor/cursor.mojom.h:14:\nIn file included from ../../base/callback.h:9:\nIn file included from ../../base/callback_internal.h:14:\nIn file included from ../../base/memory/ref_counted.h:17:\n../../base/logging.h:709:3: error: no matching function for call to \u0027MakeCheckOpValueString\u0027\n  MakeCheckOpValueString(\u0026ss, v1);\n  ^~~~~~~~~~~~~~~~~~~~~~\n../../base/logging.h:757:1: note: in instantiation of function template specialization \u0027logging::MakeCheckOpString\u003cgfx::PointF, gfx::PointF\u003e\u0027 requested here\nDEFINE_CHECK_OP_IMPL(EQ, \u003d\u003d)\n^\n../../base/logging.h:749:25: note: expanded from macro \u0027DEFINE_CHECK_OP_IMPL\u0027\n      return ::logging::MakeCheckOpString(v1, v2, names);                    \\\n                        ^\n../../services/ui/ws/event_dispatcher.cc:314:3: note: in instantiation of function template specialization \u0027logging::CheckEQImpl\u003cgfx::PointF, gfx::PointF\u003e\u0027 request\\\ned here\n  DCHECK_EQ(event_location.location, event.AsPointerEvent()-\u003eroot_location_f());\n  ^\n../../base/logging.h:931:31: note: expanded from macro \u0027DCHECK_EQ\u0027\n#define DCHECK_EQ(val1, val2) DCHECK_OP(EQ, \u003d\u003d, val1, val2)\n                              ^\n../../base/logging.h:885:18: note: expanded from macro \u0027DCHECK_OP\u0027\n      ::logging::Check##name##Impl((val1), (val2),                     \\\n                 ^\n\u003cscratch space\u003e:127:1: note: expanded from here\nCheckEQImpl\n^\n../../base/logging.h:699:18: note: candidate function not viable: no known conversion from \u0027const gfx::PointF\u0027 to \u0027std::nullptr_t\u0027 (aka \u0027nullptr_t\u0027) for 2nd argume\\\nnt\nBASE_EXPORT void MakeCheckOpValueString(std::ostream* os, std::nullptr_t p);\n                 ^\n../../base/logging.h:670:1: note: candidate template ignored: requirement \u0027base::internal::SupportsOstreamOperator\u003cconst PointF \u0026\u003e::value\u0027 was not satisfied [with \\\nT \u003d gfx::PointF]\nMakeCheckOpValueString(std::ostream* os, const T\u0026 v) {\n^\n../../base/logging.h:683:1: note: candidate template ignored: requirement \u0027std::is_function\u003ctypename std::remove_pointer\u003cPointF\u003e::type\u003e::value\u0027 was not satisfied [\\\nwith T \u003d gfx::PointF]\nMakeCheckOpValueString(std::ostream* os, const T\u0026 v) {\n^\n../../base/logging.h:694:1: note: candidate template ignored: requirement \u0027std::is_enum\u003cPointF\u003e::value\u0027 was not satisfied [with T \u003d gfx::PointF]\nMakeCheckOpValueString(std::ostream* os, const T\u0026 v) {\n^\n../../base/logging.h:711:3: error: no matching function for call to \u0027MakeCheckOpValueString\u0027\n  MakeCheckOpValueString(\u0026ss, v2);\n  ^~~~~~~~~~~~~~~~~~~~~~\n../../base/logging.h:699:18: note: candidate function not viable: no known conversion from \u0027const gfx::PointF\u0027 to \u0027std::nullptr_t\u0027 (aka \u0027nullptr_t\u0027) for 2nd argume\\\nnt\nBASE_EXPORT void MakeCheckOpValueString(std::ostream* os, std::nullptr_t p);\n                 ^\n../../base/logging.h:670:1: note: candidate template ignored: requirement \u0027base::internal::SupportsOstreamOperator\u003cconst PointF \u0026\u003e::value\u0027 was not satisfied [with \\\nT \u003d gfx::PointF]\nMakeCheckOpValueString(std::ostream* os, const T\u0026 v) {\n^\n../../base/logging.h:683:1: note: candidate template ignored: requirement \u0027std::is_function\u003ctypename std::remove_pointer\u003cPointF\u003e::type\u003e::value\u0027 was not satisfied [\\\nwith T \u003d gfx::PointF]\nMakeCheckOpValueString(std::ostream* os, const T\u0026 v) {\n^\n../../base/logging.h:694:1: note: candidate template ignored: requirement \u0027std::is_enum\u003cPointF\u003e::value\u0027 was not satisfied [with T \u003d gfx::PointF]\nMakeCheckOpValueString(std::ostream* os, const T\u0026 v) {",
+      "parentUuid": "27b45cad_c818a9ae",
+      "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fd323b5_547cfc7b",
         "filename": "services/ui/ws/event_dispatcher.h",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a39180_5a029e92",
+        "filename": "services/ui/ws/event_dispatcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-12T18:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fd323b5_547cfc7b",
+      "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +188,24 @@
     },
     {
       "key": {
+        "uuid": "38268bf3_b5004932",
+        "filename": "services/ui/ws/event_location.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-12T18:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04a99547_161ebabb",
+      "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7154627_3bdf371f",
         "filename": "services/ui/ws/event_location.h",
         "patchSetId": 3
@@ -121,6 +217,24 @@
       "writtenOn": "2017-09-12T15:58:23Z",
       "side": 1,
       "message": "This is in pixels, but in display layout, instead of screen layout, but still not DIP, right?",
+      "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb4a76d_e9d03799",
+        "filename": "services/ui/ws/event_location.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-12T18:27:11Z",
+      "side": 1,
+      "message": "That\u0027s right. Confusing, eh?",
+      "parentUuid": "f7154627_3bdf371f",
       "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -141,6 +255,24 @@
       "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f857bb1a_ac630c11",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-12T18:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c5070c5_ebe4cc7b",
+      "revId": "a7a204ffc858bc13b3dd3d3936437ddaf52db67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
