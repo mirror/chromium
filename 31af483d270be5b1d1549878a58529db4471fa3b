@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfdf725f_aaad389d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T04:55:55Z",
+      "side": 1,
+      "message": "can you update the CL description?",
+      "revId": "31af483d270be5b1d1549878a58529db4471fa3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa11c6c_fc3f5746",
+        "filename": "ui/base/dragdrop/os_exchange_data_provider_mac.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T04:55:55Z",
+      "side": 1,
+      "message": "comment. E.g.\n\n // Returns the union of SupportedPasteboardTypes() and the types in the current pasteboard.",
+      "revId": "31af483d270be5b1d1549878a58529db4471fa3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5c59eb_0a91a1be",
+        "filename": "ui/views/cocoa/drag_drop_client_mac.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T04:55:55Z",
+      "side": 1,
+      "message": "// Called when mouse leaves the drop area.\n\n(include fullstop)",
+      "range": {
+        "startLine": 62,
+        "startChar": 17,
+        "endLine": 62,
+        "endChar": 42
+      },
+      "revId": "31af483d270be5b1d1549878a58529db4471fa3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850e5faf_28d7f99a",
+        "filename": "ui/views/cocoa/drag_drop_client_mac.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T04:55:55Z",
+      "side": 1,
+      "message": "it -\u003e |this|",
+      "range": {
+        "startLine": 88,
+        "startChar": 13,
+        "endLine": 88,
+        "endChar": 15
+      },
+      "revId": "31af483d270be5b1d1549878a58529db4471fa3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ae60c9_60a6f927",
+        "filename": "ui/views/cocoa/drag_drop_client_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T04:55:55Z",
+      "side": 1,
+      "message": "comment like\n\n  // OnDrop may delete |this|, so clear |data_source_| first.\n  base::scoped_nsobject\u003cCocoaDragDropDataProvider\u003e data_source(std::move(data_source_));",
+      "revId": "31af483d270be5b1d1549878a58529db4471fa3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30d9fb9_babffcc3",
+        "filename": "ui/views/cocoa/drag_drop_client_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T04:55:55Z",
+      "side": 1,
+      "message": "Aliasing |operation_| isn\u0027t necessary if we don\u0027t also need to set it to zero in this method - I think we can just use |operation_| below.",
+      "revId": "31af483d270be5b1d1549878a58529db4471fa3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78e5f3f_abfe3e40",
+        "filename": "ui/views/cocoa/drag_drop_client_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T04:55:55Z",
+      "side": 1,
+      "message": "(with std::move, this line shouldn\u0027t be needed)",
+      "revId": "31af483d270be5b1d1549878a58529db4471fa3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
