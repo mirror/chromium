@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb3f33c2_ac8229c1",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-12T22:45:59Z",
+      "side": 1,
+      "message": "If we end up with the same URLLoader which implements something like the logic in line 258-320 in its own FollowRedirect (like the legacy network URLLoader) we might be doing the header modification twice, it looks they\u0027re all safe to apply multiple times but might be good to mention that somewhere?",
+      "revId": "2924cdc086f83c345dbecfc821b5da58bc5e7dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26dbdf30_dbc7382a",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-12T22:45:59Z",
+      "side": 1,
+      "message": "Maybe also have a brief comment that this part\u0027s basically replicating URLRequest::Redirect for now?",
+      "revId": "2924cdc086f83c345dbecfc821b5da58bc5e7dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873d5403_3f0d05e2",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-12T22:45:59Z",
+      "side": 1,
+      "message": "Can we add a TODO comment (here or at the beginning of this class impl) to factor out this class into its own file and have tests for this?",
+      "revId": "2924cdc086f83c345dbecfc821b5da58bc5e7dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3b1151_58f3a356",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-12T22:45:59Z",
+      "side": 1,
+      "message": "Thanks for adding this.",
+      "revId": "2924cdc086f83c345dbecfc821b5da58bc5e7dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
