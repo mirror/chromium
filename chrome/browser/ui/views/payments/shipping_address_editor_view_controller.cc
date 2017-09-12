@@ -32,6 +32,7 @@
 #include "third_party/libaddressinput/messages.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/address_data.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/address_formatter.h"
+#include "third_party/libaddressinput/src/cpp/include/libaddressinput/address_metadata.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/views/controls/textfield/textfield.h"
 
@@ -383,10 +384,15 @@ void ShippingAddressEditorViewController::UpdateEditorFields() {
            !failed_to_load_region_data_)) {
         control_type = EditorField::ControlType::COMBOBOX;
       }
-      editor_fields_.emplace_back(
-          server_field_type, base::UTF8ToUTF16(field_name), length_hint,
-          /*required=*/server_field_type != autofill::COMPANY_NAME,
-          control_type);
+      bool required_field = false;
+      i18n::addressinput::AddressField field_enum;
+      if (autofill::i18n::FieldForType(server_field_type, &field_enum)) {
+        required_field = i18n::addressinput::IsFieldRequired(
+            field_enum, chosen_country_code);
+      }
+      editor_fields_.emplace_back(server_field_type,
+                                  base::UTF8ToUTF16(field_name), length_hint,
+                                  /*required=*/required_field, control_type);
       // Insert the Country combobox right after NAME_FULL.
       if (server_field_type == autofill::NAME_FULL) {
         editor_fields_.emplace_back(
