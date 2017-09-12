@@ -21,22 +21,24 @@
 
 namespace {
 
-void UpdateMargins(int margins_type, int dpi, PrintMsg_Print_Params* params) {
+void UpdateMargins(int margins_type,
+                   const gfx::Size& dpi,
+                   PrintMsg_Print_Params* params) {
   if (margins_type == printing::NO_MARGINS) {
-    params->content_size.SetSize(static_cast<int>((8.5 * dpi)),
-                                 static_cast<int>((11.0 * dpi)));
+    params->content_size.SetSize(static_cast<int>((8.5 * dpi.width())),
+                                 static_cast<int>((11.0 * dpi.height())));
     params->margin_left = 0;
     params->margin_top = 0;
   } else if (margins_type == printing::PRINTABLE_AREA_MARGINS) {
-    params->content_size.SetSize(static_cast<int>((8.0 * dpi)),
-                                 static_cast<int>((10.5 * dpi)));
-    params->margin_left = static_cast<int>(0.25 * dpi);
-    params->margin_top = static_cast<int>(0.25 * dpi);
+    params->content_size.SetSize(static_cast<int>((8.0 * dpi.width())),
+                                 static_cast<int>((10.5 * dpi.height())));
+    params->margin_left = static_cast<int>(0.25 * dpi.width());
+    params->margin_top = static_cast<int>(0.25 * dpi.height());
   } else if (margins_type == printing::CUSTOM_MARGINS) {
-    params->content_size.SetSize(static_cast<int>((7.9 * dpi)),
-                                 static_cast<int>((10.4 * dpi)));
-    params->margin_left = static_cast<int>(0.30 * dpi);
-    params->margin_top = static_cast<int>(0.30 * dpi);
+    params->content_size.SetSize(static_cast<int>((7.9 * dpi.width())),
+                                 static_cast<int>((10.4 * dpi.height())));
+    params->margin_left = static_cast<int>(0.30 * dpi.width());
+    params->margin_top = static_cast<int>(0.30 * dpi.height());
   }
 }
 
@@ -63,7 +65,7 @@ MockPrinterPage::~MockPrinterPage() {
 }
 
 MockPrinter::MockPrinter()
-    : dpi_(printing::kPointsPerInch),
+    : dpi_(printing::kPointsPerInch, printing::kPointsPerInch),
       selection_only_(false),
       should_print_backgrounds_(false),
       document_cookie_(-1),
@@ -79,14 +81,15 @@ MockPrinter::MockPrinter()
       title_(base::ASCIIToUTF16("title")),
       url_(base::ASCIIToUTF16("url")),
       use_invalid_settings_(false) {
-  page_size_.SetSize(static_cast<int>(8.5 * dpi_),
-                     static_cast<int>(11.0 * dpi_));
-  content_size_.SetSize(static_cast<int>((7.5 * dpi_)),
-                        static_cast<int>((10.0 * dpi_)));
-  margin_left_ = margin_top_ = static_cast<int>(0.5 * dpi_);
-  printable_area_.SetRect(
-      static_cast<int>(0.25 * dpi_), static_cast<int>(0.25 * dpi_),
-      static_cast<int>(8 * dpi_), static_cast<int>(10.5 * dpi_));
+  page_size_.SetSize(static_cast<int>(8.5 * dpi_.width()),
+                     static_cast<int>(11.0 * dpi_.height()));
+  content_size_.SetSize(static_cast<int>((7.5 * dpi_.width())),
+                        static_cast<int>((10.0 * dpi_.height())));
+  margin_left_ = margin_top_ = static_cast<int>(0.5 * dpi_.width());
+  printable_area_.SetRect(static_cast<int>(0.25 * dpi_.width()),
+                          static_cast<int>(0.25 * dpi_.height()),
+                          static_cast<int>(8 * dpi_.width()),
+                          static_cast<int>(10.5 * dpi_.height()));
 }
 
 MockPrinter::~MockPrinter() {

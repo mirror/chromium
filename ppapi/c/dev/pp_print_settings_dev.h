@@ -60,14 +60,14 @@ struct PP_PrintSettings_Dev {
   struct PP_Rect printable_area;
   struct PP_Rect content_area;
   struct PP_Size paper_size;
-  int32_t dpi;
+  struct PP_Size dpi;
   PP_PrintOrientation_Dev orientation;
   PP_PrintScalingOption_Dev print_scaling_option;
   PP_Bool grayscale;
   /** Note that Chrome currently only supports PDF printing. */
   PP_PrintOutputFormat_Dev format;
 };
-PP_COMPILE_ASSERT_STRUCT_SIZE_IN_BYTES(PP_PrintSettings_Dev, 60);
+PP_COMPILE_ASSERT_STRUCT_SIZE_IN_BYTES(PP_PrintSettings_Dev, 64);
 /**
  * @}
  */

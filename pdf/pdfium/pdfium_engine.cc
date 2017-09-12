@@ -436,11 +436,15 @@ UNSUPPORT_INFO g_unsupported_info = {1, Unsupported_Handler};
 // |page_size| has the actual destination page size in points.
 // |content_rect| has the actual destination page printable area values in
 // points.
-void SetPageSizeAndContentRect(bool rotated,
-                               bool is_src_page_landscape,
-                               pp::Size* page_size,
-                               pp::Rect* content_rect) {
-  bool is_dst_page_landscape = page_size->width() > page_size->height();
+int SetPageSizeAndContentRect(bool rotated,
+                              bool is_src_page_landscape,
+                              pp::Size* page_size,
+                              pp::Rect* content_rect,
+                              pp::Size* dpi) {
+  int min_dpi = std::min(dpi->width(), dpi->height());
+  // Page size is in min dpi for Blink. Adjust it to real dpi size.
+  bool is_dst_page_landscape = page_size->width() * dpi->width() / min_dpi >
+                               page_size->height() * dpi->height() / min_dpi;
   bool page_orientation_mismatched =
       is_src_page_landscape != is_dst_page_landscape;
   bool rotate_dst_page = rotated ^ page_orientation_mismatched;
@@ -449,6 +453,14 @@ void SetPageSizeAndContentRect(bool rotated,
     content_rect->SetRect(content_rect->y(), content_rect->x(),
                           content_rect->height(), content_rect->width());
   }
+  if (page_orientation_mismatched) {
+#if defined(OS_WIN) || defined(OS_MACOSX)
+    return 3;
+#else
+    return 1;
+#endif
+  }
+  return 0;
 }
 
 // This formats a string with special 0xfffe end-of-line hyphens the same way
@@ -1482,10 +1494,9 @@ FPDF_DOCUMENT PDFiumEngine::CreateSinglePageRasterPdf(
 
   unsigned char* bitmap_data =
       static_cast<unsigned char*>(FPDFBitmap_GetBuffer(bitmap));
-  double ratio_x = ConvertUnitDouble(bitmap_size.width(), print_settings.dpi,
-                                     kPointsPerInch);
-  double ratio_y = ConvertUnitDouble(bitmap_size.height(), print_settings.dpi,
-                                     kPointsPerInch);
+  int dpi = std::min(print_settings.dpi.width, print_settings.dpi.height);
+  double ratio_x = ConvertUnitDouble(bitmap_size.width(), dpi, kPointsPerInch);
+  double ratio_y = ConvertUnitDouble(bitmap_size.height(), dpi, kPointsPerInch);
 
   // Add the bitmap to an image object and add the image object to the output
   // page.
@@ -1556,11 +1567,9 @@ pp::Buffer_Dev PDFiumEngine::PrintPagesAsRasterPDF(
     double source_page_height = FPDF_GetPageHeight(pdf_page);
     source_page_sizes.push_back(
         std::make_pair(source_page_width, source_page_height));
-
-    int width_in_pixels =
-        ConvertUnit(source_page_width, kPointsPerInch, print_settings.dpi);
-    int height_in_pixels =
-        ConvertUnit(source_page_height, kPointsPerInch, print_settings.dpi);
+    int dpi = std::min(print_settings.dpi.width, print_settings.dpi.height);
+    int width_in_pixels = ConvertUnit(source_page_width, kPointsPerInch, dpi);
+    int height_in_pixels = ConvertUnit(source_page_height, kPointsPerInch, dpi);
 
     pp::Rect rect(width_in_pixels, height_in_pixels);
     pages_to_print.push_back(PDFiumPage(this, page_number, rect, true));
@@ -3644,9 +3653,14 @@ void PDFiumEngine::TransformPDFPageForPrinting(
 
   pp::Size page_size(print_settings.paper_size);
   pp::Rect content_rect(print_settings.printable_area);
+  pp::Size dpi(print_settings.dpi);
+
   const bool rotated = (src_page_rotation % 2 == 1);
-  SetPageSizeAndContentRect(rotated, src_page_width > src_page_height,
-                            &page_size, &content_rect);
+  int rotate =
+      SetPageSizeAndContentRect(rotated, src_page_width > src_page_height,
+                                &page_size, &content_rect, &dpi);
+  if (rotate)
+    FPDFPage_SetRotation(page, rotate + src_page_rotation);
 
   // Compute the screen page width and height in points.
   const int actual_page_width =
@@ -4277,7 +4291,7 @@ int CalculatePosition(FPDF_PAGE page,
   if (settings.autorotate &&
       (dest->width() > dest->height()) != (page_width > page_height)) {
     rotate = 3;  // 90 degrees counter-clockwise.
-    std::swap(page_width, page_height);
+    std::swap(page_height, page_width);
   }
 
   // See if we need to scale the output

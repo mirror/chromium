@@ -75,7 +75,7 @@ TEST_F(PepperPrintingHostTest, GetDefaultPrintSettings) {
   PP_PrintSettings_Dev expected_settings = {{{0, 0}, {500, 515}},
                                             {{25, 35}, {300, 720}},
                                             {600, 700},
-                                            200,
+                                            {200, 200},
                                             PP_PRINTORIENTATION_NORMAL,
                                             PP_PRINTSCALINGOPTION_NONE,
                                             PP_FALSE,
@@ -117,7 +117,7 @@ TEST_F(PepperPrintingHostTest, GetDefaultPrintSettings) {
                            actual_settings.content_area));
   EXPECT_TRUE(
       PP_SizeEqual(expected_settings.paper_size, actual_settings.paper_size));
-  EXPECT_EQ(expected_settings.dpi, actual_settings.dpi);
+  EXPECT_TRUE(PP_SizeEqual(expected_settings.dpi, actual_settings.dpi));
   EXPECT_EQ(expected_settings.orientation, actual_settings.orientation);
   EXPECT_EQ(expected_settings.print_scaling_option,
             actual_settings.print_scaling_option);

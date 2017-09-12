@@ -69,16 +69,14 @@ TEST_F(PrintingResourceTest, GetDefaultPrintSettings) {
                                           params.sequence());
   reply_params.set_result(PP_OK);
 
-  PP_PrintSettings_Dev reply_settings = {
-    { { 0, 0 }, { 500, 515 } },
-    { { 25, 35 }, { 300, 720 } },
-    { 600, 700 },
-    200,
-    PP_PRINTORIENTATION_NORMAL,
-    PP_PRINTSCALINGOPTION_NONE,
-    PP_FALSE,
-    PP_PRINTOUTPUTFORMAT_PDF
-  };
+  PP_PrintSettings_Dev reply_settings = {{{0, 0}, {500, 515}},
+                                         {{25, 35}, {300, 720}},
+                                         {600, 700},
+                                         {200, 200},
+                                         PP_PRINTORIENTATION_NORMAL,
+                                         PP_PRINTSCALINGOPTION_NONE,
+                                         PP_FALSE,
+                                         PP_PRINTOUTPUTFORMAT_PDF};
   PluginMessageFilter::DispatchResourceReplyForTest(
       reply_params,
       PpapiPluginMsg_Printing_GetDefaultPrintSettingsReply(
@@ -90,7 +88,7 @@ TEST_F(PrintingResourceTest, GetDefaultPrintSettings) {
                            output_settings.content_area));
   EXPECT_TRUE(PP_SizeEqual(reply_settings.paper_size,
                            output_settings.paper_size));
-  EXPECT_EQ(reply_settings.dpi, output_settings.dpi);
+  EXPECT_TRUE(PP_SizeEqual(reply_settings.dpi, output_settings.dpi));
   EXPECT_EQ(reply_settings.orientation, output_settings.orientation);
   EXPECT_EQ(reply_settings.print_scaling_option,
             output_settings.print_scaling_option);
