@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_PAYMENTS_CORE_SERVICE_WORKER_PAYMENT_INSTRUMENT_H_
-#define COMPONENTS_PAYMENTS_CORE_SERVICE_WORKER_PAYMENT_INSTRUMENT_H_
+#ifndef COMPONENTS_PAYMENTS_CONTENT_SERVICE_WORKER_PAYMENT_INSTRUMENT_H_
+#define COMPONENTS_PAYMENTS_CONTENT_SERVICE_WORKER_PAYMENT_INSTRUMENT_H_
 
 #include "components/payments/core/payment_instrument.h"
 #include "content/public/browser/stored_payment_app.h"
@@ -42,4 +42,4 @@ class ServiceWorkerPaymentInstrument : public PaymentInstrument {
 
 }  // namespace payments
 
-#endif  // COMPONENTS_PAYMENTS_CORE_SERVICE_WORKER_PAYMENT_INSTRUMENT_H_
+#endif  // COMPONENTS_PAYMENTS_CONTENT_SERVICE_WORKER_PAYMENT_INSTRUMENT_H_

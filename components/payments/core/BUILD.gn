@@ -57,14 +57,7 @@ static_library("core") {
     "subkey_requester.cc",
     "subkey_requester.h",
   ]
-
-  if (!is_ios) {
-    sources += [
-      "service_worker_payment_instrument.cc",
-      "service_worker_payment_instrument.h",
-    ]
-  }
-
+  
   deps = [
     "//base",
     "//components/autofill/core/browser",
