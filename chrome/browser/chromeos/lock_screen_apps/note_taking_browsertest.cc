@@ -3,7 +3,11 @@
 // found in the LICENSE file.
 
 #include "apps/launcher.h"
+#include "ash/public/interfaces/tray_action.mojom.h"
 #include "base/command_line.h"
+#include "base/scoped_observer.h"
+#include "base/threading/thread_task_runner_handle.h"
+#include "chrome/browser/chromeos/lock_screen_apps/lock_screen_profile_creator.h"
 #include "chrome/browser/chromeos/lock_screen_apps/state_controller.h"
 #include "chrome/browser/chromeos/note_taking_helper.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
@@ -18,7 +22,47 @@
 
 namespace {
 
+using ash::mojom::TrayActionState;
+
 const char kTestAppId[] = "cadfeochfldmbdgoccgbeianhamecbae";
+
+class LockScreenAppsEnabledWaiter : public lock_screen_apps::StateObserver {
+ public:
+  LockScreenAppsEnabledWaiter() : lock_screen_apps_state_observer_(this) {}
+  ~LockScreenAppsEnabledWaiter() override {}
+
+  bool WaitForState(TrayActionState target_state) {
+    TrayActionState state =
+        lock_screen_apps::StateController::Get()->GetLockScreenNoteState();
+    if (target_state == state)
+      return true;
+
+    base::RunLoop run_loop;
+    state_change_callback_ = run_loop.QuitClosure();
+    lock_screen_apps_state_observer_.Add(
+        lock_screen_apps::StateController::Get());
+    run_loop.Run();
+
+    lock_screen_apps_state_observer_.RemoveAll();
+
+    return target_state ==
+           lock_screen_apps::StateController::Get()->GetLockScreenNoteState();
+  }
+
+  void OnLockScreenNoteStateChanged(TrayActionState state) override {
+    ASSERT_FALSE(state_change_callback_.is_null());
+    state_change_callback_.Run();
+  }
+
+ private:
+  ScopedObserver<lock_screen_apps::StateController,
+                 lock_screen_apps::StateObserver>
+      lock_screen_apps_state_observer_;
+
+  base::Closure state_change_callback_;
+
+  DISALLOW_COPY_AND_ASSIGN(LockScreenAppsEnabledWaiter);
+};
 
 class LockScreenNoteTakingTest : public ExtensionBrowserTest {
  public:
@@ -40,8 +84,8 @@ class LockScreenNoteTakingTest : public ExtensionBrowserTest {
     session_manager::SessionManager::Get()->SetSessionState(
         session_manager::SessionState::LOCKED);
 
-    return lock_screen_apps::StateController::Get()->GetLockScreenNoteState() ==
-           ash::mojom::TrayActionState::kAvailable;
+    LockScreenAppsEnabledWaiter waiter;
+    return waiter.WaitForState(ash::mojom::TrayActionState::kAvailable);
   }
 
   bool RunTestAppInLockScreenContext(const std::string& test_app,
