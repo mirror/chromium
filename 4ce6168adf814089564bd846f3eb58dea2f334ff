@@ -22,6 +22,30 @@
       "revId": "4ce6168adf814089564bd846f3eb58dea2f334ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b93a4d_4ac085be",
+        "filename": "content/renderer/media_recorder/vpx_encoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-09-12T09:00:33Z",
+      "side": 1,
+      "message": "Make sense! OK, I updated the CL to do that.",
+      "parentUuid": "dbe055ff_82c241df",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 7
+      },
+      "revId": "4ce6168adf814089564bd846f3eb58dea2f334ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
