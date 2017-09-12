@@ -54,7 +54,7 @@ TEST_F(SelectionControllerTest, setNonDirectionalSelectionIfNeeded) {
   const char* body_content = "<span id=top>top</span><span id=host></span>";
   const char* shadow_content = "<span id=bottom>bottom</span>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* top = GetDocument().getElementById("top")->firstChild();
   Node* bottom = shadow_root->getElementById("bottom")->firstChild();

@@ -85,10 +85,23 @@ void EditingTestBase::SetBodyContent(const std::string& body_content) {
   UpdateAllLifecyclePhases();
 }
 
-ShadowRoot* EditingTestBase::SetShadowContent(const char* shadow_content,
-                                              const char* host) {
+ShadowRoot* EditingTestBase::SetShadowContentDeprecated(
+    const char* shadow_content,
+    const char* host) {
   ShadowRoot* shadow_root = CreateShadowRootForElementWithIDAndSetInnerHTML(
       GetDocument(), host, shadow_content);
+  return shadow_root;
+}
+
+ShadowRoot* EditingTestBase::SetShadowContent(const char* shadow_content,
+                                              const char* host) {
+  TreeScope& scope = GetDocument();
+  ShadowRoot* shadow_root = scope.getElementById(AtomicString::FromUTF8(host))
+                                ->CreateShadowRootInternal(
+                                    ShadowRootType::kOpen, ASSERT_NO_EXCEPTION);
+  shadow_root->setInnerHTML(String::FromUTF8(shadow_content),
+                            ASSERT_NO_EXCEPTION);
+  scope.GetDocument().View()->UpdateAllLifecyclePhases();
   return shadow_root;
 }
 

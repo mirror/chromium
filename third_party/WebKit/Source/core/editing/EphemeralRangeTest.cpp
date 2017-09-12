@@ -92,7 +92,7 @@ TEST_F(EphemeralRangeTest, rangeShadowTraversal) {
       "<span id='six'>666666</span>"
       "<p id='seven'>7777777</p>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   const std::string expected_nodes(
       "[BODY][B id=\"zero\"][#text \"0\"][P id=\"host\"][P id=\"five\"][#text "
@@ -151,7 +151,7 @@ TEST_F(EphemeralRangeTest, rangeTraversalLimitedFlatTree) {
       "<span id='five'>55555</span>"
       "<p id='six'>666666</p>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   const PositionInFlatTree start_position(GetDocument().getElementById("one"),
                                           0);
@@ -216,7 +216,7 @@ TEST_F(EphemeralRangeTest, commonAncesstorFlatTree) {
       "<content select=#one></content>"
       "<p id='five'>55555</p>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   const PositionInFlatTree start_position(GetDocument().getElementById("one"),
                                           0);
