@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "51428da2_c9292f6f",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-12T20:45:40Z",
+      "side": 1,
+      "message": "Interesting.  Looks like that\u0027s the g_icon_cache.",
+      "parentUuid": "a41bb1e6_ae87798e",
+      "revId": "89c3e5271283591c9b499497f76d89b043a5aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd093365_152b2966",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 1
@@ -84,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "57c5d087_4499b445",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-12T20:45:40Z",
+      "side": 1,
+      "message": "Ah, okay, that makes sense.  Now I\u0027m wondering when PaintVectorIcon *should* be used.  It looks like it\u0027s a tool used by CreateVectorIcon, and we ended up using it directly when we shouldn\u0027t have.  *Head spins a bit*",
+      "parentUuid": "d0ff5760_3c4a2820",
+      "range": {
+        "startLine": 92,
+        "startChar": 33,
+        "endLine": 92,
+        "endChar": 34
+      },
+      "revId": "89c3e5271283591c9b499497f76d89b043a5aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6135a9f_7a6f76f0",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 1
@@ -119,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "f8fc41e7_679fb749",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-12T20:45:40Z",
+      "side": 1,
+      "message": "In our case, we\u0027ll repeatedly draw the same icon at the same scale factor.  I thought you\u0027d suggested removing the representation if we render at many scale factors, and hence end up with representations piling up.  Based on this, should we still blow away the representation after each use?  I guess the scale-specific representations are also cheap to generate?",
+      "parentUuid": "811001a7_70bd0ef7",
+      "revId": "89c3e5271283591c9b499497f76d89b043a5aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5805f24b_cc33d6d6",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 1
@@ -148,6 +208,24 @@
       "side": 1,
       "message": "It seems like you\u0027re doing it right.",
       "parentUuid": "5805f24b_cc33d6d6",
+      "revId": "89c3e5271283591c9b499497f76d89b043a5aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ddcf396_d2b3ddf8",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-12T20:45:40Z",
+      "side": 1,
+      "message": "Nice!",
+      "parentUuid": "2ac95ec9_f078b27a",
       "revId": "89c3e5271283591c9b499497f76d89b043a5aaef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
