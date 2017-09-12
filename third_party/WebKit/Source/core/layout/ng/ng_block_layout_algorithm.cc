@@ -806,7 +806,8 @@ bool NGBlockLayoutAlgorithm::PositionNewFc(
     const NGInflowChildData& child_data,
     const NGConstraintSpace& child_space,
     WTF::Optional<NGBfcOffset>* child_bfc_offset) {
-  const EClear child_clear = child.Style().Clear();
+  const ComputedStyle& child_style = child.Style();
+  const EClear child_clear = child_style.Clear();
 
   DCHECK(layout_result.PhysicalFragment());
   NGFragment fragment(ConstraintSpace().WritingMode(),
@@ -822,6 +823,8 @@ bool NGBlockLayoutAlgorithm::PositionNewFc(
                  unpositioned_floats_, ConstraintSpace(),
                  container_builder_.Size().inline_size, &tmp_exclusion_space);
 
+  // TODO(ikilpatrick): This offset should be considering the LineLeft margin
+  // of the formatting context.
   NGBfcOffset origin_offset = {
       ConstraintSpace().BfcOffset().line_offset +
           border_scrollbar_padding_.LineLeft(ConstraintSpace().Direction()),
@@ -830,13 +833,12 @@ bool NGBlockLayoutAlgorithm::PositionNewFc(
                     &origin_offset);
 
   // 2. Find an estimated layout opportunity for our fragment.
-  // TODO(ikilpatrick): Should fragment_margin_size be including the block
-  // margins here?
-  NGLogicalSize fragment_margin_size(
-      fragment.InlineSize() + child_data.margins.InlineSum(),
-      fragment.BlockSize() + child_data.margins.BlockSum());
+  NGLogicalSize fragment_size(fragment.InlineSize(), fragment.BlockSize());
+
+  // TODO(ikilpatrick): child_space.AvailableSize() is probably wrong as the
+  // area we need to search shrinks by the origin_offset and LineRight margin.
   NGLayoutOpportunity opportunity = tmp_exclusion_space.FindLayoutOpportunity(
-      origin_offset, child_space.AvailableSize(), fragment_margin_size);
+      origin_offset, child_space.AvailableSize(), fragment_size);
 
   NGMarginStrut margin_strut = previous_inflow_position.margin_strut;
 
@@ -845,7 +847,7 @@ bool NGBlockLayoutAlgorithm::PositionNewFc(
   //    MarginStrut.
   if (opportunity.offset.block_offset == child_bfc_offset_estimate)
     margin_strut.Append(child_data.margins.block_start,
-                        child.Style().HasMarginBeforeQuirk());
+                        child_style.HasMarginBeforeQuirk());
   child_bfc_offset_estimate += margin_strut.Sum();
 
   // 4. The child's BFC block offset is known here.
@@ -859,6 +861,8 @@ bool NGBlockLayoutAlgorithm::PositionNewFc(
                         &container_builder_, &unpositioned_floats_,
                         exclusion_space_.get());
 
+  // TODO(ikilpatrick): This offset should be considering the LineLeft margin
+  // of the formatting context.
   origin_offset = {
       ConstraintSpace().BfcOffset().line_offset +
           border_scrollbar_padding_.LineLeft(ConstraintSpace().Direction()),
@@ -868,11 +872,21 @@ bool NGBlockLayoutAlgorithm::PositionNewFc(
 
   // 5. Find the final layout opportunity for the fragment after all pending
   // floats are positioned at the correct BFC block's offset.
+  // TODO(ikilpatrick): child_space.AvailableSize() is probably wrong as the
+  // area we need to search shrinks by the origin_offset and LineRight margin.
   opportunity = exclusion_space_->FindLayoutOpportunity(
-      origin_offset, child_space.AvailableSize(), fragment_margin_size);
+      origin_offset, child_space.AvailableSize(), fragment_size);
 
-  // TODO(ikilpatrick): This seems wrong, this is the offset for the margin box.
-  *child_bfc_offset = opportunity.offset;
+  // Auto-margins are applied within the layout opportunity which fits.
+  NGBoxStrut margins(child_data.margins);
+  ApplyAutoMargins(child_style, opportunity.InlineSize(), fragment.InlineSize(),
+                   &margins);
+
+  *child_bfc_offset =
+      NGBfcOffset{opportunity.offset.line_offset +
+                      margins.LineLeft(ConstraintSpace().Direction()),
+                  opportunity.offset.block_offset};
+
   return true;
 }
 
@@ -993,7 +1007,8 @@ NGBoxStrut NGBlockLayoutAlgorithm::CalculateMargins(
 
     // TODO(ikilpatrick): ApplyAutoMargins looks wrong as its not respecting
     // the parents writing mode?
-    ApplyAutoMargins(*space, child_style, child_inline_size, &margins);
+    ApplyAutoMargins(child_style, space->AvailableSize().inline_size,
+                     child_inline_size, &margins);
 
     // For inflow children we need to adjust the inline end margin such that it
     // fits within the available inline size.
