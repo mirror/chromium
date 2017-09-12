@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "094c6adf_a5d7ba69",
+        "filename": "ash/shelf/shelf.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-12T00:47:47Z",
+      "side": 1,
+      "message": "I prefer to let LoginShelfView directly observe the states as well.",
+      "parentUuid": "0424bf95_ec76ddd0",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7d7bcec_78f5deaa",
         "filename": "ash/shelf/shelf.h",
         "patchSetId": 10
