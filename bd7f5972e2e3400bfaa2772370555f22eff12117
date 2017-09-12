@@ -22,6 +22,30 @@
       "revId": "bd7f5972e2e3400bfaa2772370555f22eff12117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c2cc886_c2543946",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T13:21:57Z",
+      "side": 0,
+      "message": "Ack, cr-toast currently depends on TimerProxy for testing purposes. I didn\u0027t want to depend on code in bookmarks from /resources, that is why I moved it in this CL as well.",
+      "parentUuid": "2f5934a0_385f8e05",
+      "range": {
+        "startLine": 398,
+        "startChar": 27,
+        "endLine": 398,
+        "endChar": 50
+      },
+      "revId": "bd7f5972e2e3400bfaa2772370555f22eff12117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

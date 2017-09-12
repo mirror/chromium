@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f4337b83_8f9d4959",
+        "filename": "chrome/browser/resources/md_bookmarks/compiled_resources2.gyp",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T13:21:57Z",
+      "side": 1,
+      "message": "Cleaned up some dependencies here due to a closure compilation error. It complained about a redefinition of type CrNetworkIconElement. Deleting the (unneeded?) dependencies solved it.",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 96
+      },
+      "revId": "44c6e50ffd02e1e1ed79ff03987a9aef59b4ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3198637_cb038f8a",
         "filename": "chrome/browser/resources/md_bookmarks/debouncer.js",
         "patchSetId": 2
@@ -18,6 +41,53 @@
         "startChar": 15,
         "endLine": 87,
         "endChar": 24
+      },
+      "revId": "44c6e50ffd02e1e1ed79ff03987a9aef59b4ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2ebe96_8129b24d",
+        "filename": "chrome/browser/resources/md_bookmarks/debouncer.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T13:21:57Z",
+      "side": 1,
+      "message": "Ack, leaving this for the MD Bookmarks folks to decide.",
+      "parentUuid": "b3198637_cb038f8a",
+      "range": {
+        "startLine": 87,
+        "startChar": 15,
+        "endLine": 87,
+        "endChar": 24
+      },
+      "revId": "44c6e50ffd02e1e1ed79ff03987a9aef59b4ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c4bc38a_089fe84c",
+        "filename": "chrome/browser/resources/md_bookmarks/toast_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T13:21:57Z",
+      "side": 1,
+      "message": "This is no-longer needed due to visibility: hidden in cr-toast preventing tab focus. Leaving this in resulted in a funny effect where the UNDO button disappeared immediately, while the toast was transitioning out.",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 29
       },
       "revId": "44c6e50ffd02e1e1ed79ff03987a9aef59b4ddc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -45,6 +115,30 @@
       "revId": "44c6e50ffd02e1e1ed79ff03987a9aef59b4ddc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a153eb28_b69b0b32",
+        "filename": "ui/webui/resources/cr_elements/cr_toast/cr_toast.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T13:21:57Z",
+      "side": 1,
+      "message": "I was failing to get hidden to work while still animating the transition. In my laymen\u0027s understanding this is because the hidden attribute is commonly implemented using display: none, which is a non-animatable CSS property. This is why I chose visibility: hidden now. This is animatible (https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties), should not react to tabbing and is hidden from screenreaders. Please let me know if there is a way to get \"hidden\" to work with transitions, though.",
+      "parentUuid": "fe31b0f2_43e7db46",
+      "range": {
+        "startLine": 56,
+        "startChar": 23,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "44c6e50ffd02e1e1ed79ff03987a9aef59b4ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
