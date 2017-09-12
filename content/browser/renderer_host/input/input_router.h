@@ -63,6 +63,8 @@ class InputRouter : public IPC::Listener {
 
   virtual void SetForceEnableZoom(bool enabled) = 0;
 
+  virtual void ProgressFling(base::TimeTicks time);
+
   // Associate this InputRouter with a remote host channel.
   virtual void BindHost(mojom::WidgetInputHandlerHostRequest request) = 0;
 };

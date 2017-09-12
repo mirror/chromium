@@ -27,6 +27,7 @@ GestureEventQueue::Config::Config() {
 GestureEventQueue::GestureEventQueue(
     GestureEventQueueClient* client,
     TouchpadTapSuppressionControllerClient* touchpad_client,
+    FlingControllerClient* fling_client,
     const Config& config)
     : client_(client),
       fling_in_progress_(false),
@@ -35,9 +36,13 @@ GestureEventQueue::GestureEventQueue(
       allow_multiple_inflight_events_(
           base::FeatureList::IsEnabled(features::kVsyncAlignedInputEvents)),
       debounce_interval_(config.debounce_interval),
-      fling_controller_(this, touchpad_client, config.fling_config) {
+      fling_controller_(this,
+                        touchpad_client,
+                        fling_client,
+                        config.fling_config) {
   DCHECK(client);
   DCHECK(touchpad_client);
+  DCHECK(fling_client);
 }
 
 GestureEventQueue::~GestureEventQueue() { }
@@ -50,11 +55,27 @@ void GestureEventQueue::QueueEvent(
     return;
   }
 
+  if (gesture_event.event.GetType() == WebInputEvent::kGestureFlingStart &&
+      gesture_event.event.source_device == blink::kWebGestureDeviceTouchpad) {
+    fling_controller_.ProcessGestureFlingStart(gesture_event);
+    fling_in_progress_ = true;
+    return;
+  }
+
+  if (gesture_event.event.GetType() == WebInputEvent::kGestureFlingCancel &&
+      fling_controller_.FlingInProgress()) {
+    fling_controller_.ProcessGestureFlingCancel(gesture_event);
+    fling_in_progress_ = false;
+    return;
+  }
+
   QueueAndForwardIfNecessary(gesture_event);
 }
 
 bool GestureEventQueue::ShouldDiscardFlingCancelEvent(
     const GestureEventWithLatencyInfo& gesture_event) const {
+  DCHECK(!(fling_controller_.FlingInProgress()));
+
   if (coalesced_gesture_events_.empty() && fling_in_progress_)
     return false;
   GestureQueueWithAckState::const_reverse_iterator it =
@@ -69,12 +90,20 @@ bool GestureEventQueue::ShouldDiscardFlingCancelEvent(
   return true;
 }
 
+void GestureEventQueue::ProgressFling(base::TimeTicks time) {
+  fling_controller_.ProgressFling(time);
+}
+
 bool GestureEventQueue::ShouldForwardForBounceReduction(
     const GestureEventWithLatencyInfo& gesture_event) {
   if (debounce_interval_ <= base::TimeDelta())
     return true;
   switch (gesture_event.event.GetType()) {
     case WebInputEvent::kGestureScrollUpdate:
+      if (gesture_event.event.data.scroll_update.inertial_phase ==
+          WebGestureEvent::kMomentumPhase) {
+        return true;
+      }
       if (!scrolling_in_progress_) {
         debounce_deferring_timer_.Start(
             FROM_HERE,
