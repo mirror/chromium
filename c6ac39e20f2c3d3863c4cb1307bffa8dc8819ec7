@@ -22,6 +22,30 @@
       "revId": "c6ac39e20f2c3d3863c4cb1307bffa8dc8819ec7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8e69b23_47d493ab",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/ContentSettingsAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1239716
+      },
+      "writtenOn": "2017-09-12T20:47:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ab914aa_ac1d312d",
+      "range": {
+        "startLine": 238,
+        "startChar": 5,
+        "endLine": 238,
+        "endChar": 17
+      },
+      "revId": "c6ac39e20f2c3d3863c4cb1307bffa8dc8819ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
