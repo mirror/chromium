@@ -17,6 +17,16 @@ grit("invalidations_resources") {
   output_dir = "$root_gen_dir/chrome"
 }
 
+grit("interventions_resources") {
+  source = "interventions_resources.grd"
+  defines = chrome_grit_defines
+  outputs = [
+    "grit/interventions_resources.h",
+    "interventions_resources.pak",
+  ]
+  output_dir = "$root_gen_dir/chrome"
+}
+
 grit("net_internals_resources") {
   source = "net_internals_resources.grd"
   defines = chrome_grit_defines

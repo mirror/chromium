@@ -92,6 +92,7 @@ template("chrome_extra_paks") {
       "$root_gen_dir/chrome/browser_resources.pak",
       "$root_gen_dir/chrome/chrome_unscaled_resources.pak",
       "$root_gen_dir/chrome/common_resources.pak",
+      "$root_gen_dir/chrome/interventions_resources.pak",
       "$root_gen_dir/chrome/invalidations_resources.pak",
       "$root_gen_dir/chrome/net_internals_resources.pak",
       "$root_gen_dir/chrome/password_manager_internals_resources.pak",
@@ -107,6 +108,7 @@ template("chrome_extra_paks") {
     deps = [
       "//chrome/app/theme:chrome_unscaled_resources",
       "//chrome/browser:resources",
+      "//chrome/browser/resources:interventions_resources",
       "//chrome/browser/resources:invalidations_resources",
       "//chrome/browser/resources:net_internals_resources",
       "//chrome/browser/resources:password_manager_internals_resources",
