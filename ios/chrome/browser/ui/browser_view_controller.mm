@@ -1581,7 +1581,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       InfoBarManagerImpl::FromWebState(webState);
   [[UpgradeCenter sharedInstance] addInfoBarToManager:infoBarManager
                                              forTabId:[tab tabId]];
-  if (!ReSignInInfoBarDelegate::Create(_browserState, tab)) {
+  if (!ReSignInInfoBarDelegate::Create(_browserState, tab, self.dispatcher)) {
     DisplaySyncErrors(_browserState, tab, self.dispatcher);
   }
 
@@ -1991,10 +1991,11 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 - (void)initializeBookmarkInteractionController {
   if (_bookmarkInteractionController)
     return;
-  _bookmarkInteractionController =
-      [[BookmarkInteractionController alloc] initWithBrowserState:_browserState
-                                                           loader:self
-                                                 parentController:self];
+  _bookmarkInteractionController = [[BookmarkInteractionController alloc]
+      initWithBrowserState:_browserState
+                    loader:self
+          parentController:self
+                dispatcher:self.dispatcher];
 }
 
 // Update the state of back and forward buttons, hiding the forward button if
