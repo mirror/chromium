@@ -848,8 +848,8 @@ viz::SurfaceId RenderWidgetHostViewAndroid::SurfaceIdForTesting() const {
 
 viz::FrameSinkId RenderWidgetHostViewAndroid::FrameSinkIdAtPoint(
     viz::SurfaceHittestDelegate* delegate,
-    const gfx::Point& point,
-    gfx::Point* transformed_point) {
+    const gfx::PointF& point,
+    gfx::PointF* transformed_point) {
   if (!delegated_frame_host_)
     return viz::FrameSinkId();
 
@@ -857,15 +857,15 @@ viz::FrameSinkId RenderWidgetHostViewAndroid::FrameSinkIdAtPoint(
   DCHECK_GT(scale_factor, 0);
   // The surface hittest happens in device pixels, so we need to convert the
   // |point| from DIPs to pixels before hittesting.
-  gfx::Point point_in_pixels = gfx::ConvertPointToPixel(scale_factor, point);
+  gfx::PointF point_in_pixels = gfx::ConvertPointToPixel(scale_factor, point);
 
   viz::SurfaceId surface_id = delegated_frame_host_->SurfaceId();
   if (surface_id.is_valid()) {
     viz::SurfaceHittest hittest(delegate,
                                 GetFrameSinkManager()->surface_manager());
     gfx::Transform target_transform;
-    surface_id = hittest.GetTargetSurfaceAtPoint(surface_id, point_in_pixels,
-                                                 &target_transform);
+    surface_id = hittest.GetTargetSurfaceAtPoint(
+        surface_id, gfx::ToFlooredPoint(point_in_pixels), &target_transform);
     *transformed_point = point_in_pixels;
     if (surface_id.is_valid())
       target_transform.TransformPoint(transformed_point);
@@ -905,9 +905,9 @@ void RenderWidgetHostViewAndroid::ProcessGestureEvent(
 }
 
 bool RenderWidgetHostViewAndroid::TransformPointToLocalCoordSpace(
-    const gfx::Point& point,
+    const gfx::PointF& point,
     const viz::SurfaceId& original_surface,
-    gfx::Point* transformed_point) {
+    gfx::PointF* transformed_point) {
   if (!delegated_frame_host_)
     return false;
 
@@ -915,7 +915,7 @@ bool RenderWidgetHostViewAndroid::TransformPointToLocalCoordSpace(
   DCHECK_GT(scale_factor, 0);
   // Transformations use physical pixels rather than DIP, so conversion
   // is necessary.
-  gfx::Point point_in_pixels = gfx::ConvertPointToPixel(scale_factor, point);
+  gfx::PointF point_in_pixels = gfx::ConvertPointToPixel(scale_factor, point);
 
   viz::SurfaceId surface_id = delegated_frame_host_->SurfaceId();
   if (!surface_id.is_valid())
@@ -936,9 +936,9 @@ bool RenderWidgetHostViewAndroid::TransformPointToLocalCoordSpace(
 }
 
 bool RenderWidgetHostViewAndroid::TransformPointToCoordSpaceForView(
-    const gfx::Point& point,
+    const gfx::PointF& point,
     RenderWidgetHostViewBase* target_view,
-    gfx::Point* transformed_point) {
+    gfx::PointF* transformed_point) {
   if (target_view == this || !delegated_frame_host_) {
     *transformed_point = point;
     return true;
