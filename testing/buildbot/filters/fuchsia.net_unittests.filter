@@ -1,23 +1,19 @@
 # TODO(fuchsia): Fix these tests and remove the filter. https://crbug.com/731302 .
 -CertVerifyProcInternalTest.*
--CloseOnConnectHttpServerTest.ServerImmediatelyClosesConnection
--NetworkInterfacesTest.GetNetworkList
--ProxyScriptFetcherImplTest.Priority
+-NetworkInterfacesTest.GetNetworkList # getifaddrs() not implemented
 -PythonUtils*
 -SQLite*
--UDPSocketTest.PartialRecv
 -UnixDomain*Socket*
 -URLRequest*FTP*
--URLRequestQuic*
 
-# Following tests pass locally, but flake on bots.
--DiskCacheTest.BlockFiles_Grow
--DiskCacheBackendTest.SimpleCacheDeleteQuickly
+# Exceeds FD limit.
+-ProxyScriptFetcherImplTest.Priority
+
+# Depends on MSG_TRUNC.
+-UDPSocketTest.PartialRecv
+
+# Also fails on Windows. https://crbug.com/177916
 -URLRequestTestHTTP.GetTest_ManyCookies
-
-# https://crbug.com/755552
--HttpCache.RangeGET_ParallelValidationDifferentRanges
--HttpCache.RangeGET_ParallelValidationOverlappingRanges
 
 # base::MakeFileUnreadable() doesn't work. https://crbug.com/759853
 -HttpNetworkTransactionTest.UploadUnreadableFile
