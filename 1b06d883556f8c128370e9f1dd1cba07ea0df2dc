@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cd8c2f1_830f6aa1",
+        "filename": "components/autofill/content/renderer/DEPS",
+        "patchSetId": 16
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-12T20:12:14Z",
+      "side": 1,
+      "message": "this doesn\u0027t seem valid",
+      "range": {
+        "startLine": 5,
+        "startChar": 3,
+        "endLine": 5,
+        "endChar": 38
+      },
+      "revId": "1b06d883556f8c128370e9f1dd1cba07ea0df2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb936d3_7eda67c4",
+        "filename": "components/autofill/content/renderer/password_generation_agent.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-12T20:12:14Z",
+      "side": 1,
+      "message": "what is this being added for?",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "1b06d883556f8c128370e9f1dd1cba07ea0df2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33524ff6_3bb0d6cd",
+        "filename": "components/autofill/content/renderer/password_generation_agent.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-12T20:12:14Z",
+      "side": 1,
+      "message": "what is this being added for?",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 63
+      },
+      "revId": "1b06d883556f8c128370e9f1dd1cba07ea0df2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4540ea1_fbc0eb7c",
+        "filename": "components/autofill/content/renderer/password_generation_agent.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-12T20:12:14Z",
+      "side": 1,
+      "message": "nit: the verb form is \"set up\", so this should be \"SetUpUser...\"\n\nalso, function ordering should match in the .cc and .h",
+      "range": {
+        "startLine": 111,
+        "startChar": 7,
+        "endLine": 111,
+        "endChar": 12
+      },
+      "revId": "1b06d883556f8c128370e9f1dd1cba07ea0df2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
