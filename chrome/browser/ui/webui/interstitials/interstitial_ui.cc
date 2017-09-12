@@ -435,33 +435,27 @@ void InterstitialHTMLSource::StartDataRequest(
   }
   std::unique_ptr<content::InterstitialPageDelegate> interstitial_delegate;
   std::string html;
-  if (base::StartsWith(path, "ssl", base::CompareCase::SENSITIVE)) {
+  if (web_contents->GetURL().path() == "/ssl") {
     interstitial_delegate.reset(
         CreateSSLBlockingPage(web_contents, false /* is superfish */));
-  } else if (base::StartsWith(path, "superfish-ssl",
-                              base::CompareCase::SENSITIVE)) {
+  } else if (web_contents->GetURL().path() == "/superfish-ssl") {
     interstitial_delegate.reset(
         CreateSSLBlockingPage(web_contents, true /* is superfish */));
-  } else if (base::StartsWith(path, "mitm-software-ssl",
-                              base::CompareCase::SENSITIVE)) {
+  } else if (web_contents->GetURL().path() == "/mitm-software-ssl") {
     interstitial_delegate.reset(CreateMITMSoftwareBlockingPage(web_contents));
-  } else if (base::StartsWith(path, "safebrowsing",
-                              base::CompareCase::SENSITIVE)) {
+  } else if (web_contents->GetURL().path() == "/safebrowsing") {
     interstitial_delegate.reset(CreateSafeBrowsingBlockingPage(web_contents));
-  } else if (base::StartsWith(path, "clock", base::CompareCase::SENSITIVE)) {
+  } else if (web_contents->GetURL().path() == "/clock") {
     interstitial_delegate.reset(CreateBadClockBlockingPage(web_contents));
   }
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
-  else if (base::StartsWith(path, "captiveportal",
-                            base::CompareCase::SENSITIVE))
-  {
+  else if (web_contents->GetURL().path() == "/captiveportal") {
     interstitial_delegate.reset(CreateCaptivePortalBlockingPage(web_contents));
   }
 #endif
-  if (base::StartsWith(path, "supervised_user", base::CompareCase::SENSITIVE)) {
+  if (web_contents->GetURL().path() == "/supervised_user") {
     html = GetSupervisedUserInterstitialHTML(path);
-  } else if (base::StartsWith(path, "quietsafebrowsing",
-                              base::CompareCase::SENSITIVE)) {
+  } else if (web_contents->GetURL().path() == "/quietsafebrowsing") {
     TestSafeBrowsingBlockingPageQuiet* blocking_page =
         CreateSafeBrowsingQuietBlockingPage(web_contents);
     interstitial_delegate.reset(blocking_page);
