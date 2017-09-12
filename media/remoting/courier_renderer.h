@@ -141,6 +141,11 @@ class CourierRenderer : public Renderer {
   // DemuxerStreamAdapters and record this information in the metrics.
   void MeasureAndRecordDataRates();
 
+  // Helper to check whether is waiting for data from Demuxer while receiver is
+  // waiting for buffering. If yes, remoting will be continued even though the
+  // playback might be delayed or paused.
+  bool IsWaitingForDemuxerBuffering() const;
+
   State state_;
   const scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
   const scoped_refptr<base::SingleThreadTaskRunner> media_task_runner_;
@@ -208,6 +213,10 @@ class CourierRenderer : public Renderer {
   // A timer that polls the DemuxerStreamAdapters periodically to measure
   // the data flow rates for metrics.
   base::RepeatingTimer data_flow_poll_timer_;
+
+  // Indicates whether is waiting for data from Demuxer while receiver is
+  // waiting for buffering.
+  bool is_waiting_for_demuxer_buffering_ = true;
 
   base::WeakPtrFactory<CourierRenderer> weak_factory_;
 

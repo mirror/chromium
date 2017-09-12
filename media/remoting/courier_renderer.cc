@@ -587,6 +587,13 @@ void CourierRenderer::OnBufferingStateChange(
       message->rendererclient_onbufferingstatechange_rpc().state());
   if (!state.has_value())
     return;
+  if (state == BufferingState::BUFFERING_HAVE_NOTHING) {
+    is_waiting_for_demuxer_buffering_ = IsWaitingForDemuxerBuffering();
+  } else if (is_waiting_for_demuxer_buffering_) {
+    is_waiting_for_demuxer_buffering_ = false;
+    ResetMeasurements();
+  }
+
   client_->OnBufferingStateChange(state.value());
 }
 
@@ -743,6 +750,8 @@ void CourierRenderer::OnMediaTimeUpdated() {
   DCHECK(media_task_runner_->BelongsToCurrentThread());
   if (!flush_cb_.is_null())
     return;  // Don't manage and check the queue when Flush() is on-going.
+  if (is_waiting_for_demuxer_buffering_)
+    return;  // Don't manage and check the queue when buffering is on-going.
 
   base::TimeTicks current_time = clock_->NowTicks();
   if (current_time < ignore_updates_until_time_)
@@ -877,6 +886,28 @@ void CourierRenderer::MeasureAndRecordDataRates() {
     metrics_recorder_.OnVideoRateEstimate(
         checked_kbps.ValueOrDefault(std::numeric_limits<int>::max()));
   }
+}
+
+bool CourierRenderer::IsWaitingForDemuxerBuffering() const {
+  DCHECK(media_task_runner_->BelongsToCurrentThread());
+
+  if (video_demuxer_stream_adapter_) {
+    if (!video_demuxer_stream_adapter_->IsProcessingReadRequest())
+      return false;
+    if (!video_demuxer_stream_adapter_->IsDataPending())
+      return true;  // Waiting for data from Demuxer.
+    return false;   // Ignores audio stream if video stream exists.
+  }
+
+  if (audio_demuxer_stream_adapter_) {
+    if (!audio_demuxer_stream_adapter_->IsProcessingReadRequest())
+      return false;
+    if (!audio_demuxer_stream_adapter_->IsDataPending())
+      return true;  // Waiting for data from Demuxer.
+    return false;
+  }
+
+  return false;
 }
 
 }  // namespace remoting
