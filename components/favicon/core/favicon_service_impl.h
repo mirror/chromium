@@ -100,7 +100,7 @@ class FaviconServiceImpl : public FaviconService {
                     favicon_base::IconType icon_type,
                     scoped_refptr<base::RefCountedMemory> bitmap_data,
                     const gfx::Size& pixel_size) override;
-  void SetFavicons(const GURL& page_url,
+  void SetFavicons(const std::set<GURL>& page_urls,
                    const GURL& icon_url,
                    favicon_base::IconType icon_type,
                    const gfx::Image& image) override;

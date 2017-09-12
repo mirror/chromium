@@ -1754,11 +1754,11 @@ void HistoryBackend::MergeFavicon(
   ScheduleCommit();
 }
 
-void HistoryBackend::SetFavicons(const GURL& page_url,
+void HistoryBackend::SetFavicons(const std::set<GURL>& page_urls,
                                  favicon_base::IconType icon_type,
                                  const GURL& icon_url,
                                  const std::vector<SkBitmap>& bitmaps) {
-  SetFaviconsImpl(page_url, icon_type, icon_url, bitmaps,
+  SetFaviconsImpl(page_urls, icon_type, icon_url, bitmaps,
                   FaviconBitmapType::ON_VISIT);
 }
 
@@ -1775,7 +1775,7 @@ bool HistoryBackend::SetOnDemandFavicons(const GURL& page_url,
     return false;
   }
 
-  return SetFaviconsImpl(page_url, icon_type, icon_url, bitmaps,
+  return SetFaviconsImpl({page_url}, icon_type, icon_url, bitmaps,
                          FaviconBitmapType::ON_DEMAND);
 }
 
@@ -1862,11 +1862,13 @@ void HistoryBackend::SetImportedFavicons(
   }
 }
 
-bool HistoryBackend::SetFaviconsImpl(const GURL& page_url,
+bool HistoryBackend::SetFaviconsImpl(const std::set<GURL>& page_urls,
                                      favicon_base::IconType icon_type,
                                      const GURL& icon_url,
                                      const std::vector<SkBitmap>& bitmaps,
                                      FaviconBitmapType type) {
+  DCHECK(!page_urls.empty());
+
   if (!thumbnail_db_ || !db_)
     return false;
 
@@ -1887,12 +1889,14 @@ bool HistoryBackend::SetFaviconsImpl(const GURL& page_url,
   }
 
   std::vector<favicon_base::FaviconID> icon_ids(1u, icon_id);
-  bool mapping_changed =
-      SetFaviconMappingsForPageAndRedirects(page_url, icon_type, icon_ids);
+  for (const GURL& page_url : page_urls) {
+    bool mapping_changed =
+        SetFaviconMappingsForPageAndRedirects(page_url, icon_type, icon_ids);
 
-  if (mapping_changed) {
-    // Notify the UI that this function changed an icon mapping.
-    SendFaviconChangedNotificationForPageAndRedirects(page_url);
+    if (mapping_changed) {
+      // Notify the UI that this function changed an icon mapping.
+      SendFaviconChangedNotificationForPageAndRedirects(page_url);
+    }
   }
 
   if (favicon_data_modified && !favicon_created) {

@@ -321,7 +321,8 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
                     scoped_refptr<base::RefCountedMemory> bitmap_data,
                     const gfx::Size& pixel_size);
 
-  void SetFavicons(const GURL& page_url,
+  // |page_urls| must not be empty.
+  void SetFavicons(const std::set<GURL>& page_urls,
                    favicon_base::IconType icon_type,
                    const GURL& icon_url,
                    const std::vector<SkBitmap>& bitmaps);
@@ -534,6 +535,7 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, SetFaviconsReplaceBitmapData);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest,
                            SetFaviconsSameFaviconURLForTwoPages);
+  FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, SetFaviconsWithTwoPageURLs);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, SetOnDemandFaviconsForEmptyDB);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, SetOnDemandFaviconsForPageInDB);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, SetOnDemandFaviconsForIconInDB);
@@ -685,8 +687,8 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   // If |bitmaps_are_expired| is true, the icon for |icon_url| will be modified
   // only if it's not present in the database. In that case, it will be
   // initially set as expired. Returns whether the new bitmaps were actually
-  // written.
-  bool SetFaviconsImpl(const GURL& page_url,
+  // written. |page_urls| must not be empty.
+  bool SetFaviconsImpl(const std::set<GURL>& page_urls,
                        favicon_base::IconType icon_type,
                        const GURL& icon_url,
                        const std::vector<SkBitmap>& bitmaps,
