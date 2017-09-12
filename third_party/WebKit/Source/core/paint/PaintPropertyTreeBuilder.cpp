@@ -151,8 +151,10 @@ void PaintPropertyTreeBuilder::UpdateProperties(
     context.current.rendering_context_id = 0;
     context.current.should_flatten_inherited_transform = true;
     context.absolute_position = context.current;
+    context.absolute_position.containing_block_changed_under_filter = false;
     full_context.container_for_absolute_position = nullptr;
     context.fixed_position = context.current;
+    context.fixed_position.containing_block_changed_under_filter = false;
     return;
   } else {
     context.current.paint_offset_root = frame_view.GetLayoutView()->Layer();
@@ -237,8 +239,10 @@ void PaintPropertyTreeBuilder::UpdateProperties(
   context.current.rendering_context_id = 0;
   context.current.should_flatten_inherited_transform = true;
   context.absolute_position = context.current;
+  context.fixed_position.containing_block_changed_under_filter = false;
   full_context.container_for_absolute_position = nullptr;
   context.fixed_position = context.current;
+  context.fixed_position.containing_block_changed_under_filter = false;
   context.fixed_position.transform = fixed_transform_node;
   context.fixed_position.scroll = fixed_scroll_node;
 
@@ -1120,6 +1124,20 @@ void PaintPropertyTreeBuilder::UpdateScrollAndScrollTranslation(
   }
 }
 
+static inline bool ContextsDiffer(
+    const PaintPropertyTreeBuilderFragmentContext::ContainingBlockContext& a,
+    const PaintPropertyTreeBuilderFragmentContext::ContainingBlockContext& b) {
+  if (a.clip != b.clip)
+    return true;
+  if (a.transform != b.transform)
+    return true;
+  if (a.paint_offset != b.paint_offset)
+    return true;
+  if (a.scroll != b.scroll)
+    return true;
+  return false;
+}
+
 void PaintPropertyTreeBuilder::UpdateOutOfFlowContext(
     const LayoutObject& object,
     PaintPropertyTreeBuilderFragmentContext& context,
@@ -1131,8 +1149,10 @@ void PaintPropertyTreeBuilder::UpdateOutOfFlowContext(
   if (object.IsLayoutBlock())
     context.paint_offset_for_float = context.current.paint_offset;
 
-  if (object.CanContainAbsolutePositionObjects())
+  if (object.CanContainAbsolutePositionObjects()) {
     context.absolute_position = context.current;
+    context.absolute_position.containing_block_changed_under_filter = false;
+  }
 
   if (object.IsLayoutView()) {
     if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
@@ -1140,6 +1160,7 @@ void PaintPropertyTreeBuilder::UpdateOutOfFlowContext(
       const auto* initial_fixed_scroll = context.fixed_position.scroll;
 
       context.fixed_position = context.current;
+      context.fixed_position.containing_block_changed_under_filter = false;
 
       // Fixed position transform and scroll nodes should not be affected.
       context.fixed_position.transform = initial_fixed_transform;
@@ -1147,6 +1168,7 @@ void PaintPropertyTreeBuilder::UpdateOutOfFlowContext(
     }
   } else if (object.CanContainFixedPositionObjects()) {
     context.fixed_position = context.current;
+    context.fixed_position.containing_block_changed_under_filter = false;
   } else if (paint_properties && paint_properties->CssClip()) {
     // CSS clip applies to all descendants, even if this object is not a
     // containing block ancestor of the descendant. It is okay for
@@ -1173,6 +1195,14 @@ void PaintPropertyTreeBuilder::UpdateOutOfFlowContext(
         context.fixed_position.clip = paint_properties->CssClipFixedPosition();
       return;
     }
+  }
+
+  if (NeedsFilter(object)) {
+    if (ContextsDiffer(context.current, context.absolute_position))
+      context.absolute_position.containing_block_changed_under_filter = true;
+
+    if (ContextsDiffer(context.current, context.fixed_position))
+      context.fixed_position.containing_block_changed_under_filter = true;
   }
 
   if (object.NeedsPaintPropertyUpdate() || force_subtree_update) {
@@ -1203,6 +1233,11 @@ void PaintPropertyTreeBuilder::UpdatePaintOffset(
       DCHECK(container_for_absolute_position == object.Container());
       context.current = context.absolute_position;
 
+      if (context.absolute_position.containing_block_changed_under_filter) {
+        UseCounter::Count(object.GetDocument(),
+                          WebFeature::kFilterAsContainingBlockMayChangeOutput);
+      }
+
       // Absolutely positioned content in an inline should be positioned
       // relative to the inline.
       const LayoutObject* container = container_for_absolute_position;
@@ -1220,6 +1255,11 @@ void PaintPropertyTreeBuilder::UpdatePaintOffset(
       break;
     case EPosition::kFixed:
       context.current = context.fixed_position;
+
+      if (context.absolute_position.containing_block_changed_under_filter) {
+        UseCounter::Count(object.GetDocument(),
+                          WebFeature::kFilterAsContainingBlockMayChangeOutput);
+      }
       break;
     default:
       NOTREACHED();
