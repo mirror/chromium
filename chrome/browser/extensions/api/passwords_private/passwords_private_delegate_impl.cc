@@ -117,6 +117,17 @@ void PasswordsPrivateDelegateImpl::RemovePasswordExceptionInternal(
       exception_url_to_index_map_[exception_url]);
 }
 
+void PasswordsPrivateDelegateImpl::UndoRemoveSavedPasswordOrException() {
+  ExecuteFunction(base::Bind(
+      &PasswordsPrivateDelegateImpl::UndoRemoveSavedPasswordOrExceptionInternal,
+      base::Unretained(this)));
+}
+
+void PasswordsPrivateDelegateImpl::
+    UndoRemoveSavedPasswordOrExceptionInternal() {
+  password_manager_presenter_->UndoRemoveSavedPasswordOrException();
+}
+
 void PasswordsPrivateDelegateImpl::RequestShowPassword(
     const std::string& origin_url,
     const std::string& username,

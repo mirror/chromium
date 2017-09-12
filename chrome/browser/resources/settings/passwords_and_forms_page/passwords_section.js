@@ -64,6 +64,12 @@ class PasswordManager {
   removeException(exception) {}
 
   /**
+   * Should undo the last saved password or exception removal and notify that
+   * the list has changed.
+   */
+  undoRemoveSavedPasswordOrException() {}
+
+  /**
    * Gets the saved password for a given login pair.
    * @param {!PasswordManager.LoginPair} loginPair The saved password that
    *     should be retrieved.
@@ -133,6 +139,11 @@ class PasswordManagerImpl {
   }
 
   /** @override */
+  undoRemoveSavedPasswordOrException() {
+    chrome.passwordsPrivate.undoRemoveSavedPasswordOrException();
+  }
+
+  /** @override */
   getPlaintextPassword(loginPair, callback) {
     var listener = function(reply) {
       // Only handle the reply for our loginPair request.
@@ -183,6 +194,9 @@ Polymer({
      */
     passwordExceptions: Array,
 
+    /** Label of the UNDO Button */
+    undoLabel: String,
+
     /** @override */
     subpageRoute: {
       type: Object,
@@ -211,6 +225,7 @@ Polymer({
   listeners: {
     'show-password': 'showPassword_',
     'password-menu-tap': 'onPasswordMenuTap_',
+    'command-undo': 'undoRemoveSavedPasswordOrException_',
   },
 
   /**
@@ -264,6 +279,10 @@ Polymer({
         setSavedPasswordsListener);
     this.passwordManager_.addExceptionListChangedListener(
         setPasswordExceptionsListener);
+
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      Polymer.IronA11yAnnouncer.requestAvailability();
+    });
   },
 
   /** @override */
@@ -327,9 +346,16 @@ Polymer({
    */
   onMenuRemovePasswordTap_: function() {
     this.passwordManager_.removeSavedPassword(this.activePassword.loginPair);
+    this.undoLabel = this.i18n('passwordDeleted');
+    this.fire('iron-announce', {text: this.undoLabel});
+    this.$.undoToast.show();
     /** @type {CrActionMenuElement} */ (this.$.menu).close();
   },
 
+  onUndoButtonTap_: function() {
+    this.passwordManager_.undoRemoveSavedPasswordOrException();
+    this.$.undoToast.hide();
+  },
   /**
    * Fires an event that should delete the password exception.
    * @param {!ExceptionEntryEntryEvent} e The polymer event.
@@ -337,6 +363,9 @@ Polymer({
    */
   onRemoveExceptionButtonTap_: function(e) {
     this.passwordManager_.removeException(e.model.item.urls.origin);
+    this.undoLabel = this.i18n('exceptionDeleted');
+    this.fire('iron-announce', {text: this.undoLabel});
+    this.$.undoToast.show();
   },
 
   /**
@@ -353,6 +382,10 @@ Polymer({
             event.detail.item);
     menu.showAt(target);
     this.activeDialogAnchor_ = target;
+  },
+
+  undoRemoveSavedPasswordOrException_: function(event) {
+    this.passwordManager_.undoRemoveSavedPasswordOrException();
   },
 
   /**
