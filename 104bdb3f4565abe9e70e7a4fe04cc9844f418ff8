@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71fb8c3c_6128d84c",
+        "filename": "base/allocator/partition_allocator/spin_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1188084
+      },
+      "writtenOn": "2017-09-12T22:18:14Z",
+      "side": 1,
+      "message": "Someone mentioned that we might be able to replace this with __yield(). If that\u0027s the case, we might not have to modify line 29.\n\nSee p31 of http://infocenter.arm.com/help/topic/com.arm.doc.ihi0053d/IHI0053D_acle_2_1.pdf.",
+      "range": {
+        "startLine": 30,
+        "startChar": 24,
+        "endLine": 30,
+        "endChar": 53
+      },
+      "revId": "104bdb3f4565abe9e70e7a4fe04cc9844f418ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
