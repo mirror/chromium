@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd95d811_4c8eacf6",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Delay/dezipper.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-12T18:01:59Z",
+      "side": 1,
+      "message": "You mean this file?\n\nThen I should do the same for all of the other dezippering removal CLs.",
+      "parentUuid": "4b6182d8_147a6ce8",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "7c26d698f8b5ea48d96a81ddf271a5b4bbe669d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d27d57c_f504be37",
         "filename": "third_party/WebKit/LayoutTests/webaudio/Delay/dezipper.html",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e8aff335_db95169e",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Delay/dezipper.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-12T18:01:59Z",
+      "side": 1,
+      "message": "Pretty much randomly selected and fractional so it\u0027s not on a frame boundary.",
+      "parentUuid": "4d27d57c_f504be37",
+      "range": {
+        "startLine": 125,
+        "startChar": 8,
+        "endLine": 126,
+        "endChar": 31
+      },
+      "revId": "7c26d698f8b5ea48d96a81ddf271a5b4bbe669d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae454dcc_0250e968",
         "filename": "third_party/WebKit/LayoutTests/webaudio/Delay/dezipper.html",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-11T16:38:10Z",
       "side": 1,
       "message": "This seems redundant.",
+      "range": {
+        "startLine": 170,
+        "startChar": 10,
+        "endLine": 173,
+        "endChar": 24
+      },
+      "revId": "7c26d698f8b5ea48d96a81ddf271a5b4bbe669d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "715703e8_9f2a9bc9",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Delay/dezipper.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-12T18:01:59Z",
+      "side": 1,
+      "message": "Basically meant to clarify the meaning of the tests in the output:\n\nPASS   .value setter output is identical to the array [0,0,0,0,0.15114444494247437,...].\nPASS   .value setter output matches setValueAtTime output is true.\n\nTried phrasing it neatly in beEqualToArray but everything seemed awkward.",
+      "parentUuid": "ae454dcc_0250e968",
       "range": {
         "startLine": 170,
         "startChar": 10,
