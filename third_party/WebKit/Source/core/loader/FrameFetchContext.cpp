@@ -54,7 +54,6 @@
 #include "core/loader/FrameLoader.h"
 #include "core/loader/MixedContentChecker.h"
 #include "core/loader/NetworkHintsInterface.h"
-#include "core/loader/NetworkQuietDetector.h"
 #include "core/loader/PingLoader.h"
 #include "core/loader/ProgressTracker.h"
 #include "core/loader/SubresourceFilter.h"
@@ -632,7 +631,6 @@ void FrameFetchContext::DidLoadResource(Resource* resource) {
   if (!document_)
     return;
   FirstMeaningfulPaintDetector::From(*document_).CheckNetworkStable();
-  NetworkQuietDetector::From(*document_).CheckNetworkStable();
 
   if (resource->IsLoadEventBlockingResourceType())
     document_->CheckCompleted();
