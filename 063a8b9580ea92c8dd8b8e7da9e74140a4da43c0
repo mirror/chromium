@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbec8176_8d6d3db4",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T14:40:31Z",
+      "side": 1,
+      "message": "The pref can\u0027t be registered twice.",
+      "range": {
+        "startLine": 214,
+        "startChar": 12,
+        "endLine": 214,
+        "endChar": 49
+      },
+      "revId": "063a8b9580ea92c8dd8b8e7da9e74140a4da43c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
