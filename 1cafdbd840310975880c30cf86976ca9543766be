@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "462af4c9_514eb5b4",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-12T14:21:16Z",
+      "side": 1,
+      "message": "As you\u0027ve already found, I\u0027m moving this into components/arc.\nSo, please avoid depending on chrome/ code from here.",
+      "revId": "1cafdbd840310975880c30cf86976ca9543766be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
