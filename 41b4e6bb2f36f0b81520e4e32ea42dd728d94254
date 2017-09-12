@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "450f7ef3_348d0ad3",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-12T16:47:53Z",
+      "side": 1,
+      "message": "No worries.  The bot results for patch set #4 are as expected: red bots all over with the \"wrong taps order\", some 2000 tests failed.\n\n - if the alder checksum is wrong in a PNG decode ...\n    - the PNG won\u0027t decode at all.\n - net_unittests failed, they don\u0027t use PNG ...\n    - but they do use gzip though.\n\nSeems we have good test coverage.  In patch set #5, I fixed the tap order (reversed it) and the bots are all green again.",
+      "parentUuid": "11c6a153_88ce8825",
+      "revId": "41b4e6bb2f36f0b81520e4e32ea42dd728d94254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ff2f0c6_b6bcafd4",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 3
