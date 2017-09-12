@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8eb0ca15_c283dfe9",
+        "filename": "content/child/service_worker/controller_service_worker_connector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-12T10:08:31Z",
+      "side": 1,
+      "message": "How will we implement the mechanism?\n\nI assume the case where the controller service worker goes down is that the worker is timed out, or the renderer is crashed somehow. We can handle crashes as errors, and we can just abort the fetch event. However, if the service worker is timed out, what\u0027s the appropriate way to handle?\nAlso, do we have any plans of how to implement the timeout feature?\n\nIf we can assume that the failure case is only the two which I mentioned, we might not need to have the error handler for |controller_service_worker_|.",
+      "revId": "554f788d13945d71974c78bc91bf4f490e5ec819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
