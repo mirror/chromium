@@ -57,7 +57,7 @@ bool ClearanceMayAffectLayout(
 // left to do for this block in this fragmentainer.
 bool IsOutOfSpace(const NGConstraintSpace& space, LayoutUnit content_size) {
   return space.HasBlockFragmentation() &&
-         content_size >= space.FragmentainerSpaceAvailable();
+         content_size > space.FragmentainerSpaceAvailable();
 }
 
 // Returns if the resulting fragment should be considered an "empty block".
@@ -118,9 +118,11 @@ void PositionPendingFloats(
 
   // TODO(ikilpatrick): Add DCHECK that any positioned floats are children.
 
-  for (const auto& positioned_float : positioned_floats)
+  for (const auto& positioned_float : positioned_floats) {
     container_builder->AddChild(positioned_float.layout_result,
                                 positioned_float.logical_offset);
+    container_builder->PropagateBreak(*positioned_float.layout_result.Get());
+  }
 
   unpositioned_floats->clear();
 }
@@ -319,7 +321,8 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
       }
     }
 
-    if (IsOutOfSpace(ConstraintSpace(), content_size_))
+    if (container_builder_.DidBreak() ||
+        IsOutOfSpace(ConstraintSpace(), content_size_))
       break;
   }
 
@@ -693,6 +696,7 @@ bool NGBlockLayoutAlgorithm::HandleInflow(
                             border_scrollbar_padding_.InlineSum());
 
   container_builder_.AddChild(layout_result, logical_offset);
+  container_builder_.PropagateBreak(*layout_result.Get());
 
   *previous_inflow_position =
       ComputeInflowPosition(*previous_inflow_position, child, child_data,
