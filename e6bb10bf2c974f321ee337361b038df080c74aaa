@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6b418b6_385b4cca",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-12T09:26:24Z",
+      "side": 1,
+      "message": "From what I understand when looking at beginChange and endChange, they should be called whenever state gets changed (like by setting selectedIndexes); they have an internal counter to make sure they only get executed once (in the outermost function). The exact implementation does not affect this method, but I would keep it because the exact implementation might change at a later point so that it will affect us, and because it makes sense semantically.\nOrder of execution without beginChange/endChange: beginChange -\u003e ListSelectionModel.adjustToReordering logic -\u003e endChange -\u003e FileListSelectionModel.adjustToReordering logic\nOrder of execution with beginChange/endChange: beginChange -\u003e ListSelectionModel.adjustToReordering logic -\u003e FileListSelectionModel.adjustToReordering logic -\u003e endChange",
+      "parentUuid": "691f666a_b85e9129",
+      "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca7e8a00_356bb39c",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "16be74bc_3f4daf54",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-12T09:26:24Z",
+      "side": 1,
+      "message": "Of course.. thanks for pointing that out :)",
+      "parentUuid": "ca7e8a00_356bb39c",
+      "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6abf7dde_2ff6cef4",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
         "patchSetId": 15
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-12T04:56:31Z",
       "side": 1,
       "message": "Why is selectedIndexes cleared? It should already be set in superclass method?",
+      "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e40ca00_cba58c2e",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-12T09:26:24Z",
+      "side": 1,
+      "message": "The superclass method will set the focus to the item nearest to the last item that got deleted if all of them were deleted (see https://codesearch.chromium.org/chromium/src/ui/webui/resources/js/cr/ui/list_selection_model.js?l\u003d352\u0026rcl\u003da3c45f3749fe0fab81aea4391518fd2bd9f090dc for reference), so we need to override this part. Except, of course, if I should move this logic to the superclass instead - I\u0027m just not sure if other teams are depending on the behavior of the superclass, so I did it in this file.",
+      "parentUuid": "6abf7dde_2ff6cef4",
       "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "740d8fbc_6205e569",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model_unittest.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-12T09:26:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc2d4804_7b783930",
+      "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b667e5c_3a0200c4",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model_unittest.js",
         "patchSetId": 15
@@ -90,6 +162,30 @@
       "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea16014_60e4646f",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model_unittest.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-12T09:26:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b667e5c_3a0200c4",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
