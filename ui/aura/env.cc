@@ -18,6 +18,7 @@
 #include "ui/aura/mus/window_port_mus.h"
 #include "ui/aura/mus/window_tree_client.h"
 #include "ui/aura/window.h"
+#include "ui/aura/window_occlusion_tracker.h"
 #include "ui/aura/window_port_for_shutdown.h"
 #include "ui/events/event_target_iterator.h"
 #include "ui/events/platform/platform_event_source.h"
@@ -158,6 +159,7 @@ Env::Env(Mode mode)
       context_factory_private_(nullptr) {
   DCHECK(lazy_tls_ptr.Pointer()->Get() == NULL);
   lazy_tls_ptr.Pointer()->Set(this);
+  window_occlusion_tracker_ = std::make_unique<WindowOcclusionTracker>();
 }
 
 void Env::Init() {
