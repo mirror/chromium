@@ -44,7 +44,6 @@ namespace blink {
 
 class ApplicationCache;
 class BarProp;
-class CSSRuleList;
 class CSSStyleDeclaration;
 class CustomElementRegistry;
 class Document;
@@ -215,9 +214,6 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
   // DOM Level 2 Style Interface
   CSSStyleDeclaration* getComputedStyle(Element*,
                                         const String& pseudo_elt) const;
-
-  // WebKit extension
-  CSSRuleList* getMatchedCSSRules(Element*, const String& pseudo_elt) const;
 
   // WebKit animation extensions
   int requestAnimationFrame(FrameRequestCallback*);

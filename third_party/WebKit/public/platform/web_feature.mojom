@@ -102,7 +102,6 @@ enum WebFeature {
   kDOMNodeInsertedIntoDocumentEvent = 147,
   kDOMCharacterDataModifiedEvent = 148,
   kDocumentAllLegacyCall = 150,
-  kGetMatchedCSSRules = 155,
   kPrefixedAudioDecodedByteCount = 164,
   kPrefixedVideoDecodedByteCount = 165,
   kPrefixedVideoSupportsFullscreen = 166,

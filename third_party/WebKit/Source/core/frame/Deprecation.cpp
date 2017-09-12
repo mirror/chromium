@@ -330,10 +330,6 @@ String Deprecation::DeprecationMessage(WebFeature feature) {
              "because of its detrimental effects to the end user's experience. "
              "For more help, check https://xhr.spec.whatwg.org/.";
 
-    case WebFeature::kGetMatchedCSSRules:
-      return willBeRemoved("document.getMatchedCSSRules()", M63,
-                           "4606972603138048");
-
     case WebFeature::kPrefixedWindowURL:
       return replacedBy("'webkitURL'", "'URL'");
 

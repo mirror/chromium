@@ -480,9 +480,6 @@
       status: "stable",
     },
     {
-      name: "GetMatchedCSSRules",
-    },
-    {
       name: "GetUserMedia",
       status: "stable",
     },
