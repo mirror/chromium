@@ -217,6 +217,8 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
 
   size_t frame_count_;
 
+  int reset_animation_count_stamp_ = 0;
+
   RefPtr<WebTaskRunner> task_runner_;
 };
 
