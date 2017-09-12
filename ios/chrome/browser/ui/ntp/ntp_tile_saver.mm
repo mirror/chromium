@@ -72,6 +72,8 @@ void WriteToDiskIfComplete(NSDictionary<NSURL*, NTPTile*>* tiles,
     if (!tile.faviconFetched) {
       return;
     }
+    // Any fetched tile must have a file name or a fallback monogram.
+    DCHECK(tile.faviconFileName || tile.fallbackMonogram);
   }
 
   ReplaceSavedFavicons(faviconsURL);
@@ -130,12 +132,14 @@ void SaveMostVisitedToDisk(const ntp_tiles::NTPTilesVector& mostVisitedData,
         [tmpFaviconURL URLByAppendingPathComponent:faviconFileName];
 
     void (^faviconImageBlock)(UIImage*) = ^(UIImage* favicon) {
-      tile.faviconFetched = YES;
       NSData* imageData = UIImagePNGRepresentation(favicon);
       if ([imageData writeToURL:fileURL atomically:YES]) {
+        // If the saving the image is not possible, the best thing to do is to
+        // keep the previous tile.
+        tile.faviconFetched = YES;
         tile.faviconFileName = faviconFileName;
+        WriteToDiskIfComplete(tiles, faviconsURL);
       }
-      WriteToDiskIfComplete(tiles, faviconsURL);
     };
 
     void (^fallbackBlock)(UIColor*, UIColor*, BOOL) =
@@ -146,6 +150,8 @@ void SaveMostVisitedToDisk(const ntp_tiles::NTPTilesVector& mostVisitedData,
           tile.fallbackIsDefaultColor = isDefaultColor;
           tile.fallbackMonogram = base::SysUTF16ToNSString(
               favicon::GetFallbackIconText(net::GURLWithNSURL(tile.URL)));
+          DCHECK(tile.fallbackMonogram && tile.fallbackTextColor &&
+                 tile.fallbackBackgroundColor);
           WriteToDiskIfComplete(tiles, faviconsURL);
         };
 
