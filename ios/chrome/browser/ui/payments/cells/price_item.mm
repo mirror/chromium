@@ -48,6 +48,8 @@ const CGFloat kMinWidthRatio = 0.5f;
 - (void)configureCell:(PriceCell*)cell {
   [super configureCell:cell];
   cell.accessoryType = self.accessoryType;
+  if (cell.accessoryType == MDCCollectionViewCellAccessoryDisclosureIndicator)
+    cell.accessoryView.tintColor = [[MDCPalette greyPalette] tint400];
   cell.itemLabel.text = self.item;
   cell.notificationLabel.text = self.notification;
   cell.priceLabel.text = self.price;
