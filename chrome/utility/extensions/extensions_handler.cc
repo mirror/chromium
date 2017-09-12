@@ -19,10 +19,11 @@
 #include "chrome/utility/media_galleries/media_metadata_parser.h"
 #include "content/public/utility/utility_thread.h"
 #include "media/base/media.h"
+#include "media/media_dependent_config.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "ui/base/ui_base_switches.h"
 
-#if !defined(MEDIA_DISABLE_FFMPEG)
+#if BUILDFLAG(MEDIA_ENABLE_FFMPEG)
 #include "media/filters/media_file_checker.h"
 #endif
 
@@ -78,7 +79,7 @@ class MediaParserImpl : public extensions::mojom::MediaParser {
   void CheckMediaFile(base::TimeDelta decode_time,
                       base::File file,
                       CheckMediaFileCallback callback) override {
-#if !defined(MEDIA_DISABLE_FFMPEG)
+#if BUILDFLAG(MEDIA_ENABLE_FFMPEG)
     media::MediaFileChecker checker(std::move(file));
     std::move(callback).Run(checker.Start(decode_time));
 #else

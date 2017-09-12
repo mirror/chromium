@@ -28,6 +28,7 @@ source_set("renderers") {
     "//cc/paint",
     "//gpu/command_buffer/client:gles2_interface",
     "//gpu/command_buffer/common",
+    "//media:media_dependent_config",
     "//media/base",
     "//media/filters",
     "//media/video",
@@ -44,8 +45,6 @@ source_set("renderers") {
     # TODO(crbug.com/167187): Fix size_t to int trunctaions.
     "//build/config/compiler:no_size_t_to_int_warning",
   ]
-
-  all_dependent_configs = [ "//media:media_dependent_config" ]
 }
 
 source_set("unit_tests") {

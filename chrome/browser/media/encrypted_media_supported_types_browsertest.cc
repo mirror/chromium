@@ -462,7 +462,7 @@ IN_PROC_BROWSER_TEST_F(EncryptedMediaSupportedTypesClearKeyTest, Video_MP4) {
 
   // High 10-bit Profile is supported when using ClearKey if
   // it is supported for clear content on this platform.
-#if !defined(MEDIA_DISABLE_FFMPEG) && !defined(OS_ANDROID)
+#if BUILDFLAG(MEDIA_ENABLE_FFMPEG) && !defined(OS_ANDROID)
   EXPECT_PROPRIETARY(AreCodecsSupportedByKeySystem(
       kVideoMP4MimeType, video_mp4_hi10p_codecs(), kClearKey));
 #else
