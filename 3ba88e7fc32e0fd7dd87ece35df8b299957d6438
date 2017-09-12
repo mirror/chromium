@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a239b93_edea8377",
+        "filename": "net/cert/x509_certificate_bytes.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-12T20:44:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "929b5a2e_e6e79bb4",
+      "revId": "3ba88e7fc32e0fd7dd87ece35df8b299957d6438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c59d704_0b8fac5b",
         "filename": "net/cert/x509_certificate_bytes.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-12T19:51:50Z",
       "side": 1,
       "message": "Actually, would it be better to saturate these at base::Time::FromTimeT(std::numeric_limits\u003ctime_t\u003e::max()) and such?",
+      "revId": "3ba88e7fc32e0fd7dd87ece35df8b299957d6438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e72bdfa_1199cb58",
+        "filename": "net/cert/x509_certificate_bytes.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-12T20:44:15Z",
+      "side": 1,
+      "message": "It looks like base::Time::FromTimeT special cases that and returns Max() anyway: https://cs.chromium.org/chromium/src/base/time/time.cc?rcl\u003d50e9e5ac22f5c1bfb26a1d0e2c84126cf8f0df81\u0026l\u003d141",
+      "parentUuid": "5c59d704_0b8fac5b",
       "revId": "3ba88e7fc32e0fd7dd87ece35df8b299957d6438",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
