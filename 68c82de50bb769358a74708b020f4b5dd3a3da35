@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d96b1344_91d77ec3",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-12T16:29:07Z",
+      "side": 1,
+      "message": "change to period?",
+      "range": {
+        "startLine": 134,
+        "startChar": 49,
+        "endLine": 134,
+        "endChar": 50
+      },
+      "revId": "68c82de50bb769358a74708b020f4b5dd3a3da35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680656b0_d1a55aba",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-12T16:29:07Z",
+      "side": 1,
+      "message": "can we add \"and provides the same data.\" to the end of the sentence?",
+      "revId": "68c82de50bb769358a74708b020f4b5dd3a3da35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

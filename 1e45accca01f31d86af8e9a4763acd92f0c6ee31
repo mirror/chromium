@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0edbec64_2fbd7c82",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-12T16:29:07Z",
+      "side": 1,
+      "message": "This wording looks good.",
+      "parentUuid": "3b37d95a_17b07d16",
+      "range": {
+        "startLine": 135,
+        "startChar": 71,
+        "endLine": 135,
+        "endChar": 76
+      },
+      "revId": "1e45accca01f31d86af8e9a4763acd92f0c6ee31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cec8e8d5_3ca82927",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 3
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "5e7f7d51_0470c663",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-12T16:29:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c1607384_af969a9e",
+      "range": {
+        "startLine": 178,
+        "startChar": 24,
+        "endLine": 178,
+        "endChar": 0
+      },
+      "revId": "1e45accca01f31d86af8e9a4763acd92f0c6ee31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaea4a21_d6eccb5a",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 3
@@ -219,6 +267,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "3c240738_1ee2ff64",
+      "revId": "1e45accca01f31d86af8e9a4763acd92f0c6ee31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f43feceb_426eb6a2",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-12T16:29:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d2944477_5011e227",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 20
+      },
       "revId": "1e45accca01f31d86af8e9a4763acd92f0c6ee31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
