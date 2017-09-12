@@ -1359,6 +1359,23 @@
     },
     {
       "key": {
+        "uuid": "56733925_c2d71fc3",
+        "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-12T19:45:27Z",
+      "side": 1,
+      "message": "Can you return this promise, instead of using done() to terminate the test?",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11e56b52_aa57d07b",
         "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
         "patchSetId": 2
@@ -1403,6 +1420,23 @@
       "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc8c79b2_6c7af1a9",
+        "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-12T19:45:27Z",
+      "side": 1,
+      "message": "Nit (optional):\n\nreturn goPage(\u0027CPU\u0027, 1)\n    .then(() \u003d\u003e goPage(\u0027Memory\u0027, 2))\n    .then(() \u003d\u003e goPage(\u0027CPU\u0027, 1))\n    ...\n    .then(() \u003d\u003e goPage(\u0027Memory\u0027, 2));",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
