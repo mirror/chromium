@@ -46,6 +46,30 @@
       "revId": "1f1260473e04be4fa94d58c3eae08b9651d4d2c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9877de79_08fb73fb",
+        "filename": "ios/chrome/browser/ui/settings/accounts_collection_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-12T12:10:43Z",
+      "side": 1,
+      "message": "That should be __autoreleasing not __strong according to the doc:\n\n\u003e\u003e __autoreleasing is used to denote arguments that are passed by reference\n\u003e\u003e (id *) and are autoreleased on return.\n\n__strong is the default, and as such doesn\u0027t need to be specified. Am I missing something here?\n\nhttps://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011226-CH1-SW7\n\nAnd what\u0027s even worse, GreyPerformBlock is defined as __strong NSError **errorOrNil, which is something else entirely.",
+      "parentUuid": "1775c890_92d32a84",
+      "range": {
+        "startLine": 301,
+        "startChar": 50,
+        "endLine": 301,
+        "endChar": 58
+      },
+      "revId": "1f1260473e04be4fa94d58c3eae08b9651d4d2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
