@@ -2,6 +2,86 @@
   "comments": [
     {
       "key": {
+        "uuid": "76697aa0_1a9996dc",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "|onMailtoHandlerSelected| is very unusual name for Objective-C. Only what is the reason for making this block optional? Would it be better to pass this block to init?",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5c130b_958f1b17",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "- (instancetype)init NS_UNAVAILABLE;",
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f925299_46d0a85c",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "NS_DESIGNATED_INITIALIZER",
+      "range": {
+        "startLine": 27,
+        "startChar": 34,
+        "endLine": 27,
+        "endChar": 51
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8bed7ed_954fda33",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "Do you want to use nullability annotations?",
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd5d59c9_41404b14",
         "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
         "patchSetId": 11
@@ -18,6 +98,92 @@
         "startChar": 0,
         "endLine": 20,
         "endChar": 23
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6243cf0_56df0f3f",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "Do you want to add comments for these enums?",
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "054f92a6_36ef55e1",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "Do you want to use class enum instead?",
+      "range": {
+        "startLine": 28,
+        "startChar": 16,
+        "endLine": 28,
+        "endChar": 25
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd0db423_491dd2bd",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "SECTION_IDENTIFIER_HEADER",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e67d1d92_b712486d",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "Please avoid calling instance methods inside init. Especially methods which can be overridden in subclasses. In this case you can replace init method with convenience factory method (class method).",
+      "range": {
+        "startLine": 69,
+        "startChar": 10,
+        "endLine": 69,
+        "endChar": 19
       },
       "revId": "de069544c13d14ef41775212d1d80941314429d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -48,6 +214,121 @@
     },
     {
       "key": {
+        "uuid": "c1e0c597_692c9368",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "Would it be better to use switch-case to make sure that all cases are always handled?",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 122,
+        "endChar": 14
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a339e90_23a9168c",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "How about a small optimization?:\n\nif ([self.collectionViewModel itemTypeForIndexPath:indexPath] !\u003d ItemTypeApp)\n  return NO;\n\nreturn [super collectionView:collectionView shouldHighlightItemAtIndexPath:indexPath];",
+      "range": {
+        "startLine": 156,
+        "startChar": 21,
+        "endLine": 156,
+        "endChar": 32
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17585c02_e0f6a91d",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "Do you need strong variable here?\n\nThe following code should be equivalent:\nif (weakSelf.onMailtoHandlerSelected)\n  weakSelf.onMailtoHandlerSelected(handler);",
+      "range": {
+        "startLine": 177,
+        "startChar": 62,
+        "endLine": 177,
+        "endChar": 72
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33648aa2_30975ed9",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "strongSelf.onMailtoHandlerSelected ?",
+      "range": {
+        "startLine": 181,
+        "startChar": 35,
+        "endLine": 181,
+        "endChar": 71
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7267fb47_dbb6343d",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "app_name\n\nSame comments for other places.",
+      "range": {
+        "startLine": 31,
+        "startChar": 29,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dad17c4b_c0c845c9",
         "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
         "patchSetId": 11
@@ -64,6 +345,29 @@
         "startChar": 61,
         "endLine": 67,
         "endChar": 68
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91046b8f_d35ec626",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "Does this test verifies that callback was called? Do you want to have a boolean which will be set to true inside the callback?",
+      "range": {
+        "startLine": 84,
+        "startChar": 25,
+        "endLine": 84,
+        "endChar": 32
       },
       "revId": "de069544c13d14ef41775212d1d80941314429d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -179,6 +483,155 @@
         "startChar": 4,
         "endLine": 123,
         "endChar": 28
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bbf18c8_e44213b4",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "s/alwaysAsk/didToggleAlwaysAskSwitch ?",
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3aee39_258fa968",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "Please add predeclaration and comments.",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 182,
+        "endChar": 17
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07ab688_9a73a548",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "Do you want to create a local variable for items to improve the formatting?",
+      "range": {
+        "startLine": 190,
+        "startChar": 26,
+        "endLine": 190,
+        "endChar": 45
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68ee1a16_0006eb83",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "use_mdc_style \n\nSame comment for other places",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 18
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6791e35e_f39624ca",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "Maybe const GURL\u0026 and copy URL inside? If someone later will \"fix\" this code, there will be a crash.",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 99,
+        "endChar": 42
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95101e50_67c115d9",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "Should this code be inside ExternalAppLauncherCoordinator class?",
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faef4486_a84dcf40",
+        "filename": "ios/chrome/browser/web/features.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T16:03:26Z",
+      "side": 1,
+      "message": "kMailtoPromptInMdcStyle",
+      "range": {
+        "startLine": 22,
+        "startChar": 27,
+        "endLine": 22,
+        "endChar": 50
       },
       "revId": "de069544c13d14ef41775212d1d80941314429d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
