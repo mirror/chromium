@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5712eb91_f91396a1",
+        "filename": "ios/chrome/browser/ui/settings/accounts_collection_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-12T11:03:06Z",
+      "side": 1,
+      "message": "What is this __strong for?",
+      "range": {
+        "startLine": 301,
+        "startChar": 50,
+        "endLine": 301,
+        "endChar": 58
+      },
+      "revId": "1f1260473e04be4fa94d58c3eae08b9651d4d2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
