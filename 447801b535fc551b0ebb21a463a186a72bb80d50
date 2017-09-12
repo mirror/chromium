@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebdf75f2_fdfb3fa6",
+        "filename": "net/cert/internal/cert_issuer_source_aia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-12T00:15:08Z",
+      "side": 1,
+      "message": "This one feels a bit like a layering issue.. but since it\u0027s using other x509_util stuff, maybe it\u0027s okay for now?",
+      "range": {
+        "startLine": 86,
+        "startChar": 21,
+        "endLine": 86,
+        "endChar": 51
+      },
+      "revId": "447801b535fc551b0ebb21a463a186a72bb80d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
