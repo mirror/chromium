@@ -40,8 +40,7 @@ class CONTENT_EXPORT BackgroundFetchDelegateProxy {
         const scoped_refptr<BackgroundFetchRequestInfo>& request) = 0;
   };
 
-  explicit BackgroundFetchDelegateProxy(
-      base::WeakPtr<BackgroundFetchDelegate> delegate);
+  explicit BackgroundFetchDelegateProxy(BackgroundFetchDelegate* delegate);
 
   ~BackgroundFetchDelegateProxy();
 
