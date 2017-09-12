@@ -22,6 +22,30 @@
       "revId": "585d2096fb44608a81e8e5a3a158f8a8995c34fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ba4abf_c7382790",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133169
+      },
+      "writtenOn": "2017-09-12T08:40:50Z",
+      "side": 1,
+      "message": "It seems it was a bug in other place in Opera code. I cannot reproduce it in Chromium. Please disregard.",
+      "parentUuid": "aa5908b4_4fdf3949",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 4
+      },
+      "revId": "585d2096fb44608a81e8e5a3a158f8a8995c34fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
