@@ -755,6 +755,30 @@
     },
     {
       "key": {
+        "uuid": "b4f867db_395f0420",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T18:44:33Z",
+      "side": 1,
+      "message": "Another idea I just had: The above described scenario should work fine if I wrap the call to undo in line 236 in a StartGroupingAction / EndGroupingAction pair, correct? If I understand the code correctly, this should also eliminate the need for having another UndoOperation for the inverse operation.",
+      "parentUuid": "b6805a87_5cd67436",
+      "range": {
+        "startLine": 449,
+        "startChar": 2,
+        "endLine": 450,
+        "endChar": 69
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6e4c3bd_951542bb",
         "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
         "patchSetId": 5
