@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8a678db_e966cf30",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-12T07:39:36Z",
+      "side": 0,
+      "message": "I noticed here when I was preparing another CL, seems IPC ServiceWorkerMsg_ServiceWorkerUpdated does not need these |info| and |attrs|, and in the contrary the bad effect is that GetRegistrationObjectInfoAndVersionAttributes() incremented the ref count of SWRegistrationHandle\u0026SWHandle, is this intentional? If so, would you please elaborate something to help me understand more? Thanks!\nOtherwise we should just remove these codes because they will lead to leak of corresponding SWRegistrationHandle\u0026SWHandle, although at last they will get destroyed by SWDispatcherHost dtor.",
+      "range": {
+        "startLine": 922,
+        "startChar": 2,
+        "endLine": 929,
+        "endChar": 77
+      },
+      "revId": "8e88b315858e76683589c4e70359cbf9df6239af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
