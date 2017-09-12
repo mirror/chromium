@@ -22,6 +22,30 @@
       "revId": "ce46920cbc91e08584a164dde8ea7901cb846777",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600c1819_f6e7aa8e",
+        "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-12T20:15:32Z",
+      "side": 1,
+      "message": "I think this because original_url_ of the navigation is not accessible at that point?\n\nIt looks like RedirectChain() might be similar, but is sometimes different (client redirects?).",
+      "parentUuid": "0839c1b3_b22ec6ed",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 52
+      },
+      "revId": "ce46920cbc91e08584a164dde8ea7901cb846777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
