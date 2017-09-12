@@ -1,3 +1,2 @@
-#<skip -- crbug.com/413531>
 android.webkit.WebView focusable focused scrollable
-++android.view.View clickable name='My favorite browser isABCChrome!'
+++android.view.View name='My favorite browser is ABC Chrome!'

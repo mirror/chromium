@@ -1,3 +1,23 @@
-#<skip - whitespace error
 android.webkit.WebView focusable focused scrollable
-++android.view.View clickable name='This paragraph has onewordin a span.'
+++android.view.View name='This paragraph has text in spans.'
+++android.view.View
+++++android.view.View name='E1. Eat'
+++++android.view.View role_description='link' clickable focusable link name='space'
+++android.view.View
+++++android.view.View name='E2. Eat'
+++++android.view.View role_description='link' clickable focusable link name='space'
+++android.view.View
+++++android.view.View name='E3. Eat'
+++++android.view.View role_description='link' clickable focusable link name='space'
+++android.view.View
+++++android.view.View role_description='link' clickable focusable link name='E4. Eat'
+++++android.view.View name='space'
+++android.view.View
+++++android.view.View role_description='link' clickable focusable link name='E5. Eat'
+++++android.view.View name='space'
+++android.view.View
+++++android.view.View role_description='link' clickable focusable link name='E6. Eat'
+++++android.view.View name='space'
+++android.view.View name='K1. Keep space'
+++android.view.View name='K2. Keep space'
+++android.view.View name='K3. Keep space'
