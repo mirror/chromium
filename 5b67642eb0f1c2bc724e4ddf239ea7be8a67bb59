@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54bccc15_28b92529",
+        "filename": "ios/chrome/browser/autofill/form_suggestion_label.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-12T07:28:47Z",
+      "side": 1,
+      "message": "Remove those three lines (there is no need to have an empty class extension).",
+      "revId": "5b67642eb0f1c2bc724e4ddf239ea7be8a67bb59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
