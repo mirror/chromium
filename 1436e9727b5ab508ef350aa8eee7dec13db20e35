@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cd41c44_790d8cd8",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2485,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T15:01:42Z",
+      "side": 1,
+      "message": "Let\u0027s use \u0027password\u0027, \u0027overriden_password\u0027 or something to avoid confusion with password update.",
+      "range": {
+        "startLine": 2485,
+        "startChar": 44,
+        "endLine": 2485,
+        "endChar": 55
+      },
+      "revId": "1436e9727b5ab508ef350aa8eee7dec13db20e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8002082d_840126ec",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2489,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T15:01:42Z",
+      "side": 1,
+      "message": "Let\u0027s rename to UpdatePasswordValue for the same reason.",
+      "range": {
+        "startLine": 2489,
+        "startChar": 18,
+        "endLine": 2489,
+        "endChar": 32
+      },
+      "revId": "1436e9727b5ab508ef350aa8eee7dec13db20e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
