@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58c5b6dc_1e67346d",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-12T23:13:10Z",
+      "side": 1,
+      "message": "Done. I didn\u0027t know enumerate(). Thanks!",
+      "parentUuid": "1c82949a_d231e911",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 37
+      },
+      "revId": "a99cb52de2770877c53abcb92257a9184fb24cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ad2824b_fb9037c0",
         "filename": "third_party/blink/tools/move_blink_source.py",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "03d03fea_9bd1666a",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-12T23:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ad2824b_fb9037c0",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 74
+      },
+      "revId": "a99cb52de2770877c53abcb92257a9184fb24cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81c8ed9d_7b0e941f",
         "filename": "third_party/blink/tools/move_blink_source.py",
         "patchSetId": 1
@@ -59,6 +107,24 @@
       "writtenOn": "2017-09-12T16:29:15Z",
       "side": 1,
       "message": "Optionally:\n\nelse:\n    parser.error(\u0027Unknown command.\u0027)",
+      "revId": "a99cb52de2770877c53abcb92257a9184fb24cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ee6802_de21c7dc",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-12T23:13:10Z",
+      "side": 1,
+      "message": "It seems it\u0027s unnecessary.\nWith this code, parser already shows an error for unknown command.\n\n% move_blink_source.py foo\nusage: move_blink_source.py [-h] {update,move} ...\nmove_blink_source.py: error: invalid choice: \u0027foo\u0027 (choose from \u0027update\u0027, \u0027move\u0027)",
+      "parentUuid": "81c8ed9d_7b0e941f",
       "revId": "a99cb52de2770877c53abcb92257a9184fb24cb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
