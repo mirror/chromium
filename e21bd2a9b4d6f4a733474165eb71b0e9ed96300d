@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df1f9484_c8c047e6",
+        "filename": "ios/chrome/browser/ui/omnibox/autocomplete_match_formatter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-12T13:30:39Z",
+      "side": 1,
+      "message": "AutocompleteMatch is a struct of 592 bytes. With various strings and padding it should be under 2Kb. Its constructor is almost purely copy, with one switch. So with 10 suggestions this will generate about 20Kb extra memory in these copied structs, plus some NSObject overhead and padding and stuff. Tiny!\nI guess a slight improvement for this would be to immediately calculate all of the properties of this object, because we actually need just a few attributed strings and bools. I think the calculation will have to be done anyway, but this way we\u0027ll have to store attributed strings twice (in this object + in the UILabel). I won\u0027t be surprised if AutocompleteMatch\u0027s limited attributed string representation is smaller than general-purpose representation of same thing in NSAttributedString.",
+      "parentUuid": "3a1d50c1_e786e988",
+      "revId": "e21bd2a9b4d6f4a733474165eb71b0e9ed96300d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5abcf00d_e36d3dfc",
         "filename": "ios/chrome/browser/ui/omnibox/image_retriever.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-12T13:00:09Z",
       "side": 1,
       "message": "We have enough variations of image fetchers floating around that I think introducing a new one moves us in the wrong direction.  We should try to go back through and convert everyone to use a single implementation at some point.\n\nWhy is this protocol better than simply passing an ImageFetcher around?",
+      "revId": "e21bd2a9b4d6f4a733474165eb71b0e9ed96300d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377f90b2_f6de9cf5",
+        "filename": "ios/chrome/browser/ui/omnibox/image_retriever.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-12T13:30:39Z",
+      "side": 1,
+      "message": "I see this as a temporary solution, and in the future ideally the AutocompleteMatch will contain a UIImage to display, while the Mediator will handle the image fetching. This will make the data be \"pushed\" from the Mediator to the ViewController, removing the need for the delegate.",
+      "parentUuid": "5abcf00d_e36d3dfc",
       "revId": "e21bd2a9b4d6f4a733474165eb71b0e9ed96300d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
