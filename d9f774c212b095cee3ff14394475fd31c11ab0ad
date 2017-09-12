@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ca0ddea_a6745437",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 1891,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T00:05:59Z",
+      "side": 1,
+      "message": "not use_ash and not is_macosx",
+      "revId": "d9f774c212b095cee3ff14394475fd31c11ab0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27880402_2a44da91",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 1897,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T00:05:59Z",
+      "side": 1,
+      "message": "use_titlecase is `use_titlecase_in_grd_files \u003d is_mac || is_ios`, so I think this is a dead string and can be removed.",
+      "revId": "d9f774c212b095cee3ff14394475fd31c11ab0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da53eea_b6ee25b2",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 1904,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T00:05:59Z",
+      "side": 1,
+      "message": "the description for things in title case are usually prefixed with \"In Title Case:\", i.e.\n\n\"In Title Case: Title of the bubble..\"",
+      "range": {
+        "startLine": 1904,
+        "startChar": 72,
+        "endLine": 1904,
+        "endChar": 77
+      },
+      "revId": "d9f774c212b095cee3ff14394475fd31c11ab0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27c21ec_56fc7821",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 1938,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T00:05:59Z",
+      "side": 1,
+      "message": "same comments (x3) here",
+      "revId": "d9f774c212b095cee3ff14394475fd31c11ab0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
