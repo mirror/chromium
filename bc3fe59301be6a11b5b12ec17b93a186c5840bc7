@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab057645_a3d9d5ed",
+        "filename": "content/browser/service_worker/service_worker_storage_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-12T08:42:53Z",
+      "side": 1,
+      "message": "neat",
+      "revId": "bc3fe59301be6a11b5b12ec17b93a186c5840bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
