@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66485f40_2ee90fb8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-12T08:50:02Z",
+      "side": 1,
+      "message": "nit: Please remove a trialing whitespace.",
+      "revId": "ad286f3b26771b4d3333dbb6b66784f6064c2a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6afe9f51_56173b0f",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-12T08:50:02Z",
+      "side": 1,
+      "message": "nit: Please use |IsSelectinLink()| or better name to represent this \nfunction is Boolean predicate instead of \"selecting link\".",
+      "revId": "ad286f3b26771b4d3333dbb6b66784f6064c2a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
