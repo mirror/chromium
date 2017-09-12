@@ -55,6 +55,10 @@ class GLES2Interface;
 }
 }
 
+namespace viz {
+class SharedBitmap;
+}
+
 namespace blink {
 
 class Canvas2DLayerBridgeTest;
@@ -189,6 +193,7 @@ class PLATFORM_EXPORT Canvas2DLayerBridge : public cc::TextureLayerClient,
       WeakPtr<WebGraphicsContext3DProviderWrapper>,
       std::unique_ptr<MailboxInfo>,
       const gpu::Mailbox&,
+      std::unique_ptr<viz::SharedBitmap>,
       const gpu::SyncToken&,
       bool lost_resource);
 
@@ -225,7 +230,8 @@ class PLATFORM_EXPORT Canvas2DLayerBridge : public cc::TextureLayerClient,
   // The mailbox is an out parameter only populated on success.
   bool PrepareMailboxFromImage(RefPtr<StaticBitmapImage>&&,
                                MailboxInfo*,
-                               viz::TextureMailbox*);
+                               viz::TextureMailbox*,
+                               viz::SharedBitmap*);
 
   // Used for cloning context_provider_wrapper_ into an rvalue
   WeakPtr<WebGraphicsContext3DProviderWrapper> ContextProviderWrapper() const {

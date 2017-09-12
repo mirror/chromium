@@ -27,8 +27,9 @@
 
 #include <memory>
 #include "base/memory/ptr_util.h"
+#include "cc/layers/texture_layer.h"
+#include "components/viz/common/quads/shared_bitmap.h"
 #include "components/viz/common/quads/single_release_callback.h"
-#include "components/viz/common/quads/texture_mailbox.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "gpu/command_buffer/common/capabilities.h"
@@ -111,6 +112,26 @@ static void DeleteCHROMIUMImage(
 
     ResetSkiaTextureBinding(context_provider_wrapper);
   }
+}
+
+bool PrepareMailboxFromSharedBitmap(RefPtr<blink::StaticBitmapImage>&& image,
+                                    viz::TextureMailbox* out_mailbox,
+                                    viz::SharedBitmap* shared_bitmap) {
+  // Make sure that the allocation succeed.
+  if (!shared_bitmap)
+    return false;
+  sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().GetSkImage();
+  unsigned char* dst_pixels = shared_bitmap->pixels();
+  DCHECK(dst_pixels);
+  SkImageInfo image_info = SkImageInfo::MakeN32(
+      skia_image->width(), skia_image->height(),
+      image->IsPremultiplied() ? kPremul_SkAlphaType : kUnpremul_SkAlphaType,
+      skia_image->refColorSpace());
+  skia_image->readPixels(image_info, dst_pixels, image_info.minRowBytes(), 0,
+                         0);
+  *out_mailbox = viz::TextureMailbox(
+      shared_bitmap, gfx::Size(skia_image->width(), skia_image->height()));
+  return true;
 }
 
 }  // namespace
@@ -419,7 +440,12 @@ void Canvas2DLayerBridge::ClearCHROMIUMImageCache() {
 bool Canvas2DLayerBridge::PrepareMailboxFromImage(
     RefPtr<StaticBitmapImage>&& image,
     MailboxInfo* mailbox_info,
-    viz::TextureMailbox* out_mailbox) {
+    viz::TextureMailbox* out_mailbox,
+    viz::SharedBitmap* shared_bitmap) {
+  if (!image->IsTextureBacked()) {
+    return PrepareMailboxFromSharedBitmap(std::move(image), out_mailbox,
+                                          shared_bitmap);
+  }
   if (!context_provider_wrapper_)
     return false;
 
@@ -621,7 +647,9 @@ SkSurface* Canvas2DLayerBridge::GetOrCreateSurface(AccelerationHint hint) {
     ReportSurfaceCreationFailure();
   }
 
-  if (surface_ && surface_is_accelerated && !layer_) {
+  if (((surface_ && surface_is_accelerated) ||
+       acceleration_mode_ == kDisableAcceleration) &&
+      !layer_) {
     layer_ =
         Platform::Current()->CompositorSupport()->CreateExternalTextureLayer(
             this);
@@ -972,23 +1000,30 @@ bool Canvas2DLayerBridge::PrepareTextureMailbox(
   // If the context is lost, we don't know if we should be producing GPU or
   // software frames, until we get a new context, since the compositor will
   // be trying to get a new context and may change modes.
-  if (!context_provider_wrapper_ ||
-      context_provider_wrapper_->ContextProvider()
-              ->ContextGL()
-              ->GetGraphicsResetStatusKHR() != GL_NO_ERROR)
+  if (acceleration_mode_ != kDisableAcceleration &&
+      (!context_provider_wrapper_ ||
+       context_provider_wrapper_->ContextProvider()
+               ->ContextGL()
+               ->GetGraphicsResetStatusKHR() != GL_NO_ERROR))
     return false;
 
   DCHECK(IsAccelerated() || IsHibernating() ||
-         software_rendering_while_hidden_);
+         software_rendering_while_hidden_ ||
+         acceleration_mode_ == kDisableAcceleration);
 
   // if hibernating but not hidden, we want to wake up from
   // hibernation
   if ((IsHibernating() || software_rendering_while_hidden_) && IsHidden())
     return false;
 
-  RefPtr<StaticBitmapImage> image =
-      NewImageSnapshot(kPreferAcceleration, kSnapshotReasonUnknown);
-  if (!image || !image->IsValid() || !image->IsTextureBacked())
+  RefPtr<StaticBitmapImage> image = NewImageSnapshot(
+      acceleration_mode_ != kDisableAcceleration ? kPreferAcceleration
+                                                 : kPreferNoAcceleration,
+      kSnapshotReasonUnknown);
+  if (!image || !image->IsValid() ||
+      (acceleration_mode_ != kDisableAcceleration &&
+       !image->IsTextureBacked()) ||
+      (acceleration_mode_ == kDisableAcceleration && image->IsTextureBacked()))
     return false;
 
   {
@@ -1002,15 +1037,26 @@ bool Canvas2DLayerBridge::PrepareTextureMailbox(
   }
 
   std::unique_ptr<MailboxInfo> info = WTF::WrapUnique(new MailboxInfo());
-  if (!PrepareMailboxFromImage(std::move(image), info.get(), out_mailbox))
+  std::unique_ptr<viz::SharedBitmap> shared_bitmap =
+      image->IsTextureBacked() ? nullptr
+                               : Platform::Current()->AllocateSharedBitmap(
+                                     IntSize(image->width(), image->height()));
+  if (!PrepareMailboxFromImage(std::move(image), info.get(), out_mailbox,
+                               shared_bitmap.get()))
     return false;
+  // We need flip the layer vertically because SharedBitmap is in first
+  // quadrand, while skia is in fourth quadrant.
+  if (shared_bitmap && shared_bitmap.get()) {
+    static_cast<cc::TextureLayer*>(layer_->Layer()->CcLayer())
+        ->SetFlipped(false);
+  }
   out_mailbox->set_nearest_neighbor(GetGLFilter() == GL_NEAREST);
   out_mailbox->set_color_space(color_params_.GetGfxColorSpace());
 
   auto func =
       WTF::Bind(&ReleaseFrameResources, weak_ptr_factory_.CreateWeakPtr(),
                 context_provider_wrapper_, WTF::Passed(std::move(info)),
-                out_mailbox->mailbox());
+                out_mailbox->mailbox(), WTF::Passed(std::move(shared_bitmap)));
   *out_release_callback = viz::SingleReleaseCallback::Create(
       ConvertToBaseCallback(std::move(func)));
   return true;
@@ -1024,8 +1070,12 @@ void Canvas2DLayerBridge::ReleaseFrameResources(
     WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper,
     std::unique_ptr<MailboxInfo> released_mailbox_info,
     const gpu::Mailbox& mailbox,
+    std::unique_ptr<viz::SharedBitmap> shared_bitmap,
     const gpu::SyncToken& sync_token,
     bool lost_resource) {
+  // The compositor will take care of the resources held by the shared_bitmap.
+  if (shared_bitmap && shared_bitmap.get())
+    return;
   bool context_or_layer_bridge_lost = true;
   if (layer_bridge) {
     DCHECK(layer_bridge->IsAccelerated() || layer_bridge->IsHibernating());
