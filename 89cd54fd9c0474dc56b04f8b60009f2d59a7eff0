@@ -227,6 +227,24 @@
       "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27a98108_ce34e705",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T19:01:54Z",
+      "side": 1,
+      "message": "Okay, I\u0027m willing to accept this is my fear of the unknown, and I just need to get used to relying on it. :)  Removed the check.",
+      "parentUuid": "13bdc1fc_d3c469b5",
+      "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

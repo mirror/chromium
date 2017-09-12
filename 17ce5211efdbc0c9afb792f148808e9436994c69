@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "04ad308e_13746356",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T19:01:54Z",
+      "side": 1,
+      "message": "oh, interesting - that was my first instinct, but I thought that v8::String::Utf8Value avoided copies (which is why I opted for that).  Is there no way to get at the underlying contents of the v8::String without copying the buffer?\n\n(For now, went with your suggested approach.)",
+      "parentUuid": "90e27487_076e9eea",
+      "revId": "17ce5211efdbc0c9afb792f148808e9436994c69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7652ee07_ef3ea95c",
         "filename": "extensions/renderer/gin_port_unittest.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7ce4c684_cfd8f5a0",
+        "filename": "extensions/renderer/gin_port_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T19:01:54Z",
+      "side": 1,
+      "message": "Done.  I like to try and use constants when it\u0027s easy, but agreed it\u0027s awkward to read.",
+      "parentUuid": "7652ee07_ef3ea95c",
+      "revId": "17ce5211efdbc0c9afb792f148808e9436994c69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "857992e3_705d6606",
         "filename": "extensions/renderer/gin_port_unittest.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-12T02:06:15Z",
       "side": 1,
       "message": "nit: why the block scope?",
+      "revId": "17ce5211efdbc0c9afb792f148808e9436994c69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a415d2_37e7df7f",
+        "filename": "extensions/renderer/gin_port_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T19:01:54Z",
+      "side": 1,
+      "message": "Whoops!  I think this test used to have more.  Removed.",
+      "parentUuid": "857992e3_705d6606",
       "revId": "17ce5211efdbc0c9afb792f148808e9436994c69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
