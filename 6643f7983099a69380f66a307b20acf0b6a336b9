@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b4138f3_6e62b523",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-12T17:36:40Z",
+      "side": 1,
+      "message": "Just a few questions:\n\n1) Could you comment a bit more about why its okay to downgrade the quality here? And is this going to diverge the behaviour from the Gpu cache (that still uses up to medium quality)?\n\n2) Why even have this path for caching scaled decodes if we are going to always use low here? Don\u0027t we just use the original decode for those cases (https://cs.chromium.org/chromium/src/cc/tiles/software_image_decode_cache.cc?l\u003d1011).\n\n3) I\u0027m not sure I fully understand the caching concern here. The shader path we looked up creates a temporary SkImage to create a shader (https://cs.chromium.org/chromium/src/third_party/skia/src/shaders/SkImageShader.cpp?dr\u003dCSs\u0026l\u003d237). Any caching skia does will be tied to the lifetime of this image (https://cs.chromium.org/chromium/src/third_party/skia/src/image/SkImage.cpp?dr\u0026l\u003d212).",
+      "range": {
+        "startLine": 753,
+        "startChar": 74,
+        "endLine": 754,
+        "endChar": 12
+      },
+      "revId": "6643f7983099a69380f66a307b20acf0b6a336b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
