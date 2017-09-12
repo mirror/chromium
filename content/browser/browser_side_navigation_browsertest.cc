@@ -406,6 +406,42 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
             controller.GetLastCommittedEntry()->GetURL().spec());
 }
 
+namespace {
+
+class NavigationXHRMaker : public WebContentsObserver {
+ public:
+  explicit NavigationXHRMaker(WebContents* web_contents)
+      : WebContentsObserver(web_contents) {}
+
+  void ReadyToCommitNavigation(NavigationHandle* navigation_handle) override {
+    if (navigation_handle->GetURL() != GURL("foo:bar"))
+      return;
+    std::string script =
+        "var xhr = new XMLHttpRequest();"
+        "xhr.onload = function() { document.title='pass';};"
+        "xhr.open('GET', '/title2.html');"
+        "xhr.send();";
+    ExecuteScriptAsync(web_contents(), script);
+  }
+};
+}  // namespace
+
+// Verifies that if a navigation which doesn't load an error page fails, XHRs
+// from the previou commit aren't cancelled.
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
+                       FailedNavigationLeavesXHRs) {
+  GURL url(embedded_test_server()->GetURL("/title1.html"));
+  NavigateToURL(shell(), url);
+
+  // Now make a navigation.
+  NavigationXHRMaker observer(shell()->web_contents());
+  const base::string16 title = base::ASCIIToUTF16("pass");
+  TitleWatcher watcher(shell()->web_contents(), title);
+  EXPECT_TRUE(ExecuteScript(shell()->web_contents(),
+                            "window.location.href='foo:bar'"));
+  EXPECT_EQ(title, watcher.WaitAndGetTitle());
+}
+
 class BrowserSideNavigationBrowserDisableWebSecurityTest
     : public BrowserSideNavigationBrowserTest {
  public:

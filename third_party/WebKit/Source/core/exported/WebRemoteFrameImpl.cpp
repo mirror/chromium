@@ -120,6 +120,9 @@ void WebRemoteFrameImpl::StopLoading() {
   // in all subframes, both remote and local.
 }
 
+void WebRemoteFrameImpl::StopProvisionalLoader() {
+}
+
 WebLocalFrame* WebRemoteFrameImpl::CreateLocalChild(
     WebTreeScopeType scope,
     const WebString& name,

@@ -422,7 +422,8 @@ TEST_F(NavigatorTestWithBrowserSideNavigation, NoContent) {
   EXPECT_FALSE(DidRenderFrameHostRequestCommit(main_test_rfh()));
   EXPECT_FALSE(node->navigation_request());
   EXPECT_FALSE(node->render_manager()->pending_frame_host());
-  EXPECT_FALSE(GetSpeculativeRenderFrameHost(node));
+  // This only happens after IPCs to the renderer and back.
+  // EXPECT_FALSE(GetSpeculativeRenderFrameHost(node));
 
   // Now, repeat the test with 205 Reset Content.
 
@@ -448,7 +449,8 @@ TEST_F(NavigatorTestWithBrowserSideNavigation, NoContent) {
   EXPECT_FALSE(DidRenderFrameHostRequestCommit(main_test_rfh()));
   EXPECT_FALSE(node->navigation_request());
   EXPECT_FALSE(node->render_manager()->pending_frame_host());
-  EXPECT_FALSE(GetSpeculativeRenderFrameHost(node));
+  // This only happens after IPCs to the renderer and back.
+  // EXPECT_FALSE(GetSpeculativeRenderFrameHost(node));
 }
 
 // PlzNavigate: Test that a new RenderFrameHost is created when doing a cross
