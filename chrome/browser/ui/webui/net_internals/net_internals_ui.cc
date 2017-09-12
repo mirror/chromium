@@ -244,10 +244,9 @@ class NetInternalsMessageHandler::IOThreadImpl
   // WebUIMessageHandler to be deleted on the UI thread while we were executing
   // on the IO thread. |io_thread| is the global IOThread (it is passed in as
   // an argument since we need to grab it from the UI thread).
-  IOThreadImpl(
-      const base::WeakPtr<NetInternalsMessageHandler>& handler,
-      IOThread* io_thread,
-      net::URLRequestContextGetter* main_context_getter);
+  IOThreadImpl(const base::WeakPtr<NetInternalsMessageHandler>& handler,
+               IOThread* io_thread,
+               net::URLRequestContextGetter* main_context_getter);
 
   // Called on UI thread just after creation, to add a ContextGetter to
   // |context_getters_|.
@@ -385,25 +384,22 @@ void NetInternalsMessageHandler::RegisterMessages() {
   proxy_ = new IOThreadImpl(this->AsWeakPtr(), g_browser_process->io_thread(),
                             profile->GetRequestContext());
   proxy_->AddRequestContextGetter(
-      content::BrowserContext::GetDefaultStoragePartition(profile)->
-          GetMediaURLRequestContext());
+      content::BrowserContext::GetDefaultStoragePartition(profile)
+          ->GetMediaURLRequestContext());
 
   web_ui()->RegisterMessageCallback(
-      "notifyReady",
-      base::Bind(&NetInternalsMessageHandler::OnRendererReady,
-                 base::Unretained(this)));
+      "notifyReady", base::Bind(&NetInternalsMessageHandler::OnRendererReady,
+                                base::Unretained(this)));
   web_ui()->RegisterMessageCallback(
-      "getNetInfo",
-      base::Bind(&IOThreadImpl::CallbackHelper,
-                 &IOThreadImpl::OnGetNetInfo, proxy_));
+      "getNetInfo", base::Bind(&IOThreadImpl::CallbackHelper,
+                               &IOThreadImpl::OnGetNetInfo, proxy_));
   web_ui()->RegisterMessageCallback(
       "reloadProxySettings",
       base::Bind(&IOThreadImpl::CallbackHelper,
                  &IOThreadImpl::OnReloadProxySettings, proxy_));
   web_ui()->RegisterMessageCallback(
-      "clearBadProxies",
-      base::Bind(&IOThreadImpl::CallbackHelper,
-                 &IOThreadImpl::OnClearBadProxies, proxy_));
+      "clearBadProxies", base::Bind(&IOThreadImpl::CallbackHelper,
+                                    &IOThreadImpl::OnClearBadProxies, proxy_));
   web_ui()->RegisterMessageCallback(
       "clearHostResolverCache",
       base::Bind(&IOThreadImpl::CallbackHelper,
@@ -413,13 +409,11 @@ void NetInternalsMessageHandler::RegisterMessages() {
       base::Bind(&IOThreadImpl::CallbackHelper,
                  &IOThreadImpl::OnDomainSecurityPolicyDelete, proxy_));
   web_ui()->RegisterMessageCallback(
-      "hstsQuery",
-      base::Bind(&IOThreadImpl::CallbackHelper,
-                 &IOThreadImpl::OnHSTSQuery, proxy_));
+      "hstsQuery", base::Bind(&IOThreadImpl::CallbackHelper,
+                              &IOThreadImpl::OnHSTSQuery, proxy_));
   web_ui()->RegisterMessageCallback(
-      "hstsAdd",
-      base::Bind(&IOThreadImpl::CallbackHelper,
-                 &IOThreadImpl::OnHSTSAdd, proxy_));
+      "hstsAdd", base::Bind(&IOThreadImpl::CallbackHelper,
+                            &IOThreadImpl::OnHSTSAdd, proxy_));
   web_ui()->RegisterMessageCallback(
       "expectCTQuery", base::Bind(&IOThreadImpl::CallbackHelper,
                                   &IOThreadImpl::OnExpectCTQuery, proxy_));
@@ -470,9 +464,8 @@ void NetInternalsMessageHandler::RegisterMessages() {
                  base::Unretained(this)));
 #if defined(OS_CHROMEOS)
   web_ui()->RegisterMessageCallback(
-      "importONCFile",
-      base::Bind(&NetInternalsMessageHandler::OnImportONCFile,
-                 base::Unretained(this)));
+      "importONCFile", base::Bind(&NetInternalsMessageHandler::OnImportONCFile,
+                                  base::Unretained(this)));
   web_ui()->RegisterMessageCallback(
       "storeDebugLogs",
       base::Bind(&NetInternalsMessageHandler::OnStoreDebugLogs,
@@ -928,12 +921,9 @@ void NetInternalsMessageHandler::ImportONCFileToNSSDB(
   base::ListValue network_configs;
   base::DictionaryValue global_network_config;
   base::ListValue certificates;
-  if (!chromeos::onc::ParseAndValidateOncForImport(onc_blob,
-                                                   onc_source,
-                                                   passcode,
-                                                   &network_configs,
-                                                   &global_network_config,
-                                                   &certificates)) {
+  if (!chromeos::onc::ParseAndValidateOncForImport(
+          onc_blob, onc_source, passcode, &network_configs,
+          &global_network_config, &certificates)) {
     error = "Errors occurred during the ONC parsing. ";
   }
 
@@ -945,11 +935,9 @@ void NetInternalsMessageHandler::ImportONCFileToNSSDB(
   chromeos::onc::CertificateImporterImpl cert_importer(
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO), nssdb);
   cert_importer.ImportCertificates(
-      certificates,
-      onc_source,
+      certificates, onc_source,
       base::Bind(&NetInternalsMessageHandler::OnCertificatesImported,
-                 AsWeakPtr(),
-                 error));
+                 AsWeakPtr(), error));
 }
 
 void NetInternalsMessageHandler::OnCertificatesImported(
@@ -964,12 +952,10 @@ void NetInternalsMessageHandler::OnCertificatesImported(
                         base::MakeUnique<base::Value>(error));
 }
 
-void NetInternalsMessageHandler::OnImportONCFile(
-    const base::ListValue* list) {
+void NetInternalsMessageHandler::OnImportONCFile(const base::ListValue* list) {
   std::string onc_blob;
   std::string passcode;
-  if (list->GetSize() != 2 ||
-      !list->GetString(0, &onc_blob) ||
+  if (list->GetSize() != 2 || !list->GetString(0, &onc_blob) ||
       !list->GetString(1, &passcode)) {
     NOTREACHED();
   }
@@ -998,7 +984,8 @@ void NetInternalsMessageHandler::OnStoreDebugLogs(const base::ListValue* list) {
 }
 
 void NetInternalsMessageHandler::OnStoreDebugLogsCompleted(
-    const base::FilePath& log_path, bool succeeded) {
+    const base::FilePath& log_path,
+    bool succeeded) {
   std::string status;
   if (succeeded)
     status = "Created log file: " + log_path.BaseName().AsUTF8Unsafe();
@@ -1013,13 +1000,10 @@ void NetInternalsMessageHandler::OnSetNetworkDebugMode(
   std::string subsystem;
   if (list->GetSize() != 1 || !list->GetString(0, &subsystem))
     NOTREACHED();
-  chromeos::DBusThreadManager::Get()->GetDebugDaemonClient()->
-      SetDebugMode(
-          subsystem,
-          base::Bind(
-              &NetInternalsMessageHandler::OnSetNetworkDebugModeCompleted,
-              AsWeakPtr(),
-              subsystem));
+  chromeos::DBusThreadManager::Get()->GetDebugDaemonClient()->SetDebugMode(
+      subsystem,
+      base::Bind(&NetInternalsMessageHandler::OnSetNetworkDebugModeCompleted,
+                 AsWeakPtr(), subsystem));
 }
 
 void NetInternalsMessageHandler::OnSetNetworkDebugModeCompleted(
@@ -1118,7 +1102,6 @@ void NetInternalsMessageHandler::IOThreadImpl::SendNetInfo(int info_sources) {
 }
 
 }  // namespace
-
 
 ////////////////////////////////////////////////////////////////////////////////
 //
