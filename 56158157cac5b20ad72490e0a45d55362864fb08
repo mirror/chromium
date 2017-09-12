@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "166fbc14_f8bc0e02",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T20:17:35Z",
+      "side": 1,
+      "message": "\u003e I would like that argument if this were applied solely to \"the clauses to which it matters\", which I read as \"if the username has a space, it\u0027s not really a username; this info should be considered by any clause which wants to know if we have a username\".  So for example, the NumNonHostComponents() clause is, among other things, checking whether a username exists; knowing that we don\u0027t have a username would affect that.\n\u003e \n\u003e But honestly, I think what we logically want is \"we passed the point of looking for an explicit scheme; since we didn\u0027t have one, if the \"username\" has a space in it, this isn\u0027t a URL\".  I think the only good reason not to return UNKNOWN here is that it downgrades QUERY to UNKNOWN for the 123.45 case.  With more thinking, I\u0027m increasingly unconvinced that \"a b@c\" + ctrl-enter should result in \"a%20b@c.com\" any more than \"a b@123.45\" + ctrl-enter results in \"a%20b@123.45.com\".\n\u003e \n\u003e In the end, I think it\u0027d be better to do:\n\u003e \n\u003e   if (parts-\u003epath.is_nonempty() \u0026\u0026 !username_has_space) {\n\u003e     ...\n\u003e   }\n\u003e \n\u003e   if (bad IP address)\n\u003e     ...\n\u003e \n\u003e   if (username_has_space)\n\u003e     return UNKNOWN;\n\u003e \n\u003e   ...\n\u003e \n\u003e Practically, this has the same effect as your current code except for disabling ctrl-enter on these, which I think is honestly correct.  Maintenance-wise, I think it\u0027s more correct and safe.\n\nOkay, done.  (Corrected the desired_tld test so it passes now too.)",
+      "parentUuid": "e2743fb9_7cf05037",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4048e67a_46d0fcfa",
         "filename": "components/omnibox/browser/autocomplete_input.cc",
         "patchSetId": 2
