@@ -1735,6 +1735,7 @@ split_static_library("browser") {
     "//storage/browser",
     "//storage/common",
     "//third_party/WebKit/common:blink_common",
+    "//third_party/WebKit/public:blink",
     "//third_party/WebKit/public:features",
     "//third_party/WebKit/public:resources",
     "//third_party/WebKit/public:scaled_resources",
