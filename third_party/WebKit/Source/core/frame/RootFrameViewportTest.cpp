@@ -70,6 +70,10 @@ class ScrollableAreaStub : public GarbageCollectedFinalized<ScrollableAreaStub>,
     return Platform::Current()->CurrentThread()->Scheduler()->TimerTaskRunner();
   }
 
+  ScrollbarTheme& GetPageScrollbarTheme() const override {
+    return ScrollbarTheme::GetTheme();
+  }
+
   DEFINE_INLINE_VIRTUAL_TRACE() { ScrollableArea::Trace(visitor); }
 
  protected:
