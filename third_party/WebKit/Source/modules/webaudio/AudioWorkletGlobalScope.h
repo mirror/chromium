@@ -10,11 +10,12 @@
 #include "core/workers/ThreadedWorkletGlobalScope.h"
 #include "modules/ModulesExport.h"
 #include "modules/webaudio/AudioParamDescriptor.h"
+#include "platform/audio/AudioArray.h"
 #include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
 
-class AudioBuffer;
+class AudioBus;
 class AudioWorkletProcessor;
 class AudioWorkletProcessorDefinition;
 class CrossThreadAudioWorkletProcessorInfo;
@@ -46,9 +47,11 @@ class MODULES_EXPORT AudioWorkletGlobalScope final
 
   // Invokes the JS audio processing function from an instance of
   // AudioWorkletProcessor, along with given AudioBuffer from the audio graph.
-  bool Process(AudioWorkletProcessor*,
-               AudioBuffer* input_buffer,
-               AudioBuffer* output_buffer);
+  bool Process(
+      AudioWorkletProcessor*,
+      Vector<AudioBus*>* inputBuses,
+      Vector<AudioBus*>* outputBuses,
+      HashMap<String, std::unique_ptr<AudioFloatArray>>* param_value_map);
 
   AudioWorkletProcessorDefinition* FindDefinition(const String& name);
 
