@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cce87960_aa431e91",
+        "filename": "net/cert/x509_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-12T16:39:19Z",
+      "side": 1,
+      "message": "nit: Why do we need to have two impls here? Can they all be the PostTaskWithTraitsAndReplyWithResult version under #else?",
+      "revId": "6cefb2766d02d21771aaf615b5bcd4655733cf6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
