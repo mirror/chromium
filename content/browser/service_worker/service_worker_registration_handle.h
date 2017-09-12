@@ -40,7 +40,7 @@ class CONTENT_EXPORT ServiceWorkerRegistrationHandle
       ServiceWorkerRegistration* registration);
   virtual ~ServiceWorkerRegistrationHandle();
 
-  ServiceWorkerRegistrationObjectInfo GetObjectInfo();
+  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr GetObjectInfo();
 
   bool HasNoRefCount() const { return ref_count_ <= 0; }
   void IncrementRefCount();

@@ -98,17 +98,15 @@ void DidUpdateNavigationPreloadState(
 }  // namespace
 
 ServiceWorkerStorage::InitialData::InitialData()
-    : next_registration_id(kInvalidServiceWorkerRegistrationId),
+    : next_registration_id(blink::mojom::kInvalidServiceWorkerRegistrationId),
       next_version_id(kInvalidServiceWorkerVersionId),
       next_resource_id(kInvalidServiceWorkerResourceId) {}
 
 ServiceWorkerStorage::InitialData::~InitialData() {
 }
 
-ServiceWorkerStorage::
-DidDeleteRegistrationParams::DidDeleteRegistrationParams()
-    : registration_id(kInvalidServiceWorkerRegistrationId) {
-}
+ServiceWorkerStorage::DidDeleteRegistrationParams::DidDeleteRegistrationParams()
+    : registration_id(blink::mojom::kInvalidServiceWorkerRegistrationId) {}
 
 ServiceWorkerStorage::DidDeleteRegistrationParams::DidDeleteRegistrationParams(
     const DidDeleteRegistrationParams& other) = default;
@@ -615,7 +613,7 @@ void ServiceWorkerStorage::StoreUserData(
   }
   DCHECK_EQ(INITIALIZED, state_);
 
-  if (registration_id == kInvalidServiceWorkerRegistrationId ||
+  if (registration_id == blink::mojom::kInvalidServiceWorkerRegistrationId ||
       key_value_pairs.empty()) {
     RunSoon(FROM_HERE, base::Bind(callback, SERVICE_WORKER_ERROR_FAILED));
     return;
@@ -650,7 +648,8 @@ void ServiceWorkerStorage::GetUserData(int64_t registration_id,
   }
   DCHECK_EQ(INITIALIZED, state_);
 
-  if (registration_id == kInvalidServiceWorkerRegistrationId || keys.empty()) {
+  if (registration_id == blink::mojom::kInvalidServiceWorkerRegistrationId ||
+      keys.empty()) {
     RunSoon(FROM_HERE, base::Bind(callback, std::vector<std::string>(),
                                   SERVICE_WORKER_ERROR_FAILED));
     return;
@@ -686,7 +685,7 @@ void ServiceWorkerStorage::GetUserDataByKeyPrefix(
   }
   DCHECK_EQ(INITIALIZED, state_);
 
-  if (registration_id == kInvalidServiceWorkerRegistrationId) {
+  if (registration_id == blink::mojom::kInvalidServiceWorkerRegistrationId) {
     RunSoon(FROM_HERE, base::Bind(callback, std::vector<std::string>(),
                                   SERVICE_WORKER_ERROR_FAILED));
     return;
@@ -723,7 +722,8 @@ void ServiceWorkerStorage::ClearUserData(int64_t registration_id,
     return;
   }
 
-  if (registration_id == kInvalidServiceWorkerRegistrationId || keys.empty()) {
+  if (registration_id == blink::mojom::kInvalidServiceWorkerRegistrationId ||
+      keys.empty()) {
     RunSoon(FROM_HERE, base::Bind(callback, SERVICE_WORKER_ERROR_FAILED));
     return;
   }
@@ -761,7 +761,7 @@ void ServiceWorkerStorage::ClearUserDataByKeyPrefixes(
     return;
   }
 
-  if (registration_id == kInvalidServiceWorkerRegistrationId ||
+  if (registration_id == blink::mojom::kInvalidServiceWorkerRegistrationId ||
       key_prefixes.empty()) {
     RunSoon(FROM_HERE, base::Bind(callback, SERVICE_WORKER_ERROR_FAILED));
     return;
@@ -882,7 +882,7 @@ void ServiceWorkerStorage::DiskCacheImplDoneWithDisk() {
 
 int64_t ServiceWorkerStorage::NewRegistrationId() {
   if (state_ == DISABLED)
-    return kInvalidServiceWorkerRegistrationId;
+    return blink::mojom::kInvalidServiceWorkerRegistrationId;
   DCHECK_EQ(INITIALIZED, state_);
   return next_registration_id_++;
 }
@@ -958,7 +958,7 @@ ServiceWorkerStorage::ServiceWorkerStorage(
     scoped_refptr<base::SequencedTaskRunner> database_task_runner,
     storage::QuotaManagerProxy* quota_manager_proxy,
     storage::SpecialStoragePolicy* special_storage_policy)
-    : next_registration_id_(kInvalidServiceWorkerRegistrationId),
+    : next_registration_id_(blink::mojom::kInvalidServiceWorkerRegistrationId),
       next_version_id_(kInvalidServiceWorkerVersionId),
       next_resource_id_(kInvalidServiceWorkerResourceId),
       state_(UNINITIALIZED),
@@ -1782,11 +1782,11 @@ void ServiceWorkerStorage::FindForDocumentInDB(
 
   // Find one with a pattern match.
   LongestScopeMatcher matcher(document_url);
-  int64_t match = kInvalidServiceWorkerRegistrationId;
+  int64_t match = blink::mojom::kInvalidServiceWorkerRegistrationId;
   for (const auto& registration_data : registration_data_list)
     if (matcher.MatchLongest(registration_data.scope))
       match = registration_data.registration_id;
-  if (match != kInvalidServiceWorkerRegistrationId)
+  if (match != blink::mojom::kInvalidServiceWorkerRegistrationId)
     status = database->ReadRegistration(match, origin, &data, &resources);
 
   original_task_runner->PostTask(

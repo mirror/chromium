@@ -20,8 +20,9 @@ ServiceWorkerRegistrationHandle::ServiceWorkerRegistrationHandle(
       provider_host_(provider_host),
       provider_id_(provider_host ? provider_host->provider_id()
                                  : kInvalidServiceWorkerProviderId),
-      handle_id_(context ? context->GetNewRegistrationHandleId()
-                         : kInvalidServiceWorkerRegistrationHandleId),
+      handle_id_(context
+                     ? context->GetNewRegistrationHandleId()
+                     : blink::mojom::kInvalidServiceWorkerRegistrationHandleId),
       ref_count_(1),
       registration_(registration) {
   DCHECK(registration_.get());
@@ -44,12 +45,13 @@ ServiceWorkerRegistrationHandle::~ServiceWorkerRegistrationHandle() {
   registration_->RemoveListener(this);
 }
 
-ServiceWorkerRegistrationObjectInfo
+blink::mojom::ServiceWorkerRegistrationObjectInfoPtr
 ServiceWorkerRegistrationHandle::GetObjectInfo() {
-  ServiceWorkerRegistrationObjectInfo info;
-  info.handle_id = handle_id_;
-  info.options.scope = registration_->pattern();
-  info.registration_id = registration_->id();
+  auto info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New();
+  info->handle_id = handle_id_;
+  info->options = blink::mojom::ServiceWorkerRegistrationOptions::New(
+      registration_->pattern());
+  info->registration_id = registration_->id();
   return info;
 }
 

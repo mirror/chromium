@@ -53,10 +53,11 @@ class ServiceWorkerProviderContextTest : public testing::Test {
   }
 
   void CreateObjectInfoAndVersionAttributes(
-      ServiceWorkerRegistrationObjectInfo* info,
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr* info,
       ServiceWorkerVersionAttributes* attrs) {
-    info->handle_id = 10;
-    info->registration_id = 20;
+    *info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New();
+    (*info)->handle_id = 10;
+    (*info)->registration_id = 20;
 
     attrs->active.handle_id = 100;
     attrs->active.version_id = 200;
@@ -82,12 +83,12 @@ class ServiceWorkerProviderContextTest : public testing::Test {
 TEST_F(ServiceWorkerProviderContextTest, CreateForController) {
   // Assume that these objects are passed from the browser process and own
   // references to browser-side registration/worker representations.
-  ServiceWorkerRegistrationObjectInfo registration_info;
+  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration_info;
   ServiceWorkerVersionAttributes version_attrs;
   CreateObjectInfoAndVersionAttributes(&registration_info, &version_attrs);
   std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration =
-      ServiceWorkerRegistrationHandleReference::Adopt(registration_info,
-                                                      thread_safe_sender());
+      ServiceWorkerRegistrationHandleReference::Adopt(
+          std::move(registration_info), thread_safe_sender());
   std::unique_ptr<ServiceWorkerHandleReference> installing =
       ServiceWorkerHandleReference::Adopt(version_attrs.installing,
                                           thread_safe_sender());

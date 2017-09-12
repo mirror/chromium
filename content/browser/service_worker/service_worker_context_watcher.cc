@@ -125,7 +125,8 @@ void ServiceWorkerContextWatcher::StoreRegistrationInfo(
     std::unordered_map<int64_t, std::unique_ptr<ServiceWorkerRegistrationInfo>>*
         info_map) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (registration_info.registration_id == kInvalidServiceWorkerRegistrationId)
+  if (registration_info.registration_id ==
+      blink::mojom::kInvalidServiceWorkerRegistrationId)
     return;
   (*info_map)[registration_info.registration_id] =
       base::MakeUnique<ServiceWorkerRegistrationInfo>(registration_info);
@@ -300,7 +301,7 @@ void ServiceWorkerContextWatcher::OnErrorReported(int64_t version_id,
                                                   int thread_id,
                                                   const ErrorInfo& info) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  int64_t registration_id = kInvalidServiceWorkerRegistrationId;
+  int64_t registration_id = blink::mojom::kInvalidServiceWorkerRegistrationId;
   auto it = version_info_map_.find(version_id);
   if (it != version_info_map_.end())
     registration_id = it->second->registration_id;
@@ -319,7 +320,7 @@ void ServiceWorkerContextWatcher::OnReportConsoleMessage(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (message.message_level != CONSOLE_MESSAGE_LEVEL_ERROR)
     return;
-  int64_t registration_id = kInvalidServiceWorkerRegistrationId;
+  int64_t registration_id = blink::mojom::kInvalidServiceWorkerRegistrationId;
   auto it = version_info_map_.find(version_id);
   if (it != version_info_map_.end())
     registration_id = it->second->registration_id;

@@ -94,8 +94,9 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
 
   // For service worker execution contexts. Used for initializing
   // ServiceWorkerGlobalScope#registration. Called on the worker thread.
-  void GetRegistration(ServiceWorkerRegistrationObjectInfo* info,
-                       ServiceWorkerVersionAttributes* attrs);
+  void GetRegistration(
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr* info,
+      ServiceWorkerVersionAttributes* attrs);
 
   // For service worker clients. The controller for
   // ServiceWorkerContainer#controller.

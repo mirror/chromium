@@ -262,7 +262,7 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
   void Send(IPC::Message* message);
   void SendWorkerStarted();
   void SetRegistrationInServiceWorkerGlobalScope(
-      const ServiceWorkerRegistrationObjectInfo& info,
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
       const ServiceWorkerVersionAttributes& attrs);
 
   // mojom::ServiceWorkerEventDispatcher
