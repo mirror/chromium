@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32babaa6_f0c48a14",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-12T18:12:27Z",
+      "side": 1,
+      "message": "Correct me if I\u0027m wrong, but my understanding is that we only use closures for synchronous functions.",
+      "range": {
+        "startLine": 189,
+        "startChar": 17,
+        "endLine": 194,
+        "endChar": 38
+      },
+      "revId": "95a79e315ca5a2f74aff6952f304cf5387860611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea705600_6a6d59ae",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-12T18:12:27Z",
+      "side": 1,
+      "message": "I find this code overly hard to follow because of the excessive use of callbacks. Why doesn\u0027t OnTaskbarIconRect() directly call to metrics_udpater rather than using a callback? If you say for tests, surely there is a better way to structure this code that does\u0027t involve excessive callbacks?",
+      "range": {
+        "startLine": 200,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 77
+      },
+      "revId": "95a79e315ca5a2f74aff6952f304cf5387860611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e0747be_c9d2c0f1",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-12T18:12:27Z",
+      "side": 1,
+      "message": "Can\u0027t you use Screen for this?",
+      "range": {
+        "startLine": 391,
+        "startChar": 5,
+        "endLine": 391,
+        "endChar": 66
+      },
+      "revId": "95a79e315ca5a2f74aff6952f304cf5387860611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
