@@ -21,7 +21,6 @@
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_window_manager.h"
 #include "ash/wm/window_state.h"
-#include "ash/wm/window_util.h"
 #include "ash/wm/wm_event.h"
 #include "base/compiler_specific.h"
 #include "base/logging.h"
@@ -1576,7 +1575,7 @@ TEST_F(MultiUserWindowManagerChromeOSTest, WindowsOrderPreservedTests) {
   activation_client->ActivateWindow(window(2));
   activation_client->ActivateWindow(window(1));
   activation_client->ActivateWindow(window(0));
-  EXPECT_EQ(wm::GetActiveWindow(), window(0));
+  EXPECT_EQ(activation_client->GetActiveWindow(), window(0));
 
   aura::Window::Windows mru_list =
       Shell::Get()->mru_window_tracker()->BuildMruWindowList();
@@ -1588,13 +1587,13 @@ TEST_F(MultiUserWindowManagerChromeOSTest, WindowsOrderPreservedTests) {
   multi_user_window_manager()->ActiveUserChanged(
       user_manager()->FindUser(account_id_B));
   EXPECT_EQ("H[A], H[A], H[A]", GetStatus());
-  EXPECT_EQ(wm::GetActiveWindow(), nullptr);
+  EXPECT_EQ(activation_client->GetActiveWindow(), nullptr);
 
   user_manager()->SwitchActiveUser(account_id_A);
   multi_user_window_manager()->ActiveUserChanged(
       user_manager()->FindUser(account_id_A));
   EXPECT_EQ("S[A], S[A], S[A]", GetStatus());
-  EXPECT_EQ(wm::GetActiveWindow(), window(0));
+  EXPECT_EQ(activation_client->GetActiveWindow(), window(0));
 
   mru_list = Shell::Get()->mru_window_tracker()->BuildMruWindowList();
   EXPECT_EQ(mru_list[0], window(0));
@@ -1628,7 +1627,7 @@ TEST_F(MultiUserWindowManagerChromeOSTest, GetActiveBrowserTest) {
   // Manually set last active browser in BrowserList for testing.
   BrowserList::GetInstance()->SetLastActive(browser.get());
   EXPECT_EQ(browser.get(), BrowserList::GetInstance()->GetLastActive());
-  EXPECT_EQ(browser_native_window, wm::GetActiveWindow());
+  EXPECT_EQ(browser_native_window, activation_client->GetActiveWindow());
   EXPECT_EQ(browser.get(), ChromeNewWindowClient::GetActiveBrowser());
 
   // Switch to another user's desktop with no active window.
@@ -1636,7 +1635,7 @@ TEST_F(MultiUserWindowManagerChromeOSTest, GetActiveBrowserTest) {
   multi_user_window_manager()->ActiveUserChanged(
       user_manager()->FindUser(account_id_B));
   EXPECT_EQ(browser.get(), BrowserList::GetInstance()->GetLastActive());
-  EXPECT_EQ(nullptr, wm::GetActiveWindow());
+  EXPECT_EQ(nullptr, activation_client->GetActiveWindow());
   EXPECT_EQ(nullptr, ChromeNewWindowClient::GetActiveBrowser());
 }
 
