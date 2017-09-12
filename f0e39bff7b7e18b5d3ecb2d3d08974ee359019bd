@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45ea9d54_0466a203",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1849,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-12T08:23:13Z",
+      "side": 0,
+      "message": "You should leave VisiblePosition case.",
+      "revId": "f0e39bff7b7e18b5d3ecb2d3d08974ee359019bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
