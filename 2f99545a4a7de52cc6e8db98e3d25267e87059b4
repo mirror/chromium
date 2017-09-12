@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7246c6f7_f3a0bd61",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/UploadDataProvidersTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-12T15:27:26Z",
+      "side": 1,
+      "message": "what about reverting this change and adding \"import static org.chromium.net.CronetTestRule.assertContains;\"?",
+      "revId": "2f99545a4a7de52cc6e8db98e3d25267e87059b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
