@@ -219,6 +219,8 @@ class WebURLRequest {
   BLINK_PLATFORM_EXPORT WebCachePolicy GetCachePolicy() const;
   BLINK_PLATFORM_EXPORT void SetCachePolicy(WebCachePolicy);
 
+  BLINK_PLATFORM_EXPORT double TimeoutInterval() const;
+
   BLINK_PLATFORM_EXPORT WebString HttpMethod() const;
   BLINK_PLATFORM_EXPORT void SetHTTPMethod(const WebString&);
 

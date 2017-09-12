@@ -147,6 +147,10 @@ void WebURLRequest::SetCachePolicy(WebCachePolicy cache_policy) {
   resource_request_->SetCachePolicy(cache_policy);
 }
 
+double WebURLRequest::TimeoutInterval() const {
+  return resource_request_->TimeoutInterval();
+}
+
 WebString WebURLRequest::HttpMethod() const {
   return resource_request_->HttpMethod();
 }

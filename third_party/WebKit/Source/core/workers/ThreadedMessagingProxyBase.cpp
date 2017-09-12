@@ -47,6 +47,9 @@ ThreadedMessagingProxyBase::ThreadedMessagingProxyBase(
         WebLocalFrameImpl::FromFrame(document->GetFrame());
     std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
         web_frame->Client()->CreateWorkerFetchContext();
+    sync_load_terminator_ =
+        web_worker_fetch_context->CreateSyncLoadTerminator();
+
     DCHECK(web_worker_fetch_context);
     web_worker_fetch_context->SetApplicationCacheHostID(
         document->Fetcher()->Context().ApplicationCacheHostID());
@@ -152,6 +155,9 @@ void ThreadedMessagingProxyBase::TerminateGlobalScope() {
   if (asked_to_terminate_)
     return;
   asked_to_terminate_ = true;
+
+  if (sync_load_terminator_)
+    sync_load_terminator_->Terminate();
 
   if (worker_thread_)
     worker_thread_->Terminate();

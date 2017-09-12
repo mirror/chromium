@@ -8,15 +8,22 @@
 #include <string>
 
 #include "content/public/common/resource_response_info.h"
+#include "content/public/common/url_loader.mojom.h"
 #include "url/gurl.h"
 
 namespace content {
 
 // See the SyncLoad method. (The name of this struct is not
 // suffixed with "Info" because it also contains the response data.)
-struct CONTENT_EXPORT SyncLoadResponse : ResourceResponseInfo {
+struct CONTENT_EXPORT SyncLoadResponse {
   SyncLoadResponse();
+  SyncLoadResponse(SyncLoadResponse&& other);
   ~SyncLoadResponse();
+
+  SyncLoadResponse& operator=(SyncLoadResponse&& other);
+
+  // The info of the response.
+  ResourceResponseInfo info;
 
   // The response error code.
   int error_code;
@@ -27,6 +34,9 @@ struct CONTENT_EXPORT SyncLoadResponse : ResourceResponseInfo {
 
   // The response data.
   std::string data;
+
+  int64_t downloaded_file_length = 0;
+  mojom::DownloadedTempFilePtr downloaded_tmp_file;
 };
 
 }  // namespace content
