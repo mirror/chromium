@@ -728,35 +728,44 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
   render_pass->damage_rect.Union(
       gfx::ConvertRectToPixel(device_scale_factor, damage_rect));
 
-  // Create a transformation matrix that maps buffer coordinates to target by
-  // inverting the transform and scale of buffer.
-  SkMatrix buffer_to_target_matrix;
-  switch (state_.buffer_transform) {
-    case Transform::NORMAL:
-      buffer_to_target_matrix.setIdentity();
-      break;
-    case Transform::ROTATE_90:
-      buffer_to_target_matrix.setSinCos(-1, 0);
-      buffer_to_target_matrix.postTranslate(0, output_rect.height());
-      break;
-    case Transform::ROTATE_180:
-      buffer_to_target_matrix.setSinCos(0, -1);
-      buffer_to_target_matrix.postTranslate(output_rect.width(),
-                                            output_rect.height());
-      break;
-    case Transform::ROTATE_270:
-      buffer_to_target_matrix.setSinCos(1, 0);
-      buffer_to_target_matrix.postTranslate(output_rect.width(), 0);
-      break;
-  }
   gfx::SizeF transformed_buffer_size(
       ToTransformedSize(current_resource_.size, state_.buffer_transform));
-  if (!transformed_buffer_size.IsEmpty()) {
-    buffer_to_target_matrix.preScale(
-        output_rect.width() / transformed_buffer_size.width(),
-        output_rect.height() / transformed_buffer_size.height());
+
+  // Set up the matrix for transforming from normalized buffer coordinates to
+  // post-transform normalized buffer coordinates.
+  SkMatrix buffer_transform_matrix;
+  switch (state_.buffer_transform) {
+    case Transform::NORMAL:
+      buffer_transform_matrix.setIdentity();
+      break;
+    case Transform::ROTATE_90:
+      buffer_transform_matrix.setSinCos(-1, 0);
+      buffer_transform_matrix.postTranslate(0,
+                                            transformed_buffer_size.height());
+      break;
+    case Transform::ROTATE_180:
+      buffer_transform_matrix.setSinCos(0, -1);
+      buffer_transform_matrix.postTranslate(transformed_buffer_size.width(),
+                                            transformed_buffer_size.height());
+      break;
+    case Transform::ROTATE_270:
+      buffer_transform_matrix.setSinCos(1, 0);
+      buffer_transform_matrix.postTranslate(transformed_buffer_size.width(), 0);
+      break;
   }
+
+  // Compute the total transformation from normalized buffer coordinates to
+  // target coordinates.
+  SkMatrix buffer_to_target_matrix(buffer_transform_matrix);
+  // Scale and offset the normalized space to fit the content size rectangle.
+  if (!transformed_buffer_size.IsEmpty())
+    buffer_to_target_matrix.postScale(1.f / transformed_buffer_size.width(),
+                                      1.f / transformed_buffer_size.height());
+
+  buffer_to_target_matrix.postScale(content_size_.width(),
+                                    content_size_.height());
   buffer_to_target_matrix.postTranslate(origin.x(), origin.y());
+  // Convert from DPs to pixels.
   buffer_to_target_matrix.postScale(device_scale_factor, device_scale_factor);
 
   bool are_contents_opaque =
@@ -774,17 +783,33 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
 
   if (current_resource_.id) {
     gfx::PointF uv_top_left(0.f, 0.f);
-    gfx::PointF uv_bottom_right(1.f, 1.f);
+    gfx::PointF uv_bottom_right(current_resource_.size.width(),
+                                current_resource_.size.height());
     if (!state_.crop.IsEmpty()) {
-      gfx::SizeF scaled_buffer_size(
-          gfx::ScaleSize(transformed_buffer_size, 1.0f / state_.buffer_scale));
-      uv_top_left = state_.crop.origin();
-      uv_top_left.Scale(1.f / scaled_buffer_size.width(),
-                        1.f / scaled_buffer_size.height());
-      uv_bottom_right = state_.crop.bottom_right();
-      uv_bottom_right.Scale(1.f / scaled_buffer_size.width(),
-                            1.f / scaled_buffer_size.height());
+      // The crop rectangle is a post-transformation rectangle. To get the UV
+      // coordinates, we need to pass it through the inverse of the buffer
+      // transformation matrix, and convert to normalized coordinates.
+      SkMatrix buffer_to_crop_matrix(buffer_transform_matrix);
+      // Scale down by the buffer scale. This is really part of the buffer
+      // buffer transform, but we do not use it above as the content_size
+      // already includes this correction.
+      buffer_to_crop_matrix.postIDiv(state_.buffer_scale, state_.buffer_scale);
+
+      gfx::Transform buffer_to_crop_transform{
+          gfx::Transform(buffer_to_crop_matrix)};
+      gfx::RectF crop = gfx::RectF(state_.crop);
+      buffer_to_crop_transform.TransformRectReverse(&crop);
+      uv_top_left = crop.origin();
+      uv_bottom_right = crop.bottom_right();
     }
+
+    if (!current_resource_.size.IsEmpty()) {
+      uv_top_left.Scale(1.f / current_resource_.size.width(),
+                        1.f / current_resource_.size.height());
+      uv_bottom_right.Scale(1.f / current_resource_.size.width(),
+                            1.f / current_resource_.size.height());
+    }
+
     // Texture quad is only needed if buffer is not fully transparent.
     if (state_.alpha) {
       cc::TextureDrawQuad* texture_quad =
