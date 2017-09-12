@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f73c78e6_9863c723",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-12T16:55:34Z",
+      "side": 1,
+      "message": "nit: functions go before fields per style.",
+      "revId": "1a9538e404674e398f1a385af0d188bc4bd5de81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94fbf50f_713a3d0f",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-12T16:55:34Z",
+      "side": 1,
+      "message": "nit: I think it would make the most sense to make InitParams movable and pass it by value (or rvalue reference). These constructors leave |params| in an unspecified state, and it\u0027s not obvious at the call sites that you can\u0027t just reuse InitParams across calls. Passing it by move would make it obvious.",
+      "revId": "1a9538e404674e398f1a385af0d188bc4bd5de81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
