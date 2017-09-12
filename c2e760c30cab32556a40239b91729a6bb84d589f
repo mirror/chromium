@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed91a0c7_22ad76b2",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-12T17:57:59Z",
+      "side": 1,
+      "message": "Seems like this ought to be defined in a common file.",
+      "range": {
+        "startLine": 467,
+        "startChar": 36,
+        "endLine": 467,
+        "endChar": 37
+      },
+      "revId": "c2e760c30cab32556a40239b91729a6bb84d589f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
