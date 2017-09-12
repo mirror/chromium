@@ -233,14 +233,19 @@ std::unique_ptr<views::ToggleImageButton> GeneratePasswordViewButton(
 }
 
 // Creates a dropdown from the other possible passwords.
-// The items are made of '*'s.
+// The items are made of '*'s if not visible.
 std::unique_ptr<views::Combobox> GeneratePasswordDropdownView(
-    const autofill::PasswordForm& form) {
+    const autofill::PasswordForm& form,
+    bool visible) {
   DCHECK(!form.other_possible_passwords.empty());
   std::vector<base::string16> passwords;
-  for (const base::string16& possible_password :
-       form.other_possible_passwords) {
-    passwords.push_back(base::string16(possible_password.length(), '*'));
+  if (visible) {
+    passwords = form.other_possible_passwords;
+  } else {
+    for (const base::string16& possible_password :
+         form.other_possible_passwords) {
+      passwords.push_back(base::string16(possible_password.length(), '*'));
+    }
   }
   std::unique_ptr<views::Combobox> combobox = std::make_unique<views::Combobox>(
       std::make_unique<ui::SimpleComboboxModel>(passwords));
@@ -435,6 +440,9 @@ class ManagePasswordsBubbleView::PendingView
   gfx::Size CalculatePreferredSize() const override;
 
   void ToggleEditingState(bool accept_changes);
+  void TogglePasswordVisibility();
+  void ResetCredentialRow();
+  void UpdateUsernameAndPasswordInModel();
 
   ManagePasswordsBubbleView* parent_;
 
@@ -446,6 +454,7 @@ class ManagePasswordsBubbleView::PendingView
   views::ToggleImageButton* password_view_button_;
 
   bool editing_;
+  bool password_visible_;
 
   DISALLOW_COPY_AND_ASSIGN(PendingView);
 };
@@ -459,7 +468,8 @@ ManagePasswordsBubbleView::PendingView::PendingView(
       username_field_(nullptr),
       password_field_(nullptr),
       password_view_button_(nullptr),
-      editing_(false) {
+      editing_(false),
+      password_visible_(false) {
   CreateAndSetLayout();
   parent_->set_initially_focused_view(save_button_);
 }
@@ -507,9 +517,12 @@ void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout() {
     DCHECK(!password_field_);
     if (password_view_button_ && editing_ &&
         password_form->other_possible_passwords.size() > 1) {
-      password_field_ = GeneratePasswordDropdownView(*password_form).release();
+      password_field_ =
+          GeneratePasswordDropdownView(*password_form, password_visible_)
+              .release();
     } else {
-      password_field_ = GeneratePasswordLabel(*password_form).release();
+      password_field_ =
+          GeneratePasswordLabel(*password_form, password_visible_).release();
     }
 
     BuildCredentialRow(
@@ -551,7 +564,7 @@ void ManagePasswordsBubbleView::PendingView::ButtonPressed(
   } else if (sender == never_button_) {
     parent_->model()->OnNeverForThisSiteClicked();
   } else if (sender == password_view_button_) {
-    // TODO(https://crbug.com/753806): Implement making passwords visible logic.
+    TogglePasswordVisibility();
     return;
   } else {
     NOTREACHED();
@@ -570,7 +583,7 @@ void ManagePasswordsBubbleView::PendingView::OnDidChangeFocus(
     View* focused_before,
     View* focused_now) {
   if (editing_ && focused_now != username_field_ &&
-      focused_now != password_field_) {
+      focused_now != password_field_ && focused_now != password_view_button_) {
     ToggleEditingState(true);
   }
 }
@@ -595,19 +608,37 @@ gfx::Size ManagePasswordsBubbleView::PendingView::CalculatePreferredSize()
 void ManagePasswordsBubbleView::PendingView::ToggleEditingState(
     bool accept_changes) {
   if (editing_ && accept_changes) {
-    parent_->model()->OnUsernameEdited(
-        static_cast<views::Textfield*>(username_field_)->text());
-    if (password_view_button_ &&
-        parent_->model()->pending_password().other_possible_passwords.size() >
-            1) {
-      parent_->model()->OnPasswordSelected(
-          parent_->model()->pending_password().other_possible_passwords.at(
-              static_cast<views::Combobox*>(password_field_)
-                  ->selected_index()));
-    }
+    UpdateUsernameAndPasswordInModel();
   }
   editing_ = !editing_;
   edit_button_->SetEnabled(!editing_);
+  ResetCredentialRow();
+}
+
+void ManagePasswordsBubbleView::PendingView::TogglePasswordVisibility() {
+  if (editing_) {
+    UpdateUsernameAndPasswordInModel();
+  }
+  GetFocusManager()->RemoveFocusChangeListener(this);
+  password_visible_ = !password_visible_;
+  password_view_button_->SetToggled(password_visible_);
+  ResetCredentialRow();
+}
+
+void ManagePasswordsBubbleView::PendingView::
+    UpdateUsernameAndPasswordInModel() {
+  parent_->model()->OnUsernameEdited(
+      static_cast<views::Textfield*>(username_field_)->text());
+  if (password_view_button_ &&
+      parent_->model()->pending_password().other_possible_passwords.size() >
+          1) {
+    parent_->model()->OnPasswordSelected(
+        parent_->model()->pending_password().other_possible_passwords.at(
+            static_cast<views::Combobox*>(password_field_)->selected_index()));
+  }
+}
+
+void ManagePasswordsBubbleView::PendingView::ResetCredentialRow() {
   RemoveChildView(username_field_);
   username_field_ = nullptr;
   RemoveChildView(password_field_);
@@ -895,7 +926,7 @@ ManagePasswordsBubbleView::UpdatePendingView::UpdatePendingView(
     const autofill::PasswordForm* password_form =
         &parent_->model()->pending_password();
     BuildCredentialRow(layout, GenerateUsernameLabel(*password_form),
-                       GeneratePasswordLabel(*password_form), nullptr);
+                       GeneratePasswordLabel(*password_form, false), nullptr);
   }
   layout->AddPaddingRow(
       0, layout_provider->GetDistanceMetric(
