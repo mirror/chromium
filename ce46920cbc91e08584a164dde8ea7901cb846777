@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0839c1b3_b22ec6ed",
+        "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-12T18:58:17Z",
+      "side": 1,
+      "message": "What is the point of this map? Why can\u0027t we just remove DidStartNavigation and do the main frame / same document check in DidFinishNavigation without using any persistence?",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 52
+      },
+      "revId": "ce46920cbc91e08584a164dde8ea7901cb846777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
