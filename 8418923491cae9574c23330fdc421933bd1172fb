@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8812ad7d_d986965b",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-12T01:41:58Z",
+      "side": 1,
+      "message": "Could you introduce builder pattern and make AddSuggetionMarker() to take\nit? Seven parameters is too many...\n\nclass SuggestionMarkProperties {\n public:\n  class Builder { ... }\n private:\n  SuggetionMarkerType type_;\n  Color highlight_color_;\n  Color underline_color_;\n  Color background_color_;\n  Tickness thickness_;\n};\n\nIt is better to have StyleableMarkerProperties::Builder, ActiveSuggetionMarkerProperties::Builder, and so on.",
+      "revId": "8418923491cae9574c23330fdc421933bd1172fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
