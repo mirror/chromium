@@ -1548,6 +1548,11 @@ public class VrShellDelegate
         return mInVr && !mProbablyInDon;
     }
 
+    @VisibleForTesting
+    public boolean isCancellingEntryAnimation() {
+        return mCancellingEntryAnimation;
+    }
+
     /**
      * @return Pointer to the native VrShellDelegate object.
      */
