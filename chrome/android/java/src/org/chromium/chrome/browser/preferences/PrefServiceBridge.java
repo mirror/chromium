@@ -338,6 +338,13 @@ public final class PrefServiceBridge {
     }
 
     /**
+     * @return true if sound is enabled.
+     */
+    public boolean isSoundEnabled() {
+        return nativeGetSoundEnabled();
+    }
+
+    /**
      * Sets the preference that controls protected media identifier.
      */
     public void setProtectedMediaIdentifierEnabled(boolean enabled) {
@@ -987,6 +994,7 @@ public final class PrefServiceBridge {
     private native boolean nativeGetIncognitoModeManaged();
     private native boolean nativeGetPrintingEnabled();
     private native boolean nativeGetPrintingManaged();
+    private native boolean nativeGetSoundEnabled();
     private native boolean nativeGetSupervisedUserSafeSitesEnabled();
     private native void nativeSetTranslateEnabled(boolean enabled);
     private native void nativeResetTranslateDefaults();

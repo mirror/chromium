@@ -220,6 +220,11 @@ static jboolean GetAutoplayEnabled(JNIEnv* env,
   return GetBooleanForContentSetting(CONTENT_SETTINGS_TYPE_AUTOPLAY);
 }
 
+static jboolean GetSoundEnabled(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+  // Sound cannot be disabled by default.
+  return true;
+}
+
 static jboolean GetBackgroundSyncEnabled(JNIEnv* env,
                                          const JavaParamRef<jobject>& obj) {
   return GetBooleanForContentSetting(CONTENT_SETTINGS_TYPE_BACKGROUND_SYNC);
