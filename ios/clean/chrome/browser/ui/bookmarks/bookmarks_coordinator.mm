@@ -82,28 +82,49 @@
 
 #pragma mark - BookmarkHomeViewControllerDelegate
 
+#pragma mark - BookmarkHomeViewControllerDelegate
+
 - (void)bookmarkHomeViewControllerWantsDismissal:
             (BookmarkHomeViewController*)controller
                                  navigationToUrl:(const GURL&)url {
+  std::vector<GURL> urls = {url};
+  [self bookmarkHomeViewControllerWantsDismissal:controller
+                                navigationToUrls:urls];
+}
+
+- (void)
+bookmarkHomeViewControllerWantsDismissal:(BookmarkHomeViewController*)controller
+                        navigationToUrls:(const std::vector<GURL>&)urls {
+  // TODO(crbug.com/695749): Test if the following works when adding bookmark
+  // becomes available in chrome_clean_skeleton.
+
   [self dismissBookmarkBrowser];
 
-  if (url != GURL()) {
-    new_tab_page_uma::RecordAction(self.browser->browser_state(),
-                                   new_tab_page_uma::ACTION_OPENED_BOOKMARK);
-    base::RecordAction(
-        base::UserMetricsAction("MobileBookmarkManagerEntryOpened"));
+  if (urls.empty())
+    return;
 
-    if (url.SchemeIs(url::kJavaScriptScheme)) {  // bookmarklet
-      NSString* jsToEval = [base::SysUTF8ToNSString(url.GetContent())
-          stringByRemovingPercentEncoding];
-      [self.loader loadJavaScriptFromLocationBar:jsToEval];
-    } else {
-      [self.loader loadURL:url
-                   referrer:web::Referrer()
-                 transition:ui::PAGE_TRANSITION_AUTO_BOOKMARK
-          rendererInitiated:NO];
+  BOOL openInCurrentTab = YES;
+  for (const GURL& url : urls) {
+    if (!url.is_valid()) {
+      continue;
     }
-  }
+    if (openInCurrentTab) {
+      // Only open the first URL in the current tab.
+      openInCurrentTab = NO;
+
+      // TODO(crbug.com/695749): See if we need different metrics for 'Open
+      // All'.
+      new_tab_page_uma::RecordAction(_browserState,
+                                     new_tab_page_uma::ACTION_OPENED_BOOKMARK);
+      base::RecordAction(
+          base::UserMetricsAction("MobileBookmarkManagerEntryOpened"));
+
+      [self openURLInCurrentTab:url];
+    } else {
+      // Open other URLs (if any) in background tabs.
+      [self openURLInBackgroundTab:url];
+    }
+  }  // end for
 }
 
 #pragma mark - Private
@@ -115,6 +136,26 @@
 
   [self.bookmarkBrowser dismissModals];
   [self stop];
+}
+
+- (void)openURLInCurrentTab:(const GURL&)url {
+  if (url.SchemeIs(url::kJavaScriptScheme)) {  // bookmarklet
+    NSString* jsToEval = [base::SysUTF8ToNSString(url.GetContent())
+        stringByRemovingPercentEncoding];
+    [_loader loadJavaScriptFromLocationBar:jsToEval];
+  } else {
+    [_loader loadURL:url
+                 referrer:web::Referrer()
+               transition:ui::PAGE_TRANSITION_AUTO_BOOKMARK
+        rendererInitiated:NO];
+  }
+}
+
+- (void)openURLInBackgroundTab:(const GURL&)url {
+  [_loader webPageOrderedOpen:url
+                     referrer:web::Referrer()
+                 inBackground:YES
+                     appendTo:kLastTab];
 }
 
 @end

@@ -79,8 +79,13 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   // True if the promo is visible.
   BOOL _promoVisible;
 
-  // Set of nodes being editing currently.
+  // The following 2 ivars both represent the set of nodes being edited.
+  // The set is for fast lookup.
+  // The vector maintains the order that edit nodes were added.
+  // Use the relevant instance methods to modify these two ivars in tandem.
+  // DO NOT modify these two ivars directly.
   std::set<const bookmarks::BookmarkNode*> _editNodes;
+  std::vector<const bookmarks::BookmarkNode*> _editNodesOrdered;
 }
 
 // The UITableView to show bookmarks.
@@ -226,6 +231,10 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   return _editNodes;
 }
 
+- (const std::vector<const bookmarks::BookmarkNode*>&)editNodesOrdered {
+  return _editNodesOrdered;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView {
@@ -321,6 +330,7 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
     // If table is in edit mode, record all the nodes added to edit set.
     if (self.editing) {
       _editNodes.insert(node);
+      _editNodesOrdered.push_back(node);
       [self.delegate bookmarkTableView:self selectedEditNodes:_editNodes];
       return;
     }
@@ -342,6 +352,12 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
     const BookmarkNode* node = [self nodeAtIndexPath:indexPath];
     DCHECK(node);
     _editNodes.erase(node);
+
+    std::vector<const BookmarkNode*>::iterator it =
+        std::find(_editNodesOrdered.begin(), _editNodesOrdered.end(), node);
+    DCHECK(it != _editNodesOrdered.end());
+    _editNodesOrdered.erase(it);
+
     [self.delegate bookmarkTableView:self selectedEditNodes:_editNodes];
   }
 }
@@ -488,6 +504,7 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
 
 - (void)resetEditNodes {
   _editNodes.clear();
+  _editNodesOrdered.clear();
   if (self.editing) {
     // Also update viewcontroler that the edit nodes changed, if in edit mode.
     [self.delegate bookmarkTableView:self selectedEditNodes:_editNodes];

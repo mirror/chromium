@@ -334,6 +334,14 @@ const CGFloat kSpacer = 50;
   [self presentViewController:navController animated:YES completion:NULL];
 }
 
+- (void)openAllNodes:(const std::vector<const bookmarks::BookmarkNode*>&)nodes {
+  std::vector<GURL> urls = [self getURLsToOpen:nodes];
+  if (self.homeDelegate) {
+    [self.homeDelegate bookmarkHomeViewControllerWantsDismissal:self
+                                               navigationToUrls:urls];
+  }
+}
+
 #pragma mark - Navigation Bar Callbacks
 
 - (void)navigationBarCancel:(id)sender {
@@ -435,9 +443,7 @@ const CGFloat kSpacer = 50;
 
   BOOL foundURL = NO;
   BOOL foundFolder = NO;
-  for (std::set<const bookmarks::BookmarkNode*>::iterator i = nodes.begin();
-       i != nodes.end(); ++i) {
-    const bookmarks::BookmarkNode* node = *i;
+  for (const BookmarkNode* node : nodes) {
     if (!foundURL && node->is_url()) {
       foundURL = YES;
     } else if (!foundFolder && node->is_folder()) {
@@ -1096,6 +1102,19 @@ const CGFloat kSpacer = 50;
   [super updateViewConstraints];
 }
 
+// Returns a vector of all URLs in |nodes|.
+- (std::vector<GURL>)getURLsToOpen:
+    (const std::vector<const BookmarkNode*>&)nodes {
+  std::vector<GURL> urls;
+
+  for (const BookmarkNode* node : nodes) {
+    if (node->is_url()) {
+      urls.push_back(node->url());
+    }
+  }
+  return urls;
+}
+
 #pragma mark - ContextBarDelegate implementation
 
 // Called when the leading button is clicked.
@@ -1268,6 +1287,7 @@ const CGFloat kSpacer = 50;
 #pragma mark - Context Menu
 
 - (UIAlertController*)contextMenuForMultipleBookmarkURLs {
+  __weak BookmarkHomeViewController* weakSelf = self;
   UIAlertController* alert = [UIAlertController
       alertControllerWithTitle:nil
                        message:nil
@@ -1282,7 +1302,10 @@ const CGFloat kSpacer = 50;
   UIAlertAction* openAllAction = [UIAlertAction
       actionWithTitle:l10n_util::GetNSString(IDS_IOS_BOOKMARK_CONTEXT_MENU_OPEN)
                 style:UIAlertActionStyleDefault
-              handler:nil];
+              handler:^(UIAlertAction* _Nonnull action) {
+                [weakSelf openAllNodes:[weakSelf.bookmarksTableView
+                                               editNodesOrdered]];
+              }];
 
   UIAlertAction* openInIncognitoAction = [UIAlertAction
       actionWithTitle:l10n_util::GetNSString(
