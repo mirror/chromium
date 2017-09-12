@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04d84d5f_bc4fccb2",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-12T15:38:42Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 308,
+        "startChar": 6,
+        "endLine": 308,
+        "endChar": 12
+      },
+      "revId": "c39d82fcd4fe9c7b861077b7ee562b0f9757ec68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19237d3_ddbd74d4",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-12T15:38:42Z",
+      "side": 1,
+      "message": "Replace this with:\nif (surface_)\n  return surface-\u003eisTextureBacked();",
+      "range": {
+        "startLine": 313,
+        "startChar": 6,
+        "endLine": 313,
+        "endChar": 14
+      },
+      "revId": "c39d82fcd4fe9c7b861077b7ee562b0f9757ec68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a082d66_f8f24003",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-12T15:38:42Z",
+      "side": 1,
+      "message": "this should now just be \"if (!layer_)\".  This is what is causing your crash. You are in the fallback scenario, so the surface is not accelerated and acceleration is not disabled, so we never enter this condition.",
+      "range": {
+        "startLine": 650,
+        "startChar": 8,
+        "endLine": 650,
+        "endChar": 16
+      },
+      "revId": "c39d82fcd4fe9c7b861077b7ee562b0f9757ec68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf3f699_af8439d7",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-12T15:38:42Z",
+      "side": 1,
+      "message": "This should just be \"if (layer_)\"",
+      "range": {
+        "startLine": 752,
+        "startChar": 2,
+        "endLine": 752,
+        "endChar": 4
+      },
+      "revId": "c39d82fcd4fe9c7b861077b7ee562b0f9757ec68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380047bd_b76a0b9d",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-12T15:38:42Z",
+      "side": 1,
+      "message": "Replace this with:\nif (!IsAccelerated())\n  return true;",
+      "range": {
+        "startLine": 929,
+        "startChar": 2,
+        "endLine": 929,
+        "endChar": 4
+      },
+      "revId": "c39d82fcd4fe9c7b861077b7ee562b0f9757ec68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
