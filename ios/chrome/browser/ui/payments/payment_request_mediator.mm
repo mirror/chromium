@@ -203,6 +203,10 @@ using ::payment_request_util::GetShippingSectionTitle;
             static_cast<payments::IOSPaymentInstrument*>(paymentMethod);
         item.methodTypeIcon = mobileApp->icon_image();
         break;
+      case payments::PaymentInstrument::Type::SERVICE_WORKER_APP:
+        NOTIMPLEMENTED();
+        item.methodTypeIcon = nullptr;
+        break;
     }
 
     item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
