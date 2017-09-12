@@ -552,10 +552,7 @@ void ImageResourceContent::UpdateImageAnimationPolicy() {
     }
   }
 
-  if (image_->AnimationPolicy() != new_policy) {
-    image_->ResetAnimation();
-    image_->SetAnimationPolicy(new_policy);
-  }
+  image_->SetAnimationPolicy(new_policy);
 }
 
 void ImageResourceContent::ChangedInRect(const blink::Image* image,

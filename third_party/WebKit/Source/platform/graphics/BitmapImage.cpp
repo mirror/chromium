@@ -48,6 +48,24 @@
 
 namespace blink {
 
+int GetRepetitionCountWithPolicyOverride(int actual_count,
+                                         ImageAnimationPolicy policy) {
+  switch (policy) {
+    case kImageAnimationPolicyAllowed:
+      // Default policy, no count override.
+      return actual_count;
+    case kImageAnimationPolicyAnimateOnce:
+      // Only a single loop allowed.
+      return kAnimationLoopOnce;
+    case kImageAnimationPolicyNoAnimation:
+      // Dont animate.
+      return kAnimationNone;
+  }
+
+  NOTREACHED();
+  return actual_count;
+}
+
 BitmapImage::BitmapImage(ImageObserver* observer, bool is_multipart)
     : Image(observer, is_multipart),
       current_frame_index_(0),
@@ -127,7 +145,8 @@ PaintImage BitmapImage::CreateAndCacheFrame(size_t index) {
                               : PaintImage::CompletionState::PARTIALLY_DONE;
   builder.set_paint_image_generator(std::move(generator))
       .set_frame_index(index)
-      .set_repetition_count(repetition_count_)
+      .set_repetition_count(GetRepetitionCountWithPolicyOverride(
+          repetition_count_, animation_policy_))
       .set_completion_state(completion_state)
       .set_reset_animation_count_stamp(reset_animation_count_stamp_);
 
@@ -678,6 +697,14 @@ bool BitmapImage::InternalAdvanceAnimation(AnimationAdvancement advancement) {
     GetImageObserver()->AnimationAdvanced(this);
 
   return true;
+}
+
+void BitmapImage::SetAnimationPolicy(ImageAnimationPolicy policy) {
+  if (animation_policy_ == policy)
+    return;
+
+  animation_policy_ = policy;
+  ResetAnimation();
 }
 
 void BitmapImage::NotifyObserversOfAnimationAdvance(TimerBase*) {
