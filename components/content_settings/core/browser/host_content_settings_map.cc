@@ -324,6 +324,23 @@ ContentSetting HostContentSettingsMap::GetDefaultContentSetting(
   return content_setting;
 }
 
+ContentSetting HostContentSettingsMap::GetFactoryDefaultContentSetting(
+    ContentSettingsType content_type) const {
+  const base::Value* initial_default =
+      content_settings::ContentSettingsRegistry::GetInstance()
+          ->Get(content_type)
+          ->website_settings_info()
+          ->initial_default_value();
+
+  // All ContentSettingsTypes should have a initial default value registered.
+  DCHECK(initial_default);
+
+  int result = 0;
+  bool success = initial_default->GetAsInteger(&result);
+  DCHECK(success);
+  return static_cast<ContentSetting>(result);
+}
+
 ContentSetting HostContentSettingsMap::GetContentSetting(
     const GURL& primary_url,
     const GURL& secondary_url,
