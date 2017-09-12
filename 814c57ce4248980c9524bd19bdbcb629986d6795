@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a9e8b47_44823f9f",
+        "filename": "chromeos/dbus/dbus_method_call_status.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-12T09:06:47Z",
+      "side": 1,
+      "message": "In the comment and here, you are using three different words to describe the same thing: \"response\", \"result\", and \"reply\".\nPlease stick to one word.",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "814c57ce4248980c9524bd19bdbcb629986d6795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ededf7d_454c2620",
+        "filename": "chromeos/dbus/dbus_method_call_status.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-12T09:06:47Z",
+      "side": 1,
+      "message": "\"arg\" doesn\u0027t sound descriptive as the name of an argument.\nHow about using \"result\" or something as the argument name instead?",
+      "range": {
+        "startLine": 32,
+        "startChar": 57,
+        "endLine": 32,
+        "endChar": 60
+      },
+      "revId": "814c57ce4248980c9524bd19bdbcb629986d6795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
