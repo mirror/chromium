@@ -115,6 +115,11 @@ const char kColorCorrectRenderingName[] = "Color correct rendering";
 const char kColorCorrectRenderingDescription[] =
     "Enables color correct rendering of web content.";
 
+const char kContentSuggestionsDebugLogName[] = "Content suggestions debug log";
+const char kContentSuggestionsDebugLogDescription[] =
+    "Enable content suggestions debug log accessible through "
+    "snippets-internals.";
+
 const char kForceColorProfileSRGB[] = "sRGB";
 const char kForceColorProfileP3[] = "Display P3 D65";
 const char kForceColorProfileColorSpin[] = "Color spin with gamma 2.4";
