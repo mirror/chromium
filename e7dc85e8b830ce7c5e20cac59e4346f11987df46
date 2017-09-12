@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6665c49c_1786e775",
+        "filename": "content/public/browser/reload_type.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T17:55:54Z",
+      "side": 1,
+      "message": "fix this comment to reflect the new enum name.",
+      "revId": "e7dc85e8b830ce7c5e20cac59e4346f11987df46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
