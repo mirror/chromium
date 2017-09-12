@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "ac0c9473_d8a0d836",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-12T00:59:40Z",
+      "side": 1,
+      "message": "please write out StatusCallback since we can\u0027t immediately see the type of type-\u003estart_callback_",
+      "revId": "5b572f4c712e94076517dd38f660784e692934db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b88236_543201a0",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-12T00:59:40Z",
+      "side": 1,
+      "message": "please write out the type",
+      "revId": "5b572f4c712e94076517dd38f660784e692934db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48d064b_879fbae5",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-12T00:59:40Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "5b572f4c712e94076517dd38f660784e692934db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c7d872_de916203",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-12T00:59:40Z",
+      "side": 1,
+      "message": "prefer `using \u003d` over `typedef`: https://chromium-cpp.appspot.com/",
+      "revId": "5b572f4c712e94076517dd38f660784e692934db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1c0194_b16886b0",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-12T00:59:40Z",
+      "side": 1,
+      "message": "std::move()",
+      "revId": "5b572f4c712e94076517dd38f660784e692934db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e4923bc_684438d4",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-12T00:59:40Z",
+      "side": 1,
+      "message": "Hm, would you be able avoid adding two Status*Callbacks by just changing SWInternalsUI now? I\u0027m not sure I want this TODO to linger in the codebase too long.",
+      "revId": "5b572f4c712e94076517dd38f660784e692934db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49ec655d_05375f8b",
         "filename": "content/browser/service_worker/service_worker_version.h",
         "patchSetId": 5
@@ -13,6 +115,24 @@
       "writtenOn": "2017-09-11T22:50:06Z",
       "side": 1,
       "message": "This cannot be converted yet because of ServiceWorkerInternalsUI.\nHowever, it is safe​ to convert this to StatusOnceCallback because stop_callbacks_ are guaranteed to run only once.",
+      "revId": "5b572f4c712e94076517dd38f660784e692934db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5db82d1_363dc2c4",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-12T00:59:40Z",
+      "side": 1,
+      "message": "I thought if you make this OnceCallback, the callsites can still use base::Bind() so it might be possible to change it now?",
+      "parentUuid": "49ec655d_05375f8b",
       "revId": "5b572f4c712e94076517dd38f660784e692934db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
