@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8cab03b5_1d1e841a",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-12T21:10:12Z",
+      "side": 1,
+      "message": "Thanks!\n\nOut of curiosity, why is ANGLE implementing the WebGL semantics for this? It\u0027s currently handled on the client side in the WebGL implementation, so all the command buffer should see for WebGL1 is GL_DEPTH_ATTACHMENT/GL_STENCIL_ATTACHMENT (see https://chromium.googlesource.com/chromium/src/+/761e2ddaa6d3aea34848809174a250291b2615a5 ).",
+      "parentUuid": "3be81ede_67ab65e5",
+      "revId": "0cc4941b7184325f01ddcb017f3d9e08a0dc33cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9739ff02_9551a058",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
         "patchSetId": 12
