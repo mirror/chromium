@@ -128,7 +128,6 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
             public void onContentShown(boolean isFirstShown) {
                 if (isFirstShown) {
                     adapter.refreshSuggestions();
-                    mSuggestionsUiDelegate.getEventReporter().onSurfaceOpened();
 
                     maybeUpdateContextualSuggestions();
 
@@ -140,6 +139,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                     mRecyclerView.getScrollEventReporter().reset();
                 }
 
+                mSuggestionsUiDelegate.getEventReporter().onSurfaceOpened();
                 SuggestionsMetrics.recordSurfaceVisible();
             }
 
