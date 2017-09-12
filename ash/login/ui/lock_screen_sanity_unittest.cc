@@ -17,7 +17,7 @@
 #include "ui/views/focus/focus_manager.h"
 
 using ::testing::_;
-using LockScreenSanityTest = ash::LoginTestBase;
+using LockScreenSanityTest = LoginTestBase;
 
 namespace ash {
 namespace {
