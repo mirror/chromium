@@ -70,6 +70,24 @@
       "revId": "1cafdbd840310975880c30cf86976ca9543766be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b063423_b2a4455e",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-12T17:48:54Z",
+      "side": 1,
+      "message": "There seems to be precedent for component specific features (e.g. see components/safe_browsing/features.cc) so I would put it there.",
+      "parentUuid": "19a7caf1_85c92e1e",
+      "revId": "1cafdbd840310975880c30cf86976ca9543766be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
