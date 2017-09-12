@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "eccc7668_2bca0c24",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-12T07:01:29Z",
+      "side": 1,
+      "message": "nit: Can you make the issue title a little clearer as there\u0027re multiple similar efforts? e.g. \"Convert more Callbacks to OnceCallbacks in ServiceWorker code\"",
+      "revId": "5b572f4c712e94076517dd38f660784e692934db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac0c9473_d8a0d836",
         "filename": "content/browser/service_worker/embedded_worker_instance.cc",
         "patchSetId": 5
