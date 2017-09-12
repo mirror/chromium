@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "56015b3c_9ec88ff1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 2123,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-12T05:57:44Z",
+      "side": 1,
+      "message": "The swatch icon only gets contrast info for the \u0027color\u0027 property (per line 2114 above), so I\u0027d need to thread that information through in any case. Should I still do this?",
+      "parentUuid": "f6810d1a_8d7a2637",
+      "revId": "7d67d25a18115334f621ba84b2820920ba3a23e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6de48f9c_55c40f7a",
         "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
         "patchSetId": 3
