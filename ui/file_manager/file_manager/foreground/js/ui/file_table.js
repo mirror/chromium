@@ -522,6 +522,23 @@ FileTable.prototype.setListThumbnailLoader = function(listThumbnailLoader) {
 };
 
 /**
+ * Returns the element containing the thumbnail of a certain list item as
+ * background image.
+ * @param {number} index The index of the item containing the desired thumbnail.
+ */
+FileTable.prototype.getThumbnails = function(index) {
+  var listItem = this.getListItemByIndex(index);
+  if (!listItem) {
+    return null;
+  }
+  var container = listItem.querySelector('.detail-thumbnail');
+  if (!container) {
+    return null;
+  }
+  return container.querySelectorAll('.thumbnail');
+};
+
+/**
  * Handles thumbnail loaded event.
  * @param {!Event} event An event.
  * @private
@@ -536,8 +553,7 @@ FileTable.prototype.onThumbnailLoaded_ = function(event) {
             assertInstanceof(box, HTMLDivElement), event.dataUrl,
             true /* with animation */);
       } else {
-        this.clearThumbnailImage_(
-            assertInstanceof(box, HTMLDivElement));
+        this.clearThumbnailImage_(assertInstanceof(box, HTMLDivElement));
       }
     }
   }
