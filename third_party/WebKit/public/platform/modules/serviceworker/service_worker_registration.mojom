@@ -6,9 +6,19 @@ module blink.mojom;
 
 import "url/mojo/url.mojom";
 
+const int32 kInvalidServiceWorkerRegistrationHandleId = -1;
+const int64 kInvalidServiceWorkerRegistrationId = -1;
+
 // Represents options for register():
 // https://w3c.github.io/ServiceWorker/#dictdef-registrationoptions
 struct ServiceWorkerRegistrationOptions {
   url.mojom.Url scope;
   // TODO(yuryu): Other values will be added as they are supported later.
+};
+
+// Struct for delivering the information about the ServiceWorkerRegistration.
+struct ServiceWorkerRegistrationObjectInfo {
+  int32 handle_id = kInvalidServiceWorkerRegistrationHandleId;
+  ServiceWorkerRegistrationOptions options;
+  int64 registration_id = kInvalidServiceWorkerRegistrationId;
 };
