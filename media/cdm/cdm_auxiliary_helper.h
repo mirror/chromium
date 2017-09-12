@@ -30,7 +30,8 @@ class MEDIA_EXPORT CdmAuxiliaryHelper : public CdmAllocator,
  public:
   // Callback to create CdmAllocator for the created CDM.
   using CreationCB =
-      base::RepeatingCallback<std::unique_ptr<CdmAuxiliaryHelper>()>;
+      base::RepeatingCallback<std::unique_ptr<CdmAuxiliaryHelper>(
+          const std::string& key_system)>;
 
   CdmAuxiliaryHelper();
   ~CdmAuxiliaryHelper() override;
