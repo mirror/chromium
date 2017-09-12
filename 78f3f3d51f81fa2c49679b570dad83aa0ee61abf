@@ -141,6 +141,30 @@
       "revId": "78f3f3d51f81fa2c49679b570dad83aa0ee61abf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca23d59_836841ed",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-12T16:55:33Z",
+      "side": 1,
+      "message": "yeah, this approach is more backward-compatible (though, expectation of backward compatibility on private APIs is somewhat reduced, so you should have a way to handle breaking changes to private APIs; e.g. if we ever wanted to make this API public, we might want to revisit this).\n\nSo, I\u0027m fine with keeping this as is (given that you prefer adding separate error reporting).",
+      "parentUuid": "594e0663_f0fc905d",
+      "range": {
+        "startLine": 181,
+        "startChar": 4,
+        "endLine": 181,
+        "endChar": 16
+      },
+      "revId": "78f3f3d51f81fa2c49679b570dad83aa0ee61abf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
