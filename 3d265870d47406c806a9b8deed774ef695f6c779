@@ -214,6 +214,24 @@
     },
     {
       "key": {
+        "uuid": "b0d7b23d_bc757104",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T00:39:58Z",
+      "side": 1,
+      "message": "\u003e the only thing I can do is make CanMouseTriggerSlideIn return true (by making IsImmersiveModeEnabled I implemented return false which is obviously not correct).\n\nI think this perhaps _is_ the right approach :)\n\nYour CL introduces a new behaviour for immersive mode. So it makes sense that the logic in\n\n bool ExclusiveAccessBubbleViews::CanMouseTriggerSlideIn() const {\n   return !bubble_view_context_-\u003eIsImmersiveModeEnabled();\n }\n\nis now out of date.\n\n\nCanMouseTriggerSlideIn() should return true, since this is checked after a 15 minute delay without the mouse moving to \"remind\" the user that they are still in fullscreen (as a security feature) - I think you want that, but it needs to be decoupled from immersive mode.\n\n\nI think the right approach is to add a new virtual method to ExclusiveAccessBubbleViewsContext called \"bool CanTriggerOnMouse() const \u003d 0\"\n\nCanMouseTriggerSlideIn() should be renamed to match -- \"SlideIn\" is no longer a good name since the bubble no longer slides. It once did, but now it just animates opacity.",
+      "parentUuid": "06011822_8a45fbbb",
+      "revId": "3d265870d47406c806a9b8deed774ef695f6c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc8f37a7_b30a7c99",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 5
