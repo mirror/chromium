@@ -187,8 +187,7 @@ TEST(CSSParserTokenStreamTest, BlockErrorRecoveryConsumeComponentValue) {
 
   {
     CSSParserTokenStream::BlockGuard guard(stream);
-    EXPECT_EQ(CSSParserTokenStream::LookAhead::kIsValid,
-              stream.EnsureLookAhead());
+    stream.EnsureLookAhead();
     stream.UncheckedConsumeComponentValue();
   }  // calls destructor
 
