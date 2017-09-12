@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21a46156_87b2a6b0",
+        "filename": "components/autofill/content/renderer/password_generation_agent.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-12T10:13:05Z",
+      "side": 1,
+      "message": "Just wondering, why do we need to clear the field value? It the user decided to use a generated password it would be overridden anyway.",
+      "range": {
+        "startLine": 630,
+        "startChar": 1,
+        "endLine": 630,
+        "endChar": 50
+      },
+      "revId": "04b0461dc0d207d439cf5f0ed157f82c8c16192e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa39ff4_de241aac",
+        "filename": "components/autofill/content/renderer/password_generation_agent.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-12T10:13:05Z",
+      "side": 1,
+      "message": "Nit: just use WebString() constructor.",
+      "range": {
+        "startLine": 631,
+        "startChar": 6,
+        "endLine": 631,
+        "endChar": 46
+      },
+      "revId": "04b0461dc0d207d439cf5f0ed157f82c8c16192e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed5cda9_ad9773e8",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-12T10:13:05Z",
+      "side": 1,
+      "message": "Out argument should be in the end of the argument list according to Google C++ style.",
+      "range": {
+        "startLine": 152,
+        "startChar": 3,
+        "endLine": 152,
+        "endChar": 51
+      },
+      "revId": "04b0461dc0d207d439cf5f0ed157f82c8c16192e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55301eee_05fb7d25",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-12T10:13:05Z",
+      "side": 1,
+      "message": "It looks that |label| and |icon| are always empty strings in the current code. What are the plans for using of these arguments? If no direct plans to use them, it would be better to remove them and add when (and if) it would be needed.",
+      "range": {
+        "startLine": 154,
+        "startChar": 3,
+        "endLine": 155,
+        "endChar": 28
+      },
+      "revId": "04b0461dc0d207d439cf5f0ed157f82c8c16192e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c0b73b_390b391e",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-12T10:13:05Z",
+      "side": 1,
+      "message": "It\u0027s pity to do round trip between the browser and the renderer processes, but I agree that in the current architecture it\u0027s hard to avoid.",
+      "range": {
+        "startLine": 430,
+        "startChar": 4,
+        "endLine": 430,
+        "endChar": 67
+      },
+      "revId": "04b0461dc0d207d439cf5f0ed157f82c8c16192e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19fe684f_c6a37f7b",
+        "filename": "components/password_manager/core/browser/password_autofill_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-12T10:13:05Z",
+      "side": 1,
+      "message": "these 2 tests look almost the same, with the only difference in sync state. Would it be possible to remove duplication, for example by introducing a function TestGenerationFallback(sync_state, ... (and other parameters if needed))?",
+      "range": {
+        "startLine": 1028,
+        "startChar": 0,
+        "endLine": 1029,
+        "endChar": 76
+      },
+      "revId": "04b0461dc0d207d439cf5f0ed157f82c8c16192e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
