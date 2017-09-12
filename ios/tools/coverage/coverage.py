@@ -55,6 +55,10 @@ VALID_TEST_TARGET_POSTFIXES = ['unittests', 'inttests', 'egtests']
 # Used to determine if a test target is an earl grey test.
 EARL_GREY_TEST_TARGET_POSTFIX = 'egtests'
 
+# Used to determine if a file is a test file. The coverage of test files should
+# be excluded from code coverage report.
+TEST_FILES_POSTFIXES = ['unittest.mm', 'unittest.cc', 'egtest.mm']
+
 
 def _CreateCoverageProfileDataForTarget(target, jobs_count=None):
   """Builds and runs target to generate the coverage profile data.
@@ -92,10 +96,11 @@ def _DisplayLineCoverageReport(target, profdata_path, filter_paths):
     profdata_path: A string representing the path to the profdata file.
     filter_paths: A list of directories used to restrict code coverage results.
   """
-  print 'Generating line code coverge report'
+  print 'Generating code coverge report'
   raw_line_coverage_report = _GenerateLineCoverageReport(target, profdata_path)
-  line_coverage_report = _FilterLineCoverageReport(raw_line_coverage_report,
-                                                   filter_paths)
+  line_coverage_report_with_test = _FilterLineCoverageReport(
+      raw_line_coverage_report, filter_paths)
+  line_coverage_report = _ExcludeTestFiles(line_coverage_report_with_test)
 
   coverage_by_filter = collections.defaultdict(
       lambda: collections.defaultdict(lambda: 0))
@@ -219,6 +224,36 @@ def _FilterLineCoverageReport(raw_report, filter_paths):
       filtered_report[file_name] = raw_report[file_name]
 
   return filtered_report
+
+
+def _ExcludeTestFiles(line_coverage_report_with_test):
+  """Exclude test files from code coverage report.
+
+  Test files are identified by |TEST_FILES_POSTFIXES|.
+
+  Args:
+    line_coverage_report_with_test: A json object with the following format:
+      Root: dict => A dictionary of objects describing line covearge for files
+      -- file_name: dict => Line coverage summary.
+      ---- total_lines: int => Number of total lines.
+      ---- executed_lines: int => Number of executed lines.
+
+  Returns:
+    A json object with the following format:
+
+    Root: dict => A dictionary of objects describing line covearge for files
+    -- file_name: dict => Line coverage summary.
+    ---- total_lines: int => Number of total lines.
+    ---- executed_lines: int => Number of executed lines.
+  """
+  line_coverage_report = {}
+  for file_name in line_coverage_report_with_test:
+    if any(file_name.endswith(postfix) for postfix in TEST_FILES_POSTFIXES):
+      continue
+
+    line_coverage_report[file_name] = line_coverage_report_with_test[file_name]
+
+  return line_coverage_report
 
 
 def _PrintLineCoverageStats(total_lines, executed_lines):
