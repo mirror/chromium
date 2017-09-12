@@ -4,11 +4,14 @@
 
 #include "chrome/browser/ui/views/device_chooser_content_view.h"
 
+#include <algorithm>
+
 #include "base/memory/ptr_util.h"
 #include "base/numerics/safe_conversions.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/vector_icons/vector_icons.h"
+#include "content/public/browser/web_contents.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/color_palette.h"
@@ -37,8 +40,10 @@ const int kSignalStrengthLevelImageIds[5] = {IDR_SIGNAL_0_BAR, IDR_SIGNAL_1_BAR,
 
 DeviceChooserContentView::DeviceChooserContentView(
     views::TableViewObserver* table_view_observer,
-    std::unique_ptr<ChooserController> chooser_controller)
+    std::unique_ptr<ChooserController> chooser_controller,
+    content::WebContents* web_contents)
     : chooser_controller_(std::move(chooser_controller)),
+      web_contents_(web_contents),
       help_text_(l10n_util::GetStringFUTF16(
           IDS_DEVICE_CHOOSER_GET_HELP_LINK_WITH_SCANNING_STATUS,
           base::string16())),
@@ -112,7 +117,16 @@ void DeviceChooserContentView::Layout() {
 }
 
 gfx::Size DeviceChooserContentView::CalculatePreferredSize() const {
-  return gfx::Size(402, 320);
+  int width = 402;
+  int height = 320;
+  if (web_contents_) {
+    gfx::Rect bounds = web_contents_->GetViewBounds();
+    width = std::min(width, bounds.width());
+    // Here the bounds.height() is divided by 2 to offset the height of the
+    // chooser dialog title, button, and the footnote link.
+    height = std::min(height, bounds.height() / 2);
+  }
+  return gfx::Size(width, height);
 }
 
 int DeviceChooserContentView::RowCount() {

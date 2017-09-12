@@ -14,13 +14,17 @@
 class ChooserController;
 class DeviceChooserContentView;
 
+namespace content {
+class WebContents;
+}
+
 // Displays a chooser view as a modal dialog constrained
 // to the window/tab displaying the given web contents.
 class ChooserDialogView : public views::DialogDelegateView,
                           public views::TableViewObserver {
  public:
-  explicit ChooserDialogView(
-      std::unique_ptr<ChooserController> chooser_controller);
+  ChooserDialogView(std::unique_ptr<ChooserController> chooser_controller,
+                    content::WebContents* web_contents = nullptr);
   ~ChooserDialogView() override;
 
   // views::WidgetDelegate:
