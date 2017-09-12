@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "066def48_c6ec548f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-12T06:27:40Z",
+      "side": 1,
+      "message": "job -\u003e the number of ongoing stream responses.",
+      "revId": "eed09038447ab9084d4f12057e3d4fe253245b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67014b46_fc7348a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-12T06:27:40Z",
+      "side": 1,
+      "message": "insted -\u003e instead",
+      "revId": "eed09038447ab9084d4f12057e3d4fe253245b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8c427f_46485bcd",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-12T06:27:40Z",
+      "side": 1,
+      "message": "we should revise this comment now:\n// Called when the browser process starts/finishes reading a fetch event response via Mojo data pipe from the service worker. We try to not stop the service worker while there is an ongoing response.",
+      "revId": "eed09038447ab9084d4f12057e3d4fe253245b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7bd9239_ebb7d0c2",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-12T06:27:40Z",
+      "side": 1,
+      "message": "probably we should avoid \"job\" now since it\u0027s a concept from the old ServiceWorkerURLRequestJob.\nMaybe\n\n// The number of fetch event responses that the service worker is streaming to the browser process. We try to not stop the service worker while there is an ongoing response.\nint pending_stream_response_count_;",
+      "revId": "eed09038447ab9084d4f12057e3d4fe253245b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
