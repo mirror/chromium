@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eac57347_b3fc2e0e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-12T07:44:25Z",
+      "side": 1,
+      "message": "This doesn\u0027t compile on other platforms - you need to still define platform.",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 12
+      },
+      "revId": "3c6304c0f5a3744b06c4908fd21ced2a1a61a2f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
