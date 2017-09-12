@@ -7,12 +7,12 @@
 
 #include <stdint.h>
 #include <memory>
-#include <set>
 #include <string>
 #include <utility>
 
 #include "base/atomic_ref_count.h"
 #include "base/callback.h"
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
@@ -242,7 +242,7 @@ class MEDIA_EXPORT AudioOutputController
   // The targets for audio stream to be copied to. |should_duplicate_| is set to
   // 1 when the OnMoreData() call should proxy the data to
   // BroadcastDataToDuplicationTargets().
-  std::set<AudioPushSink*> duplication_targets_;
+  base::flat_set<AudioPushSink*> duplication_targets_;
   base::AtomicRefCount should_duplicate_;
 
   // The current volume of the audio stream.
@@ -259,6 +259,8 @@ class MEDIA_EXPORT AudioOutputController
 
   // Scans audio samples from OnMoreData() as input to compute power levels.
   AudioPowerMonitor power_monitor_;
+
+  bool error_during_callback_ = false;
 
   // Updated each time a power measurement is logged.
   base::TimeTicks last_audio_level_log_time_;

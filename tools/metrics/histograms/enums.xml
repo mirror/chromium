@@ -1661,6 +1661,12 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="Runtime error"/>
 </enum>
 
+<enum name="AudioRenderingStartupResult">
+  <int value="0" label="OK"/>
+  <int value="1" label="Failed to create stream"/>
+  <int value="2" label="Failed to open stream"/>
+</enum>
+
 <enum name="AudioSampleFormat">
   <int value="0" label="Unknown"/>
   <int value="1" label="Unsigned 8-bit"/>
