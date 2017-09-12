@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5364d80_b5ec82ca",
+        "filename": "chrome/browser/extensions/api/storage/managed_value_store_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T23:00:32Z",
+      "side": 1,
+      "message": "iwyu extensions/browser/extension_file_task_runner.h",
+      "revId": "4269ce81b101fab0534737ab2964d39bc336a333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1d154a_1f61e1e8",
+        "filename": "chrome/browser/extensions/api/storage/managed_value_store_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-12T23:00:32Z",
+      "side": 1,
+      "message": "Optional: maybe rename *OnBlockingPool?  Do we have a new canonical suffix?",
+      "revId": "4269ce81b101fab0534737ab2964d39bc336a333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
