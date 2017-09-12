@@ -82,6 +82,29 @@
     },
     {
       "key": {
+        "uuid": "5709af65_1249d66e",
+        "filename": "chromecast/browser/cast_display_configurator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-09-12T16:33:54Z",
+      "side": 1,
+      "message": "implementation:",
+      "range": {
+        "startLine": 39,
+        "startChar": 36,
+        "endLine": 39,
+        "endChar": 45
+      },
+      "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ad676b7_2217ea56",
         "filename": "chromecast/browser/cast_display_configurator.h",
         "patchSetId": 3
@@ -110,6 +133,29 @@
       "writtenOn": "2017-09-12T15:39:13Z",
       "side": 1,
       "message": "nit: include \u003cmemory\u003e",
+      "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c07f7b_52b6fa4f",
+        "filename": "chromecast/browser/cast_display_configurator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-09-12T16:33:54Z",
+      "side": 1,
+      "message": "const ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 13
+      },
       "revId": "58fdbb45f0854fbb23f8fa48a9bcc8287df616c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
