@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73a4e719_97950628",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-12T22:54:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure about these public methods in the tab_grid_coordinator, I don\u0027t think I\u0027ve seen a coordinator with public methods. It feels that these should go through the dispatcher, maybe something like createTab? WDYT?\nOn the other hand tab_grid_container and tab_grid are tightly coupled anyways.",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "fa55e9ab333c2f17db3b7838aa6f1c45470389af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
