@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "578ab37b_ca98b32f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/SVGLength-px-with-context.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-09-12T05:24:40Z",
+      "side": 1,
+      "message": "Ok. I will ignore the SVGLength-px-with-context.html to upstream.",
+      "parentUuid": "ee95122d_60c06f48",
+      "range": {
+        "startLine": 24,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 93
+      },
+      "revId": "6a1208b9d4e9ed34d05fce521905df524c4c26e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cf2f61c_383631d0",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/SVGLength-px.html",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-08T12:14:34Z",
       "side": 1,
       "message": "Per current SVG2 [1], this should actually not throw, but rather convert using a \u0027size\u0027 of 100.\n\n[1] https://svgwg.org/svg2-draft/types.html#__svg__SVGLength__convertToSpecifiedUnits",
+      "range": {
+        "startLine": 25,
+        "startChar": 57,
+        "endLine": 25,
+        "endChar": 117
+      },
+      "revId": "6a1208b9d4e9ed34d05fce521905df524c4c26e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278821b5_b543ac0a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/SVGLength-px.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-09-12T05:24:40Z",
+      "side": 1,
+      "message": "Should we have to make a fix first or update the Test ?\nWhat is the expected output here?",
+      "parentUuid": "6cf2f61c_383631d0",
       "range": {
         "startLine": 25,
         "startChar": 57,
