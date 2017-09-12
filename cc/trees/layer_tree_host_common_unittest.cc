@@ -8666,7 +8666,7 @@ TEST_F(LayerTreeHostCommonTest, SkippingSubtreeMain) {
   update_list = GetUpdateLayerList();
   EXPECT_TRUE(VerifyLayerInList(grandchild, update_list));
 
-  RemoveAnimationFromElementWithExistingPlayer(child->element_id(), timeline(),
+  RemoveAnimationFromElementWithExistingTicker(child->element_id(), timeline(),
                                                animation_id);
   child->SetTransform(gfx::Transform());
   child->SetOpacity(0.f);
@@ -8690,7 +8690,7 @@ TEST_F(LayerTreeHostCommonTest, SkippingSubtreeMain) {
       animation_id, 1, TargetProperty::OPACITY);
   animation->set_fill_mode(Animation::FillMode::NONE);
   animation->set_time_offset(base::TimeDelta::FromMilliseconds(-1000));
-  AddAnimationToElementWithExistingPlayer(child->element_id(), timeline(),
+  AddAnimationToElementWithExistingTicker(child->element_id(), timeline(),
                                           std::move(animation));
   ExecuteCalculateDrawPropertiesAndSaveUpdateLayerList(root.get());
   update_list = GetUpdateLayerList();
@@ -8824,6 +8824,7 @@ TEST_F(LayerTreeHostCommonTest, SkippingLayerImpl) {
   std::unique_ptr<Animation> transform_animation(
       Animation::Create(std::move(curve), 3, 3, TargetProperty::TRANSFORM));
   scoped_refptr<AnimationPlayer> player(AnimationPlayer::Create(1));
+  timeline()->AttachPlayer(player);
   host_impl.animation_host()->RegisterPlayerForElement(root_ptr->element_id(),
                                                        player.get());
   player->AddAnimation(std::move(transform_animation));
@@ -8836,6 +8837,7 @@ TEST_F(LayerTreeHostCommonTest, SkippingLayerImpl) {
 
   host_impl.animation_host()->UnregisterPlayerForElement(root_ptr->element_id(),
                                                          player.get());
+  timeline()->DetachPlayer(player);
 }
 
 TEST_F(LayerTreeHostCommonTest, LayerSkippingInSubtreeOfSingularTransform) {
@@ -8871,6 +8873,7 @@ TEST_F(LayerTreeHostCommonTest, LayerSkippingInSubtreeOfSingularTransform) {
   std::unique_ptr<Animation> transform_animation(
       Animation::Create(std::move(curve), 3, 3, TargetProperty::TRANSFORM));
   scoped_refptr<AnimationPlayer> player(AnimationPlayer::Create(1));
+  timeline()->AttachPlayer(player);
   host_impl()->animation_host()->RegisterPlayerForElement(
       grand_child->element_id(), player.get());
   player->AddAnimation(std::move(transform_animation));
@@ -8881,6 +8884,7 @@ TEST_F(LayerTreeHostCommonTest, LayerSkippingInSubtreeOfSingularTransform) {
 
   host_impl()->animation_host()->UnregisterPlayerForElement(
       grand_child->element_id(), player.get());
+  timeline()->DetachPlayer(player);
 }
 
 TEST_F(LayerTreeHostCommonTest, SkippingPendingLayerImpl) {
@@ -8931,6 +8935,7 @@ TEST_F(LayerTreeHostCommonTest, SkippingPendingLayerImpl) {
   std::unique_ptr<Animation> animation(
       Animation::Create(std::move(curve), 3, 3, TargetProperty::OPACITY));
   scoped_refptr<AnimationPlayer> player(AnimationPlayer::Create(1));
+  timeline()->AttachPlayer(player);
   host_impl.animation_host()->RegisterPlayerForElement(root_ptr->element_id(),
                                                        player.get());
   player->AddAnimation(std::move(animation));
@@ -8942,6 +8947,7 @@ TEST_F(LayerTreeHostCommonTest, SkippingPendingLayerImpl) {
 
   host_impl.animation_host()->UnregisterPlayerForElement(root_ptr->element_id(),
                                                          player.get());
+  timeline()->DetachPlayer(player);
 }
 
 TEST_F(LayerTreeHostCommonTest, SkippingLayer) {
@@ -9771,7 +9777,7 @@ TEST_F(LayerTreeHostCommonTest, OpacityAnimationsTrackingTest) {
   animation->set_fill_mode(Animation::FillMode::NONE);
   animation->set_time_offset(base::TimeDelta::FromMilliseconds(-1000));
   Animation* animation_ptr = animation.get();
-  AddAnimationToElementWithExistingPlayer(animated->element_id(), timeline(),
+  AddAnimationToElementWithExistingTicker(animated->element_id(), timeline(),
                                           std::move(animation));
 
   ExecuteCalculateDrawPropertiesAndSaveUpdateLayerList(root.get());
@@ -9827,7 +9833,7 @@ TEST_F(LayerTreeHostCommonTest, TransformAnimationsTrackingTest) {
   animation->set_fill_mode(Animation::FillMode::NONE);
   animation->set_time_offset(base::TimeDelta::FromMilliseconds(-1000));
   Animation* animation_ptr = animation.get();
-  AddAnimationToElementWithExistingPlayer(animated->element_id(), timeline(),
+  AddAnimationToElementWithExistingTicker(animated->element_id(), timeline(),
                                           std::move(animation));
 
   ExecuteCalculateDrawPropertiesAndSaveUpdateLayerList(root.get());
