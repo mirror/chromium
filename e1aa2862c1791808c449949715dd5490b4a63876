@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d4f0ed48_0429ba29",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-09-12T15:34:11Z",
+      "side": 1,
+      "message": "This one is actually more like LogNumberOfAddressesSuppressedForDisuse on line 784.\n\nLine 784 is for logging how many disused profiles are there, but not necessarily\nthe ones got suppressed in when suggesting.",
+      "parentUuid": "87853a93_84059516",
+      "range": {
+        "startLine": 767,
+        "startChar": 14,
+        "endLine": 767,
+        "endChar": 55
+      },
+      "revId": "e1aa2862c1791808c449949715dd5490b4a63876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42b5913a_5c090ecf",
         "filename": "components/autofill/core/browser/personal_data_manager.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "32ee52e3_8ae5dcdb",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-09-12T15:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42b5913a_5c090ecf",
+      "range": {
+        "startLine": 241,
+        "startChar": 14,
+        "endLine": 241,
+        "endChar": 62
+      },
+      "revId": "e1aa2862c1791808c449949715dd5490b4a63876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ef6ee7c_10f048cf",
         "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "e1aa2862c1791808c449949715dd5490b4a63876",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d4f9bd_6267e680",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3729,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-09-12T15:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ef6ee7c_10f048cf",
+      "range": {
+        "startLine": 3729,
+        "startChar": 7,
+        "endLine": 3729,
+        "endChar": 70
+      },
+      "revId": "e1aa2862c1791808c449949715dd5490b4a63876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
