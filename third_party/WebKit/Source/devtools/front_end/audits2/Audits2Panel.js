@@ -43,6 +43,9 @@ Audits2.Audits2Panel = class extends UI.Panel {
       preset.setting.addChangeListener(this._updateStartButtonEnabled.bind(this));
     this._showLandingPage();
     SDK.targetManager.observeModels(SDK.ServiceWorkerManager, this);
+    SDK.targetManager.addEventListener(
+        SDK.TargetManager.Events.InspectedURLChanged, this._updateStartButtonEnabled, this);
+    this._isUnderTest = false;
   }
 
   /**
@@ -79,13 +82,39 @@ Audits2.Audits2Panel = class extends UI.Panel {
   }
 
   /**
+   * @return {?Element}
+   */
+  _getAuditResultsElementForTest() {
+    return this._auditResultsElement;
+  }
+
+  /**
+   * @return {?UI.Dialog}
+   */
+  _getDialogForTest() {
+    return this._dialog;
+  }
+
+  /**
+   * @param {boolean} value
+   */
+  _setIsUnderTest(value) {
+    this._isUnderTest = value;
+    this._updateStartButtonEnabled();
+  }
+
+  /**
    * @return {boolean}
    */
   _hasActiveServiceWorker() {
     if (!this._manager)
       return false;
 
-    var inspectedURL = SDK.targetManager.mainTarget().inspectedURL().asParsedURL();
+    var mainTarget = SDK.targetManager.mainTarget();
+    if (!mainTarget)
+      return false;
+
+    var inspectedURL = mainTarget.inspectedURL().asParsedURL();
     var inspectedOrigin = inspectedURL && inspectedURL.securityOrigin();
     for (var registration of this._manager.registrations().values()) {
       if (registration.securityOrigin !== inspectedOrigin)
@@ -114,14 +143,18 @@ Audits2.Audits2Panel = class extends UI.Panel {
     if (!this._manager)
       return null;
 
-    var inspectedURL = SDK.targetManager.mainTarget().inspectedURL();
-    if (!/^(http|chrome-extension)/.test(inspectedURL)) {
+    var mainTarget = SDK.targetManager.mainTarget();
+    var inspectedURL = mainTarget && mainTarget.inspectedURL();
+    if (inspectedURL && !/^(http|chrome-extension)/.test(inspectedURL)) {
       return Common.UIString(
           'Can only audit HTTP/HTTPS pages and Chrome extensions. ' +
           'Navigate to a different page to start an audit.');
     }
 
-    if (!Runtime.queryParam('can_dock'))
+    // Audits don't work on most undockable targets (extension popup pages, remote debugging, etc).
+    // However, the tests run in a content shell which is not dockable yet audits just fine,
+    // so disable this check when under test.
+    if (!this._isUnderTest && !Runtime.queryParam('can_dock'))
       return Common.UIString('Can only audit tabs. Navigate to this page in a separate tab to start an audit.');
 
     return null;
@@ -302,7 +335,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
           this._updateButton();
           this._updateStatus(Common.UIString('Loading\u2026'));
         })
-        .then(_ => this._protocolService.startLighthouse(this._inspectedURL, categoryIDs))
+        .then(_ => this._protocolService.startLighthouse(this._inspectedURL, categoryIDs, !this._isUnderTest))
         .then(lighthouseResult => {
           if (lighthouseResult && lighthouseResult.fatal) {
             const error = new Error(lighthouseResult.message);
@@ -575,10 +608,11 @@ Audits2.ProtocolService = class extends Common.Object {
   /**
    * @param {string} inspectedURL
    * @param {!Array<string>} categoryIDs
+   * @param {boolean=} log
    * @return {!Promise<!ReportRenderer.ReportJSON>}
    */
-  startLighthouse(inspectedURL, categoryIDs) {
-    return this._send('start', {url: inspectedURL, categoryIDs});
+  startLighthouse(inspectedURL, categoryIDs, log = true) {
+    return this._send('start', {url: inspectedURL, categoryIDs, log});
   }
 
   /**
