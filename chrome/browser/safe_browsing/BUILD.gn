@@ -98,6 +98,8 @@ static_library("safe_browsing") {
       "services_delegate.h",
       "test_safe_browsing_blocking_page_quiet.cc",
       "test_safe_browsing_blocking_page_quiet.h",
+      "test_safe_browsing_database_helper.cc",
+      "test_safe_browsing_database_helper.h",
       "test_safe_browsing_service.cc",
       "test_safe_browsing_service.h",
       "ui_manager.cc",
