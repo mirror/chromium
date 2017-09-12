@@ -350,7 +350,7 @@ void ModuleTreeLinker::FetchDescendants() {
     ModuleScriptFetchRequest request(
         urls[i], module_script_->Nonce(), module_script_->ParserState(),
         module_script_->CredentialsMode(),
-        module_script_->BaseURL().GetString(), positions[i]);
+        module_script_->BaseURL().GetString(), positions[i], false);
     modulator_->FetchTreeInternal(request, ancestor_list_with_url_,
                                   ModuleGraphLevel::kDependentModuleFetch,
                                   reached_url_set_.Get(), dependency_client);

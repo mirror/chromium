@@ -44,6 +44,7 @@ namespace blink {
 class Document;
 class LinkRelAttribute;
 class LocalFrame;
+class ModuleScript;
 class NetworkHintsInterface;
 class PrerenderHandle;
 struct ViewportDescriptionWrapper;
@@ -100,13 +101,17 @@ class CORE_EXPORT LinkLoader final
 
   DECLARE_TRACE();
 
+  class ModulePreloadObserver;
+
  private:
   class FinishObserver;
   LinkLoader(LinkLoaderClient*, RefPtr<WebTaskRunner>);
 
   void NotifyFinished();
+  void NotifyModuleLoadFinished(ModuleScript*);
 
   Member<FinishObserver> finish_observer_;
+  Member<ModulePreloadObserver> module_preload_observer_;
   Member<LinkLoaderClient> client_;
 
   Member<PrerenderHandle> prerender_;

@@ -14,6 +14,7 @@
 #include "core/loader/modulescript/ModuleScriptLoaderRegistry.h"
 #include "core/loader/modulescript/WorkletModuleScriptFetcher.h"
 #include "core/workers/MainThreadWorkletGlobalScope.h"
+#include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceLoadingLog.h"
@@ -95,10 +96,14 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
   // parser metadata is parser state,
   ResourceLoaderOptions options;
   options.parser_disposition = module_request.ParserState();
-  // As initiator for module script fetch is not specified in HTML spec,
-  // we specity "" as initiator per:
-  // https://fetch.spec.whatwg.org/#concept-request-initiator
-  options.initiator_info.name = g_empty_atom;
+  if (module_request.IsModulePreload()) {
+    options.initiator_info.name = FetchInitiatorTypeNames::link;
+  } else {
+    // As initiator for module script fetch is not specified in HTML spec,
+    // we specity "" as initiator per:
+    // https://fetch.spec.whatwg.org/#concept-request-initiator
+    options.initiator_info.name = g_empty_atom;
+  }
 
   if (level == ModuleGraphLevel::kDependentModuleFetch) {
     options.initiator_info.imported_module_referrer =
@@ -133,6 +138,9 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
   // "Let source text be the result of UTF-8 decoding response's body."
   fetch_params.SetDecoderOptions(
       TextResourceDecoderOptions::CreateAlwaysUseUTF8ForText());
+
+  if (module_request.IsModulePreload())
+    fetch_params.SetLinkPreload(true);
 
   nonce_ = module_request.Nonce();
   parser_state_ = module_request.ParserState();

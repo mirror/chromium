@@ -31,9 +31,12 @@
 
 #include "core/loader/LinkLoader.h"
 
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "core/css/MediaList.h"
 #include "core/css/MediaQueryEvaluator.h"
 #include "core/dom/Document.h"
+#include "core/dom/Modulator.h"
+#include "core/dom/ModuleScript.h"
 #include "core/frame/FrameConsole.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
@@ -44,6 +47,7 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/NetworkHintsInterface.h"
+#include "core/loader/modulescript/ModuleScriptFetchRequest.h"
 #include "core/loader/private/PrerenderHandle.h"
 #include "core/loader/resource/LinkFetchResource.h"
 #include "platform/Prerender.h"
@@ -117,6 +121,24 @@ class LinkLoader::FinishObserver final
   Member<Resource> resource_;
 };
 
+class LinkLoader::ModulePreloadObserver final : public SingleModuleClient {
+ public:
+  ModulePreloadObserver(LinkLoader* loader) : loader_(loader) {}
+
+  // SingleModuleClient implementation
+  void NotifyModuleLoadFinished(ModuleScript* module) override {
+    loader_->NotifyModuleLoadFinished(module);
+  }
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(loader_);
+    blink::SingleModuleClient::Trace(visitor);
+  }
+
+ private:
+  Member<LinkLoader> loader_;
+};
+
 LinkLoader::LinkLoader(LinkLoaderClient* client,
                        RefPtr<WebTaskRunner> task_runner)
     : client_(client) {
@@ -129,6 +151,13 @@ void LinkLoader::NotifyFinished() {
   DCHECK(finish_observer_);
   Resource* resource = finish_observer_->GetResource();
   if (resource->ErrorOccurred())
+    client_->LinkLoadingErrored();
+  else
+    client_->LinkLoaded();
+}
+
+void LinkLoader::NotifyModuleLoadFinished(ModuleScript* module) {
+  if (!module || module->IsErrored())
     client_->LinkLoadingErrored();
   else
     client_->LinkLoaded();
@@ -368,6 +397,78 @@ static Resource* PreloadIfNeeded(const LinkRelAttribute& rel_attribute,
                                          link_fetch_params);
 }
 
+static LinkLoader::ModulePreloadObserver* ModulePreloadIfNeeded(
+    LinkLoader* loader,
+    const LinkRelAttribute& rel_attribute,
+    const KURL& href,
+    Document& document,
+    const String& media,
+    CrossOriginAttributeValue cross_origin,
+    LinkCaller caller,
+    ViewportDescription* viewport_description) {
+  if (!document.Loader() || !rel_attribute.IsModulePreload())
+    return nullptr;
+
+  // TODO: add UseCounter
+  if (!href.IsValid() || href.IsEmpty()) {
+    document.AddConsoleMessage(ConsoleMessage::Create(
+        kOtherMessageSource, kWarningMessageLevel,
+        String("<link rel=modulepreload> has an invalid `href` value")));
+    return nullptr;
+  }
+
+  if (!media.IsEmpty()) {
+    MediaValues* media_values =
+        MediaValues::CreateDynamicIfFrameExists(document.GetFrame());
+    if (viewport_description) {
+      media_values->OverrideViewportDimensions(
+          viewport_description->max_width.GetFloatValue(),
+          viewport_description->max_height.GetFloatValue());
+    }
+
+    // Preload only if media matches
+    RefPtr<MediaQuerySet> media_queries = MediaQuerySet::Create(media);
+    MediaQueryEvaluator evaluator(*media_values);
+    if (!evaluator.Eval(*media_queries))
+      return nullptr;
+  }
+
+  Modulator* modulator =
+      Modulator::From(ToScriptStateForMainWorld(document.GetFrame()));
+  DCHECK(modulator);
+  if (!modulator)
+    return nullptr;
+
+  WebURLRequest::FetchCredentialsMode credentials_mode =
+      WebURLRequest::kFetchCredentialsModeOmit;
+  switch (cross_origin) {
+    case kCrossOriginAttributeNotSet:
+      credentials_mode = WebURLRequest::kFetchCredentialsModeOmit;
+      break;
+    case kCrossOriginAttributeAnonymous:
+      credentials_mode = WebURLRequest::kFetchCredentialsModeSameOrigin;
+      break;
+    case kCrossOriginAttributeUseCredentials:
+      credentials_mode = WebURLRequest::kFetchCredentialsModeInclude;
+      break;
+  }
+  ModuleScriptFetchRequest request(href, credentials_mode);
+  LinkLoader::ModulePreloadObserver* module_preload_observer =
+      new LinkLoader::ModulePreloadObserver(loader);
+  modulator->FetchSingle(request,
+                         ModuleGraphLevel::kDependentModuleFetch /* ? */,
+                         module_preload_observer);
+
+  Settings* settings = document.GetSettings();
+  if (settings && settings->GetLogPreload()) {
+    document.AddConsoleMessage(ConsoleMessage::Create(
+        kOtherMessageSource, kVerboseMessageLevel,
+        String("Preload triggered for " + href.Host() + href.GetPath())));
+  }
+
+  return module_preload_observer;
+}
+
 static Resource* PrefetchIfNeeded(Document& document,
                                   const KURL& href,
                                   const LinkRelAttribute& rel_attribute,
@@ -485,6 +586,10 @@ bool LinkLoader::LoadLink(
   if (resource)
     finish_observer_ = new FinishObserver(this, resource);
 
+  module_preload_observer_ =
+      ModulePreloadIfNeeded(this, rel_attribute, href, document, media,
+                            cross_origin, kLinkCalledFromMarkup, nullptr);
+
   if (const unsigned prerender_rel_types =
           PrerenderRelTypesFromRelAttribute(rel_attribute, document)) {
     if (!prerender_) {
@@ -516,6 +621,7 @@ void LinkLoader::Abort() {
 
 DEFINE_TRACE(LinkLoader) {
   visitor->Trace(finish_observer_);
+  visitor->Trace(module_preload_observer_);
   visitor->Trace(client_);
   visitor->Trace(prerender_);
   PrerenderClient::Trace(visitor);
