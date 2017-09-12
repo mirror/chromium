@@ -16,6 +16,24 @@
       "revId": "c6cd986d68270f802b076a77b9801897da3ff40b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b048f066_bb497665",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-12T01:56:54Z",
+      "side": 1,
+      "message": "Yeah they are included in other_inputs. Changed it to explicitly specify the templates to make it clearer.",
+      "parentUuid": "73d43ed4_e99b4f7f",
+      "revId": "c6cd986d68270f802b076a77b9801897da3ff40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
