@@ -16,6 +16,24 @@
       "revId": "386f770d451cd3859f81c774eba529ce7d7bb738",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "700bf246_bf9c20ef",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/UploadDataProvidersTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-12T15:19:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cad89bf6_fc91b748",
+      "revId": "386f770d451cd3859f81c774eba529ce7d7bb738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
