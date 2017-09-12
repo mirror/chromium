@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "27131a7b_69fcb210",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T17:28:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "07ee430e_bcc50a81",
+      "range": {
+        "startLine": 595,
+        "startChar": 0,
+        "endLine": 600,
+        "endChar": 12
+      },
+      "revId": "bb6d7d7dcad6d5d07564a52aa0457342dfb0b929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "549767c4_b14bbc6f",
         "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_apitest.cc",
         "patchSetId": 4

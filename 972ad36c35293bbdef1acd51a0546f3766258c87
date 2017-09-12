@@ -684,6 +684,30 @@
     },
     {
       "key": {
+        "uuid": "b2f993d7_84adb8ff",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T17:28:37Z",
+      "side": 1,
+      "message": "Arguably this should never happen once the Operation is constructed.",
+      "parentUuid": "fbab96b8_3cd20e2c",
+      "range": {
+        "startLine": 446,
+        "startChar": 2,
+        "endLine": 447,
+        "endChar": 11
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82e15bf5_db9e08dd",
         "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
         "patchSetId": 5
@@ -695,6 +719,30 @@
       "writtenOn": "2017-09-05T21:23:05Z",
       "side": 1,
       "message": "It\u0027s unusual to have the undooperations themselves add the alternate operation. Doesn\u0027t PasswordManagerPresenter, or some model, have notifications for mutations?",
+      "range": {
+        "startLine": 449,
+        "startChar": 2,
+        "endLine": 450,
+        "endChar": 69
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6805a87_5cd67436",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T17:28:37Z",
+      "side": 1,
+      "message": "PasswordManagerPresenter has OnLoginsChanged, which looks like a good place to add support for the Undo Operations, even in batches. Unfortunately, this call is async, meaning we hit the DCHECK in Undo Manager again. The undo operation schedules an operation on the password store in its Undo method, but by the time Undo finishes, this operation has not yet executed yet, meaning OnLoginsChanged hasn\u0027t been called yet either, and no redo operation has been added to the manager. This DCHECKs here: https://codesearch.chromium.org/chromium/src/components/undo/undo_manager.cc?l\u003d124\u0026rcl\u003d22df00fda61bbf6f75a19ecd8b2c7e7a29e12fcd \n\nMy current workaround (in this CL) is to add the Undo Operations before the call to AddLogin / RemoveLogin happens. This works, but is rather ugly. Do you happen to know an easy way to support the async adding of Undo Operations?",
+      "parentUuid": "82e15bf5_db9e08dd",
       "range": {
         "startLine": 449,
         "startChar": 2,
@@ -730,6 +778,30 @@
     },
     {
       "key": {
+        "uuid": "ef16def0_5cb2332d",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T17:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6e4c3bd_951542bb",
+      "range": {
+        "startLine": 143,
+        "startChar": 4,
+        "endLine": 143,
+        "endChar": 27
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b09f82ce_2e794e60",
         "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
         "patchSetId": 5
@@ -753,6 +825,30 @@
     },
     {
       "key": {
+        "uuid": "7aa19ae8_3a2c37bd",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T17:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b09f82ce_2e794e60",
+      "range": {
+        "startLine": 151,
+        "startChar": 4,
+        "endLine": 151,
+        "endChar": 21
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abe8ba58_85075280",
         "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
         "patchSetId": 5
@@ -773,6 +869,30 @@
       "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3b7092_109602af",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T17:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abe8ba58_85075280",
+      "range": {
+        "startLine": 157,
+        "startChar": 8,
+        "endLine": 157,
+        "endChar": 28
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -844,6 +964,30 @@
       "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081eea82_6b1807b3",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T17:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f167df0a_6ff9aaaf",
+      "range": {
+        "startLine": 1141,
+        "startChar": 6,
+        "endLine": 1141,
+        "endChar": 56
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

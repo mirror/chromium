@@ -34,6 +34,24 @@
       "revId": "6161872c442f3dc3ed9f5f3d7fb93581251ea378",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a541346_a7d9254a",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-12T17:28:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a5c66e4f_29ebe5f8",
+      "revId": "6161872c442f3dc3ed9f5f3d7fb93581251ea378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
