@@ -42,7 +42,7 @@ extern const int kTrayMenuBottomRowPadding;
 extern const int kTrayMenuBottomRowPaddingBetweenItems;
 
 // The minimum width of the tray menu.
-extern const int kTrayMenuMinimumWidth;
+extern const int kTrayMenuWidth;
 
 extern const int kTrayPopupAutoCloseDelayInSeconds;
 extern const int kTrayPopupAutoCloseDelayForTextInSeconds;
