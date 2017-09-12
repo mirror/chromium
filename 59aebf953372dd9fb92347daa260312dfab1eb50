@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c74ec07_70011f46",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-12T16:51:47Z",
+      "side": 1,
+      "message": "Can\u0027t we just do mode_ \u003d\u003d Pseudo? Returning true means we changed the mode\nIf you want a variable here maybe should_enable_filtering?",
+      "range": {
+        "startLine": 311,
+        "startChar": 6,
+        "endLine": 311,
+        "endChar": 25
+      },
+      "revId": "59aebf953372dd9fb92347daa260312dfab1eb50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
