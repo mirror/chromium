@@ -16,6 +16,24 @@
       "revId": "6cefb2766d02d21771aaf615b5bcd4655733cf6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "430cb054_30fbf0a5",
+        "filename": "net/cert/x509_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-12T16:43:49Z",
+      "side": 1,
+      "message": "Reason here that #if BUILDFLAG(USE_BYTE_CERTS) refers to buffers on creation. It looks that it is not easy to create copy of that elements to safely pass in another thread (calling object may be deleted together with SSL object that owns such buffers). In other case it is easy to convert everything to array of string StringPiece that can be pass safely to another thread.",
+      "parentUuid": "cce87960_aa431e91",
+      "revId": "6cefb2766d02d21771aaf615b5bcd4655733cf6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
