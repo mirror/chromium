@@ -426,6 +426,11 @@ input {
     cursor: auto;
 }
 
+input[readonly],
+textarea[readonly] {
+    user-select: text;
+}
+
 input[type="search" i] {
     -webkit-appearance: searchfield;
     box-sizing: border-box;
