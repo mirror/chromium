@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b53de3f2_063a7e9b",
+        "filename": "ui/webui/resources/cr_elements/cr_toast/cr_toast.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-12T16:16:32Z",
+      "side": 1,
+      "message": "Do we need these? They seem like they might be page specific. At minimum we should define them as CSS vars that can be overridden, e.g:\nmin-wax-width: var(--cr-toast-max-width, 568px);",
+      "revId": "cb6b331256d75433dec8210812b79bf9a794c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
