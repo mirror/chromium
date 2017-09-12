@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b1ef9ad5_905efe68",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_grid.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-12T11:02:00Z",
+      "side": 1,
+      "message": "I think it\u0027s 0 or 1, rather than 1 or \u003e1.\nWhen there\u0027s no thumbnail e.g. the file is .txt, the querySelectorAll(\u0027.thumbnail\u0027) is empty.\nI think the existing code uses list for treating the both case in a consistent way, but here it makes sense to return a single element, or null if there\u0027s no thumbnail, like the following:\n\nvar thumbnails \u003d container.querySelectorAll(\u0027.thumbnail\u0027);\nassert(thumbnails.length \u003c\u003d 1);\nreturn thumbnails.length ? thumbnails[0] : null;",
+      "parentUuid": "18815de4_e9974cc5",
+      "revId": "219bb84030ec0750c3f56da8e45368f115198872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe32fe84_9134a5da",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table.js",
         "patchSetId": 12
