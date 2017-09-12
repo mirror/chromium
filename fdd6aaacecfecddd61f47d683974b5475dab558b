@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "183454c2_1b6072b8",
+        "filename": "third_party/WebKit/Source/platform/wtf/RefPtr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-12T01:46:04Z",
+      "side": 1,
+      "message": "Remove this comment for now. Let\u0027s add this comment when we have a clear plan to deprecate RefPtr and start working on it.",
+      "revId": "fdd6aaacecfecddd61f47d683974b5475dab558b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
