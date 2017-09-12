@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b21a4a6_d15874ca",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1136999
+      },
+      "writtenOn": "2017-09-12T20:45:57Z",
+      "side": 1,
+      "message": "Update, Finish and Abort are identical but for types.  Is there a way to factor the commonality out?  Perhaps a template method?",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 36
+      },
+      "revId": "8cb5fb19f49c117e644b21104b797819c8623121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f1839f_aeb01aa0",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1136999
+      },
+      "writtenOn": "2017-09-12T20:45:57Z",
+      "side": 1,
+      "message": "Is there a reason this isn\u0027t key_permissions_map-\u003e?",
+      "range": {
+        "startLine": 278,
+        "startChar": 24,
+        "endLine": 278,
+        "endChar": 47
+      },
+      "revId": "8cb5fb19f49c117e644b21104b797819c8623121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d694f1_54fe2715",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1136999
+      },
+      "writtenOn": "2017-09-12T20:45:57Z",
+      "side": 1,
+      "message": "Can this fail, return nullptr?",
+      "range": {
+        "startLine": 72,
+        "startChar": 21,
+        "endLine": 72,
+        "endChar": 34
+      },
+      "revId": "8cb5fb19f49c117e644b21104b797819c8623121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6d9ae3_954ab807",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1136999
+      },
+      "writtenOn": "2017-09-12T20:45:57Z",
+      "side": 1,
+      "message": "Can this be nullptr?",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 19
+      },
+      "revId": "8cb5fb19f49c117e644b21104b797819c8623121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
