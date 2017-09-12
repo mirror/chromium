@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94109069_ede23d89",
+        "filename": "components/exo/keyboard_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-12T16:00:44Z",
+      "side": 1,
+      "message": "MAYBE_ :)",
+      "revId": "06292acc3426a33c85ba9b7ee977cd7656cdc2fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
