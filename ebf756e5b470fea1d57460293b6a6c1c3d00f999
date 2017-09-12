@@ -34,6 +34,24 @@
       "revId": "ebf756e5b470fea1d57460293b6a6c1c3d00f999",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a925a5eb_143aef1a",
+        "filename": "third_party/WebKit/LayoutTests/W3CImportExpectations",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-12T03:01:55Z",
+      "side": 1,
+      "message": "Yep, that\u0027s a good summary. For the OWNERS coverage, I\u0027m thinking that maybe we could make it part of the rotation to check every Monday if there are directories missing OWNERS.",
+      "parentUuid": "024b6c40_370cd870",
+      "revId": "ebf756e5b470fea1d57460293b6a6c1c3d00f999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
