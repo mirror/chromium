@@ -31,6 +31,8 @@
 #include "components/variations/variations_associated_data.h"
 
 #if defined(OS_ANDROID)
+#include "base/allocator/features.h"
+#include "base/trace_event/freed_object_tracker.h"
 #include "chrome/browser/chrome_browser_field_trials_mobile.h"
 #else
 #include "chrome/browser/chrome_browser_field_trials_desktop.h"
@@ -223,6 +225,9 @@ void ChromeBrowserFieldTrials::SetupFieldTrials() {
 
 #if defined(OS_ANDROID)
   chrome::SetupMobileFieldTrials();
+#if BUILDFLAG(USE_ALLOCATOR_SHIM)
+  base::trace_event::FreedObjectTracker::GetInstance()->Enable();
+#endif
 #else
   chrome::SetupDesktopFieldTrials();
 #endif
