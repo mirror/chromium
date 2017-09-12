@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3e21126_018db43f",
+        "filename": "third_party/WebKit/public/platform/WebLayer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-12T14:57:15Z",
+      "side": 1,
+      "message": "Instead of \"setOpaque\" you mean \"WebLayer::SetContentsOpaque\", right?\n\nFor historical purposes, it might be worth mentioning that this is a roundabout way of allowing creators of WebLayers to specify opaqueness without CompositedLayerMapping/PaintArtifactCompositor clobbering it later.  The paint team is going to have to deal with this wrinkle at some point when they get rid of WebLayer.",
+      "revId": "d818b8ba1e023e4fbae4ebe45e94b8d0dbad4047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
