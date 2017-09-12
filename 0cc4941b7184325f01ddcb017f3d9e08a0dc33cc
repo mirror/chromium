@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3be81ede_67ab65e5",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-09-12T19:54:15Z",
+      "side": 1,
+      "message": "I changed this to feature_info-\u003efeature_flags().angle_webgl_compatibility which is a more direct check.  ANGLE implements the WebGL framebuffer attachment semantics which unfortunately results in an incomplete framebuffer when the same attachment is bound to both depth and stencil for WebGL1.",
+      "parentUuid": "0d4119e1_590b0788",
+      "revId": "0cc4941b7184325f01ddcb017f3d9e08a0dc33cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9739ff02_9551a058",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-12T18:30:27Z",
       "side": 1,
       "message": "What makes this DCHECK valid? I think we may want some code in Initialize to force using a texture if we\u0027re in single-buffer mode.",
+      "revId": "0cc4941b7184325f01ddcb017f3d9e08a0dc33cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06248ba_012e3bab",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-09-12T19:54:15Z",
+      "side": 1,
+      "message": "True, forced the sample count to 0 for single buffered offscreen contexts.",
+      "parentUuid": "9739ff02_9551a058",
       "revId": "0cc4941b7184325f01ddcb017f3d9e08a0dc33cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "47ce2e97_90d397a2",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-09-12T19:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98022d72_bc953d3d",
+      "revId": "0cc4941b7184325f01ddcb017f3d9e08a0dc33cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "602b5a49_cdfda0e5",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "0cc4941b7184325f01ddcb017f3d9e08a0dc33cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8411f48d_d0295883",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3065,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-09-12T19:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "602b5a49_cdfda0e5",
+      "revId": "0cc4941b7184325f01ddcb017f3d9e08a0dc33cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
