@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dafe575_5828cffd",
+        "filename": "components/exo/keyboard_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-12T16:38:56Z",
+      "side": 1,
+      "message": "no need for a MAYBE_ here. just disable it on all platforms",
+      "range": {
+        "startLine": 225,
+        "startChar": 21,
+        "endLine": 225,
+        "endChar": 27
+      },
+      "revId": "8ad183f8e93cb6c4a77c8bd3936d64858ad963e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
