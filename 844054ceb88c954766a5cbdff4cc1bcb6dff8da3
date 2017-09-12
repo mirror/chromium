@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "497f7fd7_00f0ed8e",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-12T21:04:31Z",
+      "side": 1,
+      "message": "I was having second thoughts, so I looked through our codebase and found more examples.\n\nvoid Acquire:\nhttps://cs.chromium.org/chromium/src/base/synchronization/lock.h?q\u003dacquire+file:%5C.h\u0026sq\u003dpackage:chromium\u0026l\u003d26\u0026dr\u003dCSs\nhttps://cs.chromium.org/chromium/src/third_party/skia/src/core/SkSharedMutex.h?q\u003dacquire\u0026sq\u003dpackage:chromium\u0026l\u003d33\u0026dr\u003dCSs\nhttps://cs.chromium.org/chromium/src/ppapi/utility/threading/lock.h?q\u003dacquire\u0026sq\u003dpackage:chromium\u0026l\u003d31\u0026dr\u003dCSs\n\nbool TryAcquire:\nhttps://cs.chromium.org/chromium/src/third_party/skia/include/private/SkSpinlock.h?type\u003dcs\u0026q\u003dacquire+file:%5C.h\u0026sq\u003dpackage:chromium\u0026l\u003d27\nhttps://cs.chromium.org/chromium/src/third_party/android_tools/sdk/sources/android-25/java/util/concurrent/Semaphore.java?q\u003dTryAcquire\u0026sq\u003dpackage:chromium\u0026l\u003d339\u0026dr\u003dCSs\nhttps://cs.chromium.org/chromium/src/third_party/swiftshader/third_party/LLVM/lib/Support/Mutex.cpp?q\u003dTryAcquire\u0026sq\u003dpackage:chromium\u0026l\u003d30\u0026dr\u003dCSs\n\nbool Acquire:\nhttps://cs.chromium.org/chromium/src/ui/base/clipboard/clipboard_win.cc?q\u003dacquire\u0026sq\u003dpackage:chromium\u0026l\u003d66\u0026dr\u003dCSs\nhttps://cs.chromium.org/chromium/src/third_party/webrtc/rtc_base/race_checker.h?q\u003dacquire+file:%5C.h\u0026sq\u003dpackage:chromium\u0026l\u003d32\u0026dr\u003dCSs\nhttps://cs.chromium.org/chromium/src/chrome/installer/setup/setup_singleton.h?q\u003dacquire+file:%5C.h\u0026sq\u003dpackage:chromium\u0026l\u003d62\u0026dr\u003dCSs \u003c-- the pattern you mentioned\n\nbase::Lock uses void Acquire() and bool Try().\n\nI suppose there are examples of both patterns, so if you prefer bool Acquire(), we can go for that.",
+      "parentUuid": "710fb87e_8bcb4489",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d436789_5454f42d",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 3
