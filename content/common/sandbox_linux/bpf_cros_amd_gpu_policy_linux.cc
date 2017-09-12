@@ -118,12 +118,14 @@ ResultExpr CrosAmdGpuProcessPolicy::EvaluateSyscall(int sysno) const {
     case __NR_sysinfo:
     case __NR_uname:
       return Allow();
+#if defined(__x86_64__)
     // Allow only AF_UNIX for |domain|.
     case __NR_socket:
     case __NR_socketpair: {
       const Arg<int> domain(0);
       return If(domain == AF_UNIX, Allow()).Else(Error(EPERM));
     }
+#endif
     default:
       // Default to the generic GPU policy.
       return GpuProcessPolicy::EvaluateSyscall(sysno);
