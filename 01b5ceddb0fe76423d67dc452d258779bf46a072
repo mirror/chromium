@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c51e44c_513e050c",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2103,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T13:20:24Z",
+      "side": 1,
+      "message": "There must be still some tests for base heuristic (we don\u0027t remove the base heuristic, then should test it). Don\u0027t re-use them. Change them so that HTML classifier doesn\u0027t trigger any result (i.e. base heuristic is used). Update comments accordingly.\n\nAnd do add tests for HTML classifier.",
+      "range": {
+        "startLine": 2102,
+        "startChar": 0,
+        "endLine": 2103,
+        "endChar": 67
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
