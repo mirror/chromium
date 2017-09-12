@@ -4,6 +4,7 @@
 
 #import "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.h"
 
+#import "ios/chrome/browser/ui/collection_view/cells/collection_view_switch_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_text_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_controller_test.h"
 #import "ios/chrome/browser/web/fake_mailto_handler_helpers.h"
@@ -50,6 +51,7 @@ class ComposeEmailHandlerCollectionViewControllerTest
 };
 
 TEST_F(ComposeEmailHandlerCollectionViewControllerTest, TestConstructor) {
+  BOOL useMDCStyle = base::FeatureList::IsEnabled(kMailtoPromptInMDCStyle);
   handlers_ = @[
     [[MailtoHandlerSystemMail alloc] init],
     [[FakeMailtoHandlerGmailInstalled alloc] init],
@@ -61,7 +63,8 @@ TEST_F(ComposeEmailHandlerCollectionViewControllerTest, TestConstructor) {
 
   // Checks that there is one section with all the available MailtoHandler
   // objects listed.
-  ASSERT_EQ(1, NumberOfSections());
+  NSInteger expectedSections = useMDCStyle ? 2 : 1;
+  ASSERT_EQ(expectedSections, NumberOfSections());
   // Array returned by -defaultHandlers is sorted by the name of the Mail app
   // and may not be in the same order as |handlers_|.
   NSArray<MailtoHandler*>* handlers = [rewriter_ defaultHandlers];
@@ -83,6 +86,11 @@ TEST_F(ComposeEmailHandlerCollectionViewControllerTest, TestConstructor) {
       EXPECT_NE(darkestTint, item.textColor);
       EXPECT_EQ(UIAccessibilityTraitNotEnabled, item.accessibilityTraits);
     }
+  }
+  if (useMDCStyle) {
+    BOOL isOn = [rewriter_ defaultHandlerID] == nil;
+    CheckSwitchCellStateAndTitleWithId(isOn, IDS_IOS_CHOOSE_EMAIL_ASK_TOGGLE, 1,
+                                       0);
   }
 }
 
