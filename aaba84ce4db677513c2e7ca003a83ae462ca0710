@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "458b4fea_70df9fad",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-12T03:05:18Z",
+      "side": 1,
+      "message": "q: How does this functionally change this page?",
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d19cd69f_0b87050d",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 9
@@ -71,6 +88,207 @@
     },
     {
       "key": {
+        "uuid": "4aec1a48_b7d58b23",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-12T03:05:18Z",
+      "side": 1,
+      "message": "And alternately, could it be a non-ptr member variable?",
+      "parentUuid": "4252fd1b_36d7c3e9",
+      "range": {
+        "startLine": 105,
+        "startChar": 33,
+        "endLine": 105,
+        "endChar": 52
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6187b2d_e400f4ae",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-12T03:05:18Z",
+      "side": 1,
+      "message": "Is there guaranteed to be a service for this profile?",
+      "range": {
+        "startLine": 138,
+        "startChar": 11,
+        "endLine": 138,
+        "endChar": 18
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74828f7e_e9da04c6",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-12T03:05:18Z",
+      "side": 1,
+      "message": "You could reuse |url| here yes?",
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac6037d_7fe8568c",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-12T03:05:18Z",
+      "side": 1,
+      "message": "nit: This could return a const ref, to avoid a copy. Should be safe since it\u0027s a local var.",
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f480ed70_2eea052c",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-12T03:05:18Z",
+      "side": 1,
+      "message": "Q: Could this be Origin rather than GURL?\n\nAlso, is the URL of the top-level frame where reuse happened?",
+      "range": {
+        "startLine": 177,
+        "startChar": 31,
+        "endLine": 177,
+        "endChar": 35
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e6c0988_306ad485",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-12T03:05:18Z",
+      "side": 1,
+      "message": "(super nitty-nit: \"new_password_hash\")",
+      "range": {
+        "startLine": 34,
+        "startChar": 53,
+        "endLine": 34,
+        "endChar": 65
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b5ffb23_f1462f06",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-12T03:05:18Z",
+      "side": 1,
+      "message": "nit: check the new UMA metric",
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73363b22_4a42efe2",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-12T03:05:18Z",
+      "side": 1,
+      "message": "q: what\u0027s the logic for using LastCommitted vs Visible Entry?  I\u0027m just curious.",
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76895a1_9239c387",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-12T03:05:18Z",
+      "side": 1,
+      "message": "A thought: This logic is here and elsewhere... maybe it could be a static function in CPPPS?",
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c7c99a_0af31641",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-12T03:05:18Z",
+      "side": 1,
+      "message": "nit: size_t can\u0027t be \u003c 0",
+      "range": {
+        "startLine": 49,
+        "startChar": 51,
+        "endLine": 49,
+        "endChar": 52
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29416702_5edfdd8a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -88,6 +306,47 @@
         "endLine": 55742,
         "endChar": 16
       },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19f16c3_95ce5891",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 55742,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-12T03:05:18Z",
+      "side": 1,
+      "message": "(I\u0027m fine with it... I was a reviewer but said I\u0027d be slow w/ travel....)",
+      "parentUuid": "29416702_5edfdd8a",
+      "range": {
+        "startLine": 55742,
+        "startChar": 9,
+        "endLine": 55742,
+        "endChar": 16
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1512ba_8fba314f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 55744,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-12T03:05:18Z",
+      "side": 1,
+      "message": "Describe WHEN it\u0027s logged (logged when we see that the user has changed their password)",
       "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
