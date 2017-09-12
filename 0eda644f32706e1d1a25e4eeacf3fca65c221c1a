@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "84f6daac_f908fc88",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/WebIDL/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-12T03:12:23Z",
+      "side": 1,
+      "message": "I\u0027ve gone with the indirection file://third_party/WebKit/Source/bindings/OWNERS, it has the right team and component, and these names and then some.",
+      "parentUuid": "90714d46_03d9d997",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 6
+      },
+      "revId": "0eda644f32706e1d1a25e4eeacf3fca65c221c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c6d753a_df9ac564",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/OWNERS",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-11T17:25:10Z",
       "side": 1,
       "message": "Maybe I should hand this off to panicker@ - I just ended up as OWNER since I imported these so we could delete our manually-imported copy. But no harm to leave as-is.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 6
+      },
+      "revId": "0eda644f32706e1d1a25e4eeacf3fca65c221c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fda7ede_e6ebf20f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-12T03:12:23Z",
+      "side": 1,
+      "message": "Going with panicker@chromium.org instead.",
+      "parentUuid": "6c6d753a_df9ac564",
       "range": {
         "startLine": 2,
         "startChar": 0,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "c938300b_34339fa6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/storage/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-12T03:12:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ca7cd50_f1855d08",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "0eda644f32706e1d1a25e4eeacf3fca65c221c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "500ea64a_d7f6e6b3",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/user-timing/OWNERS",
         "patchSetId": 1
@@ -114,6 +186,30 @@
       "revId": "0eda644f32706e1d1a25e4eeacf3fca65c221c1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10700ab1_15ca4756",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/user-timing/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-12T03:12:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "500ea64a_d7f6e6b3",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 6
+      },
+      "revId": "0eda644f32706e1d1a25e4eeacf3fca65c221c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
