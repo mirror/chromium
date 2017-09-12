@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7258d11_96b35647",
+        "filename": "chrome/browser/ui/webui/interventions/OWNERS",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-12T21:55:14Z",
+      "side": 1,
+      "message": "Can you also add tbansal@chromium.org here, and add him to the review for that?",
+      "revId": "7995a2a96474426be5523d495b9ea6a51774c17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
