@@ -17,7 +17,8 @@ using base::android::JavaParamRef;
 
 class TestViewAndroid : public ViewAndroid {
  public:
-  explicit TestViewAndroid(ViewClient* client) : ViewAndroid(client) {}
+  TestViewAndroid(ViewClient* client, ViewAndroid::LayoutType layout_type)
+      : ViewAndroid(client, layout_type) {}
 
   float GetDipScale() override { return 1.f; }
 };
@@ -50,12 +51,11 @@ class TestViewClient : public ViewClient {
 class ViewAndroidBoundsTest : public testing::Test {
  public:
   ViewAndroidBoundsTest()
-      : root_(nullptr),
-        view1_(&client1_),
-        view2_(&client2_),
-        view3_(&client3_) {
+      : root_(nullptr, ViewAndroid::LayoutType::MATCH_PARENT),
+        view1_(&client1_, ViewAndroid::LayoutType::NORMAL),
+        view2_(&client2_, ViewAndroid::LayoutType::NORMAL),
+        view3_(&client3_, ViewAndroid::LayoutType::NORMAL) {
     root_.GetEventForwarder();
-    root_.layout_params_ = ViewAndroid::LayoutParams::MatchParent();
   }
 
   void Reset() {
@@ -94,9 +94,8 @@ class ViewAndroidBoundsTest : public testing::Test {
 };
 
 TEST_F(ViewAndroidBoundsTest, MatchesViewInFront) {
-  view1_.layout_params_ = ViewAndroid::LayoutParams::Normal(50, 50, 400, 600);
-  view1_.layout_params_ = ViewAndroid::LayoutParams::Normal(50, 50, 400, 600);
-  view2_.layout_params_ = ViewAndroid::LayoutParams::Normal(50, 50, 400, 600);
+  view1_.SetLayoutForTesting(ViewAndroid::LayoutType::NORMAL, 50, 50, 400, 600);
+  view2_.SetLayoutForTesting(ViewAndroid::LayoutType::NORMAL, 50, 50, 400, 600);
   root_.AddChild(&view2_);
   root_.AddChild(&view1_);
 
@@ -110,8 +109,8 @@ TEST_F(ViewAndroidBoundsTest, MatchesViewInFront) {
 }
 
 TEST_F(ViewAndroidBoundsTest, MatchesViewArea) {
-  view1_.layout_params_ = ViewAndroid::LayoutParams::Normal(50, 50, 200, 200);
-  view2_.layout_params_ = ViewAndroid::LayoutParams::Normal(20, 20, 400, 600);
+  view1_.SetLayoutForTesting(ViewAndroid::LayoutType::NORMAL, 50, 50, 200, 200);
+  view2_.SetLayoutForTesting(ViewAndroid::LayoutType::NORMAL, 20, 20, 400, 600);
 
   root_.AddChild(&view2_);
   root_.AddChild(&view1_);
@@ -126,23 +125,24 @@ TEST_F(ViewAndroidBoundsTest, MatchesViewArea) {
 }
 
 TEST_F(ViewAndroidBoundsTest, MatchesViewAfterMove) {
-  view1_.layout_params_ = ViewAndroid::LayoutParams::Normal(50, 50, 200, 200);
-  view2_.layout_params_ = ViewAndroid::LayoutParams::Normal(20, 20, 400, 600);
+  view1_.SetLayoutForTesting(ViewAndroid::LayoutType::NORMAL, 50, 50, 200, 200);
+  view2_.SetLayoutForTesting(ViewAndroid::LayoutType::NORMAL, 20, 20, 400, 600);
   root_.AddChild(&view2_);
   root_.AddChild(&view1_);
 
   GenerateTouchEventAt(100.f, 100.f);
   ExpectHit(client1_);
 
-  view1_.layout_params_ = ViewAndroid::LayoutParams::Normal(150, 150, 200, 200);
+  view1_.SetLayoutForTesting(ViewAndroid::LayoutType::NORMAL, 150, 150, 200,
+                             200);
   GenerateTouchEventAt(100.f, 100.f);
   ExpectHit(client2_);
 }
 
 TEST_F(ViewAndroidBoundsTest, MatchesViewSizeOfkMatchParent) {
-  view1_.layout_params_ = ViewAndroid::LayoutParams::Normal(20, 20, 400, 600);
-  view3_.layout_params_ = ViewAndroid::LayoutParams::MatchParent();
-  view2_.layout_params_ = ViewAndroid::LayoutParams::Normal(50, 50, 200, 200);
+  view1_.SetLayoutForTesting(ViewAndroid::LayoutType::NORMAL, 20, 20, 400, 600);
+  view2_.SetLayoutForTesting(ViewAndroid::LayoutType::NORMAL, 50, 50, 200, 200);
+  view3_.SetLayoutForTesting(ViewAndroid::LayoutType::MATCH_PARENT, 0, 0, 0, 0);
 
   root_.AddChild(&view1_);
   root_.AddChild(&view2_);
@@ -161,9 +161,9 @@ TEST_F(ViewAndroidBoundsTest, MatchesViewSizeOfkMatchParent) {
 }
 
 TEST_F(ViewAndroidBoundsTest, MatchesViewsWithOffset) {
-  view1_.layout_params_ = ViewAndroid::LayoutParams::Normal(10, 20, 150, 100);
-  view2_.layout_params_ = ViewAndroid::LayoutParams::Normal(20, 30, 40, 30);
-  view3_.layout_params_ = ViewAndroid::LayoutParams::Normal(70, 30, 40, 30);
+  view1_.SetLayoutForTesting(ViewAndroid::LayoutType::NORMAL, 10, 20, 150, 100);
+  view2_.SetLayoutForTesting(ViewAndroid::LayoutType::NORMAL, 20, 30, 40, 30);
+  view3_.SetLayoutForTesting(ViewAndroid::LayoutType::NORMAL, 70, 30, 40, 30);
 
   root_.AddChild(&view1_);
   view1_.AddChild(&view2_);
@@ -187,9 +187,7 @@ TEST_F(ViewAndroidBoundsTest, OnSizeChanged) {
   view1_.AddChild(&view2_);
   view1_.AddChild(&view3_);
 
-  view1_.layout_params_ = ViewAndroid::LayoutParams::Normal(0, 0, 0, 0);
-  view2_.layout_params_ = ViewAndroid::LayoutParams::MatchParent();
-  view3_.layout_params_ = ViewAndroid::LayoutParams::Normal(0, 0, 0, 0);
+  view2_.SetLayoutForTesting(ViewAndroid::LayoutType::MATCH_PARENT, 0, 0, 0, 0);
 
   // Size event propagates to non-match-parent children only.
   view1_.OnSizeChanged(100, 100);
@@ -199,13 +197,10 @@ TEST_F(ViewAndroidBoundsTest, OnSizeChanged) {
 
   Reset();
 
-  // TODO(jinsukkim): Enable following test once the top view can be
-  //     set to have match-parent property.
-
-  // Match-parent view should ignore the size event.
-  // view2_.OnSizeChanged(100, 200);
-  // EXPECT_FALSE(client2_.OnSizeCalled());
-  // EXPECT_FALSE(client3_.OnSizeCalled());
+  // Match-parent view should not receivee size events in the first place.
+  EXPECT_DCHECK_DEATH(view2_.OnSizeChanged(100, 200));
+  EXPECT_FALSE(client2_.OnSizeCalled());
+  EXPECT_FALSE(client3_.OnSizeCalled());
 
   Reset();
 

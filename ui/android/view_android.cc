@@ -80,12 +80,13 @@ ViewAndroid::ScopedAnchorView::view() const {
   return view_.get(env);
 }
 
-ViewAndroid::ViewAndroid(ViewClient* view_client)
+ViewAndroid::ViewAndroid(ViewClient* view_client, LayoutType layout_type)
     : parent_(nullptr),
       client_(view_client),
-      layout_params_(LayoutParams::MatchParent()) {}
+      view_rect_(0, 0, 0, 0),
+      layout_type_(layout_type) {}
 
-ViewAndroid::ViewAndroid() : ViewAndroid(nullptr) {}
+ViewAndroid::ViewAndroid() : ViewAndroid(nullptr, LayoutType::NORMAL) {}
 
 ViewAndroid::~ViewAndroid() {
   observer_list_.Clear();
@@ -144,9 +145,8 @@ void ViewAndroid::AddChild(ViewAndroid* child) {
 
   // Empty view size also need not propagating down in order to prevent
   // spurious events with empty size from being sent down.
-  if (child->layout_params_.match_parent && layout_params_.width != 0 &&
-      layout_params_.height != 0) {
-    child->OnSizeChangedInternal(layout_params_.width, layout_params_.height);
+  if (child->match_parent() && !view_rect_.IsEmpty()) {
+    child->OnSizeChangedInternal(view_rect_.size());
     DispatchOnSizeChanged();
   }
 
@@ -383,31 +383,32 @@ int ViewAndroid::GetSystemWindowInsetBottom() {
 }
 
 void ViewAndroid::OnSizeChanged(int width, int height) {
-  // TODO(jinsukkim): Assert match-parent here. Match-parent view should keep
-  // its size in sync with its parent, ignoring the incoming size change event.
+  // Match-parent view must not receive size events.
+  DCHECK(!match_parent());
+
   float scale = GetDipScale();
-  OnSizeChangedInternal(std::ceil(width / scale), std::ceil(height / scale));
+  OnSizeChangedInternal(
+      gfx::Size(std::ceil(width / scale), std::ceil(height / scale)));
 
   // Signal resize event after all the views in the tree get the updated size.
   DispatchOnSizeChanged();
 }
 
-void ViewAndroid::OnSizeChangedInternal(int width, int height) {
-  if (layout_params_.width == width && layout_params_.height == height)
+void ViewAndroid::OnSizeChangedInternal(const gfx::Size& size) {
+  if (view_rect_.size() == size)
     return;
 
-  layout_params_.width = width;
-  layout_params_.height = height;
+  view_rect_.set_size(size);
   for (auto* child : children_) {
-    if (child->layout_params_.match_parent)
-      child->OnSizeChangedInternal(width, height);
+    if (child->match_parent())
+      child->OnSizeChangedInternal(size);
   }
 }
 
 void ViewAndroid::DispatchOnSizeChanged() {
   client_->OnSizeChanged();
   for (auto* child : children_) {
-    if (child->layout_params_.match_parent)
+    if (child->match_parent())
       child->DispatchOnSizeChanged();
   }
 }
@@ -487,23 +488,28 @@ bool ViewAndroid::HitTest(ViewClientCallback<E> send_to_client,
 
   if (!children_.empty()) {
     gfx::PointF offset_point(point);
-    offset_point.Offset(-layout_params_.x, -layout_params_.y);
+    offset_point.Offset(-view_rect_.x(), -view_rect_.y());
     gfx::Point int_point = gfx::ToFlooredPoint(offset_point);
 
     // Match from back to front for hit testing.
     for (auto* child : base::Reversed(children_)) {
-      bool matched = child->layout_params_.match_parent;
-      if (!matched) {
-        gfx::Rect bound(child->layout_params_.x, child->layout_params_.y,
-                        child->layout_params_.width,
-                        child->layout_params_.height);
-        matched = bound.Contains(int_point);
-      }
+      bool matched = child->match_parent();
+      if (!matched)
+        matched = child->view_rect_.Contains(int_point);
       if (matched && child->HitTest(send_to_client, event, offset_point))
         return true;
     }
   }
   return false;
+}
+
+void ViewAndroid::SetLayoutForTesting(LayoutType layout,
+                                      int x,
+                                      int y,
+                                      int width,
+                                      int height) {
+  view_rect_.SetRect(x, y, width, height);
+  layout_type_ = layout;
 }
 
 }  // namespace ui
