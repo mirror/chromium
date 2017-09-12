@@ -136,32 +136,45 @@ FileGrid.prototype.setListThumbnailLoader = function(listThumbnailLoader) {
 };
 
 /**
+ * Returns the element containing the thumbnail of a certain list item as
+ * background image.
+ * @param {number} index The index of the item containing the desired thumbnail.
+ */
+FileGrid.prototype.getThumbnails = function(index) {
+  var listItem = this.getListItemByIndex(index);
+  if (!listItem) {
+    return null;
+  }
+  var container = listItem.querySelector('.img-container');
+  if (!container) {
+    return null;
+  }
+  return container.querySelectorAll('.thumbnail');
+};
+
+/**
  * Handles thumbnail loaded event.
  * @param {!Event} event An event.
  * @private
  */
 FileGrid.prototype.onThumbnailLoaded_ = function(event) {
   var listItem = this.getListItemByIndex(event.index);
-  var entry = listItem && this.dataModel.item(listItem.listIndex);
-  if (entry) {
+  if (listItem) {
+    var entry = listItem && this.dataModel.item(listItem.listIndex);
     var box = listItem.querySelector('.img-container');
-    if (box) {
-      var mimeType = this.metadataModel_.getCache(
-          [entry], ['contentMimeType'])[0].contentMimeType;
+    if (box && entry) {
+      var mimeType =
+          this.metadataModel_.getCache([entry], ['contentMimeType'])[0]
+              .contentMimeType;
       if (!event.dataUrl) {
-        FileGrid.clearThumbnailImage_(
-            assertInstanceof(box, HTMLDivElement));
+        FileGrid.clearThumbnailImage_(assertInstanceof(box, HTMLDivElement));
         FileGrid.setGenericThumbnail_(
             assertInstanceof(box, HTMLDivElement), entry);
       } else {
         FileGrid.setThumbnailImage_(
-            assertInstanceof(box, HTMLDivElement),
-            entry,
-            assert(event.dataUrl),
-            assert(event.width),
-            assert(event.height),
-            /* should animate */ true,
-            mimeType);
+            assertInstanceof(box, HTMLDivElement), entry, assert(event.dataUrl),
+            assert(event.width), assert(event.height),
+            /* should animate */ true, mimeType);
       }
     }
     listItem.classList.toggle('thumbnail-loaded', !!event.dataUrl);
