@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dea1172_8d6943bf",
+        "filename": "ui/views/controls/menu/menu_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T16:59:34Z",
+      "side": 1,
+      "message": "Are you sure you want to DCHECK() here, instead of handling this more gracefully?",
+      "revId": "8686b94ec49e3a42a8709b75449a6993984dfe97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4218eb2e_01878de7",
+        "filename": "ui/views/controls/menu/menu_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T16:59:34Z",
+      "side": 1,
+      "message": "InitMenuHost() isn\u0027t called multiple times, is it? Can you just DCHECK() here that owner_ is nullptr instead?",
+      "revId": "8686b94ec49e3a42a8709b75449a6993984dfe97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b513c3c3_582d542b",
+        "filename": "ui/views/controls/menu/menu_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-12T16:59:34Z",
+      "side": 1,
+      "message": "It looks like we can use GestureRecognizer on mac too. So I would just remove all the defined(OS_MACOSX) checks added in this CL.",
+      "revId": "8686b94ec49e3a42a8709b75449a6993984dfe97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
