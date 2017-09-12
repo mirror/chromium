@@ -523,17 +523,17 @@ void AutocompleteMatch::GetMatchComponents(
 
   for (auto& position : match_positions) {
     // Only flag |match_in_scheme| if the match starts at the very beginning.
-    if (position.first == 0)
+    if (position.first == 0 && parsed.scheme.is_nonempty())
       *match_in_scheme = true;
 
     // Subdomain matches must begin before the domain, and end somewhere within
     // the host or later.
     if (has_subdomain && position.first < subdomain_end &&
-        position.second > host_pos) {
+        position.second > host_pos && parsed.host.is_nonempty()) {
       *match_in_subdomain = true;
     }
 
-    if (position.second > path_pos)
+    if (position.second > path_pos && parsed.path.is_nonempty())
       *match_after_host = true;
   }
 }
