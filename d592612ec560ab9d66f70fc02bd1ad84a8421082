@@ -22,6 +22,30 @@
       "revId": "d592612ec560ab9d66f70fc02bd1ad84a8421082",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae242c4_856c87a3",
+        "filename": "docs/optimizing_web_uis.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-12T21:27:08Z",
+      "side": 1,
+      "message": "Understood. Again, we are currently optimizing settings, downloads, bookmarks and history UIs, which all of them qualify as WebUIs. I can be convinced otherwise, but I don\u0027t see this as a big deal. If in the future, a Chrome Web UI (one with no formal WebUI bindings) wants to use that flag, it can do so, without the need to rename it to optimize_web_uis IMO.",
+      "parentUuid": "4baf0914_df177d9c",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 19
+      },
+      "revId": "d592612ec560ab9d66f70fc02bd1ad84a8421082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
