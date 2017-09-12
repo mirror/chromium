@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d21df547_583958f9",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/css_properties.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-12T01:11:20Z",
+      "side": 1,
+      "message": "Agree with Darren, if we do need more plumbing maintaining code separation is necessary",
+      "parentUuid": "adfd46c4_3d19efd4",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "542e961e_2b970520",
         "filename": "third_party/WebKit/Source/build/scripts/make_style_builder.py",
         "patchSetId": 6
