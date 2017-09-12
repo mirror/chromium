@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8175c000_92dbe940",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T21:32:49Z",
+      "side": 0,
+      "message": "Refactored this into loadUrlFromOmniboxMatch() so it gets called on both enter-to-navigate and select-a-suggestion to navigate.",
+      "revId": "2a3de6795bf6ee9e3dae2313991c8b86f6a7f06f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
