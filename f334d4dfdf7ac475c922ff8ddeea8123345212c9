@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b307b3d0_c5cce475",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/css_properties.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-12T01:09:17Z",
+      "side": 1,
+      "message": "Ah okay so you\u0027re sharing logic with make_value_id_mappings. In that case, I think a helper file would be more appropriate.",
+      "parentUuid": "adfd46c4_3d19efd4",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "542e961e_2b970520",
         "filename": "third_party/WebKit/Source/build/scripts/make_style_builder.py",
         "patchSetId": 6
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "in another patch pls, I dont want to have this patch do the renaming, it is very confusing :((",
       "parentUuid": "eb87b214_621af60f",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b27b85_17d63269",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-12T01:09:17Z",
+      "side": 1,
+      "message": "Excellent :)",
+      "parentUuid": "9e822bca_f7edc9e0",
       "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -177,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "4232c2d9_ac524755",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-12T01:09:17Z",
+      "side": 1,
+      "message": "Hmm you\u0027re right...do we have to duplicate \u0027inherited\u0027 then? since it\u0027s probably used by other generators.",
+      "parentUuid": "8aa6e431_3f1bac04",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4757251_9c5fb540",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
         "patchSetId": 6
@@ -206,6 +260,24 @@
       "side": 1,
       "message": "yes, it throws an error, it is a property level thing but the field has to inherit it",
       "parentUuid": "a4757251_9c5fb540",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b79c661_212d22c6",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-12T01:09:17Z",
+      "side": 1,
+      "message": "Sorry not sure what you mean by \u0027field has to inherit it\u0027?",
+      "parentUuid": "8baf148e_9319ce12",
       "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
