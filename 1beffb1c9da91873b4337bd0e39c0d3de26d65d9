@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7101fe3e_c394bc64",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2475,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T14:21:58Z",
+      "side": 1,
+      "message": "Should this be Android-only?",
+      "range": {
+        "startLine": 2475,
+        "startChar": 71,
+        "endLine": 2475,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "268bcd02_b6875026",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T14:21:58Z",
+      "side": 1,
+      "message": "nit: This is a bit pointless here. It\u0027s obvious from the next line that this is expected to be non-null.",
+      "range": {
+        "startLine": 83,
+        "startChar": 24,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e69d4e_0e82ba3b",
+        "filename": "components/ntp_snippets/logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T14:21:58Z",
+      "side": 1,
+      "message": "kMaxItemsCount\n\nAlso, should we make this Finch-configurable, just in case we want to launch it to everyone, but maybe with reduced number of entries to limit memory use?",
+      "range": {
+        "startLine": 18,
+        "startChar": 33,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8da1e7_da00a149",
+        "filename": "components/ntp_snippets/logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T14:21:58Z",
+      "side": 1,
+      "message": "optional: Could make a ctor that takes a message and automatically sets the time to now, and then just \".emplace_back(message)\"",
+      "range": {
+        "startLine": 32,
+        "startChar": 32,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51806762_c27feca7",
+        "filename": "components/ntp_snippets/logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T14:21:58Z",
+      "side": 1,
+      "message": "optional: Just include the message in the printf above? IMO easier to read than a separate join.",
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3662cfec_6ff00ffe",
+        "filename": "components/ntp_snippets/logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T14:21:58Z",
+      "side": 1,
+      "message": "kMaxItemsCount",
+      "range": {
+        "startLine": 16,
+        "startChar": 33,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5609400e_0a5b661d",
+        "filename": "components/ntp_snippets/logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T14:21:58Z",
+      "side": 1,
+      "message": "If you don\u0027t need variation params, then base/test/scoped_feature_list.h is much simpler.",
+      "range": {
+        "startLine": 29,
+        "startChar": 44,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e80a977_8337472c",
+        "filename": "components/ntp_snippets/logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T14:21:58Z",
+      "side": 1,
+      "message": "nitty nit: I think these would be easier to read the other way around, putting npos first.",
+      "range": {
+        "startLine": 51,
+        "startChar": 51,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be13bf2_8820cc36",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T14:21:58Z",
+      "side": 1,
+      "message": "Hm, looking at this: Should the first parameter of each Log() call maybe be FROM_HERE? Then we\u0027d get method name etc \"for free\". WDYT?",
+      "range": {
+        "startLine": 474,
+        "startChar": 61,
+        "endLine": 474,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
