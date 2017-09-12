@@ -22,6 +22,30 @@
       "revId": "e24d13a2915e45a771a1b770983e5f666b71a46a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df14671b_1ced68ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-09-12T08:47:57Z",
+      "side": 1,
+      "message": "Not yet. I\u0027ll post a discussion once it\u0027s ready.\nFor \"WithResult\" removal, I think it\u0027s redundant as the caller already expressed the result as the callback type.",
+      "parentUuid": "9fd876b7_1bfa4287",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "e24d13a2915e45a771a1b770983e5f666b71a46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
