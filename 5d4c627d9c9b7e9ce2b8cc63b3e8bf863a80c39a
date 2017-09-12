@@ -2,6 +2,213 @@
   "comments": [
     {
       "key": {
+        "uuid": "a3f11a6e_3758d457",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T16:45:44Z",
+      "side": 1,
+      "message": "constexpr",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 5
+      },
+      "revId": "5d4c627d9c9b7e9ce2b8cc63b3e8bf863a80c39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65ee4220_4e124a10",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T16:45:44Z",
+      "side": 1,
+      "message": "I\u0027d rather write two DCHECKs",
+      "range": {
+        "startLine": 44,
+        "startChar": 10,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "5d4c627d9c9b7e9ce2b8cc63b3e8bf863a80c39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37cb3d38_68375da2",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T16:45:44Z",
+      "side": 1,
+      "message": "initialize",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 52,
+        "endChar": 16
+      },
+      "revId": "5d4c627d9c9b7e9ce2b8cc63b3e8bf863a80c39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064c98ac_0b666e3c",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T16:45:44Z",
+      "side": 1,
+      "message": "Definition order should match the declaration order",
+      "range": {
+        "startLine": 106,
+        "startChar": 23,
+        "endLine": 106,
+        "endChar": 45
+      },
+      "revId": "5d4c627d9c9b7e9ce2b8cc63b3e8bf863a80c39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae140d5_667d5910",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T16:45:44Z",
+      "side": 1,
+      "message": "Just forward declare.",
+      "range": {
+        "startLine": 8,
+        "startChar": 34,
+        "endLine": 8,
+        "endChar": 41
+      },
+      "revId": "5d4c627d9c9b7e9ce2b8cc63b3e8bf863a80c39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26189222_4c5db626",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T16:45:44Z",
+      "side": 1,
+      "message": "A comment about the class.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 27
+      },
+      "revId": "5d4c627d9c9b7e9ce2b8cc63b3e8bf863a80c39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9da2715_1fb0cf8d",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T16:45:44Z",
+      "side": 1,
+      "message": "I don\u0027t see this class used in the header. Thus, you can move it to .cc. If it doesn\u0027t have to be a part of PasswordManagerPorter then it can live in the anonymous namespace.",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 30
+      },
+      "revId": "5d4c627d9c9b7e9ce2b8cc63b3e8bf863a80c39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c5c56dd_5c0b615e",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T16:45:44Z",
+      "side": 1,
+      "message": "Is it really used on multiple threads?",
+      "range": {
+        "startLine": 37,
+        "startChar": 21,
+        "endLine": 37,
+        "endChar": 41
+      },
+      "revId": "5d4c627d9c9b7e9ce2b8cc63b3e8bf863a80c39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "931da10c_59227269",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-12T16:45:44Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN for both classes.",
+      "range": {
+        "startLine": 69,
+        "startChar": 1,
+        "endLine": 69,
+        "endChar": 2
+      },
+      "revId": "5d4c627d9c9b7e9ce2b8cc63b3e8bf863a80c39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9836f266_5b1d4bdb",
         "filename": "third_party/closure_compiler/externs/passwords_private.js",
         "patchSetId": 2
