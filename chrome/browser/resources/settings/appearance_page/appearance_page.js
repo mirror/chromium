@@ -34,6 +34,7 @@ Polymer({
 
     /** @private */
     defaultZoom_: Number,
+    isHidden_: {type: Boolean, value: true},
 
     /**
      * List of options for the font size drop-down menu.
@@ -135,6 +136,9 @@ Polymer({
     this.browserProxy_.getDefaultZoom().then(zoom => {
       this.defaultZoom_ = zoom;
     });
+    this.browserProxy_.openWallpaperManager().then(open => {
+      this.isHidden_ = open;
+    });
   },
 
   /**
@@ -198,7 +202,9 @@ Polymer({
    * @private
    */
   openWallpaperManager_: function() {
-    this.browserProxy_.openWallpaperManager();
+    this.browserProxy_.openWallpaperManager().then(open => {
+      this.isHidden_ = open;
+    });
   },
   // </if>
 
