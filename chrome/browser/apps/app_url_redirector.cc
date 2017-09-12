@@ -54,6 +54,14 @@ bool ShouldOverrideNavigation(
     return false;
   }
 
+  // If we can't go back and there is no previously committed URL then assume
+  // it's a new empty tab and close it.
+  if (!source->GetController().CanGoBack() &&
+      source->GetLastCommittedURL() == GURL()) {
+    DVLOG(1) << "Closing empty tab.";
+    source->Close();
+  }
+
   return true;
 }
 
