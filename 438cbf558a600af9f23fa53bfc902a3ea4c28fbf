@@ -22,6 +22,30 @@
       "revId": "438cbf558a600af9f23fa53bfc902a3ea4c28fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e75ebd5_3e1d11f0",
+        "filename": "components/payments/core/service_worker_payment_instrument.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-12T20:55:53Z",
+      "side": 1,
+      "message": "Thanks for driving by, that\u0027s very helpful, forgot this restriction again :-(.",
+      "parentUuid": "47fbd82e_a894c2b1",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "438cbf558a600af9f23fa53bfc902a3ea4c28fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
