@@ -14,7 +14,6 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/scoped_observer.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "chrome/browser/extensions/api/storage/policy_value_store.h"
 #include "chrome/browser/policy/profile_policy_connector.h"
 #include "chrome/browser/policy/profile_policy_connector_factory.h"
@@ -54,9 +53,6 @@ class ExtensionRegistry;
 namespace storage = api::storage;
 
 namespace {
-
-const char kLoadSchemasBackgroundTaskTokenName[] =
-    "load_managed_storage_schemas_token";
 
 // Only extension settings are stored in the managed namespace - not apps.
 const ValueStoreFactory::ModelType kManagedModelType =
@@ -175,9 +171,8 @@ void ManagedValueStoreCache::ExtensionTracker::LoadSchemas(
       added->Remove(to_remove);
   }
 
-  // Load the schema files in a background thread.
-  BrowserThread::PostBlockingPoolSequencedTask(
-      kLoadSchemasBackgroundTaskTokenName, FROM_HERE,
+  GetExtensionFileTaskRunner()->PostTask(
+      FROM_HERE,
       base::BindOnce(&ExtensionTracker::LoadSchemasOnBlockingPool,
                      base::Passed(&added), weak_factory_.GetWeakPtr()));
 }
