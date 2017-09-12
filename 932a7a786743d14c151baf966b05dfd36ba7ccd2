@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8822459_b445f8c1",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4846,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-12T15:39:44Z",
+      "side": 1,
+      "message": "You should also clear browser_side_navigation_pending_url_ in that case.",
+      "revId": "932a7a786743d14c151baf966b05dfd36ba7ccd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
