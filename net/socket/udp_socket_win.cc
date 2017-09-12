@@ -243,6 +243,227 @@ BOOL QwaveAPI::SetFlow(HANDLE handle,
 
 //-----------------------------------------------------------------------------
 
+/** Hides the fact that DSCP values can only be set for specific remote
+ * addresses on Windows. **/
+class DscpManager {
+ public:
+  // TODO(zstein): call from SetDiffServCodePoint(DiffServCodePoint dscp)
+  void SetGlobal(DiffServCodePoint dscp) {
+    if (dscp == DSCP_NO_CHANGE) {
+      return;
+    }
+
+    default_dscp_value_ = dscp;
+  }
+
+  // ip is a remote address
+  // overrides global setting
+  // TODO(zstein): call from SetDiffServCodePointTo(DiffServCodePoint dscp,
+  // IPEndPoint remote_address) or SendTo (passing along the value cached from
+  // SetDiffServCodePoint).
+  void SetForAddress(IPEndPoint* ip, DiffServCodePoint dscp) {
+    if (dscp == DSCP_NO_CHANGE) {
+      return;  // nothing to update
+    }
+
+    ip_dscp_value_[ip] = dscp;
+
+    auto it = qos_flows_.find(dscp);
+    if (it == flows_.end()) {
+      // TODO(zstein): remove from existing flow?
+
+      // create a new flow
+      QOS_FLOWID flow_id = 0;
+      flow_id = AddSocketToFlow(qos_handle_, socket_, ip, QOS_NON_ADAPTIVE_FLOW,
+                                &flow_id);
+      qos_flows[dscp] = flow_id;
+    } else {
+      // use the existing flow id
+      QOS_FLOWID flow_id = it->second;
+      AddSocketToFlow(qos_handle_, socket_, ip, QOS_NON_ADAPTIVE_FLOW,
+                      &flow_id);
+    }
+  }
+
+  // TODO(zstein): Call before each send (thread safety?).
+  void PrepareForSend(IPEndPoint* remote_address) {
+    DiffServCodePoint desired_value = default_dscp_value_;
+
+    // check for an ip-specific value
+    auto it = ip_dscp_value_.find(remote_address);
+    if (it != ip_dscp_value_.end()) {
+      desired_value = it->second;
+    }
+
+    // check if the ip is already set to the correct value
+    it = current_dscp_values_.find(remote_address);
+    if (it != current_dscp_values_.end() && it->second == desired_value) {
+      return;
+    }
+
+    // if the ip is set to the wrong value, decrement the flow's user count by 1
+    // and deconstruct it if it has no more users
+    if (it != current_dscp_values_.end()) {
+      auto fit = qos_flows_.find(desired_value);
+      if (fit != qos_flows_.end()) {
+        --fit->second;
+        if (fit->second == 0) {
+          auto flow_id = qos - flows->second;
+          QOSRemoveSocketFromFlow(qos_handle_, socket_, flow_id, 0);
+          // TODO(zstein): Check for errors
+        }
+      }
+      // else we never sent to that ip with that dscp value, so we didn't
+      // bother adding a flow
+    }
+
+    // Add the socket and remote address to a new or existing flow.
+    auto it = qos_flows_.find(desired_value);
+    // TODO(zstein): translate and pass along desired_value
+    if (it == flows_.end()) {
+      QOS_FLOWID flow_id = 0;
+      AddSocketToFlow(qos_handle_, socket_, remote_address,
+                      QOS_NON_ADAPTIVE_FLOW, &flow_id);
+      // TODO(zstein): Check for errors
+      qos_flows_.emplace(desired_value, FlowState{flow_id, 1});
+    } else {
+      QOS_FLOWID flow_id = it->second;
+      AddSocketToFlow(qos_handle_, socket_, remote_address,
+                      QOS_NON_ADAPTIVE_FLOW, &flow_id);
+      // TODO(zstein): Check for errors
+      ++it->second.user_count_;
+    }
+  }
+
+ private:
+  // The configurable socket default DSCP value.
+  DiffServCodePoint default_dscp_value_;
+
+  // The configurable ip-specific DSCP value (overrides the default value).
+  std::unordered_map<IPEndPoint, DiffServCodePoint> ip_dscp_value_;
+  // TODO(zstein): Combine with ip_dscp_value_ map.
+  std::unordered_map<IPEndPoint, DiffServCodePoint> current_dscp_values_;
+
+  struct FlowState {
+    QOS_FLOWID id_;
+    int user_count_;  // The number of IPs using this flow.
+  };
+  std::unordered_map<DiffServCodePoint, FlowState> qos_flows_;
+};
+
+/** DscpManager supports more than we need. **/
+class DscpManager2 {
+ public:
+  void Set(DiffServCodePoint dscp,
+           QOS_TRAFFIC_TYPE traffic_type,
+           QwaveAPI& qos,
+           HANDLE qos_handle) {
+    if (dscp == DSCP_NO_CHANGE || dscp == dscl_value_) {
+      return;
+    }
+
+    dscp_value_ = dscp;
+    traffic_type_ = traffic_type;
+    qos_ = qos;
+    qos_handle_ = qos_handle;
+    if (flow_id_ != 0) {
+      qos_.RemoveSocketFromFlow(qos_handle_, NULL, flow_id_, 0);
+      flow_id_ = 0;
+    }
+  }
+
+  int PrepareForSend(const IPEndPoint& remote_address) {
+    if (dscp_value_ == DSCP_NO_CHANGE) {
+      return;
+    }
+
+    if (configured_.find(remote_address) != configured_.end()) {
+      return;
+    }
+
+    SockaddrStorage storage;
+    if (!remote_address->ToSockAddr(storage.addr, &storage.addr_len)) {
+      LOG(WARNING) << "invalid remote_address";
+      return ERR_SOCKET_NOT_CONNECTED;
+    }
+
+    bool new_flow = flow_id_ == 0;
+
+    if (!qos_.AddSocketToFlow(qos_handle_, socket_, storage.addr, traffic_type_,
+                              QOS_NON_ADAPTIVE_FLOW, &flow_id_)) {
+      DWORD err = GetLastError();
+      if (err == ERROR_DEVICE_REINITIALIZAITON_NEEDED) {
+        qos_.CloseHandle(qos_handle_);
+        flow_id_ = 0;
+        qos_handle_ = 0;
+        dscp_value_ = DSCP_NO_CHANGE;
+      }
+      return MapSystemError(err);
+    }
+
+    if (new_flow) {
+      DWORD buf = dscp_value_;
+      qos_.SetFlow(qos_handle_, flow_id_, QOSSetOutgoingDSCPValue, sizeof(buf),
+                   &buf, 0, NULL);
+    }
+
+    configured_.emplace(remote_address);
+
+    return OK;
+  }
+
+ private:
+  DiffServCodePoint dscp_value_ = DSCP_NO_CHANGE;
+  std::unordered_set<IPEndPoint> configured_;
+  QOS_TRAFFIC_TYPE traffic_type_;
+  QOS_FLOWID flow_id_ = 0;
+  QwaveAPI& qos_;
+  HANDLE qos_handle_;
+};
+
+UDPSocketWin::DscpToQosTrafficType(DiffServCodePoint dscp) {
+  QOS_TRAFFIC_TYPE traffic_type = QOSTrafficTypeBestEffort;
+  switch (dscp) {
+    case DSCP_CS0:
+      traffic_type = QOSTrafficTypeBestEffort;
+      break;
+    case DSCP_CS1:
+      traffic_type = QOSTrafficTypeBackground;
+      break;
+    case DSCP_AF11:
+    case DSCP_AF12:
+    case DSCP_AF13:
+    case DSCP_CS2:
+    case DSCP_AF21:
+    case DSCP_AF22:
+    case DSCP_AF23:
+    case DSCP_CS3:
+    case DSCP_AF31:
+    case DSCP_AF32:
+    case DSCP_AF33:
+    case DSCP_CS4:
+      traffic_type = QOSTrafficTypeExcellentEffort;
+      break;
+    case DSCP_AF41:
+    case DSCP_AF42:
+    case DSCP_AF43:
+    case DSCP_CS5:
+      traffic_type = QOSTrafficTypeAudioVideo;
+      break;
+    case DSCP_EF:
+    case DSCP_CS6:
+      traffic_type = QOSTrafficTypeVoice;
+      break;
+    case DSCP_CS7:
+      traffic_type = QOSTrafficTypeControl;
+      break;
+    case DSCP_NO_CHANGE:
+      NOTREACHED();
+      break;
+  }
+  return traffic_type;
+}
+
 UDPSocketWin::UDPSocketWin(DatagramSocket::BindType bind_type,
                            const RandIntCallback& rand_int_cb,
                            net::NetLog* net_log,
@@ -407,6 +628,12 @@ int UDPSocketWin::SendTo(IOBuffer* buf,
                          int buf_len,
                          const IPEndPoint& address,
                          const CompletionCallback& callback) {
+  // |address| will be ignored if we are connected.
+  if (!remote_address_) {
+    if (dscp_manager_.PrepareForSend(address) != OK) {
+      // TODO(zstein): LOG(WARNING)
+    }
+  }
   return SendToOrWrite(buf, buf_len, &address, callback);
 }
 
@@ -1119,45 +1346,14 @@ int UDPSocketWin::SetDiffServCodePoint(DiffServCodePoint dscp) {
       return ERROR_NOT_SUPPORTED;
   }
 
-  QOS_TRAFFIC_TYPE traffic_type = QOSTrafficTypeBestEffort;
-  switch (dscp) {
-    case DSCP_CS0:
-      traffic_type = QOSTrafficTypeBestEffort;
-      break;
-    case DSCP_CS1:
-      traffic_type = QOSTrafficTypeBackground;
-      break;
-    case DSCP_AF11:
-    case DSCP_AF12:
-    case DSCP_AF13:
-    case DSCP_CS2:
-    case DSCP_AF21:
-    case DSCP_AF22:
-    case DSCP_AF23:
-    case DSCP_CS3:
-    case DSCP_AF31:
-    case DSCP_AF32:
-    case DSCP_AF33:
-    case DSCP_CS4:
-      traffic_type = QOSTrafficTypeExcellentEffort;
-      break;
-    case DSCP_AF41:
-    case DSCP_AF42:
-    case DSCP_AF43:
-    case DSCP_CS5:
-      traffic_type = QOSTrafficTypeAudioVideo;
-      break;
-    case DSCP_EF:
-    case DSCP_CS6:
-      traffic_type = QOSTrafficTypeVoice;
-      break;
-    case DSCP_CS7:
-      traffic_type = QOSTrafficTypeControl;
-      break;
-    case DSCP_NO_CHANGE:
-      NOTREACHED();
-      break;
+  QOS_TRAFFIC_TYPE traffic_type = DscpToQosTrafficType(dscp);
+
+  if (!remote_address) {
+    // we are not actually connected, just bound - defer the set.
+    dscp_manager_.Set(dscp, traffic_type);
+    return;
   }
+
   if (qos_flow_id_ != 0) {
     qos.RemoveSocketFromFlow(qos_handle_, NULL, qos_flow_id_, 0);
     qos_flow_id_ = 0;

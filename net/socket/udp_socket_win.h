@@ -321,7 +321,10 @@ class NET_EXPORT UDPSocketWin : public base::win::ObjectWatcher::Delegate {
 
   // QWAVE data. Used to set DSCP bits on outgoing packets.
   HANDLE qos_handle_;
+  // Only used in the connected case.
   QOS_FLOWID qos_flow_id_;
+
+  // TODO(zstein): Needs a DscpManager2.
 
   THREAD_CHECKER(thread_checker_);
 
