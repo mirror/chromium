@@ -16,6 +16,24 @@
       "revId": "a8f53743b390f5602583ff6bb6137c6e3e637e90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec6ec6e7_c1c7016f",
+        "filename": "components/search_provider_logos/logo_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T11:29:05Z",
+      "side": 1,
+      "message": "I\u0027d probably merge FETCHED and CLEARED, since they can be distinguished by |logo| having a value or not. The rest seem okay to me.\n(Arguably, we shouldn\u0027t even pass out CANCELED, but instead handle the retry internally. But that\u0027s probably not worth the trouble.)",
+      "parentUuid": "aadc2483_6af0e2d8",
+      "revId": "a8f53743b390f5602583ff6bb6137c6e3e637e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

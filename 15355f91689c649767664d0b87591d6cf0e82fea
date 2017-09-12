@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14e228c7_1d2e4513",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T11:29:05Z",
+      "side": 1,
+      "message": "nit: This doesn\u0027t seem quite accurate for cached logos. AVAILABLE?",
+      "range": {
+        "startLine": 66,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "15355f91689c649767664d0b87591d6cf0e82fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693c52f8_2d224c60",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T11:29:05Z",
+      "side": 1,
+      "message": "nit: pass a raw pointer rather than ref to unique_ptr",
+      "range": {
+        "startLine": 66,
+        "startChar": 56,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "15355f91689c649767664d0b87591d6cf0e82fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da1d1013_b1c3831a",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T11:29:05Z",
+      "side": 1,
+      "message": "nit: nullopt is default, no need to set explicitly.\nOr alternatively: opt_logo \u003d logo ? *logo : base::nullopt;",
+      "range": {
+        "startLine": 67,
+        "startChar": 48,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "15355f91689c649767664d0b87591d6cf0e82fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "007c12b0_a8d10b04",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T11:29:05Z",
+      "side": 1,
+      "message": "nit: doubled",
+      "range": {
+        "startLine": 180,
+        "startChar": 31,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "15355f91689c649767664d0b87591d6cf0e82fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "276e41ca_df93284a",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T11:29:05Z",
+      "side": 1,
+      "message": "nit: Maybe use a StringPrintf instead of multiple concats?",
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d70c09_7c38a5fa",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T11:29:05Z",
+      "side": 1,
+      "message": "optional: I think this would be easier as\nbool from_cache \u003d (requested_version \u003c\u003d version_finished_);\nStartGetLogo(service, callback, from_cache);",
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "544b94dd_7f0f0f6f",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T11:29:05Z",
+      "side": 1,
+      "message": "nit: Maybe LogoCallbackReason, or just LogoState?",
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f24dae_d3a404b2",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T11:29:05Z",
+      "side": 1,
+      "message": "This seems weird. You might get a logo, but you\u0027re supposed to ignore it? Then why even hand it out at all?",
+      "range": {
+        "startLine": 79,
+        "startChar": 42,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df34392_ae2a9289",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T11:29:05Z",
+      "side": 1,
+      "message": "nit: This trips up my grammar parser. I guess you elided the \"_available\" suffix?",
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f7921a_326b7344",
+        "filename": "components/search_provider_logos/logo_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T11:29:05Z",
+      "side": 1,
+      "message": "nit: Maybe call the decoded callbacks before the encoded ones, to mimic the order in the normal case?",
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e8107b_10132cca",
+        "filename": "components/search_provider_logos/logo_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T11:29:05Z",
+      "side": 1,
+      "message": "They\u0027re both for the default search engine, no?",
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0308e45f_5a5bdd7d",
+        "filename": "components/search_provider_logos/logo_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T11:29:05Z",
+      "side": 1,
+      "message": "Really? Why?",
+      "range": {
+        "startLine": 60,
+        "startChar": 57,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75af754_fa34285a",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T11:29:05Z",
+      "side": 1,
+      "message": "Hm, should we maybe provide these two helper directly in the LogoService? Seems that every client will want either only the encoded or only the decoded logos, so that\u0027d make the service more convenient to use.",
+      "range": {
+        "startLine": 330,
+        "startChar": 77,
+        "endLine": 330,
+        "endChar": 0
+      },
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
