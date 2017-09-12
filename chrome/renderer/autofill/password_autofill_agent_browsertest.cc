@@ -436,6 +436,14 @@ class PasswordAutofillAgentTest : public ChromeRenderViewTest {
     SimulateUserInputChangeForElement(&password_element_, password);
   }
 
+  void SimulateUsernameFieldAutofill(const std::string& text) {
+    // Simulate set |username_element_| in focus.
+    static_cast<content::RenderFrameObserver*>(autofill_agent_)
+        ->FocusedNodeChanged(username_element_);
+    // Fill focused element (i.e. |username_element_|).
+    autofill_agent_->FillFieldWithValue(ASCIIToUTF16(text));
+  }
+
   void CheckTextFieldsStateForElements(const WebInputElement& username_element,
                                        const std::string& username,
                                        bool username_autofilled,
@@ -2760,26 +2768,33 @@ TEST_F(PasswordAutofillAgentTest, ShowSuggestionForNonUsernameFieldForms) {
 
 TEST_F(PasswordAutofillAgentTest,
        UsernameChangedAfterPasswordInput_InPageNavigation) {
-  LoadHTML(kNoFormHTML);
-  UpdateUsernameAndPasswordElements();
+  enum class ChangeSource { USER, AUTOFILL };
 
-  SimulateUsernameChange("Bob");
-  SimulatePasswordChange("mypassword");
-  SimulateUsernameChange("Alice");
+  for (auto change_source : {ChangeSource::USER, ChangeSource::AUTOFILL}) {
+    LoadHTML(kNoFormHTML);
+    UpdateUsernameAndPasswordElements();
 
-  // Hide form elements to simulate successful login.
-  std::string hide_elements =
-      "var password = document.getElementById('password');"
-      "password.style = 'display:none';"
-      "var username = document.getElementById('username');"
-      "username.style = 'display:none';";
-  ExecuteJavaScriptForTests(hide_elements.c_str());
+    SimulateUsernameChange("Bob");
+    SimulatePasswordChange("mypassword");
+    if (change_source == ChangeSource::USER)
+      SimulateUsernameChange("Alice");
+    else
+      SimulateUsernameFieldAutofill("Alice");
 
-  password_autofill_agent_->AJAXSucceeded();
+    // Hide form elements to simulate successful login.
+    std::string hide_elements =
+        "var password = document.getElementById('password');"
+        "password.style = 'display:none';"
+        "var username = document.getElementById('username');"
+        "username.style = 'display:none';";
+    ExecuteJavaScriptForTests(hide_elements.c_str());
 
-  ExpectInPageNavigationWithUsernameAndPasswords(
-      "Alice", "mypassword", "",
-      PasswordForm::SubmissionIndicatorEvent::XHR_SUCCEEDED);
+    password_autofill_agent_->AJAXSucceeded();
+
+    ExpectInPageNavigationWithUsernameAndPasswords(
+        "Alice", "mypassword", "",
+        PasswordForm::SubmissionIndicatorEvent::XHR_SUCCEEDED);
+  }
 }
 
 TEST_F(PasswordAutofillAgentTest,
