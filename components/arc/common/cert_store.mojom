@@ -1,0 +1,205 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+//
+// CertStoreHost is modeled after Android keymaster interface
+// system/keymaster/include/keymaster/android_keymaster.h
+//
+// and must follow the concept if extended in the future.
+// Please keep names in sync as far as it is possible.
+//
+
+module arc.mojom;
+
+// Describes an operation result.
+[Extensible]
+enum Error {
+  ERROR_OK,
+  ERROR_INVALID_KEY,
+  ERROR_UNIMPLEMENTED,
+  ERROR_UNKNOWN,
+};
+
+// Enumerates the crypto algorithms supported by Host.
+[Extensible]
+enum Algorithm {
+  ALGORITHM_RSA,
+  ALGORITHM_EC,
+};
+
+// Enumerates the operation purposes supported by Host.
+[Extensible]
+enum Purpose {
+  PURPOSE_SIGN,
+};
+
+// Enumerates the digests supported by Host.
+[Extensible]
+enum Digest {
+  DIGEST_NONE,
+  DIGEST_SHA1,
+  DIGEST_SHA_2_224,
+  DIGEST_SHA_2_256,
+  DIGEST_SHA_2_384,
+  DIGEST_SHA_2_512,
+};
+
+// Enumerates the paddings supported by Host.
+[Extensible]
+enum Padding {
+  PAD_NONE,
+  PAD_RSA_PKCS1_1_5_SIGN,
+};
+
+// Describes a parameter of client certificate provided by Host.
+union KeyParam {
+  Algorithm algorithm;
+  bool all_users;
+  Digest digest;
+  bool no_auth_required;
+  Padding padding;
+  Purpose purpose;
+};
+
+// Describes a set of parameters of client certificates provided by Host.
+struct KeyParamSet {
+  // Parameters list must contain only different parameters.
+  array<KeyParam> params;
+};
+
+// Describes a request data of GetKeyCharacteristics.
+struct KeyCharacteristicsRequest {
+  // Name of the client certificate.
+  string alias;
+};
+
+// Describes a response data of GetKeyCharacteristics.
+struct KeyCharacteristicsResponse {
+  // The requested client certificate parameters.
+  KeyParamSet params;
+
+  // Result error code.
+  Error error;
+};
+
+// Describes a request data of begin operation.
+struct BeginOperationRequest {
+  // Name of the client certificate.
+  string alias;
+
+  // Purpose of the operation.
+  Purpose purpose;
+
+  // The operation parameters (algorithm, digest, padding).
+  KeyParamSet params;
+};
+
+// Describes a response data of begin operation.
+struct BeginOperationResponse {
+  // Operation ID if the operation is successfully started.
+  uint64 op_handle;
+
+  // Result error code.
+  Error error;
+};
+
+// Describes a request data of update operation.
+struct UpdateOperationRequest {
+  // Operation ID of the operation that has to be updated.
+  uint64 op_handle;
+
+  // Data to be updated.
+  array<uint8> data;
+};
+
+// Describes a response data of update operation.
+struct UpdateOperationResponse {
+  // Length of data that has been updated.
+  uint32 input_consumed;
+
+  // Result error code.
+  Error error;
+};
+
+// Describes a request data of finish operation.
+struct FinishOperationRequest {
+  // Operation ID of the operation that has to be finished.
+  uint64 op_handle;
+};
+
+// Describes a response data of finish operation.
+struct FinishOperationResponse {
+  // Signed data by the operation.
+  array<uint8> signed_data;
+
+  // Result error code.
+  Error error;
+};
+
+// Describes a request data of abort operation.
+struct AbortOperationRequest {
+  // Operation ID of the operation that has to be aborted.
+  uint64 op_handle;
+};
+
+// Describes a response data of abort operation.
+struct AbortOperationResponse {
+  // Result error code.
+  Error error;
+};
+
+// Describes a permission to use Host side client certificates.
+// Does not correspond to keymaster type.
+struct KeyPermission {
+  // Name of the package eligible to use Host side client certificates.
+  string packageName;
+};
+
+// Describes a client certificate provided by Host.
+// Does not correspond to keymaster type.
+struct Certificate {
+  // Name of the certificate.
+  string alias;
+
+  // Base64-encoded client certificate.
+  string cert;
+};
+
+// Next method ID: 6
+// The interface is modeled after keymaster interface and must follow the format
+// if extended in the future.
+interface CertStoreHost {
+  // The helper method, which does not correspond to keymaster interface.
+  // It returns a list of Chrome OS corporate usage client certificates if
+  // any Android app is whitelisted to use them, otherwise returns an
+  // empty list.
+  ListCertificates@0() => (array<Certificate> certs);
+
+  // Retrieves key characteristics.
+  GetKeyCharacteristics@1(KeyCharacteristicsRequest request)
+      => (KeyCharacteristicsResponse response);
+
+  // Begins the operation.
+  Begin@2(BeginOperationRequest request) => (BeginOperationResponse response);
+
+  // Updates the operation information.
+  Update@3(UpdateOperationRequest request)
+      => (UpdateOperationResponse response);
+
+  // Finishes the operation, retrieves the result.
+  Finish@4(FinishOperationRequest request)
+      => (FinishOperationResponse response);
+
+  // Abort the operation.
+  Abort@5(AbortOperationRequest request) => (AbortOperationResponse response);
+};
+
+// Next method ID: 2
+interface CertStoreInstance {
+  // Establishes full-duplex communication with the host.
+  Init@0(CertStoreHost host_ptr);
+
+  // Informs the key permissions are changed.
+  OnKeyPermissionsChanged@1(array<KeyPermission> permissions);
+};
