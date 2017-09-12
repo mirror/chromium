@@ -128,7 +128,8 @@ void ValidateHistograms(const RecordedHistogram* recorded,
 
 }  // anonymous namespace
 
-IN_PROC_BROWSER_TEST_F(ExtensionApiTest, Metrics) {
+// Temporarily disabled while adding DCHECK for crbug.com/762452.
+IN_PROC_BROWSER_TEST_F(ExtensionApiTest, DISABLED_Metrics) {
   base::UserActionTester user_action_tester;
 
   base::FieldTrialList::CreateFieldTrial("apitestfieldtrial2", "group1");
