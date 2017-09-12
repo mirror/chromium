@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "24f40e2f_610f0eca",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-12T18:07:33Z",
+      "side": 1,
+      "message": "neat, I haven\u0027t seen that before, thanks for the lesson.",
+      "parentUuid": "10d552b3_dbd2e4d2",
+      "revId": "ca4b037bc242b9c2ed565b448b5d4404233037b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be0f71fe_6d31ccb8",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Hmm, for a reason I don\u0027t know, your test doesn\u0027t pass with this CL.\nI will have to go, so I will upload the addressed comment and keep it like this. Feel free to take this CL.",
       "parentUuid": "be0f71fe_6d31ccb8",
+      "revId": "ca4b037bc242b9c2ed565b448b5d4404233037b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ee8937_fce3986b",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-12T18:07:33Z",
+      "side": 1,
+      "message": "I don\u0027t know either, but I do verify that on Windows the minimal repro from the user works with your cl. It might be that my test depended on different timing of my change.\n\nThis can be investigated later :)",
+      "parentUuid": "d66448e6_15aca4a7",
       "revId": "ca4b037bc242b9c2ed565b448b5d4404233037b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

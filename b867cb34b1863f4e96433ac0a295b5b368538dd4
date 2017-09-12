@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cf9a4b2_69e53faf",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-12T18:07:33Z",
+      "side": 1,
+      "message": "in a followup, to avoid a race I think it would be better to call ExecuteScriptAsync instead. that way if the sync call takes a long time because of an overloaded system, it doesn\u0027t race with the second ExecuteScript call below (which can probably be Async as well)",
+      "revId": "b867cb34b1863f4e96433ac0a295b5b368538dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
