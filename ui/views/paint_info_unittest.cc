@@ -133,7 +133,7 @@ class PaintInfoTest : public ::testing::Test {
   PaintInfos GetPaintInfoSetup(const ui::PaintContext& context) {
     PaintInfos info_list(9);
 
-    info_list[0].reset(new PaintInfo(context, kLayerSize));
+    info_list[0].reset(new PaintInfo(context, kLayerSize, true));
 
     info_list[1].reset(
         new PaintInfo(*info_list[0], r_1, r_0.size(),

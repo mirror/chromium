@@ -84,7 +84,7 @@ void SetDragImage(const GURL& url,
   SkBitmap bitmap;
   float raster_scale = ScaleFactorForDragFromWidget(&widget);
   SkColor color = SK_ColorTRANSPARENT;
-  button.Paint(views::PaintInfo::CreateRootPaintInfo(
+  button.Paint(views::PaintInfo::CreateLayerPaintInfo(
       ui::CanvasPainter(&bitmap, size, raster_scale, color,
                         widget.GetCompositor()->is_pixel_canvas())
           .context(),

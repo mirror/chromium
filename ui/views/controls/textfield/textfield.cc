@@ -1120,7 +1120,7 @@ void Textfield::WriteDragDataForView(View* sender,
   if (!ui::XVisualManager::GetInstance()->ArgbVisualAvailable())
     color = GetBackgroundColor();
 #endif
-  label.Paint(PaintInfo::CreateRootPaintInfo(
+  label.Paint(PaintInfo::CreateLayerPaintInfo(
       ui::CanvasPainter(&bitmap, label.size(), raster_scale, color,
                         GetWidget()->GetCompositor()->is_pixel_canvas())
           .context(),

@@ -1703,7 +1703,10 @@ void View::UpdateChildLayerBounds(const LayerOffsetData& offset_data) {
 }
 
 void View::OnPaintLayer(const ui::PaintContext& context) {
-  PaintFromPaintRoot(context);
+  PaintInfo paint_info =
+      PaintInfo::CreateLayerPaintInfo(context, layer()->size());
+  Paint(paint_info);
+  PaintDebugRects(paint_info);
 }
 
 void View::OnDelegatedFrameDamage(
@@ -2041,16 +2044,18 @@ void View::RecursivePaintHelper(void (View::*func)(const PaintInfo&),
 
 void View::PaintFromPaintRoot(const ui::PaintContext& parent_context) {
   PaintInfo paint_info = PaintInfo::CreateRootPaintInfo(
-      parent_context, layer() ? layer()->size() : size());
+      parent_context, (layer() ? layer()->size() : size()));
   Paint(paint_info);
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDrawViewBoundsRects))
-    PaintDebugRects(paint_info);
+  PaintDebugRects(paint_info);
 }
 
 void View::PaintDebugRects(const PaintInfo& parent_paint_info) {
-  if (!ShouldPaint())
+  static bool kDebugRectsEnabled =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDrawViewBoundsRects);
+  if (!kDebugRectsEnabled || !ShouldPaint()) {
     return;
+  }
 
   const gfx::Rect& parent_bounds = (layer() || !parent())
                                        ? GetPaintRecordingBounds()
