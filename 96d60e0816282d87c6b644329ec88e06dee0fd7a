@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d44653d_f63f809a",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-12T16:23:27Z",
+      "side": 0,
+      "message": "what do you think about doing the assert here, outside of the if statement?",
+      "revId": "96d60e0816282d87c6b644329ec88e06dee0fd7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
