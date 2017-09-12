@@ -48,6 +48,7 @@ class UserView : public views::View,
 
  private:
   // Overridden from views::View.
+  const char* GetClassName() const override;
   int GetHeightForWidth(int width) const override;
 
   // Overridden from views::ButtonListener.
