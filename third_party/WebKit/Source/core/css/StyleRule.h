@@ -108,6 +108,8 @@ class CORE_EXPORT StyleRule : public StyleRuleBase {
 
   const CSSSelectorList& SelectorList() const { return selector_list_; }
   const StylePropertySet& Properties() const;
+  bool HasParsedProperties() { return properties_; }
+  const HeapVector<CSSProperty> ContentValues() const;
   MutableStylePropertySet& MutableProperties();
 
   void WrapperAdoptSelectorList(CSSSelectorList selectors) {

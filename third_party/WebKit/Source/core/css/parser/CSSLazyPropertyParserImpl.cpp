@@ -19,4 +19,9 @@ StylePropertySet* CSSLazyPropertyParserImpl::ParseProperties() {
       lazy_state_->SheetText(), offset_, lazy_state_->Context());
 }
 
+HeapVector<CSSProperty> CSSLazyPropertyParserImpl::ParseContentValues() {
+  return CSSParserImpl::ParseContentValuesForLazyStyle(
+      lazy_state_->SheetText(), offset_, lazy_state_->Context());
+}
+
 }  // namespace blink

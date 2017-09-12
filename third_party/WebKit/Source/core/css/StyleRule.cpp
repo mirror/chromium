@@ -230,6 +230,10 @@ const StylePropertySet& StyleRule::Properties() const {
   return *properties_;
 }
 
+const HeapVector<CSSProperty> StyleRule::ContentValues() const {
+  return lazy_property_parser_->ParseContentValues();
+}
+
 StyleRule::StyleRule(const StyleRule& o)
     : StyleRuleBase(o),
       should_consider_for_matching_rules_(kConsiderIfNonEmpty),
