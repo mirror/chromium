@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5bd4cd4_a49359c1",
+        "filename": "device/bluetooth/test/fake_central.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T05:09:03Z",
+      "side": 1,
+      "message": "Please use C++ style casts.",
+      "range": {
+        "startLine": 77,
+        "startChar": 13,
+        "endLine": 77,
+        "endChar": 27
+      },
+      "revId": "df71d6f087571a5de1d234ee97e3f1a104071e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "461084d4_21a077b4",
+        "filename": "device/bluetooth/test/fake_peripheral.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T05:09:03Z",
+      "side": 1,
+      "message": "Here as well.",
+      "range": {
+        "startLine": 56,
+        "startChar": 32,
+        "endLine": 56,
+        "endChar": 53
+      },
+      "revId": "df71d6f087571a5de1d234ee97e3f1a104071e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
