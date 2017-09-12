@@ -22,6 +22,46 @@
       "revId": "ef94aacfbfc11742963af9277101bcfebdcfc4a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86312f24_b10503a4",
+        "filename": "chrome/browser/chromeos/arc/arc_auth_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-12T17:41:43Z",
+      "side": 1,
+      "message": "What\u0027s the reason to not pass this empty icon when constructing message_center::Notification at L164?",
+      "revId": "ef94aacfbfc11742963af9277101bcfebdcfc4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5bd173_56596767",
+        "filename": "chrome/browser/chromeos/arc/arc_auth_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-12T17:41:43Z",
+      "side": 1,
+      "message": "Ditto for others.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 69
+      },
+      "revId": "ef94aacfbfc11742963af9277101bcfebdcfc4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
