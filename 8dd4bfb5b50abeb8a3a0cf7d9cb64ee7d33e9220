@@ -16,6 +16,24 @@
       "revId": "8dd4bfb5b50abeb8a3a0cf7d9cb64ee7d33e9220",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42fa94e3_bf998b18",
+        "filename": "media/gpu/rendering_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-09-12T05:53:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db462981_79555740",
+      "revId": "8dd4bfb5b50abeb8a3a0cf7d9cb64ee7d33e9220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
