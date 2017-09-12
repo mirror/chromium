@@ -71,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "48e2800e_5f426711",
+        "filename": "chrome/browser/resources/sys_internals/index.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "Not sure how svgs should be included in WebUIs like this, @dpapad, any suggestions?",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36e25271_6ebe13af",
         "filename": "chrome/browser/resources/sys_internals/index.js",
         "patchSetId": 2
@@ -235,6 +252,23 @@
     },
     {
       "key": {
+        "uuid": "7be1b60c_03c1ea48",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "Why does this do such a complicated time calculation? What value does trying to align to a second give?",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc3ee91c_59b4b94c",
         "filename": "chrome/browser/resources/sys_internals/index.js",
         "patchSetId": 2
@@ -251,6 +285,63 @@
         "startChar": 24,
         "endLine": 237,
         "endChar": 25
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0676be4_0c8909f2",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "Why not use handleUpdateData(data, Date.now());?",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf91069_20afa801",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "I don\u0027t think this should send the request after a delay. Doesn\u0027t this mean you can have a 1 second delay before sending the request on startup? Can\u0027t this timetick calculation be moved into handleUpdateData?",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feccf8c1_72824938",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "Consider naming timeTick timestamp instead.",
+      "range": {
+        "startLine": 249,
+        "startChar": 32,
+        "endLine": 249,
+        "endChar": 40
       },
       "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -352,6 +443,63 @@
     },
     {
       "key": {
+        "uuid": "f3a6e8b8_367b39c5",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "processors",
+      "range": {
+        "startLine": 276,
+        "startChar": 38,
+        "endLine": 276,
+        "endChar": 46
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8605e8_16e9210f",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "// Total may ...",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe6a83d_50f83f00",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "I don\u0027t find it clear (here or in the actual UI) what the units of these values are.\n\nI think the numbers calculated here should be stored as numbers and all formatting should happen in updateInfoPage(). This actually gives a second of stale data when switching back to the info page. It\u0027s better to just calculate the values always and then just format them when they should get displayed.",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d2d74b3_946e1da4",
         "filename": "chrome/browser/resources/sys_internals/index.js",
         "patchSetId": 2
@@ -396,6 +544,23 @@
       "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05d7cf22_9065d5e2",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "I find all these blocks confusing. Is there a reason to calculate the strings before they\u0027re actually needed in updateInfoPage? Why not store numbers and format the strings in updateInfoPage?",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -469,6 +634,23 @@
     },
     {
       "key": {
+        "uuid": "683262f2_a61fb249",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "Page names should be an enum.",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "993fb5e9_45c10631",
         "filename": "chrome/browser/resources/sys_internals/index.js",
         "patchSetId": 2
@@ -513,6 +695,171 @@
       "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7fc8830_a2445c1f",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "We shouldn\u0027t be polling here. Make in global scope:\n\n  var waitSysInfoInitialized \u003d new PromiseResolver();\n\nthen in handleUpdateData(), add:\n\n  waitSysInfoInitialized.resolve();\n\nthen in onHashChange():\n\ncase \u0027#CPU\u0027:\n  waitSysInfoInitialized.promise.then(setupCPUPage);",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feecf465_d71da8c2",
+        "filename": "chrome/test/data/webui/sys_internals/page_infopage_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "Make a function to return this in test_util.js.",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33cf18df_11ad3e65",
+        "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "Either use Math.pow() or define some constants so you can have\n\n200 * MB",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55c0fe2_200fc9c6",
+        "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "I don\u0027t think this setTimeout is necessary? Certainly not 1 whole second.\n\nsetTimeout in tests should only be used to put things on the next Task.\n\nhttps://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7661f155_53637eaf",
+        "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "assertNotReached()",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd339ec0_f86268e0",
+        "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e98d66_b7ad7c49",
+        "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "This is not reliable. We do not use setTimeout in tests like this because it slows down the test pipeline unnecessarily with artificial delays and on slow runs, can be unreliable.\n\nI think once you have the promise structure set up for the initialization as outlined in index.js, this will no longer be necessary since your page switching should be just about fully synchronous. You might still need to invoke microtask timing for the actual checks by running\n\nfunction goPage(title, btnIndex) {\n  clickDrawerBtn(btnIndex);\n  return Promise.resolve().then(() \u003d\u003e {\n    // Check stuff here\n  });\n}",
+      "range": {
+        "startLine": 98,
+        "startChar": 11,
+        "endLine": 98,
+        "endChar": 14
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e56b52_aa57d07b",
+        "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "These should be an enum defined in index.js and then used here.",
+      "range": {
+        "startLine": 109,
+        "startChar": 27,
+        "endLine": 109,
+        "endChar": 31
+      },
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3082fee8_5a1d690f",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-12T07:14:20Z",
+      "side": 1,
+      "message": "Moving this into a\n\n  setUp: function() {\n    /* Set up this global variable to disable sending the update request. */\n    DONT_SEND_UPDATE_REQUEST \u003d true;\n  },\n\nseems to work for me?",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
