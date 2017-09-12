@@ -53,7 +53,9 @@ class AutofillPaymentInstrument
       const std::vector<std::string>& supported_networks,
       const std::set<autofill::CreditCard::CardType>& supported_types,
       bool supported_types_specified) const override;
+#if !defined(OS_IOS)
   const gfx::ImageSkia* icon_image() const override;
+#endif
 
   // autofill::payments::FullCardRequest::ResultDelegate:
   void OnFullCardRequestSucceeded(

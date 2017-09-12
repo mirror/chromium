@@ -162,9 +162,11 @@ bool AutofillPaymentInstrument::IsValidForModifier(
   return is_supported_type && is_supported_network;
 }
 
+#if !defined(OS_IOS)
 const gfx::ImageSkia* AutofillPaymentInstrument::icon_image() const {
   return nullptr;
 }
+#endif
 
 void AutofillPaymentInstrument::OnFullCardRequestSucceeded(
     const autofill::payments::FullCardRequest& /* full_card_request */,
