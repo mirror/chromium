@@ -12,6 +12,7 @@ import android.app.assist.AssistContent;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -169,6 +170,7 @@ import org.chromium.webapk.lib.client.WebApkNavigationClient;
 import org.chromium.webapk.lib.client.WebApkValidator;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -203,6 +205,9 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      * No toolbar layout to inflate during initialization.
      */
     static final int NO_TOOLBAR_LAYOUT = -1;
+
+    private static final String CHROME_HOME_PREFERENCES_NAME = "chrome_home";
+    private static final String CHROME_HOME_SHARED_PREFERENCES_KEY = "Chrome Home Enabled Date";
 
     private static final int RECORD_MULTI_WINDOW_SCREEN_WIDTH_DELAY_MS = 5000;
 
@@ -464,6 +469,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                     View coordinator = findViewById(R.id.coordinator);
                     mBottomSheet = (BottomSheet) findViewById(R.id.bottom_sheet);
                     mBottomSheet.init(coordinator, controlContainer.getView(), this);
+                    logChromeHomeUsageIfApplicable();
                 }
             } finally {
                 StrictMode.setThreadPolicy(oldPolicy);
@@ -2247,5 +2253,34 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     @Deprecated
     public DiscardableReferencePool getReferencePool() {
         return mReferencePool;
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    private void logChromeHomeUsageIfApplicable() {
+        SharedPreferences sharedPreferences =
+                getSharedPreferences(CHROME_HOME_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        String earliestLoggedDate =
+                sharedPreferences.getString(CHROME_HOME_SHARED_PREFERENCES_KEY, null);
+        if (FeatureUtilities.isChromeHomeEnabled()) {
+            // Chrome home was freshly enabled today; log today as the date it was enabled.
+            if (earliestLoggedDate == null) {
+                sharedPreferences.edit().putString(CHROME_HOME_SHARED_PREFERENCES_KEY, getDate());
+            }
+        } else {
+            // Chrome home is no longer enabled so remove the entry if it exists.
+            if (earliestLoggedDate != null) {
+                sharedPreferences.edit().remove(CHROME_HOME_SHARED_PREFERENCES_KEY);
+            }
+        }
+        sharedPreferences.edit().apply();
+    }
+
+    private String getDate() {
+        Calendar calendar = Calendar.getInstance();
+        // January is 0 so add 1 to clarify.
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        return String.format("%s/%s/%s", month, day, year);
     }
 }
