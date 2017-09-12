@@ -9,11 +9,14 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/callback_forward.h"
 #include "base/format_macros.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/power_monitor/power_monitor.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
@@ -91,8 +94,7 @@ AudioInputDevice::AudioInputDevice(
       state_(IDLE),
       session_id_(0),
       agc_is_enabled_(false),
-      stopping_hack_(false),
-      missing_callbacks_detected_(false) {
+      stopping_hack_(false) {
   CHECK(ipc_);
 
   // The correctness of the code depends on the relative values assigned in the
@@ -180,24 +182,32 @@ void AudioInputDevice::OnStreamCreated(base::SharedMemoryHandle handle,
   if (initially_muted)
     callback_->OnCaptureMuted(true);
 
+// Set up checker for detecting missing audio data.
+#if defined(OS_LINUX)
+  const bool stop_at_first_alive_notification = true;
+#else
+  const bool stop_at_first_alive_notification = false;
+#endif
+  alive_checker_ = std::make_unique<AliveChecker>(
+      task_runner(),
+      base::Bind(&AudioInputDevice::DetectedDeadInputStream, this),
+      base::TimeDelta::FromSeconds(kCheckMissingCallbacksIntervalSeconds),
+      base::TimeDelta::FromSeconds(kMissingCallbacksTimeBeforeErrorSeconds),
+      stop_at_first_alive_notification, true);
+
+  // TODO: Comment on why unretained is safe.
   audio_callback_ = std::make_unique<AudioInputDevice::AudioThreadCallback>(
       audio_parameters_, handle, kRequestedSharedMemoryCount, callback_,
-      base::BindRepeating(&AudioInputDevice::SetLastCallbackTimeToNow, this));
+      base::BindRepeating(&AliveChecker::AliveNotification,
+                          base::Unretained(alive_checker_.get())));
   audio_thread_ = std::make_unique<AudioDeviceThread>(
       audio_callback_.get(), socket_handle, "AudioInputDevice");
 
   state_ = RECORDING;
   ipc_->RecordStream();
 
-  // Start detecting missing callbacks.
-  SetLastCallbackTimeToNowOnIOThread();
-  DCHECK(!check_alive_timer_);
-  check_alive_timer_ = std::make_unique<base::RepeatingTimer>();
-  check_alive_timer_->Start(
-      FROM_HERE,
-      base::TimeDelta::FromSeconds(kCheckMissingCallbacksIntervalSeconds), this,
-      &AudioInputDevice::CheckIfInputStreamIsAlive);
-  DCHECK(check_alive_timer_->IsRunning());
+  // Start detecting missing audio data.
+  alive_checker_->Start();
 }
 
 void AudioInputDevice::OnError() {
@@ -276,14 +286,9 @@ void AudioInputDevice::StartUpOnIOThread() {
 void AudioInputDevice::ShutDownOnIOThread() {
   DCHECK(task_runner()->BelongsToCurrentThread());
 
-  if (check_alive_timer_) {
-    check_alive_timer_->Stop();
-    check_alive_timer_.reset();
-  }
-
   UMA_HISTOGRAM_BOOLEAN("Media.Audio.Capture.DetectedMissingCallbacks",
-                        missing_callbacks_detected_);
-  missing_callbacks_detected_ = false;
+                        alive_checker_->DetectedDead());
+  alive_checker_.reset();
 
   // Close the stream, if we haven't already.
   if (state_ >= CREATING_STREAM) {
@@ -331,25 +336,9 @@ void AudioInputDevice::WillDestroyCurrentMessageLoop() {
   ShutDownOnIOThread();
 }
 
-void AudioInputDevice::CheckIfInputStreamIsAlive() {
+void AudioInputDevice::DetectedDeadInputStream() {
   DCHECK(task_runner()->BelongsToCurrentThread());
-  if (base::TimeTicks::Now() - last_callback_time_ >
-      base::TimeDelta::FromSeconds(kMissingCallbacksTimeBeforeErrorSeconds)) {
-    callback_->OnCaptureError("No audio received from audio capture device.");
-    missing_callbacks_detected_ = true;
-  }
-}
-
-void AudioInputDevice::SetLastCallbackTimeToNow() {
-  task_runner()->PostTask(
-      FROM_HERE,
-      base::BindOnce(&AudioInputDevice::SetLastCallbackTimeToNowOnIOThread,
-                     this));
-}
-
-void AudioInputDevice::SetLastCallbackTimeToNowOnIOThread() {
-  DCHECK(task_runner()->BelongsToCurrentThread());
-  last_callback_time_ = base::TimeTicks::Now();
+  callback_->OnCaptureError("No audio received from audio capture device.");
 }
 
 // AudioInputDevice::AudioThreadCallback
