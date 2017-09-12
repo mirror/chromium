@@ -117,6 +117,30 @@
       "revId": "b5ce672ef24159e5cd0679e68986e84ae4d5b7c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac93b6d6_ae91db35",
+        "filename": "net/disk_cache/simple/simple_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-12T21:01:30Z",
+      "side": 1,
+      "message": "Updated comment in SimpleExperimentType\nUnfortunately the Finch experiment still calls it \"control\".",
+      "parentUuid": "71c05805_799bba2f",
+      "range": {
+        "startLine": 359,
+        "startChar": 6,
+        "endLine": 359,
+        "endChar": 7
+      },
+      "revId": "b5ce672ef24159e5cd0679e68986e84ae4d5b7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
