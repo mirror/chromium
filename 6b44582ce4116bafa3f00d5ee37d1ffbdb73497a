@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c6c9f021_41636e39",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1295,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-12T09:18:58Z",
+      "side": 1,
+      "message": "We are computing the child_box\u0027s logicalBottom based on its logicalHeight. The child_box\u0027s float children don\u0027t account for that. Hence, if we want to consider float elements as HitTest candidates we need to make them account for figuring out the actual box\u0027s logicalBottom.\n\nIt\u0027s not related at all with writing modes, actually.",
+      "parentUuid": "34570912_cb630c09",
+      "revId": "6b44582ce4116bafa3f00d5ee37d1ffbdb73497a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb3d1cd1_9e97e04c",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
         "patchSetId": 2
@@ -50,6 +68,24 @@
       "revId": "6b44582ce4116bafa3f00d5ee37d1ffbdb73497a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff143de_675e4471",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-12T09:18:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cb3d1cd1_9e97e04c",
+      "revId": "6b44582ce4116bafa3f00d5ee37d1ffbdb73497a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
