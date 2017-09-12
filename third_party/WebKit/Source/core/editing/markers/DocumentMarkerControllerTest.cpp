@@ -417,7 +417,7 @@ TEST_F(DocumentMarkerControllerTest, MarkersIntersectingRangeWithShadowDOM) {
   // "not shadow" text and ending in the "shadow1" text will crash.
   SetBodyContent(
       "<div id=\"not_shadow\">not shadow</div><div id=\"shadow_root\" />");
-  ShadowRoot* shadow_root = SetShadowContent(
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(
       "<div id=\"shadow1\">shadow1</div><div id=\"shadow2\">shadow2</div>",
       "shadow_root");
 

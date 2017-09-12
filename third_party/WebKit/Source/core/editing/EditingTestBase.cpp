@@ -85,8 +85,9 @@ void EditingTestBase::SetBodyContent(const std::string& body_content) {
   UpdateAllLifecyclePhases();
 }
 
-ShadowRoot* EditingTestBase::SetShadowContent(const char* shadow_content,
-                                              const char* host) {
+ShadowRoot* EditingTestBase::SetShadowContentDeprecated(
+    const char* shadow_content,
+    const char* host) {
   ShadowRoot* shadow_root = CreateShadowRootForElementWithIDAndSetInnerHTML(
       GetDocument(), host, shadow_content);
   return shadow_root;
