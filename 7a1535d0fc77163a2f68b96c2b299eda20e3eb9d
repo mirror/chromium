@@ -16,6 +16,24 @@
       "revId": "7a1535d0fc77163a2f68b96c2b299eda20e3eb9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c2a5aa_a0f288aa",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-12T00:58:55Z",
+      "side": 1,
+      "message": "I am still trying to understand why Tima had to introduce this field, and trying to improve the name, and/or document it. In the meanwhile, I might abandon this approach since it seems we had a new idea.",
+      "parentUuid": "cf87a93b_7bc1b04e",
+      "revId": "7a1535d0fc77163a2f68b96c2b299eda20e3eb9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
