@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dec059bb_f32a4a80",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-12T08:49:34Z",
+      "side": 1,
+      "message": "Thanks Shimazu, could you point out some reference code? I didn\u0027t find it.",
+      "parentUuid": "e83b8222_2721d37a",
+      "range": {
+        "startLine": 399,
+        "startChar": 29,
+        "endLine": 399,
+        "endChar": 0
+      },
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4526a3e1_2a8cdc63",
         "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
         "patchSetId": 3
@@ -183,6 +207,24 @@
       "side": 1,
       "message": "Yeah, I find the patchset#4 trybot failures were caused by removing this check.\nThe test case is here: https://cs.chromium.org/chromium/src/content/child/service_worker/service_worker_dispatcher_unittest.cc?q\u003dservice_worker_dispatcher_unittest.cc\u0026dr\u0026l\u003d160\n\nIn this CL, I moved the test into ServiceWorkerProviderContextTest.",
       "parentUuid": "2888cb17_07e0f50f",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32f7c23e_77f12cfe",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-12T08:49:34Z",
+      "side": 1,
+      "message": "I investigated why we need this check.\nIn the following case:\n1. Open page1 and register a service worker.\n2. Open a new tab and open page2(the same origin with page1).\n\nDuring the step2, there are two stages:\n1. DocumentLoader::InstallNewDocument --\u003e FrameLoader::DispatchDidClearDocumentOfWindowObject --\u003e FrameLoaderStateMachine::CreatingInitialEmptyDocument --\u003e ..... --\u003e ServiceWorkerProviderHost::AssociateRegistration --\u003e .... --\u003eServiceWorkerProviderContext::SetController \n\n2. DocumentLoader::InstallNewDocument --\u003e FrameLoader::DispatchDidClearDocumentOfWindowObject --\u003e ModulesInitializer::OnClearWindowObjectInMainWorld --\u003e NavigatorServiceWorker::From --\u003e construct ServiceWorkerContainer --\u003e WebServiceWorkerProviderImpl::SetClient -- \u003e ServiceWorkerProviderContext::SetController \n\nIn the stage1, SetClient would not be called, so the provider_client_ is null when calling the SetController.\n\nI think this check is necessary, even in the original upstream code, \"if (found !\u003d provider_clients_.end())\" actually do the same thing?\n\nWDYT?",
+      "parentUuid": "84c30f4e_7cfe7c71",
       "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

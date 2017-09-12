@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a6f03ae5_62db50ba",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-12T08:49:34Z",
+      "side": 1,
+      "message": "Thanks, I will do that.",
+      "parentUuid": "8727b2d3_ee07916e",
+      "revId": "d7add142abc36c7e9e0b26c49ac47f54fef7f86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66177f7d_b235c895",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-09-12T07:23:12Z",
       "side": 1,
       "message": "Could you pass it as mojom interface instead of message_pipe?",
+      "revId": "d7add142abc36c7e9e0b26c49ac47f54fef7f86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9f9e6c_14ae0c25",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-12T08:49:34Z",
+      "side": 1,
+      "message": "Sorry, could you point out what mojom interface I should use? I just referred existing mojom files.",
+      "parentUuid": "66177f7d_b235c895",
       "revId": "d7add142abc36c7e9e0b26c49ac47f54fef7f86a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
