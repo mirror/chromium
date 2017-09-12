@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffafb7ce_5f33509b",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-12T08:16:11Z",
+      "side": 1,
+      "message": "nit: you can remove the check that \"self.homeDelegate\" is not nil here as sending a message to a nil object is well defined in Objective-C\n\n\u003e A nil value is the safest way to initialize an object pointer if you don’t have another value to use, because it’s perfectly acceptable in Objective-C to send a message to nil. If you do send a message to nil, obviously nothing happens.\n\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithObjects/WorkingwithObjects.html\n\nSo you can just send the message:\n\n  std::vector\u003cGURL\u003e urls \u003d [self getURLsToOpen:nodes];\n  [self.homeDelegate bookmarkHomeViewControllerWantsDismissal:self\n                                             navigationToUrls:urls];",
+      "revId": "44af542f5dce37e45be6baf9879618d21a96d875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a261b307_e3defc8f",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-12T08:16:11Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure whether compiler applies RVO (return value optimisation, an optimisation to remove unnecessary copies of the returned object) to Objective-C++ methods, so maybe change this from a method to a free function (in anonymous namespace) since it does not access \"self\"",
+      "revId": "44af542f5dce37e45be6baf9879618d21a96d875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec19e67e_6448c316",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-12T08:16:11Z",
+      "side": 1,
+      "message": "This comment should not be here:\n1. those are not ivar but methods,\n2. the methods returns const references so they cannot be used to modify the content,\n3. they explain implementation details, not what the method can be used for.\n\nInstead, I would use the following comments:\n\n  // Returns the currently selected edit nodes.\n  - (const std::set\u003cconst bookmarks::BookmarkNode*\u003e\u0026)editNodes;\n\n  // Returns the currently selected edit nodes, in the order they were selected.\n  - (const std::vector\u003cconst bookmarks::BookmarkNode*\u003e\u0026)editNodesOrdered;",
+      "revId": "44af542f5dce37e45be6baf9879618d21a96d875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e05d899_8188c9e9",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-12T08:16:11Z",
+      "side": 1,
+      "message": "This comment is slightly incorrect. It says \"DO NOT modify these two ivars directly\" but the code below do not respect this and always modify them together. To better document, maybe you could introduce an class to enforce the contract:\n\n  // An ordered set of items.\n  template \u003c typename T \u003e\n  class OrderedSet {\n   public:\n    OrderedSet() {}\n    ~OrderedSet() {}\n\n    size_t size() const {\n      return ordering_.size();\n    }\n\n    bool empty() const {\n      return ordering_.empty();\n    }\n\n    bool push_back(const T\u0026 t) {\n      auto insertion_result \u003d set_.insert(t);\n      if (!insertion_result.second)\n        ordering_.push_back(t);\n      return insertion_result.second;\n    }\n\n    void clear() {\n      set_.clear();\n      ordering_.clear();\n    }\n\n    bool erase(const T\u0026 t) {\n      auto iterator \u003d set_.find(t);\n      if (iterator \u003d\u003d set_.end())\n        return false;\n\n      set_.erase(iter);\n\n      DCHECK(base::ContainsValue(ordering_, t));\n      ordering_.erase(std::find(ordering_.begin(), ordering_.end(), t));\n    }\n\n    const std::set\u003cT\u003e\u0026 set() const { return set_; }\n    const std::vector\u003cT\u003e\u0026 ordering() const { return ordering_; }\n\n   private:\n    std::set\u003cT\u003e set_;\n    std::vector\u003cT\u003e ordering_;\n  };\n\nThen you can just use it here:\n\n  OrderedSet\u003cconst bookmarks::BookmarkNode*\u003e _editNodes;",
+      "revId": "44af542f5dce37e45be6baf9879618d21a96d875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29b8b45_27d54bae",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-12T08:16:11Z",
+      "side": 1,
+      "message": "nit: use \"auto\" here, as it is clear the value returned by \"std::find\" is some kind of iterator on the collection",
+      "range": {
+        "startLine": 416,
+        "startChar": 4,
+        "endLine": 416,
+        "endChar": 46
+      },
+      "revId": "44af542f5dce37e45be6baf9879618d21a96d875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986e6e6b_299701bb",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-12T08:16:11Z",
+      "side": 1,
+      "message": "This whole code looks like it has been copied-n-pasted from ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm. Can we share this code?",
+      "revId": "44af542f5dce37e45be6baf9879618d21a96d875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
