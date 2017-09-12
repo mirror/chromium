@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "312e05a3_0f4f1dbe",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-12T13:52:02Z",
+      "side": 1,
+      "message": "not sure if we prefer this over bringing the value back to python, e.g. something like:\n\n  previous_restaurant \u003d action_runner.EvaluateJavaScript(CODE_TO_GET_RESTAURANT_NAME)\n\nand then inject that back into the \"checking\" script. Maybe your current approach is actually cleaner. Ned, any opinions?\n\nAside, add an explanation (like yours: \"Story the current name of the restaurant\") as a comment on the source code itself.\n\nStyle nit: regardless, I think it would look better as:\n\n_SAVE_RESTAURANT_NAME \u003d \u0027\u0027\u0027\n    document.previous_restaurant_name \u003d document.querySelectorAll(\n        \u0027[data-result-index\u003d\"1\"]\u0027)[0].getAttribute(\u0027jstrack\u0027)\n\u0027\u0027\u0027",
+      "parentUuid": "886f8bf2_64f9a76c",
+      "revId": "bfc56d2f6a0c8b8a234ff42efdfc0ff28780aa2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41e1a3a2_3efedc8a",
         "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-12T13:37:05Z",
       "side": 1,
       "message": "This basically checks the restaurant was indeed updated.",
+      "revId": "bfc56d2f6a0c8b8a234ff42efdfc0ff28780aa2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa98d38_6d893d23",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-12T13:52:02Z",
+      "side": 1,
+      "message": "Can we make this check for both the \"updated\" and \"loaded\" condition, so:\n\n    action_runner.WaitForJavaScriptCondition(self._CHECK_RESTAURANTS_UPDATED)\n    action_runner.WaitForElement(selector\u003dself._RESTAURANTS_LOADED)\n\nbecomes just:\n\n    action_runner.WaitForJavaScriptCondition(self._CHECK_RESTAURANTS_UPDATED)",
+      "parentUuid": "41e1a3a2_3efedc8a",
       "revId": "bfc56d2f6a0c8b8a234ff42efdfc0ff28780aa2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
