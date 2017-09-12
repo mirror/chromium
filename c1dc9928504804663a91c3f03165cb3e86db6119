@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bdede55d_29f6c201",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1110804
+      },
+      "writtenOn": "2017-09-12T17:00:12Z",
+      "side": 1,
+      "message": "I don\u0027t think that we won\u0027t be adding more cases.\nPlan is to show that if R16 is covered more or less similar to L16,\nwe will remove L16 handling from the code.\nBut still your idea looks more future proof, so going ahead with your sugestion.",
+      "parentUuid": "5506de71_c3069311",
+      "range": {
+        "startLine": 188,
+        "startChar": 16,
+        "endLine": 188,
+        "endChar": 0
+      },
+      "revId": "c1dc9928504804663a91c3f03165cb3e86db6119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b4a85ca_6fae5944",
         "filename": "gpu/command_buffer/service/feature_info.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "c1dc9928504804663a91c3f03165cb3e86db6119",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754fb037_fda95328",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1110804
+      },
+      "writtenOn": "2017-09-12T17:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b4a85ca_6fae5944",
+      "range": {
+        "startLine": 193,
+        "startChar": 5,
+        "endLine": 193,
+        "endChar": 19
+      },
+      "revId": "c1dc9928504804663a91c3f03165cb3e86db6119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
