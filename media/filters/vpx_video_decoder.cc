@@ -36,6 +36,7 @@
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/decoder_buffer.h"
 #include "media/base/media_switches.h"
+#include "media/media_dependent_config.h"
 
 // Include libvpx header files.
 // VPX_CODEC_DISABLE_COMPAT excludes parts of the libvpx API that provide
@@ -590,7 +591,7 @@ bool VpxVideoDecoder::ConfigureDecoder(const VideoDecoderConfig& config) {
       (config.codec() == kCodecVP9 && config.format() == PIXEL_FORMAT_YV12A) ||
       (config.codec() == kCodecVP9 && config.format() == PIXEL_FORMAT_YV24));
 
-#if !defined(DISABLE_FFMPEG_VIDEO_DECODERS)
+#if !BUILDFLAG(DISABLE_FFMPEG_VIDEO_DECODERS)
   // When FFmpegVideoDecoder is available it handles VP8 that doesn't have
   // alpha, and VpxVideoDecoder will handle VP8 with alpha.
   if (config.codec() == kCodecVP8 && config.format() != PIXEL_FORMAT_YV12A)

@@ -2576,12 +2576,13 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(chrome::android::NTPShowGoogleGInOmniboxFeature)},
 #endif  // OS_ANDROID
 #if BUILDFLAG(ENABLE_WEBRTC) && BUILDFLAG(RTC_USE_H264) && \
-    !defined(MEDIA_DISABLE_FFMPEG)
+    BUILDFLAG(MEDIA_ENABLE_FFMPEG)
     {"enable-webrtc-h264-with-openh264-ffmpeg",
      flag_descriptions::kWebrtcH264WithOpenh264FfmpegName,
      flag_descriptions::kWebrtcH264WithOpenh264FfmpegDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(content::kWebRtcH264WithOpenH264FFmpeg)},
-#endif  // ENABLE_WEBRTC && BUILDFLAG(RTC_USE_H264) && !MEDIA_DISABLE_FFMPEG
+#endif  // ENABLE_WEBRTC && BUILDFLAG(RTC_USE_H264) &&
+        // BUILDFLAG(MEDIA_ENABLE_FFMPEG)
 #if defined(OS_ANDROID)
     {"offline-pages-ntp", flag_descriptions::kNtpOfflinePagesName,
      flag_descriptions::kNtpOfflinePagesDescription, kOsAndroid,

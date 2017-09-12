@@ -14,6 +14,7 @@
 #include "media/base/media_switches.h"
 #include "media/base/video_codecs.h"
 #include "media/base/video_color_space.h"
+#include "media/media_dependent_config.h"
 #include "media/media_features.h"
 
 #if defined(OS_ANDROID)
@@ -854,7 +855,7 @@ SupportsType MimeUtil::IsCodecSupported(const std::string& mime_type_lower_case,
         break;
 // HIGH10PROFILE is supported through fallback to the ffmpeg decoder
 // which is not available on Android, or if FFMPEG is not used.
-#if !defined(MEDIA_DISABLE_FFMPEG) && !defined(OS_ANDROID)
+#if BUILDFLAG(MEDIA_ENABLE_FFMPEG) && !defined(OS_ANDROID)
       case H264PROFILE_HIGH10PROFILE:
         // FFmpeg is not generally used for encrypted videos, so we do not
         // know whether 10-bit is supported.

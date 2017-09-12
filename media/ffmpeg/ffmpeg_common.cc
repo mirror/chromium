@@ -16,6 +16,7 @@
 #include "media/base/media_util.h"
 #include "media/base/video_decoder_config.h"
 #include "media/base/video_util.h"
+#include "media/media_dependent_config.h"
 #include "media/media_features.h"
 
 namespace media {
@@ -478,7 +479,7 @@ bool AVStreamToVideoDecoderConfig(const AVStream* stream,
   // default to baseline and let the VDA fail later if it doesn't support the
   // real profile. This is alright because if the FFmpeg h264 decoder isn't
   // enabled, there is no fallback if the VDA fails.
-#if defined(DISABLE_FFMPEG_VIDEO_DECODERS)
+#if BUILDFLAG(DISABLE_FFMPEG_VIDEO_DECODERS)
   if (codec == kCodecH264)
     profile = H264PROFILE_BASELINE;
 #endif
@@ -490,7 +491,7 @@ bool AVStreamToVideoDecoderConfig(const AVStream* stream,
       AVPixelFormatToVideoPixelFormat(codec_context->pix_fmt);
   // The format and coded size may be unknown if FFmpeg is compiled without
   // video decoders.
-#if defined(DISABLE_FFMPEG_VIDEO_DECODERS)
+#if BUILDFLAG(DISABLE_FFMPEG_VIDEO_DECODERS)
   if (format == PIXEL_FORMAT_UNKNOWN)
     format = PIXEL_FORMAT_YV12;
   if (coded_size == gfx::Size(0, 0))

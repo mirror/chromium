@@ -43,7 +43,6 @@ if (proprietary_codecs && media_use_ffmpeg) {
 # exported since things like USE_NEON and USE_CRAS have different meanings
 # elsewhere in the code base.
 config("media_config") {
-  configs = [ ":media_dependent_config" ]
   defines = []
   if (current_cpu == "arm64" || (current_cpu == "arm" && arm_use_neon)) {
     defines += [ "USE_NEON" ]
@@ -59,19 +58,18 @@ config("media_config") {
   }
 }
 
-# Common defines which must be set in targets which depend on //media.
-# TODO(dalecurtis): These should be converted to BUILDFLAGs.
-config("media_dependent_config") {
-  defines = []
-  if (!media_use_libvpx) {
-    defines += [ "MEDIA_DISABLE_LIBVPX" ]
-  }
-  if (!media_use_ffmpeg) {
-    defines += [ "MEDIA_DISABLE_FFMPEG" ]
-  }
-  if (disable_ffmpeg_video_decoders) {
-    defines += [ "DISABLE_FFMPEG_VIDEO_DECODERS" ]
-  }
+buildflag_header("media_dependent_config") {
+  visibility = [
+    ":media",
+    "//media/*",
+  ]
+  header = "media_dependent_config.h"
+
+  flags = [
+    "MEDIA_ENABLE_LIBVPX=$media_use_libvpx",
+    "MEDIA_ENABLE_FFMPEG=$media_use_ffmpeg",
+    "DISABLE_FFMPEG_VIDEO_DECODERS=$disable_ffmpeg_video_decoders",
+  ]
 }
 
 # Internal grouping of the configs necessary to support sub-folders having their
@@ -111,10 +109,10 @@ component("media") {
     "//url",
   ]
 
-  all_dependent_configs = [ ":media_dependent_config" ]
   public_configs = [ "//third_party/libwebm:libwebm_config" ]
   public_deps = media_subcomponent_deps
   public_deps += [
+    ":media_dependent_config",
     ":media_features",
     ":shared_memory_support",
 

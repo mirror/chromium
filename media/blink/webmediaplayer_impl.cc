@@ -51,6 +51,7 @@
 #include "media/blink/webmediasource_impl.h"
 #include "media/filters/chunk_demuxer.h"
 #include "media/filters/ffmpeg_demuxer.h"
+#include "media/media_dependent_config.h"
 #include "third_party/WebKit/public/platform/WebEncryptedMediaTypes.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayerClient.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayerEncryptedMediaClient.h"
@@ -2145,7 +2146,7 @@ void WebMediaPlayerImpl::StartPipeline() {
     DCHECK(!chunk_demuxer_);
     DCHECK(data_source_);
 
-#if !defined(MEDIA_DISABLE_FFMPEG)
+#if BUILDFLAG(MEDIA_ENABLE_FFMPEG)
     Demuxer::MediaTracksUpdatedCB media_tracks_updated_cb =
         BindToCurrentLoop(base::Bind(
             &WebMediaPlayerImpl::OnFFmpegMediaTracksUpdated, AsWeakPtr()));

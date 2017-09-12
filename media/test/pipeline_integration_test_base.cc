@@ -16,18 +16,21 @@
 #include "media/base/media_log.h"
 #include "media/base/media_tracks.h"
 #include "media/base/test_data_util.h"
-#if !defined(MEDIA_DISABLE_FFMPEG)
-#include "media/filters/ffmpeg_audio_decoder.h"
-#include "media/filters/ffmpeg_demuxer.h"
-#include "media/filters/ffmpeg_video_decoder.h"
-#endif
 #include "media/filters/file_data_source.h"
 #include "media/filters/memory_data_source.h"
+#include "media/media_dependent_config.h"
 #include "media/renderers/audio_renderer_impl.h"
 #include "media/renderers/renderer_impl.h"
 #include "media/test/fake_encrypted_media.h"
 #include "media/test/mock_media_source.h"
-#if !defined(MEDIA_DISABLE_LIBVPX)
+
+#if BUILDFLAG(MEDIA_ENABLE_FFMPEG)
+#include "media/filters/ffmpeg_audio_decoder.h"
+#include "media/filters/ffmpeg_demuxer.h"
+#include "media/filters/ffmpeg_video_decoder.h"
+#endif
+
+#if BUILDFLAG(MEDIA_ENABLE_LIBVPX)
 #include "media/filters/vpx_video_decoder.h"
 #endif
 
@@ -52,13 +55,13 @@ static std::vector<std::unique_ptr<VideoDecoder>> CreateVideoDecodersForTest(
     DCHECK(!video_decoders.empty());
   }
 
-#if !defined(MEDIA_DISABLE_LIBVPX)
+#if BUILDFLAG(MEDIA_ENABLE_LIBVPX)
   video_decoders.push_back(base::MakeUnique<VpxVideoDecoder>());
-#endif  // !defined(MEDIA_DISABLE_LIBVPX)
+#endif  // BUILDFLAG(MEDIA_ENABLE_LIBVPX)
 
 // Android does not have an ffmpeg video decoder.
-#if !defined(MEDIA_DISABLE_FFMPEG) && !defined(OS_ANDROID) && \
-    !defined(DISABLE_FFMPEG_VIDEO_DECODERS)
+#if BUILDFLAG(MEDIA_ENABLE_FFMPEG) && !defined(OS_ANDROID) && \
+    !BUILDFLAG(DISABLE_FFMPEG_VIDEO_DECODERS)
   video_decoders.push_back(base::MakeUnique<FFmpegVideoDecoder>(media_log));
 #endif
   return video_decoders;
@@ -75,7 +78,7 @@ static std::vector<std::unique_ptr<AudioDecoder>> CreateAudioDecodersForTest(
     DCHECK(!audio_decoders.empty());
   }
 
-#if !defined(MEDIA_DISABLE_FFMPEG)
+#if BUILDFLAG(MEDIA_ENABLE_FFMPEG)
   audio_decoders.push_back(
       base::MakeUnique<FFmpegAudioDecoder>(media_task_runner, media_log));
 #endif
@@ -402,7 +405,7 @@ void PipelineIntegrationTestBase::CreateDemuxer(
     std::unique_ptr<DataSource> data_source) {
   data_source_ = std::move(data_source);
 
-#if !defined(MEDIA_DISABLE_FFMPEG)
+#if BUILDFLAG(MEDIA_ENABLE_FFMPEG)
   demuxer_ = std::unique_ptr<Demuxer>(new FFmpegDemuxer(
       scoped_task_environment_.GetMainThreadTaskRunner(), data_source_.get(),
       base::Bind(&PipelineIntegrationTestBase::DemuxerEncryptedMediaInitDataCB,
