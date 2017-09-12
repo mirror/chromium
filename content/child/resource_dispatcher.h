@@ -33,6 +33,10 @@
 #include "url/gurl.h"
 #include "url/origin.h"
 
+namespace base {
+class WaitableEvent;
+}
+
 namespace net {
 struct RedirectInfo;
 }
@@ -118,6 +122,8 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
       mojo::ScopedDataPipeConsumerHandle consumer_handle);
 
+  mojom::DownloadedTempFilePtr TakeDownloadedTempFile(int request_id);
+
   // Removes a request from the |pending_requests_| list, returning true if the
   // request was found and removed.
   bool RemovePendingRequest(int request_id);
@@ -164,6 +170,11 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
   }
 
   void OnTransferSizeUpdated(int request_id, int32_t transfer_size_diff);
+
+  void set_terminate_sync_load_event(
+      base::WaitableEvent* terminate_sync_load_event) {
+    terminate_sync_load_event_ = terminate_sync_load_event;
+  }
 
  private:
   friend class URLLoaderClientImpl;
@@ -289,6 +300,8 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
 
   scoped_refptr<base::SingleThreadTaskRunner> thread_task_runner_;
   scoped_refptr<ResourceSchedulingFilter> resource_scheduling_filter_;
+
+  base::WaitableEvent* terminate_sync_load_event_ = nullptr;
 
   base::WeakPtrFactory<ResourceDispatcher> weak_factory_;
 

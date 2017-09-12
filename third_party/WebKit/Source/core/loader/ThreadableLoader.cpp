@@ -72,6 +72,15 @@ void ThreadableLoader::LoadResourceSynchronously(
     const ThreadableLoaderOptions& options,
     const ResourceLoaderOptions& resource_loader_options) {
   if (context.IsWorkerGlobalScope()) {
+    if (RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
+      DCHECK(ToWorkerGlobalScope(&context)->GetResourceFetcher());
+      // TODO(horo): Rename DocumentThreadableLoader. We will use it on the
+      // worker thread when off-main-thread-fetch is enabled.
+      DocumentThreadableLoader::LoadResourceSynchronously(
+          *ThreadableLoadingContext::Create(*ToWorkerGlobalScope(&context)),
+          request, client, options, resource_loader_options);
+      return;
+    }
     WorkerThreadableLoader::LoadResourceSynchronously(
         ToWorkerGlobalScope(context), request, client, options,
         resource_loader_options);
@@ -79,7 +88,8 @@ void ThreadableLoader::LoadResourceSynchronously(
   }
 
   DocumentThreadableLoader::LoadResourceSynchronously(
-      ToDocument(context), request, client, options, resource_loader_options);
+      *ThreadableLoadingContext::Create(*ToDocument(&context)), request, client,
+      options, resource_loader_options);
 }
 
 }  // namespace blink
