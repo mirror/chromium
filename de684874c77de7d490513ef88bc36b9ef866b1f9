@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f00520a_7c86b193",
+        "filename": "chrome/browser/ui/toolbar/back_forward_menu_model_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-12T23:37:03Z",
+      "side": 1,
+      "message": "Is this going to be a problem for all unit tests?  It seems like other tests that navigate will miss the title update, and that may matter in future tests if not today.  Or maybe I\u0027m misunderstanding?\n\n(I\u0027m wondering if this would need to be simulated in TestWebContents and NavigationSimulator, but maybe that\u0027s not feasible without knowing the title.)",
+      "revId": "de684874c77de7d490513ef88bc36b9ef866b1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b892d0b_0b97a441",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-12T23:37:03Z",
+      "side": 1,
+      "message": "Hmm, how could is_same_document be true here?  I thought RenderereDidNavigateToSamePage was the case that you hit enter in the address bar, which necessarily is a new document.  Are there any repro steps where it\u0027s possible for it to be true?",
+      "revId": "de684874c77de7d490513ef88bc36b9ef866b1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
