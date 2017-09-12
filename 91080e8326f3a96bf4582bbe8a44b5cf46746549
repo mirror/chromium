@@ -22,6 +22,30 @@
       "revId": "91080e8326f3a96bf4582bbe8a44b5cf46746549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d490b8f_1af93eb4",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-12T03:05:01Z",
+      "side": 1,
+      "message": "Done. It\u0027s better this way even without |offset|, since event.CreateFor() alone could avoid repeating.",
+      "parentUuid": "cb83fafe_e46ce829",
+      "range": {
+        "startLine": 439,
+        "startChar": 29,
+        "endLine": 439,
+        "endChar": 37
+      },
+      "revId": "91080e8326f3a96bf4582bbe8a44b5cf46746549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
