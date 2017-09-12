@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90e27487_076e9eea",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-12T02:06:15Z",
+      "side": 1,
+      "message": "nit: since we\u0027re already going to copy the string contents below to pass to the delegate, no need to do it twice. WDYT about converting to std::string and doing the comparison on that:\n\nstd::string message;\nif (success) {\n  message \u003d gin::V8ToString(stringified);\n  success \u003d message !\u003d \"undefined\";\n}\n\nif (!success) {\n  ThrowError(isolate, \"Illegal argument to Port.postMessage\");\n  return;\n}\n\ndelegate-\u003ePostMessageToPort(\n    port_id, std::make_unique\u003cMessage\u003e(\n                 message,\n                 blink::WebUserGestureIndicator::IsProcessingUserGesture()));\n\nDon\u0027t feel strongly (so you can leave as-is if you prefer), but it seems slightly more efficient, and avoids having to manually get a UTF-8 string pointer and then strcmp it.",
+      "revId": "17ce5211efdbc0c9afb792f148808e9436994c69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7652ee07_ef3ea95c",
+        "filename": "extensions/renderer/gin_port_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-12T02:06:15Z",
+      "side": 1,
+      "message": "nit: why not just say:\n\nEXPECT_EQ(\"\\\"port name\\\"\", GetStringPropertyFromObject(...));\n\nElsewhere such expectations are hardcoded, and it seems easier to read to me.",
+      "revId": "17ce5211efdbc0c9afb792f148808e9436994c69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857992e3_705d6606",
+        "filename": "extensions/renderer/gin_port_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-12T02:06:15Z",
+      "side": 1,
+      "message": "nit: why the block scope?",
+      "revId": "17ce5211efdbc0c9afb792f148808e9436994c69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

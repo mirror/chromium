@@ -209,6 +209,24 @@
       "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13bdc1fc_d3c469b5",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-12T02:06:15Z",
+      "side": 1,
+      "message": "To me the cast implies the same documentation (we wouldn\u0027t cast to object if we weren\u0027t confident it was an object), but I don\u0027t feel strongly.",
+      "parentUuid": "2a3f3a69_94caa388",
+      "revId": "89cd54fd9c0474dc56b04f8b60009f2d59a7eff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
