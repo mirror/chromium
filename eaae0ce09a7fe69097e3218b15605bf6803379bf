@@ -22,6 +22,30 @@
       "revId": "eaae0ce09a7fe69097e3218b15605bf6803379bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8ee20d_ebf20823",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-12T18:19:28Z",
+      "side": 0,
+      "message": "Thanks, Randy. I handled it in the CL after this one: https://chromium-review.googlesource.com/c/chromium/src/+/663239",
+      "parentUuid": "c214cbb3_5644a5bf",
+      "range": {
+        "startLine": 286,
+        "startChar": 13,
+        "endLine": 286,
+        "endChar": 14
+      },
+      "revId": "eaae0ce09a7fe69097e3218b15605bf6803379bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
