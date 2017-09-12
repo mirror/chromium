@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a77474d_e1e90d8e",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 1891,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-12T00:42:19Z",
+      "side": 1,
+      "message": "Done. Also rearranged the strings so its easier to understand the logic.",
+      "parentUuid": "0ca0ddea_a6745437",
+      "revId": "d9f774c212b095cee3ff14394475fd31c11ab0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27880402_2a44da91",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "d9f774c212b095cee3ff14394475fd31c11ab0ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6f9264_90e97c3e",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 1897,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-12T00:42:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27880402_2a44da91",
+      "revId": "d9f774c212b095cee3ff14394475fd31c11ab0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "77f90783_1f1db439",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 1904,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-12T00:42:19Z",
+      "side": 1,
+      "message": "Isn\u0027t \"Applications\" a proper noun? If so, wouldn\u0027t the string be the same even if \"not use_titlecase\"?",
+      "parentUuid": "3da53eea_b6ee25b2",
+      "range": {
+        "startLine": 1904,
+        "startChar": 72,
+        "endLine": 1904,
+        "endChar": 77
+      },
+      "revId": "d9f774c212b095cee3ff14394475fd31c11ab0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b27c21ec_56fc7821",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "d9f774c212b095cee3ff14394475fd31c11ab0ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f816fbdd_17187862",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 1938,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-12T00:42:19Z",
+      "side": 1,
+      "message": "Done (x2)",
+      "parentUuid": "b27c21ec_56fc7821",
+      "revId": "d9f774c212b095cee3ff14394475fd31c11ab0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
