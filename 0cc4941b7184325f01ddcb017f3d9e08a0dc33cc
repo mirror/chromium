@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c128cce2_0ccb6893",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-09-12T21:30:53Z",
+      "side": 1,
+      "message": "I found there were still a bunch of places on the service side where GL_DEPTH_STENCIL_ATTACHMENT was passed for WebGL1 and it failed ANGLE validation.  The Framebuffer class on the service side also did some WebGL-specific validation (https://cs.chromium.org/chromium/src/gpu/command_buffer/service/framebuffer_manager.cc?l\u003d767)\n\nEither way, we ended up needing this behaviour in ANGLE for Edge and Safari.",
+      "parentUuid": "8cab03b5_1d1e841a",
+      "revId": "0cc4941b7184325f01ddcb017f3d9e08a0dc33cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9739ff02_9551a058",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
         "patchSetId": 12
