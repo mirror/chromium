@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34cea347_e71a707d",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_transfer_controller.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-12T04:14:20Z",
+      "side": 1,
+      "message": "Maybe we can add only one public method to FileTable and FileGrid, and use it like this?\n\nvar thumbnail \u003d this.listContainer_.currentView.getLoadedThumbnail(index);\nif (thumbnail) {\n  var canvas \u003d ....",
+      "revId": "32cbf7de88abf7adb26b49ddd841153137104cd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
