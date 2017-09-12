@@ -1,3 +1,4 @@
+#include <iostream>
 // Copyright 2014 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -490,6 +491,90 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserDisableWebSecurityTest,
   EXPECT_TRUE(
       ExecuteScriptAndExtractString(shell()->web_contents(), script, &result));
   EXPECT_TRUE(result.empty());
+}
+
+namespace {
+
+class CancelThrottle : public NavigationThrottle {
+ public:
+  CancelThrottle(NavigationHandle* navigation_handle)
+      : NavigationThrottle(navigation_handle) {}
+
+  const char* GetNameForLogging() override { return "CancelThrottle"; }
+
+  ThrottleCheckResult WillStartRequest() override {
+    return ThrottleCheckResult::CANCEL;
+  }
+};
+
+// Creates CancelThrottles for any navigations to a given URL.
+class NavigationCanceller : public WebContentsObserver {
+ public:
+  NavigationCanceller(WebContents* web_contents, const GURL& url)
+      : WebContentsObserver(web_contents), cancel_url_(url) {}
+
+  ~NavigationCanceller() override {}
+
+  void DidStartNavigation(NavigationHandle* navigation_handle) override {
+    if (navigation_handle->GetURL() != cancel_url_) {
+      return;
+    }
+
+    std::unique_ptr<NavigationThrottle> cancel_throttle(
+        new CancelThrottle(navigation_handle));
+    navigation_handle->RegisterThrottleForTesting(std::move(cancel_throttle));
+  }
+
+  void DidFinishNavigation(NavigationHandle* navigation_handle) override {
+    if (navigation_handle->GetURL() == cancel_url_)
+      waiter_.Quit();
+  }
+
+  void WaitForCancel() { waiter_.Run(); }
+
+ private:
+  const GURL cancel_url_;
+  base::RunLoop waiter_;
+};
+}  // namespace
+
+// Description:
+// * Load page 'a' that contains an iframe to 'b'.
+// * Defer 'b' so that 'a' loads until we decide to stop it.
+// * Navigate to 'c' from 'a' with a render initiated navigation.
+// * Block 'c' to trigger a dropped navigation.
+// * Resume 'b' and make sure 'a' finishes loading normally.
+IN_PROC_BROWSER_TEST_F(
+    BrowserSideNavigationBrowserTest,
+    VerifyCancellationOfProvisionalLoadUsingDroppedNavigation) {
+  GURL a(embedded_test_server()->GetURL("/dropped_loading_main.html"));
+  GURL b(embedded_test_server()->GetURL("/title1.html"));
+  GURL c(embedded_test_server()->GetURL("/title2.html"));
+
+  TitleWatcher a_loader(shell()->web_contents(),
+                        base::ASCIIToUTF16("Navigation Finished"));
+  TestNavigationManager b_deferer(shell()->web_contents(), b);
+  NavigationCanceller c_canceler(shell()->web_contents(), c);
+
+  // 1) Load page 'a' that contains an iframe to 'b'.
+  shell()->LoadURL(a);
+
+  // 2) Defer 'b' so that 'a' loads until we decide to stop it.
+  EXPECT_TRUE(b_deferer.WaitForRequestStart());
+  EXPECT_TRUE(shell()->web_contents()->IsLoading());
+
+  // 3) Navigate to 'c' from 'a' with a render initiated navigation.
+  EXPECT_TRUE(ExecuteScript(shell(), "window.location = 'title2.html'"));
+
+  // 4) Block 'c' to trigger a dropped navigation.
+  c_canceler.WaitForCancel();
+  EXPECT_TRUE(shell()->web_contents()->IsLoading());
+
+  // 5) Resume 'b' and make sure 'a' finishes loading normally.
+  b_deferer.WaitForNavigationFinished();
+  EXPECT_EQ(base::ASCIIToUTF16("Navigation Finished"),
+            a_loader.WaitAndGetTitle());
+  EXPECT_FALSE(shell()->web_contents()->IsLoading());
 }
 
 }  // namespace content
