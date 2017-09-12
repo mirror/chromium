@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b958ab7f_728a0f51",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1861,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-12T21:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c692ccd_997a0445",
+      "range": {
+        "startLine": 1861,
+        "startChar": 33,
+        "endLine": 1861,
+        "endChar": 34
+      },
+      "revId": "72c8f0a03124ade4eac1b54c8f6695adee449989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4720fb32_9a539543",
         "filename": "content/browser/loader/resource_request_info_impl.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-07T16:22:08Z",
       "side": 1,
       "message": "Not going to block on this, but if this were nullptr, GetAssociatedRenderFrame would crash, since it dereferences this.",
+      "range": {
+        "startLine": 325,
+        "startChar": 14,
+        "endLine": 325,
+        "endChar": 0
+      },
+      "revId": "72c8f0a03124ade4eac1b54c8f6695adee449989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291f2131_df7e4d62",
+        "filename": "content/browser/loader/resource_request_info_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-12T21:11:08Z",
+      "side": 1,
+      "message": "Good point.  I\u0027m going to leave it in, since I\u0027m sometimes surprised and confused by things that don\u0027t crash, but yeah, probably not going to trip.",
+      "parentUuid": "4720fb32_9a539543",
       "range": {
         "startLine": 325,
         "startChar": 14,
