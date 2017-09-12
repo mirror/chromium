@@ -501,23 +501,6 @@ gfx::Image ChromeShellDelegate::GetDeprecatedAcceleratorImage() const {
       IDR_BLUETOOTH_KEYBOARD);
 }
 
-bool ChromeShellDelegate::GetTouchscreenEnabled(
-    ash::TouchscreenEnabledSource source) const {
-  return chromeos::system::InputDeviceSettings::Get()->GetTouchscreenEnabled(
-      source);
-}
-
-void ChromeShellDelegate::SetTouchscreenEnabled(
-    bool enabled,
-    ash::TouchscreenEnabledSource source) {
-  chromeos::system::InputDeviceSettings::Get()->SetTouchscreenEnabled(enabled,
-                                                                      source);
-}
-
-void ChromeShellDelegate::ToggleTouchpad() {
-  chromeos::system::InputDeviceSettings::Get()->ToggleTouchpad();
-}
-
 std::unique_ptr<keyboard::KeyboardUI> ChromeShellDelegate::CreateKeyboardUI() {
   return base::MakeUnique<ChromeKeyboardUI>(
       ProfileManager::GetActiveUserProfile());
