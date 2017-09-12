@@ -1686,7 +1686,6 @@ void PaintLayer::CollectFragmentsForPaint(
             offset_from_root_can_be_used ? offset_from_root : nullptr);
 
     fragment.pagination_offset = fragment_data->PaginationOffset();
-
     fragments.push_back(fragment);
   }
 }

@@ -588,17 +588,11 @@ class GraphicsLayer::LayersAsJSONArray {
                 int& transform_id,
                 FloatPoint& position) {
     FloatPoint scroll_position = ScrollPosition(layer);
-    if (scroll_position != FloatPoint()) {
-      // Output scroll position as a transform.
-      auto* scroll_translate_json = AddTransformJSON(transform_id);
-      scroll_translate_json->SetArray(
-          "transform", TransformAsJSONArray(TransformationMatrix().Translate(
-                           -scroll_position.X(), -scroll_position.Y())));
-      layer.AddFlattenInheritedTransformJSON(*scroll_translate_json);
-    }
+    bool has_scroll = scroll_position != FloatPoint();
 
     if (!layer.transform_.IsIdentity() || layer.rendering_context3d_ ||
-        layer.GetCompositingReasons() & kCompositingReason3DTransform) {
+        layer.GetCompositingReasons() & kCompositingReason3DTransform ||
+        has_scroll) {
       if (position != FloatPoint()) {
         // Output position offset as a transform.
         auto* position_translate_json = AddTransformJSON(transform_id);
@@ -611,6 +605,15 @@ class GraphicsLayer::LayersAsJSONArray {
                                               false);
         }
         position = FloatPoint();
+      }
+
+      if (has_scroll) {
+        // Output scroll position as a transform.
+        auto* scroll_translate_json = AddTransformJSON(transform_id);
+        scroll_translate_json->SetArray(
+            "transform", TransformAsJSONArray(TransformationMatrix().Translate(
+                             -scroll_position.X(), -scroll_position.Y())));
+        layer.AddFlattenInheritedTransformJSON(*scroll_translate_json);
       }
 
       if (!layer.transform_.IsIdentity() || layer.rendering_context3d_) {
