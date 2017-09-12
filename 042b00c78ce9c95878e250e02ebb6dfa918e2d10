@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a8a0f60_f1de3660",
+        "filename": "chrome/browser/chromeos/arc/arc_support_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-09-12T09:05:30Z",
+      "side": 1,
+      "message": "Nit: Combine these into 2 strings:\nconstexpr char kFederationUrlOption[] \u003d \"options.federationUrl\"\nconstexpr char kDeviceManagementUrlPrefixOption[] \u003d \"options.deviceManagementUrlPrefix\"\nand use those below.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 38
+      },
+      "revId": "042b00c78ce9c95878e250e02ebb6dfa918e2d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
