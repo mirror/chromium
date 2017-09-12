@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/callback_forward.h"
 #include "public/platform/WebApplicationCacheHost.h"
 #include "public/platform/WebDocumentSubresourceFilter.h"
 #include "public/platform/WebURL.h"
@@ -28,7 +29,15 @@ class WebDocumentSubresourceFilter;
 // used to create a new WebURLLoader instance in the worker thread.
 class WebWorkerFetchContext {
  public:
+  class SyncLoadTerminator {
+   public:
+    virtual ~SyncLoadTerminator() {}
+    virtual void Terminate() = 0;
+  };
+
   virtual ~WebWorkerFetchContext() {}
+
+  virtual std::unique_ptr<SyncLoadTerminator> CreateSyncLoadTerminator() = 0;
 
   virtual void InitializeOnWorkerThread(base::SingleThreadTaskRunner*) = 0;
 
