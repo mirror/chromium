@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "450e5126_8048a245",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1335,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-12T11:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f0b52e2_1cafed56",
+      "revId": "1ed13fd94f88428b49d461959ab67fedfe46fdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a55e0fa7_31381c37",
         "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-12T09:04:07Z",
       "side": 1,
       "message": "I think we can define a new public API in LayoutGrid, like ContentAlignment(GridAxis) so these multiple lines can be replaced by a single line, independently of the direction/axis logic. \n\nWe have similar API for SelfAlignmentForChild() and DefaultAlignment()",
+      "revId": "1ed13fd94f88428b49d461959ab67fedfe46fdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8772e36_890359a7",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-12T11:12:02Z",
+      "side": 1,
+      "message": "Good idea, but I prefer to leave this for a follow-up patch.",
+      "parentUuid": "a55e0fa7_31381c37",
       "revId": "1ed13fd94f88428b49d461959ab67fedfe46fdf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "1ed13fd94f88428b49d461959ab67fedfe46fdf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b541c2e4_f52bd181",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-12T11:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ad24cca_c29cf5f3",
+      "revId": "1ed13fd94f88428b49d461959ab67fedfe46fdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
