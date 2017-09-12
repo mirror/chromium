@@ -440,8 +440,8 @@ void ServiceWorkerRegisterJob::InstallAndContinue() {
       ServiceWorkerMetrics::EventType::INSTALL,
       base::BindOnce(&ServiceWorkerRegisterJob::DispatchInstallEvent,
                      weak_factory_.GetWeakPtr()),
-      base::Bind(&ServiceWorkerRegisterJob::OnInstallFailed,
-                 weak_factory_.GetWeakPtr()));
+      base::BindOnce(&ServiceWorkerRegisterJob::OnInstallFailed,
+                     weak_factory_.GetWeakPtr()));
 }
 
 void ServiceWorkerRegisterJob::DispatchInstallEvent() {
