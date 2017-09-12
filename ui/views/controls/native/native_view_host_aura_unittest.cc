@@ -192,7 +192,7 @@ TEST_F(NativeViewHostAuraTest, FastResizePath) {
   // with the native view positioned at the origin of the clipping window and
   // the clipping window positioned where the native view was requested.
   host()->set_fast_resize(false);
-  native_host()->ShowWidget(5, 10, 100, 100);
+  native_host()->ShowWidget(5, 10, 100, 100, 100, 100);
   EXPECT_EQ(gfx::Rect(0, 0, 100, 100).ToString(),
             host()->native_view()->bounds().ToString());
   EXPECT_EQ(gfx::Rect(5, 10, 100, 100).ToString(),
@@ -201,7 +201,7 @@ TEST_F(NativeViewHostAuraTest, FastResizePath) {
   // With fast resize, the native view should remain the same size but be
   // clipped the requested size.
   host()->set_fast_resize(true);
-  native_host()->ShowWidget(10, 25, 50, 50);
+  native_host()->ShowWidget(10, 25, 50, 50, 50, 50);
   EXPECT_EQ(gfx::Rect(0, 0, 100, 100).ToString(),
             host()->native_view()->bounds().ToString());
   EXPECT_EQ(gfx::Rect(10, 25, 50, 50).ToString(),
@@ -209,7 +209,7 @@ TEST_F(NativeViewHostAuraTest, FastResizePath) {
 
   // Turning off fast resize should make the native view start resizing again.
   host()->set_fast_resize(false);
-  native_host()->ShowWidget(10, 25, 50, 50);
+  native_host()->ShowWidget(10, 25, 50, 50, 50, 50);
   EXPECT_EQ(gfx::Rect(0, 0, 50, 50).ToString(),
             host()->native_view()->bounds().ToString());
   EXPECT_EQ(gfx::Rect(10, 25, 50, 50).ToString(),
@@ -226,7 +226,7 @@ TEST_F(NativeViewHostAuraTest, InstallClip) {
   // Without a clip, the clipping window should always be positioned at the
   // requested coordinates with the native view positioned at the origin of the
   // clipping window.
-  native_host()->ShowWidget(10, 20, 100, 100);
+  native_host()->ShowWidget(10, 20, 100, 100, 100, 100);
   EXPECT_EQ(gfx::Rect(0, 0, 100, 100).ToString(),
             host()->native_view()->bounds().ToString());
   EXPECT_EQ(gfx::Rect(10, 20, 100, 100).ToString(),
@@ -234,7 +234,7 @@ TEST_F(NativeViewHostAuraTest, InstallClip) {
 
   // Clip to the bottom right quarter of the native view.
   native_host()->InstallClip(60, 70, 50, 50);
-  native_host()->ShowWidget(10, 20, 100, 100);
+  native_host()->ShowWidget(10, 20, 100, 100, 100, 100);
   EXPECT_EQ(gfx::Rect(-50, -50, 100, 100).ToString(),
             host()->native_view()->bounds().ToString());
   EXPECT_EQ(gfx::Rect(60, 70, 50, 50).ToString(),
@@ -242,7 +242,7 @@ TEST_F(NativeViewHostAuraTest, InstallClip) {
 
   // Clip to the center of the native view.
   native_host()->InstallClip(35, 45, 50, 50);
-  native_host()->ShowWidget(10, 20, 100, 100);
+  native_host()->ShowWidget(10, 20, 100, 100, 100, 100);
   EXPECT_EQ(gfx::Rect(-25, -25, 100, 100).ToString(),
             host()->native_view()->bounds().ToString());
   EXPECT_EQ(gfx::Rect(35, 45, 50, 50).ToString(),
@@ -251,7 +251,7 @@ TEST_F(NativeViewHostAuraTest, InstallClip) {
   // Uninstalling the clip should make the clipping window match the native view
   // again.
   native_host()->UninstallClip();
-  native_host()->ShowWidget(10, 20, 100, 100);
+  native_host()->ShowWidget(10, 20, 100, 100, 100, 100);
   EXPECT_EQ(gfx::Rect(0, 0, 100, 100).ToString(),
             host()->native_view()->bounds().ToString());
   EXPECT_EQ(gfx::Rect(10, 20, 100, 100).ToString(),
@@ -300,7 +300,7 @@ TEST_F(NativeViewHostAuraTest, ParentAfterDetach) {
 TEST_F(NativeViewHostAuraTest, RemoveClippingWindowOrder) {
   CreateHost();
   toplevel()->SetBounds(gfx::Rect(20, 20, 100, 100));
-  native_host()->ShowWidget(10, 20, 100, 100);
+  native_host()->ShowWidget(10, 20, 100, 100, 100, 100);
 
   NativeViewHostWindowObserver test_observer;
   clipping_window()->AddObserver(&test_observer);
@@ -382,6 +382,26 @@ TEST_F(NativeViewHostAuraTest, SimpleShowAndHide) {
 
   DestroyHost();
   DestroyTopLevel();
+}
+
+// Ensure the native view is correctly scaled when the render size is different.
+TEST_F(NativeViewHostAuraTest, RenderScaled) {
+  CreateHost();
+  toplevel()->SetBounds(gfx::Rect(20, 20, 100, 100));
+
+  // Pass in a render size larger than the view.
+  native_host()->ShowWidget(5, 10, 100, 100, 64, 48);
+
+  // View bounds should equal render size.
+  EXPECT_EQ(gfx::Rect(0, 0, 64, 48).ToString(),
+            host()->native_view()->bounds().ToString());
+
+  // Add have a transform which is not the default identity transform.
+  gfx::Transform transform;
+  EXPECT_NE(transform.ToString(),
+            host()->native_view()->transform().ToString());
+
+  DestroyHost();
 }
 
 namespace {
