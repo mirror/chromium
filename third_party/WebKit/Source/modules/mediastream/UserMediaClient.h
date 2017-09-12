@@ -33,7 +33,7 @@
 
 #include "modules/ModulesExport.h"
 #include "modules/mediastream/UserMediaClient.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {

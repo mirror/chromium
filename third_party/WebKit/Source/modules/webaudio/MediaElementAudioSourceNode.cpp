@@ -60,7 +60,7 @@ MediaElementAudioSourceHandler::MediaElementAudioSourceHandler(
   Initialize();
 }
 
-PassRefPtr<MediaElementAudioSourceHandler>
+RefPtr<MediaElementAudioSourceHandler>
 MediaElementAudioSourceHandler::Create(AudioNode& node,
                                        HTMLMediaElement& media_element) {
   return AdoptRef(new MediaElementAudioSourceHandler(node, media_element));
@@ -203,7 +203,7 @@ void MediaElementAudioSourceHandler::Process(size_t number_of_frames) {
               ->PostTask(BLINK_FROM_HERE,
                          CrossThreadBind(
                              &MediaElementAudioSourceHandler::PrintCORSMessage,
-                             WrapPassRefPtr(this), current_src_string_));
+                             WrapRefPtr(this), current_src_string_));
         }
       }
       output_bus->Zero();

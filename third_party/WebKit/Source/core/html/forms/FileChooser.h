@@ -74,7 +74,7 @@ class FileChooserClient : public GarbageCollectedMixin {
 
 class FileChooser : public RefCounted<FileChooser> {
  public:
-  static PassRefPtr<FileChooser> Create(FileChooserClient*,
+  static RefPtr<FileChooser> Create(FileChooserClient*,
                                         const WebFileChooserParams&);
   ~FileChooser();
 

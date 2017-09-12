@@ -170,7 +170,7 @@ void SerializeV8Value(v8::Local<v8::Value> value,
   //           wire_data[kSSVHeaderV8VersionOffset]);
 }
 
-PassRefPtr<IDBValue> CreateIDBValue(v8::Isolate* isolate,
+RefPtr<IDBValue> CreateIDBValue(v8::Isolate* isolate,
                                     Vector<char>& wire_bytes,
                                     double primary_key,
                                     const WebString& key_path) {

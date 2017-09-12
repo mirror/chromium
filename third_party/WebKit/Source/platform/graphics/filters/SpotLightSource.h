@@ -30,7 +30,7 @@ namespace blink {
 
 class PLATFORM_EXPORT SpotLightSource final : public LightSource {
  public:
-  static PassRefPtr<SpotLightSource> Create(const FloatPoint3D& position,
+  static RefPtr<SpotLightSource> Create(const FloatPoint3D& position,
                                             const FloatPoint3D& direction,
                                             float specular_exponent,
                                             float limiting_cone_angle) {

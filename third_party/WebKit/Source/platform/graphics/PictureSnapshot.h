@@ -56,7 +56,7 @@ class PLATFORM_EXPORT PictureSnapshot : public RefCounted<PictureSnapshot> {
     Vector<char> data;
   };
 
-  static PassRefPtr<PictureSnapshot> Load(
+  static RefPtr<PictureSnapshot> Load(
       const Vector<RefPtr<TilePictureStream>>&);
 
   PictureSnapshot(sk_sp<const SkPicture>);

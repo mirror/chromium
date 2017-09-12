@@ -28,7 +28,7 @@ class PLATFORM_EXPORT ScrollHitTestDisplayItem final : public DisplayItem {
   ScrollHitTestDisplayItem(
       const DisplayItemClient&,
       Type,
-      PassRefPtr<const TransformPaintPropertyNode> scroll_offset_node);
+      RefPtr<const TransformPaintPropertyNode> scroll_offset_node);
   ~ScrollHitTestDisplayItem();
 
   const TransformPaintPropertyNode& scroll_offset_node() const {
@@ -51,7 +51,7 @@ class PLATFORM_EXPORT ScrollHitTestDisplayItem final : public DisplayItem {
       GraphicsContext&,
       const DisplayItemClient&,
       DisplayItem::Type,
-      PassRefPtr<const TransformPaintPropertyNode> scroll_offset_node);
+      RefPtr<const TransformPaintPropertyNode> scroll_offset_node);
 
  private:
   const ScrollPaintPropertyNode& scroll_node() const {

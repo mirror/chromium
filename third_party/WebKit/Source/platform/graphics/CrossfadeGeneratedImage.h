@@ -36,9 +36,9 @@ namespace blink {
 
 class PLATFORM_EXPORT CrossfadeGeneratedImage final : public GeneratedImage {
  public:
-  static PassRefPtr<CrossfadeGeneratedImage> Create(
-      PassRefPtr<Image> from_image,
-      PassRefPtr<Image> to_image,
+  static RefPtr<CrossfadeGeneratedImage> Create(
+      RefPtr<Image> from_image,
+      RefPtr<Image> to_image,
       float percentage,
       IntSize crossfade_size,
       const IntSize& size) {
@@ -61,8 +61,8 @@ class PLATFORM_EXPORT CrossfadeGeneratedImage final : public GeneratedImage {
             ImageClampingMode) override;
   void DrawTile(GraphicsContext&, const FloatRect&) final;
 
-  CrossfadeGeneratedImage(PassRefPtr<Image> from_image,
-                          PassRefPtr<Image> to_image,
+  CrossfadeGeneratedImage(RefPtr<Image> from_image,
+                          RefPtr<Image> to_image,
                           float percentage,
                           IntSize crossfade_size,
                           const IntSize&);

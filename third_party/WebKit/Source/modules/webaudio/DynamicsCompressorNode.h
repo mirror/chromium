@@ -40,7 +40,7 @@ class DynamicsCompressorOptions;
 
 class MODULES_EXPORT DynamicsCompressorHandler final : public AudioHandler {
  public:
-  static PassRefPtr<DynamicsCompressorHandler> Create(
+  static RefPtr<DynamicsCompressorHandler> Create(
       AudioNode&,
       float sample_rate,
       AudioParamHandler& threshold,

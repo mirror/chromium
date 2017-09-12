@@ -74,7 +74,7 @@ class FontDataCache {
  public:
   FontDataCache() {}
 
-  PassRefPtr<SimpleFontData> Get(const FontPlatformData*,
+  RefPtr<SimpleFontData> Get(const FontPlatformData*,
                                  ShouldRetain = kRetain,
                                  bool = false);
   bool Contains(const FontPlatformData*) const;

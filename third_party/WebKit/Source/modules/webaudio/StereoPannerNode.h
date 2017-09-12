@@ -21,7 +21,7 @@ class StereoPannerOptions;
 // specifically designed for equal-power stereo panning.
 class StereoPannerHandler final : public AudioHandler {
  public:
-  static PassRefPtr<StereoPannerHandler> Create(AudioNode&,
+  static RefPtr<StereoPannerHandler> Create(AudioNode&,
                                                 float sample_rate,
                                                 AudioParamHandler& pan);
   ~StereoPannerHandler() override;

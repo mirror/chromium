@@ -77,10 +77,10 @@ struct CrossThreadCopierBase<T, false> {
 };
 
 static_assert(
-    (std::is_same<PassRefPtr<CopierThreadSafeRefCountedTest>,
-                  CrossThreadCopier<PassRefPtr<
+    (std::is_same<RefPtr<CopierThreadSafeRefCountedTest>,
+                  CrossThreadCopier<RefPtr<
                       CopierThreadSafeRefCountedTest>>::Type>::value),
-    "PassRefPtr + ThreadSafeRefCounted should pass CrossThreadCopier");
+    "RefPtr + ThreadSafeRefCounted should pass CrossThreadCopier");
 static_assert(
     (std::is_same<RefPtr<CopierThreadSafeRefCountedTest>,
                   CrossThreadCopier<

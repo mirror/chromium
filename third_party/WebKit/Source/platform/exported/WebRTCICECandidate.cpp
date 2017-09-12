@@ -30,7 +30,7 @@
 
 #include "public/platform/WebRTCICECandidate.h"
 
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/RefCounted.h"
 #include "public/platform/WebString.h"
 
@@ -39,7 +39,7 @@ namespace blink {
 class WebRTCICECandidatePrivate final
     : public RefCounted<WebRTCICECandidatePrivate> {
  public:
-  static PassRefPtr<WebRTCICECandidatePrivate> Create(
+  static RefPtr<WebRTCICECandidatePrivate> Create(
       const WebString& candidate,
       const WebString& sdp_mid,
       unsigned short sdp_m_line_index) {

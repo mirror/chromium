@@ -39,7 +39,7 @@
 #include "platform/blob/BlobBytesProvider.h"
 #include "platform/blob/BlobRegistry.h"
 #include "platform/text/LineEnding.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Vector.h"
@@ -145,7 +145,7 @@ void BlobData::SetContentType(const String& content_type) {
     content_type_ = "";
 }
 
-void BlobData::AppendData(PassRefPtr<RawData> data,
+void BlobData::AppendData(RefPtr<RawData> data,
                           long long offset,
                           long long length) {
   DCHECK_EQ(file_composition_, FileCompositionStatus::NO_UNKNOWN_SIZE_FILES)
@@ -168,7 +168,7 @@ void BlobData::AppendFile(const String& path,
       BlobDataItem(path, offset, length, expected_modification_time));
 }
 
-void BlobData::AppendBlob(PassRefPtr<BlobDataHandle> data_handle,
+void BlobData::AppendBlob(RefPtr<BlobDataHandle> data_handle,
                           long long offset,
                           long long length) {
   DCHECK_EQ(file_composition_, FileCompositionStatus::NO_UNKNOWN_SIZE_FILES)

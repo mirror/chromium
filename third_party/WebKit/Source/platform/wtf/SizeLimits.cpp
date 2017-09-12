@@ -30,7 +30,7 @@
 
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/ContainerAnnotations.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/ThreadRestrictionVerifier.h"
@@ -79,8 +79,8 @@ struct SameSizeAsVectorWithInlineCapacity {
 
 static_assert(sizeof(std::unique_ptr<int>) == sizeof(int*),
               "std::unique_ptr should stay small");
-static_assert(sizeof(PassRefPtr<RefCounted<int>>) == sizeof(int*),
-              "PassRefPtr should stay small");
+static_assert(sizeof(RefPtr<RefCounted<int>>) == sizeof(int*),
+              "RefPtr should stay small");
 static_assert(sizeof(RefCounted<int>) == sizeof(SameSizeAsRefCounted),
               "RefCounted should stay small");
 static_assert(sizeof(RefPtr<RefCounted<int>>) == sizeof(int*),

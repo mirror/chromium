@@ -30,7 +30,7 @@
 #include "modules/webaudio/AudioNode.h"
 #include "platform/audio/AudioSourceProviderClient.h"
 #include "platform/audio/MultiChannelResampler.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/ThreadingPrimitives.h"
 
 namespace blink {
@@ -41,7 +41,7 @@ class MediaElementAudioSourceOptions;
 
 class MediaElementAudioSourceHandler final : public AudioHandler {
  public:
-  static PassRefPtr<MediaElementAudioSourceHandler> Create(AudioNode&,
+  static RefPtr<MediaElementAudioSourceHandler> Create(AudioNode&,
                                                            HTMLMediaElement&);
   ~MediaElementAudioSourceHandler() override;
 

@@ -304,14 +304,14 @@ class ConicGradient final : public Gradient {
 
 }  // anonymous ns
 
-PassRefPtr<Gradient> Gradient::CreateLinear(const FloatPoint& p0,
+RefPtr<Gradient> Gradient::CreateLinear(const FloatPoint& p0,
                                             const FloatPoint& p1,
                                             GradientSpreadMethod spread_method,
                                             ColorInterpolation interpolation) {
   return AdoptRef(new LinearGradient(p0, p1, spread_method, interpolation));
 }
 
-PassRefPtr<Gradient> Gradient::CreateRadial(const FloatPoint& p0,
+RefPtr<Gradient> Gradient::CreateRadial(const FloatPoint& p0,
                                             float r0,
                                             const FloatPoint& p1,
                                             float r1,
@@ -322,7 +322,7 @@ PassRefPtr<Gradient> Gradient::CreateRadial(const FloatPoint& p0,
                                      spread_method, interpolation));
 }
 
-PassRefPtr<Gradient> Gradient::CreateConic(const FloatPoint& position,
+RefPtr<Gradient> Gradient::CreateConic(const FloatPoint& position,
                                            float rotation,
                                            float start_angle,
                                            float end_angle,

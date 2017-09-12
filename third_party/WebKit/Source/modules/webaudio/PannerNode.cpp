@@ -82,7 +82,7 @@ PannerHandler::PannerHandler(AudioNode& node,
   Initialize();
 }
 
-PassRefPtr<PannerHandler> PannerHandler::Create(
+RefPtr<PannerHandler> PannerHandler::Create(
     AudioNode& node,
     float sample_rate,
     AudioParamHandler& position_x,

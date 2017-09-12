@@ -69,7 +69,7 @@ class PLATFORM_EXPORT AudioBus : public ThreadSafeRefCounted<AudioBus> {
   // case the AudioChannels will memory-manage their own storage.  If allocate
   // is false then setChannelMemory() has to be called later on for each
   // channel before the AudioBus is useable...
-  static PassRefPtr<AudioBus> Create(unsigned number_of_channels,
+  static RefPtr<AudioBus> Create(unsigned number_of_channels,
                                      size_t length,
                                      bool allocate = true);
 
@@ -111,7 +111,7 @@ class PLATFORM_EXPORT AudioBus : public ThreadSafeRefCounted<AudioBus> {
 
   // Creates a new buffer from a range in the source buffer.
   // 0 may be returned if the range does not fit in the sourceBuffer
-  static PassRefPtr<AudioBus> CreateBufferFromRange(
+  static RefPtr<AudioBus> CreateBufferFromRange(
       const AudioBus* source_buffer,
       unsigned start_frame,
       unsigned end_frame);
@@ -121,7 +121,7 @@ class PLATFORM_EXPORT AudioBus : public ThreadSafeRefCounted<AudioBus> {
   // setSampleRate() must have been previously called on sourceBus.
   // Note: sample-rate conversion is already handled in the file-reading code
   // for the mac port, so we don't need this.
-  static PassRefPtr<AudioBus> CreateBySampleRateConverting(
+  static RefPtr<AudioBus> CreateBySampleRateConverting(
       const AudioBus* source_bus,
       bool mix_to_mono,
       double new_sample_rate);
@@ -129,7 +129,7 @@ class PLATFORM_EXPORT AudioBus : public ThreadSafeRefCounted<AudioBus> {
   // Creates a new AudioBus by mixing all the channels down to mono.
   // If sourceBus is already mono, then the returned AudioBus will simply be a
   // copy.
-  static PassRefPtr<AudioBus> CreateByMixingToMono(const AudioBus* source_bus);
+  static RefPtr<AudioBus> CreateByMixingToMono(const AudioBus* source_bus);
 
   // Scales all samples by the same amount.
   void Scale(float scale);
@@ -169,7 +169,7 @@ class PLATFORM_EXPORT AudioBus : public ThreadSafeRefCounted<AudioBus> {
   // Makes maximum absolute value == 1.0 (if possible).
   void Normalize();
 
-  static PassRefPtr<AudioBus> GetDataResource(const char* name,
+  static RefPtr<AudioBus> GetDataResource(const char* name,
                                               float sample_rate);
 
  protected:

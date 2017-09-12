@@ -27,7 +27,7 @@
 #define ChannelSplitterNode_h
 
 #include "modules/webaudio/AudioNode.h"
-#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
@@ -36,7 +36,7 @@ class ChannelSplitterOptions;
 
 class ChannelSplitterHandler final : public AudioHandler {
  public:
-  static PassRefPtr<ChannelSplitterHandler> Create(AudioNode&,
+  static RefPtr<ChannelSplitterHandler> Create(AudioNode&,
                                                    float sample_rate,
                                                    unsigned number_of_outputs);
 
