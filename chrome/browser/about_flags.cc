@@ -2470,6 +2470,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kDisableTabForDesktopShareDescription, kOsAll,
      SINGLE_VALUE_TYPE(extensions::switches::kDisableTabForDesktopShare)},
 #endif  // ENABLE_EXTENSIONS
+    {"content-suggestions-debug-log",
+     flag_descriptions::kContentSuggestionsDebugLogName,
+     flag_descriptions::kContentSuggestionsDebugLogDescription, kOsAll,
+     FEATURE_VALUE_TYPE(ntp_snippets::kContentSuggestionsDebugLog)},
 #if defined(OS_ANDROID)
     {"keep-prefetched-content-suggestions",
      flag_descriptions::kKeepPrefetchedContentSuggestionsName,
