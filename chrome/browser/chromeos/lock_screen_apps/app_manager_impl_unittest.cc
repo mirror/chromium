@@ -18,6 +18,7 @@
 #include "base/test/simple_test_tick_clock.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
+#include "chrome/browser/chromeos/lock_screen_apps/profile_loader_impl.h"
 #include "chrome/browser/chromeos/login/users/scoped_test_user_manager.h"
 #include "chrome/browser/chromeos/note_taking_helper.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
@@ -360,7 +361,10 @@ class LockScreenAppManagerImplTest
   }
 
   void InitializeAndStartAppManager(Profile* profile) {
-    app_manager()->Initialize(profile, lock_screen_profile());
+    lock_screen_profile_loader_ =
+        base::MakeUnique<lock_screen_apps::ProfileLoaderImpl>(profile);
+    lock_screen_profile_loader_->Initialize();
+    app_manager()->Initialize(profile, lock_screen_profile_loader_.get());
     app_manager()->Start(
         base::Bind(&LockScreenAppManagerImplTest::OnNoteTakingChanged,
                    base::Unretained(this)));
@@ -397,6 +401,7 @@ class LockScreenAppManagerImplTest
 
  protected:
   base::SimpleTestTickClock tick_clock_;
+  std::unique_ptr<lock_screen_apps::ProfileLoader> lock_screen_profile_loader_;
 
  private:
   void OnNoteTakingChanged() { ++note_taking_changed_count_; }
