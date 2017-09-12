@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5506de71_c3069311",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-12T16:34:19Z",
+      "side": 1,
+      "message": "Nit: Maybe move this at the top of the list? In case you end up adding more cases later.\n\nIf you do, update XML as well.",
+      "range": {
+        "startLine": 188,
+        "startChar": 16,
+        "endLine": 188,
+        "endChar": 0
+      },
+      "revId": "c1dc9928504804663a91c3f03165cb3e86db6119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4a85ca_6fae5944",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-12T16:34:19Z",
+      "side": 1,
+      "message": "Nit: prefix with g_",
+      "range": {
+        "startLine": 193,
+        "startChar": 5,
+        "endLine": 193,
+        "endChar": 19
+      },
+      "revId": "c1dc9928504804663a91c3f03165cb3e86db6119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
