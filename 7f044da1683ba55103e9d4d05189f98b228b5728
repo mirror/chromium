@@ -1,0 +1,524 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e357e718_d74b1c09",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "!!! This is awesome",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dd93f33_ac816aee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "So is this.. all of this is awesome",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b049a7d_ad83a635",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "nit: can you flip this condition and early out instad? Less indenting that way.",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6525ecc_a5f93881",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "nit: Maybe\n\nconst auto\u0026 metdata \u003d raster_source_-\u003edisplay_list()-\u003ediscardable_image_map().animated_images_metadata();\nfor (const auto\u0026 data : metadata) {\n}\n\n\nit just looks a bit bulky",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a528fe6_a19b2acf",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "nit: is different.",
+      "range": {
+        "startLine": 612,
+        "startChar": 57,
+        "endLine": 613,
+        "endChar": 17
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f78a607_e18d9bab",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "nit: Can you extract this block to a helper? You call a very similar thing in the dtor.",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef749bdf_d5e781a1",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "nit: might as well move this block to a helper too",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c97498_1e08c8cb",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "It might be worth UMAing the size of this container.",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "443ae6f3_f12574d2",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "is this consistent with Blink? You might get slightly better scrolling performance if you prepaint-animate as well?",
+      "range": {
+        "startLine": 795,
+        "startChar": 25,
+        "endLine": 795,
+        "endChar": 44
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ab0c71_f90a92ad",
+        "filename": "cc/layers/picture_layer_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "nit: CamelCasePlease",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 40
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa1d80e_18ac0fc4",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "comment, also 5 minutes seems like an eternity :P",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8ea360_eeb24505",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "nit: if (!state.ShouldAnimate()) continue;\n\nThanks for the comment :)",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 32
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "970be7d9_ec180257",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "There\u0027s probably an optimization possible here.. If the image has 2 frames with infinite loop and 10ms delay, and your now - next_desired_frame_time is like 4 minutes, then this will iterate for a long time. Whereas we can modulo and figure out exactly what frame we should land on.",
+      "range": {
+        "startLine": 242,
+        "startChar": 2,
+        "endLine": 242,
+        "endChar": 62
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed64ddb3_57973606",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "just confirming, this is basically saying that the second iteration never catches up, and always plays from start?",
+      "range": {
+        "startLine": 257,
+        "startChar": 4,
+        "endLine": 258,
+        "endChar": 41
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec9e5e3_35ca28ed",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "nit: not needed",
+      "range": {
+        "startLine": 285,
+        "startChar": 9,
+        "endLine": 285,
+        "endChar": 27
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00510d12_8060984e",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "nit: class comment please",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0bc2a4_9b6d93a6",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "image",
+      "range": {
+        "startLine": 26,
+        "startChar": 56,
+        "endLine": 26,
+        "endChar": 61
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39941470_666bd37d",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "Comment on the parameters please",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d13e2c6_3bc1e155",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "api consideration: afaict, you always call this in a loop. it might be worth just passing a vector in and looping internally",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6687f4_ca406894",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "What\u0027s the story for commit to active?",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f669e9e_908dae61",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand what this means, can you elaborate a bit?",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 79
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03a525d_91acd936",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "\"Activate\"?",
+      "range": {
+        "startLine": 88,
+        "startChar": 9,
+        "endLine": 88,
+        "endChar": 28
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ebbdec9_48004a5d",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "we have a cc/base/delayed_unique_notifier.h. Is that usable here? I guess you need a different notification time each schedule?",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28825f5f_ff2f4200",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "hmm, it\u0027s a bit weird to pass \"now\" as a parameter?",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 74
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e5231c_c7afa0a8",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "cool",
+      "range": {
+        "startLine": 278,
+        "startChar": 4,
+        "endLine": 278,
+        "endChar": 40
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28257ea_f25d4fe2",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-12T15:09:12Z",
+      "side": 1,
+      "message": "nit: probably wanna keep the flag short.. maybe don\u0027t need the word \"driven\"?",
+      "range": {
+        "startLine": 360,
+        "startChar": 23,
+        "endLine": 360,
+        "endChar": 30
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
