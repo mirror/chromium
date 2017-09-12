@@ -10990,8 +10990,6 @@ void V8TestObject::reflectTestInterfaceAttributeAttributeSetterCallback(const v8
 
   v8::Local<v8::Value> v8Value = info[0];
 
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
-
   TestObjectV8Internal::reflectTestInterfaceAttributeAttributeSetter(v8Value, info);
 }
 
@@ -11005,8 +11003,6 @@ void V8TestObject::reflectReflectedNameAttributeTestAttributeAttributeSetterCall
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestObject_reflectReflectedNameAttributeTestAttribute_Setter");
 
   v8::Local<v8::Value> v8Value = info[0];
-
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
 
   TestObjectV8Internal::reflectReflectedNameAttributeTestAttributeAttributeSetter(v8Value, info);
 }
@@ -11022,8 +11018,6 @@ void V8TestObject::reflectBooleanAttributeAttributeSetterCallback(const v8::Func
 
   v8::Local<v8::Value> v8Value = info[0];
 
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
-
   TestObjectV8Internal::reflectBooleanAttributeAttributeSetter(v8Value, info);
 }
 
@@ -11037,8 +11031,6 @@ void V8TestObject::reflectLongAttributeAttributeSetterCallback(const v8::Functio
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestObject_reflectLongAttribute_Setter");
 
   v8::Local<v8::Value> v8Value = info[0];
-
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
 
   TestObjectV8Internal::reflectLongAttributeAttributeSetter(v8Value, info);
 }
@@ -11054,8 +11046,6 @@ void V8TestObject::reflectUnsignedShortAttributeAttributeSetterCallback(const v8
 
   v8::Local<v8::Value> v8Value = info[0];
 
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
-
   TestObjectV8Internal::reflectUnsignedShortAttributeAttributeSetter(v8Value, info);
 }
 
@@ -11069,8 +11059,6 @@ void V8TestObject::reflectUnsignedLongAttributeAttributeSetterCallback(const v8:
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestObject_reflectUnsignedLongAttribute_Setter");
 
   v8::Local<v8::Value> v8Value = info[0];
-
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
 
   TestObjectV8Internal::reflectUnsignedLongAttributeAttributeSetter(v8Value, info);
 }
@@ -11086,8 +11074,6 @@ void V8TestObject::idAttributeSetterCallback(const v8::FunctionCallbackInfo<v8::
 
   v8::Local<v8::Value> v8Value = info[0];
 
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
-
   TestObjectV8Internal::idAttributeSetter(v8Value, info);
 }
 
@@ -11101,8 +11087,6 @@ void V8TestObject::nameAttributeSetterCallback(const v8::FunctionCallbackInfo<v8
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestObject_name_Setter");
 
   v8::Local<v8::Value> v8Value = info[0];
-
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
 
   TestObjectV8Internal::nameAttributeSetter(v8Value, info);
 }
@@ -11118,8 +11102,6 @@ void V8TestObject::classAttributeSetterCallback(const v8::FunctionCallbackInfo<v
 
   v8::Local<v8::Value> v8Value = info[0];
 
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
-
   TestObjectV8Internal::classAttributeSetter(v8Value, info);
 }
 
@@ -11133,8 +11115,6 @@ void V8TestObject::reflectedIdAttributeSetterCallback(const v8::FunctionCallback
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestObject_reflectedId_Setter");
 
   v8::Local<v8::Value> v8Value = info[0];
-
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
 
   TestObjectV8Internal::reflectedIdAttributeSetter(v8Value, info);
 }
@@ -11150,8 +11130,6 @@ void V8TestObject::reflectedNameAttributeSetterCallback(const v8::FunctionCallba
 
   v8::Local<v8::Value> v8Value = info[0];
 
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
-
   TestObjectV8Internal::reflectedNameAttributeSetter(v8Value, info);
 }
 
@@ -11165,8 +11143,6 @@ void V8TestObject::reflectedClassAttributeSetterCallback(const v8::FunctionCallb
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestObject_reflectedClass_Setter");
 
   v8::Local<v8::Value> v8Value = info[0];
-
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
 
   TestObjectV8Internal::reflectedClassAttributeSetter(v8Value, info);
 }
@@ -11182,8 +11158,6 @@ void V8TestObject::limitedToOnlyOneAttributeAttributeSetterCallback(const v8::Fu
 
   v8::Local<v8::Value> v8Value = info[0];
 
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
-
   TestObjectV8Internal::limitedToOnlyOneAttributeAttributeSetter(v8Value, info);
 }
 
@@ -11197,8 +11171,6 @@ void V8TestObject::limitedToOnlyAttributeAttributeSetterCallback(const v8::Funct
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestObject_limitedToOnlyAttribute_Setter");
 
   v8::Local<v8::Value> v8Value = info[0];
-
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
 
   TestObjectV8Internal::limitedToOnlyAttributeAttributeSetter(v8Value, info);
 }
@@ -11214,8 +11186,6 @@ void V8TestObject::limitedToOnlyOtherAttributeAttributeSetterCallback(const v8::
 
   v8::Local<v8::Value> v8Value = info[0];
 
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
-
   TestObjectV8Internal::limitedToOnlyOtherAttributeAttributeSetter(v8Value, info);
 }
 
@@ -11230,8 +11200,6 @@ void V8TestObject::limitedWithMissingDefaultAttributeAttributeSetterCallback(con
 
   v8::Local<v8::Value> v8Value = info[0];
 
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
-
   TestObjectV8Internal::limitedWithMissingDefaultAttributeAttributeSetter(v8Value, info);
 }
 
@@ -11245,8 +11213,6 @@ void V8TestObject::limitedWithInvalidMissingDefaultAttributeAttributeSetterCallb
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestObject_limitedWithInvalidMissingDefaultAttribute_Setter");
 
   v8::Local<v8::Value> v8Value = info[0];
-
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
 
   TestObjectV8Internal::limitedWithInvalidMissingDefaultAttributeAttributeSetter(v8Value, info);
 }
@@ -11434,8 +11400,6 @@ void V8TestObject::urlStringAttributeAttributeSetterCallback(const v8::FunctionC
 
   v8::Local<v8::Value> v8Value = info[0];
 
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
-
   TestObjectV8Internal::urlStringAttributeAttributeSetter(v8Value, info);
 }
 
@@ -11449,8 +11413,6 @@ void V8TestObject::urlStringAttributeAttributeSetterCallback(const v8::FunctionC
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestObject_urlStringAttribute_Setter");
 
   v8::Local<v8::Value> v8Value = info[0];
-
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
 
   TestObjectV8Internal::urlStringAttributeAttributeSetter(v8Value, info);
 }

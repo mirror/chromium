@@ -109,8 +109,6 @@ void V8SVGTestInterface::typeAttributeSetterCallback(const v8::FunctionCallbackI
 
   v8::Local<v8::Value> v8Value = info[0];
 
-  V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
-
   SVGTestInterfaceV8Internal::typeAttributeSetter(v8Value, info);
 }
 
