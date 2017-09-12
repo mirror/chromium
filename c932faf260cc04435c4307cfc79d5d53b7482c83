@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "107482ba_9c3ed05a",
+        "filename": "ui/app_list/views/app_list_drag_and_drop_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-12T20:36:21Z",
+      "side": 1,
+      "message": "Can we change existing CreateDragIconProxy instead of creating a new method? Same question goes for UpdateDragIconProxyByLocation.",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a0963c_1f363eae",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-12T20:36:21Z",
+      "side": 1,
+      "message": "Layer comes with a cost. Suggest to defer this until we need it and call DestroyLayer when we don\u0027t need it.",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2596e382_ef0022b3",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-12T20:36:21Z",
+      "side": 1,
+      "message": "We probably can get rid of L176-179 so that animation just runs from current transform to the target transform.",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "974184db_ea3638eb",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-12T20:36:21Z",
+      "side": 1,
+      "message": "Is this necessary? Layer transform probably does not needs a repaint.",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c785c4_d893c14c",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-12T20:36:21Z",
+      "side": 1,
+      "message": "Suggest to move ScaleAppIcon calls into SetUIState.",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3160cf2_1bb75eee",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-12T20:36:21Z",
+      "side": 1,
+      "message": "Why do we need to call this from AppListItemView now? Could we still rely on AppsGridView to do this after dragging amount exceeds a threshold?",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cdbc1c3_afcaa46e",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-12T20:36:21Z",
+      "side": 1,
+      "message": "Why do we need to do this? Would this cause mouse drag stop working if user drags mouse before the timer fires?",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f5ad41_b69485e8",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-12T20:36:21Z",
+      "side": 1,
+      "message": "Leave this to AppsGridView after dragging amount exceeds a threshold ?",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
