@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "47474b82_0101b87b",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-12T21:21:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "710fb87e_8bcb4489",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d436789_5454f42d",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 3
@@ -319,6 +337,24 @@
     },
     {
       "key": {
+        "uuid": "f2528b6c_a61d5723",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-12T21:21:00Z",
+      "side": 1,
+      "message": "I prefer reducing inverted conditions. However, if I change it to\n\n  owns_file_(file_semaphore-\u003eAcquire())\n\nThen I have to invert the logic in all other places:\n\n  if (!owns_file_)\n    file_.Initialize(...)\n\nso we wind up with even more inversions which I think leads to an even higher cognitive load.",
+      "parentUuid": "975bb98e_96695f83",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d577b9a_8be78e53",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 3
@@ -366,6 +402,24 @@
       "side": 1,
       "message": "Thank you!\n\nI don\u0027t think this is an issue on any of the architectures that we currently target* but, according to my understanding of the memory model, you can\u0027t assume that the write will happen atomically. In theory, you could be reading partial results of a write (complete garbage) and return that. (Am I wrong? If so, please help me get better!)\n\n*All architectures I know of use some cache coherence protocol to synchronize cores\u0027 access to memory, so all synchronization happens at cache line granularity. As long as the static is naturally aligned, it won\u0027t cross a cache line.",
       "parentUuid": "93f8daa1_38064484",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc9ef512_856b15fd",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-12T21:21:00Z",
+      "side": 1,
+      "message": "You probably know better than I. It was my understanding that integer sized values are always read/written atomically, but maybe that\u0027s not always true.",
+      "parentUuid": "346fa4d1_b79bc5d3",
       "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
