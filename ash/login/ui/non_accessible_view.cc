@@ -1,0 +1,31 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "ash/login/ui/non_accessible_view.h"
+
+#include "ui/accessibility/ax_node_data.h"
+
+namespace ash {
+
+namespace {
+const char* kDefaultName = "NonAccessibleView";
+}  // namespace
+
+NonAccessibleView::NonAccessibleView() : NonAccessibleView(kDefaultName) {}
+
+NonAccessibleView::NonAccessibleView(const std::string& name) : name_(name) {
+  SetFocusBehavior(FocusBehavior::NEVER);
+}
+
+NonAccessibleView::~NonAccessibleView() = default;
+
+const char* NonAccessibleView::GetClassName() const {
+  return name_.c_str();
+}
+
+void NonAccessibleView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  node_data->AddState(ui::AX_STATE_INVISIBLE);
+}
+
+}  // namespace ash
