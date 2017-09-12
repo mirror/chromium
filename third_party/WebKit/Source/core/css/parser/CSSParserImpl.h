@@ -21,6 +21,7 @@ class CSSLazyParsingState;
 class CSSParserContext;
 class CSSParserObserver;
 class CSSParserObserverWrapper;
+class CSSParserRangeBuffer;
 class CSSParserTokenStream;
 class StyleRule;
 class StyleRuleBase;
@@ -140,32 +141,33 @@ class CSSParserImpl {
                                      CSSParserTokenRange prelude,
                                      const RangeOffset& prelude_offset);
   StyleRuleNamespace* ConsumeNamespaceRule(CSSParserTokenRange prelude);
-  StyleRuleMedia* ConsumeMediaRule(CSSParserTokenRange prelude,
+  StyleRuleMedia* ConsumeMediaRule(CSSParserRangeBuffer prelude_buffer,
                                    const RangeOffset& prelude_offset,
                                    CSSParserTokenStream& block);
-  StyleRuleSupports* ConsumeSupportsRule(CSSParserTokenRange prelude,
+  StyleRuleSupports* ConsumeSupportsRule(CSSParserRangeBuffer prelude_buffer,
                                          const RangeOffset& prelude_offset,
                                          CSSParserTokenStream& block);
-  StyleRuleViewport* ConsumeViewportRule(CSSParserTokenRange prelude,
+  StyleRuleViewport* ConsumeViewportRule(CSSParserRangeBuffer prelude_buffer,
                                          const RangeOffset& prelude_offset,
                                          CSSParserTokenStream& block);
-  StyleRuleFontFace* ConsumeFontFaceRule(CSSParserTokenRange prelude,
+  StyleRuleFontFace* ConsumeFontFaceRule(CSSParserRangeBuffer prelude_buffer,
                                          const RangeOffset& prelude_offset,
                                          CSSParserTokenStream& block);
   StyleRuleKeyframes* ConsumeKeyframesRule(bool webkit_prefixed,
                                            CSSParserTokenRange prelude,
                                            const RangeOffset& prelude_offset,
                                            CSSParserTokenStream& block);
-  StyleRulePage* ConsumePageRule(CSSParserTokenRange prelude,
+  StyleRulePage* ConsumePageRule(CSSParserRangeBuffer prelude_buffer,
                                  const RangeOffset& prelude_offset,
                                  CSSParserTokenStream& block);
   // Updates parsed_properties_
   void ConsumeApplyRule(CSSParserTokenRange prelude);
 
-  StyleRuleKeyframe* ConsumeKeyframeStyleRule(CSSParserTokenRange prelude,
-                                              const RangeOffset& prelude_offset,
-                                              CSSParserTokenStream& block);
-  StyleRule* ConsumeStyleRule(CSSParserTokenRange prelude,
+  StyleRuleKeyframe* ConsumeKeyframeStyleRule(
+      CSSParserRangeBuffer prelude_buffer,
+      const RangeOffset& prelude_offset,
+      CSSParserTokenStream& block);
+  StyleRule* ConsumeStyleRule(CSSParserRangeBuffer prelude_buffer,
                               const RangeOffset& prelude_offset,
                               CSSParserTokenStream& block);
 
