@@ -67,7 +67,7 @@ TEST_F(VisibleUnitsTest, absoluteCaretBoundsOf) {
       "<div><content select=#two></content><content "
       "select=#one></content></div>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Element* body = GetDocument().body();
   Element* one = body->QuerySelector("#one");
@@ -108,7 +108,7 @@ TEST_F(VisibleUnitsTest, characterAfter) {
       "<b id='four'>4444</b><content select=#two></content><content "
       "select=#one></content><b id='five'>5555</b>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Element* one = GetDocument().getElementById("one");
   Element* two = GetDocument().getElementById("two");
@@ -188,7 +188,7 @@ TEST_F(VisibleUnitsTest, characterBefore) {
       "<b id=four>4444</b><content select=#two></content><content "
       "select=#one></content><b id=five>5555</b>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();
@@ -240,7 +240,7 @@ TEST_F(VisibleUnitsTest, endOfDocument) {
       "<p><content select=#two></content></p><p><content "
       "select=#one></content></p>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Element* one = GetDocument().getElementById("one");
   Element* two = GetDocument().getElementById("two");
@@ -271,7 +271,7 @@ TEST_F(VisibleUnitsTest, endOfLine) {
       "id=six>666666</u><br><content select=#one></content><u "
       "id=seven>7777777</u></div>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();
@@ -416,7 +416,7 @@ TEST_F(VisibleUnitsTest, endOfParagraphShadow) {
       "<p><content select=#two></content></p><p><content "
       "select=#one></content></p>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Element* one = GetDocument().getElementById("one");
   Element* two = GetDocument().getElementById("two");
@@ -505,8 +505,8 @@ TEST_F(VisibleUnitsTest, endOfSentence) {
       "<p><i id=three>333</i> <content select=#two></content> <content "
       "select=#one></content> <i id=four>4444</i></p>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();
@@ -563,7 +563,7 @@ TEST_F(VisibleUnitsTest, endOfWord) {
       "<p><u id=four>44444</u><content select=#two></content><span id=space> "
       "</span><content select=#one></content><u id=five>55555</u></p>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();
@@ -627,7 +627,7 @@ TEST_F(VisibleUnitsTest, isEndOfEditableOrNonEditableContent) {
   const char* shadow_content =
       "<content select=#two></content></p><p><content select=#one></content>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Element* one = GetDocument().getElementById("one");
   Element* two = GetDocument().getElementById("two");
@@ -676,7 +676,7 @@ TEST_F(VisibleUnitsTest, isEndOfLine) {
       "id=six>666666</u><br><content select=#one></content><u "
       "id=seven>7777777</u></div>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();
@@ -720,7 +720,7 @@ TEST_F(VisibleUnitsTest, isLogicalEndOfLine) {
       "id=six>666666</u><br><content select=#one></content><u "
       "id=seven>7777777</u></div>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();
@@ -763,7 +763,7 @@ TEST_F(VisibleUnitsTest, inSameLine) {
       "id='s5'>55</span><br><content select=#one></content><span "
       "id='s6'>66</span></div>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Element* body = GetDocument().body();
   Element* one = body->QuerySelector("#one");
@@ -826,7 +826,7 @@ TEST_F(VisibleUnitsTest, isEndOfParagraph) {
       "<p><content select=#two></content></p><p><content "
       "select=#one></content></p>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();
@@ -857,7 +857,7 @@ TEST_F(VisibleUnitsTest, isStartOfLine) {
       "id=six>666666</u><br><content select=#one></content><u "
       "id=seven>7777777</u></div>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();
@@ -900,7 +900,7 @@ TEST_F(VisibleUnitsTest, isStartOfParagraph) {
       "<p><content select=#two></content></p><p><content "
       "select=#one></content></p>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Node* zero = GetDocument().getElementById("zero")->firstChild();
   Node* one = GetDocument().getElementById("one")->firstChild();
@@ -972,7 +972,7 @@ TEST_F(VisibleUnitsTest, localCaretRectOfPosition) {
   const char* shadow_content =
       "<b id='two'>22</b><content select=#one></content><b id='three'>333</b>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Element* one = GetDocument().getElementById("one");
 
@@ -997,7 +997,7 @@ TEST_F(VisibleUnitsTest, logicalEndOfLine) {
       "id=six>666666</u><br><content select=#one></content><u "
       "id=seven>7777777</u></div>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();
@@ -1082,7 +1082,7 @@ TEST_F(VisibleUnitsTest, logicalStartOfLine) {
       "id=six>666666</u><br><content select=#one></content><u "
       "id=seven>7777777</u></div>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();
@@ -1164,7 +1164,7 @@ TEST_F(VisibleUnitsTest, mostBackwardCaretPositionAfterAnchor) {
   const char* shadow_content =
       "<b id='two'>22</b><content select=#one></content><b id='three'>333</b>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Element* host = GetDocument().getElementById("host");
 
@@ -1243,7 +1243,7 @@ TEST_F(VisibleUnitsTest, mostForwardCaretPositionAfterAnchor) {
   const char* shadow_content =
       "<b id='two'>22</b><content select=#one></content><b id='three'>333</b>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
   UpdateAllLifecyclePhases();
 
   Element* host = GetDocument().getElementById("host");
@@ -1291,7 +1291,7 @@ TEST_F(VisibleUnitsTest, nextPositionOf) {
       "<b id=four>4444</b><content select=#two></content><content "
       "select=#one></content><b id=five>55555</b>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Element* zero = GetDocument().getElementById("zero");
   Element* one = GetDocument().getElementById("one");
@@ -1337,7 +1337,7 @@ TEST_F(VisibleUnitsTest, previousPositionOf) {
       "<b id=four>4444</b><content select=#two></content><content "
       "select=#one></content><b id=five>55555</b>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* zero = GetDocument().getElementById("zero")->firstChild();
   Node* one = GetDocument().getElementById("one")->firstChild();
@@ -1507,7 +1507,7 @@ TEST_F(VisibleUnitsTest, startOfDocument) {
       "<p><content select=#two></content></p><p><content "
       "select=#one></content></p>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();
@@ -1536,7 +1536,7 @@ TEST_F(VisibleUnitsTest, startOfLine) {
       "id=six>666666</u><br><content select=#one></content><u "
       "id=seven>7777777</u></div>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();
@@ -1620,7 +1620,7 @@ TEST_F(VisibleUnitsTest, startOfParagraph) {
       "<p><content select=#two></content></p><p><content "
       "select=#one></content></p>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Node* zero = GetDocument().getElementById("zero")->firstChild();
   Node* one = GetDocument().getElementById("one")->firstChild();
@@ -1677,7 +1677,7 @@ TEST_F(VisibleUnitsTest, startOfSentence) {
       "<p><i id=three>333</i> <content select=#two></content> <content "
       "select=#one></content> <i id=four>4444</i></p>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();
@@ -1734,7 +1734,7 @@ TEST_F(VisibleUnitsTest, startOfWord) {
       "<p><u id=four>44444</u><content select=#two></content><span id=space> "
       "</span><content select=#one></content><u id=five>55555</u></p>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();

@@ -113,7 +113,7 @@ TEST_F(PositionTest, NodeAsRangeLastNodeShadow) {
       "<a id='a'><content select=#two></content><content "
       "select=#one></content></a>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* host = GetDocument().getElementById("host");
   Node* n1 = GetDocument().getElementById("one");
@@ -147,7 +147,7 @@ TEST_F(PositionTest, ToPositionInFlatTreeWithActiveInsertionPoint) {
       "<a id='a'><content select=#one "
       "id='content'></content><content></content></a>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
   Element* anchor = shadow_root->getElementById("a");
 
   EXPECT_EQ(PositionInFlatTree(anchor, 0),
@@ -182,7 +182,7 @@ TEST_F(PositionTest, ToPositionInFlatTreeWithShadowRoot) {
   const char* body_content = "<p id='host'>00<b id='one'>11</b>22</p>";
   const char* shadow_content = "<a><content select=#one></content></a>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
   Element* host = GetDocument().getElementById("host");
 
   EXPECT_EQ(PositionInFlatTree(host, 0),
@@ -208,7 +208,7 @@ TEST_F(PositionTest,
   const char* body_content = "<p id='host'>00<b id='one'>11</b>22</p>";
   const char* shadow_content = "<content select=#one></content>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
   Element* host = GetDocument().getElementById("host");
 
   EXPECT_EQ(PositionInFlatTree(host, 0),
@@ -221,7 +221,7 @@ TEST_F(PositionTest, ToPositionInFlatTreeWithEmptyShadowRoot) {
   const char* body_content = "<p id='host'>00<b id='one'>11</b>22</p>";
   const char* shadow_content = "";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
   Element* host = GetDocument().getElementById("host");
 
   EXPECT_EQ(PositionInFlatTree(host, PositionAnchorType::kAfterChildren),

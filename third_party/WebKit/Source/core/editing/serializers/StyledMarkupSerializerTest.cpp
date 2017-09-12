@@ -130,7 +130,7 @@ TEST_F(StyledMarkupSerializerTest, ShadowTreeDistributeOrder) {
   const char* shadow_content =
       "<a><content select=#two></content><content select=#one></content></a>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
   EXPECT_EQ("<p id=\"host\"><b id=\"one\">11</b><b id=\"two\">22</b></p>",
             Serialize<EditingStrategy>())
       << "00 and 33 aren't appeared since they aren't distributed.";
@@ -147,7 +147,7 @@ TEST_F(StyledMarkupSerializerTest, ShadowTreeInput) {
   const char* shadow_content =
       "<a><content select=#two></content><content select=#one></content></a>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
   EXPECT_EQ(
       "<p id=\"host\"><b id=\"one\">11</b><b id=\"two\"><input "
       "value=\"22\"></b></p>",
@@ -168,7 +168,8 @@ TEST_F(StyledMarkupSerializerTest, ShadowTreeNested) {
       "select=#one></content></a>";
   const char* shadow_content2 = "NESTED";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root1 = SetShadowContent(shadow_content1, "host");
+  ShadowRoot* shadow_root1 =
+      SetShadowContentDeprecated(shadow_content1, "host");
   CreateShadowRootForElementWithIDAndSetInnerHTML(*shadow_root1, "host2",
                                                   shadow_content2);
 
@@ -186,7 +187,7 @@ TEST_F(StyledMarkupSerializerTest, ShadowTreeInterchangedNewline) {
   const char* body_content = "<a id=host><b id=one>1</b></a>";
   const char* shadow_content = "<content select=#one></content><div><br></div>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   std::string result_from_dom_tree =
       Serialize<EditingStrategy>(kAnnotateForInterchange);
@@ -235,7 +236,7 @@ TEST_F(StyledMarkupSerializerTest, ShadowTreeStyle) {
   const char* shadow_content =
       "<span style='font-weight: bold'><content select=#one></content></span>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
   one = GetDocument().getElementById("one");
   text = ToText(one->firstChild());
   PositionInFlatTree start_ict(text, 0);
@@ -264,8 +265,8 @@ TEST_F(StyledMarkupSerializerTest, AcrossShadow) {
   const char* shadow_content1 = "[<content select=#one></content>]";
   const char* shadow_content2 = "[<content select=#two></content>]";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content1, "host1");
-  SetShadowContent(shadow_content2, "host2");
+  SetShadowContentDeprecated(shadow_content1, "host1");
+  SetShadowContentDeprecated(shadow_content2, "host2");
   one = GetDocument().getElementById("one");
   two = GetDocument().getElementById("two");
   PositionInFlatTree start_ict(ToText(one->firstChild()), 0);

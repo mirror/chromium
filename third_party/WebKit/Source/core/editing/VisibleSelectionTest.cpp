@@ -106,7 +106,7 @@ TEST_F(VisibleSelectionTest, expandUsingGranularity) {
       "id=four>4444</b><span id=space>  </span><content "
       "select=#one></content><b id=five>55555</b></p>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();
@@ -392,7 +392,7 @@ TEST_F(VisibleSelectionTest, ShadowCrossing) {
       "id='s5'>55</span><content select=#one></content><span "
       "id='s6'>66</span></a>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Element* body = GetDocument().body();
   Element* host = body->QuerySelector("#host");
@@ -427,7 +427,7 @@ TEST_F(VisibleSelectionTest, ShadowV0DistributedNodes) {
       "id='s5'>55</span><content select=#one></content><span "
       "id='s6'>66</span></a>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Element* body = GetDocument().body();
   Element* one = body->QuerySelector("#one");
@@ -463,7 +463,7 @@ TEST_F(VisibleSelectionTest, ShadowNested) {
   const char* shadow_content2 =
       "<span id='s7'>77</span><content></content><span id='s8'>88</span>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
   ShadowRoot* shadow_root2 = CreateShadowRootForElementWithIDAndSetInnerHTML(
       *shadow_root, "s5", shadow_content2);
 
@@ -627,7 +627,7 @@ TEST_F(VisibleSelectionTest, WordGranularity) {
 // in undo stack.
 TEST_F(VisibleSelectionTest, updateIfNeededWithShadowHost) {
   SetBodyContent("<div id=host></div><div id=sample>foo</div>");
-  SetShadowContent("<content>", "host");
+  SetShadowContentDeprecated("<content>", "host");
   Element* sample = GetDocument().getElementById("sample");
 
   // Simulates saving selection in undo stack.
