@@ -193,7 +193,7 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
     var consoleMessage = new ConsoleModel.ConsoleMessage(
         data.logModel.target().model(SDK.RuntimeModel), data.entry.source, data.entry.level, data.entry.text, undefined,
         data.entry.url, data.entry.lineNumber, undefined, data.entry.networkRequestId, undefined, data.entry.stackTrace,
-        data.entry.timestamp, undefined, undefined, data.entry.workerId);
+        data.entry.timestamp, undefined, undefined, data.entry.workerId, undefined, data.entry.backendNodeIds);
     this.addMessage(consoleMessage);
   }
 
@@ -409,10 +409,11 @@ ConsoleModel.ConsoleMessage = class {
    * @param {?string=} scriptId
    * @param {?string=} workerId
    * @param {string=} context
+   * @param {!Array<number>=} backendNodeIds
    */
   constructor(
       runtimeModel, source, level, messageText, type, url, line, column, requestId, parameters, stackTrace, timestamp,
-      executionContextId, scriptId, workerId, context) {
+      executionContextId, scriptId, workerId, context, backendNodeIds) {
     this._runtimeModel = runtimeModel;
     this.source = source;
     this.level = /** @type {?ConsoleModel.ConsoleMessage.MessageLevel} */ (level);
@@ -431,6 +432,7 @@ ConsoleModel.ConsoleMessage = class {
     this.executionContextId = executionContextId || 0;
     this.scriptId = scriptId || null;
     this.workerId = workerId || null;
+    this.backendNodeIds = new Set(backendNodeIds || []);
 
     var manager = runtimeModel ? runtimeModel.target().model(SDK.NetworkManager) : null;
     this.request = (manager && requestId) ? NetworkLog.networkLog.requestByManagerAndId(manager, requestId) : null;
@@ -564,6 +566,9 @@ ConsoleModel.ConsoleMessage = class {
       }
     }
 
+    if (this.backendNodeIds.size || msg.backendNodeIds.size)
+      return false;
+
     return (this.runtimeModel() === msg.runtimeModel()) && (this.source === msg.source) && (this.type === msg.type) &&
         (this.level === msg.level) && (this.line === msg.line) && (this.url === msg.url) &&
         (this.messageText === msg.messageText) && (this.request === msg.request) &&
@@ -594,7 +599,7 @@ ConsoleModel.ConsoleMessage = class {
   }
 };
 
-// Note: Keep these constants in sync with the ones in Console.h
+// Note: Keep these constants in sync with the ones in ConsoleTypes.h
 /**
  * @enum {string}
  */
@@ -612,6 +617,7 @@ ConsoleModel.ConsoleMessage.MessageSource = {
   Worker: 'worker',
   Violation: 'violation',
   Intervention: 'intervention',
+  DOM: 'dom',
   Other: 'other'
 };
 
