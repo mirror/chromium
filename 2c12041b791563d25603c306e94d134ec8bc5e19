@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55a6ac5d_a8c9f5ea",
+        "filename": "third_party/WebKit/Source/core/html/parser/PreloadRequest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-12T17:48:42Z",
+      "side": 1,
+      "message": "it looks\n- resource_type_ can be kScript for \u003clink\u003e\n- but the fact script_type_ can be kModule only when the tag is script is excluding the case\n\ni find this a little confusing. can we remove the condition at L66? doesn\u0027t it work?",
+      "revId": "2c12041b791563d25603c306e94d134ec8bc5e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
