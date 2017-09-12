@@ -16,6 +16,24 @@
       "revId": "8763558af7e1c731866e3755a2d013d7744bb625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7076db0_5e1490da",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-12T19:55:37Z",
+      "side": 1,
+      "message": "Done.\nUpdated to\n  // Wake up the message loop and schedule work. This is done outside\n  // |incoming_queue_lock_| to allow for multiple post tasks to occur while\n  // ScheduleWork() is running. For platforms (e.g. Android) that require one\n  // call to ScheduleWork() for each task, all pending tasks may serialize\n  // within the ScheduleWork() call. As a result, holding a lock to maintain the\n  // lifetime of |message_loop_| is less of a concern.",
+      "parentUuid": "f96923ef_937520da",
+      "revId": "8763558af7e1c731866e3755a2d013d7744bb625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
