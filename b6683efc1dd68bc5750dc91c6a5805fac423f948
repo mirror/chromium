@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95fe7e37_5599dbbf",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_conditional_features.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-12T07:53:57Z",
+      "side": 1,
+      "message": "all in this comment is optional:\n\nHow about\ndef get_binding_basename(name, snake_case, suffix\u003d\u0027\u0027):\n  base_name \u003d \u0027V8%s%s\u0027 % (name, suffix)\n  if snake_case:\n    return to_snake_case(base_name)\n  return base_name\n?\n\nIt actually does\n 1. do not use 2-step branches\n 2. move \u0027.h\u0027 to the caller",
+      "revId": "b6683efc1dd68bc5750dc91c6a5805fac423f948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a36ff8_33064985",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_init_partial_interfaces.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-12T07:53:57Z",
+      "side": 1,
+      "message": "can we merge this with generate_conditional_features.get_bindings_basename()?\nTheir behavior differs a bit (adding .h or not) and it is confusing.",
+      "revId": "b6683efc1dd68bc5750dc91c6a5805fac423f948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
