@@ -751,17 +751,26 @@ void AudioBufferSourceNode::setLoopEnd(double loop_end) {
 }
 
 void AudioBufferSourceNode::start(ExceptionState& exception_state) {
+  if (buffer()) {
+    buffer()->RemoveViews();
+  }
   GetAudioBufferSourceHandler().Start(0, exception_state);
 }
 
 void AudioBufferSourceNode::start(double when,
                                   ExceptionState& exception_state) {
+  if (buffer()) {
+    buffer()->RemoveViews();
+  }
   GetAudioBufferSourceHandler().Start(when, exception_state);
 }
 
 void AudioBufferSourceNode::start(double when,
                                   double grain_offset,
                                   ExceptionState& exception_state) {
+  if (buffer()) {
+    buffer()->RemoveViews();
+  }
   GetAudioBufferSourceHandler().Start(when, grain_offset, exception_state);
 }
 
@@ -769,6 +778,9 @@ void AudioBufferSourceNode::start(double when,
                                   double grain_offset,
                                   double grain_duration,
                                   ExceptionState& exception_state) {
+  if (buffer()) {
+    buffer()->RemoveViews();
+  }
   GetAudioBufferSourceHandler().Start(when, grain_offset, grain_duration,
                                       exception_state);
 }

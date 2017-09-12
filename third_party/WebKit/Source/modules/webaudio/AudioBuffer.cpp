@@ -184,6 +184,7 @@ AudioBuffer::AudioBuffer(unsigned number_of_channels,
                          InitializationPolicy policy)
     : sample_rate_(sample_rate), length_(number_of_frames) {
   channels_.ReserveCapacity(number_of_channels);
+  views_.ReserveCapacity(number_of_channels);
 
   for (unsigned i = 0; i < number_of_channels; ++i) {
     DOMFloat32Array* channel_data_array =
@@ -193,8 +194,11 @@ AudioBuffer::AudioBuffer(unsigned number_of_channels,
     if (!channel_data_array)
       return;
 
+#if 0
     channel_data_array->SetNeuterable(false);
+#endif
     channels_.push_back(channel_data_array);
+    views_.push_back(DOMFloat32Array::Create(channel_data_array->View()));
   }
 }
 
@@ -203,6 +207,7 @@ AudioBuffer::AudioBuffer(AudioBus* bus)
   // Copy audio data from the bus to the Float32Arrays we manage.
   unsigned number_of_channels = bus->NumberOfChannels();
   channels_.ReserveCapacity(number_of_channels);
+  views_.ReserveCapacity(number_of_channels);
   for (unsigned i = 0; i < number_of_channels; ++i) {
     DOMFloat32Array* channel_data_array =
         CreateFloat32ArrayOrNull(length_, kDontInitialize);
@@ -216,6 +221,7 @@ AudioBuffer::AudioBuffer(AudioBus* bus)
     float* dst = channel_data_array->Data();
     memmove(dst, src, length_ * sizeof(*dst));
     channels_.push_back(channel_data_array);
+    views_.push_back(DOMFloat32Array::Create(channel_data_array->View()));
   }
 }
 
@@ -230,7 +236,7 @@ NotShared<DOMFloat32Array> AudioBuffer::getChannelData(
     return NotShared<DOMFloat32Array>(nullptr);
   }
 
-  return getChannelData(channel_index);
+  return NotShared<DOMFloat32Array>(views_[channel_index].Get());
 }
 
 NotShared<DOMFloat32Array> AudioBuffer::getChannelData(unsigned channel_index) {
@@ -262,7 +268,7 @@ void AudioBuffer::copyFromChannel(NotShared<DOMFloat32Array> destination,
     return;
   }
 
-  DOMFloat32Array* channel_data = channels_[channel_number].Get();
+  DOMFloat32Array* channel_data = views_[channel_number].Get();
 
   if (start_in_channel >= channel_data->length()) {
     exception_state.ThrowDOMException(
@@ -308,7 +314,7 @@ void AudioBuffer::copyToChannel(NotShared<DOMFloat32Array> source,
     return;
   }
 
-  DOMFloat32Array* channel_data = channels_[channel_number].Get();
+  DOMFloat32Array* channel_data = views_[channel_number].Get();
 
   if (start_in_channel >= channel_data->length()) {
     exception_state.ThrowDOMException(
@@ -339,6 +345,13 @@ void AudioBuffer::Zero() {
       float* data = array.View()->Data();
       memset(data, 0, length() * sizeof(*data));
     }
+  }
+}
+
+void AudioBuffer::RemoveViews() {
+  for (unsigned k = 0; k < views_.size(); ++k) {
+    DOMArrayBuffer* b = views_[k]->buffer();
+    b->Buffer()->RemoveView(channels_[k]->View());
   }
 }
 

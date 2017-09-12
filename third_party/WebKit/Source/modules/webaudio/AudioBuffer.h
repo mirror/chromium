@@ -103,7 +103,12 @@ class MODULES_EXPORT AudioBuffer final : public GarbageCollected<AudioBuffer>,
 
   void Zero();
 
-  DEFINE_INLINE_TRACE() { visitor->Trace(channels_); }
+  void RemoveViews();
+
+  DEFINE_INLINE_TRACE() {
+    visitor->Trace(channels_);
+    visitor->Trace(views_);
+  }
 
  private:
   // How to initialize the contents of an AudioBuffer.  Default is to
@@ -127,6 +132,7 @@ class MODULES_EXPORT AudioBuffer final : public GarbageCollected<AudioBuffer>,
   size_t length_;
 
   HeapVector<Member<DOMFloat32Array>> channels_;
+  HeapVector<Member<DOMFloat32Array>> views_;
 };
 
 }  // namespace blink
