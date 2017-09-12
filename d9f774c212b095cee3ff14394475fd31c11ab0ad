@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e1fb308d_abef691c",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 1904,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T01:13:23Z",
+      "side": 1,
+      "message": "\u003e Isn\u0027t \"Applications\" a proper noun? If so, wouldn\u0027t the string be the same even if \"not use_titlecase\"?\n\nNot all languages have proper nouns, or even capital letters :). Some languages get quotes or write 「foo」. Some languages might translate \"Add to\" into a string of words that includes more than two words. Some languages might write \"Applications Add to\", which would require the \"Add\" to get a capital. Or some languages might not conventionally un-capitalize \"to\" when in title case.\n\nIt looks like the capitalization for some translations might currently be incorrect (`git grep 5754903485544371559 -- \u0027*.xtb\u0027` to see them).\n\n\"In Title Case:\" is just an instruction to the translator to do whatever is appropriate (which has a better chance of being right if we are explicit).\n\nWe could also say \"Note `Applications` should match the name that appears under Favourites in Finder on macOS\". I think we do this for some menu items, that should match standard names on macOS.",
+      "parentUuid": "77f90783_1f1db439",
+      "range": {
+        "startLine": 1904,
+        "startChar": 72,
+        "endLine": 1904,
+        "endChar": 77
+      },
+      "revId": "d9f774c212b095cee3ff14394475fd31c11ab0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b27c21ec_56fc7821",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 4
