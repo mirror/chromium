@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9da41c19_40f1ec37",
+        "filename": "testing/libfuzzer/fuzzers/url.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-09-12T13:21:19Z",
+      "side": 1,
+      "message": "These shouldn\u0027t be part of scheme, instead should be another section named hier_part as in rfc\n\nURI         \u003d scheme \":\" hier-part [ \"?\" query ] [ \"#\" fragment ]\n\n      hier-part   \u003d \"//\" authority path-abempty\n                  / path-absolute\n                  / path-rootless\n                  / path-empty\n\nhttps://tools.ietf.org/html/rfc3986#section-3",
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56e8f56_3384da9e",
+        "filename": "testing/libfuzzer/fuzzers/url.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-09-12T13:21:19Z",
+      "side": 1,
+      "message": "nit:s/port_number/port\ns/query_string/query\ns/fragment_value/fragment\n\nto match rfc names\nhttps://tools.ietf.org/html/rfc3986#section-3",
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb7551f_d781ed12",
+        "filename": "testing/libfuzzer/fuzzers/url_parse_proto_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-09-12T13:21:19Z",
+      "side": 1,
+      "message": "Capitalize first char in comment.",
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e95523c8_e7876b78",
+        "filename": "testing/libfuzzer/fuzzers/url_parse_proto_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-09-12T13:21:19Z",
+      "side": 1,
+      "message": "Why src/src, probably file a bug to get it to be src/",
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f2767e1_e4ac3eee",
+        "filename": "testing/libfuzzer/fuzzers/url_parse_proto_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-09-12T13:21:19Z",
+      "side": 1,
+      "message": "host can be optional. e.g. i think \"data:\" works. also you defined as optional in proto, so need to check it here.",
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63dde1b_08aad9ac",
+        "filename": "testing/libfuzzer/fuzzers/url_parse_proto_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-09-12T13:21:19Z",
+      "side": 1,
+      "message": "s/query_string/port.",
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef74c011_6ad630ce",
+        "filename": "testing/libfuzzer/fuzzers/url_parse_proto_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-09-12T13:21:19Z",
+      "side": 1,
+      "message": "nit: comma after url",
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
