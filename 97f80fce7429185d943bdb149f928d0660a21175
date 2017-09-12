@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "393b7470_5871a22d",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-12T17:39:57Z",
+      "side": 1,
+      "message": "nit: is_required_field?",
+      "range": {
+        "startLine": 387,
+        "startChar": 11,
+        "endLine": 387,
+        "endChar": 25
+      },
+      "revId": "97f80fce7429185d943bdb149f928d0660a21175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a87668fd_31a3770f",
         "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
         "patchSetId": 2
@@ -13,6 +36,47 @@
       "writtenOn": "2017-09-12T17:36:00Z",
       "side": 1,
       "message": "optional: might be cleaner to make a convenience wrapper for IsFieldRequired that takes a ServerFieldType, so we can just leave all the code the same here except the value we pass to the EditorField constructor. If it lived in payment_request_data_util or some other appropriate place in components, then I could use it in the iOS fix, too.",
+      "revId": "97f80fce7429185d943bdb149f928d0660a21175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d98378_60f1bb26",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-12T17:39:57Z",
+      "side": 1,
+      "message": "SG, +1",
+      "parentUuid": "a87668fd_31a3770f",
+      "revId": "97f80fce7429185d943bdb149f928d0660a21175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b8fe812_7c4bb68d",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-12T17:39:57Z",
+      "side": 1,
+      "message": "nit: you can probably remove, especially if is_required_field.",
+      "range": {
+        "startLine": 395,
+        "startChar": 36,
+        "endLine": 395,
+        "endChar": 44
+      },
       "revId": "97f80fce7429185d943bdb149f928d0660a21175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
