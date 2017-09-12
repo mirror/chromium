@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b91b1f3_a1c0fc8f",
+        "filename": "chrome/browser/ui/overlay/overlay_surface_embedder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-12T23:26:02Z",
+      "side": 1,
+      "message": "nit: contain",
+      "range": {
+        "startLine": 16,
+        "startChar": 38,
+        "endLine": 16,
+        "endChar": 46
+      },
+      "revId": "c2a4247dffabc7128eddca876a8c908d236f5a57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
