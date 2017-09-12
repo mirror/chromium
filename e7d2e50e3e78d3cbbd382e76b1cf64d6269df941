@@ -160,6 +160,58 @@
     },
     {
       "key": {
+        "uuid": "7f50bba9_15e7e6b6",
+        "filename": "chrome/browser/resources/sys_internals/index.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-12T19:39:05Z",
+      "side": 1,
+      "message": "See example from md_bookmarks/images/folder.svg, https://cs.chromium.org/search/?q\u003dfolder.svg\u0026sq\u003dpackage:chromium\u0026type\u003dcs.\n\nIn short,\n1) Put the SVG on a separate file.\n2) Declare the SVG in the corresponding grd file.\n3) Call AddResourcePath() in the corresponding C++ file, similar to https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/md_bookmarks/md_bookmarks_ui.cc?q\u003dfolder.svg\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d121.\n4) refer to the SVG similar either from CSS like https://cs.chromium.org/chromium/src/chrome/browser/resources/md_bookmarks/shared_style.html?type\u003dcs\u0026q\u003dfolder.svg\u0026sq\u003dpackage:chromium\u0026l\u003d63 or from HTML directly.",
+      "parentUuid": "48e2800e_5f426711",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d9f0013_f7a349bd",
+        "filename": "chrome/browser/resources/sys_internals/index.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-12T19:39:05Z",
+      "side": 1,
+      "message": "Is there a good reason to prefix every id with \"sys-internals\"? Can we just drop these redundant (I think) prefixes?",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fdf9770_8a70c086",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-12T19:39:05Z",
+      "side": 1,
+      "message": "Can you use cr.define() instead to define namespaces?",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36e25271_6ebe13af",
         "filename": "chrome/browser/resources/sys_internals/index.js",
         "patchSetId": 2
@@ -298,6 +350,23 @@
       "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "782ef3bc_d6ba0fa4",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-12T19:39:05Z",
+      "side": 1,
+      "message": "Nit: The \"_\" suffix is used for private members or methods. Therefore it does not make much sense here since this function is not private to any class.",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -802,6 +871,23 @@
       "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "542e1cf5_119e2b52",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-12T19:39:05Z",
+      "side": 1,
+      "message": "Why are those /** number */ and similar annotations necessary? The make the code harder to read.",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
