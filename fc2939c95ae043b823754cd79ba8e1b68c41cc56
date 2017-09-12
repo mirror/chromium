@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69be9975_89d6366f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15564,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-12T17:30:18Z",
+      "side": 1,
+      "message": "Nit: I would suggest using names that share a prefix for these histograms.\n\ne.g. Download.ContentType.Text, DownloadContentType.Video, etc.",
+      "range": {
+        "startLine": 15564,
+        "startChar": 26,
+        "endLine": 15564,
+        "endChar": 41
+      },
+      "revId": "fc2939c95ae043b823754cd79ba8e1b68c41cc56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
