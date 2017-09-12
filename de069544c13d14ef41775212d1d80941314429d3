@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd5d59c9_41404b14",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-12T14:19:51Z",
+      "side": 1,
+      "message": "UIKit import before the other imports?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 23
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a272af49_d89a4a4a",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-12T14:19:51Z",
+      "side": 1,
+      "message": "Is this section useful?",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 57
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad17c4b_c0c845c9",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-12T14:19:51Z",
+      "side": 1,
+      "message": "Is the end of the comment missing?",
+      "range": {
+        "startLine": 67,
+        "startChar": 61,
+        "endLine": 67,
+        "endChar": 68
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67db1f9d_3b1fede5",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-12T14:19:51Z",
+      "side": 1,
+      "message": "Add comment",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 6
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0416e25f_8ff89472",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-12T14:19:51Z",
+      "side": 1,
+      "message": "Is this working with the switch?",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 44
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef88017_afe2d0e0",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-12T14:19:51Z",
+      "side": 1,
+      "message": "Here and in other places: If you want to get rid of the ink effect, you have the collectionView:hidesInkViewAtIndexPath: method. IIRC it does the same thing internally, but at least it is clear why you are doing it.\nAlso make sure the cell are still interactable even if you are returning NO, there was a bug but it should be fixed.",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 34
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13007985_be573c37",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-12T14:19:51Z",
+      "side": 1,
+      "message": "Same question",
+      "range": {
+        "startLine": 119,
+        "startChar": 16,
+        "endLine": 119,
+        "endChar": 44
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec53564_709dd83d",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-12T14:19:51Z",
+      "side": 1,
+      "message": "No need to do anything for the switch?",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 28
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
