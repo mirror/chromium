@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5eade8dd_1bf4ec32",
+        "filename": "ash/system/network/network_state_list_detailed_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-12T21:52:44Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be a NetworkHandler call, we should use NetworkConnect to show UI, see line 243.",
+      "revId": "4c65c6f4689603ff99deabfd7de47f06aa88c0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067ebc61_76578a02",
+        "filename": "chromeos/network/network_connection_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-12T21:52:44Z",
+      "side": 1,
+      "message": "This is not the right place for code that opens a UI dialog. See network_connect.h.",
+      "revId": "4c65c6f4689603ff99deabfd7de47f06aa88c0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
