@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "525d66ee_7a6dffa2",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/WebViewFindApisTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-09-12T13:22:01Z",
+      "side": 1,
+      "message": "can\u0027t you use a FutureTask rather than inventing your own type?",
+      "range": {
+        "startLine": 124,
+        "startChar": 34,
+        "endLine": 124,
+        "endChar": 47
+      },
+      "revId": "c196fa0084f46020aa737d64a63aa0da6f5bfde4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b5efb2_fcc37f8b",
+        "filename": "android_webview/test/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-09-12T13:22:01Z",
+      "side": 1,
+      "message": "also delete WebViewFindApisTestBase from codebase?",
+      "range": {
+        "startLine": 217,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 86
+      },
+      "revId": "c196fa0084f46020aa737d64a63aa0da6f5bfde4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
