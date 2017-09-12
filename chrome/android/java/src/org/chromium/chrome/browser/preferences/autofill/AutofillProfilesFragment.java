@@ -44,17 +44,18 @@ public class AutofillProfilesFragment
 
         for (AutofillProfile profile : PersonalDataManager.getInstance().getProfilesForSettings()) {
             // Add a preference for the profile.
-            Preference pref = new Preference(getActivity());
-            pref.setTitle(profile.getFullName());
-            pref.setSummary(profile.getLabel());
-
+            Preference pref;
             if (profile.getIsLocal()) {
-                pref.setFragment(AutofillProfileEditor.class.getName());
+                AutofillProfileEditorPreference localPref =
+                        new AutofillProfileEditorPreference(getActivity());
+                localPref.setTitle(profile.getFullName());
+                localPref.setSummary(profile.getLabel());
+                pref = localPref;
             } else {
+                pref = new Preference(getActivity());
                 pref.setWidgetLayoutResource(R.layout.autofill_server_data_label);
                 pref.setFragment(AutofillServerProfilePreferences.class.getName());
             }
-
             Bundle args = pref.getExtras();
             args.putString(AutofillAndPaymentsPreferences.AUTOFILL_GUID, profile.getGUID());
             getPreferenceScreen().addPreference(pref);
@@ -62,7 +63,7 @@ public class AutofillProfilesFragment
 
         // Add 'Add address' button. Tap of it brings up address editor which allows users type in
         // new addresses.
-        Preference pref = new Preference(getActivity());
+        AutofillProfileEditorPreference pref = new AutofillProfileEditorPreference(getActivity());
         Drawable plusIcon = ApiCompatibilityUtils.getDrawable(getResources(), R.drawable.plus);
         plusIcon.mutate();
         plusIcon.setColorFilter(
@@ -70,7 +71,6 @@ public class AutofillProfilesFragment
                 PorterDuff.Mode.SRC_IN);
         pref.setIcon(plusIcon);
         pref.setTitle(R.string.autofill_create_profile);
-        pref.setFragment(AutofillProfileEditor.class.getName());
         getPreferenceScreen().addPreference(pref);
     }
 
