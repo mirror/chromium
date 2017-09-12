@@ -22,8 +22,9 @@ class SerialWorkerTest : public testing::Test {
   // The class under test
   class TestSerialWorker : public SerialWorker {
    public:
-    explicit TestSerialWorker(SerialWorkerTest* t)
-      : test_(t) {}
+    explicit TestSerialWorker(SerialWorkerTest* t) : test_(t) {
+      AllowBaseSyncPrimitivesForTesting();
+    }
     void DoWork() override {
       ASSERT_TRUE(test_);
       test_->OnWork();
