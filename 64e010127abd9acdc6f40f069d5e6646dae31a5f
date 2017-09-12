@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "efdd81cd_a6f1c7af",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T20:09:30Z",
+      "side": 1,
+      "message": "\u003e Nit: Anything in this comment that is worth saying should probably be in the comment in the .h file.\n\nMoved.",
+      "parentUuid": "950f186c_1de770cd",
+      "revId": "64e010127abd9acdc6f40f069d5e6646dae31a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c19c5d4_a16ebda8",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5c49373c_40146b9d",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T20:09:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c19c5d4_a16ebda8",
+      "revId": "64e010127abd9acdc6f40f069d5e6646dae31a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a36c4ae7_a7059a76",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "64e010127abd9acdc6f40f069d5e6646dae31a5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8837153_8c8c177b",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T20:09:30Z",
+      "side": 1,
+      "message": "\u003e Nit: The first and third conditions are redundant with the second; delete them.\n\nI agree the first is redundant with the second.  Removed.\n\nBut the third is only redundant with the second if the TemplateURLService has been loaded (otherwise default_search_provider_ may not point to the right place).  I think the extra check for GetDefaultSearchProvider() is appropriate.  Added comment.\n\n(Frankly, I\u0027d like to keep all three checks because it\u0027s not obvious from names or the .h comments in TemplateURLService that ShowInDefaultList is a superset of IsPrepopulatedOrCreatedByPolicy.  Nonetheless, took your suggestion and removed the first test.)\n\n\nbool TemplateURLService::ShowInDefaultList(const TemplateURL* t_url) const {\n  return t_url \u003d\u003d default_search_provider_ ||\n      IsPrepopulatedOrCreatedByPolicy(t_url);\n}\n\nconst TemplateURL* TemplateURLService::GetDefaultSearchProvider() const {\n  return loaded_ ? default_search_provider_\n                 : initial_default_search_provider_.get();\n}",
+      "parentUuid": "a36c4ae7_a7059a76",
+      "revId": "64e010127abd9acdc6f40f069d5e6646dae31a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
