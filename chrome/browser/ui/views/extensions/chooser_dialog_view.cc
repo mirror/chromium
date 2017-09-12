@@ -25,7 +25,8 @@
 #include "ui/views/window/dialog_client_view.h"
 
 ChooserDialogView::ChooserDialogView(
-    std::unique_ptr<ChooserController> chooser_controller) {
+    std::unique_ptr<ChooserController> chooser_controller,
+    content::WebContents* web_contents) {
   // ------------------------------------
   // | Chooser dialog title             |
   // | -------------------------------- |
@@ -42,8 +43,8 @@ ChooserDialogView::ChooserDialogView(
   // ------------------------------------
 
   DCHECK(chooser_controller);
-  device_chooser_content_view_ =
-      new DeviceChooserContentView(this, std::move(chooser_controller));
+  device_chooser_content_view_ = new DeviceChooserContentView(
+      this, std::move(chooser_controller), web_contents);
   device_chooser_content_view_->SetBorder(views::CreateEmptyBorder(
       ChromeLayoutProvider::Get()->GetDialogInsetsForContentType(
           views::CONTROL, views::CONTROL)));
@@ -128,17 +129,18 @@ void ChromeExtensionChooserDialog::ShowDialogImpl(
       web_modal::WebContentsModalDialogManager::FromWebContents(web_contents_);
   if (manager) {
     constrained_window::ShowWebModalDialogViews(
-        new ChooserDialogView(std::move(chooser_controller)), web_contents_);
+        new ChooserDialogView(std::move(chooser_controller), web_contents_),
+        web_contents_);
   }
 }
 
 void ChromeDevicePermissionsPrompt::ShowDialogViews() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
   std::unique_ptr<ChooserController> chooser_controller(
       new DevicePermissionsDialogController(web_contents()->GetMainFrame(),
                                             prompt()));
 
   constrained_window::ShowWebModalDialogViews(
-      new ChooserDialogView(std::move(chooser_controller)), web_contents());
+      new ChooserDialogView(std::move(chooser_controller), web_contents()),
+      web_contents());
 }

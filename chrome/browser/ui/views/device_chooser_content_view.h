@@ -15,6 +15,10 @@
 #include "ui/views/controls/styled_label_listener.h"
 #include "ui/views/view.h"
 
+namespace content {
+class WebContents;
+}
+
 namespace views {
 class StyledLabel;
 class TableView;
@@ -31,7 +35,8 @@ class DeviceChooserContentView : public views::View,
  public:
   DeviceChooserContentView(
       views::TableViewObserver* table_view_observer,
-      std::unique_ptr<ChooserController> chooser_controller);
+      std::unique_ptr<ChooserController> chooser_controller,
+      content::WebContents* web_contents = nullptr);
   ~DeviceChooserContentView() override;
 
   // views::View:
@@ -80,6 +85,7 @@ class DeviceChooserContentView : public views::View,
   FRIEND_TEST_ALL_PREFIXES(DeviceChooserContentViewTest, ClickGetHelpLink);
 
   std::unique_ptr<ChooserController> chooser_controller_;
+  content::WebContents* web_contents_;
   views::TableView* table_view_ = nullptr;  // Weak.
   views::View* table_parent_ = nullptr;  // Weak.
   views::StyledLabel* turn_adapter_off_help_ = nullptr;  // Weak.
