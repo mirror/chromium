@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f35ebcf2_24258cf6",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-12T22:03:57Z",
+      "side": 1,
+      "message": "Is this ever actually true? I didn\u0027t think that a VPN would ever be set as the default network by Shill, I thought it was always a physical network?",
+      "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b3c50e_65652530",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-12T22:03:57Z",
+      "side": 1,
+      "message": "Use NetworkStateHandler:\n\nGetStateHandler()-\u003eGetNetworkListByType(NetworkTypePattern::VPN,...);\n\nUse NetworkState::vpn_provider_type() to test the provider type.",
+      "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5877da34_e75b32a0",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-12T22:03:57Z",
+      "side": 1,
+      "message": "Instead, modify c/b/chromeos/net/network_conenct_delegate_chromeos.cc::ShowNetworkConfigure() to handle arc VPN and have that trigger the ConfigureAndroidVpn() call.",
+      "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
