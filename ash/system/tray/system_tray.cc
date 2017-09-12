@@ -32,6 +32,7 @@
 #include "ash/system/network/tray_network.h"
 #include "ash/system/network/tray_vpn.h"
 #include "ash/system/night_light/tray_night_light.h"
+#include "ash/system/off_hours/tray_off_hours_session_limit.h"
 #include "ash/system/power/power_status.h"
 #include "ash/system/power/tray_power.h"
 #include "ash/system/rotation/tray_rotation_lock.h"
@@ -253,6 +254,8 @@ void SystemTray::CreateItems() {
       base::MakeUnique<TrayPower>(this, message_center::MessageCenter::Get()));
   tray_network_ = new TrayNetwork(this);
   AddTrayItem(base::WrapUnique(tray_network_));
+  tray_off_hours_session_limit_ = new TrayOffHoursSessionLimit(this);
+  AddTrayItem(base::WrapUnique(tray_off_hours_session_limit_));
   AddTrayItem(base::MakeUnique<TrayVPN>(this));
   AddTrayItem(base::MakeUnique<TrayBluetooth>(this));
   tray_cast_ = new TrayCast(this);

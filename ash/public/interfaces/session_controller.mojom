@@ -160,6 +160,13 @@ interface SessionController {
   // http://crbug.com/729808
   SetSessionLengthLimit(mojo.common.mojom.TimeDelta length_limit,
                         mojo.common.mojom.TimeTicks start_time);
+
+  // Update "OffHours" mode.
+  UpdateOffHourMode(bool off_hours_mode);
+
+  // Set "OffHours" session start time and duration.
+  SetOffHoursTime(mojo.common.mojom.Time start_time,
+                  mojo.common.mojom.TimeDelta duration);
 };
 
 // Interface for ash to request session service from its client (e.g. Chrome).
