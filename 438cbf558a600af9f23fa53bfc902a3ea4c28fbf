@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47fbd82e_a894c2b1",
+        "filename": "components/payments/core/service_worker_payment_instrument.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-12T18:49:18Z",
+      "side": 1,
+      "message": "Stuff in component/payments/core/ cannot depend on stuff in content/public/browser/, so please move this file and the corresponding source file to component/payment/content/. This is because iOS uses component/payments/core/, but iOS does not use content/. (Doing so would pull in a bunch of unused source files into iOS binary.)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "438cbf558a600af9f23fa53bfc902a3ea4c28fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
