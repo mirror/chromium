@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "886f8bf2_64f9a76c",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2017-09-12T13:37:05Z",
+      "side": 1,
+      "message": "This basically stores the current name of the restaurant. I am not sure this is the right way to store a value. Please let me know if there is some temporary object where I should store these kind of values.",
+      "revId": "bfc56d2f6a0c8b8a234ff42efdfc0ff28780aa2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e1a3a2_3efedc8a",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2017-09-12T13:37:05Z",
+      "side": 1,
+      "message": "This basically checks the restaurant was indeed updated.",
+      "revId": "bfc56d2f6a0c8b8a234ff42efdfc0ff28780aa2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
