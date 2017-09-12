@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e5b6473_a262b0e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/LightweightFirstRunActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-12T09:15:33Z",
+      "side": 1,
+      "message": "Can you make this a lambda?",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 61
+      },
+      "revId": "2d8def62d98101cf449ceccf0839e1cbe0a461dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3477932b_d0780ba9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/LightweightFirstRunActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-12T09:15:33Z",
+      "side": 1,
+      "message": "And these would also be excellent candidates for lambdas.",
+      "range": {
+        "startLine": 67,
+        "startChar": 12,
+        "endLine": 70,
+        "endChar": 13
+      },
+      "revId": "2d8def62d98101cf449ceccf0839e1cbe0a461dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e7a8fb_877828fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/LightweightFirstRunActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-12T09:15:33Z",
+      "side": 1,
+      "message": "Annotate with @StringRes?",
+      "range": {
+        "startLine": 167,
+        "startChar": 29,
+        "endLine": 167,
+        "endChar": 36
+      },
+      "revId": "2d8def62d98101cf449ceccf0839e1cbe0a461dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
