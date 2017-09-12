@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aadc2483_6af0e2d8",
+        "filename": "components/search_provider_logos/logo_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-12T10:10:26Z",
+      "side": 1,
+      "message": "Arguably, some of these cases are the same and don\u0027t need to be distinguished in LogoCallbackType.\n\nFETCHED and CLEARED are both authoritative answers, and the logo is valid whether null or non-null.\nFAILED is a non-authoritative answer, and the old logo should continue to be used.\nDISABLED is unclear; it\u0027s correct to use the null logo but there shouldn\u0027t previously have been a non-null logo.\nREVALIDATED is unclear; we might want the new metadata per the TODO.\nCANCELED is unclear. Maybe the caller would want to GetLogo() again?",
+      "revId": "a8f53743b390f5602583ff6bb6137c6e3e637e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
