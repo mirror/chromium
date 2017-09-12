@@ -106,7 +106,9 @@ TEST_F(SingleSampleMetricsFactoryImplTest, DoesNothing) {
   tester.ExpectTotalCount(kMetricName, 0);
 }
 
-TEST_F(SingleSampleMetricsFactoryImplTest, DefaultSingleSampleMetricWithValue) {
+// Temporarily disabled while adding DCHECK for crbug.com/762452.
+TEST_F(SingleSampleMetricsFactoryImplTest,
+       DISABLED_DefaultSingleSampleMetricWithValue) {
   base::HistogramTester tester;
   std::unique_ptr<base::SingleSampleMetric> metric =
       factory_->CreateCustomCountsMetric(kMetricName, kMin, kMax, kBucketCount);
