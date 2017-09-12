@@ -58,11 +58,10 @@ IncomingTaskQueue::IncomingTaskQueue(MessageLoop* message_loop)
       is_ready_for_scheduling_(false) {
 }
 
-bool IncomingTaskQueue::AddToIncomingQueue(
-    const tracked_objects::Location& from_here,
-    OnceClosure task,
-    TimeDelta delay,
-    bool nestable) {
+bool IncomingTaskQueue::AddToIncomingQueue(const Location& from_here,
+                                           OnceClosure task,
+                                           TimeDelta delay,
+                                           bool nestable) {
   // Use CHECK instead of DCHECK to crash earlier. See http://crbug.com/711167
   // for details.
   CHECK(task);
