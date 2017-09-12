@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "840e5f32_f308676f",
+        "filename": "base/metrics/histogram_functions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T23:56:20Z",
+      "side": 1,
+      "message": "\u003e You\u0027re right that we should be consistent, but I actually really dislike the phrasing on our best practices doc...\n\u003e \n\u003e \u003c_\u003c\n\u003e \u003e_\u003e\n\u003e \u003c_\u003c\n\u003e \n\u003e \n\u003e Maybe this is a good idea to update the phrasing there too? \u003d)  Here\u0027s a stab at coming up with something I\u0027m happier with:\n\u003e \n\u003e   // These values are persisted to logs, so it\u0027s important for their semantics\n\u003e   // to remain backward-compatible. It\u0027s safe to append additional enum values,\n\u003e   // and it\u0027s safe to deprecate existing values. However, it\u0027s not safe to\n\u003e   // change the meaning of an existing value. In particular, never insert a new\n\u003e   // enum value into the middle of the list (which would cause subsequent enum\n\u003e   // values to be renumbered), nor reuse a previously deprecated value.\n\u003e \n\u003e Okay, that\u0027s really really long.  Let me try to be more succinct:\n\u003e \n\u003e   // These values are persisted to logs; so once a value has been used, its\n\u003e   // meaning must never change. It\u0027s safe to add new values or to deprecate\n\u003e   // existing ones; but never renumber existing entries, nor reuse a\n\u003e   // previously-used value (even if it was deprecated).\n\u003e \n\u003e That\u0027s still twice the length of the existing text, but I think it\u0027s much much clearer.  Perhaps you can help me abbreviate it further, without sacrificing the clarity?\n\nI can\u0027t get it shorter if you indeed want all that explanation in it.\n\nMaybe:\n// These values are persisted to logs.  Entries cannot be renumbered or reused (even if deleted for a while before being reused).\nor\n// These values are persisted to logs.  Entries cannot be renumbered or reused (even if deleted beforehand).\nor even\n// These values are persisted to logs.  Entries cannot be renumbered; numeric values can never be reused.",
+      "parentUuid": "108b24ea_b9cc5c30",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 7
+      },
+      "revId": "c257a588ec82df7316946943b1c66bab71d33fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d8f9815_1b370b0a",
         "filename": "base/metrics/histogram_macros.h",
         "patchSetId": 2
@@ -157,6 +181,30 @@
       "revId": "c257a588ec82df7316946943b1c66bab71d33fbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9bd1da8_b87c9bb3",
+        "filename": "base/metrics/histogram_macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T23:56:20Z",
+      "side": 1,
+      "message": "\u003e I think it\u0027s still useful to document that the max should be exclusive rather than inclusive.  I\u0027ll leave this in place unless you feel strongly about remove it.\n\nAh, keeping it in for \"strictly less than\" is useful.  That\u0027s fine.  (I was more thinking about people emitting a number greater than, which is impossible with enum histograms.)",
+      "parentUuid": "0b613f65_57a4cd36",
+      "range": {
+        "startLine": 51,
+        "startChar": 22,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "c257a588ec82df7316946943b1c66bab71d33fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

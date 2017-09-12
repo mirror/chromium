@@ -22,6 +22,30 @@
       "revId": "4ed6b02d55fcef57a0597ed1d31e3fce98ad88e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3bfbb4_ac266fe7",
+        "filename": "tools/metrics/histograms/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T23:56:20Z",
+      "side": 1,
+      "message": "+1\n\n\"The COUNT value should not include an explicit value.\"\nor\n\"\"The COUNT value should not be set explicitly.\"",
+      "parentUuid": "258aba95_240e34bf",
+      "range": {
+        "startLine": 65,
+        "startChar": 40,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "4ed6b02d55fcef57a0597ed1d31e3fce98ad88e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
