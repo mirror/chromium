@@ -22,6 +22,167 @@
       "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b47613a_0a9e3f70",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T13:47:00Z",
+      "side": 1,
+      "message": "Do end comments with a period. Style guide said that.\n\nand below.",
+      "range": {
+        "startLine": 529,
+        "startChar": 37,
+        "endLine": 529,
+        "endChar": 38
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55cc13b2_68611264",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T13:47:00Z",
+      "side": 1,
+      "message": "what if site marked username field or server sent a prediction? We should not override that. \n\nCheck whether username_element is null. If yes, then call HTML detector.",
+      "range": {
+        "startLine": 530,
+        "startChar": 2,
+        "endLine": 531,
+        "endChar": 74
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35197ca_f82ff856",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T13:47:00Z",
+      "side": 1,
+      "message": "if a IF body is more than one line, curly brackets should be added. Check all code.",
+      "range": {
+        "startLine": 532,
+        "startChar": 32,
+        "endLine": 532,
+        "endChar": 33
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f94c43a_52da86e9",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T13:47:00Z",
+      "side": 1,
+      "message": "To double check that the HTML detector doesn\u0027t affect on it. Add \"DCHECK(false)\" inside the detector and run this test.",
+      "range": {
+        "startLine": 314,
+        "startChar": 2,
+        "endLine": 317,
+        "endChar": 15
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1e02bb_2ca6598c",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T13:47:00Z",
+      "side": 1,
+      "message": "HTML detector wouldn\u0027t affect on this test. I would revert changes of this test.",
+      "range": {
+        "startLine": 1079,
+        "startChar": 23,
+        "endLine": 1079,
+        "endChar": 32
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e3837f_d46294e9",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T13:47:00Z",
+      "side": 1,
+      "message": "here we don\u0027t care about how username field was detected. Either base heuristic and HTML detector would point to the only text field. I believe we can revert this change as well.\n\nand below...",
+      "range": {
+        "startLine": 1106,
+        "startChar": 26,
+        "endLine": 1106,
+        "endChar": 34
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655a42b2_5dda1144",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-12T13:47:00Z",
+      "side": 1,
+      "message": "You changed only one occurrence of \"username\". Do we actually need to change any of them?",
+      "range": {
+        "startLine": 1221,
+        "startChar": 2,
+        "endLine": 1224,
+        "endChar": 48
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
