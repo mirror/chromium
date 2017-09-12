@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f78f2fd0_4187002b",
+        "filename": "third_party/WebKit/common/memory_coordinator/physical_memory_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-09-12T23:28:33Z",
+      "side": 1,
+      "message": "I don\u0027t think this class does any coordination, hence I don\u0027t think the name is appropriate.\n\nIf we limit the class to the ApproximatedDeviceMemory, maybe we should call it so.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "ce2812359f6c5014d62e1b9a1c67bda254b3a6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
