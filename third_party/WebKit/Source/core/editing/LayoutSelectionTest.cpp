@@ -374,7 +374,7 @@ TEST_F(LayoutSelectionTest, FirstLetterUpdateSeletion) {
 
 TEST_F(LayoutSelectionTest, CommitAppearanceIfNeededNotCrash) {
   SetBodyContent("<div id='host'><span>bar<span></div><div>baz</div>");
-  SetShadowContent("foo", "host");
+  SetShadowContentDeprecated("foo", "host");
   UpdateAllLifecyclePhases();
   // <div id='host'>
   //   #shadow-root

@@ -57,7 +57,7 @@ TEST_F(NodeTest, canStartSelectionWithShadowDOM) {
   const char* shadow_content =
       "<a href='http://www.msn.com'><content></content></a>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
   Node* one = GetDocument().getElementById("one");
 
   EXPECT_FALSE(one->CanStartSelection());

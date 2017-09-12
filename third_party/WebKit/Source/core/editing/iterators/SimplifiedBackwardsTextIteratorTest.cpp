@@ -100,7 +100,7 @@ TEST_F(SimplifiedBackwardsTextIteratorTest, SubrangeWithReplacedElements) {
       "three <content select=#two></content> <content select=#one></content> "
       "zero";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Element* host = GetDocument().getElementById("host");
 
@@ -119,7 +119,7 @@ TEST_F(SimplifiedBackwardsTextIteratorTest, characterAt) {
       "three <content select=#two></content> <content select=#one></content> "
       "zero";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Element* host = GetDocument().getElementById("host");
 
@@ -175,7 +175,7 @@ TEST_F(SimplifiedBackwardsTextIteratorTest, copyTextTo) {
       "three <content select=#two></content> <content select=#one></content> "
       "zero";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Element* host = GetDocument().getElementById("host");
   const char* message =
