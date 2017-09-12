@@ -297,6 +297,9 @@ class WebURLResponse {
 
   BLINK_PLATFORM_EXPORT void AppendRedirectResponse(const WebURLResponse&);
 
+  BLINK_PLATFORM_EXPORT WebString GetPlaceholderText() const;
+  BLINK_PLATFORM_EXPORT void SetPlaceholderText(const WebString&);
+
 #if INSIDE_BLINK
  protected:
   // Permit subclasses to set arbitrary ResourceResponse pointer as

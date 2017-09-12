@@ -1164,6 +1164,8 @@ void WebURLLoaderImpl::PopulateURLResponse(const WebURL& url,
   extra_data->set_previews_state(info.previews_state);
   extra_data->set_effective_connection_type(info.effective_connection_type);
 
+  response->SetPlaceholderText(WebString::FromUTF16(info.placeholder_text));
+
   // If there's no received headers end time, don't set load timing.  This is
   // the case for non-HTTP requests, requests that don't go over the wire, and
   // certain error cases.

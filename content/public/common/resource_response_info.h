@@ -11,6 +11,7 @@
 
 #include "base/files/file_path.h"
 #include "base/memory/ref_counted.h"
+#include "base/strings/string16.h"
 #include "base/time/time.h"
 #include "content/common/content_export.h"
 #include "content/public/common/previews_state.h"
@@ -182,6 +183,8 @@ struct CONTENT_EXPORT ResourceResponseInfo {
   // True if service worker navigation preload was performed due to the request
   // for this response.
   bool did_service_worker_navigation_preload;
+
+  base::string16 placeholder_text;
 
   // NOTE: When adding or changing fields here, also update
   // ResourceResponse::DeepCopy in resource_response.cc.

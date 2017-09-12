@@ -64,7 +64,9 @@ string16 FormatNumber(int64_t number) {
   return i18n::UnicodeStringToString16(ustr);
 }
 
-string16 FormatDouble(double number, int fractional_digits) {
+string16 FormatDouble(double number,
+                      int min_fractional_digits,
+                      int max_fractional_digits) {
   icu::NumberFormat* number_format =
       g_number_format_float.Get().number_format.get();
 
@@ -72,12 +74,16 @@ string16 FormatDouble(double number, int fractional_digits) {
     // As a fallback, just return the raw number in a string.
     return ASCIIToUTF16(StringPrintf("%f", number));
   }
-  number_format->setMaximumFractionDigits(fractional_digits);
-  number_format->setMinimumFractionDigits(fractional_digits);
+  number_format->setMaximumFractionDigits(max_fractional_digits);
+  number_format->setMinimumFractionDigits(min_fractional_digits);
   icu::UnicodeString ustr;
   number_format->format(number, ustr);
 
   return i18n::UnicodeStringToString16(ustr);
+}
+
+string16 FormatDouble(double number, int fractional_digits) {
+  return FormatDouble(number, fractional_digits, fractional_digits);
 }
 
 string16 FormatPercent(int number) {

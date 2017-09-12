@@ -5,13 +5,15 @@
 #ifndef COMPONENTS_DATA_REDUCTION_PROXY_CONTENT_BROWSER_CONTENT_LOFI_DECIDER_H_
 #define COMPONENTS_DATA_REDUCTION_PROXY_CONTENT_BROWSER_CONTENT_LOFI_DECIDER_H_
 
-#include "components/data_reduction_proxy/core/common/lofi_decider.h"
 #include "base/macros.h"
+#include "base/strings/string16.h"
+#include "components/data_reduction_proxy/core/common/lofi_decider.h"
 
 class GURL;
 
 namespace net {
 class HttpRequestHeaders;
+class HttpResponseHeaders;
 class URLRequest;
 }
 
@@ -29,7 +31,9 @@ namespace data_reduction_proxy {
 // Owned by DataReductionProxyIOData and should be called on the IO thread.
 class ContentLoFiDecider : public LoFiDecider {
  public:
-  ContentLoFiDecider();
+  using FormatPlaceholderTextFn = base::string16 (*)(int64_t);
+
+  ContentLoFiDecider(FormatPlaceholderTextFn format_placeholder_text_fn);
   ~ContentLoFiDecider() override;
 
   // LoFiDecider implementation:
@@ -53,7 +57,14 @@ class ContentLoFiDecider : public LoFiDecider {
       GURL* new_url,
       previews::PreviewsDecider* previews_decider) const override;
 
+  void MaybeAddPlaceholderText(
+      net::URLRequest* request,
+      const net::HttpResponseHeaders* response_headers) const override;
+
  private:
+  // Non-null function pointer.
+  const FormatPlaceholderTextFn format_placeholder_text_fn_;
+
   DISALLOW_COPY_AND_ASSIGN(ContentLoFiDecider);
 };
 

@@ -193,6 +193,8 @@ source_set("common_sources") {
     "presentation_info.cc",
     "presentation_info.h",
     "previews_state.h",
+    "previews_user_data.cc",
+    "previews_user_data.h",
     "process_type.h",
     "push_event_payload.h",
     "push_subscription_options.h",

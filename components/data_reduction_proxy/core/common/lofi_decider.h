@@ -11,6 +11,7 @@ class GURL;
 
 namespace net {
 class HttpRequestHeaders;
+class HttpResponseHeaders;
 class URLRequest;
 }
 
@@ -71,6 +72,10 @@ class LoFiDecider {
       net::URLRequest* request,
       GURL* new_url,
       previews::PreviewsDecider* previews_decider) const = 0;
+
+  virtual void MaybeAddPlaceholderText(
+      net::URLRequest* request,
+      const net::HttpResponseHeaders* response_headers) const = 0;
 };
 
 }  // namespace data_reduction_proxy

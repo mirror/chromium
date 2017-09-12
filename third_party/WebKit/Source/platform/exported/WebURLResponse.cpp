@@ -397,6 +397,14 @@ void WebURLResponse::SetConnectionInfo(
   resource_response_->SetConnectionInfo(connection_info);
 }
 
+WebString WebURLResponse::GetPlaceholderText() const {
+  return resource_response_->GetPlaceholderText();
+}
+
+void WebURLResponse::SetPlaceholderText(const WebString& value) {
+  resource_response_->SetPlaceholderText(value);
+}
+
 WebURLResponse::WebURLResponse(ResourceResponse& r) : resource_response_(&r) {}
 
 }  // namespace blink

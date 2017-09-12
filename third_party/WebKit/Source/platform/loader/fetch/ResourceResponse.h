@@ -399,6 +399,9 @@ class PLATFORM_EXPORT ResourceResponse final {
   }
   void AppendRedirectResponse(const ResourceResponse&);
 
+  const String& GetPlaceholderText() const { return placeholder_text_; }
+  void SetPlaceholderText(const String& value) { placeholder_text_ = value; }
+
   // This method doesn't compare the all members.
   static bool Compare(const ResourceResponse&, const ResourceResponse&);
 
@@ -533,6 +536,8 @@ class PLATFORM_EXPORT ResourceResponse final {
   // PlzNavigate: the redirect responses are transmitted
   // inside the final response.
   Vector<ResourceResponse> redirect_responses_;
+
+  String placeholder_text_;
 };
 
 inline bool operator==(const ResourceResponse& a, const ResourceResponse& b) {
@@ -591,6 +596,7 @@ struct CrossThreadResourceResponseData {
   long long decoded_body_length_;
   String downloaded_file_path_;
   RefPtr<BlobDataHandle> downloaded_file_handle_;
+  String placeholder_text_;
 };
 
 }  // namespace blink

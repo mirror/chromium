@@ -30,6 +30,7 @@
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/previews_user_data.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/resource_type.h"
 #include "net/base/io_buffer.h"
@@ -78,6 +79,12 @@ void PopulateResourceResponse(
 
   response->head.effective_connection_type =
       net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN;
+
+  if (const PreviewsUserData* previews_user_data =
+          reinterpret_cast<PreviewsUserData*>(
+              request->GetUserData(PreviewsUserData::kUserDataKey))) {
+    response->head.placeholder_text = previews_user_data->placeholder_text();
+  }
 
   if (info->GetResourceType() == RESOURCE_TYPE_MAIN_FRAME) {
     DCHECK(info->IsMainFrame());

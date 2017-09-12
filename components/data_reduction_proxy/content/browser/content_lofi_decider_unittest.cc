@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/test/scoped_feature_list.h"
@@ -90,10 +91,10 @@ class ContentLoFiDeciderTest : public testing::Test {
     data_reduction_proxy_network_delegate_->InitIODataAndUMA(
         test_context_->io_data(), test_context_->io_data()->bypass_stats());
 
-
     std::unique_ptr<data_reduction_proxy::ContentLoFiDecider>
         data_reduction_proxy_lofi_decider(
-            new data_reduction_proxy::ContentLoFiDecider());
+            new data_reduction_proxy::ContentLoFiDecider(
+                &base::Int64ToString16));
     test_context_->io_data()->set_lofi_decider(
         std::move(data_reduction_proxy_lofi_decider));
   }
@@ -186,10 +187,9 @@ class ContentLoFiDeciderTest : public testing::Test {
   static void VerifyAcceptTransformHeader(const net::URLRequest& request,
                                           bool expected_accept_lite_page,
                                           bool expected_accept_empty_image) {
-    std::unique_ptr<data_reduction_proxy::ContentLoFiDecider> lofi_decider(
-        new data_reduction_proxy::ContentLoFiDecider());
     net::HttpRequestHeaders headers;
-    lofi_decider->MaybeSetAcceptTransformHeader(request, &headers);
+    ContentLoFiDecider lofi_decider(&base::Int64ToString16);
+    lofi_decider.MaybeSetAcceptTransformHeader(request, &headers);
 
     std::string header_value;
     EXPECT_EQ(expected_accept_lite_page || expected_accept_empty_image,
@@ -211,6 +211,10 @@ class ContentLoFiDeciderTest : public testing::Test {
     EXPECT_EQ(
         expected_compressed_video_used,
         header_value.find(compressed_video_directive()) != std::string::npos);
+  }
+
+  ContentLoFiDecider* lofi_decider() const {
+    return test_context_->lofi_decider();
   }
 
  protected:
@@ -415,64 +419,56 @@ TEST_F(ContentLoFiDeciderTest, VideoDirectiveDoesNotOverride) {
 }
 
 TEST_F(ContentLoFiDeciderTest, IsSlowPagePreviewRequested) {
-  std::unique_ptr<data_reduction_proxy::ContentLoFiDecider> lofi_decider(
-      new data_reduction_proxy::ContentLoFiDecider());
   net::HttpRequestHeaders headers;
-  EXPECT_FALSE(lofi_decider->IsSlowPagePreviewRequested(headers));
+  EXPECT_FALSE(lofi_decider()->IsSlowPagePreviewRequested(headers));
   headers.SetHeader(chrome_proxy_accept_transform_header(), "lite-page");
-  EXPECT_TRUE(lofi_decider->IsSlowPagePreviewRequested(headers));
+  EXPECT_TRUE(lofi_decider()->IsSlowPagePreviewRequested(headers));
   headers.SetHeader(chrome_proxy_accept_transform_header(), "lite-page;foo");
-  EXPECT_FALSE(lofi_decider->IsSlowPagePreviewRequested(headers));
+  EXPECT_FALSE(lofi_decider()->IsSlowPagePreviewRequested(headers));
   headers.SetHeader(chrome_proxy_accept_transform_header(), "empty-image");
-  EXPECT_TRUE(lofi_decider->IsSlowPagePreviewRequested(headers));
+  EXPECT_TRUE(lofi_decider()->IsSlowPagePreviewRequested(headers));
   headers.SetHeader(chrome_proxy_accept_transform_header(), "empty-image;foo");
-  EXPECT_FALSE(lofi_decider->IsSlowPagePreviewRequested(headers));
+  EXPECT_FALSE(lofi_decider()->IsSlowPagePreviewRequested(headers));
   headers.SetHeader("Another-Header", "empty-image");
-  lofi_decider->RemoveAcceptTransformHeader(&headers);
-  EXPECT_FALSE(lofi_decider->IsSlowPagePreviewRequested(headers));
+  lofi_decider()->RemoveAcceptTransformHeader(&headers);
+  EXPECT_FALSE(lofi_decider()->IsSlowPagePreviewRequested(headers));
 }
 
 TEST_F(ContentLoFiDeciderTest, IsLitePagePreviewRequested) {
-  std::unique_ptr<data_reduction_proxy::ContentLoFiDecider> lofi_decider(
-      new data_reduction_proxy::ContentLoFiDecider());
   net::HttpRequestHeaders headers;
-  EXPECT_FALSE(lofi_decider->IsLitePagePreviewRequested(headers));
+  EXPECT_FALSE(lofi_decider()->IsLitePagePreviewRequested(headers));
   headers.SetHeader(chrome_proxy_accept_transform_header(), "empty-image");
-  EXPECT_FALSE(lofi_decider->IsLitePagePreviewRequested(headers));
+  EXPECT_FALSE(lofi_decider()->IsLitePagePreviewRequested(headers));
   headers.SetHeader(chrome_proxy_accept_transform_header(),
                     "empty-image;lite-page");
-  EXPECT_FALSE(lofi_decider->IsLitePagePreviewRequested(headers));
+  EXPECT_FALSE(lofi_decider()->IsLitePagePreviewRequested(headers));
   headers.SetHeader(chrome_proxy_accept_transform_header(), "lite-page");
-  EXPECT_TRUE(lofi_decider->IsLitePagePreviewRequested(headers));
+  EXPECT_TRUE(lofi_decider()->IsLitePagePreviewRequested(headers));
   headers.SetHeader(chrome_proxy_accept_transform_header(), "lite-page;foo");
-  EXPECT_TRUE(lofi_decider->IsLitePagePreviewRequested(headers));
+  EXPECT_TRUE(lofi_decider()->IsLitePagePreviewRequested(headers));
   headers.SetHeader("Another-Header", "lite-page");
-  lofi_decider->RemoveAcceptTransformHeader(&headers);
-  EXPECT_FALSE(lofi_decider->IsLitePagePreviewRequested(headers));
+  lofi_decider()->RemoveAcceptTransformHeader(&headers);
+  EXPECT_FALSE(lofi_decider()->IsLitePagePreviewRequested(headers));
 }
 
 TEST_F(ContentLoFiDeciderTest, RemoveAcceptTransformHeader) {
-  std::unique_ptr<data_reduction_proxy::ContentLoFiDecider> lofi_decider(
-      new data_reduction_proxy::ContentLoFiDecider());
   net::HttpRequestHeaders headers;
   headers.SetHeader(chrome_proxy_accept_transform_header(), "Foo");
   EXPECT_TRUE(headers.HasHeader(chrome_proxy_accept_transform_header()));
-  lofi_decider->RemoveAcceptTransformHeader(&headers);
+  lofi_decider()->RemoveAcceptTransformHeader(&headers);
   EXPECT_FALSE(headers.HasHeader(chrome_proxy_accept_transform_header()));
 }
 
 TEST_F(ContentLoFiDeciderTest, ShouldRecordLoFiUMA) {
-  std::unique_ptr<data_reduction_proxy::ContentLoFiDecider> lofi_decider(
-      new data_reduction_proxy::ContentLoFiDecider());
   std::unique_ptr<net::URLRequest> request1 = CreateRequestByType(
       content::RESOURCE_TYPE_IMAGE, false, content::SERVER_LOFI_ON);
-  EXPECT_TRUE(lofi_decider->ShouldRecordLoFiUMA(*request1.get()));
+  EXPECT_TRUE(lofi_decider()->ShouldRecordLoFiUMA(*request1.get()));
   std::unique_ptr<net::URLRequest> request2 = CreateRequestByType(
       content::RESOURCE_TYPE_MAIN_FRAME, false, content::PREVIEWS_OFF);
-  EXPECT_FALSE(lofi_decider->ShouldRecordLoFiUMA(*request2.get()));
+  EXPECT_FALSE(lofi_decider()->ShouldRecordLoFiUMA(*request2.get()));
   std::unique_ptr<net::URLRequest> request3 = CreateRequestByType(
       content::RESOURCE_TYPE_MAIN_FRAME, false, content::SERVER_LITE_PAGE_ON);
-  EXPECT_TRUE(lofi_decider->ShouldRecordLoFiUMA(*request3.get()));
+  EXPECT_TRUE(lofi_decider()->ShouldRecordLoFiUMA(*request3.get()));
 }
 
 TEST_F(ContentLoFiDeciderTest, NoTransformDoesNotAddHeader) {
@@ -486,51 +482,44 @@ TEST_F(ContentLoFiDeciderTest, NoTransformDoesNotAddHeader) {
 TEST_F(ContentLoFiDeciderTest, RequestIsClientSideLoFiMainFrameTest) {
   std::unique_ptr<net::URLRequest> request = CreateRequestByType(
       content::RESOURCE_TYPE_MAIN_FRAME, true, content::CLIENT_LOFI_ON);
-  std::unique_ptr<data_reduction_proxy::ContentLoFiDecider> lofi_decider(
-      new data_reduction_proxy::ContentLoFiDecider());
-  EXPECT_FALSE(lofi_decider->IsClientLoFiImageRequest(*request));
+  EXPECT_FALSE(lofi_decider()->IsClientLoFiImageRequest(*request));
 }
 
 TEST_F(ContentLoFiDeciderTest, RequestIsNotClientSideLoFiImageTest) {
   std::unique_ptr<net::URLRequest> request = CreateRequestByType(
       content::RESOURCE_TYPE_IMAGE, true, content::PREVIEWS_NO_TRANSFORM);
-  std::unique_ptr<data_reduction_proxy::ContentLoFiDecider> lofi_decider(
-      new data_reduction_proxy::ContentLoFiDecider());
-  EXPECT_FALSE(lofi_decider->IsClientLoFiImageRequest(*request));
+  EXPECT_FALSE(lofi_decider()->IsClientLoFiImageRequest(*request));
 }
 
 TEST_F(ContentLoFiDeciderTest, RequestIsClientSideLoFiImageTest) {
   std::unique_ptr<net::URLRequest> request = CreateRequestByType(
       content::RESOURCE_TYPE_IMAGE, true, content::CLIENT_LOFI_ON);
-  std::unique_ptr<data_reduction_proxy::ContentLoFiDecider> lofi_decider(
-      new data_reduction_proxy::ContentLoFiDecider());
-  EXPECT_TRUE(lofi_decider->IsClientLoFiImageRequest(*request));
+  EXPECT_TRUE(lofi_decider()->IsClientLoFiImageRequest(*request));
 }
 
 TEST_F(ContentLoFiDeciderTest, RequestIsClientLoFiAutoReload) {
   // IsClientLoFiAutoReloadRequest() should return true for any request with the
   // CLIENT_LOFI_AUTO_RELOAD bit set.
-
-  EXPECT_TRUE(ContentLoFiDecider().IsClientLoFiAutoReloadRequest(
+  EXPECT_TRUE(lofi_decider()->IsClientLoFiAutoReloadRequest(
       *CreateRequestByType(content::RESOURCE_TYPE_IMAGE, false,
                            content::CLIENT_LOFI_AUTO_RELOAD)));
 
   EXPECT_TRUE(
-      ContentLoFiDecider().IsClientLoFiAutoReloadRequest(*CreateRequestByType(
+      lofi_decider()->IsClientLoFiAutoReloadRequest(*CreateRequestByType(
           content::RESOURCE_TYPE_IMAGE, true,
           content::CLIENT_LOFI_AUTO_RELOAD | content::PREVIEWS_NO_TRANSFORM)));
 
-  EXPECT_TRUE(ContentLoFiDecider().IsClientLoFiAutoReloadRequest(
+  EXPECT_TRUE(lofi_decider()->IsClientLoFiAutoReloadRequest(
       *CreateRequestByType(content::RESOURCE_TYPE_MAIN_FRAME, true,
                            content::CLIENT_LOFI_AUTO_RELOAD)));
 
-  EXPECT_TRUE(ContentLoFiDecider().IsClientLoFiAutoReloadRequest(
+  EXPECT_TRUE(lofi_decider()->IsClientLoFiAutoReloadRequest(
       *CreateRequestByType(content::RESOURCE_TYPE_SCRIPT, true,
                            content::CLIENT_LOFI_AUTO_RELOAD)));
 
   // IsClientLoFiAutoReloadRequest() should return false for any request without
   // the CLIENT_LOFI_AUTO_RELOAD bit set.
-  EXPECT_FALSE(ContentLoFiDecider().IsClientLoFiAutoReloadRequest(
+  EXPECT_FALSE(lofi_decider()->IsClientLoFiAutoReloadRequest(
       *CreateRequestByType(content::RESOURCE_TYPE_IMAGE, false,
                            content::PREVIEWS_NO_TRANSFORM)));
 }

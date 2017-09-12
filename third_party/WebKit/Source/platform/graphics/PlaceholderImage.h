@@ -6,6 +6,7 @@
 #define PlaceholderImage_h
 
 #include "platform/SharedBuffer.h"
+#include "platform/fonts/Font.h"
 #include "platform/geometry/IntSize.h"
 #include "platform/graphics/Image.h"
 #include "platform/graphics/ImageOrientation.h"
@@ -25,8 +26,9 @@ class ImageObserver;
 class PLATFORM_EXPORT PlaceholderImage final : public Image {
  public:
   static PassRefPtr<PlaceholderImage> Create(ImageObserver* observer,
-                                             const IntSize& size) {
-    return AdoptRef(new PlaceholderImage(observer, size));
+                                             const IntSize& size,
+                                             const String& text) {
+    return AdoptRef(new PlaceholderImage(observer, size, text));
   }
 
   ~PlaceholderImage() override;
@@ -47,7 +49,7 @@ class PLATFORM_EXPORT PlaceholderImage final : public Image {
   bool IsPlaceholderImage() const override { return true; }
 
  private:
-  PlaceholderImage(ImageObserver*, const IntSize&);
+  PlaceholderImage(ImageObserver*, const IntSize&, const String&);
 
   bool CurrentFrameHasSingleSecurityOrigin() const override { return true; }
 
@@ -66,8 +68,13 @@ class PLATFORM_EXPORT PlaceholderImage final : public Image {
                    const FloatSize& repeat_spacing) override;
 
   const IntSize size_;
+  const String text_;
+
+  // Lazily calculated, initially set to -1.
+  float cached_text_width_;
 
   // Lazily initialized.
+  Font font_;
   sk_sp<PaintRecord> paint_record_for_current_frame_;
   PaintImage::ContentId paint_record_content_id_;
 };

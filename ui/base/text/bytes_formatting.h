@@ -55,6 +55,8 @@ base::string16 FormatSpeedWithUnits(int64_t bytes,
                                     DataUnits units,
                                     bool show_units);
 
+UI_BASE_EXPORT base::string16 FormatBytesForPlaceholderText(int64_t bytes);
+
 }  // namespace ui
 
 #endif  // UI_BASE_TEXT_BYTES_FORMATTING_H_

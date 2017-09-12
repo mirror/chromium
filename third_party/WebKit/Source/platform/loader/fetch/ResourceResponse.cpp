@@ -198,6 +198,7 @@ ResourceResponse::ResourceResponse(CrossThreadResourceResponseData* data)
   decoded_body_length_ = data->decoded_body_length_;
   downloaded_file_path_ = data->downloaded_file_path_;
   downloaded_file_handle_ = data->downloaded_file_handle_;
+  placeholder_text_ = data->placeholder_text_;
 
   // Bug https://bugs.webkit.org/show_bug.cgi?id=60397 this doesn't support
   // whatever values may be present in the opaque m_extraData structure.
@@ -266,6 +267,7 @@ std::unique_ptr<CrossThreadResourceResponseData> ResourceResponse::CopyData()
   data->decoded_body_length_ = decoded_body_length_;
   data->downloaded_file_path_ = downloaded_file_path_.IsolatedCopy();
   data->downloaded_file_handle_ = downloaded_file_handle_;
+  data->placeholder_text_ = placeholder_text_.IsolatedCopy();
 
   // Bug https://bugs.webkit.org/show_bug.cgi?id=60397 this doesn't support
   // whatever values may be present in the opaque m_extraData structure.

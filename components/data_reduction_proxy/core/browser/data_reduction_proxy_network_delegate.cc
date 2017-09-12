@@ -588,6 +588,12 @@ void DataReductionProxyNetworkDelegate::OnHeadersReceivedInternal(
         DataReductionProxyData::GetDataAndCreateIfNecessary(request);
     data->set_client_lofi_requested(true);
   }
+
+  if (data_reduction_proxy_io_data_ &&
+      data_reduction_proxy_io_data_->lofi_decider()) {
+    data_reduction_proxy_io_data_->lofi_decider()->MaybeAddPlaceholderText(
+        request, original_response_headers);
+  }
 }
 
 void DataReductionProxyNetworkDelegate::CalculateAndRecordDataUsage(

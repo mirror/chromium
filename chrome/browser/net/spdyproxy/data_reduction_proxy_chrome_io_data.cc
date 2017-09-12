@@ -31,6 +31,7 @@
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
+#include "ui/base/text/bytes_formatting.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -93,7 +94,8 @@ CreateDataReductionProxyChromeIOData(
               version_info::GetChannelString(chrome::GetChannel())));
 
   data_reduction_proxy_io_data->set_lofi_decider(
-      base::MakeUnique<data_reduction_proxy::ContentLoFiDecider>());
+      base::MakeUnique<data_reduction_proxy::ContentLoFiDecider>(
+          &ui::FormatBytesForPlaceholderText));
   data_reduction_proxy_io_data->set_resource_type_provider(
       base::MakeUnique<data_reduction_proxy::ContentResourceTypeProvider>());
   data_reduction_proxy_io_data->set_lofi_ui_service(

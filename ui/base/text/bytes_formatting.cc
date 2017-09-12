@@ -112,4 +112,36 @@ base::string16 FormatSpeed(int64_t bytes) {
   return FormatSpeedWithUnits(bytes, GetByteDisplayUnits(bytes), true);
 }
 
+base::string16 FormatBytesForPlaceholderText(int64_t bytes) {
+  if (bytes < 0) {
+    NOTREACHED() << "Negative bytes value";
+    return base::string16();
+  }
+
+  double unit_amount = static_cast<double>(bytes);
+  int units_id = IDS_APP_BYTES;
+  int fractional_digits = 0;
+
+  if (bytes <= 1024) {
+    unit_amount = 1.0;
+    units_id = IDS_APP_KIBIBYTES;
+    fractional_digits = 0;
+  } else {
+    const int* units_it = kByteStrings;
+    for (; units_it != kByteStrings + (arraysize(kByteStrings) - 1) &&
+           unit_amount >= 1000.0;
+         unit_amount /= 1024.0, ++units_it) {
+    }
+
+    if (unit_amount < 1.0)
+      unit_amount = 1.0;
+
+    units_id = *units_it;
+    fractional_digits = unit_amount >= 10.0 ? 0 : 1;
+  }
+
+  return l10n_util::GetStringFUTF16(
+      units_id, base::FormatDouble(unit_amount, 0, fractional_digits));
+}
+
 }  // namespace ui

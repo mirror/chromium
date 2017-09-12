@@ -290,6 +290,10 @@ class TestLoFiDecider : public LoFiDecider {
     ignore_is_using_data_reduction_proxy_check_ = true;
   }
 
+  void MaybeAddPlaceholderText(
+      net::URLRequest* request,
+      const net::HttpResponseHeaders* response_headers) const override {}
+
  private:
   bool should_be_client_lofi_;
   bool should_be_client_lofi_auto_reload_;

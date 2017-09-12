@@ -469,7 +469,8 @@ ImageResourceContent::UpdateImageResult ImageResourceContent::UpdateImage(
         if (image_ && !image_->IsNull()) {
           IntSize dimensions = image_->Size();
           ClearImage();
-          image_ = PlaceholderImage::Create(this, dimensions);
+          image_ = PlaceholderImage::Create(
+              this, dimensions, info_->GetResponse().GetPlaceholderText());
         }
       }
 

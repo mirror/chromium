@@ -16,15 +16,49 @@
 #include "components/previews/core/previews_decider.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/common/previews_state.h"
+#include "content/public/common/previews_user_data.h"
 #include "content/public/common/resource_type.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_request_headers.h"
+#include "net/http/http_response_headers.h"
 #include "net/url_request/url_request.h"
 #include "url/gurl.h"
 
 namespace data_reduction_proxy {
 
-ContentLoFiDecider::ContentLoFiDecider() {}
+namespace {
+
+int64_t GetOriginalLength(const content::ResourceRequestInfo* info,
+                          const net::HttpResponseHeaders* response_headers) {
+  DCHECK(response_headers);
+  if (response_headers->HasHeaderValue("via", "1.1 Chrome-Compression-Proxy") &&
+      response_headers->HasHeaderValue("chrome-proxy-content-transform",
+                                       "empty-image")) {
+    return response_headers->GetInt64HeaderValue("x-original-content-length");
+  }
+
+  if (!info ||
+      !(info->GetPreviewsState() &
+        (content::CLIENT_LOFI_ON | content::CLIENT_LOFI_AUTO_RELOAD))) {
+    return -1;
+  }
+
+  if (response_headers->response_code() == 206) {
+    int64_t first, last, length;
+    return response_headers->GetContentRangeFor206(&first, &last, &length)
+               ? length
+               : -1;
+  }
+  return response_headers->GetContentLength();
+}
+
+}  // namespace
+
+ContentLoFiDecider::ContentLoFiDecider(
+    FormatPlaceholderTextFn format_placeholder_text_fn)
+    : format_placeholder_text_fn_(format_placeholder_text_fn) {
+  DCHECK(format_placeholder_text_fn_);
+}
 
 ContentLoFiDecider::~ContentLoFiDecider() {}
 
@@ -188,6 +222,24 @@ void ContentLoFiDecider::MaybeApplyAMPPreview(
 
   // TODO(rajendrant): Apply the matching logic for |request| and update
   // |new_url| to its AMP version.
+}
+
+void ContentLoFiDecider::MaybeAddPlaceholderText(
+    net::URLRequest* request,
+    const net::HttpResponseHeaders* response_headers) const {
+  if (!response_headers)
+    return;
+
+  int64_t length = GetOriginalLength(
+      content::ResourceRequestInfo::ForRequest(request), response_headers);
+
+  if (length < 0)
+    return;
+
+  request->SetUserData(
+      content::PreviewsUserData::kUserDataKey,
+      std::unique_ptr<base::SupportsUserData::Data>(
+          new content::PreviewsUserData(format_placeholder_text_fn_(length))));
 }
 
 }  // namespace data_reduction_proxy

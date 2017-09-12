@@ -4,6 +4,12 @@
 
 #include "platform/graphics/PlaceholderImage.h"
 
+#include <utility>
+
+#include "platform/fonts/FontDescription.h"
+#include "platform/fonts/FontFamily.h"
+#include "platform/fonts/FontSelectionTypes.h"
+#include "platform/geometry/FloatPoint.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/geometry/IntPoint.h"
 #include "platform/geometry/IntRect.h"
@@ -14,6 +20,7 @@
 #include "platform/graphics/paint/PaintFlags.h"
 #include "platform/graphics/paint/PaintRecord.h"
 #include "platform/graphics/paint/PaintRecorder.h"
+#include "platform/text/TextRun.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkRect.h"
@@ -21,8 +28,69 @@
 
 namespace blink {
 
-PlaceholderImage::PlaceholderImage(ImageObserver* observer, const IntSize& size)
-    : Image(observer), size_(size) {}
+namespace {
+
+// Placeholder image visual specifications:
+// https://docs.google.com/document/d/1BHeA1azbgCdZgCnr16VN2g7A9MHPQ_dwKn5szh8evMQ/edit
+
+constexpr int kIconWidth = 24;
+constexpr int kIconHeight = 24;
+constexpr int kFeaturePaddingX = 8;
+constexpr int kIconPaddingY = 5;
+constexpr int kPaddingBetweenIconAndText = 2;
+constexpr int kTextPaddingY = 9;
+
+constexpr int kFontSize = 14;
+
+void DrawIcon(PaintCanvas* canvas, const PaintFlags& flags, float x, float y) {
+  DEFINE_STATIC_REF(Image, icon_image,
+                    (Image::LoadPlatformResource("placeholderIcon")));
+  DCHECK(!icon_image->IsNull());
+
+  // Note that the |icon_image| is not scaled according to dest_rect / src_rect,
+  // and is always drawn at the same size. This is so that placeholder icons are
+  // visible (e.g. when replacing a large image that's scaled down to a small
+  // area) and so that all placeholder images on the same page look consistent.
+  canvas->drawImageRect(icon_image->PaintImageForCurrentFrame(),
+                        IntRect(IntPoint::Zero(), icon_image->Size()),
+                        FloatRect(x, y, kIconWidth, kIconHeight), &flags,
+                        PaintCanvas::kFast_SrcRectConstraint);
+}
+
+RefPtr<SharedFontFamily> CreateSharedFontFamily(const AtomicString& name,
+                                                RefPtr<SharedFontFamily> next) {
+  RefPtr<SharedFontFamily> family = SharedFontFamily::Create();
+  family->SetFamily(name);
+  if (next)
+    family->AppendFamily(std::move(next));
+  return family;
+}
+
+FontDescription CreatePlaceholderFontDescription() {
+  FontDescription description;
+  description.FirstFamily().SetFamily("Roboto");
+  description.FirstFamily().AppendFamily(CreateSharedFontFamily(
+      "Helvetica Neue",
+      CreateSharedFontFamily("Helvetica",
+                             CreateSharedFontFamily("Arial", nullptr))));
+
+  description.SetGenericFamily(FontDescription::kSansSerifFamily);
+  description.SetComputedSize(kFontSize);
+  description.SetWeight(FontSelectionValue(500));
+
+  return description;
+}
+
+}  // namespace
+
+PlaceholderImage::PlaceholderImage(ImageObserver* observer,
+                                   const IntSize& size,
+                                   const String& text)
+    : Image(observer),
+      size_(size),
+      text_(text),
+      cached_text_width_(-1.0f),
+      paint_record_content_id_(-1) {}
 
 PlaceholderImage::~PlaceholderImage() {}
 
@@ -61,41 +129,48 @@ void PlaceholderImage::Draw(PaintCanvas* canvas,
     return;
   }
 
-  // Placeholder image visual specifications:
-  // https://docs.google.com/document/d/1BHeA1azbgCdZgCnr16VN2g7A9MHPQ_dwKn5szh8evMQ/edit
-
   PaintFlags flags(base_flags);
   flags.setStyle(PaintFlags::kFill_Style);
   flags.setColor(SkColorSetARGB(0x80, 0xD9, 0xD9, 0xD9));
   canvas->drawRect(dest_rect, flags);
 
-  constexpr int kIconWidth = 24;
-  constexpr int kIconHeight = 24;
-  constexpr int kIconPaddingX = 8;
-  constexpr int kIconPaddingY = 5;
-
-  if (dest_rect.Width() < kIconWidth + 2 * kIconPaddingX ||
+  if (dest_rect.Width() < kIconWidth + 2 * kFeaturePaddingX ||
       dest_rect.Height() < kIconHeight + 2 * kIconPaddingY) {
     return;
   }
 
-  DEFINE_STATIC_REF(Image, icon_image,
-                    (Image::LoadPlatformResource("placeholderIcon")));
-  DCHECK(!icon_image->IsNull());
+  if (!text_.IsEmpty() && cached_text_width_ < 0.0f) {
+    font_ = Font(CreatePlaceholderFontDescription());
+    font_.Update(nullptr);
+    cached_text_width_ = font_.Width(TextRun(text_));
+  }
 
-  FloatRect icon_dest_rect(
-      dest_rect.X() + (dest_rect.Width() - kIconWidth) / 2.0f,
-      dest_rect.Y() + (dest_rect.Height() - kIconHeight) / 2.0f, kIconWidth,
-      kIconHeight);
+  const float icon_and_text_width =
+      cached_text_width_ +
+      (kIconWidth + 2 * kFeaturePaddingX + kPaddingBetweenIconAndText);
 
-  // Note that the |icon_image| is not scaled according to dest_rect / src_rect,
-  // and is always drawn at the same size. This is so that placeholder icons are
-  // visible (e.g. when replacing a large image that's scaled down to a small
-  // area) and so that all placeholder images on the same page look consistent.
-  canvas->drawImageRect(icon_image->PaintImageForCurrentFrame(),
-                        IntRect(IntPoint::Zero(), icon_image->Size()),
-                        icon_dest_rect, &base_flags,
-                        PaintCanvas::kFast_SrcRectConstraint);
+  if (text_.IsEmpty() || dest_rect.Width() < icon_and_text_width) {
+    DrawIcon(canvas, flags,
+             dest_rect.X() + (dest_rect.Width() - kIconWidth) / 2.0f,
+             dest_rect.Y() + (dest_rect.Height() - kIconHeight) / 2.0f);
+    return;
+  }
+
+  const float feature_x =
+      dest_rect.X() + (dest_rect.Width() - icon_and_text_width) / 2.0f;
+  const float feature_y =
+      dest_rect.Y() +
+      (dest_rect.Height() - (kIconHeight + 2 * kIconPaddingY)) / 2.0f;
+
+  DrawIcon(canvas, base_flags, feature_x + kFeaturePaddingX,
+           feature_y + kIconPaddingY);
+
+  flags.setColor(SkColorSetARGB(0xAB, 0, 0, 0));
+  font_.DrawBidiText(canvas, TextRunPaintInfo(TextRun(text_)),
+                     FloatPoint(feature_x + (kFeaturePaddingX + kIconWidth +
+                                             kPaddingBetweenIconAndText),
+                                feature_y + (kTextPaddingY + kFontSize)),
+                     Font::kUseFallbackIfFontNotReady, 1.0f, flags);
 }
 
 void PlaceholderImage::DrawPattern(GraphicsContext& context,

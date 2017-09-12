@@ -21,6 +21,10 @@ BASE_I18N_EXPORT string16 FormatNumber(int64_t number);
 //         => "1,234,567.8" in English, "1.234.567,8" in German
 BASE_I18N_EXPORT string16 FormatDouble(double number, int fractional_digits);
 
+BASE_I18N_EXPORT string16 FormatDouble(double number,
+                                       int min_fractional_digits,
+                                       int max_fractional_digits);
+
 // Return a percentage formatted with space and symbol in the user's locale.
 // Ex: FormatPercent(12) => "12%" in English, "12 %" in Romanian
 BASE_I18N_EXPORT string16 FormatPercent(int number);
