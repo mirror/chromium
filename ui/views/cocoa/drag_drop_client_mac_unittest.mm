@@ -196,7 +196,8 @@ class DragDropClientMacTest : public WidgetTest {
   }
 
   void TearDown() override {
-    widget_->CloseNow();
+    if (close_on_teardown_)
+      widget_->CloseNow();
     WidgetTest::TearDown();
   }
 
@@ -205,6 +206,7 @@ class DragDropClientMacTest : public WidgetTest {
   BridgedNativeWidget* bridge_ = nullptr;
   DragDropView* target_ = nullptr;
   base::scoped_nsobject<MockDraggingInfo> dragging_info_;
+  bool close_on_teardown_ = true;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DragDropClientMacTest);
@@ -293,6 +295,36 @@ TEST_F(DragDropClientMacTest, PasteboardToOSExchangeTest) {
   // it.
   [pasteboard->get() setString:@"text" forType:NSPasteboardTypeString];
   EXPECT_EQ(DragUpdate(pasteboard->get()), NSDragOperationCopy);
+  EXPECT_EQ(Drop(), NSDragOperationMove);
+}
+
+// View object that will close Widget on drop.
+class DragDropCloseView : public DragDropView {
+ public:
+  DragDropCloseView() {}
+  int OnPerformDrop(const ui::DropTargetEvent& event) override {
+    GetWidget()->CloseNow();
+    return ui::DragDropTypes::DRAG_MOVE;
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(DragDropCloseView);
+};
+
+// Tests if closing Widget on OnPerformDrop does not crash.
+TEST_F(DragDropClientMacTest, CloseWidgetOnDrop) {
+  OSExchangeData data;
+  const base::string16& text = ASCIIToUTF16("text");
+  data.SetString(text);
+  SetData(data);
+
+  target_ = new DragDropCloseView();
+  widget_->GetContentsView()->AddChildView(target_);
+  target_->SetBoundsRect(gfx::Rect(0, 0, 100, 100));
+  target_->set_formats(ui::OSExchangeData::STRING | ui::OSExchangeData::URL);
+  close_on_teardown_ = false;
+
+  EXPECT_EQ(DragUpdate(nil), NSDragOperationCopy);
   EXPECT_EQ(Drop(), NSDragOperationMove);
 }
 
