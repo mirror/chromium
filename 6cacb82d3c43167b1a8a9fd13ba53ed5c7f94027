@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b5b0589_48539979",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-12T09:07:53Z",
+      "side": 1,
+      "message": "nit: please move mActivity before mSheet to match the order in the constructor arguments and member assignments.",
+      "range": {
+        "startLine": 65,
+        "startChar": 33,
+        "endLine": 65,
+        "endChar": 42
+      },
+      "revId": "6cacb82d3c43167b1a8a9fd13ba53ed5c7f94027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
