@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9f26739_3126d95e",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-12T13:57:32Z",
+      "side": 1,
+      "message": "Yes, it is needed here to observe policy changes.",
+      "parentUuid": "2926a203_f9ef3d6b",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17a40ad8_ae348669",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
         "patchSetId": 1
@@ -121,6 +139,24 @@
       "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07504d11_21813925",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-12T13:57:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4b62b10_e89e9dc9",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -281,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "f7ed3935_aace8dd7",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-12T13:57:32Z",
+      "side": 1,
+      "message": "After the mojom interface changes unimplemented methods report \"ERROR_UNIMPLEMENTED\" for now. The CL is already too big to add this functionality. It\u0027s coming in the following CLs.",
+      "parentUuid": "4d3cfb72_42672cda",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "622d4d14_b18f01c8",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
         "patchSetId": 1
@@ -295,6 +349,24 @@
       "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404afbea_b2d34ffe",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-12T13:57:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "622d4d14_b18f01c8",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -315,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "2f06df3b_6154ff89",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-12T13:57:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c768622a_f412a909",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77ed1f60_f7c4fdf6",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
         "patchSetId": 1
@@ -329,6 +419,24 @@
       "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd5a66fd_d804be8b",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-12T13:57:32Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "77ed1f60_f7c4fdf6",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -364,6 +472,24 @@
       "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853abbec_3e5689ae",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-12T13:57:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b54e1961_a0d1c75b",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
