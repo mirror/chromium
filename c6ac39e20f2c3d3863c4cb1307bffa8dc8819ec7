@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ab914aa_ac1d312d",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/ContentSettingsAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-09-12T15:14:46Z",
+      "side": 1,
+      "message": "You should just mark the whole class @TargetApi(Build.VERSION_CODES.L) instead of suppressing this - we\u0027re not very consistent about this, but setting the target for webview code is more correct (suppressing NewApi means it won\u0027t call out cases where the API was introduced later)",
+      "range": {
+        "startLine": 238,
+        "startChar": 5,
+        "endLine": 238,
+        "endChar": 17
+      },
+      "revId": "c6ac39e20f2c3d3863c4cb1307bffa8dc8819ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
