@@ -135,6 +135,7 @@ using ::payment_request_util::
       }
       case payments::PaymentInstrument::Type::SERVICE_WORKER_APP: {
         NOTIMPLEMENTED();
+        item.methodTypeIcon = nullptr;
         break;
       }
     }

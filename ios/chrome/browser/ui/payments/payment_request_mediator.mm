@@ -205,6 +205,7 @@ using ::payment_request_util::GetShippingSectionTitle;
         break;
       case payments::PaymentInstrument::Type::SERVICE_WORKER_APP:
         NOTIMPLEMENTED();
+        item.methodTypeIcon = nullptr;
         break;
     }
 
