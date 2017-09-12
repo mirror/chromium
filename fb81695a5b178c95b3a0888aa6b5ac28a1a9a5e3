@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f8230f97_792f8ad7",
+        "filename": "components/history/core/browser/top_sites_database.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-12T19:47:10Z",
+      "side": 1,
+      "message": "As you\u0027re going to do a reorder pass anyway, how about updating the public/private sections now and making the .cc match next.",
+      "parentUuid": "54177d11_803daf17",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 21
+      },
+      "revId": "fb81695a5b178c95b3a0888aa6b5ac28a1a9a5e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93e528aa_39439e1a",
         "filename": "components/history/core/browser/top_sites_database.h",
         "patchSetId": 6
