@@ -21,7 +21,8 @@ class GLSurfaceMock : public gl::GLSurface {
   MOCK_METHOD3(Resize,
                bool(const gfx::Size& size, float scale_factor, bool alpha));
   MOCK_METHOD0(IsOffscreen, bool());
-  MOCK_METHOD0(SwapBuffers, gfx::SwapResult());
+  MOCK_METHOD1(SwapBuffers,
+               gfx::SwapResult(std::vector<ui::LatencyInfo>* latency_info));
   MOCK_METHOD4(PostSubBuffer,
                gfx::SwapResult(int x, int y, int width, int height));
   MOCK_METHOD0(SupportsPostSubBuffer, bool());

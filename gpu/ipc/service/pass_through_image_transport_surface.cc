@@ -46,34 +46,44 @@ void PassThroughImageTransportSurface::Destroy() {
   GLSurfaceAdapter::Destroy();
 }
 
-gfx::SwapResult PassThroughImageTransportSurface::SwapBuffers() {
-  std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info =
-      StartSwapBuffers();
-  gfx::SwapResult result = gl::GLSurfaceAdapter::SwapBuffers();
-  FinishSwapBuffers(std::move(latency_info), result);
+gfx::SwapResult PassThroughImageTransportSurface::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info_discard) {
+  DCHECK(latency_info_discard->empty());
+
+  std::vector<ui::LatencyInfo> latency_info;
+  bool has_browser_snapshot_request = StartSwapBuffers(&latency_info);
+  // latency_info is an in/out parameter for this path in order to give
+  // implementations a chance to defer and update latency_info with
+  // timestamps of it's own.
+  gfx::SwapResult result = gl::GLSurfaceAdapter::SwapBuffers(&latency_info);
+  FinishSwapBuffers(std::move(latency_info), has_browser_snapshot_request,
+                    result);
   return result;
 }
 
 void PassThroughImageTransportSurface::SwapBuffersAsync(
     const GLSurface::SwapCompletionCallback& callback) {
-  std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info =
-      StartSwapBuffers();
+  std::vector<ui::LatencyInfo> latency_info;
+  bool has_browser_snapshot_request = StartSwapBuffers(&latency_info);
 
   // We use WeakPtr here to avoid manual management of life time of an instance
   // of this class. Callback will not be called once the instance of this class
   // is destroyed. However, this also means that the callback can be run on
   // the calling thread only.
-  gl::GLSurfaceAdapter::SwapBuffersAsync(base::Bind(
-      &PassThroughImageTransportSurface::FinishSwapBuffersAsync,
-      weak_ptr_factory_.GetWeakPtr(), base::Passed(&latency_info), callback));
+  gl::GLSurfaceAdapter::SwapBuffersAsync(
+      base::Bind(&PassThroughImageTransportSurface::FinishSwapBuffersAsync,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&latency_info),
+                 callback, has_browser_snapshot_request));
 }
 
 gfx::SwapResult PassThroughImageTransportSurface::SwapBuffersWithBounds(
     const std::vector<gfx::Rect>& rects) {
-  std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info =
-      StartSwapBuffers();
+  std::vector<ui::LatencyInfo> latency_info;
+  bool has_browser_snapshot_request = StartSwapBuffers(&latency_info);
   gfx::SwapResult result = gl::GLSurfaceAdapter::SwapBuffersWithBounds(rects);
-  FinishSwapBuffers(std::move(latency_info), result);
+  ui::LatencyInfo::AddTerminatedFrameSwapComponent(&latency_info);
+  FinishSwapBuffers(std::move(latency_info), has_browser_snapshot_request,
+                    result);
   return result;
 }
 
@@ -81,11 +91,13 @@ gfx::SwapResult PassThroughImageTransportSurface::PostSubBuffer(int x,
                                                                 int y,
                                                                 int width,
                                                                 int height) {
-  std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info =
-      StartSwapBuffers();
+  std::vector<ui::LatencyInfo> latency_info;
+  bool has_browser_snapshot_request = StartSwapBuffers(&latency_info);
   gfx::SwapResult result =
       gl::GLSurfaceAdapter::PostSubBuffer(x, y, width, height);
-  FinishSwapBuffers(std::move(latency_info), result);
+  ui::LatencyInfo::AddTerminatedFrameSwapComponent(&latency_info);
+  FinishSwapBuffers(std::move(latency_info), has_browser_snapshot_request,
+                    result);
   return result;
 }
 
@@ -95,30 +107,33 @@ void PassThroughImageTransportSurface::PostSubBufferAsync(
     int width,
     int height,
     const GLSurface::SwapCompletionCallback& callback) {
-  std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info =
-      StartSwapBuffers();
+  std::vector<ui::LatencyInfo> latency_info;
+  bool has_browser_snapshot_request = StartSwapBuffers(&latency_info);
   gl::GLSurfaceAdapter::PostSubBufferAsync(
       x, y, width, height,
       base::Bind(&PassThroughImageTransportSurface::FinishSwapBuffersAsync,
                  weak_ptr_factory_.GetWeakPtr(), base::Passed(&latency_info),
-                 callback));
+                 callback, has_browser_snapshot_request));
 }
 
 gfx::SwapResult PassThroughImageTransportSurface::CommitOverlayPlanes() {
-  std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info =
-      StartSwapBuffers();
+  std::vector<ui::LatencyInfo> latency_info;
+  bool has_browser_snapshot_request = StartSwapBuffers(&latency_info);
   gfx::SwapResult result = gl::GLSurfaceAdapter::CommitOverlayPlanes();
-  FinishSwapBuffers(std::move(latency_info), result);
+  ui::LatencyInfo::AddTerminatedFrameSwapComponent(&latency_info);
+  FinishSwapBuffers(std::move(latency_info), has_browser_snapshot_request,
+                    result);
   return result;
 }
 
 void PassThroughImageTransportSurface::CommitOverlayPlanesAsync(
     const GLSurface::SwapCompletionCallback& callback) {
-  std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info =
-      StartSwapBuffers();
-  gl::GLSurfaceAdapter::CommitOverlayPlanesAsync(base::Bind(
-      &PassThroughImageTransportSurface::FinishSwapBuffersAsync,
-      weak_ptr_factory_.GetWeakPtr(), base::Passed(&latency_info), callback));
+  std::vector<ui::LatencyInfo> latency_info;
+  bool has_browser_snapshot_request = StartSwapBuffers(&latency_info);
+  gl::GLSurfaceAdapter::CommitOverlayPlanesAsync(
+      base::Bind(&PassThroughImageTransportSurface::FinishSwapBuffersAsync,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&latency_info),
+                 callback, has_browser_snapshot_request));
 }
 
 PassThroughImageTransportSurface::~PassThroughImageTransportSurface() {
@@ -177,55 +192,51 @@ void PassThroughImageTransportSurface::UpdateSwapInterval() {
   }
 }
 
-std::unique_ptr<std::vector<ui::LatencyInfo>>
-PassThroughImageTransportSurface::StartSwapBuffers() {
+bool PassThroughImageTransportSurface::StartSwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
   // GetVsyncValues before SwapBuffers to work around Mali driver bug:
   // crbug.com/223558.
   SendVSyncUpdateIfAvailable();
 
   UpdateSwapInterval();
 
+  bool has_browser_snapshot_request = false;
   base::TimeTicks swap_time = base::TimeTicks::Now();
   for (auto& latency : latency_info_) {
     latency.AddLatencyNumberWithTimestamp(
         ui::INPUT_EVENT_GPU_SWAP_BUFFER_COMPONENT, 0, 0, swap_time, 1);
-  }
-
-  std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info(
-      new std::vector<ui::LatencyInfo>());
-  latency_info->swap(latency_info_);
-
-  return latency_info;
-}
-
-void PassThroughImageTransportSurface::FinishSwapBuffers(
-    std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info,
-    gfx::SwapResult result) {
-  base::TimeTicks swap_ack_time = base::TimeTicks::Now();
-  bool has_browser_snapshot_request = false;
-  for (auto& latency : *latency_info) {
-    latency.AddLatencyNumberWithTimestamp(
-        ui::INPUT_EVENT_LATENCY_TERMINATED_FRAME_SWAP_COMPONENT, 0, 0,
-        swap_ack_time, 1);
     has_browser_snapshot_request |= latency.FindLatency(
         ui::BROWSER_SNAPSHOT_FRAME_NUMBER_COMPONENT, nullptr);
   }
+
+  latency_info->swap(latency_info_);
+  latency_info_.clear();
+  return has_browser_snapshot_request;
+}
+
+void PassThroughImageTransportSurface::FinishSwapBuffers(
+    std::vector<ui::LatencyInfo> latency_info,
+    bool has_browser_snapshot_request,
+    gfx::SwapResult result) {
   if (has_browser_snapshot_request)
     WaitForSnapshotRendering();
 
   if (delegate_) {
     SwapBuffersCompleteParams params;
-    params.latency_info = std::move(*latency_info);
+    params.latency_info = std::move(latency_info);
     params.result = result;
     delegate_->DidSwapBuffersComplete(std::move(params));
   }
 }
 
 void PassThroughImageTransportSurface::FinishSwapBuffersAsync(
-    std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info,
+    std::vector<ui::LatencyInfo> latency_info,
     GLSurface::SwapCompletionCallback callback,
+    bool has_browser_snapshot_request,
     gfx::SwapResult result) {
-  FinishSwapBuffers(std::move(latency_info), result);
+  ui::LatencyInfo::AddTerminatedFrameSwapComponent(&latency_info);
+  FinishSwapBuffers(std::move(latency_info), has_browser_snapshot_request,
+                    result);
   callback.Run(result);
 }
 

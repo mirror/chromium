@@ -26,14 +26,17 @@ class DRTSurfaceOSMesa : public gl::GLSurfaceOSMesa {
           gfx::Size(1, 1)) {}
 
   // Implement a subset of GLSurface.
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(
+      std::vector<ui::LatencyInfo>* latency_info) override;
 
  private:
   ~DRTSurfaceOSMesa() override {}
   DISALLOW_COPY_AND_ASSIGN(DRTSurfaceOSMesa);
 };
 
-gfx::SwapResult DRTSurfaceOSMesa::SwapBuffers() {
+gfx::SwapResult DRTSurfaceOSMesa::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
+  ui::LatencyInfo::AddTerminatedFrameSwapComponent(latency_info);
   return gfx::SwapResult::SWAP_ACK;
 }
 

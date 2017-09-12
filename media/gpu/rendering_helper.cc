@@ -552,7 +552,8 @@ void RenderingHelper::WarmUpRendering(int warm_up_iterations) {
           base::Bind(&WaitForSwapAck, wait_for_swap_ack.QuitClosure()));
       wait_for_swap_ack.Run();
     } else {
-      gl_surface_->SwapBuffers();
+      std::vector<ui::LatencyInfo> latency_info_dummy;
+      gl_surface_->SwapBuffers(&latency_info_dummy);
     }
   }
   glDeleteTextures(1, &texture_id);
@@ -794,7 +795,8 @@ void RenderingHelper::RenderContent() {
   if (gl_surface_->SupportsAsyncSwap()) {
     gl_surface_->SwapBuffersAsync(base::Bind(&WaitForSwapAck, schedule_frame));
   } else {
-    gl_surface_->SwapBuffers();
+    std::vector<ui::LatencyInfo> latency_info_dummy;
+    gl_surface_->SwapBuffers(&latency_info_dummy);
     ScheduleNextRenderContent();
   }
 }
