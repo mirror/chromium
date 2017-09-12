@@ -74,7 +74,6 @@
 #include "chrome/common/safe_browsing/download_file_types.pb.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
-#include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/history/content/browser/download_conversions.h"
 #include "components/history/core/browser/download_constants.h"
@@ -103,7 +102,6 @@
 #include "content/public/common/quarantine.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/download_test_observer.h"
-#include "content/public/test/test_file_error_injector.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "extensions/browser/extension_dialog_auto_confirm.h"
 #include "extensions/browser/extension_system.h"
@@ -403,78 +401,87 @@ class HistoryObserver : public DownloadHistory::Observer {
   DISALLOW_COPY_AND_ASSIGN(HistoryObserver);
 };
 
-class DownloadTest : public InProcessBrowserTest {
+DownloadTestBase::DownloadTestBase() {}
+
+void DownloadTestBase::SetUpOnMainThread() {
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&chrome_browser_net::SetUrlRequestMocksEnabled, true));
+  ASSERT_TRUE(InitialSetup());
+  host_resolver()->AddRule("www.a.com", "127.0.0.1");
+}
+
+// Returning false indicates a failure of the setup, and should be asserted
+// in the caller.
+bool DownloadTestBase::InitialSetup() {
+  bool have_test_dir = PathService::Get(chrome::DIR_TEST_DATA, &test_dir_);
+  EXPECT_TRUE(have_test_dir);
+  if (!have_test_dir)
+    return false;
+
+  // Sanity check default values for window and tab count.
+  int window_count = chrome::GetTotalBrowserCount();
+  EXPECT_EQ(1, window_count);
+  EXPECT_EQ(1, browser()->tab_strip_model()->count());
+
+  // Set up the temporary download folder.
+  bool created_downloads_dir = CreateAndSetDownloadsDirectory(browser());
+  EXPECT_TRUE(created_downloads_dir);
+  if (!created_downloads_dir)
+    return false;
+  browser()->profile()->GetPrefs()->SetBoolean(prefs::kPromptForDownload,
+                                               false);
+
+  DownloadManager* manager = DownloadManagerForBrowser(browser());
+  DownloadPrefs::FromDownloadManager(manager)->ResetAutoOpen();
+
+  return true;
+}
+
+void DownloadTestBase::TearDownOnMainThread() {}
+
+bool DownloadTestBase::CreateAndSetDownloadsDirectory(Browser* browser) {
+  if (!browser)
+    return false;
+
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
+  if (!downloads_directory_.CreateUniqueTempDir())
+    return false;
+
+  browser->profile()->GetPrefs()->SetFilePath(prefs::kDownloadDefaultDirectory,
+                                              downloads_directory_.GetPath());
+  browser->profile()->GetPrefs()->SetFilePath(prefs::kSaveFileDefaultDirectory,
+                                              downloads_directory_.GetPath());
+
+  return true;
+}
+
+base::FilePath DownloadTestBase::GetDownloadsDirectory() {
+  return downloads_directory_.GetPath();
+}
+
+base::FilePath DownloadTestBase::OriginFile(const base::FilePath& file) {
+  return test_dir_.Append(file);
+}
+
+class DownloadTest : public DownloadTestBase {
  public:
-  // Choice of navigation or direct fetch.  Used by |DownloadFileCheckErrors()|.
-  enum DownloadMethod {
-    DOWNLOAD_NAVIGATE,
-    DOWNLOAD_DIRECT
-  };
-
-  // Information passed in to |DownloadFileCheckErrors()|.
-  struct DownloadInfo {
-    const char* starting_url;           // URL for initiating the download.
-    const char* expected_download_url;  // Expected value of DI::GetURL(). Can
-                                        // be different if |starting_url|
-                                        // initiates a download from another
-                                        // URL.
-    DownloadMethod download_method;     // Navigation or Direct.
-    // Download interrupt reason (NONE is OK).
-    content::DownloadInterruptReason reason;
-    bool show_download_item;  // True if the download item appears on the shelf.
-    bool should_redirect_to_documents;  // True if we save it in "My Documents".
-  };
-
-  struct FileErrorInjectInfo {
-    DownloadInfo download_info;
-    content::TestFileErrorInjector::FileErrorInfo error_info;
-  };
-
-  DownloadTest() {}
+  DownloadTest() = default;
 
   void SetUpOnMainThread() override {
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&chrome_browser_net::SetUrlRequestMocksEnabled, true));
-    ASSERT_TRUE(InitialSetup());
-    host_resolver()->AddRule("www.a.com", "127.0.0.1");
+    DownloadTestBase::SetUpOnMainThread();
+
+    file_activity_observer_.reset(
+        new DownloadTestFileActivityObserver(browser()->profile()));
   }
 
   void TearDownOnMainThread() override {
+    DownloadTestBase::TearDownOnMainThread();
+
     // Needs to be torn down on the main thread. file_activity_observer_ holds a
     // reference to the ChromeDownloadManagerDelegate which should be destroyed
     // on the UI thread.
     file_activity_observer_.reset();
-  }
-
-  // Returning false indicates a failure of the setup, and should be asserted
-  // in the caller.
-  bool InitialSetup() {
-    bool have_test_dir = PathService::Get(chrome::DIR_TEST_DATA, &test_dir_);
-    EXPECT_TRUE(have_test_dir);
-    if (!have_test_dir)
-      return false;
-
-    // Sanity check default values for window and tab count.
-    int window_count = chrome::GetTotalBrowserCount();
-    EXPECT_EQ(1, window_count);
-    EXPECT_EQ(1, browser()->tab_strip_model()->count());
-
-    // Set up the temporary download folder.
-    bool created_downloads_dir = CreateAndSetDownloadsDirectory(browser());
-    EXPECT_TRUE(created_downloads_dir);
-    if (!created_downloads_dir)
-      return false;
-    browser()->profile()->GetPrefs()->SetBoolean(
-        prefs::kPromptForDownload, false);
-
-    DownloadManager* manager = DownloadManagerForBrowser(browser());
-    DownloadPrefs::FromDownloadManager(manager)->ResetAutoOpen();
-
-    file_activity_observer_.reset(
-        new DownloadTestFileActivityObserver(browser()->profile()));
-
-    return true;
   }
 
  protected:
@@ -489,38 +496,9 @@ class DownloadTest : public InProcessBrowserTest {
     return test_file_directory;
   }
 
-  base::FilePath GetDownloadsDirectory() {
-    return downloads_directory_.GetPath();
-  }
-
-  // Location of the file source (the place from which it is downloaded).
-  base::FilePath OriginFile(const base::FilePath& file) {
-    return test_dir_.Append(file);
-  }
-
   // Location of the file destination (place to which it is downloaded).
   base::FilePath DestinationFile(Browser* browser, const base::FilePath& file) {
     return GetDownloadDirectory(browser).Append(file.BaseName());
-  }
-
-  // Must be called after browser creation.  Creates a temporary
-  // directory for downloads that is auto-deleted on destruction.
-  // Returning false indicates a failure of the function, and should be asserted
-  // in the caller.
-  bool CreateAndSetDownloadsDirectory(Browser* browser) {
-    if (!browser)
-      return false;
-
-    base::ThreadRestrictions::ScopedAllowIO allow_io;
-    if (!downloads_directory_.CreateUniqueTempDir())
-      return false;
-
-    browser->profile()->GetPrefs()->SetFilePath(
-        prefs::kDownloadDefaultDirectory, downloads_directory_.GetPath());
-    browser->profile()->GetPrefs()->SetFilePath(
-        prefs::kSaveFileDefaultDirectory, downloads_directory_.GetPath());
-
-    return true;
   }
 
   DownloadPrefs* GetDownloadPrefs(Browser* browser) {
@@ -756,8 +734,7 @@ class DownloadTest : public InProcessBrowserTest {
 
     base::FilePath basefilename(filename.BaseName());
     net::FileURLToFilePath(url, &filename);
-    base::FilePath download_path =
-        downloads_directory_.GetPath().Append(basefilename);
+    base::FilePath download_path = GetDownloadsDirectory().Append(basefilename);
 
     bool downloaded_path_exists = base::PathExists(download_path);
     EXPECT_TRUE(downloaded_path_exists);
@@ -1071,12 +1048,6 @@ class DownloadTest : public InProcessBrowserTest {
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                             base::MessageLoop::QuitWhenIdleClosure());
   }
-
-  // Location of the test data.
-  base::FilePath test_dir_;
-
-  // Location of the downloads directory for these tests
-  base::ScopedTempDir downloads_directory_;
 
   std::unique_ptr<DownloadTestFileActivityObserver> file_activity_observer_;
 };
