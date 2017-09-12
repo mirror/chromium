@@ -9,6 +9,7 @@
 #include "base/i18n/rtl.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "components/vector_icons/vector_icons.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/ime/input_method.h"
 #include "ui/base/material_design/material_design_controller.h"
@@ -16,6 +17,7 @@
 #include "ui/events/event.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/canvas.h"
+#include "ui/gfx/color_palette.h"
 #include "ui/gfx/color_utils.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -97,12 +99,22 @@ TreeView::TreeView()
       row_height_(font_list_.GetHeight() + kTextVerticalPadding * 2) {
   // Always focusable, even on Mac (consistent with NSOutlineView).
   SetFocusBehavior(FocusBehavior::ALWAYS);
-  closed_icon_ = *ui::ResourceBundle::GetSharedInstance().GetImageNamed(
-      (base::i18n::IsRTL() ? IDR_FOLDER_CLOSED_RTL
-                           : IDR_FOLDER_CLOSED)).ToImageSkia();
-  open_icon_ = *ui::ResourceBundle::GetSharedInstance().GetImageNamed(
-      (base::i18n::IsRTL() ? IDR_FOLDER_OPEN_RTL
-                           : IDR_FOLDER_OPEN)).ToImageSkia();
+  if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+    closed_icon_ =
+        gfx::CreateVectorIcon(vector_icons::kFolderIcon, gfx::kChromeIconGrey);
+    open_icon_ =
+        gfx::CreateVectorIcon(vector_icons::kFolderIcon, gfx::kChromeIconGrey);
+  } else {
+    closed_icon_ =
+        *ui::ResourceBundle::GetSharedInstance()
+             .GetImageNamed((base::i18n::IsRTL() ? IDR_FOLDER_CLOSED_RTL
+                                                 : IDR_FOLDER_CLOSED))
+             .ToImageSkia();
+    open_icon_ = *ui::ResourceBundle::GetSharedInstance()
+                      .GetImageNamed((base::i18n::IsRTL() ? IDR_FOLDER_OPEN_RTL
+                                                          : IDR_FOLDER_OPEN))
+                      .ToImageSkia();
+  }
   text_offset_ = closed_icon_.width() + kImagePadding + kImagePadding +
       kArrowRegionSize;
 }
