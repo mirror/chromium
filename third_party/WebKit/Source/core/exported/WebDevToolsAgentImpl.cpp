@@ -524,7 +524,7 @@ void WebDevToolsAgentImpl::DispatchMessageFromFrontend(int session_id,
 
 void WebDevToolsAgentImpl::InspectElementAt(
     int session_id,
-    const WebPoint& point_in_root_frame) {
+    const WebFloatPoint& point_in_root_frame) {
   if (!session_id)
     return;
   auto agent_it = overlay_agents_.find(session_id);
@@ -538,9 +538,9 @@ void WebDevToolsAgentImpl::InspectElementAt(
                             WebInputEvent::kNoModifiers,
                             WTF::MonotonicallyIncreasingTimeMS());
   dummy_event.SetPositionInWidget(point_in_root_frame.x, point_in_root_frame.y);
-  IntPoint transformed_point = FlooredIntPoint(
+  FloatPoint transformed_point =
       TransformWebMouseEvent(web_local_frame_impl_->GetFrameView(), dummy_event)
-          .PositionInRootFrame());
+          .PositionInRootFrame();
   HitTestResult result(
       request, web_local_frame_impl_->GetFrameView()->RootFrameToContents(
                    transformed_point));

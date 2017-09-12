@@ -123,7 +123,7 @@ bool TouchEventIsGeneratedHack(const XEvent& xev) {
   if (ui::GetTouchForceFromXEvent(xev) < 1.0f)
     return false;
 
-  if (ui::EventLocationFromXEvent(xev) != gfx::Point())
+  if (ui::EventLocationFromXEvent(xev) != gfx::PointF())
     return false;
 
   // Radius is in pixels, and the valuator is the diameter in pixels.
@@ -561,16 +561,16 @@ base::TimeTicks EventTimeFromXEvent(const XEvent& xev) {
   return base::TimeTicks();
 }
 
-gfx::Point EventLocationFromXEvent(const XEvent& xev) {
+gfx::PointF EventLocationFromXEvent(const XEvent& xev) {
   switch (xev.type) {
     case EnterNotify:
     case LeaveNotify:
-      return gfx::Point(xev.xcrossing.x, xev.xcrossing.y);
+      return gfx::PointF(xev.xcrossing.x, xev.xcrossing.y);
     case ButtonPress:
     case ButtonRelease:
-      return gfx::Point(xev.xbutton.x, xev.xbutton.y);
+      return gfx::PointF(xev.xbutton.x, xev.xbutton.y);
     case MotionNotify:
-      return gfx::Point(xev.xmotion.x, xev.xmotion.y);
+      return gfx::PointF(xev.xmotion.x, xev.xmotion.y);
     case GenericEvent: {
       XIDeviceEvent* xievent = static_cast<XIDeviceEvent*>(xev.xcookie.data);
       float x = xievent->event_x;
@@ -587,10 +587,10 @@ gfx::Point EventLocationFromXEvent(const XEvent& xev) {
           break;
       }
 #endif  // defined(OS_CHROMEOS)
-      return gfx::Point(static_cast<int>(x), static_cast<int>(y));
+      return gfx::PointF(x, y);
     }
   }
-  return gfx::Point();
+  return gfx::PointF();
 }
 
 gfx::Point EventSystemLocationFromXEvent(const XEvent& xev) {
