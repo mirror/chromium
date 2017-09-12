@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6427b939_974fd1ef",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-12T04:41:38Z",
+      "side": 1,
+      "message": "this is much nicer here than in the template file!",
+      "revId": "82504076b8105bace035152d4e27d0a130238653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488e4e5e_59ad6921",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-12T04:41:38Z",
+      "side": 1,
+      "message": "shouldn\u0027t this remain above core/css/properties/CSSPropertyAPI.h to maintain alphabetical order?",
+      "revId": "82504076b8105bace035152d4e27d0a130238653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c3c26e_747d30d7",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-12T04:41:38Z",
+      "side": 1,
+      "message": "nit: replace if not with else",
+      "revId": "82504076b8105bace035152d4e27d0a130238653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb464f5_be23ad1d",
+        "filename": "third_party/WebKit/Source/build/scripts/make_style_builder.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-12T04:41:38Z",
+      "side": 1,
+      "message": "looks like there\u0027s a fair bit of duplicate code between this and make_css_property_api_headers.py, could we pull some out into a shared method?",
+      "revId": "82504076b8105bace035152d4e27d0a130238653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
