@@ -38,8 +38,36 @@ FileListSelectionModel.prototype.getCheckSelectMode = function() {
 };
 
 /**
- * Handles change event to update isCheckSelectMode_ BEFORE the change event is
- * dispatched to other listeners.
+ * @override
+ * Changes to single-select mode if all selected files get deleted.
+ */
+FileListSelectionModel.prototype.adjustToReordering = function(permutation) {
+  this.beginChange();
+  // Look at the old state.
+  var oldSelectedItemsCount = this.selectedIndexes.length;
+  var oldLeadIndex = this.leadIndex;
+  var newSelectedItemsCount = this.selectedIndexes
+                                  .map(function(oldIndex) {
+                                    return permutation[oldIndex];
+                                  })
+                                  .filter(function(index) {
+                                    return index != -1;
+                                  })
+                                  .length;
+  // Call the superclass function.
+  cr.ui.ListSelectionModel.prototype.adjustToReordering.call(this, permutation);
+  // Remove selection and focus if all items got deleted.
+  if (oldSelectedItemsCount && !newSelectedItemsCount && this.length_ &&
+      oldLeadIndex != -1) {
+    this.isCheckSelectMode_ = false;
+    this.selectedIndexes = [];
+  }
+  this.endChange();
+};
+
+/**
+ * Handles change event to update isCheckSelectMode_ BEFORE the change event
+ * is dispatched to other listeners.
  * @param {!Event} event Event object of 'change' event.
  * @private
  */
