@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c82949a_d231e911",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-12T16:29:15Z",
+      "side": 1,
+      "message": "This could also be written as:\n\nfor i, (src, dest) in enumerate(file_pairs):\n    ...",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 37
+      },
+      "revId": "a99cb52de2770877c53abcb92257a9184fb24cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad2824b_fb9037c0",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-12T16:29:15Z",
+      "side": 1,
+      "message": "Could the subprocess calls could be replaced with git.move and self._fs.move?\n\nBoth ways should work, but using FileSystem and Git for these things seems more consistent.",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 74
+      },
+      "revId": "a99cb52de2770877c53abcb92257a9184fb24cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c8ed9d_7b0e941f",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-12T16:29:15Z",
+      "side": 1,
+      "message": "Optionally:\n\nelse:\n    parser.error(\u0027Unknown command.\u0027)",
+      "revId": "a99cb52de2770877c53abcb92257a9184fb24cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
