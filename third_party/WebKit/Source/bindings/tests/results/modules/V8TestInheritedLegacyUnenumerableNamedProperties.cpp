@@ -82,7 +82,8 @@ static void namedPropertyGetter(const AtomicString& name, const v8::PropertyCall
   V8SetReturnValueInt(info, result);
 }
 
-static void namedPropertyQuery(const AtomicString& name, const v8::PropertyCallbackInfo<v8::Integer>& info) {
+template <typename T>
+static void namedPropertyQuery(const AtomicString& name, const v8::PropertyCallbackInfo<T>& info) {
   const CString& nameInUtf8 = name.Utf8();
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kGetterContext, "TestInheritedLegacyUnenumerableNamedProperties", nameInUtf8.data());
 
@@ -110,6 +111,33 @@ static void namedPropertyEnumerator(const v8::PropertyCallbackInfo<v8::Array>& i
   if (exceptionState.HadException())
     return;
   V8SetReturnValue(info, ToV8(names, info.Holder(), info.GetIsolate()).As<v8::Array>());
+}
+
+static void namedPropertyDescriptor(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>& info) {
+  // This function is called when an IDL interface supports named properties
+  // but not indexed properties. When a numeric property is queried, V8 calls
+  // indexedPropertyDescriptorCallback(), which calls this function.
+
+  // Since we initialize our indexed and named property handlers differently
+  // (the former use descriptors and definers, the latter uses a query
+  // callback), we need to inefficiently call the query callback and convert
+  // the v8::PropertyAttribute integer it returns into a v8::PropertyDescriptor
+  // expected by a descriptor callback.
+  const AtomicString& indexAsName = AtomicString::Number(index);
+  TestInheritedLegacyUnenumerableNamedPropertiesV8Internal::namedPropertyQuery(indexAsName, info);
+  v8::Local<v8::Value> getterValue = info.GetReturnValue().Get();
+  if (!getterValue->IsUndefined()) {
+    DCHECK(getterValue->IsInt32());
+    const int32_t props =
+        getterValue->ToInt32(info.GetIsolate()->GetCurrentContext())
+            .ToLocalChecked()
+            ->Value();
+    v8::PropertyDescriptor desc(V8String(info.GetIsolate(), indexAsName),
+                                !(props & v8::ReadOnly));
+    desc.set_enumerable(!(props & v8::DontEnum));
+    desc.set_configurable(!(props & v8::DontDelete));
+    V8SetReturnValue(info, desc);
+  }
 }
 
 } // namespace TestInheritedLegacyUnenumerableNamedPropertiesV8Internal
@@ -152,6 +180,10 @@ void V8TestInheritedLegacyUnenumerableNamedProperties::indexedPropertyGetterCall
   TestInheritedLegacyUnenumerableNamedPropertiesV8Internal::namedPropertyGetter(propertyName, info);
 }
 
+void V8TestInheritedLegacyUnenumerableNamedProperties::indexedPropertyDescriptorCallback(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>& info) {
+  TestInheritedLegacyUnenumerableNamedPropertiesV8Internal::namedPropertyDescriptor(index, info);
+}
+
 static const V8DOMConfiguration::AccessorConfiguration V8TestInheritedLegacyUnenumerableNamedPropertiesAccessors[] = {
     { "longAttribute", V8TestInheritedLegacyUnenumerableNamedProperties::longAttributeAttributeGetterCallback, nullptr, V8PrivateProperty::kNoCachedAccessor, static_cast<v8::PropertyAttribute>(v8::ReadOnly), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds },
 };
@@ -179,7 +211,7 @@ static void installV8TestInheritedLegacyUnenumerableNamedPropertiesTemplate(
   v8::IndexedPropertyHandlerConfiguration indexedPropertyHandlerConfig(
       V8TestInheritedLegacyUnenumerableNamedProperties::indexedPropertyGetterCallback,
       nullptr,
-      nullptr,
+      V8TestInheritedLegacyUnenumerableNamedProperties::indexedPropertyDescriptorCallback,
       nullptr,
       nullptr,
       nullptr,
