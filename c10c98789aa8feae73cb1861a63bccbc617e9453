@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ef30988_4a9cb922",
+        "filename": "testing/libfuzzer/fuzzers/url.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-09-12T20:19:02Z",
+      "side": 1,
+      "message": "this part can be repeated field.",
+      "revId": "c10c98789aa8feae73cb1861a63bccbc617e9453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd264e6_3970aa2e",
+        "filename": "testing/libfuzzer/fuzzers/url.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-09-12T20:19:02Z",
+      "side": 1,
+      "message": "query as well can be separated into repeated options",
+      "revId": "c10c98789aa8feae73cb1861a63bccbc617e9453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
