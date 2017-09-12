@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49998a26_4382b77a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T23:18:11Z",
+      "side": 1,
+      "message": "Nit: Before this CL, the FROM_HERE macro directly called GetProgramCounter() and passed the value to the Location constructor. However, that costs a few bytes for each FROM_HERE invocation.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "728c071e9f9ff3d2a458a439877032b569e9b8e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
