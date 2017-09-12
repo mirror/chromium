@@ -13,6 +13,7 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/task_scheduler/post_task.h"
 #include "components/policy/core/common/policy_namespace.h"
 #include "components/policy/core/common/policy_service.h"
 #include "extensions/browser/api/storage/settings_observer.h"
@@ -100,6 +101,10 @@ class ManagedValueStoreCache : public ValueStoreCache,
   // All the PolicyValueStores live on the FILE thread, and |store_map_| can be
   // accessed only on the FILE thread as well.
   std::map<std::string, std::unique_ptr<PolicyValueStore>> store_map_;
+
+  scoped_refptr<base::SequencedTaskRunner> file_task_runner_ =
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE});
 
   DISALLOW_COPY_AND_ASSIGN(ManagedValueStoreCache);
 };
