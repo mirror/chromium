@@ -11,6 +11,8 @@
 
 namespace blink {
 
+class CSSParserObserverWrapper;
+
 // A streaming interface to CSSTokenizer that tokenizes on demand.
 // Abstractly, the stream ends at either EOF or the beginning/end of a block.
 // To consume a block, a BlockGuard must be created first to ensure that
@@ -53,8 +55,7 @@ class CORE_EXPORT CSSParserTokenStream {
 
   explicit CSSParserTokenStream(CSSTokenizer& tokenizer)
       : tokenizer_(tokenizer), next_index_(0) {
-    // TODO(shend): Uncomment the code below once observers work properly with
-    // streams. DCHECK_EQ(tokenizer.CurrentSize(), 0U);
+    DCHECK_EQ(tokenizer.CurrentSize(), 0U);
   }
 
   CSSParserTokenStream(CSSParserTokenStream&&) = default;
@@ -72,7 +73,10 @@ class CORE_EXPORT CSSParserTokenStream {
     return LookAhead::kIsValid;
   }
 
-  bool HasLookAhead() const { return next_index_ < tokenizer_.CurrentSize(); }
+  // Whether we have peeked at the next token or not.
+  bool HasLookAhead() const {
+    return next_index_ == tokenizer_.CurrentSize() - 1;
+  }
 
   const CSSParserToken& Peek() const {
     const CSSParserToken& token = PeekInternal();
@@ -97,20 +101,11 @@ class CORE_EXPORT CSSParserTokenStream {
   const CSSParserToken& UncheckedConsume() {
     const CSSParserToken& token = UncheckedConsumeInternal();
     DCHECK_NE(token.GetBlockType(), CSSParserToken::kBlockStart);
+    DCHECK(!HasLookAhead());
     return token;
   }
 
   bool AtEnd() const { return Peek().IsEOF(); }
-
-  // Range represents all tokens from current position to EOF.
-  // Eagerly consumes all the remaining input.
-  // TODO(shend): Remove this method once we switch over to using streams
-  // completely.
-  CSSParserTokenRange MakeRangeToEOF() {
-    const auto range = tokenizer_.TokenRange();
-    return range.MakeSubRange(tokenizer_.tokens_.begin() + next_index_,
-                              tokenizer_.tokens_.end());
-  }
 
   // Range represents all tokens that were consumed between begin and end.
   CSSParserTokenRange MakeSubRange(Iterator begin, Iterator end) {
@@ -122,12 +117,6 @@ class CORE_EXPORT CSSParserTokenStream {
         .MakeSubRange(tokens_begin + begin.index_, tokens_begin + end.index_);
   }
 
-  // TODO(shend): Only used by CSSParserObserverWrapper. Delete this when we get
-  // streaming to work with observers
-  CSSParserTokenRange MakeSubRangeAtCurrentPosition() {
-    return MakeSubRange(Position(), Position());
-  }
-
   Iterator Position() const {
     DCHECK_LE(next_index_, tokenizer_.CurrentSize());
     return Iterator(next_index_);
@@ -136,9 +125,19 @@ class CORE_EXPORT CSSParserTokenStream {
   // Get the index of the character in the original string to be consumed next.
   size_t Offset() const { return offset_; }
 
+  // Get the index of the starting character of the look-ahead token.
+  size_t LookAheadOffset() const {
+    DCHECK(HasLookAhead() || AtEnd());
+    return tokenizer_.PreviousOffset();
+  }
+
   void ConsumeWhitespace();
   CSSParserToken ConsumeIncludingWhitespace();
   void UncheckedConsumeComponentValue(unsigned nesting_level = 0);
+  void UncheckedConsumeComponentValueWithOffsets(CSSParserObserverWrapper&);
+  // Either consumes a comment token and returns true, or peeks at the next
+  // token and return false.
+  bool ConsumeCommentOrNothing();
 
  private:
   const CSSParserToken& PeekInternal() const {
@@ -160,7 +159,7 @@ class CORE_EXPORT CSSParserTokenStream {
 
   const CSSParserToken& UncheckedConsumeInternal() {
     DCHECK(HasLookAhead());
-    offset_ = tokenizer_.input_.Offset();
+    offset_ = tokenizer_.Offset();
     return tokenizer_.tokens_[next_index_++];
   }
 
