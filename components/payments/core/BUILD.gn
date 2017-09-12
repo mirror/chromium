@@ -58,6 +58,13 @@ static_library("core") {
     "subkey_requester.h",
   ]
 
+  if (!is_ios) {
+    sources += [
+      "service_worker_payment_instrument.cc",
+      "service_worker_payment_instrument.h",
+    ]
+  }
+
   deps = [
     "//base",
     "//components/autofill/core/browser",
@@ -66,6 +73,7 @@ static_library("core") {
     "//components/link_header_util",
     "//components/pref_registry",
     "//components/strings:components_strings_grit",
+    "//content/public/browser",
     "//net",
     "//services/metrics/public/cpp:metrics_cpp",
     "//services/metrics/public/cpp:ukm_builders",
