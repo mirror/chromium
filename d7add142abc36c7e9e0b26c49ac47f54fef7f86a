@@ -86,6 +86,24 @@
       "revId": "d7add142abc36c7e9e0b26c49ac47f54fef7f86a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d2768c_9f278ebe",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-12T09:18:10Z",
+      "side": 1,
+      "message": "It\u0027s content::mojom::ServiceWorkerEventDispatcher. We had to use a message pipe over the legacy IPC, but now we can use InterfacePtr for it thanks to your contribution! :)",
+      "parentUuid": "ba9f9e6c_14ae0c25",
+      "revId": "d7add142abc36c7e9e0b26c49ac47f54fef7f86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
