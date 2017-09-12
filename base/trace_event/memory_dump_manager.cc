@@ -181,7 +181,11 @@ MemoryDumpManager::MemoryDumpManager()
     : is_coordinator_(false),
       tracing_process_id_(kInvalidTracingProcessId),
       dumper_registrations_ignored_for_testing_(false),
-      heap_profiling_mode_(kHeapProfilingModeDisabled) {}
+      heap_profiling_mode_(kHeapProfilingModeDisabled) {
+  // Poke TraceLog instance to avoid deadlock.
+  // https://crbug.com/764357
+  TraceLog::GetInstance();
+}
 
 MemoryDumpManager::~MemoryDumpManager() {
   Thread* dump_thread = nullptr;
