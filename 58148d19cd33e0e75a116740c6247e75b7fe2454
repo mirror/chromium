@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc2d8ffc_741290e8",
+        "filename": "third_party/WebKit/Source/core/paint/RarePaintData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-12T17:57:46Z",
+      "side": 1,
+      "message": "Done.\n\nActually we will remove this for SPV2. Added comment for it.",
+      "parentUuid": "ef37f7ae_b9b6531f",
+      "revId": "58148d19cd33e0e75a116740c6247e75b7fe2454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4c2f291_f7462de5",
         "filename": "third_party/WebKit/Source/core/paint/RarePaintData.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "58148d19cd33e0e75a116740c6247e75b7fe2454",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91500c53_7b52fade",
+        "filename": "third_party/WebKit/Source/core/paint/RarePaintData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-12T17:57:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4c2f291_f7462de5",
+      "revId": "58148d19cd33e0e75a116740c6247e75b7fe2454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
