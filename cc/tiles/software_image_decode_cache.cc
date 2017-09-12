@@ -750,8 +750,10 @@ SoftwareImageDecodeCache::GetScaledImageDecode(const ImageKey& key,
   {
     TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                  "SoftwareImageDecodeCache::ScaleImage - scale pixels");
+    // We use low filter quality to scale, since we're already targetting a mip
+    // level.
     bool result =
-        decoded_pixmap.scalePixels(scaled_pixmap, key.filter_quality());
+        decoded_pixmap.scalePixels(scaled_pixmap, kLow_SkFilterQuality);
     DCHECK(result) << key.ToString();
   }
 
