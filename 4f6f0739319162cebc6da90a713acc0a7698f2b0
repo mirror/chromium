@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfd08e18_2cb2e2ae",
+        "filename": "chrome/test/chromedriver/chrome_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-09-12T06:40:40Z",
+      "side": 1,
+      "message": "nit:lowercase",
+      "range": {
+        "startLine": 148,
+        "startChar": 21,
+        "endLine": 148,
+        "endChar": 22
+      },
+      "revId": "4f6f0739319162cebc6da90a713acc0a7698f2b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
