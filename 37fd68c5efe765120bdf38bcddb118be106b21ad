@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fb5a02c_745820cc",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-12T14:22:30Z",
+      "side": 1,
+      "message": "nullptr should work",
+      "revId": "37fd68c5efe765120bdf38bcddb118be106b21ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956d1dae_c33fea2e",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-12T14:22:30Z",
+      "side": 1,
+      "message": "what if context is null?",
+      "revId": "37fd68c5efe765120bdf38bcddb118be106b21ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11bd6cbb_7a9482c0",
+        "filename": "content/browser/android/selection_popup_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-12T14:22:30Z",
+      "side": 1,
+      "message": "maybe should just expose a protected method from connector instead",
+      "revId": "37fd68c5efe765120bdf38bcddb118be106b21ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd1bbcf5_c05dd71a",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-12T14:22:30Z",
+      "side": 1,
+      "message": "I didn\u0027t dig into this, is this guaranteed?",
+      "revId": "37fd68c5efe765120bdf38bcddb118be106b21ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f70c602_3997b401",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-12T14:22:30Z",
+      "side": 1,
+      "message": "private",
+      "revId": "37fd68c5efe765120bdf38bcddb118be106b21ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
