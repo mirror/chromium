@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5de56cdc_100dcbc0",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-12T00:43:34Z",
+      "side": 1,
+      "message": "Move this to #pragma private? This is not part of navigation bar callbacks.",
+      "range": {
+        "startLine": 1107,
+        "startChar": 0,
+        "endLine": 1118,
+        "endChar": 1
+      },
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6d222a9_79b4a46f",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
         "patchSetId": 1
@@ -77,6 +100,24 @@
     },
     {
       "key": {
+        "uuid": "ace43801_a414e06c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-12T00:43:34Z",
+      "side": 1,
+      "message": "Why do you think we need to dispatch_async? Does it not work right without it?",
+      "parentUuid": "8a373a52_812d2a2a",
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "490d6269_0a34f864",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 1
@@ -97,6 +138,30 @@
       "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a82e6f20_ce099b37",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-12T00:43:34Z",
+      "side": 1,
+      "message": "If we need an ordered list, why not get rid of the set of editNodes, and just keep this one vector of edit nodes? One reason could be to avoid duplicate nodes we need to use a set, but i am not sure if that\u0027s really useful here?",
+      "parentUuid": "490d6269_0a34f864",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 44
+      },
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
