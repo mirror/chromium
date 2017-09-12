@@ -32,6 +32,9 @@
 namespace device {
 namespace {
 
+const char kNetworkLocationBaseUrl[] =
+    "https://www.googleapis.com/geolocation/v1/geolocate";
+
 const char kLocationString[] = "location";
 const char kLatitudeString[] = "lat";
 const char kLongitudeString[] = "lng";
@@ -103,11 +106,11 @@ int NetworkLocationRequest::url_fetcher_id_for_tests = 0;
 
 NetworkLocationRequest::NetworkLocationRequest(
     const scoped_refptr<net::URLRequestContextGetter>& context,
-    const GURL& url,
+    const std::string& api_key,
     LocationResponseCallback callback)
-    : url_context_(context), location_response_callback_(callback), url_(url) {
-  DCHECK(url.is_valid());
-}
+    : url_context_(context),
+      api_key_(api_key),
+      location_response_callback_(callback) {}
 
 NetworkLocationRequest::~NetworkLocationRequest() {}
 
@@ -123,7 +126,6 @@ bool NetworkLocationRequest::MakeRequest(const WifiData& wifi_data,
   wifi_data_ = wifi_data;
   wifi_timestamp_ = wifi_timestamp;
 
-  GURL request_url = FormRequestURL(url_);
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("device_geolocation_request", R"(
         semantics {
@@ -148,6 +150,8 @@ bool NetworkLocationRequest::MakeRequest(const WifiData& wifi_data,
             }
           }
         })");
+  const GURL request_url = FormRequestURL(GURL(kNetworkLocationBaseUrl));
+  DCHECK(request_url.is_valid());
   url_fetcher_ =
       net::URLFetcher::Create(url_fetcher_id_for_tests, request_url,
                               net::URLFetcher::POST, this, traffic_annotation);
@@ -205,17 +209,15 @@ struct AccessPointLess {
 };
 
 GURL FormRequestURL(const GURL& url) {
-  if (url == LocationArbitrator::DefaultNetworkProviderURL()) {
-    std::string api_key = google_apis::GetAPIKey();
-    if (!api_key.empty()) {
-      std::string query(url.query());
-      if (!query.empty())
-        query += "&";
-      query += "key=" + net::EscapeQueryParamValue(api_key, true);
-      GURL::Replacements replacements;
-      replacements.SetQueryStr(query);
-      return url.ReplaceComponents(replacements);
-    }
+  std::string api_key = google_apis::GetAPIKey();
+  if (!api_key.empty()) {
+    std::string query(url.query());
+    if (!query.empty())
+      query += "&";
+    query += "key=" + net::EscapeQueryParamValue(api_key, true);
+    GURL::Replacements replacements;
+    replacements.SetQueryStr(query);
+    return url.ReplaceComponents(replacements);
   }
   return url;
 }

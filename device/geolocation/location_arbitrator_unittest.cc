@@ -117,10 +117,8 @@ class TestingLocationArbitrator : public LocationArbitrator {
   }
 
   std::unique_ptr<LocationProvider> NewNetworkLocationProvider(
-      const scoped_refptr<AccessTokenStore>& access_token_store,
       const scoped_refptr<net::URLRequestContextGetter>& context,
-      const GURL& url,
-      const base::string16& access_token) override {
+      const std::string& api_key) override {
     cell_ = new FakeLocationProvider;
     return base::WrapUnique(cell_);
   }

@@ -15,14 +15,8 @@
 #include "device/geolocation/access_token_store.h"
 #include "device/geolocation/geolocation_delegate.h"
 #include "device/geolocation/network_location_provider.h"
-#include "url/gurl.h"
 
 namespace device {
-namespace {
-
-const char* kDefaultNetworkProviderUrl =
-    "https://www.googleapis.com/geolocation/v1/geolocate";
-}  // namespace
 
 // To avoid oscillations, set this to twice the expected update interval of a
 // a GPS-type location provider (in case it misses a beat) plus a little.
@@ -37,10 +31,6 @@ LocationArbitrator::LocationArbitrator(
       is_running_(false) {}
 
 LocationArbitrator::~LocationArbitrator() {}
-
-GURL LocationArbitrator::DefaultNetworkProviderURL() {
-  return GURL(kDefaultNetworkProviderUrl);
-}
 
 bool LocationArbitrator::HasPermissionBeenGrantedForTest() const {
   return is_permission_granted_;
@@ -64,7 +54,6 @@ bool LocationArbitrator::StartProvider(bool enable_high_accuracy) {
       const scoped_refptr<AccessTokenStore> access_token_store =
           GetAccessTokenStore();
       if (access_token_store) {
-        DCHECK(DefaultNetworkProviderURL().is_valid());
         token_store_callback_.Reset(
             base::Bind(&LocationArbitrator::OnAccessTokenStoresLoaded,
                        base::Unretained(this)));
@@ -106,13 +95,9 @@ void LocationArbitrator::StopProvider() {
 void LocationArbitrator::OnAccessTokenStoresLoaded(
     AccessTokenStore::AccessTokenMap access_token_map,
     const scoped_refptr<net::URLRequestContextGetter>& context_getter) {
-  // If there are no access tokens, boot strap it with the default server URL.
-  if (access_token_map.empty())
-    access_token_map[DefaultNetworkProviderURL()];
-  for (const auto& entry : access_token_map) {
-    RegisterProvider(NewNetworkLocationProvider(
-        GetAccessTokenStore(), context_getter, entry.first, entry.second));
-  }
+  // Create a NetworkLocationProvider using the provided request context.
+  RegisterProvider(NewNetworkLocationProvider(
+      context_getter, delegate_->GetNetworkGeolocationApiKey()));
   DoStartProviders();
 }
 
@@ -169,15 +154,13 @@ scoped_refptr<AccessTokenStore> LocationArbitrator::GetAccessTokenStore() {
 
 std::unique_ptr<LocationProvider>
 LocationArbitrator::NewNetworkLocationProvider(
-    const scoped_refptr<AccessTokenStore>& access_token_store,
     const scoped_refptr<net::URLRequestContextGetter>& context,
-    const GURL& url,
-    const base::string16& access_token) {
+    const std::string& api_key) {
 #if defined(OS_ANDROID)
   // Android uses its own SystemLocationProvider.
   return nullptr;
 #else
-  return std::make_unique<NetworkLocationProvider>(context, url);
+  return std::make_unique<NetworkLocationProvider>(context, api_key);
 #endif
 }
 
