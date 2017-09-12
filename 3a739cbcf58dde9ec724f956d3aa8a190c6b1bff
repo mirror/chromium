@@ -22,6 +22,30 @@
       "revId": "3a739cbcf58dde9ec724f956d3aa8a190c6b1bff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b069059d_4bf019f0",
+        "filename": "device/u2f/u2f_command_type.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-09-12T12:53:21Z",
+      "side": 1,
+      "message": "Done.\n\nFIY: Both options are correct. The one with 2 commas is American, whereas the British don\u0027t put the second comma. See https://jakubmarian.com/comma-after-i-e-and-e-g/",
+      "parentUuid": "f0d4ecd0_f3fe94f8",
+      "range": {
+        "startLine": 13,
+        "startChar": 7,
+        "endLine": 13,
+        "endChar": 8
+      },
+      "revId": "3a739cbcf58dde9ec724f956d3aa8a190c6b1bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
