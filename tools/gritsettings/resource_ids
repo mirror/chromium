@@ -90,6 +90,9 @@
   "chrome/browser/resources/invalidations_resources.grd": {
     "includes": [11910],
   },
+  "chrome/browser/resources/interventions_resources.grd": {
+    "includes": [11940],
+  },
   "chrome/browser/resources/net_internals_resources.grd": {
     "includes": [11960],
   },

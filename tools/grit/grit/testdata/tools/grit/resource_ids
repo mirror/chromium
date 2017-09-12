@@ -22,6 +22,9 @@
   "chrome/browser/resources/component_extension_resources.grd": {
     "includes": [1000],
   },
+  "chrome/browser/resources/interventions_resources.grd": {
+    "includes": [1400],
+  },
   "chrome/browser/resources/net_internals_resources.grd": {
     "includes": [1500],
   },
