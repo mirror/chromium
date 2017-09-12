@@ -5,8 +5,10 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
+#include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/extensions/bookmark_app_helper.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
+#include "chrome/browser/renderer_context_menu/render_view_context_menu_test_util.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
@@ -19,6 +21,7 @@
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/common/context_menu_params.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_frame_navigation_observer.h"
 #include "content/public/test/test_utils.h"
@@ -163,10 +166,13 @@ class BookmarkAppUrlRedirectorBrowserTest : public ExtensionBrowserTest {
     return chrome::FindLastActive();
   }
 
-  // Navigates the active tab to the launching page.
-  void NavigateToLaunchingPage() {
-    ui_test_utils::NavigateToURL(browser(), GetLaunchingPageURL());
+  // Navigates the active tab in |browser| to the launching page.
+  void NavigateToLaunchinPage(Browser* browser) {
+    ui_test_utils::NavigateToURL(browser, GetLaunchingPageURL());
   }
+
+  // Navigates the active tab to the launching page.
+  void NavigateToLaunchingPage() { NavigateToLaunchinPage(browser()); }
 
   // Checks that, after running |action|, the initial tab's window doesn't have
   // any new tabs, the initial tab did not navigate, and that a new app window
@@ -193,25 +199,33 @@ class BookmarkAppUrlRedirectorBrowserTest : public ExtensionBrowserTest {
   }
 
   // Checks that no new windows are opened after running |action| and that the
-  // existing window is still the active one and navigated to |target_url|.
-  // Returns true if there were no errors.
-  bool TestTabActionDoesNotOpenAppWindow(const GURL& target_url,
+  // existing |browser| window is still the active one and navigated to
+  // |target_url|. Returns true if there were no errors.
+  bool TestTabActionDoesNotOpenAppWindow(Browser* browser,
+                                         const GURL& target_url,
                                          const base::Closure& action) {
     content::WebContents* initial_tab =
-        browser()->tab_strip_model()->GetActiveWebContents();
-    int num_tabs = browser()->tab_strip_model()->count();
-    size_t num_browsers = chrome::GetBrowserCount(profile());
+        browser->tab_strip_model()->GetActiveWebContents();
+    int num_tabs = browser->tab_strip_model()->count();
+    size_t num_browsers = chrome::GetBrowserCount(browser->profile());
 
     action.Run();
 
-    EXPECT_EQ(num_tabs, browser()->tab_strip_model()->count());
-    EXPECT_EQ(num_browsers, chrome::GetBrowserCount(profile()));
-    EXPECT_EQ(browser(), chrome::FindLastActive());
-    EXPECT_EQ(initial_tab,
-              browser()->tab_strip_model()->GetActiveWebContents());
+    EXPECT_EQ(num_tabs, browser->tab_strip_model()->count());
+    EXPECT_EQ(num_browsers, chrome::GetBrowserCount(browser->profile()));
+    EXPECT_EQ(browser, chrome::FindLastActive());
+    EXPECT_EQ(initial_tab, browser->tab_strip_model()->GetActiveWebContents());
     EXPECT_EQ(target_url, initial_tab->GetLastCommittedURL());
 
     return !HasFailure();
+  }
+
+  // Checks that no new windows are opened after running |action| and that the
+  // main browser window is still the active one and navigated to |target_url|.
+  // Returns true if there were no errors.
+  bool TestTabActionDoesNotOpenAppWindow(const GURL& target_url,
+                                         const base::Closure& action) {
+    return TestTabActionDoesNotOpenAppWindow(browser(), target_url, action);
   }
 
   // Checks that no new windows are opened after running |action| and that the
@@ -424,6 +438,59 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, OutOfScopeUrlSelf) {
       base::Bind(&ClickLinkAndWait,
                  browser()->tab_strip_model()->GetActiveWebContents(),
                  out_of_scope_url, LinkTarget::SELF));
+}
+
+// Tests that clicking "Open link in incognito window" to an in-scope URL does
+// not open an App window.
+IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, OpenInIncognito) {
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  size_t num_browsers = chrome::GetBrowserCount(profile());
+  int num_tabs = browser()->tab_strip_model()->count();
+  content::WebContents* initial_tab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  GURL initial_url = initial_tab->GetLastCommittedURL();
+
+  const GURL in_scope_url = embedded_test_server()->GetURL(kInScopeUrlPath);
+  ui_test_utils::UrlLoadObserver url_observer(
+      in_scope_url, content::NotificationService::AllSources());
+  content::ContextMenuParams params;
+  params.page_url = initial_url;
+  params.link_url = in_scope_url;
+  TestRenderViewContextMenu menu(initial_tab->GetMainFrame(), params);
+  menu.Init();
+  menu.ExecuteCommand(IDC_CONTENT_CONTEXT_OPENLINKOFFTHERECORD,
+                      0 /* event_flags */);
+  url_observer.Wait();
+
+  Browser* incognito_browser = chrome::FindLastActive();
+  EXPECT_EQ(incognito_browser->profile(), profile()->GetOffTheRecordProfile());
+  EXPECT_NE(browser(), incognito_browser);
+  EXPECT_EQ(in_scope_url, incognito_browser->tab_strip_model()
+                              ->GetActiveWebContents()
+                              ->GetLastCommittedURL());
+
+  EXPECT_EQ(num_browsers, chrome::GetBrowserCount(profile()));
+  EXPECT_EQ(num_tabs, browser()->tab_strip_model()->count());
+  EXPECT_EQ(initial_tab, browser()->tab_strip_model()->GetActiveWebContents());
+  EXPECT_EQ(initial_url, initial_tab->GetLastCommittedURL());
+}
+
+// Tests that clicking a link to an in-scope URL when in incognito does not open
+// an App window.
+IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
+                       InScopeUrlIncognito) {
+  InstallTestBookmarkApp();
+  Browser* incognito_browser = CreateIncognitoBrowser();
+  NavigateToLaunchinPage(incognito_browser);
+
+  const GURL in_scope_url = embedded_test_server()->GetURL(kInScopeUrlPath);
+  TestTabActionDoesNotOpenAppWindow(
+      incognito_browser, in_scope_url,
+      base::Bind(&ClickLinkAndWait,
+                 incognito_browser->tab_strip_model()->GetActiveWebContents(),
+                 in_scope_url, LinkTarget::SELF));
 }
 
 // Tests that clicking links inside a website for an installed app doesn't open
