@@ -383,11 +383,20 @@ Position NextRootInlineBoxCandidatePosition(Node*,
                                             const VisiblePosition&,
                                             EditableType);
 
+PositionInFlatTree NextRootInlineBoxCandidatePosition(
+    Node*,
+    const VisiblePositionInFlatTree&,
+    EditableType);
 CORE_EXPORT Position
 PreviousRootInlineBoxCandidatePosition(Node*,
                                        const VisiblePosition&,
                                        EditableType);
 
+CORE_EXPORT PositionInFlatTree
+PreviousRootInlineBoxCandidatePosition(Node*,
+                                       const VisiblePositionInFlatTree&,
+                                       EditableType);
 }  // namespace blink
+// namespace blink
 
 #endif  // VisibleUnits_h
