@@ -17,6 +17,7 @@
 #include "net/cookies/canonical_cookie.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/gfx/canvas.h"
 #include "ui/native_theme/native_theme.h"
 #include "ui/views/border.h"
@@ -70,7 +71,9 @@ void CookieInfoView::SetCookie(const std::string& domain,
 
 void CookieInfoView::ClearCookieDisplay() {
   base::string16 no_cookie_string =
-      l10n_util::GetStringUTF16(IDS_COOKIES_COOKIE_NONESELECTED);
+      ui::MaterialDesignController::IsSecondaryUiMaterial()
+          ? base::string16()
+          : l10n_util::GetStringUTF16(IDS_COOKIES_COOKIE_NONESELECTED);
   name_value_field_->SetText(no_cookie_string);
   content_value_field_->SetText(no_cookie_string);
   domain_value_field_->SetText(no_cookie_string);
