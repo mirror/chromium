@@ -34,6 +34,7 @@
 #include "core/page/Page.h"
 #include "platform/Language.h"
 #include "platform/MemoryCoordinator.h"
+#include "third_party/WebKit/common/memory_coordinator/physical_memory_coordinator.h"
 
 namespace blink {
 
@@ -52,7 +53,7 @@ String Navigator::vendor() const {
 }
 
 float Navigator::deviceMemory() const {
-  return MemoryCoordinator::GetApproximatedDeviceMemory();
+  return PhysicalMemoryCoordinator::GetApproximatedDeviceMemory();
 }
 
 String Navigator::vendorSub() const {

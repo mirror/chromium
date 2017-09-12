@@ -21,6 +21,8 @@ component("blink_common") {
 
   sources = [
     "common_export.h",
+    "memory_coordinator/physical_memory_coordinator.cc",
+    "memory_coordinator/physical_memory_coordinator.h",
     "mime_util/mime_util.cc",
     "mime_util/mime_util.h",
   ]
@@ -40,6 +42,7 @@ test("blink_common_unittests") {
   visibility = [ "*" ]
 
   sources = [
+    "memory_coordinator/physical_memory_coordinator_unittest.cc",
     "mime_util/mime_util_unittest.cc",
     "test/run_all_unittests.cc",
   ]
