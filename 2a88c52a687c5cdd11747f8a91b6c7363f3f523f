@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a25867e7_c16df2bb",
+        "filename": "ui/views/cocoa/drag_drop_client_mac_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T07:56:17Z",
+      "side": 1,
+      "message": "this comes up in other test files, we normally just set widget_ to nullptr. I.e., here do\n\n if (widget_)..",
+      "revId": "2a88c52a687c5cdd11747f8a91b6c7363f3f523f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e14aa1_f1778987",
+        "filename": "ui/views/cocoa/drag_drop_client_mac_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T07:56:17Z",
+      "side": 1,
+      "message": ".. then remove this",
+      "revId": "2a88c52a687c5cdd11747f8a91b6c7363f3f523f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f193698c_e8666840",
+        "filename": "ui/views/cocoa/drag_drop_client_mac_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T07:56:17Z",
+      "side": 1,
+      "message": "nit: blank line before, and\n\n // View:\n int OnPerformDrop(...\n\n\n(to indicate where the override is declared)",
+      "revId": "2a88c52a687c5cdd11747f8a91b6c7363f3f523f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "215be6e3_3df761d3",
+        "filename": "ui/views/cocoa/drag_drop_client_mac_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T07:56:17Z",
+      "side": 1,
+      "message": "Tests if -\u003e Tests that",
+      "range": {
+        "startLine": 314,
+        "startChar": 3,
+        "endLine": 314,
+        "endChar": 11
+      },
+      "revId": "2a88c52a687c5cdd11747f8a91b6c7363f3f523f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b83fa9ef_0a692bb0",
+        "filename": "ui/views/cocoa/drag_drop_client_mac_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-12T07:56:17Z",
+      "side": 1,
+      "message": "and here do\n\n // OnPerformDrop() will have deleted the widget.\n widget_ \u003d nullptr;",
+      "revId": "2a88c52a687c5cdd11747f8a91b6c7363f3f523f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
