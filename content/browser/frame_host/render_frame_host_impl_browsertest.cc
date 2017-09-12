@@ -608,12 +608,7 @@ IN_PROC_BROWSER_TEST_F(
   TitleWatcher watcher(shell()->web_contents(), XHR_loaded);
   watcher.AlsoWaitForTitle(XHR_aborted);
 
-  // TODO(arthursonzogni): FIXME XHR are aborted with PlzNavigate.
-  // See https://crbug.com/762945.
-  if (IsBrowserSideNavigationEnabled())
-    EXPECT_EQ(XHR_aborted, watcher.WaitAndGetTitle());
-  else
-    EXPECT_EQ(XHR_loaded, watcher.WaitAndGetTitle());
+  EXPECT_EQ(XHR_loaded, watcher.WaitAndGetTitle());
 }
 
 }  // namespace content
