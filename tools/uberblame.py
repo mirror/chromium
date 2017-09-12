@@ -5,6 +5,7 @@
 
 import cgi
 import codecs
+import random
 import subprocess
 import sys
 import tempfile
@@ -203,6 +204,9 @@ def uberblame_aux(file_name, git_log_stdout):
   current_tokens = tokenize_data(current_data, False)
   current_blame = tokenize_data(current_data, True)
 
+  previous_progress_percentage = -1
+  blamed_tokens = 0
+  total_tokens = len(current_tokens)
   uber_blame = (current_data, current_blame)
 
   previous_commit = None
@@ -238,12 +242,26 @@ def uberblame_aux(file_name, git_log_stdout):
         token_context = current_blame[added_token_index]
         if token_context != None:
           token_context.commit = previous_commit
+          blamed_tokens += 1
 
       previous_blame = [None] * len(previous_tokens)
       for current_blame_index in changed_tokens:
         previous_blame_index = changed_tokens[current_blame_index]
         previous_blame[previous_blame_index] = (
             current_blame[current_blame_index])
+
+      progress_percentage = int(100.0*blamed_tokens/total_tokens)
+      if progress_percentage != previous_progress_percentage:
+        blamed_tokens_str = str(blamed_tokens)
+        total_tokens_str = str(total_tokens)
+        zero_padding_amt = len(total_tokens_str) - len(blamed_tokens_str)
+        blamed_tokens_str = '0'*zero_padding_amt + blamed_tokens_str
+        progress_str = ('0' + str(progress_percentage)
+                        if progress_percentage < 10
+                        else str(progress_percentage))
+        print 'Blamed %s/%s tokens (%s%%)' % (
+            blamed_tokens_str, total_tokens_str, progress_str)
+      previous_progress_percentage = progress_percentage
 
       current_data = previous_data
       current_tokens = previous_tokens
@@ -285,6 +303,12 @@ def uberblame(file_name):
   return data, blame
 
 
+def generate_pastel_color():
+  return "#%0.2X%0.2X%0.2X" % (random.randint(200, 255),
+                               random.randint(200, 255),
+                               random.randint(200, 255))
+
+
 def visualize_uberblame(data, blame):
   """Creates and displays a web page to visualize |blame|.
 
@@ -295,33 +319,45 @@ def visualize_uberblame(data, blame):
   html = [ '<html><head><style>' ]
   html.append('body {font-family: "Courier New";}')
   html.append('pre { display: inline; }')
-  html.append('</style></head><body><pre>')
+  html.append('a { color: #000000; text-decoration: none; }')
+  html.append('#linenums { text-align: right; }')
+  html.append('</style></head><body>')
+  html.append('<table><tbody><tr><td valign="top" id="linenums"><pre>')
+  # We'll set the line number column later once we know how many lines
+  # there are.
+  line_num_column_index = len(html)
+  html.append('')
+  html.append('</pre></td><td valign="top"><pre>')
+  commit_colors = {}
   blame_index = 0
   row = 0
+  lastline = ''
   for line in data.split('\n'):
+    lastline = line
     column = 0
-    in_link = False
-    for c in line.rstrip('\n'):
+    for c in line + '\n':
       if blame_index < len(blame):
         token_context = blame[blame_index]
         if (row == token_context.row and
             column == token_context.column + token_context.length):
-          html.append('</a>')
-          in_link = False
+          html.append('</a></span>')
           blame_index += 1
+      if blame_index < len(blame):
         token_context = blame[blame_index]
         if row == token_context.row and column == token_context.column:
           html.append(('<a href="https://chromium.googlesource.com/' +
                        'chromium/src/+/%s">') % token_context.commit)
-          in_link = True
+          commit = token_context.commit
+          if commit not in commit_colors:
+            commit_colors[commit] = generate_pastel_color()
+          color = commit_colors[commit]
+          html.append('<span style="background-color: %s">' % color)
       html.append(cgi.escape(c))
       column += 1
-    if in_link:
-      html.append('</a>')
-      blame_index += 1
-    html.append('\n')
     row += 1
-  html.append('</pre></body></html>')
+  line_nums = range(1, row if lastline.strip() == '' else row + 1)
+  html[line_num_column_index] = '\n'.join([str(num) for num in line_nums])
+  html.append('</pre></td></tr></tbody></table></body></html>')
   # Keep the temporary file around so the browser has time to open it.
   # TODO(thomasanderson): spin up a temporary web server to serve this
   # file so we don't have to leak it.
