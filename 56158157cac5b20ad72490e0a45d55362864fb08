@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "18d07cfa_c49af3d7",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T19:12:10Z",
+      "side": 1,
+      "message": "\u003e I guess my thought was that the presence of the username-with-space on these makes them extremely ambiguous.  Consider the input \"a b@123.45/\"\n\u003e \n\u003e Current behavior: URL (because of the trailing slash)\n\u003e Your change: QUERY (because of the not-likely-an-IP check)\n\u003e My proposal: UNKNOWN (because of the \"a b@\")\n\u003e \n\u003e I\u0027m sure URL is not right, but I\u0027m not sure QUERY is better than UNKNOWN.  This seems more UNKNOWNy to me (\"likely a search, but maybe you wanted to navigate?\").  What gives you such confidence that UNKNOWN is wrong for this?\n\nI don\u0027t have confidence that UNKNOWN is wrong for this.  In this example, there are two conflicting signals: username with a space - leans toward QUERY; trailing slash - leans toward URL.  I could see the balance coming out either way.\n\nFundamentally, I don\u0027t like the early UNKNOWN return for a different reason.  This function grows by people adding heuristics in particular places.  Putting the early return here will make all additions of QUERY heuristics later in the function more likely to break because they won\u0027t be reached.  Having the username_has_space only on exactly the clauses to which it matters make later additions to this already-complex function more likely to work as intended.",
+      "parentUuid": "c0b193b8_03f82791",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4048e67a_46d0fcfa",
         "filename": "components/omnibox/browser/autocomplete_input.cc",
         "patchSetId": 2
@@ -192,6 +210,24 @@
       "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f73ca8_69d41431",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-12T19:12:10Z",
+      "side": 1,
+      "message": "Yup, Peter said it.  username_has_space is unnecessary here because if a username existed, then the flow generally cannot reach here.  It can only reach here if the user presses-control enter, in which case I\u0027ll take that as a sign that the user is seeking a URL and override the username-space heuristic.",
+      "parentUuid": "293a9f74_9c804fe3",
+      "revId": "56158157cac5b20ad72490e0a45d55362864fb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
