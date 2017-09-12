@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "a442c367_eb9a997a",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-12T09:03:35Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "90d60659_e688561f",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "12d32ba7ac39216c7c162dc096836ea3ba8ee240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63f82a5e_029eb7f0",
         "filename": "components/ntp_snippets/remote/remote_suggestion.h",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-12T07:29:06Z",
       "side": 1,
       "message": "It looks like |repeated SnippetSourceProto sources \u003d 8| in SnippetProto is not needed anymore. Instead we just need to inline one SnippetSourceProto fields. However, this proto is persisted in the database, thus, the fix is not that simple. Could you add a TODO to the proto?",
+      "range": {
+        "startLine": 51,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 24
+      },
+      "revId": "12d32ba7ac39216c7c162dc096836ea3ba8ee240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f875655c_92513fb6",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-12T09:03:35Z",
+      "side": 1,
+      "message": "It\u0027s safe to change a repeated proto into an optional one. For the unlikely case that there are multiple sources, the  We can just do that. (done).\n\nFrom https://engdoc.corp.google.com/eng/howto/infrastructure/protocol-buffer.html?cl\u003dhead#s16 clients expecting an optional field will take the last input value if the field is of primitive type, or merge all input elements together if the field is of message type.",
+      "parentUuid": "63f82a5e_029eb7f0",
       "range": {
         "startLine": 51,
         "startChar": 12,
@@ -91,6 +139,30 @@
       "revId": "12d32ba7ac39216c7c162dc096836ea3ba8ee240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f48092a5_3dc232d3",
+        "filename": "components/ntp_snippets/remote/remote_suggestion_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-12T09:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87391f5a_969970e8",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "12d32ba7ac39216c7c162dc096836ea3ba8ee240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
