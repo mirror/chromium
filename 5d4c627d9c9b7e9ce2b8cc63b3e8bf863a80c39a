@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9836f266_5b1d4bdb",
+        "filename": "third_party/closure_compiler/externs/passwords_private.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-12T15:41:44Z",
+      "side": 1,
+      "message": "nit: Add comment?",
+      "revId": "5d4c627d9c9b7e9ce2b8cc63b3e8bf863a80c39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
