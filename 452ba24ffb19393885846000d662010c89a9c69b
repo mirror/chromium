@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c6dd707_6a10a375",
+        "filename": "content/shell/browser/shell_browser_main_parts.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-12T14:35:17Z",
+      "side": 1,
+      "message": "{} -\u003e \u003d default;",
+      "revId": "452ba24ffb19393885846000d662010c89a9c69b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f15dd0_066deb96",
+        "filename": "content/shell/browser/shell_browser_main_parts.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-12T14:35:17Z",
+      "side": 1,
+      "message": "nit: since ownership is passed, consider changing SetGeolocationDelegate() to take an std::unique_ptr\u003c\u003e.",
+      "revId": "452ba24ffb19393885846000d662010c89a9c69b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
