@@ -9,6 +9,7 @@
 #include "core/css/FontFaceDescriptors.h"
 #include "core/css/FontFaceSetDocument.h"
 #include "core/html/HTMLIFrameElement.h"
+#include "core/page/Page.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/scroll/ScrollbarTheme.h"
@@ -54,11 +55,13 @@ void RenderingTest::SetUp() {
 
   Settings::SetMockScrollbarsEnabled(true);
   RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(true);
-  EXPECT_TRUE(ScrollbarTheme::GetTheme().UsesOverlayScrollbars());
 
   // This ensures that the minimal DOM tree gets attached
   // correctly for tests that don't call setBodyInnerHTML.
   GetDocument().View()->UpdateAllLifecyclePhases();
+
+  EXPECT_TRUE(
+      GetDocument().GetPage()->GetScrollbarTheme().UsesOverlayScrollbars());
 
   // Allow ASSERT_DEATH and EXPECT_DEATH for multiple threads.
   ::testing::FLAGS_gtest_death_test_style = "threadsafe";

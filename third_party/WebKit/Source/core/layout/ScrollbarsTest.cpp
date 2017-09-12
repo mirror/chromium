@@ -7,6 +7,7 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutView.h"
+#include "core/page/Page.h"
 #include "core/paint/PaintLayerScrollableArea.h"
 #include "core/testing/sim/SimDisplayItemList.h"
 #include "core/testing/sim/SimRequest.h"
@@ -27,6 +28,10 @@ namespace {
 class ScrollbarsTest : private ScopedRootLayerScrollingForTest, public SimTest {
  public:
   ScrollbarsTest() : ScopedRootLayerScrollingForTest(true) {}
+
+  ScrollbarTheme& GetScrollbarTheme() {
+    return GetDocument().GetPage()->GetScrollbarTheme();
+  }
 };
 
 TEST_F(ScrollbarsTest, DocumentStyleRecalcPreservesScrollbars) {
@@ -62,10 +67,6 @@ TEST_F(ScrollbarsTest, CustomScrollbarsCauseLayoutOnExistenceChange) {
   // but remove this setting.
   ScopedRootLayerScrollingForTest turn_off_root_layer_scrolling(false);
 
-  // This test is specifically checking the behavior when overlay scrollbars
-  // are enabled.
-  DCHECK(ScrollbarTheme::GetTheme().UsesOverlayScrollbars());
-
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
@@ -100,6 +101,10 @@ TEST_F(ScrollbarsTest, CustomScrollbarsCauseLayoutOnExistenceChange) {
   ASSERT_FALSE(layout_viewport->VerticalScrollbar());
   ASSERT_FALSE(layout_viewport->HorizontalScrollbar());
 
+  // This test is specifically checking the behavior when overlay scrollbars
+  // are enabled.
+  DCHECK(GetScrollbarTheme().UsesOverlayScrollbars());
+
   // Adding translation will cause a vertical scrollbar to appear but not dirty
   // layout otherwise. Ensure the change of scrollbar causes a layout to
   // recalculate the page width with the vertical scrollbar added.
@@ -116,10 +121,6 @@ TEST_F(ScrollbarsTest, TransparentBackgroundUsesDarkOverlayColorTheme) {
   // but remove this setting.
   ScopedRootLayerScrollingForTest turn_off_root_layer_scrolling(false);
 
-  // This test is specifically checking the behavior when overlay scrollbars
-  // are enabled.
-  DCHECK(ScrollbarTheme::GetTheme().UsesOverlayScrollbars());
-
   WebView().Resize(WebSize(800, 600));
   WebView().SetBaseBackgroundColorOverride(SK_ColorTRANSPARENT);
   SimRequest request("https://example.com/test.html", "text/html");
@@ -132,6 +133,10 @@ TEST_F(ScrollbarsTest, TransparentBackgroundUsesDarkOverlayColorTheme) {
       "  }"
       "</style>");
   Compositor().BeginFrame();
+
+  // This test is specifically checking the behavior when overlay scrollbars
+  // are enabled.
+  DCHECK(GetScrollbarTheme().UsesOverlayScrollbars());
 
   ScrollableArea* layout_viewport =
       GetDocument().View()->LayoutViewportScrollableArea();
@@ -200,6 +205,10 @@ class ParameterizedScrollbarsTest : public ::testing::WithParamInterface<bool>,
         .LastSetCursorForTesting()
         .GetType();
   }
+
+  ScrollbarTheme& GetScrollbarTheme() {
+    return GetDocument().GetPage()->GetScrollbarTheme();
+  }
 };
 
 INSTANTIATE_TEST_CASE_P(All, ParameterizedScrollbarsTest, ::testing::Bool());
@@ -207,10 +216,6 @@ INSTANTIATE_TEST_CASE_P(All, ParameterizedScrollbarsTest, ::testing::Bool());
 // Ensure overlay scrollbar change to display:none correctly.
 TEST_P(ParameterizedScrollbarsTest,
        OverlayScrollbarChangeToDisplayNoneDynamically) {
-  // This test is specifically checking the behavior when overlay scrollbars
-  // are enabled.
-  DCHECK(ScrollbarTheme::GetTheme().UsesOverlayScrollbars());
-
   WebView().Resize(WebSize(200, 200));
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
@@ -229,6 +234,10 @@ TEST_P(ParameterizedScrollbarsTest,
       "<div class='big'>"
       "</div>");
   Compositor().BeginFrame();
+
+  // This test is specifically checking the behavior when overlay scrollbars
+  // are enabled.
+  DCHECK(GetScrollbarTheme().UsesOverlayScrollbars());
 
   Document& document = GetDocument();
   Element* div = document.getElementById("div");
@@ -872,7 +881,7 @@ TEST_P(ParameterizedScrollbarsTest,
   constexpr TimeDelta kMockOverlayFadeOutDelay =
       TimeDelta::FromMillisecondsD(kMockOverlayFadeOutDelayMs);
 
-  ScrollbarTheme& theme = ScrollbarTheme::GetTheme();
+  ScrollbarTheme& theme = GetScrollbarTheme();
   // This test relies on mock overlay scrollbars.
   ASSERT_TRUE(theme.IsMockTheme());
   ASSERT_TRUE(theme.UsesOverlayScrollbars());

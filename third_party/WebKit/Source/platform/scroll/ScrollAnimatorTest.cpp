@@ -119,6 +119,10 @@ class MockScrollableArea : public GarbageCollectedFinalized<MockScrollableArea>,
     return Platform::Current()->CurrentThread()->Scheduler()->TimerTaskRunner();
   }
 
+  ScrollbarTheme& GetPageScrollbarTheme() const override {
+    return ScrollbarTheme::GetTheme();
+  }
+
   DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(animator);
     ScrollableArea::Trace(visitor);
