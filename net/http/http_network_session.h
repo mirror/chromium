@@ -92,6 +92,10 @@ class NET_EXPORT HttpNetworkSession : public base::MemoryCoordinatorClient {
     bool ignore_certificate_errors;
     uint16_t testing_fixed_http_port;
     uint16_t testing_fixed_https_port;
+    // If true, TCP fast open will be used for all HTTP/HTTPS connections.
+    bool enable_tcp_fast_open;
+    // If true, TCP fast open will be used for all HTTPS connections.
+    // TODO(mmenke): With 0-RTT session resumption, does this method make sense?
     bool enable_tcp_fast_open_for_ssl;
     bool enable_user_alternate_protocol_ports;
 
