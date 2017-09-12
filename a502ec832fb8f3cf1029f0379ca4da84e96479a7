@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a09f4cf9_823e282b",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-12T09:08:12Z",
+      "side": 1,
+      "message": "AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED is dispatched for opening a dialog or window. TYPE_WINDOW_CONTENT_CHANGED is dispatched for the update of content.\n\nAndroid app can dispatch TYPE_WINDOW_STATE_CHANGED manually by calling View.sendAccessibilityEvent. But AFAIK, an application cannot directly touch the view inside notifications.",
+      "parentUuid": "c5ab1b31_c802c1c0",
+      "revId": "a502ec832fb8f3cf1029f0379ca4da84e96479a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "460d5262_781d4593",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
         "patchSetId": 5
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "281c73a0_35cf275a",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-12T09:08:12Z",
+      "side": 1,
+      "message": "Q1. Host widget\nSorry, I couldn\u0027t get which part are you talking about. Could you point where the comment is directed to?\n\nQ2. Create tree source for all filter mode\nI believe this is directed to the code where creates tree source of notification in OnAccessibilityEvent. No, we won\u0027t need to create tree source for filter type OFF or FOCUS. But we want to create it for WHITELISTED and ALL. I think the current code is working in the way.\n\nQ3. ArcNotificationContentView::OnNotificationSurfaceAdded\nWe are already dispatching AX_EVENT_CHILDREN_CHANGED in ArcNotificationContentView::OnNotificationSurfaceAdded. What do you mean ax notification? Do we have an event for notification? I\u0027ve checked ax_enums.idl but couldn\u0027t find anything contains word \"notification\".\n\nAlso I don\u0027t think we need to dispatch notification event in this CL. This CL is exposing elements inside notification same as those of an application.\n\nWe will need to map TYPE_NOTIFICATION_STATE_CHANGED to something equivalent in ChromeVox. But it\u0027s another story.",
+      "parentUuid": "14fc8481_d964e7cf",
+      "revId": "a502ec832fb8f3cf1029f0379ca4da84e96479a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae0b2e42_efc3e090",
         "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
         "patchSetId": 5
@@ -98,6 +134,24 @@
       "writtenOn": "2017-09-11T18:29:24Z",
       "side": 1,
       "message": "Simple accessers go into header as +int32_t root_id() { return root_id_; }",
+      "revId": "a502ec832fb8f3cf1029f0379ca4da84e96479a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "345fcf22_c9f402b4",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-12T09:08:12Z",
+      "side": 1,
+      "message": "Removed GetAXTreeId and fixed to use GetTreeData.\n\nAlso GetRootNodeId is removed as I\u0027ve switched to use window id for the purpose.",
+      "parentUuid": "b2b03653_018625f7",
       "revId": "a502ec832fb8f3cf1029f0379ca4da84e96479a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
