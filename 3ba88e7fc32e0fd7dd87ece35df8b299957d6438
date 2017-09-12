@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "929b5a2e_e6e79bb4",
+        "filename": "net/cert/x509_certificate_bytes.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-12T19:50:06Z",
+      "side": 1,
+      "message": "Looks like OS_ANDROID is also fine here since it uses time64_t and timegm64 and the like.",
+      "revId": "3ba88e7fc32e0fd7dd87ece35df8b299957d6438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
