@@ -11,7 +11,7 @@ PaymentInstrument::PaymentInstrument(int icon_resource_id, Type type)
 
 PaymentInstrument::~PaymentInstrument() {}
 
-const gfx::ImageSkia* PaymentInstrument::icon_image() const {
+const gfx::ImageSkia* PaymentInstrument::icon_image_skia() const {
   return nullptr;
 }
 

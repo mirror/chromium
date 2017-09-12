@@ -31,7 +31,7 @@ class ServiceWorkerPaymentInstrument : public PaymentInstrument {
       const std::vector<std::string>& supported_networks,
       const std::set<autofill::CreditCard::CardType>& supported_types,
       bool supported_types_specified) const override;
-  const gfx::ImageSkia* icon_image() const override;
+  const gfx::ImageSkia* icon_image_skia() const override;
 
  private:
   std::unique_ptr<content::StoredPaymentApp> stored_payment_app_info_;

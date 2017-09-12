@@ -747,9 +747,10 @@ PaymentSheetViewController::CreatePaymentMethodRow() {
     selected_instrument_sublabel->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     layout->AddView(selected_instrument_sublabel.release());
 
-    std::unique_ptr<views::ImageView> icon_view = CreateInstrumentIconView(
-        selected_instrument->icon_resource_id(),
-        selected_instrument->icon_image(), selected_instrument->GetLabel());
+    std::unique_ptr<views::ImageView> icon_view =
+        CreateInstrumentIconView(selected_instrument->icon_resource_id(),
+                                 selected_instrument->icon_image_skia(),
+                                 selected_instrument->GetLabel());
     icon_view->SetImageSize(gfx::Size(32, 20));
 
     return builder.AccessibleContent(selected_instrument->GetLabel())

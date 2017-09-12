@@ -68,7 +68,7 @@ bool ServiceWorkerPaymentInstrument::IsValidForModifier(
   return false;
 }
 
-const gfx::ImageSkia* ServiceWorkerPaymentInstrument::icon_image() const {
+const gfx::ImageSkia* ServiceWorkerPaymentInstrument::icon_image_skia() const {
   return icon_image_.get();
 }
 
