@@ -82,6 +82,27 @@ gfx::PointF PercentToMeters(const gfx::PointF& percent) {
   return gfx::PointF(percent.x() * kWidth, percent.y() * kHeight);
 }
 
+// TODO(cjgrant): Move this to a common location and use elsewhere.
+void DrawVectorIcon(gfx::Canvas* canvas,
+                    const gfx::VectorIcon& icon,
+                    float pixel_size,
+                    gfx::PointF center,
+                    SkColor color) {
+  gfx::ImageSkia image = CreateVectorIcon(
+      gfx::IconDescription(icon, 0, color, base::TimeDelta(), gfx::kNoneIcon));
+
+  // Determine how much we need to scale the icon to fit the target region.
+  float scale = pixel_size / image.width();
+  const gfx::ImageSkiaRep& image_rep = image.GetRepresentation(scale);
+
+  // Blit the icon based on its desired center position on the canvas.
+  cc::PaintFlags flags;
+  gfx::Point point(center.x() - pixel_size / 2, center.y() - pixel_size / 2);
+  canvas->DrawImageIntInPixel(image_rep, point.x(), point.y(),
+                              image_rep.pixel_width(), image_rep.pixel_height(),
+                              false, flags);
+}
+
 }  // namespace
 
 UrlBarTexture::UrlBarTexture(
@@ -193,15 +214,11 @@ void UrlBarTexture::Draw(SkCanvas* canvas, const gfx::Size& texture_size) {
   canvas->drawRRect(round_rect, paint);
 
   // Back button icon.
-  canvas->save();
-  canvas->translate(
-      ToPixels((kBackButtonWidth - kBackIconSize) / 2 + kBackIconOffset),
-      ToPixels((kHeight - kBackIconSize) / 2));
-  PaintVectorIcon(&gfx_canvas, vector_icons::kBackArrowIcon,
-                  ToPixels(kBackIconSize),
-                  can_go_back_ ? color_scheme().element_foreground
-                               : color_scheme().disabled);
-  canvas->restore();
+  DrawVectorIcon(&gfx_canvas, vector_icons::kBackArrowIcon,
+                 ToPixels(kBackIconSize),
+                 {ToPixels(kBackButtonWidth / 2 + kBackIconOffset), height / 2},
+                 can_go_back_ ? color_scheme().element_foreground
+                              : color_scheme().disabled);
 
   // Security indicator and URL area.
   paint.setColor(color_scheme().element_background);
@@ -223,13 +240,13 @@ void UrlBarTexture::Draw(SkCanvas* canvas, const gfx::Size& texture_size) {
       state_.vector_icon != nullptr && state_.should_display_url) {
     gfx::RectF icon_region(left_edge, kHeight / 2 - kSecurityIconSize / 2,
                            kSecurityIconSize, kSecurityIconSize);
-    canvas->save();
-    canvas->translate(ToPixels(icon_region.x()), ToPixels(icon_region.y()));
-    PaintVectorIcon(&gfx_canvas, *state_.vector_icon,
-                    ToPixels(kSecurityIconSize),
-                    GetSecurityChipColor(state_.security_level,
-                                         state_.offline_page, color_scheme()));
-    canvas->restore();
+    gfx::PointF center = icon_region.CenterPoint();
+    gfx::PointF center_pixels =
+        gfx::PointF(ToPixels(center.x()), ToPixels(center.y()));
+    DrawVectorIcon(&gfx_canvas, *state_.vector_icon,
+                   ToPixels(kSecurityIconSize), center_pixels,
+                   GetSecurityChipColor(state_.security_level,
+                                        state_.offline_page, color_scheme()));
     security_hit_region_ = icon_region;
     left_edge += kSecurityIconSize + kFieldSpacing;
   }
