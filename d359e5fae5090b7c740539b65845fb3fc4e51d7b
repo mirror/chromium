@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6e90122_4dcc1eb6",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-12T06:11:25Z",
+      "side": 1,
+      "message": "// Tap on Move of the context Menu",
+      "revId": "d359e5fae5090b7c740539b65845fb3fc4e51d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c12082b_813f6a36",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-12T06:11:25Z",
+      "side": 1,
+      "message": "same",
+      "revId": "d359e5fae5090b7c740539b65845fb3fc4e51d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
