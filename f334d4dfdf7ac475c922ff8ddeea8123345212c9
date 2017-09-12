@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "4bff363e_78515c93",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/css_properties.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-12T04:24:34Z",
+      "side": 1,
+      "message": "yes I will separate then, getting error \u003d))",
+      "parentUuid": "d21df547_583958f9",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "542e961e_2b970520",
         "filename": "third_party/WebKit/Source/build/scripts/make_style_builder.py",
         "patchSetId": 6
@@ -249,6 +267,24 @@
     },
     {
       "key": {
+        "uuid": "5321fd40_f994d50e",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-12T04:24:34Z",
+      "side": 1,
+      "message": "I think we need a dupli here, if we want to enforce that field which are declared with property should not have inherited with them, we can do that in python. And I think wherever we are doing validation we should have an assert and a comment right above it to describe what kind of validation we are doing there.",
+      "parentUuid": "4232c2d9_ac524755",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4757251_9c5fb540",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
         "patchSetId": 6
@@ -296,6 +332,24 @@
       "side": 1,
       "message": "Sorry not sure what you mean by \u0027field has to inherit it\u0027?",
       "parentUuid": "8baf148e_9319ce12",
+      "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4138f3b_9701a1ba",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-12T04:24:34Z",
+      "side": 1,
+      "message": "it means that field have to have independent and they take it from their parent css properties",
+      "parentUuid": "1b79c661_212d22c6",
       "revId": "f334d4dfdf7ac475c922ff8ddeea8123345212c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
