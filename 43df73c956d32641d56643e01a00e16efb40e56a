@@ -69,6 +69,23 @@
       "revId": "43df73c956d32641d56643e01a00e16efb40e56a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d63be1f_2f6fd517",
+        "filename": "third_party/WebKit/Source/core/editing/EditingTestBase.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-12T08:41:01Z",
+      "side": 1,
+      "message": "Because you leave original one as-is, this is not renaming.\nRenaming patch is just renaming.\nModify, rename and refactoring patches should be split and should be \n described clearly.\nI guess there is shadow-version-free tests, right?\nSince we use V0 and V1 term in blink, I prefer\npatch #1 Redefine SetShadowContent(const char*,const char*, ShadowRootType \u003d ShadowRootType::V0). This is pure refactoring.\n\npatch #2 Define new SetShadowContentV1(const char*,const char*, ShadowRootType \u003d ShadowRootType::V0) calling SetShadowContent(_,_,V1) if we can.",
+      "revId": "43df73c956d32641d56643e01a00e16efb40e56a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
