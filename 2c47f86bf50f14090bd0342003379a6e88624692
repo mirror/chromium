@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3be48ff2_3d6dab38",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-12T17:30:16Z",
+      "side": 1,
+      "message": "What\u0027s the stub for?  I don\u0027t think anything ever needs to link it.  Your only call to its function is guarded by ADLER32_SIMD_SSSE3.",
+      "revId": "2c47f86bf50f14090bd0342003379a6e88624692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
