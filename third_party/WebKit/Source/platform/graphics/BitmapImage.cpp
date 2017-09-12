@@ -114,7 +114,7 @@ PaintImage BitmapImage::CreateAndCacheFrame(size_t index) {
   frames_[index].orientation_ = decoder_->OrientationAtIndex(index);
   frames_[index].have_metadata_ = true;
   frames_[index].is_complete_ = decoder_->FrameIsReceivedAtIndex(index);
-  if (RepetitionCount(false) != kAnimationNone)
+  if (RepetitionCount() != kAnimationNone)
     frames_[index].duration_ = decoder_->FrameDurationAtIndex(index);
   frames_[index].has_alpha_ = decoder_->FrameHasAlphaAtIndex(index);
   frames_[index].frame_bytes_ =
@@ -122,9 +122,13 @@ PaintImage BitmapImage::CreateAndCacheFrame(size_t index) {
 
   PaintImageBuilder builder;
   InitPaintImageBuilder(builder);
+  auto completion_state = all_data_received_
+                              ? PaintImage::CompletionState::DONE
+                              : PaintImage::CompletionState::PARTIALLY_DONE;
   builder.set_paint_image_generator(std::move(generator))
       .set_frame_index(index)
-      .set_repetition_count(repetition_count_);
+      .set_repetition_count(repetition_count_)
+      .set_completion_state(completion_state);
 
   // The caching of the decoded image data by the external users of this image
   // is keyed based on the uniqueID of the underlying SkImage for this
@@ -247,6 +251,20 @@ Image::SizeAvailability BitmapImage::DataChanged(bool all_data_received) {
         cached_frame_ = PaintImage();
     }
   }
+
+  // If the image is being animated by the compositor, clear the cached_frame_
+  // on a data update to push it to the compositor. Since we never advance the
+  // animation here, the |cached_frame_index_| is always the first frame and the
+  // |cached_frame_| might have not have been cleared in the loop above.
+  //
+  // Another case would be the completion status of the image, which has changed
+  // if we now have all the data.
+  const bool clear_cached_frame =
+      (MaybeAnimated() &&
+       RuntimeEnabledFeatures::CompositorDrivenImageAnimationsEnabled()) ||
+      all_data_received != all_data_received_;
+  if (clear_cached_frame)
+    cached_frame_ = PaintImage();
 
   // Feed all the data we've seen so far to the image decoder.
   all_data_received_ = all_data_received;
@@ -381,6 +399,8 @@ PaintImage BitmapImage::PaintImageForCurrentFrame() {
 
 PassRefPtr<Image> BitmapImage::ImageForDefaultFrame() {
   if (FrameCount() > 1) {
+    // TODO(khushalsagar): Set the repetition policy to kAnimationNone on this
+    // image so cc doesn't animate it.
     return StaticBitmapImage::Create(FrameAtIndex(0u));
   }
 
@@ -437,17 +457,16 @@ ImageOrientation BitmapImage::FrameOrientationAtIndex(size_t index) {
   return decoder_->OrientationAtIndex(index);
 }
 
-int BitmapImage::RepetitionCount(bool image_known_to_be_complete) {
+int BitmapImage::RepetitionCount() {
   if ((repetition_count_status_ == kUnknown) ||
-      ((repetition_count_status_ == kUncertain) &&
-       image_known_to_be_complete)) {
+      ((repetition_count_status_ == kUncertain) && all_data_received_)) {
     // Snag the repetition count.  If |imageKnownToBeComplete| is false, the
     // repetition count may not be accurate yet for GIFs; in this case the
     // decoder will default to cAnimationLoopOnce, and we'll try and read
     // the count again once the whole image is decoded.
     repetition_count_ = decoder_ ? decoder_->RepetitionCount() : kAnimationNone;
     repetition_count_status_ =
-        (image_known_to_be_complete || repetition_count_ == kAnimationNone)
+        (all_data_received_ || repetition_count_ == kAnimationNone)
             ? kCertain
             : kUncertain;
   }
@@ -455,8 +474,11 @@ int BitmapImage::RepetitionCount(bool image_known_to_be_complete) {
 }
 
 bool BitmapImage::ShouldAnimate() {
-  bool animated = RepetitionCount(false) != kAnimationNone &&
-                  !animation_finished_ && GetImageObserver();
+  if (RuntimeEnabledFeatures::CompositorDrivenImageAnimationsEnabled())
+    return false;
+
+  bool animated = RepetitionCount() != kAnimationNone && !animation_finished_ &&
+                  GetImageObserver();
   if (animated && animation_policy_ == kImageAnimationPolicyNoAnimation)
     animated = false;
   return animated;
@@ -481,7 +503,7 @@ void BitmapImage::StartAnimation(CatchUpAnimation catch_up_if_necessary) {
   // in a GIF can potentially come after all the rest of the image data, so
   // wait on it.
   if (!all_data_received_ &&
-      (RepetitionCount(false) == kAnimationLoopOnce ||
+      (RepetitionCount() == kAnimationLoopOnce ||
        animation_policy_ == kImageAnimationPolicyAnimateOnce) &&
       current_frame_index_ >= (FrameCount() - 1))
     return;
@@ -566,6 +588,7 @@ void BitmapImage::StopAnimation() {
 }
 
 void BitmapImage::ResetAnimation() {
+  // TODO(khushalsagar): Plumb this resetting of animation to cc.
   StopAnimation();
   current_frame_index_ = 0;
   repetitions_complete_ = 0;
@@ -622,12 +645,9 @@ bool BitmapImage::InternalAdvanceAnimation(AnimationAdvancement advancement) {
   } else {
     repetitions_complete_++;
 
-    // Get the repetition count again. If we weren't able to get a
-    // repetition count before, we should have decoded the whole image by
-    // now, so it should now be available.
     // We don't need to special-case cAnimationLoopOnce here because it is
     // 0 (see comments on its declaration in ImageAnimation.h).
-    if ((RepetitionCount(true) != kAnimationLoopInfinite &&
+    if ((RepetitionCount() != kAnimationLoopInfinite &&
          repetitions_complete_ > repetition_count_) ||
         animation_policy_ == kImageAnimationPolicyAnimateOnce) {
       animation_finished_ = true;

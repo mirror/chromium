@@ -36,10 +36,9 @@ PaintImage CreateDiscardablePaintImage(
     const gfx::Size& size,
     sk_sp<SkColorSpace> color_space = nullptr);
 
-PaintImage CreateAnimatedImage(
-    const gfx::Size& size,
-    std::vector<FrameMetadata> frames = {FrameMetadata()},
-    int repetition_count = kAnimationLoopInfinite);
+PaintImage CreateAnimatedImage(const gfx::Size& size,
+                               std::vector<FrameMetadata> frames,
+                               int repetition_count = kAnimationLoopInfinite);
 
 }  // namespace cc
 

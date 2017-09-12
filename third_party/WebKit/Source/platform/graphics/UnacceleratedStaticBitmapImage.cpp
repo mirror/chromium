@@ -20,7 +20,8 @@ UnacceleratedStaticBitmapImage::UnacceleratedStaticBitmapImage(
 
   PaintImageBuilder builder;
   InitPaintImageBuilder(builder);
-  builder.set_image(std::move(image));
+  builder.set_image(std::move(image))
+      .set_completion_state(PaintImage::CompletionState::DONE);
   paint_image_ = builder.TakePaintImage();
 }
 
