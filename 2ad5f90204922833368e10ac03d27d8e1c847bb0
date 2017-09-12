@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "7a45dc39_cd33a0e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-12T18:07:03Z",
+      "side": 1,
+      "message": "maybe clarify that this doesn\u0027t affect sync XHR from workers?",
+      "revId": "2ad5f90204922833368e10ac03d27d8e1c847bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2367d66_df601586",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/xmlhttprequest-sync-default-feature-policy.sub.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-12T18:07:03Z",
+      "side": 1,
+      "message": "how about using an arrow function?",
+      "revId": "2ad5f90204922833368e10ac03d27d8e1c847bb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bbe70d9_e9ee727a",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
         "patchSetId": 3
