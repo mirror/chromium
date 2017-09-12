@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78fcea2d_509453b7",
+        "filename": "ash/shelf/shelf_background_animator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-12T00:07:53Z",
+      "side": 1,
+      "message": "Where is this observer registered?",
+      "range": {
+        "startLine": 144,
+        "startChar": 5,
+        "endLine": 144,
+        "endChar": 28
+      },
+      "revId": "a95878e732d45477303aaafd32717b2f0cdb3678",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

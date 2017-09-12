@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "0424bf95_ec76ddd0",
+        "filename": "ash/shelf/shelf.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-12T00:07:53Z",
+      "side": 1,
+      "message": "Let\u0027s get an OWNERs opinion before making another change, since the current approach may be preferable. But, here is another option that has less boilerplate:\n\n- ShelfView directly observes shutdown policy and lock screen note state, since only it cares about that.\n- Session state observation stays as-is.\n\nI\u0027d be good to know exactly if and if so why we want Shelf to do all of the observing.",
+      "parentUuid": "efd1540b_68d9744e",
+      "revId": "adb8b5f6fd679c295665dc4215780d3c296df1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7d7bcec_78f5deaa",
         "filename": "ash/shelf/shelf.h",
         "patchSetId": 10
