@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1576d0fe_bfa42827",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T18:55:52Z",
+      "side": 1,
+      "message": "Nit: allows makes it sound like a policy bit. Given that this is a publicly exposed function, I think it would be nice to update comments a bit (in particular, it might be nice to document under what conditions code might want to pass true or false for |keep_state| and |inform_renderer|, instead of just what they do).\n\nOr maybe this is covered at a higher-level and I just don\u0027t understand enough \u003d)",
+      "range": {
+        "startLine": 482,
+        "startChar": 51,
+        "endLine": 482,
+        "endChar": 57
+      },
+      "revId": "247f2f2bfa1e0edd5f2a4a2e10bc8e37cb2a1ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c9dbb1f_147c968f",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-12T18:55:52Z",
+      "side": 1,
+      "message": "Might be slightly easier to read as a bulleted list (one might see two \"when trues\" and try to figure out if one is a typo otherwise)",
+      "range": {
+        "startLine": 307,
+        "startChar": 54,
+        "endLine": 307,
+        "endChar": 65
+      },
+      "revId": "247f2f2bfa1e0edd5f2a4a2e10bc8e37cb2a1ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
