@@ -4,7 +4,6 @@
 -NetworkInterfacesTest.GetNetworkList
 -ProxyScriptFetcherImplTest.Priority
 -PythonUtils*
--SQLite*
 -UnixDomain*Socket*
 -URLRequest*FTP*
 -URLRequestQuic*
