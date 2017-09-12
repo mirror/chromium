@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c521e85_5f5de645",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-09-12T01:31:00Z",
+      "side": 1,
+      "message": "Good point. I decided to directly use UkmRecorder::Get() internally and not pass this in, which avoids this issue.",
+      "parentUuid": "4d1c1b0c_89977da4",
+      "range": {
+        "startLine": 243,
+        "startChar": 20,
+        "endLine": 243,
+        "endChar": 53
+      },
+      "revId": "fac92150899222fdcc4dcfdcaf21ecbb2c668acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d008a7a_12948df9",
         "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
         "patchSetId": 19
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-05T20:49:24Z",
       "side": 1,
       "message": "It might be a better interface to just move this function out of the class, and move the class into the .cc file, since you aren\u0027t actually exposing the class.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "fac92150899222fdcc4dcfdcaf21ecbb2c668acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "237aa260_c7f1e2c6",
+        "filename": "components/ukm/content/source_url_recorder_web_contents_observer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-09-12T01:31:00Z",
+      "side": 1,
+      "message": "Good idea. Done, thanks!",
+      "parentUuid": "d5316758_ec18edb1",
       "range": {
         "startLine": 29,
         "startChar": 2,

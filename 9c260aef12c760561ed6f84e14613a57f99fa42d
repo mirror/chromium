@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70452fa4_e2372226",
+        "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-09-12T01:31:00Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b6520039_92ee59ef",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 30
+      },
+      "revId": "9c260aef12c760561ed6f84e14613a57f99fa42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dec7589e_696a6191",
         "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
         "patchSetId": 22
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-07T20:08:25Z",
       "side": 1,
       "message": "We should probably put the scheme based checks into UpdateSourceURL, since it seems like they applies equally to all sources of URLs.",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 11
+      },
+      "revId": "9c260aef12c760561ed6f84e14613a57f99fa42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab3f3f1_5c35d817",
+        "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-09-12T01:31:00Z",
+      "side": 1,
+      "message": "Yeah, I think that could make sense as a follow up to this change since it\u0027s a separate but related change that would impact all UKM clients, so will need to be made carefully to make sure none of the old code was incorrectly depending on logging other schemes.",
+      "parentUuid": "dec7589e_696a6191",
       "range": {
         "startLine": 74,
         "startChar": 2,
