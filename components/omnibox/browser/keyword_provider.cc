@@ -132,7 +132,7 @@ const TemplateURL* KeywordProvider::GetSubstitutingTemplateURLForInput(
     return NULL;
 
   base::string16 keyword, remaining_input;
-  if (!ExtractKeywordFromInput(*input, &keyword, &remaining_input))
+  if (!ExtractKeywordFromInput(*input, model, &keyword, &remaining_input))
     return NULL;
 
   DCHECK(model);
@@ -171,7 +171,7 @@ const TemplateURL* KeywordProvider::GetSubstitutingTemplateURLForInput(
 
 base::string16 KeywordProvider::GetKeywordForText(
     const base::string16& text) const {
-  const base::string16 keyword(TemplateURLService::CleanUserInputKeyword(text));
+  const base::string16 keyword(model_->CleanUserInputKeyword(text));
 
   if (keyword.empty())
     return keyword;
@@ -242,7 +242,7 @@ void KeywordProvider::Start(const AutocompleteInput& input,
   // typed, if the user uses them enough and isn't obviously typing something
   // else.  In this case we'd consider all input here to be query input.
   base::string16 keyword, remaining_input;
-  if (!ExtractKeywordFromInput(input, &keyword, &remaining_input))
+  if (!ExtractKeywordFromInput(input, model_, &keyword, &remaining_input))
     return;
 
   // Get the best matches for this keyword.
@@ -356,13 +356,15 @@ void KeywordProvider::Stop(bool clear_cached_results,
 KeywordProvider::~KeywordProvider() {}
 
 // static
-bool KeywordProvider::ExtractKeywordFromInput(const AutocompleteInput& input,
-                                              base::string16* keyword,
-                                              base::string16* remaining_input) {
+bool KeywordProvider::ExtractKeywordFromInput(
+    const AutocompleteInput& input,
+    const TemplateURLService* template_url_service,
+    base::string16* keyword,
+    base::string16* remaining_input) {
   if ((input.type() == metrics::OmniboxInputType::INVALID))
     return false;
 
-  *keyword = TemplateURLService::CleanUserInputKeyword(
+  *keyword = template_url_service->CleanUserInputKeyword(
       SplitKeywordFromInput(input.text(), true, remaining_input));
   return !keyword->empty();
 }

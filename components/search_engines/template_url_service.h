@@ -118,9 +118,13 @@ class TemplateURLService : public WebDataServiceConsumer,
   // Register Profile preferences in |registry|.
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
-  // Removes any unnecessary characters from a user input keyword.
-  // This removes the leading scheme, "www." and any trailing slash.
-  static base::string16 CleanUserInputKeyword(const base::string16& keyword);
+  // Removes any unnecessary characters from a user input keyword, returning
+  // the resulting keyword.  Usually this means it does transformation such as
+  // removing leading scheme, "www." and any trailing slash and returning the
+  // resulting string regardless of whether it's a registered keyword.
+  // However, it it finds a registered keyword at any point before finishing
+  // those transformations, it'll return that keyword.
+  base::string16 CleanUserInputKeyword(const base::string16& keyword) const;
 
   // Returns true if there is no TemplateURL that conflicts with the
   // keyword/url pair, or there is one but it can be replaced. If there is an
