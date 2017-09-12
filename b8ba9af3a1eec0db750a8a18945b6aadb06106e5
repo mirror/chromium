@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "80ae5b2a_b697eb54",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-12T21:18:20Z",
+      "side": 1,
+      "message": "Not yet, we don\u0027t have unittests for this class yet. We have to declare the nested URLLoaderRequestController class in the .h file so it can be tested, I\u0027d rather do that in a seperate CL. (ditto for kMaxRedirects handling)",
+      "parentUuid": "1b411bf3_814c9068",
+      "range": {
+        "startLine": 279,
+        "startChar": 15,
+        "endLine": 279,
+        "endChar": 33
+      },
+      "revId": "b8ba9af3a1eec0db750a8a18945b6aadb06106e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2af4677_fdf068e2",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 6
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "4589632c_46b144ef",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-12T21:18:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2af4677_fdf068e2",
+      "range": {
+        "startLine": 310,
+        "startChar": 4,
+        "endLine": 310,
+        "endChar": 21
+      },
+      "revId": "b8ba9af3a1eec0db750a8a18945b6aadb06106e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "570cad7e_9cc38e37",
         "filename": "content/public/common/referrer.cc",
         "patchSetId": 6
@@ -91,6 +139,30 @@
       "revId": "b8ba9af3a1eec0db750a8a18945b6aadb06106e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d101f36b_573b0053",
+        "filename": "content/public/common/referrer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-12T21:18:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "570cad7e_9cc38e37",
+      "range": {
+        "startLine": 136,
+        "startChar": 35,
+        "endLine": 136,
+        "endChar": 73
+      },
+      "revId": "b8ba9af3a1eec0db750a8a18945b6aadb06106e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
