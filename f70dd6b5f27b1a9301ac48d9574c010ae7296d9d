@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c3dca7a_f2bd2307",
+        "filename": "third_party/WebKit/public/platform/scheduler/child/child_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-12T15:53:45Z",
+      "side": 1,
+      "message": "public/platform/scheduler shouldn\u0027t know anything about TaskQueue.\n\nWorkerScheduler is the right place for this method.",
+      "range": {
+        "startLine": 36,
+        "startChar": 24,
+        "endLine": 36,
+        "endChar": 33
+      },
+      "revId": "f70dd6b5f27b1a9301ac48d9574c010ae7296d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

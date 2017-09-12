@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "455e16cf_4a6be021",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-12T15:53:45Z",
+      "side": 0,
+      "message": "I believe that we still should obtain a reference to WorkerScheduler and call NewDefaultTaskQueue on obtained object. Let me think what\u0027s the best way of doing this.",
+      "range": {
+        "startLine": 390,
+        "startChar": 13,
+        "endLine": 390,
+        "endChar": 44
+      },
+      "revId": "101c6038ed5ff103977081bde8fdd2025633553a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
