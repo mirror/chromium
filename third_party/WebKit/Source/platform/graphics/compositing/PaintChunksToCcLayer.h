@@ -42,6 +42,18 @@ struct RasterUnderInvalidationCheckingParams {
 
 class PLATFORM_EXPORT PaintChunksToCcLayer {
  public:
+  // Converts a list of Blink paint chunks and display items into cc display
+  // items, inserting appropriate begin/end items with respect to property
+  // tree state. The converted items are appended into a unfinalized cc display
+  // item list.
+  static void ConvertInto(const Vector<const PaintChunk*>&,
+                          const PropertyTreeState& layer_state,
+                          const gfx::Vector2dF& layer_offset,
+                          const DisplayItemList&,
+                          cc::DisplayItemList&);
+
+  // Similar to ConvertInto(), but returns a finalized new list instead of
+  // appending converted items to an existing list.
   static scoped_refptr<cc::DisplayItemList> Convert(
       const Vector<const PaintChunk*>&,
       const PropertyTreeState& layer_state,
