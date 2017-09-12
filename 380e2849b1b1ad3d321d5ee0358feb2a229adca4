@@ -304,6 +304,30 @@
       "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4897af4c_11de9e3e",
+        "filename": "components/language/core/browser/url_language_histogram.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-12T03:35:48Z",
+      "side": 1,
+      "message": "Is good",
+      "parentUuid": "b9aae8b9_4e47bb84",
+      "range": {
+        "startLine": 27,
+        "startChar": 32,
+        "endLine": 28,
+        "endChar": 30
+      },
+      "revId": "380e2849b1b1ad3d321d5ee0358feb2a229adca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
