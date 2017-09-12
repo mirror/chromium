@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "82b1a36b_eee4796a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-12T20:17:44Z",
+      "side": 1,
+      "message": "Could you add a description with more context about this change?",
+      "revId": "4b73e49c4838c9c004b6ad1955d9ad23c353dfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464e1f80_31f1ca41",
+        "filename": "components/offline_pages/core/client_policy_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-12T20:17:44Z",
+      "side": 1,
+      "message": "Why the expiration time change?",
+      "range": {
+        "startLine": 67,
+        "startChar": 40,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "4b73e49c4838c9c004b6ad1955d9ad23c353dfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a06c6214_75db1959",
         "filename": "components/offline_pages/core/downloads/download_ui_item.h",
         "patchSetId": 5
