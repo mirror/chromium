@@ -532,6 +532,7 @@ void TraceLog::GetKnownCategoryGroups(
 
 void TraceLog::SetEnabled(const TraceConfig& trace_config,
                           uint8_t modes_to_enable) {
+  base::ThreadRestrictions::AssertWaitAllowed();
   std::vector<EnabledStateObserver*> observer_list;
   std::map<AsyncEnabledStateObserver*, RegisteredAsyncObserver> observer_map;
   {
@@ -659,11 +660,13 @@ TraceConfig TraceLog::GetCurrentTraceConfig() const {
 }
 
 void TraceLog::SetDisabled() {
+  base::ThreadRestrictions::AssertWaitAllowed();
   AutoLock lock(lock_);
   SetDisabledWhileLocked(RECORDING_MODE);
 }
 
 void TraceLog::SetDisabled(uint8_t modes_to_disable) {
+  base::ThreadRestrictions::AssertWaitAllowed();
   AutoLock lock(lock_);
   SetDisabledWhileLocked(modes_to_disable);
 }
