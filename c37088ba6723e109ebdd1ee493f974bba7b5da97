@@ -16,6 +16,24 @@
       "revId": "c37088ba6723e109ebdd1ee493f974bba7b5da97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba84fad5_9c5827dc",
+        "filename": "components/arc/arc_export.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-12T08:23:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0edf569_b78852bc",
+      "revId": "c37088ba6723e109ebdd1ee493f974bba7b5da97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

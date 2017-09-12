@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75805071_c7d38217",
+        "filename": "components/arc/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-12T08:23:13Z",
+      "side": 1,
+      "message": "Oops, this was just my mistake. Fixed.",
+      "parentUuid": "170ccdae_cd3cbd21",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "e99b3cf7438d995fdffd7a8f72fe219658a503bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41e601a5_052d7a3f",
         "filename": "components/arc/BUILD.gn",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-31T15:45:23Z",
       "side": 1,
       "message": "I think you can also remove this if you add pref_registry to the public_deps of :prefs. Anybody who includes :prefs should have pref_registry anyways, so I don\u0027t think there\u0027s a downside of moving it there.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 33
+      },
+      "revId": "e99b3cf7438d995fdffd7a8f72fe219658a503bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f61339_b456ece4",
+        "filename": "components/arc/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-12T08:23:13Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "41e601a5_052d7a3f",
       "range": {
         "startLine": 75,
         "startChar": 0,
