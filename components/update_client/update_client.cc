@@ -34,6 +34,7 @@
 #include "components/update_client/update_client_internal.h"
 #include "components/update_client/update_engine.h"
 #include "components/update_client/utils.h"
+#include "extensions/common/disable_reason.h"
 #include "url/gurl.h"
 
 namespace update_client {
@@ -48,7 +49,8 @@ CrxUpdateItem::CrxUpdateItem(const CrxUpdateItem& other) = default;
 CrxComponent::CrxComponent()
     : allows_background_download(true),
       requires_network_encryption(true),
-      supports_group_policy_enable_component_updates(false) {}
+      supports_group_policy_enable_component_updates(false),
+      disable_reasons(extensions::disable_reason::DISABLE_NONE) {}
 
 CrxComponent::CrxComponent(const CrxComponent& other) = default;
 
