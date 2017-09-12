@@ -16,6 +16,24 @@
       "revId": "d674e1ecd7066ee86fe9515ad8620debd02f5b18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "324cf4d7_b54ed653",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-12T00:03:55Z",
+      "side": 1,
+      "message": "Makes sense. Now I see it again, I think it is better to init the layout type via ctr and not to allow for changing it at all, since the layout type should be fixed, not supposed to change over time. Removed this method, and updated the constructors.",
+      "parentUuid": "30c796bd_45a4d44b",
+      "revId": "d674e1ecd7066ee86fe9515ad8620debd02f5b18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
