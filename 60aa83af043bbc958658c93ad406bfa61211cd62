@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "81452274_e4148dcd",
+        "filename": "content/network/network_change_manager_client_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-12T20:25:41Z",
+      "side": 1,
+      "message": "If this depends on BrowserThread, it should be in content/public/browser, or components/.  I\u0027m not seeing a need to depend on BrowserThread here - presumably we\u0027ll want to use it in the renderer, too, and enable non-content-embedders to use it as well, neither of which can use BrowserThread.",
+      "parentUuid": "467be9d9_1cd1247f",
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb0779cc_e1fd74a5",
         "filename": "content/network/network_change_manager_client_impl.h",
         "patchSetId": 2
@@ -76,6 +94,75 @@
         "startChar": 16,
         "endLine": 79,
         "endChar": 30
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e437ec7a_9998cc89",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-12T20:25:41Z",
+      "side": 1,
+      "message": "optional:  Could just use std::set and pass in an iterator here.  Admittedly, this shouldn\u0027t be common, but we\u0027ll often see multiple deletions at once, and that gets us O(log n) insertion and deletion with minimal additional complexity (Or could use std::set and take a pointer here, which has the same complexity, if slightly worse performance, since it does a search + rebalance).",
+      "range": {
+        "startLine": 39,
+        "startChar": 37,
+        "endLine": 39,
+        "endChar": 39
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9777f7f6_5f190942",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-12T20:25:41Z",
+      "side": 1,
+      "message": "nit:  Can use range for loop",
+      "range": {
+        "startLine": 54,
+        "startChar": 54,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3827f414_3be042a3",
+        "filename": "content/network/network_change_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-12T20:25:41Z",
+      "side": 1,
+      "message": "There is also mojo::InterfacePtrSet - it looks not great, though there\u0027s a TODO about improving it.",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 50
       },
       "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -146,6 +233,30 @@
     },
     {
       "key": {
+        "uuid": "1b42c9c2_95d263e1",
+        "filename": "content/public/common/network_change_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-12T20:25:41Z",
+      "side": 1,
+      "message": "Yes, they do - remember that Mojo is cross process.  We\u0027d need these if a consumer were written in Java or something (Which seems an entirely reasonable thing to do, at least for this interface)",
+      "parentUuid": "7b62986c_31de36af",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d25b9053_a989ef80",
         "filename": "content/public/common/network_change_manager.mojom",
         "patchSetId": 2
@@ -162,6 +273,29 @@
         "startChar": 0,
         "endLine": 61,
         "endChar": 1
+      },
+      "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "790b4584_64ac84f1",
+        "filename": "content/public/common/network_change_notifier.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-12T20:25:41Z",
+      "side": 1,
+      "message": "Rather than use typemaps, I\u0027d suggest just having NetworkChangeManagerImpl do the conversions itself.  Since there\u0027s only one source class, and a lot of consumers, we don\u0027t need to expose the net enum to consumers...I think?  If we want users to be using net enums, then NetworkChangeManagerClientImpl should be using them instead of the net enums.",
+      "range": {
+        "startLine": 3,
+        "startChar": 22,
+        "endLine": 3,
+        "endChar": 29
       },
       "revId": "60aa83af043bbc958658c93ad406bfa61211cd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
