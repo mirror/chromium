@@ -111,6 +111,8 @@ inline bool IsHeapProfilingModeEnabled(HeapProfilingMode mode) {
          mode != kHeapProfilingModeInvalid;
 }
 
+// Don't call this function when MemoryDumpManager lock is acquired.
+// https://crbug.com/764357
 void EnableFilteringForPseudoStackProfiling() {
   if (AllocationContextTracker::capture_mode() !=
           AllocationContextTracker::CaptureMode::PSEUDO_STACK ||
@@ -256,7 +258,6 @@ bool MemoryDumpManager::EnableHeapProfiling(HeapProfilingMode profiling_mode) {
     case kHeapProfilingModePseudo:
       AllocationContextTracker::SetCaptureMode(
           AllocationContextTracker::CaptureMode::PSEUDO_STACK);
-      EnableFilteringForPseudoStackProfiling();
       break;
 
     case kHeapProfilingModeNative:
@@ -304,6 +305,10 @@ bool MemoryDumpManager::EnableHeapProfiling(HeapProfilingMode profiling_mode) {
     bool enabled = IsHeapProfilingModeEnabled(heap_profiling_mode_);
     for (const auto& mdpinfo : dump_providers_)
       NotifyHeapProfilingEnabledLocked(mdpinfo, enabled);
+  }
+  if (heap_profiling_mode_ == kHeapProfilingModePseudo) {
+    AutoUnlock unlock(lock_);
+    EnableFilteringForPseudoStackProfiling();
   }
   return true;
 #else
