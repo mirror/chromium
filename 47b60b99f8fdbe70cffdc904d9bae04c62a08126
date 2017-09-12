@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dee0a519_56c42120",
+        "filename": "components/drive/chromeos/file_system/copy_operation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-12T09:03:01Z",
+      "side": 1,
+      "message": "Then could you make it clear by saying that preserve_last_modified preserves only last_modified, and last_modified_by_me is always set to the same value as last_modified?\nFrom the current comment, the relationships between last_modified, last_modified_by_me, and preserve_last_modified are unclear.",
+      "parentUuid": "d1e232b5_da4ee46b",
+      "range": {
+        "startLine": 139,
+        "startChar": 5,
+        "endLine": 139,
+        "endChar": 43
+      },
+      "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48516c5c_db49529f",
         "filename": "components/drive/drive.proto",
         "patchSetId": 9
@@ -125,6 +149,24 @@
       "side": 1,
       "message": "I considered it but did not do so in this PS because making changes to FakeDriveService would affect all other tests. In the latest PS I changed FakeDriveService, but in fact I needed to update conflict_resolver_unittest.cc.\n\nWhich way do you prefer?",
       "parentUuid": "9d02aebb_aecf9ef0",
+      "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf66359_0831849b",
+        "filename": "components/drive/file_system/copy_operation_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-12T09:03:01Z",
+      "side": 1,
+      "message": "Provided an owner of chrome/browser/sync_file_system/drive_backend/conflict_resolver_unittest.cc agrees, I prefer setting timestamps in FakeDriveService.",
+      "parentUuid": "0d432e4b_c39ff3c2",
       "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

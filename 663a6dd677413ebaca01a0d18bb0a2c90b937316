@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cad8161_ee06596c",
+        "filename": "chrome/browser/sync_file_system/drive_backend/conflict_resolver_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-12T09:03:01Z",
+      "side": 1,
+      "message": "Why was data1 the primary, and now it\u0027s data4?",
+      "revId": "663a6dd677413ebaca01a0d18bb0a2c90b937316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c60cb2_5adfcdbf",
+        "filename": "components/drive/chromeos/file_system/copy_operation.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-12T09:03:01Z",
+      "side": 1,
+      "message": "How about saying \"Regardless of preserve_last_modified\u0027s value, ...\" or \"No matter whether ...\" instead of \"However ...\" to make it clear that you are still talking about preserve_last_modified?",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 12
+      },
+      "revId": "663a6dd677413ebaca01a0d18bb0a2c90b937316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd81c03_699c27dc",
+        "filename": "components/drive/chromeos/file_system/copy_operation.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-12T09:03:01Z",
+      "side": 1,
+      "message": "be preserved?\n\nProbably it\u0027s simpler to say just \"will always be set to\" instead of \"will not be preserved and set to\"",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 61
+      },
+      "revId": "663a6dd677413ebaca01a0d18bb0a2c90b937316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
