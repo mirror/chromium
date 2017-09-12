@@ -14,6 +14,7 @@
 #include "platform/heap/SelfKeepAlive.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Optional.h"
+#include "public/platform/WebWorkerFetchContext.h"
 
 namespace blink {
 
@@ -102,6 +103,9 @@ class CORE_EXPORT ThreadedMessagingProxyBase
   std::unique_ptr<WorkerThread> worker_thread_;
 
   bool asked_to_terminate_;
+
+  std::unique_ptr<WebWorkerFetchContext::SyncLoadTerminator>
+      sync_load_terminator_;
 
   // Used to keep this alive until the worker thread gets terminated. This is
   // necessary because the co-owner (i.e., Worker or Worklet object) can be
