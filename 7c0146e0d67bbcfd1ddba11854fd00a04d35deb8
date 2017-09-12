@@ -186,6 +186,24 @@
       "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53312c23_113c3df6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_worker/Audits2Service.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-12T21:14:04Z",
+      "side": 1,
+      "message": "Hmm... Good question. Perhaps, we should pass isUnderTest to workers here: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/services/ServiceManager.js?rcl\u003d673e8a437f569bff9705e9b6e9883d25b795d384\u0026l\u003d37.\n\nAnd check that queryParam in this method, leaving the code but renaming the methods ...forTest. WDYT?",
+      "parentUuid": "ce8289be_deeebfb5",
+      "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
