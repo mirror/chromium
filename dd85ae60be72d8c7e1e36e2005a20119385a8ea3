@@ -22,6 +22,30 @@
       "revId": "dd85ae60be72d8c7e1e36e2005a20119385a8ea3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093e7e03_69240709",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 87978,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T14:50:25Z",
+      "side": 1,
+      "message": "The purpose of this histogram is to track if it is safe to remove GetCurrentURL method and replace with GetLastCommittedURL. The name was always incorrect, because CurrentURLEqualsLastCommittedURL was never about equality check. I would prefer to keep the current histogram because the purpose of this histogram has not changed and because what we actually want to track with this histogram is when it gets to 100%. WDYT?",
+      "parentUuid": "3649b693_dec27532",
+      "range": {
+        "startLine": 87978,
+        "startChar": 75,
+        "endLine": 87978,
+        "endChar": 0
+      },
+      "revId": "dd85ae60be72d8c7e1e36e2005a20119385a8ea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
