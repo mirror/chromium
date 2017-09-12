@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b040b0b4_89b3c9b0",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T15:38:40Z",
+      "side": 1,
+      "message": "ntlm:: not necessary since we are in the ntlm namespace. Perhaps for a later cleanup pass.",
+      "revId": "ef39dbdcf4ee97727d71e725911930facbd85f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0177b199_0785bad2",
+        "filename": "net/ntlm/ntlm_buffer_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-12T15:38:40Z",
+      "side": 1,
+      "message": "Should explain what the empty constructor does.",
+      "revId": "ef39dbdcf4ee97727d71e725911930facbd85f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
