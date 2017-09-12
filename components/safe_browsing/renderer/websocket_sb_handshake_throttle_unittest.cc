@@ -132,7 +132,7 @@ TEST_F(WebSocketSBHandshakeThrottleTest, CheckArguments) {
 TEST_F(WebSocketSBHandshakeThrottleTest, Safe) {
   throttle_->ThrottleHandshake(GURL(kTestUrl), nullptr, &fake_callbacks_);
   safe_browsing_.RunUntilCalled();
-  std::move(safe_browsing_.callback_).Run(true, false);
+  std::move(safe_browsing_.callback_).Run(nullptr, true, false);
   fake_callbacks_.RunUntilCalled();
   EXPECT_EQ(FakeWebCallbacks::RESULT_SUCCESS, fake_callbacks_.result_);
 }
@@ -140,7 +140,7 @@ TEST_F(WebSocketSBHandshakeThrottleTest, Safe) {
 TEST_F(WebSocketSBHandshakeThrottleTest, Unsafe) {
   throttle_->ThrottleHandshake(GURL(kTestUrl), nullptr, &fake_callbacks_);
   safe_browsing_.RunUntilCalled();
-  std::move(safe_browsing_.callback_).Run(false, false);
+  std::move(safe_browsing_.callback_).Run(nullptr, false, false);
   fake_callbacks_.RunUntilCalled();
   EXPECT_EQ(FakeWebCallbacks::RESULT_ERROR, fake_callbacks_.result_);
   EXPECT_EQ(
