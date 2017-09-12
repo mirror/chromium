@@ -30,9 +30,16 @@ class WebContents;
 // AutoEmbedFullscreen mode: When enabled, TabContentsController will observe
 // for WebContents fullscreen changes and automatically swap the normal
 // WebContents view with the fullscreen view (if different). In addition, if a
-// WebContents is being screen-captured, the view will be centered within the
-// container view, sized to the aspect ratio of the capture video resolution,
-// and scaling will be avoided whenever possible.
+// WebContents is being screen-captured, the WebContentsView will be centered
+// within the container view and sized to the aspect ratio of the capture video
+// resolution; also, the WebContentsView will be sized so that the page is
+// rendered at the capture video resolution. This means the container view can
+// have a different size than the WebContentsView, and the tab content may
+// appear scaled within the browser window on the local screen. The reason for
+// doing all this is to improve quality and performance: For example, pages that
+// stream video content will dynamically adapt their video playback resolution
+// based on their rendering size; and so this should ideally match the tab
+// capture size.
 @interface TabContentsController : NSViewController {
  @private
    content::WebContents* contents_;  // weak

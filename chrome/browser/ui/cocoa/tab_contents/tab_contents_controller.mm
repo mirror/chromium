@@ -31,7 +31,10 @@
 #include "skia/ext/skia_utils_mac.h"
 #include "ui/base/cocoa/animation_utils.h"
 #import "ui/base/cocoa/touch_bar_forward_declarations.h"
-#include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/geometry/rect_f.h"
+#include "ui/gfx/geometry/size.h"
+#include "ui/gfx/geometry/size_f.h"
 #include "ui/gfx/scrollbar_size.h"
 
 using content::WebContents;
@@ -79,9 +82,17 @@ class FullscreenObserver : public WebContentsObserver {
 
 @interface TabContentsController (TabContentsContainerViewDelegate)
 - (BOOL)contentsInFullscreenCaptureMode;
-// Computes and returns the frame to use for the contents view using the size of
-// |container| as the target size.
-- (NSRect)frameForContentsViewIn:(NSView*)container;
+
+// Computes and returns the frame to use for the scaling view within the
+// TabContentsContainerView.
+- (NSRect)frameForScalingViewIn:(NSView*)container;
+
+// Computes and returns the bounds to use for the scaling view within the
+// TabContentsContainerView. In the normal case, the bounds size will be
+// equivalent to frame size. In 'AutoEmbedFullscreen mode', the bounds size is
+// set to the video capture resolution, which is almost always different from
+// the frame size. See 'AutoEmbedFullscreen mode' in header file comments.
+- (NSRect)boundsForScalingViewIn:(NSView*)container;
 
 // Returns YES if the content view should be resized.
 - (BOOL)shouldResizeContentView;
@@ -94,11 +105,16 @@ class FullscreenObserver : public WebContentsObserver {
 // An NSView with special-case handling for when the contents view does not
 // expand to fill the entire tab contents area. See 'AutoEmbedFullscreen mode'
 // in header file comments.
+//
+// This view creates and manages its own subview, a "scaling" view, which acts
+// as a container for the contents view. It allows the rendering size of the
+// contents view to be something different than its normal on-screen display
+// size.
 @interface TabContentsContainerView : NSView {
  @private
   TabContentsController* delegate_;  // weak
 }
-
+- (void)ensureContentsVisible:(NSView*)contentsView;
 - (void)updateBackgroundColorFromWindowTheme:(NSWindow*)window;
 @end
 
@@ -107,10 +123,14 @@ class FullscreenObserver : public WebContentsObserver {
 - (id)initWithDelegate:(TabContentsController*)delegate {
   if ((self = [super initWithFrame:NSZeroRect])) {
     delegate_ = delegate;
+
     ScopedCAActionDisabler disabler;
     base::scoped_nsobject<CALayer> layer([[CALayer alloc] init]);
     [self setLayer:layer];
     [self setWantsLayer:YES];
+
+    // Create and add the scaling view.
+    [self addSubview:[[NSView alloc] initWithFrame:NSZeroRect]];
   }
   return self;
 }
@@ -121,29 +141,71 @@ class FullscreenObserver : public WebContentsObserver {
   delegate_ = nil;
 }
 
-// Override auto-resizing logic to query the delegate for the exact frame to
-// use for the contents view.
-// TODO(spqchan): The popup check is a temporary solution to fix the regression
-// issue described in crbug.com/604288. This method doesn't really affect
-// fullscreen if the content is inside a normal browser window, but would
-// cause a flash fullscreen widget to blow up if it's inside a popup.
+// Returns the scaling view, which is the child of TabContentsContainerView.
+- (NSView*)scalingView {
+  return [[self subviews] objectAtIndex:0];
+}
+
+// Return the contents view, which is the child of the scaling view; or nil if
+// there isn't one attached.
+- (NSView*)contentsView {
+  NSArray* const scalingViewSubviews = [[self scalingView] subviews];
+  if ([scalingViewSubviews count] == 0)
+    return nil;  // No contents view attached.
+  return [scalingViewSubviews objectAtIndex:0];
+}
+
+// Override auto-resizing logic to query the delegate for the exact frame and
+// bounds to use for the contents view, and then perform manual layout of the
+// scaling view (child view) and contents view (grandchild view).
 - (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize {
-  NSView* const contentsView =
-      [[self subviews] count] > 0 ? [[self subviews] objectAtIndex:0] : nil;
-  if (!contentsView || [contentsView autoresizingMask] == NSViewNotSizable ||
-      !delegate_ ||
+  ScopedCAActionDisabler disabler;
+
+  NSView* const contentsView = [self contentsView];
+  if (!contentsView)
+    return;  // No contents view attached yet.
+
+  // TODO(spqchan): The popup check is a temporary solution to fix the
+  // regression described in crbug.com/604288. This method doesn't really affect
+  // fullscreen if the content is inside a normal browser window, but would
+  // cause a flash fullscreen widget to blow up if it's inside a popup.
+  if (!delegate_ ||
       (![delegate_ shouldResizeContentView] && [delegate_ isPopup])) {
     return;
   }
 
-  ScopedCAActionDisabler disabler;
-  [contentsView setFrame:[delegate_ frameForContentsViewIn:self]];
+  // Set the position and size of the scaling view within this container view.
+  NSView* const scalingView = [self scalingView];
+  [scalingView setFrame:[delegate_ frameForScalingViewIn:self]];
+  const NSRect scalingViewBounds = [delegate_ boundsForScalingViewIn:self];
+  [scalingView setBounds:scalingViewBounds];
+
+  // Update the position and size of the contents view, if it has changed.
+  if (!NSEqualRects(scalingViewBounds, [contentsView frame]))
+    [contentsView setFrame:scalingViewBounds];
 }
 
 // Update the background layer's color whenever the view needs to repaint.
 - (void)setNeedsDisplayInRect:(NSRect)rect {
   [super setNeedsDisplayInRect:rect];
   [self updateBackgroundColorFromWindowTheme:[self window]];
+}
+
+- (void)ensureContentsVisible:(NSView*)contentsView {
+  DCHECK(contentsView);
+
+  // TabContentsContainerView performs manual layout.
+  [contentsView setAutoresizingMask:NSViewNotSizable];
+
+  NSView* const scalingView = [self scalingView];
+  if ([[scalingView subviews] count] == 0) {
+    [scalingView addSubview:contentsView];
+  } else if ([[scalingView subviews] objectAtIndex:0] != contentsView) {
+    [scalingView replaceSubview:[[scalingView subviews] objectAtIndex:0]
+                           with:contentsView];
+  }
+
+  [self resizeSubviewsWithOldSize:[self bounds].size];
 }
 
 - (void)updateBackgroundColorFromWindowTheme:(NSWindow*)window {
@@ -191,8 +253,8 @@ class FullscreenObserver : public WebContentsObserver {
 }
 
 - (BOOL)acceptsFirstResponder {
-  return [[self subviews] count] > 0 &&
-      [[[self subviews] objectAtIndex:0] acceptsFirstResponder];
+  NSView* const contentsView = [self contentsView];
+  return contentsView && [contentsView acceptsFirstResponder];
 }
 
 // When receiving a click-to-focus in the solid color area surrounding the
@@ -201,7 +263,7 @@ class FullscreenObserver : public WebContentsObserver {
 - (BOOL)becomeFirstResponder {
   if (![self acceptsFirstResponder])
     return NO;
-  return [[self window] makeFirstResponder:[[self subviews] objectAtIndex:0]];
+  return [[self window] makeFirstResponder:[self contentsView]];
 }
 
 - (BOOL)canBecomeKeyView {
@@ -258,8 +320,6 @@ class FullscreenObserver : public WebContentsObserver {
     return;
 
   ScopedCAActionDisabler disabler;
-  NSView* contentsContainer = [self view];
-  NSArray* subviews = [contentsContainer subviews];
   NSView* contentsNativeView;
   content::RenderWidgetHostView* const fullscreenView =
       isEmbeddingFullscreenWidget_ ?
@@ -273,22 +333,11 @@ class FullscreenObserver : public WebContentsObserver {
     contentsNativeView = contents_->GetNativeView();
   }
 
-  if ([self shouldResizeContentView])
-    [contentsNativeView setFrame:[self frameForContentsViewIn:superview]];
-
-  if ([subviews count] == 0) {
-    [contentsContainer addSubview:contentsNativeView];
-  } else if ([subviews objectAtIndex:0] != contentsNativeView) {
-    [contentsContainer replaceSubview:[subviews objectAtIndex:0]
-                                 with:contentsNativeView];
-  }
-
-  [contentsNativeView setAutoresizingMask:NSViewNotSizable];
+  TabContentsContainerView* const contentsContainer =
+      static_cast<TabContentsContainerView*>([self view]);
+  [contentsContainer ensureContentsVisible:contentsNativeView];
   [contentsContainer setFrame:[superview bounds]];
   [superview addSubview:contentsContainer];
-  [contentsNativeView setAutoresizingMask:NSViewWidthSizable|
-                                          NSViewHeightSizable];
-
   [contentsContainer setNeedsDisplay:YES];
 }
 
@@ -300,8 +349,8 @@ class FullscreenObserver : public WebContentsObserver {
   content::RenderWidgetHostView* const fullscreenView =
       contents_->GetFullscreenRenderWidgetHostView();
   if (fullscreenView) {
-    [fullscreenView->GetNativeView()
-        setFrame:[self frameForContentsViewIn:[self view]]];
+    [static_cast<TabContentsContainerView*>([self view])
+        ensureContentsVisible:fullscreenView->GetNativeView()];
   }
 }
 
@@ -389,41 +438,49 @@ class FullscreenObserver : public WebContentsObserver {
   return YES;
 }
 
-- (NSRect)frameForContentsViewIn:(NSView*)container {
-  gfx::Rect rect([container bounds]);
+- (NSRect)frameForScalingViewIn:(NSView*)container {
+  NSRect bounds = [container bounds];
+  bounds.origin = NSZeroPoint;
 
   // In most cases, the contents view is simply sized to fill the container
   // view's bounds. Only WebContentses that are in fullscreen mode and being
   // screen-captured will engage the special layout/sizing behavior.
   if (![self contentsInFullscreenCaptureMode])
-    return NSRectFromCGRect(rect.ToCGRect());
+    return bounds;
 
-  // Size the contents view to the capture video resolution and center it. If
-  // the container view is not large enough to fit it at the preferred size,
-  // scale down to fit (preserving aspect ratio).
-  content::WebContents* const wc = fullscreenObserver_->web_contents();
-  const gfx::Size captureSize = wc->GetPreferredSize();
-  if (captureSize.width() <= rect.width() &&
-      captureSize.height() <= rect.height()) {
-    // No scaling, just centering.
-    rect.ClampToCenteredSize(captureSize);
+  // For 'AutoEmbedFullscreen mode', scale the view to fit within the container,
+  // and center it.
+  gfx::RectF rect(bounds);
+  gfx::Size captureSize =
+      fullscreenObserver_->web_contents()->GetPreferredSize();
+  DCHECK(!captureSize.IsEmpty());
+  const float x = captureSize.width() * rect.height();
+  const float y = captureSize.height() * rect.width();
+  if (y < x) {
+    rect.ClampToCenteredSize(gfx::SizeF(rect.width(), y / captureSize.width()));
   } else {
-    // Scale down, preserving aspect ratio, and center.
-    // TODO(miu): This is basically media::ComputeLetterboxRegion(), and it
-    // looks like others have written this code elsewhere.  Let's consolidate
-    // into a shared function ui/gfx/geometry or around there.
-    const int64_t x = static_cast<int64_t>(captureSize.width()) * rect.height();
-    const int64_t y = static_cast<int64_t>(captureSize.height()) * rect.width();
-    if (y < x) {
-      rect.ClampToCenteredSize(gfx::Size(
-          rect.width(), static_cast<int>(y / captureSize.width())));
-    } else {
-      rect.ClampToCenteredSize(gfx::Size(
-          static_cast<int>(x / captureSize.height()), rect.height()));
-    }
+    rect.ClampToCenteredSize(
+        gfx::SizeF(x / captureSize.height(), rect.height()));
   }
+  // Ensure the bounds align with pixel boundaries.
+  return gfx::ToEnclosedRect(rect).ToCGRect();
+}
 
-  return NSRectFromCGRect(rect.ToCGRect());
+- (NSRect)boundsForScalingViewIn:(NSView*)container {
+  NSRect bounds;
+  bounds.origin = NSZeroPoint;
+
+  // When in 'AutoEmbedFullscreen mode' mode, the bounds size is set to the
+  // video capture resolution. See header file for more details.
+  if ([self contentsInFullscreenCaptureMode]) {
+    content::WebContents* const wc = fullscreenObserver_->web_contents();
+    gfx::Size captureSize = wc->GetPreferredSize();
+    DCHECK(!captureSize.IsEmpty());
+    bounds.size = captureSize.ToCGSize();
+  } else {
+    bounds.size = [container bounds].size;
+  }
+  return bounds;
 }
 
 - (BOOL)shouldResizeContentView {
