@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82bf3c33_1ecdd591",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-12T18:07:39Z",
+      "side": 1,
+      "message": "nit, suggestion (not part of this CL, just a nice to have): Change this switch to include all values in the enum and not have a default label, so that compilers errors occur here when the enum is changed without the switch being changed?",
+      "range": {
+        "startLine": 1022,
+        "startChar": 6,
+        "endLine": 1022,
+        "endChar": 13
+      },
+      "revId": "4355b3f17e91c99c65932e60f60221c0849f5d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c214cbb3_5644a5bf",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-12T18:07:39Z",
+      "side": 0,
+      "message": "Comment seems out of date?  Should this set of CLs also rejigger the contract between the source stream and the URLRequestHttpJob so that this call isn\u0027t needed?",
+      "range": {
+        "startLine": 286,
+        "startChar": 13,
+        "endLine": 286,
+        "endChar": 14
+      },
+      "revId": "eaae0ce09a7fe69097e3218b15605bf6803379bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
