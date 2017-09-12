@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8ca9c22_3f04f0cb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-12T08:19:13Z",
+      "side": 1,
+      "message": "We should not invalidate all layout object in old selection.\nWe should invalidate layout objects of old selection not in new selection\nand layout objects of new selection not in old selection, e.g. old ^ new\n\nThree phase:\n1. Collect layout objects in old selection and mark kNone\n2. Computes new selection and invalid layout object not in old selection\n3. Invalidate layout objects in old selection but not in new selection",
+      "revId": "1005bef274f2898b8ed22d78b39f5c2d2d410a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efa8f2fa_0527eb95",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-12T08:19:13Z",
+      "side": 1,
+      "message": "nit: Please remove a trailing whitespace.",
+      "revId": "1005bef274f2898b8ed22d78b39f5c2d2d410a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39bf5096_21b032eb",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-12T08:19:13Z",
+      "side": 1,
+      "message": "nit: Could you use early-return style.",
+      "revId": "1005bef274f2898b8ed22d78b39f5c2d2d410a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
