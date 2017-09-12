@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10c674e4_aaa11b65",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-12T00:12:32Z",
+      "side": 1,
+      "message": "nit: It\u0027s a bit strange to have the DCHECK pre-conditions mixed with the code here; consider moving them to the top of the if, since they don\u0027t depend on of the actual code or variables in the block itself.",
+      "revId": "b2fd4ab556f8cfbb2b33a17c356af6569192e0b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
