@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/toolbar/back_forward_menu_model.h"
 
+#include <map>
+
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/strings/string16.h"
@@ -78,9 +80,10 @@ class BackFwdMenuModelTest : public ChromeRenderViewHostTestHarness {
   }
 
   void LoadURLAndUpdateState(const char* url, const char* title) {
-    NavigateAndCommit(GURL(url));
-    web_contents()->UpdateTitleForEntry(
-        controller().GetLastCommittedEntry(), base::UTF8ToUTF16(title));
+    GURL gurl(url);
+    NavigateAndCommit(gurl);
+    title_map_[gurl] = base::UTF8ToUTF16(title);
+    UpdatePageTitle();
   }
 
   // Navigate back or forward the given amount and commits the entry (which
@@ -88,23 +91,40 @@ class BackFwdMenuModelTest : public ChromeRenderViewHostTestHarness {
   void NavigateToOffset(int offset) {
     controller().GoToOffset(offset);
     WebContentsTester::For(web_contents())->CommitPendingNavigation();
+    UpdatePageTitle();
   }
 
   // Same as NavigateToOffset but goes to an absolute index.
   void NavigateToIndex(int index) {
     controller().GoToIndex(index);
     WebContentsTester::For(web_contents())->CommitPendingNavigation();
+    UpdatePageTitle();
   }
 
   // Goes back/forward and commits the load.
   void GoBack() {
     controller().GoBack();
     WebContentsTester::For(web_contents())->CommitPendingNavigation();
+    UpdatePageTitle();
   }
   void GoForward() {
     controller().GoForward();
     WebContentsTester::For(web_contents())->CommitPendingNavigation();
+    UpdatePageTitle();
   }
+
+ private:
+  void UpdatePageTitle() {
+    // Upon history navigation, the NavigationController resets the page's title
+    // in the NavigationEntry, and only when the renderer parses the page does
+    // the title get set. In a unittest like this, what this means is that every
+    // navigation resets the title, because there is no renderer. This function,
+    // therefore, simulates the page load by setting the title.
+    content::NavigationEntry* entry = controller().GetLastCommittedEntry();
+    web_contents()->UpdateTitleForEntry(entry, title_map_[entry->GetURL()]);
+  }
+
+  std::map<GURL, base::string16> title_map_;
 };
 
 TEST_F(BackFwdMenuModelTest, BasicCase) {
