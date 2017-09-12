@@ -192,6 +192,12 @@ uint64_t GetFakeSizeForVmRegion(int pid, int region_index) {
   return 4096 * pid * (region_index + 1);
 }
 
+std::unique_ptr<ProcessMemoryDump> MakeProcessMemoryDump(
+    MemoryDumpRequestArgs args) {
+  MemoryDumpArgs dump_args{arg.level_of_detail};
+  return std::make_unique<ProcessMemoryDump>(nullptr, dump_args);
+}
+
 mojom::RawOSMemDumpPtr FillRawOSDump(int pid) {
   mojom::RawOSMemDumpPtr raw_os_dump = mojom::RawOSMemDump::New();
   raw_os_dump->platform_private_footprint =

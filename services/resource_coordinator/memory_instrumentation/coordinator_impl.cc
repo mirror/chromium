@@ -547,6 +547,9 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
         request->args, result.process_id, os_dump.get(),
         &result.raw_os_dump->memory_maps);
 
+    tracing_observer_->AddChromeDumpToTraceIfEnabled(
+        request->args, result.process_id, result.raw_process_dump);
+
     if (!request->ShouldReturnMmaps() && !request->ShouldReturnSummaries())
       continue;
 
