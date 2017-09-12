@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96ca82d7_48e464b7",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-12T07:42:03Z",
+      "side": 1,
+      "message": "This function is in #pragma private when you reveal the common lines above. ;)",
+      "parentUuid": "5de56cdc_100dcbc0",
+      "range": {
+        "startLine": 1107,
+        "startChar": 0,
+        "endLine": 1118,
+        "endChar": 1
+      },
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6d222a9_79b4a46f",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
         "patchSetId": 1
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "80b1ce29_33938d95",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-12T07:42:03Z",
+      "side": 1,
+      "message": "Thanks for the tip.\nDone. and added a TODO to see if we need different metrics later.",
+      "parentUuid": "133143c9_c09907bd",
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38ca8e79_8f172b2d",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
         "patchSetId": 1
@@ -80,6 +122,30 @@
       "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8317efe_519e8206",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-12T07:42:03Z",
+      "side": 1,
+      "message": "Thanks, I will use is_valid() checking here.\n\n- I verified that it is impossible to make the url an empty string in iOS, desktop and android versions.\n- is_valid() can block empty url as well.",
+      "parentUuid": "38ca8e79_8f172b2d",
+      "range": {
+        "startLine": 254,
+        "startChar": 6,
+        "endLine": 254,
+        "endChar": 19
+      },
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -115,6 +181,24 @@
       "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df19c657_a3f8127c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-12T07:42:03Z",
+      "side": 1,
+      "message": "It works well without dispatch_async.\nBut I am just thinking the case when user is trying to open many urls at the same time, the response time may be slow and dispatch_async might improve that.\nHowever, it is a corner case so may be we can decide that later.",
+      "parentUuid": "ace43801_a414e06c",
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "3f52f01a_752bf8c1",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-12T07:42:03Z",
+      "side": 1,
+      "message": "It seems we need to keep std::set because the update bookmark functions from bookmark_utils_ios takes std::set as argument.  Keeping both can prevent the overhead of conversion when using bookmark_utils_ios\u0027s functions.\nI think that\u0027s the same reason why bookmark_home_view_controller keeping both as well.\nWDYT? thx.",
+      "parentUuid": "a82e6f20_ce099b37",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 44
+      },
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbb71879_a29ca7ad",
         "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
         "patchSetId": 1
@@ -197,6 +305,24 @@
       "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee5b7c0_b02e5d95",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-12T07:42:03Z",
+      "side": 1,
+      "message": "TODO added.",
+      "parentUuid": "32ee5384_11ff57b5",
+      "revId": "5fcae9e354961d3939dfb66d13bad10b17a64077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
