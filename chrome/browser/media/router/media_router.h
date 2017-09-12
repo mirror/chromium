@@ -34,6 +34,7 @@ class Origin;
 
 namespace media_router {
 
+class IssueManager;
 class IssuesObserver;
 class MediaRoutesObserver;
 class MediaSinksObserver;
@@ -152,11 +153,9 @@ class MediaRouter : public KeyedService {
       std::unique_ptr<std::vector<uint8_t>> data,
       SendRouteMessageCallback callback) = 0;
 
-  // Adds a new issue with info |issue_info|.
-  virtual void AddIssue(const IssueInfo& issue_info) = 0;
-
-  // Clears the issue with the id |issue_id|.
-  virtual void ClearIssue(const Issue::Id& issue_id) = 0;
+  // Returns the IssueManager owned by the MediaRouter. Guaranteed to be
+  // non-null.
+  virtual IssueManager* GetIssueManager() = 0;
 
   // Notifies the Media Router that the user has taken an action involving the
   // Media Router. This can be used to perform any initialization that is not
@@ -254,14 +253,6 @@ class MediaRouter : public KeyedService {
   // Removes a previously added MediaRoutesObserver. |observer| will stop
   // receiving further updates.
   virtual void UnregisterMediaRoutesObserver(MediaRoutesObserver* observer) = 0;
-
-  // Adds the IssuesObserver |observer|.
-  // It is invalid to register the same observer more than once and will result
-  // in undefined behavior.
-  virtual void RegisterIssuesObserver(IssuesObserver* observer) = 0;
-
-  // Removes the IssuesObserver |observer|.
-  virtual void UnregisterIssuesObserver(IssuesObserver* observer) = 0;
 
   // Registers |observer| with this MediaRouter. |observer| specifies a media
   // route and will receive messages from the MediaSink connected to the
