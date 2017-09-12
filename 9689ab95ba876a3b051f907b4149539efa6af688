@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45f87a2a_c03d7deb",
+        "filename": "chrome/installer/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-12T23:56:18Z",
+      "side": 1,
+      "message": "Maybe this should check for component builds instead?",
+      "revId": "9689ab95ba876a3b051f907b4149539efa6af688",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
