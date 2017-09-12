@@ -2402,18 +2402,15 @@ bool AXNodeObject::CanHaveChildren() const {
 }
 
 Element* AXNodeObject::ActionElement() const {
-  Node* node = this->GetNode();
-  if (!node)
+  const AXObject* obj = this;
+
+  while (obj && (!obj->GetNode() || !obj->GetNode()->IsElementNode()))
+    obj = obj->ParentObject();
+
+  if (!obj || !obj->GetNode() || !obj->GetNode()->IsElementNode())
     return nullptr;
 
-  if (node->IsElementNode() && IsClickable())
-    return ToElement(node);
-
-  Element* anchor = AnchorElement();
-  Element* click_element = MouseButtonListener();
-  if (!anchor || (click_element && click_element->IsDescendantOf(anchor)))
-    return click_element;
-  return anchor;
+  return ToElement(obj->GetNode());
 }
 
 Element* AXNodeObject::AnchorElement() const {
