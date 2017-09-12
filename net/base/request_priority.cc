@@ -10,8 +10,6 @@ namespace net {
 
 const char* RequestPriorityToString(RequestPriority priority) {
   switch (priority) {
-    case THROTTLED:
-      return "THROTTLED";
     case IDLE:
       return "IDLE";
     case LOWEST:
