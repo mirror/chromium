@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a281d1e9_effc41b6",
+        "filename": "ios/web_view/features.gni",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-12T14:56:20Z",
+      "side": 1,
+      "message": "As we learned recently, this flag will disable all API which require some way to store the data (e.g. autofill). So should we use a different name? Maybe ios_web_view_enable_autofill_sorage ?",
+      "range": {
+        "startLine": 9,
+        "startChar": 38,
+        "endLine": 9,
+        "endChar": 42
+      },
+      "revId": "a5864266cb296e8689d2409163257c5f7bac2067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
