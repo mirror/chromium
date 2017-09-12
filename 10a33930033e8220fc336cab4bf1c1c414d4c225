@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3f84850_001cde43",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-12T11:04:27Z",
+      "side": 1,
+      "message": "This test is potentially flaky because of this timeout (\u003d1s).\nTo avoid this, I think I could register a custom request handler in the embedded_test_server that will pause the request and resume it when didFailLoading is called on a custom WebContentsObserver \nThough it will potentially make this test more complicated, I don\u0027t know if it worth the cost. Let me know if you prefer doing this.",
+      "range": {
+        "startLine": 596,
+        "startChar": 61,
+        "endLine": 596,
+        "endChar": 62
+      },
+      "revId": "10a33930033e8220fc336cab4bf1c1c414d4c225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
