@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a2f1208_3fa61dbc",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-text-nodes-disconnect-on-webkitBeforeTextInserted-event.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-12T18:19:25Z",
+      "side": 1,
+      "message": "1)webkitBeforeTextInserted worked when invoked on div rather than document.\n2)if focus element is made as \u0027b|az\u0027 instead of |baz then the nodes were getting disconnected.\n3)execCommand had to be invoked from selection.document rather than document",
+      "parentUuid": "1eea4972_46e14f02",
+      "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdd0c7ca_b2ed47f0",
         "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-text-remove-iframe-on-webkitBeforeTextInserted-event.html",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78619af_c2113b0f",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-text-remove-iframe-on-webkitBeforeTextInserted-event.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-12T18:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdd0c7ca_b2ed47f0",
+      "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "c505b120_f5ceb313",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-12T18:19:25Z",
+      "side": 1,
+      "message": "Did you mean to add the names of the test case here ?",
+      "parentUuid": "9fa0b01a_1e0f4604",
+      "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef13974c_5da92322",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 7
@@ -93,6 +147,24 @@
     },
     {
       "key": {
+        "uuid": "74a317aa_c55efaf9",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-12T18:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef13974c_5da92322",
+      "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c2678b6_4fc68de8",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 7
@@ -107,6 +179,24 @@
       "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b58bff_81d390b2",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-12T18:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c2678b6_4fc68de8",
+      "revId": "b1ae617862f838b51ac6c374c9a11cea584598be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
