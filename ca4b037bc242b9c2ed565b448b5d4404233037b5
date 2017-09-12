@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e94ec61_c7ac7677",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-12T15:43:54Z",
+      "side": 1,
+      "message": "what\u0027s R\"javascript(?",
+      "revId": "ca4b037bc242b9c2ed565b448b5d4404233037b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0f71fe_6d31ccb8",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-12T15:43:54Z",
+      "side": 1,
+      "message": "this will be flaky as you pointed out in the other cl\n\nthe test i added in https://chromium-review.googlesource.com/c/chromium/src/+/660882 shouldn\u0027t be flaky, as it injects the XHR right before the renderer gets the window.location call.",
+      "revId": "ca4b037bc242b9c2ed565b448b5d4404233037b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
