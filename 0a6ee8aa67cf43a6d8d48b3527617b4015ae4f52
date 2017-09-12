@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6b3b796_a63e8818",
+        "filename": "ios/chrome/browser/ui/external_file_remover.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-12T09:36:15Z",
+      "side": 1,
+      "message": "Since you are modifying this file, can you move this method declaration above the member variables to have the file respect the style guide:\n\n\u003e Within each section, generally prefer grouping similar kinds of declarations together, and generally prefer the following order: types (including typedef, using, and nested structs and classes), constants, factory functions, constructors, assignment operators, destructor, all other methods, data members.\n\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "0a6ee8aa67cf43a6d8d48b3527617b4015ae4f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c83b3f_5d099bf1",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-12T09:36:15Z",
+      "side": 1,
+      "message": "Just \"GetReferencedExternalFiles()\" here.",
+      "range": {
+        "startLine": 74,
+        "startChar": 23,
+        "endLine": 74,
+        "endChar": 72
+      },
+      "revId": "0a6ee8aa67cf43a6d8d48b3527617b4015ae4f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e73e0a_0d2336bd",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-12T09:36:15Z",
+      "side": 1,
+      "message": "You need to initialise this local variable otherwise, below, you\u0027ll be sending a message to nil which is a no-op (and thus won\u0027t modify all_tab_model_files, and thus it will end up being empty).\n\n  NSMutableSet* all_tab_model_files \u003d [NSMutableSet set];\n\nI\u0027m surprised that no tests caught this error. Do we have unit tests for ExternalFileRemover? If yes, can you add a test that would have caught this? If not, as a followup, can you see how difficult it would be to add unit tests for ExternalFileRemover (this will need refactoring of the class to inject the dependencies directly instead of going through ChromeBrowserState)?",
+      "range": {
+        "startLine": 114,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 35
+      },
+      "revId": "0a6ee8aa67cf43a6d8d48b3527617b4015ae4f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba330d4_32ea0748",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-12T09:36:15Z",
+      "side": 1,
+      "message": "No need for a separate variable, just add to all_tab_model_files directly.\n\n  for (const auto\u0026 bookmark : bookmarks) {\n    GURL bookmark_url \u003d bookmark.url;\n    if (UrlIsExternalFileReference(bookmark_url)) {\n      [all_tab_model_files\n          addObject:base::SysUTF8ToNSString(bookmark_url.ExtractFileName())];\n    }\n  }\n  return all_tab_model_files;\n\nYou can probably rename \"all_tab_model_files\" to \"referenced_external_files\" too.",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 54
+      },
+      "revId": "0a6ee8aa67cf43a6d8d48b3527617b4015ae4f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
