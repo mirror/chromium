@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e485677_42da255c",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-12T21:14:43Z",
+      "side": 1,
+      "message": "I think you need this only around the Popen() call below, i.e. it can be closed immediately after Popen() returns, Popen() dups the fd internally.",
+      "range": {
+        "startLine": 350,
+        "startChar": 7,
+        "endLine": 350,
+        "endChar": 28
+      },
+      "revId": "4cb9c725ed6c69290fd9b159ac2b8747a42a30e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
