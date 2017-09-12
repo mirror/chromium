@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "622cedbc_2523a2bd",
+        "filename": "ash/wm/workspace/workspace_layout_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1663,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-12T23:53:03Z",
+      "side": 1,
+      "message": "Please use the exclusion list for this (in testing/buildbot/filters/ash_unittests_mash.filter) and file a bug on it that you link too.",
+      "range": {
+        "startLine": 1663,
+        "startChar": 5,
+        "endLine": 1663,
+        "endChar": 31
+      },
+      "revId": "adbb74d9924f9b0d8ff988287d3c81a71e3191c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
