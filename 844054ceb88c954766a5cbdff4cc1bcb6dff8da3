@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "edf434ad_bde514a0",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-12T17:10:35Z",
+      "side": 1,
+      "message": "Agreed. I used Limiter since that\u0027s what Sanjay called it in leveldb, but do a gree with you.",
+      "parentUuid": "fc4bb66f_0ee9d46c",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbb2b5ca_87e92557",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1eef52_d68ac049",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-12T17:10:35Z",
+      "side": 1,
+      "message": "Isn\u0027t that only when there\u0027s a timeout value - ie when the acquisition can fail?",
+      "parentUuid": "dbb2b5ca_87e92557",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "767a3a21_7dab0d18",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-12T17:10:35Z",
+      "side": 1,
+      "message": "This will only happen when the open file limit has been reached - so rarely.",
+      "parentUuid": "9d436789_5454f42d",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "638b1e34_4a9aa5bb",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4efa12_a97dc10e",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-12T17:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "638b1e34_4a9aa5bb",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c2d0516a_e0e291f0",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-12T17:10:35Z",
+      "side": 1,
+      "message": "Done. We do use mu_ elsewhere in env_chromium so should probably fix that during  https://bugs.chromium.org/p/chromium/issues/detail?id\u003d762598",
+      "parentUuid": "d6607a9f_359f3c70",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "173f4845_12b93603",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f47f1dd_eab06221",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-12T17:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "173f4845_12b93603",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "2378ea0b_1af1b419",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-12T17:10:35Z",
+      "side": 1,
+      "message": "Agreed, but also \"temporary\" makes me think it\u0027ll be deleted after close. I decided to go with \"open_before_read_\". Not in love with that either. Any better suggestions?",
+      "parentUuid": "a080c61c_c1aabce6",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d577b9a_8be78e53",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f8daa1_38064484",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-12T17:10:35Z",
+      "side": 1,
+      "message": "No, not always from the same thread, but contention would have only done the initialization multiple times right.\n\nBut, good point. I used a static (made cleaner by https://chromium-review.googlesource.com/656108).",
+      "parentUuid": "9d577b9a_8be78e53",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "1bca6979_b64047ee",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-12T17:10:35Z",
+      "side": 1,
+      "message": "I\u0027d like to stop logging this entirely. See https://bugs.chromium.org/p/chromium/issues/detail?id\u003d763968",
+      "parentUuid": "519febfa_98bc438c",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d45ccfd_1d8a1cef",
         "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
         "patchSetId": 3
@@ -184,6 +346,24 @@
       "writtenOn": "2017-09-09T02:35:36Z",
       "side": 1,
       "message": "I think that \"the sum of the two limits\" does not apply here. Copy-paste typo from env_posix_test.cc?",
+      "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0741f4e6_532a8659",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-12T17:10:35Z",
+      "side": 1,
+      "message": "Yep - thx.",
+      "parentUuid": "6d45ccfd_1d8a1cef",
       "revId": "844054ceb88c954766a5cbdff4cc1bcb6dff8da3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
