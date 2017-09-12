@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14de632f_2a70cc27",
+        "filename": "content/browser/renderer_host/web_database_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-12T20:02:11Z",
+      "side": 1,
+      "message": "nit: QuotaManager",
+      "range": {
+        "startLine": 154,
+        "startChar": 5,
+        "endLine": 154,
+        "endChar": 18
+      },
+      "revId": "14ee5522bfd152b7553c6201aa53dacb7802e853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb233b7_8fb4ca9c",
+        "filename": "content/browser/renderer_host/web_database_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-12T20:02:11Z",
+      "side": 1,
+      "message": "The purpose of the QuotaManagerProxy is to make cross-sequence calls easier, so why not take advantage of it here?\n\nIt will proxy the calls to the correct thread, and then post a task back on the passed sequence. This would let you eliminate DatabaseGetSpaceAvailableOnIOThread and just have DatabaseDidGetUsageAndQuota which is already back on the tracker thread; even that could optionally be reduced to an inline lambda, e.g.\n\ndb_tracker_-\u003equota_manager_proxy()-\u003eGetUsageAndQuota(\n      db_tracker_-\u003etask_runner(),\n      origin.GetURL(), storage::kStorageTypeTemporary,\n      base::Bind([](GetSpaceAvailableCallback callback,\n    storage::QuotaStatusCode status, int64_t usage,int64_t quota) {\n  int64_t available \u003d 0;\n  if ((status \u003d\u003d storage::kQuotaStatusOk) \u0026\u0026 (usage \u003c quota)) {\n    available \u003d quota - usage;\n  }\n  std::move(callback).Run(available);\n }, std::move(callback)));",
+      "range": {
+        "startLine": 156,
+        "startChar": 22,
+        "endLine": 156,
+        "endChar": 41
+      },
+      "revId": "14ee5522bfd152b7553c6201aa53dacb7802e853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae07d12c_40612e02",
+        "filename": "content/browser/renderer_host/web_database_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-12T20:02:11Z",
+      "side": 1,
+      "message": "This can be done in WebDatabaseHostImpl::GetSpaceAvailable, since it\u0027s just checking the properties of the passed origin; no need to do this after the sequence hop, and so no need to pass bad_message_callback around.",
+      "range": {
+        "startLine": 218,
+        "startChar": 2,
+        "endLine": 222,
+        "endChar": 3
+      },
+      "revId": "14ee5522bfd152b7553c6201aa53dacb7802e853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55631c90_df9fead5",
+        "filename": "content/common/web_database.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-12T20:02:11Z",
+      "side": 1,
+      "message": "nit: indent consistently",
+      "revId": "14ee5522bfd152b7553c6201aa53dacb7802e853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
