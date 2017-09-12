@@ -3,11 +3,11 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import optimize_webui
 import os
 import shutil
 import tempfile
 import unittest
-import vulcanize_gn
 
 
 _HERE_DIR = os.path.dirname(__file__)
@@ -43,7 +43,7 @@ class VulcanizeGnTest(unittest.TestCase):
     # TODO(dbeam): make it possible to _run_vulcanize twice? Is that useful?
     assert not self._out_folder
     self._out_folder = self._create_tmp_dir()
-    vulcanize_gn.main([
+    optimize_webui.main([
       '--depfile', os.path.join(self._out_folder,'depfile.d'),
       '--html_in_file', html_in_file,
       '--html_out_file', html_out_file,
