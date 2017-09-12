@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "1e5d4fb9_5af619ff",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-12T17:49:11Z",
+      "side": 1,
+      "message": "In a second thought, we still need a \u0027i\u0027 variable to reference the position in the vector.",
+      "parentUuid": "cfc46909_b8c13d3c",
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "313b15b5_e9652f1e",
         "filename": "third_party/zlib/neon_adler32.c",
         "patchSetId": 5
