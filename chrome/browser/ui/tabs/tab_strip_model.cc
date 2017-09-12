@@ -1331,14 +1331,15 @@ void TabStripModel::MoveWebContentsAtImpl(int index,
                                           bool select_after_move) {
   FixOpenersAndGroupsReferencing(index);
 
-  std::unique_ptr<WebContentsData> moved_data =
-      std::move(contents_data_[index]);
-  WebContents* web_contents = moved_data->web_contents();
-  contents_data_.erase(contents_data_.begin() + index);
-  contents_data_.insert(contents_data_.begin() + to_position,
-                        std::move(moved_data));
+  WebContents* web_contents = GetWebContentsAtImpl(index);
+  auto old_start = contents_data_.begin() + index;
+  auto new_start = contents_data_.begin() + to_position;
+  if (new_start < old_start)
+    std::rotate(new_start, old_start, old_start + 1);
+  else
+    std::rotate(old_start, old_start + 1, new_start + 1);
 
-  selection_model_.Move(index, to_position);
+  selection_model_.Move(index, to_position, 1);
   if (!selection_model_.IsSelected(to_position) && select_after_move) {
     // TODO(sky): why doesn't this code notify observers?
     selection_model_.SetSelectedIndex(to_position);
