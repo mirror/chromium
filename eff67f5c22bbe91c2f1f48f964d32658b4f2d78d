@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "252099f6_ec4d54a8",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-09-12T09:32:44Z",
+      "side": 1,
+      "message": "/already load/might be already loaded due to/",
+      "revId": "eff67f5c22bbe91c2f1f48f964d32658b4f2d78d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
