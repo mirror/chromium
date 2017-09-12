@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "7b02ff75_9f5d27a8",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-12T16:35:35Z",
+      "side": 1,
+      "message": "Nice. I ran into this issue yesterday. Glad to see it fixed before I even had to mention it. :)",
+      "revId": "68fb968387cbba97e743a59df503c0956d13f8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a1fc4f0_9b34f327",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-12T16:35:35Z",
+      "side": 1,
+      "message": "Do you mean here that the value passed to |include_delimeter| doesn\u0027t matter in the PATH case? If so, can you say that instead? It\u0027s slightly unclear why you\u0027re saying setting it to true has no effect and then setting it to false.",
+      "revId": "68fb968387cbba97e743a59df503c0956d13f8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76901b69_3853df84",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-12T16:35:35Z",
+      "side": 1,
+      "message": "Isn\u0027t there an existing set of tests somewhere that look like this? I can\u0027t find them but I swear I remember reviewing them. I just want to make sure this isn\u0027t unnecessarily duplicating some other code.",
+      "revId": "68fb968387cbba97e743a59df503c0956d13f8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d8872d_e197246a",
+        "filename": "components/omnibox/browser/autocomplete_match_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-12T16:35:35Z",
+      "side": 1,
+      "message": "This is a fantastic set of tests. But they\u0027d be even better if, instead of specifying a MatchPosition literal, you used a string literal. E.g.:\n\n{\"http://www.google.com\", \"ht\", false, false, false},\n\nAnd just use string.find in the test loop below to find the initial position of the test substring.",
+      "revId": "68fb968387cbba97e743a59df503c0956d13f8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37726153_06422916",
         "filename": "components/omnibox/browser/search_suggestion_parser.cc",
         "patchSetId": 2
@@ -13,6 +81,24 @@
       "writtenOn": "2017-09-12T01:48:31Z",
       "side": 1,
       "message": "This HasHTTPScheme(input_text) call is here to never trim the scheme if the input text contains \"http\". It\u0027s only applicable in cases like... http://http.com or http://http.foo.com\n\nI left it here to preserve old behavior, but I\u0027m not sure we even need it. If the autocomplete match is \"http.com\", I don\u0027t think it\u0027s a big deal to strip the scheme.",
+      "revId": "68fb968387cbba97e743a59df503c0956d13f8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e681835a_910c3745",
+        "filename": "components/omnibox/browser/search_suggestion_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-12T16:35:35Z",
+      "side": 1,
+      "message": "I agree that we don\u0027t need that. It\u0027s an odd and super-rare case and even so we\u0027d still show the match in the host which seems fine. If it simplifies the code to remove this, sgtm.",
+      "parentUuid": "37726153_06422916",
       "revId": "68fb968387cbba97e743a59df503c0956d13f8a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
