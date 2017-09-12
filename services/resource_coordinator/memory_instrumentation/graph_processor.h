@@ -1,0 +1,28 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef SERVICES_RESOURCE_COORDINATOR_MEMORY_INSTRUMENTATION_GRAPH_PROCESSOR_H_
+#define SERVICES_RESOURCE_COORDINATOR_MEMORY_INSTRUMENTATION_GRAPH_PROCESSOR_H_
+
+#include <memory>
+
+#include "base/process/process_handle.h"
+#include "base/trace_event/process_memory_dump.h"
+#include "services/resource_coordinator/memory_instrumentation/graph.h"
+
+namespace memory_instrumentation {
+
+class GraphProcessor {
+ public:
+  std::unique_ptr<GlobalDump> Process(
+      std::map<base::ProcessId, base::trace_event::ProcessMemoryDump>
+          process_dumps);
+
+ private:
+  void PopulateProcessDump(const base::trace_event::ProcessMemoryDump& source,
+                           ProcessDump& dest);
+};
+
+}  // namespace memory_instrumentation
+#endif
