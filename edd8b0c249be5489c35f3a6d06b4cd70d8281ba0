@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e25499a5_cd50215e",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-12T11:52:18Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think we need this comment. Same applies to flex tracks for example.",
+      "revId": "edd8b0c249be5489c35f3a6d06b4cd70d8281ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971aa1b8_95413eb9",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-12T11:52:18Z",
+      "side": 1,
+      "message": "This cannot happen anymore due to the early return at the beginning.",
+      "revId": "edd8b0c249be5489c35f3a6d06b4cd70d8281ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
