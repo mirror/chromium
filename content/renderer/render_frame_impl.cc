@@ -2592,7 +2592,7 @@ RenderAccessibility* RenderFrameImpl::GetRenderAccessibility() {
   return render_accessibility_;
 }
 
-int RenderFrameImpl::GetRoutingID() {
+int RenderFrameImpl::GetRoutingID() const {
   return routing_id_;
 }
 

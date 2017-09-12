@@ -424,7 +424,7 @@ class CONTENT_EXPORT RenderFrameImpl
   // RenderFrame implementation:
   RenderView* GetRenderView() override;
   RenderAccessibility* GetRenderAccessibility() override;
-  int GetRoutingID() override;
+  int GetRoutingID() const override;
   blink::WebLocalFrame* GetWebFrame() override;
   const WebPreferences& GetWebkitPreferences() override;
   int ShowContextMenu(ContextMenuClient* client,
@@ -1240,7 +1240,7 @@ class CONTENT_EXPORT RenderFrameImpl
   bool in_frame_tree_;
 
   RenderViewImpl* render_view_;
-  int routing_id_;
+  const int routing_id_;
 
   // If this frame was created to replace a proxy, this will store the routing
   // id of the proxy to replace at commit-time, at which time it will be

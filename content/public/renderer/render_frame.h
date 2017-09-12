@@ -115,7 +115,7 @@ class CONTENT_EXPORT RenderFrame : public IPC::Listener,
   virtual RenderAccessibility* GetRenderAccessibility() = 0;
 
   // Get the routing ID of the frame.
-  virtual int GetRoutingID() = 0;
+  virtual int GetRoutingID() const = 0;
 
   // Returns the associated WebFrame.
   virtual blink::WebLocalFrame* GetWebFrame() = 0;
