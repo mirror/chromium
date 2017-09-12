@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72da4448_574ce7db",
+        "filename": "third_party/WebKit/Source/core/layout/BaselineAlignment.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-12T10:23:53Z",
+      "side": 1,
+      "message": "Not a big fan of having a reference to the track sizing algorithm here. I\u0027ve checked that it\u0027s mainly used to retrieve the LayoutGrid and the Grid instances. That could be easily fixed by passing them instead of the algorithm. The only problem is that it\u0027s used also to compute some grid area size. Do you think it would be easy to get rid of the algorithm reference here? We can think about doing it later too.",
+      "revId": "7f4e367640f86545b542f19ba448398dd4b03e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf688cec_d7e663ec",
+        "filename": "third_party/WebKit/Source/core/layout/GridLayoutUtils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-12T10:23:53Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this include here.",
+      "revId": "7f4e367640f86545b542f19ba448398dd4b03e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32250f6_a8416f17",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-12T10:23:53Z",
+      "side": 1,
+      "message": "I think it\u0027s better to pass the LayoutGrid object to BaselineAlignment than to expose this",
+      "revId": "7f4e367640f86545b542f19ba448398dd4b03e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a9f5f34_22295316",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-12T10:23:53Z",
+      "side": 1,
+      "message": "I\u0027m seriously considering making the strategy a friend class of the algorithm. That way we could remove all these accessors just needed by the strategies.",
+      "revId": "7f4e367640f86545b542f19ba448398dd4b03e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c9f481_27203501",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-12T10:23:53Z",
+      "side": 1,
+      "message": "I don\u0027t see where these last two are used.",
+      "revId": "7f4e367640f86545b542f19ba448398dd4b03e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
