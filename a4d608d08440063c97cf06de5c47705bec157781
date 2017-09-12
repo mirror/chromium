@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "04513a71_5335206c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-sync-not-supported.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-12T07:55:37Z",
+      "side": 1,
+      "message": "Yes... Thanks for pointing it out!",
+      "parentUuid": "98b6b490_198394ef",
+      "revId": "a4d608d08440063c97cf06de5c47705bec157781",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e4ef5c1_54dd8572",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-sync-not-supported.htm",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "a4d608d08440063c97cf06de5c47705bec157781",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184197b1_f8034420",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-sync-not-supported.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-12T07:55:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4ef5c1_54dd8572",
+      "revId": "a4d608d08440063c97cf06de5c47705bec157781",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
