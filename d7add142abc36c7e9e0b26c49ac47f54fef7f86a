@@ -16,6 +16,40 @@
       "revId": "d7add142abc36c7e9e0b26c49ac47f54fef7f86a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8727b2d3_ee07916e",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-12T07:23:12Z",
+      "side": 1,
+      "message": "nit: This could be just controllee_state_-\u003econtrollee_ \u003d controllee and put it to the header because it\u0027s just a setter.",
+      "revId": "d7add142abc36c7e9e0b26c49ac47f54fef7f86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66177f7d_b235c895",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-12T07:23:12Z",
+      "side": 1,
+      "message": "Could you pass it as mojom interface instead of message_pipe?",
+      "revId": "d7add142abc36c7e9e0b26c49ac47f54fef7f86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

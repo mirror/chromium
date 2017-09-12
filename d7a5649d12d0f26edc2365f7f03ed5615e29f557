@@ -25,6 +25,47 @@
     },
     {
       "key": {
+        "uuid": "e83b8222_2721d37a",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-12T07:23:12Z",
+      "side": 1,
+      "message": "Instead of just ignoring SetController message, I think you can implement a mock Mojo\u0027s impl class to catch the message. |remove_endpoints_| has an isolated InterfaceRequest for that purpose.\nCould you check if SetController is called?",
+      "parentUuid": "c6be84ea_a0f30353",
+      "range": {
+        "startLine": 399,
+        "startChar": 29,
+        "endLine": 399,
+        "endChar": 0
+      },
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4526a3e1_2a8cdc63",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-12T07:23:12Z",
+      "side": 1,
+      "message": "ditto except for the opposite condition",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a454a201_40a12b20",
         "filename": "content/child/service_worker/service_worker_dispatcher.h",
         "patchSetId": 3
