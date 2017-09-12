@@ -1,0 +1,154 @@
+<!doctype html>
+<title>Repro for bug 756754</title>
+<pre id="console"></pre>
+<script type="text/javascript" src="common.js"></script>
+<script>
+'use strict';
+
+// The purpose of this test is to to check:
+// 1. Blobs are cleaned up when the backing store is closed.
+// 2. Blobs are cleaned up incrementally while read-modify-write transactions
+//    happen.
+
+// Number of rounds to run the test for.
+const kRoundCount = 10;
+
+// Number of records in the database. Each record is 256KB.
+const kDatabaseSize = 5;
+
+function create_record(id, version) {
+  let data = new Blob(new Uint8Array(200));
+  return {data: data, id: id, version: 0};
+}
+
+function clean_up() {
+  return new Promise((resolve, reject) => {
+    var request = indexedDB.deleteDatabase('bug756754');
+    request.onsuccess = () => { resolve(); };
+    request.onerror = () => { reject(request.error); };
+  });
+}
+
+// Resolves with the IDBDatabase.
+function set_up() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open('bug756754', 1);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      const transaction = request.transaction;
+      const store = db.createObjectStore('block-store');
+
+      // Writing the records to avoid blocking the browser UI and getting a tab
+      // kill suggestion.
+      const write_record = (id, done) => {
+        const write_request = store.put(create_record(id, 0), id);
+        write_request.onsuccess = done;
+        write_request.onerror = () => {
+          reject(error);
+          transaction.abort();
+        };
+      };
+
+      let id = 0;
+      let loop;
+      loop = () => {
+        if (id == kDatabaseSize)
+          return;
+        write_record(id, loop);
+        id += 1;
+      };
+      loop();
+    };
+    request.onsuccess = () => { resolve(request.result); };
+    request.onerror = () => { reject(request.error); };
+  });
+}
+
+// Resolves with true when done.
+function read_modify_write(db, id) {
+  // Commenting out the read path doesn't result in leaks. This means we leak
+  // blobs in the unwrapping path.
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['block-store'], 'readwrite');
+    const store = transaction.objectStore('block-store');
+    const read_request = store.get(id);  // Comment out to remove read path.
+    read_request.onsuccess = () => {  // Comment out to remove read path.
+      let record = read_request.result;  // Comment out to remove read path.
+      record.version += 1;  // Comment out to remove read path.
+
+      // Uncomment to remove the read path.
+      //const record = largeRecord(id, Date.now());
+
+      const write_request = store.put(record, id);
+      write_request.onsuccess = () => {
+        record = null;
+        resolve(true);
+      };
+      write_request.onerror = () => { reject(write_request.error); }
+    };  // Comment out to remove read path.
+    read_request.onerror = () => { reject(read_request.error); }  // Comment out to remove read path.
+  });
+}
+
+// Polyfill navigator.storage.estimate(), because it's only shipped in M61+.
+if (!navigator.storage) navigator.storage = {};
+if (!navigator.storage.estimate) {
+  navigator.storage.estimate = () => {
+    return new Promise((resolve, reject) => {
+      navigator.webkitTemporaryStorage.queryUsageAndQuota((used, granted) => {
+        resolve({ usage: used, quota: granted });
+      });
+    });
+  };
+}
+
+// Formats a number that expresses disk space / size of disk data structures.
+const space = (number) => {
+  const kMegabyte = 1024 * 1024;
+  return `${(number / kMegabyte).toFixed(2)} MB`;
+};
+
+async function run() {
+  try {
+    debug(`Database size: ${kDatabaseSize}`);
+    debug(`Round count: ${kRoundCount}`);
+    debug('Deleting database');
+    var info = await navigator.storage.estimate();
+    debug(`Quota -- Used: ${space(info.usage)} Total: ${space(info.quota)}`);
+    await clean_up();
+    var info = await navigator.storage.estimate();
+    debug(`Quota -- Used: ${space(info.usage)} Total: ${space(info.quota)}`);
+
+    debug('Creating database');
+    const db = await set_up();
+    for (let round = 0; round < kRoundCount; ++round) {
+      if (round % 10 == 0) {
+        debug(`Starting round ${round} / ${kRoundCount}`);
+        const info = await navigator.storage.estimate();
+        debug(`Quota -- Used: ${space(info.usage)} Total: ${space(info.quota)}`);
+      }
+      for (let id = 0; id < kDatabaseSize; ++id) {
+        await read_modify_write(db, id, round);
+        // window.gc is enabled by --js-flags="--expose-gc"
+        // It is not mandatory, but it reduces the quota fluctuations caused by
+        // delayed garbage collection of Blobs.
+        window.gc();
+      }
+    }
+    db.close();
+
+    info = await navigator.storage.estimate();
+    debug(`Quota -- Used: ${space(info.usage)} Total: ${space(info.quota)}`);
+    window.gc();
+    debug(`Quota -- Used: ${space(info.usage)} Total: ${space(info.quota)}`);
+    done();
+  } catch (error) {
+    fail(`Error encountered: ${error}`);
+  }
+}
+
+</script>
+<body onLoad="run()">
+    <div id="status">Starting...<br/></div>
+</body>
