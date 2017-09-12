@@ -20,6 +20,7 @@
 #include "base/strings/string16.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/tick_clock.h"
+#include "chrome/browser/chromeos/lock_screen_apps/profile_loader.h"
 #include "chrome/browser/chromeos/note_taking_helper.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/extensions/extension_assets_manager.h"
@@ -156,27 +157,42 @@ AppManagerImpl::AppManagerImpl(base::TickClock* tick_clock)
 AppManagerImpl::~AppManagerImpl() = default;
 
 void AppManagerImpl::Initialize(Profile* primary_profile,
-                                Profile* lock_screen_profile) {
+                                ProfileLoader* lock_screen_profile_loader) {
   DCHECK_EQ(State::kNotInitialized, state_);
   DCHECK(primary_profile);
-  DCHECK(lock_screen_profile);
-  DCHECK_NE(primary_profile, lock_screen_profile);
+
+  primary_profile_ = primary_profile;
+  lock_screen_profile_loader_ = lock_screen_profile_loader;
+
+  state_ = State::kInactive;
+
+  note_taking_helper_observer_.Add(chromeos::NoteTakingHelper::Get());
+
+  lock_screen_profile_loader_->AddLoadProfileCallback(
+      base::Bind(&AppManagerImpl::OnLockScreenProfileLoaded,
+                 weak_ptr_factory_.GetWeakPtr()));
+}
+
+void AppManagerImpl::OnLockScreenProfileLoaded() {
+  if (!lock_screen_profile_loader_->lock_screen_profile())
+    return;
+
+  DCHECK_NE(primary_profile_,
+            lock_screen_profile_loader_->lock_screen_profile());
+
   // Do not use OTR profile for lock screen apps. This is important for
   // profile usage in |LaunchNoteTaking| - lock screen app background page runs
   // in original, non off the record profile, so the launch event has to be
   // dispatched to that profile. For other |lock_screen_profile_|, it makes no
   // difference - the profile is used to get browser context keyed services, all
   // of which redirect OTR profile to the original one.
-  DCHECK(!lock_screen_profile->IsOffTheRecord());
+  lock_screen_profile_ =
+      lock_screen_profile_loader_->lock_screen_profile()->GetOriginalProfile();
 
-  CHECK(!chromeos::ProfileHelper::Get()->GetUserByProfile(lock_screen_profile))
+  CHECK(!chromeos::ProfileHelper::Get()->GetUserByProfile(lock_screen_profile_))
       << "Lock screen profile should not be associated with any users.";
 
-  primary_profile_ = primary_profile;
-  lock_screen_profile_ = lock_screen_profile;
-  state_ = State::kInactive;
-
-  note_taking_helper_observer_.Add(chromeos::NoteTakingHelper::Get());
+  OnNoteTakingExtensionChanged();
 }
 
 void AppManagerImpl::Start(const base::Closure& note_taking_changed_callback) {
@@ -294,6 +310,9 @@ void AppManagerImpl::OnNoteTakingExtensionChanged() {
 }
 
 std::string AppManagerImpl::FindLockScreenNoteTakingApp() const {
+  if (!lock_screen_profile_)
+    return std::string();
+
   // Note that lock screen does not currently support Android apps, so
   // it's enough to only check the state of the preferred Chrome app.
   std::unique_ptr<chromeos::NoteTakingAppInfo> note_taking_app =
