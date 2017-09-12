@@ -340,7 +340,8 @@ TEST_F(PreviewsInfoBarDelegateUnitTest, InfobarTestClickLinkLoFi) {
   const struct {
     bool using_previews_blacklist;
   } tests[] = {
-      {true}, {false},
+      {true},
+      {false},
   };
   for (const auto test : tests) {
     opt_out_called_ = false;
@@ -395,7 +396,7 @@ TEST_F(PreviewsInfoBarDelegateUnitTest, InfobarTestClickLinkLitePage) {
 
   content::WebContentsTester::For(web_contents())->CommitPendingNavigation();
 
-  EXPECT_EQ(content::ReloadType::DISABLE_LOFI_MODE,
+  EXPECT_EQ(content::ReloadType::DISABLE_PREVIEWS,
             TestPreviewsWebContentsObserver::FromWebContents(web_contents())
                 ->last_navigation_reload_type());
 
@@ -538,7 +539,7 @@ TEST_F(PreviewsInfoBarDelegateUnitTest, OfflineInfobarDisablesLoFi) {
 
   content::WebContentsTester::For(web_contents())->CommitPendingNavigation();
 
-  EXPECT_EQ(content::ReloadType::DISABLE_LOFI_MODE,
+  EXPECT_EQ(content::ReloadType::DISABLE_PREVIEWS,
             TestPreviewsWebContentsObserver::FromWebContents(web_contents())
                 ->last_navigation_reload_type());
 

@@ -22,7 +22,7 @@ enum class ReloadType {
   // user agent after following a redirect.
   ORIGINAL_REQUEST_URL,
   // Reloads the current entry with Lo-Fi mode disabled.
-  DISABLE_LOFI_MODE
+  DISABLE_PREVIEWS
 };
 
 }  // namespace content
