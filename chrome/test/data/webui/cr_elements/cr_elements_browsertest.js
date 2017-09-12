@@ -276,3 +276,27 @@ CrElementsDialogTest.prototype = {
 TEST_F('CrElementsDialogTest', 'All', function() {
   mocha.run();
 });
+
+/**
+ * @constructor
+ * @extends {CrElementsBrowserTest}
+ */
+function CrElementsToastTest() {}
+
+CrElementsToastTest.prototype = {
+  __proto__: CrElementsBrowserTest.prototype,
+
+  /** @override */
+  browsePreload: 'chrome://resources/cr_elements/cr_toast/cr_toast.html',
+
+  /** @override */
+  extraLibraries: CrElementsBrowserTest.prototype.extraLibraries.concat([
+    ROOT_PATH + 'ui/webui/resources/js/timer_proxy.js',
+    ROOT_PATH + 'ui/webui/resources/js/test_timer_proxy.js',
+    'cr_toast_test.js',
+  ]),
+};
+
+TEST_F('CrElementsToastTest', 'All', function() {
+  mocha.run();
+});
