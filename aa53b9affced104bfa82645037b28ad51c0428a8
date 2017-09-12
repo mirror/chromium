@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58444e7f_9d248cda",
+        "filename": "components/language/core/browser/baseline_language_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-09-12T04:27:03Z",
+      "side": 1,
+      "message": "Are you sure this handles region-specific languages (e.g., en-AU) the same way as they currently are handled?",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff5516b_16cc88fe",
+        "filename": "components/language/core/browser/baseline_language_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-09-12T04:27:03Z",
+      "side": 1,
+      "message": "This assumes the accept language prefs do not change over the lifetime of this model? Should you document that?",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b3fa2e_c616263c",
+        "filename": "components/language/core/browser/baseline_language_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-09-12T04:27:03Z",
+      "side": 1,
+      "message": "Can this just be a constant defined in the module?",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece54405_60ea9399",
+        "filename": "components/language/core/browser/baseline_language_model_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-09-12T04:27:03Z",
+      "side": 1,
+      "message": "Is there nothing already in Chrome to handle this?",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf5cba0_a9ea9179",
+        "filename": "components/language/core/browser/baseline_language_model_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-09-12T04:27:03Z",
+      "side": 1,
+      "message": "What about Chrome OS? It uses \"preferred_languages\".",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15239679_a40d2bca",
+        "filename": "components/language/core/browser/language_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-09-12T04:27:03Z",
+      "side": 1,
+      "message": "I cant see where this is implemented???",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
