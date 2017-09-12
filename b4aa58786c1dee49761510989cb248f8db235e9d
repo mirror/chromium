@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f17acb34_ce077470",
+        "filename": "third_party/WebKit/Source/modules/payments/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-12T18:19:32Z",
+      "side": 1,
+      "message": "typo!",
+      "revId": "b4aa58786c1dee49761510989cb248f8db235e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
