@@ -5,6 +5,7 @@
 #include "components/sync/base/sync_prefs.h"
 
 #include "base/base64.h"
+#include "base/debug/stack_trace.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/path_service.h"
@@ -150,10 +151,15 @@ bool SyncPrefs::IsSyncRequested() const {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   // IsSyncRequested is the inverse of the old SuppressStart pref.
   // Since renaming a pref value is hard, here we still use the old one.
-  return !pref_service_->GetBoolean(prefs::kSyncSuppressStart);
+  bool requested = !pref_service_->GetBoolean(prefs::kSyncSuppressStart);
+  DVLOG(0) << __FUNCTION__ << "{PAV}: requested=" << requested;
+  return requested;
 }
 
 void SyncPrefs::SetSyncRequested(bool is_requested) {
+  DVLOG(0) << __FUNCTION__ << "{PAV}: is_requested=" << is_requested;
+  if (!is_requested)
+    DVLOG(0) << __FUNCTION__ << "{PAV}\n" << base::debug::StackTrace().ToString();
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   // See IsSyncRequested for why we use this pref and !is_requested.
   pref_service_->SetBoolean(prefs::kSyncSuppressStart, !is_requested);

@@ -113,8 +113,10 @@ void StartupController::OverrideFallbackTimeoutForTest(
 }
 
 bool StartupController::TryStart() {
-  if (!can_start_.Run())
+  if (!can_start_.Run()) {
+    DVLOG(0) << __FUNCTION__ << "{PAV}: CanStart returned false";
     return false;
+  }
 
   // For performance reasons, defer the heavy lifting for sync init unless:
   //
@@ -124,16 +126,20 @@ bool StartupController::TryStart() {
   // Do not start up the sync engine if setup has not completed and isn't
   // in progress, unless told to otherwise.
   if (setup_in_progress_) {
+    DVLOG(0) << __FUNCTION__ << "{PAV}: Setup in progress";
     return StartUp(STARTUP_IMMEDIATE);
   } else if (sync_prefs_->IsFirstSetupComplete() || bypass_setup_complete_) {
+    DVLOG(0) << __FUNCTION__ << "{PAV}: First setup complete";
     return StartUp(received_start_request_ ? STARTUP_IMMEDIATE
                                            : STARTUP_DEFERRED);
   } else {
+    DVLOG(0) << __FUNCTION__ << "{PAV}: Didn't start";
     return false;
   }
 }
 
 bool StartupController::TryStartImmediately() {
+  DVLOG(0) << __FUNCTION__ << "{PAV}";
   received_start_request_ = true;
   bypass_setup_complete_ = true;
   return TryStart();

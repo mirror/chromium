@@ -184,6 +184,7 @@ ProfileSyncService::ProfileSyncService(InitParams init_params)
       passphrase_prompt_triggered_by_version_(false),
       sync_enabled_weak_factory_(this),
       weak_factory_(this) {
+  DVLOG(0) << __FUNCTION__ << "{PAV}";
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(sync_client_);
   std::string last_version = sync_prefs_.GetLastRunVersion();
@@ -209,6 +210,13 @@ ProfileSyncService::~ProfileSyncService() {
 
 bool ProfileSyncService::CanSyncStart() const {
   DCHECK(thread_checker_.CalledOnValidThread());
+  bool allowed = IsSyncAllowed();
+  bool requested = IsSyncRequested();
+  bool signed_in = IsSignedIn();
+  DVLOG(0) << __FUNCTION__ << "{PAV}"
+      << " allowed=" << allowed
+      << " requested=" << requested
+      << " signed_in=" << signed_in;
   return (IsSyncAllowed() && IsSyncRequested() &&
           (IsLocalSyncEnabled() || IsSignedIn()));
 }
@@ -547,6 +555,7 @@ void ProfileSyncService::OnDataTypeRequestsSyncStartup(syncer::ModelType type) {
 }
 
 void ProfileSyncService::StartUpSlowEngineComponents() {
+  DVLOG(0) << __FUNCTION__ << "{PAV}";
   invalidation::InvalidationService* invalidator =
       sync_client_->GetInvalidationService();
 
@@ -569,6 +578,7 @@ void ProfileSyncService::OnGetTokenSuccess(
     const OAuth2TokenService::Request* request,
     const std::string& access_token,
     const base::Time& expiration_time) {
+  DVLOG(0) << __FUNCTION__ << "{PAV}";
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_EQ(access_token_request_.get(), request);
   access_token_request_.reset();
@@ -589,6 +599,7 @@ void ProfileSyncService::OnGetTokenSuccess(
 void ProfileSyncService::OnGetTokenFailure(
     const OAuth2TokenService::Request* request,
     const GoogleServiceAuthError& error) {
+  DVLOG(0) << __FUNCTION__ << "{PAV}: error=" << error.ToString();
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_EQ(access_token_request_.get(), request);
   DCHECK_NE(error.state(), GoogleServiceAuthError::NONE);
@@ -886,6 +897,7 @@ void ProfileSyncService::OnEngineInitialized(
         debug_info_listener,
     const std::string& cache_guid,
     bool success) {
+  DVLOG(0) << __FUNCTION__ << "{PAV}: Engine initialized";
   DCHECK(thread_checker_.CalledOnValidThread());
   UpdateEngineInitUMA(success);
 
@@ -1423,9 +1435,16 @@ bool ProfileSyncService::IsSignedIn() const {
 bool ProfileSyncService::CanEngineStart() const {
   if (IsLocalSyncEnabled())
     return true;
-  return CanSyncStart() && oauth2_token_service_ &&
+  bool can_sync_start = CanSyncStart();
+  bool refresh_token_available = oauth2_token_service_ &&
          oauth2_token_service_->RefreshTokenIsAvailable(
              signin_->GetAccountIdToUse());
+  DVLOG(0) << __FUNCTION__ << "{PAV}: can_sync_start=" << can_sync_start <<
+      " refresh_token_available=" << refresh_token_available;
+  return can_sync_start && refresh_token_available;
+  // return CanSyncStart() && oauth2_token_service_ &&
+  //        oauth2_token_service_->RefreshTokenIsAvailable(
+  //            signin_->GetAccountIdToUse());
 }
 
 bool ProfileSyncService::IsEngineInitialized() const {
@@ -1822,6 +1841,7 @@ std::unique_ptr<base::Value> ProfileSyncService::GetTypeStatusMap() {
 }
 
 void ProfileSyncService::RequestAccessToken() {
+  DVLOG(0) << __FUNCTION__ << "{PAV}";
   // Only one active request at a time.
   if (access_token_request_ != nullptr)
     return;
@@ -1842,6 +1862,7 @@ void ProfileSyncService::RequestAccessToken() {
   token_request_time_ = base::Time::Now();
   token_receive_time_ = base::Time();
   next_token_request_time_ = base::Time();
+  DVLOG(0) << __FUNCTION__ << "{PAV}: StartRequest";
   access_token_request_ =
       oauth2_token_service_->StartRequest(account_id, oauth2_scopes, this);
 }

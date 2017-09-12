@@ -107,6 +107,7 @@ void SyncServiceBase::NotifyObservers() {
 }
 
 void SyncServiceBase::InitializeEngine() {
+  DVLOG(0) << __FUNCTION__ << "{PAV}: Initializing engine";
   DCHECK(engine_);
 
   if (!sync_thread_) {
