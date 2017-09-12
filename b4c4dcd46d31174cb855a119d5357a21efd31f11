@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4615517b_466be3a6",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-12T17:12:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f1876664_2c0be63b",
+      "revId": "b4c4dcd46d31174cb855a119d5357a21efd31f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3adf369_ee73d31b",
         "filename": "chrome/browser/resources/settings/settings_shared_css.html",
         "patchSetId": 4
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "f107f54a_c5e35045",
+        "filename": "chrome/browser/resources/settings/settings_shared_css.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-12T17:12:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d6b16f81_3380d607",
+      "revId": "b4c4dcd46d31174cb855a119d5357a21efd31f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e108ce9f_608b130e",
         "filename": "ui/webui/resources/cr_elements/cr_link_row/cr_link_row.html",
         "patchSetId": 4
@@ -104,6 +140,24 @@
       "revId": "b4c4dcd46d31174cb855a119d5357a21efd31f11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e99011_bd1da163",
+        "filename": "ui/webui/resources/cr_elements/cr_link_row/cr_link_row.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-12T17:12:42Z",
+      "side": 1,
+      "message": "I was trying to find out whether or not there\u0027s currently labels (excluding sub-label) that spans 2 rows, in which case using [noSubLabel] to determine row-height would make the row too short for the label content? \n\nBut if you already checked all the .two-rows that you\u0027re replacing, then we\u0027re all good.",
+      "parentUuid": "02ea0616_4b824d59",
+      "revId": "b4c4dcd46d31174cb855a119d5357a21efd31f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
