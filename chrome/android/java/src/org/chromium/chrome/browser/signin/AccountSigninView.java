@@ -127,7 +127,7 @@ public class AccountSigninView extends FrameLayout {
     private Listener mListener;
     private Delegate mDelegate;
     private @UndoBehavior int mUndoBehavior;
-    private ProfileDataCache mProfileData;
+    private ProfileDataCache mProfileDataCache;
     private String mSelectedAccountName;
     private boolean mIsDefaultAccountSelected;
     private @StringRes int mCancelButtonTextId;
@@ -215,10 +215,10 @@ public class AccountSigninView extends FrameLayout {
     }
 
     private void setProfileDataCache(ProfileDataCache profileData) {
-        assert mProfileData == null;
-        mProfileData = profileData;
+        assert mProfileDataCache == null;
+        mProfileDataCache = profileData;
         if (ViewCompat.isAttachedToWindow(this)) {
-            mProfileData.addObserver(mProfileDataCacheObserver);
+            mProfileDataCache.addObserver(mProfileDataCacheObserver);
         }
     }
 
@@ -252,15 +252,15 @@ public class AccountSigninView extends FrameLayout {
         super.onAttachedToWindow();
         triggerUpdateAccounts();
         AccountManagerFacade.get().addObserver(mAccountsChangedObserver);
-        if (mProfileData != null) {
-            mProfileData.addObserver(mProfileDataCacheObserver);
+        if (mProfileDataCache != null) {
+            mProfileDataCache.addObserver(mProfileDataCacheObserver);
         }
     }
 
     @Override
     protected void onDetachedFromWindow() {
-        if (mProfileData != null) {
-            mProfileData.removeObserver(mProfileDataCacheObserver);
+        if (mProfileDataCache != null) {
+            mProfileDataCache.removeObserver(mProfileDataCacheObserver);
         }
         AccountManagerFacade.get().removeObserver(mAccountsChangedObserver);
         super.onDetachedFromWindow();
@@ -298,7 +298,7 @@ public class AccountSigninView extends FrameLayout {
      * Refresh the list of available system accounts asynchronously.
      */
     private void triggerUpdateAccounts() {
-        if (mProfileData == null) {
+        if (mProfileDataCache == null) {
             return;
         }
 
@@ -354,9 +354,9 @@ public class AccountSigninView extends FrameLayout {
         int accountToSelect = selection.getSelectedAccountIndex();
         boolean shouldJumpToConfirmationScreen = selection.shouldJumpToConfirmationScreen();
 
-        mSigninChooseView.updateAccounts(mAccountNames, accountToSelect, mProfileData);
+        mSigninChooseView.updateAccounts(mAccountNames, accountToSelect, mProfileDataCache);
         setUpSigninButton(!mAccountNames.isEmpty());
-        mProfileData.update(mAccountNames);
+        mProfileDataCache.update(mAccountNames);
 
         boolean selectedAccountChanged = oldAccountNames != null && !oldAccountNames.isEmpty()
                 && (mAccountNames.isEmpty()
@@ -467,17 +467,17 @@ public class AccountSigninView extends FrameLayout {
     }
 
     private void updateProfileData() {
-        mSigninChooseView.updateAccountProfileImages(mProfileData);
+        mSigninChooseView.updateAccountProfileImages(mProfileDataCache);
 
         if (mSelectedAccountName != null) updateSignedInAccountInfo();
     }
 
     private void updateSignedInAccountInfo() {
-        mSigninAccountImage.setImageDrawable(mProfileData.getImage(mSelectedAccountName));
+        DisplayableProfileData profileData = mProfileDataCache.getProfileData(mSelectedAccountName);
+        mSigninAccountImage.setImageDrawable(profileData.getImage());
         String name = null;
-        if (mIsChildAccount) name = mProfileData.getGivenName(mSelectedAccountName);
-        if (name == null) name = mProfileData.getFullName(mSelectedAccountName);
-        if (name == null) name = mSelectedAccountName;
+        if (mIsChildAccount) name = profileData.getGivenName();
+        if (name == null) name = profileData.getFullNameOrEmail();
         mSigninAccountName.setText(getResources().getString(R.string.signin_hi_name, name));
         mSigninAccountEmail.setText(mSelectedAccountName);
     }
@@ -494,7 +494,7 @@ public class AccountSigninView extends FrameLayout {
 
     private void showConfirmSigninPage() {
         updateSignedInAccountInfo();
-        mProfileData.update(Collections.singletonList(mSelectedAccountName));
+        mProfileDataCache.update(Collections.singletonList(mSelectedAccountName));
 
         mSigninChooseView.setVisibility(View.GONE);
         mSigninConfirmationView.setVisibility(View.VISIBLE);

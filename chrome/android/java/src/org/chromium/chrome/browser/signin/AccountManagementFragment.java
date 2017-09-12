@@ -202,7 +202,7 @@ public class AccountManagementFragment extends PreferenceFragment
 
         addPreferencesFromResource(R.xml.account_management_preferences);
 
-        String fullName = mProfileDataCache.getFullName(mSignedInAccountName);
+        String fullName = mProfileDataCache.getProfileData(mSignedInAccountName).getFullName();
         if (TextUtils.isEmpty(fullName)) {
             fullName = ProfileDownloader.getCachedFullName(mProfile);
         }
@@ -370,7 +370,7 @@ public class AccountManagementFragment extends PreferenceFragment
             Preference pref = new Preference(getActivity());
             pref.setLayoutResource(R.layout.account_management_account_row);
             pref.setTitle(account.name);
-            pref.setIcon(mProfileDataCache.getImage(account.name));
+            pref.setIcon(mProfileDataCache.getProfileData(account.name).getImage());
 
             pref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
