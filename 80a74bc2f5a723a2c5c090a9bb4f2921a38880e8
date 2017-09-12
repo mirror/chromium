@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9e0aac8_d40364ad",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T15:45:03Z",
+      "side": 1,
+      "message": "s/logMostVisitedNavigation/logEvent/ (right?!)",
+      "range": {
+        "startLine": 304,
+        "startChar": 78,
+        "endLine": 304,
+        "endChar": 0
+      },
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bceb8aea_b740e922",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T15:45:03Z",
+      "side": 1,
+      "message": "Maybe make a separate errorToLogType helper?",
+      "range": {
+        "startLine": 547,
+        "startChar": 18,
+        "endLine": 547,
+        "endChar": 0
+      },
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb50fcc7_0a27e59e",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T15:45:03Z",
+      "side": 1,
+      "message": "I don\u0027t think I\u0027d log this as ACTION_CLOSE_OVERLAY, since that\u0027s not explicitly what the user did.",
+      "range": {
+        "startLine": 723,
+        "startChar": 51,
+        "endLine": 723,
+        "endChar": 0
+      },
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e515143_f05dc801",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1654,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T15:45:03Z",
+      "side": 1,
+      "message": "empty body - should there be anything here?",
+      "range": {
+        "startLine": 1654,
+        "startChar": 3,
+        "endLine": 1654,
+        "endChar": 0
+      },
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0901da85_1eeb33d7",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T15:45:03Z",
+      "side": 1,
+      "message": "ACTIVATE_KEYBOARD",
+      "range": {
+        "startLine": 142,
+        "startChar": 63,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e2f5e2_50c887ea",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T15:45:03Z",
+      "side": 1,
+      "message": "Hm, this might be easier to read with fallthrough and a conversion helper, like this:\n\ncase NTP_VOICE_ACTION_ACTIVATE_KEYBOARD:\ncase NTP_VOICE_ACTION...:\n...all the other cases...\n  UMA_HISTOGRAM_ENUMERATION(kActionsHist, LoggingEventToVoiceAction(event));\n  break;\n\nAnd similar for the errors.\nWDYT?",
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10ab43c1_1230c880",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T15:45:03Z",
+      "side": 1,
+      "message": "Braces please if the body doesn\u0027t fit on one line.",
+      "range": {
+        "startLine": 838,
+        "startChar": 80,
+        "endLine": 838,
+        "endChar": 0
+      },
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f95fd811_20981638",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27577,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-12T15:45:03Z",
+      "side": 1,
+      "message": "nit: The other enums here seem to use singular",
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
