@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "588eeaf6_d4afbff3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-12T21:09:48Z",
+      "side": 1,
+      "message": "again, \"AwContents\" isn\u0027t the name of a layer. just use AwSettings here",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 10
+      },
+      "revId": "55a1b1aba4f5c896c284c97c350d802c775bd442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f1543d2_554f1e84",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSettings.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-12T21:09:48Z",
+      "side": 1,
+      "message": "constants at top of class",
+      "revId": "55a1b1aba4f5c896c284c97c350d802c775bd442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
