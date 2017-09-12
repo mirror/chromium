@@ -319,8 +319,11 @@ This file contains the strings for ash.
         Voice input
       </message>
 
+      <message name="IDS_ASH_STATUS_TRAY_LOCALE_CHANGE_TITLE" desc="The title used for locale change notifications in the system tray.">
+        Language has been changed
+      </message>
       <message name="IDS_ASH_STATUS_TRAY_LOCALE_CHANGE_MESSAGE" desc="The message used for locale change notifications in the system tray.">
-        The language has changed from "<ph name="FROM_LOCALE">$1<ex>Italian</ex></ph>" to "<ph name="TO_LOCALE">$2<ex>English (United States)</ex></ph>" after syncing your settings.
+        From "<ph name="FROM_LOCALE">$1<ex>Italian</ex></ph>" to "<ph name="TO_LOCALE">$2<ex>English (United States)</ex></ph>" after syncing your settings.
       </message>
       <message name="IDS_ASH_STATUS_TRAY_LOCALE_REVERT_MESSAGE" desc="Link to revert a change.">
         Change back to "<ph name="FROM_LOCALE">$1<ex>Italian</ex></ph>" (requires restart)
@@ -1008,7 +1011,7 @@ This file contains the strings for ash.
         Help us improve Chromebooks
       </message>
       <message name="IDS_ASH_HATS_NOTIFICATION_BODY" desc="The body of the notification for Happiness Tracking Survey.">
-        Let us know how we’re doing by answering a few questions.
+        Let us know how we’re doing.
       </message>
       <message name="IDS_ASH_HATS_NOTIFICATION_TAKE_SURVEY_BUTTON" desc="The title of the button in the notification for Happiness Tracking Survey to take the said survey.">
         Take survey
