@@ -46,7 +46,7 @@ DomDistillerStore::DomDistillerStore(
       database_loaded_(false),
       attachment_store_(syncer::AttachmentStore::CreateInMemoryStore()),
       weak_ptr_factory_(this) {
-  database_->Init(kDatabaseUMAClientName, database_dir,
+  database_->Init(kDatabaseUMAClientName, database_dir, leveldb_env::Options(),
                   base::Bind(&DomDistillerStore::OnDatabaseInit,
                              weak_ptr_factory_.GetWeakPtr()));
 }
@@ -60,7 +60,7 @@ DomDistillerStore::DomDistillerStore(
       attachment_store_(syncer::AttachmentStore::CreateInMemoryStore()),
       model_(initial_data),
       weak_ptr_factory_(this) {
-  database_->Init(kDatabaseUMAClientName, database_dir,
+  database_->Init(kDatabaseUMAClientName, database_dir, leveldb_env::Options(),
                   base::Bind(&DomDistillerStore::OnDatabaseInit,
                              weak_ptr_factory_.GetWeakPtr()));
 }

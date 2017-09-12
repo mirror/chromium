@@ -110,6 +110,10 @@ class OptionsEqMatcher : public MatcherInterface<const Options&> {
   DISALLOW_COPY_AND_ASSIGN(OptionsEqMatcher);
 };
 
+Matcher<const Options&> OptionsEq(const Options& expected) {
+  return MakeMatcher(new OptionsEqMatcher(expected));
+}
+
 }  // namespace
 
 EntryMap GetSmallModel() {
@@ -182,13 +186,15 @@ TEST_F(ProtoDatabaseImplTest, TestDBInitFailure) {
   base::FilePath path(FILE_PATH_LITERAL("/fake/path"));
 
   MockDB* mock_db = new MockDB();
-  EXPECT_CALL(*mock_db, Init(path, options_)).WillOnce(Return(false));
+  Options options;
+  options.create_if_missing = true;
+  EXPECT_CALL(*mock_db, Init(path, OptionsEq(options))).WillOnce(Return(false));
 
   MockDatabaseCaller caller;
   EXPECT_CALL(caller, InitCallback(false));
 
   db_->InitWithDatabase(
-      base::WrapUnique(mock_db), path, Options(),
+      base::WrapUnique(mock_db), path, options,
       base::Bind(&MockDatabaseCaller::InitCallback, base::Unretained(&caller)));
 
   base::RunLoop().RunUntilIdle();
@@ -308,7 +314,8 @@ TEST(ProtoDatabaseImplLevelDBTest, TestDBSaveAndLoadKeys) {
 
   auto expect_init_success =
       base::Bind([](bool success) { EXPECT_TRUE(success); });
-  db->Init(kTestLevelDBClientName, temp_dir.GetPath(), expect_init_success);
+  db->Init(kTestLevelDBClientName, temp_dir.GetPath(),
+           LevelDB::DefaultOptions(), expect_init_success);
 
   base::RunLoop run_update_entries;
   auto expect_update_success = base::Bind(
@@ -540,7 +547,7 @@ TEST(ProtoDatabaseImplThreadingTest, TestDBDestruction) {
   MockDatabaseCaller caller;
   EXPECT_CALL(caller, InitCallback(_));
   db->Init(
-      kTestLevelDBClientName, temp_dir.GetPath(),
+      kTestLevelDBClientName, temp_dir.GetPath(), Options(),
       base::Bind(&MockDatabaseCaller::InitCallback, base::Unretained(&caller)));
 
   db.reset();
@@ -568,7 +575,7 @@ TEST(ProtoDatabaseImplThreadingTest, TestDBDestroy) {
   MockDatabaseCaller caller;
   EXPECT_CALL(caller, InitCallback(_));
   db->Init(
-      kTestLevelDBClientName, temp_dir.GetPath(),
+      kTestLevelDBClientName, temp_dir.GetPath(), Options(),
       base::Bind(&MockDatabaseCaller::InitCallback, base::Unretained(&caller)));
 
   EXPECT_CALL(caller, DestroyCallback(_));
@@ -601,14 +608,13 @@ void TestLevelDBSaveAndLoad(bool close_after_save) {
         std::make_pair(pair.second.id(), pair.second.SerializeAsString()));
   }
 
-  Options options;
   std::unique_ptr<LevelDB> db(new LevelDB(kTestLevelDBClientName));
-  EXPECT_TRUE(db->Init(temp_dir.GetPath(), options));
+  EXPECT_TRUE(db->Init(temp_dir.GetPath(), LevelDB::DefaultOptions()));
   EXPECT_TRUE(db->Save(save_entries, remove_keys));
 
   if (close_after_save) {
     db.reset(new LevelDB(kTestLevelDBClientName));
-    EXPECT_TRUE(db->Init(temp_dir.GetPath(), options));
+    EXPECT_TRUE(db->Init(temp_dir.GetPath(), LevelDB::DefaultOptions()));
   }
 
   EXPECT_TRUE(db->Load(&load_entries));
@@ -644,7 +650,7 @@ TEST(ProtoDatabaseImplLevelDBTest, TestDBInitFail) {
   std::vector<std::string> load_entries;
   KeyVector remove_keys;
 
-  EXPECT_FALSE(db->InitWithOptions(temp_dir.GetPath(), options));
+  EXPECT_FALSE(db->Init(temp_dir.GetPath(), options));
   EXPECT_FALSE(db->Load(&load_entries));
   EXPECT_FALSE(db->Save(save_entries, remove_keys));
 }
@@ -654,7 +660,7 @@ TEST(ProtoDatabaseImplLevelDBTest, TestMemoryDatabase) {
 
   std::vector<std::string> load_entries;
 
-  ASSERT_TRUE(db->Init(base::FilePath(), Options()));
+  ASSERT_TRUE(db->Init(base::FilePath(), LevelDB::DefaultOptions()));
 
   ASSERT_TRUE(db->Load(&load_entries));
   EXPECT_EQ(0u, load_entries.size());
