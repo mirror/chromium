@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "680abcbc_ee8eebcf",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-12T18:29:23Z",
+      "side": 1,
+      "message": "Seems ninja/gn wants to make a lib, and requires some source code to do so.  If I remove the code parts from the build rule, ie., make is as follows:\n\n  static_library(\"zlib_adler32_simd\") {\n    sources \u003d [\n      \"adler32_simd.h\",\n    ]\n\n    configs -\u003d [ \"//build/config/compiler:chromium_code\" ]\n    configs +\u003d [ \"//build/config/compiler:no_chromium_code\" ]\n  }\n\n% ninja -C out/Release chrome\nninja: Entering directory `out/Release\u0027\n[1/1] Regenerating ninja files\n[1/57] LIBTOOL-STATIC obj/third_party/zlib/libzlib_adler32_simd.a\nFAILED: obj/third_party/zlib/libzlib_adler32_simd.a \nexport DEVELOPER_DIR\u003d/Users/noel/chrome/src/build/mac_files/Xcode.app;  rm -f obj/third_party/zlib/libzlib_adler32_simd.a \u0026\u0026 TOOL_VERSION\u003d1499478679 python ../../build/toolchain/mac/filter_libtool.py libtool -static  -o obj/third_party/zlib/libzlib_adler32_simd.a \nerror: /Users/noel/chrome/src/build/mac_files/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool: no files specified\n...\n\nAdding the stub.c fixes that error.  Perhaps there\u0027s another way round it ... I\u0027ll look tomorrow.  Maybe conditionally add the lib as a deps +\u003d [ ... ] to static_library(\"zlib\") rule.",
+      "parentUuid": "3be48ff2_3d6dab38",
+      "revId": "2c47f86bf50f14090bd0342003379a6e88624692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff801919_0e3f19b4",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 11
