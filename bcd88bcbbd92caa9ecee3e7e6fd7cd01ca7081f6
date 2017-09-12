@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e453f875_0072555f",
+        "filename": "components/cronet/android/test/javaperftests/run.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-12T17:21:42Z",
+      "side": 1,
+      "message": "I know nothing about expectations/decorators, but the CL description seems to say benchmarks should use expectations, but this benchmark is changed to use decorators?",
+      "range": {
+        "startLine": 210,
+        "startChar": 30,
+        "endLine": 210,
+        "endChar": 0
+      },
+      "revId": "bcd88bcbbd92caa9ecee3e7e6fd7cd01ca7081f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdb249e7_451ba29f",
         "filename": "tools/perf/contrib/cros_benchmarks/page_cycler_v2.py",
         "patchSetId": 2
