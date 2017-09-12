@@ -96,6 +96,9 @@ extern const char kCloudImportDescription[];
 extern const char kColorCorrectRenderingName[];
 extern const char kColorCorrectRenderingDescription[];
 
+extern const char kContentSuggestionsDebugLogName[];
+extern const char kContentSuggestionsDebugLogDescription[];
+
 extern const char kForceColorProfileSRGB[];
 extern const char kForceColorProfileP3[];
 extern const char kForceColorProfileColorSpin[];
