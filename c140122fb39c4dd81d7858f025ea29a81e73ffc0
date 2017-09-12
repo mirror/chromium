@@ -34,6 +34,24 @@
       "revId": "c140122fb39c4dd81d7858f025ea29a81e73ffc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "931cee0f_24217d05",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1108729
+      },
+      "writtenOn": "2017-09-12T01:58:41Z",
+      "side": 1,
+      "message": "Done, but it didn\u0027t end up being that much more compact. The rotation around the center was the only shared transform.",
+      "parentUuid": "6de4e055_9327ac84",
+      "revId": "c140122fb39c4dd81d7858f025ea29a81e73ffc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

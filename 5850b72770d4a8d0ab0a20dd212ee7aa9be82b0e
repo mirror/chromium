@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3b6f0a35_02dc9068",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1108729
+      },
+      "writtenOn": "2017-09-12T01:58:41Z",
+      "side": 1,
+      "message": "I found these transforms weren\u0027t quite right, per the updated commit message.",
+      "revId": "5850b72770d4a8d0ab0a20dd212ee7aa9be82b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43b253c8_4fd9bd55",
         "filename": "components/exo/surface.cc",
         "patchSetId": 1
