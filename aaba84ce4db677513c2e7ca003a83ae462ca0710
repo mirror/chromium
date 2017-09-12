@@ -135,6 +135,29 @@
     },
     {
       "key": {
+        "uuid": "e6572c0e_a7ce5488",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-12T17:47:39Z",
+      "side": 1,
+      "message": "nit: use \"!empty\" instead of \"size\u003e0\"?",
+      "range": {
+        "startLine": 138,
+        "startChar": 48,
+        "endLine": 138,
+        "endChar": 52
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74828f7e_e9da04c6",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 9
@@ -146,6 +169,29 @@
       "writtenOn": "2017-09-12T03:05:18Z",
       "side": 1,
       "message": "You could reuse |url| here yes?",
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59a1d09_10f95f75",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-12T17:47:39Z",
+      "side": 1,
+      "message": "nit: up 1 line",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 25
+      },
       "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -208,6 +254,29 @@
         "startChar": 53,
         "endLine": 34,
         "endChar": 65
+      },
+      "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80cce5f6_f5dc441a",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-12T17:47:39Z",
+      "side": 1,
+      "message": "nit: assert_true(reuses().empty());",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 11
       },
       "revId": "aaba84ce4db677513c2e7ca003a83ae462ca0710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
