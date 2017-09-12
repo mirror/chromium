@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0abf7f6_95a2452a",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-12T15:57:51Z",
+      "side": 1,
+      "message": "Done.  Thanks for the tip.",
+      "parentUuid": "ffafb7ce_5f33509b",
+      "revId": "44af542f5dce37e45be6baf9879618d21a96d875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a261b307_e3defc8f",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "44af542f5dce37e45be6baf9879618d21a96d875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de99653d_a22c07b9",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-12T15:57:51Z",
+      "side": 1,
+      "message": "Done. thx.",
+      "parentUuid": "a261b307_e3defc8f",
+      "revId": "44af542f5dce37e45be6baf9879618d21a96d875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7674ac11_d28992cc",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-12T15:57:51Z",
+      "side": 1,
+      "message": "Thanks for the advice.\nHowever, I removed editNodesOrdered so I reverted the change here.",
+      "parentUuid": "ec19e67e_6448c316",
+      "revId": "44af542f5dce37e45be6baf9879618d21a96d875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e05d899_8188c9e9",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "44af542f5dce37e45be6baf9879618d21a96d875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160e019f_2240df77",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-12T15:57:51Z",
+      "side": 1,
+      "message": "I\u0027ve removed _editNodesOrdered so it might not be relevant.\nAppreciate your detailed example and it\u0027s great to learn this trick!\nSorry for the late inform.",
+      "parentUuid": "4e05d899_8188c9e9",
+      "revId": "44af542f5dce37e45be6baf9879618d21a96d875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "09ee7b10_5e9c3e3d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-12T15:57:51Z",
+      "side": 1,
+      "message": "code removed.",
+      "parentUuid": "f29b8b45_27d54bae",
+      "range": {
+        "startLine": 416,
+        "startChar": 4,
+        "endLine": 416,
+        "endChar": 46
+      },
+      "revId": "44af542f5dce37e45be6baf9879618d21a96d875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "986e6e6b_299701bb",
         "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
         "patchSetId": 3
@@ -107,6 +203,24 @@
       "revId": "44af542f5dce37e45be6baf9879618d21a96d875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86be2db2_d7cfceb8",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-12T15:57:51Z",
+      "side": 1,
+      "message": "It seems chrome_clean_skeleton is still under development and I am not sure about their plan yet.\nI will add a TODO here to see if we can share later.",
+      "parentUuid": "986e6e6b_299701bb",
+      "revId": "44af542f5dce37e45be6baf9879618d21a96d875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
