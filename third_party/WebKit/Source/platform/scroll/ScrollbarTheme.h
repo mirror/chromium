@@ -199,6 +199,9 @@ class PLATFORM_EXPORT ScrollbarTheme {
     return IntRect();
   }
 
+  // Warning: Please call Page::GetScrollbarTheme instead of call this method
+  // directly since we support different native scrollbar theme base on page
+  // settings.
   static ScrollbarTheme& GetTheme();
 
   static void SetMockScrollbarsEnabled(bool flag);

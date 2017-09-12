@@ -299,14 +299,16 @@ static int CornerStart(const LayoutBox& box,
 static IntRect CornerRect(const LayoutBox& box,
                           const Scrollbar* horizontal_scrollbar,
                           const Scrollbar* vertical_scrollbar,
-                          const IntRect& bounds) {
+                          const IntRect& bounds,
+                          const ScrollableArea& scrollable_area) {
   int horizontal_thickness;
   int vertical_thickness;
   if (!vertical_scrollbar && !horizontal_scrollbar) {
     // FIXME: This isn't right. We need to know the thickness of custom
     // scrollbars even when they don't exist in order to set the resizer square
     // size properly.
-    horizontal_thickness = ScrollbarTheme::GetTheme().ScrollbarThickness();
+    horizontal_thickness =
+        scrollable_area.GetPageScrollbarTheme().ScrollbarThickness();
     vertical_thickness = horizontal_thickness;
   } else if (vertical_scrollbar && !horizontal_scrollbar) {
     horizontal_thickness = vertical_scrollbar->ScrollbarThickness();
@@ -337,7 +339,8 @@ IntRect PaintLayerScrollableArea::ScrollCornerRect() const {
       (has_resizer && (has_horizontal_bar || has_vertical_bar))) {
     return CornerRect(
         Box(), HorizontalScrollbar(), VerticalScrollbar(),
-        Box().PixelSnappedBorderBoxRect(Layer()->SubpixelAccumulation()));
+        Box().PixelSnappedBorderBoxRect(Layer()->SubpixelAccumulation()),
+        *this);
   }
   return IntRect();
 }
@@ -766,7 +769,7 @@ void PaintLayerScrollableArea::UpdateScrollDimensions() {
 
 void PaintLayerScrollableArea::UpdateScrollbarEnabledState() {
   bool force_disable =
-      ScrollbarTheme::GetTheme().ShouldDisableInvisibleScrollbars() &&
+      GetPageScrollbarTheme().ShouldDisableInvisibleScrollbars() &&
       ScrollbarsHidden();
 
   if (HorizontalScrollbar())
@@ -1532,8 +1535,8 @@ IntRect PaintLayerScrollableArea::ResizerCornerRect(
     ResizerHitTestType resizer_hit_test_type) const {
   if (Box().Style()->Resize() == EResize::kNone)
     return IntRect();
-  IntRect corner =
-      CornerRect(Box(), HorizontalScrollbar(), VerticalScrollbar(), bounds);
+  IntRect corner = CornerRect(Box(), HorizontalScrollbar(), VerticalScrollbar(),
+                              bounds, *this);
 
   if (resizer_hit_test_type == kResizerForTouch) {
     // We make the resizer virtually larger for touch hit testing. With the
@@ -2282,6 +2285,13 @@ void PaintLayerScrollableArea::DelayScrollOffsetClampScope::
     scrollable_area->ClampScrollOffsetAfterOverflowChange();
   delete needs_clamp_;
   needs_clamp_ = nullptr;
+}
+
+ScrollbarTheme& PaintLayerScrollableArea::GetPageScrollbarTheme() const {
+  Page* page = Box().GetFrame()->GetPage();
+  DCHECK(page);
+
+  return page->GetScrollbarTheme();
 }
 
 }  // namespace blink
