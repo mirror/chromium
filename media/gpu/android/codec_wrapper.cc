@@ -24,6 +24,7 @@ namespace media {
 class CodecWrapperImpl : public base::RefCountedThreadSafe<CodecWrapperImpl> {
  public:
   CodecWrapperImpl(std::unique_ptr<MediaCodecBridge> codec,
+                   scoped_refptr<AVDASurfaceBundle> surface_bundle,
                    base::Closure output_buffer_release_cb);
 
   using DequeueStatus = CodecWrapper::DequeueStatus;
@@ -37,13 +38,14 @@ class CodecWrapperImpl : public base::RefCountedThreadSafe<CodecWrapperImpl> {
   bool IsDrained() const;
   bool SupportsFlush(DeviceInfo* device_info) const;
   bool Flush();
+  bool SetSurface(scoped_refptr<AVDASurfaceBundle> surface_bundle);
+  AVDASurfaceBundle* SurfaceBundle();
   QueueStatus QueueInputBuffer(const DecoderBuffer& buffer,
                                const EncryptionScheme& encryption_scheme);
   DequeueStatus DequeueOutputBuffer(
       base::TimeDelta* presentation_time,
       bool* end_of_stream,
       std::unique_ptr<CodecOutputBuffer>* codec_buffer);
-  bool SetSurface(const base::android::JavaRef<jobject>& surface);
 
   // Releases the codec buffer and optionally renders it. This is a noop if
   // the codec buffer is not valid. Can be called on any thread. Returns true if
@@ -66,8 +68,11 @@ class CodecWrapperImpl : public base::RefCountedThreadSafe<CodecWrapperImpl> {
 
   // |lock_| protects access to all member variables.
   mutable base::Lock lock_;
-  std::unique_ptr<MediaCodecBridge> codec_;
   State state_;
+  std::unique_ptr<MediaCodecBridge> codec_;
+
+  // The currently configured surface.
+  scoped_refptr<AVDASurfaceBundle> surface_bundle_;
 
   // Buffer ids are unique for a given CodecWrapper and map to MediaCodec buffer
   // indices.
@@ -103,10 +108,13 @@ bool CodecOutputBuffer::ReleaseToSurface() {
   return codec_->ReleaseCodecOutputBuffer(id_, true);
 }
 
-CodecWrapperImpl::CodecWrapperImpl(std::unique_ptr<MediaCodecBridge> codec,
-                                   base::Closure output_buffer_release_cb)
-    : codec_(std::move(codec)),
-      state_(State::kFlushed),
+CodecWrapperImpl::CodecWrapperImpl(
+    std::unique_ptr<MediaCodecBridge> codec,
+    scoped_refptr<AVDASurfaceBundle> surface_bundle,
+    base::Closure output_buffer_release_cb)
+    : state_(State::kFlushed),
+      codec_(std::move(codec)),
+      surface_bundle_(std::move(surface_bundle)),
       next_buffer_id_(0),
       output_buffer_release_cb_(std::move(output_buffer_release_cb)) {
   DVLOG(2) << __func__;
@@ -319,16 +327,23 @@ CodecWrapperImpl::DequeueStatus CodecWrapperImpl::DequeueOutputBuffer(
 }
 
 bool CodecWrapperImpl::SetSurface(
-    const base::android::JavaRef<jobject>& surface) {
+    scoped_refptr<AVDASurfaceBundle> surface_bundle) {
   DVLOG(2) << __func__;
   base::AutoLock l(lock_);
+  DCHECK(surface_bundle);
   DCHECK(codec_ && state_ != State::kError);
 
-  if (!codec_->SetSurface(surface)) {
+  if (!codec_->SetSurface(surface_bundle->GetJavaSurface())) {
     state_ = State::kError;
     return false;
   }
+  surface_bundle_ = std::move(surface_bundle);
   return true;
+}
+
+AVDASurfaceBundle* CodecWrapperImpl::SurfaceBundle() {
+  base::AutoLock l(lock_);
+  return surface_bundle_.get();
 }
 
 bool CodecWrapperImpl::ReleaseCodecOutputBuffer(int64_t id, bool render) {
@@ -360,8 +375,10 @@ bool CodecWrapperImpl::ReleaseCodecOutputBuffer(int64_t id, bool render) {
 }
 
 CodecWrapper::CodecWrapper(std::unique_ptr<MediaCodecBridge> codec,
+                           scoped_refptr<AVDASurfaceBundle> surface_bundle,
                            base::Closure output_buffer_release_cb)
     : impl_(new CodecWrapperImpl(std::move(codec),
+                                 std::move(surface_bundle),
                                  std::move(output_buffer_release_cb))) {}
 
 CodecWrapper::~CodecWrapper() {
@@ -415,8 +432,12 @@ CodecWrapper::DequeueStatus CodecWrapper::DequeueOutputBuffer(
                                     codec_buffer);
 }
 
-bool CodecWrapper::SetSurface(const base::android::JavaRef<jobject>& surface) {
-  return impl_->SetSurface(surface);
+bool CodecWrapper::SetSurface(scoped_refptr<AVDASurfaceBundle> surface_bundle) {
+  return impl_->SetSurface(std::move(surface_bundle));
+}
+
+AVDASurfaceBundle* CodecWrapper::SurfaceBundle() {
+  return impl_->SurfaceBundle();
 }
 
 }  // namespace media
