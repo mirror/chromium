@@ -65,6 +65,8 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
                 const VideoCaptureDeliverFrameCB& frame_callback,
                 const ConstraintsCallback& callback);
   void RemoveTrack(MediaStreamVideoTrack* track);
+  void ReconfigureTrack(MediaStreamVideoTrack* track,
+                        const VideoTrackAdapterSettings& adapter_settings);
 
   // Called by |track| to notify the source whether it has any paths to a
   // consuming endpoint.
@@ -144,6 +146,8 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
   // to this object being deleted.
   void FinalizeAddTrack();
   void StartFrameMonitoring();
+  void UpdateTrackSettings(MediaStreamVideoTrack* track,
+                           const VideoTrackAdapterSettings& adapter_settings);
 
   State state_;
 

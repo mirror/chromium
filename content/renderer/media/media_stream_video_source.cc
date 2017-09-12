@@ -100,6 +100,13 @@ void MediaStreamVideoSource::RemoveTrack(MediaStreamVideoTrack* video_track) {
     StopSource();
 }
 
+void MediaStreamVideoSource::ReconfigureTrack(
+    MediaStreamVideoTrack* track,
+    const VideoTrackAdapterSettings& adapter_settings) {
+  track_adapter_->ReconfigureTrack(track, adapter_settings);
+  UpdateTrackSettings(track, adapter_settings);
+}
+
 void MediaStreamVideoSource::UpdateHasConsumers(MediaStreamVideoTrack* track,
                                                 bool has_consumers) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -184,22 +191,7 @@ void MediaStreamVideoSource::FinalizeAddTrack() {
     if (result == MEDIA_DEVICE_OK) {
       track_adapter_->AddTrack(track.track, track.frame_callback,
                                *track.adapter_settings);
-
-      // Calculate resulting frame size if the source delivers frames
-      // according to the current format. Note: Format may change later.
-      gfx::Size desired_size;
-      VideoTrackAdapter::CalculateTargetSize(
-          false /* is_rotated */,
-          GetCurrentFormat() ? GetCurrentFormat()->frame_size
-                             : gfx::Size(track.adapter_settings->max_width,
-                                         track.adapter_settings->max_height),
-          gfx::Size(track.adapter_settings->max_width,
-                    track.adapter_settings->max_height),
-          track.adapter_settings->min_aspect_ratio,
-          track.adapter_settings->max_aspect_ratio, &desired_size);
-      track.track->SetTargetSizeAndFrameRate(
-          desired_size.width(), desired_size.height(),
-          track.adapter_settings->max_frame_rate);
+      UpdateTrackSettings(track.track, *track.adapter_settings);
     }
 
     if (!track.callback.is_null())
@@ -237,6 +229,22 @@ void MediaStreamVideoSource::SetMutedState(bool muted_state) {
                               ? blink::WebMediaStreamSource::kReadyStateMuted
                               : blink::WebMediaStreamSource::kReadyStateLive);
   }
+}
+
+void MediaStreamVideoSource::UpdateTrackSettings(
+    MediaStreamVideoTrack* track,
+    const VideoTrackAdapterSettings& adapter_settings) {
+  // Calculate resulting frame size if the source delivers frames
+  // according to the current format. Note: Format may change later.
+  gfx::Size desired_size;
+  VideoTrackAdapter::CalculateTargetSize(
+      false /* is_rotated */,
+      GetCurrentFormat()
+          ? GetCurrentFormat()->frame_size
+          : gfx::Size(adapter_settings.max_width, adapter_settings.max_height),
+      adapter_settings, &desired_size);
+  track->SetTargetSizeAndFrameRate(desired_size.width(), desired_size.height(),
+                                   adapter_settings.max_frame_rate);
 }
 
 MediaStreamVideoSource::TrackDescriptor::TrackDescriptor(
