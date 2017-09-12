@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4acc23e_c2490822",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-12T08:43:39Z",
+      "side": 1,
+      "message": "Just curious but what will happen when we modify generate_conditional_features.py without modifying following list? I understand that it\u0027s difficult to modify generate_conditiona_features.py to pass around the snake-case-generated-file but I guess modifying bindings scripts a bit reliable?",
+      "revId": "4e171c09b42e1450a27da934edfce944985eab2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
