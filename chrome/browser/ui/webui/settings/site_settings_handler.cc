@@ -49,6 +49,9 @@
 #include "ui/base/text/bytes_formatting.h"
 
 #if defined(OS_CHROMEOS)
+#include "chrome/common/pref_names.h"
+#include "components/prefs/pref_change_registrar.h"
+#include "components/prefs/pref_service.h"
 #include "components/user_manager/user_manager.h"
 #endif
 
@@ -112,6 +115,14 @@ void AddExceptionsGrantedByHostedApps(content::BrowserContext* context,
 
 SiteSettingsHandler::SiteSettingsHandler(Profile* profile)
     : profile_(profile), observer_(this) {
+#if defined(OS_CHROMEOS)
+  pref_change_registrar_ = base::MakeUnique<PrefChangeRegistrar>();
+  pref_change_registrar_->Init(profile->GetPrefs());
+  pref_change_registrar_->Add(
+      prefs::kEnableDRM,
+      base::Bind(&SiteSettingsHandler::OnPrefEnableDrmChanged,
+                 base::Unretained(this)));
+#endif
 }
 
 SiteSettingsHandler::~SiteSettingsHandler() {
@@ -238,6 +249,14 @@ void SiteSettingsHandler::OnUsageInfoCleared(storage::QuotaStatusCode code) {
                            base::Value(clearing_origin_));
   }
 }
+
+#if defined(OS_CHROMEOS)
+void SiteSettingsHandler::OnPrefEnableDrmChanged() {
+  AllowJavascript();
+  CallJavascriptFunction("cr.webUIListenerCallback",
+                         base::Value("prefEnableDrmChanged"));
+}
+#endif
 
 void SiteSettingsHandler::OnContentSettingChanged(
     const ContentSettingsPattern& primary_pattern,

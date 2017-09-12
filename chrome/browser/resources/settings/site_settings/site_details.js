@@ -74,6 +74,11 @@ Polymer({
     this.addWebUIListener(
         'contentSettingSitePermissionChanged',
         this.onPermissionChanged_.bind(this));
+
+    // <if expr="chromeos">
+    this.addWebUIListener(
+        'prefEnableDrmChanged', this.prefEnableDrmChanged_.bind(this));
+    // </if>
   },
 
   /** @override */
@@ -108,7 +113,6 @@ Polymer({
         this.updatePermissions_(this.getCategoryList_());
       }
     });
-
   },
 
   /**
@@ -130,6 +134,12 @@ Polymer({
     // just check whether the origins are the same.
     if (this.toUrl(origin).origin == this.toUrl(this.origin).origin)
       this.updatePermissions_([category]);
+  },
+
+  prefEnableDrmChanged_: function() {
+    // <if expr="chromeos">
+    this.updatePermissions_([settings.ContentSettingsTypes.PROTECTED_CONTENT]);
+    // </if>
   },
 
   /**
@@ -222,10 +232,15 @@ Polymer({
    * @private
    */
   getCategoryList_: function() {
-    return Array.prototype.map.call(
-        this.root.querySelectorAll('site-details-permission'), (element) => {
-          return element.category;
-        });
+    var categoryList = [];
+    this.root.querySelectorAll('site-details-permission').forEach((element) => {
+      // <if expr="not chromeos">
+      if (element.category == settings.ContentSettingsTypes.PROTECTED_CONTENT)
+        return;
+      // </if>
+      categoryList.push(element.category);
+    });
+    return categoryList;
   },
 
   /**
