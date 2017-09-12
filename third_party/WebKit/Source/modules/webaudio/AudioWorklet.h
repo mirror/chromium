@@ -11,6 +11,7 @@
 
 namespace blink {
 
+class AudioWorkletMessagingProxy;
 class BaseAudioContext;
 class LocalFrame;
 
@@ -23,6 +24,8 @@ class MODULES_EXPORT AudioWorklet final : public Worklet {
 
   void RegisterContext(BaseAudioContext*);
   void UnregisterContext(BaseAudioContext*);
+
+  AudioWorkletMessagingProxy* WorkletMessagingProxy();
 
   DECLARE_VIRTUAL_TRACE();
 
