@@ -45,6 +45,54 @@
       "revId": "befe7a5c3c5779879fb4f90a9ccbc7c00b9c7437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea05ace2_456269f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-12T22:28:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a37cd055_680d3b96",
+      "range": {
+        "startLine": 433,
+        "startChar": 45,
+        "endLine": 433,
+        "endChar": 67
+      },
+      "revId": "befe7a5c3c5779879fb4f90a9ccbc7c00b9c7437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "942c364a_f1a9a63e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-12T22:28:11Z",
+      "side": 1,
+      "message": "Currently it smooth scrolls (it doesn\u0027t jump the content). \n#scrollToPosition jumps to the top.",
+      "parentUuid": "5da35b49_6eddd8d9",
+      "range": {
+        "startLine": 433,
+        "startChar": 22,
+        "endLine": 433,
+        "endChar": 44
+      },
+      "revId": "befe7a5c3c5779879fb4f90a9ccbc7c00b9c7437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
