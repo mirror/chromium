@@ -22,6 +22,30 @@
       "revId": "13ce8f521d57f624eed2588e6bc30713e376a55d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3527eff_35f0a96d",
+        "filename": "cc/base/math_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-12T21:58:46Z",
+      "side": 0,
+      "message": "The DCHECK contradicts the name and comments on the function.  The function claims this is unchecked and may overflow, but the DCHECK says that callers may not (actually \"do not\") pass in values that overflow.\n\nAs to why it\u0027s in this CL -- I wanted to avoid putting it in the actual refactoring CLs that follow, and this was a bit of a grab bag.  Also since Dana had already LGTMed it in another CL I didn\u0027t bother pulling it out.",
+      "parentUuid": "c5a10d08_c31b0843",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 10
+      },
+      "revId": "13ce8f521d57f624eed2588e6bc30713e376a55d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
