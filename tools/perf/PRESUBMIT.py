@@ -22,6 +22,7 @@ def _CommonChecks(input_api, output_api):
   results.extend(input_api.RunTests(input_api.canned_checks.GetPylint(
       input_api, output_api, extra_paths_list=_GetPathsToPrepend(input_api),
       pylintrc='pylintrc')))
+  print 'hi'
   return results
 
 
