@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e87e396_8cccf55e",
+        "filename": "ipc/ipc_channel_mojo.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-13T20:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03c89119_5bf524ca",
+      "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86200611_17f710ca",
         "filename": "ipc/ipc_channel_mojo.cc",
         "patchSetId": 10
@@ -39,6 +57,30 @@
       "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b220c7_1dcb0675",
+        "filename": "ipc/ipc_channel_mojo.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-13T20:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86200611_17f710ca",
+      "range": {
+        "startLine": 329,
+        "startChar": 6,
+        "endLine": 329,
+        "endChar": 9
+      },
+      "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "9493bcf3_4801c987",
+        "filename": "ipc/ipc_message_attachment.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-13T20:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ca2314a_09c88985",
+      "range": {
+        "startLine": 71,
+        "startChar": 17,
+        "endLine": 71,
+        "endChar": 35
+      },
+      "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edd8c6c8_aac0adea",
         "filename": "ipc/ipc_message_attachment.h",
         "patchSetId": 10
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "c64e9bff_66942a36",
+        "filename": "ipc/ipc_message_attachment.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-13T20:12:51Z",
+      "side": 1,
+      "message": "Sure",
+      "parentUuid": "edd8c6c8_aac0adea",
+      "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8171a120_b99b470f",
         "filename": "mojo/public/cpp/bindings/lib/native_struct_serialization.cc",
         "patchSetId": 10
@@ -93,6 +177,24 @@
       "writtenOn": "2017-09-12T23:07:41Z",
       "side": 1,
       "message": "It\u0027s a little sad that we dupe this. Maybe the earlier suggestion re: using TypeConverter (and putting it in a separate file) would be a natural way to express this?",
+      "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3053a4ce_5fb627aa",
+        "filename": "mojo/public/cpp/bindings/lib/native_struct_serialization.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-13T20:12:51Z",
+      "side": 1,
+      "message": "De-duped. Everything uses the bindings-defined enum now, and there\u0027s a TypeConverter defined by a separate //ipc target. This results in some amount of unavoidable sadness in that there\u0027s an inexpressible circular dependency between that target and the bindings (for TypeConverter definition). I believe it\u0027s safe though.",
+      "parentUuid": "8171a120_b99b470f",
       "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "43d623d3_13355e62",
+        "filename": "mojo/public/cpp/bindings/lib/native_struct_serialization.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-13T20:12:51Z",
+      "side": 1,
+      "message": "[Native]\nstruct Foo;\n\ninterface Bar {\n  DoStuff(Foo? foo);\n};",
+      "parentUuid": "1e983e24_c25d4f8f",
+      "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c128839f_b179c0ce",
         "filename": "mojo/public/cpp/bindings/lib/native_struct_serialization.h",
         "patchSetId": 10
@@ -130,6 +250,24 @@
       "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488e913c_31ee4395",
+        "filename": "mojo/public/cpp/bindings/lib/native_struct_serialization.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-13T20:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c128839f_b179c0ce",
+      "revId": "ddacd8a19eab17e7e577ab4eb42a6839386bb4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
