@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "777aef20_f5635026",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3ed8aba_17dff921",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5be35091_938e66dd",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c19cd2f9_077ff172",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 20
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "678c741d_4ec6cc39",
         "filename": "content/common/page_state.mojom",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282a13d7_45537f8f",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "678c741d_4ec6cc39",
+      "range": {
+        "startLine": 5,
+        "startChar": 7,
+        "endLine": 5,
+        "endChar": 17
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b8f0bad7_615d7565",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e240306_725d6faa",
+      "range": {
+        "startLine": 7,
+        "startChar": 2,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7feb8a9_6c8edf23",
         "filename": "content/common/page_state.mojom",
         "patchSetId": 7
@@ -114,6 +210,30 @@
       "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b23cabd_aa00df05",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7feb8a9_6c8edf23",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "dbbd9ff9_12a92726",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "Thanks Daniel, that\u0027s why I chose String16. I think path can use utf8 but the other string16s in this file are (nullable) string16s in their native FrameState/PageState counterparts and so I\u0027m trying to avoid converting them back and forth.",
+      "parentUuid": "82b9a7e7_27cb5505",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 28
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ed6b5ee_add14a94",
         "filename": "content/common/page_state.mojom",
         "patchSetId": 7
@@ -184,6 +328,30 @@
       "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a15dc8_9541ae26",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed6b5ee_add14a94",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "be167a86_35ef0516",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb88c9fc_bf5ce4ae",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 6
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f03c4b54_d6fe519f",
         "filename": "content/common/page_state.mojom",
         "patchSetId": 7
@@ -230,6 +422,30 @@
       "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c130d790_d19101d4",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f03c4b54_d6fe519f",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 8
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "18aa6b2d_06a6f0a6",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "I ended up finding and using the existing mojom definition of this enum instead, which enforces the enum matching in ReferrerPolicyEnumTraits.h",
+      "parentUuid": "d7afad70_db3e6b71",
+      "range": {
+        "startLine": 56,
+        "startChar": 27,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "992ec0a9_0002e14d",
         "filename": "content/common/page_state.mojom",
         "patchSetId": 7
@@ -267,6 +507,30 @@
       "writtenOn": "2017-09-12T15:42:49Z",
       "side": 1,
       "message": "Can this be Url from //url/mojo/url.mojom?",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 28
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbeacf2b_99b1570e",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "I\u0027d prefer not to change this to Url since ExplodedFrameState uses a string for this field. I did change filesystem_url above to use Url though, since that is its native representation.",
+      "parentUuid": "992ec0a9_0002e14d",
       "range": {
         "startLine": 67,
         "startChar": 2,
@@ -322,6 +586,30 @@
       "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c909509_09ee971b",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbd2e9bc_af63d213",
+      "range": {
+        "startLine": 716,
+        "startChar": 48,
+        "endLine": 716,
+        "endChar": 60
+      },
+      "revId": "6629f0287c3a110d87d040c1678c13a06196a501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

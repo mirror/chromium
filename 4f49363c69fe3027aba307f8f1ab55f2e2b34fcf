@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cba8bc0b_dd4cdf38",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66774805_49095df9",
+      "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff8f009a_db2394f7",
         "filename": "content/common/page_state_serialization.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87c9d70_d0c245ee",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "It\u0027s not really necessary to do both, no. I\u0027ll keep the move so that there\u0027s a clear separation of legacy and non-legacy methods.",
+      "parentUuid": "ff8f009a_db2394f7",
+      "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "caab501c_edb078c3",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a07b6e72_cbe16b6c",
+      "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85492ecf_23880608",
         "filename": "content/common/page_state_serialization.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46e0ac1_bf548094",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85492ecf_23880608",
+      "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0a3e5fbe_5c10f79b",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eba47ff_aadf9141",
+      "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df27b9ae_c054c245",
         "filename": "content/common/page_state_serialization.h",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-11T21:26:48Z",
       "side": 1,
       "message": "What\u0027s this for?  (I see references to \"quirk of the format\" in the .cc file.  Is the value used anywhere?  We should clarify in comments if it\u0027s different than the rest.)",
+      "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbb9afd_381cdffb",
+        "filename": "content/common/page_state_serialization.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "I included this by mistake; I was toying with the idea of moving http_content_type into FrameState but it ended up ballooning more than I wanted for the initial review.",
+      "parentUuid": "df27b9ae_c054c245",
       "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8818f6df_072bcd33",
+        "filename": "content/common/page_state_serialization_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T19:20:29Z",
+      "side": 1,
+      "message": "I\u0027ve added a comment and done my best to clean up the naming in both places.",
+      "parentUuid": "d07988ce_4dc89c76",
+      "revId": "4f49363c69fe3027aba307f8f1ab55f2e2b34fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
