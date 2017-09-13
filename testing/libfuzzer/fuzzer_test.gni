@@ -120,6 +120,8 @@ template("fuzzer_test") {
       forward_variables_from(invoker,
                              [
                                "check_includes",
+                               "cflags",
+                               "cflags_cc",
                                "defines",
                                "include_dirs",
                                "sources",
