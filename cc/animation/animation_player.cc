@@ -354,6 +354,13 @@ bool AnimationPlayer::IsPotentiallyAnimatingProperty(
                                                            list_type);
 }
 
+bool AnimationPlayer::IsPotentiallyAnimatingPropertyWithDifferentValues(
+    TargetProperty::Type target_property,
+    ElementListType list_type) const {
+  return animation_ticker_->IsPotentiallyAnimatingPropertyWithDifferentValues(
+      target_property, list_type);
+}
+
 bool AnimationPlayer::IsCurrentlyAnimatingProperty(
     TargetProperty::Type target_property,
     ElementListType list_type) const {

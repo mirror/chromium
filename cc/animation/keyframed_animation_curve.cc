@@ -329,6 +329,10 @@ float KeyframedFloatAnimationCurve::GetValue(base::TimeDelta t) const {
       (keyframes_[i+1]->Value() - keyframes_[i]->Value()) * progress;
 }
 
+bool KeyframedFloatAnimationCurve::IsAnimatingDifferentValues() const {
+  return keyframes_.front()->Value() != keyframes_.back()->Value();
+}
+
 std::unique_ptr<KeyframedTransformAnimationCurve>
 KeyframedTransformAnimationCurve::Create() {
   return base::WrapUnique(new KeyframedTransformAnimationCurve);

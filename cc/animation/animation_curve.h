@@ -72,6 +72,8 @@ class CC_ANIMATION_EXPORT FloatAnimationCurve : public AnimationCurve {
 
   virtual float GetValue(base::TimeDelta t) const = 0;
 
+  virtual bool IsAnimatingDifferentValues() const = 0;
+
   CurveType Type() const override;
 };
 

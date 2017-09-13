@@ -478,6 +478,29 @@ bool AnimationTicker::IsPotentiallyAnimatingProperty(
   return false;
 }
 
+bool AnimationTicker::IsPotentiallyAnimatingPropertyWithDifferentValues(
+    TargetProperty::Type target_property,
+    ElementListType list_type) const {
+  for (size_t i = 0; i < animations_.size(); ++i) {
+    if (!animations_[i]->is_finished() &&
+        animations_[i]->target_property_id() == target_property) {
+      AnimationCurve* curve = animations_[i]->curve();
+      // TODO(wutao): To add support for other curve types.
+      // http://crbugs.com/764575.
+      if (curve && curve->Type() == AnimationCurve::FLOAT &&
+          !curve->ToFloatAnimationCurve()->IsAnimatingDifferentValues())
+        continue;
+
+      if ((list_type == ElementListType::ACTIVE &&
+           animations_[i]->affects_active_elements()) ||
+          (list_type == ElementListType::PENDING &&
+           animations_[i]->affects_pending_elements()))
+        return true;
+    }
+  }
+  return false;
+}
+
 bool AnimationTicker::IsCurrentlyAnimatingProperty(
     TargetProperty::Type target_property,
     ElementListType list_type) const {

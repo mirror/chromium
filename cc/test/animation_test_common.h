@@ -31,6 +31,7 @@ class FakeFloatAnimationCurve : public FloatAnimationCurve {
 
   base::TimeDelta Duration() const override;
   float GetValue(base::TimeDelta now) const override;
+  bool IsAnimatingDifferentValues() const override;
   std::unique_ptr<AnimationCurve> Clone() const override;
 
  private:
@@ -66,6 +67,7 @@ class FakeFloatTransition : public FloatAnimationCurve {
 
   base::TimeDelta Duration() const override;
   float GetValue(base::TimeDelta time) const override;
+  bool IsAnimatingDifferentValues() const override;
 
   std::unique_ptr<AnimationCurve> Clone() const override;
 

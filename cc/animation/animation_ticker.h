@@ -107,6 +107,9 @@ class CC_ANIMATION_EXPORT AnimationTicker {
 
   bool IsPotentiallyAnimatingProperty(TargetProperty::Type target_property,
                                       ElementListType list_type) const;
+  bool IsPotentiallyAnimatingPropertyWithDifferentValues(
+      TargetProperty::Type target_property,
+      ElementListType list_type) const;
   bool IsCurrentlyAnimatingProperty(TargetProperty::Type target_property,
                                     ElementListType list_type) const;
 
