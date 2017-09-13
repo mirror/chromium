@@ -37,6 +37,13 @@ namespace protocol {
 
 namespace {
 
+using BackgroundSyncState = blink::mojom::BackgroundSyncState;
+using GetSyncStatusCallback = ServiceWorkerHandler::GetSyncStatusCallback;
+using ServiceWorkerSyncRegistration =
+    protocol::ServiceWorker::ServiceWorkerSyncRegistration;
+using ServiceWorkerSyncStatus =
+    protocol::ServiceWorker::ServiceWorkerSyncStatus;
+
 void ResultNoOp(bool success) {
 }
 
@@ -150,6 +157,92 @@ void DispatchSyncEventOnIO(scoped_refptr<ServiceWorkerContextWrapper> context,
       registration_id, origin,
       base::Bind(&DidFindRegistrationForDispatchSyncEventOnIO, sync_context,
                  tag, last_chance));
+}
+
+String ToProtocolSyncStatus(BackgroundSyncStatus status) {
+  switch (status) {
+    case BACKGROUND_SYNC_STATUS_OK:
+      return ServiceWorkerSyncStatus::StatusEnum::Ok;
+    case BACKGROUND_SYNC_STATUS_STORAGE_ERROR:
+      return ServiceWorkerSyncStatus::StatusEnum::Storage_error;
+    case BACKGROUND_SYNC_STATUS_NOT_FOUND:
+      return ServiceWorkerSyncStatus::StatusEnum::Not_found;
+    case BACKGROUND_SYNC_STATUS_NO_SERVICE_WORKER:
+      return ServiceWorkerSyncStatus::StatusEnum::No_service_worker;
+    case BACKGROUND_SYNC_STATUS_NOT_ALLOWED:
+      return ServiceWorkerSyncStatus::StatusEnum::Not_allowed;
+    case BACKGROUND_SYNC_STATUS_PERMISSION_DENIED:
+      return ServiceWorkerSyncStatus::StatusEnum::Permission_denied;
+  }
+}
+
+String ToProtocolNetworkState(SyncNetworkState a) {
+  switch (a) {
+    case NETWORK_STATE_ANY:
+      return ServiceWorkerSyncRegistration::SyncNetworkStateEnum::Any;
+    case NETWORK_STATE_AVOID_CELLULAR:
+      return ServiceWorkerSyncRegistration::SyncNetworkStateEnum::
+          Avoid_cellular;
+    case NETWORK_STATE_ONLINE:
+      return ServiceWorkerSyncRegistration::SyncNetworkStateEnum::Online;
+  }
+}
+
+String ToProtocolBackgroundSyncState(BackgroundSyncState state) {
+  switch (state) {
+    case BackgroundSyncState::PENDING:
+      return ServiceWorkerSyncRegistration::BackgroundSyncStateEnum::Pending;
+    case BackgroundSyncState::FIRING:
+      return ServiceWorkerSyncRegistration::BackgroundSyncStateEnum::Firing;
+    case BackgroundSyncState::REREGISTERED_WHILE_FIRING:
+      return ServiceWorkerSyncRegistration::BackgroundSyncStateEnum::
+          Reregistered_while_firing;
+  }
+}
+
+std::unique_ptr<protocol::Array<ServiceWorkerSyncRegistration>>
+ToProtocolRegistrations(
+    const std::vector<std::unique_ptr<BackgroundSyncRegistration>>&
+        registrations) {
+  auto result = protocol::Array<ServiceWorkerSyncRegistration>::create();
+  for (const auto& registration : registrations) {
+    result->addItem(ServiceWorkerSyncRegistration::Create()
+                        .SetDelayUntil(registration->delay_until().ToDoubleT())
+                        .SetNumAttempts(registration->num_attempts())
+                        .SetSyncNetworkState(ToProtocolNetworkState(
+                            registration->options()->network_state))
+                        .SetBackgroundSyncState(ToProtocolBackgroundSyncState(
+                            registration->sync_state()))
+                        .SetTag(registration->options()->tag)
+                        .Build());
+  }
+  return result;
+}
+
+void RegistrationsVectorToProtocolArrayOnIO(
+    std::unique_ptr<GetSyncStatusCallback> callback,
+    BackgroundSyncStatus status,
+    std::vector<std::unique_ptr<BackgroundSyncRegistration>> registrations) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::Bind(&GetSyncStatusCallback::sendSuccess,
+                 base::Passed(std::move(callback)),
+                 base::Passed(ServiceWorkerSyncStatus::Create()
+                                  .SetStatus(ToProtocolSyncStatus(status))
+                                  .SetRegistrations(
+                                      ToProtocolRegistrations(registrations))
+                                  .Build())));
+}
+
+void GetRegistrationsOnIO(scoped_refptr<BackgroundSyncContext> sync_context,
+                          int64_t registration_id,
+                          std::unique_ptr<GetSyncStatusCallback> callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  sync_context->background_sync_manager()->GetRegistrations(
+      registration_id, base::Bind(&RegistrationsVectorToProtocolArrayOnIO,
+                                  base::Passed(std::move(callback))));
 }
 
 }  // namespace
@@ -446,6 +539,31 @@ void ServiceWorkerHandler::OnErrorReported(
 void ServiceWorkerHandler::ClearForceUpdate() {
   if (context_)
     context_->SetForceUpdateOnPageLoad(false);
+}
+
+void ServiceWorkerHandler::GetSyncStatus(
+    const String& registration_id,
+    std::unique_ptr<GetSyncStatusCallback> callback) {
+  if (!render_frame_host_) {
+    callback->sendFailure(CreateContextErrorResponse());
+    return;
+  }
+  int64_t id = 0;
+  if (!base::StringToInt64(registration_id, &id)) {
+    callback->sendFailure(CreateInvalidVersionIdErrorResponse());
+    return;
+  }
+
+  StoragePartitionImpl* partition =
+      static_cast<StoragePartitionImpl*>(BrowserContext::GetStoragePartition(
+          render_frame_host_->GetProcess()->GetBrowserContext(),
+          render_frame_host_->GetSiteInstance()));
+  BackgroundSyncContext* sync_context = partition->GetBackgroundSyncContext();
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&GetRegistrationsOnIO, make_scoped_refptr(sync_context),
+                     id, base::Passed(std::move(callback))));
 }
 
 }  // namespace protocol
