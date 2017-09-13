@@ -542,6 +542,7 @@ public class SuggestionsSection extends InnerNode {
 
     /** Sets the status for the section. Some statuses can cause the suggestions to be cleared. */
     public void setStatus(@CategoryStatus int status) {
+        Log.d(TAG, "setStatus(%d) for category %d", status, mCategoryInfo.getCardLayout());
         if (!SnippetsBridge.isCategoryStatusAvailable(status)) {
             clearData();
             Log.d(TAG, "setStatus: unavailable status, cleared suggestions.");
