@@ -18,6 +18,11 @@ proto_generator_path = os.path.normpath(os.path.join(os.path.abspath(__file__),
 sys.path.insert(0, proto_generator_path)
 from binary_proto_generator import BinaryProtoGenerator
 
+def MakeSubDirs(outfile):
+  """ Make the subdirectories needed to create file |outfile| """
+  dirname = os.path.dirname(outfile)
+  if not os.path.exists(dirname):
+    os.makedirs(dirname)
 
 class SSLErrorAssistantProtoGenerator(BinaryProtoGenerator):
   def ImportProtoModule(self):
@@ -37,7 +42,8 @@ class SSLErrorAssistantProtoGenerator(BinaryProtoGenerator):
 
   def ProcessPb(self, opts, pb):
     binary_pb_str = pb.SerializeToString()
-    outfile = os.path.join(opts.outdir, opts.outbasename)
+    outfile = os.path.join(opts.outdir, str(pb.version_id), opts.outbasename)
+    MakeSubDirs(outfile)
     open(outfile, 'wb').write(binary_pb_str)
 
 
