@@ -15,6 +15,7 @@
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceLoadPriority.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
@@ -100,10 +101,10 @@ class LinkLoaderPreloadTest
     : public ::testing::TestWithParam<PreloadTestParams> {
  public:
   ~LinkLoaderPreloadTest() {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 TEST_P(LinkLoaderPreloadTest, Preload) {
@@ -117,7 +118,8 @@ TEST_P(LinkLoaderPreloadTest, Preload) {
       MockLinkLoaderClient::Create(test_case.link_loader_should_load_value);
   LinkLoader* loader = LinkLoader::Create(loader_client.Get());
   KURL href_url = KURL(NullURL(), test_case.href);
-  URLTestHelpers::RegisterMockedErrorURLLoad(href_url);
+  URLTestHelpers::RegisterMockedErrorURLLoad(
+      href_url, platform_->GetURLLoaderMockFactory());
   loader->LoadLink(LinkRelAttribute("preload"), kCrossOriginAttributeNotSet,
                    test_case.type, test_case.as, test_case.media,
                    test_case.referrer_policy, href_url,
@@ -297,6 +299,7 @@ TEST(LinkLoaderTest, Prefetch) {
 
   // Test the cases with a single header
   for (const auto& test_case : cases) {
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
     std::unique_ptr<DummyPageHolder> dummy_page_holder =
         DummyPageHolder::Create(IntSize(500, 500));
     dummy_page_holder->GetFrame().GetSettings()->SetScriptEnabled(true);
@@ -304,7 +307,8 @@ TEST(LinkLoaderTest, Prefetch) {
         MockLinkLoaderClient::Create(test_case.link_loader_should_load_value);
     LinkLoader* loader = LinkLoader::Create(loader_client.Get());
     KURL href_url = KURL(NullURL(), test_case.href);
-    URLTestHelpers::RegisterMockedErrorURLLoad(href_url);
+    URLTestHelpers::RegisterMockedErrorURLLoad(
+        href_url, platform_->GetURLLoaderMockFactory());
     loader->LoadLink(LinkRelAttribute("prefetch"), kCrossOriginAttributeNotSet,
                      test_case.type, "", test_case.media,
                      test_case.referrer_policy, href_url,
@@ -322,8 +326,7 @@ TEST(LinkLoaderTest, Prefetch) {
                   resource->GetResourceRequest().GetReferrerPolicy());
       }
     }
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 }
@@ -398,6 +401,7 @@ TEST(LinkLoaderTest, Preconnect) {
 }
 
 TEST(LinkLoaderTest, PreloadAndPrefetch) {
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
   std::unique_ptr<DummyPageHolder> dummy_page_holder =
       DummyPageHolder::Create(IntSize(500, 500));
   ResourceFetcher* fetcher = dummy_page_holder->GetDocument().Fetcher();
@@ -407,7 +411,8 @@ TEST(LinkLoaderTest, PreloadAndPrefetch) {
       MockLinkLoaderClient::Create(true);
   LinkLoader* loader = LinkLoader::Create(loader_client.Get());
   KURL href_url = KURL(KURL(), "https://www.example.com/");
-  URLTestHelpers::RegisterMockedErrorURLLoad(href_url);
+  URLTestHelpers::RegisterMockedErrorURLLoad(
+      href_url, platform_->GetURLLoaderMockFactory());
   loader->LoadLink(LinkRelAttribute("preload prefetch"),
                    kCrossOriginAttributeNotSet, "application/javascript",
                    "script", "", kReferrerPolicyDefault, href_url,

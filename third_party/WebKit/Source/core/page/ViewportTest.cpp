@@ -40,9 +40,9 @@
 #include "platform/geometry/IntRect.h"
 #include "platform/geometry/IntSize.h"
 #include "platform/scroll/ScrollbarTheme.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/web/WebConsoleMessage.h"
 #include "public/web/WebFrame.h"
@@ -62,21 +62,20 @@ class ViewportTest : public ::testing::Test {
       : base_url_("http://www.test.com/"), chrome_url_("chrome://") {}
 
   ~ViewportTest() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
   void RegisterMockedHttpURLLoad(const std::string& file_name) {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
-        WebString::FromUTF8(file_name));
+        WebString::FromUTF8(file_name), platform_->GetURLLoaderMockFactory());
   }
 
   void RegisterMockedChromeURLLoad(const std::string& file_name) {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(chrome_url_), testing::CoreTestDataPath(),
-        WebString::FromUTF8(file_name));
+        WebString::FromUTF8(file_name), platform_->GetURLLoaderMockFactory());
   }
 
   void ExecuteScript(WebLocalFrame* frame, const WebString& code) {
@@ -86,6 +85,7 @@ class ViewportTest : public ::testing::Test {
 
   std::string base_url_;
   std::string chrome_url_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 static void SetViewportSettings(WebSettings* settings) {

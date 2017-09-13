@@ -45,8 +45,7 @@ class NotificationImageLoaderTest : public ::testing::Test {
 
   ~NotificationImageLoaderTest() override {
     loader_->Stop();
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
@@ -55,7 +54,7 @@ class NotificationImageLoaderTest : public ::testing::Test {
   WebURL RegisterMockedURL(const String& file_name) {
     WebURL registered_url = URLTestHelpers::RegisterMockedURLLoadFromBase(
         kImageLoaderBaseUrl, testing::CoreTestDataPath(kImageLoaderBaseDir),
-        file_name, "image/png");
+        file_name, platform_->GetURLLoaderMockFactory(), "image/png");
     return registered_url;
   }
 
@@ -79,6 +78,7 @@ class NotificationImageLoaderTest : public ::testing::Test {
 
  protected:
   HistogramTester histogram_tester_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 
  private:
   std::unique_ptr<DummyPageHolder> page_;
@@ -92,7 +92,7 @@ TEST_F(NotificationImageLoaderTest, SuccessTest) {
   histogram_tester_.ExpectTotalCount("Notifications.LoadFinishTime.Icon", 0);
   histogram_tester_.ExpectTotalCount("Notifications.LoadFileSize.Icon", 0);
   histogram_tester_.ExpectTotalCount("Notifications.LoadFailTime.Icon", 0);
-  Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
+  platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
   EXPECT_EQ(LoadState::kLoadSuccessful, Loaded());
   histogram_tester_.ExpectTotalCount("Notifications.LoadFinishTime.Icon", 1);
   histogram_tester_.ExpectUniqueSample("Notifications.LoadFileSize.Icon", 7439,

@@ -22,10 +22,10 @@
 #include "core/paint/compositing/CompositedLayerMapping.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/Vector.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebCoalescedInputEvent.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/web/WebConsoleMessage.h"
@@ -58,8 +58,7 @@ class RootScrollerTest : public ::testing::Test,
 
   ~RootScrollerTest() override {
     features_backup_.Restore();
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
@@ -90,7 +89,7 @@ class RootScrollerTest : public ::testing::Test,
   void RegisterMockedHttpURLLoad(const std::string& file_name) {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
-        WebString::FromUTF8(file_name));
+        WebString::FromUTF8(file_name), platform_->GetURLLoaderMockFactory());
   }
 
   void ExecuteScript(const WebString& code) {
@@ -182,6 +181,7 @@ class RootScrollerTest : public ::testing::Test,
   std::string base_url_;
   FrameTestHelpers::WebViewHelper helper_;
   RuntimeEnabledFeatures::Backup features_backup_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 INSTANTIATE_TEST_CASE_P(All, RootScrollerTest, ::testing::Bool());

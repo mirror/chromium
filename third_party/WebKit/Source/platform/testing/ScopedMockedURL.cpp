@@ -5,23 +5,26 @@
 #include "platform/testing/ScopedMockedURL.h"
 
 #include "platform/testing/URLTestHelpers.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 
 namespace blink {
 namespace testing {
 
-ScopedMockedURL::ScopedMockedURL(const WebURL& url) : url_(url) {}
+ScopedMockedURL::ScopedMockedURL(const WebURL& url,
+                                 WebURLLoaderMockFactory* platform)
+    : url_(url), platform_(platform) {}
 
 ScopedMockedURL::~ScopedMockedURL() {
-  Platform::Current()->GetURLLoaderMockFactory()->UnregisterURL(url_);
+  platform_->UnregisterURL(url_);
 }
 
 ScopedMockedURLLoad::ScopedMockedURLLoad(const WebURL& full_url,
                                          const WebString& file_path,
+                                         WebURLLoaderMockFactory* platform,
                                          const WebString& mime_type)
-    : ScopedMockedURL(full_url) {
-  URLTestHelpers::RegisterMockedURLLoad(full_url, file_path, mime_type);
+    : ScopedMockedURL(full_url, platform) {
+  URLTestHelpers::RegisterMockedURLLoad(full_url, file_path, platform,
+                                        mime_type);
 }
 
 }  // namespace testing

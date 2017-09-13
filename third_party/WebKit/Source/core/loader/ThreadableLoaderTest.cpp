@@ -21,6 +21,7 @@
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/fetch/ResourceTimingInfo.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/weborigin/KURL.h"
@@ -29,7 +30,6 @@
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/RefPtr.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebURLLoadTiming.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/platform/WebURLRequest.h"
@@ -325,6 +325,9 @@ class ThreadableLoaderTest
     : public ::testing::TestWithParam<ThreadableLoaderToTest> {
  public:
   ThreadableLoaderTest() {
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+    platform_ = platform->GetURLLoaderMockFactory();
+
     switch (GetParam()) {
       case kDocumentThreadableLoaderTest:
         helper_ = WTF::WrapUnique(new DocumentThreadableLoaderTestHelper);
@@ -353,7 +356,7 @@ class ThreadableLoaderTest
 
   void ServeRequests() {
     helper_->OnServeRequests();
-    Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
+    platform_->ServeAsynchronousRequests();
   }
 
   void CreateLoader() { helper_->CreateLoader(Client()); }
@@ -373,19 +376,18 @@ class ThreadableLoaderTest
 
   void TearDown() override {
     helper_->OnTearDown();
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
-        ->UnregisterAllURLsAndClearMemoryCache();
+    platform_->UnregisterAllURLsAndClearMemoryCache();
     client_.reset();
   }
 
   void SetUpSuccessURL() {
-    URLTestHelpers::RegisterMockedURLLoad(
-        SuccessURL(), testing::CoreTestDataPath(kFileName), "text/html");
+    URLTestHelpers::RegisterMockedURLLoad(SuccessURL(),
+                                          testing::CoreTestDataPath(kFileName),
+                                          platform_, "text/html");
   }
 
   void SetUpErrorURL() {
-    URLTestHelpers::RegisterMockedErrorURLLoad(ErrorURL());
+    URLTestHelpers::RegisterMockedErrorURLLoad(ErrorURL(), platform_);
   }
 
   void SetUpRedirectURL() {
@@ -402,7 +404,7 @@ class ThreadableLoaderTest
     response.AddHTTPHeaderField("Access-Control-Allow-Origin", "null");
 
     URLTestHelpers::RegisterMockedURLLoadWithCustomResponse(
-        url, testing::CoreTestDataPath(kFileName), response);
+        url, testing::CoreTestDataPath(kFileName), response, platform_);
   }
 
   void SetUpRedirectLoopURL() {
@@ -419,11 +421,12 @@ class ThreadableLoaderTest
     response.AddHTTPHeaderField("Access-Control-Allow-Origin", "null");
 
     URLTestHelpers::RegisterMockedURLLoadWithCustomResponse(
-        url, testing::CoreTestDataPath(kFileName), response);
+        url, testing::CoreTestDataPath(kFileName), response, platform_);
   }
 
   std::unique_ptr<MockThreadableLoaderClient> client_;
   std::unique_ptr<ThreadableLoaderTestHelper> helper_;
+  WebURLLoaderMockFactory* platform_;
 };
 
 INSTANTIATE_TEST_CASE_P(Document,

@@ -39,9 +39,9 @@
 #include "core/layout/LayoutView.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/web/WebFrameClient.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -59,8 +59,7 @@ class LayoutGeometryMapTest
         base_url_("http://www.test.com/") {}
 
   void TearDown() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
@@ -165,10 +164,11 @@ class LayoutGeometryMapTest
   void RegisterMockedHttpURLLoad(const std::string& file_name) {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
-        WebString::FromUTF8(file_name));
+        WebString::FromUTF8(file_name), platform_->GetURLLoaderMockFactory());
   }
 
   const std::string base_url_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 INSTANTIATE_TEST_CASE_P(All, LayoutGeometryMapTest, ::testing::Bool());

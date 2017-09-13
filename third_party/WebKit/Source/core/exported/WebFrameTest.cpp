@@ -113,6 +113,7 @@
 #include "platform/scroll/ScrollbarTestSuite.h"
 #include "platform/testing/HistogramTester.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/weborigin/KURLHash.h"
@@ -121,7 +122,6 @@
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/dtoa/utils.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebCache.h"
 #include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebClipboard.h"
@@ -192,12 +192,13 @@ class WebFrameTest : public ::testing::Test {
   WebFrameTest()
       : base_url_("http://internal.test/"),
         not_base_url_("http://external.test/"),
-        chrome_url_("chrome://") {}
+        chrome_url_("chrome://") {
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+    platform_ = platform->GetURLLoaderMockFactory();
+  }
 
   ~WebFrameTest() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
-        ->UnregisterAllURLsAndClearMemoryCache();
+    platform_->UnregisterAllURLsAndClearMemoryCache();
   }
 
   void RegisterMockedHttpURLLoad(const std::string& file_name) {
@@ -212,7 +213,7 @@ class WebFrameTest : public ::testing::Test {
                                      const std::string& file_name) {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url), testing::CoreTestDataPath(),
-        WebString::FromUTF8(file_name));
+        WebString::FromUTF8(file_name), platform_);
   }
 
   void RegisterMockedHttpURLLoadWithCSP(const std::string& file_name,
@@ -227,14 +228,16 @@ class WebFrameTest : public ::testing::Test {
     std::string full_string = base_url_ + file_name;
     URLTestHelpers::RegisterMockedURLLoadWithCustomResponse(
         ToKURL(full_string),
-        testing::CoreTestDataPath(WebString::FromUTF8(file_name)), response);
+        testing::CoreTestDataPath(WebString::FromUTF8(file_name)), response,
+        platform_);
   }
 
   void RegisterMockedHttpURLLoadWithMimeType(const std::string& file_name,
                                              const std::string& mime_type) {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
-        WebString::FromUTF8(file_name), WebString::FromUTF8(mime_type));
+        WebString::FromUTF8(file_name), platform_,
+        WebString::FromUTF8(mime_type));
   }
 
   static void ConfigureCompositingWebView(WebSettings* settings) {
@@ -337,6 +340,7 @@ class WebFrameTest : public ::testing::Test {
   std::string base_url_;
   std::string not_base_url_;
   std::string chrome_url_;
+  WebURLLoaderMockFactory* platform_;
 };
 
 typedef bool TestParamRootLayerScrolling;
@@ -6536,8 +6540,8 @@ TEST_P(ParameterizedWebFrameTest, ReplaceNavigationAfterHistoryNavigation) {
   error_history_item.Initialize();
   error_history_item.SetURLString(
       WebString::FromUTF8(error_url.c_str(), error_url.length()));
-  Platform::Current()->GetURLLoaderMockFactory()->RegisterErrorURL(
-      URLTestHelpers::ToKURL(error_url), response, error);
+  platform_->RegisterErrorURL(URLTestHelpers::ToKURL(error_url), response,
+                              error);
   FrameTestHelpers::LoadHistoryItem(frame, error_history_item,
                                     kWebHistoryDifferentDocumentLoad,
                                     WebCachePolicy::kUseProtocolCachePolicy);
@@ -7190,13 +7194,11 @@ TEST_P(ParameterizedWebFrameTest, SiteForCookiesForRedirect) {
   redirect_response.SetMIMEType("text/html");
   redirect_response.SetHTTPStatusCode(302);
   redirect_response.SetHTTPHeaderField("Location", redirect);
-  Platform::Current()->GetURLLoaderMockFactory()->RegisterURL(
-      test_url, redirect_response, file_path);
+  platform_->RegisterURL(test_url, redirect_response, file_path);
 
   WebURLResponse final_response;
   final_response.SetMIMEType("text/html");
-  Platform::Current()->GetURLLoaderMockFactory()->RegisterURL(
-      redirect_url, final_response, file_path);
+  platform_->RegisterURL(redirect_url, final_response, file_path);
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "first_party_redirect.html");
@@ -10687,7 +10689,8 @@ TEST_P(ParameterizedWebFrameTest, SaveImageAt) {
   std::string url = base_url_ + "image-with-data-url.html";
   RegisterMockedURLLoadFromBase(base_url_, "image-with-data-url.html");
   URLTestHelpers::RegisterMockedURLLoad(
-      ToKURL("http://test"), testing::CoreTestDataPath("white-1x1.png"));
+      ToKURL("http://test"), testing::CoreTestDataPath("white-1x1.png"),
+      platform_);
 
   FrameTestHelpers::WebViewHelper helper;
   SaveImageFromDataURLWebFrameClient client;
@@ -10843,8 +10846,8 @@ TEST_P(ParameterizedWebFrameTest, LoadJavascriptURLInNewFrame) {
   helper.Initialize();
 
   std::string redirect_url = base_url_ + "foo.html";
-  URLTestHelpers::RegisterMockedURLLoad(ToKURL(redirect_url),
-                                        testing::CoreTestDataPath("foo.html"));
+  URLTestHelpers::RegisterMockedURLLoad(
+      ToKURL(redirect_url), testing::CoreTestDataPath("foo.html"), platform_);
   WebURLRequest request(ToKURL("javascript:location='" + redirect_url + "'"));
   helper.LocalMainFrame()->LoadRequest(request);
 
@@ -10983,13 +10986,13 @@ class MultipleDataChunkDelegate : public WebURLLoaderTestDelegate {
 TEST_P(ParameterizedWebFrameTest, ImageDocumentDecodeError) {
   std::string url = base_url_ + "not_an_image.ico";
   URLTestHelpers::RegisterMockedURLLoad(
-      ToKURL(url), testing::CoreTestDataPath("not_an_image.ico"),
+      ToKURL(url), testing::CoreTestDataPath("not_an_image.ico"), platform_,
       "image/x-icon");
   MultipleDataChunkDelegate delegate;
-  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(&delegate);
+  platform_->SetLoaderDelegate(&delegate);
   FrameTestHelpers::WebViewHelper helper;
   helper.InitializeAndLoad(url);
-  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(nullptr);
+  platform_->SetLoaderDelegate(nullptr);
 
   Document* document =
       ToLocalFrame(helper.WebView()->GetPage()->MainFrame())->GetDocument();
@@ -11388,7 +11391,7 @@ TEST_P(ParameterizedWebFrameTest, NoLoadingCompletionCallbacksInDetach) {
   RegisterMockedHttpURLLoad("single_iframe.html");
   URLTestHelpers::RegisterMockedURLLoad(
       ToKURL(base_url_ + "visible_iframe.html"),
-      testing::CoreTestDataPath("frame_with_frame.html"));
+      testing::CoreTestDataPath("frame_with_frame.html"), platform_);
   RegisterMockedHttpURLLoad("parent_detaching_frame.html");
 
   FrameTestHelpers::WebViewHelper web_view_helper;
@@ -11662,7 +11665,7 @@ TEST_P(ParameterizedWebFrameTest, FallbackForNonexistentProvisionalNavigation) {
   // Because the child frame will be HandledByClient, the main frame will not
   // finish loading, so FrameTestHelpers::PumpPendingRequestsForFrameToLoad
   // doesn't work here.
-  Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
+  platform_->ServeAsynchronousRequests();
 
   // Overwrite the client-handled child frame navigation with about:blank.
   WebLocalFrame* child = main_frame->FirstChild()->ToWebLocalFrame();

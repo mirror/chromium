@@ -43,6 +43,7 @@
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/TouchAction.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "public/platform/Platform.h"
@@ -82,8 +83,7 @@ class ScrollingCoordinatorTest : public ::testing::Test,
   }
 
   ~ScrollingCoordinatorTest() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
@@ -103,7 +103,7 @@ class ScrollingCoordinatorTest : public ::testing::Test,
   void RegisterMockedHttpURLLoad(const std::string& file_name) {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
-        WebString::FromUTF8(file_name));
+        WebString::FromUTF8(file_name), platform_->GetURLLoaderMockFactory());
   }
 
   WebLayer* GetRootScrollLayer() {
@@ -129,6 +129,7 @@ class ScrollingCoordinatorTest : public ::testing::Test,
   }
 
   FrameTestHelpers::WebViewHelper helper_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 INSTANTIATE_TEST_CASE_P(All, ScrollingCoordinatorTest, ::testing::Bool());

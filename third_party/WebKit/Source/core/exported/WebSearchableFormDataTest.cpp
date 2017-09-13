@@ -34,9 +34,9 @@
 
 #include "core/frame/FrameTestHelpers.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/web/WebDocument.h"
 #include "public/web/WebFrame.h"
@@ -50,9 +50,10 @@ namespace {
 
 void RegisterMockedURLLoadFromBaseURL(const std::string& base_url,
                                       const std::string& file_name) {
-  URLTestHelpers::RegisterMockedURLLoadFromBase(WebString::FromUTF8(base_url),
-                                                testing::CoreTestDataPath(),
-                                                WebString::FromUTF8(file_name));
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
+  URLTestHelpers::RegisterMockedURLLoadFromBase(
+      WebString::FromUTF8(base_url), testing::CoreTestDataPath(),
+      WebString::FromUTF8(file_name), platform_->GetURLLoaderMockFactory());
 }
 
 class WebSearchableFormDataTest : public ::testing::Test {
@@ -60,12 +61,12 @@ class WebSearchableFormDataTest : public ::testing::Test {
   WebSearchableFormDataTest() {}
 
   ~WebSearchableFormDataTest() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
   FrameTestHelpers::WebViewHelper web_view_helper_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 }  // namespace

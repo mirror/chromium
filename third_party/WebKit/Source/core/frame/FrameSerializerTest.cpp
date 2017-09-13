@@ -37,6 +37,7 @@
 #include "core/frame/FrameTestHelpers.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "platform/SerializedResource.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/Assertions.h"
@@ -68,8 +69,7 @@ class FrameSerializerTest : public ::testing::Test,
   }
 
   void TearDown() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
@@ -80,7 +80,7 @@ class FrameSerializerTest : public ::testing::Test,
   void RegisterURL(const KURL& url, const char* file, const char* mime_type) {
     URLTestHelpers::RegisterMockedURLLoad(
         url, testing::CoreTestDataPath(WebString::FromUTF8(folder_ + file)),
-        WebString::FromUTF8(mime_type));
+        platform_->GetURLLoaderMockFactory(), WebString::FromUTF8(mime_type));
   }
 
   void RegisterURL(const char* url, const char* file, const char* mime_type) {
@@ -100,7 +100,7 @@ class FrameSerializerTest : public ::testing::Test,
     response.SetMIMEType("text/html");
     response.SetHTTPStatusCode(status_code);
 
-    Platform::Current()->GetURLLoaderMockFactory()->RegisterErrorURL(
+    platform_->GetURLLoaderMockFactory()->RegisterErrorURL(
         KURL(base_url_, file), response, error);
   }
 
@@ -195,6 +195,7 @@ class FrameSerializerTest : public ::testing::Test,
   HashMap<String, String> rewrite_urls_;
   Vector<String> skip_urls_;
   String rewrite_folder_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 TEST_F(FrameSerializerTest, HTMLElements) {

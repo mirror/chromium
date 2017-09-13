@@ -34,10 +34,10 @@
 #include "core/dom/NodeTraversal.h"
 #include "core/frame/FrameTestHelpers.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/PtrUtil.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebCache.h"
 #include "public/platform/WebPrerender.h"
 #include "public/platform/WebPrerenderingSupport.h"
@@ -159,15 +159,14 @@ class TestPrerenderingSupport : public WebPrerenderingSupport {
 class PrerenderingTest : public ::testing::Test {
  public:
   ~PrerenderingTest() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
   void Initialize(const char* base_url, const char* file_name) {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url), blink::testing::CoreTestDataPath(),
-        WebString::FromUTF8(file_name));
+        WebString::FromUTF8(file_name), platform_->GetURLLoaderMockFactory());
     web_view_helper_.Initialize();
     web_view_helper_.WebView()->SetPrerendererClient(&prerenderer_client_);
 
@@ -225,6 +224,7 @@ class PrerenderingTest : public ::testing::Test {
   TestPrerendererClient prerenderer_client_;
 
   FrameTestHelpers::WebViewHelper web_view_helper_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 }  // namespace

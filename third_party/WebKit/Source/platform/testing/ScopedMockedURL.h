@@ -5,6 +5,7 @@
 #ifndef ScopedMockedURL_h
 #define ScopedMockedURL_h
 
+#include "platform/testing/TestingPlatformSupport.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLResponse.h"
@@ -18,11 +19,12 @@ namespace testing {
 // tests.
 class ScopedMockedURL {
  public:
-  explicit ScopedMockedURL(const WebURL&);
+  explicit ScopedMockedURL(const WebURL&, WebURLLoaderMockFactory* platform);
   virtual ~ScopedMockedURL();
 
  private:
   WebURL url_;
+  WebURLLoaderMockFactory* platform_;
 };
 
 class ScopedMockedURLLoad : ScopedMockedURL {
@@ -30,6 +32,7 @@ class ScopedMockedURLLoad : ScopedMockedURL {
   ScopedMockedURLLoad(
       const WebURL& full_url,
       const WebString& file_path,
+      WebURLLoaderMockFactory* platform,
       const WebString& mime_type = WebString::FromUTF8("text/html"));
   ~ScopedMockedURLLoad() override = default;
 };

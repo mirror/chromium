@@ -19,6 +19,7 @@
 #include "core/style/ComputedStyle.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/graphics/Color.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/weborigin/SchemeRegistry.h"
@@ -45,9 +46,11 @@ class WebDocumentTest : public ::testing::Test {
 };
 
 void WebDocumentTest::SetUpTestCase() {
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
   URLTestHelpers::RegisterMockedURLLoad(
       ToKURL(std::string(kDefaultOrigin) + kManifestDummyFilePath),
-      testing::CoreTestDataPath(kManifestDummyFilePath));
+      testing::CoreTestDataPath(kManifestDummyFilePath),
+      platform_->GetURLLoaderMockFactory());
 }
 
 void WebDocumentTest::LoadURL(const std::string& url) {
@@ -202,8 +205,11 @@ KURL ToOriginB(const char* file) {
   return ToKURL(std::string(g_base_url_origin_b) + file);
 }
 
-void RegisterMockedURLLoad(const KURL& url, const char* path) {
-  URLTestHelpers::RegisterMockedURLLoad(url, testing::CoreTestDataPath(path));
+void RegisterMockedURLLoad(const KURL& url,
+                           const char* path,
+                           WebURLLoaderMockFactory* platform) {
+  URLTestHelpers::RegisterMockedURLLoad(url, testing::CoreTestDataPath(path),
+                                        platform);
 }
 
 }  // anonymous namespace
@@ -219,30 +225,37 @@ class WebDocumentFirstPartyTest : public WebDocumentTest {
 };
 
 void WebDocumentFirstPartyTest::SetUpTestCase() {
-  RegisterMockedURLLoad(ToOriginA(g_empty_file), g_empty_file);
-  RegisterMockedURLLoad(ToOriginA(g_nested_data), g_nested_data);
-  RegisterMockedURLLoad(ToOriginA(g_nested_origin_a), g_nested_origin_a);
-  RegisterMockedURLLoad(ToOriginA(g_nested_origin_sub_a),
-                        g_nested_origin_sub_a);
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
+  WebURLLoaderMockFactory* platform = platform_->GetURLLoaderMockFactory();
+  RegisterMockedURLLoad(ToOriginA(g_empty_file), g_empty_file, platform);
+  RegisterMockedURLLoad(ToOriginA(g_nested_data), g_nested_data, platform);
+  RegisterMockedURLLoad(ToOriginA(g_nested_origin_a), g_nested_origin_a,
+                        platform);
+  RegisterMockedURLLoad(ToOriginA(g_nested_origin_sub_a), g_nested_origin_sub_a,
+                        platform);
   RegisterMockedURLLoad(ToOriginA(g_nested_origin_secure_a),
-                        g_nested_origin_secure_a);
+                        g_nested_origin_secure_a, platform);
   RegisterMockedURLLoad(ToOriginA(g_nested_origin_a_in_origin_a),
-                        g_nested_origin_a_in_origin_a);
+                        g_nested_origin_a_in_origin_a, platform);
   RegisterMockedURLLoad(ToOriginA(g_nested_origin_a_in_origin_b),
-                        g_nested_origin_a_in_origin_b);
-  RegisterMockedURLLoad(ToOriginA(g_nested_origin_b), g_nested_origin_b);
+                        g_nested_origin_a_in_origin_b, platform);
+  RegisterMockedURLLoad(ToOriginA(g_nested_origin_b), g_nested_origin_b,
+                        platform);
   RegisterMockedURLLoad(ToOriginA(g_nested_origin_b_in_origin_a),
-                        g_nested_origin_b_in_origin_a);
+                        g_nested_origin_b_in_origin_a, platform);
   RegisterMockedURLLoad(ToOriginA(g_nested_origin_b_in_origin_b),
-                        g_nested_origin_b_in_origin_b);
-  RegisterMockedURLLoad(ToOriginA(g_nested_src_doc), g_nested_src_doc);
+                        g_nested_origin_b_in_origin_b, platform);
+  RegisterMockedURLLoad(ToOriginA(g_nested_src_doc), g_nested_src_doc,
+                        platform);
 
-  RegisterMockedURLLoad(ToOriginSubA(g_empty_file), g_empty_file);
-  RegisterMockedURLLoad(ToOriginSecureA(g_empty_file), g_empty_file);
+  RegisterMockedURLLoad(ToOriginSubA(g_empty_file), g_empty_file, platform);
+  RegisterMockedURLLoad(ToOriginSecureA(g_empty_file), g_empty_file, platform);
 
-  RegisterMockedURLLoad(ToOriginB(g_empty_file), g_empty_file);
-  RegisterMockedURLLoad(ToOriginB(g_nested_origin_a), g_nested_origin_a);
-  RegisterMockedURLLoad(ToOriginB(g_nested_origin_b), g_nested_origin_b);
+  RegisterMockedURLLoad(ToOriginB(g_empty_file), g_empty_file, platform);
+  RegisterMockedURLLoad(ToOriginB(g_nested_origin_a), g_nested_origin_a,
+                        platform);
+  RegisterMockedURLLoad(ToOriginB(g_nested_origin_b), g_nested_origin_b,
+                        platform);
 }
 
 void WebDocumentFirstPartyTest::Load(const char* file) {
