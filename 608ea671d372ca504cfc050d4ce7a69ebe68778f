@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0647ad95_3ad0cddf",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_grid.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-13T05:58:45Z",
+      "side": 1,
+      "message": "nit: revert?",
+      "revId": "608ea671d372ca504cfc050d4ce7a69ebe68778f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4f88e2_640a9db6",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-13T05:58:45Z",
+      "side": 1,
+      "message": "nit: revert",
+      "revId": "608ea671d372ca504cfc050d4ce7a69ebe68778f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
