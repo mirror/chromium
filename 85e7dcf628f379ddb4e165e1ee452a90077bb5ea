@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b00e22d_985fdc89",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T17:00:40Z",
+      "side": 1,
+      "message": "optional nit: I\u0027d prefer indenting two more spaces.",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 5
+      },
+      "revId": "85e7dcf628f379ddb4e165e1ee452a90077bb5ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
