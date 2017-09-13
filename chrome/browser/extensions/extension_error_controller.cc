@@ -30,15 +30,21 @@ ExtensionErrorController::~ExtensionErrorController() {}
 
 void ExtensionErrorController::ShowErrorIfNeeded() {
   IdentifyAlertableExtensions();
+  DLOG(INFO) << "ShowErrorIfNeeded " << blacklisted_extensions_.size();
 
   // Make sure there's something to show, and that there isn't currently a
   // bubble displaying.
   if (!blacklisted_extensions_.is_empty() && !error_ui_.get()) {
-    if (!is_first_run_) {
+    DLOG(INFO) << "here";
+    if (!is_first_run_ || true) {
       error_ui_.reset(g_create_ui(this));
+      DLOG(INFO) << "now";
       if (!error_ui_->ShowErrorInBubbleView())  // Couldn't find a browser.
         error_ui_.reset();
+      else
+        DLOG(INFO) << "Showed it?";
     } else {
+      DLOG(INFO) << "firstrun?";
       // First run. Just acknowledge all the extensions, silently, by
       // shortcutting the display of the UI and going straight to the
       // callback for pressing the Accept button.
@@ -91,6 +97,8 @@ void ExtensionErrorController::OnAlertClosed() {
 }
 
 void ExtensionErrorController::IdentifyAlertableExtensions() {
+  DLOG(INFO)
+      << "void ExtensionErrorController::IdentifyAlertableExtensions() {";
   ExtensionRegistry* registry = ExtensionRegistry::Get(browser_context_);
   ExtensionPrefs* prefs = ExtensionPrefs::Get(browser_context_);
 
@@ -103,6 +111,7 @@ void ExtensionErrorController::IdentifyAlertableExtensions() {
   // notification.
 
   const ExtensionSet& blacklisted_set = registry->blacklisted_extensions();
+  DLOG(INFO) << blacklisted_set.size();
   for (ExtensionSet::const_iterator iter = blacklisted_set.begin();
        iter != blacklisted_set.end();
        ++iter) {

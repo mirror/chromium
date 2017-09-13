@@ -2351,6 +2351,7 @@ void ExtensionService::MaybeFinishDelayedInstallations() {
 }
 
 void ExtensionService::OnBlacklistUpdated() {
+  DLOG(INFO) << "UDATED!";
   blacklist_->GetBlacklistedIDs(
       registry_->GenerateInstalledExtensionsSet()->GetIDs(),
       base::Bind(&ExtensionService::ManageBlacklist, AsWeakPtr()));
@@ -2364,6 +2365,7 @@ void ExtensionService::OnUpgradeRecommended() {
 
 void ExtensionService::ManageBlacklist(
     const extensions::Blacklist::BlacklistStateMap& state_map) {
+  DLOG(INFO) << "Manage.";
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   std::set<std::string> blacklisted;
