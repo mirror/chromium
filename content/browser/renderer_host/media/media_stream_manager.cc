@@ -228,8 +228,7 @@ void SendVideoCaptureLogMessage(const std::string& message) {
 // statements in MediaStreamManager.
 class MediaStreamManager::DeviceRequest {
  public:
-  DeviceRequest(MediaStreamRequester* requester,
-                int requesting_process_id,
+  DeviceRequest(int requesting_process_id,
                 int requesting_frame_id,
                 int page_request_id,
                 const url::Origin& security_origin,
@@ -237,8 +236,7 @@ class MediaStreamManager::DeviceRequest {
                 MediaStreamRequestType request_type,
                 const StreamControls& controls,
                 const std::string& salt)
-      : requester(requester),
-        requesting_process_id(requesting_process_id),
+      : requesting_process_id(requesting_process_id),
         requesting_frame_id(requesting_frame_id),
         page_request_id(page_request_id),
         security_origin(security_origin),
@@ -337,8 +335,7 @@ class MediaStreamManager::DeviceRequest {
                                               video_type_, is_secure);
   }
 
-  MediaStreamRequester* const requester;  // Can be NULL.
-
+  base::WeakPtr<MediaStreamRequester> requester;
 
   // The render process id that requested this stream to be generated and that
   // will receive a handle to the MediaStream. This may be different from
@@ -517,13 +514,10 @@ std::string MediaStreamManager::MakeMediaAccessRequest(
     MediaRequestResponseCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  // TODO(perkj): The argument list with NULL parameters to DeviceRequest
-  // suggests that this is the wrong design. Can this be refactored?
-  DeviceRequest* request =
-      new DeviceRequest(NULL, render_process_id, render_frame_id,
-                        page_request_id, security_origin,
-                        false,  // user gesture
-                        MEDIA_DEVICE_ACCESS, controls, std::string());
+  DeviceRequest* request = new DeviceRequest(
+      render_process_id, render_frame_id, page_request_id, security_origin,
+      false,  // user gesture
+      MEDIA_DEVICE_ACCESS, controls, std::string());
 
   const std::string& label = AddRequest(request);
 
@@ -539,20 +533,22 @@ std::string MediaStreamManager::MakeMediaAccessRequest(
   return label;
 }
 
-void MediaStreamManager::GenerateStream(MediaStreamRequester* requester,
-                                        int render_process_id,
-                                        int render_frame_id,
-                                        const std::string& salt,
-                                        int page_request_id,
-                                        const StreamControls& controls,
-                                        const url::Origin& security_origin,
-                                        bool user_gesture) {
+void MediaStreamManager::GenerateStream(
+    base::WeakPtr<MediaStreamRequester> requester,
+    int render_process_id,
+    int render_frame_id,
+    const std::string& salt,
+    int page_request_id,
+    const StreamControls& controls,
+    const url::Origin& security_origin,
+    bool user_gesture) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DVLOG(1) << "GenerateStream()";
 
   DeviceRequest* request = new DeviceRequest(
-      requester, render_process_id, render_frame_id, page_request_id,
-      security_origin, user_gesture, MEDIA_GENERATE_STREAM, controls, salt);
+      render_process_id, render_frame_id, page_request_id, security_origin,
+      user_gesture, MEDIA_GENERATE_STREAM, controls, salt);
+  request->requester = std::move(requester);
 
   const std::string& label = AddRequest(request);
 
@@ -731,14 +727,15 @@ void MediaStreamManager::CloseDevice(MediaStreamType type, int session_id) {
   }
 }
 
-void MediaStreamManager::OpenDevice(MediaStreamRequester* requester,
-                                    int render_process_id,
-                                    int render_frame_id,
-                                    const std::string& salt,
-                                    int page_request_id,
-                                    const std::string& device_id,
-                                    MediaStreamType type,
-                                    const url::Origin& security_origin) {
+void MediaStreamManager::OpenDevice(
+    base::WeakPtr<MediaStreamRequester> requester,
+    int render_process_id,
+    int render_frame_id,
+    const std::string& salt,
+    int page_request_id,
+    const std::string& device_id,
+    MediaStreamType type,
+    const url::Origin& security_origin) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(type == MEDIA_DEVICE_AUDIO_CAPTURE ||
          type == MEDIA_DEVICE_VIDEO_CAPTURE);
@@ -753,11 +750,11 @@ void MediaStreamManager::OpenDevice(MediaStreamRequester* requester,
   } else {
     NOTREACHED();
   }
-  DeviceRequest* request =
-      new DeviceRequest(requester, render_process_id, render_frame_id,
-                        page_request_id, security_origin,
-                        false,  // user gesture
-                        MEDIA_OPEN_DEVICE_PEPPER_ONLY, controls, salt);
+  DeviceRequest* request = new DeviceRequest(
+      render_process_id, render_frame_id, page_request_id, security_origin,
+      false,  // user gesture
+      MEDIA_OPEN_DEVICE_PEPPER_ONLY, controls, salt);
+  request->requester = std::move(requester);
 
   const std::string& label = AddRequest(request);
   // Post a task and handle the request asynchronously. The reason is that the
@@ -1213,20 +1210,23 @@ void MediaStreamManager::FinalizeGenerateStream(const std::string& label,
       NOTREACHED();
   }
 
-  request->requester->StreamGenerated(request->requesting_frame_id,
-                                      request->page_request_id, label,
-                                      audio_devices, video_devices);
+  if (request->requester) {
+    request->requester->StreamGenerated(request->requesting_frame_id,
+                                        request->page_request_id, label,
+                                        audio_devices, video_devices);
+  }
 }
 
 void MediaStreamManager::FinalizeRequestFailed(
     const std::string& label,
     DeviceRequest* request,
     content::MediaStreamRequestResult result) {
-  if (request->requester)
+  if (request->requester) {
     request->requester->StreamGenerationFailed(
         request->requesting_frame_id,
         request->page_request_id,
         result);
+  }
 
   if (request->request_type == MEDIA_DEVICE_ACCESS &&
       !request->callback.is_null()) {
@@ -1239,9 +1239,11 @@ void MediaStreamManager::FinalizeRequestFailed(
 
 void MediaStreamManager::FinalizeOpenDevice(const std::string& label,
                                             DeviceRequest* request) {
-  request->requester->DeviceOpened(request->requesting_frame_id,
-                                   request->page_request_id, label,
-                                   request->devices.front());
+  if (request->requester) {
+    request->requester->DeviceOpened(request->requesting_frame_id,
+                                     request->page_request_id, label,
+                                     request->devices.front());
+  }
 }
 
 void MediaStreamManager::FinalizeMediaAccessRequest(
