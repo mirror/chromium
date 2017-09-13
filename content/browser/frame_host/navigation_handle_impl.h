@@ -199,7 +199,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // expose the NavigationHandle to code outside of content/ MUST go though the
   // NavigatorDelegate. In particular, the ContentBrowserClient should not be
   // called directly form the NavigationHandle code. Thus, these calls will not
-  // expose the NavigationHandle when navigating to an InterstialPage.
+  // expose the NavigationHandle when navigating to an InterstitialPage.
   NavigatorDelegate* GetDelegate() const;
 
   RequestContextType request_context_type() const {
