@@ -145,6 +145,10 @@ float FakeFloatAnimationCurve::GetValue(base::TimeDelta now) const {
   return 0.0f;
 }
 
+bool FakeFloatAnimationCurve::IsAnimatingDifferentValues() const {
+  return true;
+}
+
 std::unique_ptr<AnimationCurve> FakeFloatAnimationCurve::Clone() const {
   return base::WrapUnique(new FakeFloatAnimationCurve);
 }
@@ -206,6 +210,10 @@ float FakeFloatTransition::GetValue(base::TimeDelta time) const {
   if (progress >= 1.0)
     progress = 1.0;
   return (1.0 - progress) * from_ + progress * to_;
+}
+
+bool FakeFloatTransition::IsAnimatingDifferentValues() const {
+  return from_ != to_;
 }
 
 std::unique_ptr<AnimationCurve> FakeFloatTransition::Clone() const {

@@ -41,4 +41,8 @@ float FloatAnimationCurveAdapter::GetValue(base::TimeDelta t) const {
       target_value_);
 }
 
+bool FloatAnimationCurveAdapter::IsAnimatingDifferentValues() const {
+  return initial_value_ != target_value_;
+}
+
 }  // namespace ui

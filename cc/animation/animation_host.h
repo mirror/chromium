@@ -125,6 +125,9 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost,
   bool HasPotentiallyRunningOpacityAnimation(
       ElementId element_id,
       ElementListType list_type) const override;
+  bool HasPotentiallyRunningOpacityAnimationWithDifferentValues(
+      ElementId element_id,
+      ElementListType list_type) const override;
   bool HasPotentiallyRunningTransformAnimation(
       ElementId element_id,
       ElementListType list_type) const override;

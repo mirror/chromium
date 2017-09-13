@@ -451,6 +451,17 @@ bool AnimationHost::HasPotentiallyRunningOpacityAnimation(
              : false;
 }
 
+bool AnimationHost::HasPotentiallyRunningOpacityAnimationWithDifferentValues(
+    ElementId element_id,
+    ElementListType list_type) const {
+  auto element_animations = GetElementAnimationsForElementId(element_id);
+  return element_animations
+             ? element_animations
+                   ->IsPotentiallyAnimatingPropertyWithDifferentValues(
+                       TargetProperty::OPACITY, list_type)
+             : false;
+}
+
 bool AnimationHost::HasPotentiallyRunningTransformAnimation(
     ElementId element_id,
     ElementListType list_type) const {

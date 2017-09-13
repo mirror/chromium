@@ -214,6 +214,14 @@ bool HasPotentiallyRunningOpacityAnimation(LayerType* layer) {
 }
 
 template <typename LayerType>
+bool HasPotentiallyRunningOpacityAnimationWithDifferentValues(
+    LayerType* layer) {
+  return layer->GetMutatorHost()
+      ->HasPotentiallyRunningOpacityAnimationWithDifferentValues(
+          layer->element_id(), layer->GetElementTypeForAnimation());
+}
+
+template <typename LayerType>
 bool FilterIsAnimating(LayerType* layer) {
   return layer->GetMutatorHost()->IsAnimatingFilterProperty(
       layer->element_id(), layer->GetElementTypeForAnimation());
@@ -826,8 +834,9 @@ bool ShouldCreateRenderSurface(LayerType* layer,
       num_descendants_that_draw_content > 0 &&
       (layer->DrawsContent() || num_descendants_that_draw_content > 1);
 
-  bool may_have_transparency = EffectiveOpacity(layer) != 1.f ||
-                               HasPotentiallyRunningOpacityAnimation(layer);
+  bool may_have_transparency =
+      EffectiveOpacity(layer) != 1.f ||
+      HasPotentiallyRunningOpacityAnimationWithDifferentValues(layer);
   if (may_have_transparency && ShouldFlattenTransform(layer) &&
       at_least_two_layers_in_subtree_draw_content) {
     TRACE_EVENT_INSTANT0(

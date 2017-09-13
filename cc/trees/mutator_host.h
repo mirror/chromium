@@ -95,6 +95,9 @@ class MutatorHost {
   virtual bool HasPotentiallyRunningOpacityAnimation(
       ElementId element_id,
       ElementListType list_type) const = 0;
+  virtual bool HasPotentiallyRunningOpacityAnimationWithDifferentValues(
+      ElementId element_id,
+      ElementListType list_type) const = 0;
   virtual bool HasPotentiallyRunningTransformAnimation(
       ElementId element_id,
       ElementListType list_type) const = 0;

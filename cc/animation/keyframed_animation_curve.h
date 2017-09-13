@@ -199,6 +199,7 @@ class CC_ANIMATION_EXPORT KeyframedFloatAnimationCurve
 
   // FloatAnimationCurve implementation
   float GetValue(base::TimeDelta t) const override;
+  bool IsAnimatingDifferentValues() const override;
 
   using Keyframes = std::vector<std::unique_ptr<FloatKeyframe>>;
   const Keyframes& keyframes_for_testing() const { return keyframes_; }

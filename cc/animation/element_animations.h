@@ -86,6 +86,14 @@ class CC_ANIMATION_EXPORT ElementAnimations
   bool IsPotentiallyAnimatingProperty(TargetProperty::Type target_property,
                                       ElementListType list_type) const;
 
+  // Returns true if there is an animation that is either currently animating
+  // the given property or scheduled to animate this property in the future, the
+  // initial value is different than the target value, that affects the given
+  // tree type.
+  bool IsPotentiallyAnimatingPropertyWithDifferentValues(
+      TargetProperty::Type target_property,
+      ElementListType list_type) const;
+
   // Returns true if there is an animation that is currently animating the given
   // property and that affects the given tree type.
   bool IsCurrentlyAnimatingProperty(TargetProperty::Type target_property,

@@ -382,6 +382,18 @@ bool ElementAnimations::IsPotentiallyAnimatingProperty(
   return false;
 }
 
+bool ElementAnimations::IsPotentiallyAnimatingPropertyWithDifferentValues(
+    TargetProperty::Type target_property,
+    ElementListType list_type) const {
+  for (auto& player : players_list_) {
+    if (player.IsPotentiallyAnimatingPropertyWithDifferentValues(
+            target_property, list_type))
+      return true;
+  }
+
+  return false;
+}
+
 bool ElementAnimations::IsCurrentlyAnimatingProperty(
     TargetProperty::Type target_property,
     ElementListType list_type) const {
