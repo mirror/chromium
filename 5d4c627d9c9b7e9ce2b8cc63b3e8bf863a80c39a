@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "12080a8d_1ec1aa8b",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "No, \u0027default\u0027 is harmful because then we won\u0027t get the warning if somebody extends Type later.\nThe style guide wants variables to be initialized (https://google.github.io/styleguide/cppguide.html#Local_Variables). In this particular case it\u0027s crucial. |type| is an enum, so it\u0027s backed by int. One can call your function with any int value, the switch won\u0027t work and your code propagates a value from the stack further with all the consequences.\nSame applicable to |file_selector_mode|.",
+      "parentUuid": "5d2e6d43_6215fbec",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 52,
+        "endChar": 16
+      },
+      "revId": "5d4c627d9c9b7e9ce2b8cc63b3e8bf863a80c39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "064c98ac_0b666e3c",
         "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
         "patchSetId": 2

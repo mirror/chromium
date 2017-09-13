@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "40404530_0ed13b34",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 5588,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "\u0027passwords\u0027 here and below. (if it\u0027s incorrect, fix the description above)",
+      "range": {
+        "startLine": 5588,
+        "startChar": 124,
+        "endLine": 5588,
+        "endChar": 132
+      },
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af77ba62_7bab5719",
         "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate.h",
         "patchSetId": 3
@@ -47,6 +70,351 @@
       "writtenOn": "2017-09-13T17:52:49Z",
       "side": 1,
       "message": "This is awkward. The model shouldn\u0027t be dictating view behavior. It should just provide state to the view and the view should determine button visibility. Also, the way this is triggered (on the getSavedPasswordList request) is fragile.\n\nThis isn\u0027t something that should be part of the API. For feature switches like this we typically provide a boolean to the html source, e.g. see changePasswordEnabled: https://cs.chromium.org/search/?q\u003dchangePasswordEnabled\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a88639_69f4cd1f",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "Drop. The compilation error is much better than a runtime error.",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 19
+      },
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf3cef2_39d21972",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "why not Type?",
+      "range": {
+        "startLine": 96,
+        "startChar": 45,
+        "endLine": 96,
+        "endChar": 53
+      },
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "846f2cc1_dd25ee1c",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "I\u0027m concerned about the fact that you store |web_contents_|. Is it possible that you close the tab before selecting a file in the dialog? In that case the crash is inevitable.",
+      "range": {
+        "startLine": 109,
+        "startChar": 34,
+        "endLine": 109,
+        "endChar": 47
+      },
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7340b92_3b47a4cc",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "Same question as for |web_contents_|",
+      "range": {
+        "startLine": 121,
+        "startChar": 6,
+        "endLine": 121,
+        "endChar": 33
+      },
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7247f51_604d9917",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "Can you move it to the anonymous namespace too or at least make static?",
+      "range": {
+        "startLine": 127,
+        "startChar": 38,
+        "endLine": 127,
+        "endChar": 71
+      },
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5830d047_9a43ed22",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "Move to the anonymous namespace below the class.",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 22
+      },
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54cf27bb_6f99e3b9",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "If this method is called on non UI thread, it\u0027s a bug. Talking to the password store should be done from the UI thread only.\nI guess you can drop \u0027ThreadSafe\u0027 in the parent and enforce the check with DCHECK_CALLED_ON_VALID_SEQUENCE",
+      "range": {
+        "startLine": 137,
+        "startChar": 29,
+        "endLine": 137,
+        "endChar": 44
+      },
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d66f046_6d0b3ea9",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "It\u0027s a useless histogram. I suggest to mark it as obsolete in histograms.xml and drop here.",
+      "range": {
+        "startLine": 155,
+        "startChar": 41,
+        "endLine": 155,
+        "endChar": 75
+      },
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ce428f_9c2a7ce6",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "from the file",
+      "range": {
+        "startLine": 17,
+        "startChar": 15,
+        "endLine": 17,
+        "endChar": 38
+      },
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2778883f_2a223afb",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "// ui::SelectFileDialog::Listener:",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81735519_41b4099e",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "const \u0026",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 32
+      },
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f312741_3aed4f47",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ee6b5a_53697635",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "Why it is suddenly virtual?",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 9
+      },
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67862fdb_b644df5d",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "Comment on both.",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 22
+      },
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b86debaa_ef54058c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 12714,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T18:46:35Z",
+      "side": 1,
+      "message": "How it is relevant to this CL? Was it added automatically?",
+      "range": {
+        "startLine": 12714,
+        "startChar": 26,
+        "endLine": 12714,
+        "endChar": 73
+      },
       "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
