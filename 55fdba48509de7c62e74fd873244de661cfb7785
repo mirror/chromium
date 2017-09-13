@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a57d4bf_c3d3623d",
+        "filename": "net/cert/internal/general_names.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-13T23:45:49Z",
+      "side": 1,
+      "message": "(I have a followup CL to remove the types_to_record parameter)",
+      "range": {
+        "startLine": 92,
+        "startChar": 29,
+        "endLine": 92,
+        "endChar": 34
+      },
+      "revId": "55fdba48509de7c62e74fd873244de661cfb7785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
