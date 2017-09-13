@@ -32,12 +32,20 @@ SysInternalsBrowserTest.prototype = {
     'line_chart/scrollbar_test.js',
     'line_chart/sub_chart_test.js',
     'line_chart/unit_label_test.js',
+    'page_drawer_test.js',
+    'page_infopage_test.js',
+    'page_switch_test.js',
+    'page_unit_test.js',
     'test_util.js',
     ROOT_PATH + 'third_party/mocha/mocha.js',
     ROOT_PATH + 'third_party/polymer/v1_0/components-chromium/' +
         'iron-test-helpers/mock-interactions.js',
     ROOT_PATH + 'chrome/test/data/webui/mocha_adapter.js',
   ],
+
+  setUp: function() {
+    window.GG = 1;
+  },
 };
 
 TEST_F('SysInternalsBrowserTest', 'getSysInfo', function() {
@@ -66,4 +74,20 @@ TEST_F('SysInternalsBrowserTest', 'LineChart_SubChart', function() {
 
 TEST_F('SysInternalsBrowserTest', 'LineChart_UnitLabel', function() {
   LineChartTest.UnitLabel();
+});
+
+TEST_F('SysInternalsBrowserTest', 'Page_Drawer', function() {
+  PageTest.Drawer();
+});
+
+TEST_F('SysInternalsBrowserTest', 'Page_InfoPage', function() {
+  PageTest.InfoPage();
+});
+
+TEST_F('SysInternalsBrowserTest', 'Page_Switch', function() {
+  PageTest.Switch();
+});
+
+TEST_F('SysInternalsBrowserTest', 'Page_Unit', function() {
+  PageTest.Unit();
 });
