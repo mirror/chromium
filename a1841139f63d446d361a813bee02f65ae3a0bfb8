@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "33314033_7fcb59fd",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-09-13T18:34:31Z",
+      "side": 1,
+      "message": "I think this should be a set rather than a list since order doesn\u0027t matter. That will speed up checks for contents.",
+      "range": {
+        "startLine": 925,
+        "startChar": 8,
+        "endLine": 925,
+        "endChar": 18
+      },
+      "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95cd83ee_5ad3bfba",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
         "patchSetId": 1
@@ -13,6 +36,29 @@
       "writtenOn": "2017-09-13T18:21:44Z",
       "side": 1,
       "message": "There is also a `spitlines()` method which does basically the same thing.",
+      "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf9bbc6_60b23b4c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-09-13T18:34:31Z",
+      "side": 1,
+      "message": "This comment provides little help. It should explain *why* rather than *what*. Either remove or fix.\n\n(I know you didn\u0027t write it originally, but since you\u0027re touching it you may as well improve it.)",
+      "range": {
+        "startLine": 928,
+        "startChar": 0,
+        "endLine": 928,
+        "endChar": 107
+      },
       "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +110,29 @@
       "writtenOn": "2017-09-13T18:21:44Z",
       "side": 1,
       "message": "I\u0027m not positive, but I think that currently we\u0027re actually reading in the whole contents of SmokeTests for each test that\u0027s checked.\n\nOne additional improvement that could be made here if you want would be to change the helper method to take a filename (e.g. change _tests_from_file_contents to _tests_from_file), and add the @memoized decorator (like the skipped_perf_tests method below).",
+      "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4249480f_6ab90b10",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-09-13T18:34:31Z",
+      "side": 1,
+      "message": "I wonder if it would be worth it to cache this work. It seems likely that this would be called multiple times for different tests within a single \"Port\" instance. How to make the caching work:\n\n1. Add an instance variable \"self._smoke_tests_set \u003d None\" to the __init__ function.\n\n2. Make a new function get_smoke_tests_set that looks like:\nif self._smoke_tests_set is None:\n  smoke_test_filename \u003d self.path_to_smoke_tests_file()\n  if self._filesystem.exists(smoke_test_filename):\n    smoke_tests_file_contents \u003d self._filesystem.read_text_file(smoke_test_filename)\n    self._smoke_tests_set \u003d self._tests_from_file_contents(smoke_tests_file_contents)\n  else: \n    self._smoke_tests_set \u003d set()\nreturn self._smoke_tests_set\n\n3.Then skipped_due_to_smoke_tests can be simply:\n\nif not self.default_smoke_test_only():\n  return False\nreturn test not in self._get_smoke_tests_set()",
+      "range": {
+        "startLine": 945,
+        "startChar": 8,
+        "endLine": 946,
+        "endChar": 79
+      },
       "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
