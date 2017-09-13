@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5777bb6e_3a6834c3",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ThreadedInputConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-13T14:47:53Z",
+      "side": 1,
+      "message": "Hmm... My old CL probably didn\u0027t resolve conflict correctly at that time.\nhttps://codereview.chromium.org/2458773005/\n\ntext.length() \u003e 0 should be replaced by true.\n\nHow about adding something like,\n\nprivate void commitTextOnUiThread(...) {\n  cancelCombiningAccentOnUiThread();\n  mImeAdapter.sendCompositionToNative(text, newCursorPosition, true, 0);\n}\n\nand calling it from here and commitText()?",
+      "range": {
+        "startLine": 499,
+        "startChar": 28,
+        "endLine": 499,
+        "endChar": 51
+      },
+      "revId": "c94f96829b3513299d932dfc51fdd2d8b23709d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d8af3fa_17eb62fe",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/input/ThreadedInputConnectionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-13T14:47:53Z",
+      "side": 1,
+      "message": "Could you try to test the behavior instead of the internal state?\n\nThere are already some test cases around pending accents in ImeTest, so you can easily add more. Please add a breaking test case without the production code change first, and make sure that the test case is fixed with the change in ThreadedInputConnection.",
+      "range": {
+        "startLine": 357,
+        "startChar": 16,
+        "endLine": 357,
+        "endChar": 47
+      },
+      "revId": "c94f96829b3513299d932dfc51fdd2d8b23709d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
