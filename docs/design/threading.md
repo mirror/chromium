@@ -399,9 +399,9 @@ With `CancelableTaskTracker` you can cancel a single task with returned
         CancelPreviousTask();
         DBResult* result = new DBResult();
         task_id_ = tracker_->PostTaskAndReply(
-            BrowserThread::GetMessageLoopProxyForThread(BrowserThread::DB).get(),
+            file_task_runner_.get(),
             FROM_HERE,
-            base::Bind(&LookupHistoryOnDBThread, this, input, result),
+            base::Bind(&LookupHistoryOnFileTaskRunner, this, input, result),
             base::Bind(&ShowHistoryOnUIThread, this, base::Owned(result)));
       }
 
@@ -414,6 +414,9 @@ With `CancelableTaskTracker` you can cancel a single task with returned
      private:
       CancelableTaskTracker tracker_;  // Cancels all pending tasks while destruction.
       CancelableTaskTracker::TaskId task_id_;
+      scoped_refptr<base::SequencedTaskRunner> file_task_runner_ =
+          base::CreateSequenedTaskRunnerWithTraits(
+              {base::MayBlock(), base::TaskPriority::USER_VISIBLE});
       ...
     };
 
