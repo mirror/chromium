@@ -60,6 +60,7 @@ class TaskGroupTest : public testing::Test {
         run_loop_(base::MakeUnique<base::RunLoop>()),
         task_group_(base::Process::Current().Handle(),
                     base::Process::Current().Pid(),
+                    TaskGroup::SortKey(),
                     base::Bind(&TaskGroupTest::OnBackgroundCalculationsDone,
                                base::Unretained(this)),
                     new SharedSampler(io_task_runner_),
