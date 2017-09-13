@@ -22,6 +22,30 @@
       "revId": "7d2567050060c7e98dc108e1a98af615662ff5f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "976a0119_3a901739",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-13T08:14:25Z",
+      "side": 1,
+      "message": "Done. Very helpful\u0026exact comments suggestion, Thanks! Agree that provider_id should have been enough to do differentiation, anyway I\u0027ll eliminate handle_id related things at last.",
+      "parentUuid": "bc0414fa_b0ecfa51",
+      "range": {
+        "startLine": 28,
+        "startChar": 14,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "7d2567050060c7e98dc108e1a98af615662ff5f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
