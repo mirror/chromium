@@ -38,6 +38,10 @@ class NewTabButton : public views::ImageButton,
   // button's visible region begins.
   static int GetTopOffset();
 
+  // Returns whether there was a bubble that was closed. A bubble closes only
+  // when it exists.
+  static bool CloseCurrentBubble();
+
   // Retrieves the last active BrowserView instance to display the NewTabPromo.
   static void ShowPromoForLastActiveBrowser();
 
