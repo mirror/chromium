@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "42fd1326_8fed0c1f",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T22:12:12Z",
+      "side": 1,
+      "message": "Does the order of these matter here?  Please comment.",
+      "revId": "bcdf751e1e7e7815c8223579e66048c79b9732a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30374afb_8ef967f9",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T22:12:12Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bcdf751e1e7e7815c8223579e66048c79b9732a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b22bc1d2_489f96ea",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T22:12:12Z",
+      "side": 1,
+      "message": "I wish you could have something there that makes sure all disable reasons are handled, i.e., something that would cause a DCHECK if someone later adds a disable reason without updating the proto or this code.",
+      "revId": "bcdf751e1e7e7815c8223579e66048c79b9732a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1c3c9cc_52b5b170",
         "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
         "patchSetId": 8
@@ -25,6 +76,29 @@
     },
     {
       "key": {
+        "uuid": "839dc295_47ac4a57",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T22:12:12Z",
+      "side": 1,
+      "message": "optional nit: auto",
+      "range": {
+        "startLine": 413,
+        "startChar": 4,
+        "endLine": 413,
+        "endChar": 38
+      },
+      "revId": "bcdf751e1e7e7815c8223579e66048c79b9732a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d6cb731_86ffe7fd",
         "filename": "chrome/browser/metrics/extensions_metrics_provider.h",
         "patchSetId": 8
@@ -36,6 +110,30 @@
       "writtenOn": "2017-09-13T07:50:07Z",
       "side": 1,
       "message": "nit: Could you use protected members rather than friend classes for testing?",
+      "range": {
+        "startLine": 63,
+        "startChar": 52,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "bcdf751e1e7e7815c8223579e66048c79b9732a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20c0eced_f1966646",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T22:12:12Z",
+      "side": 1,
+      "message": "\u003e nit: Could you use protected members rather than friend classes for testing?\n\nProtected members are discouraged by the style guide.\n\"Make data members private, unless they are static const (and follow the naming convention for constants). For technical reasons, we allow data members of a test fixture class to be protected when using Google Test).\"\nhttps://google.github.io/styleguide/cppguide.html#Access_Control\n\nMaybe you can explicitly use FRIEND_TEST_ALL_PREFIXES?",
+      "parentUuid": "1d6cb731_86ffe7fd",
       "range": {
         "startLine": 63,
         "startChar": 52,
@@ -82,6 +180,30 @@
       "writtenOn": "2017-09-13T07:50:07Z",
       "side": 1,
       "message": "As I mentioned elsewhere, I\u0027d prefer not to expose this information to consumers of this class.",
+      "range": {
+        "startLine": 152,
+        "startChar": 73,
+        "endLine": 152,
+        "endChar": 0
+      },
+      "revId": "bcdf751e1e7e7815c8223579e66048c79b9732a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed463a9_e5c37fcd",
+        "filename": "components/metrics/metrics_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T22:12:12Z",
+      "side": 1,
+      "message": "+1, please don\u0027t rely metrics_service uptime recording strategies.",
+      "parentUuid": "175b4f30_1c02623c",
       "range": {
         "startLine": 152,
         "startChar": 73,
