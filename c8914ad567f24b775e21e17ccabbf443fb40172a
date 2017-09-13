@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2e3bc5ef_07309a2d",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: It\u0027s no more \"MillisecondsIn\", it\u0027s just \"kHour\" now. (Same applies to the two following constants, and to the constants in the test code.)",
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47861a5c_0f347bd8",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 25
@@ -64,6 +81,29 @@
         "startChar": 41,
         "endLine": 44,
         "endChar": 48
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec87eaea_43a2fa8e",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: Name sounds like it\u0027s \"\u003c\", while it\u0027s actually \"\u003c\u003d\". Maybe something like \"EarlierOrEqualInWeek\" would be more correct.",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 20
       },
       "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -163,6 +203,29 @@
     },
     {
       "key": {
+        "uuid": "6538a992_13469b90",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: \"cyclic\"",
+      "range": {
+        "startLine": 95,
+        "startChar": 38,
+        "endLine": 95,
+        "endChar": 48
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc1b0219_9d38583b",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 25
@@ -179,6 +242,29 @@
         "startChar": 5,
         "endLine": 97,
         "endChar": 29
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3083cc_01d51324",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: \"error\"",
+      "range": {
+        "startLine": 107,
+        "startChar": 31,
+        "endLine": 107,
+        "endChar": 37
       },
       "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -225,6 +311,29 @@
         "startChar": 16,
         "endLine": 142,
         "endChar": 26
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a240e999_509dfb84",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: Maybe better calculate \"milliseconds + gmt_offset\" and store it in variable? It will be easier to understand what that means, as opposed to \"-gmt_offset\" calculated here.",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 12
       },
       "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -347,6 +456,29 @@
     },
     {
       "key": {
+        "uuid": "5ad8d80d_29db5e05",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: Move this function to an anonymous namespace.",
+      "range": {
+        "startLine": 318,
+        "startChar": 22,
+        "endLine": 318,
+        "endChar": 42
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14a2e629_259dd0e3",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 25
@@ -363,6 +495,75 @@
         "startChar": 47,
         "endLine": 332,
         "endChar": 48
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9105a9d0_ec9fb9f8",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: Add \"only\".",
+      "range": {
+        "startLine": 332,
+        "startChar": 33,
+        "endLine": 332,
+        "endChar": 34
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c23aa80_7d590108",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: The name is too cryptic. Please don\u0027t use abbreviations.",
+      "range": {
+        "startLine": 336,
+        "startChar": 13,
+        "endLine": 336,
+        "endChar": 18
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a50a3e5_9903f30b",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: I think word \"till\" will suit better here. And with type base::TimeDelta.",
+      "range": {
+        "startLine": 341,
+        "startChar": 6,
+        "endLine": 341,
+        "endChar": 12
       },
       "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -409,6 +610,29 @@
         "startChar": 30,
         "endLine": 34,
         "endChar": 35
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a616f5_81031479",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: The name doesn\u0027t correspond to the actual functionality.\nMaybe something like \"ApplyOffHoursProto\"?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 16
       },
       "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -531,6 +755,29 @@
     },
     {
       "key": {
+        "uuid": "66f59dd8_9640eabb",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: Move this comment somewhere else - maybe inside the method implementation. Because here it\u0027s misleading: the observer itself is actually called not only in this case.",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 40
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "893ad5de_e30f5b00",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
         "patchSetId": 25
@@ -548,6 +795,201 @@
         "endLine": 88,
         "endChar": 22
       },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d3d1a2_3b55bb28",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: Add missing #include.",
+      "range": {
+        "startLine": 92,
+        "startChar": 26,
+        "endLine": 92,
+        "endChar": 41
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6172d107_24a1107f",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: Add missing #include.",
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1611db53_9525452a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: I believe it\u0027s not allowed by the Style guide to have such global objects with nontrivial constructor. So either change this into a plain array of character strings, or move this constant inside the test code.",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9518c367_fb4e7ea0",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: I believe it\u0027s not allowed by the Style guide to have such global objects with nontrivial constructor. So either change this into a plain array of character strings, or move this constant inside the test code.",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc1a5ad_af5cdd83",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: \"kWeekdays\"",
+      "range": {
+        "startLine": 21,
+        "startChar": 40,
+        "endLine": 21,
+        "endChar": 48
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a808000c_b96b2769",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: No need to do this if you\u0027re not adding any custom behavior - so just remove your overrides of SetUp() and TearDown().",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 60
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2336238b_5a8297d1",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: First letter in method names should be capital.",
+      "range": {
+        "startLine": 74,
+        "startChar": 34,
+        "endLine": 74,
+        "endChar": 48
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aab683a_4a07dd42",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: The default constructor of TimeDelta seems to do the same.",
+      "range": {
+        "startLine": 93,
+        "startChar": 45,
+        "endLine": 93,
+        "endChar": 66
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c103050_57d21523",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-13T11:08:02Z",
+      "side": 1,
+      "message": "nit: Make this private?",
       "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
