@@ -128,12 +128,29 @@ ContextGroup::ContextGroup(
 bool ContextGroup::Initialize(GLES2Decoder* decoder,
                               ContextType context_type,
                               const DisallowedFeatures& disallowed_features) {
-  bool enable_es3 = context_type == CONTEXT_TYPE_OPENGLES3 ||
-                    context_type == CONTEXT_TYPE_WEBGL2;
-  if (!gpu_preferences_.enable_es3_apis && enable_es3) {
-    DLOG(ERROR) << "ContextGroup::Initialize failed because ES3 APIs are "
-                << "not available.";
-    return false;
+  switch (context_type) {
+    case CONTEXT_TYPE_WEBGL1:
+      if (!gpu_feature_info_.IsFeatureEnabled(
+              GPU_FEATURE_TYPE_ACCELERATED_WEBGL)) {
+        std::string status = gpu_feature_info_.GetFeatureStatusString(
+            GPU_FEATURE_TYPE_ACCELERATED_WEBGL);
+        DLOG(ERROR) << "ContextGroup::Initialize failed because WebGL is "
+                    << status;
+        return false;
+      }
+      break;
+    case CONTEXT_TYPE_WEBGL2:
+      if (!gpu_feature_info_.IsFeatureEnabled(
+              GPU_FEATURE_TYPE_ACCELERATED_WEBGL2)) {
+        std::string status = gpu_feature_info_.GetFeatureStatusString(
+            GPU_FEATURE_TYPE_ACCELERATED_WEBGL2);
+        DLOG(ERROR) << "ContextGroup::Initialize failed because WebGL2 is "
+                    << status;
+        return false;
+      }
+      break;
+    default:
+      break;
   }
   if (HaveContexts()) {
     if (context_type != feature_info_->context_type()) {
@@ -176,7 +193,9 @@ bool ContextGroup::Initialize(GLES2Decoder* decoder,
     }
   }
 
-  if (enable_es3 || feature_info_->feature_flags().ext_draw_buffers) {
+  if (context_type == CONTEXT_TYPE_OPENGLES3 ||
+      context_type == CONTEXT_TYPE_WEBGL2 ||
+      feature_info_->feature_flags().ext_draw_buffers) {
     GetIntegerv(GL_MAX_COLOR_ATTACHMENTS_EXT, &max_color_attachments_);
     if (max_color_attachments_ < 1)
       max_color_attachments_ = 1;

@@ -42,6 +42,14 @@ void StringToIds(const std::string& str, std::vector<uint32_t>* list) {
   }
 }
 
+bool UseSwiftShader(const base::CommandLine& command_line) {
+  if (!command_line.HasSwitch(switches::kUseGL))
+    return false;
+  std::string use_gl = command_line.GetSwitchValueASCII(switches::kUseGL);
+  return (use_gl == gl::kGLImplementationSwiftShaderForWebGLName ||
+          use_gl == gl::kGLImplementationSwiftShaderName);
+}
+
 GpuFeatureStatus GetGpuRasterizationFeatureStatus(
     const std::set<int>& blacklisted_features,
     const base::CommandLine& command_line) {
@@ -65,6 +73,35 @@ GpuFeatureStatus GetGpuRasterizationFeatureStatus(
   if (!base::FeatureList::IsEnabled(features::kDefaultEnableGpuRasterization))
     return kGpuFeatureStatusDisabled;
 
+  return kGpuFeatureStatusEnabled;
+}
+
+GpuFeatureStatus GetWebGLFeatureStatus(
+    const std::set<int>& blacklisted_features,
+    const base::CommandLine& command_line) {
+  if (UseSwiftShader(command_line))
+    return kGpuFeatureStatusEnabledSoftware;
+  if (command_line.HasSwitch(switches::kDisableWebGL))
+    return kGpuFeatureStatusDisabled;
+  if (blacklisted_features.count(GPU_FEATURE_TYPE_ACCELERATED_WEBGL))
+    return kGpuFeatureStatusBlacklisted;
+  return kGpuFeatureStatusEnabled;
+}
+
+GpuFeatureStatus GetWebGL2FeatureStatus(
+    const std::set<int>& blacklisted_features,
+    const base::CommandLine& command_line) {
+  if (UseSwiftShader(command_line))
+    return kGpuFeatureStatusEnabledSoftware;
+  if (command_line.HasSwitch(switches::kDisableES3APIs) ||
+#if defined(OS_WIN)
+      command_line.HasSwitch(switches::kDisableD3D11) ||
+#endif
+      command_line.HasSwitch(switches::kDisableES3GLContext)) {
+    return kGpuFeatureStatusDisabled;
+  }
+  if (blacklisted_features.count(GPU_FEATURE_TYPE_ACCELERATED_WEBGL2))
+    return kGpuFeatureStatusBlacklisted;
   return kGpuFeatureStatusEnabled;
 }
 
@@ -186,9 +223,13 @@ GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
         list->MakeDecision(GpuControlList::kOsAny, std::string(), gpu_info);
   }
 
-  // Currently only used for GPU rasterization.
+  // Currently only computed and used for a few features.
   gpu_feature_info.status_values[GPU_FEATURE_TYPE_GPU_RASTERIZATION] =
       GetGpuRasterizationFeatureStatus(blacklisted_features, *command_line);
+  gpu_feature_info.status_values[GPU_FEATURE_TYPE_ACCELERATED_WEBGL] =
+      GetWebGLFeatureStatus(blacklisted_features, *command_line);
+  gpu_feature_info.status_values[GPU_FEATURE_TYPE_ACCELERATED_WEBGL2] =
+      GetWebGL2FeatureStatus(blacklisted_features, *command_line);
 
   std::set<base::StringPiece> all_disabled_extensions;
   std::string disabled_gl_extensions_value =
@@ -232,6 +273,12 @@ GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
   // TODO(zmo): Find a better way to communicate these settings to bindings
   // initialization than commandline switches.
   AppendWorkaroundsToCommandLine(gpu_feature_info, command_line);
+
+  // Adjust feature status based on driver bug workarounds.
+  if (gpu_feature_info.IsWorkaroundEnabled(DISABLE_D3D11)) {
+    gpu_feature_info.status_values[GPU_FEATURE_TYPE_ACCELERATED_WEBGL2] =
+        kGpuFeatureStatusDisabled;
+  }
 
   return gpu_feature_info;
 }
