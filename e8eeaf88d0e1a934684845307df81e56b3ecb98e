@@ -16,6 +16,24 @@
       "revId": "e8eeaf88d0e1a934684845307df81e56b3ecb98e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c2f9af_8c6bff01",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-13T12:07:56Z",
+      "side": 1,
+      "message": "declare_args() isn\u0027t needed anymore, removed.",
+      "parentUuid": "b58757fa_7e2254f8",
+      "revId": "e8eeaf88d0e1a934684845307df81e56b3ecb98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
