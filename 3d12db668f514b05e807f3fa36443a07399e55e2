@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07ad1acc_322adc8d",
+        "filename": "url/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-13T04:35:57Z",
+      "side": 1,
+      "message": "I don\u0027t think we should be doing this, and I would like to see us specify whether we want an export or an extern so the compiler doesn\u0027t have to pick one for us if they\u0027re incompatible.",
+      "revId": "3d12db668f514b05e807f3fa36443a07399e55e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
