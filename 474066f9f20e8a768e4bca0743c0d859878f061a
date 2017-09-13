@@ -69,6 +69,30 @@
       "revId": "474066f9f20e8a768e4bca0743c0d859878f061a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318a1ee2_a6b1393d",
+        "filename": "content/common/input/ime_text_span_conversions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T23:23:14Z",
+      "side": 1,
+      "message": "In chrome code we generally use the same name of parameters for declaration/definition. If the parameters are unused in the definition then they may be commented out in both places, but we don\u0027t always do that.\n\nMaybe you\u0027re referring to the blink linter?",
+      "parentUuid": "11f73f34_2d80ffb6",
+      "range": {
+        "startLine": 15,
+        "startChar": 53,
+        "endLine": 15,
+        "endChar": 74
+      },
+      "revId": "474066f9f20e8a768e4bca0743c0d859878f061a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
