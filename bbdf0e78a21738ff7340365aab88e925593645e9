@@ -332,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "d8931f3f_a9645bd1",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T11:17:11Z",
+      "side": 1,
+      "message": "We are discussing the condition that can never happen. The style guide is clear (https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md) \u0027don\u0027t handle it\u0027.\nI don\u0027t want to encourage the pattern \"if (false) pretendToDoSomethingMeaningful();\" because it\u0027s gonna be copy pasted everywhere by the future generations. What one thinks when sees\nif (impossible)\n  return;\nIt causes confusion for some time then one can ask/realize that it prevents a crash (but the production code if full of DCHECKs anyway). But actually it\u0027s a false premise. That particular method is called from the production code. Therefore, something weird is happening already in the caller. What is the guarantee that it won\u0027t crash upon return?\n\nWe can ask chromium-dev. But the previous thread was not conclusive (https://groups.google.com/a/chromium.org/forum/?utm_source\u003ddigest\u0026utm_medium\u003demail#!searchin/chromium-dev/ASSERT_|sort:relevance/chromium-dev/7clymoTb3A0/rXZ6XJioAQAJ)",
+      "parentUuid": "86772a4d_15b40018",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 14
+      },
+      "revId": "bbdf0e78a21738ff7340365aab88e925593645e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ec509ae_a7ed5262",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 12
