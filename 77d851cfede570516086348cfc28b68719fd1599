@@ -51,6 +51,24 @@
       "revId": "77d851cfede570516086348cfc28b68719fd1599",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db19c0eb_4bf2bf9d",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-09-13T21:13:51Z",
+      "side": 1,
+      "message": "Right, |data| is unused for GesturePinchBegin/End, so we just read zeros from |data|\u0027s memory. So fortunately, this is currently not causing issues.\n\nBut if |data| were being used, then reading |data| as |scroll_update| could give garbage values.\n\nSo, yeah, setting |data.scroll_end|\u0027s fields to their default values makes sense.\n\nUsing ifs would also work, but my concern with having if statements separated from the DCHECK is that the DCHECK could get extended without the |data| setup being noticed. If we have |data| being set inside a switch with a |NOTREACHED()|, I think it would be a lot clearer that |data| needs to be set in order to call this function with a new event type. Plus we wouldn\u0027t have to duplicate the list of supported types in both the if conditions and the DCHECK.",
+      "parentUuid": "c086c02e_e4ff5159",
+      "revId": "77d851cfede570516086348cfc28b68719fd1599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
