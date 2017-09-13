@@ -384,6 +384,9 @@ class DataReductionProxyTestContext {
   // |net::MockClientSocketFactory| specified.
   void EnableDataReductionProxyWithSecureProxyCheckSuccess();
 
+  // Disables the fetch of the warmup URL.
+  void DisableWarmupURLFetch();
+
   // Returns the underlying |MockDataReductionProxyConfig|. This can only be
   // called if built with WithMockConfig.
   MockDataReductionProxyConfig* mock_config() const;
