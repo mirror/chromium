@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "ash/ash_switches.h"
+#include "ash/public/cpp/shelf_model.h"
 #include "ash/shell.h"
 #include "ash/sticky_keys/sticky_keys_controller.h"
 #include "base/bind.h"
@@ -102,6 +103,7 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/task_manager/task_manager_interface.h"
 #include "chrome/browser/ui/ash/ash_util.h"
+#include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/common/channel_info.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_features.h"
@@ -247,6 +249,44 @@ void GetSystemSlotOnIOThread(
 }  // namespace
 
 namespace internal {
+
+// Creates a ChromeLauncherController on the first active session notification.
+// Used to avoid constructing a ChromeLauncherController with no active profile.
+class ChromeLauncherControllerInitializer
+    : public session_manager::SessionManagerObserver {
+ public:
+  ChromeLauncherControllerInitializer() {
+    DCHECK(session_manager::SessionManager::Get());
+    session_manager::SessionManager::Get()->AddObserver(this);
+  }
+
+  ~ChromeLauncherControllerInitializer() override {
+    if (!chrome_launcher_controller_)
+      session_manager::SessionManager::Get()->RemoveObserver(this);
+  }
+
+  // session_manager::SessionManagerObserver:
+  void OnSessionStateChanged() override {
+    DCHECK(!ChromeLauncherController::instance());
+
+    if (session_manager::SessionManager::Get()->session_state() ==
+        session_manager::SessionState::ACTIVE) {
+      chrome_shelf_model_ = base::MakeUnique<ash::ShelfModel>();
+      chrome_launcher_controller_ = base::MakeUnique<ChromeLauncherController>(
+          nullptr, chrome_shelf_model_.get());
+      chrome_launcher_controller_->Init();
+      session_manager::SessionManager::Get()->RemoveObserver(this);
+    }
+  }
+
+ private:
+  // These are only used in Mash; corresponding instances are owned by Ash's
+  // ShelfController and ChromeShellDelegate in classic Ash.
+  std::unique_ptr<ash::ShelfModel> chrome_shelf_model_;
+  std::unique_ptr<ChromeLauncherController> chrome_launcher_controller_;
+
+  DISALLOW_COPY_AND_ASSIGN(ChromeLauncherControllerInitializer);
+};
 
 // Wrapper class for initializing dbus related services and shutting them
 // down. This gets instantiated in a scoped_ptr so that shutdown methods in the
@@ -660,6 +700,11 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
 
   g_browser_process->platform_part()->InitializeChromeUserManager();
   g_browser_process->platform_part()->InitializeSessionManager();
+
+  if (ash_util::IsRunningInMash()) {
+    chrome_launcher_controller_initializer_ =
+        base::MakeUnique<internal::ChromeLauncherControllerInitializer>();
+  }
 
   ScreenLocker::InitClass();
 
