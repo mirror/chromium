@@ -1,0 +1,579 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47861a5c_0f347bd8",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "This should be a class: https://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#Structs_vs._Classes",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 6
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b29332_198d4919",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "Might be useful to break out WeeklyTime and Interval in their own file and add unit tests.",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 12
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a76d4c9_7663e00c",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "It\u0027s weird to have this function (serialize object to Value) but not a de-serialize function. Either both should live in this object, or neither (I\u0027d lean towards neither).",
+      "range": {
+        "startLine": 44,
+        "startChar": 41,
+        "endLine": 44,
+        "endChar": 48
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91528edc_3c23db48",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "likewise, weird to have a serialize function but no deserialize. The reason why this is weird is this code needs to understand the serialization format, *and* some other code also needs to know how to deserialize.",
+      "range": {
+        "startLine": 70,
+        "startChar": 41,
+        "endLine": 70,
+        "endChar": 48
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "611d6b7b_e4ea3639",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "why is this a standalone function vs a member function on an Interval class?",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 15
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb50ec6_d0187069",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "If you have a multi-line statement in your if clause, you need curly braces. e.g.:\n\nif (foo) {\n  return bar *\n      baz;\n}",
+      "range": {
+        "startLine": 86,
+        "startChar": 12,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f67451ae_67729362",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "If start \u003d\u003d end, this recurses infinitely.\n\nI think this code might be clearer as:\n\nduration \u003d end.day_of_week - start.day_of_week * kMillisecondsInDay +\n    end.milliseconds - start.milliseconds;\n\nif (duration \u003c 0) {\n  // interval wraps over the weekend\n  duration \u003d kMillisecondsInWeek + duration;\n}\n\nreturn duration;",
+      "range": {
+        "startLine": 90,
+        "startChar": 29,
+        "endLine": 90,
+        "endChar": 43
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1b0219_9d38583b",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "Maybe should be a member function on Interval (i.e. Interval::Contains(WeeklyTime))",
+      "range": {
+        "startLine": 97,
+        "startChar": 5,
+        "endLine": 97,
+        "endChar": 29
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ee7893_1f33856a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "This is fine, but I\u0027d probably put all 3 of these together on the same line (can make them fit on one line I think which saves one line of code vertically)",
+      "range": {
+        "startLine": 142,
+        "startChar": 51,
+        "endLine": 142,
+        "endChar": 54
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f10ccdb_eca5440e",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "WeeklyTime is a trivial struct - consider just returning it rather than allocating on stack + unique_ptr. I do understand that you\u0027re using nullptr in GetWeeklyTime() below to denote an error, but I wouldn\u0027t carry that decision down into this function.",
+      "range": {
+        "startLine": 142,
+        "startChar": 16,
+        "endLine": 142,
+        "endChar": 26
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c458af0_9000b8df",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "Kind of weird to have a default timezone here - I\u0027d think that you *always* want callers to supply a timezone?",
+      "range": {
+        "startLine": 187,
+        "startChar": 54,
+        "endLine": 187,
+        "endChar": 62
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a831eb0c_58b6bc77",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "This is kind of a weird API as I pointed out in the header file. Better to just have a setter, and if the caller wants to check if the offhours mode is actually changing, they can do this:\n\nif (new_off_hours !\u003d IsOffHoursMode()) {\n  ...do stuff because we are changing mode...\n}\nSetOffHoursMode(new_off_hours);",
+      "range": {
+        "startLine": 279,
+        "startChar": 31,
+        "endLine": 279,
+        "endChar": 48
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23fc0ce_7a7f15b8",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "When would this method get called when there\u0027s already a timer running, and why would we ignore the call if the timer is set to \u003c delay? This needs a comment.",
+      "range": {
+        "startLine": 289,
+        "startChar": 28,
+        "endLine": 289,
+        "endChar": 34
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a20e96b_4be7aa6c",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "These timers are unreliable if the device sleeps (i.e. they are paused while the device sleeps) - how do we handle this?",
+      "range": {
+        "startLine": 294,
+        "startChar": 2,
+        "endLine": 294,
+        "endChar": 8
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605facbc_e5789a74",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "Can you document why we\u0027re doing this? Why does going online/offline mean offhours have changed?",
+      "range": {
+        "startLine": 310,
+        "startChar": 31,
+        "endLine": 310,
+        "endChar": 47
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a2e629_259dd0e3",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "It will be tricky to know if the current user is allowed or not - you\u0027ll need to do some checks of the whitelist. But I think that\u0027s what this TODO() captures :)",
+      "range": {
+        "startLine": 332,
+        "startChar": 47,
+        "endLine": 332,
+        "endChar": 48
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68cde48_959d2324",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "This is OK, but it\u0027ll make it hard for you to write tests for UpdateOffHoursMode() since you can\u0027t test if AttemptUserExit() has been called. Consider instead having UpdateOffHoursMode() return some kind of error if the user isn\u0027t allowed and let the caller call AttemptUserExit() -- that way you can write a test.",
+      "range": {
+        "startLine": 355,
+        "startChar": 12,
+        "endLine": 355,
+        "endChar": 27
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fed4266_d137ca17",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "nit: apply-\u003eapplied\nI don\u0027t quite understand what you mean by \"apply with default values\" - does this mean you are changing \"missing policies\" with actual default values set in the resulting proto?",
+      "range": {
+        "startLine": 34,
+        "startChar": 30,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae17713_9c72e1a6",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "In general, who owns this object, who creates it, if I want to talk to this object, how do I get a reference to it?",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb900441_04aed3b6",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "BTW, the comments in this file are oddly wrapped - what column are you wrapping at? Try to stay as close to 80 cols as possible.",
+      "range": {
+        "startLine": 49,
+        "startChar": 25,
+        "endLine": 49,
+        "endChar": 33
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b92e18d_b47e8a78",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "The comments in the implementation imply that this is called when off hours \"probably needs update\". This is weird to me - the contract should be such that the observer should only be called when off hours mode has changed. Why would we ever call it at some other time? Can you clarify this?",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 42
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5a707f_8e089aeb",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "No need for these comments - they don\u0027t add anything of value over the name of the function itself. If you want to keep them, then add some useful information like \"Adds an observer for when off hours starts or ends. Observer should outlive this object.\" or something like that.",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 9
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb28af5_82a651cc",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "style guide wants these put earlier in the class definition: https://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#Declaration_Order",
+      "range": {
+        "startLine": 65,
+        "startChar": 3,
+        "endLine": 65,
+        "endChar": 27
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "893ad5de_e30f5b00",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "I don\u0027t understand what these functions do. Are you setting an internal value? If so, then what is the return value?\n\nIn general, setters should look more like void SetOffHoursMode(bool off_hours_enabled);",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 22
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2bbb612_3e072879",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-13T10:46:29Z",
+      "side": 1,
+      "message": "What does this do? Isn\u0027t it typically already loaded?",
+      "range": {
+        "startLine": 242,
+        "startChar": 2,
+        "endLine": 242,
+        "endChar": 17
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
