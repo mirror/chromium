@@ -25,6 +25,7 @@
 #include "net/socket/server_socket.h"
 #include "net/socket/stream_socket.h"
 #include "net/socket/tcp_server_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -288,8 +289,7 @@ void HttpServer::DoWriteLoop(HttpConnection* connection) {
   HttpConnection::QueuedWriteIOBuffer* write_buf = connection->write_buf();
   while (rv == OK && write_buf->GetSizeToWrite() > 0) {
     rv = connection->socket()->Write(
-        write_buf,
-        write_buf->GetSizeToWrite(),
+        NO_TRAFFIC_ANNOTATION_YET, write_buf, write_buf->GetSizeToWrite(),
         base::Bind(&HttpServer::OnWriteCompleted,
                    weak_ptr_factory_.GetWeakPtr(), connection->id()));
     if (rv == ERR_IO_PENDING || rv == OK)

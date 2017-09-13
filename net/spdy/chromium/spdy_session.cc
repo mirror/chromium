@@ -57,6 +57,7 @@
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/ssl_cipher_suite_names.h"
 #include "net/ssl/ssl_connection_status_flags.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -2031,7 +2032,8 @@ int SpdySession::DoWrite() {
   scoped_refptr<IOBuffer> write_io_buffer =
       in_flight_write_->GetIOBufferForRemainingData();
   return connection_->socket()->Write(
-      write_io_buffer.get(), in_flight_write_->GetRemainingSize(),
+      NO_TRAFFIC_ANNOTATION_YET, write_io_buffer.get(),
+      in_flight_write_->GetRemainingSize(),
       base::Bind(&SpdySession::PumpWriteLoop, weak_factory_.GetWeakPtr(),
                  WRITE_STATE_DO_WRITE_COMPLETE));
 }

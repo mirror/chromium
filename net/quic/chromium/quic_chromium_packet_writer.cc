@@ -13,6 +13,7 @@
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/quic/chromium/quic_chromium_client_session.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -96,7 +97,8 @@ WriteResult QuicChromiumPacketWriter::WritePacketToSocket(
 
 WriteResult QuicChromiumPacketWriter::WritePacketToSocketImpl() {
   base::TimeTicks now = base::TimeTicks::Now();
-  int rv = socket_->Write(packet_.get(), packet_->size(), write_callback_);
+  int rv = socket_->Write(NO_TRAFFIC_ANNOTATION_YET, packet_.get(),
+                          packet_->size(), write_callback_);
 
   if (rv < 0 && rv != ERR_IO_PENDING && delegate_ != nullptr) {
     // If write error, then call delegate's HandleWriteError, which

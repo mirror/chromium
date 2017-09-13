@@ -15,6 +15,7 @@
 #include "net/socket/server_socket.h"
 #include "net/socket/stream_socket.h"
 #include "net/socket/tcp_server_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace content {
 namespace protocol {
@@ -99,13 +100,9 @@ class SocketPump {
         new net::DrainableIOBuffer(buffer.get(), total);
 
     ++pending_writes_;
-    result = to->Write(drainable.get(),
-                       total,
+    result = to->Write(NO_TRAFFIC_ANNOTATION_YET, drainable.get(), total,
                        base::Bind(&SocketPump::OnWritten,
-                                  base::Unretained(this),
-                                  drainable,
-                                  from,
-                                  to));
+                                  base::Unretained(this), drainable, from, to));
     if (result != net::ERR_IO_PENDING)
       OnWritten(drainable, from, to, result);
   }
@@ -123,13 +120,11 @@ class SocketPump {
     drainable->DidConsume(result);
     if (drainable->BytesRemaining() > 0) {
       ++pending_writes_;
-      result = to->Write(drainable.get(),
-                         drainable->BytesRemaining(),
-                         base::Bind(&SocketPump::OnWritten,
-                                    base::Unretained(this),
-                                    drainable,
-                                    from,
-                                    to));
+      result =
+          to->Write(NO_TRAFFIC_ANNOTATION_YET, drainable.get(),
+                    drainable->BytesRemaining(),
+                    base::Bind(&SocketPump::OnWritten, base::Unretained(this),
+                               drainable, from, to));
       if (result != net::ERR_IO_PENDING)
         OnWritten(drainable, from, to, result);
       return;

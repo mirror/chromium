@@ -19,6 +19,7 @@
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/socket/client_socket_handle.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/websockets/websocket_errors.h"
 #include "net/websockets/websocket_frame.h"
 #include "net/websockets/websocket_frame_parser.h"
@@ -205,12 +206,9 @@ int WebSocketBasicStream::WriteEverything(
     // The use of base::Unretained() here is safe because on destruction we
     // disconnect the socket, preventing any further callbacks.
     int result = connection_->socket()->Write(
-        buffer.get(),
-        buffer->BytesRemaining(),
+        NO_TRAFFIC_ANNOTATION_YET, buffer.get(), buffer->BytesRemaining(),
         base::Bind(&WebSocketBasicStream::OnWriteComplete,
-                   base::Unretained(this),
-                   buffer,
-                   callback));
+                   base::Unretained(this), buffer, callback));
     if (result > 0) {
       UMA_HISTOGRAM_COUNTS_100000("Net.WebSocket.DataUse.Upstream", result);
       buffer->DidConsume(result);
