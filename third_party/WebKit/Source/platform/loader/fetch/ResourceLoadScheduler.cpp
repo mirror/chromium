@@ -135,8 +135,9 @@ void ResourceLoadScheduler::SetOutstandingLimitForTesting(size_t limit) {
 
 void ResourceLoadScheduler::OnNetworkQuiet() {
   DCHECK(IsMainThread());
-  if (maximum_running_requests_seen_ == 0)
+  if (maximum_running_requests_seen_ == 0 || had_network_quiet_)
     return;
+  had_network_quiet_ = true;
 
   DEFINE_STATIC_LOCAL(
       CustomCountHistogram, main_frame_throttled,
