@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a42bd6b0_faa04f5e",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T19:35:39Z",
+      "side": 1,
+      "message": "Huh. OK. Apparently I forgot that.",
+      "parentUuid": "d620fcac_4e114387",
+      "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54b3c50e_65652530",
         "filename": "components/arc/net/arc_net_host_impl.cc",
         "patchSetId": 5
@@ -154,6 +172,24 @@
       "side": 1,
       "message": "Unfortunately that is never called.  The calling sequence seems to be:\n\n    NetworkStateListDetailedView::HandleViewClicked\n    SystemTrayController::ShowNetworkSettings\n    SystemTrayClient::ShowNetworkSettings\n    SystemTrayClient::ShowNetworkSettingsHelper",
       "parentUuid": "5877da34_e75b32a0",
+      "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2285c93_fefbf60a",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T19:35:39Z",
+      "side": 1,
+      "message": "Implicit was that the UI should call NetworkConnect::ShowNetworkConfigure() for Arc VPN networks.\n\nMaybe calling into net_instance from NetworkConnect doesn\u0027t make sense? I\u0027m unclear what will be calling this. If it makes sense to have this logic here, that\u0027s fine, but lets just call this ConfigureAndroidVpn. \"ConfigureNonInteractiveNetwork\" I think just muddies things. If at some point later it makes sense to combine multiple different calls to a single \"NonInteractive\" call we can better consider the value at that time.",
+      "parentUuid": "2f46d697_68516212",
       "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
