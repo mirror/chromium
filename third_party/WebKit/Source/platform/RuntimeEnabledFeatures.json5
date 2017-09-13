@@ -380,10 +380,6 @@
       name: "DocumentWrite",
     },
     {
-      name: "DOMConvenienceAPI",
-      status: "stable",
-    },
-    {
       name: "EmbedderCSPEnforcement",
       status: "stable",
     },
