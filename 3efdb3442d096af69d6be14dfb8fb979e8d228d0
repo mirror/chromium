@@ -391,6 +391,24 @@
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd43729_0c277e24",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-13T04:55:56Z",
+      "side": 1,
+      "message": "I agree that remote-shell is not ideal, and standard protocols are the way to go in long term. We can either use what we have or block this CL on major refactoring. Let me try to justify why I believe we shouldn\u0027t block.\n\nLet\u0027s see what we have in this CL.\n\n1. Adding pending window state. This is not specific to ARC, as other protocols like xdg need that too.\n\n2. Applying pending window state in OnSurfaceCommit with an animation. Again, not specific to ARC. Other protocols need the same.\n\n3. Two new methods - MaximizeWithCommit and RestoreWithCommit. Again, not specific to ARC. Other protocols will need to call these too. We may rename them, but we\u0027ll still need to mark the states as pending instead of applying immediately.\n\nSo, IIUC we\u0027re not adding any ARC only specific code. While we\u0027re starting from remote_shell protocol, the logic will stay when we hook up other protocols or switch away from remote-shell, or add window state changes to remote-shell\u0027s configure.",
+      "parentUuid": "f49b433c_147b677f",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
