@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa12f072_1da71f02",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-13T04:46:19Z",
+      "side": 1,
+      "message": "That\u0027s a great question! I can\u0027t remember why I put that in there! I\u0027ll take it out. Thanks for pointing it out!",
+      "parentUuid": "9c0cae80_f691516c",
+      "range": {
+        "startLine": 13,
+        "startChar": 58,
+        "endLine": 13,
+        "endChar": 59
+      },
+      "revId": "a87e28073f98caf43174a77eb6c98a34b6808c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cbd0931_84d5ffed",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "a87e28073f98caf43174a77eb6c98a34b6808c2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8478b0d_150bfd25",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-13T04:46:19Z",
+      "side": 1,
+      "message": "Oops. Thanks for pointing that out! Does it look all right now?",
+      "parentUuid": "0cbd0931_84d5ffed",
+      "revId": "a87e28073f98caf43174a77eb6c98a34b6808c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "a87e28073f98caf43174a77eb6c98a34b6808c2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65b6d2c_9734217b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-must-not-contain-cookie.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-13T04:46:19Z",
+      "side": 1,
+      "message": "Wow, it looks like I should have looked at this one more carefully before requesting code review! Thanks, I\u0027ll remove that!",
+      "parentUuid": "839c829e_024dbd23",
+      "range": {
+        "startLine": 13,
+        "startChar": 9,
+        "endLine": 13,
+        "endChar": 10
+      },
+      "revId": "a87e28073f98caf43174a77eb6c98a34b6808c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
