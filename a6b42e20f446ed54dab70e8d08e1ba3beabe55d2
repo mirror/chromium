@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b40d9db_b39c7f41",
+        "filename": "media/audio/pulse/pulse_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T10:30:13Z",
+      "side": 1,
+      "message": "Can be std::make_unique\u003c\u003e now",
+      "revId": "a6b42e20f446ed54dab70e8d08e1ba3beabe55d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f110b8_3f59f016",
+        "filename": "media/audio/pulse/pulse_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T10:30:13Z",
+      "side": 1,
+      "message": "pa_simple_new() is calling pa_threaded_mainloop_stop() even if start fails. Not sure if it\u0027s just to reduce the number of goto labels or it\u0027s something mandatory - documentation is unclear.\nI would call DestroyMainloop() just to be on a safe side.\n\nIt seems context also needs to be destroyed prior to this?",
+      "revId": "a6b42e20f446ed54dab70e8d08e1ba3beabe55d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d23565_cde47afa",
+        "filename": "media/audio/pulse/pulse_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T10:30:13Z",
+      "side": 1,
+      "message": "pa_simple_free() destroys the context when the mutex is unlocked and main loop stopped (https://github.com/pulseaudio/pulseaudio/blob/master/src/pulse/simple.c#L256)",
+      "revId": "a6b42e20f446ed54dab70e8d08e1ba3beabe55d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e306a0d_e9bfc3f2",
+        "filename": "media/audio/pulse/pulse_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T10:30:13Z",
+      "side": 1,
+      "message": "I would make a stack-allocated smart object which holds both lock, mainloop pointer and context pointer (with setters for them) and does destruction in the required order; and I would detach both pointers here.",
+      "revId": "a6b42e20f446ed54dab70e8d08e1ba3beabe55d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1258791f_dd989f1f",
+        "filename": "media/audio/pulse/pulse_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T10:30:13Z",
+      "side": 1,
+      "message": "Should we follow pa_simple_free() destruction order here (calling pa_threaded_mainloop_stop() first)?",
+      "revId": "a6b42e20f446ed54dab70e8d08e1ba3beabe55d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
