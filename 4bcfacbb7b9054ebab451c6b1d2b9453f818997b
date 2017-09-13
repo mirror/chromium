@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "533e3948_11f0a058",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T23:33:15Z",
+      "side": 1,
+      "message": "git cl format decided this.",
+      "parentUuid": "5e8d3a5e_e4bb1bab",
+      "revId": "4bcfacbb7b9054ebab451c6b1d2b9453f818997b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd5f3878_f68a75cd",
         "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "05e060dd_1e26a87c",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T23:33:15Z",
+      "side": 1,
+      "message": "Changed from \"Callback\" to \"Handler\". I have to be aware of the ambiguity between \"selectedHandler\" and \"handler\".",
+      "parentUuid": "fd5f3878_f68a75cd",
+      "revId": "4bcfacbb7b9054ebab451c6b1d2b9453f818997b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2dde06db_1b10739e",
         "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
         "patchSetId": 12
@@ -47,6 +83,30 @@
       "writtenOn": "2017-09-13T17:41:14Z",
       "side": 1,
       "message": "_selectedCallback \u003d [selectedCallback copy];\n\nNot sure if ARC forces copy automatically, but it\u0027s still better to be on the safe side.",
+      "range": {
+        "startLine": 80,
+        "startChar": 24,
+        "endLine": 80,
+        "endChar": 40
+      },
+      "revId": "4bcfacbb7b9054ebab451c6b1d2b9453f818997b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d814c485_643d73e7",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T23:33:15Z",
+      "side": 1,
+      "message": "According to Apple docs, ARC does it for you. I\u0027m not adding the -copy since it is not necessary.",
+      "parentUuid": "2dde06db_1b10739e",
       "range": {
         "startLine": 80,
         "startChar": 24,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "caebe403_6834ce33",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T23:33:15Z",
+      "side": 1,
+      "message": "Gotta fix \u0027em all. Done.",
+      "parentUuid": "bdc704a9_0607aee1",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 14
+      },
+      "revId": "4bcfacbb7b9054ebab451c6b1d2b9453f818997b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91005f4e_52b9a35d",
         "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
         "patchSetId": 12
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "822453b1_e3952920",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T23:33:15Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "91005f4e_52b9a35d",
+      "range": {
+        "startLine": 42,
+        "startChar": 36,
+        "endLine": 42,
+        "endChar": 53
+      },
+      "revId": "4bcfacbb7b9054ebab451c6b1d2b9453f818997b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cd31935_fc5b8c73",
         "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller_unittest.mm",
         "patchSetId": 12
@@ -116,6 +224,30 @@
       "writtenOn": "2017-09-13T17:41:14Z",
       "side": 1,
       "message": "s/testViewController/test_view_controller",
+      "range": {
+        "startLine": 154,
+        "startChar": 47,
+        "endLine": 154,
+        "endChar": 65
+      },
+      "revId": "4bcfacbb7b9054ebab451c6b1d2b9453f818997b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2793d990_2a83ab18",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T23:33:15Z",
+      "side": 1,
+      "message": "Done. Also changed ivar default_handler_id_.",
+      "parentUuid": "0cd31935_fc5b8c73",
       "range": {
         "startLine": 154,
         "startChar": 47,
