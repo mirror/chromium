@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "bc3a0705_c64fce1d",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T13:02:21Z",
+      "side": 1,
+      "message": "You can use base::DoNothing() instead of these.",
+      "revId": "836aadde60da4f23047e81a4273cd07da53cd56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "960eee6c_a127ec4f",
         "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
         "patchSetId": 1
@@ -13,6 +30,30 @@
       "writtenOn": "2017-09-13T09:09:58Z",
       "side": 1,
       "message": "This is the only user of VoidNoOp, so you can use a lambda function here.",
+      "range": {
+        "startLine": 97,
+        "startChar": 36,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "836aadde60da4f23047e81a4273cd07da53cd56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189a0d13_9a8ce316",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T13:02:21Z",
+      "side": 1,
+      "message": "Can you turn the Bind()s to BindOnce()s now that we\u0027re taking a OnceClosure?",
+      "parentUuid": "960eee6c_a127ec4f",
       "range": {
         "startLine": 97,
         "startChar": 36,
@@ -134,6 +175,23 @@
         "endLine": 148,
         "endChar": 60
       },
+      "revId": "836aadde60da4f23047e81a4273cd07da53cd56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60b1e27_867807b7",
+        "filename": "content/browser/service_worker/service_worker_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T13:02:21Z",
+      "side": 1,
+      "message": "Can you add a comment about why we\u0027re hardcoding OK here?",
       "revId": "836aadde60da4f23047e81a4273cd07da53cd56d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

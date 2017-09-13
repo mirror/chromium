@@ -22,6 +22,30 @@
       "revId": "b52144f5179f5296510fefcb3e5dea3891b0bb84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78055c4b_a8b13501",
+        "filename": "content/browser/service_worker/service_worker_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T13:02:21Z",
+      "side": 0,
+      "message": "It\u0027s hard to trace this but looks like the callback is OperationCompleteCallback which calls  onOperationComplete in service_worker_internals.js which invokes a callback that seems to be:\n\nfunction(status) {\n  progressNodeFor(link).style.display \u003d \u0027none\u0027;\n}\n\nSo yea, it looks like the status isn\u0027t used currently, but I\u0027m not very familiar with this code.",
+      "parentUuid": "839d7951_9c6dc315",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 49
+      },
+      "revId": "b52144f5179f5296510fefcb3e5dea3891b0bb84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
