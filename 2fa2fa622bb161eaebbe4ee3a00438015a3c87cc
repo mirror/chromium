@@ -1,0 +1,786 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce191574_8b3ea80a",
+        "filename": "remoting/client/chromoting_client_runtime.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "Why do we need a new thread? Does Android play audio just on the UI thread?",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 75
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4de680_fa814abf",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "You could define this as private static const of AudioPlayerIos.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 29
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37a0516_66c23d7f",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "You can use C++ enum. If this is only used in AudioPlayerIos, you can define it as a private nested enum:\n\n private:\n  enum AudioPlayerState {\n    UNALLOCATED,\n    ...\n  };\n\nOr define it as public nested enum if it will be used outside the class.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 14
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362055a9_e0df6429",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "Since the class is multithreaded, could you add thread checks to each method to make it clear which method is used on which thread?\n\nAlso could you document the thread usage of this class? Should it be entirely used and destroyed on one thread while all audio related tasks are done on the audio thread?",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe1d6df_65f417ec",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "You may get the caller\u0027s thread from base::ThreadTaskRunnerHandle::Get()",
+      "range": {
+        "startLine": 46,
+        "startChar": 42,
+        "endLine": 46,
+        "endChar": 63
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cfb7440_60c86798",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "Are these methods being called outside AudioPlayerIos?\n\nIf you just want to make AudioEngineOutputBufferCallback able to call Prime, you could make it a static method of AudioPlayerIos.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 67
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d62b9ef_9682bf9f",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "This name seems confusing. Change to something like priming_count_?",
+      "range": {
+        "startLine": 78,
+        "startChar": 6,
+        "endLine": 78,
+        "endChar": 14
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1656822b_c07c0a73",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "Maybe rename to enqueued_frames_count_?",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 85,
+        "endChar": 27
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b4db549_7ef9ac7d",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "Why using both int and uint32_t?",
+      "range": {
+        "startLine": 85,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 10
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf20f941_f8c918e7",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "You may do it in the next CL. Could you add thread checkers to AudioPlayerBuffer to make sure it is used entirely used on single thread?",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 19
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fafb0ad7_e5d06892",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "Just use base::MakeUnique\u003cAudioPlayerIos\u003e(std::move(consumer_proxy), ..., ...)?",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eebb238f_bf079869",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "Please order your method definitions to match the order of the declarations in the header file.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 38
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c5f210_194b6971",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "Is it really safe to use Unretained here? I think you\u0027ll get SIGSEGV if you delete AudioPlayerIos immediately after Start() is called.\n\nYou may either need to implement a core or introduce a weak pointer that invalidates in Stop().",
+      "range": {
+        "startLine": 74,
+        "startChar": 60,
+        "endLine": 74,
+        "endChar": 70
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02146d8_b8991bf9",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "DCHECK(audio_task_runner_-\u003eBelongsToCurrentThread())?",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 19
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c13fbd4e_67bd906f",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "DCHECK(audio_task_runner_-\u003eBelongsToCurrentThread())?\nAlso if Prime is done on the same thread as Stop(), then why do we need to check this? No task on the audio thread will observe the STOPPING state.",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 27
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c150cc2_dcc287ef",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "base::Unretained\n\nWhat is the life time of output_buffer? Are you sure it outlives audio_frame_supplier_?",
+      "range": {
+        "startLine": 136,
+        "startChar": 23,
+        "endLine": 136,
+        "endChar": 33
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19392cff_a7307d0d",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure if setting intermediate state is useful... Nobody from audio thread can observe this, right?",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 22
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f2354f6_6a54ce35",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "If the buffer underruns then do you expect the caller to call Start again at some point?",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 24
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4974dbf9_945fd3c1",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "DCHECK(audio_task_runner_-\u003eBelongsToCurrentThread())?",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 15
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb581cef_33c28a06",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "IIUC Pump() is already on audio thread so why posting task here?\n\nAlso I don\u0027t think base::Unretained is safe here.",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 78
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c7d3dec_b0c82d64",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "DCHECK(called_task_runner_-\u003eBelongsToCurrentThread())?",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 31
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a2f9d9_c26df81f",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "I don\u0027t think base::Unretained is safe to use here.",
+      "range": {
+        "startLine": 173,
+        "startChar": 53,
+        "endLine": 173,
+        "endChar": 75
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105c255a_9fd1e0ec",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this state is useful. Only a task from a different thread can observe the STOPPING state. And if you really need to do so then you\u0027ll need to add lock to the state_.",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 20
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1db5ec_4885fe86",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "I think it will automatically convert?",
+      "range": {
+        "startLine": 185,
+        "startChar": 9,
+        "endLine": 185,
+        "endChar": 45
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab2c5f3_5a55c90c",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "When is this used?",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 41
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc19ad4_f591ae1c",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "I feel like you could make this function static or move it to anonymous namespace. Depends on whether you\u0027ll need to set it dynamically though...",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 68
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9572274c_fdc4d252",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "I guess you\u0027ll need to DCHECK that destruction is done on the audio thread, otherwise output_queue_ is not thread safe.\n\nAlso could we move these logic to StopOnAudioThread?\n\nIf you implement a core, then you could just do audio_task_runner_-\u003eDeleteSoon(core_.release()) here, which may make the caller\u0027s life easier...",
+      "range": {
+        "startLine": 244,
+        "startChar": 20,
+        "endLine": 244,
+        "endChar": 33
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e88e89_17c15336",
+        "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "I don\u0027t think this is the right pattern.\n\nIf you use Core, you can make Core single thread and post tasks directly from the shell. Posting task to |this| is used if you don\u0027t have a Core.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5afd04c7_8dd322bb",
+        "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "You can just return base::MakeUnique\u003cAudioStreamConsumerProxy\u003e(std::move(core));",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 16
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbfe00c5_8df2ed32",
+        "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "Why is this commented out? Clean up unused code?",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 42
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8369e6bf_24b37ffd",
+        "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "How is the caller task runner being used?",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 25
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a21fb8_7825ea2c",
+        "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "I don\u0027t think base::Unretained is safe.\n\nYou may just post a task on AudioStreamConsumerProxy::AddAudioPacket to the Core\u0027s WeakPtr though.",
+      "range": {
+        "startLine": 93,
+        "startChar": 28,
+        "endLine": 93,
+        "endChar": 44
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f2b5e2_8becaf36",
+        "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 36
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e5f2996_56a06208",
+        "filename": "remoting/ios/session/remoting_client.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-13T21:08:49Z",
+      "side": 1,
+      "message": "Are you sure it can be released from this thread?",
+      "range": {
+        "startLine": 174,
+        "startChar": 17,
+        "endLine": 174,
+        "endChar": 24
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
