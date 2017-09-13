@@ -22,6 +22,30 @@
       "revId": "a5864266cb296e8689d2409163257c5f7bac2067",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4792961c_65360d67",
+        "filename": "ios/web_view/features.gni",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-13T03:35:11Z",
+      "side": 1,
+      "message": "Enabling this flag will just expose public APIs for signing in and sync, so I\u0027ll at least update the comment to be more accurate here.",
+      "parentUuid": "a281d1e9_effc41b6",
+      "range": {
+        "startLine": 9,
+        "startChar": 38,
+        "endLine": 9,
+        "endChar": 42
+      },
+      "revId": "a5864266cb296e8689d2409163257c5f7bac2067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
