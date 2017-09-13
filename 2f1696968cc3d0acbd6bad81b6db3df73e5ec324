@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdc90428_be7cae0d",
+        "filename": "gin/v8_initializer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-09-13T10:00:12Z",
+      "side": 1,
+      "message": "This comment is wrong, it now returns the same startup_data as the argument. I don\u0027t think it\u0027s a good API to return the same pointer as is passed as an argument. I think it would be best just to rework the IsolateHolder\u0027s constructor to avoid initializing snapshot_creator_ in the initializer list so that you can call GetV8ExternalSnapshotData on the startup_data without this extra function. WDYT?",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "2f1696968cc3d0acbd6bad81b6db3df73e5ec324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
