@@ -116,12 +116,6 @@ bool TranslateService::IsTranslateBubbleEnabled() {
 }
 
 // static
-std::string TranslateService::GetTargetLanguage(PrefService* prefs) {
-  return translate::TranslateManager::GetTargetLanguage(
-      ChromeTranslateClient::CreateTranslatePrefs(prefs).get());
-}
-
-// static
 bool TranslateService::IsTranslatableURL(const GURL& url) {
   // A URLs is translatable unless it is one of the following:
   // - empty (can happen for popups created with window.open(""))

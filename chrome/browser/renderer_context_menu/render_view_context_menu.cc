@@ -30,6 +30,7 @@
 #include "chrome/browser/custom_handlers/protocol_handler_registry_factory.h"
 #include "chrome/browser/devtools/devtools_window.h"
 #include "chrome/browser/download/download_stats.h"
+#include "chrome/browser/language/language_model_factory.h"
 #include "chrome/browser/media/router/media_router_dialog_controller.h"
 #include "chrome/browser/media/router/media_router_feature.h"
 #include "chrome/browser/media/router/media_router_metrics.h"
@@ -71,6 +72,7 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/guest_view/browser/guest_view_base.h"
+#include "components/language/core/browser/language_model.h"
 #include "components/metrics/proto/omnibox_input_type.pb.h"
 #include "components/omnibox/browser/autocomplete_classifier.h"
 #include "components/omnibox/browser/autocomplete_match.h"
@@ -1208,13 +1210,15 @@ void RenderViewContextMenu::AppendPageItems() {
   AppendMediaRouterItem();
 
   if (TranslateService::IsTranslatableURL(params_.page_url)) {
-    std::unique_ptr<translate::TranslatePrefs> prefs(
-        ChromeTranslateClient::CreateTranslatePrefs(
-            GetPrefs(browser_context_)));
+    language::LanguageModel* lang_model =
+        LanguageModelFactory::GetInstance()->GetForBrowserContext(
+            browser_context_);
+    DCHECK(lang_model);
+
     // TODO(crbug.com/711217): We should not allow to use the translate when the
     // feature is disabled by the PolicyList.
     std::string locale =
-        translate::TranslateManager::GetTargetLanguage(prefs.get());
+        translate::TranslateManager::GetTargetLanguage(lang_model);
     base::string16 language =
         l10n_util::GetDisplayNameForLocale(locale, locale, true);
     menu_model_.AddItem(
@@ -1992,11 +1996,12 @@ bool RenderViewContextMenu::IsTranslateEnabled() const {
   }
   std::string original_lang =
       chrome_translate_client->GetLanguageState().original_language();
-  std::unique_ptr<translate::TranslatePrefs> prefs(
-      ChromeTranslateClient::CreateTranslatePrefs(
-          GetPrefs(browser_context_)));
+  language::LanguageModel* lang_model =
+      LanguageModelFactory::GetInstance()->GetForBrowserContext(
+          browser_context_);
+  DCHECK(lang_model);
   std::string target_lang =
-      translate::TranslateManager::GetTargetLanguage(prefs.get());
+      translate::TranslateManager::GetTargetLanguage(lang_model);
   // Note that we intentionally enable the menu even if the original and
   // target languages are identical.  This is to give a way to user to
   // translate a page that might contains text fragments in a different
@@ -2449,11 +2454,15 @@ void RenderViewContextMenu::ExecTranslate() {
   std::unique_ptr<translate::TranslatePrefs> prefs(
       ChromeTranslateClient::CreateTranslatePrefs(
           GetPrefs(browser_context_)));
-  std::string target_lang =
-      translate::TranslateManager::GetTargetLanguage(prefs.get());
   prefs->UnblockLanguage(original_lang);
   prefs->RemoveSiteFromBlacklist(params_.page_url.HostNoBrackets());
 
+  language::LanguageModel* lang_model =
+      LanguageModelFactory::GetInstance()->GetForBrowserContext(
+          browser_context_);
+  DCHECK(lang_model);
+  std::string target_lang =
+      translate::TranslateManager::GetTargetLanguage(lang_model);
   translate::TranslateManager* manager =
       chrome_translate_client->GetTranslateManager();
   DCHECK(manager);

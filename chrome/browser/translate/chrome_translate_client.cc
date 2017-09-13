@@ -15,6 +15,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/infobars/infobar_service.h"
+#include "chrome/browser/language/language_model_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sync/user_event_service_factory.h"
 #include "chrome/browser/translate/translate_accept_languages_factory.h"
@@ -121,7 +122,8 @@ ChromeTranslateClient::ChromeTranslateClient(content::WebContents* web_contents)
           this,
           translate::TranslateRankerFactory::GetForBrowserContext(
               web_contents->GetBrowserContext()),
-          prefs::kAcceptLanguages)),
+          LanguageModelFactory::GetInstance()->GetForBrowserContext(
+              web_contents->GetBrowserContext()))),
       language_histogram_(
           UrlLanguageHistogramFactory::GetInstance()->GetForBrowserContext(
               web_contents->GetBrowserContext())) {
@@ -198,9 +200,9 @@ void ChromeTranslateClient::GetTranslateLanguages(
   Profile* profile =
       Profile::FromBrowserContext(web_contents->GetBrowserContext());
   Profile* original_profile = profile->GetOriginalProfile();
-  PrefService* prefs = original_profile->GetPrefs();
+
   std::unique_ptr<translate::TranslatePrefs> translate_prefs =
-      CreateTranslatePrefs(prefs);
+      CreateTranslatePrefs(original_profile->GetPrefs());
   if (!web_contents->GetBrowserContext()->IsOffTheRecord()) {
     std::string auto_translate_language =
         translate::TranslateManager::GetAutoTargetLanguage(
@@ -211,8 +213,9 @@ void ChromeTranslateClient::GetTranslateLanguages(
     }
   }
 
-  *target =
-      translate::TranslateManager::GetTargetLanguage(translate_prefs.get());
+  *target = translate::TranslateManager::GetTargetLanguage(
+      LanguageModelFactory::GetInstance()->GetForBrowserContext(
+          original_profile));
 }
 
 void ChromeTranslateClient::RecordTranslateEvent(

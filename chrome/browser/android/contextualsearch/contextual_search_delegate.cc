@@ -25,6 +25,7 @@
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/prefs/pref_service.h"
 #include "components/search_engines/template_url_service.h"
+#include "components/translate/core/browser/translate_manager.h"
 #include "components/variations/net/variations_http_headers.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/render_frame_host.h"
@@ -401,8 +402,8 @@ bool ContextualSearchDelegate::CanSendPageURL(
 // Gets the target language from the translate service using the user's profile.
 std::string ContextualSearchDelegate::GetTargetLanguage() {
   Profile* profile = ProfileManager::GetActiveUserProfile();
-  PrefService* pref_service = profile->GetPrefs();
-  std::string result = TranslateService::GetTargetLanguage(pref_service);
+  std::string result = translate::TranslateManager::GetTargetLanguage(
+      LanguageModelFactory::GetInstance()->GetForBrowserContext(profile));
   DCHECK(!result.empty());
   return result;
 }
