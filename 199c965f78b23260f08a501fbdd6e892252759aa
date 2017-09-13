@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "113b4f02_1f0ac9c7",
+        "filename": "chrome/browser/resources/settings/site_settings/constants.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-13T04:31:32Z",
+      "side": 1,
+      "message": "N/A (Hunk deleted)",
+      "parentUuid": "accc13fb_d2b4c25a",
+      "revId": "199c965f78b23260f08a501fbdd6e892252759aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b5d5f3e_e010676b",
         "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "199c965f78b23260f08a501fbdd6e892252759aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d97aea_9d3f0260",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-13T04:31:32Z",
+      "side": 1,
+      "message": "Fancy! I was about to do this, but realised that a dependent CL needs to filter on e.hidden as well, so left it off. Thank for the suggestion though :)",
+      "parentUuid": "8b5d5f3e_e010676b",
+      "revId": "199c965f78b23260f08a501fbdd6e892252759aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5e41d47a_852b111a",
+        "filename": "chrome/browser/resources/settings/site_settings_page/site_settings_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-13T04:31:32Z",
+      "side": 1,
+      "message": "N/A (PROTECTED_CONTENT being \u0027\u0027 on non-CrOS scrapped)",
+      "parentUuid": "f520a42b_b9b59780",
+      "revId": "199c965f78b23260f08a501fbdd6e892252759aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea3ed892_8c895b55",
         "filename": "chrome/test/data/webui/settings/site_details_tests.js",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "199c965f78b23260f08a501fbdd6e892252759aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884474a6_f8b19a77",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-13T04:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea3ed892_8c895b55",
+      "revId": "199c965f78b23260f08a501fbdd6e892252759aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
