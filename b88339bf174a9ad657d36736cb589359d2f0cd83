@@ -22,6 +22,47 @@
       "revId": "b88339bf174a9ad657d36736cb589359d2f0cd83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695276cc_c7a5a56f",
+        "filename": "ash/public/interfaces/session_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-13T23:27:16Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a way to indicate an optionally-called callback. I would add a success/fail boolean to it and always call the callback.",
+      "parentUuid": "6086f9e0_95c33c29",
+      "range": {
+        "startLine": 166,
+        "startChar": 27,
+        "endLine": 166,
+        "endChar": 33
+      },
+      "revId": "b88339bf174a9ad657d36736cb589359d2f0cd83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6521511d_6af70a6f",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-13T23:27:16Z",
+      "side": 1,
+      "message": "This is adding a lot of non-session-related dependencies to this file. How about putting CancelCastingDialog in its own file, or putting it somewhere media related? and/or add a SystemTray utility method related to user switching?",
+      "revId": "b88339bf174a9ad657d36736cb589359d2f0cd83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
