@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e12211d3_a691d167",
+        "filename": "net/cert/multi_threaded_cert_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-13T05:37:04Z",
+      "side": 1,
+      "message": "I may not have explained it well.\n\nThe challenge I have is \"Why do we pass WithBaseSyncPrimitives\"\n\nOne might read it as \"Because DoVerifyOnWorkerThread\" needs those - but if you read the source of that method, it doesn\u0027t. You can read that method, and read it as \"Well, CertVerifyProc::Verify\" might - but that\u0027s not part of the API contract of CertVerifyProc (or not documented as such). At best, it\u0027s an implementation behaviour - and not even of the real code, it\u0027s an implementation behaviour of a unit test.\n\nI\u0027m trying to suggest that I have trouble with a design that makes it the callers responsibility, because that seems to be a layering violation. The caller (this code) doesn\u0027t really care about the capabilities - that\u0027s why I mentioned it feels like an abstraction failing.\n\nI realize this may conflict with some of the goals of the task scheduler effort - which seems to have a goal of making all of those traits surface at task time. And that may be a reasonable goal, but what it also means is that we\u0027re making up new API contracts - such as \"CertVerifyProc::Verify should only be called on a TaskRunner with the WithBaseSyncPrimitives traits\" - but that\u0027s not documented anywhere. The closest we get to documenting here - but that\u0027s not the right layer.\n\nIf we documented it at CertVerifyProc, for example, then this documentation is redundant. However, because we\u0027re documenting it here, and not there, this means that we\u0027re documenting specific implementation behaviours of an abstract interface - and that\u0027s a layering violation, because you\u0027re having code be coded against the implementation, not the interface (and that\u0027s fragile and brittle and hard to understand).\n\nDoes that explain more why I raised the concern? I think the argument I\u0027ve heard in the past is that \"Well, these traits were already implicitly part of the contract, this just makes it explicit\" - which may be the right answer, but if it is, then we should be updating documentation in API contracts (like CertVerifyProc) to be explicit that these are the traits they require, and we should be baking the _interface_ to check and assert that those traits are met (and not just specific implementations).\n\nHopefully that explains it a bit more as to why I have trouble with what might seem like a small comment, but I think reveals a systemic design issue we should make sure to address.",
+      "parentUuid": "5e4cf969_8e4763b7",
+      "revId": "c8b45528c601f0fcd2de70115f836f4f05d1bfcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c910e17_b99d65b7",
         "filename": "net/cert/multi_threaded_cert_verifier.cc",
         "patchSetId": 4
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "TaskScheduler provides clear guarantees:\n- SKIP_ON_SHUTDOWN and CONTINUE_ON_SHUTDOWN tasks may be skipped during shutdown.\n- BLOCK_SHUTDOWN tasks are never skipped. The process does not exit until they have completed their execution.\n\nSince tasks are only skipped during shutdown, memory leaks and resource leaks are not a real issue.\n\n1) -\u003e The task will run unless shutdown starts before it is scheduled.\n2) -\u003e This starvation will only happen during TaskScheduler shutdown, which happens shortly before process termination. How is skipping the task during shutdown different from the task taking a long time to run during shutdown (in both cases, the task won\u0027t complete before process termination)?\n3) -\u003e This is probably not needed given the fact that starvation only happens during shutdown.\n\nNote: TaskScheduler shutdown is expected to happen just before process termination. If that helps, I could make this clearer in task_scheduler.h.",
       "parentUuid": "9c910e17_b99d65b7",
+      "revId": "c8b45528c601f0fcd2de70115f836f4f05d1bfcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e06a8d_7f38749e",
+        "filename": "net/cert/multi_threaded_cert_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-13T05:37:04Z",
+      "side": 1,
+      "message": "OK, I misunderstood a previous comment then; I thought tasks could be skipped outside of shutdown. I agree that if the only skipping here is shutdown, we should be good. For object teardowns (and good memory management should mean they\u0027re always torn down during shutdown), we don\u0027t wait on the state machine.",
+      "parentUuid": "e5d5aaef_4108f636",
       "revId": "c8b45528c601f0fcd2de70115f836f4f05d1bfcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
