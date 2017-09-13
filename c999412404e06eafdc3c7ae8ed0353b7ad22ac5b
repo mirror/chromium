@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "06c6ccd3_ab5a0870",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-13T22:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81948c53_16f48a90",
+      "revId": "c999412404e06eafdc3c7ae8ed0353b7ad22ac5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3b9d3c0_a5e08497",
         "filename": "chrome/browser/chromeos/system/input_device_settings.cc",
         "patchSetId": 9
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c8d02aea_f485de46",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-13T22:31:33Z",
+      "side": 1,
+      "message": "ditto, removed",
+      "parentUuid": "a3b9d3c0_a5e08497",
+      "revId": "c999412404e06eafdc3c7ae8ed0353b7ad22ac5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f7ba10b_ce25e6a8",
         "filename": "chrome/browser/chromeos/system/input_device_settings.h",
         "patchSetId": 9
@@ -65,6 +101,24 @@
       "writtenOn": "2017-09-13T22:20:52Z",
       "side": 1,
       "message": "Can this be removed now?",
+      "revId": "c999412404e06eafdc3c7ae8ed0353b7ad22ac5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8365c28_10bf317a",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-13T22:31:33Z",
+      "side": 1,
+      "message": "yeah, sorry i forget this..",
+      "parentUuid": "4f7ba10b_ce25e6a8",
       "revId": "c999412404e06eafdc3c7ae8ed0353b7ad22ac5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
