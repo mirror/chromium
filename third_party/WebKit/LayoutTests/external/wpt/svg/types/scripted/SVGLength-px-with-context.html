@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <title>SVGLength, converting from 'px' to other units (attached)</title>
-<script src="../../resources/testharness.js"></script>
-<script src="../../resources/testharnessreport.js"></script>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
 <p></p>
 <script>
 var cssPixelsPerInch = 96;
@@ -21,8 +21,6 @@ setup(function() {
   window.svgWidth = svgElement.width.baseVal.value;
   window.svgHeight = svgElement.height.baseVal.value;
   window.fontSize = parseInt(rectElement.style.fontSize);
-  // TODO(shanmuga.m) : // Since calculateXHeight() triggers force layout, relative length units are resolved.
-  // So make convertToSpecifiedUnits to update pending style sheet and do relayout if needed.
   window.xHeight = calculateXHeight();
 
   function calculateXHeight() {
