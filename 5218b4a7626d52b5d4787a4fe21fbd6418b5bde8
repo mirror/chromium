@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0c7bdd6_cf83a838",
+        "filename": "chrome/common/extensions/docs/server2/README",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-13T23:05:19Z",
+      "side": 1,
+      "message": "nit: Specify how you find the \"Cloud dashboard\", i.e. what sequences of links/items one needs to click.\n\nAlso put this as a primary option and then specify the rigorous option of line 193.",
+      "range": {
+        "startLine": 196,
+        "startChar": 1,
+        "endLine": 196,
+        "endChar": 2
+      },
+      "revId": "5218b4a7626d52b5d4787a4fe21fbd6418b5bde8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
