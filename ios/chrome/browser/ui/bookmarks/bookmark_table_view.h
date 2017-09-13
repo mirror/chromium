@@ -58,6 +58,11 @@ class PrefRegistrySyncable;
 - (void)bookmarkTableView:(BookmarkTableView*)view
               didMoveNode:(const bookmarks::BookmarkNode*)node
                toPosition:(int)position;
+
+// Tells the delegate to refresh the context bar if it is in default state.
+- (void)bookmarkTableViewRefreshContextBarIfAtDefaultState:
+    (BookmarkTableView*)view;
+
 @end
 
 @interface BookmarkTableView : UIView
@@ -91,6 +96,12 @@ class PrefRegistrySyncable;
 
 // Returns the currently selected edit nodes.
 - (const std::set<const bookmarks::BookmarkNode*>&)editNodes;
+
+// Returns true when current root node has bookmarks or folders.
+- (BOOL)hasBookmarksOrFolders;
+
+// Returns true when current root node allows new folder to be created on it.
+- (BOOL)allowsNewFolder;
 
 @end
 
