@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db33f713_9f06d419",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-13T16:55:51Z",
+      "side": 1,
+      "message": "Please add more details to this comment (e.g., that hot/cold state are switched by this value).",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 71
+      },
+      "revId": "b37c9004bae240c665bef599c10c29cb7a64d737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
