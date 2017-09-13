@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5fd29abe_43185067",
+        "filename": "components/cronet/android/test/proguard.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-09-13T17:40:36Z",
+      "side": 1,
+      "message": "I removed this in the new patch",
+      "parentUuid": "f867cae3_018d2ae9",
+      "revId": "a71285a33a12c0c43984addd93d69f4712f40913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a120697c_e4160d78",
         "filename": "components/cronet/android/test/proguard.cfg",
         "patchSetId": 2
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Hmm that line of code calls ChromiumMultiDexInstaller.install(), and there is no Assert.install() defined anywhere...  I\u0027m very confused.",
       "parentUuid": "7fdb45ab_cc98d66c",
+      "revId": "a71285a33a12c0c43984addd93d69f4712f40913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c31594_ad7b25a0",
+        "filename": "components/cronet/android/test/proguard.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-09-13T17:40:36Z",
+      "side": 1,
+      "message": "ya, same. I have a theory, I think this is caused by obfuscation. I decompiled the class file back to java and it looks like this:\n\n```\npackage org.chromium.base.test;\n\nimport android.app.Application;\nimport android.content.Context;\nimport android.content.pm.InstrumentationInfo;\nimport android.content.pm.PackageManager;\nimport android.content.pm.PackageManager.NameNotFoundException;\nimport android.os.Bundle;\nimport android.support.test.internal.runner.TestRequestBuilder;\nimport android.support.test.internal.runner.b;\nimport android.support.test.internal.runner.c;\nimport android.support.test.internal.runner.c.a;\nimport android.support.test.internal.runner.d;\nimport android.support.test.internal.runner.d.a;\nimport android.support.test.internal.runner.f;\nimport java.io.IOException;\nimport org.chromium.base.k;\n\npublic class BaseChromiumAndroidJUnitRunner\n  extends android.support.test.runner.a\n{\n  private static final String LIST_ALL_TESTS_FLAG \u003d \"org.chromium.base.test.BaseChromiumAndroidJUnitRunner.TestList\";\n  private static final String LIST_TESTS_PACKAGE_FLAG \u003d \"org.chromium.base.test.BaseChromiumAndroidJUnitRunner.TestListPackage\";\n  private static final String ARGUMENT_TEST_PACKAGE \u003d \"package\";\n  private static final String ARGUMENT_ANNOTATION \u003d \"annotation\";\n  private static final String ARGUMENT_NOT_ANNOTATION \u003d \"notAnnotation\";\n  private static final String ARGUMENT_LOG_ONLY \u003d \"log\";\n  private static final String TAG \u003d \"BaseJUnitRunner\";\n  \n  public BaseChromiumAndroidJUnitRunner() {}\n  \n  public Application newApplication(ClassLoader paramClassLoader, String paramString, Context paramContext)\n  {\n    b.b(new BaseChromiumRunnerCommon.MultiDexContextWrapper(\n      getContext(), getTargetContext()));\n    BaseChromiumRunnerCommon.reorderDexPathElements(paramClassLoader, getContext(), getTargetContext());\n    return super.newApplication(paramClassLoader, paramString, paramContext);\n  }\n\n...\n```\n\nAs you can see, ChromiumMultiDexInstaller.install has been obfuscated to b.b, not sure how proguard can make mistake like that but `junit.framework.Assert` might be be obfuscated to `b` as well.",
+      "parentUuid": "36c6959b_3f0639ca",
       "revId": "a71285a33a12c0c43984addd93d69f4712f40913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
