@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/webui/settings/appearance_handler.h"
 
+#include "ash/shell.h"
+#include "ash/wallpaper/wallpaper_delegate.h"
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/values.h"
@@ -61,8 +63,18 @@ void AppearanceHandler::HandleUseSystemTheme(const base::ListValue* args) {
 
 #if defined(OS_CHROMEOS)
 void AppearanceHandler::HandleOpenWallpaperManager(
-    const base::ListValue* /*args*/) {
-  chromeos::WallpaperManager::Get()->Open();
+    const base::ListValue* args) {
+  CHECK_EQ(args->GetSize(), 1U);
+  const base::Value* callback_id;
+  CHECK(args->Get(0, &callback_id));
+  AllowJavascript();
+
+  bool canOpen =
+      ash::Shell::Get()->wallpaper_delegate()->CanOpenSetWallpaperPage();
+  if (canOpen)
+    chromeos::WallpaperManager::Get()->Open();
+
+  ResolveJavascriptCallback(*callback_id, base::Value(canOpen));
 }
 #endif
 
