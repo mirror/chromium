@@ -16,6 +16,24 @@
       "revId": "b3538854f599ddd9232a7e04ccdc88132e83d356",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906c8858_62692c31",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-09-13T14:02:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d7d81c1_52200f82",
+      "revId": "b3538854f599ddd9232a7e04ccdc88132e83d356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
