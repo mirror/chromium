@@ -365,6 +365,32 @@ void Resource::CheckResourceIntegrity() {
   DCHECK_NE(IntegrityDisposition(), ResourceIntegrityDisposition::kNotChecked);
 }
 
+void Resource::TrySetIntegrityMetadata(const IntegrityMetadataSet& metadata) {
+  // Never overwrite existing IntegrityMetadata.
+  if (!IntegrityMetadata().IsEmpty())
+    return;
+
+  if (metadata.IsEmpty())
+    return;
+
+  // If we haven't already checked integrity, we can just set the new data.
+  if (IntegrityDisposition() == ResourceIntegrityDisposition::kNotChecked) {
+    SetIntegrityMetadata(metadata);
+    return;
+  }
+
+  // If we still have the source data (e.g. for preloads), then we reset
+  // the integrity check and check again.
+  if (Data()) {
+    integrity_disposition_ = ResourceIntegrityDisposition::kNotChecked;
+    SetIntegrityMetadata(metadata);
+    CheckResourceIntegrity();
+    return;
+  }
+
+  // If we've come here, we cannot safely set the new metadata, so we won't.
+}
+
 void Resource::NotifyFinished() {
   DCHECK(IsLoaded());
 

@@ -84,6 +84,11 @@ class CORE_EXPORT ScriptResource final : public TextResource {
 
   AccessControlStatus CalculateAccessControlStatus() const;
 
+  // For InspectorPageAgent::CachedResourceContent.
+  String CurrentDecodedText() const {
+    return TextResource::CurrentDecodedText();
+  }
+
  private:
   class ScriptResourceFactory : public ResourceFactory {
    public:

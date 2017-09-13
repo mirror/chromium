@@ -306,7 +306,7 @@ bool InspectorPageAgent::CachedResourceContent(Resource* cached_resource,
     case Resource::kScript:
       MaybeEncodeTextContent(
           cached_resource->ResourceBuffer()
-              ? ToScriptResource(cached_resource)->DecodedText()
+              ? ToScriptResource(cached_resource)->CurrentDecodedText()
               : ToScriptResource(cached_resource)->SourceText(),
           cached_resource->ResourceBuffer(), result, base64_encoded);
       return true;

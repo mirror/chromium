@@ -250,6 +250,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   const IntegrityMetadataSet& IntegrityMetadata() const {
     return integrity_metadata_;
   }
+  void TrySetIntegrityMetadata(const IntegrityMetadataSet&);
   ResourceIntegrityDisposition IntegrityDisposition() const {
     return integrity_disposition_;
   }
