@@ -46,6 +46,30 @@
       "revId": "104bdb3f4565abe9e70e7a4fe04cc9844f418ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d196c7d_a40e2502",
+        "filename": "base/allocator/partition_allocator/spin_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1188084
+      },
+      "writtenOn": "2017-09-13T15:00:56Z",
+      "side": 1,
+      "message": "Hmm I tested on an internal build, and it worked there. It\u0027s quite possible this isn\u0027t defined in clang. I\u0027ll investigate more.",
+      "parentUuid": "19213473_e5e16c22",
+      "range": {
+        "startLine": 30,
+        "startChar": 24,
+        "endLine": 30,
+        "endChar": 53
+      },
+      "revId": "104bdb3f4565abe9e70e7a4fe04cc9844f418ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
