@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81dfb19c_431bb5fb",
+        "filename": "tools/grit/grit/format/data_pack.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-09-13T14:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f969416d_ec0d4da1",
+      "revId": "8b3fe3fa16c7928cbffd17508f93e73dace559bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "468a553f_18ee79e4",
         "filename": "tools/grit/grit/format/data_pack.py",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4034957f_2476d347",
+        "filename": "tools/grit/grit/format/data_pack.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-09-13T14:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "468a553f_18ee79e4",
+      "revId": "8b3fe3fa16c7928cbffd17508f93e73dace559bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e93b8549_ca225c69",
         "filename": "tools/grit/grit_rule.gni",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-11T20:38:33Z",
       "side": 1,
       "message": "Isn\u0027t |en_pak_grit_outputs| going to be always empty?",
+      "revId": "8b3fe3fa16c7928cbffd17508f93e73dace559bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df7e11e_838a7cff",
+        "filename": "tools/grit/grit_rule.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-09-13T14:59:29Z",
+      "side": 1,
+      "message": "Named wrong. Fixed now.\n\nIt contains all *.pak outputs listed by the target, since sources contains all the non-*.pak outputs.",
+      "parentUuid": "e93b8549_ca225c69",
       "revId": "8b3fe3fa16c7928cbffd17508f93e73dace559bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
