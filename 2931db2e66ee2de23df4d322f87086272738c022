@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0506ca22_31fc0f7f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-13T06:29:58Z",
+      "side": 1,
+      "message": "Sure! I think it\u0027s good to output the specific error, but it might not be worth the extra lines. Also, we\u0027ve already been using unreached_func a lot, and it\u0027s probably good to be consistent. Thanks for the input!",
+      "parentUuid": "51169e16_257bb911",
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "315339b1_5c2b7c08",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "2931db2e66ee2de23df4d322f87086272738c022",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65371693_d5535f99",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-13T06:29:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "315339b1_5c2b7c08",
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a06666c6_bb2ae15d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-13T06:29:58Z",
+      "side": 1,
+      "message": "Probably, yeah! I\u0027ve added it. Thanks!",
+      "parentUuid": "76d2dd66_9139f242",
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "275f8096_87390fef",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "2931db2e66ee2de23df4d322f87086272738c022",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cff09f1_09703454",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-13T06:29:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "275f8096_87390fef",
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4d48edda_8aeb9f97",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-13T06:29:58Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "f18aff46_3708a13c",
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80ed56cb_c5aef4f3",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "99e87238_fe3afd11",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-13T06:29:58Z",
+      "side": 1,
+      "message": "Good question! I think I originally put it to show through the URL what the server-side was doing or something along those lines. I think it\u0027s fine to have resetting cookies as a default behavior, though!",
+      "parentUuid": "80ed56cb_c5aef4f3",
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "462ebdda_3cf1062e",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "2931db2e66ee2de23df4d322f87086272738c022",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3559a7_83c5ac5d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-13T06:29:58Z",
+      "side": 1,
+      "message": "Thank you!! That\u0027s way shorter and more understandable!",
+      "parentUuid": "462ebdda_3cf1062e",
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +267,30 @@
       "revId": "2931db2e66ee2de23df4d322f87086272738c022",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab365bf_678b9458",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-13T06:29:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f84564e_47982500",
+      "range": {
+        "startLine": 21,
+        "startChar": 46,
+        "endLine": 21,
+        "endChar": 59
+      },
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
