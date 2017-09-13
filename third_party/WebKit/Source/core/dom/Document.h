@@ -45,6 +45,7 @@
 #include "core/dom/DocumentShutdownObserver.h"
 #include "core/dom/DocumentTiming.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/dom/MaskedObjectTracker.h"
 #include "core/dom/MutationObserver.h"
 #include "core/dom/ScriptedIdleTaskController.h"
 #include "core/dom/SynchronousMutationNotifier.h"
@@ -194,6 +195,8 @@ enum NodeListInvalidationType {
   kInvalidateOnAnyAttrChange,
 };
 const int kNumNodeListInvalidationTypes = kInvalidateOnAnyAttrChange + 1;
+static_assert(kNumNodeListInvalidationTypes <= sizeof(unsigned) * 8,
+              "Must fit in bits of unsigned to use MaskedObjectTracker.");
 
 enum DocumentClass {
   kDefaultDocumentClass = 0,
@@ -1621,11 +1624,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   HeapHashSet<WeakMember<const LiveNodeListBase>>
       lists_invalidated_at_document_;
-  // Oilpan keeps track of all registered NodeLists.
-  // TODO(Oilpan): improve - only need to know if a NodeList
-  // is currently alive or not for the different types.
-  HeapHashSet<WeakMember<const LiveNodeListBase>>
-      node_lists_[kNumNodeListInvalidationTypes];
+  MaskedObjectTracker<const LiveNodeListBase> node_lists_;
 
   Member<SVGDocumentExtensions> svg_extensions_;
 
