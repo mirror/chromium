@@ -16,6 +16,24 @@
       "revId": "dcc7bf4424c988bb00d2ed4c84ccb9e5a6ee2625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28248c0_54a1d766",
+        "filename": "third_party/WebKit/Source/core/loader/NetworkQuietDetector.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-09-13T17:27:13Z",
+      "side": 0,
+      "message": "yes, it\u0027s used to collect histograms and counters right below your comment. We can only remove this file once that line is moved to FMPDetector. https://chromium-review.googlesource.com/c/chromium/src/+/664324",
+      "parentUuid": "a2ca9533_303a266d",
+      "revId": "dcc7bf4424c988bb00d2ed4c84ccb9e5a6ee2625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
