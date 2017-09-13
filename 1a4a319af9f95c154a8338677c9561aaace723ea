@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "708dea67_8c66cfa3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-whitelist-request-headers.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-13T17:11:45Z",
+      "side": 1,
+      "message": "echo back Save-Data, too?",
+      "revId": "1a4a319af9f95c154a8338677c9561aaace723ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
