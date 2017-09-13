@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b0281a3c_5b8da5a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-13T18:09:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bda31a57_72ad33fc",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 75
+      },
+      "revId": "5d64148d2872364030b5a02d6b05fa4361c01f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e0e8190_79c4d83e",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-08T18:55:53Z",
       "side": 1,
       "message": "The messages \"The card number is already used\", \"Field is required\", and \"Email required\" are full sentences, so they should be in sentence case and end on a period.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 1
+      },
+      "revId": "5d64148d2872364030b5a02d6b05fa4361c01f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e3b438_63f1b2cb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-13T18:09:18Z",
+      "side": 1,
+      "message": "These validation messages aren\u0027t iOS specific. I also don\u0027t think they qualify as \"full sentences\" when it comes to using sentence case. A good example of a \"full sentence\" is the privacy section of the Bling settings.",
+      "parentUuid": "3e0e8190_79c4d83e",
       "range": {
         "startLine": 15,
         "startChar": 0,
@@ -68,6 +116,30 @@
       "revId": "5d64148d2872364030b5a02d6b05fa4361c01f29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b144a41_6eae51e0",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-13T18:09:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac9e2fe0_0f51f2a8",
+      "range": {
+        "startLine": 247,
+        "startChar": 136,
+        "endLine": 247,
+        "endChar": 137
+      },
+      "revId": "5d64148d2872364030b5a02d6b05fa4361c01f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
