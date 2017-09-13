@@ -18,6 +18,7 @@
 #include "build/build_config.h"
 #include "cc/output/layer_tree_frame_sink.h"
 #include "services/ui/public/interfaces/window_tree_constants.mojom.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/aura/client/capture_client.h"
 #include "ui/aura/client/focus_change_observer.h"
@@ -1946,6 +1947,31 @@ TEST_P(WindowObserverTest, PropertyChanged) {
   // Sanity check to see if |PropertyChangeInfoAndClear| really clears.
   EXPECT_EQ(PropertyChangeInfo(
       reinterpret_cast<const void*>(NULL), -3), PropertyChangeInfoAndClear());
+}
+
+namespace {
+
+class MockWindowObserver : public WindowObserver {
+ public:
+  MockWindowObserver() = default;
+
+  MOCK_METHOD3(OnWindowOpacityChanged, void(Window*, float, float));
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockWindowObserver);
+};
+
+}  // namespace
+
+// Verify that WindowObserver::OnWindowOpacityChanged() is notified when the
+// opacity of a Window's Layer changes.
+TEST_P(WindowObserverTest, WindowOpacityChanged) {
+  std::unique_ptr<Window> window(CreateTestWindowWithId(1, root_window()));
+  testing::StrictMock<MockWindowObserver> observer;
+  window->AddObserver(&observer);
+  EXPECT_CALL(observer, OnWindowOpacityChanged(window.get(), 1.0f, 0.5f));
+  window->layer()->SetOpacity(0.5f);
+  window->RemoveObserver(&observer);
 }
 
 TEST_P(WindowTest, AcquireLayer) {
