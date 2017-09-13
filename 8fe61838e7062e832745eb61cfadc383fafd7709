@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f9b63bb_2b9626b1",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-13T23:22:45Z",
+      "side": 1,
+      "message": "I don\u0027t think other TLDs host services.",
+      "parentUuid": "51f15be3_b6448568",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "8fe61838e7062e832745eb61cfadc383fafd7709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe614a6d_ed3997b3",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ccb5e0e4_89a09cca",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-13T23:22:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe614a6d_ed3997b3",
+      "range": {
+        "startLine": 61,
+        "startChar": 67,
+        "endLine": 61,
+        "endChar": 68
+      },
+      "revId": "8fe61838e7062e832745eb61cfadc383fafd7709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4581680f_4859cdde",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle_unittest.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-13T22:53:48Z",
       "side": 1,
       "message": "Please write tests for \"from a.b.google.com to b.google.com\" (and vice versa.)\n\nI\u0027m slightly concerned about this type of transitions too. If the user goes from servicename.google.com to subdomain.servicename.google.com, the picker may be triggered. With the new picker UX, this might not be a big problem though.\n\nI\u0027m okay with landing this, but as always, please monitor incoming bug/user reports.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 68
+      },
+      "revId": "8fe61838e7062e832745eb61cfadc383fafd7709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f62cc89_6d056cb4",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-13T23:22:45Z",
+      "side": 1,
+      "message": "Yes the redesign will make this less annoying, adding that couple of tests.",
+      "parentUuid": "4581680f_4859cdde",
       "range": {
         "startLine": 49,
         "startChar": 0,
