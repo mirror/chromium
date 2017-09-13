@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb915355_ae06fc4d",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-09-13T08:48:52Z",
+      "side": 1,
+      "message": "Done; I\u0027ve filed bug 764633 to track this.",
+      "parentUuid": "7bdcc424_88c95150",
+      "revId": "e20c815cf108437ca986ef840dafbfb5de015f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aed4858_4dec1692",
         "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3fb77d56_efbb3bb8",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-09-13T08:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aed4858_4dec1692",
+      "revId": "e20c815cf108437ca986ef840dafbfb5de015f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dcd1362_45de7eb9",
         "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "e20c815cf108437ca986ef840dafbfb5de015f46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "524201c9_bef5fb14",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-09-13T08:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dcd1362_45de7eb9",
+      "revId": "e20c815cf108437ca986ef840dafbfb5de015f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
