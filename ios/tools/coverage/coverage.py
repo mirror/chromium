@@ -50,19 +50,21 @@ VALID_TEST_TARGET_POSTFIXES = ['unittests', 'inttests', 'egtests']
 EARL_GREY_TEST_TARGET_POSTFIX = 'egtests'
 
 
-def _CreateCoverageProfileDataForTarget(target, jobs_count=None):
+def _CreateCoverageProfileDataForTarget(target, jobs_count=None,
+                                        gtest_filter=None):
   """Builds and runs target to generate the coverage profile data.
 
   Args:
     target: A string representing the name of the target to be tested.
     jobs_count: Number of jobs to run in parallel for building. If None, a
                 default value is derived based on CPUs availability.
+    gtest_filter: Only run unit tests whose full name matches the filter.
 
   Returns:
     A string representing the absolute path to the generated profdata file.
   """
   _BuildTargetWithCoverageConfiguration(target, jobs_count)
-  profraw_path = _GetProfileRawDataPathByRunningTarget(target)
+  profraw_path = _GetProfileRawDataPathByRunningTarget(target, gtest_filter)
   profdata_path = _CreateCoverageProfileDataFromProfRawData(profraw_path)
 
   print 'Code coverage profile data is created as: ' + profdata_path
@@ -254,7 +256,7 @@ def _MatchFilePathWithDirectories(file_path, directories):
   return matched_directories
 
 
-def _BuildTargetWithCoverageConfiguration(target, jobs_count):
+def _BuildTargetWithCoverageConfiguration(target, jobs_count=None):
   """Builds target with coverage configuration.
 
   This function requires current working directory to be the root of checkout.
@@ -277,7 +279,7 @@ def _BuildTargetWithCoverageConfiguration(target, jobs_count):
   subprocess.check_call(cmd)
 
 
-def _GetProfileRawDataPathByRunningTarget(target):
+def _GetProfileRawDataPathByRunningTarget(target, gtest_filter=None):
   """Runs target and returns the path to the generated profraw data file.
 
   The output log of running the test target has no format, but it is guaranteed
@@ -285,11 +287,12 @@ def _GetProfileRawDataPathByRunningTarget(target):
 
   Args:
     target: A string representing the name of the target to be tested.
+    gtest_filter: Only run unit tests whose full name matches the filter.
 
   Returns:
     A string representing the absolute path to the generated profraw data file.
   """
-  logs = _RunTestTargetWithCoverageConfiguration(target)
+  logs = _RunTestTargetWithCoverageConfiguration(target, gtest_filter)
   for log in logs:
     if PROFRAW_LOG_IDENTIFIER in log:
       profraw_path = log.split(PROFRAW_LOG_IDENTIFIER)[1][:-1]
@@ -300,29 +303,37 @@ def _GetProfileRawDataPathByRunningTarget(target):
                  'Please refer to base/test/test_support_ios.mm for example.')
 
 
-def _RunTestTargetWithCoverageConfiguration(target):
+def _RunTestTargetWithCoverageConfiguration(target, gtest_filter=None):
   """Runs tests to generate the profraw data file.
 
   This function requires current working directory to be the root of checkout.
 
   Args:
     target: A string representing the name of the target to be tested.
+    gtest_filter: Only run unit tests whose full name matches the filter.
 
   Returns:
     A list of lines/strings created from the output log by breaking lines. The
     log has no format, but it is guaranteed to have a single line containing the
     path to the generated profraw data file.
   """
-  print 'Running ' + target
-
   iossim_path = _GetIOSSimPath()
   application_path = _GetApplicationBundlePath(target)
 
-  cmd = [iossim_path, application_path]
+  cmd = [iossim_path]
+
+  # For iossim arguments, please refer to src/testing/iossim/iossim.mm.
+  if gtest_filter:
+    cmd.append('-c --gtest_filter=' + gtest_filter)
+
+  cmd.append(application_path)
   if _TargetIsEarlGreyTest(target):
     cmd.append(_GetXCTestBundlePath(target))
 
+  print 'Running {} with command: {}'.format(target, ' '.join(cmd))
+
   logs_chracters = subprocess.check_output(cmd)
+
   return ''.join(logs_chracters).split('\n')
 
 
@@ -465,6 +476,16 @@ def _ParseCommandArguments():
                           help='Skip building test target and running tests '
                                'and re-use the specified profile data file.')
 
+  arg_parser.add_argument('--gtest_filter', type=str,
+                          help='Only run unit tests whose full name matches '
+                               'the filter.')
+
+  arg_parser.add_argument('-c', '--cmd-args', action='append',
+                          help='Command arguments that will be passed to the '
+                               'test application, and one example use case is '
+                               'to filter unit tests by passing '
+                               '\'--gtest_filter=foo.bar\'.')
+
   arg_parser.add_argument('target', nargs='+',
                           help='The name of the test target to run.')
 
@@ -523,7 +544,8 @@ def Main():
                                            'doesn\'t exist.').format(
                                                profdata_path)
   else:
-    profdata_path = _CreateCoverageProfileDataForTarget(target, jobs)
+    profdata_path = _CreateCoverageProfileDataForTarget(target, jobs,
+                                                        args.gtest_filter)
 
   _DisplayLineCoverageReport(target, profdata_path, args.path)
 
