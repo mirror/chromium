@@ -440,6 +440,17 @@ config("compiler") {
     cflags += [ "-fcolor-diagnostics" ]
   }
 
+  # TODO(hans): Remove this once Clang generates better optimized debug info by
+  # default.
+  if (is_clang && !is_nacl && current_toolchain == host_toolchain) {
+    cflags += [
+      "-Xclang",
+      "-mllvm",
+      "-Xclang",
+      "-instcombine-lower-dbg-declare=1",
+    ]
+  }
+
   # Print absolute paths in diagnostics. There is no precedent for doing this
   # on Linux/Mac (GCC doesn't support it), but MSVC does this with /FC and
   # Windows developers rely on it (crbug.com/636109) so only do this on Windows.
@@ -1223,13 +1234,10 @@ config("default_warnings") {
 
         # TODO(thakis): https://crbug.com/753973
         "-Wno-enum-compare-switch",
+
+        # TODO(hans): https://crbug.com/763392
+        "-Wno-tautological-unsigned-zero-compare",
       ]
-      if (llvm_force_head_revision) {
-        cflags += [
-          # TODO(hans): https://crbug.com/763392
-          "-Wno-tautological-unsigned-zero-compare",
-        ]
-      }
     } else if (use_xcode_clang && xcode_version_int >= 830) {
       # This is necessary to allow a progressive transition from using xcode 8.0
       # to 8.3 or more recent. Remove when all bots are migrated to 8.3.
