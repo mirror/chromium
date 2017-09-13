@@ -167,45 +167,8 @@ static EphemeralRangeInFlatTree CalcSelectionInFlatTree(
   return {};
 }
 
-struct PaintInvalidationSet {
-  STACK_ALLOCATED();
-  // Objects each have a single selection rect to invalidate.
-  HashSet<LayoutObject*> layout_objects;
-  // Ancestor Blocks of each |layout_object| and fill gaps between them, either
-  // on the left, right, or in between lines and blocks.
-  // In order to get the visual rect right, we have to examine left, middle, and
-  // right rects individually, since otherwise the union of those rects might
-  // remain the same even when changes have occurred.
-  HashSet<LayoutBlock*> layout_blocks;
-
-  PaintInvalidationSet() = default;
-  PaintInvalidationSet(PaintInvalidationSet&& other) {
-    layout_objects = std::move(other.layout_objects);
-    layout_blocks = std::move(other.layout_blocks);
-  }
-  PaintInvalidationSet& operator=(PaintInvalidationSet&& other) {
-    layout_objects = std::move(other.layout_objects);
-    layout_blocks = std::move(other.layout_blocks);
-    return *this;
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(PaintInvalidationSet);
-};
-
-static void InsertLayoutObjectAndAncestorBlocks(
-    PaintInvalidationSet* invalidation_set,
-    LayoutObject* layout_object) {
-  invalidation_set->layout_objects.insert(layout_object);
-  for (LayoutBlock* containing_block = layout_object->ContainingBlock();
-       containing_block && !containing_block->IsLayoutView();
-       containing_block = containing_block->ContainingBlock()) {
-    const auto& result =
-        invalidation_set->layout_blocks.insert(containing_block);
-    if (!result.is_new_entry)
-      break;
-  }
-}
+// Objects each have a single selection rect to invalidate.
+using PaintInvalidationSet = HashSet<LayoutObject*>;
 
 static PaintInvalidationSet CollectInvalidationSet(
     const SelectionPaintRange& range) {
@@ -214,7 +177,7 @@ static PaintInvalidationSet CollectInvalidationSet(
 
   PaintInvalidationSet invalidation_set;
   for (LayoutObject* runner : range)
-    InsertLayoutObjectAndAncestorBlocks(&invalidation_set, runner);
+    invalidation_set.insert(runner);
   return invalidation_set;
 }
 
@@ -294,32 +257,23 @@ static void SetShouldInvalidateSelection(const SelectionMarkingRange& new_range,
   // - included in new selection range and has valid SelectionState(!= kNone).
   // - included in old selection range
   // Invalidate new selected LayoutObjects.
-  for (LayoutObject* layout_object : new_invalidation_set.layout_objects) {
+  for (LayoutObject* layout_object : new_invalidation_set) {
     if (layout_object->GetSelectionState() != SelectionState::kNone) {
       layout_object->SetShouldInvalidateSelection();
-      old_invalidation_set.layout_objects.erase(layout_object);
-      continue;
-    }
-  }
-  for (LayoutBlock* layout_block : new_invalidation_set.layout_blocks) {
-    if (layout_block->GetSelectionState() != SelectionState::kNone) {
-      layout_block->SetShouldInvalidateSelection();
-      old_invalidation_set.layout_blocks.erase(layout_block);
+      old_invalidation_set.erase(layout_object);
       continue;
     }
   }
 
   // Invalidate previous selected LayoutObjects except already invalidated
   // above.
-  for (LayoutObject* layout_object : old_invalidation_set.layout_objects) {
+  for (LayoutObject* layout_object : old_invalidation_set) {
     const SelectionState old_state = layout_object->GetSelectionState();
     layout_object->SetSelectionStateIfNeeded(SelectionState::kNone);
     if (layout_object->GetSelectionState() == old_state)
       continue;
     layout_object->SetShouldInvalidateSelection();
   }
-  for (LayoutBlock* layout_block : old_invalidation_set.layout_blocks)
-    layout_block->SetShouldInvalidateSelection();
 }
 
 base::Optional<int> LayoutSelection::SelectionStart() const {
@@ -393,7 +347,7 @@ static void MarkSelected(PaintInvalidationSet* invalidation_set,
                          LayoutObject* layout_object,
                          SelectionState state) {
   layout_object->SetSelectionStateIfNeeded(state);
-  InsertLayoutObjectAndAncestorBlocks(invalidation_set, layout_object);
+  invalidation_set->insert(layout_object);
 }
 
 static void MarkSelectedInside(PaintInvalidationSet* invalidation_set,
@@ -730,10 +684,8 @@ IntRect LayoutSelection::SelectionBounds() {
   LayoutRect selected_rect;
   const PaintInvalidationSet& current_map =
       CollectInvalidationSet(paint_range_);
-  for (auto layout_object : current_map.layout_objects)
+  for (auto layout_object : current_map)
     selected_rect.Unite(SelectionRectForLayoutObject(layout_object));
-  for (auto layout_block : current_map.layout_blocks)
-    selected_rect.Unite(SelectionRectForLayoutObject(layout_block));
 
   return PixelSnappedIntRect(selected_rect);
 }
