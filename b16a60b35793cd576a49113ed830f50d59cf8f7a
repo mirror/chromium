@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aaa8ed7_332286e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-13T16:26:14Z",
+      "side": 1,
+      "message": "And here",
+      "range": {
+        "startLine": 470,
+        "startChar": 45,
+        "endLine": 470,
+        "endChar": 49
+      },
+      "revId": "b16a60b35793cd576a49113ed830f50d59cf8f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7690da4_172f2b44",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadManagerUi.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-13T16:26:14Z",
+      "side": 1,
+      "message": "And here",
+      "range": {
+        "startLine": 520,
+        "startChar": 45,
+        "endLine": 520,
+        "endChar": 49
+      },
+      "revId": "b16a60b35793cd576a49113ed830f50d59cf8f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad7f30a_9552f5f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-13T16:26:14Z",
+      "side": 1,
+      "message": "Hard code 0 here too",
+      "range": {
+        "startLine": 479,
+        "startChar": 45,
+        "endLine": 479,
+        "endChar": 49
+      },
+      "revId": "b16a60b35793cd576a49113ed830f50d59cf8f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc58ec4_f6d246cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-13T16:26:14Z",
+      "side": 1,
+      "message": "Just hard code 0 here",
+      "revId": "b16a60b35793cd576a49113ed830f50d59cf8f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
